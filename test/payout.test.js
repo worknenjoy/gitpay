@@ -100,7 +100,7 @@ describe("Payouts", () => {
         .post('/v1/payouts')
         .reply(200, {
           id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
-          amount: 100,
+          amount: 10000,
           currency: 'usd',
           status: 'created',
           method: 'bank_account',
@@ -114,11 +114,11 @@ describe("Payouts", () => {
         .send({
           amount: 100,
           currency: 'usd',
-          method: 'stripe',
+          method: 'bank_account',
         });
       expect(res.body).to.exist;
       expect(res.body.id).to.exist;
-      expect(res.body.amount).to.equal(100);
+      expect(res.body.amount).to.equal('10000');
       expect(res.body.currency).to.equal('usd');
       expect(res.body.method).to.equal('bank_account');
       expect(res.body.status).to.equal('created');

@@ -20,19 +20,24 @@ module.exports = async function payoutCreated(event, req, res) {
         }
       });
 
-      if (existingPayout) return res.status(200).json(event);
+      if (existingPayout) {
+        return res.status(200).json(event);
+      }
 
-      const payout = await models.Payout.build({
-        userId: user.dataValues.id,
-        amount: event.data.object.amount,
-        currency: event.data.object.currency,
-        status: event.data.object.status,
-        source_id: event.data.object.id,
-        description: event.data.object.description,
-        method: event.data.object.type
-      }).save();
+      const isPayoutRequest = event.data.object.metadata.type === 'payout_request';
+      if (!isPayoutRequest) {
+        const payout = await models.Payout.build({
+          userId: user.dataValues.id,
+          amount: event.data.object.amount,
+          currency: event.data.object.currency,
+          status: event.data.object.status,
+          source_id: event.data.object.id,
+          description: event.data.object.description,
+          method: event.data.object.type
+        }).save();
 
-      if (!payout) return res.status(400).send({ error: 'Error to create payout' });
+        if (!payout) return res.status(400).send({ error: 'Error to create payout' });
+      }
 
       const date = new Date(event.data.object.arrival_date * 1000);
       const language = user.language || 'en';
