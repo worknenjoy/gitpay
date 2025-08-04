@@ -1,6 +1,6 @@
 {
   "PayoutRequest.form.action": "Use total balance",
-  "PayoutRequest.form.confirm": "Convert the funds from this amount, and transfer the funds from your current balance to your registered bank account. The amount will be included in the next payout.",
+  "PayoutRequest.form.confirm": "I agree to transfer the funds from your current balance to your registered bank account. The amount will be included in the next payout.",
   "PayoutRequest.form.title": "Available funds to payout to your account",
   "account-details-address": "Address information",
   "account-details-country-information-action": "Select Country",
@@ -492,7 +492,9 @@
   "payoutSettings.subtitle": "Manage your payout settings and payment methods.",
   "payoutSettings.title": "Payout Settings",
   "payouts.balance": "Balance",
+  "payouts.editSchedule": "Change payout schedule",
   "payouts.requestPayout": "Request payout",
+  "payouts.schedule": "Payout Schedule",
   "payouts.subtitle": "Manage your payouts on the way to your bank account",
   "payouts.table.page.first": "First page",
   "payouts.title": "Payouts",

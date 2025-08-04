@@ -104,7 +104,9 @@ describe("Payouts", () => {
           currency: 'usd',
           status: 'pending',
         });
-      const user = await registerAndLogin(agent);
+      const user = await registerAndLogin(agent, {
+        account_id: 'acct_1CZ5vkLlCJ9CeQRe',
+      });
       const res = await agent
         .post('/payouts/request')
         .set('Authorization', user.headers.authorization)
@@ -115,7 +117,7 @@ describe("Payouts", () => {
         });
       expect(res.body).to.exist;
       expect(res.body.id).to.exist;
-      expect(res.body.amount).to.equal('92');
+      expect(res.body.amount).to.equal('100');
       expect(res.body.currency).to.equal('usd');
       expect(res.body.method).to.equal('stripe');
       expect(res.body.status).to.equal('pending');

@@ -3,12 +3,13 @@ import { formatStripeAmount, currencyCodeToSymbol } from 'design-library/molecul
 import SectionTable from 'design-library/molecules/tables/section-table/section-table';
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field';
 import StatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/status-field/status-field'
+import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field';
 
 const PayoutsTable = ({ payouts }) => {
 
   const tableHeaderMetadata = {
     status: { sortable: true, numeric: false, dataBaseKey: 'status', label: 'Status' },
-    method: { sortable: true, numeric: false, dataBaseKey: 'transfer_method', label: 'Transfer Method' },
+    method: { sortable: true, numeric: false, dataBaseKey: 'method', label: 'Transfer Method' },
     amount: { sortable: true, numeric: true, dataBaseKey: 'amount', label: 'Amount' },
     createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created At' }
   }
@@ -18,13 +19,13 @@ const PayoutsTable = ({ payouts }) => {
       <StatusField status={item.status} />
     ),
     method: (item: any) => (
-      <span>{item.transfer_method}</span>
+      <span>{item.method || 'No method available'}</span>
     ),
     amount: (item: any) => (
       <AmountField value={formatStripeAmount(item.amount)} currency={currencyCodeToSymbol(item.currency)} />
     ),
     createdAt: (item: any) => (
-      <span>{new Date(item.createdAt).toLocaleDateString()}</span>
+      <CreatedField createdAt={item.createdAt} />
     )
   }
 

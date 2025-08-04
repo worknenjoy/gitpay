@@ -8,6 +8,12 @@ describe('Amount Conversion', () => {
     expect(result.decimal).to.equal(1);
   });
 
+  it('should convert decimal to to centavos', () => {
+    const result = handleAmount(100, 0, 'decimal');
+    expect(result.centavos).to.equal(10000);
+    expect(result.decimal).to.equal(100);
+  });
+
   it('should convert decimal to cents', () => {
     const result = handleAmount(1, 0, 'decimal');
     expect(result.centavos).to.equal(100);

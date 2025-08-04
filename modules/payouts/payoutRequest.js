@@ -38,18 +38,7 @@ module.exports = Promise.method(async function payoutRequest(params) {
   if(!stripePayout) {
     return { error: 'Error creating payout with Stripe' }
   }
-
-  const payout = await models.Payout.build({
-    source_id: stripePayout.id,
-    userId: params.userId,
-    amount: finalAmount.decimal,
-    currency: params.currency,
-    method: params.method,
-    status: stripePayout.status
-  })
   
-  const newPayout = await payout.save()
-  
-  return newPayout
+  return stripePayout
   
 })

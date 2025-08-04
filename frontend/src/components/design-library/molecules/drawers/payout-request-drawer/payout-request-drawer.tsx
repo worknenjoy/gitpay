@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Drawer from '../drawer/drawer';
 import PayoutRequestForm from '../../../organisms/forms/payout-forms/payout-request-form/payout-request-form';
 
@@ -20,6 +20,20 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
   currency = 'usd'
 }) => {
   const formRef = useRef<{ submit: () => void }>(null);
+  const [ confirmCheck, setConfirmCheck ] = useState(false)
+  const [ amount, setAmount ] = useState<number>(0);
+
+  const onConfirmPayoutCheck = (selected: boolean) => {
+    setConfirmCheck(selected);
+  };
+
+  const onSetAmount = (value) => {
+    setAmount(Number(value));
+  };
+
+  useEffect(() => {
+    console.log('amount', amount);
+  }, [amount]);
   
   return (
     <Drawer
@@ -41,7 +55,7 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
           },
           variant: 'contained',
           color: 'secondary',
-          disabled: !balance || balance <= 0 // Disable if no balance
+          disabled: !confirmCheck || !amount || amount <= 0
         }
       ]}
     >
@@ -51,6 +65,8 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
         completed={completed}
         balance={balance}
         currency={currency}
+        onConfirmPayoutCheck={onConfirmPayoutCheck}
+        onSetAmount={onSetAmount}
       />
     </Drawer>
   );
