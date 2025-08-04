@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
@@ -116,7 +116,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
                 name: 'custom_amount',
                 value: true,
                 onChange: onConfirmPayoutCheck
-              },
+              }
             ]}
             includeSelectAll={false}
           />

@@ -9,7 +9,7 @@ const mapStateToProps = (state: any) => {
     user: getCurrentUser(state),
     account: state.account,
     payouts: state.payouts,
-    balance: state.balance,
+    balance: state.balance
   }
 }
 
@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch: any) => {
     searchPayout: (params: any) => dispatch(searchPayout(params)),
     requestPayout: (params: any) => dispatch(requestPayout(params)),
     fetchAccountBalance: () => dispatch(fetchAccountBalance()),
-    fetchAccount: () => dispatch(fetchAccount()),
+    fetchAccount: () => dispatch(fetchAccount())
   }
 }
 

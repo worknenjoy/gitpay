@@ -1,4 +1,3 @@
-import React from 'react';
 import StatusCard from './status-card';
 
 const meta = {
@@ -8,7 +7,7 @@ const meta = {
     status: 'Done',
     name: 'Available Balance',
     completed: true
-  },
+  }
 };
 
 export default meta;

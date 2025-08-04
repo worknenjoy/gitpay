@@ -99,7 +99,7 @@ const currencyMap = {
   xag: 'XAG', // Silver (troy ounce)
   xau: 'XAU', // Gold (troy ounce)
   btc: '₿', // Bitcoin
-  eth: 'Ξ', // Ethereum
+  eth: 'Ξ' // Ethereum
 };
 
 export default currencyMap

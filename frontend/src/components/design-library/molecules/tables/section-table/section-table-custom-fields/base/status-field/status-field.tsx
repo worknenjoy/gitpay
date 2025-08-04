@@ -2,8 +2,7 @@ import React from 'react';
 import { 
   CheckCircleOutlineTwoTone as ActiveIcon,
   InfoSharp as InfoIcon,
-  HelpOutline as QuestionInfoIcon,
-  NotInterested as InactiveIcon
+  HelpOutline as QuestionInfoIcon
 } from '@material-ui/icons';
 import useStyles from './status-field.styles';
 import BaseStatus from 'design-library/atoms/status/base-status/base-status';

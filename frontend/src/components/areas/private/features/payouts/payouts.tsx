@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Container, Paper } from '@material-ui/core'
+import { Container, Paper } from '@material-ui/core'
 import { FormattedMessage } from 'react-intl'
 import ProfileHeader from '../../../../design-library/molecules/headers/profile-main-header/profile-main-header'
 import PayoutsTable from './payouts-table'

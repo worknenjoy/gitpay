@@ -1,4 +1,3 @@
-import React from 'react';
 import BalanceCard from './balance-card';
 
 const meta = {
@@ -9,7 +8,7 @@ const meta = {
     currency: 'USD',
     name: 'Available Balance',
     completed: true
-  },
+  }
 };
 
 export default meta;
