@@ -43,14 +43,6 @@ const AccountTabs = ({
               value={'customer'}  
             />
           }
-          { user?.Types?.map(u => u.name)?.includes('contributor') &&
-            <Tab
-              label={
-                <FormattedMessage id="profile.account.tab.payouts" defaultMessage="Payout settings" />
-              }
-              value={'payouts'} 
-            />
-          }
           <Tab
             label={
               <FormattedMessage id="profile.account.tab.roles" defaultMessage="Roles" />

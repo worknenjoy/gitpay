@@ -10,7 +10,6 @@ import CustomerDetails from '../../../../../../containers/customer-details';
 import UserRoles from '../../../../../../containers/user-roles';
 import SettingsComponent from '../features/account-settings/settings';
 import Preferences from '../features/account-settings/preferences';
-import PayoutSettingsContainer from '../../../../../../containers/payouts-settings';
 import AccountTabMain from './account-tab-main';
 
 export default function AccountTabs({
@@ -130,7 +129,6 @@ export default function AccountTabs({
               )} 
             />
             <Route exact path="/profile/user-account/customer" component={CustomerDetails} />
-            <Route exact path="/profile/user-account/payouts" component={PayoutSettingsContainer} />
             <Route exact path="/profile/user-account/roles" component={
               (props) => (
                   <UserRoles />

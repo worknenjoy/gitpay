@@ -24,43 +24,44 @@ type FieldProps = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Field = ({ ref, name, value, label, completed = true, error, type = 'text', min, max, required = false, defaultValue, placeholder, disabled, help, inputComponent, inputProps, endAdornment, onChange }: FieldProps) => {
+export const Field = React.forwardRef<HTMLElement, FieldProps>((
+  { name, value, label, completed = true, error, type = 'text', min, max, required = false, defaultValue, placeholder, disabled, help, inputComponent, inputProps, endAdornment, onChange },
+  ref
+) => {
   return (
     <FormControl style={{ width: '100%' }}>
       <ReactPlaceholder type="text" rows={1} ready={completed} style={{margin: '20px 0'}} showLoadingAnimation>
-      <>
-      <InputLabel
-        htmlFor={name}
-      >
-        {label}
-      </InputLabel>
-      <Input
-        ref={ref}
-        id={name}
-        name={name}
-        type={type}
-        required={required}
-        defaultValue={defaultValue}
-        value={value}
-        fullWidth
-        style={{ width: '100%' }}
-        placeholder={placeholder}
-        disabled={disabled}
-        inputComponent={inputComponent}
-        onChange={onChange}
-        endAdornment={endAdornment}
-        error={error}
-        inputProps={{...inputProps, ...(type === 'number' ? { min, max } : {})}}
-      />
-      {help &&
-        <FormHelperText id="component-helper-text">
-          <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
-        </FormHelperText>
-      }
-      </>
+        <>
+          <InputLabel htmlFor={name}>
+            {label}
+          </InputLabel>
+          <Input
+            inputRef={ref}
+            id={name}
+            name={name}
+            type={type}
+            required={required}
+            defaultValue={defaultValue}
+            value={value}
+            fullWidth
+            style={{ width: '100%' }}
+            placeholder={placeholder}
+            disabled={disabled}
+            inputComponent={inputComponent}
+            onChange={onChange}
+            endAdornment={endAdornment}
+            error={error}
+            inputProps={{...inputProps, ...(type === 'number' ? { min, max } : {})}}
+          />
+          {help &&
+            <FormHelperText id="component-helper-text">
+              <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
+            </FormHelperText>
+          }
+        </>
       </ReactPlaceholder>
     </FormControl>
   )
-}
+})
 
 export default Field

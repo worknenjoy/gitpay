@@ -1,27 +1,6 @@
 import React from 'react';
 import ReactPlaceholder from 'react-placeholder';
 import { Button, Card, CardContent, CardActions, Typography, makeStyles } from '@material-ui/core';
-import currencyMap from './currency-map';
-
-
-//Function to convert currency code to symbol
-export function currencyCodeToSymbol(code) {
-  return currencyMap[code.toLowerCase()] || code;
-}
-
-//Function to format amount from cents to decimal format
-export function formatStripeAmount(amountInCents) {
-  // Convert to a number in case it's a string
-  let amount = Number(amountInCents);
-
-  // Check if the conversion result is a valid number
-  if (isNaN(amount)) {
-    return 'Invalid amount';
-  }
-
-  // Convert cents to a decimal format and fix to 2 decimal places
-  return (amount / 100).toFixed(2);
-}
 
 const useStyles = makeStyles({
   root: {
@@ -39,20 +18,17 @@ const useStyles = makeStyles({
   }
 });
 
-type BalanceCardProps = {
+type StatusCardProps = {
   name: string | React.ReactNode;
-  balance: number;
-  currency?: string;
+  status: number;
   onAdd?: (e: any) => void;
   action?: React.PropsWithChildren<any>;
   actionProps?: any;
   completed?: boolean;
 }
 
-const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionProps, completed }: BalanceCardProps) => {
+const StatusCard = ({ name, status, onAdd, action, actionProps, completed }: StatusCardProps) => {
   const classes = useStyles();
-
-  const convertedBalance = `${currencyCodeToSymbol(currency)} ${formatStripeAmount(balance)}`
 
   return (
 
@@ -68,7 +44,7 @@ const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionPro
             {name}
           </Typography>
           <Typography className={classes.balance} color="primary">
-            {convertedBalance}
+            {status}
           </Typography>
         </ReactPlaceholder>
       </CardContent>
@@ -91,4 +67,4 @@ const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionPro
   );
 };
 
-export default BalanceCard;
+export default StatusCard;

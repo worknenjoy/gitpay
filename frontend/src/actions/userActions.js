@@ -9,6 +9,10 @@ const FETCH_USER_ACCOUNT_REQUESTED = 'FETCH_USER_ACCOUNT_REQUESTED'
 const FETCH_USER_ACCOUNT_SUCCESS = 'FETCH_USER_ACCOUNT_SUCCESS'
 const FETCH_USER_ACCOUNT_ERROR = 'FETCH_USER_ACCOUNT_ERROR'
 
+const FETCH_USER_BALANCE_REQUESTED = 'FETCH_USER_BALANCE_REQUESTED'
+const FETCH_USER_BALANCE_SUCCESS = 'FETCH_USER_BALANCE_SUCCESS'
+const FETCH_USER_BALANCE_ERROR = 'FETCH_USER_BALANCE_ERROR'
+
 const FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED = 'FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED'
 const FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS = 'FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS'
 const FETCH_USER_ACCOUNT_COUNTRIES_ERROR = 'FETCH_USER_ACCOUNT_COUNTRIES_ERROR'
@@ -75,6 +79,26 @@ const fetchUserAccountSuccess = account => {
 
 const fetchUserAccountError = error => {
   return { type: FETCH_USER_ACCOUNT_ERROR, completed: true, error: error }
+}
+
+/* 
+  * Account fetch balance
+*/
+
+const fetchUserBalanceRequested = () => {
+  return { type: FETCH_USER_BALANCE_REQUESTED, completed: false }
+}
+
+const fetchUserBalanceSuccess = balance => {
+  return {
+    type: FETCH_USER_BALANCE_SUCCESS,
+    completed: true,
+    data: balance.data
+  }
+}
+
+const fetchUserBalanceError = error => {
+  return { type: FETCH_USER_BALANCE_ERROR, completed: true, error: error }
 }
 
 /*
@@ -407,6 +431,23 @@ const fetchAccount = () => {
   }
 }
 
+const fetchAccountBalance = () => {
+  validToken()
+  return (dispatch) => {
+    dispatch(fetchUserBalanceRequested())
+    return axios
+      .get(api.API_URL + '/user/account/balance')
+      .then(balance => {
+        return dispatch(fetchUserBalanceSuccess(balance))
+      })
+      .catch(e => {
+        // eslint-disable-next-line no-console
+        console.log('fetch user account balance error', e)
+        return dispatch(fetchUserBalanceError(e))
+      })
+  }
+}
+
 const fetchAccountCountries = () => {
   validToken()
   return (dispatch) => {
@@ -660,6 +701,9 @@ export {
   FETCH_USER_ACCOUNT_REQUESTED,
   FETCH_USER_ACCOUNT_SUCCESS,
   FETCH_USER_ACCOUNT_ERROR,
+  FETCH_USER_BALANCE_REQUESTED,
+  FETCH_USER_BALANCE_SUCCESS,
+  FETCH_USER_BALANCE_ERROR,
   FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED,
   FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS,
   FETCH_USER_ACCOUNT_COUNTRIES_ERROR,
@@ -697,6 +741,7 @@ export {
   UPDATE_BANKACCOUNT_SUCCESS,
   UPDATE_BANKACCOUNT_ERROR,
   fetchAccount,
+  fetchAccountBalance,
   fetchAccountCountries,
   createAccount,
   updateAccount,

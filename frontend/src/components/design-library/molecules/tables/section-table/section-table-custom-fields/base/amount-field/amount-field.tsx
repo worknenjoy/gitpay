@@ -3,11 +3,11 @@ import { useIntl } from 'react-intl';
 
 import messages from '../../../../../../../areas/public/features/task/messages/task-messages'
 
-const AmountField = ({ value }) => {
+const AmountField = ({ value, currency = '$' }) => {
   const intl = useIntl();
   return (
     <div style={{ width: 70, textAlign: 'center' }}>
-      {value ? (value === '0' ? intl.formatMessage(messages.noAmountDefined) : `$ ${value}`) : intl.formatMessage(messages.noBounty)}
+      {value ? (value === '0' ? intl.formatMessage(messages.noAmountDefined) : `${currency} ${value}`) : intl.formatMessage(messages.noBounty)}
     </div>
   );
 };

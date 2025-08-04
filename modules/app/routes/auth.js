@@ -121,6 +121,8 @@ router.post('/user/account', controllers.accountCreate)
 router.get('/user/account', controllers.account)
 router.put('/user/account', controllers.accountUpdate)
 
+router.get('/user/account/balance', controllers.accountBalance)
+
 router.get('/user/account/countries', controllers.accountCountries)
 
 router.post('/user/bank_accounts', controllers.createBankAccount)

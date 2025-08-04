@@ -274,6 +274,17 @@ exports.accountCountries = (req, res) => {
     })
 }
 
+exports.accountBalance = (req, res) => {
+  user.userAccountBalance({ account_id: req.user.account_id })
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.send(false)
+    })
+}
+
 exports.userUpdate = (req, res) => {
   req.body.id = req.user.id
   user.userUpdate(req.body)
