@@ -15,11 +15,12 @@ import ReactPlaceholder from 'react-placeholder'
 import SideMenuPlaceholder from './side-menu.placeholder'
 import SideMenuItems from './side-menu-items'
 
+
 const useStyles = makeStyles((theme) => ({
   sidePaper: {
     backgroundColor: '#2c5c46',
     height: '100%'
-  },
+    },
   row: {
     display: 'flex',
     justifyContent: 'center',
@@ -156,7 +157,6 @@ export const SideMenu: React.FC<SideMenuProps> = ({
   menuItems
 }) => {
   const classes = useStyles()
-  const [selected, setSelected] = useState(0)
   const [isActive, setIsActive] = useState(false)
 
   const handleClickMenuMobile = () => {
