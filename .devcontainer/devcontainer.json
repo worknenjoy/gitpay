@@ -9,7 +9,9 @@
         "ms-vscode-remote.remote-containers"
     ],
     "forwardPorts": [
-        5432
+        5432,
+        3000,
+        8082
     ],
     "postCreateCommand": "pip install -r requirements.txt",
     "settings": {
