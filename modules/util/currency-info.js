@@ -1,7 +1,4 @@
-
-
-//Map for currency symbols
-const currencyMap = {
+module.exports = {
   usd: { symbol: '$', decimalPlaces: 2 }, // US Dollar
   eur: { symbol: '€', decimalPlaces: 2 }, // Euro
   gbp: { symbol: '£', decimalPlaces: 2 }, // British Pound
@@ -101,5 +98,3 @@ const currencyMap = {
   btc: { symbol: '₿', decimalPlaces: 8 }, // Bitcoin
   eth: { symbol: 'Ξ', decimalPlaces: 8 } // Ethereum
 };
-
-export default currencyMap

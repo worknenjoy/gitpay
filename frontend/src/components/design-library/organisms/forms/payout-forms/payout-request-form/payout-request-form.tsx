@@ -4,7 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { FormattedMessage } from 'react-intl';
 import Field from '../../../../atoms/inputs/fields/field/field';
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
-import BalanceCard, { formatStripeAmount } from 'design-library/molecules/cards/balance-card/balance-card';
+import BalanceCard, { convertStripeAmountByCurrency } from 'design-library/molecules/cards/balance-card/balance-card';
+import currencyMap from 'design-library/molecules/cards/balance-card/currency-map';
 
 const useStyles = makeStyles((theme) => ({
   placholder: {
@@ -45,7 +46,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
 
   const handleAddBalance = () => {
     if (amountInputRef.current) {
-      const formattedAmount = formatStripeAmount(balance).toString();
+      const formattedAmount = convertStripeAmountByCurrency(balance, currency).toString();
       const inputElement = amountInputRef.current; // Find the input element inside the Field component
 
       if (inputElement) {
@@ -59,7 +60,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
   };
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const maxAmount = Number(formatStripeAmount(balance));
+    const maxAmount = Number(convertStripeAmountByCurrency(balance, currency));
     let value = Number(e.target.value);
 
     if (value > maxAmount) {
@@ -72,6 +73,10 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
     e.target.value = value.toString();
     onSetAmount(value);
   };
+
+  const stepByCurrency = currencyMap[currency.toLowerCase()]?.decimalPlaces
+    ? Math.pow(10, -currencyMap[currency.toLowerCase()].decimalPlaces)
+    : 0.01;
 
 
   return (
@@ -95,7 +100,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
             type="number"
             ref={amountInputRef}
             placeholder="Enter the amount"
-            inputProps={{ min: 0, step: 0.01, max: formatStripeAmount(balance) }}
+            inputProps={{ min: 0, step: stepByCurrency, max: convertStripeAmountByCurrency(balance, currency) }}
             completed={completed}
             disabled={balance === 0}
             endAdornment={

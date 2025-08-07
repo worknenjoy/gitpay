@@ -8,6 +8,18 @@ describe('Amount Conversion', () => {
     expect(result.decimal).to.equal(1);
   });
 
+  it('should convert cents to decimal with currency and no fee', () => {
+    const result = handleAmount(51666, 0, 'centavos', 'jod');
+    expect(result.centavos).to.equal(51666);
+    expect(result.decimal).to.equal(51.666);
+  });
+
+  it('should convert cents to decimal with currency and a fee', () => {
+    const result = handleAmount(10000, 8, 'centavos', 'jod');
+    expect(result.centavos).to.equal(9200);
+    expect(result.decimal).to.equal(9.2);
+  });
+
   it('should convert decimal to to centavos', () => {
     const result = handleAmount(100, 0, 'decimal');
     expect(result.centavos).to.equal(10000);

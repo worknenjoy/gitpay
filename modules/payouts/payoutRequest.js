@@ -26,7 +26,7 @@ module.exports = Promise.method(async function payoutRequest(params) {
 
   if(!user.account_id) return { error: 'User account not activated' }
 
-  const finalAmount = handleAmount(params.amount, 0, 'decimal')
+  const finalAmount = handleAmount(params.amount, 0, 'decimal', params.currency || 'usd')
 
   const stripePayout = await stripe.payouts.create({
     amount: finalAmount.centavos,

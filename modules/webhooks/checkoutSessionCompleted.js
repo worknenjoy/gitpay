@@ -49,8 +49,8 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         }
       }
       const amountAfterFee = custom_amount ? 
-        handleAmount(amount_total, 8, 'centavos') :
-        handleAmount(amount, 8, 'decimal');
+        handleAmount(amount_total, 8, 'centavos', currency) :
+        handleAmount(amount, 8, 'decimal', currency);
       const transfer_amount = amountAfterFee.decimal;
       const transfer_amount_cents = amountAfterFee.centavos;
 

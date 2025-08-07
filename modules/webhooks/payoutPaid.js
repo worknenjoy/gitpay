@@ -5,6 +5,7 @@ const SendMail = require('../mail/mail');
 const WalletMail = require('../mail/wallet');
 const stripe = require('../shared/stripe/stripe')();
 const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants');
+const { handleAmount } = require('../util/handle-amount/handle-amount');
 
 module.exports = async function payoutPaid(event, req, res) {
   return models.Payout.update({
@@ -31,7 +32,7 @@ module.exports = async function payoutPaid(event, req, res) {
             i18n.__('mail.webhook.payment.transfer.finished.subject'),
             i18n.__('mail.webhook.payment.transfer.finished.message', {
               currency: CURRENCIES[event.data.object.currency],
-              amount: event.data.object.amount / 100,
+              amount: handleAmount(event.data.object.amount, 0, 'centavos', event.data.object.currency).decimal,
               date: date
             })
           )

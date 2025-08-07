@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatStripeAmount, currencyCodeToSymbol } from 'design-library/molecules/cards/balance-card/balance-card';
+import { convertStripeAmountByCurrency, currencyCodeToSymbol } from 'design-library/molecules/cards/balance-card/balance-card';
 import SectionTable from 'design-library/molecules/tables/section-table/section-table';
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field';
 import StatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/status-field/status-field'
@@ -22,7 +22,7 @@ const PayoutsTable = ({ payouts }) => {
       <span>{item.method || 'No method available'}</span>
     ),
     amount: (item: any) => (
-      <AmountField value={formatStripeAmount(item.amount)} currency={currencyCodeToSymbol(item.currency)} />
+      <AmountField value={convertStripeAmountByCurrency(item.amount, item.currency)} currency={currencyCodeToSymbol(item.currency)} />
     ),
     createdAt: (item: any) => (
       <CreatedField createdAt={item.createdAt} />

@@ -6,7 +6,7 @@ import currencyMap from './currency-map';
 
 //Function to convert currency code to symbol
 export function currencyCodeToSymbol(code) {
-  return currencyMap[code.toLowerCase()] || code;
+  return currencyMap[code.toLowerCase()].symbol || code;
 }
 
 //Function to format amount from cents to decimal format
@@ -22,6 +22,11 @@ export function formatStripeAmount(amountInCents) {
   // Convert cents to a decimal format and fix to 2 decimal places
   return (amount / 100).toFixed(2);
 }
+
+export const convertStripeAmountByCurrency = (amount, currency) => {
+  const places = currencyMap[currency.toLowerCase()].decimalPlaces || 2;
+  return (amount / Math.pow(10, places)).toFixed(places);
+};
 
 const useStyles = makeStyles({
   root: {
@@ -52,7 +57,7 @@ type BalanceCardProps = {
 const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionProps, completed }: BalanceCardProps) => {
   const classes = useStyles();
 
-  const convertedBalance = `${currencyCodeToSymbol(currency)} ${formatStripeAmount(balance)}`
+  const convertedBalance = `${currencyCodeToSymbol(currency)} ${convertStripeAmountByCurrency(balance, currency)}`
 
   return (
 
