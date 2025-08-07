@@ -9,7 +9,6 @@ const getCurrency = (country) => {
 }
 
 module.exports = Promise.method(function userBankAccountCreate ({ userParams, bankAccountParams }) {
-  console.log('userBankAccountCreate', userParams, bankAccountParams)
   const userCountry = userParams.country
   const userCurrency = userParams.currency || getCurrency(userCountry)
   return models.User

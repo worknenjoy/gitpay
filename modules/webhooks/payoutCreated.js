@@ -4,6 +4,7 @@ const moment = require('moment');
 const SendMail = require('../mail/mail');
 const stripe = require('../shared/stripe/stripe')();
 const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants');
+const { handleAmount } = require('../util/handle-amount/handle-amount');
 
 module.exports = async function payoutCreated(event, req, res) {
   try {
@@ -47,7 +48,7 @@ module.exports = async function payoutCreated(event, req, res) {
         i18n.__('mail.webhook.payment.transfer.intransit.subject'),
         i18n.__('mail.webhook.payment.transfer.intransit.message', {
           currency: CURRENCIES[event.data.object.currency],
-          amount: event.data.object.amount / 100,
+          amount: handleAmount(event.data.object.amount, 0, 'centavos', event.data.object.currency).decimal,
           date: moment(date).format('LLL')
         })
       );
