@@ -4,9 +4,10 @@ import ImportIssueDialog from 'design-library/organisms/layouts/topbar/import-is
 import AccountMenu from './account-menu';
 import Button from '@material-ui/core/Button';
 import { FormattedMessage } from 'react-intl';
-import { Grid, withStyles } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-const styles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -47,7 +48,6 @@ const styles = (theme) => ({
       alignItems: 'center',
       width: '100%'
     }
-
   },
   actionButtons: {
     marginRight: 10,
@@ -66,16 +66,15 @@ const styles = (theme) => ({
       justifyContent: 'center'
     }
   }
-})
+}));
 
 const AccountHeader = ({
-  classes,
   user,
   history,
   onCreateTask,
   onLogout
 }) => {
-
+  const classes = useStyles()
   const [openAddIssue, setOpenAddIssue] = useState(false);
 
   const handleAddIssueClick = () => {
@@ -133,4 +132,4 @@ const AccountHeader = ({
   )
 }
 
-export default withStyles(styles)(AccountHeader)
+export default AccountHeader
