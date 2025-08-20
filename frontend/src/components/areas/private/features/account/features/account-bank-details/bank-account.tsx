@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Grid, Typography, Card, CardContent, Chip, CardActions, Button, FormControl, Input, InputLabel, Select, MenuItem, FormHelperText, RadioGroup, FormControlLabel, Radio, Switch, Avatar } from '@material-ui/core';
+import { styled, Theme } from '@mui/material/styles';
+import { Grid, Typography, Card, CardContent, Chip, CardActions, Button, FormControl, Input, InputLabel, Select, MenuItem, FormHelperText, RadioGroup, FormControlLabel, Radio, Switch, Avatar } from '@mui/material';
 import {
   Public as PublicIcon,
   Person as PersonIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import Alert from 'design-library/atoms/alerts/alert/alert';
 import ReactPlaceholder from 'react-placeholder';
 import CountryPicker from '../../../../shared/country-picker';
@@ -13,7 +13,7 @@ import Const from '../../../../../../../consts'
 
 import { countryCodes, countryCurrencies } from '../../../../shared/country-codes'
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = styled((theme: Theme) => ({
   card: {
     width: '100%',
     marginBottom: 20,
@@ -222,7 +222,7 @@ const BankAccount = ({
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={12}>
+      <Grid xs={12} md={12}>
         <ReactPlaceholder
           showLoadingAnimation
           type="media"
@@ -248,7 +248,7 @@ const BankAccount = ({
                       <FormattedMessage id="account.register.bank.title" defaultMessage="Activate bank account:" />
                     </Typography>
                     <Grid container spacing={3}>
-                      <Grid item xs={12}>
+                      <Grid xs={12}>
                         {bankAccount.data.routing_number ? (
                           <div style={{ marginBottom: 8, marginTop: 8 }}>
                             <Alert
@@ -318,7 +318,7 @@ const BankAccount = ({
                       </Grid>
                     </Grid>
                     <Grid container spacing={3}>
-                      <Grid item xs={12} md={3}>
+                      <Grid xs={12} md={3}>
                         <FormControl>
                           <div>
                             <Typography variant="caption" gutterBottom>
@@ -344,7 +344,7 @@ const BankAccount = ({
                           </Select>
                         </FormControl>
                       </Grid>
-                      <Grid item xs={12} md={9}>
+                      <Grid xs={12} md={9}>
                         <FormControl>
                           <div>
                             <Typography variant="caption" gutterBottom>
@@ -372,7 +372,7 @@ const BankAccount = ({
                       </Grid>
                     </Grid>
                     <Grid container spacing={3}>
-                      <Grid item xs={12}>
+                      <Grid xs={12}>
                         <FormControl component="fieldset">
                           <Typography variant="caption" gutterBottom>
                             <FormattedMessage id="account.register.type" defaultMessage="Account Type:" />
@@ -414,7 +414,7 @@ const BankAccount = ({
                     </Grid>
                     <Grid container spacing={3}>
                       {ibanMode ? (
-                        <Grid item xs={12}>
+                        <Grid xs={12}>
                           <FormControl
                             error={AccountNumberError}
                           >
@@ -441,7 +441,7 @@ const BankAccount = ({
                           </FormControl>
                         </Grid>
                       ) : (
-                        <Grid item xs={12}>
+                        <Grid xs={12}>
                           {(user.country !== 'DK' || user.country !== 'BE') && (
                             <>
 
@@ -488,7 +488,7 @@ const BankAccount = ({
 
                         </Grid>
                       )}
-                      <Grid item xs={12}>
+                      <Grid xs={12}>
                         {user.country !== 'BR' && !bankAccount.data.routing_number && (
                           <FormControl>
                             <FormattedMessage

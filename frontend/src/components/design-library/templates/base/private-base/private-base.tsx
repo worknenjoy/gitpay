@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { AppBar, Container, Grid } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { AppBar, Container, Grid } from '@mui/material';
+import { Theme } from '@mui/material/styles';
 import { Page, PageContent } from '../../../../../styleguide/components/Page';
 import ProfileSideBar from '../../../organisms/layouts/profile-sidebar/profile-sidebar'
 import AccountHeader from '../../../organisms/layouts/account-header/account-header';
@@ -8,6 +8,7 @@ import Bottom from '../../../organisms/layouts/bottom-bar/bottom'
 import { useHistory } from 'react-router-dom';
 import ProfileHeader from '../../../molecules/headers/profile-main-header/profile-main-header';
 import ActivateAccountDialog from '../../../molecules/dialogs/activate-account-dialog/activate-account-dialog';
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -90,11 +91,11 @@ const PrivateBase = ({
         position="static"
         elevation={0} />
       <PageContent>
-        <Grid container className={classes.root} spacing={0}>
-          <ProfileSideBar
-            user={user}
-          />
-          <Grid item xs={12} md={10}>
+         <Grid container className={classes.root} spacing={0}>
+            <ProfileSideBar
+              user={user}
+            />
+           <Grid size={{ xs: 12, md: 10 }}>
             
             <AccountHeader
               user={data}

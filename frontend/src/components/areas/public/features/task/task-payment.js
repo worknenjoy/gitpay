@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MomentComponent from 'moment'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import Alert from '@material-ui/lab/Alert'
-import AlertTitle from '@material-ui/lab/AlertTitle'
+import Alert from '@mui/lab/Alert'
+import AlertTitle from '@mui/lab/AlertTitle'
 import {
   Container,
   withStyles,
@@ -20,13 +20,13 @@ import {
   Tabs,
   Tab,
   Chip,
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   PaymentOutlined as FilterListIcon,
   Redeem as RedeemIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { Link } from 'react-router-dom'
-import blue from '@material-ui/core/colors/blue'
+import blue from '@mui/material/colors/blue'
 import PaymentTypeIcon from '../../../private/features/payments/legacy/payment-type-icon'
 import InterestedUsers from './components/interested-users'
 import InterestedOffers from './components/interested-offers'

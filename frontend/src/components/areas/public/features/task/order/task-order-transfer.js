@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 import {
   List,
   ListItem,
@@ -10,8 +10,8 @@ import {
   Drawer,
   Typography,
   Button
-} from '@material-ui/core'
-import { SwapHorizontalCircleRounded } from '@material-ui/icons'
+} from '@mui/material'
+import { SwapHorizontalCircleRounded } from '@mui/icons-material'
 import ReactPlaceholder from 'react-placeholder'
 
 const useStyles = makeStyles((theme) => ({

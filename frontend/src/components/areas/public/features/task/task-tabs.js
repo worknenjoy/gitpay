@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import renderHTML from 'react-render-html'
 import marked from 'marked'
-import ReactPlaceholder from 'react-placeholder'
-import 'react-placeholder/lib/reactPlaceholder.css'
+import { Skeleton } from '@mui/material'
 import { messages } from './messages/task-messages'
 import RegularCard from 'design-library/molecules/cards/RegularCard'
 import Table from '../../../../Table/Table'
@@ -21,7 +20,7 @@ import {
   withStyles,
   Tooltip,
   Button
-} from '@material-ui/core'
+} from '@mui/material'
 
 import {
   Redeem as RedeemIcon,
@@ -34,7 +33,7 @@ import {
   Cancel as CancelIcon,
   Info as InfoIcon,
   SwapHoriz as TransferIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import styled from 'styled-components'
 
@@ -572,4 +571,5 @@ TaskTabs.propTypes = {
   messageTask: PropTypes.func
 }
 
+export default injectIntl(withStyles(styles)(TaskTabs))
 export default injectIntl(withStyles(styles)(TaskTabs))

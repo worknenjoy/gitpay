@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import Drawer from '../drawer/drawer'
 import OfferDrawerCreate from './components/offer-drawer-create';
 import OfferDrawerTabs from './components/offer-drawer-tabs';
 import OffersList from '../../lists/offers-list/offers-list';
-import { AddCircleTwoTone as AddIcon } from '@material-ui/icons';
+import { AddCircleTwoTone as AddIcon } from '@mui/icons-material';
 
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(theme => ({
   details: {
     display: 'flex',
     flexDirection: 'column'

@@ -1,16 +1,15 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import { Button, Skeleton } from '@mui/material';
+import { Theme, createStyles, styled } from '@mui/material/styles';
 import { FormattedMessage } from 'react-intl';
 import { BillingInfoCard } from '../../../../molecules/cards/billing-info-card/billing-info-card';
-import ReactPlaceholder from 'react-placeholder';
 import { countryCodes } from '../../../../../areas/private/shared/country-codes';
 import { formatCurrency } from '../../../../../../utils/format-currency';
 import {
   Alert, AlertTitle
-} from '@material-ui/lab'
+} from '@mui/material'
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = styled((theme: Theme) =>
   createStyles({
     btnPayment: {
       float: 'right',
@@ -52,12 +51,7 @@ const InvoicePayment = ({
           <FormattedMessage id="issue.payment.invoice.info.description" defaultMessage="To update your billing information, please fill in or update your details in the Billing Information section of your account settings. This information will be used to generate your invoice" />
         </Alert>
       </div>
-      <ReactPlaceholder
-        showLoadingAnimation={true}
-        type="media"
-        ready={customer.completed}
-        rows={5}
-      >
+      <Skeleton variant="rectangular" width="100%" height={118} animation="wave">
         <BillingInfoCard
           name={name || ' - '}
           address={`${address?.line1 || ' - '} ${address?.line2 || ' - '}`}
@@ -67,7 +61,7 @@ const InvoicePayment = ({
           country={countryCodes.find(c => c.code === address?.country)?.country || ' - '}
           totalAmount={price}
         />
-      </ReactPlaceholder>
+      </Skeleton>
       <Button
         disabled={!price}
         onClick={onInvoicePayment}

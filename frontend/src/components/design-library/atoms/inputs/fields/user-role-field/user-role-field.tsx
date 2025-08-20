@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, Tooltip, Typography } from '@material-ui/core';
-import { Help } from '@material-ui/icons';
+import { Grid, Tooltip, Typography } from '@mui/material';
+import { Help } from '@mui/icons-material';
 import Checkboxes from '../../checkboxes/checkboxes';
 import { FormattedMessage } from 'react-intl';
 
@@ -15,7 +15,7 @@ const UserRoleField = ({ roles, onChange }) => {
 
   return (
     <Grid container spacing={2} alignContent="center" alignItems="center">
-      <Grid item xs={12} md={2}>
+      <Grid xs={12} md={2}>
         <Typography variant="caption" color="textSecondary" style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
           <FormattedMessage id="user.types.roles.select.label" defaultMessage="Signup as: " />
           <Tooltip placement="right" title={<FormattedMessage id="user.types.roles.tooltip" defaultMessage="You can change this later." />}>
@@ -23,7 +23,7 @@ const UserRoleField = ({ roles, onChange }) => {
           </Tooltip>
         </Typography>
       </Grid>
-      <Grid item xs={12} md={10}>
+      <Grid xs={12} md={10}>
         <Checkboxes
           checkboxes={checkBoxes}
           includeSelectAll={true}

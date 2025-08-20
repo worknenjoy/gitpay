@@ -15,7 +15,7 @@ import {
   Chip,
   IconButton,
   Tooltip
-} from '@material-ui/core'
+} from '@mui/material'
 
 import Constants from '../../../../../consts'
 

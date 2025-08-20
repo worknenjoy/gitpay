@@ -16,12 +16,12 @@ import {
   FormGroup,
   FormControlLabel,
   MenuItem
-} from '@material-ui/core'
+} from '@mui/material'
 
 import {
   HowToReg as GroupWorkIcon,
   Message as MessageIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 const ModalReason = ({ callback, open, setOpen }) => {
   const [message, setMessage] = useState('')

@@ -4,7 +4,7 @@ import {
   InputLabel,
   Input,
   InputAdornment
-} from '@material-ui/core';
+} from '@mui/material';
 import useStyles from './price-input.styles';
 
 

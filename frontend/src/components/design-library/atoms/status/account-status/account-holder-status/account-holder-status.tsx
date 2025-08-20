@@ -5,7 +5,7 @@ import {
   InfoSharp as InfoIcon,
   HelpOutline as QuestionInfoIcon,
   NotInterested as InactiveIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import BaseStatus from '../../base-status/base-status';
 

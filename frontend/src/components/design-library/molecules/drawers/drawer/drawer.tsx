@@ -5,14 +5,14 @@ import {
   Typography,
   Fab,
   Box
-} from '@material-ui/core'
+} from '@mui/material'
 
-import CloseIcon from '@material-ui/icons/Close'
+import CloseIcon from '@mui/icons-material/Close'
 
-import { Theme, makeStyles } from '@material-ui/core/styles';
+import { Theme, styled } from '@mui/material/styles';
 import DrawerActions from './drawer-actions/drawer-actions';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = styled((theme: Theme) => ({
   closeButton: {
     position: 'absolute',
     right: theme.spacing(2),

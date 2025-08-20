@@ -3,10 +3,11 @@ import {
   Box,
   Container,
   Grid,
-  makeStyles
-} from '@material-ui/core'
-import { Pagination } from '@material-ui/lab'
+  styled
+} from '@mui/material'
+import { Pagination } from '@mui/lab'
 import OrganizationCard from './organization-card'
+import Skeleton from '@mui/material/Skeleton'
 
 const useStyles = makeStyles((theme) => ({
   root: {

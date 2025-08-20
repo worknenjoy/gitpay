@@ -16,13 +16,13 @@ import {
   withStyles,
   Paper,
   IconButton
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   LastPage as LastPageIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
 const messages = defineMessages({

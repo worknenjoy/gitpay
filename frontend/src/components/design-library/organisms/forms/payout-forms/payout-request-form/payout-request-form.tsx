@@ -1,6 +1,6 @@
 import React, { useRef, forwardRef, useImperativeHandle } from 'react';
-import { Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { FormattedMessage } from 'react-intl';
 import Field from '../../../../atoms/inputs/fields/field/field';
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
@@ -82,7 +82,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
   return (
     <form onSubmit={handleSubmit} ref={internalFormRef}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={12} justifyContent="flex-end">
+        <Grid xs={12} md={12} justifyContent="flex-end">
           <BalanceCard
             name={<FormattedMessage id="PayoutRequest.form.title" defaultMessage="Available funds to payout to your account" />}
             balance={balance}
@@ -93,7 +93,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
             completed={completed}
           />
         </Grid>
-        <Grid item xs={12} md={12}>
+        <Grid xs={12} md={12}>
           <Field
             label="Amount"
             name="amount"
@@ -113,7 +113,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
             onChange={handleAmountChange}
           />
         </Grid>
-        <Grid item xs={12} md={12}>
+        <Grid xs={12} md={12}>
           <Checkboxes
             checkboxes={[
               {

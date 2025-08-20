@@ -1,7 +1,7 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import { green } from '@material-ui/core/colors'
+import { createStyles, styled, Theme } from '@mui/material/styles'
+import { green } from '@mui/material/colors'
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = styled((theme: Theme) =>
   createStyles({
     yes: {
       backgroundColor: green[400],

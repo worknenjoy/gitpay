@@ -3,13 +3,13 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText
-} from '@material-ui/core'
-import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded'
-import CancelRoundedIcon from '@material-ui/icons/CancelRounded'
-import { makeStyles } from '@material-ui/core/styles'
-import ReactPlaceholder from 'react-placeholder'
-import CircularProgress from '@material-ui/core/CircularProgress';
+  ListItemText,
+  Skeleton
+} from '@mui/material'
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
+import { makeStyles } from '@mui/styles'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
 root: {
@@ -27,9 +27,11 @@ const SendSolutionRequirements = ({ requirements, completed }) => {
       { requirements.map((requirement, index) => (
         <ListItem>
           <ListItemIcon style={ { color: 'black' } }>
-            <ReactPlaceholder showLoadingAnimation ready={ completed } customPlaceholder={ <CustomPlaceholder /> }>
-              { requirement.done ? <CheckCircleRoundedIcon color="primary" /> : <CancelRoundedIcon /> }
-            </ReactPlaceholder>
+            {completed ? (
+              requirement.done ? <CheckCircleRoundedIcon color="primary" /> : <CancelRoundedIcon />
+            ) : (
+              <CustomPlaceholder />
+            )}
           </ListItemIcon>
           <ListItemText primary={requirement.label} />
       </ListItem>

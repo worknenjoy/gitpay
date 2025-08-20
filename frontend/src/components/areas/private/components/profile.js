@@ -15,7 +15,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions
-} from '@material-ui/core'
+} from '@mui/material'
 
 import { Page, PageContent } from '../../../../styleguide/components/Page'
 
@@ -228,8 +228,8 @@ class Profile extends Component {
           <PreferencesBar classes={ classes } />
         }
         <PageContent>
-          <Grid container className={ classes.root } spacing={ 0 }>
-            { user &&
+           <Grid container className={ classes.root } spacing={ 0 }>
+              { user &&
               <ProfileSideBar
                 classes={ classes }
                 user={ user }
@@ -237,8 +237,8 @@ class Profile extends Component {
                 history={ this.props.history }
               />
             }
-            <Grid item xs={ 12 } md={ 10 }>
-              <AccountHeader
+            <Grid size={{ xs: 12, md: 10 }}>
+               <AccountHeader
                 classes={ classes }
                 user={ user }
                 onCreateTask={ this.props.createTask }
@@ -420,8 +420,8 @@ class Profile extends Component {
         </PageContent>
         { /* Uncomment the below section to enable the 'Your Organizations section' */ }
         { /* { this.state.orgsLoaded && organizations &&
-            <Grid item xs={ 12 } md={ 12 }>
-              <div style={ { marginTop: 10, marginBottom: 10 } }>
+            <Grid size={{ xs: 12, md: 12 }}>
+               <div style={ { marginTop: 10, marginBottom: 10 } }>
                 <Typography variant='h5' component='h3'>
                   <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
                 </Typography>

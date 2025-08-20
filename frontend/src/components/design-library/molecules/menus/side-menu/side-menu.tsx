@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import logo from 'images/gitpay-logo.png'
 import {
   IconHamburger,
@@ -11,7 +11,7 @@ import {
   RightSide,
   StyledButton
 } from './side-menu.styled.div'
-import ReactPlaceholder from 'react-placeholder'
+import { Skeleton } from '@mui/material'
 import SideMenuPlaceholder from './side-menu.placeholder'
 import SideMenuItems from './side-menu-items'
 
@@ -200,19 +200,22 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                 flex: 1,
                 padding: '5px 20px'
               }}>
-                <ReactPlaceholder
-                  ready={completed}
-                  customPlaceholder={<SideMenuPlaceholder />}
-                >
+                {completed ? (
                   <OnlyDesktop>
                     <SideMenuItems menuItems={menuItems} />
                   </OnlyDesktop>
+                ) : (
+                  <Skeleton variant="rectangular" height={118} />
+                )}
 
+                {completed ? (
                   <OnlyMobile>
                     <SideMenuItems menuItems={menuItemsMobile} />
                   </OnlyMobile>
+                ) : (
+                  <Skeleton variant="rectangular" height={118} />
+                )}
 
-                </ReactPlaceholder>
               </div>
 
             </div></RightSide>

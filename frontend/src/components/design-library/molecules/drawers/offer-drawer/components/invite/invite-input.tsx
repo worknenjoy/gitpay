@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { FormControl, Input, InputLabel } from "@material-ui/core";
+import { FormControl, Input, InputLabel } from "@mui/material";
 
 const EmailInviteInput = ({
   onEmailInviteChange

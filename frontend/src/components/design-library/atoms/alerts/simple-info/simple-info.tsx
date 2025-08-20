@@ -2,8 +2,8 @@ import React from 'react'
 import useStyles from './simple-info.styles'
 import {
   Info as InfoIcon
-} from '@material-ui/icons'
-import { Typography } from '@material-ui/core'
+} from '@mui/icons-material'
+import { Typography } from '@mui/material'
 
 
 export const SimpleInfo = ({ text }) => {

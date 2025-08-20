@@ -1,7 +1,7 @@
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles'
-import { cyan, blue, lime, orange } from '@material-ui/core/colors'
+import { createStyles, Theme, styled } from '@mui/material/styles'
+import { cyan, blue, lime, orange } from '@mui/material/colors'
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = styled((theme: Theme) =>
   createStyles({
     pending: {
       backgroundColor: orange[900],

@@ -5,10 +5,10 @@ import {
   Button,
   TextField,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 
-import { makeStyles } from '@material-ui/core/styles'
-import { purple } from '@material-ui/core/colors'
+import { styled } from '@mui/material/styles'
+import { purple } from '@mui/material/colors'
 
 const useStyles = makeStyles((theme) => ({
   cssLabel: {

@@ -6,13 +6,13 @@ import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import {
   withStyles,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 
 import {
   BugReport,
   Code,
   Cloud
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import CustomTabs from '../styles/material-dashboard-react/components/CustomTabs/CustomTabs'
 

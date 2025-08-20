@@ -9,7 +9,7 @@ import {
   Avatar,
   Divider,
   Chip
-} from '@material-ui/core';
+} from '@mui/material';
 import MessageIcon from '@mui/icons-material/Message';
 import MomentComponent from 'moment';
 

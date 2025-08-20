@@ -1,11 +1,10 @@
 import React from 'react';
-import { Card, CardActions, CardContent, Chip, FormControl, Grid, Typography } from '@material-ui/core';
+import { Card, CardActions, CardContent, Chip, FormControl, Grid, Typography, Skeleton } from '@mui/material';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import messages from '../../../../../areas/private/shared/messages';
 import Button from '../../../../atoms/buttons/button/button';
 import Field from '../../../../atoms/inputs/fields/field/field';
-import ReactPlaceholder from 'react-placeholder';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -63,34 +62,9 @@ const PaypalInfoForm = ({
             <Typography component="p" color="textSecondary" style={{ marginBottom: 20, marginTop: 20 }}>
               <FormattedMessage id="account.register.paypal.warning" defaultMessage="When you activate your account with PayPal, you will receive the bounties paid with Paypal in the account that you will provide here. The Paypal taxes will be applied" />
             </Typography>
-            <ReactPlaceholder type="text" rows={1} ready={completed} style={{ width: '24%' }}>
-              {!paypal_id ? (
-                <FormattedMessage id="account.register.paypal.status" defaultMessage="This account is not associated with PayPal">
-                  {(msg) => (
-                    <Chip
-                      label={msg}
-                      style={{ marginRight: 20, backgroundColor: 'orange' }}
-                    />
-                  )}
-                </FormattedMessage>
-              ) : (
-                <div>
-                  <Typography className={classes.pos} color="textSecondary">
-                    <FormattedMessage id="account.register.account.status" defaultMessage="Account status" />
-                  </Typography>
-                  <Chip
-                    label={intl.formatMessage(messages.activeStatus)}
-                    style={{
-                      color: 'white',
-                      marginRight: 20,
-                      backgroundColor: 'green'
-                    }}
-                  />
-                </div>
-              )}
-            </ReactPlaceholder>
+            <Skeleton variant="text" width={210} height={24} animation="wave" />
           </div>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <FormControl style={{ width: '42%' }}> 
               <Field
                 completed={completed}

@@ -5,10 +5,10 @@ import ProfileAccountMenu from '../../../molecules/menus/profile-account-menu/pr
 import Button from '@mui/material/Button';
 import { FormattedMessage } from 'react-intl';
 import { Grid } from '@mui/material';
-import { makeStyles, Theme } from '@mui/styles';
+import { styled, Theme } from '@mui/styles';
 import { useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles<Theme>((theme) => ({
+const useStyles = styled<Theme>((theme) => ({
   container: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -91,13 +91,13 @@ const AccountHeader = ({
 
   return (
     <div className={classes.container}>
-      <Grid xs={12} md={4}></Grid>
-      <Grid xs={12} md={8} className={classes.wrapper}>
-        <div className={classes.inner}>
-          {user?.Types?.map((t: any) => t.name).includes('contributor') &&
-            <Grid container direction="column" alignItems="center">
-              <Grid item xs={ 12 }>
-                <Button
+       <Grid size={{ xs: 12, md: 4 }}></Grid>
+       <Grid size={{ xs: 12, md: 8 }} className={classes.wrapper}>
+          <div className={classes.inner}>
+            {user?.Types?.map((t: any) => t.name).includes('contributor') &&
+             <Grid container direction="column" alignItems="center">
+               <Grid size={{ xs: 12 }}>
+                  <Button
                   onClick={ () => history.push('/profile/explore') }
                   color="primary"
                   variant="outlined"
@@ -105,31 +105,31 @@ const AccountHeader = ({
                 >
                   <FormattedMessage id="profile.header.action.secondary" defaultMessage="Work on an issue" />
                 </Button>
-              </Grid>
-            </Grid>
-          }
-          {(user?.Types?.map((t: any) => t.name).includes('maintainer') || user?.Types?.map((t: any) => t.name).includes('funding')) &&
-            <>
-              <ImportIssueButton
-                onAddIssueClick={ handleAddIssueClick }
-                classes={classes}
-              />
-              <ImportIssueDialog
-                open={ openAddIssue }
-                onClose={ () => setOpenAddIssue(false) }
-                onCreate={ (props: any) => onHandleCreateTask(props, history) }
-                user={ user }
-              />
-            </>
-          }
-        </div>
-        <div className={classes.account}>
-          <ProfileAccountMenu 
-            user={ user } 
-            onLogout={ onLogout }
-          />
-        </div>
-      </Grid>
+               </Grid>
+             </Grid>
+            }
+            {(user?.Types?.map((t: any) => t.name).includes('maintainer') || user?.Types?.map((t: any) => t.name).includes('funding')) &&
+              <>
+                <ImportIssueButton
+                  onAddIssueClick={ handleAddIssueClick }
+                  classes={classes}
+                />
+                <ImportIssueDialog
+                  open={ openAddIssue }
+                  onClose={ () => setOpenAddIssue(false) }
+                  onCreate={ (props: any) => onHandleCreateTask(props, history) }
+                  user={ user }
+                />
+              </>
+            }
+          </div>
+          <div className={classes.account}>
+            <ProfileAccountMenu 
+              user={ user } 
+              onLogout={ onLogout }
+            />
+          </div>
+       </Grid>
     </div>
   )
 }

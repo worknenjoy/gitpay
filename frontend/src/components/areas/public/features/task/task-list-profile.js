@@ -9,7 +9,7 @@ import {
   Tab,
   Grid,
   withStyles,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import TopBarContainer from '../../../../../containers/topbar'
 import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
@@ -96,7 +96,7 @@ const TaskListProfile = (props) => {
       <PageContent>
         <Container fixed maxWidth='lg'>
           <Grid container className={ classes.root }>
-            <Grid item xs={ 12 } md={ 12 }>
+            <Grid xs={ 12 } md={ 12 }>
               <TaskListContainer />
             </Grid>
           </Grid>

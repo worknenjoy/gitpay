@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Breadcrumbs from '@material-ui/core/Breadcrumbs'
-import Link from '@material-ui/core/Link'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Link from '@mui/material/Link'
 import {
   NavigateNext as NavigateNextIcon,
   MoreVert as MoreIcon,
@@ -9,9 +9,7 @@ import {
   BugReport as ReportIcon,
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon
-} from '@material-ui/icons'
-import ReactPlaceholder from 'react-placeholder'
-import { RectShape } from 'react-placeholder/lib/placeholders'
+} from '@mui/icons-material'
 import {
   Button,
   Dialog,
@@ -26,7 +24,8 @@ import {
   MenuItem,
   ListItemIcon,
   ListItemText,
-} from '@material-ui/core'
+  Skeleton
+} from '@mui/material'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
@@ -120,7 +119,7 @@ class TaskHeader extends React.Component {
 
     return (
       <TaskHeaderContainer>
-        <Grid item xs={12} sm={12} md={12}>
+        <Grid xs={12} sm={12} md={12}>
           <Breadcrumb task={task} user={user} />
           <ReactPlaceholder customPlaceholder={headerPlaceholder} showLoadingAnimation
             ready={task.completed}

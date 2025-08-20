@@ -6,7 +6,7 @@ import {
   Typography,
   withStyles,
   Chip
-} from '@material-ui/core'
+} from '@mui/material'
 import CustomPaginationActionsTable from './payout-table'
 
 //Define messages for internationalization

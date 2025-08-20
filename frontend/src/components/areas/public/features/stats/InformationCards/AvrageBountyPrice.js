@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import LocalMallIcon from '@material-ui/icons/LocalMall'
+import LocalMallIcon from '@mui/icons-material/LocalMall'
 
 const Card = styled.div`
   margin: 0;

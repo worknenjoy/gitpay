@@ -1,10 +1,9 @@
 import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
-import { Grid, Typography, TextField } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Typography, TextField, Skeleton } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { FormattedMessage } from 'react-intl';
 import Field from '../../../../atoms/inputs/fields/field/field';
 import Alert from '../../../../atoms/alerts/alert/alert';
-import ReactPlaceholder from 'react-placeholder';
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
 
 const useStyles = makeStyles((theme) => ({
@@ -73,7 +72,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         </Alert>
       )}
       <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
+        <Grid xs={12} md={12}>
           <Field
             label="Title"
             name="title"
@@ -82,7 +81,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             completed={completed}
           />
         </Grid>
-        <Grid item xs={12} md={12}>
+        <Grid xs={12} md={12}>
           <ReactPlaceholder
             type="text"
             rows={4}
@@ -100,7 +99,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             />
           </ReactPlaceholder>
         </Grid>
-        <Grid item xs={12} md={12}>
+        <Grid xs={12} md={12}>
           <Field
             label="Amount"
             name="amount"
@@ -118,7 +117,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             disabled={customAmount}
           />
         </Grid>
-        <Grid item xs={12} md={12}>
+        <Grid xs={12} md={12}>
           <Checkboxes
             checkboxes={[
               {

@@ -14,13 +14,13 @@ import {
   withStyles,
   Paper,
   IconButton
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   LastPage as LastPageIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 const messages = defineMessages({
   firstPageLabel: {

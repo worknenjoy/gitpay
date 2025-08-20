@@ -6,11 +6,11 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import {
   Close,
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import { InfoList } from './CommonStyles'
 

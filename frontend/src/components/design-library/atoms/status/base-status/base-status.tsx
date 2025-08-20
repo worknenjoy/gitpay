@@ -1,7 +1,7 @@
 import React from 'react';
-import Chip from '@material-ui/core/Chip';
-import { Tooltip } from '@material-ui/core';
-import { HelpOutline as QuestionInfoIcon } from '@material-ui/icons';
+import Chip from '@mui/material/Chip';
+import { Tooltip } from '@mui/material';
+import { HelpOutline as QuestionInfoIcon } from '@mui/icons-material';
 import ReactPlaceholder from 'react-placeholder';
 
 type StatusListProps = {

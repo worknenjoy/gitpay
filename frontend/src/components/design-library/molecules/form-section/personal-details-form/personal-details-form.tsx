@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import Fieldset from '../../../atoms/inputs/fieldset/fieldset';
 import Field from '../../../atoms/inputs/fields/field/field';
 import IdNumberField from '../../../atoms/inputs/fields/id-number-field/id-number-field'
@@ -20,7 +20,7 @@ const PersonalDetailsForm = ({ account }) => {
       legend="Personal Details"
     >
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Field
             label="First Name"
             name="first_name"
@@ -30,7 +30,7 @@ const PersonalDetailsForm = ({ account }) => {
             defaultValue={first_name}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Field
             label="Last Name"
             name="last_name"
@@ -42,17 +42,17 @@ const PersonalDetailsForm = ({ account }) => {
         </Grid>
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={5}>
+        <Grid xs={12} md={5}>
           <IdNumberField
             account={account}
           />
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid xs={12} md={3}>
           <PhoneNumberField
             phone={phone}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid xs={12} md={4}>
           <Field
             label="Website"
             name="website"
@@ -61,7 +61,7 @@ const PersonalDetailsForm = ({ account }) => {
         </Grid>
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
+        <Grid xs={12} md={12}>
           <BirthDateField
             day={day}
             month={month}

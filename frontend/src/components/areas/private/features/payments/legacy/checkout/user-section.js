@@ -8,11 +8,11 @@ import {
   InputAdornment,
   FormControl,
   FormHelperText
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   AccountCircle,
   Email
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 class UserSection extends Component {
   constructor (props) {

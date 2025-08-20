@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormControl, Input, InputLabel, FormHelperText } from '@material-ui/core'
+import { FormControl, Input, InputLabel, FormHelperText } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import ReactPlaceholder from 'react-placeholder'
 

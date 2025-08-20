@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import TextField from '@material-ui/core/TextField'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Grid from '@material-ui/core/Grid'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import CircularProgress from '@mui/material/CircularProgress'
+import Grid from '@mui/material/Grid'
 import MuiPhoneNumber from 'material-ui-phone-number'
 import {
   ContactMailOutlined
-} from '@material-ui/icons'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
+} from '@mui/icons-material'
+import Typography from '@mui/material/Typography'
+import { styled } from '@mui/material/styles'
+import Container from '@mui/material/Container'
 import CountryList from './country-list'
 
 function checkEmail (emailAddress) {
@@ -116,7 +116,7 @@ export default function ContactRecruiterForm (props) {
         </Typography>
         <form className={ classes.form } noValidate onChange={ onChange } onSubmit={ onSubmit } onBlur={ onBlur }>
           <Grid container spacing={ 2 }>
-            <Grid item xs={ 12 } sm={ 6 }>
+            <Grid xs={ 12 } sm={ 6 }>
               <TextField
                 error={ formErrors.name }
                 helperText={ formErrors.name }
@@ -129,7 +129,7 @@ export default function ContactRecruiterForm (props) {
                 label='Name'
               />
             </Grid>
-            <Grid item xs={ 12 } sm={ 6 }>
+            <Grid xs={ 12 } sm={ 6 }>
               <TextField
                 variant='outlined'
                 fullWidth
@@ -139,7 +139,7 @@ export default function ContactRecruiterForm (props) {
                 autoComplete='title'
               />
             </Grid>
-            <Grid item xs={ 12 }>
+            <Grid xs={ 12 }>
               <TextField
                 error={ formErrors.email }
                 helperText={ formErrors.email }
@@ -153,12 +153,12 @@ export default function ContactRecruiterForm (props) {
                 autoComplete='email'
               />
             </Grid>
-            <Grid item xs={ 12 }>
+            <Grid xs={ 12 }>
               <Grid container spacing={ 2 } alignItems='center'>
-                <Grid item xs={ 2 }>
+                <Grid xs={ 2 }>
                   Phone:
                 </Grid>
-                <Grid item xs={ 10 }>
+                <Grid xs={ 10 }>
                   <MuiPhoneNumber
                     name={ 'phone' }
                     defaultCountry={ 'us' }
@@ -167,7 +167,7 @@ export default function ContactRecruiterForm (props) {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={ 12 }>
+            <Grid xs={ 12 }>
               <TextField
                 error={ formErrors.company }
                 helperText={ formErrors.company }
@@ -180,10 +180,10 @@ export default function ContactRecruiterForm (props) {
                 id='company'
               />
             </Grid>
-            <Grid item xs={ 12 }>
+            <Grid xs={ 12 }>
               <CountryList />
             </Grid>
-            <Grid item xs={ 12 }>
+            <Grid xs={ 12 }>
               <TextField
                 error={ formErrors.message }
                 helperText={ formErrors.message }

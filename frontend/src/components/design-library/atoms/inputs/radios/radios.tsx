@@ -1,6 +1,6 @@
 import React from 'react';
-import { Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Box } from '@material-ui/core';
-import Typography from '@mui/material/Typography/Typography';
+import { Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Box } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import ReactPlaceholder from 'react-placeholder';
 
 type RadioOption = {

@@ -1,12 +1,12 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Card, CardContent, Grid, Typography, withStyles } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
-import MotorcycleIcon from '@material-ui/icons/Motorcycle';
-import { Theme, createStyles } from '@material-ui/core/styles';
+import { Card, CardContent, Grid, Typography, withStyles } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
+import { TwoWheeler as Motorcycle } from '@mui/icons-material';
+import { Theme } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 
-const styles = (theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     planGridItem: {
       padding: theme.spacing(1),
       marginTop: 16
@@ -42,7 +42,7 @@ const styles = (theme: Theme) =>
       fontSize: 32,
       padding: 2
     }
-  });
+  }));
 
 type PlanDetails = {
   fee?: number;
@@ -56,14 +56,15 @@ type PlanProps = {
   plan?: PlanDetails;
 }
 
-const PlanCard = ({ classes, plan }:PlanProps) => {
+const PlanCard = ({ plan }:PlanProps) => {
+  const classes = useStyles();
   const { fee, category, title, items } = plan;
   return (
-    <Grid item className={classes.planGridItem}>
+    <Grid className={classes.planGridItem}>
       <Card className={classes.planGrid}>
         <CardContent className={classes.planGridContent}>
           <div className={classes.planButton}>
-            <MotorcycleIcon color={'primary'} className={classes.planIcon} />
+            <Motorcycle color={'primary'} className={classes.planIcon} />
             <Typography align="center" color="textPrimary" variant="h5">
               <FormattedMessage id="actions.task.payment.plan.percentagefee" defaultMessage="{fee}% fee" values={{ fee: fee }} />
             </Typography>
@@ -81,7 +82,6 @@ const PlanCard = ({ classes, plan }:PlanProps) => {
                 {item}
               </Typography>
             ))}
-            
           </div>
         </CardContent>
       </Card>
@@ -90,4 +90,4 @@ const PlanCard = ({ classes, plan }:PlanProps) => {
   );
 }
 
-export default withStyles(styles)(PlanCard)
+export default PlanCard

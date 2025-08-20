@@ -11,7 +11,7 @@ import {
   Chip,
   Tabs,
   Tab
-} from '@material-ui/core'
+} from '@mui/material'
 import { messages } from '../../../public/features/task/messages/task-messages'
 import CustomPaginationActionsTable from './transfer-table'
 import TransferDetails from './transfer-detail'

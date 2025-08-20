@@ -4,7 +4,7 @@ import {
   Checkbox,
   FormControlLabel,
   GridSize
-} from '@material-ui/core';
+} from '@mui/material';
 
 import useStyles from './checkboxes.styles';
 
@@ -79,7 +79,7 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:Checkboxe
   return (
     <Grid container spacing={3} className={classes.container}>
       {checkboxesToRender.map((checkbox, index) => (
-        <Grid item xs={12} sm={12 / checkboxesToRender.length as GridSize} className={classes.item}>
+        <Grid xs={12} sm={12 / checkboxesToRender.length as GridSize} className={classes.item}>
           <FormControlLabel
             control={
               <Checkbox

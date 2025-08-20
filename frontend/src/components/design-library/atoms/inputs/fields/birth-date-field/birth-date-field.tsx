@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, FormHelperText, Grid, Select, Typography } from '@material-ui/core';
+import { FormControl, FormHelperText, Grid, Select, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import Field from '../field/field';
 
@@ -7,15 +7,15 @@ const BirthDateField = ({ day, month, year, error = { month: false, day: false, 
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={12}>
+      <Grid xs={12} md={12}>
         <Typography color="textPrimary" style={{ marginBottom: -20, marginTop: 10 }}>
           <FormattedMessage id="account-details-personal-information-birth-date" defaultMessage="Birth date" />
         </Typography>
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid xs={12} md={4}>
         <Field name="dob_day" label="Day" type="number" min={1} max={31} defaultValue={day} />
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid xs={12} md={4}>
         <FormControl style={{ width: '100%' }}>
           <Select
             autoWidth
@@ -41,7 +41,7 @@ const BirthDateField = ({ day, month, year, error = { month: false, day: false, 
           }
         </FormControl>
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid xs={12} md={4}>
         <Field name="dob_year" label="Year" type="number" defaultValue={year} />
       </Grid>
     </Grid>

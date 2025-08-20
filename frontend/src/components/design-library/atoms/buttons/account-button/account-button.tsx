@@ -1,6 +1,6 @@
 import React from 'react';
-import { Chip } from '@material-ui/core';
-import { Person } from '@material-ui/icons';
+import { Chip } from '@mui/material';
+import { Person } from '@mui/icons-material';
 import { StyledAvatar, StyledButton } from '../../../organisms/layouts/topbar/TopbarStyles';
 import nameInitials from 'name-initials'
 

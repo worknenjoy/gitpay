@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { Chip, Tooltip, Typography, withStyles } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
+import { Chip, Tooltip, Typography, withStyles } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 
-import { Theme, createStyles } from '@material-ui/core/styles';
+import { Theme, createStyles } from '@mui/material/styles';
 
 const styles = (theme: Theme) =>
   createStyles({

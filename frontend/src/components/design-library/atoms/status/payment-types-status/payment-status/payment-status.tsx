@@ -6,7 +6,7 @@ import {
   InfoSharp as InfoIcon,
   HelpOutline as QuestionInfoIcon,
   NotInterested as InactiveIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 interface PaymentStatusProps {
   status: string;

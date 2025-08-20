@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { createStore, compose, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import thunkMiddleware from 'redux-thunk'
-import { IntlProvider, updateIntl } from 'react-intl-redux'
+import thunk from 'redux-thunk'
+import { IntlProvider } from 'react-intl-redux'
 import LogRocket from 'logrocket'
 import setupLogRocketReact from 'logrocket-react'
 import { getCookieConsentValue } from 'react-cookie-consent'
 
-import {
-  MuiThemeProvider,
-  createTheme
-} from '@material-ui/core'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 import Palette from '../styleguide/styles/palette'
 import './app.css'
 import ReactGA from 'react-ga'
@@ -50,7 +48,7 @@ const composeEnhancers =
     }) : compose
 
 const enhancer = composeEnhancers(
-  applyMiddleware(thunkMiddleware),
+  applyMiddleware(thunk),
   // other store enhancers if any
 )
 
@@ -76,17 +74,18 @@ function App () {
   }, [isLoading, getCookieConsentValue])
   if (!isLoading) {
     return (
-      <MuiThemeProvider theme={ theme }>
+      <ThemeProvider theme={ theme }>
         <Provider store={ store }>
           <IntlProvider>
             <div>
+              <CssBaseline />
               <NotificationContainer />
               <Routes />
               <CookieConsentBar />
             </div>
           </IntlProvider>
         </Provider>
-      </MuiThemeProvider>
+      </ThemeProvider>
     )
   }
   else {

@@ -9,7 +9,7 @@ import {
   Tab,
   Grid,
   withStyles,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import TopBarContainer from '../../../../../containers/topbar'
 import Bottom from '../../../../shared/bottom/bottom'
@@ -199,7 +199,7 @@ const TaskExplorer = (props) => {
         }
         <Container fixed maxWidth='lg'>
           <Grid container className={ classes.root }>
-            <Grid item xs={ 12 } md={ 12 }>
+            <Grid xs={ 12 } md={ 12 }>
               { state.value === 0 && (
                 <div>
                   <TaskFiltersContainer

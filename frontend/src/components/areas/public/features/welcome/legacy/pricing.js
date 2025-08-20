@@ -10,7 +10,7 @@ import {
   Grid,
   Typography,
   withStyles
-} from '@material-ui/core'
+} from '@mui/material'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 import TopBarContainer from '../../../../../../containers/topbar'
@@ -120,7 +120,7 @@ class Pricing extends Component {
             <Grid container spacing={ 5 } justifyContent='center'>
               { tiersMaintainers.map(tier => (
                 // Enterprise card is full width at sm breakpoint
-                <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 6 }>
+                <Grid key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 6 }>
                   <Card>
                     <CardHeader
                       title={ tier.title }
@@ -158,7 +158,7 @@ class Pricing extends Component {
             <Grid container spacing={ 5 } justifyContent='center'>
               { tiersContributors.map(tier => (
                 // Enterprise card is full width at sm breakpoint
-                <Grid item key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 12 }>
+                <Grid key={ tier.title } xs={ 12 } sm={ tier.title === 'Enterprise' ? 12 : 6 } md={ 12 }>
                   <Card>
                     <CardHeader
                       title={ tier.title }

@@ -11,7 +11,7 @@ import {
   CardContent,
   CardMedia,
   withStyles
-} from '@material-ui/core'
+} from '@mui/material'
 
 // import TaskFilter from '../task/task-filters'
 import Taskfilters from '../../../../../containers/task-filter'

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import Fieldset from '../../../atoms/inputs/fieldset/fieldset';
 import Field from '../../../atoms/inputs/fields/field/field';
 
@@ -20,7 +20,7 @@ const AddressInformationForm = ({
     >
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Field
             label="Address Line 1"
             name="address_line_1"
@@ -29,7 +29,7 @@ const AddressInformationForm = ({
             defaultValue={addressLine1}
           />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid xs={12} md={6}>
           <Field
             label="Address Line 2"
             name="address_line_2"
@@ -40,7 +40,7 @@ const AddressInformationForm = ({
         </Grid>
       </Grid>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={7}>
+        <Grid xs={12} md={7}>
           <Field
             label="City"
             name="city"
@@ -49,7 +49,7 @@ const AddressInformationForm = ({
             defaultValue={city}
           />
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid xs={12} md={2}>
           <Field
             label="State"
             name="state"
@@ -58,7 +58,7 @@ const AddressInformationForm = ({
             defaultValue={state}
           />
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid xs={12} md={3}>
           <Field
             label="Zip Code"
             name="postal_code"

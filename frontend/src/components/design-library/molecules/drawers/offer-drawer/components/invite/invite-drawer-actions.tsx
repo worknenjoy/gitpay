@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {

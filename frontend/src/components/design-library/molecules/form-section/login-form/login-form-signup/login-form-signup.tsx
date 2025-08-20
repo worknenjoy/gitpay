@@ -4,10 +4,10 @@ import {
   Button,
   TextField,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import ReCAPTCHA from 'react-google-recaptcha'
-import Checkbox from '@material-ui/core/Checkbox'
-import { makeStyles } from '@material-ui/core/styles'
+import Checkbox from '@mui/material/Checkbox'
+import { styled } from '@mui/material/styles'
 import TermsDialog from '../../../dialogs/terms-dialog/terms-dialog'
 import PrivacyDialog from '../../../dialogs/privacy-dialog/privacy-dialog'
 import UserRoleField from '../../../../atoms/inputs/fields/user-role-field/user-role-field'

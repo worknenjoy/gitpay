@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import { withStyles } from '@material-ui/core/styles'
-import Chip from '@material-ui/core/Chip'
+import { withStyles } from '@mui/material/styles'
+import Chip from '@mui/material/Chip'
 import {
   Dialog,
   DialogTitle,
@@ -14,11 +14,11 @@ import {
   FormControlLabel,
   RadioGroup,
   Radio
-} from '@material-ui/core'
+} from '@mui/material'
 
 import {
   Sync as SyncIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 const styles = theme => ({
   root: {

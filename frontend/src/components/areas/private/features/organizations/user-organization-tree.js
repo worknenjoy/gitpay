@@ -1,20 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import SvgIcon from '@material-ui/core/SvgIcon'
-import { fade, makeStyles, withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import TreeView from '@material-ui/lab/TreeView'
-import TreeItem from '@material-ui/lab/TreeItem'
-import Collapse from '@material-ui/core/Collapse'
-import Avatar from '@material-ui/core/Avatar'
+import SvgIcon from '@mui/material/SvgIcon'
+import { fade, styled, withStyles } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
+import TreeView from '@mui/lab/TreeView'
+import TreeItem from '@mui/lab/TreeItem'
+import Collapse from '@mui/material/Collapse'
+import Avatar from '@mui/material/Avatar'
 import logoGithub from 'images/github-logo-alternative.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 
 import {
   Lock,
   LockOpen
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { useSpring, animated } from 'react-spring/web.cjs' // web.cjs is required for IE 11 support
 
 import Organizations from './organizations'
@@ -80,7 +80,7 @@ const StyledTreeItem = withStyles((theme) => ({
   }
 }))((props) => <TreeItem { ...props } TransitionComponent={ TransitionComponent } />)
 
-const useStyles = makeStyles({
+const useStyles = styled({
   root: {
     flexGrow: 1,
     maxWidth: '95%'

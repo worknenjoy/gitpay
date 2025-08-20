@@ -32,7 +32,22 @@ module.exports = {
       modules: `${__dirname}/node_modules`,
       app: `${__dirname}/src`,
       images: path.resolve(__dirname, "src/images"),
-      "design-library": path.resolve(__dirname, "src/components/design-library")
+      '@material-ui/core': '@mui/material',
+      '@material-ui/icons': '@mui/icons-material',
+      '@material-ui/lab': '@mui/lab',
+      '@material-ui/core/styles': '@mui/material/styles',
+      '@material-ui/core/colors': '@mui/material/colors',
+      'react-placeholder': require.resolve('react-placeholder'),
+      'react-intl-redux': require.resolve('react-intl-redux'),
+      'react-redux': require.resolve('react-redux'),
+      'redux-thunk': require.resolve('redux-thunk'),
+      'react-ga': require.resolve('react-ga'),
+      'react-mailchimp-subscribe': require.resolve('react-mailchimp-subscribe'),
+      'react-country-region-selector': require.resolve('react-country-region-selector'),
+      'react-render-html': require.resolve('react-render-html'),
+      'material-ui-phone-number': require.resolve('material-ui-phone-number'),
+      'clsx': require.resolve('clsx'),
+      'design-library': path.resolve(__dirname, 'src/components/design-library')
     },
     fallback: {
       stream: 'stream-browserify'

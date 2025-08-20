@@ -7,7 +7,7 @@ import {
   Typography,
   withStyles,
   WithStyles
-} from '@material-ui/core'
+} from '@mui/material'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Location } from 'history'

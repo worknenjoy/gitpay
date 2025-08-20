@@ -1,9 +1,9 @@
 import React from 'react';
-import { Typography, Tabs, Tab } from '@material-ui/core';
+import { Typography, Tabs, Tab } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
-import { Button, Drawer, Container, Chip, Card, CardContent, CardHeader } from '@material-ui/core';
-import { ArrowUpwardTwoTone as ArrowUpIcon } from '@material-ui/icons';
-import Alert from '@material-ui/lab/Alert';
+import { Button, Drawer, Container, Chip, Card, CardContent, CardHeader } from '@mui/material';
+import { ArrowUpwardTwoTone as ArrowUpIcon } from '@mui/icons-material';
+import Alert from '@mui/lab/Alert';
 import ReactPlaceholder from 'react-placeholder'
 
 import { formatCurrency } from '../../../../../utils/format-currency'

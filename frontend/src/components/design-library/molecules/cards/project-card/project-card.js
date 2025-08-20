@@ -12,9 +12,9 @@ import {
   Typography,
   IconButton,
   Tooltip,
-  makeStyles,
+  styled,
   Link
-} from '@material-ui/core'
+} from '@mui/material'
 import slugify from '@sindresorhus/slugify'
 
 import logoGithub from 'images/github-logo.png'

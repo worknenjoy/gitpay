@@ -26,22 +26,19 @@ import CookiePolicy from '../../../../areas/private/components/session/cookie-po
 const logoCompleteGray = require('images/logo-complete-gray.png')
 const logoWorknEnjoy = require('images/worknenjoy-logo.png')
 
-const useStyles = makeStyles((theme) => {
-  const styles = mainStyles(theme)
-  return {
-    secBlock: {
-      textAlign: 'center',
-      padding: 8,
-      backgroundColor: '#f1f0ea'
-    },
-    spacedTop: {
-      marginTop: 20
-    },
-    img: {
-      verticalAlign: 'middle'
-    }
+const useStyles = makeStyles((theme) => ({
+  secBlock: {
+    textAlign: 'center',
+    padding: 8,
+    backgroundColor: '#f1f0ea'
+  },
+  spacedTop: {
+    marginTop: 20
+  },
+  img: {
+    verticalAlign: 'middle'
   }
-})
+}))
 
 const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
   const classes = useStyles()
@@ -51,7 +48,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
     <div className={ classes.secBlock }>
       <Container>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } sm={ 3 }>
+          <Grid size={{ xs: 12, sm: 3 }}>
             <Typography component="div">
               <strong>
                 <FormattedMessage
@@ -128,7 +125,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
               </ListItem>
             </List>
           </Grid>
-          <Grid item xs={ 12 } sm={ 3 }>
+          <Grid size={{ xs: 12, sm: 3 }}>
             <Typography component="div">
               <strong>
                 <FormattedMessage
@@ -170,11 +167,11 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
               />
             </List>
           </Grid>
-          <Grid item xs={ 12 } sm={ 2 }>
+          <Grid size={{ xs: 12, sm: 2 }}>
             <SlackCard />
             <GithubCard />
           </Grid>
-          <Grid item xs={ 12 } sm={ 4 }>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <Typography component="div">
               <FormattedMessage
                 id="bottom.subheading.newsletter"

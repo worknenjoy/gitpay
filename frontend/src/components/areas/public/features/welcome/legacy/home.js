@@ -11,14 +11,14 @@ import {
   ListItemIcon,
   Button,
   Container
-} from '@material-ui/core'
+} from '@mui/material'
 
 import {
   Work,
   Archive,
   CardMembership,
   BugReport
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
@@ -61,10 +61,10 @@ class Home extends Component {
         <Section ref='hero'>
           <HeroSection>
             <Grid container spacing={ 3 } alignContent={ 'flex-end' }>
-              <Grid item xs={ 12 } sm={ 5 }>
+              <Grid xs={ 12 } sm={ 5 }>
                 <ResponsiveImage width={ 580 } src={ freelancerImage } className={ classes.svg } />
               </Grid>
-              <Grid item xs={ 12 } sm={ 7 }>
+              <Grid xs={ 12 } sm={ 7 }>
                 <HeroTitle>
                   <Typography variant='h3' gutterBottom align='left'>
                     <FormattedMessage
@@ -121,12 +121,12 @@ class Home extends Component {
             </Typography>
           </MainTitle>
           <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } sm={ 6 }>
+            <Grid xs={ 12 } sm={ 6 }>
               <div style={ { marginLeft: 20 } }>
                 <ResponsiveImage width='400' src={ deal } />
               </div>
             </Grid>
-            <Grid item xs={ 12 } sm={ 6 }>
+            <Grid xs={ 12 } sm={ 6 }>
               <div className={ classes.seclist }>
                 <List>
                   <ListItem className={ classes.listIconTop }>

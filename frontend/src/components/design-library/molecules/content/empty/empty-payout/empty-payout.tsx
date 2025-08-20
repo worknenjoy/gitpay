@@ -1,6 +1,6 @@
 import React from 'react';
 import EmptyBase from '../empty-base/empty-base';
-import { SwapHoriz as EmptyPayoutIcon } from '@material-ui/icons'; // you can replace this icon
+import { SwapHoriz as EmptyPayoutIcon } from '@mui/icons-material'; // you can replace this icon
 import { FormattedMessage } from 'react-intl';
 
 const EmptyPayout = ({

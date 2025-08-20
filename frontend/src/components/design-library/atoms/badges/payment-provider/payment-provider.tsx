@@ -4,8 +4,8 @@ import {
   Receipt as InvoiceIcon,
   AccountBalanceWallet as WalletIcon,
   MoneyOff as UnknownPaymentIcon
-} from '@material-ui/icons';
-import  { Chip } from '@material-ui/core';
+} from '@mui/icons-material';
+import  { Chip } from '@mui/material';
 import { paymentProviders, paymentSources } from '../../../../../consts'
 
 const logoPaypal = require('images/paypal-icon.png').default;

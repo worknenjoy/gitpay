@@ -11,8 +11,8 @@ import {
   Input,
   Select,
   FormHelperText
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 import { countryCodesFull } from '../../../../shared/country-codes'
 
@@ -147,13 +147,13 @@ const CustomerDetails = ({
         style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
       >
         <Grid container spacing={2}>
-          <Grid item xs={12} md={12}>
+          <Grid xs={12} md={12}>
             <Typography variant="h6" gutterBottom>
               <FormattedMessage id="account.customer.title" defaultMessage="Billing information" />
             </Typography>
           </Grid>
           
-            <Grid item xs={12} md={12}>
+            <Grid xs={12} md={12}>
               <fieldset className={classes.fieldset}>
                 <legend className={classes.legend}>
                   <Typography>
@@ -161,7 +161,7 @@ const CustomerDetails = ({
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={12} md={12}>
+                  <Grid xs={12} sm={12} md={12}>
                     <FormattedMessage id="customer.verify.fullName" defaultMessage="Full name / Business name">
                       {(msg) => (
                         <Field
@@ -183,22 +183,22 @@ const CustomerDetails = ({
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} md={6}>
+                  <Grid xs={12} md={6}>
                     <Field name="address[line1]" label="Address line 1" value={customerData['address[line1]']} defaultValue={customer.data.address?.line1} completed={customer.completed} />
                   </Grid>
-                  <Grid item xs={12} md={4}>
+                  <Grid xs={12} md={4}>
                     <Field name="address[line2]" label="Address line 2" value={customerData['address[line2]']} defaultValue={customer.data.address?.line2} completed={customer.completed} />
                   </Grid>
-                  <Grid item xs={12} md={2}>
+                  <Grid xs={12} md={2}>
                     <Field name="address[postal_code]" label="Postal code" value={customerData['address[postal_code]']} defaultValue={customer.data.address?.postal_code} completed={customer.completed} />
                   </Grid>
-                  <Grid item xs={12} md={6}>
+                  <Grid xs={12} md={6}>
                     <Field name="address[city]" label="City" value={customerData['address[city]']} defaultValue={customer.data.address?.city} completed={customer.completed} />
                   </Grid>
-                  <Grid item xs={12} md={2}>
+                  <Grid xs={12} md={2}>
                     <Field name="address[state]" label="State" value={customerData['address[state]']} defaultValue={customer.data.address?.state} completed={customer.completed} />
                   </Grid>
-                   <Grid item xs={12} md={4}>
+                   <Grid xs={12} md={4}>
                     <ReactPlaceholder
                       type="text"
                       rows={1}
@@ -223,7 +223,7 @@ const CustomerDetails = ({
                   </Grid>
                 </Grid>
               </fieldset>
-              <Grid item xs={12}>
+              <Grid xs={12}>
                 <div style={{ float: 'right' }}>
                   <Button
                     variant="text"

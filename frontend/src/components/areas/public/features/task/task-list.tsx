@@ -7,7 +7,7 @@ import {
   Tab,
   Typography,
   withStyles,
-} from '@material-ui/core'
+} from '@mui/material'
 import { tableHeaderDefault, tableHeaderWithProject } from '../../../../shared/table-metadata/task-header-metadata'
 import ProjectListSimple from 'design-library/molecules/cards/project-card/project-list-simple'
 import { Breadcrumb } from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'

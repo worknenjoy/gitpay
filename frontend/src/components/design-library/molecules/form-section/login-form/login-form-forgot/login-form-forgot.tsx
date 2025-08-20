@@ -3,11 +3,11 @@ import { FormattedMessage } from 'react-intl'
 
 import {
   Button,
-  makeStyles,
+  styled,
   TextField,
   Typography
-} from '@material-ui/core'
-import purple from '@material-ui/core/colors/purple'
+} from '@mui/material'
+import { purple } from '@mui/material/colors'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 const useStyles = makeStyles((theme) => ({

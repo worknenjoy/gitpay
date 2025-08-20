@@ -1,7 +1,7 @@
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { orange, green, blue } from '@material-ui/core/colors'
+import { styled, Theme, createStyles } from '@mui/material/styles'
+import { orange, green, blue } from '@mui/material/colors'
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = styled((theme: Theme) =>
   createStyles({
     card: {
       backgroundColor: green[400],

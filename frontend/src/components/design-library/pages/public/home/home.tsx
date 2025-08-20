@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
-import {
-  Grid,
-  Typography,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Button,
-} from '@mui/material'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import Button from '@mui/material/Button'
 
 import {
   Work,
@@ -26,6 +24,8 @@ const freelancerImage = require('images/collections/collection-flat-build.svg')
 const citySoftware = require('images/collections/collection-flat-background.svg')
 const deal = require('images/collections/collection-flat-works.svg')
 
+import PublicBase from '../../../templates/base/public-base/public-base'
+
 import {
   MainTitle,
   ResponsiveImage,
@@ -36,8 +36,6 @@ import {
   HeroActions
 } from './CommonStyles'
 import { makeStyles } from '@mui/styles'
-import PublicBase from '../../../templates/base/public-base/public-base'
-
 
 const useStyles = makeStyles((theme) => ({
   sectionBgAlt: {
@@ -62,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginLeft: 20
   }
-
 }))
 
 
@@ -91,11 +88,11 @@ const Home = ({
         <>
           <Section>
             <HeroSection>
-              <Grid container spacing={3} alignContent={'flex-end'}>
-                <Grid item xs={12} sm={5}>
-                  <ResponsiveImage width={580} src={freelancerImage} className={classes.svg} />
-                </Grid>
-                <Grid item xs={12} sm={7}>
+               <Grid container spacing={3} alignContent={'flex-end'}>
+                 <Grid size={{ xs: 12, sm: 5 }}>
+                    <ResponsiveImage width={580} src={freelancerImage} className={classes.svg} />
+                  </Grid>
+                 <Grid size={{ xs: 12, sm: 7 }}>
                   <HeroTitle>
                     <Typography variant='h3' gutterBottom align='left'>
                       <FormattedMessage
@@ -150,14 +147,14 @@ const Home = ({
                 />
               </Typography>
             </MainTitle>
-            <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
-                <div style={{ marginLeft: 20 }}>
+             <Grid container spacing={3}>
+               <Grid size={{ xs: 12, sm: 6 }}>
+                  <div style={{ marginLeft: 20 }}>
                   <ResponsiveImage width='400' src={deal} />
                 </div>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <div className={classes.seclist}>
+               <Grid size={{ xs: 12, sm: 6 }}>
+                  <div className={classes.seclist}>
                   <List>
                     <ListItem className={classes.listIconTop}>
                       <ListItemIcon>

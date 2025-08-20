@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { TextareaAutosize, FormControl } from '@material-ui/core';
+import { TextareaAutosize, FormControl } from '@mui/material';
 import useStyles from './input-comment.styles';
 
 const InputComment = ({ placeholder, onChange }) => {

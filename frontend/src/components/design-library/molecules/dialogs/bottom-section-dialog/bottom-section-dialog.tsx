@@ -8,12 +8,12 @@ import {
   IconButton,
   Slide,
   SlideProps,
-  makeStyles
-} from '@material-ui/core'
+  styled
+} from '@mui/material'
 
 import {
   Close
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import { InfoList } from './bottom-section-dialog.styles'
 

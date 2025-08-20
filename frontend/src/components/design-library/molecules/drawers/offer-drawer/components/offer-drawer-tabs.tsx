@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tab, Tabs } from "@material-ui/core";
+import { Tab, Tabs } from "@mui/material";
 
 
 const OfferDrawerTabs = ({ tabs, onTabChange }) => {

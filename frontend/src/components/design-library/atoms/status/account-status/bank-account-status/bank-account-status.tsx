@@ -4,7 +4,7 @@ import {
   CheckCircleOutlineTwoTone as ActiveIcon,
   HelpOutline as QuestionInfoIcon,
   NotInterested as InactiveIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 
 import BaseStatus from '../../base-status/base-status';
 

@@ -9,6 +9,7 @@ import {
   Avatar,
   Container,
 } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import { AccountBalanceWallet, Work, Apps, Assignment, GroupWork } from '@mui/icons-material'
 import { useIntl, FormattedMessage } from 'react-intl'
 import messages from '../../../../areas/public/features/welcome/legacy/messages'
@@ -22,7 +23,7 @@ import {
   ResponsiveImage,
   Section
 } from '../home/CommonStyles'
-import { makeStyles } from '@mui/styles'
+import { styled } from '@mui/styles'
 import PublicBase from '../../../templates/base/public-base/public-base'
 
 const useStyles = makeStyles((theme) => ({
@@ -66,7 +67,7 @@ const About = ({
         <Container>
           <Section name='contrib' ref={ref}>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+              <Grid xs={12} sm={6}>
                 <MainTitle left>
                   <Typography variant='h5' gutterBottom>
                     <FormattedMessage
@@ -127,7 +128,7 @@ const About = ({
                   </List>
                 </MainList>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid xs={12} sm={6}>
                 <ResponsiveImage width='800' src={freelancerImage} />
               </Grid>
             </Grid>
@@ -136,7 +137,7 @@ const About = ({
         <Section name='companies' ref={ref} alternative className={classes.bgContrast}>
           <Container>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+              <Grid xs={12} sm={6}>
                 <MainTitle left>
                   <Typography variant='h5' gutterBottom>
                     <FormattedMessage
@@ -195,7 +196,7 @@ const About = ({
                   </List>
                 </MainList>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid xs={12} sm={6}>
                 <ResponsiveImage width='600' src={companiesImage} />
               </Grid>
             </Grid>
@@ -204,7 +205,7 @@ const About = ({
         <Container>
           <Section name='collab' ref={ref}>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+              <Grid xs={12} sm={6}>
                 <MainTitle left>
                   <Typography variant='h5' gutterBottom>
                     <FormattedMessage
@@ -263,7 +264,7 @@ const About = ({
                   </List>
                 </MainList>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid xs={12} sm={6}>
                 <ResponsiveImage width='600' src={teamImage} />
               </Grid>
             </Grid>

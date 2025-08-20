@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 
-const useStyles = makeStyles(() => ({
+const useStyles = styled(() => ({
   root: {
     flexGrow: 1,
     display: 'flex',

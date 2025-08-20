@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Radios from 'design-library/atoms/inputs/radios/radios';
 import { FormattedMessage } from 'react-intl';
-import Typography from '@mui/material/Typography/Typography';
+import Typography from '@mui/material/Typography';
 import SelectInput from 'design-library/atoms/inputs/select-inputs/select-input/select-input';
 import Button from 'design-library/atoms/buttons/button/button';
 import ProfileSecondaryHeader from 'design-library/molecules/headers/profile-secondary-header/profile-secondary-header';

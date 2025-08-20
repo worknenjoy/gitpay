@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Checkbox, FormControlLabel, Grid, Link, Typography } from '@material-ui/core';
+import { Checkbox, FormControlLabel, Grid, Link, Typography } from '@mui/material';
 import useStyles from './checkbox-terms.styles';
 import TermsDialog from './terms-dialog';
 // import { on } from 'events';
@@ -20,7 +20,7 @@ const CheckboxTerms = ({ onAccept }) => {
   }, [checked]);
 
   return (
-    <Grid item xs={12} className={classes.termsLabel}>
+    <Grid xs={12} className={classes.termsLabel}>
         <FormControlLabel
           control={
             <Checkbox

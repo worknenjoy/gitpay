@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import {
   Chip,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 
 const Content = styled.span`
   margin-top: 5px;

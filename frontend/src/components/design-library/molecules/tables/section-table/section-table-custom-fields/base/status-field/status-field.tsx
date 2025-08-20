@@ -3,7 +3,7 @@ import {
   CheckCircleOutlineTwoTone as ActiveIcon,
   InfoSharp as InfoIcon,
   HelpOutline as QuestionInfoIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import useStyles from './status-field.styles';
 import BaseStatus from 'design-library/atoms/status/base-status/base-status';
 

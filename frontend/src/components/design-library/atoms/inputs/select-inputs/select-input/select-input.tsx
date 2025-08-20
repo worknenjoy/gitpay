@@ -1,11 +1,10 @@
 import React from 'react';
-import { Select, MenuItem, FormControl } from '@material-ui/core';
-import ReactPlaceholder from 'react-placeholder';
+import { Select, MenuItem, FormControl, Skeleton } from '@mui/material';
 
 const SelectInput = ({ options, value, onChange, completed = true }) => {
 
   return (
-    <ReactPlaceholder type="text" rows={1} ready={completed} showLoadingAnimation>
+    completed ? (
       <FormControl variant="standard" size="medium" style={{ margin: '10px 0', width: '100%' }}>
         <Select
           SelectDisplayProps={{ style: { paddingTop: 8, paddingBottom: 8 } }}
@@ -33,9 +32,10 @@ const SelectInput = ({ options, value, onChange, completed = true }) => {
           ))}
         </Select>
       </FormControl>
-    </ReactPlaceholder>
+    ) : (
+      <Skeleton variant="rectangular" width="100%" height={56} animation="wave" />
+    )
   );
-
 }
 
 export default SelectInput;

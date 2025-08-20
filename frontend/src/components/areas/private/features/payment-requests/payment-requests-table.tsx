@@ -1,7 +1,7 @@
 import React from 'react'
 import {
   Link as LinkIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import TextField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field'
 import SectionTable from 'design-library/molecules/tables/section-table/section-table'
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'

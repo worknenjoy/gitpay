@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import useStyles from './action-buttons.styles';
 
 

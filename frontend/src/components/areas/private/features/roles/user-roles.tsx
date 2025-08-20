@@ -14,10 +14,10 @@ import {
   CardMedia,
   CardContent,
   CardActions
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank'
-import CheckBoxIcon from '@material-ui/icons/CheckBox'
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
+import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import ReactPlaceholder from 'react-placeholder'
 
 const useStyles = makeStyles((theme) => ({

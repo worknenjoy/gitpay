@@ -1,12 +1,12 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer';
-import { makeStyles, Typography, } from '@material-ui/core';
+import { styled, Typography, } from '@mui/material';
 import TaskOrderInvoiceConfirm from '../task-order-invoice-confirm';
 import MessageAssignment from '../assignment/messageAssignment';
 const taskCover = require('images/task-cover.png')
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(theme => ({
   spanText: {
     display: 'inline-block',
     verticalAlign: 'middle'

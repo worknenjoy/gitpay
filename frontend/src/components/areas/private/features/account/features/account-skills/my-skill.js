@@ -2,7 +2,7 @@ import React from 'react'
 import {
   Avatar,
   Chip
-} from '@material-ui/core'
+} from '@mui/material'
 import { withRouter } from 'react-router-dom'
 import { SkillIcon } from "./skill-icon"
 

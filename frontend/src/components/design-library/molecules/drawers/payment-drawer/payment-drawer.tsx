@@ -4,9 +4,9 @@ import {
   Tabs,
   Tab,
   withStyles
-} from '@material-ui/core'
+} from '@mui/material'
 
-import { Theme, createStyles } from '@material-ui/core/styles';
+import { Theme, createStyles } from '@mui/material/styles';
 import Drawer from '../drawer/drawer'
 
 import PickupTagList from '../../lists/pickup-tag-list/pickup-tag-list'

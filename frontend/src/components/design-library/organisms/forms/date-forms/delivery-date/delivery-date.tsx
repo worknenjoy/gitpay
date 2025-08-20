@@ -9,11 +9,11 @@ import {
   InputLabel,
   Link,
   Typography
-} from '@material-ui/core';
-import WarningIcon from '@material-ui/icons/Warning';
-import CalendarIcon from '@material-ui/icons/CalendarToday';
-import DateIcon from '@material-ui/icons/DateRange';
-import { makeStyles } from '@material-ui/core/styles';
+} from '@mui/material';
+import WarningIcon from '@mui/icons-material/Warning';
+import CalendarIcon from '@mui/icons-material/CalendarToday';
+import DateIcon from '@mui/icons-material/DateRange';
+import { styled } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme) => ({
   spanText: {

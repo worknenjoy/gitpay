@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../../../../public/features/task/messages/task-messages'
 import MomentComponent from 'moment'
 import PaymentProvider from 'design-library/atoms/badges/payment-provider/payment-provider'
@@ -10,8 +9,9 @@ import {
   withStyles,
   Button,
   Link,
-  Typography
-} from "@material-ui/core";
+  Typography,
+  Skeleton
+} from "@mui/material";
 
 import {
   Refresh as RefreshIcon,
@@ -19,7 +19,7 @@ import {
   Info as InfoIcon,
   SwapHoriz as TransferIcon,
   Receipt as ReceiptIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
 import TaskPaymentCancel from '../../../../public/features/task/task-payment-cancel'

@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import MomentComponent from 'moment'
-import ReactPlaceholder from 'react-placeholder'
-import 'react-placeholder/lib/reactPlaceholder.css'
+// Replace ReactPlaceholder with Skeleton
 import ShowMoreText from 'react-show-more-text'
 
 import { messages } from './messages/task-messages'
@@ -29,8 +28,9 @@ import {
   DialogContentText,
   MobileStepper,
   Fab,
-  Collapse
-} from '@material-ui/core'
+  Collapse,
+  Skeleton // Add Skeleton import
+} from '@mui/material'
 
 import {
   Close as CloseIcon,
@@ -42,7 +42,7 @@ import {
   Gavel as OfferIcon,
   Redeem as RedeemIcon,
   EmojiFoodBeverage as CoffeeIcon,
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer'
 
@@ -915,7 +915,7 @@ class Task extends Component {
           <TopBarContainer />
         )}
         <Grid container style={{ marginBottom: 4 }} alignItems="stretch">
-          <Grid item xs={12} sm={12} md={8} style={{ marginBottom: 40 }}>
+          <Grid xs={12} sm={12} md={8} style={{ marginBottom: 40 }}>
             <IssueContent
               className={classes.issueContent}
               logged={this.props.logged.data.id}
@@ -929,7 +929,8 @@ class Task extends Component {
             />
             {this.props.logged ?
               (
-                <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={task.completed}>
+                // Replace ReactPlaceholder with Skeleton
+                task.completed ? (
                   <TaskPaymentForm
                     classes={classes}
                     match={this.props.match}
@@ -954,7 +955,9 @@ class Task extends Component {
                     fetchTask={this.props.fetchTask}
                     syncTask={this.props.syncTask}
                   />
-                </ReactPlaceholder>
+                ) : (
+                  <Skeleton variant="rectangular" width="100%" height={100} />
+                )
               ) : (
                 <Collapse in={this.state.paymentForm}>
                   <div className={classes.mainBlock} style={{ marginBottom: 40 }}>

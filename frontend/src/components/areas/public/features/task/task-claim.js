@@ -13,7 +13,7 @@ import {
   Typography,
   InputLabel,
   Input
-} from '@material-ui/core'
+} from '@mui/material'
 
 const Container = styled.div`
   display: inline-block;

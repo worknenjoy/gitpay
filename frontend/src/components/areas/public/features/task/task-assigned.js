@@ -12,8 +12,8 @@ import {
   Tooltip,
   Card,
   CardHeader
-} from '@material-ui/core'
-import UserIcon from '@material-ui/icons/AccountCircle'
+} from '@mui/material'
+import UserIcon from '@mui/icons-material/AccountCircle'
 
 import AssignActions from './assignment/AssignActions'
 import RemoveAssignment from './assignment/RemoveAssignment'

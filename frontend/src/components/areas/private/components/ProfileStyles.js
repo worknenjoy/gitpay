@@ -1,7 +1,7 @@
 import {
   Card as BaseCard,
   CardMedia as BaseCardMedia
-} from '@material-ui/core'
+} from '@mui/material'
 
 import styled from 'styled-components'
 import media from '../../../../styleguide/media'

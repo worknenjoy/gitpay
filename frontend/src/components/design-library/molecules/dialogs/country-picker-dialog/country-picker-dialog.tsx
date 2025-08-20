@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
+import Alert from '@mui/material/Alert';
+import { styled } from '@mui/material/styles';
 import { FormattedMessage } from 'react-intl';
 
 import { countryCodes } from '../../../../areas/private/shared/country-codes';
@@ -13,7 +13,7 @@ import {
   DialogContentText,
   DialogTitle,
   Typography
-} from '@material-ui/core';
+} from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   countryContainer: {
@@ -102,10 +102,6 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
       label: item.country,
       image: item.image
     });
-  };
-
-  const Alert = (props) => {
-    return <MuiAlert elevation={2} variant="outlined" {...props} />;
   };
 
   const getCountryButtons = () => {
@@ -254,6 +250,10 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
         </DialogActions>
       </Dialog>
     </div>
+  );
+};
+
+export default CountryPicker;
   );
 };
 

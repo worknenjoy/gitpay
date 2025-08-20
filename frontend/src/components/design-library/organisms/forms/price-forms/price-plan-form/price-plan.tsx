@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles'
+import { Grid } from '@mui/material';
+import { styled } from '@mui/material/styles'
 import PriceInput from '../../../../atoms/inputs/price-input/price-input';
 import PlanCard from '../../../../molecules/cards/plan-card/plan-card';
 
@@ -10,7 +10,7 @@ type PricePlanProps = {
   onChange: any;
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(theme => ({
   planGrid: {
     '&.MuiGrid-root': {
       alignItems: 'center'

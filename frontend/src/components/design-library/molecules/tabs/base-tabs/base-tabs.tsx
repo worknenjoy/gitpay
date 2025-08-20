@@ -5,11 +5,11 @@ import {
   Box,
   Card,
   CardContent
-} from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+} from '@mui/material';
+import { styled, Theme } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = styled((theme: Theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,

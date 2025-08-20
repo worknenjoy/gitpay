@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import TextEllipsis from 'text-ellipsis';
 import { useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { Tooltip, Typography, IconButton } from '@material-ui/core';
-import FileCopyIcon from '@material-ui/icons/FileCopy';
+import { Tooltip, Typography, IconButton } from '@mui/material';
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 const LinkField = ({ url, icon, iconImg = false, title, tooltipTitle, external = false, copiable = false, limit = 42, width = 350 }) => {
   const history = useHistory();

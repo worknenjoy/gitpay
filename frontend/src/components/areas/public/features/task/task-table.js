@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { withRouter } from 'react-router-dom'
-import Link from '@material-ui/core/Link'
+import Link from '@mui/material/Link'
 import MomentComponent from 'moment'
 import TextEllipsis from 'text-ellipsis'
 import ReactPlaceholder from 'react-placeholder'
@@ -23,13 +23,13 @@ import {
   Chip,
   Paper,
   IconButton
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   LastPage as LastPageIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
 import logoGithub from 'images/github-logo.png'

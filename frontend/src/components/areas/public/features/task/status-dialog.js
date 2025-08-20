@@ -12,12 +12,12 @@ import {
   Divider,
   Dialog,
   DialogTitle,
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   FilterList as FilterListIcon,
   Done as DoneIcon,
-} from '@material-ui/icons'
-import { blue } from '@material-ui/core/colors'
+} from '@mui/icons-material'
+import { blue } from '@mui/material/colors'
 
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'

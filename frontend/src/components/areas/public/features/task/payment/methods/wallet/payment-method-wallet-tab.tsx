@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import ReactPlaceholder from 'react-placeholder'
-import { Button, createStyles, makeStyles, Theme } from '@material-ui/core'
+import { Button, createStyles, styled, Theme } from '@mui/material'
 import { formatCurrency } from '../../../../../../../../utils/format-currency'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
 
@@ -17,7 +17,7 @@ function isGreaterThan(a: string | number, b: string | number): boolean {
 }
 
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = styled((theme: Theme) =>
   createStyles({
     btnPayment: {
       float: 'right',

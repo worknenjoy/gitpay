@@ -6,11 +6,11 @@ import {
   Typography,
   Chip,
   Avatar
-} from '@material-ui/core'
+} from '@mui/material'
 
 import {
   Person as PersonIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { withRouter } from 'react-router'
 
 import logoGithub from 'images/github-logo.png'

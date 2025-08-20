@@ -3,9 +3,9 @@ import {
   Box,
   Container,
   Grid,
-  makeStyles
-} from '@material-ui/core'
-import { Pagination } from '@material-ui/lab'
+  styled
+} from '@mui/material'
+import { Pagination } from '@mui/lab'
 import ProjectCard from './project-card'
 
 const useStyles = makeStyles((theme) => ({

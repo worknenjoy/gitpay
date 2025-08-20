@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactPlaceholder from 'react-placeholder';
+import { Skeleton } from '@mui/material';
 import CountryPicker from '../../../../molecules/dialogs/country-picker-dialog/country-picker-dialog';
 import BankAccountTabs from '../../../../molecules/tabs/bank-account-tabs/bank-account-tabs';
 import EmptyBase from '../../../../molecules/content/empty/empty-base/empty-base';
@@ -47,36 +47,38 @@ const PayoutSetingsBankAccount = ({
   }
 
   return (
-    <ReactPlaceholder type="media" rows={7} ready={completed}>
-      {!data?.account_id ? (
-        <>
-          {!country?.code ? (
-            <>
-              <EmptyBankAccount onActionClick={handleCountryPicker} />
-              <CountryPicker
-                open={openCountryPicker}
-                onClose={handleCountryPickerClose}
-                onSelectCountry={handleSelectCountry}
+    <Skeleton variant="rectangular" width="100%" height={118}>
+      <ReactPlaceholder type="media" rows={7} ready={completed}>
+        {!data?.account_id ? (
+          <>
+            {!country?.code ? (
+              <>
+                <EmptyBankAccount onActionClick={handleCountryPicker} />
+                <CountryPicker
+                  open={openCountryPicker}
+                  onClose={handleCountryPickerClose}
+                  onSelectCountry={handleSelectCountry}
+                />
+              </>
+            ) : (
+              <EmptyBase
+                actionText={<FormattedMessage id="payout.settings.choose.country" defaultMessage="Choose country and continue" />}
+                text={country.label}
+                onActionClick={() => saveCountryAndContinue(country.code)}
+                icon={<img width={48} alt={country.label} src={getCountryImage(country.image)} />}
+                completed={completed}
               />
-            </>
-          ) : (
-            <EmptyBase
-              actionText={<FormattedMessage id="payout.settings.choose.country" defaultMessage="Choose country and continue" />}
-              text={country.label}
-              onActionClick={() => saveCountryAndContinue(country.code)}
-              icon={<img width={48} alt={country.label} src={getCountryImage(country.image)} />}
-              completed={completed}
-            />
-          )
-          }
-        </>
-      ) : (
-        <BankAccountTabs>
-          {children}
-        </BankAccountTabs>
-      )}
+            )
+            }
+          </>
+        ) : (
+          <BankAccountTabs>
+            {children}
+          </BankAccountTabs>
+        )}
 
-    </ReactPlaceholder>
+      </ReactPlaceholder>
+    </Skeleton>
   );
 }
 

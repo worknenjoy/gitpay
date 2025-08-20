@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Avatar, Card, CardHeader, Link, Tooltip, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Avatar, Card, CardHeader, Link, Tooltip, Typography, Skeleton } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import MomentComponent from "moment";
 import classNames from "classnames";
 
 import logoGithub from 'images/github-logo-black.png'
 import logoBitbucket from 'images/bitbucket-logo-blue.png'
-import ReactPlaceholder from "react-placeholder";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(theme => ({
   cardHeader: {
     [theme.breakpoints.down('sm')]: {
       display: 'block',
@@ -76,11 +75,6 @@ const IssueCard = ({ issue }) => {
   const updatedAtTimeString = MomentComponent(issue?.data?.updated_at).utc().format('DD/MM/YYYY hh:mm A')
 
   return (
-    <ReactPlaceholder
-      ready={issue.completed}
-      showLoadingAnimation={true}
-      type="media"
-    >
     <Card>
       <CardHeader
         className={classes.cardHeader}
@@ -131,7 +125,6 @@ const IssueCard = ({ issue }) => {
         }
       />
     </Card>
-    </ReactPlaceholder>
   )
 }
 

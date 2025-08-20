@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link, Redirect, useParams, useHistory } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-import { makeStyles, Card, CardContent, Typography, Dialog } from '@material-ui/core'
+// Fix duplicate styled import
+import { Card, CardContent, Typography, Dialog } from '@mui/material'
+import { makeStyles } from '@mui/styles'
 import Background from 'images/login_bg.png'
 
 import TermsOfService from './terms-of-service'

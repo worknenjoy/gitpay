@@ -5,7 +5,7 @@ import {
   Drawer,
   Typography,
   Button
-} from '@material-ui/core'
+} from '@mui/material'
 import ReactPlaceholder from 'react-placeholder'
 
 import MomentComponent from 'moment'

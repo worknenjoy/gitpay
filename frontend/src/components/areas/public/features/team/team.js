@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import Bottom from '../../../../shared/bottom/bottom'
 import TopBarContainer from '../../../../../containers/topbar'
 import TeamCard from 'design-library/molecules/cards/team-card/TeamCard'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Page } from 'app/styleguide/components/Page'
 import { Section } from '../welcome/components/CommonStyles'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
-import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import { makeStyles } from '@mui/material/styles'
+import Typography from '@mui/material/Typography'
 
 function checkEmail (emailAddress) {
   let sQtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]'
@@ -105,30 +105,30 @@ export default function Team (props) {
       <TopBarContainer />
       <Section>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } justify='center'>
+          <Grid xs={ 12 } justify='center'>
             <TeamCard data={ recruiterTeam } />
           </Grid>
         </Grid>
       </Section>
       <Section>
         <Grid container spacing={ 3 } style={ { backgroundColor: 'black' } } justify={ 'center' } alignItems={ 'center' } >
-          <Grid item lg={ 4 } md={ 4 } sm={ 6 } sx={ 12 }>
+          <Grid lg={ 4 } md={ 4 } sm={ 6 } sx={ 12 }>
             <img src={ require('images/core-team-page-asset.png').default } alt='assets' />
           </Grid>
-          <Grid item lg={ 4 } md={ 5 } sm={ 6 } sx={ 12 } >
+          <Grid lg={ 4 } md={ 5 } sm={ 6 } sx={ 12 } >
             <form onChange={ onChange } onSubmit={ onSubmit } onBlur={ onBlur }>
               <Grid container className={ classes.coreTeamForm }>
-                <Grid item xs={ 12 } >
+                <Grid xs={ 12 } >
                   <Typography gutterBottom >
                     Join the team!
                   </Typography>
                 </Grid>
-                <Grid item xs={ 12 } style={ { color: 'silver' } } >
+                <Grid xs={ 12 } style={ { color: 'silver' } } >
                   <Typography gutterBottom >
                     Work with the best and be part of the core
                   </Typography>
                 </Grid>
-                <Grid item xs={ 12 }>
+                <Grid xs={ 12 }>
                   <TextField
                     required
                     value={ formData.email }
@@ -142,7 +142,7 @@ export default function Team (props) {
                     InputProps={ { classes: { underline: classes.underline } } }
                   />
                 </Grid>
-                <Grid item xs={ 12 }>
+                <Grid xs={ 12 }>
                   <Button color='primary' fullWidth='true' variant='contained' type='submit'>
                     <Typography gutterBottom >
                       JOIN NOW!

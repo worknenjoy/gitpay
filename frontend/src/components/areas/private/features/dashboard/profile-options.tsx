@@ -7,11 +7,11 @@ import {
   Button,
   CardActions,
   CardContent
-} from '@material-ui/core';
+} from '@mui/material';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@mui/lab';
 
 import { Card, CardList, CardMedia } from '../../components/ProfileStyles';
 import WelcomeUser from '../../components/session/welcome-user';

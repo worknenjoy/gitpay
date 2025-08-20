@@ -15,7 +15,7 @@ import {
   Tabs,
   Tab,
   withStyles
-} from '@material-ui/core'
+} from '@mui/material'
 
 // import TaskFilter from '../task/task-filters'
 import CustomPaginationActionsTable from '../../../public/features/task/task-table';

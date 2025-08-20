@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { FormControl, Input, Select, Typography } from "@material-ui/core";
+import { FormControl, Input, Select, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { countryCodes, SEPA_COUNTRIES } from '../../../../../areas/private/shared/country-codes'
 import ReactPlaceholder from "react-placeholder";

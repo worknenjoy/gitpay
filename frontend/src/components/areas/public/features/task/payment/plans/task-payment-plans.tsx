@@ -1,15 +1,15 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Card, CardContent, Grid, Typography } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
-import MotorcycleIcon from '@material-ui/icons/Motorcycle';
-import DriveEtaIcon from '@material-ui/icons/DriveEta';
+import { Card, CardContent, Grid, Typography } from '@mui/material';
+import CheckIcon from '@mui/icons-material/Check';
+import MotorcycleIcon from '@mui/icons-material/Motorcycle';
+import DriveEtaIcon from '@mui/icons-material/DriveEta';
 
 export const TaskPaymentPlans = ({ plan, classes }) => {
 
   return (
     plan === 'open source' ? (
-      <Grid item className={classes.planGridItem}>
+      <Grid className={classes.planGridItem}>
         <Card className={classes.planGrid}>
           <CardContent className={classes.planGridContent}>
             <div className={classes.planButton}>
@@ -39,7 +39,7 @@ export const TaskPaymentPlans = ({ plan, classes }) => {
         </Card>
       </Grid>
     ) : (
-      <Grid item className={classes.planGridItem} >
+      <Grid className={classes.planGridItem} >
         <Card className={classes.planGrid}>
           <CardContent className={classes.planGridContent}>
             <div className={classes.planButton}>

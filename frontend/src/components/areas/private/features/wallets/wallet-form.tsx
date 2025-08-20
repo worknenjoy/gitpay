@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { withStyles } from '@material-ui/core/styles';
-import { Grid, Button, Paper } from '@material-ui/core';
+import { withStyles } from '@mui/material/styles';
+import { Grid, Button, Paper } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { Field } from 'design-library/atoms/inputs/fields/field/field';
@@ -35,7 +35,7 @@ const WalletForm = ({
     <Paper elevation={ 1 } style={{padding: 20}}>
       <form>
         <Grid container spacing={2}>
-          <Grid item xs={ 12 } md={ 12 }>
+          <Grid xs={ 12 } md={ 12 }>
               <fieldset className={ classes.fieldset }>
                 <legend className={ classes.legend }>
                   <Typography>
@@ -43,7 +43,7 @@ const WalletForm = ({
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
-                  <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
+                  <Grid xs={ 12 } sm={ 12 } md={ 12 }>
                     <FormattedMessage id="account.basic.name" defaultMessage="name">
                       { (msg) => (
                         <Field
@@ -55,7 +55,7 @@ const WalletForm = ({
                       ) }
                     </FormattedMessage>
                   </Grid>
-                  <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
+                  <Grid xs={ 12 } sm={ 12 } md={ 12 }>
                     <div style={{float: 'right'}}>
                       <Button
                         type="submit"

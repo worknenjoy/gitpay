@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 import {
   Paper,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 
 import AccountContainer from '../../../../../../containers/account'
 

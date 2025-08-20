@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import MuiAlert from '@material-ui/lab/Alert'
-import CloseIcon from '@material-ui/icons/Close'
+import Alert from '@mui/material/Alert'
+import CloseIcon from '@mui/icons-material/Close'
 import useStyles from './alert.styles'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import ReactPlacholder from 'react-placeholder'
 
 
-export const Alert = (props) => {
+export const CustomAlert = (props) => {
   const { onClose, alertKey = 'default', actions, dismissable = false, completed, ...rest } = props
   const classes = useStyles()
   const fullAlertKey = `alert-dismissed-${alertKey}`
@@ -30,7 +30,7 @@ export const Alert = (props) => {
 
   return (
     <ReactPlacholder rows={1} type="text" ready={completed}>
-      <MuiAlert
+      <Alert
         elevation={1}
         variant="standard"
         action={
@@ -56,4 +56,4 @@ export const Alert = (props) => {
   )
 }
 
-export default Alert
+export default CustomAlert

@@ -24,13 +24,13 @@ import {
   FormControlLabel,
   DialogContentText,
   TextareaAutosize,
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   DateRange as DateIcon,
   CalendarToday as CalendarIcon,
   Warning as WarningIcon,
   Info as InfoIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import Drawer from 'design-library/molecules/drawers/drawer/drawer'
 import Introduction from 'design-library/molecules/content/introduction/introduction'
@@ -51,7 +51,7 @@ const TaskAssignment = (props) => {
     if (props.taskFundingDialog) {
       return (
         <Grid container spacing={3} style={{ fontFamily: 'Roboto', color: '#a9a9a9' }}>
-          <Grid item xs={12} style={{ paddingTop: 0 }} >
+          <Grid xs={12} style={{ paddingTop: 0 }} >
             <FormControlLabel
               control={
                 <Checkbox
@@ -86,7 +86,7 @@ const TaskAssignment = (props) => {
     if (props.assignDialog) {
       return (
         <Grid container spacing={3} style={{ fontFamily: 'Roboto', color: '#a9a9a9' }}>
-          <Grid item xs={12} sm={6} style={{ paddingBottom: 0 }}>
+          <Grid xs={12} sm={6} style={{ paddingBottom: 0 }}>
             <FormattedMessage id='task.bounties.interested.iWillDoFor' defaultMessage='I will do for'>
               {msg => (
                 <FormControlLabel
@@ -103,7 +103,7 @@ const TaskAssignment = (props) => {
               )}
             </FormattedMessage>
           </Grid>
-          <Grid item xs={12} sm={6} style={{ paddingBottom: 0 }} className={classes.starterCheckbox}>
+          <Grid xs={12} sm={6} style={{ paddingBottom: 0 }} className={classes.starterCheckbox}>
             <FormattedMessage id='task.bounties.interested.iAmStarter' defaultMessage='I want to do for learning purposes'>
               {msg => (
                 <FormControlLabel
@@ -120,7 +120,7 @@ const TaskAssignment = (props) => {
               )}
             </FormattedMessage>
           </Grid>
-          <Grid item xs={12} style={{ paddingTop: 0 }} >
+          <Grid xs={12} style={{ paddingTop: 0 }} >
             <FormControlLabel
               control={
                 <Checkbox

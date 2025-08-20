@@ -7,12 +7,12 @@ import {
   withStyles,
   TextField,
   Typography
-} from '@material-ui/core'
-import purple from '@material-ui/core/colors/purple'
+} from '@mui/material'
+import { purple } from '@mui/material/colors'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 import api from '../../../../../consts'
-import { CheckBox, CheckBoxOutlineBlank } from '@material-ui/icons'
+import { CheckBox, CheckBoxOutlineBlank } from '@mui/icons-material'
 
 import ProviderLoginButtons from './provider-login-buttons'
 import TermsOfService from './terms-of-service'

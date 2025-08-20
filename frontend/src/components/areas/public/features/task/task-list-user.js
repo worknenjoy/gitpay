@@ -15,7 +15,7 @@ import {
   Tab,
   Tabs,
   AppBar,
-} from '@material-ui/core'
+} from '@mui/material'
 import ProfileHead from '../../../../../containers/profile-head'
 
 const styles = theme => ({
@@ -112,7 +112,7 @@ const TaskListUser = (props) => {
         </Container>
         <Container fixed maxWidth='lg'>
           <Grid container className={classes.root}>
-            <Grid item xs={12} md={12}>
+            <Grid xs={12} md={12}>
               <Tabs
                 value={taskListState.tab}
                 onChange={handleTabChange}

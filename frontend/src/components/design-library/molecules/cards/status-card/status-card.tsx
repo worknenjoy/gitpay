@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactPlaceholder from 'react-placeholder';
-import { Button, Card, CardContent, CardActions, Typography, makeStyles } from '@material-ui/core';
+import { Button, Card, CardContent, CardActions, Typography, styled } from '@mui/material';
 
-const useStyles = makeStyles({
+const useStyles = styled({
   root: {
     maxWidth: 500,
     margin: 10,

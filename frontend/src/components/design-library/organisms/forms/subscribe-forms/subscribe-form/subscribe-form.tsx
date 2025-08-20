@@ -5,7 +5,7 @@ import {
   red,
   cyan,
   teal
-} from '@material-ui/core/colors'
+} from '@mui/material/colors'
 import { useIntl, defineMessages } from 'react-intl'
 
 const msgs = defineMessages({

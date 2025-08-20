@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 import { FormattedMessage } from 'react-intl'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import Avatar from '@material-ui/core/Avatar'
-import Typography from '@material-ui/core/Typography'
-import { Forum as MessageIcon } from '@material-ui/icons'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
+import { Forum as MessageIcon } from '@mui/icons-material'
 import nameInitials from 'name-initials'
 import MessageAuthor from './task-message-author'
 import {
   Dialog,
   DialogContent,
   DialogTitle
-} from '@material-ui/core'
+} from '@mui/material'
 
 import LoginButton from '../../../private/components/session/login-button'
 

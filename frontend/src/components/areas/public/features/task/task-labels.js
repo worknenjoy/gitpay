@@ -6,7 +6,7 @@ import { injectIntl } from 'react-intl'
 import {
   withStyles,
   Chip
-} from '@material-ui/core'
+} from '@mui/material'
 
 const styles = theme => ({
   selected: {

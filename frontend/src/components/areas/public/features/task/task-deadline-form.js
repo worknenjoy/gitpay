@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useIntl, defineMessages, FormattedMessage } from 'react-intl'
 import MomentComponent from 'moment'
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from '@mui/material/styles'
 
 import {
   CardMedia,
@@ -14,8 +14,8 @@ import {
   InputAdornment,
   Collapse,
   FormControl,
-} from '@material-ui/core'
-import DateIcon from '@material-ui/icons/DateRange'
+} from '@mui/material'
+import DateIcon from '@mui/icons-material/DateRange'
 
 const timeIcon = require('images/time-icon.png')
 

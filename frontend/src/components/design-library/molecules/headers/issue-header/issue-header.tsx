@@ -5,8 +5,7 @@ import {
   BugReport as ReportIcon,
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon
-} from '@material-ui/icons'
-import ReactPlaceholder from 'react-placeholder'
+} from '@mui/icons-material'
 import {
   Button,
   Dialog,
@@ -19,8 +18,9 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
-  ListItemText
-} from '@material-ui/core'
+  ListItemText,
+  Skeleton
+} from '@mui/material'
 
 import { FormattedMessage } from 'react-intl'
 
@@ -104,7 +104,7 @@ const IssueHeader = ({
 
   return (
     <TaskHeaderContainer>
-      <Grid item xs={12} sm={12} md={12}>
+      <Grid xs={12} sm={12} md={12}>
         <Breadcrumb task={task} user={user} project={project} organization={organization} />
         <ReactPlaceholder type={'text'} rows={1} showLoadingAnimation
           ready={task.completed} style={{ marginTop: 32, marginBottom: 26, width: '80%' }}

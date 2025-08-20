@@ -1,16 +1,16 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import { useIntl } from 'react-intl';
 
 import {
   IconButton
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   LastPage as LastPageIcon
-} from '@material-ui/icons';
+} from '@mui/icons-material';
 import messages from '../../../../../areas/public/features/task/messages/task-messages';
 
 const useStyles = makeStyles((theme) => ({

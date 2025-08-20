@@ -6,12 +6,8 @@ import {
   DialogContent,
   DialogActions,
   Typography
-} from '@material-ui/core'
-import MuiAlert from '@material-ui/lab/Alert'
-
-function Alert (props) {
-  return <MuiAlert elevation={ 0 } variant="outlined" { ...props } />
-}
+} from '@mui/material'
+import Alert from '@mui/material/Alert'
 
 export default function PaymentRefund ({ open, handleClose, orderId, onRefund, listOrders }) {
   const handleRefund = async (event) => {

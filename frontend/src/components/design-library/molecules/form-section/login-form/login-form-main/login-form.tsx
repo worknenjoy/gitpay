@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import {
   Typography,
   WithStyles
-} from '@material-ui/core'
+} from '@mui/material'
 import { RouteComponentProps } from 'react-router-dom'
 import { Location } from 'history'
 import LoginFormSignin from '../login-form-signin/login-form-signin'

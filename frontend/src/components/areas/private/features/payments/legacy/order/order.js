@@ -5,7 +5,7 @@ import {
   Grid,
   Typography,
   withStyles
-} from '@material-ui/core'
+} from '@mui/material'
 import Notification from 'design-library/atoms/notifications/notification/notification'
 
 import '../../../../../checkout/checkout-form'
@@ -168,7 +168,7 @@ class Order extends Component {
       <div>
         <Grid container className={ classes.root } spacing={ 3 }>
           <TopBar />
-          <Grid item xs={ 12 }>
+          <Grid xs={ 12 }>
             <Typography
               variant="display1"
               color="primary"

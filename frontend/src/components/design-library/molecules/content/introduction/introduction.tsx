@@ -1,7 +1,7 @@
 import React from 'react'
-import { Grid, Typography, makeStyles, Theme } from '@material-ui/core'
+import { Grid, Typography, styled, Theme } from '@mui/material'
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = styled((theme: Theme) => ({
   spanText: {
     color: 'gray'
   },
@@ -18,10 +18,10 @@ const Introduction = ({ title, image, children }) => {
   return (
     <React.Fragment>
       <Grid container spacing={3} justifyContent="flex-start" style={{ textAlign: 'left', marginTop: 15 }}>
-        <Grid item xs={12} md={3}>
+        <Grid xs={12} md={3}>
           <img src={image} className={classes.coverImg} alt="cover" />
         </Grid>
-        <Grid item xs={12} md={9}>
+        <Grid xs={12} md={9}>
           <div id="form-dialog-title" style={{ padding: 0 }}>
             <Typography variant="subtitle1">
               {title}

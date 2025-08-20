@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import ReactPlaceholder from 'react-placeholder';
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 
 import {
   Table,
@@ -14,7 +14,7 @@ import {
   TableSortLabel,
   Typography,
   Paper
-} from '@material-ui/core';
+} from '@mui/material';
 
 import TablePaginationActions from './section-table-pagination-actions/section-table-pagination-actions';
 

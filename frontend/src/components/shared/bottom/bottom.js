@@ -9,7 +9,7 @@ import {
   List,
   withStyles,
   ListItem
-} from '@material-ui/core'
+} from '@mui/material'
 
 import SubscribeForm from 'design-library/organisms/forms/subscribe-forms/subscribe-form/subscribe-form'
 import InfoContainer from '../../../containers/info'
@@ -37,7 +37,7 @@ class Bottom extends Component {
       <div className={ classes.secBlock }>
         <Container>
           <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } sm={ 3 }>
+            <Grid xs={ 12 } sm={ 3 }>
               <Typography component="div">
                 <strong>
                   <FormattedMessage
@@ -115,7 +115,7 @@ class Bottom extends Component {
 
               </List>
             </Grid>
-            <Grid item xs={ 12 } sm={ 3 }>
+            <Grid xs={ 12 } sm={ 3 }>
               <Typography component="div">
                 <strong>
                   <FormattedMessage
@@ -154,11 +154,11 @@ class Bottom extends Component {
                 />
               </List>
             </Grid>
-            <Grid item xs={ 12 } sm={ 2 }>
+            <Grid xs={ 12 } sm={ 2 }>
               <SlackCard />
               <GithubCard />
             </Grid>
-            <Grid item xs={ 12 } sm={ 4 }>
+            <Grid xs={ 12 } sm={ 4 }>
               <Typography component="div">
                 <FormattedMessage
                   id="bottom.subheading.newsletter"

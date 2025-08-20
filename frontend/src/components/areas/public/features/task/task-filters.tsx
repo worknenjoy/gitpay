@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Select, MenuItem, Chip, FormControl } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { AppBar, Toolbar, Select, MenuItem, Chip, FormControl } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { useIntl, defineMessages } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Labels from '../../../../../containers/label';

@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactPlaceholder from 'react-placeholder';
-import { Button, Card, CardContent, CardActions, Typography, makeStyles } from '@material-ui/core';
+import { Button, Card, CardContent, CardActions, Typography, Skeleton, styled } from '@mui/material';
 import currencyMap from './currency-map';
 
 
@@ -28,7 +27,7 @@ export const convertStripeAmountByCurrency = (amount, currency) => {
   return (amount / Math.pow(10, places)).toFixed(places);
 };
 
-const useStyles = makeStyles({
+const useStyles = styled({
   root: {
     maxWidth: 500,
     margin: 10,
@@ -63,19 +62,9 @@ const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionPro
 
     <Card className={classes.root}>
       <CardContent>
-        <ReactPlaceholder
-          showLoadingAnimation={true}
-          type="text"
-          ready={completed}
-          rows={2}
-        >
-          <Typography className={classes.name} color="textSecondary" gutterBottom>
-            {name}
-          </Typography>
-          <Typography className={classes.balance} color="primary">
-            {convertedBalance}
-          </Typography>
-        </ReactPlaceholder>
+        <Skeleton variant="text" animation="wave" height={40} width="80%" />
+        <Skeleton variant="text" animation="wave" height={40} width="60%" />
+        <Skeleton variant="rect" animation="wave" height={118} />
       </CardContent>
       {onAdd && action && (
         <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -86,6 +75,17 @@ const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionPro
             onClick={onAdd}
             {...actionProps}
           >
+            {action}
+          </Button>
+        </CardActions>
+      )}
+
+    </Card>
+
+  );
+};
+
+export default BalanceCard;
             {action}
           </Button>
         </CardActions>

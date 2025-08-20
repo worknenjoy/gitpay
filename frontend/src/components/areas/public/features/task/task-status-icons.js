@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Chip } from '@material-ui/core'
+import { Chip } from '@mui/material'
 import {
   Lock as PrivateIcon,
   LockOpen as PublicIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 const styles = {
   IconStyle: {

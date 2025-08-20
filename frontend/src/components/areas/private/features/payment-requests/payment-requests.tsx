@@ -5,17 +5,17 @@ import {
   Paper,
   Container,
   Button
-} from '@material-ui/core'
+} from '@mui/material'
 
-import { AddRounded as AddIcon } from '@material-ui/icons'
+import { AddRounded as AddIcon } from '@mui/icons-material'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 import EmptyPaymentRequest from 'design-library/molecules/content/empty/empty-payment-request/empty-payment-request'
 import PaymentRequestDrawer from 'design-library/molecules/drawers/payment-request-drawer/payment-request-drawer'
 import ProfileHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header'
 import PaymentRequestsTable from './payment-requests-table'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(theme => ({
   icon: {
     backgroundColor: 'black'
   },

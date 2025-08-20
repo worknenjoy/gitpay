@@ -1,8 +1,7 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Typography, Skeleton } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { FormattedMessage } from 'react-intl';
-import ReactPlaceholder from 'react-placeholder';
 import AccountTypeField from '../../../../atoms/inputs/fields/account-type-field/account-type-field';
 import CountrySelectField from '../../../../atoms/inputs/fields/country-select-field/country-select-field';
 import BankCurrencyField from '../../../../atoms/inputs/fields/bank-currency-field/bank-currency-field';
@@ -77,40 +76,32 @@ const BankAccountForm = ({
         </Alert>
       )}
       <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
-          <ReactPlaceholder className={classes.placholder} type="text" rows={1} ready={completed} showLoadingAnimation>
-            <AccountTypeField
-              type={account_holder_type}
+        <Grid xs={12} md={12}>
+          <AccountTypeField
+            type={account_holder_type}
+          />
+        </Grid>
+        <Grid container spacing={2}>
+          <Grid xs={12} md={6}>
+            <CountrySelectField
+              user={user}
+              country={currentCountry}
+              disabled={!!id}
+              onChange={onChangeCountry}
             />
-          </ReactPlaceholder>
-        </Grid>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <ReactPlaceholder className={classes.placholder} type="text" rows={1} ready={completed} showLoadingAnimation>
-              <CountrySelectField
-                user={user}
-                country={currentCountry}
-                disabled={!!id}
-                onChange={onChangeCountry}
-              />
-            </ReactPlaceholder>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <ReactPlaceholder className={classes.placholder} type="text" rows={1} ready={completed} showLoadingAnimation>
-              <BankCurrencyField currency={currency} countries={countries} disabled={!!id} />
-            </ReactPlaceholder>
+          <Grid xs={12} md={6}>
+            <BankCurrencyField currency={currency} countries={countries} disabled={!!id} />
           </Grid>
         </Grid>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={12}>
-            <ReactPlaceholder className={classes.placholder} type="text" rows={1} ready={completed} showLoadingAnimation>
-              <BankSelectField
-                country={currentCountry}
-                disabled={!!id}
-                onChange={onChangeBankCode}
-                routingNumber={routing_number}
-              />
-            </ReactPlaceholder>
+          <Grid xs={12} md={12}>
+            <BankSelectField
+              country={currentCountry}
+              disabled={!!id}
+              onChange={onChangeBankCode}
+              routingNumber={routing_number}
+            />
             <Field
               completed={completed}
               label="Account Holder Name"

@@ -1,4 +1,4 @@
-import { grey, green } from '@material-ui/core/colors'
+import { colors } from '@mui/material'
 
 const Palette = {
   typography: {
@@ -55,8 +55,8 @@ const Palette = {
       light: '#E2E5EA',
       main: '#2c5c46',
       dark: '#353A42',
-      contrastText: grey[100],
-      success: green[400],
+      contrastText: colors.grey[100],
+      success: colors.green[400],
       error: '#FF0000'
     },
     secondary: {

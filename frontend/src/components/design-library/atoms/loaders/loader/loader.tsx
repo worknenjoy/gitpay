@@ -1,6 +1,6 @@
 import React from 'react'
 import useStyles from './loader.styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import CircularProgress from '@mui/material/CircularProgress'
 
 
 function CustomizedProgress() {

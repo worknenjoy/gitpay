@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactPlaceholder from 'react-placeholder';
+import { Skeleton, FormControl, Input, Select, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
-import { FormControl, Input, Select, Typography } from '@material-ui/core';
 import { countryCurrencies } from '../../../../../areas/private/shared/country-codes';
 
 
@@ -23,7 +22,7 @@ const BankCurrencyField = ({ currency, countries, disabled = false }) => {
           <FormattedMessage id="account.register.bank.account.currency" defaultMessage="Currency:" />
         </Typography>
       </div>
-      <ReactPlaceholder type="text" rows={1} ready={completed}>
+      {completed ? (
         <Select
           native
           name="bank_account_currency"
@@ -41,8 +40,11 @@ const BankCurrencyField = ({ currency, countries, disabled = false }) => {
             <option key={index} value={c.code}>{`${c.currency} - ${c.symbol}`}</option>
           ))}
         </Select>
-      </ReactPlaceholder>
+      ) : (
+        <Skeleton variant="rectangular" width="100%" height={40} animation="wave" />
+      )}
     </FormControl>
   );
 }
+
 export default BankCurrencyField;

@@ -1,6 +1,6 @@
 import React from 'react';
 import EmptyBase from './empty-base';
-import { AccessAlarm as AlarmIcon } from '@material-ui/icons'; // you can replace this icon
+import { AccessAlarm as AlarmIcon } from '@mui/icons-material'; // you can replace this icon
 
 export default {
   title: 'Design Library/Molecules/Empty/EmptyBase',

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography } from '@mui/material';
 import { Alert } from '../alert/alert';
 import { validAccount } from '../../../../../utils/valid-account';
 import api from '../../../../../consts';

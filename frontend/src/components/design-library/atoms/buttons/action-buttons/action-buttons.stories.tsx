@@ -1,11 +1,11 @@
 import React from 'react';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import CancelIcon from '@material-ui/icons/Cancel';
-import SaveIcon from '@material-ui/icons/Save';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
+import SaveIcon from '@mui/icons-material/Save';
 import ActionButtons from './action-buttons';
-import { Dialog } from '@material-ui/core';
+import { Dialog } from '@mui/material';
 
 export default {
   title: 'Design Library/Atoms/Buttons/ActionButtons',

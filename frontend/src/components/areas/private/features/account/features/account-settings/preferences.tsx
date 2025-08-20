@@ -5,7 +5,7 @@ import {
   Grid,
   Typography,
   Checkbox
-} from '@material-ui/core'
+} from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import Skill from '../account-skills/skill'
 import MySkill from '../account-skills/my-skill'
@@ -72,12 +72,12 @@ const Preferences = (props) => {
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
       <Grid container alignItems="center" spacing={1}>
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <Typography variant="h5" className={classes.title} gutterBottom>
             <FormattedMessage id="preferences.title.main" defaultMessage="Preferences" />
           </Typography>
         </Grid>
-        <Grid item xs={7}>
+        <Grid xs={7}>
           <Typography color="primary" variant="h5">
             <FormattedMessage id="preferences.os" defaultMessage="OS" />
           </Typography>
@@ -100,18 +100,18 @@ const Preferences = (props) => {
             </Typography>
           </label>
         </Grid>
-        <Grid item xs={12}>
+        <Grid xs={12}>
           <Typography color="primary" variant="h5">
             <FormattedMessage id="prefences.header.title" defaultMessage="Preferences" />
           </Typography>
         </Grid>
-        <Grid item xs={12} style={{ marginBottom: 10 }}>
+        <Grid xs={12} style={{ marginBottom: 10 }}>
           <Grid container xs={12} style={{ padding: 10 }}>
             {listSkills}
           </Grid>
         </Grid>
         <div style={{ width: '100%', flex: 'auto', display: 'flex', marginTop: 20 }}>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography color="primary" variant="h5">
               <FormattedMessage id="prefences.header.sub" defaultMessage="My language preferences" />
             </Typography>

@@ -1,15 +1,14 @@
 import React from 'react';
-import { Button, Container, Typography, makeStyles } from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { Button, Container, Typography, styled, Skeleton } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
-import ReactPlaceholder from 'react-placeholder';
 import ShowMoreText from 'react-show-more-text'
 import { marked } from 'marked'
 import parse from 'html-react-parser';
 import IssueHeader from '../../../molecules/headers/issue-header/issue-header';
 import IssueAuthorList from '../../../molecules/lists/issue-author-list/issue-author-list';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = styled(theme => ({
 
   issueContent: {
     wordBreak: 'break-word',
@@ -47,6 +46,7 @@ const IssueContent = ({ className, user, project, organization, updateTask, repo
       <Typography variant="subtitle1" style={{ marginBottom: 10, marginTop: 20 }}>
         <FormattedMessage id="task.info.description" defaultMessage="Description" />
       </Typography>
+      <Skeleton variant="text" width="100%" height={118} animation="wave" />
       <ReactPlaceholder showLoadingAnimation type={'text'} rows={5} ready={task.completed}>
         <Typography variant="body1" style={{ marginBottom: 40 }} className={`${classes.issueContent} ${className || ''}`}>
           <ShowMoreText

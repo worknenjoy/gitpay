@@ -11,8 +11,8 @@ import {
   Grid,
   Typography,
   Link,
-  makeStyles
-} from '@material-ui/core'
+  styled
+} from '@mui/material'
 import slugify from '@sindresorhus/slugify'
 
 const useStyles = makeStyles((theme) => ({

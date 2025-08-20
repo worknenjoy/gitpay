@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from '@mui/material/styles'
 import {
   Button,
   AppBar,
@@ -9,7 +9,7 @@ import {
   Grid,
   Typography,
   Link
-} from '@material-ui/core'
+} from '@mui/material'
 import peopleImage from 'images/landingPage_People.png'
 import logoGrey from 'images/logo-complete-gray.png'
 import screenImage from 'images/gitpay-explore-task-screenshot.png'
@@ -211,7 +211,7 @@ function LandingPage (props) {
     <div>
       <div className={ classes.root }>
         <Grid container className={ classes.center } spacing={ 8 }>
-          <Grid item xs={ 12 }>
+          <Grid xs={ 12 }>
             <AppBar
               position='static'
               style={ { background: 'transparent', boxShadow: 'none' } }
@@ -232,13 +232,13 @@ function LandingPage (props) {
                 </Button>
               </Toolbar>
             </AppBar>
-            <Grid item xs={ 12 } className={ classes.textContainer }>
+            <Grid xs={ 12 } className={ classes.textContainer }>
               <h1 className={ classes.header }>
                 <FormattedMessage id='welcome.landing.title' defaultMessage='A Better Way to Recruit Technical Talent' />
               </h1>
               <p className={ classes.paragraph }><FormattedMessage id='welcome.landing.description' defaultMessage='GitPay is a platform by developers, for developers that connects global talent to real-world technical challenges on GitHub and Bitbucket. This allows our international recruitment team to identify the best, proven talent in real time for roles at some of the world’s most exciting companies, like yours. Want our help filling a position?' /></p>
             </Grid>
-            <Grid item xs={ 12 } className={ classes.margin }>
+            <Grid xs={ 12 } className={ classes.margin }>
               <Button
                 variant='contained'
                 size='medium'
@@ -261,15 +261,15 @@ function LandingPage (props) {
           </Grid>
         </Grid>
       </div>
-      <Grid item xs={ 12 }>
+      <Grid xs={ 12 }>
         <img src={ peopleImage } />
       </Grid>
-      <Grid item xs={ 12 }>
+      <Grid xs={ 12 }>
         <Clientlist />
       </Grid>
       <Section>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid xs={ 12 } sm={ 6 }>
             <MainTitle center>
               <Typography variant='h5' gutterBottom>
                 <FormattedMessage
@@ -299,14 +299,14 @@ function LandingPage (props) {
               </div>
             </MainList>
           </Grid>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid xs={ 12 } sm={ 6 }>
             <ResponsiveImage width='600' src={ screenImage } />
           </Grid>
         </Grid>
       </Section>
       <Section alternative className={ classes.bgContrast }>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid xs={ 12 } sm={ 6 }>
             <MainTitle center>
               <Typography variant='h5' gutterBottom>
                 <FormattedMessage
@@ -335,14 +335,14 @@ function LandingPage (props) {
               </div>
             </MainList>
           </Grid>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid xs={ 12 } sm={ 6 }>
             <ResponsiveImage src={ profileImage } />
           </Grid>
         </Grid>
       </Section>
       <Section>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid xs={ 12 } sm={ 6 }>
             <MainTitle center>
               <Typography variant='h5' gutterBottom>
                 <FormattedMessage
@@ -372,14 +372,14 @@ function LandingPage (props) {
               </div>
             </MainList>
           </Grid>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid xs={ 12 } sm={ 6 }>
             <ResponsiveImage width='400' src={ deal } />
           </Grid>
         </Grid>
       </Section>
       <Section>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } justify>
+          <Grid xs={ 12 } justify>
             <TeamCard data={ recruiterTeam } />
           </Grid>
         </Grid>
@@ -387,7 +387,7 @@ function LandingPage (props) {
       <Section>
         <div ref={ ref }>
           <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } justify>
+            <Grid xs={ 12 } justify>
               <ContactRecruiterFormContainer />
             </Grid>
           </Grid>

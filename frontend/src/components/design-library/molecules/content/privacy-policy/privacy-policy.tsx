@@ -1,8 +1,8 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
-import { ArrowBack } from "@material-ui/icons"
+import { Typography } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material"
 import { FormattedMessage } from "react-intl";
-import { Button, Paper } from "@material-ui/core";
+import { Button, Paper } from "@mui/material";
 
 type PrivacyPolicyProps = {
   onArrowBack?: () => void;
