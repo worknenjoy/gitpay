@@ -1,6 +1,5 @@
 import React from 'react';
-import { Grid, Typography, Skeleton } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Grid, Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import AccountTypeField from '../../../../atoms/inputs/fields/account-type-field/account-type-field';
 import CountrySelectField from '../../../../atoms/inputs/fields/country-select-field/country-select-field';

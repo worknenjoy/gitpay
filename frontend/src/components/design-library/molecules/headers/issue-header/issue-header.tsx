@@ -18,8 +18,7 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
-  ListItemText,
-  Skeleton
+  ListItemText
 } from '@mui/material'
 
 import { FormattedMessage } from 'react-intl'

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import Button from '../../../../atoms/buttons/button/button';
 
 const useStyles = makeStyles((theme) => ({

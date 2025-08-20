@@ -12,7 +12,6 @@ import {
   StyledButton
 } from './side-menu.styled.div'
 import { Skeleton } from '@mui/material'
-import SideMenuPlaceholder from './side-menu.placeholder'
 import SideMenuItems from './side-menu-items'
 
 const useStyles = makeStyles((theme) => ({

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { Chip, Avatar } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import Constants from '../../../../../../../../consts'
 
 const useStyles = makeStyles((theme) => ({

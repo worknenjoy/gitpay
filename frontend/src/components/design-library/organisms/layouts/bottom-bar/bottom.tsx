@@ -15,7 +15,6 @@ import StatsBar from '../../../molecules/sections/stats-bar/stats-bar'
 import SlackCard from './SlackCard'
 import GithubCard from './GithubCard'
 
-import mainStyles from '../../../../../styleguide/styles/style'
 import { Container, BaseFooter, SubscribeFromWrapper } from './FooterStyles'
 
 import BottomSectionDialog from '../../../../areas/public/features/welcome/components/BottomSectionDialog'

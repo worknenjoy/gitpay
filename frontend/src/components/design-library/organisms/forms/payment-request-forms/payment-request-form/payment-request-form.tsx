@@ -1,6 +1,5 @@
 import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
-import { Grid, Typography, TextField, Skeleton } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Grid, Typography, TextField } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import Field from '../../../../atoms/inputs/fields/field/field';
 import Alert from '../../../../atoms/alerts/alert/alert';

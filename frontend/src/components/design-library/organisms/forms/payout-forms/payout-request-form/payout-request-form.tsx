@@ -1,6 +1,5 @@
 import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import { Grid } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { FormattedMessage } from 'react-intl';
 import Field from '../../../../atoms/inputs/fields/field/field';
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';

@@ -1,8 +1,7 @@
 import React from 'react';
-import { Card, CardActions, CardContent, Chip, FormControl, Grid, Typography, Skeleton } from '@mui/material';
+import { Card, CardActions, CardContent, FormControl, Grid, Typography, Skeleton } from '@mui/material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { makeStyles } from '@mui/styles';
-import messages from '../../../../../areas/private/shared/messages';
 import Button from '../../../../atoms/buttons/button/button';
 import Field from '../../../../atoms/inputs/fields/field/field';
 

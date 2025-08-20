@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from 'design-library/atoms/buttons/button/button';
-import { styled } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -7,8 +7,7 @@ import {
   Toolbar,
   IconButton,
   Slide,
-  SlideProps,
-  styled
+  SlideProps
 } from '@mui/material'
 
 import {

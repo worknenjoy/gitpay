@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {
   Box,
   Container,
-  Grid,
-  styled
+  Grid
 } from '@mui/material'
 import { Pagination } from '@mui/lab'
 import ProjectCard from './project-card'

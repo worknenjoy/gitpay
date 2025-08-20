@@ -1,7 +1,6 @@
 import {
   Typography
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import { FormattedMessage } from 'react-intl';
 import React from 'react';
 import Checkboxes from '../../../../../atoms/inputs/checkboxes/checkboxes';

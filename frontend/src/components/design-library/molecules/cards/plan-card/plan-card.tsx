@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Card, CardContent, Grid, Typography, withStyles } from '@mui/material';
+import { Card, CardContent, Grid, Typography } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { TwoWheeler as Motorcycle } from '@mui/icons-material';
 import { Theme } from '@mui/material/styles';

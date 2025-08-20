@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl'
 
 import {
   Button,
-  styled,
   TextField,
   Typography
 } from '@mui/material'

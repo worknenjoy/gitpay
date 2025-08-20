@@ -7,7 +7,6 @@ import {
   Typography
 } from '@mui/material'
 
-import { styled } from '@mui/material/styles'
 import { purple } from '@mui/material/colors'
 
 const useStyles = makeStyles((theme) => ({

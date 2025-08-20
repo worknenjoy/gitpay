@@ -3,8 +3,7 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
-  Skeleton
+  ListItemText
 } from '@mui/material'
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded'

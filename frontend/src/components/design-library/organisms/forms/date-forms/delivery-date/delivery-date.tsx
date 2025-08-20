@@ -13,7 +13,6 @@ import {
 import WarningIcon from '@mui/icons-material/Warning';
 import CalendarIcon from '@mui/icons-material/CalendarToday';
 import DateIcon from '@mui/icons-material/DateRange';
-import { styled } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme) => ({
   spanText: {

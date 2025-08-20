@@ -15,7 +15,6 @@ import {
   CardContent,
   CardActions
 } from '@mui/material'
-import { styled } from '@mui/material/styles'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import ReactPlaceholder from 'react-placeholder'

@@ -9,8 +9,7 @@ import {
   withStyles,
   Button,
   Link,
-  Typography,
-  Skeleton
+  Typography
 } from "@mui/material";
 
 import {

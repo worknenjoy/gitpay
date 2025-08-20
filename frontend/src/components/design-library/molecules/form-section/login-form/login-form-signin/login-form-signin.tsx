@@ -8,7 +8,6 @@ import {
 import ReCAPTCHA from 'react-google-recaptcha'
 import Checkbox from '@mui/material/Checkbox'
 import ProviderLoginButtons from '../../../../atoms/buttons/provider-login-buttons/provider-login-buttons'
-import { styled } from '@mui/material/styles'
 
 import api from '../../../../../../consts'
 

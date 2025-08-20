@@ -12,7 +12,6 @@ import {
   Typography,
   IconButton,
   Tooltip,
-  styled,
   Link
 } from '@mui/material'
 import slugify from '@sindresorhus/slugify'
