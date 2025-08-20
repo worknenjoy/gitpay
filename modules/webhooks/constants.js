@@ -144,7 +144,7 @@ const CURRENCIES = {
   htg: 'G',
   bzd: 'BZ$',
   kyd: 'CI$',
-  sgd: 'S$',
+  sgd: 'S$'
   // Add more as needed
 };
 
