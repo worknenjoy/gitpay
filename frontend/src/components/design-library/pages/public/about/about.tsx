@@ -8,8 +8,8 @@ import {
   ListItemIcon,
   Avatar,
   Container,
-} from '@material-ui/core'
-import { AccountBalanceWallet, Work, Apps, Assignment, GroupWork } from '@material-ui/icons'
+} from '@mui/material'
+import { AccountBalanceWallet, Work, Apps, Assignment, GroupWork } from '@mui/icons-material'
 import { useIntl, FormattedMessage } from 'react-intl'
 import messages from '../../../../areas/public/features/welcome/legacy/messages'
 const freelancerImage = require('images//collections/collection-flat-community.svg')
@@ -22,7 +22,7 @@ import {
   ResponsiveImage,
   Section
 } from '../home/CommonStyles'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import PublicBase from '../../../templates/base/public-base/public-base'
 
 const useStyles = makeStyles((theme) => ({

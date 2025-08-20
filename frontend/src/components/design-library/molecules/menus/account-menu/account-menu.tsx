@@ -9,7 +9,7 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   LibraryBooks,
   Tune,
@@ -21,7 +21,7 @@ import {
   AccountBox as AccountIcon,
   AccountBalance,
   Payment as PaymentIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { StyledAvatar } from '../../../organisms/layouts/topbar/TopbarStyles';
 
 const AccountMenu = ({

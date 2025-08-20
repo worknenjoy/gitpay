@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import ImportIssueButton from '../../../organisms/layouts/topbar/import-issue';
 import ImportIssueDialog from '../../../organisms/layouts/topbar/import-issue-dialog';
 import ProfileAccountMenu from '../../../molecules/menus/profile-account-menu/profile-account-menu';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import { FormattedMessage } from 'react-intl';
-import { Grid } from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { Grid } from '@mui/material';
+import { makeStyles, Theme } from '@mui/styles';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles<Theme>((theme) => ({

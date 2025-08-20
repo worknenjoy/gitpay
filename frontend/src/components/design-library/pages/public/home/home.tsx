@@ -8,14 +8,14 @@ import {
   ListItemText,
   ListItemIcon,
   Button,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import {
   Work,
   Archive,
   CardMembership,
   BugReport
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import { useIntl, FormattedMessage } from 'react-intl'
 import { useHistory } from 'react-router-dom'
@@ -35,7 +35,7 @@ import {
   HeroContent,
   HeroActions
 } from './CommonStyles'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import PublicBase from '../../../templates/base/public-base/public-base'
 
 
