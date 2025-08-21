@@ -2,8 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 import { withRouter } from 'react-router-dom'
-import ReactPlaceholder from 'react-placeholder'
-
 import {
   Table,
   TableHead,
@@ -15,7 +13,8 @@ import {
   Typography,
   withStyles,
   Paper,
-  IconButton
+  IconButton,
+  Skeleton
 } from '@mui/material'
 import {
   FirstPage as FirstPageIcon,
@@ -195,68 +194,71 @@ class CustomPaginationActionsTable extends React.Component {
     }
 
     const TableRowPlaceholder = (
-      [0,1,2,3,4].map(() => (
-      <TableRow>
-        { [0,1,2,3,4].map(() => (
-          <TableCell>
-            <div style={{ width: 80 }}>
-              <ReactPlaceholder showLoadingAnimation type="text" rows={1} ready={transfers.completed} />
-            </div>
-          </TableCell>
-        ))}
-      </TableRow>
+      [0,1,2,3,4].map((_, rIdx) => (
+        <TableRow key={`ph-${rIdx}`}>
+          {[0,1,2,3,4].map((_, cIdx) => (
+            <TableCell key={`phc-${cIdx}`}>
+              <div style={{ width: 80 }}>
+                <Skeleton variant="text" />
+              </div>
+            </TableCell>
+          ))}
+        </TableRow>
       ))
     );
 
     return (
       <Paper className={classes.root}>
-        
-          <div className={classes.tableWrapper}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  {tableHead.map(t =>
-                    <TableCell>
-                      {t}
-                    </TableCell>
-                  )}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-              <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation customPlaceholder={TableRowPlaceholder} rows={10} ready={transfers.completed}>
-                {transfers?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                  return (
-                    <TableRow key={n.id}>
-                      {n.map(p =>
-                        <TableCell component="th" scope="row" style={{ padding: 10, position: 'relative' }}>
-                          {p}
-                        </TableCell>
-                      )}
-                    </TableRow>
-                  )
-                })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 48 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
+        <div className={classes.tableWrapper}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                {tableHead.map(t =>
+                  <TableCell>
+                    {t}
+                  </TableCell>
                 )}
-                </ReactPlaceholder>
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    colSpan={3}
-                    count={transfers?.data?.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onChangePage={(e, page) => this.handleChangePage(e, page)}
-                    onChangeRowsPerPage={(e, page) => this.handleChangeRowsPerPage(e, page)}
-                    Actions={TablePaginationActionsWrapped}
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </div>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {!transfers.completed ? (
+                <>{TableRowPlaceholder}</>
+              ) : (
+                <>
+                  {transfers?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                    return (
+                      <TableRow key={n.id}>
+                        {n.map(p =>
+                          <TableCell component="th" scope="row" style={{ padding: 10, position: 'relative' }}>
+                            {p}
+                          </TableCell>
+                        )}
+                      </TableRow>
+                    )
+                  })}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 48 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </>
+              )}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  colSpan={3}
+                  count={transfers?.data?.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onChangePage={(e, page) => this.handleChangePage(e, page)}
+                  onChangeRowsPerPage={(e, page) => this.handleChangeRowsPerPage(e, page)}
+                  Actions={TablePaginationActionsWrapped}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </div>
       </Paper>
     )
   }

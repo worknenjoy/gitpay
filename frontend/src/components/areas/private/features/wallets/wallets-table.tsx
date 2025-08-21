@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl'
 import { useHistory } from 'react-router-dom'
-import ReactPlaceholder from 'react-placeholder'
-
 import {
   Table,
   TableHead,
@@ -13,7 +11,8 @@ import {
   Typography,
   withStyles,
   Paper,
-  IconButton
+  IconButton,
+  Skeleton
 } from '@mui/material'
 import {
   FirstPage as FirstPageIcon,
@@ -163,14 +162,12 @@ const CustomPaginationActionsTable = (props) => {
 
   const TableRowPlaceholder = (
     <>
-      {[0,1,2,3,4,5,6].map(() => (
-        <TableRow>
-          { [0,1,2,3,4,5,6].map(() => (
-            <TableCell>
+      {[0,1,2,3,4,5,6].map((_, idx) => (
+        <TableRow key={idx}>
+          {[0,1,2,3,4,5,6].map((_, cidx) => (
+            <TableCell key={cidx}>
               <div style={{ width: 80 }}>
-                <ReactPlaceholder showLoadingAnimation type="text" rows={1} ready={walletOrders.completed}>
-                  <div style={{ width: 80 }}></div>
-                </ReactPlaceholder>
+                <Skeleton variant="text" animation="wave" />
               </div>
             </TableCell>
           ))}
@@ -205,24 +202,28 @@ const CustomPaginationActionsTable = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-          <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation customPlaceholder={TableRowPlaceholder} ready={ walletOrders.completed } >
-            { walletOrders?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-              return (
-                <TableRow key={ n.id }>
-                  { n.map( p => 
-                    <TableCell component="th" scope="row" style={{ padding: 10, position: 'relative' }}>
-                      {p}    
-                    </TableCell>
-                  )}
-                </TableRow>
-              )
-            }) }
-            { emptyRows > 0 && (
-              <TableRow style={ { height: 48 * emptyRows } }>
-                <TableCell colSpan={ 6 } />
-              </TableRow>
-            ) }
-            </ReactPlaceholder>
+            {!walletOrders.completed ? (
+              <>{TableRowPlaceholder}</>
+            ) : (
+              <>
+                { walletOrders?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                  return (
+                    <TableRow key={ n.id }>
+                      { n.map( p => 
+                        <TableCell component="th" scope="row" style={{ padding: 10, position: 'relative' }}>
+                          {p}    
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  )
+                }) }
+                { emptyRows > 0 && (
+                  <TableRow style={ { height: 48 * emptyRows } }>
+                    <TableCell colSpan={ 6 } />
+                  </TableRow>
+                ) }
+              </>
+            )}
           </TableBody>
         </Table>
       </div>

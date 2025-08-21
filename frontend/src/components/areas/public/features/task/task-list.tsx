@@ -7,11 +7,11 @@ import {
   Tab,
   Typography,
   withStyles,
+  Skeleton
 } from '@mui/material'
 import { tableHeaderDefault, tableHeaderWithProject } from '../../../../shared/table-metadata/task-header-metadata'
 import ProjectListSimple from 'design-library/molecules/cards/project-card/project-list-simple'
 import { Breadcrumb } from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
-import ReactPlaceholder from 'react-placeholder'
 
 const styles = theme => ({
   card: {},
@@ -303,41 +303,62 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
           </div>
         }
         { isOrganizationPage &&
-        <ReactPlaceholder ready={organization.completed} type='media' rows={2}>
-          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
-            <FormattedMessage
-              id='task.list.org.headline'
-              defaultMessage='Organization'
-            />
-          </Typography>
-          <Typography variant='h3' component='h2'>
-            { organizationData.name }
-          </Typography>
-          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
-            <FormattedMessage
-              id='task.list.org.projects.headline'
-              defaultMessage='Projects'
-            />
-          </Typography>
-          <ProjectListSimple 
-            projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
-            listProjects={listProjects}
-            user={user}
-          />
-        </ReactPlaceholder>
+          (
+            !organization.completed ? (
+              <>
+                <Skeleton variant="text" animation="wave" width="60%" />
+                <Skeleton variant="text" animation="wave" width="40%" />
+              </>
+            ) : (
+              <Typography variant='h5' component='h2' style={{ marginTop: 20 }}>
+                <FormattedMessage
+                  id='task.list.org.headline'
+                  defaultMessage='Organization'
+                />
+              </Typography>
+            )
+          )
         }
-        { isProjectPage &&
-          <ReactPlaceholder ready={project.completed} type='text' rows={2}>
+        { isOrganizationPage &&
+          organization.completed &&
+          <>
+            <Typography variant='h3' component='h2'>
+              { organizationData.name }
+            </Typography>
             <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
               <FormattedMessage
-                id='task.list.headline'
-                defaultMessage='Project'
+                id='task.list.org.projects.headline'
+                defaultMessage='Projects'
               />
             </Typography>
-            <Typography variant='h3' component='h2'>
-              { project.data.name }
-            </Typography>
-          </ReactPlaceholder>
+            <ProjectListSimple 
+              projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
+              listProjects={listProjects}
+              user={user}
+            />
+          </>
+        }
+        { isProjectPage &&
+          (
+            !project.completed ? (
+              <>
+                <Skeleton variant="text" animation="wave" width="60%" />
+                <Skeleton variant="text" animation="wave" width="40%" />
+              </>
+            ) : (
+              <Typography variant='h5' component='h2' style={{ marginTop: 20 }}>
+                <FormattedMessage
+                  id='task.list.headline'
+                  defaultMessage='Project'
+                />
+              </Typography>
+            )
+          )
+        }
+        { isProjectPage && project.completed &&
+          <Typography variant='h3' component='h2'>
+            { project.data.name }
+          </Typography>
         }
         { isProfilePage &&
         <Tabs

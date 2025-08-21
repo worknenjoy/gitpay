@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import ReactPlaceholder from 'react-placeholder'
-import { Button, createStyles, styled, Theme } from '@mui/material'
+import { Button, createStyles, styled, Theme, Skeleton } from '@mui/material'
 import { formatCurrency } from '../../../../../../../../utils/format-currency'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
 
@@ -78,12 +77,14 @@ const PaymentMethodWalletTab = ({
   return (
     <div>
       <div className="payment-method-wallet-tab">
-        <ReactPlaceholder type='text' ready={wallet?.completed} rows={1} color='#E0E0E0'>
+        {!wallet?.completed ? (
+          <Skeleton variant="rectangular" height={150} width="100%" animation="wave" />
+        ) : (
           <BalanceCard
             name={wallet?.data.name}
             balance={wallet?.data.balance}
           />
-        </ReactPlaceholder>
+        )}
       </div>
       <Button
         disabled={!price || !wallet?.data?.balance || (wallet?.data?.balance && isGreaterThan(priceAfterFee, wallet?.data?.balance))}

@@ -48,36 +48,39 @@ const PayoutSetingsBankAccount = ({
 
   return (
     <Skeleton variant="rectangular" width="100%" height={118}>
-      <ReactPlaceholder type="media" rows={7} ready={completed}>
-        {!data?.account_id ? (
+      {
+        completed ? (
           <>
-            {!country?.code ? (
+            {!data?.account_id ? (
               <>
-                <EmptyBankAccount onActionClick={handleCountryPicker} />
-                <CountryPicker
-                  open={openCountryPicker}
-                  onClose={handleCountryPickerClose}
-                  onSelectCountry={handleSelectCountry}
-                />
+                {!country?.code ? (
+                  <>
+                    <EmptyBankAccount onActionClick={handleCountryPicker} />
+                    <CountryPicker
+                      open={openCountryPicker}
+                      onClose={handleCountryPickerClose}
+                      onSelectCountry={handleSelectCountry}
+                    />
+                  </>
+                ) : (
+                  <EmptyBase
+                    actionText={<FormattedMessage id="payout.settings.choose.country" defaultMessage="Choose country and continue" />}
+                    text={country.label}
+                    onActionClick={() => saveCountryAndContinue(country.code)}
+                    icon={<img width={48} alt={country.label} src={getCountryImage(country.image)} />}
+                    completed={completed}
+                  />
+                )
+                }
               </>
             ) : (
-              <EmptyBase
-                actionText={<FormattedMessage id="payout.settings.choose.country" defaultMessage="Choose country and continue" />}
-                text={country.label}
-                onActionClick={() => saveCountryAndContinue(country.code)}
-                icon={<img width={48} alt={country.label} src={getCountryImage(country.image)} />}
-                completed={completed}
-              />
-            )
-            }
+              <BankAccountTabs>
+                {children}
+              </BankAccountTabs>
+            )}
           </>
-        ) : (
-          <BankAccountTabs>
-            {children}
-          </BankAccountTabs>
-        )}
-
-      </ReactPlaceholder>
+        ) : null
+      }
     </Skeleton>
   );
 }

@@ -108,12 +108,9 @@ class TaskHeader extends React.Component {
   render() {
     const { classes, task, user, history, handleDeleteTask, taskOwner, reportTask, updateTask } = this.props
 
-    const headerPlaceholder = (
-      <div className='line-holder'>
-        <RectShape
-          color='white'
-          style={{ marginLeft: 20, marginTop: 20, width: 300, height: 20 }}
-        />
+    const headerSkeleton = (
+      <div style={{ marginTop: 8 }}>
+        <Skeleton variant="text" width="60%" height={32} />
       </div>
     )
 
@@ -121,90 +118,92 @@ class TaskHeader extends React.Component {
       <TaskHeaderContainer>
         <Grid xs={12} sm={12} md={12}>
           <Breadcrumb task={task} user={user} />
-          <ReactPlaceholder customPlaceholder={headerPlaceholder} showLoadingAnimation
-            ready={task.completed}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant='h5' gutterBottom>
-                <strong>
-                  {task.data.title}
-                </strong>
-              </Typography>
-              <IconButton onClick={this.handleMoreButton}>
-                <MoreIcon />
-              </IconButton>
-            </div>
-            <Menu
-              anchorEl={this.state.anchorEl}
-              open={Boolean(this.state.anchorEl)}
-              onClose={() => this.setState({ anchorEl: null })}
-            >
-              {taskOwner &&
-                <MenuItem onClick={async () => {
-                  await updateTask({ id: task.data.id, not_listed: !task.data.not_listed })
-                  this.handleCloseMoreButton()
-                }}>
-                  <ListItemIcon>
-                    { task.data.not_listed ?  <VisibilityIcon size='small' /> : <VisibilityOffIcon size='small' /> }
-                  </ListItemIcon>
-                  <ListItemText primary={ task.data.not_listed ? 'Change to public' : 'Change to not listed'} />
-                </MenuItem>
-              }
-              <MenuItem onClick={() => {
-                this.setState({ anchorEl: null, reportDialog: true})
-              }}>
-                <ListItemIcon>
-                  <ReportIcon size='small' />
-                </ListItemIcon>
-                <ListItemText primary='Report' />
-              </MenuItem>
-              {taskOwner &&
-                <MenuItem onClick={() => {
-                  this.setState({ anchorEl: null, deleteDialog: true })
-
-                }}>
-                  <ListItemIcon>
-                    <DeleteIcon size='small' />
-                  </ListItemIcon>
-                  <ListItemText primary='Delete' />
-                </MenuItem>
-              }
-            </Menu>
-            <TaskReport
-              taskData={task.data}
-              reportTask={reportTask}
-              user={user}
-              visible={this.state.reportDialog}
-              onClose={() => this.setState({ reportDialog: false })}
-              onOpen={() => this.setState({ reportDialog: true })}
-            />
-            <Dialog
-              open={this.state.deleteDialog}
-              onClose={this.handleDeleteDialogClose}
-              aria-labelledby='form-dialog-title'
-            >
-
-              <div>
-                <DialogTitle id='form-dialog-title'>
-                  <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this issue?' />
-                </DialogTitle>
-                <DialogContent>
-                  <Typography type='caption'>
-                    <FormattedMessage id='task.bounties.delete.caution' defaultMessage='If you delete this issue, all the records related about orders and payments will be lost' />
-                  </Typography>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={this.handleDeleteDialogClose} color='primary'>
-                    <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
-                  </Button>
-                  <Button onClick={handleDeleteTask} variant='contained' color='secondary' >
-                    <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
-                  </Button>
-                </DialogActions>
+          {!task.completed ? (
+            headerSkeleton
+          ) : (
+            <>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant='h5' gutterBottom>
+                  <strong>
+                    {task.data.title}
+                  </strong>
+                </Typography>
+                <IconButton onClick={this.handleMoreButton}>
+                  <MoreIcon />
+                </IconButton>
               </div>
+              <Menu
+                anchorEl={this.state.anchorEl}
+                open={Boolean(this.state.anchorEl)}
+                onClose={() => this.setState({ anchorEl: null })}
+              >
+                {taskOwner &&
+                  <MenuItem onClick={async () => {
+                    await updateTask({ id: task.data.id, not_listed: !task.data.not_listed })
+                    this.handleCloseMoreButton()
+                  }}>
+                    <ListItemIcon>
+                      { task.data.not_listed ?  <VisibilityIcon size='small' /> : <VisibilityOffIcon size='small' /> }
+                    </ListItemIcon>
+                    <ListItemText primary={ task.data.not_listed ? 'Change to public' : 'Change to not listed'} />
+                  </MenuItem>
+                }
+                <MenuItem onClick={() => {
+                  this.setState({ anchorEl: null, reportDialog: true})
+                }}>
+                  <ListItemIcon>
+                    <ReportIcon size='small' />
+                  </ListItemIcon>
+                  <ListItemText primary='Report' />
+                </MenuItem>
+                {taskOwner &&
+                  <MenuItem onClick={() => {
+                    this.setState({ anchorEl: null, deleteDialog: true })
 
-            </Dialog>
-          </ReactPlaceholder>
+                  }}>
+                    <ListItemIcon>
+                      <DeleteIcon size='small' />
+                    </ListItemIcon>
+                    <ListItemText primary='Delete' />
+                  </MenuItem>
+                }
+              </Menu>
+              <TaskReport
+                taskData={task.data}
+                reportTask={reportTask}
+                user={user}
+                visible={this.state.reportDialog}
+                onClose={() => this.setState({ reportDialog: false })}
+                onOpen={() => this.setState({ reportDialog: true })}
+              />
+              <Dialog
+                open={this.state.deleteDialog}
+                onClose={this.handleDeleteDialogClose}
+                aria-labelledby='form-dialog-title'
+              >
+
+                <div>
+                  <DialogTitle id='form-dialog-title'>
+                    <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this issue?' />
+                  </DialogTitle>
+                  <DialogContent>
+                    <Typography type='caption'>
+                      <FormattedMessage id='task.bounties.delete.caution' defaultMessage='If you delete this issue, all the records related about orders and payments will be lost' />
+                    </Typography>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.handleDeleteDialogClose} color='primary'>
+                      <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
+                    </Button>
+                    <Button onClick={handleDeleteTask} variant='contained' color='secondary' >
+                      <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
+                    </Button>
+                  </DialogActions>
+                </div>
+
+              </Dialog>
+            </>
+          )}
           <Typography variant='caption' style={{ display: 'inline-block', marginBottom: 20, marginRight: 0 }}>
             {task.data.provider &&
               <div>
@@ -227,11 +226,13 @@ class TaskHeader extends React.Component {
                 </a>
               </div>}
           </Typography>
-          {task.data.metadata &&
-            <ReactPlaceholder ready={task.completed}>
+          {task.data.metadata && (
+            task.completed ? (
               <TaskLabels labels={task.data.metadata.labels} />
-            </ReactPlaceholder>
-          }
+            ) : (
+              <Skeleton variant="text" width={200} />
+            )
+          )}
         </Grid>
       </TaskHeaderContainer>
     )

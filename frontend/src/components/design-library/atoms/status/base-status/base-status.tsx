@@ -2,7 +2,7 @@ import React from 'react';
 import Chip from '@mui/material/Chip';
 import { Tooltip } from '@mui/material';
 import { HelpOutline as QuestionInfoIcon } from '@mui/icons-material';
-import ReactPlaceholder from 'react-placeholder';
+import { Skeleton } from '@mui/material';
 
 type StatusListProps = {
   status: string; 
@@ -57,25 +57,29 @@ const BaseStatus = ({ status, statusList, classes, completed = true }:statusProp
   };
 
   return (
-    <ReactPlaceholder
-      type="text"
-      rows={1}
-      ready={completed}
-      showLoadingAnimation
-      style={{ width: 100, height: 32, display: 'inline-block' }}
-    >
-      {status ? 
-        <Chip 
-          size="small"
-          label={label}
-          className={classes[color]}
-          icon={icon}
-          {...extraProps}
-        /> 
-        :
-        <></>
+    <>
+      {
+        !completed ? (
+          <>
+            <Skeleton variant="text" animation="wave" width="40%" />
+          </>
+        ) : (
+          <>
+            { status ? 
+              <Chip 
+                size="small"
+                label={label}
+                className={classes[color]}
+                icon={icon}
+                {...extraProps}
+              /> 
+              :
+              <></>
+            }
+          </>
+        )
       }
-    </ReactPlaceholder>
+    </>
   );
 }
 

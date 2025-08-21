@@ -13,11 +13,11 @@ import {
   Card,
   CardMedia,
   CardContent,
-  CardActions
+  CardActions,
+  Skeleton
 } from '@mui/material'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
-import ReactPlaceholder from 'react-placeholder'
 
 const useStyles = makeStyles((theme) => ({
   row: {
@@ -223,7 +223,7 @@ const Roles = ({
     }
   }
 
-  const placeholders = Array(3).fill(null); // Define placeholders array
+  const placeholders = Array(3).fill(null);
 
   const CardListPlaceholder = (
     <>
@@ -231,17 +231,17 @@ const Roles = ({
         <Grid key={index} item xs={12} md={3} spacing={2} className={classes.rowList}>
           <Paper>
             <Card className={classes.rowContent} variant="outlined">
-                <CardMedia>
-                  <div style={{ width: '100%', height: 270, backgroundColor: 'lightgray' }} />
-                </CardMedia>
+              <CardMedia>
+                <Skeleton variant="rectangular" height={270} />
+              </CardMedia>
               <CardContent className={classes.rootLabel}>
                 <Typography variant="h5">
-                  <div style={{ width: '100%', height: '20px', backgroundColor: 'lightgray' }} />
+                  <Skeleton variant="text" />
                 </Typography>
               </CardContent>
               <CardActions className={classes.action}>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  <div style={{ width: '100%', height: '20px', backgroundColor: 'lightgray' }} />
+                  <Skeleton variant="text" />
                 </Typography>
               </CardActions>
             </Card>
@@ -262,37 +262,41 @@ const Roles = ({
         </Typography>
       </div>
       <Grid container className={classes.row} direction="row" alignItems="stretch">
-        <ReactPlaceholder customPlaceholder={CardListPlaceholder} ready={completed} showLoadingAnimation={true} style={{ padding: 5, marginBottom: 10, marginTop: 10 }}>
-          {data.map(r => (
-            <Grid key={r.id} item xs={12} md={3} spacing={2} className={classes.rowList}>
-              <Paper>
-                <Card className={classes.rowContent} variant="outlined">
-                  <CardMedia>
-                    <img src={imageMap[r.name]} alt={r.name} width={250} height={270} />
-                  </CardMedia>
-                  <CardContent className={classes.rootLabel}>
-                    <Typography variant="h5">
-                      {r.label}
-                    </Typography>
-                  </CardContent>
-                  <CardActions className={classes.action}>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      {r.description}
-                    </Typography>
-                    <Checkbox
-                      icon={<CheckBoxOutlineBlankIcon fontSize="large" style={{ color: 'transparent' }} />}
-                      checkedIcon={<CheckBoxIcon fontSize="large" />}
-                      color="primary"
-                      inputProps={{ 'aria-label': r.name }}
-                      checked={shouldBeChecked(r)}
-                      onChange={(e) => handleRoleClick(e, r)}
-                    />
-                  </CardActions>
-                </Card>
-              </Paper>
-            </Grid>
-          ))}
-        </ReactPlaceholder>
+        {!completed ? (
+          CardListPlaceholder
+        ) : (
+          <>
+            {data.map(r => (
+              <Grid key={r.id} item xs={12} md={3} spacing={2} className={classes.rowList}>
+                <Paper>
+                  <Card className={classes.rowContent} variant="outlined">
+                    <CardMedia>
+                      <img src={imageMap[r.name]} alt={r.name} width={250} height={270} />
+                    </CardMedia>
+                    <CardContent className={classes.rootLabel}>
+                      <Typography variant="h5">
+                        {r.label}
+                      </Typography>
+                    </CardContent>
+                    <CardActions className={classes.action}>
+                      <Typography variant="body2" color="textSecondary" component="p">
+                        {r.description}
+                      </Typography>
+                      <Checkbox
+                        icon={<CheckBoxOutlineBlankIcon fontSize="large" style={{ color: 'transparent' }} />}
+                        checkedIcon={<CheckBoxIcon fontSize="large" />}
+                        color="primary"
+                        inputProps={{ 'aria-label': r.name }}
+                        checked={shouldBeChecked(r)}
+                        onChange={(e) => handleRoleClick(e, r)}
+                      />
+                    </CardActions>
+                  </Card>
+                </Paper>
+              </Grid>
+            ))}
+          </>
+        )}
       </Grid>
       <div className={classes.buttons}>
         <button onClick={handleCancelClick} className={classes.cButton}>CANCEL</button>

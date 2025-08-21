@@ -6,12 +6,12 @@ import {
   Tabs,
   Tab,
   Typography,
-  withStyles
+  withStyles,
+  Skeleton
 } from '@mui/material'
 import { tableHeaderDefault, tableHeaderWithProject } from '../../../../shared/table-metadata/task-header-metadata'
 import ProjectListSimple from 'design-library/molecules/cards/project-card/project-list-simple'
 import { Breadcrumb } from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
-import ReactPlaceholder from 'react-placeholder'
 
 const styles = theme => ({
   card: {},
@@ -304,41 +304,55 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
           </div>
         }
         { isOrganizationPage &&
-        <ReactPlaceholder ready={organization.completed} type="media" rows={2}>
-          <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
-            <FormattedMessage
-              id="task.list.org.headline"
-              defaultMessage="Organization"
-            />
-          </Typography>
-          <Typography variant="h3" component="h2">
-            { organizationData.name }
-          </Typography>
-          <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
-            <FormattedMessage
-              id="task.list.org.projects.headline"
-              defaultMessage="Projects"
-            />
-          </Typography>
-          <ProjectListSimple 
-            projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
-            listProjects={listProjects}
-            user={user}
-          />
-        </ReactPlaceholder>
+          (!organization.completed ? (
+            <div>
+              <Skeleton variant="rectangular" height={100} animation="wave" />
+              <Skeleton variant="text" animation="wave" />
+            </div>
+          ) : (
+            <>
+              <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
+                <FormattedMessage
+                  id="task.list.org.headline"
+                  defaultMessage="Organization"
+                />
+              </Typography>
+              <Typography variant="h3" component="h2">
+                { organizationData.name }
+              </Typography>
+              <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
+                <FormattedMessage
+                  id="task.list.org.projects.headline"
+                  defaultMessage="Projects"
+                />
+              </Typography>
+              <ProjectListSimple 
+                projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
+                listProjects={listProjects}
+                user={user}
+              />
+            </>
+          ))
         }
         { isProjectPage &&
-          <ReactPlaceholder ready={project.completed} type="text" rows={2}>
-            <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
-              <FormattedMessage
-                id="task.list.headline"
-                defaultMessage="Project"
-              />
-            </Typography>
-            <Typography variant="h3" component="h2">
-              { project.data.name }
-            </Typography>
-          </ReactPlaceholder>
+          (!project.completed ? (
+            <div>
+              <Skeleton variant="text" animation="wave" />
+              <Skeleton variant="text" animation="wave" />
+            </div>
+          ) : (
+            <>
+              <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
+                <FormattedMessage
+                  id="task.list.headline"
+                  defaultMessage="Project"
+                />
+              </Typography>
+              <Typography variant="h3" component="h2">
+                { project.data.name }
+              </Typography>
+            </>
+          ))
         }
         { isProfilePage &&
         <Tabs
@@ -383,4 +397,5 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
   )
 }
 
+export default withRouter(withStyles(styles)(TaskList))
 export default withRouter(withStyles(styles)(TaskList))

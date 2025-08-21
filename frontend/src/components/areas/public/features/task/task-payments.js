@@ -1,5 +1,5 @@
 import React from 'react'
-import { styled } from '@mui/material/styles'
+import { makeStyles } from '@mui/material/styles'
 import { FormattedMessage } from 'react-intl'
 import Typography from '@mui/material/Typography'
 import List from '@mui/material/List'

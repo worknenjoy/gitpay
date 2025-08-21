@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactPlaceholder from 'react-placeholder';
-import { Button, Card, CardContent, CardActions, Typography, styled } from '@mui/material';
+import { Button, Card, CardContent, CardActions, Typography, styled, Skeleton } from '@mui/material';
 
 const useStyles = styled({
   root: {
@@ -34,19 +33,23 @@ const StatusCard = ({ name, status, onAdd, action, actionProps, completed }: Sta
 
     <Card className={classes.root}>
       <CardContent>
-        <ReactPlaceholder
-          showLoadingAnimation={true}
-          type="text"
-          ready={completed}
-          rows={2}
-        >
-          <Typography className={classes.name} color="textSecondary" gutterBottom>
-            {name}
-          </Typography>
-          <Typography className={classes.balance} color="primary">
-            {status}
-          </Typography>
-        </ReactPlaceholder>
+        {
+          !completed ? (
+            <>
+              <Skeleton variant="text" animation="wave" width="60%" />
+              <Skeleton variant="text" animation="wave" width="80%" />
+            </>
+          ) : (
+            <>
+              <Typography className={classes.name} color="textSecondary" gutterBottom>
+                {name}
+              </Typography>
+              <Typography className={classes.balance} color="primary">
+                {status}
+              </Typography>
+            </>
+          )
+        }
       </CardContent>
       {onAdd && action && (
         <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>

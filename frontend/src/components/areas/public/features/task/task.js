@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import MomentComponent from 'moment'
-// Replace ReactPlaceholder with Skeleton
 import ShowMoreText from 'react-show-more-text'
+import { Skeleton } from '@mui/material'
 
 import { messages } from './messages/task-messages'
 import TaskInviteCard from './task-invite-card'
@@ -29,7 +29,6 @@ import {
   MobileStepper,
   Fab,
   Collapse,
-  Skeleton // Add Skeleton import
 } from '@mui/material'
 
 import {
@@ -929,7 +928,6 @@ class Task extends Component {
             />
             {this.props.logged ?
               (
-                // Replace ReactPlaceholder with Skeleton
                 task.completed ? (
                   <TaskPaymentForm
                     classes={classes}
@@ -956,7 +954,10 @@ class Task extends Component {
                     syncTask={this.props.syncTask}
                   />
                 ) : (
-                  <Skeleton variant="rectangular" width="100%" height={100} />
+                  <>
+                    <Skeleton variant="text" animation="wave" width="80%" />
+                    <Skeleton variant="text" animation="wave" width="60%" />
+                  </>
                 )
               ) : (
                 <Collapse in={this.state.paymentForm}>

@@ -1,5 +1,5 @@
 import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
-import { Grid, Typography, TextField } from '@mui/material';
+import { Grid, Typography, TextField, Skeleton } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import Field from '../../../../atoms/inputs/fields/field/field';
 import Alert from '../../../../atoms/alerts/alert/alert';
@@ -81,22 +81,21 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           />
         </Grid>
         <Grid xs={12} md={12}>
-          <ReactPlaceholder
-            type="text"
-            rows={4}
-            ready={completed}
-            showLoadingAnimation
-          >
-            <TextField
-              fullWidth
-              variant="outlined"
-              label="Description"
-              name="description"
-              placeholder="Describe your service"
-              multiline
-              rows={4}
-            />
-          </ReactPlaceholder>
+          {
+            !completed ? (
+              <Skeleton variant="rectangular" animation="wave" width="100%" height={120} />
+            ) : (
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="Description"
+                name="description"
+                placeholder="Describe your service"
+                multiline
+                rows={4}
+              />
+            )
+          }
         </Grid>
         <Grid xs={12} md={12}>
           <Field

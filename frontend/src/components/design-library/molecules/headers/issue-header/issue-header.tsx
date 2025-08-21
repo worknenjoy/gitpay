@@ -20,6 +20,7 @@ import {
   ListItemIcon,
   ListItemText
 } from '@mui/material'
+import Skeleton from '@mui/material/Skeleton'
 
 import { FormattedMessage } from 'react-intl'
 
@@ -105,20 +106,24 @@ const IssueHeader = ({
     <TaskHeaderContainer>
       <Grid xs={12} sm={12} md={12}>
         <Breadcrumb task={task} user={user} project={project} organization={organization} />
-        <ReactPlaceholder type={'text'} rows={1} showLoadingAnimation
-          ready={task.completed} style={{ marginTop: 32, marginBottom: 26, width: '80%' }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h5" gutterBottom>
-              <strong>
-                {task.data.title}
-              </strong>
-            </Typography>
-            <IconButton onClick={handleMoreButton}>
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </ReactPlaceholder>
+        {
+          !task.completed ? (
+            <Skeleton variant="text" animation="wave" style={{ marginTop: 32, marginBottom: 26, width: '80%' }} />
+          ) : (
+            <div style={{ marginTop: 32, marginBottom: 26, width: '80%' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="h5" gutterBottom>
+                  <strong>
+                    {task.data.title}
+                  </strong>
+                </Typography>
+                <IconButton onClick={handleMoreButton}>
+                  <MoreIcon />
+                </IconButton>
+              </div>
+            </div>
+          )
+        }
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
@@ -187,32 +192,34 @@ const IssueHeader = ({
             </DialogActions>
           </div>
         </Dialog>
-        <ReactPlaceholder type={'text'} rows={1} showLoadingAnimation
-          ready={task.completed} style={{ marginTop: 20, marginBottom: 20, width: '40%' }}
-        >
-          <Typography variant="caption" style={{ display: 'inline-block', marginBottom: 20, marginRight: 0 }}>
-            {task.data.provider &&
-              <div>
-                Created on <a
-                  href={task.data.url}
-                  style={{ textDecoration: 'underline' }}
-                >
-                  {task.data.provider} <img width="12" src={task.data.provider === 'github' ? logoGithub : logoBitbucket} style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, verticalAlign: 'bottom' }} />
-                </a>
-                by {' '}
-                <a
-                  href={task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.html_url : ''}
-                >
-                  {task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.login : task.data.metadata && task.data.metadata.user}
-                  <img
-                    style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, verticalAlign: 'bottom' }}
-                    width="16"
-                    src={task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.avatar_url : ''}
-                  />
-                </a>
-              </div>}
-          </Typography>
-        </ReactPlaceholder>
+        {
+          !task.completed ? (
+            <Skeleton variant="text" animation="wave" style={{ marginTop: 20, marginBottom: 20, width: '40%' }} />
+          ) : (
+            <Typography variant="caption" style={{ display: 'inline-block', marginBottom: 20, marginRight: 0 }}>
+              {task.data.provider &&
+                <div>
+                  Created on <a
+                    href={task.data.url}
+                    style={{ textDecoration: 'underline' }}
+                  >
+                    {task.data.provider} <img width="12" src={task.data.provider === 'github' ? logoGithub : logoBitbucket} style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, verticalAlign: 'bottom' }} />
+                  </a>
+                  by {' '}
+                  <a
+                    href={task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.html_url : ''}
+                  >
+                    {task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.login : task.data.metadata && task.data.metadata.user}
+                    <img
+                      style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, verticalAlign: 'bottom' }}
+                      width="16"
+                      src={task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.avatar_url : ''}
+                    />
+                  </a>
+                </div>}
+            </Typography>
+          )
+        }
         <TaskLabels labels={task.data?.metadata?.labels} completed={task.completed} />
       </Grid>
     </TaskHeaderContainer>

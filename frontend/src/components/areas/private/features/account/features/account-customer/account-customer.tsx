@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useIntl, FormattedMessage } from 'react-intl'
-import ReactPlaceholder from 'react-placeholder'
+import { Skeleton } from '@mui/material'
 import {
   Paper,
   Grid,
@@ -49,37 +49,39 @@ type FieldProps = {
 export const Field = ({ ref, name, value, label, type = 'text', required = false, defaultValue, placeholder, disabled, help, inputComponent, onChange, completed }: FieldProps) => {
   return (
     <FormControl style={{ width: '100%' }}>
-       <ReactPlaceholder
-          type="text"
-          rows={1}
-          ready={completed}
-      >
-      <InputLabel
-        htmlFor={name}
-      >
-        {label}
-      </InputLabel>
-      <Input
-        ref={ref}
-        id={name}
-        name={name}
-        type={type}
-        required={required}
-        defaultValue={defaultValue}
-        value={value}
-        fullWidth
-        style={{ width: '100%' }}
-        placeholder={placeholder}
-        disabled={disabled}
-        inputComponent={inputComponent}
-        onChange={onChange}
-      />
-      {help &&
-        <FormHelperText id="component-helper-text">
-          <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
-        </FormHelperText>
+      {
+        !completed ? (
+          <Skeleton variant="text" animation="wave" width="100%" />
+        ) : (
+          <>
+          <InputLabel
+            htmlFor={name}
+          >
+            {label}
+          </InputLabel>
+          <Input
+            ref={ref}
+            id={name}
+            name={name}
+            type={type}
+            required={required}
+            defaultValue={defaultValue}
+            value={value}
+            fullWidth
+            style={{ width: '100%' }}
+            placeholder={placeholder}
+            disabled={disabled}
+            inputComponent={inputComponent}
+            onChange={onChange}
+          />
+          {help &&
+            <FormHelperText id="component-helper-text">
+              <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
+            </FormHelperText>
+          }
+          </>
+        )
       }
-      </ReactPlaceholder>
     </FormControl>
   )
 }
@@ -198,27 +200,27 @@ const CustomerDetails = ({
                     <Field name="address[state]" label="State" value={customerData['address[state]']} defaultValue={customer.data.address?.state} completed={customer.completed} />
                   </Grid>
                    <Grid xs={12} md={4}>
-                    <ReactPlaceholder
-                      type="text"
-                      rows={1}
-                      ready={customer.completed}
-                    >
-                      <Select
-                        native
-                        name="address[country]"
-                        value={customerData['address[country]']}
-                        input={<Input id="address-country" />}
-                        fullWidth
-                        style={{ marginTop: 16 }}
-                      >
-                        <option value="">
-                          {intl.formatMessage({ id: 'select.country', defaultMessage: 'Select country' })}
-                        </option>
-                        {countryCodesFull.map((c, index) => (
-                          <option key={index} value={c.code} selected={customer.data.address?.country === c.code}>{c.country}</option>
-                        ))}
-                      </Select>
-                    </ReactPlaceholder>
+                    {
+                      !customer.completed ? (
+                        <Skeleton variant="text" animation="wave" width="100%" />
+                      ) : (
+                        <Select
+                          native
+                          name="address[country]"
+                          value={customerData['address[country]']}
+                          input={<Input id="address-country" />}
+                          fullWidth
+                          style={{ marginTop: 16 }}
+                        >
+                          <option value="">
+                            {intl.formatMessage({ id: 'select.country', defaultMessage: 'Select country' })}
+                          </option>
+                          {countryCodesFull.map((c, index) => (
+                            <option key={index} value={c.code} selected={customer.data.address?.country === c.code}>{c.country}</option>
+                          ))}
+                        </Select>
+                      )
+                    }
                   </Grid>
                 </Grid>
               </fieldset>

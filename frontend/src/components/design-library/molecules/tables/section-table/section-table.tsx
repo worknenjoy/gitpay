@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import ReactPlaceholder from 'react-placeholder';
 import { makeStyles } from '@mui/styles'
+import { Skeleton } from '@mui/material'
 
 import {
   Table,
@@ -206,9 +206,13 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
           {[0, 1, 2, 3, 4, 5].map(() => (
             <TableCell className={classes.tableCell}>
               <div style={{ width: 80, padding: '8px 4px' }}>
-                <ReactPlaceholder showLoadingAnimation type="text" rows={1} ready={tableData.completed}>
-                  <div />
-                </ReactPlaceholder>
+                {
+                  !tableData.completed ? (
+                    <Skeleton variant="text" animation="wave" />
+                  ) : (
+                    <div />
+                  )
+                }
               </div>
             </TableCell>
           ))}
@@ -223,26 +227,34 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
         <Table className={classes.table}>
           <TableHeadCustom />
           <TableBody>
-            <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation customPlaceholder={TableRowPlaceholder} ready={tableData.completed}>
-                {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n) => (
-                <TableRow key={n.id}>
-                  {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
-                  <TableCell key={fieldId} className={classes.tableCell}>
-                    <ReactPlaceholder showLoadingAnimation type="text" rows={1} ready={tableData.completed}>
-                    <div>
-                      {customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](n) : n[fieldId]}
-                    </div>
-                    </ReactPlaceholder>
-                  </TableCell>
-                  ))}
-                </TableRow>
-                ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 48 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </ReactPlaceholder>
+            {
+              !tableData.completed ? (
+                <TableRowPlaceholder />
+              ) : (
+                sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n) => (
+                  <TableRow key={n.id}>
+                    {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
+                    <TableCell key={fieldId} className={classes.tableCell}>
+                      {
+                        !tableData.completed ? (
+                          <Skeleton variant="text" animation="wave" />
+                        ) : (
+                          <div>
+                            {customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](n) : n[fieldId]}
+                          </div>
+                        )
+                      }
+                    </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              )
+            }
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 48 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
           </TableBody>
           <TableFooter>
             <TableRow>

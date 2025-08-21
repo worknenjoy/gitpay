@@ -47,34 +47,44 @@ const IssueContent = ({ className, user, project, organization, updateTask, repo
         <FormattedMessage id="task.info.description" defaultMessage="Description" />
       </Typography>
       <Skeleton variant="text" width="100%" height={118} animation="wave" />
-      <ReactPlaceholder showLoadingAnimation type={'text'} rows={5} ready={task.completed}>
-        <Typography variant="body1" style={{ marginBottom: 40 }} className={`${classes.issueContent} ${className || ''}`}>
-          <ShowMoreText
-            lines={8}
-            more={
-              <Button
-                size="small"
-                variant="outlined"
-              >
-                <FormattedMessage id="task.description.more" defaultMessage="Show more" />
-                <ExpandMore />
-              </Button>
-            }
-            less={
-              <Button
-                size="small"
-                variant="outlined"
-              >
-                <FormattedMessage id="task.description.less" defaultMessage="Show less" />
-                <ExpandLess />
-              </Button>
-            }
-          >
-            {task.data.description && parse(marked(task.data.description))}
-          </ShowMoreText>
+      {
+        !task.completed ? (
+          <>
+            <Skeleton variant="text" animation="wave" width="100%" />
+            <Skeleton variant="text" animation="wave" width="100%" />
+            <Skeleton variant="text" animation="wave" width="100%" />
+            <Skeleton variant="text" animation="wave" width="100%" />
+            <Skeleton variant="text" animation="wave" width="100%" />
+          </>
+        ) : (
+          <Typography variant="body1" style={{ marginBottom: 40 }} className={`${classes.issueContent} ${className || ''}`}>
+            <ShowMoreText
+              lines={8}
+              more={
+                <Button
+                  size="small"
+                  variant="outlined"
+                >
+                  <FormattedMessage id="task.description.more" defaultMessage="Show more" />
+                  <ExpandMore />
+                </Button>
+              }
+              less={
+                <Button
+                  size="small"
+                  variant="outlined"
+                >
+                  <FormattedMessage id="task.description.less" defaultMessage="Show less" />
+                  <ExpandLess />
+                </Button>
+              }
+            >
+              {task.data.description && parse(marked(task.data.description))}
+            </ShowMoreText>
 
-        </Typography>
-      </ReactPlaceholder>
+          </Typography>
+        )
+      }
       <IssueAuthorList
         logged={logged}
         user={user}

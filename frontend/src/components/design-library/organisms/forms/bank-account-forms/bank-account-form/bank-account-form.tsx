@@ -81,7 +81,7 @@ const BankAccountForm = ({
           />
         </Grid>
         <Grid container spacing={2}>
-          <Grid xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <CountrySelectField
               user={user}
               country={currentCountry}
@@ -89,12 +89,12 @@ const BankAccountForm = ({
               onChange={onChangeCountry}
             />
           </Grid>
-          <Grid xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <BankCurrencyField currency={currency} countries={countries} disabled={!!id} />
           </Grid>
         </Grid>
         <Grid container spacing={2}>
-          <Grid xs={12} md={12}>
+          <Grid size={{ xs: 12, md: 12 }}>
             <BankSelectField
               country={currentCountry}
               disabled={!!id}

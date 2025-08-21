@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useIntl, FormattedMessage, FormattedDate } from 'react-intl'
-import ReactPlaceholder from 'react-placeholder'
 import {
   withStyles,
   Grid,
   Button,
   Typography,
   FormControl,
-  Select
+  Select,
+  Skeleton
 } from '@mui/material'
 
 import 'react-phone-number-input/style.css'
@@ -127,12 +127,12 @@ const AccountDetails = ({
       <Grid xs={12} md={12}>
         <Grid container spacing={2}>
           <Grid xs={12} md={account && account.data.country ? 6 : 12}>
-            <ReactPlaceholder
-              showLoadingAnimation
-              type="media"
-              rows={1}
-              ready={account.completed}
-            >
+            {!account.completed ? (
+              <div>
+                <Skeleton variant="rectangular" height={150} animation="wave" />
+                <Skeleton variant="text" animation="wave" />
+              </div>
+            ) : (
               <fieldset className={classes.fieldset}>
                 <legend className={classes.legend}>
                   <Typography>
@@ -188,7 +188,7 @@ const AccountDetails = ({
                   </Grid>
                 ) : ('')}
               </fieldset>
-            </ReactPlaceholder>
+            )}
           </Grid>
           {account && account.data.country &&
           <Grid xs={12} md={6}>
@@ -198,38 +198,29 @@ const AccountDetails = ({
                   <FormattedMessage id="account.details.currency.title" defaultMessage="Currency" />
                 </Typography>
               </legend>
-              <ReactPlaceholder
-                showLoadingAnimation
-                type="text"
-                rows={1}
-                ready={countries.completed}
-              >
+              {!countries.completed ? (
+                <Skeleton variant="text" animation="wave" />
+              ) : (
                 <FormControl style={{ width: '100%' }}>
                   <Select
+                    autoWidth
                     native
-                    value={countries.data.default_currency}
-                    disabled={true}
-                    onChange={(e) => {
-
-                    }}
-                    inputProps={{
-                      name: 'country',
-                      id: 'country-native-simple'
-                    }}
+                    name="individual[dob][month]"
+                    style={{ marginRight: 8, marginTop: 16, width: '100%' }}
                   >
-                    <option aria-label="None" value="" />
-                    <option value={countries.data.default_currency}>
-                      {`${countryCurrencies.find(c => c.code.toLowerCase() === countries.data.default_currency)?.currency} - ${countryCurrencies.find(c => c.code.toLowerCase() === countries.data.default_currency)?.symbol}` || countries.data.default_currency}
-                    </option>
-                    {countries.data?.supported_bank_account_currencies &&
-                      Object.keys(countries.data.supported_bank_account_currencies).map((currency, index) => (
-                      <option key={currency} value={currency}>
-                        {`${countryCurrencies.find(c => c.code.toLowerCase() === currency)?.currency} - ${countryCurrencies.find(c => c.code.toLowerCase() === currency)?.symbol}` || currency}
-                      </option>
-                      ))}
+                    <FormattedMessage id="account.details.month" defaultMessage="Month of birth">{(msg) => <option value="" key={'default'}>{msg}</option>}</FormattedMessage>
+                    {[[1, 'Jan'], [2, 'Feb'], [3, 'Mar'], [4, 'Apr'], [5, 'May'], [6, 'June'], [7, 'Jul'], [8, 'Aug'], [9, 'Set'], [10, 'Oct'], [11, 'Nov'], [12, 'Dec']].map(
+                      (item, i) => {
+                        return (
+                          <option selected={account.data.individual && !!(item[0] === account.data.individual.dob.month || item[1] === accountData['individual[dob][month]'])} key={i} value={item[0]}>
+                            {`${item[1]}`}
+                          </option>
+                        )
+                      }
+                    )}
                   </Select>
                 </FormControl>
-              </ReactPlaceholder>
+              )}
             </fieldset>
           </Grid>}
         </Grid>
@@ -469,6 +460,15 @@ const AccountDetails = ({
                 >
                   <FormattedMessage id="account.actions.update" defaultMessage="Update Account" />
                 </Button>
+              </div>
+            </Grid>
+          </form>
+        </Grid>)}
+    </Grid>
+  )
+}
+
+export default withStyles(styles)(AccountDetails)
               </div>
             </Grid>
           </form>

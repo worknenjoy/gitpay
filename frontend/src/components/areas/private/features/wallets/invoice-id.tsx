@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ReactPlaceholder from 'react-placeholder';
+import { Skeleton } from '@mui/material';
 
 export const InvoiceId = ({ walletOrderId, fetchWalletOrder }) => {
   const [invoiceNumber, setInvoiceNumber] = useState(0);
@@ -15,9 +15,13 @@ export const InvoiceId = ({ walletOrderId, fetchWalletOrder }) => {
 
   return (
     <div>
-      <ReactPlaceholder type="text" ready={!!invoiceNumber} rows={1} color="#E0E0E0">
-        {invoiceNumber}
-      </ReactPlaceholder>
+      {
+        !invoiceNumber ? (
+          <Skeleton variant="text" animation="wave" width={120} />
+        ) : (
+          invoiceNumber
+        )
+      }
     </div>
   );
 };

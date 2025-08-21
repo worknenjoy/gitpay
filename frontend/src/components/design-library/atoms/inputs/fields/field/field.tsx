@@ -1,7 +1,6 @@
 import React from 'react'
-import { FormControl, Input, InputLabel, FormHelperText } from '@mui/material'
+import { FormControl, Input, InputLabel, FormHelperText, Skeleton } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
-import ReactPlaceholder from 'react-placeholder'
 
 type FieldProps = {
   name: string,
@@ -30,36 +29,40 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>((
 ) => {
   return (
     <FormControl style={{ width: '100%' }}>
-      <ReactPlaceholder type="text" rows={1} ready={completed} style={{margin: '20px 0'}} showLoadingAnimation>
-        <>
-          <InputLabel htmlFor={name}>
-            {label}
-          </InputLabel>
-          <Input
-            inputRef={ref}
-            id={name}
-            name={name}
-            type={type}
-            required={required}
-            defaultValue={defaultValue}
-            value={value}
-            fullWidth
-            style={{ width: '100%' }}
-            placeholder={placeholder}
-            disabled={disabled}
-            inputComponent={inputComponent}
-            onChange={onChange}
-            endAdornment={endAdornment}
-            error={error}
-            inputProps={{...inputProps, ...(type === 'number' ? { min, max } : {})}}
-          />
-          {help &&
-            <FormHelperText id="component-helper-text">
-              <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
-            </FormHelperText>
-          }
-        </>
-      </ReactPlaceholder>
+      {
+        !completed ? (
+          <Skeleton variant="text" animation="wave" width="100%" style={{ margin: '20px 0' }} />
+        ) : (
+          <>
+            <InputLabel htmlFor={name}>
+              {label}
+            </InputLabel>
+            <Input
+              inputRef={ref}
+              id={name}
+              name={name}
+              type={type}
+              required={required}
+              defaultValue={defaultValue}
+              value={value}
+              fullWidth
+              style={{ width: '100%' }}
+              placeholder={placeholder}
+              disabled={disabled}
+              inputComponent={inputComponent}
+              onChange={onChange}
+              endAdornment={endAdornment}
+              error={error}
+              inputProps={{...inputProps, ...(type === 'number' ? { min, max } : {})}}
+            />
+            {help &&
+              <FormHelperText id="component-helper-text">
+                <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
+              </FormHelperText>
+            }
+          </>
+        )
+      }
     </FormControl>
   )
 })

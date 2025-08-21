@@ -430,11 +430,13 @@ class TaskTabs extends React.Component {
               <FormattedMessage id='task.info.description' defaultMessage='Description' />
             </Typography>
             <Typography variant='body2' align='left' gutterBottom>
-              <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
+              {!task.completed ? (
+                <Skeleton variant="rectangular" height={200} />
+              ) : (
                 <PlaceholderDiv className={ classes.contentBody }>
                   { task.data.metadata && task.data.metadata.issue && task.data.metadata.issue.body && renderHTML(marked(task.data.metadata.issue.body)) }
                 </PlaceholderDiv>
-              </ReactPlaceholder>
+              )}
             </Typography>
           </Card>
         </TabContainer>
@@ -571,5 +573,4 @@ TaskTabs.propTypes = {
   messageTask: PropTypes.func
 }
 
-export default injectIntl(withStyles(styles)(TaskTabs))
 export default injectIntl(withStyles(styles)(TaskTabs))

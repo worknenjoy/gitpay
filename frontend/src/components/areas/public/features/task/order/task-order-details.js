@@ -4,10 +4,9 @@ import {
   Chip,
   Drawer,
   Typography,
-  Button
+  Button,
+  Skeleton
 } from '@mui/material'
-import ReactPlaceholder from 'react-placeholder'
-
 import MomentComponent from 'moment'
 
 const TaskOrderDetails = ({ open, order, onClose, onCancel }) => {
@@ -27,7 +26,14 @@ const TaskOrderDetails = ({ open, order, onClose, onCancel }) => {
           <Typography type='caption'>
             <FormattedMessage id='task.bounties.order.details.message' defaultMessage='We have here more info about your order' />
           </Typography>
-          <ReactPlaceholder type='text' rows={5} ready={completed} showLoadingAnimation={true}>
+          {!completed ? (
+            <div style={{ marginTop: 10 }}>
+              <Skeleton variant="text" />
+              <Skeleton variant="text" />
+              <Skeleton variant="text" />
+              <Skeleton variant="text" />
+            </div>
+          ) : (
             <div style={{ display: 'flex', flexWrap: 'wrap', marginTop: 10, justifyContent: 'space-between' }}>
               <div style={{ marginBottom: 20, width: '30%', marginRight: 20 }}>
                 <Typography variant='body1'>
@@ -90,7 +96,7 @@ const TaskOrderDetails = ({ open, order, onClose, onCancel }) => {
                 </React.Fragment>
               }
             </div>
-          </ReactPlaceholder>
+          )}
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           {data && data.status !== 'canceled' && data.paypal && (data.paypal.status === 'APPROVED' || data.paypal.status === 'COMPLETED') &&

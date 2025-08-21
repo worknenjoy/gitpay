@@ -1,9 +1,8 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Typography, Skeleton } from '@mui/material';
 import useStyles from './fieldset.styles';
-import ReactPlaceholder from 'react-placeholder';
 
-const Fieldset = ({ children, completed, legend, rows = 1 }) => {
+const Fieldset = ({ children, completed, legend }) => {
   const classes = useStyles();
   return (
     <fieldset className={classes.fieldset}>
@@ -12,16 +11,13 @@ const Fieldset = ({ children, completed, legend, rows = 1 }) => {
           {legend}
         </Typography>
       </legend>
-      <ReactPlaceholder
-        showLoadingAnimation
-        type="text"
-        rows={rows}
-        ready={completed}
-        lineSpacing={24}
-        className={classes.placeholder}
-      >
-        {children}
-      </ReactPlaceholder>
+      {
+        !completed ? (
+          <Skeleton variant="text" animation="wave" width="100%" />
+        ) : (
+          children
+        )
+      }
     </fieldset>
   );
 }
