@@ -914,7 +914,7 @@ class Task extends Component {
           <TopBarContainer />
         )}
         <Grid container style={{ marginBottom: 4 }} alignItems="stretch">
-          <Grid xs={12} sm={12} md={8} style={{ marginBottom: 40 }}>
+          <Grid size={{ xs: 12, sm: 12, md: 8 }} style={{ marginBottom: 40 }}>
             <IssueContent
               className={classes.issueContent}
               logged={this.props.logged.data.id}
@@ -967,7 +967,7 @@ class Task extends Component {
                 </Collapse>
               )}
           </Grid>
-          <Grid className={classes.sidebar} item xs={12} sm={12} md={4}>
+          <Grid className={classes.sidebar} item size={{ xs: 12, sm: 12, md: 4 }}>
             {task.values && task.values.available > 0 &&
               <div style={{ textAlign: 'center', marginTop: 10 }}>
                 <Typography variant='caption' style={{ textTransform: 'uppercase' }}>

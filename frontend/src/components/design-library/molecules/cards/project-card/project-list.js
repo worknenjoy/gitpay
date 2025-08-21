@@ -80,11 +80,8 @@ const ProjectList = ({ listProjects, projects }) => {
           { currentProjects && currentProjects.length > 0 && currentProjects
             .map(project => (
               <Grid
-                item
                 key={ project.id }
-                lg={ 4 }
-                md={ 6 }
-                xs={ 12 }
+                size={{ lg: 4, md: 6, xs: 12 }}
               >
                 <ProjectCard
                   className={ classes.projectCard }
@@ -111,6 +108,9 @@ const ProjectList = ({ listProjects, projects }) => {
       }
     </Container>
   )
+}
+
+export default ProjectList
 }
 
 export default ProjectList

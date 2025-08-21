@@ -116,7 +116,7 @@ export default function ContactRecruiterForm (props) {
         </Typography>
         <form className={ classes.form } noValidate onChange={ onChange } onSubmit={ onSubmit } onBlur={ onBlur }>
           <Grid container spacing={ 2 }>
-            <Grid xs={ 12 } sm={ 6 }>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 error={ formErrors.name }
                 helperText={ formErrors.name }
@@ -129,7 +129,7 @@ export default function ContactRecruiterForm (props) {
                 label='Name'
               />
             </Grid>
-            <Grid xs={ 12 } sm={ 6 }>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 variant='outlined'
                 fullWidth
@@ -139,7 +139,7 @@ export default function ContactRecruiterForm (props) {
                 autoComplete='title'
               />
             </Grid>
-            <Grid xs={ 12 }>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 error={ formErrors.email }
                 helperText={ formErrors.email }
@@ -153,12 +153,12 @@ export default function ContactRecruiterForm (props) {
                 autoComplete='email'
               />
             </Grid>
-            <Grid xs={ 12 }>
+            <Grid size={{ xs: 12 }}>
               <Grid container spacing={ 2 } alignItems='center'>
-                <Grid xs={ 2 }>
+                <Grid size={{ xs: 2 }}>
                   Phone:
                 </Grid>
-                <Grid xs={ 10 }>
+                <Grid size={{ xs: 10 }}>
                   <MuiPhoneNumber
                     name={ 'phone' }
                     defaultCountry={ 'us' }
@@ -167,7 +167,7 @@ export default function ContactRecruiterForm (props) {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid xs={ 12 }>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 error={ formErrors.company }
                 helperText={ formErrors.company }
@@ -180,10 +180,10 @@ export default function ContactRecruiterForm (props) {
                 id='company'
               />
             </Grid>
-            <Grid xs={ 12 }>
+            <Grid size={{ xs: 12 }}>
               <CountryList />
             </Grid>
-            <Grid xs={ 12 }>
+            <Grid size={{ xs: 12 }}>
               <TextField
                 error={ formErrors.message }
                 helperText={ formErrors.message }

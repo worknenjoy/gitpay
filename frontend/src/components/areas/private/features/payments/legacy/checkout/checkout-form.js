@@ -147,7 +147,7 @@ const CheckoutForm = (props) => {
   return (
     <form onSubmit={ handleSubmit } onChange={ onChange } style={ { marginTop: 20 } }>
       <Grid container spacing={ 3 }>
-        <Grid xs={ 12 } style={ { marginBottom: 20 } }>
+        <Grid size={{ xs: 12 }} style={ { marginBottom: 20 } }>
           {logged ? (
             <div>
               <Typography variant="caption">
@@ -162,11 +162,11 @@ const CheckoutForm = (props) => {
           )}
         </Grid>
 
-        <Grid xs={ 12 }>
+        <Grid size={{ xs: 12 }}>
           <CardSection />
         </Grid>
 
-        <Grid xs={ 12 }>
+        <Grid size={{ xs: 12 }}>
           <Coupon
             couponState={ couponState }
             handleCouponInput={ handleCouponInput }
@@ -176,7 +176,7 @@ const CheckoutForm = (props) => {
           />
         </Grid>
 
-        <Grid xs={ 12 }>
+        <Grid size={{ xs: 12 }}>
           <div style={ { marginTop: 20, float: 'right' } }>
             <Button
               type="submit"

@@ -228,7 +228,7 @@ const Roles = ({
   const CardListPlaceholder = (
     <>
       {placeholders.map((_, index: number) => (
-        <Grid key={index} item xs={12} md={3} spacing={2} className={classes.rowList}>
+        <Grid key={index} item size={{ xs: 12, md: 3 }} spacing={2} className={classes.rowList}>
           <Paper>
             <Card className={classes.rowContent} variant="outlined">
               <CardMedia>
@@ -267,7 +267,7 @@ const Roles = ({
         ) : (
           <>
             {data.map(r => (
-              <Grid key={r.id} item xs={12} md={3} spacing={2} className={classes.rowList}>
+              <Grid key={r.id} item size={{ xs: 12, md: 3 }} spacing={2} className={classes.rowList}>
                 <Paper>
                   <Card className={classes.rowContent} variant="outlined">
                     <CardMedia>

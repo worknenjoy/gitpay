@@ -16,18 +16,18 @@ const styles = theme => ({
 
 function Skill({ classes, title, onClick, isSelected }) {
   return (
-    <Grid container direction="row" alignItems="center" xs={6}>
-      <Grid xs={2}>
+    <Grid container direction="row" alignItems="center" size={{ xs: 6 }}>
+      <Grid size={{ xs: 2 }}>
         <Avatar className={classNames(classes.skillIcon, !isSelected && classes.greyed)}>
           <SkillIcon name={title} />
         </Avatar>
       </Grid>
-      <Grid xs={6}>
+      <Grid size={{ xs: 6 }}>
         <Typography variant="body1" color="primary">
           {title}
         </Typography>
       </Grid>
-      <Grid xs={4} alignItems="flex-end">
+      <Grid size={{ xs: 4 }} alignItems="flex-end">
         <Checkbox onClick={onClick} checked={isSelected ? true : false} />
       </Grid>
     </Grid>

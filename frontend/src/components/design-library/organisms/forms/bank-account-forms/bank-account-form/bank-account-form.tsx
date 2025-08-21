@@ -75,7 +75,7 @@ const BankAccountForm = ({
         </Alert>
       )}
       <Grid container spacing={2}>
-        <Grid xs={12} md={12}>
+        <Grid size={{ xs: 12, md: 12 }}>
           <AccountTypeField
             type={account_holder_type}
           />

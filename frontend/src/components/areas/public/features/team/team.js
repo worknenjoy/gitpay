@@ -105,30 +105,30 @@ export default function Team (props) {
       <TopBarContainer />
       <Section>
         <Grid container spacing={ 3 }>
-          <Grid xs={ 12 } justify='center'>
+          <Grid size={{ xs: 12 }} justify='center'>
             <TeamCard data={ recruiterTeam } />
           </Grid>
         </Grid>
       </Section>
       <Section>
         <Grid container spacing={ 3 } style={ { backgroundColor: 'black' } } justify={ 'center' } alignItems={ 'center' } >
-          <Grid lg={ 4 } md={ 4 } sm={ 6 } sx={ 12 }>
+          <Grid size={{ lg: 4, md: 4, sm: 6 }}>
             <img src={ require('images/core-team-page-asset.png').default } alt='assets' />
           </Grid>
-          <Grid lg={ 4 } md={ 5 } sm={ 6 } sx={ 12 } >
+          <Grid size={{ lg: 4, md: 5, sm: 6 }}>
             <form onChange={ onChange } onSubmit={ onSubmit } onBlur={ onBlur }>
               <Grid container className={ classes.coreTeamForm }>
-                <Grid xs={ 12 } >
+                <Grid size={{ xs: 12 }} >
                   <Typography gutterBottom >
                     Join the team!
                   </Typography>
                 </Grid>
-                <Grid xs={ 12 } style={ { color: 'silver' } } >
+                <Grid size={{ xs: 12 }} style={ { color: 'silver' } } >
                   <Typography gutterBottom >
                     Work with the best and be part of the core
                   </Typography>
                 </Grid>
-                <Grid xs={ 12 }>
+                <Grid size={{ xs: 12 }}>
                   <TextField
                     required
                     value={ formData.email }
@@ -142,7 +142,7 @@ export default function Team (props) {
                     InputProps={ { classes: { underline: classes.underline } } }
                   />
                 </Grid>
-                <Grid xs={ 12 }>
+                <Grid size={{ xs: 12 }}>
                   <Button color='primary' fullWidth='true' variant='contained' type='submit'>
                     <Typography gutterBottom >
                       JOIN NOW!

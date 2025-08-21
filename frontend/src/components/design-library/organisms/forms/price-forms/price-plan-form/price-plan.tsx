@@ -28,9 +28,7 @@ const PricePlan = ({ price, plan, onChange }:PricePlanProps) => {
     >
       <Grid
         spacing={0}
-        xs={12}
-        md={plan ? 4 : 12}
-        lg={plan ? 4 : 12}
+        size={{ xs: 12, md: plan ? 4 : 12, lg: plan ? 4 : 12 }}
       >
         <PriceInput
           priceLabel="Price"
@@ -44,9 +42,7 @@ const PricePlan = ({ price, plan, onChange }:PricePlanProps) => {
       {plan && 
         <Grid
           spacing={0}
-          xs={12}
-          md={8}
-          lg={8}
+          size={{ xs: 12, md: 8, lg: 8 }}
         >
           <PlanCard plan={plan} />
         </Grid>

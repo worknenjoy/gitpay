@@ -82,7 +82,7 @@ const AccountTabMain = ({
     <Paper elevation={ 1 } style={{padding: 20}}>
       <form>
         <Grid container spacing={2}>
-          <Grid xs={ 12 } md={ 12 }>
+          <Grid size={{ xs: 12, md: 12 }}>
               <fieldset className={ classes.fieldset }>
                 <legend className={ classes.legend }>
                   <Typography>
@@ -90,7 +90,7 @@ const AccountTabMain = ({
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
-                  <Grid xs={ 12 } sm={ 6 } md={ 6 }>
+                  <Grid size={{ xs: 12, sm: 6, md: 6 }}>
                     <ProviderLoginButtons 
                       provider={provider}
                       login_strategy={login_strategy}
@@ -107,7 +107,7 @@ const AccountTabMain = ({
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
-                  <Grid xs={ 12 } sm={ 12 } md={ 12 }>
+                  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <FormattedMessage id="account.basic.name" defaultMessage="name">
                       { (msg) => (
                         <Field
@@ -119,7 +119,7 @@ const AccountTabMain = ({
                       ) }
                     </FormattedMessage>
                   </Grid>
-                  <Grid xs={ 12 } sm={ 12 } md={ 12 }>
+                  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <div style={{float: 'right'}}>
                       <Button
                         type="submit"
@@ -140,7 +140,7 @@ const AccountTabMain = ({
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
-                  <Grid xs={ 12 } sm={ 12 } md={ 12 }>
+                  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <FormattedMessage id="account.basic.password.current" defaultMessage="Current password">
                       { (msg) => (
                         <Field
@@ -175,7 +175,7 @@ const AccountTabMain = ({
                       ) }
                     </FormattedMessage>
                   </Grid>
-                  <Grid xs={ 12 } sm={ 12 } md={ 12 }>
+                  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <div style={{float: 'right'}}>
                       <Button
                         type="submit"
@@ -196,7 +196,7 @@ const AccountTabMain = ({
                 deleteUser={ deleteUser }
               />
           </Grid>
-          <Grid xs={ 12 } sm={ 6 } md={ 6 }>
+          <Grid size={{ xs: 12, sm: 6, md: 6 }}>
             
           </Grid>
         </Grid>

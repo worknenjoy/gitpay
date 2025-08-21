@@ -119,14 +119,14 @@ const AccountDetails = ({
 
   return (
     <Grid container spacing={2}>
-      <Grid xs={12} md={12}>
+      <Grid size={{ xs: 12, md: 12 }}>
         <Typography variant="h6" gutterBottom>
           <FormattedMessage id="account-details-personal-information-title" defaultMessage="Account details" />
         </Typography>
       </Grid>
-      <Grid xs={12} md={12}>
+      <Grid size={{ xs: 12, md: 12 }}>
         <Grid container spacing={2}>
-          <Grid xs={12} md={account && account.data.country ? 6 : 12}>
+          <Grid size={{ xs: 12, md: (account && account.data.country ? 6 : 12) }}>
             {!account.completed ? (
               <div>
                 <Skeleton variant="rectangular" height={150} animation="wave" />
@@ -141,7 +141,7 @@ const AccountDetails = ({
                 </legend>
                 <Grid container spacing={2}>
                   {displayCurrentCountry.country &&
-                    <Grid xs={12} md={12}>
+                    <Grid size={{ xs: 12, md: 12 }}>
                       <Alert severity="info">
                         <FormattedMessage id="account-details-country-information-desc" defaultMessage="Please make sure you have bank account on the country selected before continue." />
                       </Alert>
@@ -149,7 +149,7 @@ const AccountDetails = ({
                   }
                   {account && account.data.country
                     ? <>
-                      <Grid xs={12} md={6}>
+                      <Grid size={{ xs: 12, md: 6 }}>
                         <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
                           <img width="48" src={require(`images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`).default || require(`images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
                           <Typography component="span" style={{ marginLeft: 10 }}>
@@ -169,7 +169,7 @@ const AccountDetails = ({
                 </Grid>
                 {displayCurrentCountry.country ? (
                   <Grid container spacing={2}>
-                    <Grid xs={12} md={12}>
+                    <Grid size={{ xs: 12, md: 12 }}>
                       <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
                         <img width="48" src={require(`images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`).default || require(`images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`)} />
                         <Typography component="span" style={{ marginLeft: 10 }}>
@@ -177,7 +177,7 @@ const AccountDetails = ({
                         </Typography>
                       </div>
                     </Grid>
-                    <Grid xs={12} md={12} justifyContent="flex-end" alignContent="flex-end" style={{ display: 'flex' }}>
+                    <Grid size={{ xs: 12, md: 12 }} justifyContent="flex-end" alignContent="flex-end" style={{ display: 'flex' }}>
                       <Button variant="contained" color="secondary" onClick={() => {
                         displayCurrentCountry.code && createAccount(displayCurrentCountry.code)
                         setDisplayCurrentCountry({ country: '', code: '' })
@@ -191,7 +191,7 @@ const AccountDetails = ({
             )}
           </Grid>
           {account && account.data.country &&
-          <Grid xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <fieldset className={classes.fieldset} style={{height: 108, display: 'flex', alignItems: 'center'}}>
               <legend className={classes.legend}>
                 <Typography>
@@ -226,7 +226,7 @@ const AccountDetails = ({
         </Grid>
       </Grid>
       {account.data.country && (
-        <Grid xs={12} md={12}>
+        <Grid size={{ xs: 12, md: 12 }}>
           <form
             onSubmit={handleSubmit}
             onChange={onChange}
@@ -239,7 +239,7 @@ const AccountDetails = ({
                 </Typography>
               </legend>
               <Grid container spacing={2}>
-                <Grid xs={12} sm={6} md={6}>
+                <Grid size={{ xs: 12, sm: 6, md: 6 }}>
                   <FormattedMessage id="account.verify.firstName" defaultMessage="First name">
                     {(msg) => (
                       <Field
@@ -250,7 +250,7 @@ const AccountDetails = ({
                     )}
                   </FormattedMessage>
                 </Grid>
-                <Grid xs={12} sm={6} md={6}>
+                <Grid size={{ xs: 12, sm: 6, md: 6 }}>
                   <FormattedMessage id="account.verify.lastName" defaultMessage="Last name">
                     {(msg) => (
                       <Field
@@ -261,7 +261,7 @@ const AccountDetails = ({
                     )}
                   </FormattedMessage>
                 </Grid>
-                <Grid xs={12} sm={6} md={4}>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                   <Field
                     name="individual[id_number]"
                     label={
@@ -309,7 +309,7 @@ const AccountDetails = ({
                     }
                   />
                 </Grid>
-                <Grid xs={12} sm={12} md={4}>
+                <Grid size={{ xs: 12, sm: 12, md: 4 }}>
                   <FormattedMessage id="account.verify.phone_number" defaultMessage="Phone number">
                     {
                       (msg) => (
@@ -323,7 +323,7 @@ const AccountDetails = ({
                       )}
                   </FormattedMessage>
                 </Grid>
-                <Grid xs={12} sm={12} md={4}>
+                <Grid size={{ xs: 12, sm: 12, md: 4 }}>
                   <FormattedMessage id="account.verify.business_profile_url" defaultMessage="Website">
                     {(msg) => (
                       <Field
@@ -336,15 +336,15 @@ const AccountDetails = ({
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
-                <Grid xs={12} md={12}>
+                <Grid size={{ xs: 12, md: 12 }}>
                   <Typography color="textPrimary" style={{ marginBottom: -20, marginTop: 10 }}>
                     <FormattedMessage id="account-details-personal-information-birth-date" defaultMessage="Birth date" />
                   </Typography>
                 </Grid>
-                <Grid xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                   <Field name="individual[dob][day]" label="Day" type="number" defaultValue={accountData['individual[dob][day]'] || account.data.individual && account.data.individual.dob && account.data.individual.dob.day} />
                 </Grid>
-                <Grid xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                   <FormControl style={{ width: '100%' }}>
                     <Select
                       autoWidth
@@ -365,7 +365,7 @@ const AccountDetails = ({
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                   <Field name="individual[dob][year]" label="Year" type="number" defaultValue={accountData['individual[dob][year]'] || account.data.individual && account.data.individual.dob && account.data.individual.dob.year} />
                 </Grid>
               </Grid>
@@ -377,19 +377,19 @@ const AccountDetails = ({
                 </Typography>
               </legend>
               <Grid container spacing={2}>
-                <Grid xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Field name="individual[address][line1]" label="Address line 1" defaultValue={accountData['individual[address][line1]'] || account.data.individual && account.data.individual.address.line1} />
                 </Grid>
-                <Grid xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Field name="individual[address][line2]" label="Address line 2" defaultValue={accountData['individual[address][line2]'] || account.data.individual && account.data.individual.address.line2} />
                 </Grid>
-                <Grid xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Field name="individual[address][city]" label="City" defaultValue={accountData['individual[address][city]'] || account.data.individual && account.data.individual.address.city} />
                 </Grid>
-                <Grid xs={12} md={2}>
+                <Grid size={{ xs: 12, md: 2 }}>
                   <Field name="individual[address][state]" label="State" defaultValue={accountData['individual[address][state]'] || account.data.individual && account.data.individual.address.state} />
                 </Grid>
-                <Grid xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                   <Field name="individual[address][postal_code]" label="Postal code" defaultValue={accountData['individual[address][postal_code]'] || account.data.individual && account.data.individual.address.postal_code} />
                 </Grid>
               </Grid>
@@ -401,7 +401,7 @@ const AccountDetails = ({
                 </Typography>
               </legend>
               <Grid container spacing={2}>
-                <Grid xs={12} md={12}>
+                <Grid size={{ xs: 12, md: 12 }}>
                   {!account.data.tos_acceptance.date ? (
                     <>
                       <FormControl>
@@ -451,7 +451,7 @@ const AccountDetails = ({
                 </Grid>
               </Grid>
             </fieldset>
-            <Grid xs={12}>
+            <Grid size={{ xs: 12 }}>
               <div style={{ float: 'right' }}>
                 <Button
                   type="submit"
