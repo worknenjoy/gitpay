@@ -20,7 +20,7 @@ const CheckboxTerms = ({ onAccept }) => {
   }, [checked]);
 
   return (
-    <Grid xs={12} className={classes.termsLabel}>
+    <Grid size={{ xs: 12 }} className={classes.termsLabel}>
         <FormControlLabel
           control={
             <Checkbox

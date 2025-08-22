@@ -61,9 +61,7 @@ const OrganizationList = ({ listOrganizations, organizations }) => {
             <Grid
               item
               key={ organization.id }
-              lg={ 4 }
-              md={ 6 }
-              xs={ 12 }
+              size={{ xs: 12, md: 6, lg: 4 }}
             >
               <OrganizationCard
                 className={ classes.projectCard }

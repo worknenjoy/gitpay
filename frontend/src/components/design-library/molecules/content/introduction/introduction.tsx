@@ -18,10 +18,10 @@ const Introduction = ({ title, image, children }) => {
   return (
     <React.Fragment>
       <Grid container spacing={3} justifyContent="flex-start" style={{ textAlign: 'left', marginTop: 15 }}>
-        <Grid xs={12} md={3}>
+  <Grid size={{ xs: 12, md: 3 }}>
           <img src={image} className={classes.coverImg} alt="cover" />
         </Grid>
-        <Grid xs={12} md={9}>
+  <Grid size={{ xs: 12, md: 9 }}>
           <div id="form-dialog-title" style={{ padding: 0 }}>
             <Typography variant="subtitle1">
               {title}

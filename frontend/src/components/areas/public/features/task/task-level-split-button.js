@@ -78,7 +78,7 @@ export default function TaskLevelSplitButton ({ id, level, updateTask }) {
 
   return (
     <Grid container direction='column' alignItems='center'>
-      <Grid xs={ 12 }>
+  <Grid size={{ xs: 12 }}>
         <ButtonGroup variant='outlined' color='secondary' ref={ anchorRef } aria-label='split button'>
           <Button onClick={ handleClick }>{ selectedLevel || optionLabels[options[selectedIndex]] }</Button>
           <Button

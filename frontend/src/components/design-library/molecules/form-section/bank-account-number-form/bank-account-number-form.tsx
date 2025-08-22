@@ -15,7 +15,7 @@ const BankAccountNumberForm = ({ bankAccount, defaultIbanMode }) => {
   return (
     <Grid container spacing={2}>
       {ibanMode || defaultIbanMode ? (
-        <Grid xs={12} md={12}>
+        <Grid size={{ xs: 12, md: 12 }}>
           <Field
             completed={completed}
             label="IBAN"
@@ -29,7 +29,7 @@ const BankAccountNumberForm = ({ bankAccount, defaultIbanMode }) => {
         </Grid>
       ) : (
         <>
-          <Grid xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Field
               completed={completed}
               label="Routing Number"
@@ -41,7 +41,7 @@ const BankAccountNumberForm = ({ bankAccount, defaultIbanMode }) => {
               required
             />
           </Grid>
-          <Grid xs={12} md={6}>
+          <Grid size={{ xs: 12, md: 6 }}>
             <Field
               completed={completed}
               label="Account Number"
@@ -56,7 +56,7 @@ const BankAccountNumberForm = ({ bankAccount, defaultIbanMode }) => {
         </>
       )}
       { !defaultIbanMode && (
-        <Grid xs={12}>
+        <Grid size={{ xs: 12 }}>
           <FormControl style={{ width: '100%' }} disabled={id}>
             <FormControlLabel
               control={

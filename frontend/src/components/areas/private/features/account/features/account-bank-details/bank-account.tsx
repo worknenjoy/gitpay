@@ -221,7 +221,7 @@ const BankAccount = ({
 
   return (
     <Grid container spacing={2}>
-      <Grid xs={12} md={12}>
+  <Grid size={{ xs: 12, md: 12 }}>
         {!bankAccount.completed ? (
           <div>
             <Skeleton variant="rectangular" height={200} animation="wave" />
@@ -251,7 +251,7 @@ const BankAccount = ({
                         <FormattedMessage id="account.register.bank.title" defaultMessage="Activate bank account:" />
                       </Typography>
                       <Grid container spacing={3}>
-                        <Grid xs={12}>
+                        <Grid size={{ xs: 12 }}>
                           {bankAccount.data.routing_number ? (
                             <div style={{ marginBottom: 8, marginTop: 8 }}>
                               <Alert
@@ -321,7 +321,7 @@ const BankAccount = ({
                         </Grid>
                       </Grid>
                       <Grid container spacing={3}>
-                        <Grid xs={12} md={3}>
+                        <Grid size={{ xs: 12, md: 3 }}>
                           <FormControl>
                             <div>
                               <Typography variant="caption" gutterBottom>
@@ -347,7 +347,7 @@ const BankAccount = ({
                             </Select>
                           </FormControl>
                         </Grid>
-                        <Grid xs={12} md={9}>
+                        <Grid size={{ xs: 12, md: 9 }}>
                           <FormControl>
                             <div>
                               <Typography variant="caption" gutterBottom>
@@ -375,7 +375,7 @@ const BankAccount = ({
                         </Grid>
                       </Grid>
                       <Grid container spacing={3}>
-                        <Grid xs={12}>
+                        <Grid size={{ xs: 12 }}>
                           <FormControl component="fieldset">
                             <Typography variant="caption" gutterBottom>
                               <FormattedMessage id="account.register.type" defaultMessage="Account Type:" />
@@ -417,7 +417,7 @@ const BankAccount = ({
                       </Grid>
                       <Grid container spacing={3}>
                         {ibanMode ? (
-                          <Grid xs={12}>
+                          <Grid size={{ xs: 12 }}>
                             <FormControl
                               error={AccountNumberError}
                             >
@@ -444,7 +444,7 @@ const BankAccount = ({
                             </FormControl>
                           </Grid>
                         ) : (
-                          <Grid xs={12}>
+                          <Grid size={{ xs: 12 }}>
                             {(user.country !== 'DK' || user.country !== 'BE') && (
                               <>
 
@@ -491,7 +491,7 @@ const BankAccount = ({
 
                           </Grid>
                         )}
-                        <Grid xs={12}>
+                        <Grid size={{ xs: 12 }}>
                           {user.country !== 'BR' && !bankAccount.data.routing_number && (
                             <FormControl>
                               <FormattedMessage

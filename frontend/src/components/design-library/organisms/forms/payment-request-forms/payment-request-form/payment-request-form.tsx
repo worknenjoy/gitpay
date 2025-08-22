@@ -71,7 +71,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         </Alert>
       )}
       <Grid container spacing={2}>
-        <Grid xs={12} md={12}>
+  <Grid size={{ xs: 12, md: 12 }}>
           <Field
             label="Title"
             name="title"
@@ -80,7 +80,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             completed={completed}
           />
         </Grid>
-        <Grid xs={12} md={12}>
+  <Grid size={{ xs: 12, md: 12 }}>
           {
             !completed ? (
               <Skeleton variant="rectangular" animation="wave" width="100%" height={120} />
@@ -97,7 +97,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             )
           }
         </Grid>
-        <Grid xs={12} md={12}>
+  <Grid size={{ xs: 12, md: 12 }}>
           <Field
             label="Amount"
             name="amount"
@@ -115,7 +115,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             disabled={customAmount}
           />
         </Grid>
-        <Grid xs={12} md={12}>
+  <Grid size={{ xs: 12, md: 12 }}>
           <Checkboxes
             checkboxes={[
               {

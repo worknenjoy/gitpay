@@ -199,7 +199,7 @@ const TaskExplorer = (props) => {
         }
         <Container fixed maxWidth='lg'>
           <Grid container className={ classes.root }>
-            <Grid xs={ 12 } md={ 12 }>
+            <Grid size={{ xs: 12, md: 12 }}>
               { state.value === 0 && (
                 <div>
                   <TaskFiltersContainer

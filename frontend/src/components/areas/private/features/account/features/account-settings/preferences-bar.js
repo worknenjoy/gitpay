@@ -17,7 +17,7 @@ class PreferencesBar extends Component {
         elevation={ 0 }>
         <Toolbar>
           <Grid container alignItems="center" spacing={ 1 }>
-            <Grid xs style={ { paddingTop: 15, paddingBottom: 15 } }>
+            <Grid style={ { paddingTop: 15, paddingBottom: 15 } }>
               <Typography color="primary" variant="body1" gutterBottom>
                 <FormattedMessage id="preferences.subtitle" defaultMessage="Setup your preferences about skill and how you should receive the notifications about new tasks and projects" />
               </Typography>

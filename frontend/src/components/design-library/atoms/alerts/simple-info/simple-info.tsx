@@ -1,25 +1,23 @@
 import React from 'react'
-import useStyles from './simple-info.styles'
 import {
   Info as InfoIcon
 } from '@mui/icons-material'
-import { Typography } from '@mui/material'
+import { SimpleInfoRoot, IconCenter, Text } from './simple-info.styles'
 
 
 export const SimpleInfo = ({ text }) => {
-  const classes = useStyles()
 
   return (
-    <div className={classes.root}>
+    <SimpleInfoRoot>
+      <IconCenter>
+        <InfoIcon />
+      </IconCenter>
       <div>
-        <InfoIcon className={classes.iconCenter} />
-      </div>
-      <div>
-        <Typography variant="body2" gutterBottom className={classes.text}>
+        <Text>
           {text}
-        </Typography>
+        </Text>
       </div>
-    </div>
+    </SimpleInfoRoot>
   )
 }
 

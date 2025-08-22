@@ -168,7 +168,7 @@ class Order extends Component {
       <div>
         <Grid container className={ classes.root } spacing={ 3 }>
           <TopBar />
-          <Grid xs={ 12 }>
+          <Grid size={{ xs: 12 }}>
             <Typography
               variant="display1"
               color="primary"

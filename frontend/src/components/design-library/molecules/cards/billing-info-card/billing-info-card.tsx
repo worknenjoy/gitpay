@@ -24,7 +24,7 @@ export const BillingInfoCard = ({ name, address, city, state, zipCode, country, 
         <Divider sx={{ marginBottom: 2 }} />
         <Grid container spacing={2}>
           {Object.entries(billingData).map(([label, value]) => (
-            <Grid xs={12 / columns} key={label}>
+            <Grid size={{ xs: 12 / columns }} key={label}>
               <Typography variant="body2" color="textSecondary">
                 {label}:
               </Typography>

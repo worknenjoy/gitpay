@@ -63,7 +63,7 @@ const PaypalInfoForm = ({
             </Typography>
             <Skeleton variant="text" width={210} height={24} animation="wave" />
           </div>
-          <Grid xs={12}>
+            <Grid size={{ xs: 12 }}>
             <FormControl style={{ width: '42%' }}> 
               <Field
                 completed={completed}

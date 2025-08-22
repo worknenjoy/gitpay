@@ -104,7 +104,7 @@ const IssueHeader = ({
 
   return (
     <TaskHeaderContainer>
-      <Grid xs={12} sm={12} md={12}>
+  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
         <Breadcrumb task={task} user={user} project={project} organization={organization} />
         {
           !task.completed ? (

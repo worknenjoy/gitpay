@@ -81,7 +81,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
   return (
     <form onSubmit={handleSubmit} ref={internalFormRef}>
       <Grid container spacing={2}>
-        <Grid xs={12} md={12} justifyContent="flex-end">
+  <Grid size={{ xs: 12, md: 12 }} justifyContent="flex-end">
           <BalanceCard
             name={<FormattedMessage id="PayoutRequest.form.title" defaultMessage="Available funds to payout to your account" />}
             balance={balance}
@@ -92,7 +92,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
             completed={completed}
           />
         </Grid>
-        <Grid xs={12} md={12}>
+  <Grid size={{ xs: 12, md: 12 }}>
           <Field
             label="Amount"
             name="amount"
@@ -112,7 +112,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
             onChange={handleAmountChange}
           />
         </Grid>
-        <Grid xs={12} md={12}>
+  <Grid size={{ xs: 12, md: 12 }}>
           <Checkboxes
             checkboxes={[
               {

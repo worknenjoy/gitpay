@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Grid,
   Checkbox,
-  FormControlLabel,
-  GridSize
+  FormControlLabel
 } from '@mui/material';
 
 import useStyles from './checkboxes.styles';
@@ -79,7 +78,7 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:Checkboxe
   return (
     <Grid container spacing={3} className={classes.container}>
       {checkboxesToRender.map((checkbox, index) => (
-        <Grid xs={12} sm={12 / checkboxesToRender.length as GridSize} className={classes.item}>
+  <Grid size={{ xs: 12, sm: 12 / checkboxesToRender.length }} className={classes.item}>
           <FormControlLabel
             control={
               <Checkbox

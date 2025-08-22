@@ -17,7 +17,7 @@ export default function ImportIssueButton ({
 
   return (
     <Grid container direction="column" alignItems="center">
-      <Grid xs={ 12 }>
+  <Grid size={{ xs: 12 }}>
         <ButtonGroup variant="contained" color="primary" ref={ anchorRef } aria-label="split button">
           <Button onClick={ handleClick } className={classes?.actionButtons}>
             <FormattedMessage

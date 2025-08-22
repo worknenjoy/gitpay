@@ -6,13 +6,13 @@ import { Grid } from '@mui/material';
 const CountryCurrencyForm = ({ country, countries, currency, completed}) => {
   return (
     <Grid container spacing={2}>
-      <Grid xs={12} md={6}>
+  <Grid size={{ xs: 12, md: 6 }}>
         <CountryField
           country={country}
           completed={completed}
         />
       </Grid>
-      <Grid xs={12} md={6}>
+  <Grid size={{ xs: 12, md: 6 }}>
         <CurrencyField
           countries={countries}
           disabled={true}

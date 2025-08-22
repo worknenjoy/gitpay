@@ -29,7 +29,7 @@ const InviteDrawerCheckboxes = ({
 
   return (
     <Grid container spacing={3} style={{ fontFamily: 'Roboto', color: '#a9a9a9' }}>
-      <Grid xs={12} style={{ paddingTop: 0 }} >
+  <Grid size={{ xs: 12 }} style={{ paddingTop: 0 }} >
         <FormControlLabel
           control={
             <Checkbox

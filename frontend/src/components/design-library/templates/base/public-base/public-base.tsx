@@ -43,3 +43,5 @@ const PublicBase = ({
     </Root>
   )
 }
+
+export default PublicBase

@@ -53,7 +53,7 @@ const Welcome = (props) => {
       <Container>
         <Section name='contrib' ref={ ref }>
           <Grid container spacing={ 3 }>
-            <Grid xs={ 12 } sm={ 6 }>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <MainTitle left>
                 <Typography variant='h5' gutterBottom>
                   <FormattedMessage
@@ -114,7 +114,7 @@ const Welcome = (props) => {
                 </List>
               </MainList>
             </Grid>
-            <Grid xs={ 12 } sm={ 6 }>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <ResponsiveImage width='800' src={ freelancerImage } />
             </Grid>
           </Grid>
@@ -123,7 +123,7 @@ const Welcome = (props) => {
       <Section name='companies' ref={ ref } alternative className={ classes.bgContrast }>
         <Container>
           <Grid container spacing={ 3 }>
-            <Grid xs={ 12 } sm={ 6 }>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <MainTitle left>
                 <Typography variant='h5' gutterBottom>
                   <FormattedMessage
@@ -182,7 +182,7 @@ const Welcome = (props) => {
                 </List>
               </MainList>
             </Grid>
-            <Grid xs={ 12 } sm={ 6 }>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <ResponsiveImage width='600' src={ companiesImage } />
             </Grid>
           </Grid>
@@ -191,7 +191,7 @@ const Welcome = (props) => {
       <Container>
         <Section name='collab' ref={ ref }>
           <Grid container spacing={ 3 }>
-            <Grid xs={ 12 } sm={ 6 }>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <MainTitle left>
                 <Typography variant='h5' gutterBottom>
                   <FormattedMessage
@@ -250,7 +250,7 @@ const Welcome = (props) => {
                 </List>
               </MainList>
             </Grid>
-            <Grid xs={ 12 } sm={ 6 }>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <ResponsiveImage width='600' src={ teamImage } />
             </Grid>
           </Grid>
