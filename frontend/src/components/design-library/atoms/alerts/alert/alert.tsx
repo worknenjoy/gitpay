@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import Alert from '@mui/material/Alert'
 import CloseIcon from '@mui/icons-material/Close'
 import useStyles from './alert.styles'
-import { Button } from '@mui/material'
-import ReactPlacholder from 'react-placeholder'
-
+import { Button, Skeleton, Box } from '@mui/material'
 
 export const CustomAlert = (props) => {
   const { onClose, alertKey = 'default', actions, dismissable = false, completed, ...rest } = props
@@ -28,31 +26,37 @@ export const CustomAlert = (props) => {
     return null
   }
 
+  if (!completed) {
+    return (
+      <Box>
+        <Skeleton variant="rectangular" height={56} />
+      </Box>
+    )
+  }
+
   return (
-    <ReactPlacholder rows={1} type="text" ready={completed}>
-      <Alert
-        elevation={1}
-        variant="standard"
-        action={
-          <>
-            {actions}
-            {dismissable && (
-              <Button
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={handleClose}
-                className={classes.closeButton}
-              >
-                Dismiss
-                <CloseIcon fontSize="inherit" />
-              </Button>
-            )}
-          </>
-        }
-        {...rest}
-      />
-    </ReactPlacholder>
+    <Alert
+      elevation={1}
+      variant="standard"
+      action={
+        <>
+          {actions}
+          {dismissable && (
+            <Button
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={handleClose}
+              className={classes.closeButton}
+            >
+              Dismiss
+              <CloseIcon fontSize="inherit" />
+            </Button>
+          )}
+        </>
+      }
+      {...rest}
+    />
   )
 }
 

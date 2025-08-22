@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import GitHubIcon from '@mui/icons-material/GitHub'
 
-const useStyles = styled(theme => ({
+const useStyles = makeStyles(theme => ({
   wrapper: {
     display: 'flex',
     flexDirection: 'column',

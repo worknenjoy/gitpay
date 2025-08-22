@@ -8,7 +8,7 @@ import classNames from "classnames";
 import logoGithub from 'images/github-logo-black.png'
 import logoBitbucket from 'images/bitbucket-logo-blue.png'
 
-const useStyles = styled(theme => ({
+const useStyles = makeStyles(theme => ({
   cardHeader: {
     [theme.breakpoints.down('sm')]: {
       display: 'block',

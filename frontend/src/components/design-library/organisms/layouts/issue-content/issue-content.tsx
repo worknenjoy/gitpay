@@ -8,7 +8,7 @@ import parse from 'html-react-parser';
 import IssueHeader from '../../../molecules/headers/issue-header/issue-header';
 import IssueAuthorList from '../../../molecules/lists/issue-author-list/issue-author-list';
 
-const useStyles = styled(theme => ({
+const useStyles = makeStyles(theme => ({
 
   issueContent: {
     wordBreak: 'break-word',

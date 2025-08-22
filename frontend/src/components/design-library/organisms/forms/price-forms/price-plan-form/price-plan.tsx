@@ -10,7 +10,7 @@ type PricePlanProps = {
   onChange: any;
 }
 
-const useStyles = styled(theme => ({
+const useStyles = makeStyles(theme => ({
   planGrid: {
     '&.MuiGrid-root': {
       alignItems: 'center'

@@ -8,7 +8,7 @@ import OffersList from '../../lists/offers-list/offers-list';
 import { AddCircleTwoTone as AddIcon } from '@mui/icons-material';
 
 
-const useStyles = styled(theme => ({
+const useStyles = makeStyles(theme => ({
   details: {
     display: 'flex',
     flexDirection: 'column'

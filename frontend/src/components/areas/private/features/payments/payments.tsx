@@ -9,7 +9,7 @@ import {
 
 import { styled } from '@mui/material/styles'
 
-const useStyles = styled(theme => ({
+const useStyles = makeStyles(theme => ({
   icon: {
     backgroundColor: 'black'
   },

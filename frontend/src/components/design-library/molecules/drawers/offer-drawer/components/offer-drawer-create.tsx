@@ -12,7 +12,7 @@ import InviteInput from './invite/invite-input';
 import { styled } from '@mui/material';
 import CheckboxTerms from '../../../../atoms/inputs/checkbox-terms/checkbox-terms';
 
-const useStyles = styled(theme => ({
+const useStyles = makeStyles(theme => ({
   details: {
     display: 'flex',
     flexDirection: 'column'

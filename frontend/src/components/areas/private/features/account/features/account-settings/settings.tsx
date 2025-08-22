@@ -28,16 +28,12 @@ const messages = {
 const logoLangEn = require('images/united-states-of-america.png')
 const logoLangBr = require('images/brazil.png')
 
-const useStyles = styled(theme => ({
-  title: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
-  }
+const Title = styled(Typography)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2)
 }))
 
 const Settings = (props) => {
-  const intl = useIntl()
-  const classes = useStyles()
   const { user } = props
   const [anchorEl, setAnchorEl] = useState(null)
   const [selectedLanguage, setSelectedLanguage] = useState(null)
@@ -86,12 +82,12 @@ const Settings = (props) => {
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
       <Grid container alignItems="center" spacing={1}>
-        <Grid xs={12}>
-          <Typography variant="h5" className={classes.title} gutterBottom>
+        <Grid size={{ xs: 12 }}>
+          <Title variant="h5" gutterBottom>
             <FormattedMessage id="preferences.title" defaultMessage="Settings" />
-          </Typography>
+          </Title>
         </Grid>
-        <Grid xs={5} style={{ marginBottom: 20, marginTop: 40 }}>
+        <Grid size={{ xs: 12, sm: 5 }} style={{ marginBottom: 20, marginTop: 40 }}>
           <Typography color="primary" variant="h5" gutterBottom>
             <FormattedMessage id="preferences.actions.language.title" defaultMessage="Language" />
           </Typography>
@@ -141,7 +137,7 @@ const Settings = (props) => {
             </MenuItem>
           </Menu>
         </Grid>
-        <Grid xs={12} style={{ marginTop: 20, marginBottom: 20 }}>
+        <Grid size={{ xs: 12 }} style={{ marginTop: 20, marginBottom: 20 }}>
           <Typography color="primary" variant="h5">
             <FormattedMessage id="prefences.my.notifications" defaultMessage="Notifications" />
           </Typography>
@@ -159,7 +155,7 @@ const Settings = (props) => {
             </Typography>
           </label>
         </Grid>
-        <Grid xs={12} style={{ marginTop: 20, marginBottom: 20 }}>
+        <Grid size={{ xs: 12 }} style={{ marginTop: 20, marginBottom: 20 }}>
           <Typography color="primary" variant="h5">
             <FormattedMessage id="prefences.my.openforjobs" defaultMessage="Open For Jobs" />
           </Typography>

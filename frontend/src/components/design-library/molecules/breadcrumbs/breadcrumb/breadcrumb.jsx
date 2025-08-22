@@ -6,7 +6,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import { styled } from '@mui/material/styles'
 import { useHistory } from 'react-router-dom'
 
-const useStyles = styled(theme => ({
+const useStyles = makeStyles(theme => ({
   breadcrumbRoot: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2)

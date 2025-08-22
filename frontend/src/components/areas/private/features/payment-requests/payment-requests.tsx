@@ -15,7 +15,7 @@ import PaymentRequestDrawer from 'design-library/molecules/drawers/payment-reque
 import ProfileHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header'
 import PaymentRequestsTable from './payment-requests-table'
 
-const useStyles = styled(theme => ({
+const useStyles = makeStyles(theme => ({
   icon: {
     backgroundColor: 'black'
   },
