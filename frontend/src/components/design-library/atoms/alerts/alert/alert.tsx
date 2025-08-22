@@ -1,12 +1,10 @@
 import React, { useState } from 'react'
 import Alert from '@mui/material/Alert'
 import CloseIcon from '@mui/icons-material/Close'
-import useStyles from './alert.styles'
 import { Button, Skeleton, Box } from '@mui/material'
 
 export const CustomAlert = (props) => {
   const { onClose, alertKey = 'default', actions, dismissable = false, completed, ...rest } = props
-  const classes = useStyles()
   const fullAlertKey = `alert-dismissed-${alertKey}`
 
   const [open, setOpen] = useState(() => {
@@ -47,7 +45,6 @@ export const CustomAlert = (props) => {
               color="inherit"
               size="small"
               onClick={handleClose}
-              className={classes.closeButton}
             >
               Dismiss
               <CloseIcon fontSize="inherit" />

@@ -1,13 +1,11 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Button, Typography } from '@mui/material';
-import { Alert } from '../alert/alert';
 import { validAccount } from '../../../../../utils/valid-account';
 import api from '../../../../../consts';
-import useStyles from './account-requirements.styles';
+import { CustomAlert } from './account-requirements.styles';
 
 const AccountRequirements = ({ user, account, intl, onClick }) => {
-  const classes = useStyles()
   const { completed = true } = account;
 
   const missingRequirements = () => {
@@ -28,9 +26,8 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
   }
   return (
     !validAccount(user, account) ?
-      <Alert
+      <CustomAlert
         completed={completed}
-        className={classes.alert}
         severity="warning"
         action={
           <Button
@@ -56,7 +53,7 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
             </ul>
           </>
         }
-      </Alert>
+      </CustomAlert>
       :
       null
   );

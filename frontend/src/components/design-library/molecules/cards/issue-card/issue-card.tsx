@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Avatar, Card, CardHeader, Link, Tooltip, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import MomentComponent from "moment";
 import classNames from "classnames";
 

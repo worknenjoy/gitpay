@@ -12,7 +12,7 @@ import {
 import LanguageIcon from '@mui/icons-material/Language'
 import { updateIntl } from 'react-intl-redux'
 import { LabelButton, StyledAvatarIconOnly } from 'design-library/organisms/layouts/topbar/TopbarStyles'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import { store } from '../../../../../../../main/app'
 import messagesBr from '../../../../../../../translations/result/br.json'
 import messagesEn from '../../../../../../../translations/result/en.json'

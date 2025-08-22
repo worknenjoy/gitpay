@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 
-import { styled } from '@mui/material/styles';
 import Drawer from '../drawer/drawer'
 import OfferDrawerCreate from './components/offer-drawer-create';
 import OfferDrawerTabs from './components/offer-drawer-tabs';

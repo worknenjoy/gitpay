@@ -1,5 +1,4 @@
 import React from 'react'
-import { styled } from '@mui/material/styles'
 import { FormattedMessage } from 'react-intl'
 import Card from '@mui/material/Card'
 import CardActionArea from '@mui/material/CardActionArea'

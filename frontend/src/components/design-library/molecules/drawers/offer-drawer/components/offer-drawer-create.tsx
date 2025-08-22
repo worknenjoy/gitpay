@@ -9,7 +9,6 @@ import PricePlan from '../../../../organisms/forms/price-forms/price-plan-form/p
 import InputComment from '../../../../atoms/inputs/input-comment/input-comment';
 import OfferDrawerCheckboxes from './offer/offer-drawer-checkboxes';
 import InviteInput from './invite/invite-input';
-import { styled } from '@mui/material';
 import CheckboxTerms from '../../../../atoms/inputs/checkbox-terms/checkbox-terms';
 
 const useStyles = makeStyles(theme => ({

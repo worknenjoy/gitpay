@@ -1,6 +1,5 @@
 import React from 'react';
 import { Grid } from '@mui/material';
-import { styled } from '@mui/material/styles'
 import PriceInput from '../../../../atoms/inputs/price-input/price-input';
 import PlanCard from '../../../../molecules/cards/plan-card/plan-card';
 
