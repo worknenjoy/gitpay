@@ -13,11 +13,7 @@ const AddressInformationForm = ({
   country
 }) => {
   return (
-    <Fieldset
-      completed={completed}
-      rows={2}
-      legend="Address Information"
-    >
+  <Fieldset completed={completed} legend="Address Information">
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 6 }}>
           <Field

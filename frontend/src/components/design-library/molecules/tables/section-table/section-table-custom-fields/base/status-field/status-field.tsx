@@ -4,11 +4,10 @@ import {
   InfoSharp as InfoIcon,
   HelpOutline as QuestionInfoIcon
 } from '@mui/icons-material';
-import useStyles from './status-field.styles';
+import classes, { StatusFieldRoot } from './status-field.styles';
 import BaseStatus from 'design-library/atoms/status/base-status/base-status';
 
 const StatusField = ({ status }) => {
-  const classes = useStyles();
 
     const statusList = [
       { status: 'pending', label: 'Pending', color: 'pending', icon: <InfoIcon className={classes.pending} />, message: 'Your payout is pending. Please come back later to see the latest status.' },
@@ -18,12 +17,14 @@ const StatusField = ({ status }) => {
       { status: 'unknown', label: 'Unknown', color: 'unknown', icon: <QuestionInfoIcon className={classes.unknown} />, message: 'Your status is unknown. Please check back later.' }
     ];
   return (
-    <BaseStatus
-      classes={classes}
-      status={status}
-      statusList={statusList}
-      completed={true}
-    />
+    <StatusFieldRoot>
+      <BaseStatus
+        classes={classes}
+        status={status}
+        statusList={statusList}
+        completed={true}
+      />
+    </StatusFieldRoot>
   );
 }
 

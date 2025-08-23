@@ -1,26 +1,21 @@
 import React from "react";
-import classNames from "classnames";
-import { withStyles, Grid, Typography, Checkbox, Avatar } from "@mui/material";
-import { SkillIcon } from "./skill-icon"
+import { Grid, Typography, Checkbox } from "@mui/material";
+import { SkillIcon } from "./skill-icon";
+import { SkillAvatar } from "./skill.styles";
 
-const styles = theme => ({
-  skillIcon: {
-    borderRadius: 0,
-    backgroundColor: 'transparent'
-  },
-  greyed: {
-    filter: 'grayscale(0.8)'
-  }
-})
+type SkillProps = {
+  title: string;
+  onClick?: () => void;
+  isSelected?: boolean;
+};
 
-
-function Skill({ classes, title, onClick, isSelected }) {
+function Skill({ title, onClick, isSelected }: SkillProps) {
   return (
     <Grid container direction="row" alignItems="center" size={{ xs: 6 }}>
       <Grid size={{ xs: 2 }}>
-        <Avatar className={classNames(classes.skillIcon, !isSelected && classes.greyed)}>
+        <SkillAvatar greyed={!isSelected}>
           <SkillIcon name={title} />
-        </Avatar>
+        </SkillAvatar>
       </Grid>
       <Grid size={{ xs: 6 }}>
         <Typography variant="body1" color="primary">
@@ -34,4 +29,4 @@ function Skill({ classes, title, onClick, isSelected }) {
   );
 }
 
-export default withStyles(styles)(Skill);
+export default Skill;

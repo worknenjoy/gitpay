@@ -1,7 +1,6 @@
 import { styled } from '@mui/material/styles'
-
-const useStyles = styled(() => ({
-  actionButtons: {}
+export const Container = styled('div')(() => ({
+	// reserved for future styles
 }))
+export default { Container }
 
-export default useStyles

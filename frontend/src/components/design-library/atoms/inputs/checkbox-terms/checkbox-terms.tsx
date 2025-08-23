@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Checkbox, FormControlLabel, Grid, Link, Typography } from '@mui/material';
-import useStyles from './checkbox-terms.styles';
+import getCheckboxTermsStyles from './checkbox-terms.styles';
+import { useTheme } from '@mui/material/styles';
 import TermsDialog from './terms-dialog';
 // import { on } from 'events';
 
 
 const CheckboxTerms = ({ onAccept }) => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const styles = getCheckboxTermsStyles(theme);
   const [checked, setChecked] = useState(false);
   const [ openTerms, setOpenTerms ] = useState(false);
 
@@ -20,14 +22,14 @@ const CheckboxTerms = ({ onAccept }) => {
   }, [checked]);
 
   return (
-    <Grid size={{ xs: 12 }} className={classes.termsLabel}>
+  <Grid size={{ xs: 12 }} sx={styles.termsLabel}>
         <FormControlLabel
           control={
             <Checkbox
               checked={checked}
               onChange={handleChange}
               color="primary"
-              className={classes.checkbox}
+              sx={styles.checkbox}
             />
           }
           onClick={handleChange}

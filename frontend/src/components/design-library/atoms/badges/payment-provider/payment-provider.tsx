@@ -1,16 +1,15 @@
 import React from 'react';
-import { 
+import {
   CreditCard as CreditCardIcon,
   Receipt as InvoiceIcon,
   AccountBalanceWallet as WalletIcon,
   MoneyOff as UnknownPaymentIcon
 } from '@mui/icons-material';
-import  { Chip } from '@mui/material';
-import { paymentProviders, paymentSources } from '../../../../../consts'
+import { Chip } from '@mui/material';
+import { blue, green, grey, orange } from '@mui/material/colors';
+import { paymentProviders, paymentSources } from '../../../../../consts';
 
 const logoPaypal = require('images/paypal-icon.png').default;
-
-import useStyles from './payment-provider.styles';
 
 type statusProps = {
   provider: string;
@@ -24,8 +23,7 @@ type GetPaymentTypesProps = {
 }
 type GetPaymentType = (currentPaymentProvider:string, currentPaymentSource:string) => GetPaymentTypesProps
 
-export default function PaymentProvider({ provider, sourceType }:statusProps) {
-  const classes = useStyles();
+export default function PaymentProvider({ provider, sourceType }: statusProps) {
 
   const getStatus:GetPaymentType = (currentPaymentProvider:string, currentPaymentSource:string) => {
     let choosenPayment:GetPaymentTypesProps = {};
@@ -79,7 +77,27 @@ export default function PaymentProvider({ provider, sourceType }:statusProps) {
 
   const currentPaymentType = getStatus(provider, sourceType);
 
+  const chipSx = (() => {
+    switch (currentPaymentType.color) {
+      case 'card':
+        return { bgcolor: green[400], color: 'common.white' };
+      case 'invoice':
+        return { bgcolor: orange[600], color: 'common.white' };
+      case 'paypal':
+        return { bgcolor: blue[300], color: 'common.white' };
+      case 'wallet':
+        return { bgcolor: grey[500], color: 'common.white' };
+      default:
+        return { bgcolor: grey[400], color: 'common.white' };
+    }
+  })();
+
   return (
-    <Chip size="small" label={currentPaymentType.label} className={classes[currentPaymentType.color]} icon={currentPaymentType.icon} />
+    <Chip
+      size="small"
+      label={currentPaymentType.label}
+      icon={currentPaymentType.icon}
+      sx={{ ...chipSx, '& .MuiChip-icon': { color: 'common.white' } }}
+    />
   );
 }

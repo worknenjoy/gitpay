@@ -149,7 +149,7 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
             </Button>
           </div>
         </div>
-      </div>
+      </Center>
     </form>
   )
 }

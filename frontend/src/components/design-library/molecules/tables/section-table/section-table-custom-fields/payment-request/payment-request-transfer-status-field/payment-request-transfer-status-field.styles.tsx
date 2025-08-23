@@ -1,21 +1,21 @@
 import { Theme } from '@mui/material/styles'
-import { green, orange } from '@mui/material/colors'
+import { green, orange, blue, red } from '@mui/material/colors'
 
 export const getPaymentRequestTransferStatusFieldStyles = (theme: Theme) => ({
   pending: {
-    backgroundColor: orange[700],
+    backgroundColor: orange[500],
     color: theme.palette.common.white
   },
   initiated: {
-    backgroundColor: green[400],
+    backgroundColor: blue[500],
     color: theme.palette.common.white
   },
   completed: {
-    backgroundColor: theme.palette.success.main,
+    backgroundColor: green[500],
     color: theme.palette.common.white
   },
-  failed: {
-    backgroundColor: theme.palette.error.main,
+  error: {
+    backgroundColor: red[500],
     color: theme.palette.common.white
   },
   unknown: {

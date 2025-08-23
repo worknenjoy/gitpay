@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 
 
-const useStyles = makeStyles(theme => ({
+const classes = {
   icon: {
     backgroundColor: 'black'
   },
@@ -19,10 +19,10 @@ const useStyles = makeStyles(theme => ({
   media: {
     width: 600
   }
-}))
+} as const
 
 const Payments = ({ orders, getOrders, user }) => {
-  const classes = useStyles()
+  // styles via classes constant
 
   useEffect(() => {
     getOrders()

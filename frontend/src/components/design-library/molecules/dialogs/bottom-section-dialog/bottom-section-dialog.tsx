@@ -1,12 +1,13 @@
 import React from 'react'
 import {
   ListItem,
+  ListItemButton,
   Typography,
   Dialog,
   Toolbar,
   IconButton,
   Slide,
-  SlideProps
+  SlideProps,
 } from '@mui/material'
 
 import {
@@ -29,7 +30,7 @@ const BottomSectionDialog = ({
   const [ open, setOpen ] = React.useState(false)
 
   return (
-    <ListItem button component="a">
+    <ListItemButton component="a">
   <Typography variant="subtitle1" onClick={ () => setOpen(!open) } component={HeaderTypography as any}>
         {header}
       </Typography>
@@ -57,7 +58,7 @@ const BottomSectionDialog = ({
           </InfoList>
     </AppBarStyled>
       </Dialog>
-    </ListItem>
+    </ListItemButton>
   )
 }
 

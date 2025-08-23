@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Skeleton } from '@mui/material'
 
-import { TableHead, TableBody, TableFooter, TablePagination, TableRow, TableSortLabel, Typography } from '@mui/material';
+import { TableHead, TableCell, TableBody, TableFooter, TablePagination, TableRow, TableSortLabel, Typography } from '@mui/material';
 import { RootPaper, TableWrapper, StyledTable, StyledTableCell } from './section-table.styles'
 
 import TablePaginationActions from './section-table-pagination-actions/section-table-pagination-actions';
@@ -146,12 +146,12 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
     );
   }
 
-  const TableRowPlaceholder = (
+  const TableRowPlaceholder: React.FC = () => (
     <React.Fragment>
-      {[0, 1, 2, 3, 4, 5].map(() => (
-        <TableRow>
-          {[0, 1, 2, 3, 4, 5].map(() => (
-            <StyledTableCell>
+      {[0, 1, 2, 3, 4, 5].map((_, rowIndex) => (
+        <TableRow key={rowIndex}>
+          {[0, 1, 2, 3, 4, 5].map((_, cellIndex) => (
+            <StyledTableCell key={cellIndex}>
               <div style={{ width: 80, padding: '8px 4px' }}>
                 {
                   !tableData.completed ? (

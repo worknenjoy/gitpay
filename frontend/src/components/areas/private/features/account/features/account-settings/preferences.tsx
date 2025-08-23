@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  withStyles,
   Paper,
   Grid,
   Typography,
@@ -51,7 +50,6 @@ const Preferences = (props) => {
   const listSkills = skillsList.map((item, index) => (
     <Skill
       key={`skill-${index}`}
-      classes={classes}
       title={item}
       onClick={() => handleSkillClick(item)}
       isSelected={skills?.includes(item)}
@@ -134,4 +132,4 @@ const Preferences = (props) => {
 }
 
 export const PreferencesPure = Preferences
-export default withStyles(styles)(Preferences)
+export default Preferences

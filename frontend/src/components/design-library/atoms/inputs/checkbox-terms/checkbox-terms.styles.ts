@@ -1,12 +1,12 @@
-import { styled } from '@mui/material/styles'
+import { Theme } from '@mui/material/styles'
 
-const useStyles = styled(() => ({
+export const getCheckboxTermsStyles = (theme: Theme) => ({
   termsLabel: {
     paddingTop: 0
   },
   checkbox: {
     paddingRight: 5
   }
-}))
+})
 
-export default useStyles
+export default getCheckboxTermsStyles

@@ -51,7 +51,7 @@ export default function OffersList({
                   <Chip
                     label={offer?.status || 'pending'}
                     color="secondary"
-                    variant="default"
+                    variant="filled"
                     size="small"
                     style={{marginLeft: 10, display: 'inline-block'}}
                   />

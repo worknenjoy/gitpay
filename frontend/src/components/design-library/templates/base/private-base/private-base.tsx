@@ -68,7 +68,7 @@ const PrivateBase = ({
           onResend={onResendActivationEmail}
         />
       }
-    <SecondaryBar component="div" color="primary" position="static" elevation={0} />
+    <SecondaryBar color="primary" position="static" elevation={0} />
       <PageContent>
       <RootGrid container spacing={0}>
             <ProfileSideBar

@@ -91,8 +91,10 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
           </DialogContentText>
           <CountryContainer>{getCountryButtons()}</CountryContainer>
         </DialogContent>
-        <DialogActions component={FullWidthMobile as any}>
-          <DialogContent id="alert-dialog-footer" component={CreditTextMobile as any}>
+        <DialogActions>
+          <FullWidthMobile>
+          <DialogContent id="alert-dialog-footer">
+            <CreditTextMobile>
             <DialogContentText>
               Icons made by{' '}
               <a href="http://www.freepik.com/" title="Freepik">
@@ -133,6 +135,7 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
                 CC 3.0 BY
               </a>
             </DialogContentText>
+            </CreditTextMobile>
           </DialogContent>
           
             <Button
@@ -144,7 +147,7 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
                 })
               }
               size="large"
-              component={ButtonSecondaryMobile as any}
+              
             >
               Cancel
             </Button>
@@ -164,13 +167,13 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
               style={{
                 minWidth: 'auto'
               }}
-              component={ButtonPrimaryMobile as any}
+              
             >
               <FormattedMessage id="dialog.picker.choose" defaultMessage={`Choose {country}`} values={{
                 country: currentCountry.label
               }} /> 
             </Button>
-          
+          </FullWidthMobile>
         </DialogActions>
       </Dialog>
     </div>

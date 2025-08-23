@@ -27,7 +27,7 @@ const SideMenuItems = ({
                 component={MenuItemStyled as any}
                 selected={item.selected}
               >
-                <ListItemIcon component={Icon as any}><>{item.icon}</></ListItemIcon>
+                <ListItemIcon><>{item.icon}</></ListItemIcon>
                 <ListItemText primaryTypographyProps={{ component: Primary as any }} primary={item.label} />
               </MenuItem>
             )

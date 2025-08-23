@@ -1,6 +1,6 @@
-import { styled } from '@mui/material/styles'
+import { Theme } from '@mui/material/styles'
 
-const useStyles = styled(() => ({
+export const getPriceInputStyles = (theme: Theme) => ({
   formPayment: {
     marginTop: 10,
     marginBottom: 10
@@ -14,6 +14,6 @@ const useStyles = styled(() => ({
     textAlign: 'right',
     height: 98
   }
-}))
+})
 
-export default useStyles
+export default getPriceInputStyles

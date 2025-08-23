@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
+import Button, { ButtonProps } from '@mui/material/Button'
 import ListItem from '@mui/material/ListItem'
 import { Section as BaseSection, ResponsiveImage } from './CommonStyles'
 
@@ -34,7 +34,7 @@ export const ListItemTop = styled(ListItem)(() => ({
 }))
 
 // Buttons
-export const GutterTopButton = styled(Button)(() => ({
+export const GutterTopButton = styled(Button)<ButtonProps>(() => ({
   marginTop: 20,
 }))
 

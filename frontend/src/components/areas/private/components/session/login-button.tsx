@@ -3,22 +3,14 @@ import styled, { css } from 'styled-components'
 import { FormattedMessage } from 'react-intl'
 import Auth from '../../../../../modules/auth'
 
-import {
-  Typography,
-  withStyles,
-  WithStyles
-} from '@mui/material'
+import { Typography } from '@mui/material'
 
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Location } from 'history'
 
 import LoginFormContainer from '../../../../../containers/login-form'
 
-const styles = (theme: any) => ({
-  gutterLeft: {
-    marginLeft: 10
-  }
-})
+// removed legacy withStyles usage
 
 const Wrapper = styled.div<{ contrast?: boolean }>`
   ${props => props.contrast && css`
@@ -30,7 +22,7 @@ const Content = styled.div`
   margin-top: 0;
 `
 
-interface LoginButtonProps extends RouteComponentProps,  WithStyles<typeof styles> {
+interface LoginButtonProps extends RouteComponentProps {
   referrer?: Location;
   location: any
   contrast?: boolean
@@ -61,7 +53,7 @@ class LoginButton extends Component<LoginButtonProps> {
   }
 
   render() {
-    const { classes, contrast, size, includeForm, hideExtra, mode, onClose, noCancelButton, user } = this.props
+  const { contrast, size, includeForm, hideExtra, mode, onClose, noCancelButton, user } = this.props
 
     return (
       <Wrapper contrast={contrast}>
@@ -102,4 +94,4 @@ class LoginButton extends Component<LoginButtonProps> {
   }
 }
 
-export default withRouter(withStyles(styles)(LoginButton) as React.ComponentType<LoginButtonProps>)
+export default withRouter(LoginButton as React.ComponentType<LoginButtonProps>)

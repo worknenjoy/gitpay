@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { styled, Theme } from '@mui/material/styles';
-import { Grid, Typography, Card, CardContent, Chip, CardActions, Button, FormControl, Input, InputLabel, Select, MenuItem, FormHelperText, RadioGroup, FormControlLabel, Radio, Switch, Avatar, Skeleton } from '@mui/material'
+import Grid from '@mui/material/Grid'
+import { Typography, Card, CardContent, Chip, CardActions, Button, FormControl, Input, InputLabel, Select, MenuItem, FormHelperText, RadioGroup, FormControlLabel, Radio, Switch, Avatar, Skeleton } from '@mui/material'
 import {
   Public as PublicIcon,
   Person as PersonIcon
@@ -12,49 +12,13 @@ import Const from '../../../../../../../consts'
 
 import { countryCodes, countryCurrencies } from '../../../../shared/country-codes'
 
-const useStyles = styled((theme: Theme) => ({
-  card: {
-    width: '100%',
-    marginBottom: 20,
-    padding: 10
-  },
-  cardEmpty: {
-    textAlign: 'center',
-    marginBottom: 40
-  },
-  cardEmptyActions: {
-    display: 'flex',
-    justifyContent: 'center',
-    paddingTop: 20,
-    paddingBottom: 40
-  },
-  cardEmptyActionsAlt: {
-    display: 'flex',
-    justifyContent: 'center',
-    paddingBottom: 20
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)'
-  },
-  title: {
-    marginBottom: 16,
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  pos: {
-    marginBottom: 12
-  },
-  chip: {
-    margin: theme.spacing(1)
-  },
-  label: {},
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120
-  }
-}))
+const cardSx = { width: '100%', mb: 2, p: 1 } as const;
+const cardEmptySx = { textAlign: 'center', mb: 5 } as const;
+const cardEmptyActionsSx = { display: 'flex', justifyContent: 'center', pt: 2, pb: 5 } as const;
+const cardEmptyActionsAltSx = { display: 'flex', justifyContent: 'center', pb: 2 } as const;
+const titleSx = { mb: 2, fontSize: 18, fontWeight: 'bold' } as const;
+const chipSx = { m: 1 } as const;
+const formControlSx = { m: 1, minWidth: 120 } as const;
 
 const BankAccount = ({
   account,
@@ -66,7 +30,6 @@ const BankAccount = ({
   user
 }) => {
   const intl = useIntl()
-  const classes = useStyles();
 
   const [ibanMode, setIbanMode] = React.useState(false);
   const [userId, setUserId] = React.useState('');
@@ -245,7 +208,7 @@ const BankAccount = ({
                   onSubmit={handleBankAccount}
                   style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
                 >
-                  <Card className={classes.card} elevation={0}>
+                  <Card sx={cardSx} elevation={0}>
                     <CardContent>
                       <Typography variant="h6">
                         <FormattedMessage id="account.register.bank.title" defaultMessage="Activate bank account:" />
@@ -284,7 +247,7 @@ const BankAccount = ({
                             </div>
                           ) : (
                             <FormControl
-                              className={classes.formControl}
+                              sx={formControlSx}
                               error={bankNumberError}
                             >
                               {user.country === 'BR' && (
@@ -415,9 +378,9 @@ const BankAccount = ({
                           </FormControl>
                         </Grid>
                       </Grid>
-                      <Grid container spacing={3}>
+            <Grid container spacing={3}>
                         {ibanMode ? (
-                          <Grid size={{ xs: 12 }}>
+              <Grid size={{ xs: 12 }}>
                             <FormControl
                               error={AccountNumberError}
                             >
@@ -540,9 +503,9 @@ const BankAccount = ({
             ) : (
               <div>
                 {!account.data.id &&
-                  <Card className={classes.cardEmpty} elevation={0}>
+                  <Card sx={cardEmptySx} elevation={0}>
                     <CardContent>
-                      <Typography className={classes.title} color="textSecondary">
+                      <Typography sx={titleSx} color="textSecondary">
                         <FormattedMessage id="account.register.headline" defaultMessage="There is no account registered to receive the payments" />
                       </Typography>
                       {countryCode && (
@@ -553,12 +516,12 @@ const BankAccount = ({
                           <Chip
                             avatar={<Avatar><img width={72} src={require(`images/countries/${countryImage}.png`).default} /></Avatar>}
                             label={countryLabel}
-                            className={classes.chip}
+                            sx={chipSx}
                           />
                         </div>
                       )}
                     </CardContent>
-                    <CardActions className={classes.cardEmptyActionsAlt}>
+                    <CardActions sx={cardEmptyActionsAltSx}>
                       <Button
                         style={{ color: 'white' }}
                         size="large"
@@ -570,7 +533,7 @@ const BankAccount = ({
                         <PublicIcon style={{ marginLeft: 10 }} />
                       </Button>
                     </CardActions>
-                    <CardActions className={classes.cardEmptyActions}>
+                    <CardActions sx={cardEmptyActionsSx}>
                       <Button
                         style={{ color: 'white' }}
                         size="large"

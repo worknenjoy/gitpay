@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   ListItem,
+  ListItemButton,
   Typography,
   Dialog,
   AppBar,
@@ -26,7 +27,8 @@ const BottomSectionDialog = ({
   const [ open, setOpen ] = React.useState(false)
 
   return (
-    <ListItem button component='a'>
+    <ListItem component='div'>
+      <ListItemButton component='a'>
       <Typography
         variant='subtitle1'
         onClick={ () => setOpen(true) }
@@ -35,6 +37,7 @@ const BottomSectionDialog = ({
       >
         {header}
       </Typography>
+      </ListItemButton>
       <Dialog
         fullScreen
         open={ open }

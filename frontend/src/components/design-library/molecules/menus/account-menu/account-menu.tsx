@@ -7,6 +7,7 @@ import {
   Drawer,
   List,
   ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText
 } from '@mui/material';
@@ -122,14 +123,14 @@ const AccountMenu = ({
         </ListItem>
         { MenuItems.map((item, index) => (
           getUserType(item.type) &&
-          <ListItem button onClick={ item.onClick } key={ index }>
+          <ListItemButton onClick={ item.onClick } key={ index }>
             <ListItemIcon>
               { item.icon }
             </ListItemIcon>
             <ListItemText>
               { item.name }
             </ListItemText>
-          </ListItem>
+          </ListItemButton>
         )) }
       </List>
     </Drawer>

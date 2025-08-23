@@ -5,8 +5,7 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import { FormattedMessage } from 'react-intl'
 
 export default function ImportIssueButton ({
-  onAddIssueClick,
-  classes
+  onAddIssueClick
 }) {
   const anchorRef = React.useRef(null)
 

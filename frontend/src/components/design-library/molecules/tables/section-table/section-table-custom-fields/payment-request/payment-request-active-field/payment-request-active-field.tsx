@@ -1,5 +1,6 @@
 import React from 'react';
-import useStyles from './payment-request-active-field.styles';
+import { useTheme } from '@mui/material/styles';
+import getStyles from './payment-request-active-field.styles';
 import BaseStatus from 'design-library/atoms/status/base-status/base-status';
 
 interface PaymentRequestActiveFieldProps {
@@ -11,7 +12,8 @@ const PaymentRequestActiveField: React.FC<PaymentRequestActiveFieldProps> = ({
   status,
   completed = true
 }) => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const statusList = [
     {
@@ -30,7 +32,7 @@ const PaymentRequestActiveField: React.FC<PaymentRequestActiveFieldProps> = ({
     <BaseStatus
       status={status}
       statusList={statusList}
-      classes={classes}
+      styles={styles}
       completed={completed}
     />
   );

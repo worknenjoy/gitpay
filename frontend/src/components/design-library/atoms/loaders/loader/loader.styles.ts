@@ -1,16 +1,19 @@
 import { styled } from '@mui/material/styles'
+import CircularProgress from '@mui/material/CircularProgress'
 
-const useStyles = styled(() => ({
-  root: {
-    flexGrow: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%'
-  },
-  progress: {
-    color: '#009688'
-  }
+export const Root = styled('div')(() => ({
+  flexGrow: 1,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%'
 }))
 
-export default useStyles
+export const Progress = styled(CircularProgress)(() => ({
+  color: '#009688'
+}))
+
+export default {
+  Root,
+  Progress
+}

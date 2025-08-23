@@ -90,4 +90,3 @@ export default function IssueAuthorList ({ authors, logged, user, task, messageA
     </React.Fragment>
   )
 }
-}

@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useIntl, FormattedMessage, FormattedDate } from 'react-intl'
-import {
-  withStyles,
-  Grid,
-  Button,
-  Typography,
-  FormControl,
-  Select,
-  Skeleton
-} from '@mui/material'
+import { Button, Typography, FormControl, Select, Skeleton } from '@mui/material'
+import Grid from '@mui/material/Grid'
 
 import 'react-phone-number-input/style.css'
 import Moment from 'moment'
@@ -22,17 +15,8 @@ import Alert from 'design-library/atoms/alerts/alert/alert'
 import TextMaskCustom from './TextMaskCustom';
 import messages from '../../../../shared/messages'
 
-const styles = (theme) => ({
-  legend: {
-    fontSize: 18,
-    fontWeight: 500,
-    color: theme.palette.primary.dark
-  },
-  fieldset: {
-    border: `1px solid ${theme.palette.primary.light}`,
-    marginBottom: 20
-  }
-})
+const fieldsetStyle = (theme?: any) => ({ border: `1px solid ${theme?.palette?.primary?.light || '#ddd'}`, marginBottom: 20 });
+const legendStyle = (theme?: any) => ({ fontSize: 18, fontWeight: 500, color: theme?.palette?.primary?.dark || 'inherit' });
 
 const AccountDetails = ({
   account,
@@ -42,8 +26,7 @@ const AccountDetails = ({
   createAccount,
   fetchAccount,
   fetchAccountCountries,
-  setActiveStep,
-  classes
+  setActiveStep
 }) => {
   const intl = useIntl()
   const [accountData, setAccountData] = useState({})
@@ -133,8 +116,8 @@ const AccountDetails = ({
                 <Skeleton variant="text" animation="wave" />
               </div>
             ) : (
-              <fieldset className={classes.fieldset}>
-                <legend className={classes.legend}>
+              <fieldset style={fieldsetStyle()}>
+                <legend style={legendStyle()}>
                   <Typography>
                     <FormattedMessage id="account-details-country-information-title" defaultMessage="Country" />
                   </Typography>
@@ -162,7 +145,7 @@ const AccountDetails = ({
                       <Button variant="outlined" onClick={() => setOpenCountryPicker(true)} style={{ margin: 20 }}>
                         <FormattedMessage id="account-details-country-information-action" defaultMessage="Select Country" />
                       </Button>
-                      <CountryPicker open={openCountryPicker} onClose={closeCountryPicker} classes={classes} />
+                      <CountryPicker open={openCountryPicker} onClose={closeCountryPicker} />
                     </div>
                   }
                   <code style={{ display: 'none' }}>{account && JSON.stringify(account.data)}</code>
@@ -191,38 +174,38 @@ const AccountDetails = ({
             )}
           </Grid>
           {account && account.data.country &&
-          <Grid size={{ xs: 12, md: 6 }}>
-            <fieldset className={classes.fieldset} style={{height: 108, display: 'flex', alignItems: 'center'}}>
-              <legend className={classes.legend}>
-                <Typography>
-                  <FormattedMessage id="account.details.currency.title" defaultMessage="Currency" />
-                </Typography>
-              </legend>
-              {!countries.completed ? (
-                <Skeleton variant="text" animation="wave" />
-              ) : (
-                <FormControl style={{ width: '100%' }}>
-                  <Select
-                    autoWidth
-                    native
-                    name="individual[dob][month]"
-                    style={{ marginRight: 8, marginTop: 16, width: '100%' }}
-                  >
-                    <FormattedMessage id="account.details.month" defaultMessage="Month of birth">{(msg) => <option value="" key={'default'}>{msg}</option>}</FormattedMessage>
-                    {[[1, 'Jan'], [2, 'Feb'], [3, 'Mar'], [4, 'Apr'], [5, 'May'], [6, 'June'], [7, 'Jul'], [8, 'Aug'], [9, 'Set'], [10, 'Oct'], [11, 'Nov'], [12, 'Dec']].map(
-                      (item, i) => {
-                        return (
-                          <option selected={account.data.individual && !!(item[0] === account.data.individual.dob.month || item[1] === accountData['individual[dob][month]'])} key={i} value={item[0]}>
-                            {`${item[1]}`}
-                          </option>
-                        )
-                      }
-                    )}
-                  </Select>
-                </FormControl>
-              )}
-            </fieldset>
-          </Grid>}
+            <Grid size={{ xs: 12, md: 6 }}>
+              <fieldset style={{ ...fieldsetStyle(), height: 108, display: 'flex', alignItems: 'center' }}>
+                <legend style={legendStyle()}>
+                  <Typography>
+                    <FormattedMessage id="account.details.currency.title" defaultMessage="Currency" />
+                  </Typography>
+                </legend>
+                {!countries.completed ? (
+                  <Skeleton variant="text" animation="wave" />
+                ) : (
+                  <FormControl style={{ width: '100%' }}>
+                    <Select
+                      autoWidth
+                      native
+                      name="individual[dob][month]"
+                      style={{ marginRight: 8, marginTop: 16, width: '100%' }}
+                    >
+                      <FormattedMessage id="account.details.month" defaultMessage="Month of birth">{(msg) => <option value="" key={'default'}>{msg}</option>}</FormattedMessage>
+                      {[[1, 'Jan'], [2, 'Feb'], [3, 'Mar'], [4, 'Apr'], [5, 'May'], [6, 'June'], [7, 'Jul'], [8, 'Aug'], [9, 'Set'], [10, 'Oct'], [11, 'Nov'], [12, 'Dec']].map(
+                        (item, i) => {
+                          return (
+                            <option selected={account.data.individual && !!(item[0] === account.data.individual.dob.month || item[1] === accountData['individual[dob][month]'])} key={i} value={item[0]}>
+                              {`${item[1]}`}
+                            </option>
+                          )
+                        }
+                      )}
+                    </Select>
+                  </FormControl>
+                )}
+              </fieldset>
+            </Grid>}
         </Grid>
       </Grid>
       {account.data.country && (
@@ -232,8 +215,8 @@ const AccountDetails = ({
             onChange={onChange}
             style={{ marginBottom: 20 }}
           >
-            <fieldset className={classes.fieldset}>
-              <legend className={classes.legend}>
+            <fieldset style={fieldsetStyle()}>
+              <legend style={legendStyle()}>
                 <Typography>
                   <FormattedMessage id="account-details-personal-information" defaultMessage="Personal details" />
                 </Typography>
@@ -370,8 +353,8 @@ const AccountDetails = ({
                 </Grid>
               </Grid>
             </fieldset>
-            <fieldset className={classes.fieldset}>
-              <legend className={classes.legend}>
+            <fieldset style={fieldsetStyle()}>
+              <legend style={legendStyle()}>
                 <Typography>
                   <FormattedMessage id="account-details-address" defaultMessage="Address information" />
                 </Typography>
@@ -394,8 +377,8 @@ const AccountDetails = ({
                 </Grid>
               </Grid>
             </fieldset>
-            <fieldset className={classes.fieldset}>
-              <legend className={classes.legend}>
+            <fieldset style={fieldsetStyle()}>
+              <legend style={legendStyle()}>
                 <Typography>
                   <FormattedMessage id="account.details.terms" defaultMessage="Accept terms" />
                 </Typography>
@@ -467,14 +450,4 @@ const AccountDetails = ({
     </Grid>
   )
 }
-
-export default withStyles(styles)(AccountDetails)
-              </div>
-            </Grid>
-          </form>
-        </Grid>)}
-    </Grid>
-  )
-}
-
-export default withStyles(styles)(AccountDetails)
+export default AccountDetails

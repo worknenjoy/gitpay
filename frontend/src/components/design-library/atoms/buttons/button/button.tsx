@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button as MaterialButton, CircularProgress } from '@mui/material';
-import useStyles from './button.styles';
+import { Button as MaterialButton } from '@mui/material';
+import styles from './button.styles';
 
 type ButtonProps = {
   type?: 'button' | 'submit' | 'reset';
   variant?: 'text' | 'outlined' | 'contained';
-  color?: 'default' | 'inherit' | 'primary' | 'secondary';
+  color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
   label?: React.ReactNode;
   disabled?: boolean;
   completed?: boolean;
@@ -21,7 +21,7 @@ const Button = ({
   completed,
   onClick
 }:ButtonProps) => {
-  const classes = useStyles();
+  const { Progress } = styles as any;
   return (
     <MaterialButton
       type={type}
@@ -32,9 +32,7 @@ const Button = ({
     >
       <>
         {label}
-        {!completed && (
-          <CircularProgress className={classes.progress} size={24} color="inherit" />
-        )}
+        {!completed && (<Progress size={24} color="inherit" />)}
       </>
     </MaterialButton>
   );

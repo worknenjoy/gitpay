@@ -1,25 +1,33 @@
-import { styled } from '@mui/material/styles'
+import styled from 'styled-components'
+import { Button } from '@mui/material'
 
-const useStyles = styled(() => ({
-  primaryWrapper: {
-    marginTop: 30,
-    marginBottom: 10
-  },
-  primaryLabel: {
-    display: 'inline-block',
-    marginRight: 10
-  },
-  secondaryContainer: {
-    display: 'flex',
-    justifyContent: 'space-evenly'
-  },
-  secondaryButton: {
-    marginRight: 5
-  },
-  secondaryLabel: {
-    display: 'inline-block',
-    marginRight: 10
-  }
-}))
+// Wrapper for each primary action block
+export const PrimaryWrapper = styled.div`
+  margin-top: 30px;
+  margin-bottom: 10px;
+`
 
-export default useStyles
+// Span for the primary button label
+export const PrimaryLabel = styled.span`
+  display: inline-block;
+  margin-right: 10px;
+`
+
+// Container for secondary actions row
+export const SecondaryContainer = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`
+
+// Styled MUI Button for secondary actions spacing
+export const SecondaryButton = styled(Button)`
+  margin-right: 5px;
+`
+
+// Span for the secondary button label
+export const SecondaryLabel = styled.span`
+  display: inline-block;
+  margin-right: 10px;
+`
+
+// no default export; use named imports

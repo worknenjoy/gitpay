@@ -1,6 +1,6 @@
-import { styled } from '@mui/material/styles'
+import { Theme } from '@mui/material/styles'
 
-const useStyles = styled(() => ({
+export const getCheckboxesStyles = (theme: Theme) => ({
   container: {
     fontFamily: 'Roboto',
     color: '#a9a9a9'
@@ -8,13 +8,9 @@ const useStyles = styled(() => ({
   item: {
     paddingBottom: 0
   },
-  starterCheckbox: {},
-  termsLabel: {
-    paddingTop: 0
-  },
   checkbox: {
     paddingRight: 5
   }
-}))
+})
 
-export default useStyles
+export default getCheckboxesStyles

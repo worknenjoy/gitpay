@@ -6,7 +6,7 @@ import {
   Button,
   Typography
 } from '@mui/material'
-import { withStyles, createStyles, Theme } from '@mui/material/styles'
+import { createStyles, Theme } from '@mui/material/styles'
 import { FormattedMessage, useIntl } from 'react-intl'
 import moment from 'moment'
 
@@ -19,26 +19,24 @@ import InvoiceId from './invoice-id'
 import { formatCurrency } from '../../../../../utils/format-currency'
 import InvoiceDueDate from './invoice-due-date'
 
-const styles = (theme: Theme) =>
-  createStyles({
-    paper: {
-      padding: 10,
-      marginTop: 10,
-      marginBottom: 10,
-      textAlign: 'left',
-      color: theme.palette.text.secondary
-    },
-    button: {
-      width: 100,
-      fontSize: 10
-    },
-    icon: {
-      marginLeft: 5
-    }
-  })
+const classes = {
+  paper: {
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: 'left' as const,
+    color: 'inherit'
+  },
+  button: {
+    width: 100,
+    fontSize: 10
+  },
+  icon: {
+    marginLeft: 5
+  }
+}
 
 const Wallets = ({
-  classes,
   user,
   customer,
   fetchCustomer,
@@ -145,7 +143,7 @@ const Wallets = ({
             <FormattedMessage id="general.wallets" defaultMessage="Wallets" />
           </Typography>
         </div>
-        <Skeleton variant="rect" height={118} animation="wave" />
+  <Skeleton variant="rectangular" height={118} animation="wave" />
         {wallet.data.id ? (
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
             <BalanceCard
@@ -157,7 +155,7 @@ const Wallets = ({
           </div>
         ) : (
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
-            <div className={classes.paper}>
+            <div style={classes.paper}>
               {showWalletName ? (
                 <WalletForm
                   value={walletName}
@@ -175,7 +173,7 @@ const Wallets = ({
                   <Typography variant="body1" gutterBottom>
                     <FormattedMessage id="general.wallets.empty" defaultMessage="You dont have any active wallet" />
                   </Typography>
-                  <Button style={{ marginTop: 12 }} onClick={createWalletName} variant="contained" size="large" color="secondary" className={classes.button}>
+                  <Button style={{ marginTop: 12, ...classes.button }} onClick={createWalletName} variant="contained" size="large" color="secondary">
                     <FormattedMessage id="general.wallets.create" defaultMessage="Create wallet" />
                   </Button>
                 </div>
@@ -183,7 +181,7 @@ const Wallets = ({
             </div>
           </div>
         )}
-        {wallets.data && wallets.data.length > 0 && (
+  {wallets.data && wallets.data.length > 0 && (
           <div style={{ marginTop: 10, marginBottom: 30 }}>
             <CustomPaginationActionsTable
               tableHead={[
@@ -227,4 +225,4 @@ const Wallets = ({
   )
 }
 
-export default withStyles(styles)(Wallets)
+export default Wallets

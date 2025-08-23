@@ -9,7 +9,7 @@ import {
   CardContent
 } from '@mui/material';
 
-import { makeStyles } from '@mui/styles';
+// removed makeStyles usage
 
 import { Alert, AlertTitle } from '@mui/material';
 
@@ -24,40 +24,20 @@ const taskIcon = require('images/icons/noun_project management_3063547.svg');
 const configIcon = require('images/icons/noun_project management_3063514.svg');
 const paymentsIcon = require('images/icons/noun_project management_3063535.svg');
 
-const useStyles = makeStyles((theme) => ({
-  cardActions: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  card: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
-  cardMedia: {
-    height: 140,
-    backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
-  },
-  cardContent: {
-    flexGrow: 1
-  },
-  cardList: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-    gap: theme.spacing(2)
-  }
-}));
+const styles = {
+  cardActions: { display: 'flex', justifyContent: 'center' },
+  card: { width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' },
+  cardMedia: { height: 140, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' },
+  cardContent: { flexGrow: 1 },
+  cardList: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }
+} as const;
 
 const ProfileOptions = ({ user }) => {
   const { data = {}, completed } = user;
   const { Types = [] } = data;
 
   const history = useHistory();
-  const classes = useStyles();
+  const classes = styles as any;
 
   const [ visible , setVisible ] = React.useState(false)
 

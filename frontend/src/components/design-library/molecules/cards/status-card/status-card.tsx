@@ -1,21 +1,21 @@
 import React from 'react';
 import { Button, Card, CardContent, CardActions, Typography, styled, Skeleton } from '@mui/material';
 
-const useStyles = styled({
-  root: {
-    maxWidth: 500,
-    margin: 10,
-    textAlign: 'right',
-    padding: 10
-  },
-  balance: {
-    fontSize: 32,
-    fontWeight: 'bold'
-  },
-  name: {
-    fontSize: 18
-  }
-});
+const Root = styled(Card)(() => ({
+  maxWidth: 500,
+  margin: 10,
+  textAlign: 'right',
+  padding: 10
+}))
+
+const Balance = styled(Typography)(() => ({
+  fontSize: 32,
+  fontWeight: 'bold'
+}))
+
+const Name = styled(Typography)(() => ({
+  fontSize: 18
+}))
 
 type StatusCardProps = {
   name: string | React.ReactNode;
@@ -27,11 +27,11 @@ type StatusCardProps = {
 }
 
 const StatusCard = ({ name, status, onAdd, action, actionProps, completed }: StatusCardProps) => {
-  const classes = useStyles();
+  
 
   return (
 
-    <Card className={classes.root}>
+  <Root>
       <CardContent>
         {
           !completed ? (
@@ -41,12 +41,12 @@ const StatusCard = ({ name, status, onAdd, action, actionProps, completed }: Sta
             </>
           ) : (
             <>
-              <Typography className={classes.name} color="textSecondary" gutterBottom>
+        <Name color="textSecondary" gutterBottom>
                 {name}
-              </Typography>
-              <Typography className={classes.balance} color="primary">
+        </Name>
+        <Balance color="primary">
                 {status}
-              </Typography>
+        </Balance>
             </>
           )
         }
@@ -65,7 +65,7 @@ const StatusCard = ({ name, status, onAdd, action, actionProps, completed }: Sta
         </CardActions>
       )}
 
-    </Card>
+  </Root>
 
   );
 };

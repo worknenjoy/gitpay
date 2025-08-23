@@ -5,11 +5,13 @@ import {
   Input,
   InputAdornment
 } from '@mui/material';
-import useStyles from './price-input.styles';
+import getPriceInputStyles from './price-input.styles';
+import { useTheme } from '@mui/material/styles';
 
 
 const PriceInput = ({ priceLabel, value, onChange, defaultValue, currency = '$', endAdornment = true }) => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const styles = getPriceInputStyles(theme);
   const [ price, setPrice ] = useState(0)
 
   const handleChange = (event) => {
@@ -24,7 +26,7 @@ const PriceInput = ({ priceLabel, value, onChange, defaultValue, currency = '$',
   }, [value])
   
   return (
-    <form className={classes.formPayment} action="POST">
+  <form style={styles.formPayment as React.CSSProperties} action="POST">
       <FormControl>
         <InputLabel htmlFor="adornment-amount">
           {priceLabel}
@@ -36,7 +38,7 @@ const PriceInput = ({ priceLabel, value, onChange, defaultValue, currency = '$',
           }
           startAdornment={
             <InputAdornment position="start">
-              <span className={classes.currencySymbol}> {currency} </span>
+              <span style={styles.currencySymbol as React.CSSProperties}> {currency} </span>
             </InputAdornment>
           }
           type="number"
@@ -44,7 +46,7 @@ const PriceInput = ({ priceLabel, value, onChange, defaultValue, currency = '$',
           defaultValue={defaultValue}
           value={price}
           onChange={handleChange}
-          className={classes.input}
+          sx={styles.input}
         />
       </FormControl>
     </form>

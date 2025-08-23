@@ -16,7 +16,6 @@ const PersonalDetailsForm = ({ account }) => {
   return (
     <Fieldset
       completed={completed}
-      rows={3}
       legend="Personal Details"
     >
       <Grid container spacing={2}>

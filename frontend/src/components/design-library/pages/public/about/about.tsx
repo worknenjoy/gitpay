@@ -47,7 +47,8 @@ const About = ({
         importIssuesProps={importIssuesProps}
       >
         <Container>
-          <Section name='contrib' ref={ref}>
+          <div id='contrib' ref={ref}>
+            <Section>
             <Grid container spacing={3}>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <MainTitle left>
@@ -114,9 +115,11 @@ const About = ({
                 <ResponsiveImage width='800' src={freelancerImage} />
               </Grid>
             </Grid>
-          </Section>
+            </Section>
+          </div>
         </Container>
-        <SectionBgContrast name='companies' ref={ref} alternative>
+        <div id='companies' ref={ref}>
+          <SectionBgContrast alternative>
           <Container>
             <Grid container spacing={3}>
               <Grid size={{ xs: 12, sm: 6 }}>
@@ -183,9 +186,11 @@ const About = ({
               </Grid>
             </Grid>
           </Container>
-        </SectionBgContrast>
+          </SectionBgContrast>
+        </div>
         <Container>
-          <Section name='collab' ref={ref}>
+          <div id='collab' ref={ref}>
+            <Section>
             <Grid container spacing={3}>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <MainTitle left>
@@ -250,7 +255,8 @@ const About = ({
                 <ResponsiveImage width='600' src={teamImage} />
               </Grid>
             </Grid>
-          </Section>
+            </Section>
+          </div>
         </Container>
       </PublicBase>
     </Root>

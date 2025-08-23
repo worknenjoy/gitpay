@@ -1,43 +1,43 @@
-import { styled } from '@mui/material/styles'
+import { Theme } from '@mui/material/styles'
 import { cyan, blue, lime, orange } from '@mui/material/colors'
 
-const InvoiceStatus = styled('span')(({ theme }) => ({
-  '&.pending': {
+export const getInvoiceStatusStyles = (theme: Theme) => ({
+  pending: {
     backgroundColor: orange[900],
     color: theme.palette.common.white
   },
-  '&.draft': {
+  draft: {
     backgroundColor: orange[500],
     color: theme.palette.common.white
   },
-  '&.open': {
+  open: {
     backgroundColor: orange[300],
     color: theme.palette.common.white
   },
-  '&.paid': {
+  paid: {
     backgroundColor: lime[800],
     color: theme.palette.common.white
   },
-  '&.failed': {
+  failed: {
     backgroundColor: theme.palette.error.main,
     color: theme.palette.common.white
   },
-  '&.uncollectible': {
+  uncollectible: {
     backgroundColor: cyan[500],
     color: theme.palette.common.white
   },
-  '&.void': {
+  void: {
     backgroundColor: theme.palette.error.main,
     color: theme.palette.common.white
   },
-  '&.refunded': {
+  refunded: {
     backgroundColor: blue[500],
     color: theme.palette.common.white
   },
-  '&.unknown': {
+  unknown: {
     backgroundColor: theme.palette.grey[500],
     color: theme.palette.common.white
   }
-}))
+})
 
-export default InvoiceStatus
+export default getInvoiceStatusStyles

@@ -2,71 +2,9 @@ import React, { useState } from 'react';
 import ImportIssueButton from 'design-library/organisms/layouts/topbar/import-issue';
 import ImportIssueDialog from 'design-library/organisms/layouts/topbar/import-issue-dialog';
 import AccountMenu from './account-menu';
-import Button from '@mui/material/Button';
 import { FormattedMessage } from 'react-intl';
 import { Grid } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'end',
-    backgroundColor: '#fff',
-    padding: '10px 20px',
-    shadow: '0 0 10px rgba(0,0,0,0.1)',
-    '@media (max-width: 37.5em)': {
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: '10px 0'
-    }
-  },
-  wrapper: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    '@media (max-width: 37.5em)': {
-      borderRight: 'none',
-      flexDirection: 'column',
-      width: '100%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 20
-    }
-  },
-  inner: {
-    marginRight: 10,
-    paddingRight: 15,
-    borderRight: '1px solid #ccc',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    '@media (max-width: 37.5em)': {
-      borderRight: 'none',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%'
-    }
-  },
-  actionButtons: {
-    marginRight: 10,
-    '@media (max-width: 37.5em)': {
-      marginTop: 20,
-      width: '100%'
-    }
-  },
-  account: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    '@media (max-width: 37.5em)': {
-      marginTop: 20,
-      width: '100%',
-      justifyContent: 'center'
-    }
-  }
-}));
+import { Container, Wrapper, Inner, ActionButton, Account } from 'design-library/organisms/layouts/account-header/account-header.styles';
 
 const AccountHeader = ({
   user,
@@ -74,7 +12,6 @@ const AccountHeader = ({
   onCreateTask,
   onLogout
 }) => {
-  const classes = useStyles()
   const [openAddIssue, setOpenAddIssue] = useState(false);
 
   const handleAddIssueClick = () => {
@@ -87,21 +24,20 @@ const AccountHeader = ({
   }
 
   return (
-    <div className={classes.container}>
+    <Container>
        <Grid size={{ xs: 12, md: 4 }}></Grid>
-       <Grid size={{ xs: 12, md: 8 }} className={classes.wrapper}>
-          <div className={classes.inner}>
+       <Grid size={{ xs: 12, md: 8 }} component={Wrapper}>
+          <Inner>
             {user?.Types?.map(t => t.name).includes('contributor') &&
              <Grid container direction="column" alignItems="center">
                <Grid size={{ xs: 12 }}>
-                  <Button
+                  <ActionButton
                   onClick={ () => history.push('/profile/explore') }
                   color="primary"
                   variant="outlined"
-                  className={ classes.actionButtons }
                 >
                   <FormattedMessage id="profile.header.action.secondary" defaultMessage="Work on an issue" />
-                </Button>
+                </ActionButton>
                </Grid>
              </Grid>
             }
@@ -109,7 +45,6 @@ const AccountHeader = ({
               <>
                 <ImportIssueButton
                   onAddIssueClick={ handleAddIssueClick }
-                  classes={classes}
                 />
                 <ImportIssueDialog
                   open={ openAddIssue }
@@ -119,16 +54,16 @@ const AccountHeader = ({
                 />
               </>
             }
-          </div>
-          <div className={classes.account}>
+          </Inner>
+          <Account>
           <AccountMenu 
             user={ user } 
             history={ history }
             onLogout={ onLogout }
           />
-        </div>
+        </Account>
        </Grid>
-    </div>
+    </Container>
   )
 }
 

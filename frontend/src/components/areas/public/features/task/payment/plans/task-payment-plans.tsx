@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
-import MotorcycleIcon from '@mui/icons-material/Motorcycle';
+import MotorcycleIcon from '@mui/icons-material/TwoWheeler';
 import DriveEtaIcon from '@mui/icons-material/DriveEta';
 
 export const TaskPaymentPlans = ({ plan, classes }) => {

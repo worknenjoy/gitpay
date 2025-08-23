@@ -1,26 +1,17 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { withStyles } from '@mui/material/styles';
-import { Grid, Button, Paper } from '@mui/material';
+// removed withStyles
+import { Button, Paper } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import { Field } from 'design-library/atoms/inputs/fields/field/field';
 
-const styles = (theme) => ({
-  legend: {
-    fontSize: 18,
-    fontWeight: 500,
-    color: theme.palette.primary.dark
-  },
-  fieldset: {
-    border: `1px solid ${theme.palette.primary.light}`,
-    marginBottom: 20
-  }
-})
+const fieldsetStyle = { border: '1px solid #ddd', marginBottom: 20 } as const;
+const legendStyle = { fontSize: 18, fontWeight: 500 } as const;
 
 
 const WalletForm = ({
-  classes,
   value,
   onChange,
   onCreate
@@ -34,16 +25,16 @@ const WalletForm = ({
   return (
     <Paper elevation={ 1 } style={{padding: 20}}>
       <form>
-        <Grid container spacing={2}>
-          <Grid size={{ xs: 12, md: 12 }}>
-              <fieldset className={ classes.fieldset }>
-                <legend className={ classes.legend }>
+  <Grid container spacing={2}>
+    <Grid size={{ xs: 12, md: 12 }}>
+              <fieldset style={fieldsetStyle}>
+                <legend style={legendStyle}>
                   <Typography>
                     <FormattedMessage id="wallet.new.fieldset.title" defaultMessage="New wallet" />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
-                  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+      <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <FormattedMessage id="account.basic.name" defaultMessage="name">
                       { (msg) => (
                         <Field
@@ -55,7 +46,7 @@ const WalletForm = ({
                       ) }
                     </FormattedMessage>
                   </Grid>
-                  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+      <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <div style={{float: 'right'}}>
                       <Button
                         type="submit"
@@ -76,4 +67,4 @@ const WalletForm = ({
   );
 }
 
-export default withStyles(styles)(WalletForm);
+export default WalletForm;

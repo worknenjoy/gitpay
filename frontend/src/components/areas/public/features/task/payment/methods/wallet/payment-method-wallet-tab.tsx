@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Button, createStyles, styled, Theme, Skeleton } from '@mui/material'
+import { Button, styled, Skeleton } from '@mui/material'
 import { formatCurrency } from '../../../../../../../../utils/format-currency'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
 
@@ -16,14 +16,10 @@ function isGreaterThan(a: string | number, b: string | number): boolean {
 }
 
 
-const useStyles = styled((theme: Theme) =>
-  createStyles({
-    btnPayment: {
-      float: 'right',
-      marginTop: 10
-    },
-  })
-)
+const BtnPayment = styled(Button)(() => ({
+  float: 'right',
+  marginTop: 10
+}))
 
 const PaymentMethodWalletTab = ({
   user,
@@ -41,7 +37,7 @@ const PaymentMethodWalletTab = ({
   syncTask
 }) => {
 
-  const classes = useStyles()
+  
 
   const onWalletPayment = async () => {
     await createOrder({
@@ -86,17 +82,16 @@ const PaymentMethodWalletTab = ({
           />
         )}
       </div>
-      <Button
+      <BtnPayment
         disabled={!price || !wallet?.data?.balance || (wallet?.data?.balance && isGreaterThan(priceAfterFee, wallet?.data?.balance))}
         onClick={onWalletPayment}
         variant='contained'
         color='secondary'
-        className={classes.btnPayment}
       >
         <FormattedMessage id='task.payment.wallet.action' defaultMessage='Pay {amount} with your Wallet' values={{
           amount: formatCurrency(priceAfterFee)
         }} />
-      </Button>
+  </BtnPayment>
     </div>
   );
 }

@@ -18,141 +18,18 @@ import {
 } from '@mui/material'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
-
-const useStyles = makeStyles((theme) => ({
-  row: {
-    width: '100%',
-    [theme.breakpoints.down('lg')]: {
-      flexDirection: 'column',
-      margin: 'auto'
-    },
-    [theme.breakpoints.up('lg')]: {
-      flexDirection: 'row',
-      width: '100%',
-      padding: '3% 0 3% 0',
-      margin: '0 0 0 0',
-      alignItems: 'center'
-    }
-  },
-  bigRow: {
-    margin: '2% 5% 0 0',
-    padding: '0 0 0 0',
-    '& h1': {
-      fontWeight: '500'
-    },
-    '& p': {
-      color: 'gray',
-      fontSize: '18px'
-    }
-  },
-  rowList: {
-    [theme.breakpoints.down('lg')]: {
-      margin: '0 0% 10% 0'
-    },
-    [theme.breakpoints.up('lg')]: {
-      margin: '0 5% 0% 0'
-    }
-  },
-  rowContent: {
-    borderRadius: 0,
-    height: '100%',
-    '& div': {
-      height: '100%'
-    },
-    '& img': {
-      backgroundColor: '#263238',
-      objectFit: 'cover',
-      width: '100%',
-      height: '100%'
-    }
-  },
-  media: {
-    height: '100%'
-  },
-  rootLabel: {
-    padding: '5px 16px 0px',
-    backgroundColor: '#455a64',
-    '& h5': {
-      color: 'white'
-    }
-  },
-  action: {
-    alignItems: 'flex-start',
-    paddingTop: '0 ',
-    backgroundColor: '#455a64',
-    '& p': {
-      padding: '0 10px 0 15px',
-      float: 'left',
-      width: '90%',
-      alignItems: 'center',
-      color: '#c7ced1',
-      wordWrap: 'break-word',
-      whiteSpace: 'pre-wrap',
-      fontSize: '0.78rem'
-    },
-    '& span': {
-      paddingTop: 0,
-      paddingLeft: 0,
-      '& svg': {
-        backgroundColor: 'white'
-      }
-    }
-  },
-  infoItem: {
-    paddingLeft: '10px',
-    backgroundColor: '#455a64',
-    display: 'flex',
-    flexDirection: 'row',
-    '& Checkbox': {
-      marginRight: '0px',
-      backgroundColor: 'white'
-    }
-  },
-  menuItem: {
-    color: 'white',
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    padding: '0 0 2px',
-    '& h4': {
-      paddingTop: '10px',
-      paddingBottom: '5px',
-      margin: 0,
-      fontSize: '18px'
-    },
-    '& p': {
-      width: '100%',
-      marginTop: '0px',
-      marginBottom: '0px'
-    }
-  },
-  buttons: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'flex-end'
-  },
-  cButton: {
-    border: 'none',
-    backgroundColor: 'transparent',
-    color: '#00b58e',
-    fontWeight: 'bold',
-    fontFamily: 'arial',
-    '& button:focus': {
-      outline: 'none'
-    }
-  },
-  sButton: {
-    border: 0,
-    margin: '0 4% 0 4%',
-    padding: '10px 60px 10px',
-    backgroundColor: '#00b58e',
-    fontSize: '14px',
-    height: '20%',
-    color: '#FFFFFF',
-    cursor: 'pointer',
-    fontWeight: 'bold'
-  }
-}))
+import {
+  RolesContainer,
+  BigRow,
+  RowGrid,
+  RowListItem,
+  RowCard,
+  RootLabel,
+  ActionBar,
+  ButtonsRow,
+  CancelButton,
+  SaveButton
+} from './user-roles.styles'
 
 const messages = defineMessages({
   saveSuccess: {
@@ -180,7 +57,6 @@ const Roles = ({
   addNotification
 }) => {
   const { data, completed } = roles
-  const classes = useStyles()
   const intl = useIntl()
   const [selectedRoles, setSelectedRoles] = useState([])
 
@@ -228,57 +104,57 @@ const Roles = ({
   const CardListPlaceholder = (
     <>
       {placeholders.map((_, index: number) => (
-        <Grid key={index} item size={{ xs: 12, md: 3 }} spacing={2} className={classes.rowList}>
+        <RowListItem key={index} size={{ xs: 12, md: 3 }} spacing={2}>
           <Paper>
-            <Card className={classes.rowContent} variant="outlined">
+            <RowCard variant="outlined">
               <CardMedia>
                 <Skeleton variant="rectangular" height={270} />
               </CardMedia>
-              <CardContent className={classes.rootLabel}>
+              <RootLabel>
                 <Typography variant="h5">
                   <Skeleton variant="text" />
                 </Typography>
-              </CardContent>
-              <CardActions className={classes.action}>
+              </RootLabel>
+              <ActionBar>
                 <Typography variant="body2" color="textSecondary" component="p">
                   <Skeleton variant="text" />
                 </Typography>
-              </CardActions>
-            </Card>
+              </ActionBar>
+            </RowCard>
           </Paper>
-        </Grid>
+        </RowListItem>
       ))}
     </>
   );
 
   return (
-    <Paper elevation={2} style={{ padding: '10px 20px 20px 20px' }}>
-      <div className={classes.bigRow}>
+    <RolesContainer elevation={2}>
+      <BigRow>
         <Typography variant="h4" noWrap>
           <FormattedMessage id="user.type.title" defaultMessage="What type of user are you?" />
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p" noWrap>
           <FormattedMessage id="user.type.description" defaultMessage="Define how you will use Gitpay. You can choose multiple types of user roles you want." />
         </Typography>
-      </div>
-      <Grid container className={classes.row} direction="row" alignItems="stretch">
+      </BigRow>
+      <RowGrid container direction="row" alignItems="stretch">
         {!completed ? (
           CardListPlaceholder
         ) : (
           <>
             {data.map(r => (
-              <Grid key={r.id} item size={{ xs: 12, md: 3 }} spacing={2} className={classes.rowList}>
+              <RowListItem key={r.id} size={{ xs: 12, md: 3 }} spacing={2}>
                 <Paper>
-                  <Card className={classes.rowContent} variant="outlined">
+                  <RowCard variant="outlined">
                     <CardMedia>
                       <img src={imageMap[r.name]} alt={r.name} width={250} height={270} />
                     </CardMedia>
-                    <CardContent className={classes.rootLabel}>
+                    <RootLabel>
                       <Typography variant="h5">
                         {r.label}
                       </Typography>
-                    </CardContent>
-                    <CardActions className={classes.action}>
+                    </RootLabel>
+                    <ActionBar>
                       <Typography variant="body2" color="textSecondary" component="p">
                         {r.description}
                       </Typography>
@@ -290,24 +166,23 @@ const Roles = ({
                         checked={shouldBeChecked(r)}
                         onChange={(e) => handleRoleClick(e, r)}
                       />
-                    </CardActions>
-                  </Card>
+                    </ActionBar>
+                  </RowCard>
                 </Paper>
-              </Grid>
+              </RowListItem>
             ))}
           </>
         )}
-      </Grid>
-      <div className={classes.buttons}>
-        <button onClick={handleCancelClick} className={classes.cButton}>CANCEL</button>
-        <button onClick={handleSaveClick} className={classes.sButton}>SAVE</button>
-      </div>
-    </Paper>
+      </RowGrid>
+      <ButtonsRow>
+        <CancelButton onClick={handleCancelClick}>CANCEL</CancelButton>
+        <SaveButton onClick={handleSaveClick}>SAVE</SaveButton>
+      </ButtonsRow>
+    </RolesContainer>
   )
 }
 
 Roles.propTypes = {
-  classes: PropTypes.object.isRequired,
   updateUser: PropTypes.func,
   createRoles: PropTypes.func,
   deleteRoles: PropTypes.func,

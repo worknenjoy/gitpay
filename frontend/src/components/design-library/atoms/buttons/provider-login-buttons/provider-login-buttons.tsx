@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography'
 import GithubLogo from 'images/github-logo.png'
 import BitbucketLogo from 'images/bitbucket-logo.png'
 import api from '../../../../../consts'
-import useStyles from './provider-login-buttons.styles'
+import stylesModule from './provider-login-buttons.styles'
 
 type ProviderLoginButtonsProps = {
   classes?: any,
@@ -30,7 +30,7 @@ const ProviderLoginButtons = ({
   authorizeGithub,
   disconnectGithub
 }:ProviderLoginButtonsProps) => {
-  const classesLocal = useStyles()
+  const { ButtonWithMargin, TextMargin, LinkMargin } = stylesModule as any
   const styles = {
     textAlign: textPosition,
     marginBottom: 10
@@ -45,12 +45,12 @@ return (
             { value: provider }
           } />
           { (login_strategy === 'local' || login_strategy === null) &&
-          <a href="#" onClick={(e) => {
+          <LinkMargin href="#" onClick={(e) => {
             e.preventDefault();
             disconnectGithub();
-          }} className={classesLocal.linkMargin}>
+          }}>
             <FormattedMessage id="account.login.connect.provider.disconnect" defaultMessage="disconnect" />
-          </a> }
+          </LinkMargin> }
         </Typography>
       </div> : 
       <div style={ { display: hideExtra ? 'none' : 'block' } }>
@@ -63,8 +63,7 @@ return (
       }
     <div style={{ display: 'flex', justifyContent: position }}>
       <div>
-        <Button
-          className={classesLocal.buttonMargin}
+        <ButtonWithMargin as={Button}
           {...authorizeGithub ?
             { onClick: () => authorizeGithub() } :
             { href: `${api.API_URL}/authorize/github`}
@@ -74,8 +73,8 @@ return (
           disabled={provider === 'github'}
         >
           <img width="16" src={GithubLogo} />
-          <span className={classesLocal.textMargin}>Github</span>
-        </Button>
+          <TextMargin>Github</TextMargin>
+        </ButtonWithMargin>
         <Button
           href={`${api.API_URL}/authorize/bitbucket`}
           variant="contained"
@@ -83,7 +82,7 @@ return (
           disabled={provider === 'bitbucket'}
         >
           <img width="16" src={BitbucketLogo} />
-          <span className={classesLocal.textMargin}>Bitbucket</span>
+          <TextMargin>Bitbucket</TextMargin>
         </Button>
       </div>
     </div>

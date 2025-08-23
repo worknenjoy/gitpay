@@ -34,7 +34,6 @@ const SignupDialog = ({
             location={undefined}
             history={undefined}
             match={undefined}
-            classes={undefined}
           />
         </div>
       </DialogContent>

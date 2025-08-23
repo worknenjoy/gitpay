@@ -1,12 +1,11 @@
 import React from 'react'
-import { Skeleton } from '@mui/material'
-import useStyles from './avatar-placeholder.styles'
+import styles from './avatar-placeholder.styles'
 
 export const AvatarPlaceholder = () => {
-  const classes = useStyles()
+  const { Placeholder } = styles as any
   return (
     <div className="avatar-placeholder">
-      <Skeleton variant="circular" className={classes.placeholder} />
+      <Placeholder variant="circular" />
     </div>
   )
 }

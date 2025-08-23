@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useIntl, FormattedMessage } from 'react-intl'
 import { Skeleton } from '@mui/material'
+import Grid from '@mui/material/Grid'
 import {
   Paper,
-  Grid,
   Button,
   Typography,
   InputLabel,
@@ -12,23 +12,11 @@ import {
   Select,
   FormHelperText
 } from '@mui/material'
+import { StyledFieldset, StyledLegend } from './account-customer.styles'
 
 import { countryCodesFull } from '../../../../shared/country-codes'
 
-const useStyles = makeStyles((theme) => ({
-  legend: {
-    fontSize: 18,
-    fontWeight: 500,
-    color: theme.palette.primary.dark
-  },
-  fieldset: {
-    border: `1px solid ${theme.palette.primary.light}`,
-    marginBottom: 20,
-    '&[disabled] legend': {
-      color: theme.palette.primary.light
-    }
-  }
-}))
+// styles migrated to Styled components in account-customer.styles.ts
 
 type FieldProps = {
   name: string,
@@ -93,7 +81,6 @@ const CustomerDetails = ({
   updateCustomer,
   user
 }) => {
-  const classes = useStyles()
   const intl = useIntl()
   const [customerData, setCustomerData] = useState({})
   const { data } = user
@@ -155,12 +142,12 @@ const CustomerDetails = ({
           </Grid>
           
             <Grid size={{ xs: 12, md: 12 }}>
-              <fieldset className={classes.fieldset}>
-                <legend className={classes.legend}>
+              <StyledFieldset>
+                <StyledLegend>
                   <Typography>
                     <FormattedMessage id="customer.personal.title" defaultMessage="1. Personal / business details" />
                   </Typography>
-                </legend>
+                </StyledLegend>
                 <Grid container spacing={2}>
                   <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <FormattedMessage id="customer.verify.fullName" defaultMessage="Full name / Business name">
@@ -176,13 +163,13 @@ const CustomerDetails = ({
                     </FormattedMessage>
                   </Grid>
                 </Grid>
-              </fieldset>
-              <fieldset className={classes.fieldset}>
-                <legend className={classes.legend}>
+              </StyledFieldset>
+              <StyledFieldset>
+                <StyledLegend>
                   <Typography>
                     <FormattedMessage id="account-details-address" defaultMessage="2. Address information" />
                   </Typography>
-                </legend>
+                </StyledLegend>
                 <Grid container spacing={2}>
                   <Grid size={{ xs: 12, md: 6 }}>
                     <Field name="address[line1]" label="Address line 1" value={customerData['address[line1]']} defaultValue={customer.data.address?.line1} completed={customer.completed} />
@@ -223,7 +210,7 @@ const CustomerDetails = ({
                     }
                   </Grid>
                 </Grid>
-              </fieldset>
+              </StyledFieldset>
               <Grid size={{ xs: 12 }}>
                 <div style={{ float: 'right' }}>
                   <Button

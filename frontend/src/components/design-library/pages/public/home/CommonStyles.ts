@@ -1,8 +1,13 @@
-import { styled } from '@mui/material/styles'
+import { styled, Theme } from '@mui/material/styles'
+
+interface MainTitleProps {
+  left?: boolean;
+  center?: boolean;
+}
 
 export const MainTitle = styled('div', {
   shouldForwardProp: (prop) => prop !== 'left' && prop !== 'center',
-})(({ theme, left, center }) => ({
+})<MainTitleProps>(({ theme, left, center }: { theme: Theme } & MainTitleProps) => ({
   textAlign: 'center',
   display: 'block',
   paddingBottom: 10,
@@ -69,13 +74,17 @@ export const MainBanner = styled('div')(({ theme }) => ({
   },
 }))
 
+interface SectionProps {
+  alternative?: boolean;
+}
+
 export const Section = styled('div', {
   shouldForwardProp: (prop) => prop !== 'alternative',
-})(({ alternative }) => ({
+})<SectionProps>(({ alternative }) => ({
   textAlign: 'center',
   padding: '1rem',
   ...(alternative && { backgroundColor: '#f1f0ea' }),
-}))
+}));
 
 export const HeroTitle = styled('div')({})
 
