@@ -9,19 +9,9 @@ import {
 
 import CloseIcon from '@mui/icons-material/Close'
 
-import { Theme, styled } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 import DrawerActions from './drawer-actions/drawer-actions';
-
-const useStyles = styled((theme: Theme) => ({
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(2),
-    top: theme.spacing(2),
-    backgroundColor: 'darkgray',
-    color: 'white',
-    boxShadow: 'none'
-  }
-}));
+import { CloseFab } from './drawer.styles'
 
 type DrawerProps = {
   open: boolean;
@@ -43,14 +33,12 @@ const Drawer = ({
   completed = true
 }: DrawerProps) => {
 
-  const classes = useStyles();
-
   const closeDialogButton = () => {
 
     return (
-      <Fab size="small" aria-label="close" className={classes.closeButton} onClick={onClose}>
+  <CloseFab size="small" aria-label="close" onClick={onClose}>
         <CloseIcon fontSize="small" />
-      </Fab>
+  </CloseFab>
     )
 
   }

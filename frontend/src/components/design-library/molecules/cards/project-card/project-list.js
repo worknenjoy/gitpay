@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import {
   Box,
   Container,
-  Grid
+  Grid,
+  Pagination
 } from '@mui/material'
-import { Pagination } from '@mui/lab'
+import { makeStyles } from '@mui/styles'
 import ProjectCard from './project-card'
 
 const useStyles = makeStyles((theme) => ({
@@ -79,10 +80,7 @@ const ProjectList = ({ listProjects, projects }) => {
         >
           { currentProjects && currentProjects.length > 0 && currentProjects
             .map(project => (
-              <Grid
-                key={ project.id }
-                size={{ lg: 4, md: 6, xs: 12 }}
-              >
+              <Grid key={ project.id } lg={ 4 } md={ 6 } xs={ 12 }>
                 <ProjectCard
                   className={ classes.projectCard }
                   project={ project }
@@ -111,6 +109,4 @@ const ProjectList = ({ listProjects, projects }) => {
 }
 
 export default ProjectList
-}
 
-export default ProjectList

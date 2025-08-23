@@ -5,12 +5,9 @@ import Field from '../../../../atoms/inputs/fields/field/field';
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
 import BalanceCard, { convertStripeAmountByCurrency } from 'design-library/molecules/cards/balance-card/balance-card';
 import currencyMap from 'design-library/molecules/cards/balance-card/currency-map';
+import { EndAdornment } from './payout-request-form.styles';
 
-const useStyles = makeStyles((theme) => ({
-  placholder: {
-    margin: 10
-  }
-}));
+// styles moved to payout-request-form.styles.ts
 
 interface PayoutRequestFormProps {
   onSubmit?: (e: any, data: any) => void;
@@ -103,11 +100,11 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
             completed={completed}
             disabled={balance === 0}
             endAdornment={
-              <div style={{ marginLeft: 8 }}>
+              <EndAdornment>
                 <i>
                   {currency?.toUpperCase() || 'USD'}
                 </i>
-              </div>
+              </EndAdornment>
             }
             onChange={handleAmountChange}
           />

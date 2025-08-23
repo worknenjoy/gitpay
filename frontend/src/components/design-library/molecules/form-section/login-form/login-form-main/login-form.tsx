@@ -1,10 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import { FormattedMessage } from 'react-intl'
-import {
-  Typography,
-  WithStyles
-} from '@mui/material'
+import { Typography } from '@mui/material'
 import { RouteComponentProps } from 'react-router-dom'
 import { Location } from 'history'
 import LoginFormSignin from '../login-form-signin/login-form-signin'
@@ -28,7 +25,7 @@ const Content = styled.div`
   margin-top: 0;
 `
 
-interface LoginButtonProps extends RouteComponentProps, WithStyles<typeof styles> {
+interface LoginButtonProps extends RouteComponentProps {
   referrer?: Location;
   location: any
   contrast?: boolean

@@ -2,80 +2,18 @@ import React, { useState } from 'react';
 import ImportIssueButton from '../../../organisms/layouts/topbar/import-issue';
 import ImportIssueDialog from '../../../organisms/layouts/topbar/import-issue-dialog';
 import ProfileAccountMenu from '../../../molecules/menus/profile-account-menu/profile-account-menu';
-import Button from '@mui/material/Button';
 import { FormattedMessage } from 'react-intl';
 import { Grid } from '@mui/material';
-import { styled, Theme } from '@mui/styles';
 import { useHistory } from 'react-router-dom';
+import { Container, Wrapper, Inner, ActionButton, Account } from './account-header.styles';
 
-const useStyles = styled<Theme>((theme) => ({
-  container: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'end',
-    backgroundColor: '#fff',
-    padding: '10px 20px',
-    boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: '10px 0'
-    }
-  },
-  wrapper: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
-      borderRight: 'none',
-      flexDirection: 'column',
-      width: '100%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 20
-    }
-  },
-  inner: {
-    marginRight: 10,
-    paddingRight: 15,
-    borderRight: '1px solid #ccc',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
-      borderRight: 'none',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%'
-    }
-
-  },
-  actionButtons: {
-    marginRight: 10,
-    [theme.breakpoints.down('sm')]: {
-      marginTop: 20,
-      width: '100%'
-    }
-  },
-  account: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
-      marginTop: 20,
-      width: '100%',
-      justifyContent: 'center'
-    }
-  }
-}));
+// styles moved to account-header.styles.ts
 
 const AccountHeader = ({
   user,
   onCreateTask,
   onLogout
 }) => {
-  const classes = useStyles();
   const history = useHistory();
 
   const [openAddIssue, setOpenAddIssue] = useState(false);
@@ -90,21 +28,20 @@ const AccountHeader = ({
   }
 
   return (
-    <div className={classes.container}>
+    <Container>
        <Grid size={{ xs: 12, md: 4 }}></Grid>
-       <Grid size={{ xs: 12, md: 8 }} className={classes.wrapper}>
-          <div className={classes.inner}>
+       <Grid size={{ xs: 12, md: 8 }} component={Wrapper}>
+          <Inner>
             {user?.Types?.map((t: any) => t.name).includes('contributor') &&
              <Grid container direction="column" alignItems="center">
                <Grid size={{ xs: 12 }}>
-                  <Button
+                  <ActionButton
                   onClick={ () => history.push('/profile/explore') }
                   color="primary"
                   variant="outlined"
-                  className={ classes.actionButtons }
                 >
                   <FormattedMessage id="profile.header.action.secondary" defaultMessage="Work on an issue" />
-                </Button>
+                </ActionButton>
                </Grid>
              </Grid>
             }
@@ -112,7 +49,6 @@ const AccountHeader = ({
               <>
                 <ImportIssueButton
                   onAddIssueClick={ handleAddIssueClick }
-                  classes={classes}
                 />
                 <ImportIssueDialog
                   open={ openAddIssue }
@@ -122,15 +58,15 @@ const AccountHeader = ({
                 />
               </>
             }
-          </div>
-          <div className={classes.account}>
+          </Inner>
+          <Account>
             <ProfileAccountMenu 
               user={ user } 
               onLogout={ onLogout }
             />
-          </div>
+          </Account>
        </Grid>
-    </div>
+    </Container>
   )
 }
 

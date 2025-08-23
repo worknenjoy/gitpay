@@ -1,5 +1,6 @@
 import React from 'react';
 import SecondaryTitle from '../../../atoms/typography/secondary-title/secondary-title';
+import { Container } from './profile-secondary-header.styles';
 
 type ProfileSecondaryHeaderProps = {
   title: string | React.ReactNode; // Allow title to be a string or a React node
@@ -9,13 +10,13 @@ type ProfileSecondaryHeaderProps = {
 
 const ProfileSecondaryHeader = ({ title, subtitle, aside }:ProfileSecondaryHeaderProps) => {
   return (
-    <div style={{marginBottom: 20, display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+    <Container>
       <SecondaryTitle
         title={title}
         subtitle={subtitle}
       />
       {aside && aside}
-    </div>
+    </Container>
   );
 }
 

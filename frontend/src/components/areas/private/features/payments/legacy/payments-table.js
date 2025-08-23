@@ -259,13 +259,3 @@ CustomPaginationActionsTable.propTypes = {
 }
 
 export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))
-  }
-}
-
-CustomPaginationActionsTable.propTypes = {
-  classes: PropTypes.object.isRequired,
-  history: PropTypes.object,
-  payments: PropTypes.object
-}
-
-export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))

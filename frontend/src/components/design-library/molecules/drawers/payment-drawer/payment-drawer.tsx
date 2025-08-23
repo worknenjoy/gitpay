@@ -1,25 +1,17 @@
 import React, { useState } from 'react'
 
-import {
-  Tabs,
-  Tab,
-  withStyles
-} from '@mui/material'
+import { Tabs, Tab } from '@mui/material'
 
-import { Theme, createStyles } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import Drawer from '../drawer/drawer'
 
 import PickupTagList from '../../lists/pickup-tag-list/pickup-tag-list'
 import PricePlan from '../../../organisms/forms/price-forms/price-plan-form/price-plan'
 
-
-const styles = (theme: Theme) =>
-  createStyles({
-    details: {
-      display: 'flex',
-      flexDirection: 'column'
-    }
-  });
+const Details = styled('div')(() => ({
+  display: 'flex',
+  flexDirection: 'column'
+}))
 
 type PaymentDrawerProps = {
   tabs: any;
@@ -30,7 +22,7 @@ type PaymentDrawerProps = {
   title: any;
   pickupTagListMessagesPrimaryText: any;
   pickupTagListMessagesSecondaryText: any;
-  classes: any;
+  classes?: any;
 }
 
 const PaymentDrawer = ({ tabs, open, onClose, onChangePrice, plan, title, pickupTagListMessagesPrimaryText, pickupTagListMessagesSecondaryText, classes }: PaymentDrawerProps) => {
@@ -61,7 +53,7 @@ const PaymentDrawer = ({ tabs, open, onClose, onChangePrice, plan, title, pickup
         onPickItem={onPickItem}
       />
       <PricePlan plan={plan} price={price} onChange={onChangePrice} />
-      <div>
+  <Details>
         <Tabs
           value={tabValue}
           onChange={handleChange}
@@ -71,9 +63,9 @@ const PaymentDrawer = ({ tabs, open, onClose, onChangePrice, plan, title, pickup
           {tabs.map((tab) => <Tab label={tab.label} value={tab.value} />)}
         </Tabs>
         {tabs.map((tab) => tab.value === tabValue && tab.component)}
-      </div>
+  </Details>
     </Drawer >
   )
 }
 
-export default withStyles(styles)(PaymentDrawer)
+export default PaymentDrawer

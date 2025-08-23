@@ -2,7 +2,6 @@ import React from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import MomentComponent from 'moment';
 import {
-  Paper,
   Input,
   InputAdornment,
   FormControl,
@@ -13,32 +12,10 @@ import {
 import WarningIcon from '@mui/icons-material/Warning';
 import CalendarIcon from '@mui/icons-material/CalendarToday';
 import DateIcon from '@mui/icons-material/DateRange';
-
-const useStyles = makeStyles((theme) => ({
-  spanText: {
-    color: 'gray'
-  },
-  deliveryDateSuggestion: {
-    display: 'flex',
-    paddingLeft: 5,
-    alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-      alignItems: 'flex-start'
-    }
-  },
-  dateSuggestionBtn: {
-    cursor: 'pointer',
-    [theme.breakpoints.up('sm')]: {
-      marginTop: 4,
-      marginLeft: 10
-    }
-  }
-}));
+import { Container, Header, Row, IconBox, Content, GrayCaption, DeliveryDateSuggestion, DateSuggestionBtn, SpanText } from './delivery-date.styles'
 
 const DeliveryDate = ({ date, onDateChange }) => {
   const intl = useIntl();
-  const classes = useStyles();
   const [showSuggestAnotherDateField, setShowSuggestAnotherDateField] = React.useState(false);
   const [interestedSuggestedDate, setInterestedSuggestedDate] = React.useState('');
 
@@ -57,42 +34,42 @@ const DeliveryDate = ({ date, onDateChange }) => {
   }
 
   return (
-    <Paper style={{ background: '#F7F7F7', borderColor: '#F0F0F0', borderWidth: 1, borderStyle: 'solid', boxShadow: 'none', padding: 10, paddingTop: 0 }}>
-      <div style={{ textAlign: 'center' }}>
+    <Container>
+      <Header>
         <Typography variant="body1">
           <FormattedMessage id="task.bounties.interested.deliveryDateTitle" defaultMessage="Review Delivery Dates" />
         </Typography>
-      </div>
-      <div style={{ display: 'flex', marginTop: 10, marginBottom: 10 }}>
-        <div style={{ width: 25, justifyContent: 'center', display: 'flex' }}><WarningIcon style={{ color: '#D7472F', fontSize: 18 }} /></div>
-        <div style={{ paddingLeft: 5 }}>
-          <Typography variant="caption" gutterBottom style={{ color: 'gray' }}>
+      </Header>
+      <Row>
+        <IconBox><WarningIcon style={{ color: '#D7472F', fontSize: 18 }} /></IconBox>
+        <Content>
+          <GrayCaption variant="caption" gutterBottom>
             <FormattedMessage id="task.bounties.interested.deliveryDateSuggest" defaultMessage={'You can suggest other delivery date.'}>
               {(msg) => (
-                <span className={classes.spanText}>
+                <SpanText>
                   {msg}
-                </span>
+                </SpanText>
               )}
             </FormattedMessage>
-          </Typography>
-        </div>
-      </div>
-      <div style={{ display: 'flex', marginTop: 10, marginBottom: 10 }}>
-        <div style={{ width: 25, justifyContent: 'center', display: 'flex', alignItems: 'center' }}><CalendarIcon style={{ color: 'gray' }} /></div>
-        <div className={classes.deliveryDateSuggestion}>
-          <Typography variant="caption" style={{ color: 'gray' }}>
-            <span className={classes.spanText}>
+          </GrayCaption>
+        </Content>
+      </Row>
+      <Row>
+        <IconBox><CalendarIcon style={{ color: 'gray' }} /></IconBox>
+        <DeliveryDateSuggestion>
+          <GrayCaption variant="caption">
+            <SpanText>
               <FormattedMessage id="task.bounties.interested.deliveryDate" defaultMessage="Delivery date at {deliveryDate}" values={{ deliveryDate: deliveryDate }} />
               {deadline
                 ? <FormattedMessage id="task.bounties.interested.deadline" defaultMessage=" (in {deadline} days)" values={{ deadline: deadline }} />
                 : null}
-            </span>
-          </Typography>
-          <Link onClick={handleSuggestAnotherDate} variant="body1" className={classes.dateSuggestionBtn}>
+            </SpanText>
+          </GrayCaption>
+          <DateSuggestionBtn onClick={handleSuggestAnotherDate} variant="body1">
             <FormattedMessage id="task.bounties.actions.sugggestAnotherDate" defaultMessage="SUGGEST ANOTHER DATE" />&nbsp;
-          </Link>
-        </div>
-      </div>
+          </DateSuggestionBtn>
+        </DeliveryDateSuggestion>
+      </Row>
 
       {showSuggestAnotherDateField && (
         <FormControl fullWidth>
@@ -112,7 +89,7 @@ const DeliveryDate = ({ date, onDateChange }) => {
            
         </FormControl>
       )}
-    </Paper>
+  </Container>
   );
 };
 

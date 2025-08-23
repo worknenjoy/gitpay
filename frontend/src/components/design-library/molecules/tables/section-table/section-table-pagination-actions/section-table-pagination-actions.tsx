@@ -12,17 +12,9 @@ import {
   LastPage as LastPageIcon
 } from '@mui/icons-material';
 import messages from '../../../../../areas/public/features/task/messages/task-messages';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5)
-  }
-}));
+import { Root } from './section-table-pagination-actions.styles'
 
 const TablePaginationActions = ({ count, page, rowsPerPage, onPageChange }) => {
-  const classes = useStyles();
   const theme = useTheme();
   const intl = useIntl();
 
@@ -46,7 +38,7 @@ const TablePaginationActions = ({ count, page, rowsPerPage, onPageChange }) => {
   const isRtl = direction && direction === 'rtl';
 
   return (
-    <div className={classes.root}>
+    <Root>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -75,7 +67,7 @@ const TablePaginationActions = ({ count, page, rowsPerPage, onPageChange }) => {
       >
         {isRtl ? <FirstPageIcon /> : <LastPageIcon />}
       </IconButton>
-    </div>
+    </Root>
   );
 };
 

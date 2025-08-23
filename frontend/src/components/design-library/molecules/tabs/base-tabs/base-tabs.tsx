@@ -6,41 +6,16 @@ import {
   Card,
   CardContent
 } from '@mui/material';
-import { styled, Theme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom';
-
-const useStyles = styled((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    display: 'flex'
-  },
-  card: {
-    width: '100%',
-    marginBottom: 20,
-    padding: 10
-  },
-  tabsVertical: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-    width: 280,
-    alignItems: 'flex-end'
-  },
-  tabs: {
-    flexDirection: 'column'
-  },
-  tab: {
-    margin: 10,
-    marginRight: 20
-  },
-  tabPanel: {
-    width: '100%',
-    marginTop: 20
-  },
-  tabPanelVertical: {
-    marginTop: 0,
-    width: '100%'
-  }
-}));
+import {
+  Root,
+  StyledCard,
+  StyledTabsVertical,
+  StyledTabsColumn,
+  TabPanelRoot,
+  TabPanelVertical
+} from './base-tabs.styles'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,20 +24,16 @@ interface TabPanelProps {
 }
 
 function TabPanel(props: TabPanelProps) {
-  const classes = useStyles();
   const { children, isVertical, withCard = true } = props;
 
   return (
-    <div
-      role="tabpanel"
-      className={isVertical ? classes.tabPanelVertical : classes.tabPanel}
-    >  
+  <div role="tabpanel">
       <Box p={0}>
-        {withCard ? <Card className={classes.card} elevation={0}>
+    {withCard ? <StyledCard elevation={0}>
           <CardContent>
             {children}
           </CardContent>
-        </Card> : children}
+    </StyledCard> : children}
         
       </Box>
     </div>
@@ -90,7 +61,6 @@ const BaseTabs = ({
   withCard = true,
   children
 }:BaseTabsProps) => {
-  const classes = useStyles();
   const history = useHistory();
   const [value, setValue] = React.useState(activeTab);
 
@@ -117,14 +87,14 @@ const BaseTabs = ({
   }, [history.location.pathname, tabs]);
 
   return (
-    <div className={isVertical ? classes.root : ''}>
+    <div>
       <Tabs 
         value={value}
         onChange={handleChange}
         textColor="secondary"
         indicatorColor="secondary"
         orientation={orientation}
-        className={isVertical ? classes.tabsVertical : classes.tabs}
+        {...(isVertical ? { component: StyledTabsVertical as any } : {})}
       >
         {tabs.map((tab) => (
           <Tab 

@@ -9,25 +9,9 @@ import { useHistory } from 'react-router-dom';
 import ProfileHeader from '../../../molecules/headers/profile-main-header/profile-main-header';
 import ActivateAccountDialog from '../../../molecules/dialogs/activate-account-dialog/activate-account-dialog';
 import { makeStyles } from '@mui/styles'
+import { RootGrid, SecondaryBar, ContainerRoot } from './private-base.styles'
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    backgroundColor: '#F7F7F7'
-  },
-  containerRoot: {
-    padding: theme.spacing(4)
-  },
-  menuContainer: {
-    marginBottom: 40,
-    marginRight: 20,
-    marginLeft: 20,
-    width: '100%'
-  },
-  secondaryBar: {
-    backgroundColor: theme.palette.primary.light
-  }
-  
-}));
+// styles migrated to private-base.styles.ts
 
 type PrivateBaseProps = {
   children: React.ReactNode;
@@ -58,7 +42,7 @@ const PrivateBase = ({
   profileHeaderProps = undefined,
   bottomProps = { info: { bounties: 0, users: 0, tasks: 0 }, getInfo: () => {} }
 }:PrivateBaseProps) => {
-  const classes = useStyles();
+  // removed useStyles
   const history = useHistory();
   const { data = {}, completed } = user;
   const { email_verified } = data;
@@ -84,14 +68,9 @@ const PrivateBase = ({
           onResend={onResendActivationEmail}
         />
       }
-      <AppBar
-        component="div"
-        classes={{ colorPrimary: classes.secondaryBar }}
-        color="primary"
-        position="static"
-        elevation={0} />
+    <SecondaryBar component="div" color="primary" position="static" elevation={0} />
       <PageContent>
-         <Grid container className={classes.root} spacing={0}>
+      <RootGrid container spacing={0}>
             <ProfileSideBar
               user={user}
             />
@@ -103,7 +82,7 @@ const PrivateBase = ({
               onLogout={handleSignOut}
             />
             
-            <Container maxWidth="lg" className={classes.containerRoot}>
+        <ContainerRoot maxWidth="lg">
             { profileHeaderProps && (
               <ProfileHeader
                 title={profileHeaderProps.title}
@@ -111,9 +90,9 @@ const PrivateBase = ({
               />
             )}
               {children}
-            </Container>
+        </ContainerRoot>
           </Grid>
-        </Grid>
+      </RootGrid>
       </PageContent>
       <Bottom { ...bottomProps } />
     </Page>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import PriceInput from '../../../../atoms/inputs/price-input/price-input';
 import PlanCard from '../../../../molecules/cards/plan-card/plan-card';
+import { PlanGrid } from './price-plan-form.styles';
 
 type PricePlanProps = {
   price: number;
@@ -9,22 +10,9 @@ type PricePlanProps = {
   onChange: any;
 }
 
-const useStyles = makeStyles(theme => ({
-  planGrid: {
-    '&.MuiGrid-root': {
-      alignItems: 'center'
-    }
-  }
-}))
-
 const PricePlan = ({ price, plan, onChange }:PricePlanProps) => {
-  const classes = useStyles();
   return (
-    <Grid
-      container
-      spacing={0}
-      className={classes.planGrid}
-    >
+  <PlanGrid container spacing={0}>
       <Grid
         spacing={0}
         size={{ xs: 12, md: plan ? 4 : 12, lg: plan ? 4 : 12 }}
@@ -46,7 +34,7 @@ const PricePlan = ({ price, plan, onChange }:PricePlanProps) => {
           <PlanCard plan={plan} />
         </Grid>
       }
-    </Grid>
+  </PlanGrid>
   );
 }
 

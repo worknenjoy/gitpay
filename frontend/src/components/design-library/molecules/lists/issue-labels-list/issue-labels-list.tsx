@@ -44,4 +44,3 @@ export const IssueLabelsList = ({ labels, completed }) => {
 }
 
 export default IssueLabelsList
-export default IssueLabelsList

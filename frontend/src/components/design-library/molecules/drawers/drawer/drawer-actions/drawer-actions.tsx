@@ -1,20 +1,10 @@
 import React from 'react';
 import Button from 'design-library/atoms/buttons/button/button';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(2),
-    marginLeft: theme.spacing(1)
-  }
-}));
+import { Root } from './drawer-actions.styles'
 
 const DrawerActions = ({ actions, completed = true }) => {
-  const classes = useStyles();
-
   return (
-    <div className={classes.root}>
+  <Root>
       { actions.map ((action, index) => (
         <Button 
           onClick={action.onClick}
@@ -25,7 +15,7 @@ const DrawerActions = ({ actions, completed = true }) => {
           completed={completed}
         />
       ))}
-    </div>
+  </Root>
   );
 };
 

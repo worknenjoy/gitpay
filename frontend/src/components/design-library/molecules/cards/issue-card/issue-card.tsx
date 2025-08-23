@@ -6,40 +6,11 @@ import classNames from "classnames";
 
 import logoGithub from 'images/github-logo-black.png'
 import logoBitbucket from 'images/bitbucket-logo-blue.png'
-
-const useStyles = makeStyles(theme => ({
-  cardHeader: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'block',
-      textAlign: 'center'
-    }
-  },
-  cardAvatar: {
-    [theme.breakpoints.down('sm')]: {
-      marginRight: 0
-    }
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    border: `4px solid ${theme.palette.primary.main}`,
-    [theme.breakpoints.down('sm')]: {
-      margin: 'auto',
-      display: 'block',
-      marginBottom: 5
-    }
-  },
-  taskTitle: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex', alignItems: 'center', justifyContent: 'center'
-    }
-  }
-}));
+import { StyledCardHeader, StyledAvatar, TaskTitle } from './issue-card.styles'
 
 
 const IssueCard = ({ issue }) => {
   
-  const classes = useStyles();
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -75,9 +46,7 @@ const IssueCard = ({ issue }) => {
 
   return (
     <Card>
-      <CardHeader
-        className={classes.cardHeader}
-        classes={{ avatar: classes.cardAvatar }}
+  <StyledCardHeader
         avatar={
           <FormattedMessage id="task.status.created.name" defaultMessage="Created by {name}" values={{
             name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
@@ -94,7 +63,7 @@ const IssueCard = ({ issue }) => {
                 >
                   <Avatar
                     src={issue.data.metadata?.issue?.user?.avatar_url}
-                    className={classNames(classes.avatar)}
+        component={StyledAvatar as any}
                   />
                 </a>
               </Tooltip>
@@ -106,7 +75,7 @@ const IssueCard = ({ issue }) => {
             <Link
               href={`${issue.data.url}`}
               target="_blank"
-              className={classes.taskTitle}>
+      component={TaskTitle as any}>
               {issue.data.title}
               <img width="24" height="24" style={{ marginLeft: 10 }} src={issue.data.provider === 'github' ? logoGithub : logoBitbucket} />
             </Link>
@@ -122,7 +91,7 @@ const IssueCard = ({ issue }) => {
             <FormattedMessage id="task.bounties.interested.created" defaultMessage="created" /> {updatedAtTimeString}
           </Typography>
         }
-      />
+  />
     </Card>
   )
 }

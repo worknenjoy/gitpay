@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MomentComponent from 'moment'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import Alert from '@mui/lab/Alert'
-import AlertTitle from '@mui/lab/AlertTitle'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
 import {
   Container,
   withStyles,

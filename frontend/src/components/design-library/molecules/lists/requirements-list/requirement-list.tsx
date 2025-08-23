@@ -7,22 +7,15 @@ import {
 } from '@mui/material'
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
-import { makeStyles } from '@mui/styles'
+import { Root } from './requirement-list.styles'
 import CircularProgress from '@mui/material/CircularProgress';
-
-const useStyles = makeStyles((theme) => ({
-root: {
-    width: '100%',
-    maxWidth: 500
-  }
-}))
 
 const CustomPlaceholder = () => <CircularProgress size={24} />
 const SendSolutionRequirements = ({ requirements, completed }) => {
-  const classes = useStyles()
+  
 
   return (
-    <List className={ classes.root }>
+  <List component={Root as any}>
       { requirements.map((requirement, index) => (
         <ListItem>
           <ListItemIcon style={ { color: 'black' } }>

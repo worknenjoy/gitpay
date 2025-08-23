@@ -3,9 +3,9 @@ import {
   Box,
   Container,
   Grid,
-  styled
+  Pagination
 } from '@mui/material'
-import { Pagination } from '@mui/lab'
+import { makeStyles } from '@mui/styles'
 import OrganizationCard from './organization-card'
 import Skeleton from '@mui/material/Skeleton'
 
@@ -58,11 +58,7 @@ const OrganizationList = ({ listOrganizations, organizations }) => {
           spacing={ 3 }
         >
           { currentOrganizations && currentOrganizations.length && currentOrganizations.map(organization => (
-            <Grid
-              item
-              key={ organization.id }
-              size={{ xs: 12, md: 6, lg: 4 }}
-            >
+            <Grid item key={ organization.id } xs={ 12 } md={ 6 } lg={ 4 }>
               <OrganizationCard
                 className={ classes.projectCard }
                 organization={ organization }

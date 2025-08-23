@@ -4,12 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import Field from '../../../../atoms/inputs/fields/field/field';
 import Alert from '../../../../atoms/alerts/alert/alert';
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
-
-const useStyles = makeStyles((theme) => ({
-  placholder: {
-    margin: 10
-  }
-}));
+import { AlertWrapper, AlertInner, EndAdornment } from './payment-request-form.styles';
 
 interface PaymentRequestFormProps {
   onSubmit?: (e:any, data: any) => void;
@@ -21,7 +16,6 @@ type PaymentRequestFormHandle = {
 };
 
 const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFormProps>(({ onSubmit, completed = true }, ref) => {
-  const classes = useStyles();
   const [error, setError] = useState<string | false>(false);
   const internalFormRef = useRef<HTMLFormElement>(null);
   const [ customAmount, setCustomAmount ] = useState(false);
@@ -56,15 +50,14 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
       {error && (
         <Alert
           severity="error"
-          style={{ marginBottom: 20, marginTop: 20 }}
           completed={completed}
         >
-          <div style={{ marginBottom: 20 }}>
+          <AlertWrapper>
             <FormattedMessage
               id="paymentRequest.create.error"
               defaultMessage="An error occurred while creating a Payment Request:"
             />
-          </div>
+          </AlertWrapper>
           <Typography variant="body1" color="error">
             {error}
           </Typography>
@@ -106,11 +99,11 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             inputProps={{ min: 0, step: '0.01' }}
             completed={completed}
             endAdornment={
-              <div style={{ marginLeft: 8 }}>
+              <EndAdornment>
                 <i>
                   <FormattedMessage id="currency" defaultMessage="USD" />
                 </i>
-              </div>
+              </EndAdornment>
             }
             disabled={customAmount}
           />

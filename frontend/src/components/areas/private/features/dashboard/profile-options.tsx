@@ -11,7 +11,7 @@ import {
 
 import { makeStyles } from '@mui/styles';
 
-import { Alert, AlertTitle } from '@mui/lab';
+import { Alert, AlertTitle } from '@mui/material';
 
 import { Card, CardList, CardMedia } from '../../components/ProfileStyles';
 import WelcomeUser from '../../components/session/welcome-user';

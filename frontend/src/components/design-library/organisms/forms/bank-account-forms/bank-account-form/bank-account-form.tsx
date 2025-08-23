@@ -24,11 +24,6 @@ const errorMapping = {
   'external_account[account_type]': 'Invalid bank account type'
 }
 
-const useStyles = makeStyles((theme) => ({
-  placholder: {
-    margin: 10
-  }
-}));
 
 const BankAccountForm = ({
   user,
@@ -37,7 +32,6 @@ const BankAccountForm = ({
   onChangeBankCode,
   onSubmit
 }) => {
-  const classes = useStyles();
   const { data, completed, error = {} } = bankAccount || {};
   const { id, status, account_holder_name, account_holder_type, account_number, routing_number, last4, country, currency } = data || {};
   const [ ibanMode, setIbanMode ] = React.useState(false);

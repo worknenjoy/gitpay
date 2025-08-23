@@ -35,32 +35,18 @@ import {
   HeroContent,
   HeroActions
 } from './CommonStyles'
-import { makeStyles } from '@mui/styles'
-
-const useStyles = makeStyles((theme) => ({
-  sectionBgAlt: {
-    backgroundColor: theme.palette.primary.contrastText
-  },
-  root: {
-    flexGrow: 1,
-    marginTop: 0
-  },
-  svg: {
-    width: '100%'
-  },
-  seclist: {
-    padding: 20
-  },
-  listIconTop: {
-    marginTop: 20
-  },
-  gutterTopSmall: {
-    marginTop: 20
-  },
-  button: {
-    marginLeft: 20
-  }
-}))
+import {
+  Root,
+  AltSection,
+  BottomCTASection,
+  BottomCopy,
+  ImageContainer,
+  HeroImage,
+  SecList,
+  ListItemTop,
+  GutterTopButton,
+  MLButton,
+} from './home.styles'
 
 
 const Home = ({
@@ -72,11 +58,11 @@ const Home = ({
   importIssuesProps
 }) => {
   const history = useHistory()
-  const classes = useStyles()
+  // using styled components from home.styles
   const intl = useIntl()
 
   return (
-    <div className={classes.root}>
+    <Root>
       <PublicBase
         loggedIn={loggedIn}
         bottomBarProps={bottomBarProps}
@@ -90,7 +76,7 @@ const Home = ({
             <HeroSection>
                <Grid container spacing={3} alignContent={'flex-end'}>
                  <Grid size={{ xs: 12, sm: 5 }}>
-                    <ResponsiveImage width={580} src={freelancerImage} className={classes.svg} />
+                    <HeroImage width={580} src={freelancerImage} />
                   </Grid>
                  <Grid size={{ xs: 12, sm: 7 }}>
                   <HeroTitle>
@@ -120,25 +106,23 @@ const Home = ({
                         defaultMessage='Work on an issue'
                       />
                     </Button>
-                    <Button
+                    <MLButton
                       variant='contained'
                       color='primary'
-                      className={classes.button}
-                      style={{ marginLeft: 20 }}
                       onClick={() => history.push('/signup')}
                     >
                       <FormattedMessage
                         id='home.hero.headline.button.secondary'
                         defaultMessage='Import issue'
                       />
-                    </Button>
+                    </MLButton>
                   </HeroActions>
                 </Grid>
               </Grid>
             </HeroSection>
           </Section>
 
-          <Section className={classes.sectionBgAlt}>
+          <AltSection>
             <MainTitle>
               <Typography variant='h5' gutterBottom>
                 <FormattedMessage
@@ -149,14 +133,14 @@ const Home = ({
             </MainTitle>
              <Grid container spacing={3}>
                <Grid size={{ xs: 12, sm: 6 }}>
-                  <div style={{ marginLeft: 20 }}>
+                  <ImageContainer>
                   <ResponsiveImage width='400' src={deal} />
-                </div>
+                </ImageContainer>
               </Grid>
                <Grid size={{ xs: 12, sm: 6 }}>
-                  <div className={classes.seclist}>
+                  <SecList>
                   <List>
-                    <ListItem className={classes.listIconTop}>
+                    <ListItemTop>
                       <ListItemIcon>
                         <Archive />
                       </ListItemIcon>
@@ -168,9 +152,9 @@ const Home = ({
                           messages.welcomeHowToItemOneSecondary
                         )}
                       />
-                    </ListItem>
+                    </ListItemTop>
                     <Divider />
-                    <ListItem className={classes.listIconTop}>
+                    <ListItemTop>
                       <ListItemIcon>
                         <BugReport />
                       </ListItemIcon>
@@ -182,9 +166,9 @@ const Home = ({
                           messages.welcomeHowToItemTwoSecondary
                         )}
                       />
-                    </ListItem>
+                    </ListItemTop>
                     <Divider />
-                    <ListItem className={classes.listIconTop}>
+                    <ListItemTop>
                       <ListItemIcon>
                         <CardMembership />
                       </ListItemIcon>
@@ -196,9 +180,9 @@ const Home = ({
                           messages.welcomeHowToItemThreeSecondary
                         )}
                       />
-                    </ListItem>
+                    </ListItemTop>
                     <Divider />
-                    <ListItem className={classes.listIconTop}>
+                    <ListItemTop>
                       <ListItemIcon>
                         <Work />
                       </ListItemIcon>
@@ -210,59 +194,47 @@ const Home = ({
                           messages.welcomeHowToItemFourSecondary
                         )}
                       />
-                    </ListItem>
+                    </ListItemTop>
                   </List>
-                </div>
+                </SecList>
               </Grid>
             </Grid>
-          </Section>
-          <Section
-            style={{
-              // background: `url(${citySoftware}) 50% 5px no-repeat`,
-              // backgroundSize: 'cover',
-              height: 350,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-          >
-            <Typography variant='h6' gutterBottom style={{ padding: '0 60px' }}>
+          </AltSection>
+          <BottomCTASection>
+            <BottomCopy variant='h6' gutterBottom>
               <FormattedMessage
                 id='welcome.bottom.call'
                 defaultMessage='A better way to build your project, a better way to work in projects'
               />
-            </Typography>
-            <Button
+            </BottomCopy>
+            <GutterTopButton
               component='a'
               href='/#/signup'
               size='large'
               variant='contained'
               color='primary'
-              className={classes.gutterTopSmall}
             >
               <FormattedMessage
                 id='welcome.bottom.link'
                 defaultMessage='Get started'
               />
-            </Button>
-            <Button
+            </GutterTopButton>
+            <GutterTopButton
               component='a'
               href='https://docs.gitpay.me'
               size='large'
               variant='text'
               color='primary'
-              className={classes.gutterTopSmall}
             >
               <FormattedMessage
                 id='welcome.bottom.linkAlt'
                 defaultMessage='See our documentation'
               />
-            </Button>
-          </Section>
+            </GutterTopButton>
+          </BottomCTASection>
         </>
       </PublicBase>
-    </div>
+    </Root>
   )
 }
 

@@ -6,18 +6,6 @@ import OfferDrawerTabs from './components/offer-drawer-tabs';
 import OffersList from '../../lists/offers-list/offers-list';
 import { AddCircleTwoTone as AddIcon } from '@mui/icons-material';
 
-
-const useStyles = makeStyles(theme => ({
-  details: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  spanText: {
-    display: 'inline-block',
-    verticalAlign: 'middle'
-  }
-}));
-
 export type OfferDrawerProps = {
   title: any;
   introTitle: any;
@@ -72,7 +60,7 @@ const OfferDrawer = ({
   const [ currentPrice, setCurrentPrice ] = React.useState(0);
   const [ enableActions, setEnableActions ] = React.useState(true);
 
-  const classes = useStyles();
+  
 
   const createSection =
     <OfferDrawerCreate

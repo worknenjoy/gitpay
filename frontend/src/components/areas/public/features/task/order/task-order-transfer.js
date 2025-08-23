@@ -95,4 +95,3 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task, listOrde
 }
 
 export default TaskOrderTransfer
-export default TaskOrderTransfer

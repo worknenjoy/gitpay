@@ -3,7 +3,6 @@ import {
   ListItem,
   Typography,
   Dialog,
-  AppBar,
   Toolbar,
   IconButton,
   Slide,
@@ -14,17 +13,7 @@ import {
   Close
 } from '@mui/icons-material'
 
-import { InfoList } from './bottom-section-dialog.styles'
-
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'relative'
-  },
-  appBarHeader: {
-    marginLeft: theme.spacing(2),
-    flex: 1
-  }
-}))
+import { InfoList, AppBarStyled, AppBarHeader, HeaderTypography } from './bottom-section-dialog.styles'
 
 
 const BottomSectionDialog = ({
@@ -37,18 +26,11 @@ const BottomSectionDialog = ({
   content
 }) => {
 
-  const classes = useStyles()
-
   const [ open, setOpen ] = React.useState(false)
 
   return (
     <ListItem button component="a">
-      <Typography
-        variant="subtitle1"
-        onClick={ () => setOpen(!open) }
-        component="div"
-        style={ { display: 'block', width: '100%' } }
-      >
+  <Typography variant="subtitle1" onClick={ () => setOpen(!open) } component={HeaderTypography as any}>
         {header}
       </Typography>
       <Dialog
@@ -57,7 +39,7 @@ const BottomSectionDialog = ({
         open={ open }
         onClose={ () => setOpen(false) }
       >
-        <AppBar className={ classes.appBar }>
+    <AppBarStyled>
           <Toolbar>
             <IconButton
               color="inherit"
@@ -66,14 +48,14 @@ const BottomSectionDialog = ({
             >
               <Close />
             </IconButton>
-            <Typography variant="subtitle1" className={ classes.appBarHeader }>
+      <Typography variant="subtitle1" component={AppBarHeader as any}>
               {title}
             </Typography>
           </Toolbar>
           <InfoList>
             {content}
           </InfoList>
-        </AppBar>
+    </AppBarStyled>
       </Dialog>
     </ListItem>
   )

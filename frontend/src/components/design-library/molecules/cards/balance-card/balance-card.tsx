@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Card, CardContent, CardActions, Typography, Skeleton, styled } from '@mui/material';
+import { Button, CardContent, CardActions, Typography, Skeleton } from '@mui/material';
 import currencyMap from './currency-map';
+import { RootCard, Balance as BalanceText, Name as NameText } from './balance-card.styles'
 
 
 //Function to convert currency code to symbol
@@ -27,21 +28,7 @@ export const convertStripeAmountByCurrency = (amount, currency) => {
   return (amount / Math.pow(10, places)).toFixed(places);
 };
 
-const useStyles = styled({
-  root: {
-    maxWidth: 500,
-    margin: 10,
-    textAlign: 'right',
-    padding: 10
-  },
-  balance: {
-    fontSize: 32,
-    fontWeight: 'bold'
-  },
-  name: {
-    fontSize: 18
-  }
-});
+// styles migrated to balance-card.styles.ts
 
 type BalanceCardProps = {
   name: string | React.ReactNode;
@@ -54,17 +41,30 @@ type BalanceCardProps = {
 }
 
 const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionProps, completed }: BalanceCardProps) => {
-  const classes = useStyles();
 
   const convertedBalance = `${currencyCodeToSymbol(currency)} ${convertStripeAmountByCurrency(balance, currency)}`
 
-  return (
+  const isLoading = completed === false;
 
-    <Card className={classes.root}>
+  return (
+    <RootCard>
       <CardContent>
-        <Skeleton variant="text" animation="wave" height={40} width="80%" />
-        <Skeleton variant="text" animation="wave" height={40} width="60%" />
-        <Skeleton variant="rect" animation="wave" height={118} />
+        {isLoading ? (
+          <>
+            <Skeleton variant="text" animation="wave" height={40} width="80%" />
+            <Skeleton variant="text" animation="wave" height={40} width="60%" />
+            <Skeleton variant="rectangular" animation="wave" height={118} />
+          </>
+        ) : (
+          <>
+      <NameText gutterBottom>
+              {name}
+      </NameText>
+      <BalanceText>
+              {convertedBalance}
+      </BalanceText>
+          </>
+        )}
       </CardContent>
       {onAdd && action && (
         <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -79,20 +79,7 @@ const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionPro
           </Button>
         </CardActions>
       )}
-
-    </Card>
-
-  );
-};
-
-export default BalanceCard;
-            {action}
-          </Button>
-        </CardActions>
-      )}
-
-    </Card>
-
+    </RootCard>
   );
 };
 

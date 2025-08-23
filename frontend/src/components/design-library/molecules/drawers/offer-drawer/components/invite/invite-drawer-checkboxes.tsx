@@ -1,6 +1,5 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { styled } from '@mui/material/styles';
 import { 
   Grid,
   FormControlLabel,
@@ -9,23 +8,12 @@ import {
   Link
 } from '@mui/material';
 
-const useStyles = styled({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '16px'
-  },
-  checkbox: {
-    marginBottom: '8px'
-  }
-});
 
 const InviteDrawerCheckboxes = ({
   termsAgreed,
   handleCheckboxTerms,
   ...props
 }) => {
-  const classes = useStyles();
 
   return (
     <Grid container spacing={3} style={{ fontFamily: 'Roboto', color: '#a9a9a9' }}>

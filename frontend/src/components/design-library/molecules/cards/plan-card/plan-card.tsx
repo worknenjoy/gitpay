@@ -1,48 +1,11 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { TwoWheeler as Motorcycle } from '@mui/icons-material';
-import { Theme } from '@mui/material/styles';
-import { makeStyles } from '@mui/styles';
+import { PlanGridItem, PlanCard as StyledCard, PlanCardContent as StyledCardContent, PlanButton, PlanBullets, PlanIcon } from './plan-card.styles';
 
-const useStyles = makeStyles((theme: Theme) => ({
-    planGridItem: {
-      padding: theme.spacing(1),
-      marginTop: 16
-    },
-    planContainer: {
-      paddingTop: 5,
-      paddingBottom: 5
-    },
-    planGrid: {
-      margin: 0,
-      padding: 8
-    },
-    planGridContent: {
-      display: 'flex',
-      justifyContent: 'space-evenly',
-      alignItems: 'center',
-      margin: 0,
-      '&.MuiCardContent-root': {
-        padding: 0
-      }
-    },
-    planButton: {
-      display: 'flex',
-      alignItems: 'center',
-      flexDirection: 'column'
-    },
-    planBullets: {
-      paddingLeft: theme.spacing(1),
-      padding: 5
-    },
-    planIcon: {
-      textAlign: 'center',
-      fontSize: 32,
-      padding: 2
-    }
-  }));
+// styles migrated to plan-card.styles.ts
 
 type PlanDetails = {
   fee?: number;
@@ -52,27 +15,27 @@ type PlanDetails = {
 }
 
 type PlanProps = {
-  classes: any;
   plan?: PlanDetails;
 }
 
 const PlanCard = ({ plan }:PlanProps) => {
-  const classes = useStyles();
   const { fee, category, title, items } = plan;
   return (
-    <Grid className={classes.planGridItem}>
-      <Card className={classes.planGrid}>
-        <CardContent className={classes.planGridContent}>
-          <div className={classes.planButton}>
-            <Motorcycle color={'primary'} className={classes.planIcon} />
+    <PlanGridItem>
+      <StyledCard>
+        <StyledCardContent>
+          <PlanButton>
+            <PlanIcon>
+              <Motorcycle color={'primary'} />
+            </PlanIcon>
             <Typography align="center" color="textPrimary" variant="h5">
               <FormattedMessage id="actions.task.payment.plan.percentagefee" defaultMessage="{fee}% fee" values={{ fee: fee }} />
             </Typography>
             <Typography align="center" color="textSecondary" variant="h6" gutterBottom>
               {category}
             </Typography>
-          </div>
-          <div className={classes.planBullets}>
+          </PlanButton>
+          <PlanBullets>
             <Typography align="center" variant="caption" gutterBottom>
               {title}
             </Typography>
@@ -82,10 +45,10 @@ const PlanCard = ({ plan }:PlanProps) => {
                 {item}
               </Typography>
             ))}
-          </div>
-        </CardContent>
-      </Card>
-    </Grid>
+          </PlanBullets>
+        </StyledCardContent>
+      </StyledCard>
+    </PlanGridItem>
 
   );
 }

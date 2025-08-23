@@ -7,39 +7,7 @@ import {
   Typography
 } from '@mui/material'
 
-import { purple } from '@mui/material/colors'
-
-const useStyles = makeStyles((theme) => ({
-  cssLabel: {
-    '&$cssFocused': {
-      color: purple[500]
-    }
-  },
-  cssFocused: {},
-  cssUnderline: {
-    '&:after': {
-      borderBottomColor: purple[500]
-    }
-  },
-  cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: purple[500]
-    }
-  },
-  notchedOutline: {},
-  margins: {
-    marginTop: 10,
-    marginBottom: 10
-  },
-  button: {
-    marginRight: 20
-  },
-  center: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-}))
+import { Margins, Center, SpacedButton, StyledTextField } from './login-form-reset.styles'
 
 type LoginOnResetProps = {
   password: string
@@ -60,7 +28,7 @@ type ErrorStateType = {
 }
 
 const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:LoginFormResetProps) => {
-  const classes = useStyles()
+  
   const { token } = useParams<{ token: string }>()
 
   const [validatingPassword, setValidatingPassword] = useState(false)
@@ -130,26 +98,13 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
 
   return (
     <form onSubmit={submitByFormType} action={action} method="POST" autoComplete="off">
-      <div className={ classes.margins }>
-        <TextField
+      <Margins>
+        <StyledTextField
           name="password"
           onChange={ handleChangePassword }
           onBlur={ handleBlurPassword }
           onFocus={ handleFocusPassword }
           fullWidth
-          InputLabelProps={ {
-            classes: {
-              root: classes.cssLabel,
-              focused: classes.cssFocused
-            }
-          } }
-          InputProps={ {
-            classes: {
-              root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline
-            }
-          } }
           type="password"
           label="Password"
           variant="outlined"
@@ -158,9 +113,9 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
           helperText={ error.password }
           defaultValue={ password }
         />
-      </div>
-      <div className={classes.margins}>
-        <TextField
+      </Margins>
+      <Margins>
+        <StyledTextField
           error={ !!error.confirmPassword }
           helperText={ error.confirmPassword }
           name="confirm_password"
@@ -168,36 +123,23 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
           onBlur={handleBlurConfirmPassword}
           onFocus={ handleFocusConfirmPassword }
           fullWidth
-          InputLabelProps={{
-            classes: {
-              root: classes.cssLabel,
-              focused: classes.cssFocused
-            }
-          }}
-          InputProps={{
-            classes: {
-              root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline
-            }
-          }}
           type="password"
           label="Confirm Password"
           variant="outlined"
           id="confirmPassword"
           defaultValue={confirmPassword}
         />
-      </div>
-      <div className={classes.center} style={{ marginTop: 20 }}>
+      </Margins>
+      <Center style={{ marginTop: 20 }}>
         <div>
           {noCancelButton ? null : (
-            <Button onClick={onClose} size="large" variant="text" color="primary" className={classes.button}>
+            <SpacedButton onClick={onClose} size="large" variant="text" color="primary">
               <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
-            </Button>
+            </SpacedButton>
           )}
-          <Button type="submit" size="large" variant="contained" color="primary" className={classes.button}>
+          <SpacedButton type="submit" size="large" variant="contained" color="primary">
             <FormattedMessage id="account.login.label.password.reset" defaultMessage="Reset password" />
-          </Button>
+          </SpacedButton>
           <div style={{ marginTop: 20, display: 'flex', alignItems: 'baseline' }}>
             <Typography variant="body1" component="span">
               <FormattedMessage id="account.login.label.or.signup" defaultMessage="Have an account?" />

@@ -16,4 +16,3 @@ const SidebarMenuPlaceholder = () => {
 }
 
 export default SidebarMenuPlaceholder;
-export default SidebarMenuPlaceholder;

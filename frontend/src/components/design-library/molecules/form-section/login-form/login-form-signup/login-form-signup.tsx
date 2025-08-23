@@ -10,6 +10,7 @@ import Checkbox from '@mui/material/Checkbox'
 import TermsDialog from '../../../dialogs/terms-dialog/terms-dialog'
 import PrivacyDialog from '../../../dialogs/privacy-dialog/privacy-dialog'
 import UserRoleField from '../../../../atoms/inputs/fields/user-role-field/user-role-field'
+import { Center, SpacedButton, Margins, StyledTextField } from './login-form-signup.styles'
 
 const containUrl = (string) => {
   // Regular expression to match a basic URL structure
@@ -19,37 +20,7 @@ const containUrl = (string) => {
   return urlPattern.test(string);
 }
 
-const useStyles = makeStyles((theme) => ({
-  cssLabel: {
-    '&$cssFocused': {
-      color: theme.palette.primary.main
-    }
-  },
-  cssFocused: {},
-  cssUnderline: {
-    '&:after': {
-      borderBottomColor: theme.palette.primary.main
-    }
-  },
-  cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: theme.palette.primary.main
-    }
-  },
-  notchedOutline: {},
-  margins: {
-    marginTop: 10,
-    marginBottom: 10
-  },
-  button: {
-    marginRight: 20
-  },
-  center: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-}))
+// styles migrated to styled-components
 
 type LoginFormSignupProps = {
   onSubmit?: (data: any) => any
@@ -72,7 +43,7 @@ const LoginFormSignup = ({
   roles,
   fetchRoles
 }: LoginFormSignupProps) => {
-  const classes = useStyles()
+  
   const [openTermsDialog, setOpenTermsDialog] = useState(false)
   const [openPrivacyDialog, setOpenPrivacyDialog] = useState(false)
   const [validating, setValidating] = useState(false)
@@ -320,24 +291,11 @@ const LoginFormSignup = ({
 
   return (
     <form onSubmit={handleForm} action={action} method="POST" autoComplete="off">
-      <div className={classes.margins}>
-        <TextField
+      <Margins>
+        <StyledTextField
           name="name"
           onChange={handleChange('name')}
           fullWidth
-          InputLabelProps={{
-            classes: {
-              root: classes.cssLabel,
-              focused: classes.cssFocused
-            }
-          }}
-          InputProps={{
-            classes: {
-              root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline
-            }
-          }}
           label="Name"
           variant="outlined"
           id="name"
@@ -345,27 +303,14 @@ const LoginFormSignup = ({
           helperText={error.name}
           defaultValue={state.name}
         />
-      </div>
-      <div className={classes.margins}>
-        <TextField
+      </Margins>
+      <Margins>
+        <StyledTextField
           name="username"
           onChange={handleChange('username')}
           onBlur={handleBlur}
           onFocus={handleFocus}
           fullWidth
-          InputLabelProps={{
-            classes: {
-              root: classes.cssLabel,
-              focused: classes.cssFocused
-            }
-          }}
-          InputProps={{
-            classes: {
-              root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline
-            }
-          }}
           label="E-mail"
           variant="outlined"
           id="username"
@@ -373,27 +318,14 @@ const LoginFormSignup = ({
           helperText={error.username}
           defaultValue={state.username}
         />
-      </div>
-      <div className={classes.margins}>
-        <TextField
+      </Margins>
+      <Margins>
+        <StyledTextField
           name="password"
           onChange={handleChange('password')}
           onBlur={handleBlur}
           onFocus={handleFocus}
           fullWidth
-          InputLabelProps={{
-            classes: {
-              root: classes.cssLabel,
-              focused: classes.cssFocused
-            }
-          }}
-          InputProps={{
-            classes: {
-              root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline
-            }
-          }}
           type="password"
           label="Password"
           variant="outlined"
@@ -402,10 +334,10 @@ const LoginFormSignup = ({
           helperText={error.password}
           defaultValue={state.password}
         />
-      </div>
+      </Margins>
 
-      <div className={classes.margins}>
-        <TextField
+      <Margins>
+        <StyledTextField
           error={validating && password !== confirmPassword}
           helperText={validating && password !== confirmPassword ? <FormattedMessage id="user.confirm.password.error" defaultMessage="Passwords do not match" /> : ''}
           name="confirm_password"
@@ -413,32 +345,19 @@ const LoginFormSignup = ({
           onBlur={handleBlur}
           onFocus={handleFocus}
           fullWidth
-          InputLabelProps={{
-            classes: {
-              root: classes.cssLabel,
-              focused: classes.cssFocused
-            }
-          }}
-          InputProps={{
-            classes: {
-              root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline
-            }
-          }}
           type="password"
           label="Confirm Password"
           variant="outlined"
           id="confirmPassword"
           defaultValue={state.confirmPassword}
         />
-      </div>
-      <div className={classes.margins}>
+      </Margins>
+  <Margins>
         <UserRoleField
           roles={roles}
           onChange={handleTypesChange('Types')}
         />
-      </div>
+  </Margins>
       <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {state.agreeTermsCheck
@@ -490,16 +409,16 @@ const LoginFormSignup = ({
           </Typography>
         </div>
       }
-      <div className={classes.center} style={{ marginTop: 20 }}>
+  <Center style={{ marginTop: 20 }}>
         <div>
           {noCancelButton ? null : (
-            <Button onClick={onClose} size="large" variant="text" color="primary" className={classes.button}>
+    <SpacedButton onClick={onClose} size="large" variant="text" color="primary">
               <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
-            </Button>
+    </SpacedButton>
           )}
-          <Button data-testid="signup-button" type="submit" size="large" variant="contained" color="primary" className={classes.button}>
+      <SpacedButton data-testid="signup-button" type="submit" size="large" variant="contained" color="primary">
             <FormattedMessage id="account.login.label.signup" defaultMessage="Sign up" />
-          </Button>
+      </SpacedButton>
           <div style={{ marginTop: 20, display: 'flex', alignItems: 'baseline' }}>
             <Typography variant="body1" component="span">
               <FormattedMessage id="account.login.label.or.signup" defaultMessage="Have an account?" />
@@ -509,7 +428,7 @@ const LoginFormSignup = ({
             </Button>
           </div>
         </div>
-      </div>
+  </Center>
       <TermsDialog open={openTermsDialog} onClose={closeTermsDialog} />
       <PrivacyDialog open={openPrivacyDialog} onClose={closePrivacyDialog} />
     </form>

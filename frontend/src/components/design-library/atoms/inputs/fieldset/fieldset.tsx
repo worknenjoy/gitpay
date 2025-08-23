@@ -1,16 +1,15 @@
 import React from 'react';
 import { Typography, Skeleton } from '@mui/material';
-import useStyles from './fieldset.styles';
+import { StyledFieldset, StyledLegend } from './fieldset.styles';
 
 const Fieldset = ({ children, completed, legend }) => {
-  const classes = useStyles();
   return (
-    <fieldset className={classes.fieldset}>
-      <legend className={classes.legend}>
+    <StyledFieldset>
+      <StyledLegend>
         <Typography>
           {legend}
         </Typography>
-      </legend>
+      </StyledLegend>
       {
         !completed ? (
           <Skeleton variant="text" animation="wave" width="100%" />
@@ -18,7 +17,7 @@ const Fieldset = ({ children, completed, legend }) => {
           children
         )
       }
-    </fieldset>
+    </StyledFieldset>
   );
 }
 

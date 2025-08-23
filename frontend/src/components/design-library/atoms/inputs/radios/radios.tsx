@@ -1,7 +1,8 @@
 import React from 'react';
-import { Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Box } from '@mui/material';
+import { Radio, RadioGroup, FormControl, FormLabel } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Skeleton } from '@mui/material';
+import { RowFormControlLabel, ContentBox } from './radios.styles';
 
 type RadioOption = {
   label: string | React.ReactNode;
@@ -36,13 +37,12 @@ export default function Radios({ name, label, options, value, onChange, complete
             </FormLabel>}
             <RadioGroup name={name} value={value} onChange={onChange}>
               {options.map((option) => (
-                <FormControlLabel
+                <RowFormControlLabel
                   key={option.value}
                   value={option.value}
                   control={<Radio />}
-                  style={{ margin: '4px 0', display: 'flex', alignItems: 'flex-start' }}
                   label={
-                    <Box style={{marginTop: 6}}>
+                    <ContentBox>
                       <Typography variant="body1">{option.label}</Typography>
                       {option.caption && (
                         <Typography variant="caption" color="textSecondary">
@@ -50,7 +50,7 @@ export default function Radios({ name, label, options, value, onChange, complete
                         </Typography>
                       )}
                       {option.content ? option.content : null}
-                    </Box>
+                    </ContentBox>
                   }
                 />
               ))}

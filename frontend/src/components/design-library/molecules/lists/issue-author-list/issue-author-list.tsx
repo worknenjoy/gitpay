@@ -17,25 +17,9 @@ import {
 } from '@mui/material'
 
 import LoginButton from '../../form-section/login-form/login-form-signin/login-form-signin'
-import { makeStyles } from '@mui/styles'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1
-  },
-  mainBlock: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: theme.spacing(2)
-  },
-  inline: {
-    display: 'inline'
-  }
-}))
+import { Root, MainBlock } from './issue-author-list.styles'
 
 export default function IssueAuthorList ({ authors, logged, user, task, messageAuthor }) {
-  const classes = useStyles()
   const [openDialog, setOpenDialog] = useState(false)
 
   const handleMessageAuthorDialog = (e) => {
@@ -49,7 +33,7 @@ export default function IssueAuthorList ({ authors, logged, user, task, messageA
         <FormattedMessage id="task.info.authors" defaultMessage="Imported by" />
       </Typography>
       <Skeleton variant="rectangular" width="100%" height={118} />
-      <List className={ classes.root }>
+  <List component={Root as any}>
         { authors && authors.map(a => {
           return (
             <React.Fragment>
@@ -87,9 +71,9 @@ export default function IssueAuthorList ({ authors, logged, user, task, messageA
               <FormattedMessage id="task.bounties.logged.info" defaultMessage="You need to login to send messages to the author" />
             </DialogTitle>
             <DialogContent>
-              <div className={ classes.mainBlock }>
+              <MainBlock>
                 <LoginButton onClose={() => setOpenDialog(false)} />
-              </div>
+              </MainBlock>
             </DialogContent>
           </Dialog>
         ) : (

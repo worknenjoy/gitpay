@@ -3,7 +3,7 @@ import { Typography, Tabs, Tab } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { Button, Drawer, Container, Chip, Card, CardContent, CardHeader } from '@mui/material';
 import { ArrowUpwardTwoTone as ArrowUpIcon } from '@mui/icons-material';
-import Alert from '@mui/lab/Alert';
+import Alert from '@mui/material/Alert';
 import { Skeleton } from '@mui/material'
 
 import { formatCurrency } from '../../../../../utils/format-currency'

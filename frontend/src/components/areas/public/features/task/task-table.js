@@ -108,7 +108,7 @@ TablePaginationActions.propTypes = {
   onChangePage: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  theme: PropTypes.object isRequired,
+  theme: PropTypes.object.isRequired,
 }
 
 const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { withTheme: true })(

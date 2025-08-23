@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import MuiAlert from '@mui/lab/Alert'
+import MuiAlert from '@mui/material/Alert'
 import { FormattedMessage } from 'react-intl'
 
 import { countryCodes } from './country-codes'

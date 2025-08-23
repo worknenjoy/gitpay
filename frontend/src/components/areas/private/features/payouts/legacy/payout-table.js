@@ -271,4 +271,3 @@ CustomPaginationActionsTable.propTypes = {
 }
 
 export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))
-export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))

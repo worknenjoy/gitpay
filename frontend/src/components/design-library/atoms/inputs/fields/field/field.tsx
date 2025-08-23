@@ -1,5 +1,6 @@
 import React from 'react'
-import { FormControl, Input, InputLabel, FormHelperText, Skeleton } from '@mui/material'
+import { Input, InputLabel, FormHelperText, Skeleton } from '@mui/material'
+import { RootFormControl } from './field.styles'
 import { FormattedMessage } from 'react-intl'
 
 type FieldProps = {
@@ -28,10 +29,10 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>((
   ref
 ) => {
   return (
-    <FormControl style={{ width: '100%' }}>
+    <RootFormControl>
       {
         !completed ? (
-          <Skeleton variant="text" animation="wave" width="100%" style={{ margin: '20px 0' }} />
+      <Skeleton variant="text" animation="wave" width="100%" sx={{ my: 2 }} />
         ) : (
           <>
             <InputLabel htmlFor={name}>
@@ -46,7 +47,6 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>((
               defaultValue={defaultValue}
               value={value}
               fullWidth
-              style={{ width: '100%' }}
               placeholder={placeholder}
               disabled={disabled}
               inputComponent={inputComponent}
@@ -63,7 +63,7 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>((
           </>
         )
       }
-    </FormControl>
+    </RootFormControl>
   )
 })
 
