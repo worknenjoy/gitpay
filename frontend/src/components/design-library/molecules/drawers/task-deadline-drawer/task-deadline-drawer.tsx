@@ -27,7 +27,6 @@ const TaskDeadlineDrawer = ({
     >
       <TaskDeadlineForm 
         match={{ params: { id: taskId } }}
-        classes={classes}
         open={open}
         task={task}
         updateTask={(task) => {

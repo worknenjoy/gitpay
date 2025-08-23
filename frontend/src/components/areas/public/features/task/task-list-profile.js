@@ -2,14 +2,8 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { defineMessages, injectIntl } from 'react-intl'
 
-import {
-  Container,
-  Typography,
-  Tabs,
-  Tab,
-  Grid,
-  withStyles,
-} from '@mui/material'
+import { Container, Typography, Tabs, Tab, Grid } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 import TopBarContainer from '../../../../../containers/topbar'
 import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
@@ -18,55 +12,7 @@ import { Page, PageContent } from 'app/styleguide/components/Page'
 
 import TaskListContainer from '../../../../../containers/task-list'
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
-  altButton: {
-    marginRight: 10
-  },
-  bigRow: {
-    marginTop: 40
-  },
-  row: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: 10
-  },
-  rowList: {
-    marginTop: 10,
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  rowContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
-  infoItem: {
-    width: '100%',
-    textAlign: 'center'
-  },
-  menuContainer: {
-    marginBottom: 40,
-    marginRight: 20,
-    marginLeft: 20,
-    width: '100%'
-  },
-  menuItem: {
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
-      '& $primary, & $icon': {
-        color: theme.palette.common.white
-      }
-    }
-  },
-  primary: {},
-  icon: {
-    marginRight: 5
-  }
-})
+const Root = styled(Grid)({ flexGrow: 1 })
 
 const messages = defineMessages({
   issuesTitle: {
@@ -88,27 +34,25 @@ const messages = defineMessages({
 })
 
 const TaskListProfile = (props) => {
-  const { classes, noTopBar, noBottomBar } = props
+  const { noTopBar, noBottomBar } = props
 
   return (
     <Page>
       { !noTopBar && <TopBarContainer /> }
       <PageContent>
         <Container fixed maxWidth='lg'>
-          <Grid container className={ classes.root }>
+          <Root container>
             <Grid size={{ xs: 12, md: 12 }}>
               <TaskListContainer />
             </Grid>
-          </Grid>
+          </Root>
         </Container>
       </PageContent>
-      { !noBottomBar && <Bottom classes={ classes } /> }
+  { !noBottomBar && <Bottom /> }
     </Page>
   )
 }
 
-TaskListProfile.propTypes = {
-  classes: PropTypes.object
-}
+TaskListProfile.propTypes = {}
 
-export default injectIntl(withStyles(styles)(TaskListProfile))
+export default injectIntl(TaskListProfile)

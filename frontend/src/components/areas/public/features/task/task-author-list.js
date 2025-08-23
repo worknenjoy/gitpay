@@ -18,17 +18,10 @@ import {
 
 import LoginButton from '../../../private/components/session/login-button'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-
-  },
-  inline: {
-    display: 'inline',
-  },
-}))
+const Root = styled(List)(({ theme }) => ({}))
+const Inline = styled('span')(({ theme }) => ({ display: 'inline' }))
 
 export default function AuthorList ({ authors, logged, user, task, messageAuthor, location }) {
-  const classes = useStyles()
   const [openDialog, setOpenDialog] = useState(false)
 
   const handleMessageAuthorDialog = (e) => {
@@ -38,7 +31,7 @@ export default function AuthorList ({ authors, logged, user, task, messageAuthor
 
   return (
     <React.Fragment>
-      <List className={ classes.root }>
+  <Root>
         { authors && authors.map(a => {
           return (
             <React.Fragment>
@@ -53,7 +46,7 @@ export default function AuthorList ({ authors, logged, user, task, messageAuthor
                     </Avatar>
                   ) }
                 </ListItemAvatar>
-                <ListItemText
+    <ListItemText
                   primary={
                     <a href='#' onClick={ handleMessageAuthorDialog }>
                       <Typography variant='subtitle2'>
@@ -68,7 +61,7 @@ export default function AuthorList ({ authors, logged, user, task, messageAuthor
             </React.Fragment>
           )
         }) }
-      </List>
+      </Root>
       <React.Fragment>
         { !logged ? (
           <Dialog open={ openDialog }>
@@ -76,7 +69,7 @@ export default function AuthorList ({ authors, logged, user, task, messageAuthor
               <FormattedMessage id='task.bounties.logged.info' defaultMessage='You need to login to send messages to the author' />
             </DialogTitle>
             <DialogContent>
-              <div className={ classes.mainBlock }>
+        <div>
                 <LoginButton referer={ location } includeForm />
               </div>
             </DialogContent>

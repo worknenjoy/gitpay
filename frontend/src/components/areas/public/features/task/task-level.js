@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
 import {
-  withStyles,
   Typography
 } from '@mui/material'
 
@@ -31,12 +30,7 @@ const messages = defineMessages({
   }
 })
 
-const styles = theme => ({
-  selected: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText
-  }
-})
+// removed withStyles
 
 const levels = { 'easy': 0, 'medium': 1, 'hard': 2 }
 const levelsArray = ['easy', 'medium', 'hard']
@@ -106,4 +100,4 @@ class TaskLevel extends Component {
   }
 }
 
-export default injectIntl(withRouter(withStyles(styles)(TaskLevel)))
+export default injectIntl(withRouter(TaskLevel))

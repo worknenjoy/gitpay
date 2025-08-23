@@ -7,7 +7,7 @@ import { Page } from 'app/styleguide/components/Page'
 import { Section } from '../welcome/components/CommonStyles'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { makeStyles } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 
 function checkEmail (emailAddress) {
@@ -30,21 +30,20 @@ function checkEmail (emailAddress) {
   return reValidEmail.test(emailAddress)
 }
 
-const useStyles = makeStyles((theme) => ({
-  coreTeamForm: {
-    marginTop: theme.spacing(1),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    color: 'white'
+const CoreTeamForm = styled(Grid)(({ theme }) => ({
+  marginTop: theme.spacing(1),
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-end',
+  color: 'white'
+}))
+
+const UnderlineTextField = styled(TextField)(({ theme }) => ({
+  '& .MuiInput-underline:before': {
+    borderBottomColor: '#009688'
   },
-  underline: {
-    '&:before': {
-      borderBottomColor: '#009688',
-    },
-    color: 'white',
-    marginBottom: 10
-  }
+  color: 'white',
+  marginBottom: 10
 }))
 
 const recruiterTeam = [
@@ -81,7 +80,6 @@ const recruiterTeam = [
 export default function Team (props) {
   const [formData, setFormData] = useState({})
   const [formErrors, setFormErrors] = useState({})
-  const classes = useStyles()
 
   const onChange = (event) => {
     const name = event.nativeEvent.target.name
@@ -117,7 +115,7 @@ export default function Team (props) {
           </Grid>
           <Grid size={{ lg: 4, md: 5, sm: 6 }}>
             <form onChange={ onChange } onSubmit={ onSubmit } onBlur={ onBlur }>
-              <Grid container className={ classes.coreTeamForm }>
+              <CoreTeamForm container>
                 <Grid size={{ xs: 12 }} >
                   <Typography gutterBottom >
                     Join the team!
@@ -129,7 +127,7 @@ export default function Team (props) {
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12 }}>
-                  <TextField
+                  <UnderlineTextField
                     required
                     value={ formData.email }
                     error={ formErrors.email }
@@ -139,7 +137,6 @@ export default function Team (props) {
                     name='email'
                     color='primary'
                     autoComplete='email'
-                    InputProps={ { classes: { underline: classes.underline } } }
                   />
                 </Grid>
                 <Grid size={{ xs: 12 }}>
@@ -149,7 +146,7 @@ export default function Team (props) {
                     </Typography>
                   </Button>
                 </Grid>
-              </Grid>
+              </CoreTeamForm>
             </form>
           </Grid>
         </Grid>

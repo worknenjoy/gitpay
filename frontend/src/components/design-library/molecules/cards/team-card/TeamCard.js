@@ -1,5 +1,6 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
+import { styled } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import CardActionArea from '@mui/material/CardActionArea'
 import CardActions from '@mui/material/CardActions'
@@ -10,54 +11,53 @@ import Typography from '@mui/material/Typography'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import GitHubIcon from '@mui/icons-material/GitHub'
 
-const useStyles = makeStyles(theme => ({
-  wrapper: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    justifyContent: 'center'
-  },
-  root: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    flexFlow: 'column wrap',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column'
-    }
-  },
-  card: {
-    maxWidth: 400,
-    minWidth: 350,
-    [theme.breakpoints.down('sm')]: {
-      minWidth: 0
-    },
-    margin: 40
-  },
-  media: {
-    height: 220
+const Wrapper = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 1,
+  justifyContent: 'center'
+}))
+
+const Root = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'row',
+  flexFlow: 'column wrap',
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column'
   }
+}))
+
+const StyledCard = styled(Card)(({ theme }) => ({
+  maxWidth: 400,
+  minWidth: 350,
+  [theme.breakpoints.down('sm')]: {
+    minWidth: 0
+  },
+  margin: 40
+}))
+
+const Media = styled(CardMedia)(({ theme }) => ({
+  height: 220
 }))
 
 export default function TeamCard (props) {
   const { data } = props
-  const classes = useStyles()
 
   return (
-    <div className={ classes.wrapper }>
+    <Wrapper>
       <Typography variant="h5" gutterBottom>
         <FormattedMessage
           id="team.title"
           defaultMessage="Team"
         />
       </Typography>
-      <div className={ classes.root }>
+      <Root>
         { data && data.map(member => {
           return (
-            <Card className={ classes.card }>
+            <StyledCard>
               <CardActionArea>
-                <CardMedia
-                  className={ classes.media }
+                <Media
                   image={ member.image }
                   title={ member.name }
                 />
@@ -84,11 +84,11 @@ export default function TeamCard (props) {
                   </Button>
                 }
               </CardActions>
-            </Card>
+            </StyledCard>
           )
         })
         }
-      </div>
-    </div>
+      </Root>
+    </Wrapper>
   )
 }

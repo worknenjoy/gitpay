@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Link, Redirect, useParams, useHistory } from 'react-router-dom'
 import { FormattedMessage } from 'react-intl'
-// Fix duplicate styled import
 import { Card, CardContent, Typography, Dialog } from '@mui/material'
-import { makeStyles } from '@mui/styles'
+import { styled as muiStyled } from '@mui/material/styles'
 import Background from 'images/login_bg.png'
 
 import TermsOfService from './terms-of-service'
@@ -15,37 +14,31 @@ import LoginFormSignup from 'design-library/molecules/form-section/login-form/lo
 import LoginFormReset from 'design-library/molecules/form-section/login-form/login-form-reset/login-form-reset'
 import LoginFormForgot from 'design-library/molecules/form-section/login-form/login-form-forgot/login-form-forgot'
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    width: '100%',
-    height: '100%',
-    overflow: 'visible',
-    flex: 1,
-    margin: 0,
-    padding: 0,
-    display: 'flex',
-    justifyContent: 'center',
-    backgroundImage: `url(${Background})`,
-    backgroundSize: '100% 100%',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat'
-  },
-  card: {
-    minWidth: 420,
-    marginTop: 40,
-    opacity: 0.8,
-    overflow: 'visible'
-  },
-  cardContent: {
-    textAlign: 'center',
-    position: 'relative'
-  },
-  title: {
-    fontSize: 12
-  },
-  pos: {
-    marginBottom: 10
-  }
+const Container = muiStyled('div')(() => ({
+  width: '100%',
+  height: '100%',
+  overflow: 'visible',
+  flex: 1,
+  margin: 0,
+  padding: 0,
+  display: 'flex',
+  justifyContent: 'center',
+  backgroundImage: `url(${Background})`,
+  backgroundSize: '100% 100%',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat'
+}))
+
+const StyledCard = muiStyled(Card)(() => ({
+  minWidth: 420,
+  marginTop: 40,
+  opacity: 0.8,
+  overflow: 'visible'
+}))
+
+const StyledCardContent = muiStyled(CardContent)(() => ({
+  textAlign: 'center',
+  position: 'relative'
 }))
 
 const Content = styled.div`
@@ -64,7 +57,6 @@ const LoginPage = ({
   forgotPassword,
   resetPassword
 }) => {
-  const classes = useStyles()
   const history = useHistory()
   const { mode: modeParam, token, status } = useParams()
 
@@ -123,10 +115,10 @@ const LoginPage = ({
   }
 
   return (
-    <div className={classes.container}>
+    <Container>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Card className={classes.card}>
-          <CardContent className={classes.cardContent}>
+        <StyledCard>
+          <StyledCardContent>
             <Link to="/#">
               <img src={logo} width={140} alt="Logo" />
             </Link>
@@ -195,8 +187,8 @@ const LoginPage = ({
                 />
               )}
             </Content>
-          </CardContent>
-        </Card>
+          </StyledCardContent>
+        </StyledCard>
         <div style={{ marginTop: 10, textAlign: 'center' }}>
           <Typography variant="caption" color="default" gutterBottom noWrap component="span">
             <FormattedMessage id="account.login.connect.bottom" defaultMessage="© 2023 Gitpay - All rights reserved" />
@@ -219,7 +211,7 @@ const LoginPage = ({
           </Dialog>
         </div>
       </div>
-    </div>
+    </Container>
   )
 }
 

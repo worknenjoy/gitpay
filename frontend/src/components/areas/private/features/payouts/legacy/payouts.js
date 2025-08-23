@@ -4,7 +4,6 @@ import moment from 'moment'
 import {
   Container,
   Typography,
-  withStyles,
   Chip
 } from '@mui/material'
 import CustomPaginationActionsTable from './payout-table'
@@ -73,19 +72,7 @@ function formatStripeAmount(amountInCents) {
   return (amount / 100).toFixed(2);
 }
 
-const styles = theme => ({
-  paper: {
-    padding: 10,
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: 'left',
-    color: theme.palette.text.secondary
-  },
-  button: {
-    width: 100,
-    font: 10
-  }
-})
+// removed withStyles
 
 const Payouts = ({ searchPayout, payouts, user, intl }) => {
 
@@ -127,4 +114,4 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
   )
 }
 
-export default injectIntl(withStyles(styles)(Payouts))
+export default injectIntl(Payouts)

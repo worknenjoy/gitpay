@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { styled } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import Tooltip from '@mui/material/Tooltip'
 import CardHeader from '@mui/material/CardHeader'
@@ -13,41 +14,25 @@ import Link from '@mui/material/Link'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(0),
-    marginBottom: theme.spacing(2),
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start'
-  },
-  rootCard: {
-    maxWidth: 345,
-    marginRight: 20
-  },
-  item: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3)
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%' // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest
-    })
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)'
-  }
+const Root = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(0),
+  marginBottom: theme.spacing(2),
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'flex-start'
+}))
+
+const RootCard = styled(Card)(({ theme }) => ({
+  maxWidth: 345,
+  marginRight: 20
+}))
+
+const Item = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(3),
+  marginBottom: theme.spacing(3)
 }))
 
 export default function ProjectListSimple ({ listProjects, projects, user }) {
-  const classes = useStyles()
-
   useEffect(() => {
     listProjects && listProjects()
   }, [])
@@ -91,14 +76,14 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
     )
   }
   return (
-    <div className={ classes.root }>
+    <Root>
       { projects && projects.data && projectSortMoreBounties(projectsSort(projects.data)).map(p => {
         return (
-          <div className={ classes.item }>
-            <Card className={ classes.rootCard }>
+          <Item key={p.id || p.name}>
+            <RootCard>
               <CardHeader
                 avatar={
-                  <Avatar aria-label="recipe" className={ classes.avatar }>
+                  <Avatar aria-label="recipe">
                     { p.name[0] }
                   </Avatar>
                 }
@@ -131,10 +116,10 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
                   {getProjectLink(p)}
                 </CardActions>
               </div>
-            </Card>
-          </div>
+            </RootCard>
+          </Item>
         )
       }) }
-    </div>
+    </Root>
   )
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import SvgIcon from '@mui/material/SvgIcon'
-import { fade, styled, withStyles } from '@mui/material/styles'
+import { alpha, styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import TreeView from '@mui/lab/TreeView'
 import TreeItem from '@mui/lab/TreeItem'
@@ -67,28 +67,18 @@ TransitionComponent.propTypes = {
   in: PropTypes.bool
 }
 
-const StyledTreeItem = withStyles((theme) => ({
-  iconContainer: {
-    '& .close': {
-      opacity: 0.3
-    }
-  },
-  group: {
+const StyledTreeItem = styled((props) => (
+  <TreeItem { ...props } TransitionComponent={ TransitionComponent } />
+))(({ theme }) => ({
+  '& .MuiTreeItem-iconContainer .close': { opacity: 0.3 },
+  '& .MuiTreeItem-group': {
     marginLeft: 7,
     paddingLeft: 18,
-    borderLeft: `1px dashed ${fade(theme.palette.text.primary, 0.4)}`
+    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`
   }
-}))((props) => <TreeItem { ...props } TransitionComponent={ TransitionComponent } />)
-
-const useStyles = styled({
-  root: {
-    flexGrow: 1,
-    maxWidth: '95%'
-  }
-})
+}))
 
 export default function UserOrganizationTree ({ createOrganizations, updateOrganization, organizations, user, history }) {
-  const classes = useStyles()
 
   return (
     <div>
@@ -96,7 +86,7 @@ export default function UserOrganizationTree ({ createOrganizations, updateOrgan
         Organizations you own on Gitpay
       </Typography>
       <TreeView
-        className={ classes.root }
+        sx={{ flexGrow: 1, maxWidth: '95%' }}
         defaultExpanded={ ['1'] }
         defaultCollapseIcon={ <MinusSquare /> }
         defaultExpandIcon={ <PlusSquare /> }

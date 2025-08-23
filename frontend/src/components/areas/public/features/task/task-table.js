@@ -16,13 +16,13 @@ import {
   TableRow,
   TableSortLabel,
   Typography,
-  withStyles,
   Tooltip,
   Chip,
   Paper,
   IconButton,
   Skeleton
 } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
@@ -36,13 +36,11 @@ import logoBitbucket from 'images/bitbucket-logo.png'
 import Constants from '../../../../../consts'
 import messages from './messages/task-messages'
 
-const actionsStyles = theme => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5),
-  },
-})
+const ActionsRoot = styled('div')(({ theme }) => ({
+  flexShrink: 0,
+  color: theme.palette.text.secondary,
+  marginLeft: theme.spacing(2.5),
+}))
 
 class TablePaginationActions extends React.Component {
   handleFirstPageButtonClick = event => {
@@ -65,10 +63,10 @@ class TablePaginationActions extends React.Component {
   };
 
   render() {
-    const { classes, count, page, rowsPerPage, theme } = this.props
+    const { count, page, rowsPerPage, theme } = this.props
 
     return (
-      <div className={classes.root} >
+      <ActionsRoot>
         <IconButton
           onClick={(e) => this.handleFirstPageButtonClick(e)}
           disabled={page === 0}
@@ -97,7 +95,7 @@ class TablePaginationActions extends React.Component {
         >
           {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
         </IconButton>
-      </div>
+  </ActionsRoot>
     )
   }
 }
@@ -111,49 +109,10 @@ TablePaginationActions.propTypes = {
   theme: PropTypes.object.isRequired,
 }
 
-const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { withTheme: true })(
-  TablePaginationActions
-))
+const TablePaginationActionsWrapped = injectIntl((props) => <TablePaginationActions {...props} />)
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(3),
-  },
-  table: {
-    minWidth: 500
-  },
-  tableCell: {
-    root: {
-      padding: 5
-    }
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
-  chipStatusSuccess: {
-    marginBottom: theme.spacing(1),
-    verticalAlign: 'middle',
-    backgroundColor: 'transparent',
-    color: theme.palette.primary.success
-  },
-  chipStatusClosed: {
-    marginBottom: theme.spacing(1),
-    verticalAlign: 'middle',
-    backgroundColor: 'transparent',
-    color: theme.palette.error.main
-  },
-  avatarStatusSuccess: {
-    width: theme.spacing(0),
-    height: theme.spacing(0),
-    backgroundColor: theme.palette.primary.success,
-  },
-  avatarStatusClosed: {
-    width: theme.spacing(0),
-    height: theme.spacing(0),
-    backgroundColor: theme.palette.error.main,
-  },
-})
+const RootPaper = styled(Paper)(({ theme }) => ({ width: '100%', marginTop: theme.spacing(3) }))
+const TableWrapper = styled('div')(({ theme }) => ({ overflowX: 'auto' }))
 
 class CustomPaginationActionsTable extends React.Component {
   constructor(props) {
@@ -285,7 +244,7 @@ class CustomPaginationActionsTable extends React.Component {
   }
 
   render() {
-    const { classes, tasks, tableHeaderMetadata, intl } = this.props
+  const { tasks, tableHeaderMetadata, intl } = this.props
     const { rowsPerPage, page, sortedBy, sortDirection, sortedData } = this.state;
 
     const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
@@ -322,20 +281,20 @@ class CustomPaginationActionsTable extends React.Component {
 
     
     if (tasks.completed && tasks.data.length === 0) {
-      return (<Paper className={classes.root}>
+  return (<RootPaper>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
           <Typography variant='caption'>
             <FormattedMessage id='task.table.body.noIssues' defaultMessage='No issues' />
           </Typography>
         </div>
-      </Paper>);
+  </RootPaper>);
     }
 
     const TableRowPlaceholder = (
       [0,1,2,3,4,5].map((_, rIdx) => (
         <TableRow key={`ph-${rIdx}`}>
           {[0,1,2,3,4,5].map((_, cIdx) => (
-            <TableCell key={`phc-${cIdx}`} classes={classes.tableCell}>
+            <TableCell key={`phc-${cIdx}`} sx={{ p: 0.625 }}>
               <div style={{ width: 80, padding: '8px 4px' }}>
                 <Skeleton variant="text" />
               </div>
@@ -346,9 +305,9 @@ class CustomPaginationActionsTable extends React.Component {
     );
 
     return (
-      <Paper className={classes.root}>
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table}>
+      <RootPaper>
+        <TableWrapper>
+          <Table sx={{ minWidth: 500 }}>
             <TableHeadCustom />
             <TableBody>
               {!tasks.completed ? (
@@ -358,9 +317,7 @@ class CustomPaginationActionsTable extends React.Component {
                   {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                     return (
                       <TableRow key={n.id}>
-                        <TableCell component='th' scope='row' classes={{
-                          root: classes.tableCell.root
-                        }} style={{ position: 'relative' }}>
+                        <TableCell component='th' scope='row' sx={{ p: 0.625 }} style={{ position: 'relative' }}>
                           <div style={{ width: 350, display: 'flex', alignItems: 'center' }}>
                             <a style={{ cursor: 'pointer' }} onClick={(e) => this.handleClickListItem(n)}>
                               {TextEllipsis(`${n.title || 'no title'}`, 42)}
@@ -372,26 +329,28 @@ class CustomPaginationActionsTable extends React.Component {
                             </a>
                           </div>
                         </TableCell>
-                        <TableCell classes={classes.tableCell}>
+                        <TableCell sx={{ p: 0.625 }}>
                           <div style={{ width: 80 }}>
                             <Chip 
                               label={this.props.intl.formatMessage(Constants.STATUSES[n.status])}
-                              avatar={<Avatar className={n.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess} style={{ width: 12, height: 12 }}>{' '}</Avatar>}
-                              className={n.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess}
+                              avatar={<Avatar sx={{ width: 12, height: 12, bgcolor: n.status === 'closed' ? 'error.main' : 'success.main' }}>{' '}</Avatar>}
+                              variant="outlined"
+                              color={n.status === 'closed' ? 'error' : 'success'}
+                              sx={{ mb: 1, verticalAlign: 'middle' }}
                             />
                           </div>
                         </TableCell>
                         { tableHeaderMetadata['project'] &&
-                          <TableCell classes={classes.tableCell}>
+                          <TableCell sx={{ p: 0.625 }}>
                             {this.renderProjectLink(n?.Project)}
                           </TableCell>
                         }
-                        <TableCell numeric classes={classes.tableCell} style={{ padding: 5 }}>
+                        <TableCell numeric sx={{ p: 0.625 }}>
                           <div style={{ width: 70, textAlign: 'center' }}>
                             {n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty)}
                           </div>
                         </TableCell>
-                        <TableCell classes={classes.tableCell}>
+                        <TableCell sx={{ p: 0.625 }}>
                           {n?.Labels?.length ?
                             <div>
                               {n?.Labels?.slice(0, 2).map(
@@ -409,7 +368,7 @@ class CustomPaginationActionsTable extends React.Component {
                               } ...
                             </div> : <>-</>}
                         </TableCell>
-                        <TableCell classes={classes.tableCell}>
+                        <TableCell sx={{ p: 0.625 }}>
                         {n?.Project?.ProgrammingLanguages?.length ?
                             <div>
                               {n?.Project?.ProgrammingLanguages?.slice(0, 2).map(
@@ -427,7 +386,7 @@ class CustomPaginationActionsTable extends React.Component {
                               } ...
                             </div> : <>-</>}
                         </TableCell>
-                        <TableCell classes={classes.tableCell}>
+                        <TableCell sx={{ p: 0.625 }}>
                           <div style={{ width: 120 }}>
                             {n.createdAt ? MomentComponent(n.createdAt).fromNow() : this.props.intl.formatMessage(messages.noDefined)}
                           </div>
@@ -457,8 +416,8 @@ class CustomPaginationActionsTable extends React.Component {
               </TableRow>
             </TableFooter>
           </Table>
-        </div>
-      </Paper>
+        </TableWrapper>
+      </RootPaper>
     )
   }
 }
@@ -470,4 +429,4 @@ CustomPaginationActionsTable.propTypes = {
   user: PropTypes.object,
 }
 
-export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))
+export default injectIntl(withRouter(CustomPaginationActionsTable))

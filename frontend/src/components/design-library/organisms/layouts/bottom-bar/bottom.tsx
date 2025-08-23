@@ -7,7 +7,6 @@ import {
   List,
   ListItemButton
 } from '@mui/material'
-// removed makeStyles in favor of styled components
 
 import SubscribeForm from '../../forms/subscribe-forms/subscribe-form/subscribe-form'
 import StatsBar from '../../../molecules/sections/stats-bar/stats-bar'

@@ -3,17 +3,13 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { injectIntl } from 'react-intl'
 
-import {
-  withStyles,
-  Chip
-} from '@mui/material'
+import { Chip } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-const styles = theme => ({
-  selected: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText
-  }
-})
+const LabelsContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap'
+}))
 
 class TaskLabels extends Component {
   static propTypes = {
@@ -26,27 +22,27 @@ class TaskLabels extends Component {
 
   taskLabels = (labels) => {
     return (
-      <React.Fragment>
+  <LabelsContainer>
         { labels.map((label, index) => (
           <Chip
             key={ index + 1 }
             label={ label.name }
-            style={ { marginRight: 10, marginTop: 10, marginBottom: 10 } }
+    sx={{ mr: 1.25, mt: 1.25, mb: 1.25 }}
             variant='outlined'
           />
         )) }
-      </React.Fragment>
+  </LabelsContainer>
     )
   }
 
   render () {
     const { labels } = this.props
     return (
-      <div>
+      <LabelsContainer>
         { labels && this.taskLabels(labels) }
-      </div>
+      </LabelsContainer>
     )
   }
 }
 
-export default injectIntl(withRouter(withStyles(styles)(TaskLabels)))
+export default injectIntl(withRouter(TaskLabels))

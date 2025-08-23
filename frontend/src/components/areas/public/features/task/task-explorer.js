@@ -8,8 +8,8 @@ import {
   Tabs,
   Tab,
   Grid,
-  withStyles,
 } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 import TopBarContainer from '../../../../../containers/topbar'
 import Bottom from '../../../../shared/bottom/bottom'
@@ -21,55 +21,7 @@ import ProjectListContainer from '../../../../../containers/project-list'
 import OrganizationListContainer from '../../../../../containers/organization-list'
 import TaskFiltersContainer from '../../../../../containers/task-filter'
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
-  altButton: {
-    marginRight: 10
-  },
-  bigRow: {
-    marginTop: 40
-  },
-  row: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: 10
-  },
-  rowList: {
-    marginTop: 10,
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  rowContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
-  infoItem: {
-    width: '100%',
-    textAlign: 'center'
-  },
-  menuContainer: {
-    marginBottom: 40,
-    marginRight: 20,
-    marginLeft: 20,
-    width: '100%'
-  },
-  menuItem: {
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
-      '& $primary, & $icon': {
-        color: theme.palette.common.white
-      }
-    }
-  },
-  primary: {},
-  icon: {
-    marginRight: 5
-  }
-})
+// removed withStyles usage; layout styled via sx
 
 const messages = defineMessages({
   issuesTitle: {
@@ -160,7 +112,7 @@ const TaskExplorer = (props) => {
     }
   }
 
-  const { classes, noTopBar, noBottomBar } = props
+  const { noTopBar, noBottomBar } = props
 
   return (
     <Page>
@@ -198,7 +150,7 @@ const TaskExplorer = (props) => {
           </Container>
         }
         <Container fixed maxWidth='lg'>
-          <Grid container className={ classes.root }>
+          <Grid container sx={{ flexGrow: 1 }}>
             <Grid size={{ xs: 12, md: 12 }}>
               { state.value === 0 && (
                 <div>
@@ -219,7 +171,7 @@ const TaskExplorer = (props) => {
           </Grid>
         </Container>
       </PageContent>
-      { !noBottomBar && <Bottom classes={ classes } /> }
+  { !noBottomBar && <Bottom /> }
     </Page>
   )
 }
@@ -228,4 +180,4 @@ TaskExplorer.propTypes = {
   classes: PropTypes.object
 }
 
-export default injectIntl(withStyles(styles)(TaskExplorer))
+export default injectIntl(TaskExplorer)

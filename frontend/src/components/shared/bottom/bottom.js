@@ -7,7 +7,6 @@ import {
   Typography,
   Divider,
   List,
-  withStyles,
   ListItem
 } from '@mui/material'
 
@@ -16,7 +15,6 @@ import InfoContainer from '../../../containers/info'
 import SlackCard from './SlackCard'
 import GithubCard from './GithubCard'
 
-import mainStyles from '../../../styleguide/styles/style'
 import { Container, BaseFooter, SubscribeFromWrapper } from './FooterStyles'
 
 import BottomSectionDialog from '../../areas/public/features/welcome/components/BottomSectionDialog'
@@ -27,14 +25,12 @@ import CookiePolicy from '../../areas/private/components/session/cookie-policy'
 const logoCompleteGray = require('images/logo-complete-gray.png')
 const logoWorknEnjoy = require('images/worknenjoy-logo.png')
 
-const styles = (theme) => mainStyles(theme)
-
 class Bottom extends Component {
   render () {
-    const { classes } = this.props
+    const { } = this.props
 
     return (
-      <div className={ classes.secBlock }>
+      <div>
         <Container>
           <Grid container spacing={ 3 }>
             <Grid size={{ xs: 12, sm: 3 }}>
@@ -126,7 +122,6 @@ class Bottom extends Component {
               </Typography>
               <List component="nav">
                 <BottomSectionDialog
-                  classes={ classes }
                   title="Legal"
                   header="Privacy policy"
                   subtitle={ 'Privacy Policy' }
@@ -135,7 +130,6 @@ class Bottom extends Component {
                   }
                 />
                 <BottomSectionDialog
-                  classes={ classes }
                   title="Legal"
                   header="Terms of Service"
                   subtitle={ 'Terms of Service' }
@@ -144,7 +138,6 @@ class Bottom extends Component {
                   }
                 />
                 <BottomSectionDialog
-                  classes={ classes }
                   title="Legal"
                   header="Cookie Policy"
                   subtitle={ 'Cookie Policy' }
@@ -173,7 +166,7 @@ class Bottom extends Component {
                   style={ { display: 'flex', alignItems: 'center' } }
                 >
                   <div>
-                    <img className={ classes.img } src={ logoCompleteGray } width="100" />
+                    <img src={ logoCompleteGray } width="100" />
                   </div>
                   <Typography
                     component="span"
@@ -189,7 +182,7 @@ class Bottom extends Component {
                     />
                   </Typography>
                   <a href="http://worknenjoy.com" target="_blank" rel="noreferrer">
-                    <img className={ classes.img } src={ logoWorknEnjoy } width="100" />
+                    <img src={ logoWorknEnjoy } width="100" />
                   </a>
                 </BaseFooter>
                 <div style={ { textAlign: 'right' } }>
@@ -204,7 +197,7 @@ class Bottom extends Component {
               </div>
             </Grid>
           </Grid>
-          <Divider className={ classes.spacedTop } />
+          <Divider sx={{ mt: 2 }} />
           <InfoContainer />
         </Container>
       </div>
@@ -212,8 +205,6 @@ class Bottom extends Component {
   }
 }
 
-Bottom.propTypes = {
-  classes: PropTypes.object.isRequired
-}
+Bottom.propTypes = {}
 
-export default withStyles(styles)(Bottom)
+export default Bottom

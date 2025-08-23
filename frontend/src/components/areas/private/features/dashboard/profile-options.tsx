@@ -9,8 +9,6 @@ import {
   CardContent
 } from '@mui/material';
 
-// removed makeStyles usage
-
 import { Alert, AlertTitle } from '@mui/material';
 
 import { Card, CardList, CardMedia } from '../../components/ProfileStyles';

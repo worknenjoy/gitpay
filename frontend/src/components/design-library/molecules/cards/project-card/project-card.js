@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import clsx from 'clsx'
+import { styled } from '@mui/material/styles'
 import {
   Avatar,
   Box,
@@ -19,18 +19,14 @@ import slugify from '@sindresorhus/slugify'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  statsItem: {
-    alignItems: 'center',
-    display: 'flex'
-  },
-  statsIcon: {
-    marginRight: theme.spacing(1)
-  }
+const RootCard = styled(Card)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column'
+}))
+
+const StatsItem = styled(Grid)(({ theme }) => ({
+  alignItems: 'center',
+  display: 'flex'
 }))
 
 const projectBounties = (data) => {
@@ -44,7 +40,6 @@ const projectBountiesList = (data) => {
 }
 
 const ProjectCard = ({ className, project, ...rest }) => {
-  const classes = useStyles()
 
   const goToProject = (event, project) => {
     event.preventDefault()
@@ -53,8 +48,8 @@ const ProjectCard = ({ className, project, ...rest }) => {
   }
 
   return (
-    <Card
-      className={ clsx(classes.root, className) }
+    <RootCard
+      className={ className }
       { ...rest }
     >
       <CardContent style={ { position: 'relative' } }>
@@ -73,7 +68,7 @@ const ProjectCard = ({ className, project, ...rest }) => {
           mb={ 3 }
           mt={ 3 }
         >
-          <Avatar aria-label="recipe" className={ classes.avatar }>
+          <Avatar aria-label="recipe">
             { project.name[0] }
           </Avatar>
         </Box>
@@ -115,24 +110,18 @@ const ProjectCard = ({ className, project, ...rest }) => {
           justify="space-between"
           spacing={ 2 }
         >
-          <Grid
-            className={ classes.statsItem }
-            item
-          >
+      <StatsItem item>
             <Typography variant="subtitle1">
               { projectBountiesList(project.Tasks) }
             </Typography>
-          </Grid>
-          <Grid
-            className={ classes.statsItem }
-            item
-          >
+      </StatsItem>
+      <StatsItem item>
             <Chip style={ { marginLeft: 10 } } size="small" clickable onClick={ (e) => goToProject(e, project) } avatar={ <Avatar>{ project.Tasks.filter(t => t.status === 'open').length }</Avatar> } label={ ' open issue(s)' }
             />
-          </Grid>
+      </StatsItem>
         </Grid>
       </Box>
-    </Card>
+    </RootCard>
   )
 }
 

@@ -4,10 +4,10 @@ import { FormattedMessage } from 'react-intl'
 
 import {
   Button,
-  withStyles,
   TextField,
   Typography
 } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { purple } from '@mui/material/colors'
 import ReCAPTCHA from 'react-google-recaptcha'
 
@@ -18,37 +18,16 @@ import ProviderLoginButtons from './provider-login-buttons'
 import TermsOfService from './terms-of-service'
 import PrivacyPolicy from './privacy-policy'
 
-const styles = theme => ({
-  cssLabel: {
-    '&$cssFocused': {
-      color: purple[500]
-    }
-  },
-  cssFocused: {},
-  cssUnderline: {
-    '&:after': {
-      borderBottomColor: purple[500]
-    }
-  },
-  cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: purple[500]
-    }
-  },
-  notchedOutline: {},
-  margins: {
-    marginTop: 10,
-    marginBottom: 10
-  },
-  button: {
-    marginRight: 20
-  },
-  center: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
+const FormRow = styled('div')(({ theme }) => ({
+  marginTop: 10,
+  marginBottom: 10
+}))
+
+const Center = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
+}))
 
 class LoginForm extends Component {
   constructor (props) {
@@ -340,7 +319,7 @@ class LoginForm extends Component {
   }
 
   render () {
-    const { classes, onClose, noCancelButton } = this.props
+  const { onClose, noCancelButton } = this.props
     const { action, formType, termsOfServiceOpen, privacyPolicyOpen, agreeTermsCheckError } = this.state
     const { validating, password, confirmPassword, error } = this.state
 
@@ -389,24 +368,16 @@ class LoginForm extends Component {
     return (
       <form onSubmit={ this.submitByFormType } action={ action } method="POST" autoComplete="off">
         { formType === 'signup' && (
-          <div className={ classes.margins }>
+          <FormRow>
             <TextField
               name="name"
               onChange={ this.handleChange('name') }
               fullWidth
-              InputLabelProps={ {
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused
-                }
-              } }
-              InputProps={ {
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline
-                }
-              } }
+              sx={{
+                '& .MuiInputLabel-root.Mui-focused': { color: purple[500] },
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: purple[500] },
+                '& .MuiInputBase-root.Mui-focused': { color: 'inherit' }
+              }}
               label="Name"
               variant="outlined"
               id="name"
@@ -414,28 +385,19 @@ class LoginForm extends Component {
               helperText={ error.name }
               defaultValue={ this.state.name }
             />
-          </div>
+          </FormRow>
         ) }
         { formType !== 'reset' && (
-          <div className={ classes.margins }>
+          <FormRow>
             <TextField
               name="username"
               onChange={ this.handleChange('username') }
               onBlur={ this.handleBlur }
               fullWidth
-              InputLabelProps={ {
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused
-                }
-              } }
-              InputProps={ {
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline
-                }
-              } }
+              sx={{
+                '& .MuiInputLabel-root.Mui-focused': { color: purple[500] },
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: purple[500] }
+              }}
               label="E-mail"
               variant="outlined"
               id="username"
@@ -443,28 +405,19 @@ class LoginForm extends Component {
               helperText={ error.username }
               defaultValue={ this.state.username }
             />
-          </div>
+          </FormRow>
         ) }
         { formType !== 'forgot' && (
-        <div className={ classes.margins }>
+        <FormRow>
           <TextField
             name="password"
             onChange={ this.handleChange('password') }
             onBlur={ this.handleBlur }
             fullWidth
-            InputLabelProps={ {
-              classes: {
-                root: classes.cssLabel,
-                focused: classes.cssFocused
-              }
-            } }
-            InputProps={ {
-              classes: {
-                root: classes.cssOutlinedInput,
-                focused: classes.cssFocused,
-                notchedOutline: classes.notchedOutline
-              }
-            } }
+            sx={{
+              '& .MuiInputLabel-root.Mui-focused': { color: purple[500] },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: purple[500] }
+            }}
             type="password"
             label="Password"
             variant="outlined"
@@ -473,9 +426,9 @@ class LoginForm extends Component {
             helperText={ error.password }
             defaultValue={ this.state.password }
           />
-        </div>) }
+        </FormRow>) }
         { (formType === 'signup' || formType === 'reset') && (
-          <div className={ classes.margins }>
+          <FormRow>
             <TextField
               error={ validating && password !== confirmPassword }
               helperText={ validating && password !== confirmPassword ? <FormattedMessage id="user.confirm.password.error" defaultMessage="Passwords do not match" /> : '' }
@@ -483,26 +436,17 @@ class LoginForm extends Component {
               onChange={ this.handleChange('confirmPassword') }
               onBlur={ this.handleBlur }
               fullWidth
-              InputLabelProps={ {
-                classes: {
-                  root: classes.cssLabel,
-                  focused: classes.cssFocused
-                }
-              } }
-              InputProps={ {
-                classes: {
-                  root: classes.cssOutlinedInput,
-                  focused: classes.cssFocused,
-                  notchedOutline: classes.notchedOutline
-                }
-              } }
+              sx={{
+                '& .MuiInputLabel-root.Mui-focused': { color: purple[500] },
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: purple[500] }
+              }}
               type="password"
               label="Confirm Password"
               variant="outlined"
               id="confirmPassword"
               defaultValue={ this.state.confirmPassword }
             />
-          </div>
+          </FormRow>
         ) }
         
         { formType === 'signin' && (
@@ -576,15 +520,15 @@ class LoginForm extends Component {
             </Typography>
           </div>
         }
-        <div className={ classes.center } style={ { marginTop: 20 } }>
+  <Center style={ { marginTop: 20 } }>
 
           { formType === 'signin' ? (
             <div>
-              <Button fullWidth type="submit" size="large" variant="contained" color="primary" className={ classes.button }>
+              <Button fullWidth type="submit" size="large" variant="contained" color="primary" sx={{ mr: 2 }}>
                 <FormattedMessage id="account.login.label.signin" defaultMessage="Sign in" />
               </Button>
               { noCancelButton ? null : (
-                <Button onClick={ onClose } fullWidth size="large" variant="text" color="primary" className={ classes.button } style={ { marginTop: 10 } }>
+                <Button onClick={ onClose } fullWidth size="large" variant="text" color="primary" sx={{ mr: 2, mt: 1 }}>
                   <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
                 </Button>
               ) }
@@ -605,22 +549,22 @@ class LoginForm extends Component {
           ) : (
             <div>
               { noCancelButton ? null : (
-                <Button onClick={ onClose } size="large" variant="text" color="primary" className={ classes.button }>
+                <Button onClick={ onClose } size="large" variant="text" color="primary" sx={{ mr: 2 }}>
                   <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
                 </Button>
               ) }
               { formType === 'signup' && (
-                <Button data-testid="signup-button" type="submit" size="large" variant="contained" color="primary" className={ classes.button }>
+                <Button data-testid="signup-button" type="submit" size="large" variant="contained" color="primary" sx={{ mr: 2 }}>
                   <FormattedMessage id="account.login.label.signup" defaultMessage="Sign up" />
                 </Button>
               ) }
               { formType === 'forgot' && (
-                <Button type="submit" size="large" variant="contained" color="primary" className={ classes.button }>
+                <Button type="submit" size="large" variant="contained" color="primary" sx={{ mr: 2 }}>
                   <FormattedMessage id="account.login.label.password.recover" defaultMessage="Recover password" />
                 </Button>
               ) }
               { formType === 'reset' && (
-                <Button type="submit" size="large" variant="contained" color="primary" className={ classes.button }>
+                <Button type="submit" size="large" variant="contained" color="primary" sx={{ mr: 2 }}>
                   <FormattedMessage id="account.login.label.password.reset" defaultMessage="Reset password" />
                 </Button>
               ) }
@@ -635,10 +579,10 @@ class LoginForm extends Component {
             </div>
           )
           }
-        </div>
+  </Center>
       </form>
     )
   }
 }
 
-export default withRouter(withStyles(styles)(LoginForm))
+export default withRouter(LoginForm)

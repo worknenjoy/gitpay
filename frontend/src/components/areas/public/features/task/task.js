@@ -2,15 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import MomentComponent from 'moment'
-import ShowMoreText from 'react-show-more-text'
 import { Skeleton } from '@mui/material'
 
 import { messages } from './messages/task-messages'
 import TaskInviteCard from './task-invite-card'
-import TaskHeader from './task-header'
-import AuthorList from './task-author-list'
 import queryString from 'query-string'
-import renderHTML from 'react-render-html'
 import { marked } from 'marked'
 
 import {
@@ -23,7 +19,6 @@ import {
   Grid,
   Typography,
   Button,
-  withStyles,
   Link,
   DialogContentText,
   MobileStepper,
@@ -1226,4 +1221,4 @@ Task.propTypes = {
   requestClaimTask: PropTypes.func
 }
 
-export default injectIntl(withStyles(styles)(Task))
+export default injectIntl(Task)

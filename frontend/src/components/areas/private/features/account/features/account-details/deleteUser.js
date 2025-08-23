@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 
 import {
-  withStyles,
   Button,
   Dialog,
   DialogActions,
@@ -12,21 +11,20 @@ import {
   DialogTitle,
   Typography
 } from '@mui/material'
+import { styled as muiStyled } from '@mui/material/styles'
 
 const Container = styled.div`
   display: inline-block;
   margin-right: 1rem;
 `
 
-const styles = theme => ({
-  deleteButton: {
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.primary.contrastText,
-    '&:hover': {
-      backgroundColor: theme.palette.error.light
-    }
+const DeleteButton = muiStyled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.error.main,
+  color: theme.palette.primary.contrastText,
+  '&:hover': {
+    backgroundColor: theme.palette.error.light
   }
-})
+}))
 
 class DeleteUser extends Component {
   constructor (props) {
@@ -52,7 +50,7 @@ class DeleteUser extends Component {
   }
 
   render () {
-    const { visible, classes } = this.props
+  const { visible } = this.props
 
     return (
       <Container>
@@ -73,9 +71,9 @@ class DeleteUser extends Component {
             <Button onClick={ () => this.props.onClose() } color="primary">
               <FormattedMessage id="account.profile.settings.delete.user.form.cancel" defaultMessage="Cancel" />
             </Button>
-            <Button onClick={ this.confirmDelete } variant="contained" className={ classes.deleteButton } >
+            <DeleteButton onClick={ this.confirmDelete } variant="contained">
               <FormattedMessage id="account.profile.settings.delete.user.form.confirm" defaultMessage="Confirm" />
-            </Button>
+            </DeleteButton>
           </DialogActions>
         </Dialog>
       </Container>
@@ -83,4 +81,4 @@ class DeleteUser extends Component {
   }
 }
 
-export default withStyles(styles)(DeleteUser)
+export default DeleteUser

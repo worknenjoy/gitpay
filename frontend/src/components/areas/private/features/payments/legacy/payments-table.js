@@ -11,11 +11,11 @@ import {
   TablePagination,
   TableRow,
   Typography,
-  withStyles,
   Paper,
   IconButton,
   Skeleton
 } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
@@ -55,13 +55,11 @@ const messages = defineMessages({
   }
 })
 
-const actionsStyles = theme => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5)
-  }
-})
+const ActionsRoot = styled('div')(({ theme }) => ({
+  flexShrink: 0,
+  color: theme.palette.text.secondary,
+  marginLeft: theme.spacing(2.5)
+}))
 
 class TablePaginationActions extends React.Component {
   handleFirstPageButtonClick = event => {
@@ -84,10 +82,10 @@ class TablePaginationActions extends React.Component {
   };
 
   render () {
-    const { classes, count, page, rowsPerPage, theme } = this.props
+    const { count, page, rowsPerPage, theme } = this.props
 
     return (
-      <div className={ classes.root } >
+      <ActionsRoot>
         <IconButton
           onClick={ (e) => this.handleFirstPageButtonClick(e) }
           disabled={ page === 0 }
@@ -116,7 +114,7 @@ class TablePaginationActions extends React.Component {
         >
           { theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon /> }
         </IconButton>
-      </div>
+  </ActionsRoot>
     )
   }
 }
@@ -130,22 +128,10 @@ TablePaginationActions.propTypes = {
   theme: PropTypes.object.isRequired
 }
 
-const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { withTheme: true })(
-  TablePaginationActions
-))
+const TablePaginationActionsWrapped = injectIntl((props) => <TablePaginationActions {...props} />)
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(3)
-  },
-  table: {
-    minWidth: 500
-  },
-  tableWrapper: {
-    overflowX: 'auto'
-  }
-})
+const RootPaper = styled(Paper)(({ theme }) => ({ width: '100%', marginTop: theme.spacing(3) }))
+const TableWrapper = styled('div')(({ theme }) => ({ overflowX: 'auto' }))
 
 class CustomPaginationActionsTable extends React.Component {
   constructor (props) {
@@ -177,7 +163,7 @@ class CustomPaginationActionsTable extends React.Component {
   
 
   render () {
-    const { classes, payments, tableHead } = this.props
+  const { payments, tableHead } = this.props
     const { rowsPerPage, page } = this.state
     const emptyRows = payments?.data?.length ? rowsPerPage - Math.min(rowsPerPage, payments?.data?.length - page * rowsPerPage) : 0
 
@@ -196,9 +182,9 @@ class CustomPaginationActionsTable extends React.Component {
     );
 
     return (
-      <Paper className={ classes.root }>
-        <div className={ classes.tableWrapper }>
-          <Table className={ classes.table }>
+      <RootPaper>
+        <TableWrapper>
+          <Table sx={{ minWidth: 500 }}>
             <TableHead>
               <TableRow>
                 { tableHead.map( t => 
@@ -246,8 +232,8 @@ class CustomPaginationActionsTable extends React.Component {
               </TableRow>
             </TableFooter>
           </Table>
-        </div>
-      </Paper>
+        </TableWrapper>
+      </RootPaper>
     )
   }
 }
@@ -258,4 +244,4 @@ CustomPaginationActionsTable.propTypes = {
   payments: PropTypes.object
 }
 
-export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))
+export default injectIntl(withRouter(CustomPaginationActionsTable))

@@ -1,22 +1,12 @@
 import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
-import {
-  withStyles,
-  Grid,
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Avatar,
-  Container,
-} from '@mui/material'
+import { Grid, Typography, List, ListItem, ListItemText, ListItemIcon, Avatar, Container } from '@mui/material'
 import { AccountBalanceWallet, Work, Apps, Assignment, GroupWork } from '@mui/icons-material'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import TopBarContainer from '../../../../../../containers/topbar'
 import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
 import messages from './messages'
-import mainStyles from '../../../../../../styleguide/styles/style'
+// removed withStyles/theme styles usage
 const freelancerImage = require('images//collections/collection-flat-community.svg')
 const companiesImage = require('images//collections/collection-flat-companies.svg')
 const teamImage = require('images//welcome-teamwork.png')
@@ -28,7 +18,7 @@ import {
   Section
 } from '../components/CommonStyles'
 
-const styles = theme => mainStyles(theme)
+// legacy styles removed
 
 const Welcome = (props) => {
   const ref = useRef(null)
@@ -45,10 +35,10 @@ const Welcome = (props) => {
     }
   }, [])
 
-  const { classes } = props
+  const { } = props
 
   return (
-    <div className={ classes.root }>
+  <div>
       <TopBarContainer hide />
       <Container>
         <Section name='contrib' ref={ ref }>
@@ -64,9 +54,9 @@ const Welcome = (props) => {
               </MainTitle>
               <MainList>
                 <List>
-                  <ListItem className={ classes.listIconTop }>
+          <ListItem>
                     <ListItemIcon style={ { marginRight: 12 } }>
-                      <Avatar className={ classes.iconFill }>
+            <Avatar>
                         <Apps />
                       </Avatar>
                     </ListItemIcon>
@@ -80,9 +70,9 @@ const Welcome = (props) => {
                     />
                   </ListItem>
 
-                  <ListItem className={ classes.listIconTop }>
+          <ListItem>
                     <ListItemIcon style={ { marginRight: 12 } }>
-                      <Avatar className={ classes.iconFill }>
+            <Avatar>
                         <Work />
                       </Avatar>
                     </ListItemIcon>
@@ -96,9 +86,9 @@ const Welcome = (props) => {
                     />
                   </ListItem>
 
-                  <ListItem className={ classes.listIconTop }>
+          <ListItem>
                     <ListItemIcon style={ { marginRight: 12 } }>
-                      <Avatar className={ classes.iconFill }>
+            <Avatar>
                         <AccountBalanceWallet />
                       </Avatar>
                     </ListItemIcon>
@@ -120,7 +110,7 @@ const Welcome = (props) => {
           </Grid>
         </Section>
       </Container>
-      <Section name='companies' ref={ ref } alternative className={ classes.bgContrast }>
+  <Section name='companies' ref={ ref } alternative>
         <Container>
           <Grid container spacing={ 3 }>
             <Grid size={{ xs: 12, sm: 6 }}>
@@ -134,9 +124,9 @@ const Welcome = (props) => {
               </MainTitle>
               <MainList>
                 <List>
-                  <ListItem className={ classes.listIconTop }>
+          <ListItem>
                     <ListItemIcon style={ { marginRight: 12 } }>
-                      <Avatar className={ classes.iconFill }>
+            <Avatar>
                         <Assignment />
                       </Avatar>
                     </ListItemIcon>
@@ -149,9 +139,9 @@ const Welcome = (props) => {
                       ) }
                     />
                   </ListItem>
-                  <ListItem className={ classes.listIconTop }>
+          <ListItem>
                     <ListItemIcon style={ { marginRight: 12 } }>
-                      <Avatar className={ classes.iconFill }>
+            <Avatar>
                         <GroupWork />
                       </Avatar>
                     </ListItemIcon>
@@ -164,9 +154,9 @@ const Welcome = (props) => {
                       ) }
                     />
                   </ListItem>
-                  <ListItem className={ classes.listIconTop }>
+          <ListItem>
                     <ListItemIcon style={ { marginRight: 12 } }>
-                      <Avatar className={ classes.iconFill }>
+            <Avatar>
                         <AccountBalanceWallet />
                       </Avatar>
                     </ListItemIcon>
@@ -202,9 +192,9 @@ const Welcome = (props) => {
               </MainTitle>
               <MainList>
                 <List>
-                  <ListItem className={ classes.listIconTop }>
+          <ListItem>
                     <ListItemIcon style={ { marginRight: 12 } }>
-                      <Avatar className={ classes.iconFill }>
+            <Avatar>
                         <Apps />
                       </Avatar>
                     </ListItemIcon>
@@ -217,9 +207,9 @@ const Welcome = (props) => {
                       ) }
                     />
                   </ListItem>
-                  <ListItem className={ classes.listIconTop }>
+          <ListItem>
                     <ListItemIcon style={ { marginRight: 12 } }>
-                      <Avatar className={ classes.iconFill }>
+            <Avatar>
                         <Work />
                       </Avatar>
                     </ListItemIcon>
@@ -232,9 +222,9 @@ const Welcome = (props) => {
                       ) }
                     />
                   </ListItem>
-                  <ListItem className={ classes.listIconTop }>
+          <ListItem>
                     <ListItemIcon style={ { marginRight: 12 } }>
-                      <Avatar className={ classes.iconFill }>
+            <Avatar>
                         <AccountBalanceWallet />
                       </Avatar>
                     </ListItemIcon>
@@ -261,8 +251,6 @@ const Welcome = (props) => {
   )
 }
 
-Welcome.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
+Welcome.propTypes = {}
 
-export default injectIntl(withStyles(styles)(Welcome))
+export default injectIntl(Welcome)

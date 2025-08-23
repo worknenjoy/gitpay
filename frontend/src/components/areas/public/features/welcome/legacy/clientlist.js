@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  Card,
-  Grid,
-  Typography,
-  withStyles
-} from '@mui/material'
+import { Card, Grid, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
@@ -15,22 +11,21 @@ import {
   ResponsiveImage
 } from '../components/CommonStyles'
 
-const styles = theme => ({
-  layout: {
-    width: 'auto',
-    marginBottom: theme.spacing.unit * 6,
-    marginTop: theme.spacing.unit * 2,
-    [theme.breakpoints.up(900 + theme.spacing.unit * 3 * 2)]: {
-      width: '100%'
-    },
-    textAlign: 'center'
+const Layout = styled('div')(({ theme }) => ({
+  width: 'auto',
+  marginBottom: theme.spacing(6),
+  marginTop: theme.spacing(2),
+  [theme.breakpoints.up(900 + theme.spacing(3) * 2)]: {
+    width: '100%'
   },
-  heroContent: {
-    maxWidth: 600,
-    margin: '0 auto',
-    padding: `0 0 ${theme.spacing.unit * 4}px`,
-  }
-})
+  textAlign: 'center'
+}))
+
+const HeroContent = styled('div')(({ theme }) => ({
+  maxWidth: 600,
+  margin: '0 auto',
+  padding: `0 0 ${theme.spacing(4)}px`,
+}))
 
 const clientimg1 = require('images/clients/electron-logo.png')
 const clientimg2 = require('images/clients/etherpad-logo.png')
@@ -55,17 +50,17 @@ const clients = [
 ]
 class Clientlist extends Component {
   render () {
-    const { classes } = this.props
+  const { } = this.props
 
     return (
-      <div className={ classes.layout }>
-        <div className={ classes.heroContent }>
+      <Layout>
+        <HeroContent>
           <MainTitle style={ { width: 'auto' } }>
             <Typography variant='h6' gutterBottom>
               <FormattedMessage id='welcome.clientlist.main.title' defaultMessage='Companies solving issues with Gitpay' />
             </Typography>
           </MainTitle>
-        </div>
+        </HeroContent>
         <Grid container spacing={ 50 } alignItems='center' justify='center'>
           { clients.map(client => (
             <Grid key={ client.title } size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}>
@@ -75,13 +70,11 @@ class Clientlist extends Component {
             </Grid>
           )) }
         </Grid>
-      </div>
+      </Layout>
     )
   }
 }
 
-Clientlist.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
+Clientlist.propTypes = {}
 
-export default injectIntl(withStyles(styles)(Clientlist))
+export default injectIntl(Clientlist)

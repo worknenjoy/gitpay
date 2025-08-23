@@ -18,7 +18,7 @@ export default function ImportIssueButton ({
     <Grid container direction="column" alignItems="center">
   <Grid size={{ xs: 12 }}>
         <ButtonGroup variant="contained" color="primary" ref={ anchorRef } aria-label="split button">
-          <Button onClick={ handleClick } className={classes?.actionButtons}>
+          <Button onClick={ handleClick }>
             <FormattedMessage
               id="home.hero.headline.button.secondary"
               defaultMessage="Import issue"

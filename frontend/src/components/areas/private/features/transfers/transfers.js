@@ -7,11 +7,11 @@ import {
   Container,
   Button,
   Typography,
-  withStyles,
   Chip,
   Tabs,
   Tab
 } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { messages } from '../../../public/features/task/messages/task-messages'
 import CustomPaginationActionsTable from './transfer-table'
 import TransferDetails from './transfer-detail'
@@ -31,19 +31,7 @@ const transferMessages = defineMessages({
   }
 })
 
-const styles = theme => ({
-  paper: {
-    padding: 10,
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: 'left',
-    color: theme.palette.text.secondary
-  },
-  button: {
-    width: 100,
-    font: 10
-  }
-})
+// removed withStyles usage; styles inlined via sx where needed
 
 const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount, transfers, transfer, user, account, intl, match, history }) => {
   const [value, setValue] = React.useState(0)
@@ -198,4 +186,4 @@ const Transfers = ({ searchTransfer, updateTransfer, fetchTransfer, fetchAccount
   )
 }
 
-export default injectIntl(withRouter(withStyles(styles)(Transfers)))
+export default injectIntl(withRouter(Transfers))

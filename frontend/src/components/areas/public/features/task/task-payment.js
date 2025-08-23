@@ -6,7 +6,6 @@ import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import {
   Container,
-  withStyles,
   Button,
   Typography,
   Avatar,
@@ -21,6 +20,7 @@ import {
   Tab,
   Chip,
 } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import {
   PaymentOutlined as FilterListIcon,
   Redeem as RedeemIcon
@@ -106,18 +106,16 @@ const messages = defineMessages({
 
 })
 
-const StyledTab = withStyles({
-  wrapper: {
+const StyledTab = styled(Tab)(({ theme }) => ({
+  '& .MuiTab-wrapper': {
     flexDirection: 'row',
-    alignItems: 'inherit',
+    alignItems: 'inherit'
   },
-  svgIcon: {
-    root: {
-      width: 16,
-      height: 16,
-    },
+  '& svg': {
+    width: 16,
+    height: 16
   }
-})(Tab);
+}))
 
 class TaskPayment extends Component {
   constructor(props) {
@@ -472,4 +470,4 @@ TaskPayment.propTypes = {
   filterTaskOrders: PropTypes.func
 }
 
-export default injectIntl(withStyles(styles)(TaskPayment))
+export default injectIntl(TaskPayment)

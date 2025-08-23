@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { makeStyles } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import Tooltip from '@mui/material/Tooltip'
 import CardHeader from '@mui/material/CardHeader'
@@ -9,60 +9,45 @@ import Chip from '@mui/material/Chip'
 import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import slugify from '@mui/material'
+import slugify from '@sindresorhus/slugify'
 
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(2),
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start'
-  },
-  rootCard: {
-    maxWidth: 500,
-    marginRight: 20,
-  },
-  item: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3)
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%' // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  }
+const Root = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(3),
+  marginBottom: theme.spacing(2),
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'flex-start'
+}))
+
+const RootCard = styled(Card)(({ theme }) => ({
+  maxWidth: 500,
+  marginRight: 20
+}))
+
+const Item = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(3),
+  marginBottom: theme.spacing(3)
 }))
 
 export default function OrganizationList ({ listOrganizations, organizations }) {
-  const classes = useStyles()
 
   useEffect(() => {
     listOrganizations()
   }, [])
 
   return (
-    <div className={ classes.root }>
+    <Root>
       { organizations && organizations.data && organizations.data.map(o => {
         return (
-          <div className={ classes.item }>
+          <Item>
             { o.Projects && o.Projects.length > 0 &&
-            <Card className={ classes.rootCard }>
+            <RootCard>
               <CardHeader
                 avatar={
-                  <Avatar aria-label='recipe' className={ classes.avatar }>
+                  <Avatar aria-label='recipe'>
                     { o.name[0] }
                   </Avatar>
                 }
@@ -107,10 +92,10 @@ export default function OrganizationList ({ listOrganizations, organizations }) 
                   ) }
                 </CardActions>
               </div>
-            </Card> }
-          </div>
+            </RootCard> }
+          </Item>
         )
       }) }
-    </div>
+    </Root>
   )
 }

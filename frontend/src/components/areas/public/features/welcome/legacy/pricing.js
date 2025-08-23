@@ -1,16 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Grid,
-  Typography,
-  withStyles
-} from '@mui/material'
+import { Button, Card, CardActions, CardContent, CardHeader, Grid, Typography } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 import TopBarContainer from '../../../../../../containers/topbar'
@@ -19,44 +11,33 @@ import {
   MainTitle
 } from '../components/CommonStyles'
 
-const styles = theme => ({
-  layout: {
-    width: 'auto',
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(3),
-    marginBottom: theme.spacing(6),
-    marginTop: theme.spacing(2),
-    [theme.breakpoints.up(900 + theme.spacing(3) * 2)]: {
-      width: 900,
-      marginLeft: 'auto',
-      marginRight: 'auto',
-    },
+const Layout = styled('div')(({ theme }) => ({
+  width: 'auto',
+  marginLeft: theme.spacing(3),
+  marginRight: theme.spacing(3),
+  marginBottom: theme.spacing(6),
+  marginTop: theme.spacing(2),
+  [theme.breakpoints.up(900 + theme.spacing(3) * 2)]: {
+    width: 900,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
-  heroContent: {
-    maxWidth: 600,
-    margin: '0 auto',
-    padding: `${theme.spacing(2)}px 0 ${theme.spacing(2)}px`,
-    marginTop: theme.spacing(3),
-    marginBottom: 0
-  },
-  heroDesc: {
-    paddingTop: theme.spacing(2)
-  },
-  cardHeader: {
-    backgroundColor: theme.palette.primary.light,
-  },
-  cardPricing: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'baseline',
-    marginBottom: theme.spacing(2),
-  },
-  cardActions: {
-    [theme.breakpoints.up('sm')]: {
-      paddingBottom: theme.spacing(2),
-    },
-  }
-})
+}))
+
+const HeroContent = styled('div')(({ theme }) => ({
+  maxWidth: 600,
+  margin: '0 auto',
+  padding: `${theme.spacing(2)}px 0 ${theme.spacing(2)}px`,
+  marginTop: theme.spacing(3),
+  marginBottom: 0
+}))
+
+const CardPricing = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'baseline',
+  marginBottom: theme.spacing(2),
+}))
 
 const tiersMaintainers = [
   {
@@ -98,24 +79,24 @@ const tiersContributors = [
 
 class Pricing extends Component {
   render () {
-    const { classes } = this.props
+  const { } = this.props
 
     return (
       <div className={ classes.root }>
         <TopBarContainer ref='intro' hide />
-        <div className={ classes.layout }>
+        <Layout>
           <React.Fragment>
             { /* Hero unit */ }
-            <div className={ classes.heroContent }>
+            <HeroContent>
               <MainTitle>
                 <Typography variant='h5' gutterBottom>
                   <FormattedMessage id='welcome.pricing.maintainers.title' defaultMessage='Fee for maintainers' />
                 </Typography>
               </MainTitle>
-              <Typography variant='body1' align='center' color='textSecondary' className={ classes.heroDesc }>
+              <Typography variant='body1' align='center' color='textSecondary' sx={{ pt: 2 }}>
                 <FormattedMessage id='welcome.pricing.description' defaultMessage='These are the fees when you pay for an issue to be solved on Gitpay' />
               </Typography>
-            </div>
+            </HeroContent>
             { /* End hero unit */ }
             <Grid container spacing={ 5 } justifyContent='center'>
               { tiersMaintainers.map(tier => (
@@ -127,17 +108,17 @@ class Pricing extends Component {
                       subheader={ tier.subheader }
                       titleTypographyProps={ { align: 'center' } }
                       subheaderTypographyProps={ { align: 'center' } }
-                      className={ classes.cardHeader }
+                      sx={{ backgroundColor: theme => theme.palette.primary.light }}
                     />
                     <CardContent>
-                      <div className={ classes.cardPricing }>
+                      <CardPricing>
                         <Typography variant='h5' color='textPrimary'>
                           <small>Fee</small> { tier.price }
                         </Typography>
                         <Typography variant='body1' color='textSecondary'>
                           <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
                         </Typography>
-                      </div>
+                      </CardPricing>
                       { tier.description.map((line, i) => (
                         <Typography variant='body1' align='center' key={ line }>
                           { line }
@@ -145,7 +126,7 @@ class Pricing extends Component {
                       )) }
                     </CardContent>
                     { tier.link &&
-                      <CardActions className={ classes.cardActions }>
+                      <CardActions sx={{ pb: { sm: 2 } }}>
                         <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
                           { tier.buttonText }
                         </Button>
@@ -165,17 +146,17 @@ class Pricing extends Component {
                       subheader={ tier.subheader }
                       titleTypographyProps={ { align: 'center' } }
                       subheaderTypographyProps={ { align: 'center' } }
-                      className={ classes.cardHeader }
+                      sx={{ backgroundColor: theme => theme.palette.primary.light }}
                     />
                     <CardContent>
-                      <div className={ classes.cardPricing }>
+                      <CardPricing>
                         <Typography variant='h5' color='textPrimary'>
                           <small>Fee</small> { tier.price }
                         </Typography>
                         <Typography variant='body1' color='textSecondary'>
                           <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
                         </Typography>
-                      </div>
+                      </CardPricing>
                       { tier.description.map((line, i) => (
                         <Typography gutterBottom variant={tier.description.length - 1 === i ? 'caption' : 'body1'} align='center' key={ line }>
                           {line}
@@ -183,7 +164,7 @@ class Pricing extends Component {
                       )) }
                     </CardContent>
                     { tier.link &&
-                      <CardActions className={ classes.cardActions }>
+                      <CardActions sx={{ pb: { sm: 2 } }}>
                         <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
                           { tier.buttonText }
                         </Button>
@@ -194,15 +175,13 @@ class Pricing extends Component {
               )) }
             </Grid>
           </React.Fragment>
-        </div>
+        </Layout>
         <Bottom />
       </div>
     )
   }
 }
 
-Pricing.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
+Pricing.propTypes = {}
 
-export default injectIntl(withStyles(styles)(Pricing))
+export default injectIntl(Pricing)

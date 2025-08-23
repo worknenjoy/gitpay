@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { AppBar, Container, Grid } from '@mui/material';
-import { Theme } from '@mui/material/styles';
+import { Grid } from '@mui/material';
 import { Page, PageContent } from '../../../../../styleguide/components/Page';
 import ProfileSideBar from '../../../organisms/layouts/profile-sidebar/profile-sidebar'
 import AccountHeader from '../../../organisms/layouts/account-header/account-header';
@@ -8,7 +7,6 @@ import Bottom from '../../../organisms/layouts/bottom-bar/bottom'
 import { useHistory } from 'react-router-dom';
 import ProfileHeader from '../../../molecules/headers/profile-main-header/profile-main-header';
 import ActivateAccountDialog from '../../../molecules/dialogs/activate-account-dialog/activate-account-dialog';
-import { makeStyles } from '@mui/styles'
 import { RootGrid, SecondaryBar, ContainerRoot } from './private-base.styles'
 
 // styles migrated to private-base.styles.ts

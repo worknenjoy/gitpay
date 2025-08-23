@@ -18,7 +18,6 @@ import {
   DialogTitle,
   Typography,
   Grid,
-  withStyles,
   IconButton,
   Menu,
   MenuItem,
@@ -56,27 +55,7 @@ const TaskHeaderContainer = styled.div`
   `}
 `
 
-const styles = theme => ({
-  breadcrumbRoot: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
-  },
-  breadcrumbLink: {
-    textDecoration: 'underline'
-  },
-  chipStatusPaid: {
-    marginLeft: 0,
-    verticalAlign: 'middle',
-    backgroundColor: theme.palette.primary.light
-  },
-  button: {
-    width: 100,
-    font: 10
-  },
-  gutterRight: {
-    marginRight: 10
-  }
-})
+// styles removed (migrated away from withStyles)
 
 class TaskHeader extends React.Component {
   constructor(props) {
@@ -106,7 +85,7 @@ class TaskHeader extends React.Component {
   }
 
   render() {
-    const { classes, task, user, history, handleDeleteTask, taskOwner, reportTask, updateTask } = this.props
+  const { task, user, history, handleDeleteTask, taskOwner, reportTask, updateTask } = this.props
 
     const headerSkeleton = (
       <div style={{ marginTop: 8 }}>
@@ -240,8 +219,7 @@ class TaskHeader extends React.Component {
 }
 
 TaskHeader.propTypes = {
-  classes: PropTypes.object.isRequired,
   task: PropTypes.object
 }
 
-export default injectIntl(withStyles(styles)(TaskHeader))
+export default injectIntl(TaskHeader)

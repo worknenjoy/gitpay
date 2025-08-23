@@ -14,6 +14,7 @@ import {
 } from '@mui/icons-material'
 
 import { InfoList } from './CommonStyles'
+import { AppBar as AppBarStyles, AppBarHeader } from './bottom-section-dialog.styles'
 
 
 const BottomSectionDialog = ({
@@ -43,7 +44,7 @@ const BottomSectionDialog = ({
         open={ open }
         onClose={ () => setOpen(false) }
       >
-        <AppBar className={ classes.appBar }>
+        <AppBarStyles>
           <Toolbar>
             <IconButton
               color='inherit'
@@ -52,14 +53,14 @@ const BottomSectionDialog = ({
             >
               <Close />
             </IconButton>
-            <Typography variant='subtitle1' className={ classes.appBarHeader }>
+            <AppBarHeader variant='subtitle1'>
               {title}
-            </Typography>
+            </AppBarHeader>
           </Toolbar>
           <InfoList>
             {content}
           </InfoList>
-        </AppBar>
+        </AppBarStyles>
       </Dialog>
     </ListItem>
   )

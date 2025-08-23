@@ -32,7 +32,6 @@ export const SubscribeFromWrapper = styled('div')(({ theme }) => ({
   },
 }))
 
-// Extracted from bottom.tsx (makeStyles replacement)
 export const SecBlock = styled('div')(() => ({
   textAlign: 'center',
   padding: 8,

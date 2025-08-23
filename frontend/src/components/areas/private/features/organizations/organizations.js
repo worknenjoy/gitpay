@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import { withStyles } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Chip from '@mui/material/Chip'
 import Avatar from '@mui/material/Avatar'
 import TextField from '@mui/material/TextField'
@@ -18,16 +18,11 @@ import {
 } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    padding: theme.spacing(0.5)
-  },
-  chip: {
-    margin: theme.spacing(0.5)
-  }
-})
+const Root = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  padding: theme.spacing(0.5)
+}))
 
 class Organizations extends Component {
   constructor (props) {
@@ -67,11 +62,11 @@ class Organizations extends Component {
   }
 
   render () {
-    const { classes, data } = this.props
+  const { data } = this.props
     const { dialogOpen, currentOrg } = this.state
 
     return (
-      <div className={ classes.root }>
+  <Root>
         { data.length && data.map(org => {
           return (
             <Chip
@@ -82,7 +77,7 @@ class Organizations extends Component {
               label={ org.name }
               onDelete={ () => this.handleClick(org) }
               onClick={ () => this.handleClick(org) }
-              className={ classes.chip }
+      sx={{ m: 0.5 }}
               deleteIcon={ org.imported ? <DoneIcon /> : <ImportIcon /> }
             />
           )
@@ -134,9 +129,9 @@ class Organizations extends Component {
 
           </DialogActions>
         </Dialog>
-      </div>
+  </Root>
     )
   }
 }
 
-export default withStyles(styles)(Organizations)
+export default Organizations

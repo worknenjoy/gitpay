@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import TextField from '@mui/material/TextField'
 import CircularProgress from '@mui/material/CircularProgress'
 import Grid from '@mui/material/Grid'
-import MuiPhoneNumber from 'material-ui-phone-number'
+import { MuiTelInput } from 'mui-tel-input'
 import {
   ContactMailOutlined
 } from '@mui/icons-material'
@@ -34,39 +34,36 @@ function checkEmail (emailAddress) {
   return reValidEmail.test(emailAddress)
 }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(1),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+const Wrapper = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(1),
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+}))
+
+const StyledAvatar = styled(Avatar)(({ theme }) => ({
+  margin: theme.spacing(1),
+  backgroundColor: theme.palette.secondary.main,
+}))
+
+const StyledForm = styled('form')(({ theme }) => ({
+  width: '100%',
+  marginTop: theme.spacing(2),
+}))
+
+const SubmitButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(3, 0, 2),
+  textTransform: 'none',
+  background: '#4A4EDD',
+  height: 50,
+  '&:hover': {
+    background: '#7F83FF',
   },
-  phonePicker: {
-    width: '100%'
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(2),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-    textTransform: 'none',
-    background: '#4A4EDD',
-    height: 50,
-    '&:hover': {
-      background: '#7F83FF',
-    },
-  }
 }))
 
 export default function ContactRecruiterForm (props) {
   const [formData, setFormData] = useState({})
   const [formErrors, setFormErrors] = useState({})
-  const classes = useStyles()
   const { contact } = props
 
   const validate = (event) => {
@@ -107,18 +104,18 @@ export default function ContactRecruiterForm (props) {
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
-      <div className={ classes.paper }>
-        <Avatar className={ classes.avatar }>
+      <Wrapper>
+        <StyledAvatar>
           <ContactMailOutlined />
-        </Avatar>
+        </StyledAvatar>
         <Typography component='h1' variant='h5'>
           Contact us
         </Typography>
-        <form className={ classes.form } noValidate onChange={ onChange } onSubmit={ onSubmit } onBlur={ onBlur }>
+        <StyledForm noValidate onChange={ onChange } onSubmit={ onSubmit } onBlur={ onBlur }>
           <Grid container spacing={ 2 }>
             <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
-                error={ formErrors.name }
+                error={ !!formErrors.name }
                 helperText={ formErrors.name }
                 autoComplete='name'
                 name='name'
@@ -141,7 +138,7 @@ export default function ContactRecruiterForm (props) {
             </Grid>
             <Grid size={{ xs: 12 }}>
               <TextField
-                error={ formErrors.email }
+                error={ !!formErrors.email }
                 helperText={ formErrors.email }
                 variant='outlined'
                 required
@@ -159,17 +156,22 @@ export default function ContactRecruiterForm (props) {
                   Phone:
                 </Grid>
                 <Grid size={{ xs: 10 }}>
-                  <MuiPhoneNumber
-                    name={ 'phone' }
-                    defaultCountry={ 'us' }
-                    inputClass={ classes.phonePicker }
-                  />
+                  <MuiTelInput
+                label='Phone'
+                defaultCountry='US'     // mesmo padrão que você usava
+                value={phone}
+                onChange={handlePhoneChange}
+                fullWidth
+                variant='outlined'
+                error={ !!formErrors.phone }
+                helperText={ formErrors.phone }
+              />
                 </Grid>
               </Grid>
             </Grid>
             <Grid size={{ xs: 12 }}>
               <TextField
-                error={ formErrors.company }
+                error={ !!formErrors.company }
                 helperText={ formErrors.company }
                 variant='outlined'
                 required
@@ -185,7 +187,7 @@ export default function ContactRecruiterForm (props) {
             </Grid>
             <Grid size={{ xs: 12 }}>
               <TextField
-                error={ formErrors.message }
+                error={ !!formErrors.message }
                 helperText={ formErrors.message }
                 variant='outlined'
                 rows={ 4 }
@@ -199,25 +201,24 @@ export default function ContactRecruiterForm (props) {
               />
             </Grid>
           </Grid>
-          <Button
+          <SubmitButton
             type='submit'
             fullWidth
             variant='contained'
             color='primary'
             disabled={ !contact.completed }
-            className={ classes.submit }
           >
             { contact.completed ? (
               <span>Contact us</span>
             ) : (
               <CircularProgress color='primary' />
             ) }
-          </Button>
+          </SubmitButton>
           <Button onClick={ () => window.scroll({ top: 0, behavior: 'smooth' }) } variant='text' size='small'>
             back to top
           </Button>
-        </form>
-      </div>
+        </StyledForm>
+      </Wrapper>
     </Container>
   )
 }

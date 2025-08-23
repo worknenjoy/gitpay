@@ -7,23 +7,14 @@ import { injectIntl, defineMessages } from 'react-intl'
 import CustomPaginationActionsTable from './task-table'
 import { tableHeaderDefault } from '../../../../shared/table-metadata/task-header-metadata'
 
-import {
-  Container,
-  Grid,
-  withStyles,
-  Typography,
-  Tab,
-  Tabs,
-  AppBar,
-} from '@mui/material'
+import { Container, Grid, Typography, Tab, Tabs, AppBar } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import ProfileHead from '../../../../../containers/profile-head'
 
-const styles = theme => ({
-  rootTabs: {
-    marginRight: theme.spacing(3),
-    marginBottom: theme.spacing(3)
-  }
-})
+const Root = styled(Grid)(({ theme }) => ({
+  marginRight: theme.spacing(3),
+  marginBottom: theme.spacing(3)
+}))
 
 const messages = defineMessages({
   issuesCreated: {
@@ -41,7 +32,7 @@ const messages = defineMessages({
 })
 
 const TaskListUser = (props) => {
-  const { classes } = props
+  const { } = props
 
   const [taskListState, setTaskListState] = useState({
     tab: 0,
@@ -111,7 +102,7 @@ const TaskListUser = (props) => {
           <ProfileHead />
         </Container>
         <Container fixed maxWidth='lg'>
-          <Grid container className={classes.root}>
+          <Root container>
             <Grid size={{ xs: 12, md: 12 }}>
               <Tabs
                 value={taskListState.tab}
@@ -133,16 +124,14 @@ const TaskListUser = (props) => {
                 <CustomPaginationActionsTable tasks={props.tasks} user={props.user} tableHeaderMetadata={tableHeaderDefault} />
               </TabContainer>
             </Grid>
-          </Grid>
+          </Root>
         </Container>
-        <Bottom classes={classes} />
+  <Bottom />
       </Page>
     </React.Fragment>
   )
 }
 
-TaskListUser.propTypes = {
-  classes: PropTypes.object.isRequired
-}
+TaskListUser.propTypes = {}
 
-export default injectIntl(withStyles(styles)(TaskListUser))
+export default injectIntl(TaskListUser)

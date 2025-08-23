@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import { withStyles } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import {
   Button,
   AppBar,
@@ -402,4 +402,4 @@ LandingPage.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(LandingPage)
+export default LandingPage

@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl'
 import { countryCodes } from './country-codes'
 
 import {
-  withStyles,
   Button,
   Dialog,
   DialogActions,
@@ -15,25 +14,18 @@ import {
   DialogTitle,
   Typography
 } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-const styles = theme => ({
-  countryContainer: {
-    padding: 20,
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignContent: 'center'
-  },
-  countryItem: {
-    display: 'inline-block',
-    textAlign: 'center',
-    padding: 25
-  }
-})
+const CountryContainer = styled('div')(({ theme }) => ({
+  padding: 20,
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  alignContent: 'center'
+}))
 
 class CountryPicker extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
     open: PropTypes.bool,
     onClose: PropTypes.func
   }
@@ -56,23 +48,32 @@ class CountryPicker extends Component {
   }
 
   render () {
-    const { classes } = this.props
+  const { } = this.props
 
     const Alert = (props) => {
       return <MuiAlert elevation={ 2 } variant="outlined" { ...props } />
     }
+
+    const CountryItemButton = styled(Button)(({ theme }) => ({
+      textAlign: 'center',
+      padding: 25,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }))
 
     const getCountryButtons = () => {
       return countryCodes.map((item) => {
         const imageModule = require(`images/countries/${item.image}.png`)
         const countryImageSrc = imageModule.default || imageModule
         return (
-          <Button style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} variant={ this.state.currentCountryCode === item.code ? 'outlined' : '' } onClick={ (e) => this.handleCountry(e, item) } className={ classes.countryItem }>
+          <CountryItemButton variant={ this.state.currentCountryCode === item.code ? 'outlined' : '' } onClick={ (e) => this.handleCountry(e, item) }>
             <img width="48" style={{marginRight: 10}} src={ countryImageSrc } onLoad={() => {}} />
             <Typography component="span" gutterBottom>
               { item.country }
             </Typography>
-          </Button>
+          </CountryItemButton>
         )
       })
     }
@@ -100,9 +101,9 @@ class CountryPicker extends Component {
                 </Typography>
               </Alert>
             </DialogContentText>
-            <div className={ classes.countryContainer }>
+            <CountryContainer>
               { getCountryButtons() }
-            </div>
+            </CountryContainer>
           </DialogContent>
           <DialogActions alignItems="space-evenly">
             <DialogContent id="alert-dialog-footer">
@@ -133,4 +134,4 @@ class CountryPicker extends Component {
   }
 }
 
-export default withStyles(styles)(CountryPicker)
+export default CountryPicker
