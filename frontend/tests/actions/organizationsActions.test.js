@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
+import { thunk } from 'redux-thunk'
 import moxios from 'moxios'
 import * as organizationsActions from '../../src/actions/organizationsActions'
 import Auth from '../../src/modules/auth'

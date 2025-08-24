@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
+import { thunk } from 'redux-thunk';
 import * as actions from '../../src/actions/notificationActions';
 import * as types from '../../src/actions/notificationActions';
 import { expect } from 'chai';

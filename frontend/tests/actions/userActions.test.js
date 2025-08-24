@@ -3,7 +3,7 @@
  */
 import { expect } from 'chai'
 import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
+import { thunk } from 'redux-thunk'
 import moxios from 'moxios'
 import * as actions from '../../src/actions/userActions'
 import * as types from '../../src/actions/userActions'
