@@ -21,15 +21,16 @@ const SideMenuItems = ({
           )}
           {section.items.map((item, index) => (
             item.include && (
-              <MenuItem
+              <MenuItemStyled
                 key={`item-${sectionIndex}-${index}`}
                 onClick={item.onClick}
-                component={MenuItemStyled as any}
                 selected={item.selected}
               >
-                <ListItemIcon><>{item.icon}</></ListItemIcon>
+                <ListItemIcon sx={(theme) => ({ color: theme.palette.getContrastText(theme.palette.primary.main) })}>
+                  {item.icon}
+                </ListItemIcon>
                 <ListItemText primaryTypographyProps={{ component: Primary as any }} primary={item.label} />
-              </MenuItem>
+              </MenuItemStyled>
             )
           ))}
         </div>
