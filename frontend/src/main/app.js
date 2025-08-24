@@ -7,7 +7,7 @@ import LogRocket from 'logrocket'
 import setupLogRocketReact from 'logrocket-react'
 import { getCookieConsentValue } from 'react-cookie-consent'
 
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { ThemeProvider, createTheme, StyledEngineProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import Palette from '../styleguide/styles/palette'
 import './app.css'
@@ -74,18 +74,20 @@ function App () {
   }, [isLoading, getCookieConsentValue])
   if (!isLoading) {
     return (
-      <ThemeProvider theme={ theme }>
-        <Provider store={ store }>
-          <IntlProvider>
-            <div>
-              <CssBaseline />
-              <NotificationContainer />
-              <Routes />
-              <CookieConsentBar />
-            </div>
-          </IntlProvider>
-        </Provider>
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={ theme }>
+          <Provider store={ store }>
+            <IntlProvider>
+              <div>
+                <CssBaseline />
+                <NotificationContainer />
+                <Routes />
+                <CookieConsentBar />
+              </div>
+            </IntlProvider>
+          </Provider>
+        </ThemeProvider>
+      </StyledEngineProvider>
     )
   }
   else {

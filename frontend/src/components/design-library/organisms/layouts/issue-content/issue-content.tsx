@@ -9,7 +9,7 @@ import IssueHeader from '../../../molecules/headers/issue-header/issue-header';
 import IssueAuthorList from '../../../molecules/lists/issue-author-list/issue-author-list';
 import { DescriptionHeading, IssueContentText } from './issue-content.styles';
 
-const IssueContent = ({ className, user, project, organization, updateTask, reportTask, onDeleteTask, logged, task, messageAuthor }) => {
+const IssueContent = ({ user, project, organization, updateTask, reportTask, onDeleteTask, logged, task, messageAuthor }) => {
   const taskOwner = () => {
     const creator = logged && task.data.User && user.id === task.data.User.id
     const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === user.id).length > 0 : false
@@ -42,7 +42,7 @@ const IssueContent = ({ className, user, project, organization, updateTask, repo
             <Skeleton variant="text" animation="wave" width="100%" />
           </>
         ) : (
-      <IssueContentText variant="body1" className={className}>
+      <IssueContentText variant="body1">
             <ShowMoreText
               lines={8}
               more={

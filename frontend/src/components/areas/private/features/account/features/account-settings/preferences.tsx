@@ -1,26 +1,15 @@
 import React from 'react'
-import {
-  Paper,
-  Grid,
-  Typography,
-  Checkbox
-} from '@mui/material'
+import { Grid, Typography, Checkbox } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import Skill from '../account-skills/skill'
 import MySkill from '../account-skills/my-skill'
+import { Root, Title, ChipContainer, InlineLabel, SkillsGrid, Section } from './preferences.styles'
 
 const skillsList = [
   'Node.js', 'Ruby', 'Python', 'CSS', 'Design', 'Writing', 'Documentation',
   'React', 'React Native', 'Angular', 'Vue.js', 'Blogging', 'Wordpress',
   'PHP', 'Testing', 'Git', 'Continuous Integration'
 ]
-
-const styles = theme => ({
-  title: {
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2
-  }
-})
 
 const Preferences = (props) => {
   const { classes, preferences, updateUser, user } = props
@@ -68,12 +57,12 @@ const Preferences = (props) => {
   const hasSomeSkill = skillsArray?.length > 0
 
   return (
-    <Paper elevation={1} style={{ padding: 20 }}>
+    <Root elevation={1}>
       <Grid container alignItems="center" spacing={1}>
         <Grid size={{ xs: 12 }}>
-          <Typography variant="h5" className={classes.title} gutterBottom>
+          <Title variant="h5" gutterBottom>
             <FormattedMessage id="preferences.title.main" defaultMessage="Preferences" />
-          </Typography>
+          </Title>
         </Grid>
         <Grid size={{ xs: 7 }}>
           <Typography color="primary" variant="h5">
@@ -81,21 +70,21 @@ const Preferences = (props) => {
           </Typography>
           <Checkbox id="checkbox_windows" checked={osArray?.includes('Windows')} onClick={() => handleOSClick('Windows')} />
           <label htmlFor="checkbox_windows">
-            <Typography style={{ display: 'inline-block' }} component="span" color="primary" variant="body2">
+            <InlineLabel color="primary" variant="body2">
               Windows
-            </Typography>
+            </InlineLabel>
           </label>
           <Checkbox id="checkbox_linux" checked={osArray?.includes('Linux')} onClick={() => handleOSClick('Linux')} />
           <label htmlFor="checkbox_linux">
-            <Typography style={{ display: 'inline-block' }} component="span" color="primary" variant="body2">
+            <InlineLabel color="primary" variant="body2">
               Linux
-            </Typography>
+            </InlineLabel>
           </label>
           <Checkbox id="checkbox_mac" checked={osArray?.includes('Mac')} onClick={() => handleOSClick('Mac')} />
           <label htmlFor="checkbox_mac">
-            <Typography style={{ display: 'inline-block' }} component="span" color="primary" variant="body2">
+            <InlineLabel color="primary" variant="body2">
               Mac
-            </Typography>
+            </InlineLabel>
           </label>
         </Grid>
         <Grid size={{ xs: 12 }}>
@@ -103,18 +92,18 @@ const Preferences = (props) => {
             <FormattedMessage id="prefences.header.title" defaultMessage="Preferences" />
           </Typography>
         </Grid>
-        <Grid size={{ xs: 12 }} style={{ marginBottom: 10 }}>
+        <SkillsGrid size={{ xs: 12 }}>
           <Grid container size={{ xs: 12 }} style={{ padding: 10 }}>
             {listSkills}
           </Grid>
-        </Grid>
-        <div style={{ width: '100%', flex: 'auto', display: 'flex', marginTop: 20 }}>
+        </SkillsGrid>
+        <Section>
           <Grid size={{ xs: 12 }}>
             <Typography color="primary" variant="h5">
               <FormattedMessage id="prefences.header.sub" defaultMessage="My language preferences" />
             </Typography>
             <Grid container size={{ xs: 12 }} style={{ padding: 10 }}>
-              <div className={classes.chipContainer}>
+              <ChipContainer>
                 {hasSomeSkill ? (
                   selectedSkillsList
                 ) : (
@@ -122,12 +111,12 @@ const Preferences = (props) => {
                     <FormattedMessage id="prefences.my.skills.zero" defaultMessage="No skills selected" />
                   </Typography>
                 )}
-              </div>
+              </ChipContainer>
             </Grid>
           </Grid>
-        </div>
+        </Section>
       </Grid>
-    </Paper>
+    </Root>
   )
 }
 
