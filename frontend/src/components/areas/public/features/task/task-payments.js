@@ -1,31 +1,23 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 import { FormattedMessage } from 'react-intl'
-import Typography from '@material-ui/core/Typography'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
+import Typography from '@mui/material/Typography'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
 import MomentComponent from 'moment'
 
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from '@mui/material/Avatar'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%'
-  },
-  small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3)
-  }
-}))
+const Root = styled(List)(({ theme }) => ({ width: '100%' }))
+const SmallAvatar = styled(Avatar)(({ theme }) => ({ width: theme.spacing(3), height: theme.spacing(3) }))
 
 export default function TaskPayments ({ orders }) {
-  const classes = useStyles()
   if (!orders) return <div />
   return orders && orders.length > 0 && (
-    <List dense className={ classes.root }>
+    <Root dense>
       <Typography variant='caption' align='center' style={ { display: 'inline-block', width: '100%', marginBottom: 10 } }>
         Paid by
       </Typography>
@@ -34,14 +26,13 @@ export default function TaskPayments ({ orders }) {
           <ListItem key={ order.id }>
             <ListItemAvatar style={ { minWidth: 34 } }>
               { order.User
-                ? <Avatar
-                    className={ classes.small }
+                ? <SmallAvatar
                     alt={
                     `${order.User && (order.User.name || order.User.username) || 'Anonymous'}`
                   }
                     src={ order.User && order.User.profile_url }
                 />
-                : <Avatar className={ classes.small } />
+                : <SmallAvatar />
               }
             </ListItemAvatar>
             <ListItemText primary={
@@ -64,6 +55,6 @@ export default function TaskPayments ({ orders }) {
           </ListItem>
         )
       }) }
-    </List>
+  </Root>
   )
 }

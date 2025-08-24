@@ -13,13 +13,13 @@ import {
   IconButton,
   Typography,
   Avatar,
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   Apps,
   Work,
   AccountBalanceWallet,
   Close
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import Transition from 'design-library/atoms/transitions/transition'
 import messages from './messages'

@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
+import { thunk } from 'redux-thunk'
 import moxios from 'moxios'
 import { expect } from 'chai'
 import * as paymentRequestActions from '../../src/actions/paymentRequestActions'

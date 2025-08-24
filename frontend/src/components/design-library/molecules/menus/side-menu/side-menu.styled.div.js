@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 import {
   Button,
   Avatar
-} from '@material-ui/core'
+} from '@mui/material'
 
 import media from '../../../../../styleguide/media'
 

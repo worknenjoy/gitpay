@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, DialogContent } from '@material-ui/core';
+import { Dialog, DialogContent } from '@mui/material';
 import LoginForm from '../../form-section/login-form/login-form-main/login-form'
 
 
@@ -34,7 +34,6 @@ const SignupDialog = ({
             location={undefined}
             history={undefined}
             match={undefined}
-            classes={undefined}
           />
         </div>
       </DialogContent>

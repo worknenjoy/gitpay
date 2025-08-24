@@ -1,8 +1,6 @@
 import React from 'react';
+import { useTheme } from '@mui/material/styles';
 import useStyles from './payment-request-status-field.styles';
-
-
-
 import BaseStatus from 'design-library/atoms/status/base-status/base-status';
 
 interface PaymentRequestTransferStatusFieldProps {
@@ -14,7 +12,8 @@ const PaymentRequestTransferStatusField: React.FC<PaymentRequestTransferStatusFi
   status,
   completed = true
 }) => {
-  const classes = useStyles();
+    const theme = useTheme();
+    const styles = useStyles(theme);
 
   const statusList = [
     {
@@ -43,7 +42,7 @@ const PaymentRequestTransferStatusField: React.FC<PaymentRequestTransferStatusFi
     <BaseStatus
       status={status}
       statusList={statusList}
-      classes={classes}
+        styles={styles}
       completed={completed}
     />
   );

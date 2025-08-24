@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import Radios from 'design-library/atoms/inputs/radios/radios';
 import { FormattedMessage } from 'react-intl';
-import Typography from '@mui/material/Typography/Typography';
+import Typography from '@mui/material/Typography';
 import SelectInput from 'design-library/atoms/inputs/select-inputs/select-input/select-input';
 import Button from 'design-library/atoms/buttons/button/button';
 import ProfileSecondaryHeader from 'design-library/molecules/headers/profile-secondary-header/profile-secondary-header';
+import { RightActions, AutomaticOptions } from './payout-schedule-form.styles';
 
 const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
   const [automaticPayoutOptions, setAutomaticPayoutOptions] = React.useState(false);
@@ -75,8 +76,8 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
             label: <FormattedMessage id="payout.settings.schedule.automatic" defaultMessage="Automatic Payouts" />,
             caption: <FormattedMessage id="payout.settings.schedule.automatic.caption" defaultMessage="Gitpay will automatically payout funds to your bank account based on the selected schedule." />,
             content: automaticPayoutOptions && (
-              <div style={{ width: 400 }}>
-                <Typography variant="caption" style={{ marginTop: 20 }}>
+              <AutomaticOptions>
+                <Typography variant="caption">
                   <FormattedMessage id="payoutSchedule.automaticOptions" defaultMessage="Set a custom schedule to payout funds to your bank account." />
                 </Typography>
                 <div>
@@ -91,12 +92,12 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
                     completed={completed}
                   />
                 </div>
-              </div>
+              </AutomaticOptions>
             )
           }
         ]}
       />
-      <div style={{ marginTop: 20, display: 'flex', justifyContent: 'flex-end' }}>
+      <RightActions>
         <Button
           completed={completed}
           variant="contained"
@@ -104,7 +105,7 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
           type="submit"
           label={<FormattedMessage id="payoutSchedule.save" defaultMessage="Save Payout Schedule" />}
         />
-      </div>
+      </RightActions>
     </form>
   );
 };

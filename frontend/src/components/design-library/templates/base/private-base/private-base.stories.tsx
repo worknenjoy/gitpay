@@ -1,6 +1,6 @@
 import React from 'react';
 import PrivateBase from './private-base';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 
 export default {
   title: 'Design Library/Templates/Base/PrivateBase',

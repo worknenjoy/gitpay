@@ -1,11 +1,12 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
+import { Skeleton } from '@mui/material'
 
-const useStyles = makeStyles(() => ({
-  placeholder: {
-    width: 40,
-    height: 40,
-    margin: 10
-  }
+export const Placeholder = styled(Skeleton)(() => ({
+  width: 40,
+  height: 40,
+  margin: 10
 }))
 
-export default useStyles
+export default {
+  Placeholder
+}

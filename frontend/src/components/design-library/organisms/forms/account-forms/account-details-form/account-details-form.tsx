@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import Button from '../../../../atoms/buttons/button/button';
 import CountryCurrency from '../../../../molecules/form-section/country-currency-form/country-currency-form';
 import PersonalDetailsForm from '../../../../molecules/form-section/personal-details-form/personal-details-form';

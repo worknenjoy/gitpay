@@ -4,7 +4,7 @@
 
 jest.unmock('react-intl')
 import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
+import { thunk } from 'redux-thunk'
 import moxios from 'moxios'
 import * as taskSolutionActions from '../../../src/actions/taskSolutionActions'
 import Auth from '../../../src/modules/auth'

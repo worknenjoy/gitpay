@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import {
   Avatar,
   Chip
-} from '@material-ui/core'
-import Folder from '@material-ui/icons/Folder'
+} from '@mui/material'
+import Folder from '@mui/icons-material/Folder'
 
 import { withRouter } from 'react-router-dom'
 import { injectIntl } from 'react-intl'

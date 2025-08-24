@@ -1,28 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { withStyles } from '@material-ui/core/styles';
-import { Grid, Button, Paper } from '@material-ui/core';
-import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid'
+import { Button, Paper } from '@mui/material';
 
 import { Field } from 'design-library/atoms/inputs/fields/field/field';
 import ProviderLoginButtons from '../../../../../../containers/provider-login-buttons';
 import DeleteAccountButton from './delete-account-button';
 
-const styles = (theme) => ({
-  legend: {
-    fontSize: 18,
-    fontWeight: 500,
-    color: theme.palette.primary.dark
-  },
-  fieldset: {
-    border: `1px solid ${theme.palette.primary.light}`,
-    marginBottom: 20
-  }
-})
+import { Fieldset, LegendText } from './account-tab-main.styles'
 
 
 const AccountTabMain = ({
-  classes,
   user,
   updateUser,
   changePassword,
@@ -82,15 +70,15 @@ const AccountTabMain = ({
     <Paper elevation={ 1 } style={{padding: 20}}>
       <form>
         <Grid container spacing={2}>
-          <Grid item xs={ 12 } md={ 12 }>
-              <fieldset className={ classes.fieldset }>
-                <legend className={ classes.legend }>
-                  <Typography>
+          <Grid size={{ xs: 12, md: 12 }}>
+              <Fieldset>
+                <legend>
+                  <LegendText>
                     <FormattedMessage id="account.provider.link" defaultMessage="Link accounts" />
-                  </Typography>
+                  </LegendText>
                 </legend>
                 <Grid container spacing={2}>
-                  <Grid item xs={ 12 } sm={ 6 } md={ 6 }>
+                  <Grid size={{ xs: 12, sm: 6, md: 6 }}>
                     <ProviderLoginButtons 
                       provider={provider}
                       login_strategy={login_strategy}
@@ -99,15 +87,15 @@ const AccountTabMain = ({
                     />
                   </Grid>
                 </Grid>
-              </fieldset>
-              <fieldset className={ classes.fieldset }>
-                <legend className={ classes.legend }>
-                  <Typography>
+              </Fieldset>
+              <Fieldset>
+                <legend>
+                  <LegendText>
                     <FormattedMessage id="account.account" defaultMessage="Account" />
-                  </Typography>
+                  </LegendText>
                 </legend>
                 <Grid container spacing={2}>
-                  <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
+                  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <FormattedMessage id="account.basic.name" defaultMessage="name">
                       { (msg) => (
                         <Field
@@ -119,7 +107,7 @@ const AccountTabMain = ({
                       ) }
                     </FormattedMessage>
                   </Grid>
-                  <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
+                  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <div style={{float: 'right'}}>
                       <Button
                         type="submit"
@@ -132,15 +120,15 @@ const AccountTabMain = ({
                     </div>
                   </Grid>
                 </Grid>
-              </fieldset>
-              <fieldset className={ classes.fieldset }>
-                <legend className={ classes.legend }>
-                  <Typography>
+              </Fieldset>
+              <Fieldset>
+                <legend>
+                  <LegendText>
                     <FormattedMessage id="account.password.change.title" defaultMessage="Change password" />
-                  </Typography>
+                  </LegendText>
                 </legend>
                 <Grid container spacing={2}>
-                  <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
+                  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <FormattedMessage id="account.basic.password.current" defaultMessage="Current password">
                       { (msg) => (
                         <Field
@@ -175,7 +163,7 @@ const AccountTabMain = ({
                       ) }
                     </FormattedMessage>
                   </Grid>
-                  <Grid item xs={ 12 } sm={ 12 } md={ 12 }>
+                  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
                     <div style={{float: 'right'}}>
                       <Button
                         type="submit"
@@ -189,14 +177,14 @@ const AccountTabMain = ({
                     </div>
                   </Grid>
                 </Grid>
-              </fieldset>
+              </Fieldset>
               <DeleteAccountButton
                 user={ user }
                 history={ history }
                 deleteUser={ deleteUser }
               />
           </Grid>
-          <Grid item xs={ 12 } sm={ 6 } md={ 6 }>
+          <Grid size={{ xs: 12, sm: 6, md: 6 }}>
             
           </Grid>
         </Grid>
@@ -205,4 +193,4 @@ const AccountTabMain = ({
   );
 }
 
-export default withStyles(styles)(AccountTabMain);
+export default AccountTabMain;

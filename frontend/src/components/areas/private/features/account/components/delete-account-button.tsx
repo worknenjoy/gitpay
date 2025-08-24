@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import DeleteUser from '../features/account-details/deleteUser';
 

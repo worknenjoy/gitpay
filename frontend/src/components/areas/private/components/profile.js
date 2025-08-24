@@ -8,14 +8,14 @@ import {
   Grid,
   Container,
   Button,
-  withStyles,
   AppBar,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
   DialogActions
-} from '@material-ui/core'
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 import { Page, PageContent } from '../../../../styleguide/components/Page'
 
@@ -40,61 +40,7 @@ import TaskListProfile from '../../../../containers/task-list-profile'
 const TaskListProfileProjects = (props) => <TaskListProfile {...props} />
 const TaskListProfileOrganization = (props) => <TaskListProfile noTopBar noBottomBar {...props} />
 
-const styles = theme => ({
-  root: {
-    backgroundColor: '#F7F7F7'
-  },
-  altButton: {
-    marginRight: 10
-  },
-  bigRow: {
-    marginTop: 20,
-    marginBottom: 20
-  },
-  row: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  rowList: {
-    marginTop: 10,
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  rowContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
-  infoItem: {
-    width: '100%',
-    textAlign: 'center'
-  },
-  menuContainer: {
-    marginBottom: 40,
-    marginRight: 20,
-    marginLeft: 20,
-    width: '100%'
-  },
-  secondaryBar: {
-    backgroundColor: theme.palette.primary.light
-  },
-  chip: {
-    marginRight: 10,
-    marginBottom: 20
-  },
-  chipSkill: {
-    margin: theme.spacing(1)
-  },
-  chipLanguage: {
-    margin: theme.spacing(1)
-  },
-  chipContainer: {
-    marginTop: 12,
-    marginBottom: 12,
-    width: '100%'
-  }
-})
+const RootGrid = styled(Grid)(({ theme }) => ({ backgroundColor: '#F7F7F7' }))
 
 class Profile extends Component {
   constructor (props) {
@@ -178,7 +124,7 @@ class Profile extends Component {
   }
 
   render () {
-    const { classes, user, roles } = this.props
+  const { user, roles } = this.props
     const { emailNotVerifiedDialog } = this.state
 
     let titleNavigation = this.getTitleNavigation()
@@ -220,26 +166,25 @@ class Profile extends Component {
         </Dialog>
         <AppBar
           component="div"
-          classes={ { colorPrimary: classes.secondaryBar } }
           color="primary"
           position="static"
-          elevation={ 0 } />
+          elevation={ 0 }
+          sx={{ bgcolor: (theme) => theme.palette.primary.light }}
+        />
         { this.state.selected === 2 &&
-          <PreferencesBar classes={ classes } />
+          <PreferencesBar />
         }
         <PageContent>
-          <Grid container className={ classes.root } spacing={ 0 }>
-            { user &&
+           <RootGrid container spacing={ 0 }>
+              { user &&
               <ProfileSideBar
-                classes={ classes }
                 user={ user }
                 onLogout={ this.handleSignOut }
                 history={ this.props.history }
               />
             }
-            <Grid item xs={ 12 } md={ 10 }>
-              <AccountHeader
-                classes={ classes }
+            <Grid size={{ xs: 12, md: 10 }}>
+               <AccountHeader
                 user={ user }
                 onCreateTask={ this.props.createTask }
                 history={ this.props.history }
@@ -416,12 +361,12 @@ class Profile extends Component {
                 </HashRouter>
               </Container>
             </Grid>
-          </Grid>
+          </RootGrid>
         </PageContent>
         { /* Uncomment the below section to enable the 'Your Organizations section' */ }
         { /* { this.state.orgsLoaded && organizations &&
-            <Grid item xs={ 12 } md={ 12 }>
-              <div style={ { marginTop: 10, marginBottom: 10 } }>
+            <Grid size={{ xs: 12, md: 12 }}>
+               <div style={ { marginTop: 10, marginBottom: 10 } }>
                 <Typography variant='h5' component='h3'>
                   <FormattedMessage id='account.profile.org.headline' defaultMessage='Your organizations' />
                 </Typography>
@@ -434,9 +379,7 @@ class Profile extends Component {
               </div>
             </Grid>
           } */ }
-        <BottomContainer
-          classes={ classes }
-        />
+  <BottomContainer />
       </Page>
     )
   }
@@ -451,4 +394,4 @@ Profile.propTypes = {
   addNotification: PropTypes.object
 }
 
-export default injectIntl(withStyles(styles)(Profile))
+export default injectIntl(Profile)

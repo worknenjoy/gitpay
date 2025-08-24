@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import {
   Grid,
   Checkbox,
-  FormControlLabel,
-  GridSize
-} from '@material-ui/core';
+  FormControlLabel
+} from '@mui/material';
 
-import useStyles from './checkboxes.styles';
+import getCheckboxesStyles from './checkboxes.styles';
+import { useTheme } from '@mui/material/styles';
 
 
 type CheckboxesProps = {
@@ -17,7 +17,8 @@ type CheckboxesProps = {
 
 
 const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:CheckboxesProps) => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const styles = getCheckboxesStyles(theme);
   const [checked, setChecked] = useState({});
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, onChangeCheckbox) => {
@@ -77,16 +78,16 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:Checkboxe
 
 
   return (
-    <Grid container spacing={3} className={classes.container}>
+    <Grid container spacing={3} sx={styles.container}>
       {checkboxesToRender.map((checkbox, index) => (
-        <Grid item xs={12} sm={12 / checkboxesToRender.length as GridSize} className={classes.item}>
+  <Grid size={{ xs: 12, sm: 12 / checkboxesToRender.length }} sx={styles.item}>
           <FormControlLabel
             control={
               <Checkbox
                 checked={checked[checkbox.name] || false}
                 onChange={(e) => handleChange(e, checkbox?.onChange)}
                 color="primary"
-                className={classes.checkbox}
+                sx={styles.checkbox}
                 name={checkbox.name}
                 value={checkbox.value}
               />

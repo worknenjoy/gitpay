@@ -9,7 +9,7 @@ import {
   ListItemAvatar,
   Avatar,
   Divider
-} from '@material-ui/core';
+} from '@mui/material';
 import MessageIcon from '@mui/icons-material/Message';
 import MomentComponent from 'moment';
 import { FormattedMessage } from 'react-intl';
@@ -51,7 +51,7 @@ export default function OffersList({
                   <Chip
                     label={offer?.status || 'pending'}
                     color="secondary"
-                    variant="default"
+                    variant="filled"
                     size="small"
                     style={{marginLeft: 10, display: 'inline-block'}}
                   />

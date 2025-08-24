@@ -1,6 +1,6 @@
 import React from 'react';
-import { IconButton, Menu, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { MoreVert as MoreIcon, Visibility as VisibilityIcon } from '@material-ui/icons';
+import { IconButton, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
+import { MoreVert as MoreIcon, Visibility as VisibilityIcon } from '@mui/icons-material';
 
 
 export const ActionsMenu = (props) => {

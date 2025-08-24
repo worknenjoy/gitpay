@@ -1,6 +1,6 @@
 import React from 'react';
 import EmptyBase from '../empty-base/empty-base';
-import { AccountBalance as EmptyBankAccountIcon } from '@material-ui/icons'; // you can replace this icon
+import { AccountBalance as EmptyBankAccountIcon } from '@mui/icons-material'; // you can replace this icon
 import { FormattedMessage } from 'react-intl';
 
 const EmptyBankAccount = ({

@@ -7,57 +7,29 @@ import {
   Button,
   CardActions,
   CardContent
-} from '@material-ui/core';
+} from '@mui/material';
 
-import { makeStyles } from '@material-ui/core/styles';
-
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@mui/material';
 
 import { Card, CardList, CardMedia } from '../../components/ProfileStyles';
+import { CardActionsCentered, ContentWrapper, AlertWrapper } from './profile-options.styles';
 import WelcomeUser from '../../components/session/welcome-user';
 
-const organizationIcon = require('images/icons/noun_project management_3063542.svg');
-const toolsIcon = require('images/icons/noun_project management_3063515.svg');
-const preferencesIcon = require('images/icons/noun_project management_3063532.svg');
-const generalSettingsIcon = require('images/icons/noun_project management_3063521.svg');
-const taskIcon = require('images/icons/noun_project management_3063547.svg');
-const configIcon = require('images/icons/noun_project management_3063514.svg');
-const paymentsIcon = require('images/icons/noun_project management_3063535.svg');
+// Use ES module imports for assets so webpack (file-loader) returns a URL string correctly
+import toolsIcon from 'images/icons/noun_project management_3063515.svg';
+import preferencesIcon from 'images/icons/noun_project management_3063532.svg';
+import generalSettingsIcon from 'images/icons/noun_project management_3063521.svg';
+import taskIcon from 'images/icons/noun_project management_3063547.svg';
+import configIcon from 'images/icons/noun_project management_3063514.svg';
+import paymentsIcon from 'images/icons/noun_project management_3063535.svg';
 
-const useStyles = makeStyles((theme) => ({
-  cardActions: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  card: {
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
-  cardMedia: {
-    height: 140,
-    backgroundSize: 'contain',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center'
-  },
-  cardContent: {
-    flexGrow: 1
-  },
-  cardList: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-    gap: theme.spacing(2)
-  }
-}));
+// styles moved to styled components in profile-options.styles.ts
 
 const ProfileOptions = ({ user }) => {
   const { data = {}, completed } = user;
   const { Types = [] } = data;
 
   const history = useHistory();
-  const classes = useStyles();
 
   const [ visible , setVisible ] = React.useState(false)
 
@@ -69,7 +41,7 @@ const ProfileOptions = ({ user }) => {
     <Fragment>
       {window.localStorage.getItem('firstLogin') === 'true' && <WelcomeUser />}
       {visible && (
-        <div style={{ marginTop: 20 }}>
+        <AlertWrapper>
           <Alert
             severity="warning"
             action={
@@ -99,9 +71,9 @@ const ProfileOptions = ({ user }) => {
               defaultMessage="You need to update your role to define your user type. Click on the button to update your role"
             />
           </Alert>
-        </div>
+        </AlertWrapper>
       )}
-      <div style={{ marginBottom: 40 }}>
+      <ContentWrapper>
         <CardList>
           {Types &&
             Types.map((t) => t.name).includes('contributor') && (
@@ -126,7 +98,7 @@ const ProfileOptions = ({ user }) => {
                     />
                   </Typography>
                 </CardContent>
-                <CardActions className={classes.cardActions}>
+                <CardActionsCentered>
                   <Button size="small" color="primary">
                     <Link to={'/profile/tasks'}>
                       <FormattedMessage
@@ -135,7 +107,7 @@ const ProfileOptions = ({ user }) => {
                       />
                     </Link>
                   </Button>
-                </CardActions>
+                </CardActionsCentered>
               </Card>
             )}
           {Types &&
@@ -162,7 +134,7 @@ const ProfileOptions = ({ user }) => {
                     />
                   </Typography>
                 </CardContent>
-                <CardActions className={classes.cardActions}>
+                <CardActionsCentered>
                   <Button size="small" color="primary">
                     <Link to={'/profile/payments'}>
                       <FormattedMessage
@@ -171,7 +143,7 @@ const ProfileOptions = ({ user }) => {
                       />
                     </Link>
                   </Button>
-                </CardActions>
+                </CardActionsCentered>
               </Card>
             )}
           {Types &&
@@ -197,7 +169,7 @@ const ProfileOptions = ({ user }) => {
                     />
                   </Typography>
                 </CardContent>
-                <CardActions className={classes.cardActions}>
+                <CardActionsCentered>
                   <Button size="small" color="primary">
                     <Link to={'/profile/payout-settings'}>
                       <FormattedMessage
@@ -206,7 +178,7 @@ const ProfileOptions = ({ user }) => {
                       />
                     </Link>
                   </Button>
-                </CardActions>
+                </CardActionsCentered>
               </Card>
             )}
           {Types &&
@@ -230,7 +202,7 @@ const ProfileOptions = ({ user }) => {
                     />
                   </Typography>
                 </CardContent>
-                <CardActions className={classes.cardActions}>
+                <CardActionsCentered>
                   <Button size="small" color="primary">
                     <Link to="/profile/user-account/skills">
                       <FormattedMessage
@@ -239,7 +211,7 @@ const ProfileOptions = ({ user }) => {
                       />
                     </Link>
                   </Button>
-                </CardActions>
+                </CardActionsCentered>
               </Card>
             )}
           <Card>
@@ -258,7 +230,7 @@ const ProfileOptions = ({ user }) => {
                 />
               </Typography>
             </CardContent>
-            <CardActions className={classes.cardActions}>
+            <CardActionsCentered>
               <Button size="small" color="primary">
                 <Link to="/profile/user-account/roles">
                   <FormattedMessage
@@ -267,7 +239,7 @@ const ProfileOptions = ({ user }) => {
                   />
                 </Link>
               </Button>
-            </CardActions>
+            </CardActionsCentered>
           </Card>
           <Card>
             <CardMedia
@@ -288,7 +260,7 @@ const ProfileOptions = ({ user }) => {
                 />
               </Typography>
             </CardContent>
-            <CardActions className={classes.cardActions}>
+    <CardActionsCentered>
               <Button size="small" color="primary">
                 <Link to="/profile/user-account/settings">
                   <FormattedMessage
@@ -297,10 +269,10 @@ const ProfileOptions = ({ user }) => {
                   />
                 </Link>
               </Button>
-            </CardActions>
+    </CardActionsCentered>
           </Card>
         </CardList>
-      </div>
+  </ContentWrapper>
     </Fragment>
   );
 };

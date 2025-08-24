@@ -4,32 +4,26 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText
-} from '@material-ui/core'
-import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded'
-import CancelRoundedIcon from '@material-ui/icons/CancelRounded'
-import { makeStyles } from '@material-ui/core/styles'
-import ReactPlaceholder from 'react-placeholder'
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-const useStyles = makeStyles((theme) => ({
-root: {
-    width: '100%',
-    maxWidth: 500
-  }
-}))
+} from '@mui/material'
+import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
+import { Root } from './requirement-list.styles'
+import CircularProgress from '@mui/material/CircularProgress';
 
 const CustomPlaceholder = () => <CircularProgress size={24} />
 const SendSolutionRequirements = ({ requirements, completed }) => {
-  const classes = useStyles()
+  
 
   return (
-    <List className={ classes.root }>
+  <List component={Root as any}>
       { requirements.map((requirement, index) => (
         <ListItem>
           <ListItemIcon style={ { color: 'black' } }>
-            <ReactPlaceholder showLoadingAnimation ready={ completed } customPlaceholder={ <CustomPlaceholder /> }>
-              { requirement.done ? <CheckCircleRoundedIcon color="primary" /> : <CancelRoundedIcon /> }
-            </ReactPlaceholder>
+            {completed ? (
+              requirement.done ? <CheckCircleRoundedIcon color="primary" /> : <CancelRoundedIcon />
+            ) : (
+              <CustomPlaceholder />
+            )}
           </ListItemIcon>
           <ListItemText primary={requirement.label} />
       </ListItem>

@@ -12,7 +12,7 @@ import {
   FormControl,
   Typography,
   TextField
-} from '@material-ui/core'
+} from '@mui/material'
 
 const Container = styled.div`
   display: inline-block;

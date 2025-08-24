@@ -1,4 +1,4 @@
-import { FormControl, FormHelperText, MenuItem, Select, Typography } from '@material-ui/core';
+import { FormControl, FormHelperText, MenuItem, Select, Typography } from '@mui/material';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Const from '../../../../../../consts';

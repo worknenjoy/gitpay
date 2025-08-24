@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, TextField, FormControl, FormHelperText, Typography, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core'
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, TextField, FormControl, FormHelperText, Typography, FormGroup, FormControlLabel, Checkbox } from '@mui/material'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 

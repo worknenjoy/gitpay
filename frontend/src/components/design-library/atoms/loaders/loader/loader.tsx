@@ -1,15 +1,14 @@
 import React from 'react'
-import useStyles from './loader.styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import styles from './loader.styles'
 
 
 function CustomizedProgress() {
-  const classes = useStyles()
+  const { Root, Progress } = styles as any
 
   return (
-    <div className={classes.root}>
-      <CircularProgress className={classes.progress} disableShrink size={60} />
-    </div>
+    <Root>
+      <Progress disableShrink size={60} />
+    </Root>
   )
 }
 

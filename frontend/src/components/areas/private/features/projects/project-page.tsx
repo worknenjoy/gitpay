@@ -1,37 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { withRouter } from 'react-router-dom'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { defineMessages, FormattedMessage } from 'react-intl'
 
-import {
-  Tabs,
-  Tab,
-  Typography,
-  withStyles
-} from '@material-ui/core'
+import { Tabs, Tab, Typography, Skeleton } from '@mui/material'
 import { tableHeaderDefault, tableHeaderWithProject } from '../../../../shared/table-metadata/task-header-metadata'
 import ProjectListSimple from 'design-library/molecules/cards/project-card/project-list-simple'
 import { Breadcrumb } from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
-import ReactPlaceholder from 'react-placeholder'
+import { RootTabs } from './project-page.styles'
 
-const styles = theme => ({
-  card: {},
-  gutterLeft: {
-    marginLeft: 10
-  },
-  media: {
-    width: 600
-  },
-  rootTabs: {
-    marginRight: theme.spacing(3),
-    marginBottom: theme.spacing(3)
-  },
-  button: {
-
-  },
-  buttonActive: {
-
-  }
-})
+// styles moved to project-page.styles.ts
 
 const messages = defineMessages({
   allTasks: {
@@ -61,7 +38,6 @@ const messages = defineMessages({
 })
 
 
-import { RouteComponentProps } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import SectionTable from 'design-library/molecules/tables/section-table/section-table'
 import IssueLinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-link-field/issue-link-field'
@@ -72,7 +48,7 @@ import IssuePriceField from 'design-library/molecules/tables/section-table/secti
 import IssueProjectField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-project-field/issue-project-field'
 import IssueStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-status-field/issue-status-field'
 
-interface TaskListProps extends RouteComponentProps {
+interface TaskListProps {
   user: any;
   tasks: any;
   organization: any;
@@ -82,9 +58,7 @@ interface TaskListProps extends RouteComponentProps {
   project: any;
   fetchProject: any;
   filterTasks: any;
-  classes: any;
-  intl: any;
-  history: any;
+  intl?: any;
 }
 
 interface MatchParams {
@@ -131,10 +105,13 @@ const customColumnRenderer = {
   )
 }
 
-const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes }) => {
+const TaskList: React.FC<TaskListProps> = ({ user, tasks, organization, fetchOrganization, listTasks, listProjects, project, fetchProject, filterTasks }) => {
   const intl = useIntl()
-  const isProfilePage = history.location.pathname.includes('/profile')
-  const { organization_id, project_id } = match.params
+  const history = useHistory()
+  const location = useLocation()
+  const params = useParams<MatchParams>()
+  const isProfilePage = location.pathname.includes('/profile')
+  const { organization_id, project_id } = params
   const profileUrl = isProfilePage ? '/profile' : ''
   const baseUrl = organization_id && project_id ? '/organizations/' + organization_id + '/projects/' + project_id + '/' : '/tasks/'
   const { data: organizationData } = organization
@@ -146,8 +123,8 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
   })
   const [ isOrganizationPage, setIsOrganizationPage ] = useState(false)
   const [ isProjectPage, setIsProjectPage ] = useState(false)
-  const [ organizationId, setOrganizationId ] = useState(match.params.organization_id)
-  const [ projectId, setProjectId ] = useState(match.params.project_id)
+  const [ organizationId, setOrganizationId ] = useState(organization_id)
+  const [ projectId, setProjectId ] = useState(project_id)
 
   const fetchData = async () => {
     if (organizationId && !projectId) {
@@ -170,10 +147,9 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
     if (!projectId && !organizationId) await listTasks({ status: 'open' })
     //if(projectId) await props.listProjects()
 
-    const params = match.params
-    handleRoutePath(params.filter)
+  handleRoutePath(params.filter)
     
-    if ((!projectId && !organizationId) && (history.location.pathname === '/tasks/open')) {
+  if ((!projectId && !organizationId) && (location.pathname === '/tasks/open')) {
       setTaskListState({ ...taskListState, tab: 0 })
     }
   }
@@ -206,7 +182,7 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
     return () => {
       clearProjectState()
     }
-  }, [match.params.organization_id, match.params.project_id])
+  }, [organization_id, project_id])
   
   useEffect(() => {
     filterTasksByState()
@@ -246,8 +222,8 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
   }, [])
 
   const handleTabChange = useCallback(async (event, value) => {
-    const { organization_id, project_id } = match.params
-    const  baseUrl = profileUrl + organization_id && project_id ? '/organizations/' + organization_id + '/projects/' + project_id + '/' : '/tasks/'
+    const { organization_id, project_id } = params
+    const  baseUrl = (profileUrl + (organization_id && project_id ? '/organizations/' + organization_id + '/projects/' + project_id + '/' : '/tasks/'))
     setTaskListState({ ...taskListState, tab: value })
     switch (value) {
       case 0:
@@ -265,11 +241,11 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
       default:
         filterTasks('all')
     }
-  }, [taskListState, history, filterTasks])
+  }, [taskListState, history, filterTasks, params, profileUrl])
 
   const handleSecTabChange = async (event: any, value: React.SetStateAction<string>) => {
     setCurrentTab(value)
-    history.push(profileUrl + baseUrl + value)
+  history.push(profileUrl + baseUrl + value)
     switch (value) {
       case 'all':
         filterTasks('all')
@@ -304,47 +280,61 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
           </div>
         }
         { isOrganizationPage &&
-        <ReactPlaceholder ready={organization.completed} type="media" rows={2}>
-          <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
-            <FormattedMessage
-              id="task.list.org.headline"
-              defaultMessage="Organization"
-            />
-          </Typography>
-          <Typography variant="h3" component="h2">
-            { organizationData.name }
-          </Typography>
-          <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
-            <FormattedMessage
-              id="task.list.org.projects.headline"
-              defaultMessage="Projects"
-            />
-          </Typography>
-          <ProjectListSimple 
-            projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
-            listProjects={listProjects}
-            user={user}
-          />
-        </ReactPlaceholder>
+          (!organization.completed ? (
+            <div>
+              <Skeleton variant="rectangular" height={100} animation="wave" />
+              <Skeleton variant="text" animation="wave" />
+            </div>
+          ) : (
+            <>
+              <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
+                <FormattedMessage
+                  id="task.list.org.headline"
+                  defaultMessage="Organization"
+                />
+              </Typography>
+              <Typography variant="h3" component="h2">
+                { organizationData.name }
+              </Typography>
+              <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
+                <FormattedMessage
+                  id="task.list.org.projects.headline"
+                  defaultMessage="Projects"
+                />
+              </Typography>
+              <ProjectListSimple 
+                projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
+                listProjects={listProjects}
+                user={user}
+              />
+            </>
+          ))
         }
         { isProjectPage &&
-          <ReactPlaceholder ready={project.completed} type="text" rows={2}>
-            <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
-              <FormattedMessage
-                id="task.list.headline"
-                defaultMessage="Project"
-              />
-            </Typography>
-            <Typography variant="h3" component="h2">
-              { project.data.name }
-            </Typography>
-          </ReactPlaceholder>
+          (!project.completed ? (
+            <div>
+              <Skeleton variant="text" animation="wave" />
+              <Skeleton variant="text" animation="wave" />
+            </div>
+          ) : (
+            <>
+              <Typography variant="h5" component="h2" style={ { marginTop: 20 } }>
+                <FormattedMessage
+                  id="task.list.headline"
+                  defaultMessage="Project"
+                />
+              </Typography>
+              <Typography variant="h3" component="h2">
+                { project.data.name }
+              </Typography>
+            </>
+          ))
         }
-        { isProfilePage &&
+  { isProfilePage &&
         <Tabs
           value={ currentTab }
           onChange={ handleSecTabChange }
-          scrollButtons="on"
+          scrollButtons="auto"
           indicatorColor="secondary"
           textColor="secondary"
           style={{marginTop: 20, marginBottom: 20}}
@@ -370,7 +360,7 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
             />
           }
         </Tabs>}
-        <div className={ classes.rootTabs }>
+  <RootTabs>
           <TabContainer>
             <SectionTable
               tableData={tasks}
@@ -378,9 +368,9 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
               customColumnRenderer={customColumnRenderer}
             />
           </TabContainer>
-        </div>
+  </RootTabs>
     </React.Fragment>
   )
 }
 
-export default withRouter(withStyles(styles)(TaskList))
+export default TaskList

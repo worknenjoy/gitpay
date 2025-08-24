@@ -4,8 +4,6 @@ import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 import MomentComponent from 'moment'
 import TextEllipsis from 'text-ellipsis'
-import ReactPlaceholder from 'react-placeholder'
-
 import {
   ListItem,
   ListItemText,
@@ -14,8 +12,9 @@ import {
   ItemIcon,
   Chip,
   IconButton,
-  Tooltip
-} from '@material-ui/core'
+  Tooltip,
+  Skeleton
+} from '@mui/material'
 
 import Constants from '../../../../../consts'
 
@@ -33,13 +32,18 @@ class TaskItem extends Component {
     const { item, key, ready, classes, intl } = this.props
 
     return (
-      <ReactPlaceholder
-        style={ { marginBottom: 20 } }
-        showLoadingAnimation
-        type='media'
-        rows={ 2 }
-        ready={ ready }
-      >
+      !ready ? (
+        <ListItem button key={ key } style={ { marginBottom: 20 } }>
+          <Skeleton variant='circular' width={ 40 } height={ 40 } style={ { marginRight: 10 } } />
+          <ListItemText>
+            <Skeleton variant='text' width='80%' />
+            <Skeleton variant='text' width='40%' />
+          </ListItemText>
+          <ListItemSecondaryAction>
+            <Skeleton variant='rectangular' width={ 80 } height={ 32 } />
+          </ListItemSecondaryAction>
+        </ListItem>
+      ) : (
         <ListItem
           key={ key }
           button
@@ -83,7 +87,7 @@ class TaskItem extends Component {
             </IconButton>
           </ListItemSecondaryAction>
         </ListItem>
-      </ReactPlaceholder>
+      )
     )
   }
 }

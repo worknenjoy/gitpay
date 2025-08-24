@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@material-ui/core';
+import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 

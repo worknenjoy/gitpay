@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from '@material-ui/core';
+import { Container } from '@mui/material';
 import ProfileHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header';
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table';
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import AddIcon from '@material-ui/icons/Add'
-import { TextField, Chip, Button, Typography } from '@material-ui/core'
+import AddIcon from '@mui/icons-material/Add'
+import { TextField, Chip, Button, Typography } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 
 interface CouponProps {

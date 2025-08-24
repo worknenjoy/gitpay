@@ -16,7 +16,7 @@ import {
   Radio,
   Typography,
   TextField
-} from '@material-ui/core'
+} from '@mui/material'
 
 export const IssueReportDialog = ({ visible = true, onClose, reportTask, taskData, user }) => {
   const [reason, setReason] = useState('')

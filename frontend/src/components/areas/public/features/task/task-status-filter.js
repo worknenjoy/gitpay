@@ -5,20 +5,11 @@ import { messages } from './messages/task-messages'
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import {
-  withStyles,
   Chip
-} from '@material-ui/core'
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-const styles = theme => ({
-  selected: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-    '&:active': {
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.primary.main,
-    }
-  }
-})
+// removed withStyles; using sx inline
 
 const statuses = ['open', 'in_progress', 'closed']
 const additionalStatuses = ['issuesWithBounties', 'contribution']
@@ -146,7 +137,7 @@ class TaskStatusFilter extends Component {
 
   render () {
     const { selected, additionalSelected } = this.state
-    const { classes } = this.props
+    const { } = this.props
     return (
       <div>
         <FormattedMessage id='task.status.filter.all' defaultMessage='All'>
@@ -157,7 +148,7 @@ class TaskStatusFilter extends Component {
               clickable
               key={ 0 }
               label={ msg }
-              className={ selected === 'all' ? classes.selected : {} }
+              sx={ selected === 'all' ? { bgcolor: 'primary.main', color: 'primary.contrastText', '&:active': { bgcolor: 'primary.main', color: 'primary.contrastText' } } : {} }
             />
           ) }
         </FormattedMessage>
@@ -168,7 +159,7 @@ class TaskStatusFilter extends Component {
             clickable
             key={ index + 1 }
             label={ this.statusesDisplay(status) }
-            className={ selected === status ? classes.selected : {} }
+            sx={ selected === status ? { bgcolor: 'primary.main', color: 'primary.contrastText', '&:active': { bgcolor: 'primary.main', color: 'primary.contrastText' } } : {} }
           />
         )) }
         <span style={ {
@@ -187,7 +178,7 @@ class TaskStatusFilter extends Component {
               clickable
               key={ index + 1 }
               label={ this.additionalStatusDisplay(status) }
-              className={ additionalSelected === status ? classes.selected : {} }
+              sx={ additionalSelected === status ? { bgcolor: 'primary.main', color: 'primary.contrastText', '&:active': { bgcolor: 'primary.main', color: 'primary.contrastText' } } : {} }
             />
           ))
         }
@@ -196,4 +187,4 @@ class TaskStatusFilter extends Component {
   }
 }
 
-export default injectIntl(withRouter(withStyles(styles)(TaskStatusFilter)))
+export default injectIntl(withRouter(TaskStatusFilter))
