@@ -1,13 +1,12 @@
 import React from 'react'
 import {
-  ListItem,
   ListItemButton,
   Typography,
   Dialog,
   Toolbar,
   IconButton,
   Slide,
-  SlideProps,
+  SlideProps
 } from '@mui/material'
 
 import {

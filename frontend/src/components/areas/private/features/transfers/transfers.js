@@ -11,7 +11,6 @@ import {
   Tabs,
   Tab
 } from '@mui/material'
-import { styled } from '@mui/material/styles'
 import { messages } from '../../../public/features/task/messages/task-messages'
 import CustomPaginationActionsTable from './transfer-table'
 import TransferDetails from './transfer-detail'

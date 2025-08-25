@@ -13,7 +13,7 @@ import {
   DialogTitle,
   Typography
 } from '@mui/material';
-import { CountryContainer, CountryItem, FullWidthMobile, CreditTextMobile, ButtonPrimaryMobile, ButtonSecondaryMobile } from './country-picker-dialog.styles'
+import { CountryContainer, CountryItem, FullWidthMobile, CreditTextMobile } from './country-picker-dialog.styles'
 
 const CountryPicker = ({ open, onClose, onSelectCountry }) => {
   const [currentCountry, setCurrentCountry] = useState({

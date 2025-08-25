@@ -9,7 +9,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 
 import CountryPicker from '../../../../shared/country-picker'
-import { countryCodes, countryCurrencies } from '../../../../shared/country-codes'
+import { countryCodes } from '../../../../shared/country-codes'
 import Field from 'design-library/atoms/inputs/fields/field/field'
 import Alert from 'design-library/atoms/alerts/alert/alert'
 import TextMaskCustom from './TextMaskCustom';

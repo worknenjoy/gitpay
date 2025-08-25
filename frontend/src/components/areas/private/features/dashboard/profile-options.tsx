@@ -5,7 +5,6 @@ import { Link, useHistory } from 'react-router-dom';
 import {
   Typography,
   Button,
-  CardActions,
   CardContent
 } from '@mui/material';
 

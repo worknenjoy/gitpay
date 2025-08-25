@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, CardContent, CardActions, Typography, Skeleton } from '@mui/material';
+import { Button, CardContent, CardActions, Skeleton } from '@mui/material';
 import currencyMap from './currency-map';
 import { RootCard, Balance as BalanceText, Name as NameText } from './balance-card.styles'
 

@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles'
 
 export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
   marginTop: 10,
-  marginBottom: 10,
+  marginBottom: 10
 }))
 
 export const Primary = styled('span')(({ theme }) => ({

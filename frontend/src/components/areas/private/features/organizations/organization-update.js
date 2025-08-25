@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import { styled } from '@mui/material/styles'
 import Chip from '@mui/material/Chip'
 import {
   Dialog,

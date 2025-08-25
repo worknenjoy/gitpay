@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Grid, Pagination } from '@mui/material'
-import ProjectCard from './project-card'
 import { StyledContainer, StyledProjectCard } from './project-list.styles'
 
 const paginate = (array, pageSize, pageNumber) => {

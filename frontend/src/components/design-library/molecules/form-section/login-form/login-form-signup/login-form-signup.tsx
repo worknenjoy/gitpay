@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import {
   Button,
-  TextField,
   Typography
 } from '@mui/material'
 import ReCAPTCHA from 'react-google-recaptcha'
