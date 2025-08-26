@@ -120,7 +120,7 @@ exports.github = async (req, res) => {
               )
 
               if (!taskUpdate) {
-                SendMail.error('notifications@gitpay.me', 'Error to update task', `An error ocurred to update the task ${task}`)
+                SendMail.error('notifications@gitpay.me', 'Error to update task', `An error occurred to update the task ${task}`)
               }
               finalResponse = {
                 task: {

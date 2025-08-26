@@ -93,7 +93,7 @@ module.exports = Promise.method(function taskFetch (taskParams) {
                 if (userExist && userExist.dataValues && userExist.dataValues.id) {
                   const memberExist = await memberExists({ userId: userExist.dataValues.id, taskId: data.id })
                   if (memberExist.dataValues && memberExist.dataValues.id) {
-                    // alerady member
+                    // already member
                   }
                   else {
                     // add member
