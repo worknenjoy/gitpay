@@ -1,13 +1,14 @@
 const path = require('path');
 module.exports = {
   "stories": [
-    "../src/**/*.stories.mdx",
     "../src/**/*.stories.@(js|jsx|ts|tsx)"
   ],
   "addons": [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-controls",
+    {
+      name: "@storybook/addon-essentials",
+      options: { docs: false, controls: false } // disable Controls to avoid @storybook/icons
+    },
     "@storybook/addon-interactions"
   ],
   "framework": "@storybook/react",
@@ -23,6 +24,7 @@ module.exports = {
       images: path.resolve(__dirname, "../src/images"), // Add your alias
       app: path.resolve(__dirname, "../src"), // Add your alias
       "design-library": path.resolve(__dirname, "../src/components/design-library"), // Add your alias
+      "@material-ui/core": "@mui/material", // map MUI v4 import to MUI v5 if present
     };
     config.resolve.fallback = { 
       ...config.resolve.fallback,

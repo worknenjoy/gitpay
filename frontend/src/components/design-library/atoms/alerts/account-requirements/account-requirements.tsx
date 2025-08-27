@@ -1,8 +1,9 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { validAccount } from '../../../../../utils/valid-account';
 import api from '../../../../../consts';
+import Button from '../../../atoms/buttons/button/button'
 import { CustomAlert } from './account-requirements.styles';
 
 const AccountRequirements = ({ user, account, intl, onClick }) => {
@@ -31,13 +32,12 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
         severity="warning"
         action={
           <Button
-            size="small"
+            completed={completed}
             onClick={onClick}
             variant="contained"
             color="secondary"
-          >
-            <FormattedMessage id="transfers.alert.button" defaultMessage="Update your account" />
-          </Button>
+            label={<FormattedMessage id="transfers.alert.button" defaultMessage="Update your account" />}
+          />
         }
       >
         <Typography variant="subtitle1" gutterBottom>
