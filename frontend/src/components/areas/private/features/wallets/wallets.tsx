@@ -6,7 +6,6 @@ import {
   Button,
   Typography
 } from '@mui/material'
-import { createStyles, Theme } from '@mui/material/styles'
 import { FormattedMessage, useIntl } from 'react-intl'
 import moment from 'moment'
 

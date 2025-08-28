@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Avatar, Card, CardHeader, Link, Tooltip, Typography } from "@mui/material";
+import { Avatar, Card, Link, Tooltip, Typography } from "@mui/material";
 import MomentComponent from "moment";
-import classNames from "classnames";
 
 import logoGithub from 'images/github-logo-black.png'
 import logoBitbucket from 'images/bitbucket-logo-blue.png'

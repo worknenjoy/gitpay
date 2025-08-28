@@ -162,7 +162,7 @@ const Palette = {
           '&:hover': {
             boxShadow: 'none'
           }
-        },
+        }
         
       }
     },

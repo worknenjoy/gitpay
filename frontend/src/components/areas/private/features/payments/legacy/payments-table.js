@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+import { injectIntl, defineMessages } from 'react-intl'
 import { withRouter } from 'react-router-dom'
 import {
   Table,
@@ -10,7 +10,6 @@ import {
   TableFooter,
   TablePagination,
   TableRow,
-  Typography,
   Paper,
   IconButton,
   Skeleton

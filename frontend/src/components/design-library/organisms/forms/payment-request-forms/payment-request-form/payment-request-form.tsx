@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import Field from '../../../../atoms/inputs/fields/field/field';
 import Alert from '../../../../atoms/alerts/alert/alert';
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
-import { AlertWrapper, AlertInner, EndAdornment } from './payment-request-form.styles';
+import { AlertWrapper, EndAdornment } from './payment-request-form.styles';
 
 interface PaymentRequestFormProps {
   onSubmit?: (e:any, data: any) => void;

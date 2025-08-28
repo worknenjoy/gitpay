@@ -7,13 +7,9 @@ import maintainer from 'images/notifications.png'
 
 import {
   Paper,
-  Grid,
   Typography,
   Checkbox,
-  Card,
   CardMedia,
-  CardContent,
-  CardActions,
   Skeleton
 } from '@mui/material'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'

@@ -19,7 +19,7 @@ import isGithubUrl from 'is-github-url'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 import api from '../../../../../consts'
-import { FullWidthFormControl, HeaderTypography, ProvidersWrapper, ProviderButton } from './import-issue-dialog.styles'
+import { FullWidthFormControl, ProvidersWrapper, ProviderButton } from './import-issue-dialog.styles'
 
 const ImportIssueDialog = ({ 
   user,

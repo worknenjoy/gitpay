@@ -3,13 +3,11 @@ import React from 'react'
 import {
   Drawer as MuiDrawer,
   Typography,
-  Fab,
   Box
 } from '@mui/material'
 
 import CloseIcon from '@mui/icons-material/Close'
 
-import { Theme } from '@mui/material/styles';
 import DrawerActions from './drawer-actions/drawer-actions';
 import { CloseFab } from './drawer.styles'
 

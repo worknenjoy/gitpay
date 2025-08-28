@@ -1,7 +1,7 @@
 
-import { MenuList, Typography, MenuItem, ListItemIcon, ListItemText } from '@mui/material'
+import { MenuList, Typography, ListItemIcon, ListItemText } from '@mui/material'
 import React from 'react'
-import { MenuItemStyled, Primary, Icon, Category } from './side-menu-items.styles'
+import { MenuItemStyled, Primary, Category } from './side-menu-items.styles'
 
 const SideMenuItems = ({
   menuItems

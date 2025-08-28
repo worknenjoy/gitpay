@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl'
 import {
   Container,
   Typography,
-  Card,
   CardActions,
   CardContent
 } from '@mui/material'

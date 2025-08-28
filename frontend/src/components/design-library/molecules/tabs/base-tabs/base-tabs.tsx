@@ -3,18 +3,12 @@ import {
   Tabs,
   Tab,
   Box,
-  Card,
   CardContent
 } from '@mui/material';
-import { Theme } from '@mui/material/styles';
 import { useHistory } from 'react-router-dom';
 import {
-  Root,
   StyledCard,
-  StyledTabsVertical,
-  StyledTabsColumn,
-  TabPanelRoot,
-  TabPanelVertical
+  StyledTabsVertical
 } from './base-tabs.styles'
 
 interface TabPanelProps {
