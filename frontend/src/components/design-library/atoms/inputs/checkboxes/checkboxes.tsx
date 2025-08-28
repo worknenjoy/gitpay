@@ -5,7 +5,6 @@ import {
   FormControlLabel
 } from '@mui/material';
 
-import { CheckboxItem, CheckboxesContainer, StyledCheckbox } from './checkboxes.styles';
 import { useTheme } from '@mui/material/styles';
 
 
