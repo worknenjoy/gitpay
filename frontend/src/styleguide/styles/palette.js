@@ -159,19 +159,11 @@ const Palette = {
           borderRadius: '18px',
           textTransform: 'none',
           fontSize: 16,
-          color: '#353A42',
           '&:hover': {
-            backgroundColor: '#E2E5EA'
+            boxShadow: 'none'
           }
-        },
-        contained: {
-          boxShadow: 'none',
-          textTransform: 'none'
-        },
-        containedPrimary: {
-          color: '#fff',
-          backgroundColor: '#4D7E6F'
         }
+        
       }
     },
     MuiButtonGroup: {
