@@ -2,40 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import {
   Button,
-  Typography,
-  TextField
-} from '@material-ui/core'
+  Typography
+} from '@mui/material'
 import ReCAPTCHA from 'react-google-recaptcha'
-import Checkbox from '@material-ui/core/Checkbox'
+import Checkbox from '@mui/material/Checkbox'
 import ProviderLoginButtons from '../../../../atoms/buttons/provider-login-buttons/provider-login-buttons'
-import { makeStyles } from '@material-ui/core/styles'
 
 import api from '../../../../../../consts'
-
-const useStyles = makeStyles((theme) => ({
-  margins: {
-    marginBottom: 20
-  },
-  center: {
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  button: {
-    marginTop: 10
-  },
-  cssLabel: {
-    '&$cssFocused': {
-      color: theme.palette.primary.main
-    }
-  },
-  cssFocused: {},
-  cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: theme.palette.primary.main
-    }
-  },
-  notchedOutline: {}
-}))
+import { Margins, Center, SpacedButton, StyledTextField } from './login-form-signin.styles'
 
 type LoginFormSigninProps = {
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void
@@ -47,7 +21,6 @@ type LoginFormSigninProps = {
 }
 
 const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot }:LoginFormSigninProps) => {
-  const classes = useStyles()
   const [state, setState] = useState({
     username: '',
     password: '',
@@ -159,25 +132,12 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
 
   return (
     <form onSubmit={submitByFormType} action={`${api.API_URL}/authorize/local`} method="POST" autoComplete="off">
-      <div className={classes.margins}>
-        <TextField
+      <Margins>
+        <StyledTextField
           name="username"
           onChange={handleChange('username')}
           onBlur={handleBlur}
           fullWidth
-          InputLabelProps={{
-            classes: {
-              root: classes.cssLabel,
-              focused: classes.cssFocused
-            }
-          }}
-          InputProps={{
-            classes: {
-              root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline
-            }
-          }}
           label="E-mail"
           variant="outlined"
           id="username"
@@ -185,27 +145,14 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
           helperText={error.username}
           defaultValue={state.username}
         />
-      </div>
+      </Margins>
 
-      <div className={classes.margins}>
-        <TextField
+      <Margins>
+        <StyledTextField
           name="password"
           onChange={handleChange('password')}
           onBlur={handleBlur}
           fullWidth
-          InputLabelProps={{
-            classes: {
-              root: classes.cssLabel,
-              focused: classes.cssFocused
-            }
-          }}
-          InputProps={{
-            classes: {
-              root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline
-            }
-          }}
           type="password"
           label="Password"
           variant="outlined"
@@ -214,7 +161,7 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
           helperText={error.password}
           defaultValue={state.password}
         />
-      </div>
+      </Margins>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {state.rememberMe
@@ -250,15 +197,15 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
           </Typography>
         </div>
       }
-      <div className={classes.center} style={{ marginTop: 20 }}>
+      <Center style={{ marginTop: 20 }}>
         <div>
-          <Button fullWidth type="submit" size="large" variant="contained" color="primary" className={classes.button}>
+          <SpacedButton fullWidth type="submit" size="large" variant="contained" color="primary">
             <FormattedMessage id="account.login.label.signin" defaultMessage="Sign in" />
-          </Button>
+          </SpacedButton>
           {noCancelButton ? null : (
-            <Button onClick={onClose} fullWidth size="large" variant="text" color="primary" className={classes.button} style={{ marginTop: 10 }}>
+            <SpacedButton onClick={onClose} fullWidth size="large" variant="text" color="primary" style={{ marginTop: 10 }}>
               <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
-            </Button>
+            </SpacedButton>
           )}
 
           <div style={{ marginTop: 10 }}>
@@ -274,7 +221,7 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
             </Button>
           </div>
         </div>
-      </div>
+  </Center>
     </form>
   )
 }

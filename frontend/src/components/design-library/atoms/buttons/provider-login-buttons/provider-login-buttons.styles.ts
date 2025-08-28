@@ -1,16 +1,16 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 
-const useStyles = makeStyles(() => ({
-  buttonMargin: {
-    marginRight: 10
-  },
-  textMargin: {
-    marginLeft: 10
-  },
-  linkMargin: {
-    display: 'inline-box',
-    marginLeft: 5
-  }
+export const ButtonWithMargin = styled('span')(() => ({
+  marginRight: 10
 }))
 
-export default useStyles
+export const TextMargin = styled('span')(() => ({
+  marginLeft: 10
+}))
+
+export const LinkMargin = styled('a')(() => ({
+  display: 'inline-box',
+  marginLeft: 5
+}))
+
+export default { ButtonWithMargin, TextMargin, LinkMargin }

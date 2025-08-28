@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import clsx from 'clsx'
+import { styled } from '@mui/material/styles'
 import {
   Avatar,
   Box,
@@ -10,27 +10,21 @@ import {
   Divider,
   Grid,
   Typography,
-  Link,
-  makeStyles
-} from '@material-ui/core'
+  Link
+} from '@mui/material'
 import slugify from '@sindresorhus/slugify'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  statsItem: {
-    alignItems: 'center',
-    display: 'flex'
-  },
-  statsIcon: {
-    marginRight: theme.spacing(1)
-  }
+const RootCard = styled(Card)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column'
+}))
+
+const StatsItem = styled(Grid)(({ theme }) => ({
+  alignItems: 'center',
+  display: 'flex'
 }))
 
 const OrganizationCard = ({ className, organization, ...rest }) => {
-  const classes = useStyles()
 
   const goToOrganization = (event, organization) => {
     event.preventDefault()
@@ -40,8 +34,8 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
   }
 
   return (
-    <Card
-      className={ clsx(classes.root, className) }
+    <RootCard
+      className={ className }
       { ...rest }
     >
       <CardContent>
@@ -50,7 +44,7 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
           justifyContent='center'
           mb={ 3 }
         >
-          <Avatar aria-label='recipe' className={ classes.avatar }>
+          <Avatar aria-label='recipe'>
             { organization.name[0] }
           </Avatar>
         </Box>
@@ -93,19 +87,12 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
           justify='space-between'
           spacing={ 2 }
         >
-          <Grid
-            className={ classes.statsItem }
-            item
-          >
+      <StatsItem item>
             <Typography variant='body2' color='textSecondary' component='small' style={ { width: '100%', marginBottom: 10, marginLeft: 16 } }>
               Projects:
             </Typography>
-          </Grid>
-          <Grid
-            className={ classes.statsItem }
-            item
-            style={ { flexWrap: 'wrap' } }
-          >
+      </StatsItem>
+      <StatsItem item style={ { flexWrap: 'wrap' } }>
             { organization.Projects && organization.Projects.map(p =>
               (<Chip key={ p.id } style={ { marginLeft: 10, marginBottom: 10 } } size='medium' clickable onClick={ () => {
                 window.location.href = `/#/organizations/${organization.id}/${organization.name}/projects/${p.id}/${slugify(p.name)}`
@@ -113,10 +100,10 @@ const OrganizationCard = ({ className, organization, ...rest }) => {
               } } label={ p.name }
               />)
             ) }
-          </Grid>
+      </StatsItem>
         </Grid>
       </Box>
-    </Card>
+    </RootCard>
   )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Breadcrumbs from '@material-ui/core/Breadcrumbs'
-import Link from '@material-ui/core/Link'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Link from '@mui/material/Link'
 import {
   NavigateNext as NavigateNextIcon,
   MoreVert as MoreIcon,
@@ -9,9 +9,7 @@ import {
   BugReport as ReportIcon,
   Visibility as VisibilityIcon,
   VisibilityOff as VisibilityOffIcon
-} from '@material-ui/icons'
-import ReactPlaceholder from 'react-placeholder'
-import { RectShape } from 'react-placeholder/lib/placeholders'
+} from '@mui/icons-material'
 import {
   Button,
   Dialog,
@@ -20,13 +18,13 @@ import {
   DialogTitle,
   Typography,
   Grid,
-  withStyles,
   IconButton,
   Menu,
   MenuItem,
   ListItemIcon,
   ListItemText,
-} from '@material-ui/core'
+  Skeleton
+} from '@mui/material'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
@@ -57,27 +55,7 @@ const TaskHeaderContainer = styled.div`
   `}
 `
 
-const styles = theme => ({
-  breadcrumbRoot: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
-  },
-  breadcrumbLink: {
-    textDecoration: 'underline'
-  },
-  chipStatusPaid: {
-    marginLeft: 0,
-    verticalAlign: 'middle',
-    backgroundColor: theme.palette.primary.light
-  },
-  button: {
-    width: 100,
-    font: 10
-  },
-  gutterRight: {
-    marginRight: 10
-  }
-})
+// styles removed (migrated away from withStyles)
 
 class TaskHeader extends React.Component {
   constructor(props) {
@@ -107,105 +85,104 @@ class TaskHeader extends React.Component {
   }
 
   render() {
-    const { classes, task, user, history, handleDeleteTask, taskOwner, reportTask, updateTask } = this.props
+  const { task, user, history, handleDeleteTask, taskOwner, reportTask, updateTask } = this.props
 
-    const headerPlaceholder = (
-      <div className='line-holder'>
-        <RectShape
-          color='white'
-          style={{ marginLeft: 20, marginTop: 20, width: 300, height: 20 }}
-        />
+    const headerSkeleton = (
+      <div style={{ marginTop: 8 }}>
+        <Skeleton variant="text" width="60%" height={32} />
       </div>
     )
 
     return (
       <TaskHeaderContainer>
-        <Grid item xs={12} sm={12} md={12}>
+  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
           <Breadcrumb task={task} user={user} />
-          <ReactPlaceholder customPlaceholder={headerPlaceholder} showLoadingAnimation
-            ready={task.completed}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant='h5' gutterBottom>
-                <strong>
-                  {task.data.title}
-                </strong>
-              </Typography>
-              <IconButton onClick={this.handleMoreButton}>
-                <MoreIcon />
-              </IconButton>
-            </div>
-            <Menu
-              anchorEl={this.state.anchorEl}
-              open={Boolean(this.state.anchorEl)}
-              onClose={() => this.setState({ anchorEl: null })}
-            >
-              {taskOwner &&
-                <MenuItem onClick={async () => {
-                  await updateTask({ id: task.data.id, not_listed: !task.data.not_listed })
-                  this.handleCloseMoreButton()
-                }}>
-                  <ListItemIcon>
-                    { task.data.not_listed ?  <VisibilityIcon size='small' /> : <VisibilityOffIcon size='small' /> }
-                  </ListItemIcon>
-                  <ListItemText primary={ task.data.not_listed ? 'Change to public' : 'Change to not listed'} />
-                </MenuItem>
-              }
-              <MenuItem onClick={() => {
-                this.setState({ anchorEl: null, reportDialog: true})
-              }}>
-                <ListItemIcon>
-                  <ReportIcon size='small' />
-                </ListItemIcon>
-                <ListItemText primary='Report' />
-              </MenuItem>
-              {taskOwner &&
-                <MenuItem onClick={() => {
-                  this.setState({ anchorEl: null, deleteDialog: true })
-
-                }}>
-                  <ListItemIcon>
-                    <DeleteIcon size='small' />
-                  </ListItemIcon>
-                  <ListItemText primary='Delete' />
-                </MenuItem>
-              }
-            </Menu>
-            <TaskReport
-              taskData={task.data}
-              reportTask={reportTask}
-              user={user}
-              visible={this.state.reportDialog}
-              onClose={() => this.setState({ reportDialog: false })}
-              onOpen={() => this.setState({ reportDialog: true })}
-            />
-            <Dialog
-              open={this.state.deleteDialog}
-              onClose={this.handleDeleteDialogClose}
-              aria-labelledby='form-dialog-title'
-            >
-
-              <div>
-                <DialogTitle id='form-dialog-title'>
-                  <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this issue?' />
-                </DialogTitle>
-                <DialogContent>
-                  <Typography type='caption'>
-                    <FormattedMessage id='task.bounties.delete.caution' defaultMessage='If you delete this issue, all the records related about orders and payments will be lost' />
-                  </Typography>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={this.handleDeleteDialogClose} color='primary'>
-                    <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
-                  </Button>
-                  <Button onClick={handleDeleteTask} variant='contained' color='secondary' >
-                    <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
-                  </Button>
-                </DialogActions>
+          {!task.completed ? (
+            headerSkeleton
+          ) : (
+            <>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant='h5' gutterBottom>
+                  <strong>
+                    {task.data.title}
+                  </strong>
+                </Typography>
+                <IconButton onClick={this.handleMoreButton}>
+                  <MoreIcon />
+                </IconButton>
               </div>
+              <Menu
+                anchorEl={this.state.anchorEl}
+                open={Boolean(this.state.anchorEl)}
+                onClose={() => this.setState({ anchorEl: null })}
+              >
+                {taskOwner &&
+                  <MenuItem onClick={async () => {
+                    await updateTask({ id: task.data.id, not_listed: !task.data.not_listed })
+                    this.handleCloseMoreButton()
+                  }}>
+                    <ListItemIcon>
+                      { task.data.not_listed ?  <VisibilityIcon size='small' /> : <VisibilityOffIcon size='small' /> }
+                    </ListItemIcon>
+                    <ListItemText primary={ task.data.not_listed ? 'Change to public' : 'Change to not listed'} />
+                  </MenuItem>
+                }
+                <MenuItem onClick={() => {
+                  this.setState({ anchorEl: null, reportDialog: true})
+                }}>
+                  <ListItemIcon>
+                    <ReportIcon size='small' />
+                  </ListItemIcon>
+                  <ListItemText primary='Report' />
+                </MenuItem>
+                {taskOwner &&
+                  <MenuItem onClick={() => {
+                    this.setState({ anchorEl: null, deleteDialog: true })
 
-            </Dialog>
-          </ReactPlaceholder>
+                  }}>
+                    <ListItemIcon>
+                      <DeleteIcon size='small' />
+                    </ListItemIcon>
+                    <ListItemText primary='Delete' />
+                  </MenuItem>
+                }
+              </Menu>
+              <TaskReport
+                taskData={task.data}
+                reportTask={reportTask}
+                user={user}
+                visible={this.state.reportDialog}
+                onClose={() => this.setState({ reportDialog: false })}
+                onOpen={() => this.setState({ reportDialog: true })}
+              />
+              <Dialog
+                open={this.state.deleteDialog}
+                onClose={this.handleDeleteDialogClose}
+                aria-labelledby='form-dialog-title'
+              >
+
+                <div>
+                  <DialogTitle id='form-dialog-title'>
+                    <FormattedMessage id='task.bounties.delete.confirmation' defaultMessage='Are you sure you want to delete this issue?' />
+                  </DialogTitle>
+                  <DialogContent>
+                    <Typography type='caption'>
+                      <FormattedMessage id='task.bounties.delete.caution' defaultMessage='If you delete this issue, all the records related about orders and payments will be lost' />
+                    </Typography>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={this.handleDeleteDialogClose} color='primary'>
+                      <FormattedMessage id='task.actions.cancel' defaultMessage='Cancel' />
+                    </Button>
+                    <Button onClick={handleDeleteTask} variant='contained' color='secondary' >
+                      <FormattedMessage id='task.actions.delete' defaultMessage='Delete' />
+                    </Button>
+                  </DialogActions>
+                </div>
+
+              </Dialog>
+            </>
+          )}
           <Typography variant='caption' style={{ display: 'inline-block', marginBottom: 20, marginRight: 0 }}>
             {task.data.provider &&
               <div>
@@ -228,11 +205,13 @@ class TaskHeader extends React.Component {
                 </a>
               </div>}
           </Typography>
-          {task.data.metadata &&
-            <ReactPlaceholder ready={task.completed}>
+          {task.data.metadata && (
+            task.completed ? (
               <TaskLabels labels={task.data.metadata.labels} />
-            </ReactPlaceholder>
-          }
+            ) : (
+              <Skeleton variant="text" width={200} />
+            )
+          )}
         </Grid>
       </TaskHeaderContainer>
     )
@@ -240,8 +219,7 @@ class TaskHeader extends React.Component {
 }
 
 TaskHeader.propTypes = {
-  classes: PropTypes.object.isRequired,
   task: PropTypes.object
 }
 
-export default injectIntl(withStyles(styles)(TaskHeader))
+export default injectIntl(TaskHeader)

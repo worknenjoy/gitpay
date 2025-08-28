@@ -1,6 +1,6 @@
 import React from 'react';
 import Fieldset from '../../fieldset/fieldset';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 import { countryCodes } from '../../../../../areas/private/shared/country-codes';
 
 const CountryField = ({ country, completed }) => {

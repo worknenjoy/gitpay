@@ -1,37 +1,24 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { withRouter } from 'react-router-dom'
-import { defineMessages, FormattedMessage } from 'react-intl'
-
-import {
-  Tabs,
-  Tab,
-  Typography,
-  withStyles,
-} from '@material-ui/core'
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl'
+import { Tabs, Tab, Typography, Skeleton } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { tableHeaderDefault, tableHeaderWithProject } from '../../../../shared/table-metadata/task-header-metadata'
 import ProjectListSimple from 'design-library/molecules/cards/project-card/project-list-simple'
 import { Breadcrumb } from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
-import ReactPlaceholder from 'react-placeholder'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
+import SectionTable from 'design-library/molecules/tables/section-table/section-table'
+import IssueLinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-link-field/issue-link-field'
+import IssueCreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-created-field/issue-created-field'
+import IssueLabelsField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-labels-field/issue-labels-field'
+import IssueLanguageField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-language-field/issue-language-field'
+import IssuePriceField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-price-field/issue-price-field'
+import IssueProjectField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-project-field/issue-project-field'
+import IssueStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-status-field/issue-status-field'
 
-const styles = theme => ({
-  card: {},
-  gutterLeft: {
-    marginLeft: 10
-  },
-  media: {
-    width: 600
-  },
-  rootTabs: {
-    marginRight: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-  },
-  button: {
-
-  },
-  buttonActive: {
-
-  }
-})
+const RootTabs = styled('div')(({ theme }) => ({
+  marginRight: theme.spacing(3),
+  marginBottom: theme.spacing(3),
+}))
 
 const messages = defineMessages({
   allTasks: {
@@ -60,19 +47,7 @@ const messages = defineMessages({
   }
 })
 
-
-import { RouteComponentProps } from 'react-router-dom';
-import { useIntl } from 'react-intl';
-import SectionTable from 'design-library/molecules/tables/section-table/section-table'
-import IssueLinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-link-field/issue-link-field'
-import IssueCreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-created-field/issue-created-field'
-import IssueLabelsField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-labels-field/issue-labels-field'
-import IssueLanguageField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-language-field/issue-language-field'
-import IssuePriceField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-price-field/issue-price-field'
-import IssueProjectField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-project-field/issue-project-field'
-import IssueStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-status-field/issue-status-field'
-
-interface TaskListProps extends RouteComponentProps {
+interface TaskListProps {
   user: any;
   tasks: any;
   organization: any;
@@ -82,9 +57,6 @@ interface TaskListProps extends RouteComponentProps {
   project: any;
   fetchProject: any;
   filterTasks: any;
-  classes: any;
-  intl: any;
-  history: any;
 }
 
 interface MatchParams {
@@ -131,85 +103,75 @@ const customColumnRenderer = {
   ),
 }
 
-const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = ({ user, tasks, organization, match, fetchOrganization, listTasks, listProjects, project, fetchProject, history, filterTasks, classes }) => {
+const TaskList: React.FC<TaskListProps> = ({ user, tasks, organization, fetchOrganization, listTasks, listProjects, project, fetchProject, filterTasks }) => {
   const intl = useIntl()
-  const isProfilePage = history.location.pathname.includes('/profile')
-  const { organization_id, project_id } = match.params
+  const history = useHistory()
+  const location = useLocation()
+  const { organization_id, project_id, filter } = useParams<MatchParams>()
+  const isProfilePage = location.pathname.includes('/profile')
   const profileUrl = isProfilePage ? '/profile' : ''
-  const baseUrl = organization_id && project_id ? '/organizations/' + organization_id + '/projects/' + project_id + '/' : '/tasks/'
   const { data: organizationData } = organization
+
+  const basePath = organization_id && project_id ? `/organizations/${organization_id}/projects/${project_id}/` : '/tasks/'
+  const baseUrl = `${profileUrl}${basePath}`
 
   const [currentTab, setCurrentTab] = useState('createdbyme')
   const [taskListState, setTaskListState] = useState({
     tab: 0,
     loading: true
   })
-  const [ isOrganizationPage, setIsOrganizationPage ] = useState(false)
-  const [ isProjectPage, setIsProjectPage ] = useState(false)
-  const [ organizationId, setOrganizationId ] = useState(match.params.organization_id)
-  const [ projectId, setProjectId ] = useState(match.params.project_id)
+
+  const isOrganizationPage = !!organization_id && !project_id
+  const isProjectPage = !!organization_id && !!project_id
 
   const fetchData = async () => {
-    if (organizationId && !projectId) {
-      setIsOrganizationPage(true)
-      await fetchOrganization(organizationId)
-      await listTasks({ organizationId: organizationId })
+    if (organization_id && !project_id) {
+      await fetchOrganization(organization_id)
+      await listTasks({ organizationId: organization_id })
     }
 
-    if (organizationId && projectId) {
-      setIsProjectPage(true)
-    }
-    
-    if (organizationId && projectId) {
+    if (organization_id && project_id) {
       await fetchProject(
-        projectId,
+        project_id,
         { status: 'open' }
       )
     }
     
-    if (!projectId && !organizationId) await listTasks({ status: 'open' })
-    if(projectId) await listProjects()
+    if (!project_id && !organization_id) await listTasks({ status: 'open' })
+    if (project_id) await listProjects()
 
-    const params = match.params
-    handleRoutePath(params.filter)
+    handleRoutePath(filter)
     
-    if ((!projectId && !organizationId) && (history.location.pathname === '/tasks/open')) {
-      setTaskListState({ ...taskListState, tab: 0 })
+    if ((!project_id && !organization_id) && (location.pathname === '/tasks/open')) {
+      setTaskListState(prev => ({ ...prev, tab: 0 }))
     }
-  }
-  
-  const clearProjectState = () => {
-    setIsOrganizationPage(false)
-    setIsProjectPage(false)
-    setOrganizationId(null)
-    setProjectId(null)
   }
 
   useEffect(() => {
     fetchData().then(() => {
-      if (history.location.pathname === '/profile/organizations/2/projects/2') {
+      if (location.pathname === '/profile/organizations/2/projects/2') {
         user.Types && user.Types.map(t => t.name).includes('contributor') && handleSecTabChange({}, 'all')
         user.Types && user.Types.map(t => t.name).includes('maintainer') && handleSecTabChange({}, 'createdbyme')
       }
-      if (history.location.pathname === '/profile/organizations/2/projects/2/createdbyme') {
+      if (location.pathname === '/profile/organizations/2/projects/2/createdbyme') {
         handleSecTabChange({}, 'createdbyme')
       }
-      if (history.location.pathname === '/profile/organizations/2/projects/2/interested') {
+      if (location.pathname === '/profile/organizations/2/projects/2/interested') {
         handleSecTabChange({}, 'interested')
       }
-      if (history.location.pathname === '/profile/organizations/2/projects/2/assigned') {
+      if (location.pathname === '/profile/organizations/2/projects/2/assigned') {
         handleSecTabChange({}, 'assigned')
       }
     })
 
     return () => {
-      clearProjectState()
+      // no-op cleanup
     }
-  }, [match.params.organization_id, match.params.project_id])
+  }, [organization_id, project_id]) // eslint-disable-line react-hooks/exhaustive-deps
   
   useEffect(() => {
     filterTasksByState()
-  }, [taskListState.tab, filterTasks])
+  }, [taskListState.tab, filterTasks]) // eslint-disable-line react-hooks/exhaustive-deps
   
 
   function filterTasksByState () {
@@ -229,7 +191,7 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
     }
   }
 
-  const handleRoutePath = useCallback((value) => {
+  const handleRoutePath = useCallback((value?: string) => {
     switch (value) {
       case 'createdbyme':
         handleTabChange(0, 1)
@@ -242,12 +204,10 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
         break
       default:
     }
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleTabChange = useCallback(async (event, value) => {
-    const { organization_id, project_id } = match.params
-    const  baseUrl = profileUrl + organization_id && project_id ? '/organizations/' + organization_id + '/projects/' + project_id + '/' : '/tasks/'
-    setTaskListState({ ...taskListState, tab: value })
+    setTaskListState(prev => ({ ...prev, tab: value }))
     switch (value) {
       case 0:
         history.push(baseUrl + 'open')
@@ -264,11 +224,11 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
       default:
         filterTasks('all')
     }
-  }, [taskListState, history, filterTasks])
+  }, [baseUrl, history, filterTasks])
 
   const handleSecTabChange = async (event: any, value: React.SetStateAction<string>) => {
     setCurrentTab(value)
-    history.push(profileUrl + baseUrl + value)
+    history.push(baseUrl + value)
     switch (value) {
       case 'all':
         filterTasks('all')
@@ -286,7 +246,6 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
     }
   }
 
-  
   const TabContainer = props => {
     return (
       <div>
@@ -303,47 +262,68 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
           </div>
         }
         { isOrganizationPage &&
-        <ReactPlaceholder ready={organization.completed} type='media' rows={2}>
-          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
-            <FormattedMessage
-              id='task.list.org.headline'
-              defaultMessage='Organization'
-            />
-          </Typography>
-          <Typography variant='h3' component='h2'>
-            { organizationData.name }
-          </Typography>
-          <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
-            <FormattedMessage
-              id='task.list.org.projects.headline'
-              defaultMessage='Projects'
-            />
-          </Typography>
-          <ProjectListSimple 
-            projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
-            listProjects={listProjects}
-            user={user}
-          />
-        </ReactPlaceholder>
+          (
+            !organization.completed ? (
+              <>
+                <Skeleton variant="text" animation="wave" width="60%" />
+                <Skeleton variant="text" animation="wave" width="40%" />
+              </>
+            ) : (
+              <Typography variant='h5' component='h2' style={{ marginTop: 20 }}>
+                <FormattedMessage
+                  id='task.list.org.headline'
+                  defaultMessage='Organization'
+                />
+              </Typography>
+            )
+          )
         }
-        { isProjectPage &&
-          <ReactPlaceholder ready={project.completed} type='text' rows={2}>
+        { isOrganizationPage &&
+          organization.completed &&
+          <>
+            <Typography variant='h3' component='h2'>
+              { organizationData.name }
+            </Typography>
             <Typography variant='h5' component='h2' style={ { marginTop: 20 } }>
               <FormattedMessage
-                id='task.list.headline'
-                defaultMessage='Project'
+                id='task.list.org.projects.headline'
+                defaultMessage='Projects'
               />
             </Typography>
-            <Typography variant='h3' component='h2'>
-              { project.data.name }
-            </Typography>
-          </ReactPlaceholder>
+            <ProjectListSimple 
+              projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
+              listProjects={listProjects}
+              user={user}
+            />
+          </>
+        }
+        { isProjectPage &&
+          (
+            !project.completed ? (
+              <>
+                <Skeleton variant="text" animation="wave" width="60%" />
+                <Skeleton variant="text" animation="wave" width="40%" />
+              </>
+            ) : (
+              <Typography variant='h5' component='h2' style={{ marginTop: 20 }}>
+                <FormattedMessage
+                  id='task.list.headline'
+                  defaultMessage='Project'
+                />
+              </Typography>
+            )
+          )
+        }
+        { isProjectPage && project.completed &&
+          <Typography variant='h3' component='h2'>
+            { project.data.name }
+          </Typography>
         }
         { isProfilePage &&
         <Tabs
           value={ currentTab }
           onChange={ handleSecTabChange }
-          scrollButtons='on'
+          scrollButtons='auto'
           indicatorColor='secondary'
           textColor='secondary'
           style={{marginTop: 20, marginBottom: 20}}
@@ -369,7 +349,7 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
             />
           }
         </Tabs>}
-        <div className={ classes.rootTabs }>
+        <RootTabs>
           <TabContainer>
             <SectionTable
               tableData={tasks}
@@ -377,9 +357,9 @@ const TaskList: React.FC<TaskListProps & { match: { params: MatchParams } }> = (
               customColumnRenderer={customColumnRenderer}
             />
           </TabContainer>
-        </div>
+        </RootTabs>
     </React.Fragment>
   )
 }
 
-export default withRouter(withStyles(styles)(TaskList))
+export default TaskList

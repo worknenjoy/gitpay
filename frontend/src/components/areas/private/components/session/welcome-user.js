@@ -5,7 +5,7 @@ import {
   Button,
   DialogContentText,
   MobileStepper
-} from '@material-ui/core'
+} from '@mui/material'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 

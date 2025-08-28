@@ -2,47 +2,38 @@ import React, { useEffect } from 'react'
 import nameInitials from 'name-initials'
 
 import {
-  withStyles,
   Typography,
   Chip,
   Avatar
-} from '@material-ui/core'
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 import {
   Person as PersonIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { withRouter } from 'react-router'
 
 import logoGithub from 'images/github-logo.png'
 
-const styles = theme => ({
-  profile: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    margin: '30px 30px 30px 30px',
-    flexFlow: 'column',
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    height: 350
-  },
-  avatar: {
-    width: 160,
-    height: 160
-  },
-  nameContainer: {
-    display: 'flex',
-    alignItems: 'center'
-  },
-  website: {
-    textAlign: 'center',
-    color: '#515bc4',
-    fontSize: '0.8rem'
-  }
-})
+const Profile = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  margin: '30px',
+  flexFlow: 'column',
+  flexDirection: 'column',
+  flexWrap: 'wrap',
+  height: 350
+}))
+
+const BigAvatar = styled(Avatar)({ width: 160, height: 160 })
+
+const NameContainer = styled('div')({ display: 'flex', alignItems: 'center' })
+
+const Website = styled(Typography)({ textAlign: 'center', color: '#515bc4', fontSize: '0.8rem' })
 
 const ProfileHead = (props) => {
-  const { classes, profile } = props
+  const { profile } = props
 
   useEffect(() => {
     const userId = props.match.params.usernameId.split('-')[0]
@@ -52,19 +43,17 @@ const ProfileHead = (props) => {
   }, [props.match.params])
 
   return (
-    <div className={ classes.profile }>
+    <Profile>
       <div>
         { profile.picture_url ? (
-          <Avatar
+          <BigAvatar
             alt={ profile.username }
             src={ profile.picture_url }
-            className={ classes.avatar }
           />
         ) : (
-          <Avatar
+          <BigAvatar
             alt={ profile.username }
             src=""
-            className={ classes.avatar }
           >
             { profile.name ? (
               nameInitials(profile.name)
@@ -73,22 +62,22 @@ const ProfileHead = (props) => {
             ) : (
               <PersonIcon />
             ) }
-          </Avatar>
+          </BigAvatar>
         ) }
       </div>
-      <div className={ classes.nameContainer }>
+      <NameContainer>
         <Typography component="h4" variant="h4">{ profile.name }</Typography>
         <a target="_blank" href={ profile.profile_url } rel="noreferrer">
           <img width="20" src={ logoGithub } style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 } } />
         </a>
-      </div>
+      </NameContainer>
       <div>
-        <Typography className={ classes.website }>
+        <Website>
           <a href={ profile.website } target="__blank">
             { profile.website &&
                         profile.website.replace(/^https?:\/\//, '') }
           </a>
-        </Typography>
+        </Website>
       </div>
       <div>
         { profile && profile.Types && profile.Types.map(r => {
@@ -100,8 +89,8 @@ const ProfileHead = (props) => {
           )
         }) }
       </div>
-    </div>
+    </Profile>
   )
 }
 
-export default withStyles(styles)(withRouter(ProfileHead))
+export default withRouter(ProfileHead)

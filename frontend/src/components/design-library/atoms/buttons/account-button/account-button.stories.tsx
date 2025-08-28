@@ -16,13 +16,10 @@ Default.args = {
     logged: true,
     completed: true,
     error: null,
-    user: {
-      completed: true,
-      data: {
-        email: 'test@gmail.com',
-        username: 'Test User',
-        picture_url: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50'
-      }
+    data: {
+      email: 'test@gmail.com',
+      username: 'Test User',
+      picture_url: 'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50'
     }
   }
 };

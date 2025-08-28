@@ -1,13 +1,11 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 import TopBar from '../../../organisms/layouts/topbar/topbar'
 import Bottom from '../../../organisms/layouts/bottom-bar/bottom'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginTop: 0
-  }
+const Root = styled('div')(({ theme }) => ({
+  flexGrow: 1,
+  marginTop: 0
 }))
 
 type PublicBaseProps = {
@@ -29,10 +27,8 @@ const PublicBase = ({
   loginFormForgotFormProps,
   importIssuesProps
 }:PublicBaseProps) => {
-  const classes = useStyles()
-
   return (
-    <div className={ classes.root }>
+    <Root>
       <TopBar
         loggedIn={ loggedIn }
         accountMenuProps={ accountMenuProps }
@@ -44,7 +40,7 @@ const PublicBase = ({
       <Bottom
         { ...bottomBarProps }
       />
-    </div>
+    </Root>
   )
 }
 

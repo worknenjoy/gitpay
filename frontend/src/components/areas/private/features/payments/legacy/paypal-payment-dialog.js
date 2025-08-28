@@ -7,7 +7,7 @@ import {
   CardContent,
   Checkbox,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 
 class PaypalPaymentDialog extends Component {
   state = {

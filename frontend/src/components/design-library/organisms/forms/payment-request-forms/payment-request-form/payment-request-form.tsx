@@ -1,17 +1,10 @@
 import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
-import { Grid, Typography, TextField } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Typography, TextField, Skeleton } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import Field from '../../../../atoms/inputs/fields/field/field';
 import Alert from '../../../../atoms/alerts/alert/alert';
-import ReactPlaceholder from 'react-placeholder';
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
-
-const useStyles = makeStyles((theme) => ({
-  placholder: {
-    margin: 10
-  }
-}));
+import { AlertWrapper, EndAdornment } from './payment-request-form.styles';
 
 interface PaymentRequestFormProps {
   onSubmit?: (e:any, data: any) => void;
@@ -23,7 +16,6 @@ type PaymentRequestFormHandle = {
 };
 
 const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFormProps>(({ onSubmit, completed = true }, ref) => {
-  const classes = useStyles();
   const [error, setError] = useState<string | false>(false);
   const internalFormRef = useRef<HTMLFormElement>(null);
   const [ customAmount, setCustomAmount ] = useState(false);
@@ -58,22 +50,21 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
       {error && (
         <Alert
           severity="error"
-          style={{ marginBottom: 20, marginTop: 20 }}
           completed={completed}
         >
-          <div style={{ marginBottom: 20 }}>
+          <AlertWrapper>
             <FormattedMessage
               id="paymentRequest.create.error"
               defaultMessage="An error occurred while creating a Payment Request:"
             />
-          </div>
+          </AlertWrapper>
           <Typography variant="body1" color="error">
             {error}
           </Typography>
         </Alert>
       )}
       <Grid container spacing={2}>
-        <Grid item xs={12} md={12}>
+  <Grid size={{ xs: 12, md: 12 }}>
           <Field
             label="Title"
             name="title"
@@ -82,25 +73,24 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             completed={completed}
           />
         </Grid>
-        <Grid item xs={12} md={12}>
-          <ReactPlaceholder
-            type="text"
-            rows={4}
-            ready={completed}
-            showLoadingAnimation
-          >
-            <TextField
-              fullWidth
-              variant="outlined"
-              label="Description"
-              name="description"
-              placeholder="Describe your service"
-              multiline
-              rows={4}
-            />
-          </ReactPlaceholder>
+  <Grid size={{ xs: 12, md: 12 }}>
+          {
+            !completed ? (
+              <Skeleton variant="rectangular" animation="wave" width="100%" height={120} />
+            ) : (
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="Description"
+                name="description"
+                placeholder="Describe your service"
+                multiline
+                rows={4}
+              />
+            )
+          }
         </Grid>
-        <Grid item xs={12} md={12}>
+  <Grid size={{ xs: 12, md: 12 }}>
           <Field
             label="Amount"
             name="amount"
@@ -109,16 +99,16 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             inputProps={{ min: 0, step: '0.01' }}
             completed={completed}
             endAdornment={
-              <div style={{ marginLeft: 8 }}>
+              <EndAdornment>
                 <i>
                   <FormattedMessage id="currency" defaultMessage="USD" />
                 </i>
-              </div>
+              </EndAdornment>
             }
             disabled={customAmount}
           />
         </Grid>
-        <Grid item xs={12} md={12}>
+  <Grid size={{ xs: 12, md: 12 }}>
           <Checkboxes
             checkboxes={[
               {

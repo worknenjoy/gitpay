@@ -1,21 +1,20 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 
-const useStyles = makeStyles(() => ({
-  root: {
-    paddingBottom: 10,
-    display: 'flex',
-    alignItems: 'center'
-  },
-  iconCenter: {
-    verticalAlign: 'middle',
-    paddingRight: 5,
-    color: 'action'
-  },
-  text: {
-    color: 'gray',
-    marginTop: 5,
-    fontSize: 11
-  }
+export const SimpleInfoRoot = styled('div')(({ theme }) => ({
+  paddingBottom: 10,
+  display: 'flex',
+  alignItems: 'center'
 }))
 
-export default useStyles
+export const IconCenter = styled('span')(({ theme }) => ({
+  verticalAlign: 'middle',
+  paddingRight: 5,
+  color: theme.palette.action.active
+}))
+
+export const Text = styled('p')(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  marginTop: 5,
+  fontSize: 11,
+  marginBottom: 0
+}))

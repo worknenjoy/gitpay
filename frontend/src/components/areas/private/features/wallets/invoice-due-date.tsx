@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import ReactPlaceholder from 'react-placeholder';
+import { Skeleton } from '@mui/material';
 
 export const InvoiceDueDate = ({ walletOrderId, fetchWalletOrder }) => {
   const [ invoiceDueDate, setInvoiceDueDate ] = useState(0);
@@ -16,9 +16,13 @@ export const InvoiceDueDate = ({ walletOrderId, fetchWalletOrder }) => {
 
   return (
     <div>
-      <ReactPlaceholder type="text" ready={!!invoiceDueDate} rows={1} color="#E0E0E0">
-        {moment.unix(invoiceDueDate).fromNow()}
-      </ReactPlaceholder>
+      {
+        !invoiceDueDate ? (
+          <Skeleton variant="text" animation="wave" width={120} />
+        ) : (
+          moment.unix(invoiceDueDate).fromNow()
+        )
+      }
     </div>
   );
 }

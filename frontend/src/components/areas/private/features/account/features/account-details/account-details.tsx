@@ -1,38 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useIntl, FormattedMessage, FormattedDate } from 'react-intl'
-import ReactPlaceholder from 'react-placeholder'
-import {
-  withStyles,
-  Grid,
-  Button,
-  Typography,
-  FormControl,
-  Select
-} from '@material-ui/core'
+import { Button, Typography, FormControl, Select, Skeleton } from '@mui/material'
+import Grid from '@mui/material/Grid'
 
 import 'react-phone-number-input/style.css'
 import Moment from 'moment'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Switch from '@mui/material/Switch'
 
 import CountryPicker from '../../../../shared/country-picker'
-import { countryCodes, countryCurrencies } from '../../../../shared/country-codes'
+import { countryCodes } from '../../../../shared/country-codes'
 import Field from 'design-library/atoms/inputs/fields/field/field'
 import Alert from 'design-library/atoms/alerts/alert/alert'
 import TextMaskCustom from './TextMaskCustom';
 import messages from '../../../../shared/messages'
 
-const styles = (theme) => ({
-  legend: {
-    fontSize: 18,
-    fontWeight: 500,
-    color: theme.palette.primary.dark
-  },
-  fieldset: {
-    border: `1px solid ${theme.palette.primary.light}`,
-    marginBottom: 20
-  }
-})
+const fieldsetStyle = (theme?: any) => ({ border: `1px solid ${theme?.palette?.primary?.light || '#ddd'}`, marginBottom: 20 });
+const legendStyle = (theme?: any) => ({ fontSize: 18, fontWeight: 500, color: theme?.palette?.primary?.dark || 'inherit' });
 
 const AccountDetails = ({
   account,
@@ -42,8 +26,7 @@ const AccountDetails = ({
   createAccount,
   fetchAccount,
   fetchAccountCountries,
-  setActiveStep,
-  classes
+  setActiveStep
 }) => {
   const intl = useIntl()
   const [accountData, setAccountData] = useState({})
@@ -119,29 +102,29 @@ const AccountDetails = ({
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={12}>
+      <Grid size={{ xs: 12, md: 12 }}>
         <Typography variant="h6" gutterBottom>
           <FormattedMessage id="account-details-personal-information-title" defaultMessage="Account details" />
         </Typography>
       </Grid>
-      <Grid item xs={12} md={12}>
+      <Grid size={{ xs: 12, md: 12 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={account && account.data.country ? 6 : 12}>
-            <ReactPlaceholder
-              showLoadingAnimation
-              type="media"
-              rows={1}
-              ready={account.completed}
-            >
-              <fieldset className={classes.fieldset}>
-                <legend className={classes.legend}>
+          <Grid size={{ xs: 12, md: (account && account.data.country ? 6 : 12) }}>
+            {!account.completed ? (
+              <div>
+                <Skeleton variant="rectangular" height={150} animation="wave" />
+                <Skeleton variant="text" animation="wave" />
+              </div>
+            ) : (
+              <fieldset style={fieldsetStyle()}>
+                <legend style={legendStyle()}>
                   <Typography>
                     <FormattedMessage id="account-details-country-information-title" defaultMessage="Country" />
                   </Typography>
                 </legend>
                 <Grid container spacing={2}>
                   {displayCurrentCountry.country &&
-                    <Grid item xs={12} md={12}>
+                    <Grid size={{ xs: 12, md: 12 }}>
                       <Alert severity="info">
                         <FormattedMessage id="account-details-country-information-desc" defaultMessage="Please make sure you have bank account on the country selected before continue." />
                       </Alert>
@@ -149,7 +132,7 @@ const AccountDetails = ({
                   }
                   {account && account.data.country
                     ? <>
-                      <Grid item xs={12} md={6}>
+                      <Grid size={{ xs: 12, md: 6 }}>
                         <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
                           <img width="48" src={require(`images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`).default || require(`images/countries/${countryCodes.find(c => c.code === account.data.country).image}.png`)} />
                           <Typography component="span" style={{ marginLeft: 10 }}>
@@ -162,14 +145,14 @@ const AccountDetails = ({
                       <Button variant="outlined" onClick={() => setOpenCountryPicker(true)} style={{ margin: 20 }}>
                         <FormattedMessage id="account-details-country-information-action" defaultMessage="Select Country" />
                       </Button>
-                      <CountryPicker open={openCountryPicker} onClose={closeCountryPicker} classes={classes} />
+                      <CountryPicker open={openCountryPicker} onClose={closeCountryPicker} />
                     </div>
                   }
                   <code style={{ display: 'none' }}>{account && JSON.stringify(account.data)}</code>
                 </Grid>
                 {displayCurrentCountry.country ? (
                   <Grid container spacing={2}>
-                    <Grid item xs={12} md={12}>
+                    <Grid size={{ xs: 12, md: 12 }}>
                       <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
                         <img width="48" src={require(`images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`).default || require(`images/countries/${countryCodes.find(c => c.code === displayCurrentCountry.code).image}.png`)} />
                         <Typography component="span" style={{ marginLeft: 10 }}>
@@ -177,7 +160,7 @@ const AccountDetails = ({
                         </Typography>
                       </div>
                     </Grid>
-                    <Grid item xs={12} md={12} justifyContent="flex-end" alignContent="flex-end" style={{ display: 'flex' }}>
+                    <Grid size={{ xs: 12, md: 12 }} justifyContent="flex-end" alignContent="flex-end" style={{ display: 'flex' }}>
                       <Button variant="contained" color="secondary" onClick={() => {
                         displayCurrentCountry.code && createAccount(displayCurrentCountry.code)
                         setDisplayCurrentCountry({ country: '', code: '' })
@@ -188,67 +171,58 @@ const AccountDetails = ({
                   </Grid>
                 ) : ('')}
               </fieldset>
-            </ReactPlaceholder>
+            )}
           </Grid>
           {account && account.data.country &&
-          <Grid item xs={12} md={6}>
-            <fieldset className={classes.fieldset} style={{height: 108, display: 'flex', alignItems: 'center'}}>
-              <legend className={classes.legend}>
-                <Typography>
-                  <FormattedMessage id="account.details.currency.title" defaultMessage="Currency" />
-                </Typography>
-              </legend>
-              <ReactPlaceholder
-                showLoadingAnimation
-                type="text"
-                rows={1}
-                ready={countries.completed}
-              >
-                <FormControl style={{ width: '100%' }}>
-                  <Select
-                    native
-                    value={countries.data.default_currency}
-                    disabled={true}
-                    onChange={(e) => {
-
-                    }}
-                    inputProps={{
-                      name: 'country',
-                      id: 'country-native-simple'
-                    }}
-                  >
-                    <option aria-label="None" value="" />
-                    <option value={countries.data.default_currency}>
-                      {`${countryCurrencies.find(c => c.code.toLowerCase() === countries.data.default_currency)?.currency} - ${countryCurrencies.find(c => c.code.toLowerCase() === countries.data.default_currency)?.symbol}` || countries.data.default_currency}
-                    </option>
-                    {countries.data?.supported_bank_account_currencies &&
-                      Object.keys(countries.data.supported_bank_account_currencies).map((currency, index) => (
-                      <option key={currency} value={currency}>
-                        {`${countryCurrencies.find(c => c.code.toLowerCase() === currency)?.currency} - ${countryCurrencies.find(c => c.code.toLowerCase() === currency)?.symbol}` || currency}
-                      </option>
-                      ))}
-                  </Select>
-                </FormControl>
-              </ReactPlaceholder>
-            </fieldset>
-          </Grid>}
+            <Grid size={{ xs: 12, md: 6 }}>
+              <fieldset style={{ ...fieldsetStyle(), height: 108, display: 'flex', alignItems: 'center' }}>
+                <legend style={legendStyle()}>
+                  <Typography>
+                    <FormattedMessage id="account.details.currency.title" defaultMessage="Currency" />
+                  </Typography>
+                </legend>
+                {!countries.completed ? (
+                  <Skeleton variant="text" animation="wave" />
+                ) : (
+                  <FormControl style={{ width: '100%' }}>
+                    <Select
+                      autoWidth
+                      native
+                      name="individual[dob][month]"
+                      style={{ marginRight: 8, marginTop: 16, width: '100%' }}
+                    >
+                      <FormattedMessage id="account.details.month" defaultMessage="Month of birth">{(msg) => <option value="" key={'default'}>{msg}</option>}</FormattedMessage>
+                      {[[1, 'Jan'], [2, 'Feb'], [3, 'Mar'], [4, 'Apr'], [5, 'May'], [6, 'June'], [7, 'Jul'], [8, 'Aug'], [9, 'Set'], [10, 'Oct'], [11, 'Nov'], [12, 'Dec']].map(
+                        (item, i) => {
+                          return (
+                            <option selected={account.data.individual && !!(item[0] === account.data.individual.dob.month || item[1] === accountData['individual[dob][month]'])} key={i} value={item[0]}>
+                              {`${item[1]}`}
+                            </option>
+                          )
+                        }
+                      )}
+                    </Select>
+                  </FormControl>
+                )}
+              </fieldset>
+            </Grid>}
         </Grid>
       </Grid>
       {account.data.country && (
-        <Grid item xs={12} md={12}>
+        <Grid size={{ xs: 12, md: 12 }}>
           <form
             onSubmit={handleSubmit}
             onChange={onChange}
             style={{ marginBottom: 20 }}
           >
-            <fieldset className={classes.fieldset}>
-              <legend className={classes.legend}>
+            <fieldset style={fieldsetStyle()}>
+              <legend style={legendStyle()}>
                 <Typography>
                   <FormattedMessage id="account-details-personal-information" defaultMessage="Personal details" />
                 </Typography>
               </legend>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={6}>
+                <Grid size={{ xs: 12, sm: 6, md: 6 }}>
                   <FormattedMessage id="account.verify.firstName" defaultMessage="First name">
                     {(msg) => (
                       <Field
@@ -259,7 +233,7 @@ const AccountDetails = ({
                     )}
                   </FormattedMessage>
                 </Grid>
-                <Grid item xs={12} sm={6} md={6}>
+                <Grid size={{ xs: 12, sm: 6, md: 6 }}>
                   <FormattedMessage id="account.verify.lastName" defaultMessage="Last name">
                     {(msg) => (
                       <Field
@@ -270,7 +244,7 @@ const AccountDetails = ({
                     )}
                   </FormattedMessage>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid size={{ xs: 12, sm: 6, md: 4 }}>
                   <Field
                     name="individual[id_number]"
                     label={
@@ -318,7 +292,7 @@ const AccountDetails = ({
                     }
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={4}>
+                <Grid size={{ xs: 12, sm: 12, md: 4 }}>
                   <FormattedMessage id="account.verify.phone_number" defaultMessage="Phone number">
                     {
                       (msg) => (
@@ -332,7 +306,7 @@ const AccountDetails = ({
                       )}
                   </FormattedMessage>
                 </Grid>
-                <Grid item xs={12} sm={12} md={4}>
+                <Grid size={{ xs: 12, sm: 12, md: 4 }}>
                   <FormattedMessage id="account.verify.business_profile_url" defaultMessage="Website">
                     {(msg) => (
                       <Field
@@ -345,15 +319,15 @@ const AccountDetails = ({
                 </Grid>
               </Grid>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={12}>
+                <Grid size={{ xs: 12, md: 12 }}>
                   <Typography color="textPrimary" style={{ marginBottom: -20, marginTop: 10 }}>
                     <FormattedMessage id="account-details-personal-information-birth-date" defaultMessage="Birth date" />
                   </Typography>
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                   <Field name="individual[dob][day]" label="Day" type="number" defaultValue={accountData['individual[dob][day]'] || account.data.individual && account.data.individual.dob && account.data.individual.dob.day} />
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                   <FormControl style={{ width: '100%' }}>
                     <Select
                       autoWidth
@@ -374,43 +348,43 @@ const AccountDetails = ({
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                   <Field name="individual[dob][year]" label="Year" type="number" defaultValue={accountData['individual[dob][year]'] || account.data.individual && account.data.individual.dob && account.data.individual.dob.year} />
                 </Grid>
               </Grid>
             </fieldset>
-            <fieldset className={classes.fieldset}>
-              <legend className={classes.legend}>
+            <fieldset style={fieldsetStyle()}>
+              <legend style={legendStyle()}>
                 <Typography>
                   <FormattedMessage id="account-details-address" defaultMessage="Address information" />
                 </Typography>
               </legend>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Field name="individual[address][line1]" label="Address line 1" defaultValue={accountData['individual[address][line1]'] || account.data.individual && account.data.individual.address.line1} />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Field name="individual[address][line2]" label="Address line 2" defaultValue={accountData['individual[address][line2]'] || account.data.individual && account.data.individual.address.line2} />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid size={{ xs: 12, md: 6 }}>
                   <Field name="individual[address][city]" label="City" defaultValue={accountData['individual[address][city]'] || account.data.individual && account.data.individual.address.city} />
                 </Grid>
-                <Grid item xs={12} md={2}>
+                <Grid size={{ xs: 12, md: 2 }}>
                   <Field name="individual[address][state]" label="State" defaultValue={accountData['individual[address][state]'] || account.data.individual && account.data.individual.address.state} />
                 </Grid>
-                <Grid item xs={12} md={4}>
+                <Grid size={{ xs: 12, md: 4 }}>
                   <Field name="individual[address][postal_code]" label="Postal code" defaultValue={accountData['individual[address][postal_code]'] || account.data.individual && account.data.individual.address.postal_code} />
                 </Grid>
               </Grid>
             </fieldset>
-            <fieldset className={classes.fieldset}>
-              <legend className={classes.legend}>
+            <fieldset style={fieldsetStyle()}>
+              <legend style={legendStyle()}>
                 <Typography>
                   <FormattedMessage id="account.details.terms" defaultMessage="Accept terms" />
                 </Typography>
               </legend>
               <Grid container spacing={2}>
-                <Grid item xs={12} md={12}>
+                <Grid size={{ xs: 12, md: 12 }}>
                   {!account.data.tos_acceptance.date ? (
                     <>
                       <FormControl>
@@ -460,7 +434,7 @@ const AccountDetails = ({
                 </Grid>
               </Grid>
             </fieldset>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <div style={{ float: 'right' }}>
                 <Button
                   type="submit"
@@ -476,5 +450,4 @@ const AccountDetails = ({
     </Grid>
   )
 }
-
-export default withStyles(styles)(AccountDetails)
+export default AccountDetails

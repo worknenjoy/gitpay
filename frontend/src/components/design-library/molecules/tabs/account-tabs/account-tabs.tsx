@@ -3,7 +3,7 @@ import {
   Tabs,
   Tab,
   Box
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 

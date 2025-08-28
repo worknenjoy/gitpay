@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { defineMessages, FormattedMessage, useIntl } from 'react-intl'
 import { useHistory } from 'react-router-dom'
-import ReactPlaceholder from 'react-placeholder'
-
 import {
   Table,
   TableHead,
@@ -11,16 +9,16 @@ import {
   TableCell,
   TableRow,
   Typography,
-  withStyles,
   Paper,
-  IconButton
-} from '@material-ui/core'
+  IconButton,
+  Skeleton
+} from '@mui/material'
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   LastPage as LastPageIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 const messages = defineMessages({
   firstPageLabel: {
@@ -53,13 +51,12 @@ const messages = defineMessages({
   }
 })
 
-const actionsStyles = theme => ({
+const actionsStyles = {
   root: {
     flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5)
+    marginLeft: 20
   }
-})
+} as const
 
 const TablePaginationActions = (props) => {
   const intl = useIntl()
@@ -83,10 +80,10 @@ const TablePaginationActions = (props) => {
     )
   }
 
-  const { classes, count, page, rowsPerPage, theme } = props
+  const { count, page, rowsPerPage, theme } = props
 
   return (
-    <div className={ classes.root } >
+  <div style={actionsStyles.root} >
       <IconButton
         onClick={ handleFirstPageButtonClick }
         disabled={ page === 0 }
@@ -128,22 +125,19 @@ TablePaginationActions.propTypes = {
   theme: PropTypes.object.isRequired
 }
 
-const TablePaginationActionsWrapped = withStyles(actionsStyles, { withTheme: true })(
-  TablePaginationActions
-)
+// removed HOC
 
-const styles = theme => ({
+const styles = {
   root: {
     width: '100%',
-    marginTop: theme.spacing(3)
+    marginTop: 24
   },
   table: {
     minWidth: 500
   },
   tableWrapper: {
-    //overflowX: 'auto',
   }
-})
+} as const
 
 const CustomPaginationActionsTable = (props) => {
   const [page, setPage] = useState(0)
@@ -158,19 +152,17 @@ const CustomPaginationActionsTable = (props) => {
     setPage(0)
   }
 
-  const { classes, walletOrders, tableHead } = props
+  const { walletOrders, tableHead } = props
   const emptyRows = walletOrders?.data?.length ? rowsPerPage - Math.min(rowsPerPage, walletOrders?.data?.length - page * rowsPerPage) : 0
 
   const TableRowPlaceholder = (
     <>
-      {[0,1,2,3,4,5,6].map(() => (
-        <TableRow>
-          { [0,1,2,3,4,5,6].map(() => (
-            <TableCell>
+      {[0,1,2,3,4,5,6].map((_, idx) => (
+        <TableRow key={idx}>
+          {[0,1,2,3,4,5,6].map((_, cidx) => (
+            <TableCell key={cidx}>
               <div style={{ width: 80 }}>
-                <ReactPlaceholder showLoadingAnimation type="text" rows={1} ready={walletOrders.completed}>
-                  <div style={{ width: 80 }}></div>
-                </ReactPlaceholder>
+                <Skeleton variant="text" animation="wave" />
               </div>
             </TableCell>
           ))}
@@ -181,7 +173,7 @@ const CustomPaginationActionsTable = (props) => {
 
   if(walletOrders?.data?.length === 0 && walletOrders.completed) {
     return (
-      <Paper className={ classes.root }>
+  <Paper style={ styles.root }>
         <div style={ { display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 } }>
           <Typography variant="caption" color="textSecondary">
             <FormattedMessage id="walletOrders.table.body.walletOrders.empty" defaultMessage="No Wallet Orders" />
@@ -192,9 +184,9 @@ const CustomPaginationActionsTable = (props) => {
   }
 
   return (
-    <Paper className={ classes.root }>
-      <div className={ classes.tableWrapper }>
-        <Table className={ classes.table }>
+    <Paper style={ styles.root }>
+      <div style={ styles.tableWrapper }>
+        <Table style={ styles.table }>
           <TableHead>
             <TableRow>
               { tableHead.map( t => 
@@ -205,24 +197,28 @@ const CustomPaginationActionsTable = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-          <ReactPlaceholder style={ { marginBottom: 20, padding: 20 } } showLoadingAnimation customPlaceholder={TableRowPlaceholder} ready={ walletOrders.completed } >
-            { walletOrders?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-              return (
-                <TableRow key={ n.id }>
-                  { n.map( p => 
-                    <TableCell component="th" scope="row" style={{ padding: 10, position: 'relative' }}>
-                      {p}    
-                    </TableCell>
-                  )}
-                </TableRow>
-              )
-            }) }
-            { emptyRows > 0 && (
-              <TableRow style={ { height: 48 * emptyRows } }>
-                <TableCell colSpan={ 6 } />
-              </TableRow>
-            ) }
-            </ReactPlaceholder>
+            {!walletOrders.completed ? (
+              <>{TableRowPlaceholder}</>
+            ) : (
+              <>
+                { walletOrders?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                  return (
+                    <TableRow key={ n.id }>
+                      { n.map( p => 
+                        <TableCell component="th" scope="row" style={{ padding: 10, position: 'relative' }}>
+                          {p}    
+                        </TableCell>
+                      )}
+                    </TableRow>
+                  )
+                }) }
+                { emptyRows > 0 && (
+                  <TableRow style={ { height: 48 * emptyRows } }>
+                    <TableCell colSpan={ 6 } />
+                  </TableRow>
+                ) }
+              </>
+            )}
           </TableBody>
         </Table>
       </div>
@@ -230,4 +226,4 @@ const CustomPaginationActionsTable = (props) => {
   )
 }
 
-export default withStyles(styles)(CustomPaginationActionsTable)
+export default CustomPaginationActionsTable

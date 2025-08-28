@@ -1,22 +1,21 @@
 import React from 'react';
-import ReactPlaceholder from 'react-placeholder';
-import { Button, Card, CardContent, CardActions, Typography, makeStyles } from '@material-ui/core';
+import { Button, Card, CardContent, CardActions, Typography, styled, Skeleton } from '@mui/material';
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 500,
-    margin: 10,
-    textAlign: 'right',
-    padding: 10
-  },
-  balance: {
-    fontSize: 32,
-    fontWeight: 'bold'
-  },
-  name: {
-    fontSize: 18
-  }
-});
+const Root = styled(Card)(() => ({
+  maxWidth: 500,
+  margin: 10,
+  textAlign: 'right',
+  padding: 10
+}))
+
+const Balance = styled(Typography)(() => ({
+  fontSize: 32,
+  fontWeight: 'bold'
+}))
+
+const Name = styled(Typography)(() => ({
+  fontSize: 18
+}))
 
 type StatusCardProps = {
   name: string | React.ReactNode;
@@ -28,25 +27,29 @@ type StatusCardProps = {
 }
 
 const StatusCard = ({ name, status, onAdd, action, actionProps, completed }: StatusCardProps) => {
-  const classes = useStyles();
+  
 
   return (
 
-    <Card className={classes.root}>
+  <Root>
       <CardContent>
-        <ReactPlaceholder
-          showLoadingAnimation={true}
-          type="text"
-          ready={completed}
-          rows={2}
-        >
-          <Typography className={classes.name} color="textSecondary" gutterBottom>
-            {name}
-          </Typography>
-          <Typography className={classes.balance} color="primary">
-            {status}
-          </Typography>
-        </ReactPlaceholder>
+        {
+          !completed ? (
+            <>
+              <Skeleton variant="text" animation="wave" width="60%" />
+              <Skeleton variant="text" animation="wave" width="80%" />
+            </>
+          ) : (
+            <>
+        <Name color="textSecondary" gutterBottom>
+                {name}
+        </Name>
+        <Balance color="primary">
+                {status}
+        </Balance>
+            </>
+          )
+        }
       </CardContent>
       {onAdd && action && (
         <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -62,7 +65,7 @@ const StatusCard = ({ name, status, onAdd, action, actionProps, completed }: Sta
         </CardActions>
       )}
 
-    </Card>
+  </Root>
 
   );
 };

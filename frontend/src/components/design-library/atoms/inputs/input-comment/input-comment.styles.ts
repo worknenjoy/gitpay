@@ -1,12 +1,12 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { Theme } from '@mui/material/styles'
 
-const useStyles = makeStyles(() => ({
+export const getInputCommentStyles = (theme: Theme) => ({
   counter: {
     fontFamily: 'Roboto',
     color: '#a9a9a9',
     marginTop: '10px',
     textAlign: 'right'
   }
-}))
+})
 
-export default useStyles
+export default getInputCommentStyles

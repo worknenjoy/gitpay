@@ -3,7 +3,7 @@ import TextEllipsis from 'text-ellipsis';
 import slugify from '@sindresorhus/slugify';
 import { useHistory } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { Tooltip, Typography } from '@material-ui/core';
+import { Tooltip, Typography } from '@mui/material';
 
 import logoGithub from 'images/github-logo.png';
 import logoBitbucket from 'images/bitbucket-logo.png';

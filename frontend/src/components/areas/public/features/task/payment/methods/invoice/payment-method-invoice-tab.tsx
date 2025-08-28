@@ -61,7 +61,7 @@ const PaymentMethodInvoiceTab: React.FC<PaymentMethodInvoiceTabProps & { match: 
     user.id && fetchCustomer(user.id);
   }, []);
 
-  if (!user.id) return <div style={{marginTop: 10, marginBottom: 10}}><LoginButton referrer={location} includeForm classes={{gutterLeft: '0px'}} /></div>;
+  if (!user.id) return <div style={{marginTop: 10, marginBottom: 10}}><LoginButton referrer={location} includeForm /></div>;
 
   return (
     <InvoicePayment 

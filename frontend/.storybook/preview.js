@@ -1,8 +1,5 @@
 import { IntlProvider } from 'react-intl';
-import {
-  MuiThemeProvider,
-  createTheme
-} from '@material-ui/core'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { addDecorator } from '@storybook/react';
 import '../src/main/app.css';
@@ -21,9 +18,9 @@ const withIntl = (Story, context) => {
 };
 
 const withMuiTheme = (Story) => (
-  <MuiThemeProvider theme={ theme }>
+  <ThemeProvider theme={ theme }>
     <Story />
-  </MuiThemeProvider>
+  </ThemeProvider>
 );
 
 const withRouter = (Story) => (

@@ -1,41 +1,25 @@
 import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { FormattedMessage } from 'react-intl'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import Avatar from '@material-ui/core/Avatar'
-import Typography from '@material-ui/core/Typography'
-import { Forum as MessageIcon } from '@material-ui/icons'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
+import { Forum as MessageIcon } from '@mui/icons-material'
 import nameInitials from 'name-initials'
-import Placeholder from 'react-placeholder'
+import { Skeleton } from '@mui/material'
 import IssueMessageAuthorDialog from '../../../molecules/dialogs/issue-message-author-dialog/issue-message-author-dialog'
 import {
   Dialog,
   DialogContent,
   DialogTitle
-} from '@material-ui/core'
+} from '@mui/material'
 
 import LoginButton from '../../form-section/login-form/login-form-signin/login-form-signin'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1
-  },
-  mainBlock: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: theme.spacing(2)
-  },
-  inline: {
-    display: 'inline'
-  }
-}))
+import { Root, MainBlock } from './issue-author-list.styles'
 
 export default function IssueAuthorList ({ authors, logged, user, task, messageAuthor }) {
-  const classes = useStyles()
   const [openDialog, setOpenDialog] = useState(false)
 
   const handleMessageAuthorDialog = (e) => {
@@ -48,39 +32,38 @@ export default function IssueAuthorList ({ authors, logged, user, task, messageA
       <Typography variant="subtitle1" style={{ marginBottom: 10, marginTop: 20 }}>
         <FormattedMessage id="task.info.authors" defaultMessage="Imported by" />
       </Typography>
-      <Placeholder type="media" rows={1} ready={ task.completed }>
-        <List className={ classes.root }>
-          { authors && authors.map(a => {
-            return (
-              <React.Fragment>
-                { a.name &&
-                <ListItem alignItems="center">
-                  <ListItemAvatar>
-                    { a.avatar_url ? (
-                      <Avatar alt={ nameInitials(a.name) } src={ a.avatar_url } />
-                    ) : (
-                      <Avatar alt={ nameInitials(a.name) }>
-                        { nameInitials(a.name) }
-                      </Avatar>
-                    ) }
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={
-                      <a href="#" onClick={ handleMessageAuthorDialog }>
-                        <Typography variant="subtitle2">
-                          { a.name }
-                          { a.email && <MessageIcon style={ { display: 'inline', verticalAlign: 'middle', marginLeft: 10 } } /> }
-                        </Typography>
-                      </a>
-                    }
-                  />
-                </ListItem>
-                }
-              </React.Fragment>
-            )
-          }) }
-        </List>
-      </Placeholder>
+      <Skeleton variant="rectangular" width="100%" height={118} />
+  <List component={Root as any}>
+        { authors && authors.map(a => {
+          return (
+            <React.Fragment>
+              { a.name &&
+              <ListItem alignItems="center">
+                <ListItemAvatar>
+                  { a.avatar_url ? (
+                    <Avatar alt={ nameInitials(a.name) } src={ a.avatar_url } />
+                  ) : (
+                    <Avatar alt={ nameInitials(a.name) }>
+                      { nameInitials(a.name) }
+                    </Avatar>
+                  ) }
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <a href="#" onClick={ handleMessageAuthorDialog }>
+                      <Typography variant="subtitle2">
+                        { a.name }
+                        { a.email && <MessageIcon style={ { display: 'inline', verticalAlign: 'middle', marginLeft: 10 } } /> }
+                      </Typography>
+                    </a>
+                  }
+                />
+              </ListItem>
+              }
+            </React.Fragment>
+          )
+        }) }
+      </List>
       <React.Fragment>
         { !logged ? (
           <Dialog open={ openDialog } onClose={ () => setOpenDialog(false) } aria-labelledby="form-dialog-title">
@@ -88,9 +71,9 @@ export default function IssueAuthorList ({ authors, logged, user, task, messageA
               <FormattedMessage id="task.bounties.logged.info" defaultMessage="You need to login to send messages to the author" />
             </DialogTitle>
             <DialogContent>
-              <div className={ classes.mainBlock }>
+              <MainBlock>
                 <LoginButton onClose={() => setOpenDialog(false)} />
-              </div>
+              </MainBlock>
             </DialogContent>
           </Dialog>
         ) : (

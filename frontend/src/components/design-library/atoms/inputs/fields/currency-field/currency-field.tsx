@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, Select } from '@material-ui/core';
+import { FormControl, Select } from '@mui/material';
 import { countryCurrencies } from '../../../../../../components/areas/private/shared/country-codes';
 import Fieldset from '../../fieldset/fieldset';
 

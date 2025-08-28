@@ -3,44 +3,10 @@ import { FormattedMessage } from 'react-intl'
 
 import {
   Button,
-  makeStyles,
-  TextField,
   Typography
-} from '@material-ui/core'
-import purple from '@material-ui/core/colors/purple'
+} from '@mui/material'
 import ReCAPTCHA from 'react-google-recaptcha'
-
-const useStyles = makeStyles((theme) => ({
-  cssLabel: {
-    '&$cssFocused': {
-      color: purple[500]
-    }
-  },
-  cssFocused: {},
-  cssUnderline: {
-    '&:after': {
-      borderBottomColor: purple[500]
-    }
-  },
-  cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: purple[500]
-    }
-  },
-  notchedOutline: {},
-  margins: {
-    marginTop: 10,
-    marginBottom: 10
-  },
-  button: {
-    marginRight: 20
-  },
-  center: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-}))
+import { Center, SpacedButton, Margins, StyledTextField } from './login-form-forgot.styles'
 
 type LoginFormForgotProps = {
   action?: string
@@ -51,7 +17,7 @@ type LoginFormForgotProps = {
 }
 
 const LoginFormForgot = ({ action, noCancelButton, onClose, onSignin, onSubmit }:LoginFormForgotProps) => {
-  const classes = useStyles()
+  
   const [state, setState] = useState({
     username: '',
     captchaChecked: false,
@@ -141,25 +107,12 @@ const LoginFormForgot = ({ action, noCancelButton, onClose, onSignin, onSubmit }
 
   return (
     <form onSubmit={submitForm} action={action} method="POST" autoComplete="off">
-      <div className={classes.margins}>
-        <TextField
+      <Margins>
+        <StyledTextField
           name="username"
           onChange={handleChange('username')}
           onBlur={handleBlur}
           fullWidth
-          InputLabelProps={{
-            classes: {
-              root: classes.cssLabel,
-              focused: classes.cssFocused
-            }
-          }}
-          InputProps={{
-            classes: {
-              root: classes.cssOutlinedInput,
-              focused: classes.cssFocused,
-              notchedOutline: classes.notchedOutline
-            }
-          }}
           label="E-mail"
           variant="outlined"
           id="username"
@@ -167,7 +120,7 @@ const LoginFormForgot = ({ action, noCancelButton, onClose, onSignin, onSubmit }
           helperText={error.username}
           defaultValue={state.username}
         />
-      </div>
+      </Margins>
 
       {process.env.NODE_ENV === 'production' && (
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: 80, marginTop: 20 }}>
@@ -189,17 +142,17 @@ const LoginFormForgot = ({ action, noCancelButton, onClose, onSignin, onSubmit }
           </Typography>
         </div>
       }
-      <div className={classes.center} style={{ marginTop: 20 }}>
+  <Center style={{ marginTop: 20 }}>
         <div>
           {noCancelButton ? null : (
-            <Button onClick={onClose} size="large" variant="text" color="primary" className={classes.button}>
+    <SpacedButton onClick={onClose} size="large" variant="text" color="primary">
               <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
-            </Button>
+    </SpacedButton>
           )}
 
-          <Button type="submit" size="large" variant="contained" color="primary" className={classes.button}>
+      <SpacedButton type="submit" size="large" variant="contained" color="primary">
             <FormattedMessage id="account.login.label.password.recover" defaultMessage="Recover password" />
-          </Button>
+      </SpacedButton>
 
           <div style={{ marginTop: 20, display: 'flex', alignItems: 'baseline' }}>
             <Typography variant="body1" component="span">
@@ -210,7 +163,7 @@ const LoginFormForgot = ({ action, noCancelButton, onClose, onSignin, onSubmit }
             </Button>
           </div>
         </div>
-      </div>
+  </Center>
     </form>
   )
 }

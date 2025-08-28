@@ -1,5 +1,4 @@
 import React from 'react';
-import 'react-placeholder/lib/reactPlaceholder.css';
 import './side-menu.placeholder.styles.css';
 
 const SidebarMenuPlaceholder = () => {

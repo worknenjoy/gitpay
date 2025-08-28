@@ -1,12 +1,11 @@
 import React from 'react'
-import { RoundShape } from 'react-placeholder/lib/placeholders'
-import useStyles from './avatar-placeholder.styles'
+import styles from './avatar-placeholder.styles'
 
 export const AvatarPlaceholder = () => {
-  const classes = useStyles()
+  const { Placeholder } = styles as any
   return (
     <div className="avatar-placeholder">
-      <RoundShape color="#ccc" className={classes.placeholder} />
+      <Placeholder variant="circular" />
     </div>
   )
 }

@@ -11,12 +11,12 @@ import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import Logout from '@mui/icons-material/Logout';
 import Person from '@mui/icons-material/Person';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import {
   Web,
   AccountBox as AccountIcon,
   Settings as SettingsIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { nameInitials } from 'name-initials';
 
 

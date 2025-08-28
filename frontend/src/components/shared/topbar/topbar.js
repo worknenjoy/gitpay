@@ -25,7 +25,7 @@ import {
   Menu,
   MenuItem,
   Button
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   LibraryBooks,
   Tune,
@@ -37,7 +37,7 @@ import {
   AccountBox as AccountIcon,
   AccountBalance,
   Payment as PaymentIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import { withRouter } from 'react-router-dom'
 import { updateIntl } from 'react-intl-redux'

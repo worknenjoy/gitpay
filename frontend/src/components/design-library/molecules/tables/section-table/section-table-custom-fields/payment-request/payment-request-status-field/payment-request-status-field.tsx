@@ -1,5 +1,6 @@
 import React from 'react';
-import useStyles from './payment-request-status-field.styles';
+import { useTheme } from '@mui/material/styles';
+import getStyles from './payment-request-status-field.styles';
 
 
 
@@ -14,7 +15,8 @@ const PaymentRequestStatusField: React.FC<PaymentRequestStatusFieldProps> = ({
   status,
   completed = true
 }) => {
-  const classes = useStyles();
+  const theme = useTheme();
+  const styles = getStyles(theme);
 
   const statusList = [
     {
@@ -33,7 +35,7 @@ const PaymentRequestStatusField: React.FC<PaymentRequestStatusFieldProps> = ({
     <BaseStatus
       status={status}
       statusList={statusList}
-      classes={classes}
+      styles={styles}
       completed={completed}
     />
   );

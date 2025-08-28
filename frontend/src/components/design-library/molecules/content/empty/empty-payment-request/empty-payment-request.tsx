@@ -1,6 +1,6 @@
 import React from 'react';
 import EmptyBase from '../empty-base/empty-base';
-import { CardMembershipOutlined as EmptyPaymentRequestIcon } from '@material-ui/icons'; // you can replace this icon
+import { CardMembershipOutlined as EmptyPaymentRequestIcon } from '@mui/icons-material'; // you can replace this icon
 import { FormattedMessage } from 'react-intl';
 
 const EmptyPaymentRequest = ({

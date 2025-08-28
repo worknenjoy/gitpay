@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import { FormControl, Input, Select, Typography } from "@material-ui/core";
+import { FormControl, Input, Select, Typography, Skeleton } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { countryCodes, SEPA_COUNTRIES } from '../../../../../areas/private/shared/country-codes'
-import ReactPlaceholder from "react-placeholder";
 
 const CountrySelectField = ({ user, country, onChange, disabled = false }) => {
   const { data = {}, completed } = user;
@@ -31,26 +30,30 @@ const CountrySelectField = ({ user, country, onChange, disabled = false }) => {
           <FormattedMessage id="account.register.bank.account.country" defaultMessage="Country:" />
         </Typography>
       </div>
-      <ReactPlaceholder type="text" rows={1} ready={completed}>
-        <Select
-          native
-          name="bank_account_country"
-          value={currentCountry}
-          defaultValue={userCountry}
-          input={<Input id="bank-country" />}
-          fullWidth
-          style={{ marginTop: 12, marginBottom: 12 }}
-          onChange={onChangeCountry}
-          disabled={disabled}
-        >
-          <option value="">
-            Select bank country
-          </option>
-          {countryCodes.map((c, index) => (
-            <option key={index} value={c.code} selected={user.country === c.code}>{c.country}</option>
-          ))}
-        </Select>
-      </ReactPlaceholder>
+      {
+        !completed ? (
+          <Skeleton variant="text" animation="wave" width="100%" />
+        ) : (
+          <Select
+            native
+            name="bank_account_country"
+            value={currentCountry}
+            defaultValue={userCountry}
+            input={<Input id="bank-country" />}
+            fullWidth
+            style={{ marginTop: 12, marginBottom: 12 }}
+            onChange={onChangeCountry}
+            disabled={disabled}
+          >
+            <option value="">
+              Select bank country
+            </option>
+            {countryCodes.map((c, index) => (
+              <option key={index} value={c.code} selected={user.country === c.code}>{c.country}</option>
+            ))}
+          </Select>
+        )
+      }
     </FormControl>
   );
 }

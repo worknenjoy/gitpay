@@ -3,15 +3,10 @@ import { FormattedMessage } from 'react-intl'
 
 import {
   Container,
-  Button,
-  Paper,
   Typography,
-  Card,
   CardActions,
-  CardContent,
-  CardMedia,
-  withStyles
-} from '@material-ui/core'
+  CardContent
+} from '@mui/material'
 
 // import TaskFilter from '../task/task-filters'
 import Taskfilters from '../../../../../containers/task-filter'
@@ -23,21 +18,18 @@ import logoBitbucket from 'images/bitbucket-logo.png'
 import imageGettingStarted from 'images/octodex.png'
 
 import api from '../../../../../consts'
+import {
+  ExplorePaper,
+  Title,
+  TopSection,
+  FiltersWrapper,
+  StyledCard,
+  StyledCardMedia,
+  GutterLeft,
+  ProviderButton
+} from './user-explore-tasks.styles'
 
-const styles = theme => ({
-  icon: {
-    backgroundColor: 'black'
-  },
-  card: {},
-  gutterLeft: {
-    marginLeft: 10
-  },
-  media: {
-    width: 600
-  }
-})
-
-const UserTasksExplore = ({ classes, filterTasks, listTasks, tasks, user }) => {
+const UserTasksExplore = ({ filterTasks, listTasks, tasks, user }) => {
 
   const baseUrl = '/profile/explore/'
 
@@ -51,24 +43,21 @@ const UserTasksExplore = ({ classes, filterTasks, listTasks, tasks, user }) => {
   }, [])
 
   return (
-    <Paper elevation={ 0 } style={{backgroundColor: 'transparent'}}>
+    <ExplorePaper elevation={ 0 }>
       <Container>
-        <Typography variant="h5" gutterBottom style={{marginTop: 40}}>
+        <Title variant="h5" gutterBottom>
           <FormattedMessage id="issues.explore.title" defaultMessage="Explore issues" />
-        </Typography>
+        </Title>
         <Typography variant="caption" gutterBottom>
           <FormattedMessage
             id="issues.explore.description"
             defaultMessage="Here you can see all the issues on our network"
           />
         </Typography>
-        <div style={{marginBottom: 20}}>
+        <TopSection>
           { !user.id ? (
-            <Card className={ classes.card }>
-              <CardMedia
-                className={ classes.media }
-                src={ imageGettingStarted }
-              />
+            <StyledCard>
+              <StyledCardMedia src={ imageGettingStarted } />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   <FormattedMessage
@@ -84,43 +73,37 @@ const UserTasksExplore = ({ classes, filterTasks, listTasks, tasks, user }) => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button
-                  style={ { marginRight: 10 } }
+                <ProviderButton
                   href={ `${api.API_URL}/authorize/github` }
                   variant="contained"
                   size="small"
                   color="secondary"
-                  className={ classes.logButtons }
                 >
                   <img width="16" src={ logoGithub } />
-                  <span className={ classes.gutterLeft }>Github</span>
-                </Button>
+                  <GutterLeft>Github</GutterLeft>
+                </ProviderButton>
 
-                <Button
+                <ProviderButton
                   href={ `${api.API_URL}/authorize/bitbucket` }
                   variant="contained"
                   size="small"
                   color="secondary"
-                  className={ classes.logButtons }
                 >
                   <img width="16" src={ logoBitbucket } />
-                  <span className={ classes.gutterLeft }>Bitbucket</span>
-                </Button>
+                  <GutterLeft>Bitbucket</GutterLeft>
+                </ProviderButton>
               </CardActions>
-            </Card>
+            </StyledCard>
           ) : (
-            <div style={{marginTop: 20, marginBottom: 20}}>
-              <Taskfilters
-                filterTasks={ filterTasks }
-                baseUrl={ baseUrl }
-              />
+            <FiltersWrapper>
+              <Taskfilters baseUrl={ baseUrl } />
               <ExploreIssuesTable issues={ tasks } />
-            </div>
+            </FiltersWrapper>
           ) }
-        </div>
+        </TopSection>
       </Container>
-    </Paper>
+    </ExplorePaper>
   )
 }
 
-export default withStyles(styles)(UserTasksExplore)
+export default UserTasksExplore

@@ -6,10 +6,6 @@ import AccountRequirements from './account-requirements';
 export default {
   title: 'Design Library/Atoms/Alerts/AccountRequirements',
   component: AccountRequirements
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  //argTypes: {
-  //  tags: { control: '' },
-  //},
 };
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

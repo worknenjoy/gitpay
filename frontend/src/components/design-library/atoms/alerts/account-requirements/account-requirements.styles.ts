@@ -1,9 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
+import { CustomAlert as Alert } from '../alert/alert';
 
-const useStyles = makeStyles(() => ({
-  alert: {
-    marginBottom: 20
-  }
-}))
-
-export default useStyles
+export const CustomAlert = styled(Alert)({
+  marginBottom: 20,
+  display: 'flex',
+  alignItems: 'center'
+})

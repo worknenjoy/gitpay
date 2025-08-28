@@ -17,6 +17,15 @@ Primary.args = {
   onClick: () => alert('Button clicked!')
 };
 
+export const Secondary = Template.bind({});
+Secondary.args = {
+  label: 'Secondary Button',
+  color: 'secondary',
+  variant: 'contained',
+  completed: true,
+  onClick: () => alert('Button clicked!')
+};
+
 export const Loading = Template.bind({});
 Loading.args = {
   label: 'Loading Button',

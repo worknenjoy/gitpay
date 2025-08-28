@@ -1,6 +1,6 @@
 import React from 'react'
-import { Block } from '@material-ui/icons'
-import { Link } from '@material-ui/core'
+import { Block } from '@mui/icons-material'
+import { Link } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 
 export default () => {
