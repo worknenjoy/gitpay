@@ -10,9 +10,8 @@ const Template = (args) => <BankSelectField {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  user: {
-    data: {
-      country: 'BR'
-    }
-  }
+  routingNumber: '123456789',
+  country: 'BR',
+  onChange: (e) => console.log(e.target.value),
+  disabled: false
 };

@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Grid,
-  Checkbox,
-  FormControlLabel
-} from '@mui/material';
-
-import { useTheme } from '@mui/material/styles';
-
+import { Grid, FormControlLabel } from '@mui/material';
+import { CheckboxesContainer, CheckboxItem, StyledCheckbox } from './checkboxes.styles';
 
 type CheckboxesProps = {
   checkboxes: any;
@@ -16,8 +10,6 @@ type CheckboxesProps = {
 
 
 const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:CheckboxesProps) => {
-  const theme = useTheme();
-  const styles = getCheckboxesStyles(theme);
   const [checked, setChecked] = useState({});
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, onChangeCheckbox) => {
@@ -77,25 +69,28 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:Checkboxe
 
 
   return (
-    <Grid container spacing={3} sx={styles.container}>
-      {checkboxesToRender.map((checkbox, index) => (
-  <Grid size={{ xs: 12, sm: 12 / checkboxesToRender.length }} sx={styles.item}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checked[checkbox.name] || false}
-                onChange={(e) => handleChange(e, checkbox?.onChange)}
-                color="primary"
-                sx={styles.checkbox}
-                name={checkbox.name}
-                value={checkbox.value}
+    <CheckboxesContainer>
+      <Grid container spacing={3}>
+        {checkboxesToRender.map((checkbox, index) => (
+          <Grid key={checkbox?.name || index} size={{ xs: 12, sm: 12 / checkboxesToRender.length }}>
+            <CheckboxItem>
+              <FormControlLabel
+                control={
+                  <StyledCheckbox
+                    checked={checked[checkbox.name] || false}
+                    onChange={(e) => handleChange(e, checkbox?.onChange)}
+                    color="primary"
+                    name={checkbox.name}
+                    value={checkbox.value}
+                  />
+                }
+                label={checkbox.label}
               />
-            }
-            label={checkbox.label}
-          />
-        </Grid>
-      ))}
-    </Grid>
+            </CheckboxItem>
+          </Grid>
+        ))}
+      </Grid>
+    </CheckboxesContainer>
   );
 };
 

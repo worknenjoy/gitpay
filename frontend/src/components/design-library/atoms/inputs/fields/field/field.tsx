@@ -32,7 +32,7 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>((
     <RootFormControl>
       {
         !completed ? (
-      <Skeleton variant="text" animation="wave" width="100%" sx={{ my: 2 }} />
+          <Skeleton variant="text" animation="wave" width="100%" sx={{ my: 2 }} />
         ) : (
           <>
             <InputLabel htmlFor={name}>

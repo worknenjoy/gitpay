@@ -11,6 +11,7 @@ const Template = (args) => <BankCurrencyField {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   countries: {
+    completed: true,
     data: {
       default_currency: 'USD',
       supported_bank_account_currencies: {
@@ -21,6 +22,22 @@ Default.args = {
     }
   },
   disabled: false,
-  completed: false,
+  onChange: (e) => console.log(e.target.value)
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  countries: {
+    completed: false,
+    data: {
+      default_currency: 'USD',
+      supported_bank_account_currencies: {
+        USD: 'United States Dollar',
+        EUR: 'Euro',
+        GBP: 'British Pound Sterling'
+      }
+    }
+  },
+  disabled: true,
   onChange: (e) => console.log(e.target.value)
 };

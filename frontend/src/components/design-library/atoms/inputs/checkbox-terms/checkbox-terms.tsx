@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Grid, Link, Typography } from '@mui/material';
 import { StyledCheckbox, StyledFormControlLabel } from './checkbox-terms.styles';
-import { useTheme } from '@mui/material/styles';
 import TermsDialog from './terms-dialog';
 // import { on } from 'events';
 
 
 const CheckboxTerms = ({ onAccept }) => {
-  const theme = useTheme();
   const [checked, setChecked] = useState(false);
   const [openTerms, setOpenTerms] = useState(false);
 
