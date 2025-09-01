@@ -15,7 +15,7 @@ Default.args = {
     logged: true,
     completed: true,
     error: null,
-    user: {
+    data: {
       id: 1,
       email: 'test@gmail.com',
       username: 'Test User',

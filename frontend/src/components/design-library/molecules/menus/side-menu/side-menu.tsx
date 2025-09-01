@@ -10,9 +10,9 @@ import {
   RightSide,
   StyledButton
 } from './side-menu.styled.div'
-import { Skeleton } from '@mui/material'
 import { SidePaper, Row, MainHeaderWrapper, Profile } from './side-menu.styles'
 import SideMenuItems from './side-menu-items'
+import SidebarMenuPlaceholder from './side-menu.placeholder'
 
 // styles moved to side-menu.styles.ts
 
@@ -87,7 +87,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                     <SideMenuItems menuItems={menuItems} />
                   </OnlyDesktop>
                 ) : (
-                  <Skeleton variant="rectangular" height={118} />
+                  <SidebarMenuPlaceholder />
                 )}
 
                 {completed ? (
@@ -95,7 +95,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                     <SideMenuItems menuItems={menuItemsMobile} />
                   </OnlyMobile>
                 ) : (
-                  <Skeleton variant="rectangular" height={118} />
+                  <SidebarMenuPlaceholder />
                 )}
 
               </div>

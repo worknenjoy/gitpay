@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 export const Root = styled('div')(({ theme }) => ({
@@ -12,13 +13,20 @@ export const Root = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper
 }))
 
-export const IconWrapper = styled('div')(({ theme }) => ({
-  fontSize: 72,
+export const Message = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
-  marginBottom: theme.spacing(0)
+  marginBottom: theme.spacing(3),
+  marginTop: theme.spacing(2)
 }))
 
-export const Message = styled('div')(({ theme }) => ({
+export const IconContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginBottom: theme.spacing(0),
+  fontSize: 72,
   color: theme.palette.text.secondary,
-  marginBottom: theme.spacing(5)
+  '& svg': {
+    fontSize: 'inherit',
+  }
 }))

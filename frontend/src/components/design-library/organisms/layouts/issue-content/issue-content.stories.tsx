@@ -60,6 +60,14 @@ Default.args = {
 export const Loading = Template.bind({});
 Loading.args = {
   logged: true,
+  user: {
+    completed: false,
+    data: {
+      id: 1,
+      name: 'John Doe',
+      avatar: 'https://via.placeholder.com/150'
+    }
+  },
   task: {
     completed: false,
     data: {}

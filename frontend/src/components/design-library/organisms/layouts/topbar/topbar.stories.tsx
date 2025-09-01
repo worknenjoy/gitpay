@@ -13,7 +13,7 @@ LoggedIn.args = {
   loggedIn: {
     logged: true,
     completed: true,
-    user: {
+    data: {
       id: 1,
       email: 'test@gmail.com',
       username: 'test',

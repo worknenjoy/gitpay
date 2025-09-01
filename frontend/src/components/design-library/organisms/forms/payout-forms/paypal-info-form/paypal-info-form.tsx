@@ -24,7 +24,6 @@ const PaypalInfoForm = ({
             <Typography component="p" color="textSecondary" sx={{ my: 2 }}>
               <FormattedMessage id="account.register.paypal.warning" defaultMessage="When you activate your account with PayPal, you will receive the bounties paid with Paypal in the account that you will provide here. The Paypal taxes will be applied" />
             </Typography>
-            <Skeleton variant="text" width={210} height={24} animation="wave" />
           </Title>
             <Grid size={{ xs: 12 }}>
             <FullWidthFormControl> 

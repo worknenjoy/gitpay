@@ -2,8 +2,6 @@ import React from 'react';
 import { Dialog, DialogContent } from '@mui/material';
 import LoginForm from '../../form-section/login-form/login-form-main/login-form'
 
-
-
 const SignupDialog = ({ 
   open,
   onClose,

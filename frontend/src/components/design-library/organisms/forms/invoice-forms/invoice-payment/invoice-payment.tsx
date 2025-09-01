@@ -17,12 +17,12 @@ const InvoicePayment = ({
   onInvoicePayment,
   onInfoClick
 }) => {
-
-  const { name, address } = customer.data
+  const { data, completed } = customer
+  const { name, address } = data
 
   return (
     <>
-  <InfoAlertWrapper>
+      <InfoAlertWrapper>
         <Alert
           severity="info"
           action={
@@ -41,8 +41,8 @@ const InvoicePayment = ({
           </AlertTitle>
           <FormattedMessage id="issue.payment.invoice.info.description" defaultMessage="To update your billing information, please fill in or update your details in the Billing Information section of your account settings. This information will be used to generate your invoice" />
         </Alert>
-  </InfoAlertWrapper>
-      <Skeleton variant="rectangular" width="100%" height={118} animation="wave">
+      </InfoAlertWrapper>
+      {completed ?
         <BillingInfoCard
           name={name || ' - '}
           address={`${address?.line1 || ' - '} ${address?.line2 || ' - '}`}
@@ -51,9 +51,8 @@ const InvoicePayment = ({
           zipCode={address?.postal_code || ' - '}
           country={countryCodes.find(c => c.code === address?.country)?.country || ' - '}
           totalAmount={price}
-        />
-      </Skeleton>
-  <StyledPayButton
+        /> : <Skeleton variant="rectangular" width="100%" height={118} animation="wave" />}
+      <StyledPayButton
         disabled={!price}
         onClick={onInvoicePayment}
         variant="contained"
@@ -62,7 +61,7 @@ const InvoicePayment = ({
         <FormattedMessage id="fund.payment.invoice.action" defaultMessage="Generate a {amount} invoice" values={{
           amount: formatCurrency(price)
         }} />
-  </StyledPayButton>
+      </StyledPayButton>
     </>
   )
 }

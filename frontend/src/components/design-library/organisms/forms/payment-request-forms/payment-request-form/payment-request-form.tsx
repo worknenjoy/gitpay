@@ -7,7 +7,7 @@ import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
 import { AlertWrapper, EndAdornment } from './payment-request-form.styles';
 
 interface PaymentRequestFormProps {
-  onSubmit?: (e:any, data: any) => void;
+  onSubmit?: (e: any, data: any) => void;
   completed?: boolean;
 }
 
@@ -18,7 +18,7 @@ type PaymentRequestFormHandle = {
 const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFormProps>(({ onSubmit, completed = true }, ref) => {
   const [error, setError] = useState<string | false>(false);
   const internalFormRef = useRef<HTMLFormElement>(null);
-  const [ customAmount, setCustomAmount ] = useState(false);
+  const [customAmount, setCustomAmount] = useState(false);
 
   // Expose `submit` method to parent
   useImperativeHandle(ref, () => ({
@@ -31,7 +31,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    
+
     if (!data.title || !data.description || (!customAmount && !data.amount)) {
       setError('All fields are required.');
       return;
@@ -64,7 +64,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         </Alert>
       )}
       <Grid container spacing={2}>
-  <Grid size={{ xs: 12, md: 12 }}>
+        <Grid size={{ xs: 12, md: 12 }}>
           <Field
             label="Title"
             name="title"
@@ -73,7 +73,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             completed={completed}
           />
         </Grid>
-  <Grid size={{ xs: 12, md: 12 }}>
+        <Grid size={{ xs: 12, md: 12 }}>
           {
             !completed ? (
               <Skeleton variant="rectangular" animation="wave" width="100%" height={120} />
@@ -90,7 +90,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             )
           }
         </Grid>
-  <Grid size={{ xs: 12, md: 12 }}>
+        <Grid size={{ xs: 12, md: 12 }}>
           <Field
             label="Amount"
             name="amount"
@@ -108,7 +108,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             disabled={customAmount}
           />
         </Grid>
-  <Grid size={{ xs: 12, md: 12 }}>
+        <Grid size={{ xs: 12, md: 12 }}>
           <Checkboxes
             checkboxes={[
               {
@@ -117,7 +117,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                 value: true,
                 onChange: handleCustomAmountChange
               },
-              { 
+              {
                 label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
                 name: 'deactivate_after_payment',
                 value: true

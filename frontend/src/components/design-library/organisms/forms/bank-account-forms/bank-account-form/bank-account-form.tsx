@@ -87,28 +87,32 @@ const BankAccountForm = ({
             <BankCurrencyField currency={currency} countries={countries} disabled={!!id} />
           </Grid>
         </Grid>
+        <BankSelectField
+          country={currentCountry}
+          disabled={!!id}
+          onChange={onChangeBankCode}
+          routingNumber={routing_number}
+        />
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 12 }}>
-            <BankSelectField
-              country={currentCountry}
-              disabled={!!id}
-              onChange={onChangeBankCode}
-              routingNumber={routing_number}
-            />
-            <Field
-              completed={completed}
-              label="Account Holder Name"
-              name="account_holder_name"
-              type="text"
-              placeholder="Account holder name / business name"
-              defaultValue={account_holder_name}
-            />
+            <div style={{ marginTop: 16 }}>
+              <Field
+                completed={completed}
+                label="Account Holder Name"
+                name="account_holder_name"
+                type="text"
+                placeholder="Account holder name / business name"
+                defaultValue={account_holder_name}
+              />
+            </div>
           </Grid>
         </Grid>
-        <BankAccountNumberForm
-          bankAccount={bankAccount}
-          defaultIbanMode={ibanMode}
-        />
+        <div style={{ marginTop: 16 }}>
+          <BankAccountNumberForm
+            bankAccount={bankAccount}
+            defaultIbanMode={ibanMode}
+          />
+        </div>
       </Grid>
       <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '20px 0' }}>
         <Button

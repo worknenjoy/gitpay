@@ -26,9 +26,6 @@ Loading.args = {
 
 export const Empty = Template.bind({});
 Empty.args = {
-  labels: [
-    { id: 1, name: 'No labels available' },
-    { id: 2, name: '' },
-    { id: 3, name: '' }
-  ]
+  labels: [],
+  completed: true
 };

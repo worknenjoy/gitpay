@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import Button from '../../../../atoms/buttons/button/button';
-import { Root, IconWrapper, Message } from './empty-base.styles'
+import { Root, Message, IconContainer } from './empty-base.styles'
 
 type EmptyBaseProps = {
   onActionClick: () => void;
-  icon?: React.ReactElement<{ className?: string }>;
+  icon?: React.ReactElement;
   text: string | React.ReactNode;
   actionText: string | React.ReactNode;
   completed?: boolean;
@@ -20,12 +20,14 @@ const EmptyBase = ({
 }: EmptyBaseProps) => {
   return (
     <Box component={Root as any}>
-      <IconWrapper>
-        {icon && React.cloneElement(icon, { className: undefined })}
-      </IconWrapper>
-      <Typography variant="h6" component={Message as any}>
+      {icon && (
+        <IconContainer>
+          {icon}
+        </IconContainer>
+      )}
+      <Message variant="h6" gutterBottom>
         {text}
-      </Typography>
+      </Message>
       <Button 
         variant="contained"
         color="secondary"

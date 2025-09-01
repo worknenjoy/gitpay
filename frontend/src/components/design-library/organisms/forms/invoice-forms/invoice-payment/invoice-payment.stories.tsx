@@ -36,3 +36,14 @@ Primary.args = {
   onInfoClick: () => { },
   onInvoicePayment: () => { }
 };
+
+export const Loading = Template.bind({});
+Loading.args = {
+  price: 20,
+  customer: {
+    data: {},
+    completed: false
+  },
+  onInfoClick: () => { },
+  onInvoicePayment: () => { }
+};

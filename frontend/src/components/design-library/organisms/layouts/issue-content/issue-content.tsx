@@ -31,7 +31,6 @@ const IssueContent = ({ user, project, organization, updateTask, reportTask, onD
     <DescriptionHeading variant="subtitle1">
         <FormattedMessage id="task.info.description" defaultMessage="Description" />
     </DescriptionHeading>
-      <Skeleton variant="text" width="100%" height={118} animation="wave" />
       {
         !task.completed ? (
           <>

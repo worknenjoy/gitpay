@@ -12,7 +12,7 @@ export const LoggedIn = Template.bind({});
 LoggedIn.args = {
   loggedIn: {
     logged: true,
-    user: {
+    data: {
       id: 1,
       email: 'test@gmail.com',
       name: 'Test User',

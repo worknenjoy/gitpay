@@ -28,6 +28,7 @@ Default.args = {
 
 export const Loading = Template.bind({});
 Loading.args = {
+  completed: false,
   user: {
     completed: false,
     data: {}

@@ -20,25 +20,16 @@ const CustomPlaceholder = () => {
 export const IssueLabelsList = ({ labels, completed }) => {
   const taskLabels = (labels) => {
     return (
-      <Skeleton
-        animation={completed ? false : "wave"}
-        sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'column' }}
-      >
-        {completed ? (
-          labels?.length ? labels?.map((label) => ( 
-        <Chip
-          key={label.id}
-          label={label?.name}
-          style={{ marginRight: 10, marginTop: 10, marginBottom: 10 }}
-          variant="outlined"
-        />   
-          )) : <></>
-        ) : (
-          <CustomPlaceholder />
-        )}
-      </Skeleton>
-    )
-  }
+        completed ? (
+          labels?.map((label) => (
+            <Chip
+              key={label.id}
+              label={label?.name}
+              style={{ marginRight: 10, marginTop: 10, marginBottom: 10 }}
+              variant="outlined"
+            />
+          ))) : <CustomPlaceholder />
+  )}
 
   return <div>{taskLabels(labels)}</div>
 }
