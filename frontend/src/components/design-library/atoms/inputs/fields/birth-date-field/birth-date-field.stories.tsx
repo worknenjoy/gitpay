@@ -12,3 +12,10 @@ export const Default = Template.bind({});
 Default.args = {
   
 };
+
+export const PreFilled = Template.bind({});
+PreFilled.args = {
+  day: 15,
+  month: 8,
+  year: 1990
+};

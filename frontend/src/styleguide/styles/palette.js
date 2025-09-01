@@ -200,6 +200,22 @@ const Palette = {
         }
       }
     },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          color: '#929292',
+          marginTop: 10,
+          marginLeft: 10,
+          backgroundColor: 'white',
+          padding: 2,
+          zIndex: 200,
+        },
+        outlined: {
+          margin: 0,
+          padding: 0
+        }
+      }
+    },
     MuiFormLabel: {
       styleOverrides: {
         root: {
@@ -209,22 +225,6 @@ const Palette = {
         }
       }
     },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          color: '#929292',
-          marginTop: 10,
-          marginLeft: 10,
-          backgroundColor: 'white',
-          padding: 2,
-          zIndex: 200
-        },
-        outlined: {
-          margin: 0,
-          padding: 0
-        }
-      }
-    }
   }
 }
 

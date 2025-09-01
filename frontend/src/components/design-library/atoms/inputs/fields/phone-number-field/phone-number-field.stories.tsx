@@ -12,3 +12,8 @@ export const Default = Template.bind({});
 Default.args = {
   phone: '1234567890'
 };
+
+export const Empty = Template.bind({});
+Empty.args = {
+  phone: ''
+};

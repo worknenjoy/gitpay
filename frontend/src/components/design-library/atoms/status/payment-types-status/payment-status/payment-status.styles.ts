@@ -1,39 +1,61 @@
-import { styled } from '@mui/material/styles'
+import { Theme } from '@mui/material/styles'
 import { orange, green, blue, yellow } from '@mui/material/colors'
 
-const PaymentStatus = styled('span')(({ theme }) => ({
-  '&.open': {
+export const getPaymentStatusStyles = (theme: Theme) => ({
+  open: {
     backgroundColor: yellow[700],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   },
-  '&.pending': {
+  pending: {
     backgroundColor: orange[500],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   },
-  '&.succeeded': {
+  succeeded: {
     backgroundColor: green[500],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   },
-  '&.failed': {
+  failed: {
     backgroundColor: theme.palette.error.main,
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   },
-  '&.expired': {
+  expired: {
     backgroundColor: theme.palette.grey[500],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   },
-  '&.refunded': {
+  refunded: {
     backgroundColor: blue[500],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   },
-  '&.canceled': {
+  canceled: {
     backgroundColor: theme.palette.grey[500],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   },
-  '&.unknown': {
+  unknown: {
     backgroundColor: theme.palette.grey[500],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   }
-}))
-
-export default PaymentStatus
+})

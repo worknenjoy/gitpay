@@ -27,26 +27,26 @@ type StatusCardProps = {
 }
 
 const StatusCard = ({ name, status, onAdd, action, actionProps, completed }: StatusCardProps) => {
-  
+
 
   return (
 
-  <Root>
+    <Root>
       <CardContent>
         {
           !completed ? (
-            <>
-              <Skeleton variant="text" animation="wave" width="60%" />
-              <Skeleton variant="text" animation="wave" width="80%" />
-            </>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
+              <Skeleton variant="text" animation="wave" width="60%" height={40} />
+              <Skeleton variant="text" animation="wave" width="40%" height={100} />
+            </div>
           ) : (
             <>
-        <Name color="textSecondary" gutterBottom>
+              <Name color="textSecondary" gutterBottom>
                 {name}
-        </Name>
-        <Balance color="primary">
+              </Name>
+              <Balance color="primary">
                 {status}
-        </Balance>
+              </Balance>
             </>
           )
         }
@@ -65,7 +65,7 @@ const StatusCard = ({ name, status, onAdd, action, actionProps, completed }: Sta
         </CardActions>
       )}
 
-  </Root>
+    </Root>
 
   );
 };

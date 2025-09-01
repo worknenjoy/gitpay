@@ -8,5 +8,5 @@ export const RowFormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
 }))
 
 export const ContentBox = styled(MuiBox)(({ theme }) => ({
-  marginTop: 6
+  marginTop: 10
 }))

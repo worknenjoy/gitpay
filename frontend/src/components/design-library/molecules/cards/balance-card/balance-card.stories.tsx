@@ -1,3 +1,4 @@
+import React from 'react'
 import BalanceCard from './balance-card';
 
 const meta = {
@@ -11,10 +12,15 @@ const meta = {
   }
 };
 
+const Template = (args) => <BalanceCard {...args} />;
+
 export default meta;
 
-export const Default = {};
+export const Default = Template.bind({});
+Default.args = {
+};
 
-export const Loading = {
+export const Loading = Template.bind({});
+Loading.args = {
   completed: false
-}
+};

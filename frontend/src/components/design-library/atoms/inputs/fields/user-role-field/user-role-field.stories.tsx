@@ -10,9 +10,13 @@ const Template = (args) => <UserRoleField {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  userRoles: [
-    { id: '1', name: 'contributor', label: 'Contributor' },
-    { id: '2', name: 'maintainer', label: 'Maintainer' },
-    { id: '3', name: 'sponsor', label: 'Sponsor' }
-  ]
+  roles: {
+    completed: true,
+    data: [
+      { id: '1', name: 'contributor', label: 'Contributor' },
+      { id: '2', name: 'maintainer', label: 'Maintainer' },
+      { id: '3', name: 'sponsor', label: 'Sponsor' }
+    ],
+    error: false
+  }
 };

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, InputLabel, FormHelperText, Skeleton } from '@mui/material'
+import { TextField, Skeleton } from '@mui/material'
 import { RootFormControl } from './field.styles'
 import { FormattedMessage } from 'react-intl'
 
@@ -34,33 +34,37 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>((
         !completed ? (
           <Skeleton variant="text" animation="wave" width="100%" sx={{ my: 2 }} />
         ) : (
-          <>
-            <InputLabel htmlFor={name}>
-              {label}
-            </InputLabel>
-            <Input
-              inputRef={ref}
-              id={name}
-              name={name}
-              type={type}
-              required={required}
-              defaultValue={defaultValue}
-              value={value}
-              fullWidth
-              placeholder={placeholder}
-              disabled={disabled}
-              inputComponent={inputComponent}
-              onChange={onChange}
-              endAdornment={endAdornment}
-              error={error}
-              inputProps={{...inputProps, ...(type === 'number' ? { min, max } : {})}}
-            />
-            {help &&
-              <FormHelperText id="component-helper-text">
-                <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
-              </FormHelperText>
-            }
-          </>
+          <TextField
+            inputRef={ref}
+            id={name}
+            name={name}
+            type={type}
+            required={required}
+            defaultValue={defaultValue}
+            value={value}
+            fullWidth
+            placeholder={placeholder}
+            disabled={disabled}
+            onChange={onChange}
+            error={error}
+            label={label}
+            variant="standard"
+            InputLabelProps={{
+              // Force shrink only when there's content; otherwise let MUI handle focus-based shrink
+              ...(inputComponent && (Boolean(value) || Boolean(defaultValue)) ? { shrink: true } : {}),
+            }}
+            helperText={help ? (
+              <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
+            ) : undefined}
+            InputProps={{
+              ...(inputComponent ? { inputComponent } : {}),
+              ...(endAdornment ? { endAdornment } : {}),
+            }}
+            inputProps={{
+              ...inputProps,
+              ...(type === 'number' ? { min, max } : {}),
+            }}
+          />
         )
       }
     </RootFormControl>

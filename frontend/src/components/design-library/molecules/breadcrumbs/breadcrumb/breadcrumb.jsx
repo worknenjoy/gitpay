@@ -7,9 +7,6 @@ import { styled } from '@mui/material/styles'
 import { BreadcrumbRoot, BreadcrumbLink } from './breadcrumb.styles'
 import { useHistory } from 'react-router-dom'
 
-// styles moved to breadcrumb.styles.ts
-
-
 export const Breadcrumb = ({ task, user, project, organization }) => {
   const history = useHistory()
   const isProfile = history.location.pathname.includes('profile')
@@ -27,6 +24,7 @@ export const Breadcrumb = ({ task, user, project, organization }) => {
   }
 
   return (
+    completed ?
     <BreadcrumbRoot>
       <Breadcrumbs aria-label='breadcrumb' separator={<NavigateNextIcon />} fontSize='small'>
         {(user?.id && user?.id === taskUser?.id) ? (
@@ -62,7 +60,7 @@ export const Breadcrumb = ({ task, user, project, organization }) => {
           ...
         </Typography>
       </Breadcrumbs>
-    </BreadcrumbRoot>
+    </BreadcrumbRoot> : <Skeleton variant='text' />
   )
 
 }

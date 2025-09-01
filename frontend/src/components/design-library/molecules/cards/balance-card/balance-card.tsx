@@ -50,19 +50,18 @@ const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionPro
     <RootCard>
       <CardContent>
         {isLoading ? (
-          <>
-            <Skeleton variant="text" animation="wave" height={40} width="80%" />
+          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
             <Skeleton variant="text" animation="wave" height={40} width="60%" />
-            <Skeleton variant="rectangular" animation="wave" height={118} />
-          </>
+            <Skeleton variant="rectangular" animation="wave" width="40%" height={100} />
+          </div>
         ) : (
           <>
-      <NameText gutterBottom>
+            <NameText gutterBottom>
               {name}
-      </NameText>
-      <BalanceText>
+            </NameText>
+            <BalanceText>
               {convertedBalance}
-      </BalanceText>
+            </BalanceText>
           </>
         )}
       </CardContent>

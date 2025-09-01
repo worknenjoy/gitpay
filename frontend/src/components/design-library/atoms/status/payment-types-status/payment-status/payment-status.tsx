@@ -6,10 +6,11 @@ import {
   HelpOutline as QuestionInfoIcon,
   NotInterested as InactiveIcon
 } from '@mui/icons-material';
-import StyledStatus from './payment-status.styles';
+import { getPaymentStatusStyles } from './payment-status.styles';
+import { useTheme } from '@mui/material/styles';
 
 interface PaymentStatusProps {
-  status: string;
+  status: 'open' | 'pending' | 'succeeded' | 'failed' | 'expired' | 'canceled' | 'refunded' | 'unknown';
   completed?: boolean;
 }
 
@@ -17,15 +18,15 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({
   status,
   completed = true
 }) => {
+  const theme = useTheme();
+  const styles = getPaymentStatusStyles(theme);
   const statusList = [
     {
       status: 'open',
       label: 'Open',
       color: 'open',
       icon: (
-        <StyledStatus className="open">
-          <InfoIcon />
-        </StyledStatus>
+        <InfoIcon sx={styles.open} />
       )
     },
     {
@@ -33,9 +34,7 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({
       label: 'Pending',
       color: 'pending',
       icon: (
-        <StyledStatus className="pending">
-          <InfoIcon />
-        </StyledStatus>
+        <InfoIcon sx={styles.pending} />
       ),
       message: 'Your payment is pending. Please wait while we process it.'
     },
@@ -44,9 +43,7 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({
       label: 'Succeeded',
       color: 'succeeded',
       icon: (
-        <StyledStatus className="succeeded">
-          <ActiveIcon />
-        </StyledStatus>
+        <ActiveIcon />  
       )
     },
     {
@@ -54,9 +51,7 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({
       label: 'Failed',
       color: 'failed',
       icon: (
-        <StyledStatus className="failed">
-          <InactiveIcon />
-        </StyledStatus>
+        <InactiveIcon sx={styles.failed} />
       ),
       message: 'Your payment has failed. Please try again or contact support.'
     },
@@ -65,9 +60,7 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({
       label: 'Expired',
       color: 'expired',
       icon: (
-        <StyledStatus className="expired">
-          <InactiveIcon />
-        </StyledStatus>
+        <InactiveIcon sx={styles.expired} />
       )
     },
     {
@@ -75,9 +68,7 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({
       label: 'Canceled',
       color: 'canceled',
       icon: (
-        <StyledStatus className="canceled">
-          <InactiveIcon />
-        </StyledStatus>
+        <InactiveIcon sx={styles.canceled} />
       )
     },
     {
@@ -85,9 +76,7 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({
       label: 'Refunded',
       color: 'refunded',
       icon: (
-        <StyledStatus className="refunded">
-          <InfoIcon />
-        </StyledStatus>
+        <InfoIcon sx={styles.refunded} />
       )
     },
     {
@@ -95,9 +84,7 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({
       label: 'Unknown',
       color: 'unknown',
       icon: (
-        <StyledStatus className="unknown">
-          <QuestionInfoIcon />
-        </StyledStatus>
+        <QuestionInfoIcon sx={styles.unknown} />
       ),
       message: 'Your status is unknown. Please check back later.'
     }
@@ -105,16 +92,7 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({
 
   return (
     <BaseStatus
-      classes={{
-        open: 'open',
-        pending: 'pending',
-        succeeded: 'succeeded',
-        failed: 'failed',
-        expired: 'expired',
-        canceled: 'canceled',
-        refunded: 'refunded',
-        unknown: 'unknown'
-      }}
+      styles={styles}
       status={status}
       statusList={statusList}
       completed={completed}

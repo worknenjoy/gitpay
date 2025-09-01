@@ -15,15 +15,15 @@ const UserRoleField = ({ roles, onChange }) => {
 
   return (
     <Grid container spacing={2} alignContent="center" alignItems="center">
-  <Grid size={{ xs: 12, md: 2 }}>
-        <Typography variant="caption" color="textSecondary" style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+      <Grid size={{ xs: 12, md: 2 }}>
+        <Typography variant="caption" color="textSecondary" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <FormattedMessage id="user.types.roles.select.label" defaultMessage="Signup as: " />
           <Tooltip placement="right" title={<FormattedMessage id="user.types.roles.tooltip" defaultMessage="You can change this later." />}>
             <Help fontSize="small" />
           </Tooltip>
         </Typography>
       </Grid>
-  <Grid size={{ xs: 12, md: 10 }}>
+      <Grid size={{ xs: 12, md: 10 }}>
         <Checkboxes
           checkboxes={checkBoxes}
           includeSelectAll={true}
