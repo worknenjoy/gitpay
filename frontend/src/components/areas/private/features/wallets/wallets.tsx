@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Skeleton } from '@mui/material'
 import { messages } from '../../../public/features/task/messages/task-messages'
 import {
   Container,

@@ -51,18 +51,18 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>((
             variant="standard"
             InputLabelProps={{
               // Force shrink only when there's content; otherwise let MUI handle focus-based shrink
-              ...(inputComponent && (Boolean(value) || Boolean(defaultValue)) ? { shrink: true } : {}),
+              ...(inputComponent && (Boolean(value) || Boolean(defaultValue)) ? { shrink: true } : {})
             }}
             helperText={help ? (
               <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
             ) : undefined}
             InputProps={{
               ...(inputComponent ? { inputComponent } : {}),
-              ...(endAdornment ? { endAdornment } : {}),
+              ...(endAdornment ? { endAdornment } : {})
             }}
             inputProps={{
               ...inputProps,
-              ...(type === 'number' ? { min, max } : {}),
+              ...(type === 'number' ? { min, max } : {})
             }}
           />
         )

@@ -8,7 +8,6 @@ import Avatar from '@mui/material/Avatar'
 import Typography from '@mui/material/Typography'
 import { Forum as MessageIcon } from '@mui/icons-material'
 import nameInitials from 'name-initials'
-import { Skeleton } from '@mui/material'
 import IssueMessageAuthorDialog from '../../../molecules/dialogs/issue-message-author-dialog/issue-message-author-dialog'
 import {
   Dialog,

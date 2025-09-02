@@ -91,7 +91,7 @@ const Palette = {
       styleOverrides: {
         colorPrimary: {
           backgroundColor: '#4D7E6F'
-        },
+        }
         /*
         root: {
           backgroundColor: '#4D7E6F'
@@ -211,7 +211,7 @@ const Palette = {
           marginLeft: 10,
           backgroundColor: 'white',
           padding: 2,
-          zIndex: 2,
+          zIndex: 2
         },
         outlined: {
           margin: 0,
@@ -227,7 +227,7 @@ const Palette = {
           }
         }
       }
-    },
+    }
   }
 }
 

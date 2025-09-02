@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import Button from '../../../../atoms/buttons/button/button';
 import { Root, Message, IconContainer } from './empty-base.styles'
 

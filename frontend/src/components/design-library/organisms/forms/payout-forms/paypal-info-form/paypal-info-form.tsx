@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Typography, Skeleton } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { FormattedMessage, useIntl } from 'react-intl';
 import Button from '../../../../atoms/buttons/button/button';
 import Field from '../../../../atoms/inputs/fields/field/field';

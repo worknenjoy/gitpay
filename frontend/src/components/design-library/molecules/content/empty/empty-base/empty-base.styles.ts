@@ -27,6 +27,6 @@ export const IconContainer = styled('div')(({ theme }) => ({
   fontSize: 72,
   color: theme.palette.text.secondary,
   '& svg': {
-    fontSize: 'inherit',
+    fontSize: 'inherit'
   }
 }))
