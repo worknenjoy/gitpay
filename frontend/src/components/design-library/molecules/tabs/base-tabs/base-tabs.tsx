@@ -7,8 +7,12 @@ import {
 } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import {
+  Root,
   StyledCard,
-  StyledTabsVertical
+  StyledTabsColumn,
+  StyledTabsVertical,
+  TabPanelRoot,
+  TabPanelVertical
 } from './base-tabs.styles'
 
 interface TabPanelProps {
@@ -20,8 +24,10 @@ interface TabPanelProps {
 function TabPanel(props: TabPanelProps) {
   const { children, isVertical, withCard = true } = props;
 
+  const Comp = isVertical ? TabPanelVertical : TabPanelRoot;
+
   return (
-    <div role="tabpanel">
+    <Comp role="tabpanel">
       <Box p={0}>
         {withCard ? (
           <StyledCard elevation={0}>
@@ -32,7 +38,7 @@ function TabPanel(props: TabPanelProps) {
         ) : children}
 
       </Box>
-    </div>
+    </Comp>
   );
 }
 
@@ -82,15 +88,17 @@ const BaseTabs = ({
     }
   }, [history.location.pathname, tabs]);
 
+  const RootComp = isVertical ? Root : 'div';
+
   return (
-    <div>
+    <RootComp>
       <Tabs
         value={value}
         onChange={handleChange}
         textColor="secondary"
         indicatorColor="secondary"
         orientation={orientation}
-        {...(isVertical ? { component: StyledTabsVertical as any } : {})}
+        component={isVertical ? StyledTabsVertical : StyledTabsColumn}
       >
         {tabs.map((tab) => (
           <Tab
@@ -106,7 +114,7 @@ const BaseTabs = ({
       <TabPanel isVertical={isVertical} withCard={withCard}>
         {children}
       </TabPanel>
-    </div>
+    </RootComp>
   );
 }
 
