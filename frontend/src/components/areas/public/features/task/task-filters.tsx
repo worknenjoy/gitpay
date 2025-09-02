@@ -65,29 +65,27 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
     );
   };
 
-  const handleTabChange = (event: any) => {
+  const handleTabChange = async (event: any) => {
     const value = event.target.value as number;
     setTaskListState({ ...taskListState, tab: value });
     let filterPromise;
     switch (value) {
       case 0:
         history.push(baseUrl + "open");
-        filterPromise = filterTasks("status", "open");
+        filterPromise = await filterTasks("status", "open");
         break;
       case 1:
         history.push(baseUrl + "withBounties");
-        filterPromise = filterTasks("issuesWithBounties");
+        filterPromise = await filterTasks("issuesWithBounties");
         break;
       case 2:
         history.push(baseUrl + "contribution");
-        filterPromise = filterTasks("contribution");
+        filterPromise = await filterTasks("contribution");
         break;
       default:
-        filterPromise = filterTasks("all");
+        filterPromise = await filterTasks("all");
     }
-    filterPromise.then(() => {
-      // No need to update counts here
-    });
+    filterPromise;
   };
 
   return (

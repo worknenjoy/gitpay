@@ -142,7 +142,6 @@ const Wallets = ({
             <FormattedMessage id="general.wallets" defaultMessage="Wallets" />
           </Typography>
         </div>
-  <Skeleton variant="rectangular" height={118} animation="wave" />
         {wallet.data.id ? (
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
             <BalanceCard

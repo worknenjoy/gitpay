@@ -47,41 +47,39 @@ const PayoutSetingsBankAccount = ({
   }
 
   return (
-    <Skeleton variant="rectangular" width="100%" height={118}>
-      {
-        completed ? (
+
+
+    completed ? (
+      <>
+        {!data?.account_id ? (
           <>
-            {!data?.account_id ? (
+            {!country?.code ? (
               <>
-                {!country?.code ? (
-                  <>
-                    <EmptyBankAccount onActionClick={handleCountryPicker} />
-                    <CountryPicker
-                      open={openCountryPicker}
-                      onClose={handleCountryPickerClose}
-                      onSelectCountry={handleSelectCountry}
-                    />
-                  </>
-                ) : (
-                  <EmptyBase
-                    actionText={<FormattedMessage id="payout.settings.choose.country" defaultMessage="Choose country and continue" />}
-                    text={country.label}
-                    onActionClick={() => saveCountryAndContinue(country.code)}
-                    icon={<img width={48} alt={country.label} src={getCountryImage(country.image)} />}
-                    completed={completed}
-                  />
-                )
-                }
+                <EmptyBankAccount onActionClick={handleCountryPicker} />
+                <CountryPicker
+                  open={openCountryPicker}
+                  onClose={handleCountryPickerClose}
+                  onSelectCountry={handleSelectCountry}
+                />
               </>
             ) : (
-              <BankAccountTabs>
-                {children}
-              </BankAccountTabs>
-            )}
+              <EmptyBase
+                actionText={<FormattedMessage id="payout.settings.choose.country" defaultMessage="Choose country and continue" />}
+                text={country.label}
+                onActionClick={() => saveCountryAndContinue(country.code)}
+                icon={<img width={48} alt={country.label} src={getCountryImage(country.image)} />}
+                completed={completed}
+              />
+            )
+            }
           </>
-        ) : null
-      }
-    </Skeleton>
+        ) : (
+          <BankAccountTabs>
+            {children}
+          </BankAccountTabs>
+        )}
+      </>
+    ) : <Skeleton variant="rectangular" width="100%" height={118} />
   );
 }
 

@@ -14,6 +14,7 @@ const SidebarMenuPlaceholder: React.FC = () => {
           animation="wave"
           height={24}
           width={`${w}%`}
+          color="inherit"
         />
       ))}
     </Stack>

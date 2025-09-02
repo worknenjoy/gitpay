@@ -21,14 +21,16 @@ function TabPanel(props: TabPanelProps) {
   const { children, isVertical, withCard = true } = props;
 
   return (
-  <div role="tabpanel">
+    <div role="tabpanel">
       <Box p={0}>
-    {withCard ? <StyledCard elevation={0}>
-          <CardContent>
-            {children}
-          </CardContent>
-    </StyledCard> : children}
-        
+        {withCard ? (
+          <StyledCard elevation={0}>
+            <CardContent>
+              {children}
+            </CardContent>
+          </StyledCard>
+        ) : children}
+
       </Box>
     </div>
   );
@@ -36,7 +38,7 @@ function TabPanel(props: TabPanelProps) {
 
 type BaseTabsProps = {
   tabs: Array<{
-    label: string  | React.ReactNode;
+    label: string | React.ReactNode;
     value: string;
     link?: string;
   }>;
@@ -54,7 +56,7 @@ const BaseTabs = ({
   onChange,
   withCard = true,
   children
-}:BaseTabsProps) => {
+}: BaseTabsProps) => {
   const history = useHistory();
   const [value, setValue] = React.useState(activeTab);
 
@@ -82,7 +84,7 @@ const BaseTabs = ({
 
   return (
     <div>
-      <Tabs 
+      <Tabs
         value={value}
         onChange={handleChange}
         textColor="secondary"
@@ -91,13 +93,13 @@ const BaseTabs = ({
         {...(isVertical ? { component: StyledTabsVertical as any } : {})}
       >
         {tabs.map((tab) => (
-          <Tab 
+          <Tab
             key={tab.value}
             label={
               tab.label
             }
             onClick={(e) => handleTabClick(e, tab)}
-            value={tab.value} 
+            value={tab.value}
           />
         ))}
       </Tabs>

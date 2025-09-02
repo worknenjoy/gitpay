@@ -15,7 +15,7 @@ export const StyledCard = styled(Card)(({ theme }) => ({
 
 export const StyledTabsVertical = styled(Tabs)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.divider}`,
-  width: 280,
+  width: 200,
   alignItems: 'flex-end'
 }))
 

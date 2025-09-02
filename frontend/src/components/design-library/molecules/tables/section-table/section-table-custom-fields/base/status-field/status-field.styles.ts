@@ -16,23 +16,38 @@ export const classes = {
 export const StatusFieldRoot = styled('div')(({ theme }) => ({
   [`.${classes.pending}`]: {
     backgroundColor: orange[500],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   },
   [`.${classes.created}`]: {
     backgroundColor: green[500],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   },
   [`.${classes.in_transit}`]: {
     backgroundColor: orange[700],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   },
   [`.${classes.paid}`]: {
     backgroundColor: green[500],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   },
   [`.${classes.unknown}`]: {
     backgroundColor: theme.palette.grey[500],
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
   }
 }))
 

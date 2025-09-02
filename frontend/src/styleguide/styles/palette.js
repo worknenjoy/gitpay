@@ -92,9 +92,11 @@ const Palette = {
         colorPrimary: {
           backgroundColor: '#4D7E6F'
         },
+        /*
         root: {
           backgroundColor: '#4D7E6F'
         }
+        */
       }
     },
     MuiTabs: {
@@ -183,6 +185,7 @@ const Palette = {
           borderRadius: '3px',
           padding: '0px 12px',
           height: 52,
+          zIndex: 1,
           '&:focus': {
             border: '2px solid #353A42'
           }
@@ -208,7 +211,7 @@ const Palette = {
           marginLeft: 10,
           backgroundColor: 'white',
           padding: 2,
-          zIndex: 200,
+          zIndex: 2,
         },
         outlined: {
           margin: 0,
