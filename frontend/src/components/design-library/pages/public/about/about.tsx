@@ -10,9 +10,9 @@ import {
 import { AccountBalanceWallet, Work, Apps, Assignment, GroupWork } from '@mui/icons-material'
 import { useIntl, FormattedMessage } from 'react-intl'
 import messages from '../../../../areas/public/features/welcome/legacy/messages'
-const freelancerImage = require('images//collections/collection-flat-community.svg')
-const companiesImage = require('images//collections/collection-flat-companies.svg')
-const teamImage = require('images//welcome-teamwork.png')
+import freelancerImage from 'images/collections/collection-flat-community.svg'
+import companiesImage from 'images/collections/collection-flat-companies.svg'
+import teamImage from 'images/welcome-teamwork.png'
 
 import {
   MainTitle,

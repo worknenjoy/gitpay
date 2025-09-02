@@ -19,7 +19,7 @@ import Clientlist from './clientlist'
 import TeamCard from 'design-library/molecules/cards/team-card/TeamCard'
 import ContactRecruiterFormContainer from '../../../../../../containers/contact-recruiter-form'
 
-const deal = require('images/deal.png')
+import deal from 'images/deal.png'
 
 import {
   MainTitle,
@@ -33,11 +33,13 @@ import {
 // Still need to add in functionality for buttons
 // Export Styles to separate file to clean up code but left here for you to see for now
 
+import headhunterTeamMember1 from 'images/teams/headhunter-team-member1.png'
+
 const recruiterTeam = [
   {
     name: 'Alexandre Magno',
     description: 'Founder of Gitpay, and senior software engineer, sharing and helping developers to face the challenges of technical recruitment.',
-    image: require('images/teams/headhunter-team-member1.png'),
+  image: headhunterTeamMember1,
     linkedinUrl: 'https://www.linkedin.com/in/alexandremagnoteleszimerer/'
   }
 ]

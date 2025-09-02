@@ -21,17 +21,20 @@ import PrivacyPolicy from '../../areas/private/components/session/privacy-policy
 import TermsOfService from '../../areas/private/components/session/terms-of-service'
 import CookiePolicy from '../../areas/private/components/session/cookie-policy'
 
-const logoCompleteGray = require('images/logo-complete-gray.png')
-const logoWorknEnjoy = require('images/worknenjoy-logo.png')
+import logoCompleteGray from 'images/logo-complete-gray.png'
+import logoWorknEnjoy from 'images/worknenjoy-logo.png'
 
 class Bottom extends Component {
-  render () {
-    const { } = this.props
+  render() {
 
     return (
-      <div>
+      <div style={{
+        textAlign: 'center',
+        padding: 8,
+        backgroundColor: '#f1f0ea'
+      }}>
         <Container>
-          <Grid container spacing={ 3 }>
+          <Grid container spacing={3}>
             <Grid size={{ xs: 12, sm: 3 }}>
               <Typography component="div">
                 <strong>
@@ -46,8 +49,8 @@ class Bottom extends Component {
                   <Typography
                     variant="subtitle1"
                     component="div"
-                    style={ { display: 'block', width: '100%' } }
-                    onClick={ () => window.location.assign('/#/welcome') }
+                    style={{ display: 'block', width: '100%' }}
+                    onClick={() => window.location.assign('/#/welcome')}
                   >
                     <FormattedMessage
                       id="welcome.about.title"
@@ -59,8 +62,8 @@ class Bottom extends Component {
                   <Typography
                     variant="subtitle1"
                     component="div"
-                    style={ { display: 'block', width: '100%' } }
-                    onClick={ () => window.location.assign('/#/pricing') }
+                    style={{ display: 'block', width: '100%' }}
+                    onClick={() => window.location.assign('/#/pricing')}
                   >
                     <FormattedMessage
                       id="welcome.pricing.title"
@@ -72,8 +75,8 @@ class Bottom extends Component {
                   <Typography
                     variant="subtitle1"
                     component="div"
-                    style={ { display: 'block', width: '100%' } }
-                    onClick={ () => window.location.assign('/#/team') }
+                    style={{ display: 'block', width: '100%' }}
+                    onClick={() => window.location.assign('/#/team')}
                   >
                     <FormattedMessage
                       id="welcome.team.title"
@@ -85,8 +88,8 @@ class Bottom extends Component {
                   <Typography
                     variant="subtitle1"
                     component="div"
-                    style={ { display: 'block', width: '100%' } }
-                    onClick={ () => window.open('https://docs.gitpay.me/en') }
+                    style={{ display: 'block', width: '100%' }}
+                    onClick={() => window.open('https://docs.gitpay.me/en')}
                   >
                     <FormattedMessage
                       id="welcome.docs.title"
@@ -98,8 +101,8 @@ class Bottom extends Component {
                   <Typography
                     variant="subtitle1"
                     component="div"
-                    style={ { display: 'block', width: '100%' } }
-                    onClick={ () => window.location.assign('/#/tasks/open') }
+                    style={{ display: 'block', width: '100%' }}
+                    onClick={() => window.location.assign('/#/tasks/open')}
                   >
                     <FormattedMessage
                       id="welcome.explore.title"
@@ -123,25 +126,25 @@ class Bottom extends Component {
                 <BottomSectionDialog
                   title="Legal"
                   header="Privacy policy"
-                  subtitle={ 'Privacy Policy' }
+                  subtitle={'Privacy Policy'}
                   content={
-                    <PrivacyPolicy extraStyles={ false } />
+                    <PrivacyPolicy extraStyles={false} />
                   }
                 />
                 <BottomSectionDialog
                   title="Legal"
                   header="Terms of Service"
-                  subtitle={ 'Terms of Service' }
+                  subtitle={'Terms of Service'}
                   content={
-                    <TermsOfService extraStyles={ false } />
+                    <TermsOfService extraStyles={false} />
                   }
                 />
                 <BottomSectionDialog
                   title="Legal"
                   header="Cookie Policy"
-                  subtitle={ 'Cookie Policy' }
+                  subtitle={'Cookie Policy'}
                   content={
-                    <CookiePolicy extraStyles={ false } />
+                    <CookiePolicy extraStyles={false} />
                   }
                 />
               </List>
@@ -160,20 +163,20 @@ class Bottom extends Component {
               <SubscribeFromWrapper className="subscribe-form">
                 <SubscribeForm render />
               </SubscribeFromWrapper>
-              <div style={ { float: 'right' } }>
+              <div style={{ float: 'right' }}>
                 <BaseFooter
-                  style={ { display: 'flex', alignItems: 'center' } }
+                  style={{ display: 'flex', alignItems: 'center' }}
                 >
                   <div>
-                    <img src={ logoCompleteGray } width="100" />
+                    <img src={logoCompleteGray} width="100" />
                   </div>
                   <Typography
                     component="span"
-                    style={ {
+                    style={{
                       marginLeft: 10,
                       marginRight: 10,
                       display: 'inline-block'
-                    } }
+                    }}
                   >
                     <FormattedMessage
                       id="bottom.company.org"
@@ -181,11 +184,11 @@ class Bottom extends Component {
                     />
                   </Typography>
                   <a href="http://worknenjoy.com" target="_blank" rel="noreferrer">
-                    <img src={ logoWorknEnjoy } width="100" />
+                    <img src={logoWorknEnjoy} width="100" />
                   </a>
                 </BaseFooter>
-                <div style={ { textAlign: 'right' } }>
-                  <Typography variant={ 'caption' } component="span">
+                <div style={{ textAlign: 'right' }}>
+                  <Typography variant={'caption'} component="span">
                     <a href="http://worknenjoy.com">worknenjoy, Inc.</a> <br />
                     <abbr>MA: </abbr>
                     9450 SW Gemini Dr

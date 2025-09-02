@@ -48,12 +48,12 @@ import Constants from '../../../../../consts'
 import TaskDeadlineDrawer from 'design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer'
 import IssueContent from 'design-library/organisms/layouts/issue-content/issue-content'
 
-const taskCover = require('images/task-cover.png')
-const inviteCover = require('images/funds.png')
+import taskCover from 'images/task-cover.png'
+import inviteCover from 'images/funds.png'
 
-const bounty = require('images/bounty.png')
-const sharing = require('images/sharing.png')
-const notifications = require('images/notifications.png')
+import bounty from 'images/bounty.png'
+import sharing from 'images/sharing.png'
+import notifications from 'images/notifications.png'
 
 // Styled components
 const SidebarGrid = styled(Grid)(({ theme }) => ({

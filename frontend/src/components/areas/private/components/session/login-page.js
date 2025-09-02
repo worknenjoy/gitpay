@@ -45,7 +45,7 @@ const Content = styled.div`
   margin-top: 10px;
 `
 
-const logo = require('images/logo-complete.png')
+import logo from 'images/logo-complete.png'
 
 const LoginPage = ({
   addNotification,

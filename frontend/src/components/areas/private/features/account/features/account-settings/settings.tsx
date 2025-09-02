@@ -25,8 +25,8 @@ const messages = {
   'en': process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
 }
 
-const logoLangEn = require('images/united-states-of-america.png')
-const logoLangBr = require('images/brazil.png')
+import logoLangEn from 'images/united-states-of-america.png'
+import logoLangBr from 'images/brazil.png'
 
 const Title = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(2),

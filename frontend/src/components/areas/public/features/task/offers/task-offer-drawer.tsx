@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 import { SpanText } from './task-offer-drawer.styles';
 import TaskOrderInvoiceConfirm from '../task-order-invoice-confirm';
 import MessageAssignment from '../assignment/messageAssignment';
-const taskCover = require('images/task-cover.png')
+import taskCover from 'images/task-cover.png'
 
 // styles moved to task-offer-drawer.styles.ts
 

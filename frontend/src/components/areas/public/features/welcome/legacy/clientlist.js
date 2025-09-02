@@ -27,9 +27,9 @@ const HeroContent = styled('div')(({ theme }) => ({
   padding: `0 0 ${theme.spacing(4)}px`,
 }))
 
-const clientimg1 = require('images/clients/electron-logo.png')
-const clientimg2 = require('images/clients/etherpad-logo.png')
-const clientimg3 = require('images/clients/sitespeedio-logo.png')
+import clientimg1 from 'images/clients/electron-logo.png'
+import clientimg2 from 'images/clients/etherpad-logo.png'
+import clientimg3 from 'images/clients/sitespeedio-logo.png'
 
 const clients = [
   {

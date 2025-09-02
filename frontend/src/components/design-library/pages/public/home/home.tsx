@@ -20,9 +20,9 @@ import { useHistory } from 'react-router-dom'
 
 import messages from '../../../../areas/public/features/welcome/legacy/messages'
 
-const freelancerImage = require('images/collections/collection-flat-build.svg')
-const citySoftware = require('images/collections/collection-flat-background.svg')
-const deal = require('images/collections/collection-flat-works.svg')
+import freelancerImage from 'images/collections/collection-flat-build.svg'
+import citySoftware from 'images/collections/collection-flat-background.svg'
+import deal from 'images/collections/collection-flat-works.svg'
 
 import PublicBase from '../../../templates/base/public-base/public-base'
 

@@ -17,9 +17,9 @@ import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
 import messages from './messages'
 // removed withStyles/theme styles usage
 
-const freelancerImage = require('images/collections/collection-flat-build.svg')
-const citySoftware = require('images/collections/collection-flat-background.svg')
-const deal = require('images/collections/collection-flat-works.svg')
+import freelancerImage from 'images/collections/collection-flat-build.svg'
+import citySoftware from 'images/collections/collection-flat-background.svg'
+import deal from 'images/collections/collection-flat-works.svg'
 
 import {
   MainTitle,

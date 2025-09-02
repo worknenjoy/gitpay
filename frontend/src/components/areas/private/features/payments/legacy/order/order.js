@@ -9,7 +9,7 @@ import '../../../../../checkout/checkout-form'
 import TopBar from 'design-library/organisms/topbar/topbar'
 import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
 
-// const paymentIcon = require('images/payment-icon-alt.png')
+// import paymentIcon from 'images/payment-icon-alt.png'
 
 const Root = styled(Grid)(() => ({
   flexGrow: 1,

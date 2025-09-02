@@ -9,7 +9,7 @@ import { Chip } from '@mui/material';
 import { blue, green, grey, orange } from '@mui/material/colors';
 import { paymentProviders, paymentSources } from '../../../../../consts';
 
-const logoPaypal = require('images/paypal-icon.png').default;
+import logoPaypal from 'images/paypal-icon.png';
 
 type statusProps = {
   provider: string;

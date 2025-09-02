@@ -20,8 +20,8 @@ import PrivacyPolicy from '../../../../areas/private/components/session/privacy-
 import TermsOfService from '../../../../areas/private/components/session/terms-of-service'
 import CookiePolicy from '../../../../areas/private/components/session/cookie-policy'
 
-const logoCompleteGray = require('images/logo-complete-gray.png')
-const logoWorknEnjoy = require('images/worknenjoy-logo.png')
+import logoCompleteGray from 'images/logo-complete-gray.png'
+import logoWorknEnjoy from 'images/worknenjoy-logo.png'
 
 // Styles were migrated to styled components in bottom.styles.ts
 

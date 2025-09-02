@@ -40,7 +40,7 @@ import TaskPaymentCancel from './task-payment-cancel'
 import TaskOrderDetails from './order/task-order-details'
 import TaskOrderTransfer from './order/task-order-transfer'
 
-const logoGithub = require('images/github-logo.png')
+import logoGithub from 'images/github-logo.png'
 
 const PlaceholderDiv = styled.div`
  img {
