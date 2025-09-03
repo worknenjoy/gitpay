@@ -31,7 +31,7 @@ export default function TaskInviteCard ({ id, onInvite, onFunding, user }) {
   }
 
   return (
-    <div>
+    <div style={{margin: '20px 0'}}>
       <Card className={ classes.root }>
         <CardContent>
           <Typography gutterBottom variant='h5' component='h2'>

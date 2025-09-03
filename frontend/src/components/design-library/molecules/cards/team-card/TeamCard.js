@@ -22,7 +22,7 @@ const Root = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'row',
-  flexFlow: 'column wrap',
+  flexFlow: 'wrap',
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column'
   }
