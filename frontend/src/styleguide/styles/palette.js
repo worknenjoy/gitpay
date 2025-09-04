@@ -137,7 +137,7 @@ const Palette = {
             // color: 'white'
           }
           */
-        },
+        }
       }
     },
     MuiListItemIcon: {

@@ -1,5 +1,5 @@
 
-import { MenuList, Typography, ListItemIcon, ListItemText } from '@mui/material'
+import { MenuList, Typography, ListItemIcon } from '@mui/material'
 import React from 'react'
 import { MenuItemStyled, Primary, Category } from './side-menu-items.styles'
 
