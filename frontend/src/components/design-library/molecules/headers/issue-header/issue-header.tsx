@@ -104,13 +104,13 @@ const IssueHeader = ({
 
   return (
     <TaskHeaderContainer>
-  <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+      <Grid size={{ xs: 12, sm: 12, md: 12 }}>
         <Breadcrumb task={task} user={user} project={project} organization={organization} />
         {
           !task.completed ? (
-            <Skeleton variant="text" animation="wave" style={{ marginTop: 32, marginBottom: 26, width: '80%' }} />
+            <Skeleton variant="text" animation="wave" style={{ marginTop: 32, marginBottom: 26 }} />
           ) : (
-            <div style={{ marginTop: 32, marginBottom: 26, width: '80%' }}>
+            <div style={{ marginTop: 12, marginBottom: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="h5" gutterBottom>
                   <strong>
@@ -203,7 +203,7 @@ const IssueHeader = ({
                     href={task.data.url}
                     style={{ textDecoration: 'underline' }}
                   >
-                    {task.data.provider} <img width="12" src={task.data.provider === 'github' ? logoGithub : logoBitbucket} style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, verticalAlign: 'bottom' }} />
+                    {task.data.provider} <img width="18" src={task.data.provider === 'github' ? logoGithub : logoBitbucket} style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, verticalAlign: 'middle' }} />
                   </a>
                   by {' '}
                   <a
@@ -211,8 +211,8 @@ const IssueHeader = ({
                   >
                     {task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.login : task.data.metadata && task.data.metadata.user}
                     <img
-                      style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, verticalAlign: 'bottom' }}
-                      width="16"
+                      style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, verticalAlign: 'middle' }}
+                      width="18"
                       src={task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.avatar_url : ''}
                     />
                   </a>

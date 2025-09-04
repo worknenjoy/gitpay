@@ -51,7 +51,7 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task, listOrde
           <Typography type='caption'>
             <FormattedMessage id='task.bounties.order.transfer.message' defaultMessage='You can transfer the bounty paid to one of these issues you created:' />
           </Typography>
-          <div className={ classes.root }>
+          <div>
             {!tasks.completed ? (
               <div style={{overflowY: 'hidden', height: '65vh', margin: '20px 0' }}>
                 <Skeleton variant="rectangular" height={48} animation="wave" />

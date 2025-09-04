@@ -24,7 +24,7 @@ export const Breadcrumb = ({ task, user, project, organization }) => {
   }
 
   return (
-    completed ?
+    completed || projectCompleted || organizationCompleted ?
     <BreadcrumbRoot>
       <Breadcrumbs aria-label='breadcrumb' separator={<NavigateNextIcon />} fontSize='small'>
         {(user?.id && user?.id === taskUser?.id) ? (

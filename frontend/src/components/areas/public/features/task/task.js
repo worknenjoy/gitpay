@@ -103,8 +103,6 @@ const StatusChip = styled(Chip, { shouldForwardProp: prop => prop !== 'status' }
 
 const StatusAvatarDot = styled(Avatar, { shouldForwardProp: prop => prop !== 'status' })(
   ({ theme, status }) => ({
-    width: 12,
-    height: 12,
     backgroundColor: status === 'closed' ? theme.palette.error.main : theme.palette.primary.success,
   })
 )
@@ -612,7 +610,7 @@ function Task(props) {
                 <FormattedMessage id='task.value.label' defaultMessage='Value offered' />
               </Typography>
               <div>
-                <MoneyIcon />
+                <MoneyIcon style={{ verticalAlign: 'middle' }} />
                 <Typography variant='h5' component="span" sx={{ verticalAlign: 'middle', ml: 1 }}>
                   {task.values.available}
                   {task.data.paid && <Chip sx={{ ml: 1 }} size='small' label='paid' />}

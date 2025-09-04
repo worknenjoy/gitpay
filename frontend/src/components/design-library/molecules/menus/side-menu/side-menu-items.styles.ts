@@ -1,12 +1,18 @@
-import { MenuItem } from '@mui/material'
+import { ListItemText, MenuItem } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
   marginTop: 10,
-  marginBottom: 10
+  marginBottom: 10,
+  '&.Mui-selected': {
+    backgroundColor: theme.palette.action.selected,
+    '&:hover': {
+      backgroundColor: theme.palette.action.hover
+    }
+  }
 }))
 
-export const Primary = styled('span')(({ theme }) => ({
+export const Primary = styled(ListItemText)(({ theme }) => ({
   color: theme.palette.primary.contrastText,
   fontSize: '11px !important',
   fontWeight: 500

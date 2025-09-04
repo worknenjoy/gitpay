@@ -1,3 +1,4 @@
+import { Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 export const CountryContainer = styled('div')(({ theme }) => ({
@@ -14,7 +15,7 @@ export const CountryContainer = styled('div')(({ theme }) => ({
   }
 }))
 
-export const CountryItem = styled('div')(({ theme }) => ({
+export const CountryItem = styled(Button)(({ theme }) => ({
   display: 'inline-block',
   textAlign: 'center',
   padding: 25,

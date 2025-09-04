@@ -330,13 +330,13 @@ class CustomPaginationActionsTable extends React.Component {
                           </div>
                         </TableCell>
                         <TableCell sx={{ p: 0.625 }}>
-                          <div style={{ width: 80 }}>
+                          <div style={{ width: 100 }}>
                             <Chip 
                               label={this.props.intl.formatMessage(Constants.STATUSES[n.status])}
                               avatar={<Avatar sx={{ width: 12, height: 12, bgcolor: n.status === 'closed' ? 'error.main' : 'success.main' }}>{' '}</Avatar>}
                               variant="outlined"
                               color={n.status === 'closed' ? 'error' : 'success'}
-                              sx={{ mb: 1, verticalAlign: 'middle' }}
+                              
                             />
                           </div>
                         </TableCell>

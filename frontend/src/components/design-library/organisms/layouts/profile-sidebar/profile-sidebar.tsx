@@ -36,7 +36,7 @@ const ProfileSidebar = ({
       setSelected(4)
     } else if (path.includes('/profile/wallets')) {
       setSelected(5)
-   } else if (path.includes('/profile/claims')) {
+    } else if (path.includes('/profile/claims')) {
       setSelected(6)
     } else if (path.includes('/profile/payouts')) {
       setSelected(7)
@@ -50,8 +50,8 @@ const ProfileSidebar = ({
   }, [history.location.pathname])
 
   return (
-      <Grid size={{ xs: 12, md: 2 }}>
-         <SideMenu
+    <Grid size={{ xs: 12, md: 2 }}>
+      <SideMenu
         completed={completed}
         menuItems={
           [
@@ -144,7 +144,7 @@ const ProfileSidebar = ({
                 }
               ]
             }
-            
+
           ]
         }
       />

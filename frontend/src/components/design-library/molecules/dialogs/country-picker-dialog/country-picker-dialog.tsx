@@ -35,7 +35,7 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
       const imageModule = require(`images/countries/${item.image}.png`);
       const countryImageSrc = imageModule.default || imageModule;
       return (
-        <Button
+        <CountryItem
           key={item.code}
           style={{
             display: 'flex',
@@ -45,18 +45,16 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
           }}
           variant={currentCountry.code === item.code ? 'outlined' : 'text'}
           onClick={() => handleCountry(item)}
-          component={CountryItem as any}
         >
           <img
             width="48"
-            style={{ marginRight: 10 }}
             src={countryImageSrc}
             alt={item.country}
           />
           <Typography component="span" gutterBottom>
             {item.country}
           </Typography>
-        </Button>
+        </CountryItem>
       );
     });
   };

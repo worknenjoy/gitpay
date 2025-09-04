@@ -28,9 +28,9 @@ const IssueContent = ({ user, project, organization, updateTask, reportTask, onD
         reportTask={reportTask}
         handleDeleteTask={onDeleteTask}
       />
-    <DescriptionHeading variant="subtitle1">
+      <DescriptionHeading variant="subtitle1">
         <FormattedMessage id="task.info.description" defaultMessage="Description" />
-    </DescriptionHeading>
+      </DescriptionHeading>
       {
         !task.completed ? (
           <>
@@ -41,7 +41,7 @@ const IssueContent = ({ user, project, organization, updateTask, reportTask, onD
             <Skeleton variant="text" animation="wave" width="100%" />
           </>
         ) : (
-      <IssueContentText variant="body1">
+          <IssueContentText variant="body1">
             <ShowMoreText
               lines={8}
               more={
@@ -66,7 +66,7 @@ const IssueContent = ({ user, project, organization, updateTask, reportTask, onD
               {task.data.description && parse(marked(task.data.description))}
             </ShowMoreText>
 
-      </IssueContentText>
+          </IssueContentText>
         )
       }
       <IssueAuthorList
