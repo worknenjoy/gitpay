@@ -74,7 +74,6 @@
     "jest-cli": "^29.4.1",
     "jest-webpack": "^0.5.1",
     "moxios": "^0.4.0",
-    "sitemap": "^8.0.0",
     "ts-jest": "^29.4.1",
     "typescript": "^5.0.2",
     "webpack-dev-server": "^4.11.1"
@@ -167,6 +166,7 @@
     "redux-promise": "^0.5.3",
     "redux-thunk": "^3.1.0",
     "reselect": "^3.0.1",
+    "sitemap": "^8.0.0",
     "stream-browserify": "^3.0.0",
     "style-loader": "^3.3.1",
     "styled-components": "^5.3.6",
