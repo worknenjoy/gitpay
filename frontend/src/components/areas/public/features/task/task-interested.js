@@ -1,6 +1,6 @@
 import React from 'react'
-import Avatar from '@material-ui/core/Avatar'
-import AvatarGroup from '@material-ui/lab/AvatarGroup'
+import Avatar from '@mui/material/Avatar'
+import AvatarGroup from '@mui/lab/AvatarGroup'
 
 export default function TaskInterested ({ assigns }) {
   return (

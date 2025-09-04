@@ -5,25 +5,17 @@ import nameInitials from 'name-initials'
 import MomentComponent from 'moment'
 import classNames from 'classnames'
 
-import {
-  withStyles,
-  Avatar,
-  Typography,
-  Tooltip,
-  Card,
-  CardHeader
-} from '@material-ui/core'
-import UserIcon from '@material-ui/icons/AccountCircle'
+import { Avatar, Typography, Tooltip, Card, CardHeader } from '@mui/material'
+import { styled } from '@mui/material/styles'
+import UserIcon from '@mui/icons-material/AccountCircle'
 
 import AssignActions from './assignment/AssignActions'
 import RemoveAssignment from './assignment/RemoveAssignment'
 
-const styles = theme => ({
-  main: {
-    marginTop: 10,
-    marginBottom: 10
-  }
-})
+const Main = styled('div')(({ theme }) => ({
+  marginTop: 10,
+  marginBottom: 10
+}))
 
 class TaskAssigned extends Component {
   constructor (props) {
@@ -56,7 +48,7 @@ class TaskAssigned extends Component {
   }
 
   render () {
-    const { user, loggedUser, classes, isOwner, task, assign, removeAssignment, assignTask, messageTask, createOrder } = this.props
+  const { user, loggedUser, isOwner, task, assign, removeAssignment, assignTask, messageTask, createOrder } = this.props
     const hasAssignedUser = assign.id === task.assigned
     const updatedAtTimeString = MomentComponent(user.updated_at).utc().format('DD/MM/YYYY hh:mm A')
     const timePlaceholder = (
@@ -66,7 +58,7 @@ class TaskAssigned extends Component {
     )
 
     return (
-      <div className={ classes.main }>
+  <Main>
         <Card raised={ false }>
           <CardHeader
             avatar={
@@ -91,7 +83,7 @@ class TaskAssigned extends Component {
                       }
 
                       { !user.picture_url &&
-                        <Avatar className={ classNames(classes.avatar) } alt={ user.username || '' } src=''>
+                        <Avatar alt={ user.username || '' } src=''>
                           { user.username ? nameInitials(user.username) : <UserIcon /> }
                         </Avatar>
                       }
@@ -122,9 +114,9 @@ class TaskAssigned extends Component {
           />
         </Card>
 
-      </div>
+  </Main>
     )
   }
 }
 
-export default withStyles(styles)(TaskAssigned)
+export default TaskAssigned

@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Select, MenuItem, Chip, FormControl } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { AppBar, Toolbar, Select, MenuItem, Chip, FormControl } from '@mui/material';
 import { useIntl, defineMessages } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import Labels from '../../../../../containers/label';
 import Language from '../../../../../containers/language';
 
-const useStyles = makeStyles((theme) => ({
-  select: {
-    backgroundColor: 'transparent'
-  },
-  chip: {
-    marginLeft: theme.spacing(1),
-  },
-  chipActive: {
-    marginLeft: theme.spacing(1),
-    color: theme.palette.primary.dark,
-    borderColor: theme.palette.primary.light,
-  },
-}));
+const classesStatic = {
+  select: { backgroundColor: 'transparent' },
+  chip: { marginLeft: 8 },
+  chipActive: { marginLeft: 8, color: '#1a237e', borderColor: '#90caf9' }
+} as const;
 
 const messages = defineMessages({
   allTasks: {
@@ -48,7 +39,7 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
   tasks,
   filteredTasks,
 }) => {
-  const classes = useStyles();
+  const classes = classesStatic;
   const intl = useIntl();
   const history = useHistory();
 
@@ -74,29 +65,27 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
     );
   };
 
-  const handleTabChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleTabChange = async (event: any) => {
     const value = event.target.value as number;
     setTaskListState({ ...taskListState, tab: value });
     let filterPromise;
     switch (value) {
       case 0:
         history.push(baseUrl + "open");
-        filterPromise = filterTasks("status", "open");
+        filterPromise = await filterTasks("status", "open");
         break;
       case 1:
         history.push(baseUrl + "withBounties");
-        filterPromise = filterTasks("issuesWithBounties");
+        filterPromise = await filterTasks("issuesWithBounties");
         break;
       case 2:
         history.push(baseUrl + "contribution");
-        filterPromise = filterTasks("contribution");
+        filterPromise = await filterTasks("contribution");
         break;
       default:
-        filterPromise = filterTasks("all");
+        filterPromise = await filterTasks("all");
     }
-    filterPromise.then(() => {
-      // No need to update counts here
-    });
+    filterPromise;
   };
 
   return (
@@ -106,7 +95,7 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
           <Select
             value={taskListState.tab}
             onChange={handleTabChange}
-            className={classes.select}
+            sx={classes.select}
             variant="outlined"
           >
             <MenuItem value={0}>
@@ -115,7 +104,7 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
                 label={allTasksCount}
                 size="small"
                 variant="outlined"
-                className={taskListState.tab === 0 ? classes.chipActive : classes.chip}
+                sx={taskListState.tab === 0 ? classes.chipActive : classes.chip}
               />
             </MenuItem>
             <MenuItem value={1}>
@@ -124,7 +113,7 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
                 label={withBountiesCount}
                 size="small"
                 variant="outlined"
-                className={taskListState.tab === 1 ? classes.chipActive : classes.chip}
+                sx={taskListState.tab === 1 ? classes.chipActive : classes.chip}
               />
             </MenuItem>
             <MenuItem value={2}>
@@ -133,7 +122,7 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
                 label={noBountiesCount}
                 size="small"
                 variant="outlined"
-                className={taskListState.tab === 2 ? classes.chipActive : classes.chip}
+                sx={taskListState.tab === 2 ? classes.chipActive : classes.chip}
               />
             </MenuItem>
           </Select>

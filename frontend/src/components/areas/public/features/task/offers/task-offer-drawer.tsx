@@ -1,17 +1,13 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer';
-import { makeStyles, Typography, } from '@material-ui/core';
+import { Typography } from '@mui/material';
+import { SpanText } from './task-offer-drawer.styles';
 import TaskOrderInvoiceConfirm from '../task-order-invoice-confirm';
 import MessageAssignment from '../assignment/messageAssignment';
-const taskCover = require('images/task-cover.png')
+import taskCover from 'images/task-cover.png'
 
-const useStyles = makeStyles(theme => ({
-  spanText: {
-    display: 'inline-block',
-    verticalAlign: 'middle'
-  },
-}));
+// styles moved to task-offer-drawer.styles.ts
 
 type TaskOfferDrawerProps = {
   issue: any;
@@ -41,7 +37,6 @@ const TaskOfferDrawer = ({
   assigns
 }: TaskOfferDrawerProps
 ) => {
-  const classes = useStyles();
 
   const { data } = issue
   const allOffers = data?.Offers || []
@@ -138,9 +133,9 @@ const TaskOfferDrawer = ({
         introMessage={
           <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage={'Please apply only if you\'re able to do it and if you\'re available and committed to finish in the deadline.'}>
             {(msg) => (
-              <span className={classes.spanText}>
+              <SpanText>
                 {msg}
-              </span>
+              </SpanText>
             )}
           </FormattedMessage>
         }
@@ -157,9 +152,9 @@ const TaskOfferDrawer = ({
         simpleInfoText={
           <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
             {(msg) => (
-              <span className={classes.spanText}>
+              <SpanText>
                 {msg}
-              </span>
+              </SpanText>
             )}
           </FormattedMessage>
         }

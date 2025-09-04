@@ -1,25 +1,8 @@
 
 import React from 'react';
-import { Chip, Tooltip, Typography, withStyles } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
-
-import { Theme, createStyles } from '@material-ui/core/styles';
-
-const styles = (theme: Theme) =>
-  createStyles({
-    root: {
-      display: 'flex',
-      flexDirection: 'column'
-    },
-    chipContainer: {
-      marginTop: 12,
-      marginBottom: 12,
-      width: '100%'
-    },
-    chip: {
-      marginRight: theme.spacing(1)
-    }
-  });
+import { Tooltip, Typography } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
+import { Root, ChipContainer, SpacedChip } from './pickup-tag-list.styles';
 
   const tags = [
     {
@@ -70,22 +53,27 @@ const styles = (theme: Theme) =>
     }
   ]
 
-const PickupTagList = ({ classes, onPickItem, primaryText, secondaryText }) => {
+type PickupTagListProps = {
+  onPickItem: (value: number) => void;
+  primaryText: React.ReactNode;
+  secondaryText: React.ReactNode;
+}
+
+const PickupTagList = ({ onPickItem, primaryText, secondaryText }: PickupTagListProps) => {
   return (
-    <div className={classes.root}>
-      <div className={classes.chipContainer}>
+    <Root>
+      <ChipContainer>
         <Typography variant="subtitle2">
           {primaryText}
         </Typography>
         <Typography variant="body1" color="textSecondary" gutterBottom>
           {secondaryText}
         </Typography>
-        <div className={classes.chipContainer}>
+        <ChipContainer>
           {tags.map((tag) => (
-            <Chip
+            <SpacedChip
               key={tag.id}
               label={tag.name}
-              className={classes.chip}
               onClick={() => onPickItem(tag.value)}
               icon={tag?.info && (
               <Tooltip title={tag.info}>
@@ -94,10 +82,10 @@ const PickupTagList = ({ classes, onPickItem, primaryText, secondaryText }) => {
               )}
             />
           ))}
-        </div>
-      </div>
-    </div>
+        </ChipContainer>
+      </ChipContainer>
+    </Root>
   );
 }
 
-export default withStyles(styles)(PickupTagList)
+export default PickupTagList

@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import SendSolutionForm from '../send-solution-form'
 import {
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import { validAccount } from '../../../../../../utils/valid-account'
 import AccountRequirements from 'design-library/atoms/alerts/account-requirements/account-requirements'

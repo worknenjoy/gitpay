@@ -1,63 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import ReactPlaceholder from 'react-placeholder';
-import { makeStyles } from '@material-ui/core/styles'
+import { Skeleton } from '@mui/material'
 
-import {
-  Table,
-  TableHead,
-  TableBody,
-  TableCell,
-  TableFooter,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-  Typography,
-  Paper
-} from '@material-ui/core';
+import { TableHead, TableCell, TableBody, TableFooter, TablePagination, TableRow, TableSortLabel, Typography } from '@mui/material';
+import { RootPaper, TableWrapper, StyledTable, StyledTableCell } from './section-table.styles'
 
 import TablePaginationActions from './section-table-pagination-actions/section-table-pagination-actions';
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(3)
-  },
-  table: {
-    minWidth: 500
-  },
-  tableCell: {
-    root: {
-      padding: 5
-    }
-  },
-  tableWrapper: {
-    overflowX: 'auto'
-  },
-  chipStatusSuccess: {
-    marginBottom: theme.spacing(1),
-    verticalAlign: 'middle',
-    backgroundColor: 'transparent',
-    color: theme.palette.primary.main
-  },
-  chipStatusClosed: {
-    marginBottom: theme.spacing(1),
-    verticalAlign: 'middle',
-    backgroundColor: 'transparent',
-    color: theme.palette.error.main
-  },
-  avatarStatusSuccess: {
-    width: theme.spacing(0),
-    height: theme.spacing(0),
-    backgroundColor: theme.palette.primary.main
-  },
-  avatarStatusClosed: {
-    width: theme.spacing(0),
-    height: theme.spacing(0),
-    backgroundColor: theme.palette.error.main
-  }
-}));
 
 type MetaDataProps = {
   numeric: boolean,
@@ -66,7 +14,6 @@ type MetaDataProps = {
 };
 
 const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {} }) => {
-  const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [sortedBy, setSortedBy] = useState(null);
@@ -189,28 +136,32 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
 
   if (tableData.completed && tableData.data.length === 0) {
     return (
-      <Paper className={classes.root}>
+  <RootPaper>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
           <Typography variant="caption">
             <FormattedMessage id="task.table.body.noData" defaultMessage="No data" />
           </Typography>
         </div>
-      </Paper>
+  </RootPaper>
     );
   }
 
-  const TableRowPlaceholder = (
+  const TableRowPlaceholder: React.FC = () => (
     <React.Fragment>
-      {[0, 1, 2, 3, 4, 5].map(() => (
-        <TableRow>
-          {[0, 1, 2, 3, 4, 5].map(() => (
-            <TableCell className={classes.tableCell}>
+      {[0, 1, 2, 3, 4, 5].map((_, rowIndex) => (
+        <TableRow key={rowIndex}>
+          {[0, 1, 2, 3, 4, 5].map((_, cellIndex) => (
+            <StyledTableCell key={cellIndex}>
               <div style={{ width: 80, padding: '8px 4px' }}>
-                <ReactPlaceholder showLoadingAnimation type="text" rows={1} ready={tableData.completed}>
-                  <div />
-                </ReactPlaceholder>
+                {
+                  !tableData.completed ? (
+                    <Skeleton variant="text" animation="wave" />
+                  ) : (
+                    <div />
+                  )
+                }
               </div>
-            </TableCell>
+            </StyledTableCell>
           ))}
         </TableRow>
       ))}
@@ -218,31 +169,39 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
   );
 
   return (
-    <Paper className={classes.root}>
-      <div className={classes.tableWrapper}>
-        <Table className={classes.table}>
+    <RootPaper>
+      <TableWrapper>
+        <StyledTable>
           <TableHeadCustom />
           <TableBody>
-            <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation customPlaceholder={TableRowPlaceholder} ready={tableData.completed}>
-                {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n) => (
-                <TableRow key={n.id}>
-                  {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
-                  <TableCell key={fieldId} className={classes.tableCell}>
-                    <ReactPlaceholder showLoadingAnimation type="text" rows={1} ready={tableData.completed}>
-                    <div>
-                      {customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](n) : n[fieldId]}
-                    </div>
-                    </ReactPlaceholder>
-                  </TableCell>
-                  ))}
-                </TableRow>
-                ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 48 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </ReactPlaceholder>
+            {
+              !tableData.completed ? (
+                <TableRowPlaceholder />
+              ) : (
+                sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n) => (
+                  <TableRow key={n.id}>
+                    {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
+                    <StyledTableCell key={fieldId}>
+                      {
+                        !tableData.completed ? (
+                          <Skeleton variant="text" animation="wave" />
+                        ) : (
+                          <div>
+                            {customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](n) : n[fieldId]}
+                          </div>
+                        )
+                      }
+                    </StyledTableCell>
+                    ))}
+                  </TableRow>
+                ))
+              )
+            }
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 48 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
           </TableBody>
           <TableFooter>
             <TableRow>
@@ -257,9 +216,9 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
               />
             </TableRow>
           </TableFooter>
-        </Table>
-      </div>
-    </Paper>
+        </StyledTable>
+      </TableWrapper>
+    </RootPaper>
   );
 };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 
 type BaseTitleProps = {
   title: string | React.ReactNode; // Allow title to be a string or a React node

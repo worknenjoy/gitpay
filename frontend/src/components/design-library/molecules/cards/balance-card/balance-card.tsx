@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactPlaceholder from 'react-placeholder';
-import { Button, Card, CardContent, CardActions, Typography, makeStyles } from '@material-ui/core';
+import { Button, CardContent, CardActions, Skeleton } from '@mui/material';
 import currencyMap from './currency-map';
+import { RootCard, Balance as BalanceText, Name as NameText } from './balance-card.styles'
 
 
 //Function to convert currency code to symbol
@@ -28,21 +28,7 @@ export const convertStripeAmountByCurrency = (amount, currency) => {
   return (amount / Math.pow(10, places)).toFixed(places);
 };
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 500,
-    margin: 10,
-    textAlign: 'right',
-    padding: 10
-  },
-  balance: {
-    fontSize: 32,
-    fontWeight: 'bold'
-  },
-  name: {
-    fontSize: 18
-  }
-});
+// styles migrated to balance-card.styles.ts
 
 type BalanceCardProps = {
   name: string | React.ReactNode;
@@ -55,27 +41,29 @@ type BalanceCardProps = {
 }
 
 const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionProps, completed }: BalanceCardProps) => {
-  const classes = useStyles();
 
   const convertedBalance = `${currencyCodeToSymbol(currency)} ${convertStripeAmountByCurrency(balance, currency)}`
 
-  return (
+  const isLoading = completed === false;
 
-    <Card className={classes.root}>
+  return (
+    <RootCard>
       <CardContent>
-        <ReactPlaceholder
-          showLoadingAnimation={true}
-          type="text"
-          ready={completed}
-          rows={2}
-        >
-          <Typography className={classes.name} color="textSecondary" gutterBottom>
-            {name}
-          </Typography>
-          <Typography className={classes.balance} color="primary">
-            {convertedBalance}
-          </Typography>
-        </ReactPlaceholder>
+        {isLoading ? (
+          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
+            <Skeleton variant="text" animation="wave" height={40} width="60%" />
+            <Skeleton variant="rectangular" animation="wave" width="40%" height={100} />
+          </div>
+        ) : (
+          <>
+            <NameText gutterBottom>
+              {name}
+            </NameText>
+            <BalanceText>
+              {convertedBalance}
+            </BalanceText>
+          </>
+        )}
       </CardContent>
       {onAdd && action && (
         <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -90,9 +78,7 @@ const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionPro
           </Button>
         </CardActions>
       )}
-
-    </Card>
-
+    </RootCard>
   );
 };
 

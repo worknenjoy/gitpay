@@ -1,10 +1,25 @@
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, TextField, FormControl, FormHelperText, Typography, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core'
+import { 
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  TextField,
+  FormHelperText,
+  FormControl,
+  Typography,
+  FormGroup,
+  FormControlLabel,
+  Checkbox
+} from '@mui/material'
 import isGithubUrl from 'is-github-url'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 import api from '../../../../../consts'
+import { FullWidthFormControl, ProvidersWrapper, ProviderButton } from './import-issue-dialog.styles'
 
 const ImportIssueDialog = ({ 
   user,
@@ -56,7 +71,7 @@ const ImportIssueDialog = ({
   
   return (
     <form onSubmit={handleCreateTask} action="POST">
-      <Dialog
+  <Dialog
         open={ open }
         onClose={onClose}
         aria-label="form-dialog-title"
@@ -73,7 +88,7 @@ const ImportIssueDialog = ({
                 defaultMessage="Paste the url of an incident of Github or Bitbucket" />
             </Typography>
           </DialogContentText>
-          <FormControl style={{width: '100%'}} error={error}>
+          <FullWidthFormControl error={error}>
             <TextField error={error}
               onChange={onChange}
               autoFocus
@@ -104,35 +119,34 @@ const ImportIssueDialog = ({
                 </FormGroup>
               </FormControl>
             }
-            <div style={{ marginTop: 10, marginBottom: 10 }}>
-              <Button
-                style={{ marginRight: 10 }}
+            <ProvidersWrapper>
+              <ProviderButton
                 color="primary"
                 variant={provider === 'github' ? 'contained' : 'outlined'}
                 id="github"
                 onClick={(e) => setProvider('github')}
               >
                 <img width="16" src={logoGithub} />
-                <span style={{ marginLeft: 10 }}>Github</span>
-              </Button>
+                <span className="provider-label">Github</span>
+              </ProviderButton>
 
-              <Button
+              <ProviderButton
                 color="primary"
                 variant={provider === 'bitbucket' ? 'contained' : 'outlined'}
                 id="bitbucket"
                 onClick={(e) => setProvider('bitbucket')}
               >
                 <img width="16" src={logoBitbucket} />
-                <span style={{ marginLeft: 10 }}>Bitbucket</span>
-              </Button>
-            </div>
+                <span className="provider-label">Bitbucket</span>
+              </ProviderButton>
+            </ProvidersWrapper>
 
             {error &&
               <FormHelperText error={error}>
                 <FormattedMessage id="task.actions.insert.novalid" defaultMessage="This is not a valid URL" />
               </FormHelperText>
             }
-          </FormControl>
+          </FullWidthFormControl>
         </DialogContent>
 
         <DialogActions>

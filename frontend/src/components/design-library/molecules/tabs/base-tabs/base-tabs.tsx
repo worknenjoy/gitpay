@@ -3,44 +3,17 @@ import {
   Tabs,
   Tab,
   Box,
-  Card,
   CardContent
-} from '@material-ui/core';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+} from '@mui/material';
 import { useHistory } from 'react-router-dom';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-    display: 'flex'
-  },
-  card: {
-    width: '100%',
-    marginBottom: 20,
-    padding: 10
-  },
-  tabsVertical: {
-    borderRight: `1px solid ${theme.palette.divider}`,
-    width: 280,
-    alignItems: 'flex-end'
-  },
-  tabs: {
-    flexDirection: 'column'
-  },
-  tab: {
-    margin: 10,
-    marginRight: 20
-  },
-  tabPanel: {
-    width: '100%',
-    marginTop: 20
-  },
-  tabPanelVertical: {
-    marginTop: 0,
-    width: '100%'
-  }
-}));
+import {
+  Root,
+  StyledCard,
+  StyledTabsColumn,
+  StyledTabsVertical,
+  TabPanelRoot,
+  TabPanelVertical
+} from './base-tabs.styles'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,29 +22,29 @@ interface TabPanelProps {
 }
 
 function TabPanel(props: TabPanelProps) {
-  const classes = useStyles();
   const { children, isVertical, withCard = true } = props;
 
+  const Comp = isVertical ? TabPanelVertical : TabPanelRoot;
+
   return (
-    <div
-      role="tabpanel"
-      className={isVertical ? classes.tabPanelVertical : classes.tabPanel}
-    >  
+    <Comp role="tabpanel">
       <Box p={0}>
-        {withCard ? <Card className={classes.card} elevation={0}>
-          <CardContent>
-            {children}
-          </CardContent>
-        </Card> : children}
-        
+        {withCard ? (
+          <StyledCard elevation={0}>
+            <CardContent>
+              {children}
+            </CardContent>
+          </StyledCard>
+        ) : children}
+
       </Box>
-    </div>
+    </Comp>
   );
 }
 
 type BaseTabsProps = {
   tabs: Array<{
-    label: string  | React.ReactNode;
+    label: string | React.ReactNode;
     value: string;
     link?: string;
   }>;
@@ -89,8 +62,7 @@ const BaseTabs = ({
   onChange,
   withCard = true,
   children
-}:BaseTabsProps) => {
-  const classes = useStyles();
+}: BaseTabsProps) => {
   const history = useHistory();
   const [value, setValue] = React.useState(activeTab);
 
@@ -116,31 +88,33 @@ const BaseTabs = ({
     }
   }, [history.location.pathname, tabs]);
 
+  const RootComp = isVertical ? Root : 'div';
+
   return (
-    <div className={isVertical ? classes.root : ''}>
-      <Tabs 
+    <RootComp>
+      <Tabs
         value={value}
         onChange={handleChange}
         textColor="secondary"
         indicatorColor="secondary"
         orientation={orientation}
-        className={isVertical ? classes.tabsVertical : classes.tabs}
+        component={isVertical ? StyledTabsVertical : StyledTabsColumn}
       >
         {tabs.map((tab) => (
-          <Tab 
+          <Tab
             key={tab.value}
             label={
               tab.label
             }
             onClick={(e) => handleTabClick(e, tab)}
-            value={tab.value} 
+            value={tab.value}
           />
         ))}
       </Tabs>
       <TabPanel isVertical={isVertical} withCard={withCard}>
         {children}
       </TabPanel>
-    </div>
+    </RootComp>
   );
 }
 

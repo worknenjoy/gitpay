@@ -12,8 +12,8 @@ import {
   DialogTitle,
   Typography,
   TextField
-} from '@material-ui/core'
-import Icon from '@material-ui/icons/Delete'
+} from '@mui/material'
+import Icon from '@mui/icons-material/Delete'
 
 const Container = styled.div`
   display: inline-block;

@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import MomentComponent from 'moment'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import Alert from '@material-ui/lab/Alert'
-import AlertTitle from '@material-ui/lab/AlertTitle'
+import Alert from '@mui/material/Alert'
+import AlertTitle from '@mui/material/AlertTitle'
 import {
   Container,
-  withStyles,
   Button,
   Typography,
   Avatar,
@@ -20,13 +19,14 @@ import {
   Tabs,
   Tab,
   Chip,
-} from '@material-ui/core'
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
 import {
   PaymentOutlined as FilterListIcon,
   Redeem as RedeemIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { Link } from 'react-router-dom'
-import blue from '@material-ui/core/colors/blue'
+import blue from '@mui/material/colors/blue'
 import PaymentTypeIcon from '../../../private/features/payments/legacy/payment-type-icon'
 import InterestedUsers from './components/interested-users'
 import InterestedOffers from './components/interested-offers'
@@ -106,18 +106,16 @@ const messages = defineMessages({
 
 })
 
-const StyledTab = withStyles({
-  wrapper: {
+const StyledTab = styled(Tab)(({ theme }) => ({
+  '& .MuiTab-wrapper': {
     flexDirection: 'row',
-    alignItems: 'inherit',
+    alignItems: 'inherit'
   },
-  svgIcon: {
-    root: {
-      width: 16,
-      height: 16,
-    },
+  '& svg': {
+    width: 16,
+    height: 16
   }
-})(Tab);
+}))
 
 class TaskPayment extends Component {
   constructor(props) {
@@ -472,4 +470,4 @@ TaskPayment.propTypes = {
   filterTaskOrders: PropTypes.func
 }
 
-export default injectIntl(withStyles(styles)(TaskPayment))
+export default injectIntl(TaskPayment)

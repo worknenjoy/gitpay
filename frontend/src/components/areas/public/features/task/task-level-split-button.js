@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
-import ButtonGroup from '@material-ui/core/ButtonGroup'
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import Grow from '@material-ui/core/Grow'
-import Paper from '@material-ui/core/Paper'
-import Popper from '@material-ui/core/Popper'
-import MenuItem from '@material-ui/core/MenuItem'
-import MenuList from '@material-ui/core/MenuList'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import ClickAwayListener from '@mui/material/ClickAwayListener'
+import Grow from '@mui/material/Grow'
+import Paper from '@mui/material/Paper'
+import Popper from '@mui/material/Popper'
+import MenuItem from '@mui/material/MenuItem'
+import MenuList from '@mui/material/MenuList'
 
 const options = [
   '',
@@ -78,7 +78,7 @@ export default function TaskLevelSplitButton ({ id, level, updateTask }) {
 
   return (
     <Grid container direction='column' alignItems='center'>
-      <Grid item xs={ 12 }>
+  <Grid size={{ xs: 12 }}>
         <ButtonGroup variant='outlined' color='secondary' ref={ anchorRef } aria-label='split button'>
           <Button onClick={ handleClick }>{ selectedLevel || optionLabels[options[selectedIndex]] }</Button>
           <Button

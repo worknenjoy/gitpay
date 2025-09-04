@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
+import Alert from '@mui/material/Alert';
 import { FormattedMessage } from 'react-intl';
 
 import { countryCodes } from '../../../../areas/private/shared/country-codes';
@@ -13,83 +12,10 @@ import {
   DialogContentText,
   DialogTitle,
   Typography
-} from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  countryContainer: {
-    padding: 20,
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignContent: 'center',
-    [theme.breakpoints.down('sm')]: {
-      padding: 8,
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }
-  },
-  countryItem: {
-    display: 'inline-block',
-    textAlign: 'center',
-    padding: 25,
-    [theme.breakpoints.down('sm')]: {
-      padding: 10,
-      margin: 8,
-      width: '100%',
-      maxWidth: 200,
-      boxSizing: 'border-box',
-      flex: '1 1 100%',
-      minWidth: 0,
-      fontSize: '0.8rem'
-    }
-  },
-  fullWidthMobile: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-      flexDirection: 'column',
-      flex: '1 1 100%',
-      padding: 12,
-      minWidth: 0,
-      width: '100%',
-      boxSizing: 'border-box',
-      fontSize: '0.7rem'
-    }
-  },
-  actionsWrapper: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: '8px 16px',
-      boxSizing: 'border-box'
-    }
-  },
-  creditTextMobile: {
-    [theme.breakpoints.down('sm')]: {
-      borderTop: '1px solid #e0e0e0',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      order: 3
-    }
-  },
-  buttomPrimaryActionMobile: {
-    [theme.breakpoints.down('sm')]: {
-      order: 1
-    }
-  },
-  buttomSecondaryActionMobile: {
-    [theme.breakpoints.down('sm')]: {
-      order: 2,
-      marginTop: 8,
-      marginBottom: 8
-    }
-  }
-}));
+} from '@mui/material';
+import { CountryContainer, CountryItem, FullWidthMobile, CreditTextMobile } from './country-picker-dialog.styles'
 
 const CountryPicker = ({ open, onClose, onSelectCountry }) => {
-  const classes = useStyles();
   const [currentCountry, setCurrentCountry] = useState({
     label: null,
     code: null,
@@ -104,16 +30,12 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
     });
   };
 
-  const Alert = (props) => {
-    return <MuiAlert elevation={2} variant="outlined" {...props} />;
-  };
-
   const getCountryButtons = () => {
     return countryCodes.map((item) => {
       const imageModule = require(`images/countries/${item.image}.png`);
       const countryImageSrc = imageModule.default || imageModule;
       return (
-        <Button
+        <CountryItem
           key={item.code}
           style={{
             display: 'flex',
@@ -123,18 +45,16 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
           }}
           variant={currentCountry.code === item.code ? 'outlined' : 'text'}
           onClick={() => handleCountry(item)}
-          className={classes.countryItem}
         >
           <img
             width="48"
-            style={{ marginRight: 10 }}
             src={countryImageSrc}
             alt={item.country}
           />
           <Typography component="span" gutterBottom>
             {item.country}
           </Typography>
-        </Button>
+        </CountryItem>
       );
     });
   };
@@ -167,12 +87,12 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
               </Typography>
             </Alert>
           </DialogContentText>
-          <div className={classes.countryContainer}>{getCountryButtons()}</div>
+          <CountryContainer>{getCountryButtons()}</CountryContainer>
         </DialogContent>
-        <DialogActions
-          className={classes.fullWidthMobile}
-        >
-          <DialogContent id="alert-dialog-footer" className={classes.creditTextMobile}>
+        <DialogActions>
+          <FullWidthMobile>
+          <DialogContent id="alert-dialog-footer">
+            <CreditTextMobile>
             <DialogContentText>
               Icons made by{' '}
               <a href="http://www.freepik.com/" title="Freepik">
@@ -213,6 +133,7 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
                 CC 3.0 BY
               </a>
             </DialogContentText>
+            </CreditTextMobile>
           </DialogContent>
           
             <Button
@@ -224,7 +145,7 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
                 })
               }
               size="large"
-              className={classes.buttomSecondaryActionMobile}
+              
             >
               Cancel
             </Button>
@@ -244,13 +165,13 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
               style={{
                 minWidth: 'auto'
               }}
-              className={classes.buttomPrimaryActionMobile}
+              
             >
               <FormattedMessage id="dialog.picker.choose" defaultMessage={`Choose {country}`} values={{
                 country: currentCountry.label
               }} /> 
             </Button>
-          
+          </FullWidthMobile>
         </DialogActions>
       </Dialog>
     </div>

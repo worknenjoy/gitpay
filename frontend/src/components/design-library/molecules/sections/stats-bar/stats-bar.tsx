@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import {
   Chip,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 
 const Content = styled.span`
   margin-top: 5px;
@@ -34,9 +34,9 @@ const StatsBar = ({ info, tasks, bounties, users }) => {
             tasks: stats.tasks.value
           } } /> } />,
           bounties: <Chip size="small" label={ stats.bounties.value } />,
-          users: <Chip size="small" label={ <Chip size="small" label={ <FormattedMessage id="info.status.users" defaultMessage="{users} users" values={ {
+          users: <Chip size="small" label={ <FormattedMessage id="info.status.users" defaultMessage="{users} users" values={ {
             users: stats.users.value
-          } } /> } /> } />
+          } } /> } />
         } } />
       </Typography>
     </Content>

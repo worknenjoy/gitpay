@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { 
   Home,
   AccountBalanceWallet as WalletIcon,
@@ -11,7 +11,7 @@ import {
   Public as ExploreIcon,
   PaymentRounded as PaymentRequestsIcon,
   AccountBox
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { SideMenu } from 'design-library/molecules/menus/side-menu/side-menu'
 
 const ProfileSidebar = ({
@@ -42,7 +42,7 @@ const ProfileSidebar = ({
   }, [history.location.pathname])
 
   return (
-    <Grid item xs={ 12 } md={ 1 } spacing={ 0 } className={ classes.sidePaper }>
+    <Grid size={{ xs: 12, md: 1 }} spacing={ 0 } className={ classes.sidePaper }>
       <SideMenu
         completed={ user.completed }
         menuItems={

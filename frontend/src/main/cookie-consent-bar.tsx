@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import CookieConsent from "react-cookie-consent";
 import { FormattedMessage } from 'react-intl';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
 import CookiePolicy from "../components/areas/private/components/session/cookie-policy";
 
 

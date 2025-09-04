@@ -4,9 +4,9 @@ import PropTypes from 'prop-types'
 import {
   Snackbar,
   IconButton
-} from '@material-ui/core'
+} from '@mui/material'
 
-import Close from '@material-ui/icons/Close'
+import Close from '@mui/icons-material/Close'
 
 const Notification = ({ open, onClose, message, link, linkLabel }) => {
 

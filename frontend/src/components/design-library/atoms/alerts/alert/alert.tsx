@@ -1,14 +1,10 @@
 import React, { useState } from 'react'
-import MuiAlert from '@material-ui/lab/Alert'
-import CloseIcon from '@material-ui/icons/Close'
-import useStyles from './alert.styles'
-import { Button } from '@material-ui/core'
-import ReactPlacholder from 'react-placeholder'
+import Alert from '@mui/material/Alert'
+import CloseIcon from '@mui/icons-material/Close'
+import { Button, Skeleton, Box } from '@mui/material'
 
-
-export const Alert = (props) => {
+export const CustomAlert = (props) => {
   const { onClose, alertKey = 'default', actions, dismissable = false, completed, ...rest } = props
-  const classes = useStyles()
   const fullAlertKey = `alert-dismissed-${alertKey}`
 
   const [open, setOpen] = useState(() => {
@@ -28,32 +24,37 @@ export const Alert = (props) => {
     return null
   }
 
+  if (!completed) {
+    return (
+      <Box>
+        <Skeleton variant="rectangular" height={56} />
+      </Box>
+    )
+  }
+
   return (
-    <ReactPlacholder rows={1} type="text" ready={completed}>
-      <MuiAlert
-        elevation={1}
-        variant="standard"
-        action={
-          <>
-            {actions}
-            {dismissable && (
-              <Button
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={handleClose}
-                className={classes.closeButton}
-              >
-                Dismiss
-                <CloseIcon fontSize="inherit" />
-              </Button>
-            )}
-          </>
-        }
-        {...rest}
-      />
-    </ReactPlacholder>
+    <Alert
+      elevation={1}
+      variant="standard"
+      action={
+        <>
+          {actions}
+          {dismissable && (
+            <Button
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={handleClose}
+            >
+              Dismiss
+              <CloseIcon fontSize="inherit" />
+            </Button>
+          )}
+        </>
+      }
+      {...rest}
+    />
   )
 }
 
-export default Alert
+export default CustomAlert

@@ -1,19 +1,24 @@
 import React from 'react';
-import 'react-placeholder/lib/reactPlaceholder.css';
-import './side-menu.placeholder.styles.css';
+import { Skeleton, Stack } from '@mui/material';
 
-const SidebarMenuPlaceholder = () => {
+const SidebarMenuPlaceholder: React.FC = () => {
+  // Use deterministic widths to avoid SSR hydration mismatches
+  const widths = [92, 86, 98, 90, 94, 88, 96, 84];
+
   return (
-    <div className="sidebar-placeholder">
-      {[...Array(8)].map((_, i) => (
-        <div
+    <Stack spacing={1} sx={{ p: 1 }}>
+      {widths.map((w, i) => (
+        <Skeleton
           key={i}
-          className="sidebar-placeholder-line"
-          style={{ width: `${80 + Math.random() * 20}%` }}
+          variant="text"
+          animation="wave"
+          height={24}
+          width={`${w}%`}
+          color="inherit"
         />
       ))}
-    </div>
+    </Stack>
   );
-}
+};
 
 export default SidebarMenuPlaceholder;

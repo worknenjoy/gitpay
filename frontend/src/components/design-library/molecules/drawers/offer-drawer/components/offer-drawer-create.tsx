@@ -9,19 +9,8 @@ import PricePlan from '../../../../organisms/forms/price-forms/price-plan-form/p
 import InputComment from '../../../../atoms/inputs/input-comment/input-comment';
 import OfferDrawerCheckboxes from './offer/offer-drawer-checkboxes';
 import InviteInput from './invite/invite-input';
-import { makeStyles } from '@material-ui/core';
 import CheckboxTerms from '../../../../atoms/inputs/checkbox-terms/checkbox-terms';
-
-const useStyles = makeStyles(theme => ({
-  details: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  spanText: {
-    display: 'inline-block',
-    verticalAlign: 'middle'
-  }
-}));
+import { SpanText } from './offer-drawer-create.styles'
 
 interface OfferDrawerCreateProps {
   introTitle: any;
@@ -65,17 +54,15 @@ const OfferDrawerCreate: React.FC<OfferDrawerCreateProps> = ({
   hasEmailInput = false
 }) => {
 
-  const classes = useStyles();
-
   return (
     <>
       <Introduction
         title={introTitle}
         image={introImage}
       >
-        <span className={classes.spanText}>
+  <SpanText>
           {introMessage}
-        </span>
+  </SpanText>
       </Introduction>
       <IssueCard issue={issue} />
       <SimpleInfo text={

@@ -13,6 +13,7 @@ Default.args = {
   accepted: false,
   acceptanceDate: 0,
   country: 'us',
+  completed: true,
   onAccept: () => {},
   onReject: () => {}
 };
@@ -22,6 +23,17 @@ Accepted.args = {
   accepted: true,
   acceptanceDate: 1633036800, // Example timestamp
   country: 'us',
+  completed: true,
+  onAccept: () => {},
+  onReject: () => {}
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  accepted: false,
+  acceptanceDate: 0,
+  country: 'us',
+  completed: false,
   onAccept: () => {},
   onReject: () => {}
 };

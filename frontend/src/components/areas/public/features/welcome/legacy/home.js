@@ -1,35 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  withStyles,
-  Grid,
-  Typography,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Button,
-  Container
-} from '@material-ui/core'
+import { Grid, Typography, Divider, List, ListItem, ListItemText, ListItemIcon, Button, Container } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 import {
   Work,
   Archive,
   CardMembership,
   BugReport
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import TopBarContainer from '../../../../../../containers/topbar'
 import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
 import messages from './messages'
-import mainStyles from '../../../../../../styleguide/styles/style'
+// removed withStyles/theme styles usage
 
-const freelancerImage = require('images/collections/collection-flat-build.svg')
-const citySoftware = require('images/collections/collection-flat-background.svg')
-const deal = require('images/collections/collection-flat-works.svg')
+import freelancerImage from 'images/collections/collection-flat-build.svg'
+import citySoftware from 'images/collections/collection-flat-background.svg'
+import deal from 'images/collections/collection-flat-works.svg'
 
 import {
   MainTitle,
@@ -41,7 +31,7 @@ import {
   HeroActions
 } from '../components/CommonStyles'
 
-const styles = theme => mainStyles(theme)
+// legacy styles removed
 
 class Home extends Component {
   constructor (props) {
@@ -53,18 +43,18 @@ class Home extends Component {
   }
 
   render () {
-    const { classes } = this.props
+  const { } = this.props
 
     return (
-      <div className={ classes.root }>
+  <div>
         <TopBarContainer ref='intro' hide />
         <Section ref='hero'>
           <HeroSection>
             <Grid container spacing={ 3 } alignContent={ 'flex-end' }>
-              <Grid item xs={ 12 } sm={ 5 }>
-                <ResponsiveImage width={ 580 } src={ freelancerImage } className={ classes.svg } />
+              <Grid size={{ xs: 12, sm: 5 }}>
+                <ResponsiveImage width={ 580 } src={ freelancerImage } />
               </Grid>
-              <Grid item xs={ 12 } sm={ 7 }>
+              <Grid size={{ xs: 12, sm: 7 }}>
                 <HeroTitle>
                   <Typography variant='h3' gutterBottom align='left'>
                     <FormattedMessage
@@ -96,7 +86,6 @@ class Home extends Component {
                   <Button
                     variant='contained'
                     color='primary'
-                    className={ classes.button }
                     style={ { marginLeft: 20 } }
                     onClick={ () => this.props.history.push('/signup') }
                   >
@@ -111,7 +100,7 @@ class Home extends Component {
           </HeroSection>
         </Section>
 
-        <Section ref='how-it-works' className={ classes.sectionBgAlt }>
+  <Section ref='how-it-works'>
           <MainTitle>
             <Typography variant='h5' gutterBottom>
               <FormattedMessage
@@ -121,15 +110,15 @@ class Home extends Component {
             </Typography>
           </MainTitle>
           <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } sm={ 6 }>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <div style={ { marginLeft: 20 } }>
                 <ResponsiveImage width='400' src={ deal } />
               </div>
             </Grid>
-            <Grid item xs={ 12 } sm={ 6 }>
-              <div className={ classes.seclist }>
+            <Grid size={{ xs: 12, sm: 6 }}>
+        <div>
                 <List>
-                  <ListItem className={ classes.listIconTop }>
+          <ListItem>
                     <ListItemIcon>
                       <Archive />
                     </ListItemIcon>
@@ -143,7 +132,7 @@ class Home extends Component {
                     />
                   </ListItem>
                   <Divider />
-                  <ListItem className={ classes.listIconTop }>
+                  <ListItem>
                     <ListItemIcon>
                       <BugReport />
                     </ListItemIcon>
@@ -157,7 +146,7 @@ class Home extends Component {
                     />
                   </ListItem>
                   <Divider />
-                  <ListItem className={ classes.listIconTop }>
+                  <ListItem>
                     <ListItemIcon>
                       <CardMembership />
                     </ListItemIcon>
@@ -171,7 +160,7 @@ class Home extends Component {
                     />
                   </ListItem>
                   <Divider />
-                  <ListItem className={ classes.listIconTop }>
+                  <ListItem>
                     <ListItemIcon>
                       <Work />
                     </ListItemIcon>
@@ -213,7 +202,6 @@ class Home extends Component {
             size='large'
             variant='contained'
             color='primary'
-            className={ classes.gutterTopSmall }
           >
             <FormattedMessage
               id='welcome.bottom.link'
@@ -226,7 +214,6 @@ class Home extends Component {
             size='large'
             variant='text'
             color='primary'
-            className={ classes.gutterTopSmall }
           >
             <FormattedMessage
               id='welcome.bottom.linkAlt'
@@ -240,8 +227,6 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = {
-  classes: PropTypes.object.isRequired
-}
+Home.propTypes = {}
 
-export default injectIntl(withStyles(styles)(Home))
+export default injectIntl(Home)

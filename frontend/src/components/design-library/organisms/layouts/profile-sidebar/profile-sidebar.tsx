@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 import {
   Dashboard as DashboardIcon,
@@ -13,7 +13,7 @@ import {
   AccountBox as AccountIcon,
   AssignmentReturnedTwoTone as PayoutSettingsIcon,
   AssignmentTurnedIn as ClaimIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { SideMenu } from '../../../molecules/menus/side-menu/side-menu'
 
 const ProfileSidebar = ({
@@ -36,7 +36,7 @@ const ProfileSidebar = ({
       setSelected(4)
     } else if (path.includes('/profile/wallets')) {
       setSelected(5)
-   } else if (path.includes('/profile/claims')) {
+    } else if (path.includes('/profile/claims')) {
       setSelected(6)
     } else if (path.includes('/profile/payouts')) {
       setSelected(7)
@@ -50,7 +50,7 @@ const ProfileSidebar = ({
   }, [history.location.pathname])
 
   return (
-    <Grid item xs={12} md={2}>
+    <Grid size={{ xs: 12, md: 2 }}>
       <SideMenu
         completed={completed}
         menuItems={
@@ -144,7 +144,7 @@ const ProfileSidebar = ({
                 }
               ]
             }
-            
+
           ]
         }
       />

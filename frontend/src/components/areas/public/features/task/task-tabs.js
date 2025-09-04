@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import renderHTML from 'react-render-html'
 import marked from 'marked'
-import ReactPlaceholder from 'react-placeholder'
-import 'react-placeholder/lib/reactPlaceholder.css'
+import { Skeleton } from '@mui/material'
 import { messages } from './messages/task-messages'
 import RegularCard from 'design-library/molecules/cards/RegularCard'
 import Table from '../../../../Table/Table'
@@ -18,10 +17,9 @@ import {
   Tabs,
   Tab,
   Typography,
-  withStyles,
   Tooltip,
   Button
-} from '@material-ui/core'
+} from '@mui/material'
 
 import {
   Redeem as RedeemIcon,
@@ -34,7 +32,7 @@ import {
   Cancel as CancelIcon,
   Info as InfoIcon,
   SwapHoriz as TransferIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import styled from 'styled-components'
 
@@ -42,7 +40,7 @@ import TaskPaymentCancel from './task-payment-cancel'
 import TaskOrderDetails from './order/task-order-details'
 import TaskOrderTransfer from './order/task-order-transfer'
 
-const logoGithub = require('images/github-logo.png')
+import logoGithub from 'images/github-logo.png'
 
 const PlaceholderDiv = styled.div`
  img {
@@ -50,19 +48,7 @@ const PlaceholderDiv = styled.div`
  }
 `
 
-const styles = theme => ({
-  paper: {
-    padding: 10,
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: 'left',
-    color: theme.palette.text.secondary
-  },
-  button: {
-    width: 100,
-    font: 10
-  }
-})
+// removed withStyles styles; using sx and styled-components instead
 
 class TaskTabs extends React.Component {
   constructor (props) {
@@ -121,7 +107,7 @@ class TaskTabs extends React.Component {
   }
 
   render () {
-    const { task, classes, logged, isAssignOwner, user } = this.props
+  const { task, logged, isAssignOwner, user } = this.props
 
     const statuses = {
       open: this.props.intl.formatMessage(messages.openPaymentStatus),
@@ -163,7 +149,7 @@ class TaskTabs extends React.Component {
 
     const retryPaypalPaymentButton = (paymentUrl) => {
       return (
-        <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
+  <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' onClick={ (e) => {
           retryPaypalPayment(e, paymentUrl)
         } }>
           <FormattedMessage id='general.buttons.retry' defaultMessage='Retry' />
@@ -174,7 +160,7 @@ class TaskTabs extends React.Component {
 
     const cancelPaypalPaymentButton = (id) => {
       return (
-        <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' className={ classes.button } onClick={ (e) => {
+  <Button style={ { paddingTop: 2, paddingBottom: 2, width: 'auto' } } variant='contained' size='small' color='primary' onClick={ (e) => {
           cancelPaypalPayment(e, id)
         } }>
           <FormattedMessage id='general.buttons.cancel' defaultMessage='Cancel' />
@@ -192,7 +178,6 @@ class TaskTabs extends React.Component {
               variant='contained'
               size='small'
               color='primary'
-              className={ classes.button }
               onClick={ (e) => this.openOrderDetailsDialog(e, item.id) }
             >
               <FormattedMessage id='general.buttons.details' defaultMessage='Details' />
@@ -281,7 +266,6 @@ class TaskTabs extends React.Component {
                 variant='contained'
                 size='small'
                 color='primary'
-                className={ classes.button }
                 onClick={ (e) => this.openTransferDialog(e, item) }
               >
                 <FormattedMessage id='general.buttons.transfer' defaultMessage='Transfer' />
@@ -426,18 +410,20 @@ class TaskTabs extends React.Component {
         </AppBar>
         { task.tab === 0 &&
         <TabContainer>
-          <Card className={ classes.paper }>
+          <Card sx={{ p: 1.25, mt: 1.25, mb: 1.25, textAlign: 'left' }}>
             <Typography variant='h5' align='left' gutterBottom>
               <FormattedMessage id='task.info.description' defaultMessage='Description' />
             </Typography>
             <Typography variant='body2' align='left' gutterBottom>
-              <ReactPlaceholder showLoadingAnimation type='text' rows={ 1 } ready={ task.completed }>
-                <PlaceholderDiv className={ classes.contentBody }>
+              {!task.completed ? (
+                <Skeleton variant="rectangular" height={200} />
+              ) : (
+        <PlaceholderDiv>
                   { task.data.metadata && task.data.metadata.issue && task.data.metadata.issue.body && renderHTML(marked(task.data.metadata.issue.body)) }
                 </PlaceholderDiv>
-              </ReactPlaceholder>
+              )}
             </Typography>
-          </Card>
+      </Card>
         </TabContainer>
         }
         { task.tab === 1 &&
@@ -561,7 +547,6 @@ class TaskTabs extends React.Component {
 }
 
 TaskTabs.propTypes = {
-  classes: PropTypes.object.isRequired,
   task: PropTypes.object,
   handleTabChange: PropTypes.func,
   user: PropTypes.object,
@@ -572,4 +557,4 @@ TaskTabs.propTypes = {
   messageTask: PropTypes.func
 }
 
-export default injectIntl(withStyles(styles)(TaskTabs))
+export default injectIntl(TaskTabs)

@@ -30,6 +30,20 @@ Primary.args = {
   onChange: () => {}
 };
 
+export const Empty = Template.bind({});
+Empty.args = {
+  name: 'name',
+  label: 'Label',
+  required: false,
+  defaultValue: '',
+  value: '',
+  placeholder: 'Placeholder',
+  disabled: false,
+  help: false,
+  completed: true,
+  onChange: () => {}
+};
+
 export const Loading = Template.bind({});
 Loading.args = {
   completed: false

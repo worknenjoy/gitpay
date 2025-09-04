@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import ReactPlaceholder from 'react-placeholder'
-import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../../../public/features/task/messages/task-messages'
 import {
   Container,
   Button,
   Typography
-} from '@material-ui/core'
-import { withStyles, createStyles, Theme } from '@material-ui/core/styles'
+} from '@mui/material'
 import { FormattedMessage, useIntl } from 'react-intl'
 import moment from 'moment'
 
@@ -20,26 +17,24 @@ import InvoiceId from './invoice-id'
 import { formatCurrency } from '../../../../../utils/format-currency'
 import InvoiceDueDate from './invoice-due-date'
 
-const styles = (theme: Theme) =>
-  createStyles({
-    paper: {
-      padding: 10,
-      marginTop: 10,
-      marginBottom: 10,
-      textAlign: 'left',
-      color: theme.palette.text.secondary
-    },
-    button: {
-      width: 100,
-      fontSize: 10
-    },
-    icon: {
-      marginLeft: 5
-    }
-  })
+const classes = {
+  paper: {
+    padding: 10,
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: 'left' as const,
+    color: 'inherit'
+  },
+  button: {
+    width: 100,
+    fontSize: 10
+  },
+  icon: {
+    marginLeft: 5
+  }
+}
 
 const Wallets = ({
-  classes,
   user,
   customer,
   fetchCustomer,
@@ -146,46 +141,44 @@ const Wallets = ({
             <FormattedMessage id="general.wallets" defaultMessage="Wallets" />
           </Typography>
         </div>
-        <ReactPlaceholder type="text" rows={2} ready={wallet.completed}>
-          {wallet.data.id ? (
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
-              <BalanceCard
-                name={wallet.data.name || `Wallet #${wallet.id}`} balance={wallet.data.balance}
-                onAdd={(e) => openAddFundsDialog(e)}
-                action={<FormattedMessage id="wallets.addFunds" defaultMessage="Add funds" />}
-                completed={wallet.completed}
-              />
+        {wallet.data.id ? (
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+            <BalanceCard
+              name={wallet.data.name || `Wallet #${wallet.id}`} balance={wallet.data.balance}
+              onAdd={(e) => openAddFundsDialog(e)}
+              action={<FormattedMessage id="wallets.addFunds" defaultMessage="Add funds" />}
+              completed={wallet.completed}
+            />
+          </div>
+        ) : (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+            <div style={classes.paper}>
+              {showWalletName ? (
+                <WalletForm
+                  value={walletName}
+                  onChange={setWalletName}
+                  onCreate={confirmWalletCreate}
+                />
+              ) : (
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  height: '60vh'
+                }}>
+                  <Typography variant="body1" gutterBottom>
+                    <FormattedMessage id="general.wallets.empty" defaultMessage="You dont have any active wallet" />
+                  </Typography>
+                  <Button style={{ marginTop: 12, ...classes.button }} onClick={createWalletName} variant="contained" size="large" color="secondary">
+                    <FormattedMessage id="general.wallets.create" defaultMessage="Create wallet" />
+                  </Button>
+                </div>
+              )}
             </div>
-          ) : (
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
-              <div className={classes.paper}>
-                {showWalletName ? (
-                  <WalletForm
-                    value={walletName}
-                    onChange={setWalletName}
-                    onCreate={confirmWalletCreate}
-                  />
-                ) : (
-                  <div style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    height: '60vh'
-                  }}>
-                    <Typography variant="body1" gutterBottom>
-                      <FormattedMessage id="general.wallets.empty" defaultMessage="You dont have any active wallet" />
-                    </Typography>
-                    <Button style={{ marginTop: 12 }} onClick={createWalletName} variant="contained" size="large" color="secondary" className={classes.button}>
-                      <FormattedMessage id="general.wallets.create" defaultMessage="Create wallet" />
-                    </Button>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </ReactPlaceholder>
-        {wallets.data && wallets.data.length > 0 && (
+          </div>
+        )}
+  {wallets.data && wallets.data.length > 0 && (
           <div style={{ marginTop: 10, marginBottom: 30 }}>
             <CustomPaginationActionsTable
               tableHead={[
@@ -229,4 +222,4 @@ const Wallets = ({
   )
 }
 
-export default withStyles(styles)(Wallets)
+export default Wallets

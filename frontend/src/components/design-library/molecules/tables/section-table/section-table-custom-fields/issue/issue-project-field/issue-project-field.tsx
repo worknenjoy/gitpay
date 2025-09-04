@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Typography, Chip, Link } from '@material-ui/core';
+import { Typography, Chip, Link } from '@mui/material';
 
 
 const IssueProjectField = ({ issue }) => {

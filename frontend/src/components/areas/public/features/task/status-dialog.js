@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
 import {
-  withStyles,
   Avatar,
   List,
   ListItem,
@@ -12,12 +11,13 @@ import {
   Divider,
   Dialog,
   DialogTitle,
-} from '@material-ui/core'
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
 import {
   FilterList as FilterListIcon,
   Done as DoneIcon,
-} from '@material-ui/icons'
-import { blue } from '@material-ui/core/colors'
+} from '@mui/icons-material'
+import { blue } from '@mui/material/colors'
 
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
@@ -36,12 +36,10 @@ const providerStatus = {
   }
 }
 
-const styles = {
-  avatar: {
-    backgroundColor: blue[100],
-    color: blue[600]
-  }
-}
+const ColoredAvatar = styled(Avatar)(({ theme }) => ({
+  backgroundColor: blue[100],
+  color: blue[600]
+}))
 
 const messages = defineMessages({
   openStatus: {
@@ -65,7 +63,7 @@ class StatusDialog extends Component {
   }
 
   render () {
-    const { classes, onClose, selectedValue, ...other } = this.props
+  const { onClose, selectedValue, ...other } = this.props
     const statusesDisplay = {
       open: this.props.intl.formatMessage(messages.openStatus),
       new: this.props.intl.formatMessage(messages.openStatus),
@@ -95,13 +93,13 @@ class StatusDialog extends Component {
                 key={ status }
               >
                 <ListItemAvatar>
-                  <Avatar className={ classes.avatar }>
+                  <ColoredAvatar>
                     { selectedValue === status ? (
                       <DoneIcon />
                     ) : (
                       <FilterListIcon />
                     ) }
-                  </Avatar>
+                  </ColoredAvatar>
                 </ListItemAvatar>
                 <ListItemText primary={ statusesDisplay[status] } />
               </ListItem>
@@ -132,7 +130,6 @@ class StatusDialog extends Component {
 }
 
 StatusDialog.propTypes = {
-  classes: PropTypes.object.isRequired,
   provider: PropTypes.string,
   onClose: PropTypes.func,
   onSelect: PropTypes.func,
@@ -141,4 +138,4 @@ StatusDialog.propTypes = {
   id: PropTypes.number
 }
 
-export default injectIntl(withStyles(styles)(StatusDialog))
+export default injectIntl(StatusDialog)

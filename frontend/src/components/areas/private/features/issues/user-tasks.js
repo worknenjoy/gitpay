@@ -13,9 +13,9 @@ import {
   CardContent,
   CardMedia,
   Tabs,
-  Tab,
-  withStyles
-} from '@material-ui/core'
+  Tab
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 // import TaskFilter from '../task/task-filters'
 import CustomPaginationActionsTable from '../../../public/features/task/task-table';
@@ -27,18 +27,7 @@ import imageGettingStarted from 'images/octodex.png'
 
 import api from '../../../../../consts'
 
-const styles = theme => ({
-  icon: {
-    backgroundColor: 'black'
-  },
-  card: {},
-  gutterLeft: {
-    marginLeft: 10
-  },
-  media: {
-    width: 600
-  }
-})
+const Media = styled(CardMedia)({ width: 600 })
 
 const messages = defineMessages({
   allTasks: {
@@ -59,7 +48,7 @@ const messages = defineMessages({
   }
 })
 
-const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user }) => {
+const UserTasks = ({ intl, history, filterTasks, listTasks, tasks, user }) => {
   const [currentTab, setCurrentTab] = useState('')
 
   const baseUrl = '/profile/tasks/'
@@ -149,9 +138,8 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
         </Tabs>
         <div style={{marginBottom: 20}}>
           { !user.id ? (
-            <Card className={ classes.card }>
-              <CardMedia
-                className={ classes.media }
+            <Card>
+              <Media
                 src={ imageGettingStarted }
               />
               <CardContent>
@@ -175,10 +163,10 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
                   variant="contained"
                   size="small"
                   color="secondary"
-                  className={ classes.logButtons }
+                  sx={{ ml: 1 }}
                 >
                   <img width="16" src={ logoGithub } />
-                  <span className={ classes.gutterLeft }>Github</span>
+                  <span style={{ marginLeft: 10 }}>Github</span>
                 </Button>
 
                 <Button
@@ -186,10 +174,10 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
                   variant="contained"
                   size="small"
                   color="secondary"
-                  className={ classes.logButtons }
+                  sx={{ ml: 1 }}
                 >
                   <img width="16" src={ logoBitbucket } />
-                  <span className={ classes.gutterLeft }>Bitbucket</span>
+                  <span style={{ marginLeft: 10 }}>Bitbucket</span>
                 </Button>
               </CardActions>
             </Card>
@@ -205,11 +193,10 @@ const UserTasks = ({ classes, intl, history, filterTasks, listTasks, tasks, user
 }
 
 UserTasks.propTypes = {
-  classes: PropTypes.object.isRequired,
   listTasks: PropTypes.func,
   filterTasks: PropTypes.func,
   tasks: PropTypes.object,
   user: PropTypes.object
 }
 
-export default injectIntl(withStyles(styles)(UserTasks))
+export default injectIntl(UserTasks)

@@ -4,7 +4,7 @@ import {
   AccountBalanceWallet as WalletIcon,
   LibraryBooks,
   Payment as PaymentIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { SideMenu } from './side-menu';
 
 export default {

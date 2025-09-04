@@ -5,11 +5,10 @@ import {
   Paper,
   Container,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 
-import { makeStyles } from '@material-ui/core/styles'
 
-const useStyles = makeStyles(theme => ({
+const classes = {
   icon: {
     backgroundColor: 'black'
   },
@@ -20,10 +19,10 @@ const useStyles = makeStyles(theme => ({
   media: {
     width: 600
   }
-}))
+} as const
 
 const Payments = ({ orders, getOrders, user }) => {
-  const classes = useStyles()
+  // styles via classes constant
 
   useEffect(() => {
     getOrders()

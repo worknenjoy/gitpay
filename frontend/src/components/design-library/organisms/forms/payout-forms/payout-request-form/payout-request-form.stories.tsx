@@ -10,34 +10,13 @@ const Template = (args) => <PayoutRequestForm {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  user: {
-    completed: true,
-    data: {
-      country: 'US'
-    }
-  },
-  paymentRequest: {
-    completed: true,
-    data: {
-      amount: 100,
-      currency: 'USD',
-      description: 'Payment for services rendered'
-    }
-  }
+  balance: 5000,
+  currency: 'usd'
 };
 
 export const Loading = Template.bind({});
 Loading.args = {
-  user: {
-    completed: false,
-    data: {}
-  },
-  bankAccount: {
-    completed: false,
-    data: {}
-  },
-  countries: {
-    completed: false,
-    data: {}
-  }
+  balance: 0,
+  currency: 'usd',
+  completed: false
 };

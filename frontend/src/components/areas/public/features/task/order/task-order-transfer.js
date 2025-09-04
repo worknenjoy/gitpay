@@ -1,28 +1,19 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { makeStyles } from '@material-ui/core/styles'
 import {
+  Drawer,
+  Container,
+  Typography,
+  Button,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Container,
-  Drawer,
-  Typography,
-  Button
-} from '@material-ui/core'
-import { SwapHorizontalCircleRounded } from '@material-ui/icons'
-import ReactPlaceholder from 'react-placeholder'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-  },
-}))
+  Skeleton
+} from '@mui/material'
+import { SwapHorizontalCircleRounded } from '@mui/icons-material'
 
 const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task, listOrders }) => {
-  const classes = useStyles()
   const [selectedIndex, setSelectedIndex] = React.useState(null)
   const [currentTaskId, setCurrentTaskId] = React.useState(null)
 
@@ -60,8 +51,16 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task, listOrde
           <Typography type='caption'>
             <FormattedMessage id='task.bounties.order.transfer.message' defaultMessage='You can transfer the bounty paid to one of these issues you created:' />
           </Typography>
-          <div className={ classes.root }>
-            <ReactPlaceholder type='text' rows={ 5 } ready={ tasks.completed } showLoadingAnimation={ true } >
+          <div>
+            {!tasks.completed ? (
+              <div style={{overflowY: 'hidden', height: '65vh', margin: '20px 0' }}>
+                <Skeleton variant="rectangular" height={48} animation="wave" />
+                <Skeleton variant="rectangular" height={48} animation="wave" />
+                <Skeleton variant="rectangular" height={48} animation="wave" />
+                <Skeleton variant="rectangular" height={48} animation="wave" />
+                <Skeleton variant="rectangular" height={48} animation="wave" />
+              </div>
+            ) : (
               <List component='nav' style={{overflowY: 'scroll', height: '65vh', margin: '20px 0', border: '1px solid #ccc'}}>
                 { tasks && tasks.data.map((t, index) => {
                   return (
@@ -79,7 +78,7 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task, listOrde
                   )
                 }) }
               </List>
-            </ReactPlaceholder>
+            )}
           </div>
         </div>
         <div style={{display: 'flex', justifyContent: 'flex-end'}}>

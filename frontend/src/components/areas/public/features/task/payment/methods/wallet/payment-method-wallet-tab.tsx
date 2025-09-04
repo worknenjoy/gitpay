@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import ReactPlaceholder from 'react-placeholder'
-import { Button, createStyles, makeStyles, Theme } from '@material-ui/core'
+import { Button, styled, Skeleton } from '@mui/material'
 import { formatCurrency } from '../../../../../../../../utils/format-currency'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
 
@@ -17,14 +16,10 @@ function isGreaterThan(a: string | number, b: string | number): boolean {
 }
 
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    btnPayment: {
-      float: 'right',
-      marginTop: 10
-    },
-  })
-)
+const BtnPayment = styled(Button)(() => ({
+  float: 'right',
+  marginTop: 10
+}))
 
 const PaymentMethodWalletTab = ({
   user,
@@ -42,7 +37,7 @@ const PaymentMethodWalletTab = ({
   syncTask
 }) => {
 
-  const classes = useStyles()
+  
 
   const onWalletPayment = async () => {
     await createOrder({
@@ -78,24 +73,25 @@ const PaymentMethodWalletTab = ({
   return (
     <div>
       <div className="payment-method-wallet-tab">
-        <ReactPlaceholder type='text' ready={wallet?.completed} rows={1} color='#E0E0E0'>
+        {!wallet?.completed ? (
+          <Skeleton variant="rectangular" height={150} width="100%" animation="wave" />
+        ) : (
           <BalanceCard
             name={wallet?.data.name}
             balance={wallet?.data.balance}
           />
-        </ReactPlaceholder>
+        )}
       </div>
-      <Button
+      <BtnPayment
         disabled={!price || !wallet?.data?.balance || (wallet?.data?.balance && isGreaterThan(priceAfterFee, wallet?.data?.balance))}
         onClick={onWalletPayment}
         variant='contained'
         color='secondary'
-        className={classes.btnPayment}
       >
         <FormattedMessage id='task.payment.wallet.action' defaultMessage='Pay {amount} with your Wallet' values={{
           amount: formatCurrency(priceAfterFee)
         }} />
-      </Button>
+  </BtnPayment>
     </div>
   );
 }

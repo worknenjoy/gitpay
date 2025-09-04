@@ -1,23 +1,15 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
-import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import { Button, Skeleton } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { BillingInfoCard } from '../../../../molecules/cards/billing-info-card/billing-info-card';
-import ReactPlaceholder from 'react-placeholder';
 import { countryCodes } from '../../../../../areas/private/shared/country-codes';
 import { formatCurrency } from '../../../../../../utils/format-currency';
 import {
   Alert, AlertTitle
-} from '@material-ui/lab'
+} from '@mui/material'
+import { InfoAlertWrapper, StyledPayButton } from './invoice-payment.styles'
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    btnPayment: {
-      float: 'right',
-      marginTop: 10
-    }
-  })
-)
+// No component-level JSS; using styled components defined in invoice-payment.styles.ts
 
 const InvoicePayment = ({
   price,
@@ -25,14 +17,12 @@ const InvoicePayment = ({
   onInvoicePayment,
   onInfoClick
 }) => {
-
-  const classes = useStyles()
-
-  const { name, address } = customer.data
+  const { data, completed } = customer
+  const { name, address } = data
 
   return (
     <>
-      <div style={ { marginTop: 10, marginBottom: 10 } }>
+      <InfoAlertWrapper>
         <Alert
           severity="info"
           action={
@@ -51,13 +41,8 @@ const InvoicePayment = ({
           </AlertTitle>
           <FormattedMessage id="issue.payment.invoice.info.description" defaultMessage="To update your billing information, please fill in or update your details in the Billing Information section of your account settings. This information will be used to generate your invoice" />
         </Alert>
-      </div>
-      <ReactPlaceholder
-        showLoadingAnimation={true}
-        type="media"
-        ready={customer.completed}
-        rows={5}
-      >
+      </InfoAlertWrapper>
+      {completed ?
         <BillingInfoCard
           name={name || ' - '}
           address={`${address?.line1 || ' - '} ${address?.line2 || ' - '}`}
@@ -66,19 +51,17 @@ const InvoicePayment = ({
           zipCode={address?.postal_code || ' - '}
           country={countryCodes.find(c => c.code === address?.country)?.country || ' - '}
           totalAmount={price}
-        />
-      </ReactPlaceholder>
-      <Button
+        /> : <Skeleton variant="rectangular" width="100%" height={118} animation="wave" />}
+      <StyledPayButton
         disabled={!price}
         onClick={onInvoicePayment}
         variant="contained"
         color="secondary"
-        className={classes.btnPayment}
       >
         <FormattedMessage id="fund.payment.invoice.action" defaultMessage="Generate a {amount} invoice" values={{
           amount: formatCurrency(price)
         }} />
-      </Button>
+      </StyledPayButton>
     </>
   )
 }

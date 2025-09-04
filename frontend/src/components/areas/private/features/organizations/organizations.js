@@ -1,33 +1,28 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import { withStyles } from '@material-ui/core/styles'
-import Chip from '@material-ui/core/Chip'
-import Avatar from '@material-ui/core/Avatar'
-import TextField from '@material-ui/core/TextField'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import Button from '@material-ui/core/Button'
+import { styled } from '@mui/material/styles'
+import Chip from '@mui/material/Chip'
+import Avatar from '@mui/material/Avatar'
+import TextField from '@mui/material/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import Button from '@mui/material/Button'
 import {
   WorkRounded as WorkRoundedIcon,
   Done as DoneIcon,
   Sync as ImportIcon
-} from '@material-ui/icons'
-import { Typography } from '@material-ui/core'
+} from '@mui/icons-material'
+import { Typography } from '@mui/material'
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    padding: theme.spacing(0.5)
-  },
-  chip: {
-    margin: theme.spacing(0.5)
-  }
-})
+const Root = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  padding: theme.spacing(0.5)
+}))
 
 class Organizations extends Component {
   constructor (props) {
@@ -67,11 +62,11 @@ class Organizations extends Component {
   }
 
   render () {
-    const { classes, data } = this.props
+  const { data } = this.props
     const { dialogOpen, currentOrg } = this.state
 
     return (
-      <div className={ classes.root }>
+  <Root>
         { data.length && data.map(org => {
           return (
             <Chip
@@ -82,7 +77,7 @@ class Organizations extends Component {
               label={ org.name }
               onDelete={ () => this.handleClick(org) }
               onClick={ () => this.handleClick(org) }
-              className={ classes.chip }
+      sx={{ m: 0.5 }}
               deleteIcon={ org.imported ? <DoneIcon /> : <ImportIcon /> }
             />
           )
@@ -134,9 +129,9 @@ class Organizations extends Component {
 
           </DialogActions>
         </Dialog>
-      </div>
+  </Root>
     )
   }
 }
 
-export default withStyles(styles)(Organizations)
+export default Organizations

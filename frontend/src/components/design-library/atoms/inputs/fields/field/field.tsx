@@ -1,7 +1,7 @@
 import React from 'react'
-import { FormControl, Input, InputLabel, FormHelperText } from '@material-ui/core'
+import { TextField, Skeleton } from '@mui/material'
+import { RootFormControl } from './field.styles'
 import { FormattedMessage } from 'react-intl'
-import ReactPlaceholder from 'react-placeholder'
 
 type FieldProps = {
   name: string,
@@ -29,13 +29,12 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>((
   ref
 ) => {
   return (
-    <FormControl style={{ width: '100%' }}>
-      <ReactPlaceholder type="text" rows={1} ready={completed} style={{margin: '20px 0'}} showLoadingAnimation>
-        <>
-          <InputLabel htmlFor={name}>
-            {label}
-          </InputLabel>
-          <Input
+    <RootFormControl>
+      {
+        !completed ? (
+          <Skeleton variant="text" animation="wave" width="100%" sx={{ my: 2 }} />
+        ) : (
+          <TextField
             inputRef={ref}
             id={name}
             name={name}
@@ -44,23 +43,31 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>((
             defaultValue={defaultValue}
             value={value}
             fullWidth
-            style={{ width: '100%' }}
             placeholder={placeholder}
             disabled={disabled}
-            inputComponent={inputComponent}
             onChange={onChange}
-            endAdornment={endAdornment}
             error={error}
-            inputProps={{...inputProps, ...(type === 'number' ? { min, max } : {})}}
-          />
-          {help &&
-            <FormHelperText id="component-helper-text">
+            label={label}
+            variant="standard"
+            InputLabelProps={{
+              // Force shrink only when there's content; otherwise let MUI handle focus-based shrink
+              ...(inputComponent && (Boolean(value) || Boolean(defaultValue)) ? { shrink: true } : {})
+            }}
+            helperText={help ? (
               <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
-            </FormHelperText>
-          }
-        </>
-      </ReactPlaceholder>
-    </FormControl>
+            ) : undefined}
+            InputProps={{
+              ...(inputComponent ? { inputComponent } : {}),
+              ...(endAdornment ? { endAdornment } : {})
+            }}
+            inputProps={{
+              ...inputProps,
+              ...(type === 'number' ? { min, max } : {})
+            }}
+          />
+        )
+      }
+    </RootFormControl>
   )
 })
 

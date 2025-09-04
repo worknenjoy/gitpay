@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card'
-import CardActions from '@material-ui/core/CardActions'
-import CardContent from '@material-ui/core/CardContent'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
+import { styled } from '@mui/material/styles'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
 import TaskInvite from './task-invite'
 
-const useStyles = makeStyles({
+const useStyles = styled({
   root: {
     marginBottom: 20,
     marginTop: 20,
@@ -31,7 +31,7 @@ export default function TaskInviteCard ({ id, onInvite, onFunding, user }) {
   }
 
   return (
-    <div>
+    <div style={{margin: '20px 0'}}>
       <Card className={ classes.root }>
         <CardContent>
           <Typography gutterBottom variant='h5' component='h2'>

@@ -8,36 +8,32 @@ import {
   Button,
   Switch,
   Checkbox
-} from '@material-ui/core'
-import LanguageIcon from '@material-ui/icons/Language'
+} from '@mui/material'
+import LanguageIcon from '@mui/icons-material/Language'
 import { updateIntl } from 'react-intl-redux'
 import { LabelButton, StyledAvatarIconOnly } from 'design-library/organisms/layouts/topbar/TopbarStyles'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import { store } from '../../../../../../../main/app'
 import messagesBr from '../../../../../../../translations/result/br.json'
 import messagesEn from '../../../../../../../translations/result/en.json'
 import messagesBrLocal from '../../../../../../../translations/generated/br.json'
 import messagesEnLocal from '../../../../../../../translations/generated/en.json'
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 
 const messages = {
   'br': process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
   'en': process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
 }
 
-const logoLangEn = require('images/united-states-of-america.png')
-const logoLangBr = require('images/brazil.png')
+import logoLangEn from 'images/united-states-of-america.png'
+import logoLangBr from 'images/brazil.png'
 
-const useStyles = makeStyles(theme => ({
-  title: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
-  }
+const Title = styled(Typography)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2)
 }))
 
 const Settings = (props) => {
-  const intl = useIntl()
-  const classes = useStyles()
   const { user } = props
   const [anchorEl, setAnchorEl] = useState(null)
   const [selectedLanguage, setSelectedLanguage] = useState(null)
@@ -86,12 +82,12 @@ const Settings = (props) => {
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
       <Grid container alignItems="center" spacing={1}>
-        <Grid item xs={12}>
-          <Typography variant="h5" className={classes.title} gutterBottom>
+        <Grid size={{ xs: 12 }}>
+          <Title variant="h5" gutterBottom>
             <FormattedMessage id="preferences.title" defaultMessage="Settings" />
-          </Typography>
+          </Title>
         </Grid>
-        <Grid item xs={5} style={{ marginBottom: 20, marginTop: 40 }}>
+        <Grid size={{ xs: 12, sm: 5 }} style={{ marginBottom: 20, marginTop: 40 }}>
           <Typography color="primary" variant="h5" gutterBottom>
             <FormattedMessage id="preferences.actions.language.title" defaultMessage="Language" />
           </Typography>
@@ -141,7 +137,7 @@ const Settings = (props) => {
             </MenuItem>
           </Menu>
         </Grid>
-        <Grid item xs={12} style={{ marginTop: 20, marginBottom: 20 }}>
+        <Grid size={{ xs: 12 }} style={{ marginTop: 20, marginBottom: 20 }}>
           <Typography color="primary" variant="h5">
             <FormattedMessage id="prefences.my.notifications" defaultMessage="Notifications" />
           </Typography>
@@ -159,7 +155,7 @@ const Settings = (props) => {
             </Typography>
           </label>
         </Grid>
-        <Grid item xs={12} style={{ marginTop: 20, marginBottom: 20 }}>
+        <Grid size={{ xs: 12 }} style={{ marginTop: 20, marginBottom: 20 }}>
           <Typography color="primary" variant="h5">
             <FormattedMessage id="prefences.my.openforjobs" defaultMessage="Open For Jobs" />
           </Typography>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Button } from '@material-ui/core';
-import useStyles from './action-buttons.styles';
+import { Button } from '@mui/material';
+import { PrimaryWrapper, PrimaryLabel, SecondaryContainer, SecondaryButton, SecondaryLabel } from './action-buttons.styles';
 
 
 interface ActionButtonsProps {
@@ -11,7 +11,7 @@ interface ActionButtonsProps {
 
 const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => {
   const [ currentKey, setCurrentKey ] = React.useState('');
-  const classes = useStyles();
+  // styled-components imported above
 
   const actionClick = (key:string, onClick: any) => {
     setCurrentKey(key);
@@ -21,8 +21,8 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
   return (
     <div>
       {primary?.map((action, index) => (
-        <>
-          <div className={classes.primaryWrapper}>
+        <React.Fragment key={`primary-${action.key ?? index}`}>
+          <PrimaryWrapper>
             <Button
               onClick={() => actionClick(action.key, action.onClick)}
               color="primary"
@@ -32,35 +32,34 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
               disabled={action.disabled}
               endIcon={action.icon}
             >
-              <span className={classes.primaryLabel}>
+              <PrimaryLabel>
           <FormattedMessage id={action.label} />
-              </span>
+              </PrimaryLabel>
             </Button>
-          </div>
+          </PrimaryWrapper>
           {action.component && React.cloneElement(action.component, { open: action.key === currentKey, onClose: () => setCurrentKey('') })}
-        </>
+        </React.Fragment>
       ))}
-      <div className={classes.secondaryContainer}>
+      <SecondaryContainer>
         {secondary?.map((action, index) => (
-          <>
-            <Button
+          <React.Fragment key={`secondary-${action.key ?? index}`}>
+            <SecondaryButton
               onClick={() => actionClick(action.key, action.onClick)}
               size="small"
               color="secondary"
               variant="contained"
               disabled={action.disabled}
               fullWidth
-              className={classes.secondaryButton}
               endIcon={action.icon}
             >
-              <span className={classes.secondaryLabel}>
+              <SecondaryLabel>
                 {action.label}
-              </span>
-            </Button>
+              </SecondaryLabel>
+            </SecondaryButton>
             {action.component && React.cloneElement(action.component, { open: action.key === currentKey, onClose: () => setCurrentKey('') })}
-          </>
+          </React.Fragment>
         ))}
-      </div>
+      </SecondaryContainer>
     </div>
   );
 };

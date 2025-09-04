@@ -1,36 +1,11 @@
 
-import { MenuList, Typography, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { MenuList, Typography, ListItemIcon } from '@mui/material'
 import React from 'react'
-
-const useStyles = makeStyles((theme) => ({
-  menuItem: {
-    marginTop: 10,
-    marginBottom: 10
-  },
-  primary: {
-    color: theme.palette.primary.contrastText,
-    fontSize: '11px !important',
-    fontWeight: 500
-  },
-  icon: {
-    marginRight: 5,
-    color: theme.palette.primary.contrastText
-  },
-  category: {
-    color: "rgba(255, 255, 255, 0.5)",
-    fontSize: "0.58rem",
-    textTransform: "uppercase",
-    fontWeight: 600,
-    marginBottom: 16,
-    paddingLeft: 16
-  }
-}))
+import { MenuItemStyled, Primary, Category } from './side-menu-items.styles'
 
 const SideMenuItems = ({
   menuItems
 }) => {
-  const classes = useStyles()
   return (
     <MenuList>
       {menuItems.map((section, sectionIndex) => (
@@ -38,7 +13,7 @@ const SideMenuItems = ({
           {section.category && (
             <Typography
               variant="caption"
-              className={classes.category}
+              component={Category as any}
               style={{ marginTop: sectionIndex === 0 ? 0 : 16 }}
             >
               {section.category}
@@ -46,15 +21,16 @@ const SideMenuItems = ({
           )}
           {section.items.map((item, index) => (
             item.include && (
-              <MenuItem
+              <MenuItemStyled
                 key={`item-${sectionIndex}-${index}`}
                 onClick={item.onClick}
-                className={classes.menuItem}
                 selected={item.selected}
               >
-                <ListItemIcon className={classes.icon}><>{item.icon}</></ListItemIcon>
-                <ListItemText classes={{ primary: classes.primary }} primary={item.label} />
-              </MenuItem>
+                <ListItemIcon sx={(theme) => ({ color: theme.palette.getContrastText(theme.palette.primary.main) })}>
+                  {item.icon}
+                </ListItemIcon>
+                <Primary primary={item.label} />
+              </MenuItemStyled>
             )
           ))}
         </div>

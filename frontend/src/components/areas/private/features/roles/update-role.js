@@ -4,11 +4,10 @@ import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 
 import {
-  withStyles,
   Dialog,
   DialogContent,
   DialogTitle
-} from '@material-ui/core'
+} from '@mui/material'
 
 import Roles from './user-roles'
 
@@ -17,15 +16,7 @@ const Container = styled.div`
   margin-right: 1rem;
 `
 
-const styles = theme => ({
-  deleteButton: {
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.primary.contrastText,
-    '&:hover': {
-      backgroundColor: theme.palette.error.light
-    }
-  }
-})
+// removed withStyles
 
 class UpdateRole extends Component {
   static propTypes = {
@@ -63,4 +54,4 @@ class UpdateRole extends Component {
   }
 }
 
-export default withStyles(styles)(UpdateRole)
+export default UpdateRole

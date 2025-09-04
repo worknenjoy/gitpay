@@ -1,28 +1,23 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
-import useStyles from './fieldset.styles';
-import ReactPlaceholder from 'react-placeholder';
+import { Typography, Skeleton } from '@mui/material';
+import { StyledFieldset, StyledLegend } from './fieldset.styles';
 
-const Fieldset = ({ children, completed, legend, rows = 1 }) => {
-  const classes = useStyles();
+const Fieldset = ({ children, completed, legend }) => {
   return (
-    <fieldset className={classes.fieldset}>
-      <legend className={classes.legend}>
+    <StyledFieldset>
+      <StyledLegend>
         <Typography>
           {legend}
         </Typography>
-      </legend>
-      <ReactPlaceholder
-        showLoadingAnimation
-        type="text"
-        rows={rows}
-        ready={completed}
-        lineSpacing={24}
-        className={classes.placeholder}
-      >
-        {children}
-      </ReactPlaceholder>
-    </fieldset>
+      </StyledLegend>
+      {
+        !completed ? (
+          <Skeleton variant="text" animation="wave" width="100%" />
+        ) : (
+          children
+        )
+      }
+    </StyledFieldset>
   );
 }
 

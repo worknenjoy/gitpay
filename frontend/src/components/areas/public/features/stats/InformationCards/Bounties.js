@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import LocalAtmIcon from '@material-ui/icons/LocalAtm'
+import LocalAtmIcon from '@mui/icons-material/LocalAtm'
 
 const Card = styled.div`
   margin: 0;

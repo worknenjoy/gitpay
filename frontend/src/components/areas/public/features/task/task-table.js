@@ -2,11 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { withRouter } from 'react-router-dom'
-import Link from '@material-ui/core/Link'
+import Link from '@mui/material/Link'
 import MomentComponent from 'moment'
 import TextEllipsis from 'text-ellipsis'
-import ReactPlaceholder from 'react-placeholder'
-
 import {
   Avatar,
   Table,
@@ -18,18 +16,19 @@ import {
   TableRow,
   TableSortLabel,
   Typography,
-  withStyles,
   Tooltip,
   Chip,
   Paper,
-  IconButton
-} from '@material-ui/core'
+  IconButton,
+  Skeleton
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   LastPage as LastPageIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
 import logoGithub from 'images/github-logo.png'
@@ -37,13 +36,11 @@ import logoBitbucket from 'images/bitbucket-logo.png'
 import Constants from '../../../../../consts'
 import messages from './messages/task-messages'
 
-const actionsStyles = theme => ({
-  root: {
-    flexShrink: 0,
-    color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5),
-  },
-})
+const ActionsRoot = styled('div')(({ theme }) => ({
+  flexShrink: 0,
+  color: theme.palette.text.secondary,
+  marginLeft: theme.spacing(2.5),
+}))
 
 class TablePaginationActions extends React.Component {
   handleFirstPageButtonClick = event => {
@@ -66,10 +63,10 @@ class TablePaginationActions extends React.Component {
   };
 
   render() {
-    const { classes, count, page, rowsPerPage, theme } = this.props
+    const { count, page, rowsPerPage, theme } = this.props
 
     return (
-      <div className={classes.root} >
+      <ActionsRoot>
         <IconButton
           onClick={(e) => this.handleFirstPageButtonClick(e)}
           disabled={page === 0}
@@ -98,7 +95,7 @@ class TablePaginationActions extends React.Component {
         >
           {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
         </IconButton>
-      </div>
+  </ActionsRoot>
     )
   }
 }
@@ -112,49 +109,10 @@ TablePaginationActions.propTypes = {
   theme: PropTypes.object.isRequired,
 }
 
-const TablePaginationActionsWrapped = injectIntl(withStyles(actionsStyles, { withTheme: true })(
-  TablePaginationActions
-))
+const TablePaginationActionsWrapped = injectIntl((props) => <TablePaginationActions {...props} />)
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(3),
-  },
-  table: {
-    minWidth: 500
-  },
-  tableCell: {
-    root: {
-      padding: 5
-    }
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
-  chipStatusSuccess: {
-    marginBottom: theme.spacing(1),
-    verticalAlign: 'middle',
-    backgroundColor: 'transparent',
-    color: theme.palette.primary.success
-  },
-  chipStatusClosed: {
-    marginBottom: theme.spacing(1),
-    verticalAlign: 'middle',
-    backgroundColor: 'transparent',
-    color: theme.palette.error.main
-  },
-  avatarStatusSuccess: {
-    width: theme.spacing(0),
-    height: theme.spacing(0),
-    backgroundColor: theme.palette.primary.success,
-  },
-  avatarStatusClosed: {
-    width: theme.spacing(0),
-    height: theme.spacing(0),
-    backgroundColor: theme.palette.error.main,
-  },
-})
+const RootPaper = styled(Paper)(({ theme }) => ({ width: '100%', marginTop: theme.spacing(3) }))
+const TableWrapper = styled('div')(({ theme }) => ({ overflowX: 'auto' }))
 
 class CustomPaginationActionsTable extends React.Component {
   constructor(props) {
@@ -286,7 +244,7 @@ class CustomPaginationActionsTable extends React.Component {
   }
 
   render() {
-    const { classes, tasks, tableHeaderMetadata, intl } = this.props
+  const { tasks, tableHeaderMetadata, intl } = this.props
     const { rowsPerPage, page, sortedBy, sortDirection, sortedData } = this.state;
 
     const emptyRows = sortedData.length ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage) : 0
@@ -323,141 +281,143 @@ class CustomPaginationActionsTable extends React.Component {
 
     
     if (tasks.completed && tasks.data.length === 0) {
-      return (<Paper className={classes.root}>
+  return (<RootPaper>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
           <Typography variant='caption'>
             <FormattedMessage id='task.table.body.noIssues' defaultMessage='No issues' />
           </Typography>
         </div>
-      </Paper>);
+  </RootPaper>);
     }
 
     const TableRowPlaceholder = (
-      [0,1,2,3,4,5].map(() => (
-      <TableRow>
-        { [0,1,2,3,4,5].map(() => (
-          <TableCell classes={classes.tableCell}>
-            <div style={{ width: 80, padding: '8px 4px' }}>
-              <ReactPlaceholder showLoadingAnimation type='text' rows={1} ready={tasks.completed} />
-            </div>
-          </TableCell>
-        ))}
-      </TableRow>
+      [0,1,2,3,4,5].map((_, rIdx) => (
+        <TableRow key={`ph-${rIdx}`}>
+          {[0,1,2,3,4,5].map((_, cIdx) => (
+            <TableCell key={`phc-${cIdx}`} sx={{ p: 0.625 }}>
+              <div style={{ width: 80, padding: '8px 4px' }}>
+                <Skeleton variant="text" />
+              </div>
+            </TableCell>
+          ))}
+        </TableRow>
       ))
     );
 
     return (
-      <Paper className={classes.root}>
-          <div className={classes.tableWrapper}>
-            <Table className={classes.table}>
-              <TableHeadCustom />
-              <TableBody>
-              <ReactPlaceholder style={{ marginBottom: 20, padding: 20 }} showLoadingAnimation  customPlaceholder={TableRowPlaceholder} rows={10}  ready={tasks.completed}>
-                {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                  return (
-                    <TableRow key={n.id}>
-                      <TableCell component='th' scope='row' classes={{
-                        root: classes.tableCell.root
-                      }} style={{ position: 'relative' }}>
-                        <div style={{ width: 350, display: 'flex', alignItems: 'center' }}>
-                          <a style={{ cursor: 'pointer' }} onClick={(e) => this.handleClickListItem(n)}>
-                            {TextEllipsis(`${n.title || 'no title'}`, 42)}
-                          </a>
-                          <a target='_blank' href={n.url} rel="noreferrer">
-                            <Tooltip id='tooltip-fab' title={`${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}`} placement='top'>
-                              <img width='24' src={n.provider === 'github' ? logoGithub : logoBitbucket} style={{ borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 }} />
-                            </Tooltip>
-                          </a>
-                        </div>
-                      </TableCell>
-                      <TableCell classes={classes.tableCell}>
-                        <div style={{ width: 80 }}>
-                          <Chip 
-                            label={this.props.intl.formatMessage(Constants.STATUSES[n.status])}
-                            avatar={<Avatar className={n.status === 'closed' ? classes.avatarStatusClosed : classes.avatarStatusSuccess} style={{ width: 12, height: 12 }}>{' '}</Avatar>}
-                            className={n.status === 'closed' ? classes.chipStatusClosed : classes.chipStatusSuccess}
-                          />
-                        </div>
-                      </TableCell>
-                      { tableHeaderMetadata['project'] &&
-                        <TableCell classes={classes.tableCell}>
-                          {this.renderProjectLink(n?.Project)}
+      <RootPaper>
+        <TableWrapper>
+          <Table sx={{ minWidth: 500 }}>
+            <TableHeadCustom />
+            <TableBody>
+              {!tasks.completed ? (
+                <>{TableRowPlaceholder}</>
+              ) : (
+                <>
+                  {sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                    return (
+                      <TableRow key={n.id}>
+                        <TableCell component='th' scope='row' sx={{ p: 0.625 }} style={{ position: 'relative' }}>
+                          <div style={{ width: 350, display: 'flex', alignItems: 'center' }}>
+                            <a style={{ cursor: 'pointer' }} onClick={(e) => this.handleClickListItem(n)}>
+                              {TextEllipsis(`${n.title || 'no title'}`, 42)}
+                            </a>
+                            <a target='_blank' href={n.url} rel="noreferrer">
+                              <Tooltip id='tooltip-fab' title={`${this.props.intl.formatMessage(messages.onHoverTaskProvider)} ${n.provider}`} placement='top'>
+                                <img width='24' src={n.provider === 'github' ? logoGithub : logoBitbucket} style={{ borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, marginLeft: 10 }} />
+                              </Tooltip>
+                            </a>
+                          </div>
                         </TableCell>
-                      }
-                      <TableCell numeric classes={classes.tableCell} style={{ padding: 5 }}>
-                        <div style={{ width: 70, textAlign: 'center' }}>
-                          {n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty)}
-                        </div>
-                      </TableCell>
-                      <TableCell classes={classes.tableCell}>
-                        {n?.Labels?.length ?
-                          <div>
-                            {n?.Labels?.slice(0, 2).map(
-                              (label, index) =>
-                              (
-                                <Chip
-                                  style={{ marginRight: 5, marginBottom: 5 }}
-                                  size='small'
-                                  label={
-                                    TextEllipsis(`${label.name || ''}`, 10)
-                                  }
-                                />
+                        <TableCell sx={{ p: 0.625 }}>
+                          <div style={{ width: 100 }}>
+                            <Chip 
+                              label={this.props.intl.formatMessage(Constants.STATUSES[n.status])}
+                              avatar={<Avatar sx={{ width: 12, height: 12, bgcolor: n.status === 'closed' ? 'error.main' : 'success.main' }}>{' '}</Avatar>}
+                              variant="outlined"
+                              color={n.status === 'closed' ? 'error' : 'success'}
+                              
+                            />
+                          </div>
+                        </TableCell>
+                        { tableHeaderMetadata['project'] &&
+                          <TableCell sx={{ p: 0.625 }}>
+                            {this.renderProjectLink(n?.Project)}
+                          </TableCell>
+                        }
+                        <TableCell numeric sx={{ p: 0.625 }}>
+                          <div style={{ width: 70, textAlign: 'center' }}>
+                            {n.value ? (n.value === '0' ? this.props.intl.formatMessage(messages.noBounty) : `$ ${n.value}`) : this.props.intl.formatMessage(messages.noBounty)}
+                          </div>
+                        </TableCell>
+                        <TableCell sx={{ p: 0.625 }}>
+                          {n?.Labels?.length ?
+                            <div>
+                              {n?.Labels?.slice(0, 2).map(
+                                (label, index) =>
+                                (
+                                  <Chip
+                                    style={{ marginRight: 5, marginBottom: 5 }}
+                                    size='small'
+                                    label={
+                                      TextEllipsis(`${label.name || ''}`, 10)
+                                    }
+                                  />
+                                )
                               )
-                            )
-                            } ...
-                          </div> : <>-</>}
-                      </TableCell>
-                      <TableCell classes={classes.tableCell}>
-                      {n?.Project?.ProgrammingLanguages?.length ?
-                          <div>
-                            {n?.Project?.ProgrammingLanguages?.slice(0, 2).map(
-                              (language, index) =>
-                              (
-                                <Chip
-                                  style={{ marginRight: 5, marginBottom: 5 }}
-                                  size='small'
-                                  label={
-                                    TextEllipsis(`${language.name || ''}`, 10)
-                                  }
-                                />
+                              } ...
+                            </div> : <>-</>}
+                        </TableCell>
+                        <TableCell sx={{ p: 0.625 }}>
+                        {n?.Project?.ProgrammingLanguages?.length ?
+                            <div>
+                              {n?.Project?.ProgrammingLanguages?.slice(0, 2).map(
+                                (language, index) =>
+                                (
+                                  <Chip
+                                    style={{ marginRight: 5, marginBottom: 5 }}
+                                    size='small'
+                                    label={
+                                      TextEllipsis(`${language.name || ''}`, 10)
+                                    }
+                                  />
+                                )
                               )
-                            )
-                            } ...
-                          </div> : <>-</>}
-                      </TableCell>
-                      <TableCell classes={classes.tableCell}>
-                        <div style={{ width: 120 }}>
-                          {n.createdAt ? MomentComponent(n.createdAt).fromNow() : this.props.intl.formatMessage(messages.noDefined)}
-                        </div>
-                      </TableCell>
+                              } ...
+                            </div> : <>-</>}
+                        </TableCell>
+                        <TableCell sx={{ p: 0.625 }}>
+                          <div style={{ width: 120 }}>
+                            {n.createdAt ? MomentComponent(n.createdAt).fromNow() : this.props.intl.formatMessage(messages.noDefined)}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 48 * emptyRows }}>
+                      <TableCell colSpan={6} />
                     </TableRow>
-                  )
-                })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 48 * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
-                </ReactPlaceholder>
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    colSpan={3}
-                    count={sortedData.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={(e, page) => this.handleChangePage(e, page)}
-                    onRowsPerPageChange={(e, page) => this.handleChangeRowsPerPage(e, page)}
-                    Actions={TablePaginationActionsWrapped}
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-            
-          </div>
-        
-      </Paper>
+                  )}
+                </>
+              )}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  colSpan={3}
+                  count={sortedData.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={(e, page) => this.handleChangePage(e, page)}
+                  onRowsPerPageChange={(e, page) => this.handleChangeRowsPerPage(e, page)}
+                  Actions={TablePaginationActionsWrapped}
+                />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableWrapper>
+      </RootPaper>
     )
   }
 }
@@ -469,4 +429,4 @@ CustomPaginationActionsTable.propTypes = {
   user: PropTypes.object,
 }
 
-export default injectIntl(withRouter(withStyles(styles)(CustomPaginationActionsTable)))
+export default injectIntl(withRouter(CustomPaginationActionsTable))

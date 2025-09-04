@@ -1,41 +1,36 @@
 import React from 'react';
-import { Select, MenuItem, FormControl } from '@material-ui/core';
-import ReactPlaceholder from 'react-placeholder';
+import { Skeleton } from '@mui/material';
+import { RootFormControl, StyledSelect, StyledMenuItem } from './select-input.styles';
 
 const SelectInput = ({ options, value, onChange, completed = true }) => {
 
   return (
-    <ReactPlaceholder type="text" rows={1} ready={completed} showLoadingAnimation>
-      <FormControl variant="standard" size="medium" style={{ margin: '10px 0', width: '100%' }}>
-        <Select
-          SelectDisplayProps={{ style: { paddingTop: 8, paddingBottom: 8 } }}
+    completed ? (
+      <RootFormControl variant="standard" size="medium">
+        <StyledSelect
           value={value}
           onChange={onChange}
-          style={{ width: "100%" }}
           MenuProps={{
             PaperProps: {
               style: { maxHeight: 400 }
             }
           }}
-          inputProps={{
-            style: { height: 130, boxSizing: 'border-box', padding: 10 }
-          }}
         >
           {options.map((option) => (
-            <MenuItem
+            <StyledMenuItem
               key={option.value}
               value={option.value}
               selected={option.value === value}
-              style={{ padding: 10, height: 30 }}
             >
               {option.label}
-            </MenuItem>
+            </StyledMenuItem>
           ))}
-        </Select>
-      </FormControl>
-    </ReactPlaceholder>
+        </StyledSelect>
+      </RootFormControl>
+    ) : (
+      <Skeleton variant="rectangular" width="100%" height={56} animation="wave" />
+    )
   );
-
 }
 
 export default SelectInput;

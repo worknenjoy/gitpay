@@ -1,35 +1,23 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { makeStyles } from '@material-ui/core/styles';
 import { 
   Grid,
   FormControlLabel,
   Checkbox,
   Typography,
   Link
-} from '@material-ui/core';
+} from '@mui/material';
 
-const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: '16px'
-  },
-  checkbox: {
-    marginBottom: '8px'
-  }
-});
 
 const InviteDrawerCheckboxes = ({
   termsAgreed,
   handleCheckboxTerms,
   ...props
 }) => {
-  const classes = useStyles();
 
   return (
     <Grid container spacing={3} style={{ fontFamily: 'Roboto', color: '#a9a9a9' }}>
-      <Grid item xs={12} style={{ paddingTop: 0 }} >
+  <Grid size={{ xs: 12 }} style={{ paddingTop: 0 }} >
         <FormControlLabel
           control={
             <Checkbox

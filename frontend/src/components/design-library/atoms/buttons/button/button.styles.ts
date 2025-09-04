@@ -1,9 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
+import CircularProgress from '@mui/material/CircularProgress'
 
-const useStyles = makeStyles(() => ({
-  progress: {
-    marginLeft: 10
-  }
+export const Progress = styled(CircularProgress)(() => ({
+  marginLeft: 10
 }))
 
-export default useStyles
+export default { Progress }

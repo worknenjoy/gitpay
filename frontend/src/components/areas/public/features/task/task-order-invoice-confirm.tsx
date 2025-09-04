@@ -1,9 +1,7 @@
 import React from "react";
-import { Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button  } from "@material-ui/core";
-import MuiAlert from '@material-ui/lab/Alert';
+import { Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button  } from "@mui/material";
+import Alert from '@mui/material/Alert';
 import { FormattedMessage } from "react-intl";
-
-const Alert = MuiAlert
 
 const TaskOrderInvoiceConfirm = ({
   visible,

@@ -1,17 +1,15 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-import 'react-placeholder/lib/reactPlaceholder.css'
 import { messages } from '../../../../public/features/task/messages/task-messages'
 import MomentComponent from 'moment'
 import PaymentProvider from 'design-library/atoms/badges/payment-provider/payment-provider'
 
 import {
   Container,
-  withStyles,
   Button,
   Link,
   Typography
-} from "@material-ui/core";
+} from "@mui/material";
 
 import {
   Refresh as RefreshIcon,
@@ -19,7 +17,7 @@ import {
   Info as InfoIcon,
   SwapHoriz as TransferIcon,
   Receipt as ReceiptIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
 import TaskPaymentCancel from '../../../../public/features/task/task-payment-cancel'
@@ -33,23 +31,7 @@ import CustomPaginationActionsTable from './payments-table'
 import InvoiceStatus from 'design-library/atoms/status/payment-types-status/invoice-status/invoice-status'
 import PaymentStatus from 'design-library/atoms/status/payment-types-status/payment-status/payment-status'
 
-const styles = theme => ({
-  paper: {
-    padding: 10,
-    marginTop: 10,
-    marginBottom: 10,
-    textAlign: "left",
-    color: theme.palette.text.secondary
-  },
-  button: {
-    width: 100,
-    font: 10,
-    margin: 5
-  },
-  icon: {
-    marginLeft: 5
-  }
-});
+// styles replaced by sx inline
 
 const Payments = ({
   classes,
@@ -176,13 +158,13 @@ const Payments = ({
         variant="contained"
         size="small"
         color="secondary"
-        className={classes.button}
+  sx={{ width: 100, fontSize: 10, m: 0.5 }}
         onClick={(e) => {
           retryPaypalPayment(e, item);
         }}
       >
         <FormattedMessage id="general.buttons.retry" defaultMessage="Retry" />
-        <RefreshIcon className={classes.icon} />
+  <RefreshIcon sx={{ ml: 1 }} />
       </Button>
     );
   };
@@ -193,13 +175,13 @@ const Payments = ({
         variant="contained"
         size="small"
         color="secondary"
-        className={classes.button}
+  sx={{ width: 100, fontSize: 10, m: 0.5 }}
         onClick={(e) => {
           cancelPaypalPayment(id);
         }}
       >
         <FormattedMessage id="general.buttons.cancel" defaultMessage="Cancel" />
-        <CancelIcon className={classes.icon} />
+  <CancelIcon sx={{ ml: 1 }} />
       </Button>
     );
   };
@@ -212,14 +194,14 @@ const Payments = ({
             variant="contained"
             size="small"
             color="secondary"
-            className={classes.button}
+            sx={{ width: 100, fontSize: 10, m: 0.5 }}
             onClick={(e) => openOrderDetailsDialog(e, item.id)}
           >
             <FormattedMessage
               id="general.buttons.details"
               defaultMessage="Details"
             />
-            <InfoIcon className={classes.icon} />
+            <InfoIcon sx={{ ml: 1 }} />
           </Button>
         );
       }
@@ -282,14 +264,14 @@ const Payments = ({
               variant="contained"
               size="small"
               color="secondary"
-              className={classes.button}
+              sx={{ width: 100, fontSize: 10, m: 0.5 }}
               onClick={(e) => openTransferDialog(e)}
             >
               <FormattedMessage
                 id="general.buttons.transfer"
                 defaultMessage="Transfer"
               />
-              <TransferIcon classes={classes.icon} />
+              <TransferIcon sx={{ ml: 1 }} />
             </Button>
             <TaskOrderTransfer
               task={item.Task}
@@ -324,14 +306,14 @@ const Payments = ({
               variant="contained"
               size="small"
               color="secondary"
-              className={classes.button}
+              sx={{ width: 100, fontSize: 10, m: 0.5 }}
               onClick={(e) => openRefundDialog(e, item)}
             >
               <FormattedMessage
                 id="general.buttons.refund"
                 defaultMessage="Refund"
               />
-              <ReceiptIcon className={classes.icon} />
+              <ReceiptIcon sx={{ ml: 1 }} />
             </Button>
           </React.Fragment>
         );
@@ -431,7 +413,6 @@ const Payments = ({
 };
 
 Payments.propTypes = {
-  classes: PropTypes.object.isRequired,
   handleTabChange: PropTypes.func,
   user: PropTypes.object,
   logged: PropTypes.bool,
@@ -443,4 +424,4 @@ Payments.propTypes = {
   intl: PropTypes.object
 };
 
-export default injectIntl(withStyles(styles)(Payments));
+export default injectIntl(Payments);

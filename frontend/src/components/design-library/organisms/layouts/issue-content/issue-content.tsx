@@ -1,31 +1,15 @@
 import React from 'react';
-import { Button, Container, Typography, makeStyles } from '@material-ui/core';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { Button, Container, Skeleton } from '@mui/material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { FormattedMessage } from 'react-intl';
-import ReactPlaceholder from 'react-placeholder';
 import ShowMoreText from 'react-show-more-text'
 import { marked } from 'marked'
 import parse from 'html-react-parser';
 import IssueHeader from '../../../molecules/headers/issue-header/issue-header';
 import IssueAuthorList from '../../../molecules/lists/issue-author-list/issue-author-list';
+import { DescriptionHeading, IssueContentText } from './issue-content.styles';
 
-const useStyles = makeStyles(theme => ({
-
-  issueContent: {
-    wordBreak: 'break-word',
-    overflowWrap: 'break-word',
-    '& a': {
-      wordBreak: 'break-all'
-    },
-    '& img': {
-      maxWidth: '100%',
-      height: 'auto'
-    }
-  }
-}))
-
-const IssueContent = ({ className, user, project, organization, updateTask, reportTask, onDeleteTask, logged, task, messageAuthor }) => {
-  const classes = useStyles();
+const IssueContent = ({ user, project, organization, updateTask, reportTask, onDeleteTask, logged, task, messageAuthor }) => {
   const taskOwner = () => {
     const creator = logged && task.data.User && user.id === task.data.User.id
     const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === user.id).length > 0 : false
@@ -44,37 +28,47 @@ const IssueContent = ({ className, user, project, organization, updateTask, repo
         reportTask={reportTask}
         handleDeleteTask={onDeleteTask}
       />
-      <Typography variant="subtitle1" style={{ marginBottom: 10, marginTop: 20 }}>
+      <DescriptionHeading variant="subtitle1">
         <FormattedMessage id="task.info.description" defaultMessage="Description" />
-      </Typography>
-      <ReactPlaceholder showLoadingAnimation type={'text'} rows={5} ready={task.completed}>
-        <Typography variant="body1" style={{ marginBottom: 40 }} className={`${classes.issueContent} ${className || ''}`}>
-          <ShowMoreText
-            lines={8}
-            more={
-              <Button
-                size="small"
-                variant="outlined"
-              >
-                <FormattedMessage id="task.description.more" defaultMessage="Show more" />
-                <ExpandMore />
-              </Button>
-            }
-            less={
-              <Button
-                size="small"
-                variant="outlined"
-              >
-                <FormattedMessage id="task.description.less" defaultMessage="Show less" />
-                <ExpandLess />
-              </Button>
-            }
-          >
-            {task.data.description && parse(marked(task.data.description))}
-          </ShowMoreText>
+      </DescriptionHeading>
+      {
+        !task.completed ? (
+          <>
+            <Skeleton variant="text" animation="wave" width="100%" />
+            <Skeleton variant="text" animation="wave" width="100%" />
+            <Skeleton variant="text" animation="wave" width="100%" />
+            <Skeleton variant="text" animation="wave" width="100%" />
+            <Skeleton variant="text" animation="wave" width="100%" />
+          </>
+        ) : (
+          <IssueContentText variant="body1">
+            <ShowMoreText
+              lines={8}
+              more={
+                <Button
+                  size="small"
+                  variant="outlined"
+                >
+                  <FormattedMessage id="task.description.more" defaultMessage="Show more" />
+                  <ExpandMore />
+                </Button>
+              }
+              less={
+                <Button
+                  size="small"
+                  variant="outlined"
+                >
+                  <FormattedMessage id="task.description.less" defaultMessage="Show less" />
+                  <ExpandLess />
+                </Button>
+              }
+            >
+              {task.data.description && parse(marked(task.data.description))}
+            </ShowMoreText>
 
-        </Typography>
-      </ReactPlaceholder>
+          </IssueContentText>
+        )
+      }
       <IssueAuthorList
         logged={logged}
         user={user}

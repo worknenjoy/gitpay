@@ -4,11 +4,11 @@ import {
   FormControl,
   FilledInput,
   InputAdornment,
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
-import GitHubIcon from '@material-ui/icons/GitHub'
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
+import GitHubIcon from '@mui/icons-material/GitHub'
 
-const useStyles = makeStyles({
+const useStyles = styled({
   customInput: {
     padding: '12px 14px', // Customize padding as needed
   },

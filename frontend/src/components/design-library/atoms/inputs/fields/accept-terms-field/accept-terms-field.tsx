@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FormControl, FormControlLabel, Typography, Switch } from '@material-ui/core';
+import { FormControl, FormControlLabel, Typography, Switch } from '@mui/material';
 import { FormattedMessage, FormattedDate } from 'react-intl';
 import Moment from 'moment';
 import Fieldset from '../../fieldset/fieldset';

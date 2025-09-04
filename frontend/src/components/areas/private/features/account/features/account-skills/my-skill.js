@@ -2,12 +2,12 @@ import React from 'react'
 import {
   Avatar,
   Chip
-} from '@material-ui/core'
+} from '@mui/material'
 import { withRouter } from 'react-router-dom'
 import { SkillIcon } from "./skill-icon"
 
 const MySkill = (props) => {
-  const { classes, title, onDelete } = props
+  const { title, onDelete } = props
 
   return (
     <Chip
@@ -17,7 +17,6 @@ const MySkill = (props) => {
         </Avatar>
       }
       label={title}
-      className={classes.chipSkill}
       onDelete={onDelete}
       style={{marginRight: 5}}
     />

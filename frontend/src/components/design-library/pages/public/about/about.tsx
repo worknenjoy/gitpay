@@ -3,18 +3,16 @@ import {
   Grid,
   Typography,
   List,
-  ListItem,
-  ListItemText,
   ListItemIcon,
-  Avatar,
+  ListItemText,
   Container,
-} from '@material-ui/core'
-import { AccountBalanceWallet, Work, Apps, Assignment, GroupWork } from '@material-ui/icons'
+} from '@mui/material'
+import { AccountBalanceWallet, Work, Apps, Assignment, GroupWork } from '@mui/icons-material'
 import { useIntl, FormattedMessage } from 'react-intl'
 import messages from '../../../../areas/public/features/welcome/legacy/messages'
-const freelancerImage = require('images//collections/collection-flat-community.svg')
-const companiesImage = require('images//collections/collection-flat-companies.svg')
-const teamImage = require('images//welcome-teamwork.png')
+import freelancerImage from 'images/collections/collection-flat-community.svg'
+import companiesImage from 'images/collections/collection-flat-companies.svg'
+import teamImage from 'images/welcome-teamwork.png'
 
 import {
   MainTitle,
@@ -22,24 +20,10 @@ import {
   ResponsiveImage,
   Section
 } from '../home/CommonStyles'
-import { makeStyles } from '@material-ui/core/styles'
 import PublicBase from '../../../templates/base/public-base/public-base'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    marginTop: 0
-  },
-  listIconTop: {
-    marginTop: 20
-  },
-  iconFill: {
-    color: theme.palette.primary.main
-  },
-  bgContrast: {
-    backgroundColor: theme.palette.primary.contrastText
-  }
-}))
+// new styled components
+import { Root, ListItemTop, AvatarPrimary, SectionBgContrast } from './about.styles'
 
 const About = ({
   loggedIn,
@@ -50,11 +34,10 @@ const About = ({
   importIssuesProps
 }) => {
   const intl = useIntl()
-  const classes = useStyles()
   const ref = useRef(null)
 
   return (
-    <div className={classes.root}>
+    <Root>
       <PublicBase
         loggedIn={loggedIn}
         bottomBarProps={bottomBarProps}
@@ -64,9 +47,10 @@ const About = ({
         importIssuesProps={importIssuesProps}
       >
         <Container>
-          <Section name='contrib' ref={ref}>
+          <div id='contrib' ref={ref}>
+            <Section>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <MainTitle left>
                   <Typography variant='h5' gutterBottom>
                     <FormattedMessage
@@ -77,11 +61,11 @@ const About = ({
                 </MainTitle>
                 <MainList>
                   <List>
-                    <ListItem className={classes.listIconTop}>
+                    <ListItemTop>
                       <ListItemIcon style={{ marginRight: 12 }}>
-                        <Avatar className={classes.iconFill}>
+                        <AvatarPrimary>
                           <Apps />
-                        </Avatar>
+                        </AvatarPrimary>
                       </ListItemIcon>
                       <ListItemText
                         primary={intl.formatMessage(
@@ -91,13 +75,13 @@ const About = ({
                           messages.welcomeFreelancersItemOneSecondary
                         )}
                       />
-                    </ListItem>
+                    </ListItemTop>
 
-                    <ListItem className={classes.listIconTop}>
+                    <ListItemTop>
                       <ListItemIcon style={{ marginRight: 12 }}>
-                        <Avatar className={classes.iconFill}>
+                        <AvatarPrimary>
                           <Work />
-                        </Avatar>
+                        </AvatarPrimary>
                       </ListItemIcon>
                       <ListItemText
                         primary={intl.formatMessage(
@@ -107,13 +91,13 @@ const About = ({
                           messages.welcomeFreelancersItemTwoSecondary
                         )}
                       />
-                    </ListItem>
+                    </ListItemTop>
 
-                    <ListItem className={classes.listIconTop}>
+                    <ListItemTop>
                       <ListItemIcon style={{ marginRight: 12 }}>
-                        <Avatar className={classes.iconFill}>
+                        <AvatarPrimary>
                           <AccountBalanceWallet />
-                        </Avatar>
+                        </AvatarPrimary>
                       </ListItemIcon>
                       <ListItemText
                         primary={intl.formatMessage(
@@ -123,20 +107,22 @@ const About = ({
                           messages.welcomeFreelancersItemThreeSecondary
                         )}
                       />
-                    </ListItem>
+                    </ListItemTop>
                   </List>
                 </MainList>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <ResponsiveImage width='800' src={freelancerImage} />
               </Grid>
             </Grid>
-          </Section>
+            </Section>
+          </div>
         </Container>
-        <Section name='companies' ref={ref} alternative className={classes.bgContrast}>
+        <div id='companies' ref={ref}>
+          <SectionBgContrast alternative>
           <Container>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <MainTitle left>
                   <Typography variant='h5' gutterBottom>
                     <FormattedMessage
@@ -147,11 +133,11 @@ const About = ({
                 </MainTitle>
                 <MainList>
                   <List>
-                    <ListItem className={classes.listIconTop}>
+                    <ListItemTop>
                       <ListItemIcon style={{ marginRight: 12 }}>
-                        <Avatar className={classes.iconFill}>
+                        <AvatarPrimary>
                           <Assignment />
-                        </Avatar>
+                        </AvatarPrimary>
                       </ListItemIcon>
                       <ListItemText
                         primary={intl.formatMessage(
@@ -161,12 +147,12 @@ const About = ({
                           messages.welcomeCompaniesItemOneSecondary
                         )}
                       />
-                    </ListItem>
-                    <ListItem className={classes.listIconTop}>
+                    </ListItemTop>
+                    <ListItemTop>
                       <ListItemIcon style={{ marginRight: 12 }}>
-                        <Avatar className={classes.iconFill}>
+                        <AvatarPrimary>
                           <GroupWork />
-                        </Avatar>
+                        </AvatarPrimary>
                       </ListItemIcon>
                       <ListItemText
                         primary={intl.formatMessage(
@@ -176,12 +162,12 @@ const About = ({
                           messages.welcomeCompaniesItemTwoSecondary
                         )}
                       />
-                    </ListItem>
-                    <ListItem className={classes.listIconTop}>
+                    </ListItemTop>
+                    <ListItemTop>
                       <ListItemIcon style={{ marginRight: 12 }}>
-                        <Avatar className={classes.iconFill}>
+                        <AvatarPrimary>
                           <AccountBalanceWallet />
-                        </Avatar>
+                        </AvatarPrimary>
                       </ListItemIcon>
                       <ListItemText
                         primary={intl.formatMessage(
@@ -191,20 +177,22 @@ const About = ({
                           messages.welcomeCompaniesItemThreeSecondary
                         )}
                       />
-                    </ListItem>
+                    </ListItemTop>
                   </List>
                 </MainList>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <ResponsiveImage width='600' src={companiesImage} />
               </Grid>
             </Grid>
           </Container>
-        </Section>
+          </SectionBgContrast>
+        </div>
         <Container>
-          <Section name='collab' ref={ref}>
+          <div id='collab' ref={ref}>
+            <Section>
             <Grid container spacing={3}>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <MainTitle left>
                   <Typography variant='h5' gutterBottom>
                     <FormattedMessage
@@ -215,11 +203,11 @@ const About = ({
                 </MainTitle>
                 <MainList>
                   <List>
-                    <ListItem className={classes.listIconTop}>
+                    <ListItemTop>
                       <ListItemIcon style={{ marginRight: 12 }}>
-                        <Avatar className={classes.iconFill}>
+                        <AvatarPrimary>
                           <Apps />
-                        </Avatar>
+                        </AvatarPrimary>
                       </ListItemIcon>
                       <ListItemText
                         primary={intl.formatMessage(
@@ -229,12 +217,12 @@ const About = ({
                           messages.welcomeCollabItemOneSecondary
                         )}
                       />
-                    </ListItem>
-                    <ListItem className={classes.listIconTop}>
+                    </ListItemTop>
+                    <ListItemTop>
                       <ListItemIcon style={{ marginRight: 12 }}>
-                        <Avatar className={classes.iconFill}>
+                        <AvatarPrimary>
                           <Work />
-                        </Avatar>
+                        </AvatarPrimary>
                       </ListItemIcon>
                       <ListItemText
                         primary={intl.formatMessage(
@@ -244,12 +232,12 @@ const About = ({
                           messages.welcomeCollabItemTwoSecondary
                         )}
                       />
-                    </ListItem>
-                    <ListItem className={classes.listIconTop}>
+                    </ListItemTop>
+                    <ListItemTop>
                       <ListItemIcon style={{ marginRight: 12 }}>
-                        <Avatar className={classes.iconFill}>
+                        <AvatarPrimary>
                           <AccountBalanceWallet />
-                        </Avatar>
+                        </AvatarPrimary>
                       </ListItemIcon>
                       <ListItemText
                         primary={intl.formatMessage(
@@ -259,18 +247,19 @@ const About = ({
                           messages.welcomeCollabItemThreeSecondary
                         )}
                       />
-                    </ListItem>
+                    </ListItemTop>
                   </List>
                 </MainList>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid size={{ xs: 12, sm: 6 }}>
                 <ResponsiveImage width='600' src={teamImage} />
               </Grid>
             </Grid>
-          </Section>
+            </Section>
+          </div>
         </Container>
       </PublicBase>
-    </div>
+    </Root>
   )
 }
 export default About

@@ -5,13 +5,13 @@ import {
   Button,
   DialogContentText,
   MobileStepper
-} from '@material-ui/core'
+} from '@mui/material'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-const welcome1 = require('images/welcome1.png')
-const welcome2 = require('images/welcome2.png')
-const welcome3 = require('images/welcome3.png')
+import welcome1 from 'images/welcome1.png'
+import welcome2 from 'images/welcome2.png'
+import welcome3 from 'images/welcome3.png'
 
 export default class WelcomeUser extends Component {
   constructor (props) {

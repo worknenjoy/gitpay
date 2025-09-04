@@ -4,54 +4,35 @@ import { FormattedMessage } from 'react-intl'
 import {
   Grid,
   Typography,
-  Divider,
   List,
-  ListItem
-} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+  ListItemButton
+} from '@mui/material'
 
 import SubscribeForm from '../../forms/subscribe-forms/subscribe-form/subscribe-form'
 import StatsBar from '../../../molecules/sections/stats-bar/stats-bar'
 import SlackCard from './SlackCard'
 import GithubCard from './GithubCard'
 
-import mainStyles from '../../../../../styleguide/styles/style'
-import { Container, BaseFooter, SubscribeFromWrapper } from './FooterStyles'
+import { Container, BaseFooter, SubscribeFromWrapper, SecBlock, SpacedDivider, LogoImg } from './bottom.styles'
 
 import BottomSectionDialog from '../../../../areas/public/features/welcome/components/BottomSectionDialog'
 import PrivacyPolicy from '../../../../areas/private/components/session/privacy-policy'
 import TermsOfService from '../../../../areas/private/components/session/terms-of-service'
 import CookiePolicy from '../../../../areas/private/components/session/cookie-policy'
 
-const logoCompleteGray = require('images/logo-complete-gray.png')
-const logoWorknEnjoy = require('images/worknenjoy-logo.png')
+import logoCompleteGray from 'images/logo-complete-gray.png'
+import logoWorknEnjoy from 'images/worknenjoy-logo.png'
 
-const useStyles = makeStyles((theme) => {
-  const styles = mainStyles(theme)
-  return {
-    secBlock: {
-      textAlign: 'center',
-      padding: 8,
-      backgroundColor: '#f1f0ea'
-    },
-    spacedTop: {
-      marginTop: 20
-    },
-    img: {
-      verticalAlign: 'middle'
-    }
-  }
-})
+// Styles were migrated to styled components in bottom.styles.ts
 
 const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
-  const classes = useStyles()
   const { tasks, bounties, users } = info
 
   return (
-    <div className={ classes.secBlock }>
+  <SecBlock>
       <Container>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } sm={ 3 }>
+          <Grid size={{ xs: 12, sm: 3 }}>
             <Typography component="div">
               <strong>
                 <FormattedMessage
@@ -61,7 +42,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
               </strong>
             </Typography>
             <List component="nav">
-              <ListItem button component="a">
+              <ListItemButton component="a">
                 <Typography
                   variant="subtitle1"
                   component="div"
@@ -73,8 +54,8 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
                     defaultMessage="About us"
                   />
                 </Typography>
-              </ListItem>
-              <ListItem button component="a">
+              </ListItemButton>
+              <ListItemButton component="a">
                 <Typography
                   variant="subtitle1"
                   component="div"
@@ -86,8 +67,8 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
                     defaultMessage="Pricing"
                   />
                 </Typography>
-              </ListItem>
-              <ListItem button component="a">
+              </ListItemButton>
+              <ListItemButton component="a">
                 <Typography
                   variant="subtitle1"
                   component="div"
@@ -99,8 +80,8 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
                     defaultMessage="Team"
                   />
                 </Typography>
-              </ListItem>
-              <ListItem button component="a">
+              </ListItemButton>
+              <ListItemButton component="a">
                 <Typography
                   variant="subtitle1"
                   component="div"
@@ -112,8 +93,8 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
                     defaultMessage="Documentation"
                   />
                 </Typography>
-              </ListItem>
-              <ListItem button component="a">
+              </ListItemButton>
+              <ListItemButton component="a">
                 <Typography
                   variant="subtitle1"
                   component="div"
@@ -125,10 +106,10 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
                     defaultMessage="Explore"
                   />
                 </Typography>
-              </ListItem>
+              </ListItemButton>
             </List>
           </Grid>
-          <Grid item xs={ 12 } sm={ 3 }>
+          <Grid size={{ xs: 12, sm: 3 }}>
             <Typography component="div">
               <strong>
                 <FormattedMessage
@@ -140,7 +121,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
             <List component="nav">
               <BottomSectionDialog
                 key="privacy-policy"
-                classes={ classes }
+                classes={{}}
                 title="Legal"
                 header="Privacy policy"
                 subtitle={ 'Privacy Policy' }
@@ -150,7 +131,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
               />
               <BottomSectionDialog
                 key="terms-of-service"
-                classes={ classes }
+                classes={{}}
                 title="Legal"
                 header="Terms of Service"
                 subtitle={ 'Terms of Service' }
@@ -160,7 +141,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
               />
               <BottomSectionDialog
                 key="cookie-policy"
-                classes={ classes }
+                classes={{}}
                 title="Legal"
                 header="Cookie Policy"
                 subtitle={ 'Cookie Policy' }
@@ -170,11 +151,11 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
               />
             </List>
           </Grid>
-          <Grid item xs={ 12 } sm={ 2 }>
+          <Grid size={{ xs: 12, sm: 2 }}>
             <SlackCard />
             <GithubCard />
           </Grid>
-          <Grid item xs={ 12 } sm={ 4 }>
+          <Grid size={{ xs: 12, sm: 4 }}>
             <Typography component="div">
               <FormattedMessage
                 id="bottom.subheading.newsletter"
@@ -189,7 +170,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
                 style={ { display: 'flex', alignItems: 'center' } }
               >
                 <div>
-                  <img className={ classes.img } src={ logoCompleteGray } width="100" />
+                  <LogoImg src={ logoCompleteGray } width="100" />
                 </div>
                 <Typography
                   component="span"
@@ -205,7 +186,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
                   />
                 </Typography>
                 <a href="http://worknenjoy.com" target="_blank" rel="noreferrer">
-                  <img className={ classes.img } src={ logoWorknEnjoy } width="100" />
+          <LogoImg src={ logoWorknEnjoy } width="100" />
                 </a>
               </BaseFooter>
               <div style={ { textAlign: 'right' } }>
@@ -220,10 +201,10 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0}, getInfo }) => {
             </div>
           </Grid>
         </Grid>
-        <Divider className={ classes.spacedTop } />
+    <SpacedDivider />
         <StatsBar info={getInfo} tasks={tasks} bounties={bounties} users={users} />
       </Container>
-    </div>
+  </SecBlock>
   )
 }
 

@@ -1,18 +1,20 @@
 import React from 'react'
 import {
   ListItem,
+  ListItemButton,
   Typography,
   Dialog,
   AppBar,
   Toolbar,
   IconButton,
-} from '@material-ui/core'
+} from '@mui/material'
 
 import {
   Close,
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 import { InfoList } from './CommonStyles'
+import { AppBar as AppBarStyles, AppBarHeader } from './bottom-section-dialog.styles'
 
 
 const BottomSectionDialog = ({
@@ -26,7 +28,8 @@ const BottomSectionDialog = ({
   const [ open, setOpen ] = React.useState(false)
 
   return (
-    <ListItem button component='a'>
+    <ListItem component='div'>
+      <ListItemButton component='a'>
       <Typography
         variant='subtitle1'
         onClick={ () => setOpen(true) }
@@ -35,12 +38,13 @@ const BottomSectionDialog = ({
       >
         {header}
       </Typography>
+      </ListItemButton>
       <Dialog
         fullScreen
         open={ open }
         onClose={ () => setOpen(false) }
       >
-        <AppBar className={ classes.appBar }>
+        <AppBarStyles>
           <Toolbar>
             <IconButton
               color='inherit'
@@ -49,14 +53,14 @@ const BottomSectionDialog = ({
             >
               <Close />
             </IconButton>
-            <Typography variant='subtitle1' className={ classes.appBarHeader }>
+            <AppBarHeader variant='subtitle1'>
               {title}
-            </Typography>
+            </AppBarHeader>
           </Toolbar>
           <InfoList>
             {content}
           </InfoList>
-        </AppBar>
+        </AppBarStyles>
       </Dialog>
     </ListItem>
   )

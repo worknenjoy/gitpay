@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import { withStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 import {
   Button,
   AppBar,
@@ -9,7 +9,7 @@ import {
   Grid,
   Typography,
   Link
-} from '@material-ui/core'
+} from '@mui/material'
 import peopleImage from 'images/landingPage_People.png'
 import logoGrey from 'images/logo-complete-gray.png'
 import screenImage from 'images/gitpay-explore-task-screenshot.png'
@@ -19,7 +19,7 @@ import Clientlist from './clientlist'
 import TeamCard from 'design-library/molecules/cards/team-card/TeamCard'
 import ContactRecruiterFormContainer from '../../../../../../containers/contact-recruiter-form'
 
-const deal = require('images/deal.png')
+import deal from 'images/deal.png'
 
 import {
   MainTitle,
@@ -33,11 +33,13 @@ import {
 // Still need to add in functionality for buttons
 // Export Styles to separate file to clean up code but left here for you to see for now
 
+import headhunterTeamMember1 from 'images/teams/headhunter-team-member1.png'
+
 const recruiterTeam = [
   {
     name: 'Alexandre Magno',
     description: 'Founder of Gitpay, and senior software engineer, sharing and helping developers to face the challenges of technical recruitment.',
-    image: require('images/teams/headhunter-team-member1.png'),
+  image: headhunterTeamMember1,
     linkedinUrl: 'https://www.linkedin.com/in/alexandremagnoteleszimerer/'
   }
 ]
@@ -211,7 +213,7 @@ function LandingPage (props) {
     <div>
       <div className={ classes.root }>
         <Grid container className={ classes.center } spacing={ 8 }>
-          <Grid item xs={ 12 }>
+          <Grid size={{ xs: 12 }}>
             <AppBar
               position='static'
               style={ { background: 'transparent', boxShadow: 'none' } }
@@ -232,13 +234,13 @@ function LandingPage (props) {
                 </Button>
               </Toolbar>
             </AppBar>
-            <Grid item xs={ 12 } className={ classes.textContainer }>
+            <Grid size={{ xs: 12 }} className={ classes.textContainer }>
               <h1 className={ classes.header }>
                 <FormattedMessage id='welcome.landing.title' defaultMessage='A Better Way to Recruit Technical Talent' />
               </h1>
               <p className={ classes.paragraph }><FormattedMessage id='welcome.landing.description' defaultMessage='GitPay is a platform by developers, for developers that connects global talent to real-world technical challenges on GitHub and Bitbucket. This allows our international recruitment team to identify the best, proven talent in real time for roles at some of the world’s most exciting companies, like yours. Want our help filling a position?' /></p>
             </Grid>
-            <Grid item xs={ 12 } className={ classes.margin }>
+            <Grid size={{ xs: 12 }} className={ classes.margin }>
               <Button
                 variant='contained'
                 size='medium'
@@ -261,15 +263,15 @@ function LandingPage (props) {
           </Grid>
         </Grid>
       </div>
-      <Grid item xs={ 12 }>
+      <Grid size={{ xs: 12 }}>
         <img src={ peopleImage } />
       </Grid>
-      <Grid item xs={ 12 }>
+      <Grid size={{ xs: 12 }}>
         <Clientlist />
       </Grid>
       <Section>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <MainTitle center>
               <Typography variant='h5' gutterBottom>
                 <FormattedMessage
@@ -299,14 +301,14 @@ function LandingPage (props) {
               </div>
             </MainList>
           </Grid>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <ResponsiveImage width='600' src={ screenImage } />
           </Grid>
         </Grid>
       </Section>
       <Section alternative className={ classes.bgContrast }>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <MainTitle center>
               <Typography variant='h5' gutterBottom>
                 <FormattedMessage
@@ -335,14 +337,14 @@ function LandingPage (props) {
               </div>
             </MainList>
           </Grid>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <ResponsiveImage src={ profileImage } />
           </Grid>
         </Grid>
       </Section>
       <Section>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <MainTitle center>
               <Typography variant='h5' gutterBottom>
                 <FormattedMessage
@@ -372,14 +374,14 @@ function LandingPage (props) {
               </div>
             </MainList>
           </Grid>
-          <Grid item xs={ 12 } sm={ 6 }>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <ResponsiveImage width='400' src={ deal } />
           </Grid>
         </Grid>
       </Section>
       <Section>
         <Grid container spacing={ 3 }>
-          <Grid item xs={ 12 } justify>
+          <Grid size={{ xs: 12 }} justify>
             <TeamCard data={ recruiterTeam } />
           </Grid>
         </Grid>
@@ -387,7 +389,7 @@ function LandingPage (props) {
       <Section>
         <div ref={ ref }>
           <Grid container spacing={ 3 }>
-            <Grid item xs={ 12 } justify>
+            <Grid size={{ xs: 12 }} justify>
               <ContactRecruiterFormContainer />
             </Grid>
           </Grid>
@@ -402,4 +404,4 @@ LandingPage.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(LandingPage)
+export default LandingPage

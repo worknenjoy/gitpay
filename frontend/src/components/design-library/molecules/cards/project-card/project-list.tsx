@@ -1,24 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Box,
-  Container,
-  Grid,
-  makeStyles
-} from '@material-ui/core'
-import { Pagination } from '@material-ui/lab'
-import ProjectCard from './project-card'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: theme.palette.background.dark,
-    minHeight: '100%',
-    paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3)
-  },
-  projectCard: {
-    height: '100%'
-  }
-}))
+import { Box, Grid, Pagination } from '@mui/material'
+import { StyledContainer, StyledProjectCard } from './project-list.styles'
 
 const paginate = (array, pageSize, pageNumber) => {
   // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
@@ -26,7 +8,6 @@ const paginate = (array, pageSize, pageNumber) => {
 }
 
 const ProjectList = ({ listProjects, projects }) => {
-  const classes = useStyles()
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [currentProjects, setCurrentProjects] = useState([])
@@ -72,7 +53,7 @@ const ProjectList = ({ listProjects, projects }) => {
   const pages = Math.ceil(total / recordsPerPage)
 
   return (
-    <Container maxWidth={ false }>
+    <StyledContainer maxWidth={ false }>
       <Box mt={ 3 } mb={ 3 }>
         <Grid
           container
@@ -80,17 +61,8 @@ const ProjectList = ({ listProjects, projects }) => {
         >
           { currentProjects && currentProjects.length > 0 && currentProjects
             .map(project => (
-              <Grid
-                item
-                key={ project.id }
-                lg={ 4 }
-                md={ 6 }
-                xs={ 12 }
-              >
-                <ProjectCard
-                  className={ classes.projectCard }
-                  project={ project }
-                />
+              <Grid key={ project.id } size={ { lg: 4, md: 6, xs: 12 } }>
+                <StyledProjectCard project={ project } />
               </Grid>
             )) }
         </Grid>
@@ -110,8 +82,9 @@ const ProjectList = ({ listProjects, projects }) => {
         />
       </Box>
       }
-    </Container>
+    </StyledContainer>
   )
 }
 
 export default ProjectList
+

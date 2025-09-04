@@ -1,13 +1,12 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Button, Typography } from '@material-ui/core';
-import { Alert } from '../alert/alert';
+import { Typography } from '@mui/material';
 import { validAccount } from '../../../../../utils/valid-account';
 import api from '../../../../../consts';
-import useStyles from './account-requirements.styles';
+import Button from '../../../atoms/buttons/button/button'
+import { CustomAlert } from './account-requirements.styles';
 
 const AccountRequirements = ({ user, account, intl, onClick }) => {
-  const classes = useStyles()
   const { completed = true } = account;
 
   const missingRequirements = () => {
@@ -28,19 +27,17 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
   }
   return (
     !validAccount(user, account) ?
-      <Alert
+      <CustomAlert
         completed={completed}
-        className={classes.alert}
         severity="warning"
         action={
           <Button
-            size="small"
+            completed={completed}
             onClick={onClick}
             variant="contained"
             color="secondary"
-          >
-            <FormattedMessage id="transfers.alert.button" defaultMessage="Update your account" />
-          </Button>
+            label={<FormattedMessage id="transfers.alert.button" defaultMessage="Update your account" />}
+          />
         }
       >
         <Typography variant="subtitle1" gutterBottom>
@@ -56,7 +53,7 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
             </ul>
           </>
         }
-      </Alert>
+      </CustomAlert>
       :
       null
   );

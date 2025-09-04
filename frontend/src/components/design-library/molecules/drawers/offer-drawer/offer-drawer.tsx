@@ -1,23 +1,10 @@
 import React, { useEffect } from 'react'
 
-import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '../drawer/drawer'
 import OfferDrawerCreate from './components/offer-drawer-create';
 import OfferDrawerTabs from './components/offer-drawer-tabs';
 import OffersList from '../../lists/offers-list/offers-list';
-import { AddCircleTwoTone as AddIcon } from '@material-ui/icons';
-
-
-const useStyles = makeStyles(theme => ({
-  details: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  spanText: {
-    display: 'inline-block',
-    verticalAlign: 'middle'
-  }
-}));
+import { AddCircleTwoTone as AddIcon } from '@mui/icons-material';
 
 export type OfferDrawerProps = {
   title: any;
@@ -73,7 +60,7 @@ const OfferDrawer = ({
   const [ currentPrice, setCurrentPrice ] = React.useState(0);
   const [ enableActions, setEnableActions ] = React.useState(true);
 
-  const classes = useStyles();
+  
 
   const createSection =
     <OfferDrawerCreate

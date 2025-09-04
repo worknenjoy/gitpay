@@ -1,3 +1,4 @@
+import React from 'react';
 import StatusCard from './status-card';
 
 const meta = {
@@ -12,8 +13,16 @@ const meta = {
 
 export default meta;
 
-export const Default = {};
+const Template = (args) => <StatusCard {...args} />;
 
-export const Loading = {
+export const Default = Template.bind({});
+Default.args = {
+  status: 'Done',
+  name: 'Available Balance',
+  completed: true
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
   completed: false
 }

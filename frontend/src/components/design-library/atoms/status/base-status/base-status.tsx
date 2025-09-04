@@ -1,8 +1,8 @@
 import React from 'react';
-import Chip from '@material-ui/core/Chip';
-import { Tooltip } from '@material-ui/core';
-import { HelpOutline as QuestionInfoIcon } from '@material-ui/icons';
-import ReactPlaceholder from 'react-placeholder';
+import Chip from '@mui/material/Chip';
+import { Tooltip } from '@mui/material';
+import { HelpOutline as QuestionInfoIcon } from '@mui/icons-material';
+import { Skeleton } from '@mui/material';
 
 type StatusListProps = {
   status: string; 
@@ -15,17 +15,21 @@ type StatusListProps = {
 type statusProps = {
   status: string;
   statusList: Array<StatusListProps>;
-  classes: any;
+  classes?: any;
+  styles?: Record<string, any>;
   completed?: boolean; // Optional prop to indicate if the status is completed
 }
 
-const BaseStatus = ({ status, statusList, classes, completed = true }:statusProps) => {
+const BaseStatus = ({ status, statusList, classes, styles, completed = true }:statusProps) => {
 
   const [tooltipOpen, setTooltipOpen] = React.useState(false);
 
   const currentStatus = statusList.find((item) => item.status === status) || statusList.find((item) => item.status === 'unknown')
 
   const { label , color, icon, message } = currentStatus;
+
+  const chipStyleProps = color && styles && styles[color] ? { sx: styles[color] } : (classes && color ? { className: classes[color] } : {})
+  const iconStyleProps = color && styles && styles[color] ? { sx: styles[color] } : (classes && color ? { className: classes[color] } : {})
   
   // Custom delete icon with tooltip
   const deleteIconWithTooltip = (
@@ -41,7 +45,7 @@ const BaseStatus = ({ status, statusList, classes, completed = true }:statusProp
     > 
       <QuestionInfoIcon
         fontSize="small"
-        className={classes[color]}
+        {...iconStyleProps}
         onClick={e => {
           e.stopPropagation();
           setTooltipOpen(!tooltipOpen);
@@ -57,25 +61,29 @@ const BaseStatus = ({ status, statusList, classes, completed = true }:statusProp
   };
 
   return (
-    <ReactPlaceholder
-      type="text"
-      rows={1}
-      ready={completed}
-      showLoadingAnimation
-      style={{ width: 100, height: 32, display: 'inline-block' }}
-    >
-      {status ? 
-        <Chip 
-          size="small"
-          label={label}
-          className={classes[color]}
-          icon={icon}
-          {...extraProps}
-        /> 
-        :
-        <></>
+    <>
+      {
+        !completed ? (
+          <>
+            <Skeleton variant="text" animation="wave" width="40%" />
+          </>
+        ) : (
+          <>
+            { status ? 
+              <Chip 
+                size="small"
+                label={label}
+                {...chipStyleProps}
+                icon={icon}
+                {...extraProps}
+              /> 
+              :
+              <></>
+            }
+          </>
+        )
       }
-    </ReactPlaceholder>
+    </>
   );
 }
 

@@ -1,12 +1,11 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
-const useStyles = makeStyles(() => ({
-  termsLabel: {
-    paddingTop: 0
-  },
-  checkbox: {
-    paddingRight: 5
-  }
-}))
+export const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
+  paddingRight: 5
+}));
 
-export default useStyles
+export const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
+  paddingTop: 0
+}));

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Card, CardText } from '@material-ui/core'
+import { Card, CardText } from '@mui/material'
 import Input from '../../common/form/inputAuth'
 
 const cardStyle = {

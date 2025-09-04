@@ -7,9 +7,10 @@ import {
   Drawer,
   List,
   ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText
-} from '@material-ui/core';
+} from '@mui/material';
 import {
   LibraryBooks,
   Tune,
@@ -21,7 +22,7 @@ import {
   AccountBox as AccountIcon,
   AccountBalance,
   Payment as PaymentIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { StyledAvatar } from '../../../organisms/layouts/topbar/TopbarStyles';
 
 const AccountMenu = ({
@@ -122,14 +123,14 @@ const AccountMenu = ({
         </ListItem>
         { MenuItems.map((item, index) => (
           getUserType(item.type) &&
-          <ListItem button onClick={ item.onClick } key={ index }>
+          <ListItemButton onClick={ item.onClick } key={ index }>
             <ListItemIcon>
               { item.icon }
             </ListItemIcon>
             <ListItemText>
               { item.name }
             </ListItemText>
-          </ListItem>
+          </ListItemButton>
         )) }
       </List>
     </Drawer>
