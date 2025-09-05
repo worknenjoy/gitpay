@@ -1,4 +1,5 @@
 module.exports.currencyMap = {
+  'AL': 'ALL', // Albania
   'AU': 'AUD',
   'AT': 'EUR',
   'BE': 'EUR',

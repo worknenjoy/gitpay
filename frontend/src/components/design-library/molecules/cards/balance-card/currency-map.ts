@@ -1,5 +1,3 @@
-
-
 //Map for currency symbols
 const currencyMap = {
   usd: { symbol: '$', decimalPlaces: 2 }, // US Dollar
@@ -34,6 +32,7 @@ const currencyMap = {
   ils: { symbol: '₪', decimalPlaces: 2 }, // Israeli Shekel
   sar: { symbol: 'ر.س', decimalPlaces: 2 }, // Saudi Riyal
   aed: { symbol: 'د.إ', decimalPlaces: 2 }, // UAE Dirham
+  all: { symbol: 'L', decimalPlaces: 2 }, // Albanian Lek
   egp: { symbol: '£', decimalPlaces: 2 }, // Egyptian Pound
   czk: { symbol: 'Kč', decimalPlaces: 2 }, // Czech Koruna
   clp: { symbol: 'CLP$', decimalPlaces: 0 }, // Chilean Peso

@@ -1,4 +1,5 @@
 export const countryCodes = [
+  { country: 'Albania', code: 'AL', image: 'albania' },
   { country: 'Australia', code: 'AU', image: 'australia' },
   { country: 'Austria', code: 'AT', image: 'austria' },
   { country: 'Belgium', code: 'BE', image: 'belgium' },
@@ -58,6 +59,7 @@ export const countryCodes = [
 
 export const countryCurrencies = [
   { currency: 'Australian Dollar', symbol: 'A$', code: 'AUD', countries: ['AU'] },
+  { currency: 'Albanian Lek', symbol: 'Lek', code: 'ALL', countries: ['AL'] },
   { currency: 'Euro', symbol: '€', code: 'EUR', countries: ['AT', 'BE', 'CY', 'EE', 'FI', 'FR', 'DE', 'GR', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'SK', 'SI', 'ES'] },
   { currency: 'Brazilian Real', symbol: 'R$', code: 'BRL', countries: ['BR'] },
   { currency: 'Bulgarian Lev', symbol: 'лв', code: 'BGN', countries: ['BG'] },
