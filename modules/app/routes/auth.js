@@ -120,6 +120,7 @@ router.put('/user/update', controllers.userUpdate)
 router.post('/user/account', controllers.accountCreate)
 router.get('/user/account', controllers.account)
 router.put('/user/account', controllers.accountUpdate)
+router.delete('/user/account', controllers.accountDelete)
 
 router.get('/user/account/balance', controllers.accountBalance)
 

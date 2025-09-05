@@ -18,7 +18,7 @@ const Button = ({
   color,
   label,
   disabled,
-  completed,
+  completed = true,
   onClick
 }:ButtonProps) => {
   const { Progress } = styles as any;

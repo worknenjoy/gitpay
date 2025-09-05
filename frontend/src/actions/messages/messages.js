@@ -337,6 +337,14 @@ const messages = defineMessages({
     id: 'actions.user.account.update.success',
     defaultMessage: 'Your account was updated successfully'
   },
+  notificationUserAccountDeleteSuccess: {
+    id: 'actions.user.account.delete.success',
+    defaultMessage: 'Your account was deleted successfully'
+  },
+  notificationUserAccountDeleteError: {
+    id: 'actions.user.account.delete.error',
+    defaultMessage: 'We could not delete your account'
+  },
   notificationUserAccountUpdateErrorMissing: {
     id: 'actions.user.account.update.error.missing',
     defaultMessage: 'We had an issue to update your account. Please review the information provided'

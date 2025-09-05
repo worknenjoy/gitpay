@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import ConfirmDialog from './confirm-dialog';
 
@@ -7,8 +6,7 @@ const meta = {
   component: ConfirmDialog,
   parameters: { layout: 'centered' },
   argTypes: {
-    onConfirm: { action: 'confirm' },
-    onCancel: { action: 'cancel' },
+    
   },
 } satisfies Meta<typeof ConfirmDialog>;
 
@@ -24,6 +22,7 @@ export const DefaultOpen: Story = {
     alertMessage: 'Please confirm your action.',
     confirmLabel: 'Delete',
     cancelLabel: 'Cancel',
+    completed: true
   },
 };
 
@@ -47,32 +46,12 @@ export const WithoutTitle: Story = {
   },
 };
 
-export const WithTrigger: Story = {
-  render: (args) => {
-    const [open, setOpen] = useState(false);
-    return (
-      <div>
-        <button onClick={() => setOpen(true)}>Open Confirm Dialog</button>
-        <ConfirmDialog
-          {...args}
-          open={open}
-          onCancel={() => {
-            setOpen(false);
-            args.onCancel?.();
-          }}
-          onConfirm={() => {
-            setOpen(false);
-            args.onConfirm?.();
-          }}
-          title={args.title ?? 'Perform action?'}
-        >
-          {args.children ?? 'Are you sure you want to do this?'}
-        </ConfirmDialog>
-      </div>
-    );
-  },
+export const Loading: Story = {
   args: {
-    confirmLabel: 'Yes',
-    cancelLabel: 'No',
+    open: true,
+    message: 'Loading...',
+    confirmLabel: 'Confirm',
+    cancelLabel: 'Cancel',
+    completed: false
   },
 };

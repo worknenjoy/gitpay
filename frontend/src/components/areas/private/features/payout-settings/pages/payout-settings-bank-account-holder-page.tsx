@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PayoutSettingsBankAccountHolder from 'design-library/pages/private/settings-pages/payout-settings-bank-account-holder/payout-settings-bank-account-holder';
 
-const BankAccountHolderPage = ({ user, account, countries, updateAccount }) => {
+const BankAccountHolderPage = ({ user, account, countries, updateAccount, deleteAccount }) => {
   const { data, completed } = account;
   const [terms, setTerms] = useState(false)
 
@@ -55,6 +55,7 @@ const BankAccountHolderPage = ({ user, account, countries, updateAccount }) => {
       countries={countries}
       onSubmit={handleSubmit}
       onChange={setTerms}
+      onConfirmCloseAccount={deleteAccount}
     />
   );
 }

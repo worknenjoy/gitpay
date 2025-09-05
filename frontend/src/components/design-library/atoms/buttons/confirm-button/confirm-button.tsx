@@ -70,7 +70,6 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
         color={color}
         label={label}
         disabled={disabled}
-        completed={completed}
         onClick={openDialog}
       />
       <ConfirmDialog
@@ -83,6 +82,7 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
         cancelLabel={cancelLabel}
         alertMessage={alertMessage}
         alertSeverity={alertSeverity}
+        completed={completed}
       />
     </>
   );

@@ -32,3 +32,16 @@ SecondaryStyle.args = {
   confirmLabel: 'Archive',
   cancelLabel: 'Keep',
 };
+
+export const Loading = Template.bind({});
+Loading.args = {
+  label: 'Delete',
+  color: 'error',
+  variant: 'contained',
+  completed: false,
+  dialogMessage: 'Are you sure you want to delete this item? This action cannot be undone.',
+  confirmLabel: 'Delete',
+  cancelLabel: 'Cancel',
+  alertMessage: 'This will permanently remove the item.',
+  alertSeverity: 'warning',
+};

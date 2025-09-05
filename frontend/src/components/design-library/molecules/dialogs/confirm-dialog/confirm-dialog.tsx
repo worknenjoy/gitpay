@@ -1,23 +1,24 @@
 import React from 'react'
 import {
-  Button,
   Dialog,
   DialogContent,
   DialogActions,
   Typography
 } from '@mui/material'
 import Alert, { AlertColor } from '@mui/material/Alert'
+import Button from '../../../atoms/buttons/button/button'
 
 type ConfirmDialogProps = {
   open: boolean
-  handleClose: () => void
   message: React.ReactNode
   onConfirm?: () => Promise<void> | void
   onCancel?: () => void
+  handleClose?: () => void
   confirmLabel?: React.ReactNode
   cancelLabel?: React.ReactNode
   alertMessage?: React.ReactNode
-  alertSeverity?: AlertColor
+  alertSeverity?: AlertColor,
+  completed?: boolean
 }
 
 export default function ConfirmDialog ({
@@ -29,7 +30,8 @@ export default function ConfirmDialog ({
   confirmLabel = 'Confirm',
   cancelLabel = 'Cancel',
   alertMessage,
-  alertSeverity = 'warning'
+  alertSeverity = 'warning',
+  completed
 }: ConfirmDialogProps) {
   const handleConfirmClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -62,12 +64,8 @@ export default function ConfirmDialog ({
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={ handleCancelClick } variant="outlined" color="secondary">
-            {cancelLabel}
-          </Button>
-          <Button variant="contained" color="primary" onClick={ handleConfirmClick }>
-            {confirmLabel}
-          </Button>
+          <Button onClick={ handleCancelClick } variant="outlined" color="secondary" label={cancelLabel} />
+          <Button variant="contained" color="primary" onClick={ handleConfirmClick } label={confirmLabel} completed={completed} />
         </DialogActions>
       </Dialog>
     </div>

@@ -14,6 +14,9 @@ import {
   UPDATE_USER_ACCOUNT_REQUESTED,
   UPDATE_USER_ACCOUNT_SUCCESS,
   UPDATE_USER_ACCOUNT_ERROR,
+  DELETE_USER_ACCOUNT_REQUESTED,
+  DELETE_USER_ACCOUNT_SUCCESS,
+  DELETE_USER_ACCOUNT_ERROR,
   GET_BANKACCOUNT_REQUESTED,
   GET_BANKACCOUNT_SUCCESS,
   GET_BANKACCOUNT_ERROR,
@@ -45,6 +48,12 @@ export const account = (state = { data: { }, completed: true, error: {} }, actio
       return { ...state, completed: true, data: action.data, error: {} }
     case UPDATE_USER_ACCOUNT_ERROR:
       return { ...state, completed: true, error: action.error, data: action.data }
+    case DELETE_USER_ACCOUNT_REQUESTED:
+      return { ...state, completed: false }
+    case DELETE_USER_ACCOUNT_SUCCESS:
+      return { ...state, completed: true, data: {}, error: {} }
+    case DELETE_USER_ACCOUNT_ERROR:
+      return { ...state, completed: true, error: action.error }
     default:
       return state
   }

@@ -5,7 +5,8 @@ const PayoutSetingsBankAccountHolder = ({
   account,
   countries,
   onSubmit,
-  onChange
+  onChange,
+  onConfirmCloseAccount
 }) => {
   return (
     <>
@@ -14,6 +15,7 @@ const PayoutSetingsBankAccountHolder = ({
         countries={countries}
         onSubmit={onSubmit}
         onChange={onChange}
+        onConfirmCloseAccount={onConfirmCloseAccount}
       />
     </>
   );
