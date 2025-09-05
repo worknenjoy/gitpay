@@ -105,7 +105,7 @@ const AccountDetailsForm = ({
           confirmLabel={<FormattedMessage id="account.actions.close" defaultMessage="Close Account" />}
           cancelLabel={<FormattedMessage id="account.actions.cancel" defaultMessage="Cancel" />}
           alertMessage={<FormattedMessage id="account.actions.close.alert" defaultMessage="Closing your account will remove all your data, including bank accounts, transfers, and claims from our system. This action cannot be undone." />}
-          alertSeverity='warning'
+          alertSeverity="warning"
           onConfirm={onConfirmCloseAccount}
         />
         <Button 
