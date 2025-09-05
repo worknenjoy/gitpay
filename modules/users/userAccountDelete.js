@@ -9,7 +9,7 @@ module.exports = Promise.method(async function userAccountDelete({ userId }) {
   const deletedAccount = await stripe.accounts.del(account_id);
 
   if (!deletedAccount.deleted) throw new Error('Failed to delete Stripe account');
-  const userUpdated = await models.User.update({ account_id: null }, { where: { id: userId }, returning: true });
+  const userUpdated = await models.User.update({ account_id: null, country: null }, { where: { id: userId }, returning: true });
   
   if (!userUpdated[0]) throw new Error('Failed to update user');
   const updatedUser = await models.User.findByPk(userId, {
