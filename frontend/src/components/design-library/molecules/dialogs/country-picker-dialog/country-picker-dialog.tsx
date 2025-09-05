@@ -135,42 +135,44 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
             </DialogContentText>
             </CreditTextMobile>
           </DialogContent>
-          
-            <Button
-              onClick={(e) =>
-                onClose(e, {
-                  country: null,
-                  code: null,
-                  image: null
-                })
-              }
-              size="large"
-              
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              onClick={(e) => {
-                onSelectCountry(currentCountry);
-                onClose(e, {
-                  country: currentCountry.label,
-                  code: currentCountry.code,
-                  image: currentCountry.image
-                })
-              }}
-              size="large"
-              color="secondary"
-              autoFocus
-              style={{
-                minWidth: 'auto'
-              }}
-              
-            >
-              <FormattedMessage id="dialog.picker.choose" defaultMessage={`Choose {country}`} values={{
-                country: currentCountry.label
-              }} /> 
-            </Button>
+            <div style={{ display: 'flex', justifyContent: 'flex-end'}}>
+              <Button
+                onClick={(e) =>
+                  onClose(e, {
+                    country: null,
+                    code: null,
+                    image: null
+                  })
+                }
+                size="large"
+                
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                onClick={(e) => {
+                  onSelectCountry(currentCountry);
+                  onClose(e, {
+                    country: currentCountry.label,
+                    code: currentCountry.code,
+                    image: currentCountry.image
+                  })
+                }}
+                size="large"
+                color="secondary"
+                autoFocus
+                style={{
+                  minWidth: 'auto',
+                  marginLeft: 10
+                }}
+                
+              >
+                <FormattedMessage id="dialog.picker.choose" defaultMessage={`Choose {country}`} values={{
+                  country: currentCountry.label
+                }} /> 
+              </Button>
+            </div>
           </FullWidthMobile>
         </DialogActions>
       </Dialog>

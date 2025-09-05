@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { updateUser, fetchAccount, fetchAccountCountries, deleteUser, createBankAccount, createAccount, updateAccount, updateBankAccount, getBankAccount } from '../../../actions/userActions';
+import { updateUser, fetchAccount, fetchAccountCountries, deleteUser, createBankAccount, createAccount, updateAccount, deleteAccount, updateBankAccount, getBankAccount } from '../../../actions/userActions';
 import { changePassword } from '../../../actions/loginActions'
 import { addNotification } from '../../../actions/notificationActions';
 import PayoutSettingsPage from '../../../components/areas/private/features/payout-settings/pages/payout-settings-bank-account-page';
@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch: any) => {
     deleteUser: (id: any) => dispatch(deleteUser(id)),
     createAccount: (account: any) => dispatch(createAccount(account)),
     updateAccount: (account) => dispatch(updateAccount(account)),
+    deleteAccount: () => dispatch(deleteAccount()),
     createBankAccount: (bankAccount: any) => dispatch(createBankAccount(bankAccount)),
     updateBankAccount: (bankAccount: any) => dispatch(updateBankAccount(bankAccount)),
     getBankAccount: () => dispatch(getBankAccount())

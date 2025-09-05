@@ -25,6 +25,10 @@ const UPDATE_USER_ACCOUNT_REQUESTED = 'UPDATE_USER_ACCOUNT_REQUESTED'
 const UPDATE_USER_ACCOUNT_SUCCESS = 'UPDATE_USER_ACCOUNT_SUCCESS'
 const UPDATE_USER_ACCOUNT_ERROR = 'UPDATE_USER_ACCOUNT_ERROR'
 
+const DELETE_USER_ACCOUNT_REQUESTED = 'DELETE_USER_ACCOUNT_REQUESTED'
+const DELETE_USER_ACCOUNT_SUCCESS = 'DELETE_USER_ACCOUNT_SUCCESS'
+const DELETE_USER_ACCOUNT_ERROR = 'DELETE_USER_ACCOUNT_ERROR'
+
 const FETCH_USER_CUSTOMER_REQUESTED = 'FETCH_USER_CUSTOMER_REQUESTED'
 const FETCH_USER_CUSTOMER_SUCCESS = 'FETCH_USER_CUSTOMER_SUCCESS'
 const FETCH_USER_CUSTOMER_ERROR = 'FETCH_USER_CUSTOMER_ERROR'
@@ -159,6 +163,26 @@ const updateUserAccountSuccess = account => {
 
 const updateUserAccountError = (error, data) => {
   return { type: UPDATE_USER_ACCOUNT_ERROR, completed: true, error: error, data }
+}
+
+/*
+ * User account delete
+ */
+
+const deleteUserAccountRequested = () => {
+  return { type: DELETE_USER_ACCOUNT_REQUESTED, completed: false }
+}
+
+const deleteUserAccountSuccess = user => {
+  return {
+    type: DELETE_USER_ACCOUNT_SUCCESS,
+    completed: true,
+    data: user.data
+  }
+}
+
+const deleteUserAccountError = error => {
+  return { type: DELETE_USER_ACCOUNT_ERROR, completed: true, error: error }
 }
 
 /*
@@ -526,6 +550,27 @@ const updateAccount = (account) => {
   }
 }
 
+const deleteAccount = () => {
+  validToken()
+  return (dispatch) => {
+    dispatch(deleteUserAccountRequested())
+    return axios
+      .delete(api.API_URL + '/user/account')
+      .then(user => {
+        dispatch(addNotification('actions.user.account.delete.success'))
+        return dispatch(deleteUserAccountSuccess(user))
+      })
+      .catch(error => {
+        dispatch(
+          addNotification('actions.user.account.delete.error')
+        )
+        // eslint-disable-next-line no-console
+        console.log('error on delete account', error)
+        return dispatch(deleteUserAccountError(error))
+      })
+  }
+}
+
 /*
 * User
 */
@@ -713,6 +758,9 @@ export {
   UPDATE_USER_ACCOUNT_REQUESTED,
   UPDATE_USER_ACCOUNT_SUCCESS,
   UPDATE_USER_ACCOUNT_ERROR,
+  DELETE_USER_ACCOUNT_REQUESTED,
+  DELETE_USER_ACCOUNT_SUCCESS,
+  DELETE_USER_ACCOUNT_ERROR,
   FETCH_USER_CUSTOMER_REQUESTED,
   FETCH_USER_CUSTOMER_SUCCESS,
   FETCH_USER_CUSTOMER_ERROR,
@@ -745,6 +793,7 @@ export {
   fetchAccountCountries,
   createAccount,
   updateAccount,
+  deleteAccount,
   fetchCustomer,
   createCustomer,
   updateCustomer,

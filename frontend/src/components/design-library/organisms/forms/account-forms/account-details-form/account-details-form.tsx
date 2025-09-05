@@ -9,6 +9,7 @@ import AcceptTermsField from '../../../../atoms/inputs/fields/accept-terms-field
 import Alert from '../../../../atoms/alerts/alert/alert';
 import ProfileSecondaryHeader from '../../../../molecules/headers/profile-secondary-header/profile-secondary-header';
 import AccountHolderStatus from '../../../../atoms/status/account-status/account-holder-status/account-holder-status';
+import ConfirmButton from 'design-library/atoms/buttons/confirm-button/confirm-button';
 
 const errorMapping = {
   'individual[dob][day]': 'Invalid day of birth',
@@ -28,7 +29,8 @@ const AccountDetailsForm = ({
   account,
   countries,
   onSubmit,
-  onChange
+  onChange,
+  onConfirmCloseAccount
 }) => {
   const { data = {}, completed, error = {} } = account;
   const { individual = {}, capabilities = {}, currency } = data;
@@ -92,7 +94,20 @@ const AccountDetailsForm = ({
         onAccept={onChange}
         completed={completed}
       />
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <ConfirmButton 
+          variant="outlined"
+          color="error" 
+          label={<FormattedMessage id="account.actions.close" defaultMessage="Close Account" />}
+          disabled={false}
+          completed={completed}
+          dialogMessage={<FormattedMessage id="account.actions.close.confirm" defaultMessage="Are you sure you want to close your account? By closing your account, you still have your account on Gitpay, but you will have to register your country and provide your information or from your business again. This is an option for who changed from country or choose a country which you're not residing legally." />}
+          confirmLabel={<FormattedMessage id="account.actions.close" defaultMessage="Close Account" />}
+          cancelLabel={<FormattedMessage id="account.actions.cancel" defaultMessage="Cancel" />}
+          alertMessage={<FormattedMessage id="account.actions.close.alert" defaultMessage="Closing your account will remove all your data, including bank accounts, transfers, and claims from our system. This action cannot be undone." />}
+          alertSeverity="warning"
+          onConfirm={onConfirmCloseAccount}
+        />
         <Button 
           type="submit"
           variant="contained"

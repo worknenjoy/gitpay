@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Skeleton } from '@mui/material';
 import CountryPicker from '../../../../molecules/dialogs/country-picker-dialog/country-picker-dialog';
 import BankAccountTabs from '../../../../molecules/tabs/bank-account-tabs/bank-account-tabs';
@@ -46,9 +46,15 @@ const PayoutSetingsBankAccount = ({
     onSaveCountry(country);
   }
 
+  useEffect(() => {
+    setCountry({
+      code: null,
+      label: null,
+      image: null
+    });
+  }, [user]);
+
   return (
-
-
     completed ? (
       <>
         {!data?.account_id ? (

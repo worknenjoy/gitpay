@@ -14,7 +14,10 @@ import {
 import {
   UPDATE_USER_REQUESTED,
   UPDATE_USER_SUCCESS,
-  UPDATE_USER_ERROR
+  UPDATE_USER_ERROR,
+  DELETE_USER_ACCOUNT_REQUESTED,
+  DELETE_USER_ACCOUNT_SUCCESS,
+  DELETE_USER_ACCOUNT_ERROR
 } from '../actions/userActions'
 
 export const loggedIn = (state = { logged: false, data: {}, completed: true, error: {} }, action) => {
@@ -32,6 +35,7 @@ export const loggedIn = (state = { logged: false, data: {}, completed: true, err
     case UPDATE_USER_ERROR:
       return { ...state, completed: action.completed, error: action.error }
     case LOGOUT_REQUESTED:
+      return { ...state, logged: action.logged, completed: action.completed }
     case LOGOUT_COMPLETED:
       return { ...state, logged: action.logged, completed: action.completed }
     case SEARCH_USER_SUCCESS:
@@ -44,6 +48,13 @@ export const loggedIn = (state = { logged: false, data: {}, completed: true, err
       return { ...state, data: action.data, completed: action.completed }
     case FETCH_LOGGED_USER_ERROR:
       return { ...state, completed: action.completed, error: action.error }
+    case DELETE_USER_ACCOUNT_REQUESTED:
+      return { ...state, completed: false }
+    case DELETE_USER_ACCOUNT_SUCCESS:
+      return { ...state, completed: true, data: action.data, error: {} }
+    case DELETE_USER_ACCOUNT_ERROR:
+      return { ...state, completed: true, error: action.error }
+
     default:
       return state
   }

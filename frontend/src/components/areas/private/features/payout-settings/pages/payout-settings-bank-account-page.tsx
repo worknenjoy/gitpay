@@ -13,6 +13,7 @@ const PayoutSettingsBankAccountPage = ({
   countries,
   createAccount,
   updateAccount,
+  deleteAccount,
   fetchAccount,
   fetchAccountCountries,
   getBankAccount,
@@ -42,6 +43,7 @@ const PayoutSettingsBankAccountPage = ({
                 {...routeProps}
                 user={user}
                 updateAccount={updateAccount}
+                deleteAccount={deleteAccount}
                 fetchAccountCountries={fetchAccountCountries}
                 account={account}
                 countries={countries}

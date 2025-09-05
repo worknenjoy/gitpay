@@ -285,6 +285,28 @@ exports.accountBalance = (req, res) => {
     })
 }
 
+exports.accountUpdate = (req, res) => {
+  user.userAccountUpdate({userParams: req.user, accountParams: req.body})
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log('error on account update', error)
+      res.status(401).send(error)
+    })
+}
+
+exports.accountDelete = (req, res) => {
+  user.userAccountDelete({ userId: req.user.id })
+    .then(data => {
+      res.send(data)
+    }).catch(error => {
+      // eslint-disable-next-line no-console
+      console.log('error on account delete', error)
+      res.status(401).send(error)
+    })
+}
+
 exports.userUpdate = (req, res) => {
   req.body.id = req.user.id
   user.userUpdate(req.body)
@@ -306,17 +328,6 @@ exports.userFetch = (req, res) => {
     console.log(error)
     res.status(400).send(error)
   })
-}
-
-exports.accountUpdate = (req, res) => {
-  user.userAccountUpdate({userParams: req.user, accountParams: req.body})
-    .then(data => {
-      res.send(data)
-    }).catch(error => {
-      // eslint-disable-next-line no-console
-      console.log('error on account update', error)
-      res.status(401).send(error)
-    })
 }
 
 exports.createBankAccount = (req, res) => {
