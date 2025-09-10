@@ -144,7 +144,8 @@ const Wallets = ({
         {wallet.data.id ? (
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
             <BalanceCard
-              name={wallet.data.name || `Wallet #${wallet.id}`} balance={wallet.data.balance}
+              name={wallet.data.name || `Wallet #${wallet.id}`} 
+              balance={wallet.data.balance}
               onAdd={(e) => openAddFundsDialog(e)}
               action={<FormattedMessage id="wallets.addFunds" defaultMessage="Add funds" />}
               completed={wallet.completed}

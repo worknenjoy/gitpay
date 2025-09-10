@@ -20,6 +20,11 @@ export const Default = Template.bind({});
 Default.args = {
 };
 
+export const Centavos = Template.bind({});
+Centavos.args = {
+  type: 'centavos'
+};
+
 export const Loading = Template.bind({});
 Loading.args = {
   completed: false
