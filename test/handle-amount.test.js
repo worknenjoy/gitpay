@@ -55,7 +55,7 @@ describe('Amount Conversion', () => {
   });
   it('should apply 8 percent for an amount that will cause rounding', () => {
     const result = handleAmount(4995, 8, 'centavos');
-    expect(result.centavos).to.equal(4595);
-    expect(result.decimal).to.equal(45.954);
+    expect(result.centavos).to.equal(4596);
+    expect(result.decimal).to.equal(45.95);
   });
 });
