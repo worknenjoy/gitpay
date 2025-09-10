@@ -13,7 +13,7 @@ function handleAmount(amount, percent, type, currency = 'usd') {
   
   const percentDecimal = new Decimal(1).minus(new Decimal(percent).div(100));
   const resultDecimal = decimalAmount.mul(percentDecimal);
-  const centavos = resultDecimal.mul(centsFactor).toDecimalPlaces(decimalPlaces, Decimal.ROUND_HALF_UP).toNumber();
+  const centavos = resultDecimal.mul(centsFactor).toDecimalPlaces(0, Decimal.ROUND_HALF_UP).toNumber();
   const decimal = resultDecimal.toNumber();
   return { centavos, decimal };
 }
