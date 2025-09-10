@@ -78,7 +78,7 @@ const Payouts = ({ payouts, balance, fetchAccountBalance, searchPayout, requestP
                   action={<FormattedMessage id="payouts.requestPayout" defaultMessage="Request payout" />}
                   actionProps={{ disabled: item.amount === 0 || payoutSchedule !== 'manual' }}
                   completed={completed}
-                  type='centavos'
+                  type="centavos"
                 />
                 <PayoutRequestDrawer
                   open={payoutRequestDrawer}

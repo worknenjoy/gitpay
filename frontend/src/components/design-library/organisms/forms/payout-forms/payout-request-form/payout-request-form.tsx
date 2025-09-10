@@ -87,7 +87,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
             actionProps={{ disabled: balance === 0 }}
             onAdd={handleAddBalance}
             completed={completed}
-            type='centavos'
+            type="centavos"
           />
         </Grid>
         <Grid size={{ xs: 12, md: 12 }}>
