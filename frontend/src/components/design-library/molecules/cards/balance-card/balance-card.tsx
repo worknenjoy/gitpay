@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, CardContent, CardActions, Skeleton } from '@mui/material';
 import currencyMap from './currency-map';
 import { RootCard, Balance as BalanceText, Name as NameText } from './balance-card.styles'
+import { formatCurrency } from '../../../../../utils/format-currency'
 
 
 //Function to convert currency code to symbol
@@ -38,11 +39,12 @@ type BalanceCardProps = {
   action?: React.PropsWithChildren<any>;
   actionProps?: any;
   completed?: boolean;
+  type?: 'decimal' | 'centavos';
 }
 
-const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionProps, completed }: BalanceCardProps) => {
+const BalanceCard = ({ name, balance, currency = 'USD', onAdd, action, actionProps, completed, type = 'decimal' }: BalanceCardProps) => {
 
-  const convertedBalance = `${currencyCodeToSymbol(currency)} ${convertStripeAmountByCurrency(balance, currency)}`
+  const convertedBalance = type === 'decimal' ? formatCurrency(balance) :`${currencyCodeToSymbol(currency)} ${convertStripeAmountByCurrency(balance, currency)}`
 
   const isLoading = completed === false;
 
