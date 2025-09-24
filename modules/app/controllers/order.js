@@ -10,7 +10,8 @@ const orderTransfer = require('../../orders').orderTransfer
 const orderRefund = require('../../orders').orderRefund
 
 exports.createOrder = (req, res) => {
-  orderBuild(req.body)
+  const params = { ...req.body, ...{ userId: req.user.id } }
+  orderBuild(params)
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -20,7 +21,8 @@ exports.createOrder = (req, res) => {
 }
 
 exports.cancelOrder = (req, res) => {
-  orderCancel(req.body)
+  const params = { ...req.body, ...{ userId: req.user.id } }
+  orderCancel(params)
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -29,7 +31,8 @@ exports.cancelOrder = (req, res) => {
 }
 
 exports.refundOrder = (req, res) => {
-  orderRefund(req.params)
+  const params = { ...req.params, ...{ userId: req.user.id } }
+  orderRefund(params)
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -38,7 +41,8 @@ exports.refundOrder = (req, res) => {
 }
 
 exports.detailsOrder = (req, res) => {
-  orderDetails(req.params)
+  const params = { ...req.params, ...{ userId: req.user.id } }
+  orderDetails(params)
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -47,7 +51,8 @@ exports.detailsOrder = (req, res) => {
 }
 
 exports.listOrders = (req, res) => {
-  orderSearch(req.query)
+  const params = { ...req.params, ...{ userId: req.user.id } }
+  orderSearch(params)
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -56,7 +61,8 @@ exports.listOrders = (req, res) => {
 }
 
 exports.fetchOrders = (req, res) => {
-  orderFetch(req.params)
+  const params = { ...req.params, ...{ userId: req.user.id } }
+  orderFetch(params)
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -78,7 +84,8 @@ exports.authorizeOrder = (req, res) => {
 }
 
 exports.updateOrder = (req, res) => {
-  orderUpdate(req.body)
+  const params = { ...req.body, ...{ userId: req.user.id, id: req.params.id } }
+  orderUpdate(params)
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -87,7 +94,8 @@ exports.updateOrder = (req, res) => {
 }
 
 exports.paymentOrder = (req, res) => {
-  orderPayment(req.body)
+  const params = { ...req.body, ...{ userId: req.user.id, id: req.params.id } }
+  orderPayment(params)
     .then(data => {
       res.send(data)
     }).catch(error => {
@@ -96,7 +104,8 @@ exports.paymentOrder = (req, res) => {
 }
 
 exports.transferOrder = (req, res) => {
-  orderTransfer(req.params, req.body)
+  const params = { ...req.params, ...{ userId: req.user.id } }
+  orderTransfer(params, req.body)
     .then(data => {
       res.send(data)
     }).catch(error => {
