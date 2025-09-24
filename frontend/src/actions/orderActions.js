@@ -172,10 +172,11 @@ const transferOrderError = error => {
 */
 
 const listOrders = query => {
+  validToken()
   return dispatch => {
     dispatch(listOrdersRequested())
     return axios
-      .get(api.API_URL + '/orders/list', { params: query })
+      .get(api.API_URL + '/orders', { params: query })
       .then(orders => {
         if (orders.data) {
           return dispatch(listOrdersSuccess(orders.data))
@@ -203,10 +204,11 @@ const listOrders = query => {
 }
 
 const createOrder = order => {
+  validToken()
   return dispatch => {
     dispatch(createOrderRequested())
     return axios
-      .post(api.API_URL + '/orders/create', order)
+      .post(api.API_URL + '/orders', order)
       .then(order => {
         if (order.data) {
           dispatch(addNotification('actions.order.create.success'))
@@ -233,10 +235,11 @@ const createOrder = order => {
 }
 
 const updateOrder = order => {
+  validToken()
   return dispatch => {
     dispatch(updateOrderRequested())
     return axios
-      .put(api.API_URL + '/orders/update', order)
+      .put(api.API_URL + '/orders', order)
       .then(order => {
         if (order.data) {
           return dispatch(updateOrderSuccess(order.data))
@@ -267,8 +270,8 @@ const payOrder = order => {
   validToken()
   return dispatch => {
     dispatch(payOrderRequested())
-    axios
-      .post(api.API_URL + '/orders/payment', order)
+    return axios
+      .post(api.API_URL + `/orders/${order.id}/payments`, order)
       .then(order => {
         // eslint-disable-next-line no-console
         if (order.data.transfer_id) {
@@ -301,7 +304,7 @@ const transferOrder = (order, params) => {
   return dispatch => {
     dispatch(transferOrderRequested())
     axios
-      .post(api.API_URL + `/orders/transfer/${order.id}`, params)
+      .post(api.API_URL + `/orders/${order.id}/transfers`, params)
       .then(order => {
         if (order.data) {
           dispatch(addNotification(
@@ -333,7 +336,7 @@ const cancelOrder = id => {
   return dispatch => {
     dispatch(cancelOrderRequested())
     return axios
-      .post(api.API_URL + '/orders/cancel', { id })
+      .post(api.API_URL + `/orders/${id}/cancel`, { id })
       .then(order => {
         console.log('order cancel data', order)
         if (order.data) {
@@ -363,7 +366,7 @@ const detailOrder = id => {
   return dispatch => {
     dispatch(detailOrderRequested())
     return axios
-      .get(api.API_URL + '/orders/details/' + id)
+      .get(api.API_URL + `/orders/${id}`)
       .then(order => {
         if (order.data) {
           return dispatch(detailOrderSuccess(order.data))
@@ -376,10 +379,10 @@ const detailOrder = id => {
       .catch(e => {
         dispatch(
           addNotification(
-            'actions.order.cancel.payment.error'
+            'actions.order.details.error'
           )
         )
-        return dispatch(cancelOrderError(e))
+        return dispatch(detailOrderError(e))
       })
   }
 }
@@ -389,7 +392,7 @@ const refundOrder = id => {
   return dispatch => {
     dispatch(refundOrderRequested())
     return axios
-      .get(api.API_URL + '/orders/refund/' + id)
+      .post(api.API_URL + `/orders/${id}/refund`)
       .then(order => {
         if (order.data) {
           dispatch(addNotification('actions.order.refund.success'))
