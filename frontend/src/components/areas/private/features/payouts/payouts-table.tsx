@@ -2,7 +2,7 @@ import React from 'react';
 import { convertStripeAmountByCurrency, currencyCodeToSymbol } from 'design-library/molecules/cards/balance-card/balance-card';
 import SectionTable from 'design-library/molecules/tables/section-table/section-table';
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field';
-import StatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/status-field/status-field'
+import PayoutStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payouts/payout-status-field/payout-status-field';
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field';
 
 const PayoutsTable = ({ payouts }) => {
@@ -16,7 +16,7 @@ const PayoutsTable = ({ payouts }) => {
 
   const customColumnRenderer = {
     status: (item: any) => (
-      <StatusField status={item.status} />
+      <PayoutStatusField status={item.status} />
     ),
     method: (item: any) => (
       <span>{item.method || 'No method available'}</span>

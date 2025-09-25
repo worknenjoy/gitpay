@@ -5,6 +5,7 @@ import IssueLinkField from 'design-library/molecules/tables/section-table/sectio
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field';
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field';
 import TextField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field';
+import TransferStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/transfer/transfer-status-field/transfer-status-field';
 
 const Claims = ({
   user,
@@ -38,6 +39,11 @@ const Claims = ({
               createdAt: { sortable: true, numeric: true, dataBaseKey: 'createdAt', label: <FormattedMessage id="account.profile.claims.createdAt" defaultMessage="Created At" /> }
             },
             customColumnRenderer: {
+              status: (item:any) => (
+                <TransferStatusField
+                  status={item.status}
+                />
+              ),
               issue: (item) => (
                 <IssueLinkField
                   issue={item?.Task}
@@ -69,6 +75,11 @@ const Claims = ({
               createdAt: { sortable: true, numeric: true, dataBaseKey: 'createdAt', label: <FormattedMessage id="account.profile.claims.createdAt" defaultMessage="Created At" /> }
             },
             customColumnRenderer: {
+              status: (item:any) => (
+                <TransferStatusField
+                  status={item.status}
+                />
+              ),
               title: (item:any) => (
                 <TextField
                   title={item?.PaymentRequest?.title}
