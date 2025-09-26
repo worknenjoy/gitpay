@@ -1,6 +1,7 @@
 const readline = require('readline');
 const webhookPlatform = require('../modules/app/controllers/webhooks/webhook-platform');
 const webhookConnect = require('../modules/app/controllers/webhooks/webhook-connect');
+console.log('environment', process.env.NODE_ENV);
 
 const rl = readline.createInterface({
   input: process.stdin,

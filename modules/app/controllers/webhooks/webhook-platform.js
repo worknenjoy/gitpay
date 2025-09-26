@@ -20,6 +20,7 @@ const invoiceUpdated = require('../../../webhooks/invoiceUpdated')
 const invoicePaid = require('../../../webhooks/invoicePaid')
 const invoiceFinalized = require('../../../webhooks/invoiceFinalized')
 const transferCreated = require('../../../webhooks/transferCreated')
+const transferReversed = require('../../../webhooks/transferReversed')
 const payoutCreated = require('../../../webhooks/payoutCreated')
 const payoutFailed = require('../../../webhooks/payoutFailed')
 const payoutPaid = require('../../../webhooks/payoutPaid')
@@ -39,7 +40,7 @@ exports.webhookPlatform = async (req, res) => {
   let event;
   
   try {
-    if (process.env.NODE_ENV === 'test') {
+    if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
       event = typeof req.body === 'string' || Buffer.isBuffer(req.body)
         ? JSON.parse(req.body.toString())
         : req.body;
@@ -78,6 +79,8 @@ exports.webhookPlatform = async (req, res) => {
         return await invoiceFinalized(event, req, res)
       case 'transfer.created':
         return await transferCreated(event, req, res)
+      case 'transfer.reversed':
+        return await transferReversed(event, req, res)
       case 'payout.created':
         return await payoutCreated(event, req, res)
       case 'payout.failed':
