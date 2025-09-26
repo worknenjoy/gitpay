@@ -20,7 +20,7 @@ const checkoutSessionCompleted = require('../../webhooks/checkoutSessionComplete
 
 const FAILED_REASON = {
   declined_by_network: 'Denied by card',
-  not_sent_to_network: 'Hight risk card, please provide all the information'
+  not_sent_to_network: 'High risk card, please provide all the information'
 }
 
 const CURRENCIES = {
