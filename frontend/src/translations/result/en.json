@@ -221,7 +221,7 @@
   "actions.task.fetch.error": "We could not obtain this issue; please try again later",
   "actions.task.fetch.other.error": "We could not obtain this issue; please try again later",
   "actions.task.fetch.unavailable": "Issue unavailable",
-  "actions.task.interested.notification.success": "You add as interested for this task successfully",
+  "actions.task.interested.notification.success": "You applied to solve this issue successfully",
   "actions.task.invite.error": "We could not send this invite",
   "actions.task.invite.success": "Invite sent",
   "actions.task.issues.error.notfound": "Issue not found",
