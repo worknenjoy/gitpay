@@ -11,7 +11,7 @@ const models = require('../models')
 
 const chargeData = require('./data/stripe/charge')
 const createTransferData = require('./data/stripe/stripe.transfer.created')
-const updatedTransferData = require('./data/stripe/stripe.transfer.updated')
+const reverseTransferData = require('./data/stripe/stripe.webhook.transfer.reversed')
 const payoutData = require('./data/stripe/payout')
 const cardData = require('./data/stripe/card')
 const balanceData = require('./data/stripe/balance')
@@ -257,6 +257,45 @@ describe('webhooks for platform', () => {
         expect(event).to.exist
         expect(event.id).to.equal('evt_test_123')
         expect(transferUpdated.status).to.equal('created')
+      })
+
+      it('should update a transfer from a Payment Request when webhook transfer.reversed is triggered', async () => {
+        const user = await models.User.create({
+          email: 'teste@mail.com',
+          password: 'teste'
+        })
+
+        const paymentRequest = await models.PaymentRequest.create({
+          userId: user.id,
+          title: 'Test Payment Request',
+          description: 'This is a test payment request',
+          amount: 100.00,
+          currency: 'USD',
+          payment_link_id: 'prl_123',
+        })
+
+        const paymentRequestTransfer = await models.PaymentRequestTransfer.create({
+          transfer_id: 'tr_test_00000000000000',
+          paymentRequestId: paymentRequest.id,
+          userId: user.id,
+          status: 'created'
+        })
+
+        const res = await agent
+          .post('/webhooks/stripe-platform')
+          .send(reverseTransferData.success)
+          .expect('Content-Type', /json/)
+          .expect(200)
+
+        expect(res.statusCode).to.equal(200)
+        const event = res.body
+        expect(event).to.exist
+        expect(event.id).to.equal('evt_test_00000000000000')
+
+        const transferUpdated = await models.PaymentRequestTransfer.findOne({
+          where: { id: paymentRequestTransfer.id }
+        })
+        expect(transferUpdated.status).to.equal('reversed')
       })
 
       it('should notify the transfer when a webhook payout.create is triggered and create a new payout', async () => {
@@ -679,7 +718,7 @@ describe('webhooks for platform', () => {
         userId: user.body.id,
         transfer_status: 'pending'
       })
-      
+
       const res = await agent
         .post('/webhooks/stripe-platform')
         .send(createTransferData.createdFromPaymentRequest)

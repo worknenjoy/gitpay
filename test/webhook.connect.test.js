@@ -10,7 +10,6 @@ const models = require('../models')
 
 const chargeData = require('./data/stripe/charge')
 const createdTransferData = require('./data/stripe/stripe.transfer.created')
-const updatedTransferData = require('./data/stripe/stripe.transfer.updated')
 const payoutData = require('./data/stripe/payout')
 const cardData = require('./data/stripe/card')
 const balanceData = require('./data/stripe/balance')
