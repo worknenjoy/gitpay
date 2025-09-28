@@ -18,7 +18,7 @@ import {
 import { styled } from '@mui/material/styles'
 
 // import TaskFilter from '../task/task-filters'
-import CustomPaginationActionsTable from '../../../public/features/task/task-table';
+import CustomPaginationActionsTable from '../../../public/features/task/legacy/task-table';
 
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'

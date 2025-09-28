@@ -2,7 +2,7 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 import MomentComponent from 'moment'
 
-import messages from '../../../../../../../areas/public/features/task/messages/task-messages'
+import messages from '../../../../../../../../messages/messages'
 
 const CreatedField = ({ createdAt }) => {
   const intl = useIntl();

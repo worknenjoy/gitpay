@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Task from '../components/areas/public/features/task/task'
+import Task from '../components/areas/public/features/task/legacy/task'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn } from '../actions/loginActions'
 import { fetchCustomer } from '../actions/userActions'
