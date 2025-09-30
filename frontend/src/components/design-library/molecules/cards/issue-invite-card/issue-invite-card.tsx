@@ -1,23 +1,14 @@
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { styled } from '@mui/material/styles'
-import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 
-import TaskInvite from './task-invite'
+import TaskInvite from '../../dialogs/issue-invite-dialog/issue-invite-dialog'
+import { Root } from './issue-invite-card.styles'
 
-const useStyles = styled({
-  root: {
-    marginBottom: 20,
-    marginTop: 20,
-  },
-})
-
-export default function TaskInviteCard ({ id, onInvite, onFunding, user }) {
-  const classes = useStyles()
+export default function IssueInviteCard ({ id, onInvite, onFunding, user }) {
   const [dialogContributorOpen, setDialogContributorOpen] = useState(false)
 
   const handleInviteContributor = (e) => {
@@ -32,7 +23,7 @@ export default function TaskInviteCard ({ id, onInvite, onFunding, user }) {
 
   return (
     <div style={{margin: '20px 0'}}>
-      <Card className={ classes.root }>
+      <Root>
         <CardContent>
           <Typography gutterBottom variant='h5' component='h2'>
             <FormattedMessage id='task.invite.card.title' defaultMessage='Invite' />
@@ -57,7 +48,7 @@ export default function TaskInviteCard ({ id, onInvite, onFunding, user }) {
             <FormattedMessage id='task.invite.card.button.sponsor' defaultMessage='Invite sponsor' />
           </Button>
         </CardActions>
-      </Card>
+      </Root>
       <TaskInvite
         visible={ dialogContributorOpen }
         onClose={ handleInviteContributorClose }

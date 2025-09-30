@@ -1,20 +1,14 @@
 import React from 'react'
-import { styled } from '@mui/material/styles'
 import { FormattedMessage } from 'react-intl'
 import Typography from '@mui/material/Typography'
-import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import MomentComponent from 'moment'
+import { Root, SmallAvatar } from './issue-payments-list.styles'
 
-import Avatar from '@mui/material/Avatar'
-
-const Root = styled(List)(({ theme }) => ({ width: '100%' }))
-const SmallAvatar = styled(Avatar)(({ theme }) => ({ width: theme.spacing(3), height: theme.spacing(3) }))
-
-export default function TaskPayments ({ orders }) {
+export default function IssuePaymentsList ({ orders }) {
   if (!orders) return <div />
   return orders && orders.length > 0 && (
     <Root dense>

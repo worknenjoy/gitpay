@@ -24,7 +24,7 @@ const optionLabels = {
   'hard': 'Hard'
 }
 
-export default function TaskLevelSplitButton ({ id, level, updateTask }) {
+export default function TaskLevelSplitButton({ id, level, updateTask }) {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
@@ -78,46 +78,46 @@ export default function TaskLevelSplitButton ({ id, level, updateTask }) {
 
   return (
     <Grid container direction='column' alignItems='center'>
-  <Grid size={{ xs: 12 }}>
-        <ButtonGroup variant='outlined' color='secondary' ref={ anchorRef } aria-label='split button'>
-          <Button onClick={ handleClick }>{ selectedLevel || optionLabels[options[selectedIndex]] }</Button>
+      <Grid size={{ xs: 12 }}>
+        <ButtonGroup variant='outlined' color='secondary' ref={anchorRef} aria-label='split button'>
+          <Button onClick={handleClick}>{selectedLevel || optionLabels[options[selectedIndex]]}</Button>
           <Button
             color='secondary'
             size='small'
-            aria-controls={ open ? 'split-button-menu' : undefined }
-            aria-expanded={ open ? 'true' : undefined }
+            aria-controls={open ? 'split-button-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
             aria-label='select merge strategy'
             aria-haspopup='menu'
-            onClick={ handleToggle }
+            onClick={handleToggle}
           >
             <ArrowDropDownIcon />
           </Button>
         </ButtonGroup>
-        <Popper style={ { zIndex: 9999 } } open={ open } anchorEl={ anchorRef.current } role={ undefined } transition disablePortal>
-          { ({ TransitionProps, placement }) => (
+        <Popper style={{ zIndex: 9999 }} open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+          {({ TransitionProps, placement }) => (
             <Grow
-              { ...TransitionProps }
-              style={ {
+              {...TransitionProps}
+              style={{
                 transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
-              } }
+              }}
             >
               <Paper>
-                <ClickAwayListener onClickAway={ handleClose }>
+                <ClickAwayListener onClickAway={handleClose}>
                   <MenuList id='split-button-menu'>
-                    { options.map((option, index) => (
+                    {options.map((option, index) => (
                       <MenuItem
-                        key={ index }
-                        selected={ index === selectedIndex }
-                        onClick={ (event) => handleMenuItemClick(event, index, option) }
+                        key={index}
+                        selected={index === selectedIndex}
+                        onClick={(event) => handleMenuItemClick(event, index, option)}
                       >
-                        { optionLabels[option] }
+                        {optionLabels[option]}
                       </MenuItem>
-                    )) }
+                    ))}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
             </Grow>
-          ) }
+          )}
         </Popper>
       </Grid>
     </Grid>

@@ -1,14 +1,12 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import {
   Redeem as RedeemIcon,
   CreditCard as BountyIcon,
   HowToReg as HowToRegIcon,
 } from '@mui/icons-material';
 import IssueActions from 'design-library/atoms/buttons/issue-actions/issue-actions';
-import TaskPaymentContainer from '../../../../../../../containers/task-payment';
-import TaskPaymentFormContainer from '../../../../../../../containers/task-payment-form';
-import TaskSolutionDrawer from '../../../../../../../containers/send-solution-drawer';
+import TaskPaymentFormContainer from '../../../../../containers/task-payment-form';
+import TaskSolutionDrawer from '../../../../../containers/send-solution-drawer';
 
 interface IssueActionsProps {
   issue: any;

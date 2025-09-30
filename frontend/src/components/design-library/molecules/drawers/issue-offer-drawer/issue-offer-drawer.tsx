@@ -2,19 +2,17 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer';
 import { Typography } from '@mui/material';
-import { SpanText } from './task-offer-drawer.styles';
-import TaskOrderInvoiceConfirm from '../task-order-invoice-confirm';
-import MessageAssignment from '../assignment/messageAssignment';
+import { SpanText } from './issue-offer-drawer.styles';
+import TaskOrderInvoiceConfirm from '../../../../areas/public/features/task/legacy/task-order-invoice-confirm';
+import MessageAssignment from '../../../../areas/public/features/task/legacy/assignment/messageAssignment';
 import taskCover from 'images/task-cover.png'
-
-// styles moved to task-offer-drawer.styles.ts
 
 type TaskOfferDrawerProps = {
   issue: any;
   open: boolean;
   onClose: any;
   onMessage: any;
-  assigned: boolean;
+  assigned?: boolean;
   updateTask: any;
   offerUpdate: any;
   loggedUser: any;
@@ -23,7 +21,7 @@ type TaskOfferDrawerProps = {
   assigns: any;
 }
 
-const TaskOfferDrawer = ({
+const IssueOfferDrawer = ({
   issue,
   open,
   onClose,
@@ -200,4 +198,4 @@ const TaskOfferDrawer = ({
   );
 }
 
-export default TaskOfferDrawer;
+export default IssueOfferDrawer;

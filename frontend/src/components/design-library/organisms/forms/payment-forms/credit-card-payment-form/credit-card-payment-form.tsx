@@ -8,8 +8,8 @@ import {
 } from '@mui/material'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
 
-import CardSection from './card-section'
-import UserSection from './user-section'
+import CardSection from '../../../../molecules/form-section/card-number-form/card-number-form'
+import UserSection from '../../../../../areas/private/features/payments/legacy/checkout/user-section'
 import Coupon from 'design-library/molecules/form-section/coupon-form/coupon'
 
 const CheckoutForm = (props) => {

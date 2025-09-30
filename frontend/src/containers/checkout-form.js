@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import CheckoutForm from '../components/areas/private/features/payments/legacy/checkout/checkout-form'
+import CheckoutForm from '../components/design-library/organisms/forms/payment-forms/credit-card-payment-form/credit-card-payment-form'
 import { validateCoupon } from '../actions/couponActions'
 
 const mapStateToProps = state => {

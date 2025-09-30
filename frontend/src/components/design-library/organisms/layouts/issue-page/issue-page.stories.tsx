@@ -1,6 +1,5 @@
 import React from 'react';
 import IssuePage from './issue-page';
-import { organization } from 'src/reducers/organizationsReducer';
 
 const meta = {
   title: 'Design Library/Organisms/Layout/IssuePage',
