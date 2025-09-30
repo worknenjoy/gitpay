@@ -12,7 +12,7 @@ export default function IssuePaymentsList ({ orders }) {
   if (!orders) return <div />
   return orders && orders.length > 0 && (
     <Root dense>
-      <Typography variant='caption' align='center' style={ { display: 'inline-block', width: '100%', marginBottom: 10 } }>
+      <Typography variant="caption" align="center" style={ { display: 'inline-block', width: '100%', marginBottom: 10 } }>
         Paid by
       </Typography>
       { orders && orders.map((order) => {
@@ -32,17 +32,17 @@ export default function IssuePaymentsList ({ orders }) {
             <ListItemText primary={
               <React.Fragment>
                 { order.User
-                  ? <Typography variant='body2'>{ order.User && order.User.name || order.User.username || 'Anonymous' }</Typography>
-                  : <Typography variant='body2'>
-                    <FormattedMessage id='task.payment.order.nouser' defaultMessage='Some user' />
+                  ? <Typography variant="body2">{ order.User && order.User.name || order.User.username || 'Anonymous' }</Typography>
+                  : <Typography variant="body2">
+                    <FormattedMessage id="task.payment.order.nouser" defaultMessage="Some user" />
                   </Typography>
                 }
-                <Typography color='textSecondary' variant='caption'> { MomentComponent(order.updatedAt).fromNow() }</Typography>
-                <Typography variant='caption'> with <i>{ order.provider === 'paypal' ? 'Paypal' : 'Credit Card' }</i></Typography>
+                <Typography color="textSecondary" variant="caption"> { MomentComponent(order.updatedAt).fromNow() }</Typography>
+                <Typography variant="caption"> with <i>{ order.provider === 'paypal' ? 'Paypal' : 'Credit Card' }</i></Typography>
               </React.Fragment>
             } />
             <ListItemSecondaryAction>
-              <Typography variant='caption'>
+              <Typography variant="caption">
                 <strong>${ order.amount }</strong>
               </Typography>
             </ListItemSecondaryAction>

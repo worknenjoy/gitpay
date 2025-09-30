@@ -77,17 +77,17 @@ export default function TaskLevelSplitButton({ id, level, updateTask }) {
   }
 
   return (
-    <Grid container direction='column' alignItems='center'>
+    <Grid container direction="column" alignItems="center">
       <Grid size={{ xs: 12 }}>
-        <ButtonGroup variant='outlined' color='secondary' ref={anchorRef} aria-label='split button'>
+        <ButtonGroup variant="outlined" color="secondary" ref={anchorRef} aria-label="split button">
           <Button onClick={handleClick}>{selectedLevel || optionLabels[options[selectedIndex]]}</Button>
           <Button
-            color='secondary'
-            size='small'
+            color="secondary"
+            size="small"
             aria-controls={open ? 'split-button-menu' : undefined}
             aria-expanded={open ? 'true' : undefined}
-            aria-label='select merge strategy'
-            aria-haspopup='menu'
+            aria-label="select merge strategy"
+            aria-haspopup="menu"
             onClick={handleToggle}
           >
             <ArrowDropDownIcon />
@@ -98,12 +98,12 @@ export default function TaskLevelSplitButton({ id, level, updateTask }) {
             <Grow
               {...TransitionProps}
               style={{
-                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'
               }}
             >
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList id='split-button-menu'>
+                  <MenuList id="split-button-menu">
                     {options.map((option, index) => (
                       <MenuItem
                         key={index}

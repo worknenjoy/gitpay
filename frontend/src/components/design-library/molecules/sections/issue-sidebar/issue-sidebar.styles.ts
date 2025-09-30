@@ -5,8 +5,8 @@ export const SidebarGrid = styled(Grid)(({ theme }) => ({
   backgroundColor: '#eee',
   padding: 25,
   [theme.breakpoints.down('sm')]: {
-    padding: 15,
-  },
+    padding: 15
+  }
 }))
 
 export const SidebarSection = styled('div')(({ theme }) => ({
@@ -18,16 +18,16 @@ export const SidebarSection = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     alignItems: 'center',
     marginTop: 10,
-    marginBottom: 10,
-  },
+    marginBottom: 10
+  }
 }))
 
 export const SidebarItem = styled('div')(({ theme }) => ({
   textAlign: 'center',
   [theme.breakpoints.down('sm')]: {
     marginBottom: 15,
-    maxWidth: '100%',
-  },
+    maxWidth: '100%'
+  }
 }))
 
 export const TaskInfoContent = styled('div')(() => ({
@@ -35,24 +35,24 @@ export const TaskInfoContent = styled('div')(() => ({
   marginLeft: 5,
   marginTop: 10,
   display: 'inline-block',
-  textAlign: 'middle',
+  textAlign: 'middle'
 }))
 
 export const SpanText = styled('span')(() => ({
   display: 'inline-block',
-  verticalAlign: 'middle',
+  verticalAlign: 'middle'
 }))
 
 export const StatusChip = styled(Chip, { shouldForwardProp: prop => prop !== 'status' })(
   ({ theme, status }) => ({
     marginBottom: theme.spacing(1),
     backgroundColor: 'transparent',
-    color: status === 'closed' ? theme.palette.error.main : theme.palette.primary.main,
+    color: status === 'closed' ? theme.palette.error.main : theme.palette.primary.main
   })
 )
 
 export const StatusAvatarDot = styled(Avatar, { shouldForwardProp: prop => prop !== 'status' })(
   ({ theme, status }) => ({
-    backgroundColor: status === 'closed' ? theme.palette.error.main : theme.palette.primary.main,
+    backgroundColor: status === 'closed' ? theme.palette.error.main : theme.palette.primary.main
   })
 )

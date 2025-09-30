@@ -10,10 +10,10 @@ const IssuePublicStatus = ({ status }) => {
         <React.Fragment>
           { (status === 'private')
             ? (
-              <StyledChip label='Private' icon={ <PrivateIconStyled fontSize='small' /> } />
+              <StyledChip label="Private" icon={ <PrivateIconStyled fontSize="small" /> } />
             )
             : (
-              <StyledChip label='Public' icon={ <PublicIconStyled fontSize='small' /> } />
+              <StyledChip label="Public" icon={ <PublicIconStyled fontSize="small" /> } />
             )
           }
         </React.Fragment>

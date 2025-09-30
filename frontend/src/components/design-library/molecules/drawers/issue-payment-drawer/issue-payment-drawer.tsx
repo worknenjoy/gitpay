@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
 
 import PaymentDrawer from 'design-library/molecules/drawers/payment-drawer/payment-drawer'
@@ -70,20 +69,20 @@ function IssuePaymentDrawer(props: any) {
 
   return (
     <PaymentDrawer
-      title={<FormattedMessage id='task.payment.headline' defaultMessage='New payment for an issue' />}
-      pickupTagListMessagesPrimaryText={<FormattedMessage id='issue.payment.headline.bounty.add' defaultMessage='Add a bounty for this issue' />}
-      pickupTagListMessagesSecondaryText={<FormattedMessage id='issue.payment.form.message.subheading' defaultMessage='Create a bounty for this issue and who you assign will receive the payment for this bounty' />}
+      title={<FormattedMessage id="task.payment.headline" defaultMessage="New payment for an issue" />}
+      pickupTagListMessagesPrimaryText={<FormattedMessage id="issue.payment.headline.bounty.add" defaultMessage="Add a bounty for this issue" />}
+      pickupTagListMessagesSecondaryText={<FormattedMessage id="issue.payment.form.message.subheading" defaultMessage="Create a bounty for this issue and who you assign will receive the payment for this bounty" />}
       onChangePrice={(p) => pickTaskPrice(p)}
       open={open}
       onClose={onClose}
       plan={{
         fee: feeValue,
-        category: <FormattedMessage id='actions.task.payment.plan.opensource' defaultMessage='Open Source' />,
-        title: <FormattedMessage id='actions.task.payment.plan.opensource.info' defaultMessage='For Open Source Project' />,
+        category: <FormattedMessage id="actions.task.payment.plan.opensource" defaultMessage="Open Source" />,
+        title: <FormattedMessage id="actions.task.payment.plan.opensource.info" defaultMessage="For Open Source Project" />,
         items: [
-          feeValue === 0 ? <FormattedMessage key='noFee' id='actions.task.payment.plan.bullet.noFee' defaultMessage='No fee for issues equal or above 5000' /> : undefined,
-          <FormattedMessage key='public' id='actions.task.payment.plan.bullet.public' defaultMessage='For Public Projects' />,
-          <FormattedMessage key='basic' id='actions.task.payment.plan.bullet.basic' defaultMessage='Basic Campaign' />
+          feeValue === 0 ? <FormattedMessage key="noFee" id="actions.task.payment.plan.bullet.noFee" defaultMessage="No fee for issues equal or above 5000" /> : undefined,
+          <FormattedMessage key="public" id="actions.task.payment.plan.bullet.public" defaultMessage="For Public Projects" />,
+          <FormattedMessage key="basic" id="actions.task.payment.plan.bullet.basic" defaultMessage="Basic Campaign" />
         ]
       }}
       tabs={[

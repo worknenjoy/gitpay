@@ -1,8 +1,7 @@
 import React from 'react';
 import {
-  Redeem as RedeemIcon,
   CreditCard as BountyIcon,
-  HowToReg as HowToRegIcon,
+  HowToReg as HowToRegIcon
 } from '@mui/icons-material';
 import IssueActions from 'design-library/atoms/buttons/issue-actions/issue-actions';
 import TaskPaymentFormContainer from '../../../../../containers/task-payment-form';
@@ -16,7 +15,7 @@ interface IssueActionsProps {
 
 const IssueActionsByRole = ({
   issue,
-  currentRole,
+  currentRole
 }:IssueActionsProps) => {
   const { data } = issue;
   const shouldDisable = data?.paid || data?.transfer_id || data?.Transfer?.id;
@@ -25,8 +24,8 @@ const IssueActionsByRole = ({
     onClick: () => {},
     label: 'Add bounty',
     disabled: shouldDisable,
-    icon: <BountyIcon fontSize='small' />,
-    component: <TaskPaymentFormContainer />,
+    icon: <BountyIcon fontSize="small" />,
+    component: <TaskPaymentFormContainer />
   }
   const roles = {
     admin: {
@@ -41,14 +40,14 @@ const IssueActionsByRole = ({
           onClick: () => {},
           label: 'Send solution',
           disabled: shouldDisable,
-          icon: <HowToRegIcon fontSize='small' />,
-          component: <TaskSolutionDrawer />,
-        },
+          icon: <HowToRegIcon fontSize="small" />,
+          component: <TaskSolutionDrawer />
+        }
       ],
       secondary: [
         commonAction
-      ],
-    },
+      ]
+    }
   }
   return (
     <IssueActions

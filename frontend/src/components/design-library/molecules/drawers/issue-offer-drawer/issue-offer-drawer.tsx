@@ -79,7 +79,7 @@ const IssueOfferDrawer = ({
       source_type: 'invoice-item',
       customer_id: loggedUser?.user?.customer_id,
       metadata: {
-        offer_id: data.id,
+        offer_id: data.id
       }
     })
     await assignTask(data.id, assign.id)
@@ -124,12 +124,12 @@ const IssueOfferDrawer = ({
       />
       <OfferDrawer
         offerCheckboxes={true}
-        title={<FormattedMessage id='issue.offer.drawer.title' defaultMessage='Make an offer' />}
+        title={<FormattedMessage id="issue.offer.drawer.title" defaultMessage="Make an offer" />}
         introTitle={
-          <FormattedMessage id='task.solve.title' defaultMessage='Are you interested to solve this issue and earn bounties?' />
+          <FormattedMessage id="task.solve.title" defaultMessage="Are you interested to solve this issue and earn bounties?" />
         }
         introMessage={
-          <FormattedMessage id='task.bounties.interested.warningMessage' defaultMessage={'Please apply only if you\'re able to do it and if you\'re available and committed to finish in the deadline.'}>
+          <FormattedMessage id="task.bounties.interested.warningMessage" defaultMessage={'Please apply only if you\'re able to do it and if you\'re available and committed to finish in the deadline.'}>
             {(msg) => (
               <SpanText>
                 {msg}
@@ -138,17 +138,17 @@ const IssueOfferDrawer = ({
           </FormattedMessage>
         }
         pickupTagListTitle={
-          <Typography style={{ padding: 10 }} variant='body1'>
-            <FormattedMessage id='issues.bounties.interested.canSuggestBounty.title' defaultMessage='Suggest a bounty offer' />
+          <Typography style={{ padding: 10 }} variant="body1">
+            <FormattedMessage id="issues.bounties.interested.canSuggestBounty.title" defaultMessage="Suggest a bounty offer" />
           </Typography>
         }
         pickutTagListDescription={
-          <Typography style={{ padding: 10 }} variant='body1'>
-            <FormattedMessage id='issues.bounties.interested.canSuggestBounty.headline' defaultMessage='You will suggest a bounty that will generate an order when the maintainer accept and you receive a payment when is merged' />
+          <Typography style={{ padding: 10 }} variant="body1">
+            <FormattedMessage id="issues.bounties.interested.canSuggestBounty.headline" defaultMessage="You will suggest a bounty that will generate an order when the maintainer accept and you receive a payment when is merged" />
           </Typography>
         }
         simpleInfoText={
-          <FormattedMessage id='task.bounties.interested.descritpion' defaultMessage='You may be assigned to this task and receive your bounty when your code is merged'>
+          <FormattedMessage id="task.bounties.interested.descritpion" defaultMessage="You may be assigned to this task and receive your bounty when your code is merged">
             {(msg) => (
               <SpanText>
                 {msg}
@@ -157,7 +157,7 @@ const IssueOfferDrawer = ({
           </FormattedMessage>
         }
         commentAreaPlaceholder={
-          <FormattedMessage id='task.bounties.interested.comment.value' defaultMessage='Tell about your interest in solve this task and any plan in mind' />
+          <FormattedMessage id="task.bounties.interested.comment.value" defaultMessage="Tell about your interest in solve this task and any plan in mind" />
         }
         introImage={taskCover}
         issue={issue}
@@ -166,11 +166,11 @@ const IssueOfferDrawer = ({
         actions={ 
           [
             {
-              label: <FormattedMessage id='task.bounties.interested.cancel' defaultMessage='Cancel' />,
+              label: <FormattedMessage id="task.bounties.interested.cancel" defaultMessage="Cancel" />,
               onClick: onClose
             },
             {
-              label: <FormattedMessage id='task.bounties.interested.offer' defaultMessage='Make an offer' />,
+              label: <FormattedMessage id="task.bounties.interested.offer" defaultMessage="Make an offer" />,
               onClick: handleOfferTask,
               variant: 'contained',
               color: 'secondary',

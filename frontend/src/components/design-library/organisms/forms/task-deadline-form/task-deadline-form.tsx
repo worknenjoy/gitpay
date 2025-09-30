@@ -12,7 +12,7 @@ import {
   InputLabel,
   InputAdornment,
   Collapse,
-  FormControl,
+  FormControl
 } from '@mui/material'
 import DateIcon from '@mui/icons-material/DateRange'
 
@@ -34,7 +34,7 @@ const messages = defineMessages({
   deadlineLevel4: {
     id: 'task.deadline.level4',
     defaultMessage: ' In on month '
-  },
+  }
 })
 
 const ChipsContainer = styled('div')(({ theme }) => ({
@@ -92,18 +92,18 @@ const TaskDeadlineForm = ({ onHandleClearDeadline, onHandleDeadline, open, task 
         <div>
           <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'flex-start', gap: 10, marginBottom: 16 }}>
             <CardMedia
-              component='img'
+              component="img"
               image={TimeIcon}
               alt={intl.formatMessage({ id: 'task.status.deadline.subheading.main', defaultMessage: 'Choose a date that this task should be finished' })}
               title={intl.formatMessage({ id: 'task.status.deadline.subheading.main', defaultMessage: 'Choose a date that this task should be finished' })}
               sx={{ width: 40, height: 40, objectFit: 'contain' }}
             />
             <div>
-              <Typography variant='h6' gutterBottom>
-                <FormattedMessage id='task.status.deadline.headline' defaultMessage='Finish date' />
+              <Typography variant="h6" gutterBottom>
+                <FormattedMessage id="task.status.deadline.headline" defaultMessage="Finish date" />
               </Typography>
-              <Typography variant='body1' color='textSecondary'>
-                <FormattedMessage id='task.status.deadline.subheading' defaultMessage='Choose a date that this task should be finished' />,
+              <Typography variant="body1" color="textSecondary">
+                <FormattedMessage id="task.status.deadline.subheading" defaultMessage="Choose a date that this task should be finished" />,
               </Typography>
             </div>
           </div>
@@ -112,18 +112,18 @@ const TaskDeadlineForm = ({ onHandleClearDeadline, onHandleDeadline, open, task 
               return renderChip(item.label, item.value)
             })}
           </ChipsContainer>
-          <form action='POST'>
+          <form action="POST">
             <FormControl fullWidth>
-              <FormattedMessage id='task.status.deadline.day.label' defaultMessage='Day'>
+              <FormattedMessage id="task.status.deadline.day.label" defaultMessage="Day">
                 {(msg) => (
-                  <InputLabel htmlFor='adornment-date' sx={{ mt: 0, ml: '2em' }}>{msg}</InputLabel>
+                  <InputLabel htmlFor="adornment-date" sx={{ mt: 0, ml: '2em' }}>{msg}</InputLabel>
                 )}
               </FormattedMessage>
               <Input
-                id='adornment-date'
-                startAdornment={<InputAdornment position='start'><DateIcon /></InputAdornment>}
+                id="adornment-date"
+                startAdornment={<InputAdornment position="start"><DateIcon /></InputAdornment>}
                 placeholder={intl.formatMessage({ id: 'task.status.deadline.day.insert.label', defaultMessage: 'Choose a date' })}
-                type='date'
+                type="date"
                 value={`${MomentComponent(deadline).format('YYYY-MM-DD')}` || `${MomentComponent().format('YYYY-MM-DD')}`}
                 onChange={handleInputChangeCalendar}
               />
@@ -132,20 +132,20 @@ const TaskDeadlineForm = ({ onHandleClearDeadline, onHandleDeadline, open, task 
               {deadline && (
                 <Button
                   onClick={handleClearDeadline}
-                  variant='outlined'
-                  color='secondary'
+                  variant="outlined"
+                  color="secondary"
                   sx={{ color: 'error.main', borderColor: 'error.main' }}
                   style={{ marginRight: 8 }}
                 >
-                  <FormattedMessage id='task.deadline.button.clear' defaultMessage='Clear deadline' />
+                  <FormattedMessage id="task.deadline.button.clear" defaultMessage="Clear deadline" />
                 </Button>
               )}
-              <Button disabled={!deadline} onClick={handleDeadline} variant='contained' color='primary'>
+              <Button disabled={!deadline} onClick={handleDeadline} variant="contained" color="primary">
                 {deadline && dateChanged
-                  ? <FormattedMessage id='task.status.deadline.set.target' defaultMessage='set to target date to {date}' values={{
+                  ? <FormattedMessage id="task.status.deadline.set.target" defaultMessage="set to target date to {date}" values={{
                     date: MomentComponent(deadline).format('MM/DD/YYYY')
                   }} />
-                  : <FormattedMessage id='task.deadline.button.save' defaultMessage='Save date' />
+                  : <FormattedMessage id="task.deadline.button.save" defaultMessage="Save date" />
                 }
               </Button>
             </div>

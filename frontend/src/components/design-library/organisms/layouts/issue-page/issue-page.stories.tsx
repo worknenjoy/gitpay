@@ -4,7 +4,7 @@ import IssuePage from './issue-page';
 const meta = {
   title: 'Design Library/Organisms/Layout/IssuePage',
   component: IssuePage,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen' }
 };
 
 export default meta;
