@@ -1,21 +1,23 @@
-import React from 'react';
-import { Grid } from '@mui/material';
-import IssueContent from 'design-library/molecules/content/issue-content/issue-content';
-import IssueSidebar from 'design-library/molecules/sections/issue-sidebar/issue-sidebar';
+import React from 'react'
+import { Root } from './issue-public-page.styles'
+import IssuePage from 'design-library/organisms/layouts/issue-page/issue-page'
+import PublicBase from 'design-library/templates/base/public-base/public-base'
 
-const IssuePage = ({ 
-  logged,
+const IssuePublicPage = ({
+  loggedIn,
   task,
+  bottomBarProps,
+  accountMenuProps,
   project,
   organization,
   onDeleteTask,
-  account,
   updateTask,
   reportTask,
   messageAuthor,
   inviteTask,
   fundingInviteTask,
   cleanPullRequestDataState,
+  account,
   fetchAccount,
   taskSolution,
   getTaskSolution,
@@ -25,26 +27,22 @@ const IssuePage = ({
   pullRequestData
 }) => {
   return (
-    <Grid container style={{ marginBottom: 4 }} alignItems="stretch">
-      <Grid size={{ xs: 12, sm: 12, md: 8 }} style={{ marginBottom: 40 }}>
-        <IssueContent
-          logged={logged}
+    <Root>
+      <PublicBase
+        loggedIn={loggedIn}
+        bottomBarProps={bottomBarProps}
+        accountMenuProps={accountMenuProps}
+      >
+        <IssuePage
+          logged={loggedIn}
           task={task}
           project={project}
-          user={logged?.data}
+          organization={organization}
+          onDeleteTask={onDeleteTask}
+          account={account}
           updateTask={updateTask}
           reportTask={reportTask}
           messageAuthor={messageAuthor}
-          organization={organization}
-          onDeleteTask={onDeleteTask}
-        />
-      </Grid>
-      <Grid size={{ xs: 12, sm: 12, md: 4 }} style={{ marginBottom: 40 }}>
-        <IssueSidebar
-          user={logged}
-          account={account}
-          task={task}
-          updateTask={updateTask}
           inviteTask={inviteTask}
           cleanPullRequestDataState={cleanPullRequestDataState}
           fetchAccount={fetchAccount}
@@ -56,9 +54,9 @@ const IssuePage = ({
           pullRequestData={pullRequestData}
           taskSolution={taskSolution}
         />
-      </Grid>
-    </Grid>
-  );
+      </PublicBase>
+    </Root>
+  )
 }
 
-export default IssuePage;
+export default IssuePublicPage

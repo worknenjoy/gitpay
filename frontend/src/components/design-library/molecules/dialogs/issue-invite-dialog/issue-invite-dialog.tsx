@@ -48,7 +48,7 @@ const TaskInvite: React.FC<Props> = ({ id, visible = true, onClose, onInvite, us
           <FormattedMessage id="task.invite.title" defaultMessage="Invite someone to work on this task" />
         </DialogTitle>
         <DialogContent>
-          <form onChange={ onChangeInvite } type="POST">
+          <form onChange={ onChangeInvite } method="POST">
             <FormControl fullWidth style={ { marginBottom: 20 } }>
               <Typography variant="subtitle1" gutterBottom>
                 E-mail

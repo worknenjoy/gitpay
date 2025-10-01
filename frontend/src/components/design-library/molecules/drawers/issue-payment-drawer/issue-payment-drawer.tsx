@@ -3,7 +3,7 @@ import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
 
 import PaymentDrawer from 'design-library/molecules/drawers/payment-drawer/payment-drawer'
 
-import PaymentDialog from '../../../../areas/private/features/payments/legacy/payment-dialog'
+import CreditCardPaymentCard from 'design-library/molecules/cards/credit-card-payment-card/credit-card-payment-card'
 import PaypalPaymentDialog from '../../../../areas/private/features/payments/legacy/paypal-payment-dialog'
 import PaymentMethodInvoiceTab from '../../../../areas/public/features/task/legacy/payment/methods/invoice/payment-method-invoice-tab'
 import PaymentMethodWalletTab from '../../../../areas/public/features/task/legacy/payment/methods/wallet/payment-method-wallet-tab'
@@ -31,7 +31,7 @@ const fee = { 'open source': 1.08, 'private': 1.18, 'full': 1.30 }
 
 function IssuePaymentDrawer(props: any) {
   const intl = useIntl()
-  const { open, onClose, fetchCustomer, customer } = props
+  const { open, onClose, taskId, fetchCustomer, customer } = props
 
   const [price, setPrice] = useState<number | string>(0)
   const [plan, setPlan] = useState<'open source' | 'private' | 'full'>('open source')
@@ -91,13 +91,13 @@ function IssuePaymentDrawer(props: any) {
           label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodCrediCard),
           value: 'card',
           component: (
-            <PaymentDialog
+            <CreditCardPaymentCard
               addNotification={props.addNotification}
               onPayment={props.updateTask}
               price={price}
               formatedPrice={formatCurrency(priceAfterFee as number)}
               user={props.user}
-              task={props.match.params.id}
+              task={props.task?.data}
               plan={plan}
               onClose={onClose}
             />
@@ -129,7 +129,7 @@ function IssuePaymentDrawer(props: any) {
               onPayment={props.updateTask}
               price={price}
               formatedPrice={formatCurrency(priceAfterFee as number)}
-              taskId={props.match.params.id}
+              taskId={props.task?.data?.id}
               createOrder={props.createOrder}
               user={props.user}
               order={props.order}

@@ -8,7 +8,7 @@ const publishableKey = (process.env.STRIPE_PUBKEY as string) || 'pk_test_12345'
 const stripePromise = loadStripe(publishableKey)
 
 export default {
-	title: 'Design Library/Molecules/Forms/CardNumberForm',
+	title: 'Design Library/Molecules/FormSection/CardNumberForm',
 	component: CardPaymentForm,
 	decorators: [
 		(Story) => (

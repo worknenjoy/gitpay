@@ -34,6 +34,7 @@ import { IssueReportDialog as TaskReport } from '../../dialogs/issue-reports-dia
 
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
+import useIssueAuthor from '../../../../../hooks/use-issue-author'
 
 const TaskHeaderContainer = styled.div`
   box-sizing: border-box;
@@ -77,10 +78,10 @@ const IssueHeader = ({
   project,
   organization,
   handleDeleteTask,
-  taskOwner,
   reportTask,
   updateTask
 }) => {
+  const issueAuthor = useIssueAuthor(task, user)
   const [anchorEl, setAnchorEl] = useState(null)
   const [deleteDialog, setDeleteDialog] = useState(false)
   const [reportDialog, setReportDialog] = useState(false)
@@ -129,7 +130,7 @@ const IssueHeader = ({
           open={Boolean(anchorEl)}
           onClose={handleCloseMoreButton}
         >
-          {taskOwner &&
+          {issueAuthor &&
             <MenuItem onClick={async () => {
               await updateTask({ id: task.data.id, not_listed: !task.data.not_listed })
               handleCloseMoreButton()
@@ -149,7 +150,7 @@ const IssueHeader = ({
             </ListItemIcon>
             <ListItemText primary="Report" />
           </MenuItem>
-          {taskOwner &&
+          {issueAuthor &&
             <MenuItem onClick={() => {
               setAnchorEl(null)
               setDeleteDialog(true)

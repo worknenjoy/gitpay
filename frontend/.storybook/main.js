@@ -23,6 +23,7 @@ module.exports = {
       ...config.resolve.alias,
       images: path.resolve(__dirname, "../src/images"), // Add your alias
       app: path.resolve(__dirname, "../src"), // Add your alias
+      "images": path.resolve(__dirname, "../src/images"), // Add your alias
       "design-library": path.resolve(__dirname, "../src/components/design-library"), // Add your alias
       "@material-ui/core": "@mui/material", // map MUI v4 import to MUI v5 if present
     };

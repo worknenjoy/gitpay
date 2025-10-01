@@ -7,7 +7,7 @@ const CardSection = (props) => {
       <CardElement
         options={{
           style: {
-            base: { fontSize: '22px', marginTop: 20, marginBottom: 20 }
+            base: { fontSize: '22px' }
           }
         }}
       />

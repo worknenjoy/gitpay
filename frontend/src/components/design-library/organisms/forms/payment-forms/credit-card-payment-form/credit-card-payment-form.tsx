@@ -7,10 +7,9 @@ import {
   Button
 } from '@mui/material'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
-
-import CardSection from '../../../../molecules/form-section/card-number-form/card-number-form'
-import UserSection from '../../../../../areas/private/features/payments/legacy/checkout/user-section'
 import Coupon from 'design-library/molecules/form-section/coupon-form/coupon'
+import UserBasicInfoFormSection from '../../../../molecules/form-section/user-basic-info-form-section/user-basic-info-form-section'
+import CardNumberForm from '../../../../molecules/form-section/card-number-form/card-number-form'
 
 const CheckoutForm = (props) => {
   const stripe = useStripe()
@@ -158,12 +157,12 @@ const CheckoutForm = (props) => {
               </Typography>
             </div>
           ) : (
-            <UserSection error={ checkoutFormState.error } />
+            <UserBasicInfoFormSection error={ checkoutFormState.error } />
           )}
         </Grid>
 
         <Grid size={{ xs: 12 }}>
-          <CardSection />
+          <CardNumberForm />
         </Grid>
 
         <Grid size={{ xs: 12 }}>

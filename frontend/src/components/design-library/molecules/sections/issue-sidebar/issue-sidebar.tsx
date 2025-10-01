@@ -1,72 +1,97 @@
 import React, { useState } from "react";
 import { Typography, Chip, Button } from "@mui/material";
+import {
+  AttachMoney as MoneyIcon,
+  EmojiFoodBeverage as CoffeeIcon,
+} from '@mui/icons-material'
 import { FormattedMessage, useIntl } from "react-intl";
 import MomentComponent from 'moment'
-import MoneyIcon from "images/money-icon.svg";
-import CoffeeIcon from "@mui/icons-material/Coffee";
 import OfferDrawer from "design-library/molecules/drawers/offer-drawer/offer-drawer";
-import { SidebarGrid, SidebarItem, SidebarSection, SpanText, TaskInfoContent, StatusChip, StatusAvatarDot } from "./issue-sidebar.styles";
+import { SidebarItem, SidebarSection, SpanText, TaskInfoContent, StatusChip, StatusAvatarDot, SidebarRoot } from "./issue-sidebar.styles";
 import IssuePublicStatus from "design-library/atoms/status/issue-public-status/issue-public-status";
 import TaskDeadlineDrawer from "design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer";
-import IssueActionsByRole from "design-library/molecules/sections/issue-actions-by-role/issue-actions-by-role";
+import IssueActionsByRole from "design-library/atoms/buttons/issue-actions-by-role/issue-actions-by-role";
 import Constants from '../../../../../consts'
-import inviteCover from "images/invite-cover.png";
+import inviteCover from 'images/funds.png'
 import IssueLevelDropdown from "design-library/atoms/inputs/dropdowns/issue-level-dropdown/issue-level-dropdown";
 import { messages } from '../../../../../messages/messages'
 import IssueInviteCard from "design-library/molecules/cards/issue-invite-card/issue-invite-card";
-import IssueOfferDrawer from "design-library/molecules/drawers/issue-offer-drawer/issue-offer-drawer";
 import IssuePaymentsList from "design-library/molecules/lists/issue-payments-list/issue-payments-list";
+import useIssueAuthor from "../../../../../hooks/use-issue-author";
 
 const IssueSidebar = ({
   user,
-  logged,
+  account,
   task,
   updateTask,
   inviteTask,
-  createOrder,
-  assignTask,
-  offerUpdate,
-  messageOffer,
-  taskOwner,
-  assignDialog,
-  handleAssignFundingDialogClose,
-  fundingInvite,
-  handleFundingEmailInputChange,
-  handleFundingInputMessageChange,
-  sendFundingInvite,
-  currentPrice,
-  setCurrentPrice,
-  termsAgreed,
-  setTermsAgreed,
-  setInterestedSuggestedDate,
-  taskFundingDialog,
-  handleTaskFundingDialogOpen
+  fundingInviteTask,
+  cleanPullRequestDataState,
+  fetchAccount,
+  fetchPullRequestData,
+  taskSolution,
+  getTaskSolution,
+  createTaskSolution,
+  updateTaskSolution,
+  pullRequestData
 }) => {
   const intl = useIntl();
-  const [deadlineForm, setDeadlineForm] = useState(false)
+  const issueAuthor = useIssueAuthor(task, user)
 
-  const deliveryDate = task.data.deadline !== null
+  const [deadlineForm, setDeadlineForm] = useState(false)
+  const [taskFundingDialog, setTaskFundingDialog] = useState(false)
+  const [fundingInvite, setFundingInvite] = useState({ email: '', comment: '' })
+  const [interestedSuggestedDate, setInterestedSuggestedDate] = useState(null)
+  const [currentPrice, setCurrentPrice] = useState(0)
+  const [termsAgreed, setTermsAgreed] = useState(false)
+
+  const handleFundingEmailInputChange = (e) => {
+    setFundingInvite({ ...fundingInvite, email: e.target.value })
+  }
+  const handleFundingInputMessageChange = (e) => {
+    setFundingInvite({ ...fundingInvite, comment: e.target.value })
+  }
+  const handleAssignFundingDialogClose = () => {
+    setTaskFundingDialog(false)
+    setFundingInvite({ email: '', comment: '' })
+    setTermsAgreed(false)
+    setInterestedSuggestedDate(null)
+  }
+
+  const deliveryDate = task?.data?.deadline !== null
     ? MomentComponent(task.data.deadline).utc().format('MM-DD-YYYY')
     : intl.formatMessage(messages.deliveryDateNotInformed)
 
-  const deadlineDiff = task.data.deadline !== null
+  const deadlineDiff = task?.data?.deadline !== null
     ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days')
     : false
+
+  const handleTaskFundingDialogOpen = () => {
+    setInterestedSuggestedDate(null)
+    setCurrentPrice(0)
+    setTaskFundingDialog(true)
+  }
+
+  const sendFundingInvite = (e) => {
+    e.preventDefault()
+    fundingInviteTask(task.data.id, fundingInvite.email, fundingInvite.comment, currentPrice, interestedSuggestedDate, user)
+    handleAssignFundingDialogClose()
+  }
   
   return (
-    <SidebarGrid size={{ xs: 12, sm: 12, md: 4 }}>
+    <SidebarRoot>
       {task.values && task.values.available > 0 && (
         <div style={{ textAlign: 'center', marginTop: 10 }}>
-          <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-            <FormattedMessage id="task.value.label" defaultMessage="Value offered" />
+          <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
+            <FormattedMessage id='task.value.label' defaultMessage='Value offered' />
           </Typography>
           <div>
             <div style={{ verticalAlign: 'middle' }}>
               <MoneyIcon />
             </div>
-            <Typography variant="h5" component="span" sx={{ verticalAlign: 'middle', ml: 1 }}>
+            <Typography variant='h5' component="span" sx={{ verticalAlign: 'middle', ml: 1 }}>
               {task.values.available}
-              {task.data.paid && <Chip sx={{ ml: 1 }} size="small" label="paid" />}
+              {task.data.paid && <Chip sx={{ ml: 1 }} size='small' label='paid' />}
             </Typography>
           </div>
         </div>
@@ -74,8 +99,8 @@ const IssueSidebar = ({
 
       <SidebarSection>
         <SidebarItem>
-          <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-            <FormattedMessage id="task.publicy.label" defaultMessage="Publicy" />
+          <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
+            <FormattedMessage id='task.publicy.label' defaultMessage='Publicy' />
           </Typography>
           <div>
             <IssuePublicStatus status={task.data.private ? 'private' : 'public'} />
@@ -84,8 +109,8 @@ const IssueSidebar = ({
 
         {task.data.status && (
           <SidebarItem>
-            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.status.label" defaultMessage="Status" />
+            <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
+              <FormattedMessage id='task.status.label' defaultMessage='Status' />
             </Typography>
             <div>
               <StatusChip
@@ -99,27 +124,27 @@ const IssueSidebar = ({
       </SidebarSection>
 
       <SidebarSection>
-        {task.data.level && !taskOwner() && (
+        {task.data.level && !issueAuthor && (
           <SidebarItem>
-            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.level.label" defaultMessage="Level" />
+            <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
+              <FormattedMessage id='task.level.label' defaultMessage='Level' />
             </Typography>
             <div>
               <CoffeeIcon />
-              <Typography variant="h6">
+              <Typography variant='h6'>
                 <TaskInfoContent>{task.data.level}</TaskInfoContent>
               </Typography>
             </div>
           </SidebarItem>
         )}
 
-        {task.data.deadline && !taskOwner() && (
+        {task.data.deadline && !issueAuthor && (
           <SidebarItem>
-            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.deadline.label" defaultMessage="Deadline" />
+            <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
+              <FormattedMessage id='task.deadline.label' defaultMessage='Deadline' />
             </Typography>
             <div>
-              <Typography variant="h6">
+              <Typography variant='h6'>
                 <Button onClick={() => setDeadlineForm(true)}>
                   {task.data.deadline ? (
                     <div>
@@ -127,11 +152,11 @@ const IssueSidebar = ({
                       {deadlineDiff && deadlineDiff > 0 ? (
                         <small>in {deadlineDiff} days</small>
                       ) : (
-                        <Chip size="small" label={<FormattedMessage id="task.dealine.past" defaultMessage="Overdue" />} />
+                        <Chip size='small' label={<FormattedMessage id='task.dealine.past' defaultMessage='Overdue' />} />
                       )}
                     </div>
                   ) : (
-                    <FormattedMessage id="task.deadline.call" defaultMessage="Set deadline" />
+                    <FormattedMessage id='task.deadline.call' defaultMessage='Set deadline' />
                   )}
                 </Button>
               </Typography>
@@ -139,26 +164,26 @@ const IssueSidebar = ({
           </SidebarItem>
         )}
 
-        {taskOwner() && (
+        {issueAuthor && (
           <SidebarItem>
-            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.level.label" defaultMessage="Level" />
+            <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
+              <FormattedMessage id='task.level.label' defaultMessage='Level' />
             </Typography>
             <div>
-              <Typography variant="h6">
+              <Typography variant='h6'>
                 <IssueLevelDropdown id={task.data.id} level={task.data.level} updateTask={updateTask} />
               </Typography>
             </div>
           </SidebarItem>
         )}
 
-        {taskOwner() && (
+        {issueAuthor && (
           <SidebarItem>
-            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.deadline.label" defaultMessage="Deadline" />
+            <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
+              <FormattedMessage id='task.deadline.label' defaultMessage='Deadline' />
             </Typography>
             <div>
-              <Typography variant="h6">
+              <Typography variant='h6'>
                 <Button onClick={() => setDeadlineForm(true)}>
                   {task.data.deadline ? (
                     <div>
@@ -166,11 +191,11 @@ const IssueSidebar = ({
                       {deadlineDiff && deadlineDiff > 0 ? (
                         <small>in {deadlineDiff} days</small>
                       ) : (
-                        <Chip size="small" label={<FormattedMessage id="task.dealine.past" defaultMessage="Overdue" />} />
+                        <Chip size='small' label={<FormattedMessage id='task.dealine.past' defaultMessage='Overdue' />} />
                       )}
                     </div>
                   ) : (
-                    <FormattedMessage id="task.deadline.call" defaultMessage="Set deadline" />
+                    <FormattedMessage id='task.deadline.call' defaultMessage='Set deadline' />
                   )}
                 </Button>
               </Typography>
@@ -196,36 +221,36 @@ const IssueSidebar = ({
         </div>
       ) : null}
 
-      <IssueActionsByRole issue={task} currentRole={taskOwner() ? 'admin' : 'user'} />
+      <IssueActionsByRole
+        issue={task}
+        currentRole={issueAuthor ? 'admin' : 'user'}
+        cleanPullRequestDataState={cleanPullRequestDataState}
+        account={account}
+        fetchAccount={fetchAccount}
+        user={user}
+        taskSolution={taskSolution}
+        getTaskSolution={getTaskSolution}
+        createTaskSolution={createTaskSolution}
+        updateTaskSolution={updateTaskSolution}
+        fetchPullRequestData={fetchPullRequestData}
+        pullRequestData={pullRequestData}
+      />
 
       <IssueInviteCard onInvite={inviteTask} onFunding={handleTaskFundingDialogOpen} user={user} id={task.data.id} />
 
-      <IssueOfferDrawer
-        issue={task}
-        open={assignDialog}
-        onClose={handleAssignFundingDialogClose}
-        offerUpdate={offerUpdate}
-        loggedUser={logged}
-        createOrder={createOrder}
-        assignTask={assignTask}
-        assigns={task.data.Assigns}
-        onMessage={messageOffer}
-        updateTask={updateTask}
-      />
-
       <OfferDrawer
         hasEmailInput
-        title={<FormattedMessage id="issue.offer.drawer.invite.title" defaultMessage="Invite sponsor" />}
-        introTitle={<FormattedMessage id="task.funding.title" defaultMessage="Invite someone to add bounties to this issue" />}
+        title={<FormattedMessage id='issue.offer.drawer.invite.title' defaultMessage='Invite sponsor' />}
+        introTitle={<FormattedMessage id='task.funding.title' defaultMessage='Invite someone to add bounties to this issue' />}
         introMessage={
-          <FormattedMessage id="task.funding.description" defaultMessage={'You can invite a investor, sponsor, or the project owner to fund this issue and let them know your suggestions'}>
+          <FormattedMessage id='task.funding.description' defaultMessage={'You can invite a investor, sponsor, or the project owner to fund this issue and let them know your suggestions'}>
             {(msg) => <SpanText>{msg}</SpanText>}
           </FormattedMessage>
         }
-        simpleInfoText={<FormattedMessage id="issue.funding.invite.info" defaultMessage="You will invite a sponsor to add bounties to this issue" />}
-        commentAreaPlaceholder={<FormattedMessage id="task.funding.comment.value" defaultMessage="Leave a message to be sent together with the invite" />}
-        pickupTagListTitle={<FormattedMessage id="task.funding.invite.title" defaultMessage="Suggest a bounty for the sponsor" />}
-        pickutTagListDescription={<FormattedMessage id="task.funding.invite.headline" defaultMessage="You can suggest a bounty for the sponsor to add a bounty to this issue" />}
+        simpleInfoText={<FormattedMessage id='issue.funding.invite.info' defaultMessage='You will invite a sponsor to add bounties to this issue' />}
+        commentAreaPlaceholder={<FormattedMessage id='task.funding.comment.value' defaultMessage='Leave a message to be sent together with the invite' />}
+        pickupTagListTitle={<FormattedMessage id='task.funding.invite.title' defaultMessage='Suggest a bounty for the sponsor' />}
+        pickutTagListDescription={<FormattedMessage id='task.funding.invite.headline' defaultMessage='You can suggest a bounty for the sponsor to add a bounty to this issue' />}
         introImage={inviteCover}
         issue={task}
         open={taskFundingDialog}
@@ -237,19 +262,19 @@ const IssueSidebar = ({
         onTermsCheckboxChange={(checked) => setTermsAgreed(checked)}
         actions={[
           {
-            label: <FormattedMessage id="task.funding.cancel" defaultMessage="Cancel" />,
+            label: <FormattedMessage id='task.funding.cancel' defaultMessage='Cancel' />,
             onClick: handleAssignFundingDialogClose
           },
           {
             disabled: !fundingInvite.email || !termsAgreed || !currentPrice || currentPrice === 0,
-            label: <FormattedMessage id="task.funding.invite" defaultMessage="Invite" />,
+            label: <FormattedMessage id='task.funding.invite' defaultMessage='Invite' />,
             onClick: sendFundingInvite,
             variant: 'contained',
-            color: 'secondary'
+            color: 'secondary',
           }
         ]}
       />
-    </SidebarGrid>
+    </SidebarRoot>
   );
 }
 

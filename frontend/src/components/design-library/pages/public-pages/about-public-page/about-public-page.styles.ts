@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles'
 import { Avatar, ListItem } from '@mui/material'
-import { Section } from '../home/CommonStyles'
+import { Section } from '../home-public-page/CommonStyles'
 
 export const Root = styled('div')(({ theme }) => ({
   flexGrow: 1,

@@ -4,7 +4,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import TaskSolutionDrawer from '../send-solution-drawer';
+import TaskSolutionDrawer from '../../../../../../../design-library/molecules/drawers/send-solution-drawer/send-solution-drawer';
 import { BrowserRouter } from 'react-router-dom';
 import { debug } from 'jest-preview';
 

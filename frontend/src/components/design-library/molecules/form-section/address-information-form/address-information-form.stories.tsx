@@ -2,7 +2,7 @@ import React from 'react';
 import AddressInformationForm from './address-information-form';
 
 export default {
-  title: 'Design Library/Molecules/Forms/AddressInformationForm',
+  title: 'Design Library/Molecules/FormSection/AddressInformationForm',
   component: AddressInformationForm
 };
 

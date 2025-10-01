@@ -19,11 +19,11 @@ import {
   MainList,
   ResponsiveImage,
   Section
-} from '../home/CommonStyles'
+} from '../home-public-page/CommonStyles'
 import PublicBase from '../../../templates/base/public-base/public-base'
 
 // new styled components
-import { Root, ListItemTop, AvatarPrimary, SectionBgContrast } from './about.styles'
+import { Root, ListItemTop, AvatarPrimary, SectionBgContrast } from './about-public-page.styles'
 
 const About = ({
   loggedIn,

@@ -40,6 +40,5 @@ Default.args = {
 	wallet: { completed: true, data: { id: 1, name: 'Main Wallet', balance: 1500 } },
 	user: { id: 1, email: 'dev@example.com', name: 'Dev User', customer_id: 'cus_test_123' },
 	task: { completed: true, data: { id: 101, private: false } },
-	match: { params: { id: 101 } }
 };
 

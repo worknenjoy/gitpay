@@ -1,5 +1,5 @@
 import React from 'react';
-import FourOFour from './four-o-four';
+import FourOFour from './four-o-four-public-page';
 
 export default {
   title: 'Design Library/Pages/Public/FourOFour',

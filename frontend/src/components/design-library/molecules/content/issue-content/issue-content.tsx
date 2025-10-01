@@ -10,12 +10,6 @@ import IssueAuthorList from '../../lists/issue-author-list/issue-author-list';
 import { DescriptionHeading, IssueContentText } from './issue-content.styles';
 
 const IssueContent = ({ user, project, organization, updateTask, reportTask, onDeleteTask, logged, task, messageAuthor }) => {
-  const taskOwner = () => {
-    const creator = logged && task.data.User && user.id === task.data.User.id
-    const owner = (task.data.members && task.data.members.length) ? task.data.members.filter(m => m.User.id === user.id).length > 0 : false
-    return creator || owner
-  }
-
   return (
     <Container fixed maxWidth="lg">
       <IssueHeader
@@ -24,7 +18,6 @@ const IssueContent = ({ user, project, organization, updateTask, reportTask, onD
         project={project}
         organization={organization}
         updateTask={updateTask}
-        taskOwner={taskOwner()}
         reportTask={reportTask}
         handleDeleteTask={onDeleteTask}
       />

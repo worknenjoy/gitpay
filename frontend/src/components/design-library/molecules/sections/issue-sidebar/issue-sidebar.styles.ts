@@ -1,7 +1,7 @@
 import { Avatar, Chip, Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-export const SidebarGrid = styled(Grid)(({ theme }) => ({
+export const SidebarRoot = styled('div')(({ theme }) => ({
   backgroundColor: '#eee',
   padding: 25,
   [theme.breakpoints.down('sm')]: {
@@ -30,20 +30,20 @@ export const SidebarItem = styled('div')(({ theme }) => ({
   }
 }))
 
-export const TaskInfoContent = styled('div')(() => ({
-  verticalAlign: 'super',
-  marginLeft: 5,
-  marginTop: 10,
-  display: 'inline-block',
-  textAlign: 'middle'
-}))
+export const TaskInfoContent = styled('div')`
+  vertical-align: super;
+  margin-left: 5px;
+  margin-top: 10px;
+  display: inline-block;
+  text-align: middle;
+`
 
 export const SpanText = styled('span')(() => ({
   display: 'inline-block',
   verticalAlign: 'middle'
 }))
 
-export const StatusChip = styled(Chip, { shouldForwardProp: prop => prop !== 'status' })(
+export const StatusChip = styled(Chip, { shouldForwardProp: prop => prop !== 'status' })<{ status?: 'closed' | 'open' }>(
   ({ theme, status }) => ({
     marginBottom: theme.spacing(1),
     backgroundColor: 'transparent',
@@ -51,7 +51,7 @@ export const StatusChip = styled(Chip, { shouldForwardProp: prop => prop !== 'st
   })
 )
 
-export const StatusAvatarDot = styled(Avatar, { shouldForwardProp: prop => prop !== 'status' })(
+export const StatusAvatarDot = styled(Avatar, { shouldForwardProp: prop => prop !== 'status' })<{ status?: 'closed' | 'open' }>(
   ({ theme, status }) => ({
     backgroundColor: status === 'closed' ? theme.palette.error.main : theme.palette.primary.main
   })

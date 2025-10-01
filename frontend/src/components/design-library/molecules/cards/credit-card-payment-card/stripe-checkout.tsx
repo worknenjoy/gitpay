@@ -1,9 +1,10 @@
 import React from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
-import CheckoutForm from '../../../../../../../containers/checkout-form'
+import CheckoutForm from '../../../organisms/forms/payment-forms/credit-card-payment-form/credit-card-payment-form'
 
-const stripePromise = loadStripe(process.env.STRIPE_PUBKEY)
+const publishableKey = (process.env.STRIPE_PUBKEY as string) || 'pk_test_12345'
+const stripePromise = loadStripe(publishableKey)
 
 const StripeCheckout = (props) => {
   return (

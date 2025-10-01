@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Button from '@mui/material/Button'
@@ -46,7 +45,7 @@ import {
   ListItemTop,
   GutterTopButton,
   MLButton,
-} from './home.styles'
+} from './home-public-page.styles'
 
 
 const Home = ({

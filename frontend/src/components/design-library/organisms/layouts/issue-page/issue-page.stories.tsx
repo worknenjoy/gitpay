@@ -41,12 +41,24 @@ Default.args = {
           { id: 2, name: 'enhancement', color: '#a2eeef' },
           { id: 3, name: 'documentation', color: '#0075ca' }
         ]
-      },
-      Project: { name: 'Project Name' },
-      Organization: { name: 'Organization Name' }
+    }
     }
   },
+  project: { name: 'Project Name' },
+  organization: { name: 'Organization Name' },
   updateTask: () => console.log('Task updated'),
   reportTask: () => console.log('Task reported'),
-  messageAuthor: () => {}
+  messageAuthor: () => {},
+  onDeleteTask: () => console.log('Task deleted'),
+  inviteTask: () => console.log('Task invited'),
+  fundingInviteTask: () => console.log('Funding invite task'),
+  cleanPullRequestDataState: () => console.log('Cleaned pull request data state'),
+  fetchAccount: () => console.log('Fetched account data'),
+  account: { completed: true, data: { id: 1, balance: 500 } },
+  taskSolution: null,
+  getTaskSolution: () => console.log('Get task solution'),
+  createTaskSolution: () => console.log('Create task solution'),
+  updateTaskSolution: () => console.log('Update task solution'),
+  fetchPullRequestData: () => console.log('Fetch pull request data'),
+  pullRequestData: { completed: true, data: null }
 };
