@@ -11,14 +11,13 @@ import {
 } from '@mui/material'
 import LanguageIcon from '@mui/icons-material/Language'
 import { updateIntl } from 'react-intl-redux'
-import { LabelButton, StyledAvatarIconOnly } from 'design-library/organisms/layouts/topbar/TopbarStyles'
 import { FormattedMessage } from 'react-intl'
 import { store } from '../../../../../../../main/app'
 import messagesBr from '../../../../../../../translations/result/br.json'
 import messagesEn from '../../../../../../../translations/result/en.json'
 import messagesBrLocal from '../../../../../../../translations/generated/br.json'
 import messagesEnLocal from '../../../../../../../translations/generated/en.json'
-import { styled } from '@mui/material/styles'
+import { Title, LabelButton, StyledAvatarIconOnly } from './settings.styles'
 
 const messages = {
   'br': process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
@@ -27,11 +26,6 @@ const messages = {
 
 import logoLangEn from 'images/united-states-of-america.png'
 import logoLangBr from 'images/brazil.png'
-
-const Title = styled(Typography)(({ theme }) => ({
-  marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2)
-}))
 
 const Settings = (props) => {
   const { user } = props

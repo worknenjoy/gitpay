@@ -8,7 +8,7 @@ import StackData from './StackData'
 import CurrentMonthStats from './CurrentMonthStats'
 import Barchart from './Charts/Barchart'
 import media from '../../../../../styleguide/media'
-import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
+import Bottom from 'design-library/organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom'
 
 const Wrapper = styled.div`
   margin: 0;

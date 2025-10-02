@@ -5,7 +5,7 @@ import {
   List,
   ListItemIcon,
   ListItemText,
-  Container,
+  Container
 } from '@mui/material'
 import { AccountBalanceWallet, Work, Apps, Assignment, GroupWork } from '@mui/icons-material'
 import { useIntl, FormattedMessage } from 'react-intl'
@@ -47,15 +47,15 @@ const About = ({
         importIssuesProps={importIssuesProps}
       >
         <Container>
-          <div id='contrib' ref={ref}>
+          <div id="contrib" ref={ref}>
             <Section>
             <Grid container spacing={3}>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <MainTitle left>
-                  <Typography variant='h5' gutterBottom>
+                  <Typography variant="h5" gutterBottom>
                     <FormattedMessage
-                      id='welcome.headline.forfreelancers'
-                      defaultMessage='For contributors and freelancers'
+                      id="welcome.headline.forfreelancers"
+                      defaultMessage="For contributors and freelancers"
                     />
                   </Typography>
                 </MainTitle>
@@ -112,22 +112,22 @@ const About = ({
                 </MainList>
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <ResponsiveImage width='800' src={freelancerImage} />
+                <ResponsiveImage width="800" src={freelancerImage} />
               </Grid>
             </Grid>
             </Section>
           </div>
         </Container>
-        <div id='companies' ref={ref}>
+        <div id="companies" ref={ref}>
           <SectionBgContrast alternative>
           <Container>
             <Grid container spacing={3}>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <MainTitle left>
-                  <Typography variant='h5' gutterBottom>
+                  <Typography variant="h5" gutterBottom>
                     <FormattedMessage
-                      id='welcome.tagline.companies.main.headline'
-                      defaultMessage='For maintainers and organizations'
+                      id="welcome.tagline.companies.main.headline"
+                      defaultMessage="For maintainers and organizations"
                     />
                   </Typography>
                 </MainTitle>
@@ -182,22 +182,22 @@ const About = ({
                 </MainList>
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <ResponsiveImage width='600' src={companiesImage} />
+                <ResponsiveImage width="600" src={companiesImage} />
               </Grid>
             </Grid>
           </Container>
           </SectionBgContrast>
         </div>
         <Container>
-          <div id='collab' ref={ref}>
+          <div id="collab" ref={ref}>
             <Section>
             <Grid container spacing={3}>
               <Grid size={{ xs: 12, sm: 6 }}>
                 <MainTitle left>
-                  <Typography variant='h5' gutterBottom>
+                  <Typography variant="h5" gutterBottom>
                     <FormattedMessage
-                      id='welcome.headline.collab'
-                      defaultMessage='Working in development communities'
+                      id="welcome.headline.collab"
+                      defaultMessage="Working in development communities"
                     />
                   </Typography>
                 </MainTitle>
@@ -252,7 +252,7 @@ const About = ({
                 </MainList>
               </Grid>
               <Grid size={{ xs: 12, sm: 6 }}>
-                <ResponsiveImage width='600' src={teamImage} />
+                <ResponsiveImage width="600" src={teamImage} />
               </Grid>
             </Grid>
             </Section>

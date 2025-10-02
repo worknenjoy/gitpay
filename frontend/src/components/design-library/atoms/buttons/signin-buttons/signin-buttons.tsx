@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   LinkButton,
   LabelButton
-} from '../../../organisms/layouts/topbar/TopbarStyles';
+} from './signin-buttons.styles';
 
 const SigninButtons = ({
   onSignup,

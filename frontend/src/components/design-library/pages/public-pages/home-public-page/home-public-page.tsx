@@ -20,7 +20,6 @@ import { useHistory } from 'react-router-dom'
 import messages from '../../../../areas/public/features/welcome/legacy/messages'
 
 import freelancerImage from 'images/collections/collection-flat-build.svg'
-import citySoftware from 'images/collections/collection-flat-background.svg'
 import deal from 'images/collections/collection-flat-works.svg'
 
 import PublicBase from '../../../templates/base/public-base/public-base'
@@ -44,7 +43,7 @@ import {
   SecList,
   ListItemTop,
   GutterTopButton,
-  MLButton,
+  MLButton
 } from './home-public-page.styles'
 
 
@@ -79,40 +78,40 @@ const Home = ({
                   </Grid>
                  <Grid size={{ xs: 12, sm: 7 }}>
                   <HeroTitle>
-                    <Typography variant='h3' gutterBottom align='left'>
+                    <Typography variant="h3" gutterBottom align="left">
                       <FormattedMessage
-                        id='home.hero.headline.title'
-                        defaultMessage='Collaborate and earn bounties for solving issues from projects'
+                        id="home.hero.headline.title"
+                        defaultMessage="Collaborate and earn bounties for solving issues from projects"
                       />
                     </Typography>
                   </HeroTitle>
                   <HeroContent>
-                    <Typography variant='h6' gutterBottom align='left'>
+                    <Typography variant="h6" gutterBottom align="left">
                       <FormattedMessage
-                        id='home.hero.headline.description'
-                        defaultMessage='Gitpay is a platform that allows you to collaborate with other developers and earn bounties for solving issues from projects. You can also create your own projects and invite other developers to collaborate with you.'
+                        id="home.hero.headline.description"
+                        defaultMessage="Gitpay is a platform that allows you to collaborate with other developers and earn bounties for solving issues from projects. You can also create your own projects and invite other developers to collaborate with you."
                       />
                     </Typography>
                   </HeroContent>
                   <HeroActions>
                     <Button
-                      variant='text'
-                      color='primary'
+                      variant="text"
+                      color="primary"
                       onClick={() => history.push('/tasks/open')}
                     >
                       <FormattedMessage
-                        id='home.hero.headline.button.primary'
-                        defaultMessage='Work on an issue'
+                        id="home.hero.headline.button.primary"
+                        defaultMessage="Work on an issue"
                       />
                     </Button>
                     <MLButton
-                      variant='contained'
-                      color='primary'
+                      variant="contained"
+                      color="primary"
                       onClick={() => history.push('/signup')}
                     >
                       <FormattedMessage
-                        id='home.hero.headline.button.secondary'
-                        defaultMessage='Import issue'
+                        id="home.hero.headline.button.secondary"
+                        defaultMessage="Import issue"
                       />
                     </MLButton>
                   </HeroActions>
@@ -123,17 +122,17 @@ const Home = ({
 
           <AltSection>
             <MainTitle>
-              <Typography variant='h5' gutterBottom>
+              <Typography variant="h5" gutterBottom>
                 <FormattedMessage
-                  id='welcome.tagline.headline.how.title'
-                  defaultMessage='How Gitpay works'
+                  id="welcome.tagline.headline.how.title"
+                  defaultMessage="How Gitpay works"
                 />
               </Typography>
             </MainTitle>
              <Grid container spacing={3}>
                <Grid size={{ xs: 12, sm: 6 }}>
                   <ImageContainer>
-                  <ResponsiveImage width='400' src={deal} />
+                  <ResponsiveImage width="400" src={deal} />
                 </ImageContainer>
               </Grid>
                <Grid size={{ xs: 12, sm: 6 }}>
@@ -200,34 +199,34 @@ const Home = ({
             </Grid>
           </AltSection>
           <BottomCTASection>
-            <BottomCopy variant='h6' gutterBottom>
+            <BottomCopy variant="h6" gutterBottom>
               <FormattedMessage
-                id='welcome.bottom.call'
-                defaultMessage='A better way to build your project, a better way to work in projects'
+                id="welcome.bottom.call"
+                defaultMessage="A better way to build your project, a better way to work in projects"
               />
             </BottomCopy>
             <GutterTopButton
-              component='a'
-              href='/#/signup'
-              size='large'
-              variant='contained'
-              color='primary'
+              component="a"
+              href="/#/signup"
+              size="large"
+              variant="contained"
+              color="primary"
             >
               <FormattedMessage
-                id='welcome.bottom.link'
-                defaultMessage='Get started'
+                id="welcome.bottom.link"
+                defaultMessage="Get started"
               />
             </GutterTopButton>
             <GutterTopButton
-              component='a'
-              href='https://docs.gitpay.me'
-              size='large'
-              variant='text'
-              color='primary'
+              component="a"
+              href="https://docs.gitpay.me"
+              size="large"
+              variant="text"
+              color="primary"
             >
               <FormattedMessage
-                id='welcome.bottom.linkAlt'
-                defaultMessage='See our documentation'
+                id="welcome.bottom.linkAlt"
+                defaultMessage="See our documentation"
               />
             </GutterTopButton>
           </BottomCTASection>

@@ -7,7 +7,7 @@ import Notification from 'design-library/atoms/notifications/notification/notifi
 import '../../../../../checkout/checkout-form'
 
 import TopBar from 'design-library/organisms/topbar/topbar'
-import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
+import Bottom from 'design-library/organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom'
 
 // import paymentIcon from 'images/payment-icon-alt.png'
 

@@ -4,7 +4,7 @@ import { withProfileTemplate } from '../../../../../../../.storybook/decorators/
 import { generateTableData } from '../../../../../../../.storybook/utils/generateTableData';
 
 const meta = {
-  title: 'Design Library/Pages/Private/Data Pages/PrimaryDataPage',
+  title: 'Design Library/Pages/Private/DataPages/PrimaryData',
   component: PrimaryDataPage,
   decorators: [withProfileTemplate]
 };

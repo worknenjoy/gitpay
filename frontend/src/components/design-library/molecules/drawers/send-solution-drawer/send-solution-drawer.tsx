@@ -9,7 +9,7 @@ import { validAccount } from '../../../../../utils/valid-account'
 import AccountRequirements from 'design-library/atoms/alerts/account-requirements/account-requirements'
 import SendSolutionRequirements from '../../../../areas/public/features/task/legacy/send-solution-requirements'
 import Drawer from 'design-library/molecules/drawers/drawer/drawer'
-import IssueSolutionCard from 'design-library/molecules/cards/issue-solution-card/issue-solution-card'
+import IssueSolutionCard from 'design-library/molecules/cards/issue-cards/issue-solution-card/issue-solution-card'
 
 const SendSolutionDrawer = ({
   taskSolution,
@@ -96,27 +96,27 @@ const SendSolutionDrawer = ({
       <Drawer
         open={ open }
         onClose={ onClose }
-        title={ <FormattedMessage id='task.solution.dialog.message' defaultMessage='Send a solution for this issue' /> }
+        title={ <FormattedMessage id="task.solution.dialog.message" defaultMessage="Send a solution for this issue" /> }
         actions={[
           {
-            label: <FormattedMessage id='task.bounties.actions.cancel' defaultMessage='Cancel' />,
+            label: <FormattedMessage id="task.bounties.actions.cancel" defaultMessage="Cancel" />,
             onClick: onClose,
             variant: 'text',
             color: 'default',
-            disabled: false,
+            disabled: false
           },
           Object.keys(taskSolution || {}).length !== 0 && !editMode
             ? {
               onClick: handleTaskSolutionUpdate,
-              label: <FormattedMessage id='task.solution.form.edit' defaultMessage='Edit Solution' />,
+              label: <FormattedMessage id="task.solution.form.edit" defaultMessage="Edit Solution" />,
               variant: 'contained',
               color: 'primary',
-              disabled: task?.data?.paid || task?.data?.Transfer || task?.data?.transfer_id,
+              disabled: task?.data?.paid || task?.data?.Transfer || task?.data?.transfer_id
             }
             :
             {
               onClick: submitTaskSolution,
-              label: <FormattedMessage id='task.solution.form.send' defaultMessage='Send Solution' />, 
+              label: <FormattedMessage id="task.solution.form.send" defaultMessage="Send Solution" />, 
               variant: 'contained',
               color: 'primary',
               disabled: !pullRequestURL ||
@@ -129,13 +129,13 @@ const SendSolutionDrawer = ({
               task.data.paid ||
               task.data.transfer_id ||
               task.data.Transfer ||
-              !validAccount(user, account),
+              !validAccount(user, account)
             }
         ]}
 
       >
-        <Typography variant='body2' style={ { color: 'black' } } gutterBottom>
-          <FormattedMessage id='task.solution.dialog.description' defaultMessage='You can send a solution for this issue providing the Pull Request / Merge Request URL of your solution:' />
+        <Typography variant="body2" style={ { color: 'black' } } gutterBottom>
+          <FormattedMessage id="task.solution.dialog.description" defaultMessage="You can send a solution for this issue providing the Pull Request / Merge Request URL of your solution:" />
         </Typography>
         <AccountRequirements
           user={ user }

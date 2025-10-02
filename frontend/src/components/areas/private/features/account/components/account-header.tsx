@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import ImportIssueButton from 'design-library/organisms/layouts/topbar/import-issue';
-import ImportIssueDialog from 'design-library/organisms/layouts/topbar/import-issue-dialog';
+import ImportIssueButton from 'design-library/organisms/layouts/topbar-layouts/topbar-layout/import-issue';
+import ImportIssueDialog from 'design-library/organisms/layouts/topbar-layouts/topbar-layout/import-issue-dialog';
 import AccountMenu from './account-menu';
 import { FormattedMessage } from 'react-intl';
 import { Grid } from '@mui/material';
-import { Container, Wrapper, Inner, ActionButton, Account } from 'design-library/organisms/layouts/account-header/account-header.styles';
+import { Container, Wrapper, Inner, ActionButton, Account } from 'design-library/organisms/layouts/header-layouts/account-header-layout/account-header-layout.styles';
 
 const AccountHeader = ({
   user,

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Root } from './issue-public-page.styles'
-import IssuePage from 'design-library/organisms/layouts/issue-page/issue-page'
+import IssuePage from 'design-library/organisms/layouts/page-layouts/issue-page-layout/issue-page-layout'
 import PublicBase from 'design-library/templates/base/public-base/public-base'
 
 const IssuePublicPage = ({
@@ -24,7 +24,18 @@ const IssuePublicPage = ({
   createTaskSolution,
   updateTaskSolution,
   fetchPullRequestData,
-  pullRequestData
+  pullRequestData,
+  fetchCustomer,
+  customer,
+  addNotification,
+  createOrder,
+  order,
+  fetchWallet,
+  wallet,
+  listWallets,
+  wallets,
+  fetchTask,
+  syncTask
 }) => {
   return (
     <Root>
@@ -53,6 +64,17 @@ const IssuePublicPage = ({
           fetchPullRequestData={fetchPullRequestData}
           pullRequestData={pullRequestData}
           taskSolution={taskSolution}
+          fetchCustomer={fetchCustomer}
+          customer={customer}
+          addNotification={addNotification}
+          createOrder={createOrder}
+          order={order}
+          fetchWallet={fetchWallet}
+          wallet={wallet}
+          listWallets={listWallets}
+          wallets={wallets}
+          fetchTask={fetchTask}
+          syncTask={syncTask}
         />
       </PublicBase>
     </Root>

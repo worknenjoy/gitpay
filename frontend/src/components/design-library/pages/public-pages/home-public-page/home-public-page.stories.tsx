@@ -3,7 +3,7 @@ import Home from './home-public-page';
 
 export default {
   title: 'Design Library/Pages/Public/Home',
-  component: Home,
+  component: Home
 };
 
 const Template = (args) => <Home {...args} />;
@@ -19,24 +19,24 @@ LoggedIn.args = {
       Types: [
         {
           id: 1,
-          type: 'contributor',
-        },
+          type: 'contributor'
+        }
       ]
     },
-    error: null,
+    error: null
   },
   bottomBarProps: {
     info: {
       tasks: 0,
       bounties: 0,
-      users: 0,
+      users: 0
     },
-    getInfo: () => {},
+    getInfo: () => {}
   },
   accountMenuProps: {
-    signOut: () => {},
+    signOut: () => {}
 
-  },
+  }
 };
 
 export const LoggedOut = Template.bind({});
@@ -44,17 +44,17 @@ LoggedOut.args = {
   loggedIn: {
     logged: false,
     user: null,
-    error: null,
+    error: null
   },
   bottomBarProps: {
     info: {
       tasks: 0,
       bounties: 0,
-      users: 0,
+      users: 0
     },
-    getInfo: () => {},
+    getInfo: () => {}
   },
   accountMenuProps: {
-    signOut: () => {},
-  },
+    signOut: () => {}
+  }
 };

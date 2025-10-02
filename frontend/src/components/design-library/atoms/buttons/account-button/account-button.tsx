@@ -1,7 +1,7 @@
 import React from 'react';
 import { Chip } from '@mui/material';
 import { Person } from '@mui/icons-material';
-import { StyledAvatar, StyledButton } from '../../../organisms/layouts/topbar/TopbarStyles';
+import { StyledAvatar, StyledButton } from './account-buttons.styles';
 import nameInitials from 'name-initials'
 
 

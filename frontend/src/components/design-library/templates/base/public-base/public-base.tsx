@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled } from '@mui/material/styles'
-import TopBar from '../../../organisms/layouts/topbar/topbar'
-import Bottom from '../../../organisms/layouts/bottom-bar/bottom'
+import TopBar from '../../../organisms/layouts/topbar-layouts/topbar-layout/topbar-layout'
+import Bottom from '../../../organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom-bar-layout'
 
 const Root = styled('div')(({ theme }) => ({
   flexGrow: 1,

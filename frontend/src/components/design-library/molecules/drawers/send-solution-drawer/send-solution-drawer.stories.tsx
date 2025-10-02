@@ -33,7 +33,7 @@ Default.args = {
 			value: '250',
 			paid: false,
 			transfer_id: null,
-			Transfer: null,
+			Transfer: null
 		}
 	},
 	pullRequestData: {

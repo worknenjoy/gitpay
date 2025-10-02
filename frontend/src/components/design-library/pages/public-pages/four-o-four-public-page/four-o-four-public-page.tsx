@@ -24,13 +24,13 @@ export default () => {
           color: 'rgb(200,0,50)'
         } } />
         <p style={ {
-          fontSize: 40,
+          fontSize: 40
         } }>
-          <FormattedMessage id='page.404.message' defaultMessage='404 Page Not Found' />
+          <FormattedMessage id="page.404.message" defaultMessage="404 Page Not Found" />
         </p>
       </div>
       <p style={ { fontSize: 25 } }>
-        <FormattedMessage id='page.404.goto' defaultMessage='You can go to Home Page' />
+        <FormattedMessage id="page.404.goto" defaultMessage="You can go to Home Page" />
       </p>
       <div style={ {
         fontSize: 20,
@@ -39,8 +39,8 @@ export default () => {
         justifyContent: 'space-between'
       } }>
         <p>
-          <Link href='/'>
-            <FormattedMessage id='page.404.link.home' defaultMessage='Home' />
+          <Link href="/">
+            <FormattedMessage id="page.404.link.home" defaultMessage="Home" />
           </Link>
         </p>
       </div>

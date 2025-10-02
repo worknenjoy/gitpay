@@ -3,10 +3,10 @@ import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
 
 import PaymentDrawer from 'design-library/molecules/drawers/payment-drawer/payment-drawer'
 
-import CreditCardPaymentCard from 'design-library/molecules/cards/credit-card-payment-card/credit-card-payment-card'
-import PaypalPaymentDialog from '../../../../areas/private/features/payments/legacy/paypal-payment-dialog'
-import PaymentMethodInvoiceTab from '../../../../areas/public/features/task/legacy/payment/methods/invoice/payment-method-invoice-tab'
-import PaymentMethodWalletTab from '../../../../areas/public/features/task/legacy/payment/methods/wallet/payment-method-wallet-tab'
+import CreditCardPaymentCard from 'design-library/molecules/cards/payment-cards/credit-card-payment-card/credit-card-payment-card'
+import InvoicePaymentCard from '../../cards/payment-cards/invoice-payment-card/invoice-payment-card'
+import PaymentMethodWalletTab from '../../cards/payment-cards/wallet-payment-card/wallet-payment-card'
+import PaypalPaymentCard from '../../cards/payment-cards/paypal-payment-card/paypal-payment-card'
 
 const taskPaymentFormMessages = defineMessages({
   tabPaymentMethodCrediCard: {
@@ -29,15 +29,31 @@ const taskPaymentFormMessages = defineMessages({
 
 const fee = { 'open source': 1.08, 'private': 1.18, 'full': 1.30 }
 
-function IssuePaymentDrawer(props: any) {
+function IssuePaymentDrawer({
+  open,
+  onClose,
+  fetchCustomer,
+  customer,
+  addNotification,
+  updateTask,
+  user,
+  task,
+  createOrder,
+  order,
+  fetchWallet,
+  wallet,
+  listWallets,
+  wallets,
+  fetchTask,
+  syncTask
+}: any) {
   const intl = useIntl()
-  const { open, onClose, taskId, fetchCustomer, customer } = props
 
   const [price, setPrice] = useState<number | string>(0)
   const [plan, setPlan] = useState<'open source' | 'private' | 'full'>('open source')
 
   useEffect(() => {
-    if (props.task && props.task.data?.private) {
+    if (task && task.data?.private) {
       setPlan('private')
     } else {
       setPlan('open source')
@@ -92,12 +108,12 @@ function IssuePaymentDrawer(props: any) {
           value: 'card',
           component: (
             <CreditCardPaymentCard
-              addNotification={props.addNotification}
-              onPayment={props.updateTask}
+              addNotification={addNotification}
+              onPayment={updateTask}
               price={price}
               formatedPrice={formatCurrency(priceAfterFee as number)}
-              user={props.user}
-              task={props.task?.data}
+              user={user}
+              task={task?.data}
               plan={plan}
               onClose={onClose}
             />
@@ -107,13 +123,13 @@ function IssuePaymentDrawer(props: any) {
           label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodInvoice),
           value: 'invoice',
           component: (
-            <PaymentMethodInvoiceTab
+            <InvoicePaymentCard
               priceAfterFee={priceAfterFee}
               fetchCustomer={fetchCustomer}
               customer={customer}
-              user={props.user}
-              createOrder={props.createOrder}
-              task={props.task?.data}
+              user={user}
+              createOrder={createOrder}
+              task={task?.data}
               price={price}
               onPayment={onClose}
             />
@@ -123,16 +139,13 @@ function IssuePaymentDrawer(props: any) {
           label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodPaypal),
           value: 'paypal',
           component: (
-            <PaypalPaymentDialog
+            <PaypalPaymentCard
               onClose={onClose}
-              addNotification={props.addNotification}
-              onPayment={props.updateTask}
               price={price}
-              formatedPrice={formatCurrency(priceAfterFee as number)}
-              taskId={props.task?.data?.id}
-              createOrder={props.createOrder}
-              user={props.user}
-              order={props.order}
+              taskId={task?.data?.id}
+              createOrder={createOrder}
+              user={user}
+              order={order}
               plan={plan}
             />
           )
@@ -142,19 +155,18 @@ function IssuePaymentDrawer(props: any) {
           value: 'wallet',
           component: (
             <PaymentMethodWalletTab
-              user={props.user}
-              task={props.task?.data}
+              user={user}
+              task={task?.data}
               price={price}
               priceAfterFee={priceAfterFee}
-              plan={plan}
-              createOrder={props.createOrder}
-              fetchWallet={props.fetchWallet}
-              wallet={props.wallet}
-              listWallets={props.listWallets}
-              wallets={props.wallets}
+              createOrder={createOrder}
+              fetchWallet={fetchWallet}
+              wallet={wallet}
+              listWallets={listWallets}
+              wallets={wallets}
               onClose={onClose}
-              fetchTask={props.fetchTask}
-              syncTask={props.syncTask}
+              fetchTask={fetchTask}
+              syncTask={syncTask}
             />
           )
         }

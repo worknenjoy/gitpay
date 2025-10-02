@@ -35,7 +35,7 @@ const CheckoutForm = (props) => {
     couponApplied: false
   })
 
-  const { couponStoreState, user, price, formatedPrice } = props
+  const { couponStoreState = { completed: false, coupon: {} }, user, price, formatedPrice } = props
 
   const handleSubmit = async (ev) => {
     ev.preventDefault()
@@ -116,7 +116,7 @@ const CheckoutForm = (props) => {
   }, [couponState.couponInput])
 
   const setCouponApplied = () => {
-    if (couponStoreState.completed && Object.keys(couponStoreState.coupon).length > 0) {
+    if (couponStoreState?.completed && Object.keys(couponStoreState.coupon || {}).length > 0) {
       setCouponState((prev) => ({ ...prev, couponApplied: true }))
     }
   }
@@ -171,7 +171,7 @@ const CheckoutForm = (props) => {
             handleCouponInput={ handleCouponInput }
             showCouponInput={ showCouponInput }
             applyCoupon={ applyCoupon }
-            couponStoreState={ couponStoreState.coupon }
+            couponStoreState={ couponStoreState?.coupon || {} }
           />
         </Grid>
 
@@ -187,8 +187,8 @@ const CheckoutForm = (props) => {
                 id="checkout.payment.action"
                 defaultMessage="Pay {price}"
                 values={{
-                  price: couponState.couponApplied && couponStoreState.coupon.orderPrice >= 0
-                    ? `$${couponStoreState.coupon.orderPrice}`
+                  price: couponState.couponApplied && (couponStoreState?.coupon?.orderPrice ?? -1) >= 0
+                    ? `$${couponStoreState?.coupon?.orderPrice}`
                     : formatedPrice
                 }}
               />

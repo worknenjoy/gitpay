@@ -1,81 +1,84 @@
-import IssuePage from 'design-library/organisms/layouts/issue-page/issue-page';
+import IssuePage from 'design-library/organisms/layouts/page-layouts/issue-page-layout/issue-page-layout';
 import PrivateBase from 'design-library/templates/base/private-base/private-base';
 import React from 'react';
 
 
 const IssuePrivatePage = ({
+  loggedIn,
+  account,
+  fundingInviteTask,
+  createTaskSolution,
+  getTaskSolution,
+  updateTaskSolution,
+  fetchPullRequestData,
+  pullRequestData,
+  taskSolution,
   createTask,
   signOut,
-  user,
   bottomProps,
-  assignDialog,
-  assignTask,
   cleanPullRequestDataState,
-  currentPrice,
   fetchAccount,
-  fundingInvite,
-  handleAssignFundingDialogClose,
-  handleFundingEmailInputChange,
-  handleFundingInputMessageChange,
-  handleTaskFundingDialogOpen,
-  createOrder,
   inviteTask,
   messageAuthor,
-  messageOffer,
-  offerUpdate,
   onDeleteTask,
   organization,
   project,
   reportTask,
-  setCurrentPrice,
-  setInterestedSuggestedDate,
-  setTermsAgreed,
-  taskFundingDialog,
   onResendActivationEmail,
   task,
   updateTask,
-  sendFundingInvite,
-  termsAgreed
+  fetchCustomer,
+  customer,
+  addNotification,
+  createOrder,
+  order,
+  fetchWallet,
+  wallet,
+  listWallets,
+  wallets,
+  fetchTask,
+  syncTask
 }) => {
 
   return (
     <PrivateBase
       createTask={createTask}
       signOut={signOut}
-      user={user}
+      user={loggedIn}
       bottomProps={bottomProps}
       onResendActivationEmail={onResendActivationEmail}
     >
       <IssuePage
-        assignDialog={assignDialog}
-        assignTask={assignTask}
-        cleanPullRequestDataState={cleanPullRequestDataState}
-        currentPrice={currentPrice}
-        fetchAccount={fetchAccount}
-        fundingInvite={fundingInvite}
-        handleAssignFundingDialogClose={handleAssignFundingDialogClose}
-        handleFundingEmailInputChange={handleFundingEmailInputChange}
-        handleFundingInputMessageChange={handleFundingInputMessageChange}
-        handleTaskFundingDialogOpen={handleTaskFundingDialogOpen}
-        createOrder={createOrder}
-        inviteTask={inviteTask}
-        logged={user}
-        messageAuthor={messageAuthor}
-        messageOffer={messageOffer}
-        offerUpdate={offerUpdate}
-        onDeleteTask={onDeleteTask}
-        organization={organization}
-        project={project}
-        reportTask={reportTask}
-        setCurrentPrice={setCurrentPrice}
-        setInterestedSuggestedDate={setInterestedSuggestedDate}
-        setTermsAgreed={setTermsAgreed}
-        taskFundingDialog={taskFundingDialog}
+        logged={loggedIn}
         task={task}
+        project={project}
+        organization={organization}
+        onDeleteTask={onDeleteTask}
+        account={account}
         updateTask={updateTask}
-        user={user}
-        sendFundingInvite={sendFundingInvite}
-        termsAgreed={termsAgreed}
+        reportTask={reportTask}
+        messageAuthor={messageAuthor}
+        inviteTask={inviteTask}
+        cleanPullRequestDataState={cleanPullRequestDataState}
+        fetchAccount={fetchAccount}
+        fundingInviteTask={fundingInviteTask}
+        createTaskSolution={createTaskSolution}
+        getTaskSolution={getTaskSolution}
+        updateTaskSolution={updateTaskSolution}
+        fetchPullRequestData={fetchPullRequestData}
+        pullRequestData={pullRequestData}
+        taskSolution={taskSolution}
+        fetchCustomer={fetchCustomer}
+        customer={customer}
+        addNotification={addNotification}
+        createOrder={createOrder}
+        order={order}
+        fetchWallet={fetchWallet}
+        wallet={wallet}
+        listWallets={listWallets}
+        wallets={wallets}
+        fetchTask={fetchTask}
+        syncTask={syncTask}
       />
     </PrivateBase>
   );

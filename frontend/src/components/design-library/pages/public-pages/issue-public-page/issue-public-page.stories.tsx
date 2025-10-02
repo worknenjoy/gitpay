@@ -1,11 +1,11 @@
 import IssuePublicPage from './issue-public-page';
 
 const meta = {
-  title: 'Design Library/Pages/Public/IssuePublicPage',
+  title: 'Design Library/Pages/Public/IssuePublic',
   component: IssuePublicPage,
   parameters: {
-    layout: 'fullscreen',
-  },
+    layout: 'fullscreen'
+  }
 }
 
 export default meta;
@@ -15,7 +15,15 @@ export const Default = {
     loggedIn: {
       logged: false,
       completed: true,
-      data: null,
+      data: {
+        id: 1,
+        name: 'Guest User',
+        email: 'guest@example.com',
+        Types: [{
+          id: 1,
+          name: 'contributor'
+        }]
+      }
     },
     task: {
       completed: true,
@@ -29,19 +37,19 @@ export const Default = {
         user: {
           id: 1,
           name: 'John Doe',
-          avatarUrl: 'https://via.placeholder.com/150',
+          avatarUrl: 'https://via.placeholder.com/150'
         },
         Project: {
           id: 1,
           name: 'Sample Project',
           Organization: {
             id: 1,
-            name: 'Sample Organization',
-          },
-        },
+            name: 'Sample Organization'
+          }
+        }
       },
       loading: false,
-      error: null,
+      error: null
     },
     bottomBarProps: {
       // Add necessary props for BottomBar if any
@@ -49,24 +57,34 @@ export const Default = {
     accountMenuProps: {
       // Add necessary props for AccountMenu if any
     },
-    project: null,
-    organization: null,
-    onDeleteTask: () => {},
-    updateTask: () => {},
-    reportTask: () => {},
-    messageAuthor: () => {},
-    cleanPullRequestDataState: () => {},
+    onDeleteTask: () => { },
+    updateTask: () => { },
+    reportTask: () => { },
+    messageAuthor: () => { },
+    cleanPullRequestDataState: () => { },
     fetchAccount: () => Promise.resolve(),
-    account: { completed: false, data: null },
-    inviteTask: () => {},
-    fundingInviteTask: () => {},
+    account: { completed: false, data: {} },
+    inviteTask: () => { },
+    fundingInviteTask: () => { },
     taskSolution: null,
-    getTaskSolution: () => {},
-    createTaskSolution: () => {},
-    updateTaskSolution: () => {},
-    fetchPullRequestData: () => {},
-    pullRequestData: { completed: true, data: null },
-  },
+    getTaskSolution: () => { },
+    createTaskSolution: () => { },
+    updateTaskSolution: () => { },
+    fetchPullRequestData: () => { },
+    pullRequestData: { completed: true, data: {} },
+    // Synced additional props from component
+    fetchCustomer: () => Promise.resolve(),
+    customer: { completed: true, data: {} },
+    addNotification: () => { },
+    createOrder: () => Promise.resolve(),
+    order: { completed: true, data: {} },
+    fetchWallet: () => Promise.resolve(),
+    wallet: { completed: true, data: {} },
+    listWallets: () => Promise.resolve(),
+    wallets: { completed: true, data: [] },
+    fetchTask: () => Promise.resolve(),
+    syncTask: () => Promise.resolve()
+  }
 };
 
 export const loggedIn = {
@@ -78,7 +96,7 @@ export const loggedIn = {
         id: 1,
         name: 'Jane Smith',
         email: 'jane.smith@example.com',
-        avatarUrl: 'https://via.placeholder.com/150',
+        avatarUrl: 'https://via.placeholder.com/150'
       }
     },
     loggedIn: {
@@ -91,12 +109,12 @@ export const loggedIn = {
         Types: [
           {
             id: 1,
-            type: 'contributor',
-          },
-        ],
-      },
-    },
-  },
+            type: 'contributor'
+          }
+        ]
+      }
+    }
+  }
 };
 
 export const loading = {
@@ -106,9 +124,9 @@ export const loading = {
       completed: false,
       data: null,
       loading: true,
-      error: null,
-    },
-  },
+      error: null
+    }
+  }
 };
 
 export const error = {
@@ -118,7 +136,7 @@ export const error = {
       completed: true,
       data: null,
       loading: false,
-      error: 'Failed to load issue data.',
-    },
-  },
+      error: 'Failed to load issue data.'
+    }
+  }
 };

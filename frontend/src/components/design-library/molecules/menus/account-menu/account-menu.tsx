@@ -23,7 +23,7 @@ import {
   AccountBalance,
   Payment as PaymentIcon
 } from '@mui/icons-material'
-import { StyledAvatar } from '../../../organisms/layouts/topbar/TopbarStyles';
+import { StyledAvatar } from './account-menu.styles';
 
 const AccountMenu = ({
   open,

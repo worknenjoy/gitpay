@@ -21,31 +21,50 @@ const baseArgs = {
 			avatar_url: 'https://via.placeholder.com/64'
 		}
 	},
-	logged: {
-		logged: true,
-		user: { id: 1, email: 'dev@example.com', customer_id: 'cus_test_123' }
+	account: {
+		completed: true,
+		data: {
+			id: 1,
+			name: 'Foo Bar',
+		}
 	},
 	updateTask: () => {},
 	inviteTask: () => {},
+	fundingInviteTask: () => {},
+	cleanPullRequestDataState: () => {},
+	fetchAccount: () => {},
+	fetchPullRequestData: () => {},
+	taskSolution: null,
+	getTaskSolution: () => {},
+	createTaskSolution: () => {},
+	updateTaskSolution: () => {},
+	pullRequestData: {
+		completed: true,
+		data: {}
+	},
+	customer: {
+		completed: true,
+		data: {}
+	},
+	addNotification: () => {},
 	createOrder: async () => {},
-	assignTask: async () => {},
-	offerUpdate: () => {},
-	messageOffer: () => {},
-	assignDialog: false,
-	handleAssignFundingDialogClose: () => {},
-	fundingInvite: { email: '', message: '' },
-	handleFundingEmailInputChange: () => {},
-	handleFundingInputMessageChange: () => {},
-	sendFundingInvite: () => {},
-	currentPrice: 50,
-	setCurrentPrice: () => {},
-	termsAgreed: false,
-	setTermsAgreed: () => {},
-	setInterestedSuggestedDate: () => {},
-	taskFundingDialog: false,
-	handleTaskFundingDialogOpen: () => {},
-  cleanPullRequestDataState: () => {},
-  fetchAccount: () => {}
+	order: {
+		completed: true,
+		data: {}
+	},
+	fetchWallet: () => {},
+	wallet: {
+		completed: true,
+		data: {}
+	},
+	listWallets: () => {},
+	wallets: {
+		completed: true,
+		data: []
+	},
+	fetchTask: () => {},
+	syncTask: () => {},
+	fetchCustomer: () => {}
 };
 
 export const AsUser = Template.bind({});

@@ -6,7 +6,7 @@ import { Skeleton } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 import { messages } from '../../../../../../messages/messages'
-import TaskInviteCard from '../../../../../design-library/molecules/cards/issue-invite-card/issue-invite-card'
+import TaskInviteCard from '../../../../../design-library/molecules/cards/issue-cards/issue-invite-card/issue-invite-card'
 import queryString from 'query-string'
 
 import {

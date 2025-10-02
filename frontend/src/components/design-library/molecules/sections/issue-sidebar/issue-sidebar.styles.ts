@@ -1,4 +1,4 @@
-import { Avatar, Chip, Grid } from '@mui/material'
+import { Avatar, Chip } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 export const SidebarRoot = styled('div')(({ theme }) => ({

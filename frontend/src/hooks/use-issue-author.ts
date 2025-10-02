@@ -22,7 +22,7 @@ export interface ITask {
  */
 export default function useIssueAuthor(
   task: ITask | null | undefined,
-  user: IUser | null | undefined,
+  user: IUser | null | undefined
 ): boolean {
   return useMemo(() => {
     if (!user) return false

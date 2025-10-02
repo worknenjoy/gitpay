@@ -1,21 +1,66 @@
 import IssuePrivatePage from './issue-private-page';
 
 const meta = {
-  title: 'Design Library/Pages/Private/IssuePages/IssuePrivatePage',
+  title: 'Design Library/Pages/Private/Issue/IssuePrivate',
   component: IssuePrivatePage,
   parameters: {
-    layout: 'fullscreen',
-  },
+    layout: 'fullscreen'
+  }
 };
 
 export default meta;
 
-export const Default= {
+export const Default = {
   args: {
+    // Supported props from IssuePrivatePage component
     loggedIn: {
+      logged: true,
       completed: true,
-      data: { id: 1, name: 'Jane Doe', email: 'jane.doe@example.com' },
+      data: {
+        id: 1,
+        email: 'jane.doe@example.com',
+        name: 'Jane Doe',
+        Types: [{ id: 1, name: 'contributor' }],
+        Project: {
+          id: 1,
+          name: 'Sample Project',
+          Organization: { id: 1, name: 'Sample Org' }
+        }
+      }
     },
+    account: { 
+      completed: true,
+      data: { id: 1, balance: 1000 }
+    },
+    // New: top-level project and organization props
+    project: {
+      completed: true,
+      data: { id: 1, name: 'Sample Project' }
+    },
+    organization: {
+      completed: true,
+      data: { id: 1, name: 'Sample Organization' }
+    },
+    fundingInviteTask: () => alert('Funding Invite Task Clicked'),
+    createTaskSolution: () => alert('Create Task Solution Clicked'),
+    getTaskSolution: () => alert('Get Task Solution Clicked'),
+    updateTaskSolution: () => alert('Update Task Solution Clicked'),
+    fetchPullRequestData: () => alert('Fetch Pull Request Data Clicked'),
+    pullRequestData: {
+      completed: true,
+      data: {}
+    },
+    taskSolution: null,
+    createTask: () => alert('Create Task Clicked'),
+    signOut: () => alert('Sign Out Clicked'),
+    bottomProps: {},
+    cleanPullRequestDataState: () => {},
+    fetchAccount: () => {},
+    inviteTask: () => alert('Invite Task Clicked'),
+    messageAuthor: () => alert('Message Author Clicked'),
+    onDeleteTask: () => alert('Delete Task Clicked'),
+    reportTask: () => alert('Report Task Clicked'),
+    onResendActivationEmail: () => alert('Resend Activation Email Clicked'),
     task: {
       completed: true,
       data: {
@@ -28,69 +73,48 @@ export const Default= {
         user: {
           id: 2,
           name: 'John Doe',
-          avatarUrl: 'https://via.placeholder.com/150',
+          avatarUrl: 'https://via.placeholder.com/150'
         },
-        project: {
+        Project: {
           id: 1,
           name: 'Sample Project',
-        },
-        organization: {
-          id: 1,
-          name: 'Sample Organization',
+          Organization: {
+            id: 1,
+            name: 'Sample Organization'
+          }
         },
       },
       loading: false,
-      error: null,
+      error: null
     },
-    bottomBarProps: {
-      // Add necessary props for BottomBar if any
-    },
-    accountMenuProps: {
-      // Add necessary props for AccountMenu if any
-    },
-    profileHeaderProps: {
-      title: 'Issue Details',
-      subtitle: 'Detailed view of the selected issue',
-    },
-    createTask: () => alert('Create Task Clicked'),
     updateTask: () => alert('Update Task Clicked'),
-    addNotification: (msg) => alert(`Notification: ${msg}`),
-    openPaymentDrawer: false,
-    setOpenPaymentDrawer: (open) => alert(`Set Payment Drawer Open: ${open}`),
-    user: { id: 1, name: 'Jane Doe', email: 'jane.doe@example.com' },
-    onDeleteTask: () => alert('Delete Task Clicked'),
-    fetchTask: () => alert('Fetch Task Clicked'),
-    taskLoading: false,
-    taskError: null,
-    project: null,
-    organization: null,
-    updateUser: () => alert('Update User Clicked'),
-    fetchUser: () => alert('Fetch User Clicked'),
-    reportTask: () => alert('Report Task Clicked'),
-    messageAuthor: () => alert('Message Author Clicked'),
-    invoiceTask: () => alert('Invoice Task Clicked'),
-    createOrder: () => alert('Create Order Clicked'),
-    assignTask: () => alert('Assign Task Clicked'),
-    offerUpdate: () => alert('Offer Update Clicked'),
-    messageOffer: () => alert('Message Offer Clicked'),
-    assignDialog: false,
-    handleAssignFundingDialogClose: () => alert('Close Assign Funding Dialog'),
-    fundingInvite: {
-      email: '',
-      message: '',
+
+    // New: customer/order/wallet related props
+    fetchCustomer: () => alert('Fetch Customer Clicked'),
+    customer: {
+      completed: true,
+      data: { id: 1, name: 'Jane Customer' }
     },
-    handleFundingEmailInputChange: (e) => alert(`Funding Email Changed: ${e.target.value}`),
-    handleFundingInputMessageChange: (e) => alert(`Funding Message Changed: ${e.target.value}`),
-    sendFundingInvite: () => alert('Send Funding Invite Clicked'),
-    currentPrice: 0,
-    setCurrentPrice: (price) => alert(`Set Current Price: ${price}`),
-    termsAgreed: false,
-    setTermsAgreed: (agreed) => alert(`Set Terms Agreed: ${agreed}`),
-    setInterestedSuggestedDate: (date) => alert(`Set Interested Suggested Date: ${date}`),
-    taskFundingDialog: false,
-    handleTaskFundingDialogOpen: () => alert('Open Task Funding Dialog'),
-    cleanPullRequestDataState: () => alert('Clean Pull Request Data State'),
-    fetchAccount: () => alert('Fetch Account Clicked'),
-    onResendActivationEmail: () => alert('Resend Activation Email Clicked'),
-  },
+  addNotification: (...args: any[]) => alert(`Notification: ${args?.[0] || 'Sample notification'}`),
+    createOrder: () => alert('Create Order Clicked'),
+    order: {
+      completed: true,
+      data: { id: 101, status: 'pending', amount: 100, currency: 'USD' }
+    },
+    fetchWallet: () => alert('Fetch Wallet Clicked'),
+    wallet: {
+      completed: true,
+      data: { id: 10, balance: 500, currency: 'USD' }
+    },
+    listWallets: () => alert('List Wallets Clicked'),
+    wallets: {
+      completed: true,
+      data: [
+        { id: 10, balance: 500, currency: 'USD' },
+        { id: 11, balance: 250, currency: 'USD' }
+      ]
+    },
+    fetchTask: () => alert('Fetch Task Clicked'),
+    syncTask: () => alert('Sync Task Clicked')
+  }
 };
