@@ -35,7 +35,10 @@ const IssuePublicPage = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask
+  syncTask,
+  loginFormSignupFormProps,
+  loginFormForgotFormProps,
+  importIssuesProps
 }) => {
   return (
     <Root>
@@ -43,6 +46,9 @@ const IssuePublicPage = ({
         loggedIn={loggedIn}
         bottomBarProps={bottomBarProps}
         accountMenuProps={accountMenuProps}
+        loginFormSignupFormProps={loginFormSignupFormProps}
+        loginFormForgotFormProps={loginFormForgotFormProps}
+        importIssuesProps={importIssuesProps}
       >
         <IssuePage
           logged={loggedIn}

@@ -4,7 +4,7 @@ import { Grid, Typography, List, ListItem, ListItemText, ListItemIcon, Avatar, C
 import { AccountBalanceWallet, Work, Apps, Assignment, GroupWork } from '@mui/icons-material'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import TopBarContainer from '../../../../../../containers/topbar'
-import Bottom from 'design-library/organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom'
+import Bottom from 'design-library/organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom-bar-layout'
 import messages from './messages'
 // removed withStyles/theme styles usage
 import freelancerImage from 'images/collections/collection-flat-community.svg'

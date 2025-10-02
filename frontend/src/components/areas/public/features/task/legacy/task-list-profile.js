@@ -6,7 +6,7 @@ import { Container, Typography, Tabs, Tab, Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 import TopBarContainer from '../../../../../../containers/topbar'
-import Bottom from 'design-library/organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom'
+import Bottom from 'design-library/organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom-bar-layout'
 
 import { Page, PageContent } from 'app/styleguide/components/Page'
 
