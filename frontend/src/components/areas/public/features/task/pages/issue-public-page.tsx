@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import useCommonActions from '../../../../../../hooks/use-common-actions'
 import IssuePublicPageComponent from 'design-library/pages/public-pages/issue-public-page/issue-public-page'
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const IssuePublicPage = (props) => {
-  const { fetchTask } = props;
+  const { fetchTask, syncTask } = props;
   const { id } = useParams<{ id: string }>();
   
   const commonProps = useCommonActions(props);
@@ -13,7 +13,10 @@ const IssuePublicPage = (props) => {
     if (fetchTask) {
       fetchTask(id);
     }
-  }, [fetchTask, id]);
+    if (syncTask) {
+      syncTask(id);
+    }
+  }, [fetchTask, syncTask, id]);
 
   return (
     <IssuePublicPageComponent

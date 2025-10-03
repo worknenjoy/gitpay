@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom'
-import LoginButton from '../../../../../areas/private/components/session/login-button'
 import InvoicePayment from 'design-library/organisms/forms/invoice-forms/invoice-payment/invoice-payment'
 
 interface InvoicePaymentCardProps {
@@ -22,7 +21,7 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
   user,
   task,
   createOrder,
-  onPayment,
+  onPayment
 }) => {
   const history = useHistory()
   const location = useLocation()
@@ -39,9 +38,9 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
       source_type: 'invoice-item',
       customer_id: user?.customer_id,
       metadata: {
-        user_id: user.id,
+        user_id: user.id
       },
-      plan: 'open source',
+      plan: 'open source'
     })
     onPayment()
   }

@@ -44,7 +44,7 @@ const WalletPaymentCard = ({
       source_type: 'wallet-funds',
       customer_id: user?.customer_id,
       metadata: {
-        user_id: user.id,
+        user_id: user.id
       }
     })
     await syncTask(task.id)
@@ -77,10 +77,10 @@ const WalletPaymentCard = ({
       <BtnPayment
         disabled={!price || !wallet?.data?.balance || (wallet?.data?.balance && isGreaterThan(priceAfterFee, wallet?.data?.balance))}
         onClick={onWalletPayment}
-        variant='contained'
-        color='secondary'
+        variant="contained"
+        color="secondary"
       >
-        <FormattedMessage id='task.payment.wallet.action' defaultMessage='Pay {amount} with your Wallet' values={{
+        <FormattedMessage id="task.payment.wallet.action" defaultMessage="Pay {amount} with your Wallet" values={{
           amount: formatCurrency(priceAfterFee)
         }} />
       </BtnPayment>

@@ -25,7 +25,7 @@ const baseArgs = {
 		completed: true,
 		data: {
 			id: 1,
-			name: 'Foo Bar',
+			name: 'Foo Bar'
 		}
 	},
 	updateTask: () => {},

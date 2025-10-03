@@ -82,7 +82,7 @@ export const Default = {
             id: 1,
             name: 'Sample Organization'
           }
-        },
+        }
       },
       loading: false,
       error: null

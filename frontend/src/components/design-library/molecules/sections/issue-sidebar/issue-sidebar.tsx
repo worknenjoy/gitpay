@@ -97,10 +97,10 @@ const IssueSidebar = ({
             <FormattedMessage id="task.value.label" defaultMessage="Value offered" />
           </Typography>
           <div>
-            <div style={{ verticalAlign: 'middle' }}>
+            <div style={{ verticalAlign: 'sub', display: 'inline-block' }}>
               <MoneyIcon />
             </div>
-            <Typography variant="h5" component="span" sx={{ verticalAlign: 'middle', ml: 1 }}>
+            <Typography variant="h5" component="span">
               {task.values.available}
               {task.data.paid && <Chip sx={{ ml: 1 }} size="small" label="paid" />}
             </Typography>
@@ -141,8 +141,10 @@ const IssueSidebar = ({
               <FormattedMessage id="task.level.label" defaultMessage="Level" />
             </Typography>
             <div>
-              <CoffeeIcon />
-              <Typography variant="h6">
+              <div style={{ verticalAlign: 'bottom', display: 'inline-block' }}>
+                <CoffeeIcon />
+              </div>
+              <Typography variant="h6" component="span" sx={{ verticalAlign: 'baseline', ml: 1 }}>
                 <TaskInfoContent>{task.data.level}</TaskInfoContent>
               </Typography>
             </div>

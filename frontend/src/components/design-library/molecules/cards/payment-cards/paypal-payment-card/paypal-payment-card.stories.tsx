@@ -6,15 +6,15 @@ const meta: Meta<typeof PayPalPaymentCard> = {
   title: 'Design Library/Molecules/Cards/PaymentCards/PayPalPaymentCard',
   component: PayPalPaymentCard,
   parameters: {
-    layout: 'centered',
+    layout: 'centered'
   },
   decorators: [
     (Story) => (
       <div style={{ width: 360 }}>
         <Story />
       </div>
-    ),
-  ],
+    )
+  ]
 };
 
 export default meta;
@@ -32,8 +32,8 @@ export const Default: Story = {
       data: {} 
     },
     createOrder: () => Promise.resolve({ data: { payment_url: 'https://www.paypal.com/checkoutnow?token=EC-60U79048BN7719609' } }),
-    onClose: () => {},
-  },
+    onClose: () => {}
+  }
 };
 
 export const LoggedIn: Story = {
@@ -44,8 +44,8 @@ export const LoggedIn: Story = {
       data: {
         id: 1, name: 'Jane Doe', email: 'jane.doe@example.com'
       }
-    },
-  },
+    }
+  }
 };
 
 export const ProcessingOrder : Story = {
@@ -59,5 +59,5 @@ export const ProcessingOrder : Story = {
       completed: false,
       data: null
     }
-  },
+  }
 };

@@ -5,8 +5,8 @@ const meta: Meta<typeof WalletPaymentCard> = {
   title: 'Design Library/Molecules/Cards/PaymentCards/WalletPaymentCard',
   component: WalletPaymentCard,
   parameters: {
-    layout: 'centered',
-  },
+    layout: 'centered'
+  }
 };
 export default meta;
 
@@ -27,8 +27,8 @@ export const Default: Story = {
       }
     },
     fetchWallet: () => Promise.resolve({ data: { balance: 0 } }),
-    createOrder: () => Promise.resolve({ data: {} }),
-  },
+    createOrder: () => Promise.resolve({ data: {} })
+  }
 };
 
 export const LoggedIn: Story = {
@@ -37,8 +37,8 @@ export const LoggedIn: Story = {
     user: {
       completed: true,
       data: { id: 1, name: 'Jane Doe', email: 'jane.doe@example.com' }
-    },
-  },
+    }
+  }
 };
 
 export const WithWallet: Story = {
@@ -47,16 +47,16 @@ export const WithWallet: Story = {
     wallet: {
       completed: true,
       data: { id: 1, name: 'My Wallet', balance: 50 }
-    },
-  },
+    }
+  }
 };
 
 export const InsufficientFunds: Story = {
   args: {
     ...WithWallet.args,
     price: 60,
-    priceAfterFee: 54,
-  },
+    priceAfterFee: 54
+  }
 };
 
 export const LoadingWallet: Story = {
@@ -65,6 +65,6 @@ export const LoadingWallet: Story = {
     wallet: {
       completed: false,
       data: null
-    },
-  },
+    }
+  }
 };
