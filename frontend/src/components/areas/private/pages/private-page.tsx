@@ -131,7 +131,7 @@ const PrivatePage = ({
               '/profile/explore/task/:id',
               '/profile/explore/task/:id/:slug'
             ]}
-            component={(props) => <TaskPrivateContainer {...props} />}
+            component={(props) => <TaskPrivateContainer {...props} logged={user} />}
           />
           <Route
             exact

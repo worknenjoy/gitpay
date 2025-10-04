@@ -112,7 +112,7 @@ function IssuePaymentDrawer({
               onPayment={updateTask}
               price={price}
               formatedPrice={formatCurrency(priceAfterFee as number)}
-              user={user}
+              user={user?.data}
               task={task?.data}
               plan={plan}
               onClose={onClose}

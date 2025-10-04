@@ -64,7 +64,7 @@ const CheckoutForm = (props) => {
 
       if (token) {
         props.onPayment({
-          id: props.task,
+          id: props.task.id,
           Orders: {
             source_id: token.id,
             currency: 'usd',

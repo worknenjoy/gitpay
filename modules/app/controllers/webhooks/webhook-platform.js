@@ -40,7 +40,7 @@ exports.webhookPlatform = async (req, res) => {
   let event;
   
   try {
-    if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'test') {
       event = typeof req.body === 'string' || Buffer.isBuffer(req.body)
         ? JSON.parse(req.body.toString())
         : req.body;
