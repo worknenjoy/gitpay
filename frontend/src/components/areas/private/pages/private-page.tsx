@@ -12,6 +12,7 @@ import WalletsContainer from '../../../../containers/wallets'
 import PayoutsContainer from '../../../../containers/payouts'
 import TaskListProfile from '../../../../containers/task-list-profile'
 import TaskContainer from '../../../../containers/task'
+import TaskPrivateContainer from '../../../../containers/task-private'
 import PayoutSettings from '../features/payout-settings/pages/payout-settings-page'
 
 const TaskListProfileProjects = (props) => <TaskListProfile {...props} />
@@ -130,7 +131,7 @@ const PrivatePage = ({
               '/profile/explore/task/:id',
               '/profile/explore/task/:id/:slug'
             ]}
-            component={(props) => <TaskContainer noTopBar noBottomBar {...props} />}
+            component={(props) => <TaskPrivateContainer {...props} />}
           />
           <Route
             exact

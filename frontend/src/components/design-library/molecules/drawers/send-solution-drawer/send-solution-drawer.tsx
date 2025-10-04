@@ -33,7 +33,7 @@ const SendSolutionDrawer = ({
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
-    user.id && task.data.id && getTaskSolution(task.data.id)
+    user?.id && task.data.id && getTaskSolution(task.data.id)
   }, [user, task])
 
   useEffect(() => {
@@ -50,9 +50,11 @@ const SendSolutionDrawer = ({
     }
   }, [pullRequestURL])
 
+  /*
   useEffect(() => {
     fetchAccount()
   }, [])
+  */
 
   const handlePullRequestURLChange = (event) => {
     setPullRequestURL(event.target.value)

@@ -27,9 +27,11 @@ const useCommonActions = ({
     await createTask(data, history);
   };
 
+  
   useEffect(() => {
     isLogged?.();
   }, [isLogged]);
+  
 
   return {
     loggedIn: loggedIn,

@@ -32,11 +32,12 @@ const Topbar = ({
   const handleClickMenuMobile = () => {
     setIsActive(!isActive)
   }
-
+  
   useEffect(() => {
     const isLoggedIn = loggedIn?.logged
     setIsLoggedIn(isLoggedIn)
   }, [loggedIn])
+  
 
   return (
     <Bar>
