@@ -20,12 +20,12 @@ import {
 } from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
-import TaskPaymentCancel from '../../../../public/features/task/legacy/task-payment-cancel'
+import TaskPaymentCancel from '../../../../public/features/issue/legacy/task-payment-cancel'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
-import TaskOrderDetails from '../../../../public/features/task/legacy/order/task-order-details'
-import TaskOrderTransfer from '../../../../public/features/task/legacy/order/task-order-transfer'
+import TaskOrderDetails from '../../../../public/features/issue/legacy/order/task-order-details'
+import TaskOrderTransfer from '../../../../public/features/issue/legacy/order/task-order-transfer'
 import PaymentRefund from './payment-refund'
 import CustomPaginationActionsTable from './payments-table'
 import InvoiceStatus from 'design-library/atoms/status/payment-types-status/invoice-status/invoice-status'

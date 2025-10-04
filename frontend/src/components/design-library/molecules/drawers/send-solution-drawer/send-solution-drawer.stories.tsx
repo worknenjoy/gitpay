@@ -21,7 +21,10 @@ Default.args = {
 	assignDialog: false,
 
 	// data needed by component
-	user: { id: 1, account_id: 1, email: 'dev@example.com' },
+	user: { 
+		completed: true,
+		data: { id: 1, account_id: 1, email: 'dev@example.com' }
+	},
 	account: {
 		completed: true,
 		data: { requirements: { currently_due: [] } }
@@ -43,9 +46,8 @@ Default.args = {
 		isIssueClosed: true,
 		hasIssueReference: true
 	},
-	completed: true,
 	taskSolution: {},
-
+	taskSolutionCompleted: true,
 	// effects and actions (mocked)
 	fetchAccount: asyncNoop,
 	getTaskSolution: asyncResolve,

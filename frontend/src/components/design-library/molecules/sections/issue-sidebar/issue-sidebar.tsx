@@ -30,6 +30,7 @@ const IssueSidebar = ({
   fetchAccount,
   fetchPullRequestData,
   taskSolution,
+  taskSolutionCompleted,
   getTaskSolution,
   createTaskSolution,
   updateTaskSolution,
@@ -242,6 +243,7 @@ const IssueSidebar = ({
         fetchAccount={fetchAccount}
         user={user}
         taskSolution={taskSolution}
+        taskSolutionCompleted={taskSolutionCompleted}
         getTaskSolution={getTaskSolution}
         createTaskSolution={createTaskSolution}
         updateTaskSolution={updateTaskSolution}

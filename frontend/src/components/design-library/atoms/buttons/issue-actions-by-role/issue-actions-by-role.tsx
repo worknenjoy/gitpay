@@ -35,6 +35,7 @@ interface IssueActionsProps {
   wallets: any;
   fetchTask: (taskId: number) => void;
   syncTask: (taskId: number) => void;
+  taskSolutionCompleted: boolean;
 }
 
 const IssueActionsByRole = ({
@@ -46,6 +47,7 @@ const IssueActionsByRole = ({
   fetchAccount,
   user,
   taskSolution,
+  taskSolutionCompleted,
   getTaskSolution,
   createTaskSolution,
   updateTaskSolution,
@@ -129,6 +131,7 @@ const IssueActionsByRole = ({
               user={user}
               taskSolution={taskSolution}
               fetchPullRequestData={fetchPullRequestData}
+              taskSolutionCompleted={taskSolutionCompleted}
             />
           )
         }

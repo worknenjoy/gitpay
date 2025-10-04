@@ -18,6 +18,7 @@ const IssuePage = ({
   cleanPullRequestDataState,
   fetchAccount,
   taskSolution,
+  taskSolutionCompleted,
   getTaskSolution,
   createTaskSolution,
   updateTaskSolution,
@@ -67,6 +68,7 @@ const IssuePage = ({
           fetchPullRequestData={fetchPullRequestData}
           pullRequestData={pullRequestData}
           taskSolution={taskSolution}
+          taskSolutionCompleted={taskSolutionCompleted}
           customer={customer}
           addNotification={addNotification}
           createOrder={createOrder}

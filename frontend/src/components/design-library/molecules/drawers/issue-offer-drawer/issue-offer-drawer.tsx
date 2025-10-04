@@ -3,8 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer';
 import { Typography } from '@mui/material';
 import { SpanText } from './issue-offer-drawer.styles';
-import TaskOrderInvoiceConfirm from '../../../../areas/public/features/task/legacy/task-order-invoice-confirm';
-import MessageAssignment from '../../../../areas/public/features/task/legacy/assignment/messageAssignment';
+import TaskOrderInvoiceConfirm from '../../../../areas/public/features/issue/legacy/task-order-invoice-confirm';
+import MessageAssignment from '../../../../areas/public/features/issue/legacy/assignment/messageAssignment';
 import taskCover from 'images/task-cover.png'
 
 type TaskOfferDrawerProps = {

@@ -20,6 +20,7 @@ const IssuePublicPage = ({
   account,
   fetchAccount,
   taskSolution,
+  taskSolutionCompleted,
   getTaskSolution,
   createTaskSolution,
   updateTaskSolution,
@@ -70,6 +71,7 @@ const IssuePublicPage = ({
           fetchPullRequestData={fetchPullRequestData}
           pullRequestData={pullRequestData}
           taskSolution={taskSolution}
+          taskSolutionCompleted={taskSolutionCompleted}
           fetchCustomer={fetchCustomer}
           customer={customer}
           addNotification={addNotification}

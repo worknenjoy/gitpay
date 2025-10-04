@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import SendSolutionForm from '../../../../areas/public/features/task/legacy/send-solution-form'
+import SendSolutionForm from '../../../../areas/public/features/issue/legacy/send-solution-form'
 import {
   Typography
 } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import { validAccount } from '../../../../../utils/valid-account'
 import AccountRequirements from 'design-library/atoms/alerts/account-requirements/account-requirements'
-import SendSolutionRequirements from '../../../../areas/public/features/task/legacy/send-solution-requirements'
+import SendSolutionRequirements from '../../../../areas/public/features/issue/legacy/send-solution-requirements'
 import Drawer from 'design-library/molecules/drawers/drawer/drawer'
 import IssueSolutionCard from 'design-library/molecules/cards/issue-cards/issue-solution-card/issue-solution-card'
 
@@ -24,16 +24,17 @@ const SendSolutionDrawer = ({
   onClose,
   cleanPullRequestDataState,
   fetchPullRequestData,
-  pullRequestData
+  pullRequestData,
+  taskSolutionCompleted,
 }) => {
-  const { completed } = pullRequestData
   const history = useHistory()
   const [pullRequestURL, setPullRequestURL] = useState('')
   const [editMode, setEditMode] = useState(false)
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
+
   useEffect(() => {
-    user?.id && task.data.id && getTaskSolution(task.data.id)
+    user?.data?.id && task?.data?.id && getTaskSolution(task.data.id)
   }, [user, task])
 
   useEffect(() => {
@@ -50,11 +51,11 @@ const SendSolutionDrawer = ({
     }
   }, [pullRequestURL])
 
-  /*
+  
   useEffect(() => {
     fetchAccount()
   }, [])
-  */
+  
 
   const handlePullRequestURLChange = (event) => {
     setPullRequestURL(event.target.value)
@@ -81,12 +82,6 @@ const SendSolutionDrawer = ({
       
     })
   }
-
-  /*
-  if(!user.id) {
-    return <Redirect to='/signin' />
-  }
-  */
 
   const taskValue = task?.data?.value
 
@@ -131,7 +126,7 @@ const SendSolutionDrawer = ({
               task.data.paid ||
               task.data.transfer_id ||
               task.data.Transfer ||
-              !validAccount(user, account)
+              !validAccount(user?.data, account)
             }
         ]}
 
@@ -140,7 +135,7 @@ const SendSolutionDrawer = ({
           <FormattedMessage id="task.solution.dialog.description" defaultMessage="You can send a solution for this issue providing the Pull Request / Merge Request URL of your solution:" />
         </Typography>
         <AccountRequirements
-          user={ user }
+          user={ user?.data }
           account={ account }
           onClick={() => history.push('/profile/payout-settings')}
         />
@@ -148,7 +143,7 @@ const SendSolutionDrawer = ({
           ? <React.Fragment>
             <SendSolutionForm handlePullRequestURLChange={ handlePullRequestURLChange } pullRequestURL={ pullRequestURL } />
             <SendSolutionRequirements 
-              completed={ completed }
+              completed={ taskSolutionCompleted }
               isConnectedToGitHub={ pullRequestData.isConnectedToGitHub }
               isAuthorOfPR={ pullRequestData.isAuthorOfPR }
               isPRMerged={ pullRequestData.isPRMerged }

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Task from '../components/areas/public/features/task/pages/issue-public-page'
+import Task from '../components/areas/public/features/issue/pages/issue-public-page'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
 import { loggedIn, logOut } from '../actions/loginActions'
 import { info as getInfoAction } from '../actions/infoActions'
