@@ -26,7 +26,10 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
   const history = useHistory()
   const location = useLocation()
 
+  const [ processingPayment, setProcessingPayment ] = React.useState(false)
+
   const onInvoicePayment = async () => {
+    setProcessingPayment(true)
     await createOrder({
       provider: 'stripe',
       amount: price,
@@ -43,6 +46,7 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
       plan: 'open source'
     })
     onPayment()
+    setProcessingPayment(false)
   }
 
   useEffect(() => {
@@ -55,6 +59,7 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
       customer={customer}
       onInvoicePayment={onInvoicePayment}
       onInfoClick={ () => history.push('/profile/user-account/customer') }
+      processingPayment={processingPayment}
     />
   )
 }

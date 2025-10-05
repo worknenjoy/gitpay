@@ -1,6 +1,7 @@
-import { Button, Card, CardContent, Checkbox, Typography } from '@mui/material'
+import { Card, CardContent, Checkbox, Typography } from '@mui/material'
 import React, { useCallback, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
+import Button from '../../../../atoms/buttons/button/button'
 
 export type PaypalPaymentCardProps = {
   taskId?: number
@@ -17,7 +18,11 @@ const PaypalPaymentCard: React.FC<PaypalPaymentCardProps> = (props) => {
   const [termsPaypal, setTermsPaypal] = useState(false)
 
   const triggerPayment = useCallback((createdOrder: any) => {
-    window.location.href = createdOrder.payment_url
+    if (createdOrder && createdOrder.payment_url) {
+      window.location.href = createdOrder.payment_url
+    } else {
+      console.log('no payment_url found on order', createdOrder)
+    }
   }, [])
 
   const agreeTermsPaypal = useCallback(() => {
@@ -37,8 +42,7 @@ const PaypalPaymentCard: React.FC<PaypalPaymentCardProps> = (props) => {
       }).then((created: any) => {
         if (created) {
           // eslint-disable-next-line no-console
-          console.log('Paypal order order', created)
-          triggerPayment(order.data)
+          triggerPayment(created.data)
         }
         else {
           // eslint-disable-next-line no-console
@@ -80,28 +84,28 @@ const PaypalPaymentCard: React.FC<PaypalPaymentCardProps> = (props) => {
             </Typography>
           </div>
         </div>
-        {!order.completed ? (
-          'Requesting'
-        ) : (
-          <div style={{ textAlign: 'center', width: '100%', marginTop: 20 }}>
-            <FormattedMessage id="payment.paypal.logo.title" defaultMessage="Make the payment with paypal">
-              {(msg) => (
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="secondary"
-                  disabled={!termsPaypal || price === 0}
-                  onClick={handleNewOrder}
-                >
-                  <span style={{ marginRight: 10, display: 'inline-block' }}>
-                    {msg}
-                  </span>
-                  <img width={32} height={19} src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg" alt="PayPal Logo" />
-                </Button>
-              )}
-            </FormattedMessage>
-          </div>
-        )}
+        <div style={{ textAlign: 'center', width: '100%', marginTop: 20 }}>
+          <FormattedMessage id="payment.paypal.logo.title" defaultMessage="Make the payment with paypal">
+            {(msg) => (
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                disabled={!termsPaypal || price === 0}
+                onClick={handleNewOrder}
+                label={
+                  <div>
+                    <span style={{ marginRight: 10, display: 'inline-block' }}>
+                      {msg}
+                    </span>
+                    <img width={32} height={19} src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg" alt="PayPal Logo" />
+                  </div>
+                }
+                completed={order.completed}
+              />
+            )}
+          </FormattedMessage>
+        </div>
       </CardContent>
     </Card>
   )

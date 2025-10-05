@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import SendSolutionForm from '../../../../areas/public/features/issue/legacy/send-solution-form'
+import SendSolutionForm from '../../../atoms/inputs/solution-input/solution-input'
 import {
   Typography
 } from '@mui/material'
@@ -25,7 +25,7 @@ const SendSolutionDrawer = ({
   cleanPullRequestDataState,
   fetchPullRequestData,
   pullRequestData,
-  taskSolutionCompleted,
+  taskSolutionCompleted
 }) => {
   const history = useHistory()
   const [pullRequestURL, setPullRequestURL] = useState('')

@@ -127,7 +127,7 @@ function IssuePaymentDrawer({
               priceAfterFee={priceAfterFee}
               fetchCustomer={fetchCustomer}
               customer={customer}
-              user={user}
+              user={user?.data}
               createOrder={createOrder}
               task={task?.data}
               price={price}
@@ -144,7 +144,7 @@ function IssuePaymentDrawer({
               price={price}
               taskId={task?.data?.id}
               createOrder={createOrder}
-              user={user}
+              user={user?.data}
               order={order}
               plan={plan}
             />
@@ -155,7 +155,7 @@ function IssuePaymentDrawer({
           value: 'wallet',
           component: (
             <PaymentMethodWalletTab
-              user={user}
+              user={user?.data}
               task={task?.data}
               price={price}
               priceAfterFee={priceAfterFee}

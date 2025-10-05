@@ -78,7 +78,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       fetchPullRequestData(owner, repositoryName, pullRequestId, taskId)
     ),
     cleanPullRequestDataState: () => dispatch(cleanPullRequestDataState()),
-    fetchAccount: () => dispatch(fetchAccount()),
+    fetchAccount: () => dispatch(fetchAccount())
     // For account menu and bottom bar props
   // signOut and getInfo provided by profile container
   }
