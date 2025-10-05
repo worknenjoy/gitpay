@@ -15,6 +15,7 @@ import TaskContainer from '../../../../containers/task'
 import TaskPrivateContainer from '../../../../containers/task-private'
 import PayoutSettings from '../features/payout-settings/pages/payout-settings-page'
 
+const TaskPrivateRoute = (props) => <TaskPrivateContainer {...props} logged={props.user} />
 const TaskListProfileProjects = (props) => <TaskListProfile {...props} />
 const TaskListProfileOrganization = (props) => <TaskListProfile noTopBar noBottomBar {...props} />
 
@@ -131,7 +132,7 @@ const PrivatePage = ({
               '/profile/explore/task/:id',
               '/profile/explore/task/:id/:slug'
             ]}
-            component={(props) => <TaskPrivateContainer {...props} logged={user} />}
+            component={TaskPrivateRoute}
           />
           <Route
             exact

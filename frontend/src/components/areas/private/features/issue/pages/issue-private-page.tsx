@@ -13,7 +13,7 @@ const IssuePrivatePage = (props) => {
     if (syncTask) {
       syncTask(id);
     }
-  }, []);
+  }, [id]);
   
 
   return (

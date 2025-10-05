@@ -16,7 +16,7 @@ const IssuePublicPage = (props) => {
     if (syncTask) {
       syncTask(id);
     }
-  }, [fetchTask, syncTask, id]);
+  }, [id]);
 
   return (
     <IssuePublicPageComponent
