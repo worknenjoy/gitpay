@@ -10,10 +10,10 @@ const SolutionInput = props => {
     <form>
       <FormControl fullWidth>
         <FilledInput
-          id='solution-url'
-          endAdornment={ <InputAdornment position='end'><GitHubIcon fontSize='small' /></InputAdornment> }
+          id="solution-url"
+          endAdornment={ <InputAdornment position="end"><GitHubIcon fontSize="small" /></InputAdornment> }
           placeholder={ intl.formatMessage({ id: 'task.solution.form.solutionURL.placeholder', defaultMessage: 'Enter Pull Request URL' }) }
-          type='string'
+          type="string"
           value={ props.pullRequestURL }
           onChange={ props.handlePullRequestURLChange }
           sx={ solutionInputSx }

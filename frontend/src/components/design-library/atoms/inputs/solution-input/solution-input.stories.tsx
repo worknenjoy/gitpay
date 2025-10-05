@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import SolutionInput from './solution-input';
 

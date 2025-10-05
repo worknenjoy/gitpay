@@ -6,11 +6,8 @@ import {
   Paper,
   Button,
   Typography,
-  InputLabel,
-  FormControl,
   Input,
-  Select,
-  FormHelperText
+  Select
 } from '@mui/material'
 import { StyledFieldset, StyledLegend } from './account-customer.styles'
 import Field from '../../../../../../design-library/atoms/inputs/fields/field/field'
