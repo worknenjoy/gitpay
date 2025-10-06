@@ -4,7 +4,7 @@ import IssueContent from 'design-library/molecules/content/issue-content/issue-c
 import IssueSidebar from 'design-library/molecules/sections/issue-sidebar/issue-sidebar';
 
 const IssuePage = ({ 
-  logged,
+  user,
   task,
   project,
   organization,
@@ -24,7 +24,6 @@ const IssuePage = ({
   updateTaskSolution,
   fetchPullRequestData,
   pullRequestData,
-  // Props for IssuePaymentDrawer
   fetchCustomer,
   customer,
   addNotification,
@@ -41,10 +40,9 @@ const IssuePage = ({
     <Grid container style={{ marginBottom: 4 }} alignItems="stretch">
       <Grid size={{ xs: 12, sm: 12, md: 8 }} style={{ marginBottom: 40 }}>
         <IssueContent
-          logged={logged}
+          user={user}
           task={task}
           project={project}
-          user={logged?.data}
           updateTask={updateTask}
           reportTask={reportTask}
           messageAuthor={messageAuthor}
@@ -54,7 +52,7 @@ const IssuePage = ({
       </Grid>
       <Grid size={{ xs: 12, sm: 12, md: 4 }} style={{ marginBottom: 40 }}>
         <IssueSidebar
-          user={logged}
+          user={user}
           account={account}
           task={task}
           updateTask={updateTask}

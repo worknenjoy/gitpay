@@ -9,7 +9,7 @@ import IssueHeader from '../../headers/issue-header/issue-header';
 import IssueAuthorList from '../../lists/issue-author-list/issue-author-list';
 import { DescriptionHeading, IssueContentText } from './issue-content.styles';
 
-const IssueContent = ({ user, project, organization, updateTask, reportTask, onDeleteTask, logged, task, messageAuthor }) => {
+const IssueContent = ({ user, project, organization, updateTask, reportTask, onDeleteTask, task, messageAuthor }) => {
   return (
     <Container fixed maxWidth="lg">
       <IssueHeader
@@ -63,7 +63,6 @@ const IssueContent = ({ user, project, organization, updateTask, reportTask, onD
         )
       }
       <IssueAuthorList
-        logged={logged}
         user={user}
         task={task}
         messageAuthor={messageAuthor}

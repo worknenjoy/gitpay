@@ -1,16 +1,18 @@
 import React from 'react';
 import Home from './home-public-page';
+import { withPublicTemplate } from '../../../../../../.storybook/decorators/withPublicTemplate';
 
 export default {
   title: 'Design Library/Pages/Public/Home',
-  component: Home
+  component: Home,
+  decorators: [withPublicTemplate],
 };
 
 const Template = (args) => <Home {...args} />;
 
 export const LoggedIn = Template.bind({});
 LoggedIn.args = {
-  loggedIn: {
+  user: {
     logged: true,
     data: {
       id: 1,
@@ -41,7 +43,7 @@ LoggedIn.args = {
 
 export const LoggedOut = Template.bind({});
 LoggedOut.args = {
-  loggedIn: {
+  user: {
     logged: false,
     user: null,
     error: null

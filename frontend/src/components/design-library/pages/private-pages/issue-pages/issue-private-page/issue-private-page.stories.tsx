@@ -1,8 +1,10 @@
+import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate';
 import IssuePrivatePage from './issue-private-page';
 
 const meta = {
   title: 'Design Library/Pages/Private/Issue/IssuePrivate',
   component: IssuePrivatePage,
+  decorators: [withProfileTemplate],
   parameters: {
     layout: 'fullscreen'
   }
@@ -12,8 +14,7 @@ export default meta;
 
 export const Default = {
   args: {
-    // Supported props from IssuePrivatePage component
-    loggedIn: {
+    user: {
       logged: true,
       completed: true,
       data: {
@@ -41,26 +42,26 @@ export const Default = {
       completed: true,
       data: { id: 1, name: 'Sample Organization' }
     },
-    fundingInviteTask: () => alert('Funding Invite Task Clicked'),
-    createTaskSolution: () => alert('Create Task Solution Clicked'),
-    getTaskSolution: () => alert('Get Task Solution Clicked'),
-    updateTaskSolution: () => alert('Update Task Solution Clicked'),
-    fetchPullRequestData: () => alert('Fetch Pull Request Data Clicked'),
+    fundingInviteTask: () => console.log('Funding Invite Task Clicked'),
+    createTaskSolution: () => console.log('Create Task Solution Clicked'),
+    getTaskSolution: () => console.log('Get Task Solution Clicked'),
+    updateTaskSolution: () => console.log('Update Task Solution Clicked'),
+    fetchPullRequestData: () => console.log('Fetch Pull Request Data Clicked'),
     pullRequestData: {
       completed: true,
       data: {}
     },
     taskSolution: null,
-    createTask: () => alert('Create Task Clicked'),
-    signOut: () => alert('Sign Out Clicked'),
+    createTask: () => console.log('Create Task Clicked'),
+    signOut: () => console.log('Sign Out Clicked'),
     bottomProps: {},
     cleanPullRequestDataState: () => {},
     fetchAccount: () => {},
-    inviteTask: () => alert('Invite Task Clicked'),
-    messageAuthor: () => alert('Message Author Clicked'),
-    onDeleteTask: () => alert('Delete Task Clicked'),
-    reportTask: () => alert('Report Task Clicked'),
-    onResendActivationEmail: () => alert('Resend Activation Email Clicked'),
+    inviteTask: () => console.log('Invite Task Clicked'),
+    messageAuthor: () => console.log('Message Author Clicked'),
+    onDeleteTask: () => console.log('Delete Task Clicked'),
+    reportTask: () => console.log('Report Task Clicked'),
+    onResendActivationEmail: () => console.log('Resend Activation Email Clicked'),
     task: {
       completed: true,
       data: {
@@ -87,26 +88,26 @@ export const Default = {
       loading: false,
       error: null
     },
-    updateTask: () => alert('Update Task Clicked'),
+    updateTask: () => console.log('Update Task Clicked'),
 
     // New: customer/order/wallet related props
-    fetchCustomer: () => alert('Fetch Customer Clicked'),
+    fetchCustomer: () => console.log('Fetch Customer Clicked'),
     customer: {
       completed: true,
       data: { id: 1, name: 'Jane Customer' }
     },
-  addNotification: (...args: any[]) => alert(`Notification: ${args?.[0] || 'Sample notification'}`),
-    createOrder: () => alert('Create Order Clicked'),
+  addNotification: (...args: any[]) => console.log(`Notification: ${args?.[0] || 'Sample notification'}`),
+    createOrder: () => console.log('Create Order Clicked'),
     order: {
       completed: true,
       data: { id: 101, status: 'pending', amount: 100, currency: 'USD' }
     },
-    fetchWallet: () => alert('Fetch Wallet Clicked'),
+    fetchWallet: () => console.log('Fetch Wallet Clicked'),
     wallet: {
       completed: true,
       data: { id: 10, balance: 500, currency: 'USD' }
     },
-    listWallets: () => alert('List Wallets Clicked'),
+    listWallets: () => console.log('List Wallets Clicked'),
     wallets: {
       completed: true,
       data: [
@@ -114,7 +115,7 @@ export const Default = {
         { id: 11, balance: 250, currency: 'USD' }
       ]
     },
-    fetchTask: () => alert('Fetch Task Clicked'),
-    syncTask: () => alert('Sync Task Clicked')
+    fetchTask: () => console.log('Fetch Task Clicked'),
+    syncTask: () => console.log('Sync Task Clicked')
   }
 };

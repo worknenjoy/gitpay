@@ -11,19 +11,16 @@ import { fetchWallet, listWallets } from '../actions/walletActions'
 import { getTaskSolution, createTaskSolution, updateTaskSolution, fetchPullRequestData, cleanPullRequestDataState } from '../actions/taskSolutionActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getFilteredTasks, getProject } from '../selectors/tasks'
-import { getUserData } from '../common/selectors/user/getUser'
+import { getCurrentUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-  // Ensure component receives the expected "loggedIn" prop shape
-  loggedIn: state.loggedIn,
-    completed: state.loggedIn.completed,
-    logged: state.loggedIn,
+    // Ensure component receives the expected "loggedIn" prop shape
+    user: getCurrentUser(state),
     dialog: state.dialog,
-    user: getUserData(state),
     task: getTaskOrdersByFilter(state),
-  // For bottom bar props
-  info: state.info.data,
+    // For bottom bar props
+    info: state.info.data,
     // Added from send-solution-drawer.js
     account: state.account,
     taskSolution: state.taskSolutionReducer.taskSolution,

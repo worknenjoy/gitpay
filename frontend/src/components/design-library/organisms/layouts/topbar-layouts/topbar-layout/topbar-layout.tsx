@@ -20,7 +20,7 @@ import ImportIssue from '../../../forms/issue-forms/import-issue/import-issue'
 import AccountSettings from '../../../../molecules/trigger-buttons/account-settings/account-settings'
 
 const Topbar = ({
-  loggedIn,
+  user,
   accountMenuProps,
   loginFormSignupFormProps,
   loginFormForgotFormProps,
@@ -34,10 +34,9 @@ const Topbar = ({
   }
   
   useEffect(() => {
-    const isLoggedIn = loggedIn?.logged
+    const isLoggedIn = user?.logged
     setIsLoggedIn(isLoggedIn)
-  }, [loggedIn])
-  
+  }, [user])
 
   return (
     <Bar>
@@ -65,7 +64,7 @@ const Topbar = ({
           </OnlyMobile>
           { isLoggedIn ? (
             <>
-              <AccountSettings loggedIn={ loggedIn } accountMenuProps={accountMenuProps} />
+              <AccountSettings user={ user } accountMenuProps={accountMenuProps} />
               <ImportIssue {...importIssuesProps} />
             </>
           ) : (

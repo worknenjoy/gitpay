@@ -21,7 +21,6 @@ export const withProfileTemplate = (Story: any, context: any) => {
 };
 
 export const withProfilePayoutSettingsTemplate = (Story: any, context: any) => {
-  const { user, profileHeaderProps } = context.args;
   
   return ( 
     <PayoutSettings>
@@ -31,7 +30,7 @@ export const withProfilePayoutSettingsTemplate = (Story: any, context: any) => {
 };
 
 export const withProfilePayoutSettingsBankAccountTemplate = (Story: any, context: any) => {
-  const { user, profileHeaderProps } = context.args;
+  const { user } = context.args;
   
   return ( 
     <PayoutSettingsBankAccount

@@ -3,10 +3,10 @@ import { useHistory } from "react-router-dom";
 
 const useCommonActions = ({ 
   isLogged,
+  user,
   registerUser,
   forgotPassword,
   createTask,
-  loggedIn,
   info,
   getInfo,
   signOut,
@@ -34,7 +34,7 @@ const useCommonActions = ({
   
 
   return {
-    loggedIn: loggedIn,
+    user: user,
     bottomBarProps: {
       info,
       getInfo

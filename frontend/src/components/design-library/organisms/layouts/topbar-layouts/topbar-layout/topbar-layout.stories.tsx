@@ -10,7 +10,7 @@ const Template = (args: any) => <Topbar {...args} />;
 
 export const LoggedIn = Template.bind({});
 LoggedIn.args = {
-  loggedIn: {
+  user: {
     logged: true,
     completed: true,
     data: {

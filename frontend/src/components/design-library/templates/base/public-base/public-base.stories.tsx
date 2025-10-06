@@ -12,7 +12,7 @@ export const Default = Template.bind({});
 Default.args = {
   // Add default props here
   children: 'This is a public base template',
-  loggedIn: {
+  user: {
     logged: false,
     user: null,
     error: null

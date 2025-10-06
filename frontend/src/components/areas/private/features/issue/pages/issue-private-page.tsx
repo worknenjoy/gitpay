@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import IssuePrivatePageComponent from 'design-library/organisms/layouts/page-layouts/issue-page-layout/issue-page-layout'
+import IssuePrivatePageComponent from 'design-library/pages/private-pages/issue-pages/issue-private-page/issue-private-page'
 import { useParams } from 'react-router-dom';
 
 const IssuePrivatePage = (props) => {

@@ -28,11 +28,11 @@ import { StyledAvatar } from './account-menu.styles';
 const AccountMenu = ({
   open,
   handleClose,
-  loggedIn,
+  user,
   signOut
 }) => {
   const history = useHistory();
-  const { data } = loggedIn;
+  const { data } = user;
   const { id, name, username, picture_url, email, Types } = data;
 
   const getUserType = (userTypes) => {

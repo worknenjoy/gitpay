@@ -12,7 +12,7 @@ export const Default = Template.bind({});
 Default.args = {
   // Add default props here
   handleMenu: () => console.log('handleMenu'),
-  loggedIn: {
+  user: {
     logged: true,
     completed: true,
     error: null,

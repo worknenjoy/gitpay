@@ -1,18 +1,20 @@
 import IssuePublicPage from './issue-public-page';
+import { withPublicTemplate } from '../../../../../../.storybook/decorators/withPublicTemplate';
 
 const meta = {
   title: 'Design Library/Pages/Public/IssuePublic',
   component: IssuePublicPage,
+  decorators: [withPublicTemplate],
   parameters: {
     layout: 'fullscreen'
   }
-}
+};
 
 export default meta;
 
 export const Default = {
   args: {
-    loggedIn: {
+    user: {
       logged: false,
       completed: true,
       data: {
@@ -87,7 +89,7 @@ export const Default = {
   }
 };
 
-export const loggedIn = {
+export const user = {
   args: {
     ...Default.args,
     account: {
@@ -99,7 +101,7 @@ export const loggedIn = {
         avatarUrl: 'https://via.placeholder.com/150'
       }
     },
-    loggedIn: {
+    user: {
       logged: true,
       completed: true,
       data: {

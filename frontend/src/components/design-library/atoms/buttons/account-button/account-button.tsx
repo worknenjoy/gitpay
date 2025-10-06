@@ -7,9 +7,9 @@ import nameInitials from 'name-initials'
 
 const AccountButton = ({
   handleMenu,
-  loggedIn
+  user
 }) => {
-  const { data } = loggedIn;
+  const { data } = user;
   const { username, picture_url } = data;
   
   return (

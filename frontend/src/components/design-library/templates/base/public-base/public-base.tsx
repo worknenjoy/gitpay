@@ -10,7 +10,7 @@ const Root = styled('div')(({ theme }) => ({
 
 type PublicBaseProps = {
   children: React.ReactNode
-  loggedIn?: any,
+  user?: any,
   bottomBarProps?: any,
   accountMenuProps?: any,
   loginFormSignupFormProps?: any,
@@ -20,7 +20,7 @@ type PublicBaseProps = {
 
 const PublicBase = ({ 
   children,
-  loggedIn,
+  user,
   bottomBarProps,
   accountMenuProps,
   loginFormSignupFormProps,
@@ -30,7 +30,7 @@ const PublicBase = ({
   return (
     <Root>
       <TopBar
-        loggedIn={ loggedIn }
+        user={ user }
         accountMenuProps={ accountMenuProps }
         loginFormSignupFormProps={ loginFormSignupFormProps }
         loginFormForgotFormProps={ loginFormForgotFormProps }

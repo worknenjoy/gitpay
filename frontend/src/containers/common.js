@@ -11,7 +11,7 @@ const CommonContainer = (WrappedComponent, customMapStateToProps = () => ({})) =
   };
 
   const mapStateToProps = (state, ownProps) => ({
-    loggedIn: state.loggedIn,
+    user: state.loggedIn,
     info: state.info.data,
     roles: state.roles,
     ...customMapStateToProps(state), // 🔥 Allow dynamic Redux state injection!

@@ -18,8 +18,8 @@ import {
 import LoginButton from '../../form-section/login-form/login-form-signin/login-form-signin'
 import { Root, MainBlock } from './issue-author-list.styles'
 
-export default function IssueAuthorList({ authors, logged, user, task, messageAuthor }) {
-  const { data: userData } = user || {}
+export default function IssueAuthorList({ authors, user, task, messageAuthor }) {
+  const { data: userData, logged } = user || {}
   const { data: taskData } = task || {}
   const [openDialog, setOpenDialog] = useState(false)
 

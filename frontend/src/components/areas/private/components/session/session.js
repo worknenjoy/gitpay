@@ -3,25 +3,23 @@ import PropTypes from 'prop-types'
 import Auth from '../../../../../modules/auth'
 
 class Session extends Component {
-  componentWillMount () {
-    const token = this.props.match.params.token
+  componentDidMount () {
+    const { match, history } = this.props
+    const token = match.params.token
     const referer = Auth.getReferer()
 
     Auth.authenticateUser(token)
+
     if (referer && referer !== '/') {
-      this.props.history.replace(referer)
-    }
-    else {
-      this.props.history.replace('/profile')
+      history.replace(referer)
+    } else {
+      history.replace('/profile')
     }
   }
 
   render () {
-    return (
-      <div>
-        Session created
-      </div>
-    )
+    // Nothing to show; we immediately redirect
+    return null
   }
 }
 

@@ -13,7 +13,7 @@ import { getProject } from '../selectors/tasks'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-  // Logged/user/task high-level props are provided by profile container; only keep what is unique here
+    user: state.loggedIn,
     dialog: state.dialog,
     task: getTaskOrdersByFilter(state),
     // For bottom bar props
