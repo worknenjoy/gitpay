@@ -15,9 +15,9 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+      width: 250
+    }
+  }
 };
 
 const TaskFilterLangauges = function({
@@ -34,7 +34,7 @@ const TaskFilterLangauges = function({
 
   const handleChange = (event: SelectChangeEvent<typeof languages>) => {
     const {
-      target: { value },
+      target: { value }
     } = event;
   
     // Update currentLanguages based on selected values
@@ -71,8 +71,8 @@ const TaskFilterLangauges = function({
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-checkbox-label" size='small'>
-          <FormattedMessage id='task.languages' defaultMessage='Languages' />
+        <InputLabel id="demo-multiple-checkbox-label" size="small">
+          <FormattedMessage id="task.languages" defaultMessage="Languages" />
         </InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
@@ -84,7 +84,7 @@ const TaskFilterLangauges = function({
           input={
             <OutlinedInput 
               label="languages"
-              size='small'
+              size="small"
             />
           }
           renderValue={(selected) => getSelectedNames(selected).join(', ')}

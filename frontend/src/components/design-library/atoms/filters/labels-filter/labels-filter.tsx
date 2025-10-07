@@ -15,9 +15,9 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+      width: 250
+    }
+  }
 };
 
 const TaskFilterLabels = function({
@@ -34,11 +34,11 @@ const TaskFilterLabels = function({
 
   const handleChange = (event: SelectChangeEvent<typeof labels>) => {
     const {
-      target: { value },
+      target: { value }
     } = event;
     setCurrentLabels(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? labels?.data?.filter(l => l.id === value).map(l => l.name).split(',') : value,
+      typeof value === 'string' ? labels?.data?.filter(l => l.id === value).map(l => l.name).split(',') : value
     );
     const filters = { labelIds: value }
     const splitUrl = history?.location?.pathname.split('/')
@@ -67,8 +67,8 @@ const TaskFilterLabels = function({
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-checkbox-label" size='small'>
-          <FormattedMessage id='task.labels' defaultMessage='Labels' />
+        <InputLabel id="demo-multiple-checkbox-label" size="small">
+          <FormattedMessage id="task.labels" defaultMessage="Labels" />
         </InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
@@ -80,7 +80,7 @@ const TaskFilterLabels = function({
           input={
             <OutlinedInput 
               label="Labels"
-              size='small'
+              size="small"
             />
           }
           renderValue={(selected) => getSelectedNames(selected).join(', ')}

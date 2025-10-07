@@ -34,7 +34,7 @@ interface IssueFilterProps {
 const IssueFilter: React.FC<IssueFilterProps> = ({
   filterTasks,
   baseUrl = '/tasks/',
-  tasks,
+  tasks
 }) => {
   const classes = classesStatic;
   const intl = useIntl();
@@ -82,7 +82,7 @@ const IssueFilter: React.FC<IssueFilterProps> = ({
       default:
         filterPromise = await filterTasks("all");
     }
-    filterPromise;
+    filterPromise();
   };
 
   return (

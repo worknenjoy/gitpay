@@ -72,16 +72,16 @@ function PricingPublicPage() {
         { /* Hero unit */ }
         <HeroContent>
           <MainTitle>
-            <Typography variant='h5' gutterBottom>
-              <FormattedMessage id='welcome.pricing.maintainers.title' defaultMessage='Fee for maintainers' />
+            <Typography variant="h5" gutterBottom>
+              <FormattedMessage id="welcome.pricing.maintainers.title" defaultMessage="Fee for maintainers" />
             </Typography>
           </MainTitle>
-          <Typography variant='body1' align='center' color='textSecondary' sx={{ pt: 2 }}>
-            <FormattedMessage id='welcome.pricing.description' defaultMessage='These are the fees when you pay for an issue to be solved on Gitpay' />
+          <Typography variant="body1" align="center" color="textSecondary" sx={{ pt: 2 }}>
+            <FormattedMessage id="welcome.pricing.description" defaultMessage="These are the fees when you pay for an issue to be solved on Gitpay" />
           </Typography>
         </HeroContent>
         { /* End hero unit */ }
-        <Grid container spacing={ 5 } justifyContent='center'>
+        <Grid container spacing={ 5 } justifyContent="center">
           { tiersMaintainers.map(tier => (
             // Enterprise card is full width at sm breakpoint
             <Grid key={ tier.title } size={{ xs: 12, sm: tier.title === 'Enterprise' ? 12 : 6, md: 6 }}>
@@ -95,22 +95,22 @@ function PricingPublicPage() {
                 />
                 <CardContent>
                   <CardPricing>
-                    <Typography variant='h5' color='textPrimary'>
+                    <Typography variant="h5" color="textPrimary">
                       <small>Fee</small> { tier.price }
                     </Typography>
-                    <Typography variant='body1' color='textSecondary'>
-                      <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
+                    <Typography variant="body1" color="textSecondary">
+                      <FormattedMessage id="welcome.pricing.month" defaultMessage=" / issue" />
                     </Typography>
                   </CardPricing>
                   { tier.description.map((line, i) => (
-                    <Typography variant='body1' align='center' key={ line }>
+                    <Typography variant="body1" align="center" key={ line }>
                       { line }
                     </Typography>
                   )) }
                 </CardContent>
                 { tier.link &&
                   <CardActions sx={{ pb: { sm: 2 } }}>
-                    <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
+                    <Button component="a" href={ tier.link } fullWidth variant={ tier.buttonVariant } color="primary">
                       { tier.buttonText }
                     </Button>
                   </CardActions>
@@ -119,7 +119,7 @@ function PricingPublicPage() {
             </Grid>
           )) }
         </Grid>
-        <Grid container spacing={ 5 } justifyContent='center'>
+        <Grid container spacing={ 5 } justifyContent="center">
           { tiersContributors.map(tier => (
             // Enterprise card is full width at sm breakpoint
             <Grid key={ tier.title } size={{ xs: 12, sm: tier.title === 'Enterprise' ? 12 : 6, md: 12 }}>
@@ -133,22 +133,22 @@ function PricingPublicPage() {
                 />
                 <CardContent>
                   <CardPricing>
-                    <Typography variant='h5' color='textPrimary'>
+                    <Typography variant="h5" color="textPrimary">
                       <small>Fee</small> { tier.price }
                     </Typography>
-                    <Typography variant='body1' color='textSecondary'>
-                      <FormattedMessage id='welcome.pricing.month' defaultMessage=' / issue' />
+                    <Typography variant="body1" color="textSecondary">
+                      <FormattedMessage id="welcome.pricing.month" defaultMessage=" / issue" />
                     </Typography>
                   </CardPricing>
                   { tier.description.map((line, i) => (
-                    <Typography gutterBottom variant={tier.description.length - 1 === i ? 'caption' : 'body1'} align='center' key={ line }>
+                    <Typography gutterBottom variant={tier.description.length - 1 === i ? 'caption' : 'body1'} align="center" key={ line }>
                       {line}
                     </Typography>
                   )) }
                 </CardContent>
                 { tier.link &&
                   <CardActions sx={{ pb: { sm: 2 } }}>
-                    <Button component='a' href={ tier.link } fullWidth variant={ tier.buttonVariant } color='primary'>
+                    <Button component="a" href={ tier.link } fullWidth variant={ tier.buttonVariant } color="primary">
                       { tier.buttonText }
                     </Button>
                   </CardActions>

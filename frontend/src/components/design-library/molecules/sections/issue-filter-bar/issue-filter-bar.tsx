@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Select, MenuItem, Chip, FormControl } from '@mui/material';
+import { AppBar, Toolbar } from '@mui/material';
 import { useIntl, defineMessages } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import LabelsFilter from '../../../atoms/filters/labels-filter/labels-filter';
 import LanguageFilter from '../../../atoms/filters/languages-filter/languages-filter';
 import IssueFilter from '../../../atoms/filters/issue-filter/issue-filter';
-import { languages } from 'src/reducers/languageReducer';
 
 const classesStatic = {
   select: { backgroundColor: 'transparent' },
@@ -77,31 +76,8 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
     );
   };
 
-  const handleTabChange = async (event: any) => {
-    const value = event.target.value as number;
-    setTaskListState({ ...taskListState, tab: value });
-    let filterPromise;
-    switch (value) {
-      case 0:
-        history.push(baseUrl + "open");
-        filterPromise = await filterTasks("status", "open");
-        break;
-      case 1:
-        history.push(baseUrl + "withBounties");
-        filterPromise = await filterTasks("issuesWithBounties");
-        break;
-      case 2:
-        history.push(baseUrl + "contribution");
-        filterPromise = await filterTasks("contribution");
-        break;
-      default:
-        filterPromise = await filterTasks("all");
-    }
-    filterPromise;
-  };
-
   return (
-    <AppBar position='static' color='transparent' elevation={0}>
+    <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar style={{ display: 'flex', placeContent: 'space-between', margin: 0, padding: 0 }}>
         <div>
           <IssueFilter 
