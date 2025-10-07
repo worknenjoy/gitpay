@@ -1,6 +1,5 @@
 import axios from 'axios'
 import api from '../consts'
-import { loggedIn } from './loginActions'
 import { validToken } from './helpers'
 
 const FETCH_PREFERENCES_REQUESTED = 'FETCH_PREFERENCES_REQUESTED'

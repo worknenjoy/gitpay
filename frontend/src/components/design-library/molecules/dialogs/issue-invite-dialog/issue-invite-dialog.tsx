@@ -41,7 +41,7 @@ const TaskInvite: React.FC<Props> = ({ id, visible = true, onClose, onInvite, us
     <Container>
       <Dialog
         open={ visible }
-        onClose={ () => onClose() }
+        onClose={ (e) => onClose(e) }
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">

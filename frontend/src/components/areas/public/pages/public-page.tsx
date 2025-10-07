@@ -7,6 +7,7 @@ import TaskOrdersContainer from '../../../../containers/task-orders'
 import WelcomeContainer from '../../../../containers/welcome';
 import TaskExplorer from '../../../../containers/task-explorer'
 import useCommonActions from '../../../../hooks/use-common-actions';
+import PricingPage from '../features/pricing/pages/pricing-page';
 
 const TaskExplorerProjects = (props) => <TaskExplorer {...props} />
 const TaskExplorerOrganizations = (props) => <TaskExplorer {...props} />
@@ -45,6 +46,7 @@ const PublicPage = ({
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/welcome" component={WelcomeContainer} />
+          <Route path="/pricing" component={ PricingPage } />
           <Route exact path="/task/:id" component={TaskContainer} />
           <Route exact path="/task/:id/:slug" component={TaskContainer} />
           <Route exact path="/task/:id/orders" component={TaskContainer} />

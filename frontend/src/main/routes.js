@@ -12,7 +12,6 @@ import FourOFour from '../components/design-library/pages/public-pages/four-o-fo
 //import LandingPage from '../components/areas/public/features/welcome/legacy/landing-page'
 import Stats from '../components/areas/public/features/stats/Stats-main-page'
 import TaskListUser from '../containers/task-list-user'
-import Pricing from '../components/areas/public/features/welcome/legacy/pricing'
 import Auth from '../modules/auth'
 
 export default props => (
@@ -26,7 +25,6 @@ export default props => (
       {/* Private area needs to appear before the broad "/" route */}
       <PrivateRoute path="/profile" component={ ProfileContainer } />
 
-      <Route path="/pricing" component={ Pricing } />
       <Route exact path="/team" component={ TeamContainer } />
       <Route exact path="/signin" component={ LoginPageContainer } />
       <Route exact path="/signin/:status" component={ LoginPageContainer } />

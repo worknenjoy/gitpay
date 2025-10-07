@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import LanguageFilter from './language-filter';
+import LanguageFilter from './languages-filter';
 
 export default {
-  title: 'Features/Task/LanguageFilter',
+  title: 'Design Library/Atoms/Filters/Languages',
   component: LanguageFilter,
   decorators: [
     (Story) => (

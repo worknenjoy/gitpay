@@ -1,7 +1,5 @@
 import React from 'react'
-import { Root } from './issue-public-page.styles'
 import IssuePage from 'design-library/organisms/layouts/page-layouts/issue-page-layout/issue-page-layout'
-import PublicBase from 'design-library/templates/base/public-base/public-base'
 
 const IssuePublicPage = ({
   user,
@@ -34,7 +32,7 @@ const IssuePublicPage = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask,
+  syncTask
 }) => {
   return (
     <IssuePage

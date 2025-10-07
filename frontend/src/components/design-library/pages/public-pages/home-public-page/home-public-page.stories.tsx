@@ -5,7 +5,7 @@ import { withPublicTemplate } from '../../../../../../.storybook/decorators/with
 export default {
   title: 'Design Library/Pages/Public/Home',
   component: Home,
-  decorators: [withPublicTemplate],
+  decorators: [withPublicTemplate]
 };
 
 const Template = (args) => <Home {...args} />;

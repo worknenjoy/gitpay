@@ -1,15 +1,15 @@
 import React from 'react';
-import TaskFilters from './task-filters';
+import IssueFilter from './issue-filter';
 
 export default {
-  title: 'Features/Task/TaskFilters',
-  component: TaskFilters,
+  title: 'Design Library/Atoms/Filters/IssueFilter',
+  component: IssueFilter,
   parameters: {
     layout: 'fullscreen',
   },
 };
 
-const Template = (args) => <TaskFilters {...args} />;
+const Template = (args) => <IssueFilter {...args} />;
 
 const mockTasks = [
   { id: 1, value: '100', status: 'open', title: 'Task with bounty' },

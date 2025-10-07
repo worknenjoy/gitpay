@@ -1,20 +1,12 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import TaskFilterLabels from './task-filter-labels';
+import LabelsFilter from './labels-filter';
 
 export default {
-  title: 'Features/Task/TaskFilterLabels',
-  component: TaskFilterLabels,
-  decorators: [
-    (Story) => (
-      <BrowserRouter>
-        <Story />
-      </BrowserRouter>
-    ),
-  ],
+  title: 'Design Library/Atoms/Filters/Labels',
+  component: LabelsFilter,
 };
 
-const Template = (args) => <TaskFilterLabels {...args} />;
+const Template = (args) => <LabelsFilter {...args} />;
 
 const mockLabels = {
   data: [

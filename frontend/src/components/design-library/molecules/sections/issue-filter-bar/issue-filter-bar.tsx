@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Select, MenuItem, Chip, FormControl } from '@mui/material';
 import { useIntl, defineMessages } from 'react-intl';
 import { useHistory } from 'react-router-dom';
-import Labels from '../../../../../../containers/label';
-import Language from '../../../../../../containers/language';
+import LabelsFilter from '../../../atoms/filters/labels-filter/labels-filter';
+import LanguageFilter from '../../../atoms/filters/languages-filter/languages-filter';
+import IssueFilter from '../../../atoms/filters/issue-filter/issue-filter';
+import { languages } from 'src/reducers/languageReducer';
 
 const classesStatic = {
   select: { backgroundColor: 'transparent' },
@@ -31,6 +33,11 @@ interface TaskFiltersProps {
   baseUrl?: string;
   tasks: any;
   filteredTasks: any;
+  labels: any;
+  listLabels: any;
+  listTasks: any;
+  languages: any;
+  listLanguages: any;
 }
 
 const TaskFilters: React.FC<TaskFiltersProps> = ({
@@ -38,6 +45,11 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
   baseUrl = '/tasks/',
   tasks,
   filteredTasks,
+  labels,
+  listLabels,
+  listTasks,
+  languages,
+  listLanguages
 }) => {
   const classes = classesStatic;
   const intl = useIntl();
@@ -91,48 +103,28 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
   return (
     <AppBar position='static' color='transparent' elevation={0}>
       <Toolbar style={{ display: 'flex', placeContent: 'space-between', margin: 0, padding: 0 }}>
-        <FormControl>
-          <Select
-            value={taskListState.tab}
-            onChange={handleTabChange}
-            sx={classes.select}
-            variant="outlined"
-          >
-            <MenuItem value={0}>
-              {intl.formatMessage(messages.allTasks)}
-              <Chip
-                label={allTasksCount}
-                size="small"
-                variant="outlined"
-                sx={taskListState.tab === 0 ? classes.chipActive : classes.chip}
-              />
-            </MenuItem>
-            <MenuItem value={1}>
-              {intl.formatMessage(messages.allPublicTasksWithBounties)}
-              <Chip
-                label={withBountiesCount}
-                size="small"
-                variant="outlined"
-                sx={taskListState.tab === 1 ? classes.chipActive : classes.chip}
-              />
-            </MenuItem>
-            <MenuItem value={2}>
-              {intl.formatMessage(messages.allPublicTasksNoBounties)}
-              <Chip
-                label={noBountiesCount}
-                size="small"
-                variant="outlined"
-                sx={taskListState.tab === 2 ? classes.chipActive : classes.chip}
-              />
-            </MenuItem>
-          </Select>
-        </FormControl>
+        <div>
+          <IssueFilter 
+            filterTasks={filterTasks}
+            filteredTasks={filteredTasks}
+            tasks={tasks}
+            baseUrl={baseUrl}
+          />
+        </div>
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
           <div>
-            <Labels />
+            <LabelsFilter
+              labels={labels}
+              listLabels={listLabels}
+              listTasks={listTasks}
+            />
           </div>
           <div style={{ marginLeft: 10 }}>
-            <Language />
+            <LanguageFilter
+              languages={languages}
+              listLanguages={listLanguages}
+              listTasks={listTasks}
+            />
           </div>
         </div>
       </Toolbar>
