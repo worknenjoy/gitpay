@@ -2,7 +2,7 @@ import React from 'react';
 import IssueFilter from './issue-filter';
 
 export default {
-  title: 'Design Library/Atoms/Filters/IssueFilter',
+  title: 'Design Library/Atoms/Filters/Issue',
   component: IssueFilter,
   parameters: {
     layout: 'fullscreen'

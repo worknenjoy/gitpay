@@ -7,29 +7,18 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250
-    }
-  }
-};
-
-const TaskFilterLabels = function({
+const LabelsFilter = function({
   labels,
   listLabels,
   listTasks,
-  history
-}: RouteComponentProps & {
+}: {
   labels: any;
   listLabels: any;
   listTasks: any;
 }) {
+  const history = useHistory();
   const [currentLabels, setCurrentLabels] = React.useState<typeof labels>([]);
 
   const handleChange = (event: SelectChangeEvent<typeof labels>) => {
@@ -57,16 +46,16 @@ const TaskFilterLabels = function({
 
   
   useEffect(() => {
-    listLabels()
-  }, [listLabels])
+    listLabels?.()
+  }, [])
 
   const getSelectedNames = (selected) => {
     return labels?.data?.filter(l => selected.includes(l.id)).map(l => l.name)
   }
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+    
+      <FormControl sx={{ m: 1 }} fullWidth>
         <InputLabel id="demo-multiple-checkbox-label" size="small">
           <FormattedMessage id="task.labels" defaultMessage="Labels" />
         </InputLabel>
@@ -77,6 +66,7 @@ const TaskFilterLabels = function({
           name={'labelIds'}
           value={currentLabels}
           onChange={handleChange}
+          variant="outlined"
           input={
             <OutlinedInput 
               label="Labels"
@@ -84,7 +74,6 @@ const TaskFilterLabels = function({
             />
           }
           renderValue={(selected) => getSelectedNames(selected).join(', ')}
-          MenuProps={MenuProps}
         >
           {labels?.data?.map(({name, id}) => (
             <MenuItem key={id} value={id}>
@@ -94,8 +83,8 @@ const TaskFilterLabels = function({
           ))}
         </Select>
       </FormControl>
-    </div>
+   
   );
 }
 
-export default withRouter(TaskFilterLabels)
+export default LabelsFilter;

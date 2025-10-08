@@ -7,7 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -24,12 +24,12 @@ const TaskFilterLangauges = function({
   languages,
   listLanguages,
   listTasks,
-  history
-}: RouteComponentProps & {
+}: {
   languages: any;
   listLanguages: any;
   listTasks: any;
 }) {
+  const history = useHistory();
   const [currentLanguages, setCurrentLanguages] = React.useState<typeof languages>([]);
 
   const handleChange = (event: SelectChangeEvent<typeof languages>) => {
@@ -61,16 +61,16 @@ const TaskFilterLangauges = function({
   
   
   useEffect(() => {
-    listLanguages()
-  }, [listLanguages])
+    listLanguages?.()
+  }, [])
 
   const getSelectedNames = (selected) => {
     return languages?.data?.filter(l => selected.includes(l.id)).map(l => l.name)
   }
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+    
+      <FormControl sx={{ m: 1}} fullWidth>
         <InputLabel id="demo-multiple-checkbox-label" size="small">
           <FormattedMessage id="task.languages" defaultMessage="Languages" />
         </InputLabel>
@@ -98,8 +98,8 @@ const TaskFilterLangauges = function({
           ))}
         </Select>
       </FormControl>
-    </div>
+    
   );
 }
 
-export default withRouter(TaskFilterLangauges)
+export default TaskFilterLangauges

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import PublicBase from 'design-library/templates/base/public-base/public-base';
 import HomePage from 'design-library/pages/public-pages/home-public-page/home-public-page'
 import TaskContainer from '../../../../containers/task'
@@ -7,6 +7,7 @@ import TaskOrdersContainer from '../../../../containers/task-orders'
 import WelcomeContainer from '../../../../containers/welcome';
 import TaskExplorer from '../../../../containers/task-explorer'
 import useCommonActions from '../../../../hooks/use-common-actions';
+import ExplorePage from '../features/explore/pages/explore-page'
 import PricingPage from '../features/pricing/pages/pricing-page';
 
 const TaskExplorerProjects = (props) => <TaskExplorer {...props} />
@@ -69,7 +70,9 @@ const PublicPage = ({
           <Route exact path="/organizations/:organization_id/projects/:project_id/:filter" component={ (props) => <TaskExplorerProjects {...props} /> } />
           <Route exact path="/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug" component={ (props) => <TaskExplorerProjects {...props} /> } />
           <Route exact path="/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter" component={ (props) => <TaskExplorerProjects {...props} /> } />
-          <Route exact path="/tasks/:filter" component={ (props) => <TaskExplorer {...props} /> } />
+
+          <Route path="/explore" component={ ExplorePage } />
+          <Route exact path="/tasks/:filter" component={ () => <Redirect to="/explore" /> } />
         </Switch>
       </HashRouter>
     </PublicBase>

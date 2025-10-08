@@ -2,6 +2,8 @@ import React from 'react'
 import { styled } from '@mui/material/styles'
 import TopBar from '../../../organisms/layouts/topbar-layouts/topbar-layout/topbar-layout'
 import Bottom from '../../../organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom-bar-layout'
+import { Container } from '@mui/material'
+import { RootContainer } from './public-base.styles'
 
 const Root = styled('div')(({ theme }) => ({
   flexGrow: 1,
@@ -36,7 +38,7 @@ const PublicBase = ({
         loginFormForgotFormProps={ loginFormForgotFormProps }
         importIssuesProps={ importIssuesProps }
       />
-      { children }
+        { children }
       <Bottom
         { ...bottomBarProps }
       />

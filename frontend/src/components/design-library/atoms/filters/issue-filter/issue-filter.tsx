@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Select, MenuItem, Chip, FormControl } from '@mui/material';
+import { Select, MenuItem, Chip, FormControl, OutlinedInput } from '@mui/material';
 import { useIntl, defineMessages } from 'react-intl';
 import { useHistory } from 'react-router-dom';
+import { MenuItemCustom } from './issue-filter.styles';
 
 const classesStatic = {
   select: { backgroundColor: 'transparent' },
@@ -86,14 +87,18 @@ const IssueFilter: React.FC<IssueFilterProps> = ({
   };
 
   return (
-    <FormControl>
+    <FormControl sx={{ m: 1 }} fullWidth>
       <Select
         value={taskListState.tab}
         onChange={handleTabChange}
         sx={classes.select}
-        variant="outlined"
+        input={
+          <OutlinedInput 
+            size="small"
+          />
+        }
       >
-        <MenuItem value={0}>
+        <MenuItemCustom value={0}>
           {intl.formatMessage(messages.allTasks)}
           <Chip
             label={allTasksCount}
@@ -101,8 +106,8 @@ const IssueFilter: React.FC<IssueFilterProps> = ({
             variant="outlined"
             sx={taskListState.tab === 0 ? classes.chipActive : classes.chip}
           />
-        </MenuItem>
-        <MenuItem value={1}>
+        </MenuItemCustom>
+        <MenuItemCustom value={1}>
           {intl.formatMessage(messages.allPublicTasksWithBounties)}
           <Chip
             label={withBountiesCount}
@@ -110,8 +115,8 @@ const IssueFilter: React.FC<IssueFilterProps> = ({
             variant="outlined"
             sx={taskListState.tab === 1 ? classes.chipActive : classes.chip}
           />
-        </MenuItem>
-        <MenuItem value={2}>
+        </MenuItemCustom>
+        <MenuItemCustom value={2}>
           {intl.formatMessage(messages.allPublicTasksNoBounties)}
           <Chip
             label={noBountiesCount}
@@ -119,7 +124,7 @@ const IssueFilter: React.FC<IssueFilterProps> = ({
             variant="outlined"
             sx={taskListState.tab === 2 ? classes.chipActive : classes.chip}
           />
-        </MenuItem>
+        </MenuItemCustom>
       </Select>
     </FormControl>
   );

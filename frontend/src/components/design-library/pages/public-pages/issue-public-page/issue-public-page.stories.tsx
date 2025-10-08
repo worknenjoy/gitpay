@@ -2,7 +2,7 @@ import IssuePublicPage from './issue-public-page';
 import { withPublicTemplate } from '../../../../../../.storybook/decorators/withPublicTemplate';
 
 const meta = {
-  title: 'Design Library/Pages/Public/IssuePublic',
+  title: 'Design Library/Pages/Public/Issue',
   component: IssuePublicPage,
   decorators: [withPublicTemplate],
   parameters: {

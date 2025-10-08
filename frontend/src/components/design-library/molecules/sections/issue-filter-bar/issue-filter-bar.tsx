@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import LabelsFilter from '../../../atoms/filters/labels-filter/labels-filter';
 import LanguageFilter from '../../../atoms/filters/languages-filter/languages-filter';
 import IssueFilter from '../../../atoms/filters/issue-filter/issue-filter';
+import IssueFilterStatus from '../../../atoms/filters/issue-status-filter/issue-status-filter';
 
 const classesStatic = {
   select: { backgroundColor: 'transparent' },
@@ -33,10 +34,10 @@ interface TaskFiltersProps {
   tasks: any;
   filteredTasks: any;
   labels: any;
-  listLabels: any;
-  listTasks: any;
+  listLabels?: any;
+  listTasks?: any;
   languages: any;
-  listLanguages: any;
+  listLanguages?: any;
 }
 
 const TaskFilters: React.FC<TaskFiltersProps> = ({
@@ -79,7 +80,7 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
   return (
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar style={{ display: 'flex', placeContent: 'space-between', margin: 0, padding: 0 }}>
-        <div>
+        <div style={{width: '25%', marginRight: 12}}>
           <IssueFilter 
             filterTasks={filterTasks}
             filteredTasks={filteredTasks}
@@ -87,21 +88,22 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
             baseUrl={baseUrl}
           />
         </div>
-        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
-          <div>
-            <LabelsFilter
-              labels={labels}
-              listLabels={listLabels}
-              listTasks={listTasks}
-            />
-          </div>
-          <div style={{ marginLeft: 10 }}>
-            <LanguageFilter
-              languages={languages}
-              listLanguages={listLanguages}
-              listTasks={listTasks}
-            />
-          </div>
+        <div style={{width: '15%', marginRight: 12}}>
+          <IssueFilterStatus />
+        </div>
+        <div style={{width: '30%', marginRight: 12}}>
+          <LabelsFilter
+            labels={labels}
+            listLabels={listLabels}
+            listTasks={listTasks}
+          />
+        </div>
+        <div style={{width: '30%', marginRight: 12}}>
+          <LanguageFilter
+            languages={languages}
+            listLanguages={listLanguages}
+            listTasks={listTasks}
+          />
         </div>
       </Toolbar>
     </AppBar>

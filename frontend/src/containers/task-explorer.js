@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { connect } from 'react-redux'
-import TaskExplorer from '../components/areas/public/features/issue/legacy/task-explorer'
+import ExplorePage from '../components/areas/public/features/explore/pages/explore-page'
 import { listTasks, filterTasks } from '../actions/taskActions'
 import { getFilteredTasks } from '../selectors/tasks'
 
@@ -16,4 +16,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskExplorer)
+export default connect(mapStateToProps, mapDispatchToProps)(ExplorePage)
