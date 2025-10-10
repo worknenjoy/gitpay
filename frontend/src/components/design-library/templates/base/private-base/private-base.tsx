@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { Page, PageContent } from '../../../../../styleguide/components/Page';
-import ProfileSideBar from '../../../organisms/layouts/profile-sidebar/profile-sidebar'
-import AccountHeader from '../../../organisms/layouts/account-header/account-header';
-import Bottom from '../../../organisms/layouts/bottom-bar/bottom'
+import ProfileSideBar from '../../../organisms/layouts/sidebar-layouts/profile-sidebar-layout/profile-sidebar-layout'
+import AccountHeader from '../../../organisms/layouts/header-layouts/account-header-layout/account-header-layout';
+import Bottom from '../../../organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom-bar-layout';
 import { useHistory } from 'react-router-dom';
 import ProfileHeader from '../../../molecules/headers/profile-main-header/profile-main-header';
 import ActivateAccountDialog from '../../../molecules/dialogs/activate-account-dialog/activate-account-dialog';

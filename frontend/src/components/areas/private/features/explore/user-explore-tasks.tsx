@@ -28,6 +28,7 @@ import {
   GutterLeft,
   ProviderButton
 } from './user-explore-tasks.styles'
+import IssueFiltersBar from 'design-library/molecules/sections/issue-filter-bar/issue-filter-bar';
 
 const UserTasksExplore = ({ filterTasks, listTasks, tasks, user }) => {
 
@@ -96,7 +97,15 @@ const UserTasksExplore = ({ filterTasks, listTasks, tasks, user }) => {
             </StyledCard>
           ) : (
             <FiltersWrapper>
-              <Taskfilters baseUrl={ baseUrl } />
+              <IssueFiltersBar
+                filterTasks={ filterTasks }
+                listTasks={ listTasks }
+                issues={ tasks }
+                labels={ [] }
+                languages={ [] }
+                listLabels={ () => {} }
+                listLanguages={ () => {} }
+              />
               <ExploreIssuesTable issues={ tasks } />
             </FiltersWrapper>
           ) }

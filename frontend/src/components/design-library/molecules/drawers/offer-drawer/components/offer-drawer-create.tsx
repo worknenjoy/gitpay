@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Introduction from '../../../content/introduction/introduction';
-import IssueCard from '../../../cards/issue-card/issue-card';
+import IssueCard from '../../../cards/issue-cards/issue-card/issue-card';
 import SimpleInfo from '../../../../atoms/alerts/simple-info/simple-info';
 import DeliveryDate from '../../../../organisms/forms/date-forms/delivery-date/delivery-date';
 import PickupTagList from '../../../lists/pickup-tag-list/pickup-tag-list';

@@ -11,7 +11,7 @@ const Template = (args) => <AccountSettings {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   // Add default props here
-  loggedIn: {
+  user: {
     logged: true,
     completed: true,
     error: null,

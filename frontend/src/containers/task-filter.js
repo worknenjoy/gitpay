@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
 import { connect } from 'react-redux'
 import { filterTasks } from '../actions/taskActions'
-import TaskFilters from '../components/areas/public/features/task/task-filters'
+import IssueFilter from '../components/design-library/atoms/filters/issue-filter/issue-filter'
 
 const mapStateToProps = (state) => ({
-  tasks: state.tasks.data,
-  filteredTasks: state.tasks.filteredData
+  issues: state.issues.data,
+  filteredIssues: state.issues.filteredData
 })
 
 const mapDispatchToProps = {
   filterTasks
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskFilters)
+export default connect(mapStateToProps, mapDispatchToProps)(IssueFilter)

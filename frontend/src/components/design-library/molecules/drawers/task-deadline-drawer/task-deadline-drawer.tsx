@@ -1,6 +1,6 @@
 import React from 'react'
 import Drawer from '../drawer/drawer'
-import TaskDeadlineForm from '../../../../areas/public/features/task/task-deadline-form'
+import TaskDeadlineForm from '../../../organisms/forms/task-deadline-form/task-deadline-form'
 
 type TaskDeadlineDrawerProps = {
   open: boolean
@@ -26,11 +26,14 @@ const TaskDeadlineDrawer = ({
       title="Set task deadline"
     >
       <TaskDeadlineForm 
-        match={{ params: { id: taskId } }}
         open={open}
         task={task}
-        updateTask={(task) => {
-          onUpdate(task)
+        onHandleClearDeadline={() => {
+          onUpdate({ id: taskId, deadline: null })
+          onClose()
+        }}
+        onHandleDeadline={(deadline) => {
+          onUpdate({ id: taskId, deadline })
           onClose()
         }}
       />

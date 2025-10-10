@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 
-import { messages } from '../../../../public/features/task/messages/task-messages'
+import { messages } from '../../../../../../messages/messages'
 import MomentComponent from 'moment'
 import PaymentProvider from 'design-library/atoms/badges/payment-provider/payment-provider'
 
@@ -20,12 +20,12 @@ import {
 } from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
-import TaskPaymentCancel from '../../../../public/features/task/task-payment-cancel'
+import TaskPaymentCancel from '../../../../public/features/issue/legacy/task-payment-cancel'
 import PropTypes from 'prop-types'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
-import TaskOrderDetails from '../../../../public/features/task/order/task-order-details'
-import TaskOrderTransfer from '../../../../public/features/task/order/task-order-transfer'
+import TaskOrderDetails from '../../../../public/features/issue/legacy/order/task-order-details'
+import TaskOrderTransfer from '../../../../public/features/issue/legacy/order/task-order-transfer'
 import PaymentRefund from './payment-refund'
 import CustomPaginationActionsTable from './payments-table'
 import InvoiceStatus from 'design-library/atoms/status/payment-types-status/invoice-status/invoice-status'

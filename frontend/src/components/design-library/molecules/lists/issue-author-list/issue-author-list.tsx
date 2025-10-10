@@ -18,7 +18,9 @@ import {
 import LoginButton from '../../form-section/login-form/login-form-signin/login-form-signin'
 import { Root, MainBlock } from './issue-author-list.styles'
 
-export default function IssueAuthorList({ authors, logged, user, task, messageAuthor }) {
+export default function IssueAuthorList({ authors, user, task, messageAuthor }) {
+  const { data: userData, logged } = user || {}
+  const { data: taskData } = task || {}
   const [openDialog, setOpenDialog] = useState(false)
 
   const handleMessageAuthorDialog = (e) => {
@@ -78,8 +80,8 @@ export default function IssueAuthorList({ authors, logged, user, task, messageAu
         ) : (
           <IssueMessageAuthorDialog
             open={openDialog}
-            userId={user.id}
-            taskId={task.data.id}
+            userId={userData?.id}
+            taskId={taskData.id}
             name={''}
             onClose={() => setOpenDialog(false)}
             onSend={messageAuthor}

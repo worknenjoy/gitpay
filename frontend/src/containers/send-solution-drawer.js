@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { fetchAccount } from '../actions/userActions'
 import { getTaskSolution, createTaskSolution, updateTaskSolution, fetchPullRequestData, cleanPullRequestDataState } from '../actions/taskSolutionActions'
 import { getUserData } from '../common/selectors/user/getUser'
-import SendSolutionDrawer from '../components/areas/public/features/task/components/send-solution-drawer'
+import SendSolutionDrawer from '../components/design-library/molecules/drawers/send-solution-drawer/send-solution-drawer'
 
 const mapStateToProps = state => {
   return {

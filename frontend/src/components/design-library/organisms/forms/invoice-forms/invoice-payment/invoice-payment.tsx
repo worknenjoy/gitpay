@@ -15,7 +15,8 @@ const InvoicePayment = ({
   price,
   customer,
   onInvoicePayment,
-  onInfoClick
+  onInfoClick,
+  processingPayment = false
 }) => {
   const { data, completed } = customer
   const { name, address } = data
@@ -57,11 +58,11 @@ const InvoicePayment = ({
         onClick={onInvoicePayment}
         variant="contained"
         color="secondary"
-      >
-        <FormattedMessage id="fund.payment.invoice.action" defaultMessage="Generate a {amount} invoice" values={{
+        label={<FormattedMessage id="fund.payment.invoice.action" defaultMessage="Generate a {amount} invoice" values={{
           amount: formatCurrency(price)
-        }} />
-      </StyledPayButton>
+        }} />}
+        completed={!processingPayment}
+      />
     </>
   )
 }

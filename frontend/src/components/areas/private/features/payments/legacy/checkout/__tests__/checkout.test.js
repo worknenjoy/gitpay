@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { CheckoutFormPure } from '../checkout-form';
+import { CheckoutFormPure } from '../../../../../../../design-library/organisms/forms/payment-forms/credit-card-payment-form/credit-card-payment-form';
 import '@testing-library/jest-dom';
 
 xdescribe('CheckoutFormPure component', () => {

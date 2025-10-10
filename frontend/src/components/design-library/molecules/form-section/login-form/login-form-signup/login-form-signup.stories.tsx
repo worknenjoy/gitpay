@@ -2,7 +2,7 @@ import React from 'react';
 import LoginFormSignup from './login-form-signup';
 
 export default {
-  title: 'Design Library/Molecules/Forms/LoginForm/LoginFormSignup',
+  title: 'Design Library/Molecules/FormSection/LoginForm/LoginFormSignup',
   component: LoginFormSignup
 };
 

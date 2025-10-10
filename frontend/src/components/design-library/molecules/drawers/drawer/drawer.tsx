@@ -16,7 +16,7 @@ type DrawerProps = {
   onClose: any;
   title: any;
   subtitle?: any;
-  children: any;
+  children?: any;
   actions?: Array<any>;
   completed?: boolean;
 }

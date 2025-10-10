@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Tooltip, Avatar, CircularProgress, Menu, MenuItem, Button } from '@mui/material';
 import logoLangEn from 'images/united-states-of-america.png'
 import logoLangBr from 'images/brazil.png'
-import { StyledAvatarIconOnly } from '../../../organisms/layouts/topbar/TopbarStyles';
+import { StyledAvatarIconOnly } from './language-switcher.styles';
 
 const languagesIcons = {
   en: logoLangEn,

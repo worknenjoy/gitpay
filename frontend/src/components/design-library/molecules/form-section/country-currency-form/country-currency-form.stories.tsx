@@ -2,7 +2,7 @@ import React from 'react';
 import CountryCurrencyForm from './country-currency-form';
 
 export default {
-  title: 'Design Library/Molecules/Forms/CountryCurrencyForm',
+  title: 'Design Library/Molecules/FormSection/CountryCurrencyForm',
   component: CountryCurrencyForm
 };
 

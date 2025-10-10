@@ -2,7 +2,7 @@ import React from 'react';
 import PersonalDetailsForm from './personal-details-form';
 
 export default {
-  title: 'Design Library/Molecules/Forms/PersonalDetailsForm',
+  title: 'Design Library/Molecules/FormSection/PersonalDetailsForm',
   component: PersonalDetailsForm
 };
 

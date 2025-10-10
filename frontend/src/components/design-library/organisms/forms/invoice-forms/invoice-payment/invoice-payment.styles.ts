@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-import { Button } from '@mui/material'
+import Button from '../../../../atoms/buttons/button/button'
 
 export const InfoAlertWrapper = styled('div')(({ theme }) => ({
   marginTop: 10,

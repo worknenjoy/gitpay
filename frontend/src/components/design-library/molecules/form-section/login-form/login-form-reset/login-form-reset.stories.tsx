@@ -2,7 +2,7 @@ import React from 'react';
 import LoginFormReset from './login-form-reset';
 
 export default {
-  title: 'Design Library/Molecules/Forms/LoginForm/LoginFormReset',
+  title: 'Design Library/Molecules/FormSection/LoginForm/LoginFormReset',
   component: LoginFormReset
 };
 

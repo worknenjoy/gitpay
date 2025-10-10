@@ -1,7 +1,7 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 
-import messages from '../../../../../../../areas/public/features/task/messages/task-messages'
+import messages from '../../../../../../../../messages/messages'
 
 const AmountField = ({ value, currency = '$' }) => {
   const intl = useIntl();

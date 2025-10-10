@@ -1,37 +1,27 @@
 import React from 'react';
 import { Button as MaterialButton } from '@mui/material';
+import type { ButtonProps as MUIButtonProps } from '@mui/material/Button';
 import styles from './button.styles';
 
-type ButtonProps = {
-  type?: 'button' | 'submit' | 'reset';
-  variant?: 'text' | 'outlined' | 'contained';
-  color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
+export type ButtonProps = MUIButtonProps & {
   label?: React.ReactNode;
-  disabled?: boolean;
   completed?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const Button = ({
-  type,
-  variant,
-  color,
   label,
-  disabled,
   completed = true,
-  onClick
-}:ButtonProps) => {
+  children,
+  disabled,
+  ...rest
+}: ButtonProps) => {
   const { Progress } = styles as any;
+  const isDisabled = !completed ? true : disabled;
+
   return (
-    <MaterialButton
-      type={type}
-      variant={variant}
-      color={color}
-      disabled={!completed ? true : disabled}
-      onClick={onClick}
-    >
+    <MaterialButton disabled={isDisabled} {...rest}>
       <>
-        {label}
+        {children ?? label}
         {!completed && (<Progress size={24} color="inherit" />)}
       </>
     </MaterialButton>

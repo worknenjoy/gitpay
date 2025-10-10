@@ -1,7 +1,7 @@
 import React from 'react'
 import { styled } from '@mui/material/styles'
-import TopBar from '../../../organisms/layouts/topbar/topbar'
-import Bottom from '../../../organisms/layouts/bottom-bar/bottom'
+import TopBar from '../../../organisms/layouts/topbar-layouts/topbar-layout/topbar-layout'
+import Bottom from '../../../organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom-bar-layout'
 
 const Root = styled('div')(({ theme }) => ({
   flexGrow: 1,
@@ -10,7 +10,7 @@ const Root = styled('div')(({ theme }) => ({
 
 type PublicBaseProps = {
   children: React.ReactNode
-  loggedIn?: any,
+  user?: any,
   bottomBarProps?: any,
   accountMenuProps?: any,
   loginFormSignupFormProps?: any,
@@ -20,7 +20,7 @@ type PublicBaseProps = {
 
 const PublicBase = ({ 
   children,
-  loggedIn,
+  user,
   bottomBarProps,
   accountMenuProps,
   loginFormSignupFormProps,
@@ -30,13 +30,13 @@ const PublicBase = ({
   return (
     <Root>
       <TopBar
-        loggedIn={ loggedIn }
+        user={ user }
         accountMenuProps={ accountMenuProps }
         loginFormSignupFormProps={ loginFormSignupFormProps }
         loginFormForgotFormProps={ loginFormForgotFormProps }
         importIssuesProps={ importIssuesProps }
       />
-      { children }
+        { children }
       <Bottom
         { ...bottomBarProps }
       />

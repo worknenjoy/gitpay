@@ -26,7 +26,7 @@ export type OfferDrawerProps = {
   onLearnCheckboxChange?: any;
   onCommentChange?: any;
   onTermsCheckboxChange?: any;
-  onConfirmOfferChange: any;
+  onConfirmOfferChange?: any;
   onEmailInviteChange?: any;
   tabs?: any;
   offersProps?: any;

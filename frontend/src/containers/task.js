@@ -1,23 +1,33 @@
 import { connect } from 'react-redux'
-import Task from '../components/areas/public/features/task/task'
+import Task from '../components/areas/public/features/issue/pages/issue-public-page'
 import { addNotification, addDialog, closeDialog } from '../actions/notificationActions'
-import { loggedIn } from '../actions/loginActions'
-import { fetchCustomer } from '../actions/userActions'
+import { loggedIn, logOut } from '../actions/loginActions'
+import { info as getInfoAction } from '../actions/infoActions'
+import { fetchCustomer, fetchAccount } from '../actions/userActions'
 import { assignTask, removeAssignment, messageTask, messageOffer, offerUpdate, actionAssign } from '../actions/assignActions'
 import { listTasks, filterTasks, updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, messageAuthor, reportTask, requestClaimTask, transferTask } from '../actions/taskActions'
 import { createOrder, payOrder, transferOrder, cancelOrder, detailOrder, listOrders } from '../actions/orderActions'
 import { fetchWallet, listWallets } from '../actions/walletActions'
+import { getTaskSolution, createTaskSolution, updateTaskSolution, fetchPullRequestData, cleanPullRequestDataState } from '../actions/taskSolutionActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getFilteredTasks, getProject } from '../selectors/tasks'
-import { getUserData } from '../common/selectors/user/getUser'
+import { getCurrentUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    completed: state.loggedIn.completed,
-    logged: state.loggedIn,
+    // Ensure component receives the expected "loggedIn" prop shape
+    user: getCurrentUser(state),
     dialog: state.dialog,
-    user: getUserData(state),
     task: getTaskOrdersByFilter(state),
+    // For bottom bar props
+    info: state.info.data,
+    // Added from send-solution-drawer.js
+    account: state.account,
+    taskSolution: state.taskSolutionReducer.taskSolution,
+    pullRequestData: state.taskSolutionReducer.pullRequestData,
+    // Preserve existing `task` and `completed` while exposing raw task state and task-solution completion flag
+    taskRaw: state.task,
+    taskSolutionCompleted: state.taskSolutionReducer.completed,
     tasks: getFilteredTasks(state),
     project: getProject(state.project),
     order: state.order,
@@ -31,6 +41,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     isLogged: () => dispatch(loggedIn()),
     updateTask: (task) => dispatch(updateTask(task)),
+    // Expose the prop name expected by IssuePublicPage
+    onDeleteTask: (task) => dispatch(deleteTask(task)),
+    // keep original for backwards compatibility where used
     deleteTask: (task) => dispatch(deleteTask(task)),
     openDialog: (target) => dispatch(addDialog(target)),
     closeDialog: () => dispatch(closeDialog()),
@@ -62,7 +75,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     requestClaimTask: (taskId, userId, comments, isApproved, token, history) => dispatch(requestClaimTask(taskId, userId, comments, isApproved, token, history)),
     fetchCustomer: (id) => dispatch(fetchCustomer(id)),
     fetchWallet: (id) => dispatch(fetchWallet(id)),
-    listWallets: () => dispatch(listWallets())
+    listWallets: () => dispatch(listWallets()),
+    // Added from send-solution-drawer.js
+    getTaskSolution: (taskId) => dispatch(getTaskSolution(taskId)),
+    createTaskSolution: (taskSolution) => dispatch(createTaskSolution(taskSolution)),
+    updateTaskSolution: (payload) => dispatch(updateTaskSolution(payload)),
+    fetchPullRequestData: (owner, repositoryName, pullRequestId, taskId) => dispatch(
+      fetchPullRequestData(owner, repositoryName, pullRequestId, taskId)
+    ),
+    cleanPullRequestDataState: () => dispatch(cleanPullRequestDataState()),
+    fetchAccount: () => dispatch(fetchAccount()),
+    // For account menu and bottom bar props
+    signOut: () => dispatch(logOut()),
+    getInfo: () => dispatch(getInfoAction())
   }
 }
 

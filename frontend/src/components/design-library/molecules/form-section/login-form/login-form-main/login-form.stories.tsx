@@ -2,7 +2,7 @@ import React from 'react';
 import LoginFormSignin from './login-form';
 
 export default {
-  title: 'Design Library/Molecules/Forms/LoginForm/LoginFormMain/LoginFormSignin',
+  title: 'Design Library/Molecules/FormSection/LoginForm/LoginFormMain/LoginFormSignin',
   component: LoginFormSignin
 };
 

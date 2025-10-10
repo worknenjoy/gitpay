@@ -36,7 +36,6 @@ function TabPanel(props: TabPanelProps) {
             </CardContent>
           </StyledCard>
         ) : children}
-
       </Box>
     </Comp>
   );

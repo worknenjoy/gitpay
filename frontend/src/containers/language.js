@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { listLanguage } from '../actions/languageActions'
-import Language from '../components/areas/public/features/task/language-filter'
+import Language from '../components/design-library/atoms/filters/languages-filter/languages-filter'
 import { listTasks } from '../actions/taskActions'
 
 const mapStateToProps = (state, ownProps) => {

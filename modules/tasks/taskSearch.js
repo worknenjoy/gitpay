@@ -16,14 +16,16 @@ module.exports = Promise.method(function taskSearch(searchParams) {
   if (searchParams.url) query.url = searchParams.url
 
   // Ensure labelWhere is always a valid object for Sequelize includes
-  let labelInclude = null
+  let labelInclude = {
+    model: models.Label,
+  }
   if (searchParams.labelIds) {
     labelInclude = {
       model: models.Label,
       where: { id: { [Op.in]: searchParams.labelIds } },
       attributes: ['name'],
       through: { attributes: [] },
-      group: ['Task.id'], // Adjust according to your SQL dialect
+      group: ['Task.id'],
       having: Sequelize.literal(`COUNT(DISTINCT "Label"."id") = ${searchParams.labelIds.length}`)
     }
   }
@@ -37,7 +39,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
         },
         include: [{
           model: models.Task,
-          include: [models.User, models.Order, models.Assign, models.Project].concat(labelInclude ? [labelInclude] : [])
+          include: [models.User, models.Order, models.Assign, models.Project, labelInclude ]
         }],
         order: [['id', 'DESC']]
       })
@@ -61,8 +63,9 @@ module.exports = Promise.method(function taskSearch(searchParams) {
           { 
             model: models.Assign, 
             include: [{ model: models.User }] 
-          }
-        ].concat(labelInclude ? [labelInclude] : []), // Conditionally include labels
+          },
+          labelInclude
+        ],
         order: [
           ['status', 'DESC'],
           ['id', 'DESC']

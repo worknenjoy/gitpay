@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { messages } from '../../../public/features/task/messages/task-messages'
+import { messages } from '../../../../../messages/messages'
 import {
   Container,
   Button,

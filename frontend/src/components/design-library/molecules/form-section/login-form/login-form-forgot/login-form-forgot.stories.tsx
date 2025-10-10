@@ -2,7 +2,7 @@ import React from 'react';
 import LoginFormForgot from './login-form-forgot';
 
 export default {
-  title: 'Design Library/Molecules/Forms/LoginForm/LoginFormForgot',
+  title: 'Design Library/Molecules/FormSection/LoginForm/LoginFormForgot',
   component: LoginFormForgot
 };
 

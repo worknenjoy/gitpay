@@ -2,7 +2,7 @@ import React from 'react';
 import Coupon from './coupon';
 
 export default {
-  title: 'Design Library/Molecules/Forms/CouponForm',
+  title: 'Design Library/Molecules/FormSection/CouponForm',
   component: Coupon
 };
 

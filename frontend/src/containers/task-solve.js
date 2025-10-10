@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { getTaskOrdersByFilter } from '../selectors/task'
-import TaskSolve from '../components/areas/public/features/task/task-solve'
+import TaskSolve from '../components/areas/public/features/issue/task-solve'
 
 const mapStateToProps = (state, ownProps) => {
   return {

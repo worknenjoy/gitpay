@@ -6,13 +6,11 @@ import {
   Paper,
   Button,
   Typography,
-  InputLabel,
-  FormControl,
   Input,
-  Select,
-  FormHelperText
+  Select
 } from '@mui/material'
 import { StyledFieldset, StyledLegend } from './account-customer.styles'
+import Field from '../../../../../../design-library/atoms/inputs/fields/field/field'
 
 import { countryCodesFull } from '../../../../shared/country-codes'
 
@@ -32,46 +30,6 @@ type FieldProps = {
   ref?: React.Ref<HTMLElement> | null
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
   completed?: boolean
-}
-
-export const Field = ({ ref, name, value, label, type = 'text', required = false, defaultValue, placeholder, disabled, help, inputComponent, onChange, completed }: FieldProps) => {
-  return (
-    <FormControl style={{ width: '100%' }}>
-      {
-        !completed ? (
-          <Skeleton variant="text" animation="wave" width="100%" />
-        ) : (
-          <>
-          <InputLabel
-            htmlFor={name}
-          >
-            {label}
-          </InputLabel>
-          <Input
-            ref={ref}
-            id={name}
-            name={name}
-            type={type}
-            required={required}
-            defaultValue={defaultValue}
-            value={value}
-            fullWidth
-            style={{ width: '100%' }}
-            placeholder={placeholder}
-            disabled={disabled}
-            inputComponent={inputComponent}
-            onChange={onChange}
-          />
-          {help &&
-            <FormHelperText id="component-helper-text">
-              <FormattedMessage id="validation-message" defaultMessage="+Country code and Number" />
-            </FormHelperText>
-          }
-          </>
-        )
-      }
-    </FormControl>
-  )
 }
 
 const CustomerDetails = ({
