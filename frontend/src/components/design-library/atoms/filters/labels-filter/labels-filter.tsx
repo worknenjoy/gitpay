@@ -40,7 +40,6 @@ const LabelsFilter = function({
     } else if(organizationId && organizationPath === 'organizations') {
       listTasks && value && listTasks({projectId, organizationId, ...filters})
     } else {
-      console.log('labels filter', value, listTasks)
       listTasks && value && listTasks({labelIds: value})
     }
   };

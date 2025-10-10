@@ -23,7 +23,7 @@ exports.createTask = (req, res) => {
 
 exports.listTasks = (req, res) => {
   let query = { ...req.query }
-
+  
   // Normalize array parameters sent as languageIds[] and labelIds[]
   if (query['languageIds[]']) {
     query.languageIds = Array.isArray(query['languageIds[]']) ? query['languageIds[]'] : [query['languageIds[]']]
@@ -33,6 +33,7 @@ exports.listTasks = (req, res) => {
     query.labelIds = Array.isArray(query['labelIds[]']) ? query['labelIds[]'] : [query['labelIds[]']]
     delete query['labelIds[]']
   }
+
   Tasks.taskSearch(query)
     .then(data => {
       res.send(data)

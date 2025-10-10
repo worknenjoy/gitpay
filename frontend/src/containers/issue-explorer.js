@@ -14,7 +14,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    listTasks: ({ status }) => dispatch(listTasks({ status })),
+    listTasks: (params) => dispatch(listTasks(params)),
     filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
     listLabels: () => dispatch(listLabels()),
     listLanguages: () => dispatch(listLanguage())

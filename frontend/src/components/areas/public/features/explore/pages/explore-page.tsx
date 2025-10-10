@@ -11,7 +11,6 @@ const ExplorePublicPage = () => {
           <Switch>
             <Route exact path="/explore" component={ () => <Redirect to="/explore/issues" /> } />
             <Route exact path="/explore/issues" component={ IssueExplorerContainer } />
-            <Route exact path="/explore/issues/:filter" component={ IssueExplorerContainer } />
           </Switch>
         </HashRouter>
       </ExplorerPublicPage>
