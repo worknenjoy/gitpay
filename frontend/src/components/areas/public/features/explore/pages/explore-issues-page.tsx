@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import ExplorerIssuePublicPage from "design-library/pages/public-pages/explorer-public-page/explorer-issue-public-page/explorer-issue-public-page";
-import { useParams } from "react-router";
 
 const ExploreIssuesPage = ({
-  filteredTasks,
   filterTasks,
   listTasks,
   issues,
@@ -13,16 +11,13 @@ const ExploreIssuesPage = ({
   listLanguages
 }) => {
 
-  const { filter } = useParams<{ filter: string }>();
-
   useEffect(() => {
-    listTasks({status: filter});
-  }, [filter]);
+    listTasks({});
+  }, [listTasks]);
   
   return (
     <>
       <ExplorerIssuePublicPage
-        filteredTasks={filteredTasks}
         filterTasks={filterTasks}
         listTasks={listTasks}
         issues={issues}

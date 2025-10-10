@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Select, MenuItem, Chip, FormControl, OutlinedInput } from '@mui/material';
+import { Select, Chip, FormControl, OutlinedInput } from '@mui/material';
 import { useIntl, defineMessages } from 'react-intl';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { MenuItemCustom } from './issue-filter.styles';
 
 const classesStatic = {
@@ -26,64 +26,41 @@ const messages = defineMessages({
 });
 
 interface IssueFilterProps {
-  filterTasks: any;
-  baseUrl?: string;
-  tasks: any;
-  filteredTasks: any;
+  onFilter?: any;
+  counts: {
+    allIssues: number;
+    withBounties: number;
+    noBounties: number;
+  };
 }
 
 const IssueFilter: React.FC<IssueFilterProps> = ({
-  filterTasks,
-  baseUrl = '/tasks/',
-  tasks
+  onFilter,
+  counts
 }) => {
+  const { filter } = useParams<{ filter: string }>();
   const classes = classesStatic;
   const intl = useIntl();
-  const history = useHistory();
+
+  const { allIssues, withBounties, noBounties } = counts;
 
   const [taskListState, setTaskListState] = useState({
-    tab: 0,
+    tab: "all",
     loading: true
   });
-  const [allTasksCount, setAllTasksCount] = useState(0);
-  const [withBountiesCount, setWithBountiesCount] = useState(0);
-  const [noBountiesCount, setNoBountiesCount] = useState(0);
+
+  const handleFilter = (value: string) => {
+    setTaskListState({ ...taskListState, tab: value });
+    onFilter?.(value);
+  }
 
   useEffect(() => {
-    updateCounts(tasks);
-  }, [tasks]);
-
-  const updateCounts = (taskList: any[]) => {
-    setAllTasksCount(taskList.length);
-    setWithBountiesCount(
-      taskList.filter((task) => parseFloat(task.value) > 0).length
-    );
-    setNoBountiesCount(
-      taskList.filter((task) => parseFloat(task.value) === 0).length
-    );
-  };
+    setTaskListState({ ...taskListState, tab: filter ? filter : "all" });
+  }, [filter]);
 
   const handleTabChange = async (event: any) => {
-    const value = event.target.value as number;
-    setTaskListState({ ...taskListState, tab: value });
-    let filterPromise;
-    switch (value) {
-      case 0:
-        history.push(baseUrl + "open");
-        filterPromise = await filterTasks("status", "open");
-        break;
-      case 1:
-        history.push(baseUrl + "withBounties");
-        filterPromise = await filterTasks("issuesWithBounties");
-        break;
-      case 2:
-        history.push(baseUrl + "contribution");
-        filterPromise = await filterTasks("contribution");
-        break;
-      default:
-        filterPromise = await filterTasks("all");
-    }
-    filterPromise();
+    const value = event.target.value;
+    handleFilter(value);
   };
 
   return (
@@ -98,31 +75,31 @@ const IssueFilter: React.FC<IssueFilterProps> = ({
           />
         }
       >
-        <MenuItemCustom value={0}>
+        <MenuItemCustom value={"all"}>
           {intl.formatMessage(messages.allTasks)}
           <Chip
-            label={allTasksCount}
+            label={allIssues}
             size="small"
             variant="outlined"
-            sx={taskListState.tab === 0 ? classes.chipActive : classes.chip}
+            sx={taskListState.tab === "all" ? classes.chipActive : classes.chip}
           />
         </MenuItemCustom>
-        <MenuItemCustom value={1}>
+        <MenuItemCustom value={"withBounties"}>
           {intl.formatMessage(messages.allPublicTasksWithBounties)}
           <Chip
-            label={withBountiesCount}
+            label={withBounties}
             size="small"
             variant="outlined"
-            sx={taskListState.tab === 1 ? classes.chipActive : classes.chip}
+            sx={taskListState.tab === "withBounties" ? classes.chipActive : classes.chip}
           />
         </MenuItemCustom>
-        <MenuItemCustom value={2}>
+        <MenuItemCustom value={"noBounties"}>
           {intl.formatMessage(messages.allPublicTasksNoBounties)}
           <Chip
-            label={noBountiesCount}
+            label={noBounties}
             size="small"
             variant="outlined"
-            sx={taskListState.tab === 2 ? classes.chipActive : classes.chip}
+            sx={taskListState.tab === "noBounties" ? classes.chipActive : classes.chip}
           />
         </MenuItemCustom>
       </Select>

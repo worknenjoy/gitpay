@@ -23,7 +23,7 @@ const MenuProps = {
 const TaskFilterLangauges = function({
   languages,
   listLanguages,
-  listTasks,
+  listTasks
 }: {
   languages: any;
   listLanguages: any;

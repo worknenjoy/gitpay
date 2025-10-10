@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom';
 const LabelsFilter = function({
   labels,
   listLabels,
-  listTasks,
+  listTasks
 }: {
   labels: any;
   listLabels: any;

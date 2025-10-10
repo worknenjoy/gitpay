@@ -6,13 +6,13 @@ const ExploreTabs = ({ children }) => {
   const tabs = [
     { label: 'Issues', value: 'issues' },
     { label: 'Projects', value: 'projects' },
-    { label: 'Organizations', value: 'organizations' },
+    { label: 'Organizations', value: 'organizations' }
   ];
   return (
     <>
       <BaseTabs
         tabs={tabs}
-        activeTab='issues'
+        activeTab="issues"
         withCard={false}
       >
         {children}

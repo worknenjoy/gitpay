@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useMemo } from 'react';
 import { AppBar, Toolbar } from '@mui/material';
-import { useIntl, defineMessages } from 'react-intl';
-import { useHistory } from 'react-router-dom';
+import { defineMessages } from 'react-intl';
 import LabelsFilter from '../../../atoms/filters/labels-filter/labels-filter';
 import LanguageFilter from '../../../atoms/filters/languages-filter/languages-filter';
 import IssueFilter from '../../../atoms/filters/issue-filter/issue-filter';
@@ -29,52 +28,59 @@ const messages = defineMessages({
 });
 
 interface TaskFiltersProps {
-  filterTasks: any;
-  baseUrl?: string;
-  tasks: any;
-  filteredTasks: any;
+  issues: any;
   labels: any;
   listLabels?: any;
   listTasks?: any;
+  filterTasks?: any;
   languages: any;
   listLanguages?: any;
 }
 
-const TaskFilters: React.FC<TaskFiltersProps> = ({
-  filterTasks,
-  baseUrl = '/tasks/',
-  tasks,
-  filteredTasks,
+const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
+  issues,
   labels,
   listLabels,
   listTasks,
+  filterTasks,
   languages,
   listLanguages
 }) => {
-  const classes = classesStatic;
-  const intl = useIntl();
-  const history = useHistory();
-
-  const [taskListState, setTaskListState] = useState({
-    tab: 0,
-    loading: true
-  });
-  const [allTasksCount, setAllTasksCount] = useState(0);
-  const [withBountiesCount, setWithBountiesCount] = useState(0);
-  const [noBountiesCount, setNoBountiesCount] = useState(0);
+  const allIssuesRef = useRef(null);
 
   useEffect(() => {
-    updateCounts(tasks);
-  }, [tasks]);
+    if (issues?.length && !allIssuesRef.current) {
+      allIssuesRef.current = issues;
+    }
+  }, [issues]);
 
-  const updateCounts = (taskList: any[]) => {
-    setAllTasksCount(taskList.length);
-    setWithBountiesCount(
-      taskList.filter((task) => parseFloat(task.value) > 0).length
-    );
-    setNoBountiesCount(
-      taskList.filter((task) => parseFloat(task.value) === 0).length
-    );
+  const counts = useMemo(() => {
+    const base = allIssuesRef.current ?? [];
+    const toNum = (v: any) => (typeof v === "number" ? v : parseFloat(v)) || 0;
+    return {
+      allIssues: base.length,
+      withBounties: base.filter(t => toNum(t.value) > 0).length,
+      noBounties: base.filter(t => toNum(t.value) === 0).length,
+    };
+  }, [allIssuesRef.current]);
+
+  const handleFilter = (value: string) => {
+    switch (value) {
+      case "withBounties":
+        filterTasks("issuesWithBounties");
+        break;
+      case "noBounties":
+        filterTasks("contribution");
+        break;
+      case "open":
+        filterTasks("status", "open");
+        break;
+      case "closed":
+        filterTasks("status", "closed");
+        break;
+      default:
+        filterTasks("all");
+    }
   };
 
   return (
@@ -82,10 +88,8 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
       <Toolbar style={{ display: 'flex', placeContent: 'space-between', margin: 0, padding: 0 }}>
         <div style={{width: '25%', marginRight: 12}}>
           <IssueFilter 
-            filterTasks={filterTasks}
-            filteredTasks={filteredTasks}
-            tasks={tasks}
-            baseUrl={baseUrl}
+            onFilter={handleFilter}
+            counts={counts}
           />
         </div>
         <div style={{width: '15%', marginRight: 12}}>
@@ -110,4 +114,4 @@ const TaskFilters: React.FC<TaskFiltersProps> = ({
   );
 };
 
-export default TaskFilters;
+export default IssueFiltersBar;

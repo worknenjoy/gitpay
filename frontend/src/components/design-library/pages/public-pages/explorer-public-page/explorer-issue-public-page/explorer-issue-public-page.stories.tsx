@@ -6,9 +6,9 @@ const meta = {
   title: 'Design Library/Pages/Public/Explorer/Issue',
   component: ExplorerIssuePublicPage,
   parameters: {
-    layout: 'fullscreen',
+    layout: 'fullscreen'
   },
-  decorators: [ withPublicExplorerTemplate, withPublicTemplate ],
+  decorators: [ withPublicExplorerTemplate, withPublicTemplate ]
 } satisfies Meta<typeof ExplorerIssuePublicPage>;
 
 export default meta;
@@ -28,18 +28,18 @@ export const Default: Story = {
         title: 'Sample Issue 1',
         description: 'This is a sample issue description.',
         status: 'open',
-        labels: ['bug', 'frontend'],
-      }],
+        labels: ['bug', 'frontend']
+      }]
     },
     labels: {
       completed: true,
-      data: [{ id: 1, name: 'bug' }, { id: 2, name: 'feature' }],
+      data: [{ id: 1, name: 'bug' }, { id: 2, name: 'feature' }]
     },
     languages: {
       completed: true,
-      data: [{ id: 1, name: 'JavaScript' }, { id: 2, name: 'Python' }],
+      data: [{ id: 1, name: 'JavaScript' }, { id: 2, name: 'Python' }]
     },
     listLabels: () => {},
-    listLanguages: () => {},
-  },
+    listLanguages: () => {}
+  }
 };

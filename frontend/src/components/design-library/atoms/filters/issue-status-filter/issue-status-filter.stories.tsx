@@ -8,7 +8,7 @@ const meta: Meta<typeof IssueStatusFilter> = {
   component: IssueStatusFilter,
   args: {
     
-  },
+  }
 };
 export default meta;
 

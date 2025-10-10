@@ -19,10 +19,9 @@ const issueMetadata = {
   "createdAt": { sortable: true, numeric: false, dataBaseKey: "createdAt", label: 'Created At' }
 }
 
-export const IssuesTable = ({ 
-  issues,
+export const IssuesTable = ({
   filterTasks,
-  filteredTasks,
+  issues,
   labels,
   languages,
   listLabels,
@@ -57,15 +56,13 @@ export const IssuesTable = ({
   return (
     <>
       <IssueFilterBar
-        filterTasks={filterTasks}
-        filteredTasks={filteredTasks}
         labels={labels}
         languages={languages}
         listLabels={listLabels}
         listLanguages={listLanguages}
         listTasks={listTasks}
-        tasks={issues.data}
-        baseUrl='/test/issues' 
+        filterTasks={filterTasks}
+        issues={issues.data}
       />
       <SectionTable
         tableData={issues}

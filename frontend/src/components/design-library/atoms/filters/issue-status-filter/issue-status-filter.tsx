@@ -2,7 +2,6 @@ import React from 'react';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import IssueStatus from 'design-library/atoms/status/issue-status/issue-status';
 
@@ -11,7 +10,7 @@ const IssueStatusFilter = function() {
   const statuses = [
     { id: 'all', name: 'All' },
     { id: 'open', name: 'Open' },
-    { id: 'closed', name: 'Closed' },
+    { id: 'closed', name: 'Closed' }
   ];
 
   return (

@@ -2,9 +2,8 @@ import React from 'react';
 import IssueTable from 'design-library/molecules/tables/issue-table/issue-table';
 
 const ExplorerIssuePublicPage = ({
-  filterTasks,
-  filteredTasks,
   listTasks,
+  filterTasks,
   issues,
   labels,
   languages,
@@ -13,13 +12,12 @@ const ExplorerIssuePublicPage = ({
 }) => {
   return (
     <IssueTable
-      filterTasks={filterTasks}
-      filteredTasks={filteredTasks}
       listTasks={listTasks}
       issues={issues}
       labels={labels}
       languages={languages}
       listLabels={listLabels}
+      filterTasks={filterTasks}
       listLanguages={listLanguages}
     />
   );

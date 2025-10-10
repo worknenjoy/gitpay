@@ -7,8 +7,7 @@ import { listLanguage } from '../actions/languageActions'
 import { getFilteredTasks } from '../selectors/tasks'
 
 const mapStateToProps = (state) => ({
-  issues: state.tasks,
-  filteredTasks: getFilteredTasks(state),
+  issues: getFilteredTasks(state),
   labels: state.labels,
   languages: state.languages
 })
