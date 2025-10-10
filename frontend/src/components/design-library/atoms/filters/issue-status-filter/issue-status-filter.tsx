@@ -1,11 +1,16 @@
 import React from 'react';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import { OutlinedInput, MenuItem, FormControl, Select } from '@mui/material';
 import IssueStatus from 'design-library/atoms/status/issue-status/issue-status';
 
-const IssueStatusFilter = function() {
+const IssueStatusFilter = function({
+  onFilter
+}) {
+  const [ value, setValue ] = React.useState('all');
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+    onFilter?.(event.target.value);
+  };
 
   const statuses = [
     { id: 'all', name: 'All' },
@@ -21,7 +26,8 @@ const IssueStatusFilter = function() {
           id="demo-multiple-checkbox"
           name={'issueStatus'}
           variant="outlined"
-          value={'all'}
+          onChange={handleChange}
+          value={value}
           input={
             <OutlinedInput 
               size="small"

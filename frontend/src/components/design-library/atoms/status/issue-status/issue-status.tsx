@@ -11,12 +11,12 @@ const IssueStatus = ({ status }) => {
       {status === 'closed' ? (
         <ChipStatusClosed 
           label={intl.formatMessage(Constants.STATUSES[status])}
-          avatar={<AvatarStatusClosed style={{ width: 12, height: 12 }}>{' '}</AvatarStatusClosed>}
+          avatar={<AvatarStatusClosed style={{ width: 8, height: 8 }}>{' '}</AvatarStatusClosed>}
         />
       ) : (
         <ChipStatusSuccess 
           label={intl.formatMessage(Constants.STATUSES[status])}
-          avatar={<AvatarStatusSuccess style={{ width: 12, height: 12 }}>{' '}</AvatarStatusSuccess>}
+          avatar={<AvatarStatusSuccess style={{ width: 8, height: 8 }}>{' '}</AvatarStatusSuccess>}
         />
       )}
     </div>

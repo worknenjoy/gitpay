@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { AppBar, Toolbar } from '@mui/material';
 import { defineMessages } from 'react-intl';
 import LabelsFilter from '../../../atoms/filters/labels-filter/labels-filter';
@@ -46,68 +46,56 @@ const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
   languages,
   listLanguages
 }) => {
-  const allIssuesRef = useRef(null);
-
-  useEffect(() => {
-    if (issues?.length && !allIssuesRef.current) {
-      allIssuesRef.current = issues;
-    }
-  }, [issues]);
-
   const counts = useMemo(() => {
-    const base = allIssuesRef.current ?? [];
-    const toNum = (v: any) => (typeof v === "number" ? v : parseFloat(v)) || 0;
+    const base = issues ?? [];
+    const toNum = (v: any) => (typeof v === 'number' ? v : parseFloat(v)) || 0;
     return {
       allIssues: base.length,
-      withBounties: base.filter(t => toNum(t.value) > 0).length,
-      noBounties: base.filter(t => toNum(t.value) === 0).length,
+      withBounties: base.filter((t: any) => toNum(t.value) > 0).length,
+      noBounties: base.filter((t: any) => toNum(t.value) === 0).length
     };
-  }, [allIssuesRef.current]);
+  }, [issues]);
 
   const handleFilter = (value: string) => {
     switch (value) {
-      case "withBounties":
-        filterTasks("issuesWithBounties");
+      case 'withBounties':
+        filterTasks('issuesWithBounties');
         break;
-      case "noBounties":
-        filterTasks("contribution");
-        break;
-      case "open":
-        filterTasks("status", "open");
-        break;
-      case "closed":
-        filterTasks("status", "closed");
+      case 'noBounties':
+        filterTasks('contribution');
         break;
       default:
-        filterTasks("all");
+        filterTasks('all');
+    }
+  };
+
+  const handleStatusFilter = (value: string) => {
+    switch (value) {
+      case 'open':
+        listTasks({ status: 'open' });
+        break;
+      case 'closed':
+        listTasks({ status: 'closed' });
+        break;
+      default:
+        listTasks({});
     }
   };
 
   return (
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar style={{ display: 'flex', placeContent: 'space-between', margin: 0, padding: 0 }}>
-        <div style={{width: '25%', marginRight: 12}}>
-          <IssueFilter 
-            onFilter={handleFilter}
-            counts={counts}
-          />
+        <div style={{ width: '25%', marginRight: 12 }}>
+          <IssueFilter onFilter={handleFilter} counts={counts} />
         </div>
-        <div style={{width: '15%', marginRight: 12}}>
-          <IssueFilterStatus />
+        <div style={{ width: '15%', marginRight: 12 }}>
+          <IssueFilterStatus onFilter={handleStatusFilter} />
         </div>
-        <div style={{width: '30%', marginRight: 12}}>
-          <LabelsFilter
-            labels={labels}
-            listLabels={listLabels}
-            listTasks={listTasks}
-          />
+        <div style={{ width: '30%', marginRight: 12 }}>
+          <LabelsFilter labels={labels} listLabels={listLabels} listTasks={listTasks} />
         </div>
-        <div style={{width: '30%', marginRight: 12}}>
-          <LanguageFilter
-            languages={languages}
-            listLanguages={listLanguages}
-            listTasks={listTasks}
-          />
+        <div style={{ width: '30%', marginRight: 12 }}>
+          <LanguageFilter languages={languages} listLanguages={listLanguages} listTasks={listTasks} />
         </div>
       </Toolbar>
     </AppBar>

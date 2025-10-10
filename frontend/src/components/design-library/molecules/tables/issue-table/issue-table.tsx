@@ -14,8 +14,8 @@ const issueMetadata = {
   "status": { sortable: true, numeric: false, dataBaseKey: "description", label: 'Status'},
   "project": { sortable: true, numeric: false, dataBaseKey: "Project", label: 'Project' },
   "value": { sortable: true, numeric: true, dataBaseKey: "value", label: 'Amount' },
-  "labels": { sortable: true, numeric: false, dataBaseKey: "labels", label: 'Labels' },
-  "languages": { sortable: true, numeric: false, dataBaseKey: "languages", label: 'Languages' },
+  "labels": { sortable: true, numeric: false, dataBaseKey: "Labels", label: 'Labels' },
+  "languages": { sortable: true, numeric: false, dataBaseKey: "ProgrammingLanguage", label: 'Languages' },
   "createdAt": { sortable: true, numeric: false, dataBaseKey: "createdAt", label: 'Created At' }
 }
 
