@@ -4,7 +4,7 @@ import { defineMessages, FormattedMessage } from 'react-intl'
 
 import { Tabs, Tab, Typography, Skeleton } from '@mui/material'
 import { tableHeaderDefault, tableHeaderWithProject } from '../../../../shared/table-metadata/task-header-metadata'
-import ProjectListSimple from 'design-library/molecules/cards/project-card/project-list-simple'
+import ProjectListSimple from 'design-library/molecules/lists/project-list/project-list-compact/project-list-compact'
 import { Breadcrumb } from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
 import { RootTabs } from './project-page.styles'
 

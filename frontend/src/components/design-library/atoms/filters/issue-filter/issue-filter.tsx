@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Select, Chip, FormControl, OutlinedInput } from '@mui/material';
 import { useIntl, defineMessages } from 'react-intl';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { MenuItemCustom } from './issue-filter.styles';
 
 const classesStatic = {

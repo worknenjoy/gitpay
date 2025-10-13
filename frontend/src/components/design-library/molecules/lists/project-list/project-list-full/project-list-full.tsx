@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Grid, Pagination } from '@mui/material'
-import { StyledContainer, StyledProjectCard } from './project-list.styles'
+import { StyledContainer, StyledProjectCard } from './project-list-full.styles'
 
 const paginate = (array, pageSize, pageNumber) => {
   // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
   return array && array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
 }
 
-const ProjectList = ({ listProjects, projects }) => {
+const ProjectListFull = ({ projects }) => {
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [currentProjects, setCurrentProjects] = useState([])
   const recordsPerPage = 12
 
   useEffect(() => {
-    listProjects && listProjects()
     setTotal(filter(projects.data).length)
     changePage()
   }, [projects.data])
@@ -86,5 +85,5 @@ const ProjectList = ({ listProjects, projects }) => {
   )
 }
 
-export default ProjectList
+export default ProjectListFull
 

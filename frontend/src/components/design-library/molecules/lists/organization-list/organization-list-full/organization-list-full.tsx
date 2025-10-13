@@ -1,36 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import {
   Box,
-  Container,
   Grid,
   Pagination
 } from '@mui/material'
-import { styled } from '@mui/material/styles'
-import OrganizationCard from './organization-card'
-
-const Root = styled(Container)(({ theme }) => ({
-  backgroundColor: theme.palette.background.dark,
-  minHeight: '100%',
-  paddingBottom: theme.spacing(3),
-  paddingTop: theme.spacing(3)
-}))
-
-const StyledOrganizationCard = styled(OrganizationCard)({
-  height: '100%'
-})
+import { Root, StyledOrganizationCard } from './organization-list-full.styles'
 
 const paginate = (array, pageSize, pageNumber) => {
   return array && array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
 }
 
-const OrganizationList = ({ listOrganizations, organizations }) => {
+const OrganizationList = ({ organizations }) => {
   const [currentOrganizations, setCurrentOrganizations] = useState([])
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const recordsPerPage = 12
 
   useEffect(() => {
-    listOrganizations && listOrganizations()
     organizations.data && setTotal(organizations.data.length)
     changePage()
   }, [organizations.data])
@@ -51,7 +37,7 @@ const OrganizationList = ({ listOrganizations, organizations }) => {
       <Box mt={ 3 } mb={ 3 }>
         <Grid container spacing={ 3 }>
           { currentOrganizations && currentOrganizations.length && currentOrganizations.map(organization => (
-            <Grid item key={ organization.id } xs={ 12 } md={ 6 } lg={ 4 }>
+            <Grid key={ organization.id } size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
               <StyledOrganizationCard organization={ organization } />
             </Grid>
           )) }

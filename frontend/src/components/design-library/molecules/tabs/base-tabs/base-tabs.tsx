@@ -19,15 +19,16 @@ interface TabPanelProps {
   children?: React.ReactNode;
   isVertical?: boolean;
   withCard?: boolean;
+  value?: string;
 }
 
 function TabPanel(props: TabPanelProps) {
-  const { children, isVertical, withCard = true } = props;
+  const { children, value, isVertical, withCard = true, ...other } = props;
 
   const Comp = isVertical ? TabPanelVertical : TabPanelRoot;
 
   return (
-    <Comp role="tabpanel">
+    <Comp role="tabpanel" {...other}>
       <Box p={0}>
         {withCard ? (
           <StyledCard elevation={0}>
@@ -44,19 +45,19 @@ function TabPanel(props: TabPanelProps) {
 type BaseTabsProps = {
   tabs: Array<{
     label: string | React.ReactNode;
-    value: string;
+    value: string | number;
     link?: string;
   }>;
-  activeTab?: string;
+  activeTab?: string | number;
   orientation?: 'horizontal' | 'vertical';
-  onChange?: (event: React.ChangeEvent<{}>, newValue: string) => void;
+  onChange?: (event: React.ChangeEvent<{}>, newValue: string | number) => void;
   children: React.ReactNode;
   withCard?: boolean;
 }
 
 const BaseTabs = ({
   tabs,
-  activeTab = '0',
+  activeTab = 0,
   orientation = 'horizontal',
   onChange,
   withCard = true,
@@ -92,7 +93,7 @@ const BaseTabs = ({
   return (
     <RootComp>
       <Tabs
-        value={value}
+        value={value || 0}
         onChange={handleChange}
         textColor="secondary"
         indicatorColor="secondary"

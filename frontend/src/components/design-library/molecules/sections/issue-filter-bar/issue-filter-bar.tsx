@@ -87,6 +87,9 @@ const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
 
   const handleStatusFilter = (value: string) => {
     switch (value) {
+      case 'all':
+        mergedListTasks({ status: undefined });
+        break;
       case 'open':
         mergedListTasks({ status: 'open' });
         break;
@@ -95,6 +98,7 @@ const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
         break;
       default:
         mergedListTasks({});
+        break;
     }
   };
 

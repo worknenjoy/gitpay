@@ -9,7 +9,6 @@ import {
 } from '@mui/material'
 
 // import TaskFilter from '../task/task-filters'
-import Taskfilters from '../../../../../containers/task-filter'
 import ExploreIssuesTable from './explore-issues-table';
 
 import logoGithub from 'images/github-logo.png'

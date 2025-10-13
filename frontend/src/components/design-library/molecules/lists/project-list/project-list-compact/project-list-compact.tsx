@@ -32,7 +32,7 @@ const Item = styled('div')(({ theme }) => ({
   marginBottom: theme.spacing(3)
 }))
 
-export default function ProjectListSimple ({ listProjects, projects, user }) {
+export default function ProjectListCompact ({ listProjects, projects, user }) {
   useEffect(() => {
     listProjects && listProjects()
   }, [])
@@ -79,7 +79,7 @@ export default function ProjectListSimple ({ listProjects, projects, user }) {
     <Root>
       { projects && projects.data && projectSortMoreBounties(projectsSort(projects.data)).map(p => {
         return (
-          <Item key={p.id || p.name}>
+          <Item key={p.id}>
             <RootCard>
               <CardHeader
                 avatar={

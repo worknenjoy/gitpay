@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { connect } from 'react-redux'
-import OrganizationList from '../components/design-library/molecules/cards/organization/organization-list'
+import ExploreOrganizationPage from '../components/areas/public/features/explore/pages/explore-organization-page'
 import { listOrganizations } from '../actions/organizationsActions'
 
 const mapStateToProps = (state, props) => {
@@ -15,4 +15,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrganizationList)
+export default connect(mapStateToProps, mapDispatchToProps)(ExploreOrganizationPage)

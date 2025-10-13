@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { connect } from 'react-redux'
-import ProjectList from '../components/design-library/molecules/cards/project-card/project-list'
+import ProjectList from '../components/design-library/molecules/lists/project-list/project-list-compact/project-list'
 import { listTasks, filterTasks } from '../actions/taskActions'
 import { fetchProject, listProjects } from '../actions/projectActions'
 import { getFilteredTasks, getProject } from '../selectors/tasks'

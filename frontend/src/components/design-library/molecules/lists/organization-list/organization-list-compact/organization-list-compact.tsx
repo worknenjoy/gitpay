@@ -1,38 +1,12 @@
 import React, { useEffect } from 'react'
-import { styled } from '@mui/material/styles'
-import Card from '@mui/material/Card'
-import Tooltip from '@mui/material/Tooltip'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import Chip from '@mui/material/Chip'
-import Avatar from '@mui/material/Avatar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
+import { Tooltip, CardHeader, CardContent, CardActions, Chip, Avatar, IconButton, Typography } from '@mui/material'
 import slugify from '@sindresorhus/slugify'
+import { Root, RootCard, Item } from './organization-list-compact.styles'
 
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 
-const Root = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing(3),
-  marginBottom: theme.spacing(2),
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'flex-start'
-}))
-
-const RootCard = styled(Card)(({ theme }) => ({
-  maxWidth: 500,
-  marginRight: 20
-}))
-
-const Item = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing(3),
-  marginBottom: theme.spacing(3)
-}))
-
-export default function OrganizationList ({ listOrganizations, organizations }) {
+export default function OrganizationListCompact ({ listOrganizations, organizations }) {
 
   useEffect(() => {
     listOrganizations()

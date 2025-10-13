@@ -13,7 +13,7 @@ const IssueStatusFilter = function({
   };
 
   const statuses = [
-    { id: 'all', name: 'All' },
+    { id: 'all', name: 'All Statuses' },
     { id: 'open', name: 'Open' },
     { id: 'closed', name: 'Closed' }
   ];

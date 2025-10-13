@@ -3,15 +3,21 @@ import { FormattedMessage } from 'react-intl'
 import Link from '@mui/material/Link'
 import { Breadcrumbs, Typography, Skeleton } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
-import { styled } from '@mui/material/styles'
 import { BreadcrumbRoot, BreadcrumbLink } from './breadcrumb.styles'
 import { useHistory } from 'react-router-dom'
 
-export const Breadcrumb = ({ task, user, project, organization }) => {
+type BreadcrumbProps = {
+  task?: any;
+  user?: any;
+  project?: any;
+  organization?: any;
+}
+
+export const Breadcrumb = ({ task, user, project, organization }: BreadcrumbProps) => {
   const history = useHistory()
   const isProfile = history.location.pathname.includes('profile')
   const breadcrumbPathPrefix = isProfile ? '/profile/' : '/'
-  const { data, completed } = task
+  const { data = {}, completed } = task || {}
   const taskUser = data?.User
   const breadcrumbProject = data?.Project || project?.data
   const breadcrumbOrganization = breadcrumbProject?.Organization || organization
@@ -26,7 +32,7 @@ export const Breadcrumb = ({ task, user, project, organization }) => {
   return (
     completed || projectCompleted || organizationCompleted ?
     <BreadcrumbRoot>
-      <Breadcrumbs aria-label='breadcrumb' separator={<NavigateNextIcon />} fontSize='small'>
+      <Breadcrumbs aria-label='breadcrumb' separator={<NavigateNextIcon />}>
         {(user?.id && user?.id === taskUser?.id) ? (
           <Link href={'/#/profile/tasks/createdbyme'} color='inherit'>
             <Typography variant='subtitle2' component={BreadcrumbLink}>
@@ -62,5 +68,6 @@ export const Breadcrumb = ({ task, user, project, organization }) => {
       </Breadcrumbs>
     </BreadcrumbRoot> : <Skeleton variant='text' />
   )
-
 }
+
+export default Breadcrumb

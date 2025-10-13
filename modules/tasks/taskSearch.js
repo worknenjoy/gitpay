@@ -17,7 +17,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
 
   // Ensure labelWhere is always a valid object for Sequelize includes
   let labelInclude = {
-    model: models.Label,
+    model: models.Label
   }
   if (searchParams.labelIds) {
     labelInclude = {
