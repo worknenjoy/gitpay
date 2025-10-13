@@ -5,13 +5,11 @@ import HomePage from 'design-library/pages/public-pages/home-public-page/home-pu
 import TaskContainer from '../../../../containers/task'
 import TaskOrdersContainer from '../../../../containers/task-orders'
 import WelcomeContainer from '../../../../containers/welcome';
-import TaskExplorer from '../../../../containers/task-explorer'
 import ProjectPageContainer from '../../../../containers/project-page'
+import OrganizationPageContainer from '../../../../containers/organization-page'
 import useCommonActions from '../../../../hooks/use-common-actions';
 import ExplorePage from '../features/explore/pages/explore-page'
 import PricingPage from '../features/pricing/pages/pricing-page';
-
-const TaskExplorerOrganizations = (props) => <TaskExplorer {...props} />
 
 const PublicPage = ({
   user,
@@ -62,8 +60,8 @@ const PublicPage = ({
             path="/task/:id/order/:order_id/status/:status"
             component={TaskOrdersContainer}
           />
-          <Route exact path="/organizations/:organization_id" component={ (props) => <TaskExplorerOrganizations {...props} /> } />
-          <Route exact path="/organizations/:organization_id/:slug" component={ (props) => <TaskExplorerOrganizations {...props} /> } />
+          <Route exact path="/organizations/:organization_id" component={ OrganizationPageContainer } />
+          <Route exact path="/organizations/:organization_id/:slug" component={ OrganizationPageContainer } />
 
           <Route exact path="/organizations/:organization_id/projects/:project_id" component={ ProjectPageContainer } />
           <Route exact path="/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug" component={ ProjectPageContainer } />

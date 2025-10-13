@@ -32,9 +32,9 @@ const Item = styled('div')(({ theme }) => ({
   marginBottom: theme.spacing(3)
 }))
 
-export default function ProjectListCompact ({ listProjects, projects, user }) {
+export default function ProjectListCompact ({ listProjects, projects }) {
   useEffect(() => {
-    listProjects && listProjects()
+    listProjects?.()
   }, [])
 
   const hasOpenIssues = (project) => {
@@ -62,7 +62,7 @@ export default function ProjectListCompact ({ listProjects, projects, user }) {
   }
 
   const getProjectLink = (p) => {
-    const url = user?.id ? `/#/profile/organizations/${p.OrganizationId}/projects/${p.id}` : `/#/organizations/${p.OrganizationId}/projects/${p.id}`
+    const url = `/#/organizations/${p.OrganizationId}/projects/${p.id}`
     return (
       <Chip 
         style={ { marginLeft: 10 } }

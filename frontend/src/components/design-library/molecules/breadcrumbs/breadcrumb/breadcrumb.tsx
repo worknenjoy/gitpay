@@ -20,7 +20,7 @@ export const Breadcrumb = ({ task, user, project, organization }: BreadcrumbProp
   const { data = {}, completed } = task || {}
   const taskUser = data?.User
   const breadcrumbProject = data?.Project || project?.data
-  const breadcrumbOrganization = breadcrumbProject?.Organization || organization
+  const breadcrumbOrganization = breadcrumbProject?.Organization || organization?.data
   const { completed: projectCompleted } = project || {}
   const { completed: organizationCompleted } = organization || {}
 
@@ -47,15 +47,23 @@ export const Breadcrumb = ({ task, user, project, organization }: BreadcrumbProp
           </Link>
         )}
         {breadcrumbProject?.id && (
-
           <Link href={'/#' + breadcrumbPathPrefix + 'organizations/' + breadcrumbOrganization?.id} color='inherit'>
             <Typography variant='subtitle2' component={BreadcrumbLink}>
               {breadcrumbOrganization?.name}
             </Typography>
           </Link>
-
         )}
-        {data && (
+        {breadcrumbProject?.id && (
+          <Typography variant='subtitle2'>
+            {breadcrumbProject?.name}
+          </Typography>
+        )}
+        {breadcrumbOrganization?.id && !breadcrumbProject?.id && (
+          <Typography variant='subtitle2'>
+            {breadcrumbOrganization?.name}
+          </Typography>
+        )}
+        {data.length && (
           <Link href={`/#${breadcrumbPathPrefix}organizations/${breadcrumbProject?.id}/projects/${data?.Project?.id}`} color='inherit'>
             <Typography variant='subtitle2' component={BreadcrumbLink}>
               {breadcrumbProject?.name}

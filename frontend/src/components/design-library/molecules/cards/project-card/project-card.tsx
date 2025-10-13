@@ -1,33 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { styled } from '@mui/material/styles'
 import {
   Avatar,
   Box,
   Chip,
-  Card,
   CardContent,
   Divider,
   Grid,
   Typography,
   IconButton,
   Tooltip,
-  Link
 } from '@mui/material'
 import slugify from '@sindresorhus/slugify'
+import { Link, useHistory } from 'react-router-dom'
+import { RootCard, StatsItem } from './project-card.styles'
 
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 
-const RootCard = styled(Card)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column'
-}))
-
-const StatsItem = styled(Grid)(({ theme }) => ({
-  alignItems: 'center',
-  display: 'flex'
-}))
 
 const projectBounties = (data) => {
   return data.length > 0 && data.map(task => task.value ? task.value : 0).reduce((prev, next) => parseInt(prev) + parseInt(next))
@@ -40,11 +30,11 @@ const projectBountiesList = (data) => {
 }
 
 const ProjectCard = ({ project }) => {
+  const history = useHistory()
 
-  const goToProject = (event, project) => {
-    event.preventDefault()
-    window.location.href = `/#/organizations/${project.Organization.id}/${slugify(project.Organization.name)}/projects/${project.id}/${slugify(project.name)}`
-    window.location.reload()
+  const goToProject = (e, project) => {
+    e.preventDefault()
+    history.push(`/organizations/${project.Organization.id}/${slugify(project.Organization.name)}/projects/${project.id}/${slugify(project.name)}`)
   }
 
   return (
@@ -74,7 +64,7 @@ const ProjectCard = ({ project }) => {
           color="textSecondary"
           variant="body2"
         >
-          <Link href={''} onClick={(e) => goToProject(e, project)}>
+          <Link to={`/organizations/${project.Organization.id}/${slugify(project.Organization.name)}/projects/${project.id}/${slugify(project.name)}`}>
             {project.name}
           </Link>
         </Typography>
@@ -85,11 +75,9 @@ const ProjectCard = ({ project }) => {
           variant="caption"
           style={{ display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 }}
         > by {' '}
-          {project.Organization && <Link color="textSecondary" href={''} onClick={(e) => {
-            e.preventDefault()
-            window.location.href = `/#/organizations/${project.Organization.id}/${slugify(project.Organization.name)}`
-            window.location.reload()
-          }}>{project.Organization.name}</Link>}
+          {project.Organization && <Link color="textSecondary" to={`/organizations/${project.Organization.id}/${slugify(project.Organization.name)}`}>
+            {project.Organization.name}
+          </Link>}
         </Typography>
         <Typography
           align="center"

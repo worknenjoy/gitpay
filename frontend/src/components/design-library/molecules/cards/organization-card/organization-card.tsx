@@ -7,20 +7,14 @@ import {
   CardContent,
   Divider,
   Grid,
-  Typography,
-  Link
+  Typography
 } from '@mui/material'
 import slugify from '@sindresorhus/slugify'
 import { RootCard, StatsItem } from './organization-card.styles'
+import { Link, useHistory } from 'react-router-dom'
 
 const OrganizationCard = ({ organization }) => {
-
-  const goToOrganization = (event, organization) => {
-    event.preventDefault()
-
-    window.location.href = `/#/organizations/${organization.id}/${slugify(organization.name)}`
-    window.location.reload()
-  }
+  const history = useHistory()
 
   return (
     <RootCard>
@@ -40,7 +34,7 @@ const OrganizationCard = ({ organization }) => {
           gutterBottom
           variant='h6'
         >
-          <Link color='textPrimary' href={''} onClick={(e) => goToOrganization(e, organization)}>
+          <Link color='textPrimary' to={`/organizations/${organization.id}/${slugify(organization.name)}`}>
             {organization.name}
           </Link>
         </Typography>
@@ -52,7 +46,7 @@ const OrganizationCard = ({ organization }) => {
           style={{ display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 }}
         > by {' '}
           {organization &&
-            <Link color='textSecondary' href={organization.User.username ? `/#/users/${organization.User.id}-${organization.User.username}` : `/#/users/${organization.User.id}`} >
+            <Link color='textSecondary' to={`/profile/${organization.User.username || organization.User.id}`}>
               {organization.User.name || organization.User.username}
             </Link>
           }
@@ -81,8 +75,7 @@ const OrganizationCard = ({ organization }) => {
           <StatsItem style={{ flexWrap: 'wrap' }}>
             {organization.Projects && organization.Projects.map(p =>
             (<Chip key={p.id} style={{ marginLeft: 10, marginBottom: 10 }} size='medium' clickable onClick={() => {
-              window.location.href = `/#/organizations/${organization.id}/${organization.name}/projects/${p.id}/${slugify(p.name)}`
-              window.location.reload()
+              history.push(`/organizations/${organization.id}/${organization.name}/projects/${p.id}/${slugify(p.name)}`)
             }} label={p.name}
             />)
             )}
