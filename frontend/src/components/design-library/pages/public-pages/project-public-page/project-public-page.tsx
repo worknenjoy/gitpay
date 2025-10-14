@@ -22,7 +22,7 @@ const ProjectPublicPage = ({
       />
       <ContextTitle
         context={project}
-        title={<FormattedMessage id='project.title' defaultMessage='Project' />}
+        title={<FormattedMessage id="project.title" defaultMessage="Project" />}
       />
       <ProjectIssuesTable
         issues={issues}

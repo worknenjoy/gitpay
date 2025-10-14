@@ -20,41 +20,41 @@ const OrganizationCard = ({ organization }) => {
     <RootCard>
       <CardContent>
         <Box
-          display='flex'
-          justifyContent='center'
+          display="flex"
+          justifyContent="center"
           mb={3}
         >
-          <Avatar aria-label='recipe'>
+          <Avatar aria-label="recipe">
             {organization.name[0]}
           </Avatar>
         </Box>
         <Typography
-          align='center'
-          color='textPrimary'
+          align="center"
+          color="textPrimary"
           gutterBottom
-          variant='h6'
+          variant="h6"
         >
-          <Link color='textPrimary' to={`/organizations/${organization.id}/${slugify(organization.name)}`}>
+          <Link color="textPrimary" to={`/organizations/${organization.id}/${slugify(organization.name)}`}>
             {organization.name}
           </Link>
         </Typography>
         <Typography
-          align='center'
-          color='textPrimary'
+          align="center"
+          color="textPrimary"
           gutterBottom
-          variant='caption'
+          variant="caption"
           style={{ display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 }}
         > by {' '}
           {organization &&
-            <Link color='textSecondary' to={`/profile/${organization.User.username || organization.User.id}`}>
+            <Link color="textSecondary" to={`/profile/${organization.User.username || organization.User.id}`}>
               {organization.User.name || organization.User.username}
             </Link>
           }
         </Typography>
         <Typography
-          align='center'
-          color='textPrimary'
-          variant='body1'
+          align="center"
+          color="textPrimary"
+          variant="body1"
         >
           {organization.description}
         </Typography>
@@ -64,17 +64,17 @@ const OrganizationCard = ({ organization }) => {
       <Box p={2}>
         <Grid
           container
-          justifyContent='space-between'
+          justifyContent="space-between"
           spacing={2}
         >
           <StatsItem>
-            <Typography variant='body2' color='textSecondary' component='small' style={{ width: '100%', marginBottom: 10, marginLeft: 16 }}>
+            <Typography variant="body2" color="textSecondary" component="small" style={{ width: '100%', marginBottom: 10, marginLeft: 16 }}>
               Projects:
             </Typography>
           </StatsItem>
           <StatsItem style={{ flexWrap: 'wrap' }}>
             {organization.Projects && organization.Projects.map(p =>
-            (<Chip key={p.id} style={{ marginLeft: 10, marginBottom: 10 }} size='medium' clickable onClick={() => {
+            (<Chip key={p.id} style={{ marginLeft: 10, marginBottom: 10 }} size="medium" clickable onClick={() => {
               history.push(`/organizations/${organization.id}/${organization.name}/projects/${p.id}/${slugify(p.name)}`)
             }} label={p.name}
             />)

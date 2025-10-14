@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta } from '@storybook/react';
 import OrganizationPublicPage from './organization-public-page';
 import { withPublicTemplate } from '../../../../../../.storybook/decorators/withPublicTemplate';
 
@@ -6,7 +6,7 @@ const meta: Meta<typeof OrganizationPublicPage> = {
   title: 'Design Library/Pages/Public/Organization',
   component: OrganizationPublicPage,
   parameters: {
-    layout: 'fullscreen',
+    layout: 'fullscreen'
   },
   decorators: [withPublicTemplate]
 };
@@ -41,8 +41,8 @@ export const Default = {
             id: '1',
             name: 'Project Sample'
           }
-        },
-      ],
-    },
-  },
+        }
+      ]
+    }
+  }
 };

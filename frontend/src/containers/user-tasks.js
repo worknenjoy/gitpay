@@ -1,22 +1,21 @@
 import { connect } from 'react-redux'
-import UserTasks from '../components/areas/private/features/issues/user-tasks'
+import MyIssuesPage from '../components/areas/private/features/issues/pages/my-issues-page'
 import { listTasks, filterTasks } from '../actions/taskActions'
 import { getFilteredTasks } from '../selectors/tasks'
-import { getUserData } from '../common/selectors/user/getUser'
+import { getCurrentUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    logged: state.loggedIn.logged,
-    user: getUserData(state),
-    tasks: getFilteredTasks(state)
+    user: getCurrentUser(state),
+    issues: getFilteredTasks(state)
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    listTasks: ({ projectId, userId, status }) => dispatch(listTasks({ projectId, userId, status })),
+    listTasks: (params) => dispatch(listTasks(params)),
     filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserTasks)
+export default connect(mapStateToProps, mapDispatchToProps)(MyIssuesPage)

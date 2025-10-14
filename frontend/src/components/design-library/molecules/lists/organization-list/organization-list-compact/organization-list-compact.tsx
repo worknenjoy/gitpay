@@ -21,15 +21,15 @@ export default function OrganizationListCompact ({ listOrganizations, organizati
             <RootCard>
               <CardHeader
                 avatar={
-                  <Avatar aria-label='recipe'>
+                  <Avatar aria-label="recipe">
                     { o.name[0] }
                   </Avatar>
                 }
                 action={
-                  <IconButton aria-label='provider'>
-                    <Tooltip id='tooltip-fab' title={ o.provider ? o.provider : 'See on repository' } placement='right'>
-                      <a target='_blank' href={ o.provider === 'bitbucket' ? `https://bitbucket.com/${o.name}` : `https://github.com/${o.name}` } rel="noreferrer">
-                        <img width='28' src={ o.provider === 'bitbucket' ? logoBitbucket : logoGithub }
+                  <IconButton aria-label="provider">
+                    <Tooltip id="tooltip-fab" title={ o.provider ? o.provider : 'See on repository' } placement="right">
+                      <a target="_blank" href={ o.provider === 'bitbucket' ? `https://bitbucket.com/${o.name}` : `https://github.com/${o.name}` } rel="noreferrer">
+                        <img width="28" src={ o.provider === 'bitbucket' ? logoBitbucket : logoGithub }
                           style={ { borderRadius: '50%', padding: 3, backgroundColor: 'black' } }
                         />
                       </a>
@@ -47,18 +47,18 @@ export default function OrganizationListCompact ({ listOrganizations, organizati
               />
               { o.description &&
               <CardContent>
-                <Typography variant='body2' color='textSecondary' component='p'>
+                <Typography variant="body2" color="textSecondary" component="p">
                   { o.description }
                 </Typography>
               </CardContent>
               }
               <div style={ { paddingRight: 10 } }>
                 <CardActions disableSpacing style={ { alignItems: 'center', paddingRight: 10, flexWrap: 'wrap' } }>
-                  <Typography variant='body2' color='textSecondary' component='small' style={ { width: '100%', marginBottom: 10, marginLeft: 16 } }>
+                  <Typography variant="body2" color="textSecondary" component="small" style={ { width: '100%', marginBottom: 10, marginLeft: 16 } }>
                     Projects:
                   </Typography>
                   { o.Projects && o.Projects.map(p =>
-                    (<Chip style={ { marginLeft: 10, marginBottom: 10, flexWrap: 'wrap' } } size='medium' clickable onClick={ () => {
+                    (<Chip style={ { marginLeft: 10, marginBottom: 10, flexWrap: 'wrap' } } size="medium" clickable onClick={ () => {
                       window.location.href = `/#/organizations/${o.id}/${slugify(o.name)}/projects/${p.id}`
                       window.location.reload()
                     } } label={ p.name }

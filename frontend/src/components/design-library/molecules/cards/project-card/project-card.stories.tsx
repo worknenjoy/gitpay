@@ -18,7 +18,7 @@ DefaultProjectCard.args = {
     Organization: {
       name: 'Organization 1',
       description: 'Description 1',
-      provider: 'GitHub',
+      provider: 'GitHub'
     },
     Tasks: [
       { status: 'open' },
@@ -38,7 +38,7 @@ BountyProjectCard.args = {
     Organization: {
       name: 'Organization 1',
       description: 'Description 1',
-      provider: 'GitHub',
+      provider: 'GitHub'
     },
     Tasks: [
       { status: 'open', value: 50 },

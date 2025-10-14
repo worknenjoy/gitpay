@@ -14,6 +14,7 @@ type BreadcrumbProps = {
 }
 
 export const Breadcrumb = ({ task, user, project, organization }: BreadcrumbProps) => {
+  console.log('task', task)
   const history = useHistory()
   const isProfile = history.location.pathname.includes('profile')
   const breadcrumbPathPrefix = isProfile ? '/profile/' : '/'
@@ -32,49 +33,49 @@ export const Breadcrumb = ({ task, user, project, organization }: BreadcrumbProp
   return (
     completed || projectCompleted || organizationCompleted ?
     <BreadcrumbRoot>
-      <Breadcrumbs aria-label='breadcrumb' separator={<NavigateNextIcon />}>
+      <Breadcrumbs aria-label="breadcrumb" separator={<NavigateNextIcon />}>
         {(user?.id && user?.id === taskUser?.id) ? (
-          <Link href={'/#/profile/tasks/createdbyme'} color='inherit'>
-            <Typography variant='subtitle2' component={BreadcrumbLink}>
-              <FormattedMessage id='task.title.navigation.user' defaultMessage='Your issues' />
+          <Link href={'/#/profile/tasks/createdbyme'} color="inherit">
+            <Typography variant="subtitle2" component={BreadcrumbLink}>
+              <FormattedMessage id="task.title.navigation.user" defaultMessage="Your issues" />
             </Typography>
           </Link>
         ) : (
-          <Link href={`/#${breadcrumbPathPrefix}tasks/all`} color='inherit' onClick={handleBackToTaskList}>
-            <Typography variant='subtitle2' component={BreadcrumbLink}>
-              <FormattedMessage id='task.title.navigation' defaultMessage='All issues' />
+          <Link href={`/#${breadcrumbPathPrefix}tasks/all`} color="inherit" onClick={handleBackToTaskList}>
+            <Typography variant="subtitle2" component={BreadcrumbLink}>
+              <FormattedMessage id="task.title.navigation" defaultMessage="All issues" />
             </Typography>
           </Link>
         )}
         {breadcrumbProject?.id && (
-          <Link href={'/#' + breadcrumbPathPrefix + 'organizations/' + breadcrumbOrganization?.id} color='inherit'>
-            <Typography variant='subtitle2' component={BreadcrumbLink}>
+          <Link href={'/#' + breadcrumbPathPrefix + 'organizations/' + breadcrumbOrganization?.id} color="inherit">
+            <Typography variant="subtitle2" component={BreadcrumbLink}>
               {breadcrumbOrganization?.name}
             </Typography>
           </Link>
         )}
-        {breadcrumbProject?.id && (
-          <Typography variant='subtitle2'>
+        {breadcrumbProject?.id && !data.id && (
+          <Typography variant="subtitle2">
             {breadcrumbProject?.name}
           </Typography>
         )}
         {breadcrumbOrganization?.id && !breadcrumbProject?.id && (
-          <Typography variant='subtitle2'>
+          <Typography variant="subtitle2">
             {breadcrumbOrganization?.name}
           </Typography>
         )}
-        {data.length && (
-          <Link href={`/#${breadcrumbPathPrefix}organizations/${breadcrumbProject?.id}/projects/${data?.Project?.id}`} color='inherit'>
-            <Typography variant='subtitle2' component={BreadcrumbLink}>
+        {data.id && (
+          <Link href={`/#${breadcrumbPathPrefix}organizations/${breadcrumbProject?.id}/projects/${data?.Project?.id}`} color="inherit">
+            <Typography variant="subtitle2" component={BreadcrumbLink}>
               {breadcrumbProject?.name}
             </Typography>
           </Link>
         )}
-        <Typography variant='subtitle2'>
+        <Typography variant="subtitle2">
           ...
         </Typography>
       </Breadcrumbs>
-    </BreadcrumbRoot> : <Skeleton variant='text' />
+    </BreadcrumbRoot> : <Skeleton variant="text" />
   )
 }
 

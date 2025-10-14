@@ -24,7 +24,7 @@ const OrganizationPublicPage = ({
       />
       <ContextTitle
         context={organization}
-        title={<FormattedMessage id='organization.title' defaultMessage='Organization' />}
+        title={<FormattedMessage id="organization.title" defaultMessage="Organization" />}
       />
       <ProjectListCompact
         projects={{data: organization.data.Projects}}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
-import { tableHeaderDefault } from '../../../../shared/table-metadata/task-header-metadata'
+import { tableHeaderDefault } from '../../../../../shared/table-metadata/task-header-metadata'
 
 import {
   Container,
@@ -18,14 +18,14 @@ import {
 import { styled } from '@mui/material/styles'
 
 // import TaskFilter from '../task/task-filters'
-import CustomPaginationActionsTable from '../../../public/features/issue/legacy/task-table';
+import CustomPaginationActionsTable from '../../../../public/features/issue/legacy/task-table';
 
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 
 import imageGettingStarted from 'images/octodex.png'
 
-import api from '../../../../../consts'
+import api from '../../../../../../consts'
 
 const Media = styled(CardMedia)({ width: 600 })
 

@@ -106,7 +106,7 @@ const IssueHeader = ({
   return (
     <TaskHeaderContainer>
       <Grid size={{ xs: 12, sm: 12, md: 12 }}>
-        <Breadcrumb task={task} user={user} project={project} organization={organization} />
+        <Breadcrumb task={task} user={user} />
         {
           !task.completed ? (
             <Skeleton variant="text" animation="wave" style={{ marginTop: 32, marginBottom: 26 }} />
