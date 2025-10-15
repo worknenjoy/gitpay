@@ -29,7 +29,7 @@ Default.args = {
       id: 1,
       username: 'User 1'
     }
-  },
+  }
 };
 
 export const Loading = Template.bind({});

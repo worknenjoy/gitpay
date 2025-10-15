@@ -177,7 +177,7 @@ const PrivatePage = ({
               '/profile/organizations/:organization_id/projects/:project_id/:filter',
               '/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
               '/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
-              '/profile/organizations/:organization_id/projects/:project_id/:filter',
+              '/profile/organizations/:organization_id/projects/:project_id/:filter'
             ]}
             component={MyProjectIssuesContainer}
           />

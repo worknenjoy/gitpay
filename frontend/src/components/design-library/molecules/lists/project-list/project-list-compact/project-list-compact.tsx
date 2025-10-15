@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { styled } from '@mui/material/styles'
 import Card from '@mui/material/Card'
 import Tooltip from '@mui/material/Tooltip'

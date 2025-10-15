@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate';
 import MyOrganizationIssuesPrivatePage from './my-organization-issues-private-page';
-import { status } from 'src/consts';
 
 const meta: Meta<typeof MyOrganizationIssuesPrivatePage> = {
   title: 'Design Library/Pages/Private/Organization/MyOrganizationIssues',

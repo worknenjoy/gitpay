@@ -49,7 +49,7 @@ export const Default: Story = {
         Types: [
           { id: '1', name: 'contributor' }
         ]
-      },
+      }
     }
   }
 };
