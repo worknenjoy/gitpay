@@ -18,7 +18,7 @@ const Content = styled.span`
 const StatsBar = ({ info, tasks, bounties, users }) => {
   useEffect(() => {
     info?.()
-  }, [info])
+  }, [])
 
   const stats = {
     tasks: { value: tasks || '0' },

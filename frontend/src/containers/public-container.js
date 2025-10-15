@@ -1,6 +1,5 @@
-import PublicPage from '../components/areas/public/pages/public-page'
-
 import CommonContainer from "./common";
+import PublicPage from '../components/areas/public/pages/public-page'
 
 const PublicContainer = CommonContainer(PublicPage);
 

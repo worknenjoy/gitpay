@@ -30,7 +30,7 @@ const useCommonActions = ({
   
   useEffect(() => {
     isLogged?.();
-  }, [isLogged]);
+  }, []);
   
 
   return {

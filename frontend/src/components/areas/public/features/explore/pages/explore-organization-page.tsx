@@ -8,7 +8,7 @@ const ExploreOrganizationPage = ({
 
   useEffect(() => {
     listOrganizations?.()
-  }, [listOrganizations])
+  }, [])
 
   return (
     <OrganizationsListFull 
