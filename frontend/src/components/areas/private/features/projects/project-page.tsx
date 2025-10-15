@@ -304,7 +304,6 @@ const TaskList: React.FC<TaskListProps> = ({ user, tasks, organization, fetchOrg
               </Typography>
               <ProjectListSimple 
                 projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
-                listProjects={listProjects}
               />
             </>
           ))

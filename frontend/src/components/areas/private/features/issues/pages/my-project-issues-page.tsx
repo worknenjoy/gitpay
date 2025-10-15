@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react'
-import MyIssuesPrivatePage from 'design-library/pages/private-pages/issues-pages/my-issues-private-page/my-issues-private-page'
+import MyProjectIssuesPrivatePage from 'design-library/pages/private-pages/project-pages/my-project-issues-private-page/my-project-issues-private-page'
 import { useHistory, useParams } from 'react-router'
 
-const MyIssuesPage = ({
+const MyProjectIssuesPage = ({
   user,
+  project,
   issues,
   listTasks,
-  filterTasks
+  filterTasks,
+  fetchProject
 }) => {
   const history = useHistory()
-  const { filter } = useParams<{ filter: string }>()
+  const { filter, project_id } = useParams<{ filter: string, project_id: string }>()
 
   const getFilteredIssues = (filter) => {
     switch (filter) {
@@ -29,18 +31,23 @@ const MyIssuesPage = ({
   }
 
   useEffect(() => {
-    listTasks({})
-  }, [history.location.pathname])
+    fetchProject(project_id);
+  }, [project_id]);
+
+  useEffect(() => {
+    listTasks({ projectId: project_id })
+  }, [project_id])
 
   useEffect(() => {
     getFilteredIssues(filter)
   }, [filter])
 
   return (
-    <MyIssuesPrivatePage
+    <MyProjectIssuesPrivatePage
+      project={project}
       user={user}
       issues={issues}
     />
   )
 }
-export default MyIssuesPage
+export default MyProjectIssuesPage

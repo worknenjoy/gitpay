@@ -14,7 +14,6 @@ type BreadcrumbProps = {
 }
 
 export const Breadcrumb = ({ task, user, project, organization }: BreadcrumbProps) => {
-  console.log('task', task)
   const history = useHistory()
   const isProfile = history.location.pathname.includes('profile')
   const breadcrumbPathPrefix = isProfile ? '/profile/' : '/'

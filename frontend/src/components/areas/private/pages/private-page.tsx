@@ -10,13 +10,13 @@ import PaymentsContainer from '../../../../containers/payments'
 import PaymentRequestContainer from '../../../../containers/payment-requests'
 import WalletsContainer from '../../../../containers/wallets'
 import PayoutsContainer from '../../../../containers/payouts'
-import TaskListProfile from '../../../../containers/task-list-profile'
 import TaskContainer from '../../../../containers/task'
 import TaskPrivateContainer from '../../../../containers/task-private'
+import ProjectIssuesExploreContainer from '../../../../containers/profile-explore-project-issues'
+import MyProjectIssuesContainer from '../../../../containers/profile-my-project-issues'
+import OrganizationIssuesExploreContainer from '../../../../containers/profile-explore-organization-issues'
+import MyOrganizationIssuesContainer from '../../../../containers/profile-my-organization-issues'
 import PayoutSettings from '../features/payout-settings/pages/payout-settings-page'
-
-const TaskListProfileProjects = (props) => <TaskListProfile {...props} />
-const TaskListProfileOrganization = (props) => <TaskListProfile noTopBar noBottomBar {...props} />
 
 const PrivatePage = ({
   fetchOrganizations,
@@ -146,12 +146,29 @@ const PrivatePage = ({
           <Route
             exact
             path={[
-              '/profile/organizations/:organization_id',
-              '/profile/organizations/:organization_id/:slug',
               '/profile/explore/organizations/:organization_id',
               '/profile/explore/organizations/:organization_id/:slug'
             ]}
-            component={TaskListProfileOrganization}
+            component={OrganizationIssuesExploreContainer}
+          />
+          <Route
+            exact
+            path={[
+              '/profile/organizations/:organization_id',
+              '/profile/organizations/:organization_id/:filter',
+              '/profile/organizations/:organization_id/:slug'
+            ]}
+            component={MyOrganizationIssuesContainer}
+          />
+          <Route
+            exact
+            path={[
+              '/profile/explore/organizations/:organization_id/projects/:project_id',
+              '/profile/explore/organizations/:organization_id/projects/:project_id/:filter',
+              '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
+              '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter'
+            ]}
+            component={ProjectIssuesExploreContainer}
           />
           <Route
             exact
@@ -161,14 +178,10 @@ const PrivatePage = ({
               '/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
               '/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
               '/profile/organizations/:organization_id/projects/:project_id/:filter',
-              '/profile/explore/organizations/:organization_id/projects/:project_id',
-              '/profile/explore/organizations/:organization_id/projects/:project_id/:filter',
-              '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
-              '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter'
             ]}
-          >
-            <TaskListProfileProjects noTopBar noBottomBar />
-          </Route>
+            component={MyProjectIssuesContainer}
+          />
+            
           <Route
             
             path={'/profile/payout-settings'} component={PayoutSettings}

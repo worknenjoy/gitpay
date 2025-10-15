@@ -14,8 +14,7 @@ const OrganizationPublicPage = ({
   languages,
   listLabels,
   listLanguages,
-  listTasks,
-  listProjects = () => {}
+  listTasks
 }) => {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -28,7 +27,6 @@ const OrganizationPublicPage = ({
       />
       <ProjectListCompact
         projects={{data: organization.data.Projects}}
-        listProjects={listProjects}
       />
       <IssuesTable
         issues={issues}

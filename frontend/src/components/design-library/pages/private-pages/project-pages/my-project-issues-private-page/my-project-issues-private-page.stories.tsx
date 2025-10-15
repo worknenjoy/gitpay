@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import MyIssuesPrivatePage from './my-issues-private-page';
+import MyProjectIssuesPrivatePage from './my-project-issues-private-page';
 import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate';
+import MyIssuesPrivatePage from '../../issues-pages/my-issues-private-page/my-issues-private-page';
 
-const meta: Meta<typeof MyIssuesPrivatePage> = {
-  title: 'Design Library/Pages/Private/Issues/MyIssues',
-  component: MyIssuesPrivatePage,
+const meta: Meta<typeof MyProjectIssuesPrivatePage> = {
+  title: 'Design Library/Pages/Private/Project/MyProjectIssues',
+  component: MyProjectIssuesPrivatePage,
   decorators: [ withProfileTemplate],
   parameters: {
     layout: 'fullscreen'
@@ -17,6 +18,14 @@ type Story = StoryObj<typeof MyIssuesPrivatePage>;
 
 export const Default: Story = {
   args: {
+    project: {
+      completed: true,
+      data: {
+        id: 1,
+        name: 'Demo Project',
+        Organization: { id: 1, name: 'Demo Organization' }
+      }
+    },
     user: {
       completed: true,
       data: {
@@ -54,6 +63,13 @@ export const Default: Story = {
 
 export const Contributor: Story = {
   args: {
+    project: {
+      completed: true,
+      data: {
+        id: 1,
+        name: 'Demo Project'
+      }
+    },
     user: {
       completed: true,
       data: {

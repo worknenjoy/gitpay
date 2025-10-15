@@ -32,10 +32,7 @@ const Item = styled('div')(({ theme }) => ({
   marginBottom: theme.spacing(3)
 }))
 
-export default function ProjectListCompact ({ listProjects, projects }) {
-  useEffect(() => {
-    listProjects?.()
-  }, [])
+export default function ProjectListCompact ({ projects }) {
 
   const hasOpenIssues = (project) => {
     const hasOpenTasks = project.Tasks.filter(t => t.status === 'open')

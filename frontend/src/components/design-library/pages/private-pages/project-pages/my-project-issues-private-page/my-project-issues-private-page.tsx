@@ -1,6 +1,7 @@
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 import { useHistory, useParams } from 'react-router-dom'
-import { issueMetadata, customColumnRenderer } from 'design-library/molecules/tables/issue-table/issue-table'
+import { issueMetadata, customColumnRenderer } from 'design-library/molecules/tables/project-issue-table/project-issue-table'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
 import {
   Container
@@ -8,14 +9,20 @@ import {
 import {
   ExplorePaper,
   TopSection
-} from '../explore-issues-private-page/explore-issues-private-page.styles'
-import MainTitle from 'design-library/atoms/typography/main-title/main-title'
+} from './my-project-issues-private-page.styles'
 import Breadcrumbs from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb';
+import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 import useUserTypes from '../../../../../../hooks/use-user-types'
+import ContextTitle from 'design-library/atoms/typography/context-title/context-title'
 
 
-const MyIssuesPrivatePage = ({ user, issues }) => {
+const MyProjectIssuesPrivatePage = ({ 
+  project,
+  user,
+  issues 
+}) => {
   const history = useHistory()
+  const { project_id, organization_id } = useParams<{ project_id: string, organization_id: string }>()
   const { filter } = useParams<{ filter: string }>()
   const { isContributor, isMaintainer } = useUserTypes({ user })
   const [ activeTab, setActiveTab ] = React.useState('createdbyme')
@@ -26,24 +33,26 @@ const MyIssuesPrivatePage = ({ user, issues }) => {
     customColumnRenderer: customColumnRenderer
   }
 
+  const baseLink = `/profile/organizations/${organization_id}/projects/${project_id}`
+
   const myIssuesTab = {
     label: 'My imported issues',
     value: 'createdbyme',
-    link: '/profile/tasks/createdbyme',
+    link: `${baseLink}/createdbyme`,
     table: issueTableData
   }
 
   const workingTabs = {
     label: 'Issues I\'m working on',
     value: 'assigned',
-    link: '/profile/tasks/assigned',
+    link: `${baseLink}/assigned`,
     table: issueTableData
   }
 
   const followingTabs = {
     label: 'Following',
     value: 'interested',
-    link: '/profile/tasks/interested',
+    link: `${baseLink}/interested`,
     table: issueTableData
   }
 
@@ -58,7 +67,7 @@ const MyIssuesPrivatePage = ({ user, issues }) => {
       return
     }
     const currentFirstTabByRole = isMaintainer ? 'createdbyme' : isContributor ? 'assigned' : 'createdbyme'
-    history.push(`/profile/tasks/${currentFirstTabByRole}`)
+    history.push(`${baseLink}/${currentFirstTabByRole}`)
     setActiveTab(currentFirstTabByRole)
   }, [isContributor, isMaintainer, filter])
 
@@ -66,12 +75,18 @@ const MyIssuesPrivatePage = ({ user, issues }) => {
     <ExplorePaper elevation={0}>
       <Container>
         <TopSection>
-          <Breadcrumbs user={user} task={{completed: true, data: {}}} />
+          <Breadcrumbs project={project} />
         </TopSection>
         <TopSection>
           <MainTitle
             title="My Issues"
             subtitle="Here you can see issues imported or that you're working on"
+          />
+        </TopSection>
+        <TopSection>
+          <ContextTitle
+            context={project}
+            title={<FormattedMessage id="projects.explore.project.issues" defaultMessage="Project" />}
           />
         </TopSection>
         <TopSection>
@@ -85,4 +100,4 @@ const MyIssuesPrivatePage = ({ user, issues }) => {
   )
 }
 
-export default MyIssuesPrivatePage
+export default MyProjectIssuesPrivatePage

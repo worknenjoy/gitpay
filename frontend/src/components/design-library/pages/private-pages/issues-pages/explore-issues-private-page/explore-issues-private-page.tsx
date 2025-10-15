@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import {
-  Container,
+  Container
 } from '@mui/material'
 import {
   ExplorePaper,
-  TopSection,
+  TopSection
 } from './explore-issues-private-page.styles'
 import IssuesTable from 'design-library/molecules/tables/issue-table/issue-table';
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
+import Breadcrumb from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb';
 
 
 const ExploreIssuesPrivatePage = ({ 
@@ -29,6 +30,9 @@ const ExploreIssuesPrivatePage = ({
   return (
     <ExplorePaper elevation={ 0 }>
       <Container>
+        <TopSection>
+          <Breadcrumb user={user} task={{completed: true, data: {}}} />
+        </TopSection>
         <TopSection>
           <MainTitle 
             title={<FormattedMessage id="issues.explore.title" defaultMessage="Explore issues" />}

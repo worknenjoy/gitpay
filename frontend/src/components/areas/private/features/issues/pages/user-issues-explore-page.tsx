@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import ExploreIssuesPrivatePage from 'design-library/pages/private-pages/issues-pages/explore-issues-private-page/explore-issues-private-page';
+import { useHistory } from 'react-router-dom';
 
 
 const ExploreIssuesPage = ({ 
@@ -13,9 +14,11 @@ const ExploreIssuesPage = ({
   user
 }) => {
 
+  const history = useHistory()
+
   useEffect(() => {
     listTasks({})
-  }, [])
+  }, [history.location.pathname])
 
   return (
     <ExploreIssuesPrivatePage 

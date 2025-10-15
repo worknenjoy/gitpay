@@ -14,7 +14,13 @@ Default.args = {
     completed: true,
     data: {
       id: 1,
-      title: 'Task 1'
+      title: 'Task 1',
+      User: { id: 1, username: 'User 1' },
+      Project: {
+        id: 1,
+        name: 'Project 1',
+        Organization: { id: 1, name: 'Organization 1' }
+      }
     }
   },
   user: {
@@ -24,16 +30,6 @@ Default.args = {
       username: 'User 1'
     }
   },
-  project: {
-    completed: true,
-    data: {
-      id: 1,
-      name: 'Project 1'
-    }
-  },
-  organization: {
-    name: 'Organization 1'
-  }
 };
 
 export const Loading = Template.bind({});

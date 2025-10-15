@@ -1,9 +1,19 @@
-const useUserTypes = ({ user }) => {
-  const isContributor = user?.data?.Types?.some((type) => type.name === 'contributor')
-  const isMaintainer = user?.data?.Types?.some((type) => type.name === 'maintainer')
-  const isFunding = user?.data?.Types?.some((type) => type.name === 'funding')
+import { useEffect, useState } from 'react'
 
-  return { isContributor, isMaintainer, isFunding }
+const useUserTypes = ({ user }) => {
+  const { completed, data } = user || {}
+  const [isContributor, setIsContributor] = useState(false)
+  const [isMaintainer, setIsMaintainer] = useState(false)
+  const [isFunding, setIsFunding] = useState(false)
+
+  useEffect(() => {
+    const types = data?.Types ?? []
+    setIsContributor(types.some((type) => type?.name === 'contributor'))
+    setIsMaintainer(types.some((type) => type?.name === 'maintainer'))
+    setIsFunding(types.some((type) => type?.name === 'funding'))
+  }, [data])
+
+  return { isContributor, isMaintainer, isFunding, completed }
 }
 
 export default useUserTypes

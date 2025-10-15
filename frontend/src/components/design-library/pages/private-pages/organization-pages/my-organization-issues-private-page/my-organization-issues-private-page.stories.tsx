@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import MyIssuesPrivatePage from './my-issues-private-page';
 import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate';
+import MyOrganizationIssuesPrivatePage from './my-organization-issues-private-page';
+import { status } from 'src/consts';
 
-const meta: Meta<typeof MyIssuesPrivatePage> = {
-  title: 'Design Library/Pages/Private/Issues/MyIssues',
-  component: MyIssuesPrivatePage,
+const meta: Meta<typeof MyOrganizationIssuesPrivatePage> = {
+  title: 'Design Library/Pages/Private/Organization/MyOrganizationIssues',
+  component: MyOrganizationIssuesPrivatePage,
   decorators: [ withProfileTemplate],
   parameters: {
     layout: 'fullscreen'
@@ -13,10 +14,21 @@ const meta: Meta<typeof MyIssuesPrivatePage> = {
 
 export default meta;
 
-type Story = StoryObj<typeof MyIssuesPrivatePage>;
+type Story = StoryObj<typeof MyOrganizationIssuesPrivatePage>;
 
 export const Default: Story = {
   args: {
+    organization: {
+      completed: true,
+      data: {
+        id: 1,
+        name: 'Demo Organization',
+        Projects: [
+          { id: 1, name: 'Project A', Tasks: [ { id: 1, title: 'Task 1', status: 'open' }, { id: 2, title: 'Task 2', status: 'closed' } ], Organization: { id: 1, name: 'Demo Organization' } },
+          { id: 2, name: 'Project B', Tasks: [ { id: 3, title: 'Task 3', status: 'open' }, { id: 4, title: 'Task 4', status: 'closed' } ], Organization: { id: 1, name: 'Demo Organization' } }
+        ]
+      }
+    },
     user: {
       completed: true,
       data: {
@@ -54,6 +66,13 @@ export const Default: Story = {
 
 export const Contributor: Story = {
   args: {
+    project: {
+      completed: true,
+      data: {
+        id: 1,
+        name: 'Demo Project'
+      }
+    },
     user: {
       completed: true,
       data: {

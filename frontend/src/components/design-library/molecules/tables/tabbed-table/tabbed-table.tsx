@@ -19,7 +19,7 @@ const TabbedTable = ({ tabs, activeTab }) => {
   }, [activeTab, tabs]);
 
   const { label, value, table } = currentTab || {};
-  const { tableData, tableHeaderMetadata, customColumnRenderer } = table || {};
+  const { tableData, tableHeaderMetadata, customColumnRenderer } = table || { tableData: { data: [] }, tableHeaderMetadata: [], customColumnRenderer: {} };
 
   return (
     <BaseTabs
