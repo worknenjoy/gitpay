@@ -11,7 +11,7 @@ import { DescriptionHeading, IssueContentText } from './issue-content.styles';
 
 const IssueContent = ({ user, project, organization, updateTask, reportTask, onDeleteTask, task, messageAuthor }) => {
   return (
-    <Container fixed maxWidth="lg">
+    <Container fixed maxWidth="md" sx={{ mt: 2 }}>
       <IssueHeader
         task={task}
         user={user}

@@ -111,7 +111,7 @@ const IssueHeader = ({
           !task.completed ? (
             <Skeleton variant="text" animation="wave" style={{ marginTop: 32, marginBottom: 26 }} />
           ) : (
-            <div style={{ marginTop: 12, marginBottom: 0 }}>
+            <div style={{ marginTop: 20, marginBottom: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Typography variant="h5" gutterBottom>
                   <strong>

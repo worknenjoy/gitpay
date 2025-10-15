@@ -30,6 +30,9 @@ const MyIssuesPage = ({
 
   useEffect(() => {
     listTasks({})
+    return () => {
+      filterTasks({})
+    }
   }, [history.location.pathname])
 
   useEffect(() => {
