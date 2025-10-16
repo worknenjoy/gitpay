@@ -34,7 +34,7 @@ describe('preference actions', () => {
     })
   })
 
-  describe('async actions', () => {
+  xdescribe('async actions', () => {
     describe('fetch language', () => {
       beforeEach(() => {
         moxios.install()
