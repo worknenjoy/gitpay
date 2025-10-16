@@ -22,7 +22,7 @@ Default.args = {
         Organization: { id: 1, name: 'Organization 1' }
       }
     }
-  },
+  }
 };
 
 export const CustomRoot = Template.bind({});

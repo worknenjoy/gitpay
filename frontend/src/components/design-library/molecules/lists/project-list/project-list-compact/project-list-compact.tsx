@@ -1,17 +1,6 @@
 import React from 'react'
-import Tooltip from '@mui/material/Tooltip'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import Chip from '@mui/material/Chip'
-import Avatar from '@mui/material/Avatar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import Link from '@mui/material/Link'
 
-import logoGithub from 'images/github-logo.png'
-import logoBitbucket from 'images/bitbucket-logo.png'
-import { Item, Root, RootCard } from './project-list-compact.styles'
+import { Item, Root } from './project-list-compact.styles'
 import ProjectCard from 'design-library/molecules/cards/project-card/project-card'
 import ProjectListCompactPlaceholder from './project-list-compact.placeholder'
 
