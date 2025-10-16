@@ -1,5 +1,4 @@
 import React from 'react'
-import { useHistory, useParams } from 'react-router-dom'
 import { issueMetadata, customColumnRenderer } from 'design-library/molecules/tables/issue-table/issue-table'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
 import {
@@ -11,62 +10,31 @@ import {
 } from '../explore-issues-private-page/explore-issues-private-page.styles'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 import Breadcrumbs from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb';
-import useUserTypes from '../../../../../../hooks/use-user-types'
+import useMyIssueTabs from '../../../../../../hooks/use-my-issues-tabs'
+import { FormattedMessage } from 'react-intl'
 
 
 const MyIssuesPrivatePage = ({ user, issues }) => {
-  const history = useHistory()
-  const { filter } = useParams<{ filter: string }>()
-  const { isContributor, isMaintainer } = useUserTypes({ user })
-  const [ activeTab, setActiveTab ] = React.useState('createdbyme')
-
+  
   const issueTableData = {
     tableData: issues,
     tableHeaderMetadata: issueMetadata,
     customColumnRenderer: customColumnRenderer
   }
 
-  const myIssuesTab = {
-    label: 'My imported issues',
-    value: 'createdbyme',
-    link: '/profile/tasks/createdbyme',
-    table: issueTableData
-  }
-
-  const workingTabs = {
-    label: 'Issues I\'m working on',
-    value: 'assigned',
-    link: '/profile/tasks/assigned',
-    table: issueTableData
-  }
-
-  const followingTabs = {
-    label: 'Following',
-    value: 'interested',
-    link: '/profile/tasks/interested',
-    table: issueTableData
-  }
-
-  const currentTabs = [
-    ...(isMaintainer ? [myIssuesTab] : []),
-    ...(isContributor ? [workingTabs, followingTabs] : [])
-  ]
-
-  React.useEffect(() => {
-    if(filter) {
-      setActiveTab(filter)
-      return
-    }
-    const currentFirstTabByRole = isMaintainer ? 'createdbyme' : isContributor ? 'assigned' : 'createdbyme'
-    history.push(`/profile/tasks/${currentFirstTabByRole}`)
-    setActiveTab(currentFirstTabByRole)
-  }, [isContributor, isMaintainer, filter])
+  const { currentTabs, activeTab } = useMyIssueTabs({
+    user,
+    baseLink: '/profile/tasks',
+    issueTableData
+  })
 
   return (
     <ExplorePaper elevation={0}>
       <Container>
         <TopSection>
-          <Breadcrumbs user={user} task={{completed: true, data: {}}} />
+          <Breadcrumbs
+            root={{ link: '/profile/tasks', label: <FormattedMessage id="breadcrumbs.root.my.issues" defaultMessage="My Issues" /> }}
+          />
         </TopSection>
         <TopSection>
           <MainTitle

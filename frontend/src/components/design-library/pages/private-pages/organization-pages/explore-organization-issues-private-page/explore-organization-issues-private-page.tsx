@@ -21,11 +21,20 @@ const ExploreOrganizationIssuesPrivatePage = ({
   user
 }) => {
 
+  const { data, completed } = organization;
+  const projectList = { data: data?.Projects || [], completed}
+
   return (
     <ExplorePaper elevation={0}>
       <Container>
         <TopSection>
-          <Breadcrumbs organization={organization} />
+          <Breadcrumbs 
+            organization={organization}
+            root={{
+              label: <FormattedMessage id="breadcrumbs.root.explore.issues" defaultMessage="Explore Issues" />,
+              link: '/profile/explore'
+            }}
+          />
         </TopSection>
         <TopSection>
           <MainTitle 
@@ -41,7 +50,7 @@ const ExploreOrganizationIssuesPrivatePage = ({
         </TopSection>
         <TopSection>
           <ProjectListCompact
-            projects={{data: organization.data.Projects}}
+            projects={projectList}
           />
         </TopSection>
         <TopSection>

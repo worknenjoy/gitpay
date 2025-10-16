@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
   Avatar,
   Box,
@@ -9,7 +8,7 @@ import {
   Grid,
   Typography,
   IconButton,
-  Tooltip
+  Tooltip,
 } from '@mui/material'
 import slugify from '@sindresorhus/slugify'
 import { Link, useHistory } from 'react-router-dom'
@@ -17,6 +16,7 @@ import { RootCard, StatsItem } from './project-card.styles'
 
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
+import ProjectCardPlaceholder from './project-card.placeholder'
 
 
 const projectBounties = (data) => {
@@ -29,15 +29,37 @@ const projectBountiesList = (data) => {
   return hasBounties ? `$${bounties} in bounties` : 'no bounties'
 }
 
-const ProjectCard = ({ project }) => {
+const ProjectCard = ({ project, completed }) => {
   const history = useHistory()
+  const baseOrganizationPath = `/organizations/${project.Organization.id}/${slugify(project.Organization.name)}`
+  const baseProjectPath = `${baseOrganizationPath}/projects/${project.id}/${slugify(project.name)}`
+  const myIssuesProfilePath = `/profile`
+  const exploreIssuesProfilePath = `/profile/explore`
+
+  const [ currentOrganizationPath, setCurrentOrganizationPath ] = React.useState(baseOrganizationPath)
+  const [ currentProjectPath, setProjectCurrentPath ] = React.useState(baseProjectPath)
+
+  React.useEffect(() => {
+    if(history.location.pathname.includes(myIssuesProfilePath)) {
+      setCurrentOrganizationPath(`${myIssuesProfilePath}${baseOrganizationPath}`)
+      setProjectCurrentPath(`${myIssuesProfilePath}${baseProjectPath}`)
+    } else if(history.location.pathname.includes(exploreIssuesProfilePath)) {
+      setCurrentOrganizationPath(`${exploreIssuesProfilePath}${baseOrganizationPath}`)
+      setProjectCurrentPath(`${exploreIssuesProfilePath}${baseProjectPath}`)
+    } else {
+      setCurrentOrganizationPath(baseOrganizationPath)
+      setProjectCurrentPath(baseProjectPath)
+    }
+  }, [])
+
 
   const goToProject = (e, project) => {
     e.preventDefault()
-    history.push(`/organizations/${project.Organization.id}/${slugify(project.Organization.name)}/projects/${project.id}/${slugify(project.name)}`)
+    history.push(currentProjectPath)
   }
 
   return (
+    completed ? 
     <RootCard>
       <CardContent style={{ position: 'relative' }}>
         <IconButton aria-label="provider" style={{ position: 'absolute', right: 10, top: 10 }}>
@@ -64,7 +86,7 @@ const ProjectCard = ({ project }) => {
           color="textSecondary"
           variant="body2"
         >
-          <Link to={`/organizations/${project.Organization.id}/${slugify(project.Organization.name)}/projects/${project.id}/${slugify(project.name)}`}>
+          <Link to={currentProjectPath}>
             {project.name}
           </Link>
         </Typography>
@@ -75,7 +97,7 @@ const ProjectCard = ({ project }) => {
           variant="caption"
           style={{ display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 }}
         > by {' '}
-          {project.Organization && <Link color="textSecondary" to={`/organizations/${project.Organization.id}/${slugify(project.Organization.name)}`}>
+          {project.Organization && <Link color="textSecondary" to={currentOrganizationPath}>
             {project.Organization.name}
           </Link>}
         </Typography>
@@ -106,13 +128,8 @@ const ProjectCard = ({ project }) => {
           </StatsItem>
         </Grid>
       </Box>
-    </RootCard>
+    </RootCard> : <ProjectCardPlaceholder />
   )
-}
-
-ProjectCard.propTypes = {
-  className: PropTypes.string,
-  project: PropTypes.object.isRequired
 }
 
 export default ProjectCard

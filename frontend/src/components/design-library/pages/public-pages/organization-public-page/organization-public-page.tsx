@@ -16,17 +16,21 @@ const OrganizationPublicPage = ({
   listLanguages,
   listTasks
 }) => {
+  const { data, completed } = organization;
+  const projectList = { data: data?.Projects || [], completed }
+
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Breadcrumb
         organization={organization}
+        root={{ label: <FormattedMessage id="breadcrumb.explore.organizations.root" defaultMessage="Explore" />, link: '/explore/issues' }}
       />
       <ContextTitle
         context={organization}
         title={<FormattedMessage id="organization.title" defaultMessage="Organization" />}
       />
       <ProjectListCompact
-        projects={{data: organization.data.Projects}}
+        projects={projectList}
       />
       <IssuesTable
         issues={issues}

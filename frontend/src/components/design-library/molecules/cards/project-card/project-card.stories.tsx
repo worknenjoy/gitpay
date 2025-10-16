@@ -10,6 +10,7 @@ const Template = (args) => <ProjectCard {...args} />;
 
 export const DefaultProjectCard = Template.bind({});
 DefaultProjectCard.args = {
+  completed: true,
   project: {
     id: 1,
     name: 'Project 1',
@@ -30,6 +31,7 @@ DefaultProjectCard.args = {
 
 export const BountyProjectCard = Template.bind({});
 BountyProjectCard.args = {
+  completed: true,
   project: {
     id: 1,
     name: 'Project 1',
@@ -46,4 +48,10 @@ BountyProjectCard.args = {
       { status: 'open' }
     ]
   }
+};
+
+export const LoadingProjectCard = Template.bind({});
+LoadingProjectCard.args = {
+  completed: false,
+  project: {}
 };

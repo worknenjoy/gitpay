@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {
   Avatar,
   Box,
@@ -12,11 +11,13 @@ import {
 import slugify from '@sindresorhus/slugify'
 import { RootCard, StatsItem } from './organization-card.styles'
 import { Link, useHistory } from 'react-router-dom'
+import OrganizationCardPlaceholder from './organization-card.placeholder'
 
-const OrganizationCard = ({ organization }) => {
+const OrganizationCard = ({ organization, completed }) => {
   const history = useHistory()
 
   return (
+    completed ?
     <RootCard>
       <CardContent>
         <Box
@@ -82,13 +83,8 @@ const OrganizationCard = ({ organization }) => {
           </StatsItem>
         </Grid>
       </Box>
-    </RootCard>
+    </RootCard> : <OrganizationCardPlaceholder />
   )
-}
-
-OrganizationCard.propTypes = {
-  className: PropTypes.string,
-  organization: PropTypes.object.isRequired
 }
 
 export default OrganizationCard

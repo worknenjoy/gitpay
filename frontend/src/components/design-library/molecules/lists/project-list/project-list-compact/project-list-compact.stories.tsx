@@ -37,3 +37,11 @@ ProjectListCompactStory.args = {
     ]
   }
 };
+
+export const LoadingState = Template.bind({});
+LoadingState.args = {
+  projects: {
+    completed: false,
+    data: []
+  }
+};

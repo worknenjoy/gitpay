@@ -5,7 +5,7 @@ import { listOrganizations } from '../actions/organizationsActions'
 
 const mapStateToProps = (state, props) => {
   return {
-    organizations: state.organizations.organizations
+    organizations: state.organizations
   }
 }
 

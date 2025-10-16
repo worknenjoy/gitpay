@@ -31,7 +31,9 @@ const ExploreIssuesPrivatePage = ({
     <ExplorePaper elevation={ 0 }>
       <Container>
         <TopSection>
-          <Breadcrumb user={user} task={{completed: true, data: {}}} />
+          <Breadcrumb
+            root={{ label: <FormattedMessage id="breadcrumb.root.profile.explore" defaultMessage="Explore Issues" /> }}
+          />
         </TopSection>
         <TopSection>
           <MainTitle 

@@ -16,5 +16,6 @@ export const RootCard = styled(Card)(({ theme }) => ({
 
 export const Item = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(3),
-  marginBottom: theme.spacing(3)
+  marginBottom: theme.spacing(3),
+  marginRight: theme.spacing(3)
 }))

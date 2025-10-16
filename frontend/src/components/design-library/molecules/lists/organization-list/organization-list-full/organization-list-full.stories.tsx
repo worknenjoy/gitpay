@@ -28,3 +28,11 @@ Default.args = {
     data: hundredOrganizations
   }
 };
+
+export const Loading = (args) => <OrganizationListFull {...args} />;
+Loading.args = {
+  organizations: {
+    completed: false,
+    data: []
+  }
+};

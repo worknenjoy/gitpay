@@ -23,7 +23,10 @@ const ExploreProjectPage = ({
     <ExplorePaper elevation={0}>
       <Container>
         <TopSection>
-          <Breadcrumbs project={project} />
+          <Breadcrumbs
+            project={project}
+            root={{ label: <FormattedMessage id="breadcrumbs.root.explore.issues" defaultMessage="Explore Issues" />, link: '/profile/explore' }}
+         /> 
         </TopSection>
         <TopSection>
           <MainTitle 

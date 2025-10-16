@@ -10,6 +10,7 @@ const Template = (args) => <OrganizationCard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
+  completed: true,
   organization: {
     id: 1,
     name: 'Organization 1',
@@ -24,4 +25,10 @@ Default.args = {
       { id: 3, name: 'Project 3' }
     ]
   }
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  organization: {},
+  completed: false
 };

@@ -276,7 +276,7 @@ const TaskList: React.FC<TaskListProps> = ({ user, tasks, organization, fetchOrg
     <React.Fragment>
         { (project?.data?.id || organizationData?.id) &&
           <div style={{marginTop: 20}}>
-            <Breadcrumb project={project} organization={organizationData} user={user} task={{}}/>
+            <Breadcrumb project={project} organization={organizationData} />
           </div>
         }
         { isOrganizationPage &&

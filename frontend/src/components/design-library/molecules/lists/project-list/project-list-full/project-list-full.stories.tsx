@@ -24,3 +24,11 @@ ProjectListStory.args = {
     data: hundredProjects
   }
 };
+
+export const LoadingState = (args) => <ProjectListFull {...args} />;
+LoadingState.args = {
+  projects: {
+    completed: false,
+    data: []
+  }
+};

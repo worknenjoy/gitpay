@@ -19,6 +19,7 @@ const ProjectPublicPage = ({
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Breadcrumb
         project={project}
+        root={{ label: <FormattedMessage id="breadcrumb.explore.issues.root" defaultMessage="Explore" />, link: '/explore/issues' }}
       />
       <ContextTitle
         context={project}

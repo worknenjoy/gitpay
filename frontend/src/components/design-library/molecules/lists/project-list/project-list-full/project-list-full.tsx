@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Box, Grid, Pagination } from '@mui/material'
 import { StyledContainer, StyledProjectCard } from './project-list-full.styles'
+import ProjectListFullPlaceholder from './project-list-full.placeholder'
 
 const paginate = (array, pageSize, pageNumber) => {
   // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
@@ -8,6 +9,7 @@ const paginate = (array, pageSize, pageNumber) => {
 }
 
 const ProjectListFull = ({ projects }) => {
+  const { data, completed } = projects
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [currentProjects, setCurrentProjects] = useState([])
@@ -46,22 +48,23 @@ const ProjectListFull = ({ projects }) => {
   }
 
   const changePage = () => {
-    setCurrentProjects(paginate(filter(projects.data), recordsPerPage, page))
+    setCurrentProjects(paginate(filter(data), recordsPerPage, page))
   }
 
   const pages = Math.ceil(total / recordsPerPage)
 
   return (
+    completed ?
     <StyledContainer maxWidth={ false }>
       <Box mt={ 3 } mb={ 3 }>
         <Grid
           container
           spacing={ 3 }
         >
-          { currentProjects && currentProjects.length > 0 && currentProjects
-            .map(project => (
-              <Grid key={ project.id } size={ { lg: 4, md: 6, xs: 12 } }>
-                <StyledProjectCard project={ project } />
+          { currentProjects
+            .map(p => (
+              <Grid key={ p.id } size={ { lg: 4, md: 6, xs: 12 } }>
+                <StyledProjectCard project={ p } completed={ completed } />
               </Grid>
             )) }
         </Grid>
@@ -81,7 +84,7 @@ const ProjectListFull = ({ projects }) => {
         />
       </Box>
       }
-    </StyledContainer>
+    </StyledContainer> : <ProjectListFullPlaceholder />
   )
 }
 
