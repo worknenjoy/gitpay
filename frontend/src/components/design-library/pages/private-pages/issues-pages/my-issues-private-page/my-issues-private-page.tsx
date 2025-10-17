@@ -15,6 +15,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 const MyIssuesPrivatePage = ({ user, issues }) => {
+  console.log('issues', issues)
   
   const issueTableData = {
     tableData: issues,

@@ -195,23 +195,22 @@ export const tasks = (state = {
 }, action) => {
   switch (action.type) {
     case LIST_TASK_REQUESTED:
-      return { ...state, completed: false }
+      return { ...state, completed: action.completed }
     case LIST_TASK_SUCCESS:
-      return { ...state, completed: true, data: action.data }
+      return { ...state, completed: action.completed, data: action.data }
     case LIST_TASK_ERROR:
-      return { ...state, completed: true, error: action.error }
+      return { ...state, completed: action.completed, error: action.error }
     case FETCH_PROJECT_REQUESTED:
-      return { ...state, completed: false }
+      return { ...state, completed: action.completed }
     case FETCH_PROJECT_SUCCESS:
-      return { ...state, completed: true, data: action.data.Tasks }
+      return { ...state, completed: action.completed, data: action.data.Tasks }
     case FETCH_PROJECT_ERROR:
-      return { ...state, completed: true, error: action.error }
+      return { ...state, completed: action.completed, error: action.error }
     case FILTER_TASK_REQUESTED:
-      return { ...state, completed: false }
+      return { ...state }
     case FILTER_TASK_SUCCESS:
       return {
         ...state,
-        completed: true,
         filteredData: action.data,
         filterType: action.filterType,
         filterValue: action.filterValue,

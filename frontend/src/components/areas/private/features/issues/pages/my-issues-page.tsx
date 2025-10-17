@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import MyIssuesPrivatePage from 'design-library/pages/private-pages/issues-pages/my-issues-private-page/my-issues-private-page'
-import { useHistory, useParams } from 'react-router'
+import { useParams } from 'react-router'
 
 const MyIssuesPage = ({
   user,
@@ -8,7 +8,6 @@ const MyIssuesPage = ({
   listTasks,
   filterTasks
 }) => {
-  const history = useHistory()
   const { filter } = useParams<{ filter: string }>()
 
   const getFilteredIssues = (filter) => {

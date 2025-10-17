@@ -17,8 +17,8 @@ const ExploreIssuesPage = ({
   const history = useHistory()
 
   useEffect(() => {
-    listTasks({})
     filterTasks({})
+    listTasks({})
   }, [history.location.pathname])
 
   return (

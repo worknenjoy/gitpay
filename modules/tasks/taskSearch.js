@@ -37,8 +37,6 @@ function attachLabelsVirtual(instances) {
     if (Array.isArray(raw)) arr = raw
     else if (raw) { try { arr = JSON.parse(raw) } catch { arr = [] } }
     if (!Array.isArray(arr)) arr = []
-
-    // ✅ dedupe por id
     const seen = new Set()
     const deduped = []
     for (const x of arr) {
@@ -183,7 +181,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
             through: { attributes: [] }
           }]
         },
-        ordersInclude // Orders sem limitar
+        ordersInclude
       ],
       distinct: true,
       order: [['status', 'DESC'], ['id', 'DESC']]

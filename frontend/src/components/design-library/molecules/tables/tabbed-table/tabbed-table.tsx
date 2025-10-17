@@ -29,6 +29,7 @@ const TabbedTable = ({ tabs, activeTab }) => {
       withCard={false} // Use withCard prop to wrap content in a card
     >
       <SectionTable
+        key={value}
         tableData={tableData}
         tableHeaderMetadata={tableHeaderMetadata}
         customColumnRenderer={customColumnRenderer}
