@@ -12,6 +12,7 @@ const ExploreIssuesPage = ({
 }) => {
 
   useEffect(() => {
+    filterTasks({});
     listTasks({});
   }, []);
   

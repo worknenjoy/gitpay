@@ -14,13 +14,13 @@ const MyIssuesPage = ({
   const getFilteredIssues = (filter) => {
     switch (filter) {
       case 'assigned':
-        filterTasks('Assigns')
+        filterTasks('assigned')
         break;
       case 'createdbyme':
         filterTasks('userId')
         break;
       case 'interested':
-        filterTasks('assigned')
+        filterTasks('Assigns')
         break;
       default:
         filterTasks('userId')
@@ -30,10 +30,7 @@ const MyIssuesPage = ({
 
   useEffect(() => {
     listTasks({})
-    return () => {
-      filterTasks({})
-    }
-  }, [history.location.pathname])
+  }, [])
 
   useEffect(() => {
     getFilteredIssues(filter)

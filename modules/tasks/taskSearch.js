@@ -18,7 +18,6 @@ function makeLabelJsonAttr(tableAlias) {
   ]
 }
 
-// Filtro “task contém TODAS as labels pedidas” usando COUNT DISTINCT com alias correto
 function makeLabelFilterLiteral(tableAlias, ids) {
   if (!ids?.length) return null
   return Sequelize.literal(`(
@@ -29,7 +28,6 @@ function makeLabelFilterLiteral(tableAlias, ids) {
   ) = ${ids.length}`)
 }
 
-// Mapeia o atributo agregado 'labels' (subquery JSON) para o shape esperado 'Labels'
 function attachLabelsVirtual(instances) {
   const list = Array.isArray(instances) ? instances : [instances]
   for (const t of list) {
@@ -40,16 +38,24 @@ function attachLabelsVirtual(instances) {
     else if (raw) { try { arr = JSON.parse(raw) } catch { arr = [] } }
     if (!Array.isArray(arr)) arr = []
 
-    arr = arr.filter(Boolean).map(x => ({ id: x.id, name: x.name }))
+    // ✅ dedupe por id
+    const seen = new Set()
+    const deduped = []
+    for (const x of arr) {
+      if (!x || x.id == null) continue
+      if (seen.has(x.id)) continue
+      seen.add(x.id)
+      deduped.push({ id: x.id, name: x.name })
+    }
 
-    if (t?.setDataValue) t.setDataValue('Labels', arr)
-    else t.Labels = arr
+    if (t?.setDataValue) t.setDataValue('Labels', deduped)
+    else t.Labels = deduped
 
     if (t?.dataValues) delete t.dataValues.labels
   }
 }
 
-// Agrupa array por chave
+
 function groupBy(arr, keyFn) {
   const map = new Map()
   for (const item of arr) {
@@ -78,8 +84,6 @@ async function attachAssigns(tasks) {
     else t.Assigns = list
   }
 }
-
-/** ---- Main ---- **/
 
 module.exports = Promise.method(function taskSearch(searchParams) {
   const whereBase = {
@@ -116,7 +120,6 @@ module.exports = Promise.method(function taskSearch(searchParams) {
       whereTasks[Op.and] = whereTasks[Op.and] ? [...whereTasks[Op.and], lblFilter] : [lblFilter]
     }
 
-    // atributos base de Tasks com subquery JSON usando alias "Tasks"
     const taskAttrsInProject = [
       'id', 'private', 'not_listed', 'title', 'url', 'status', 'level', 'deadline', 'value',
       'createdAt', 'updatedAt', 'ProjectId', 'userId',
@@ -143,7 +146,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
                 through: { attributes: [] }
               }]
             },
-            ordersInclude // Orders sem limitar
+            ordersInclude
           ],
           distinct: true,
           order: [['status', 'DESC'], ['id', 'DESC']]
@@ -152,8 +155,8 @@ module.exports = Promise.method(function taskSearch(searchParams) {
       })
       .then(async projects => {
         projects.forEach(p => p.Tasks.forEach(t => tasks.push(t)))
-        attachLabelsVirtual(tasks)        // Labels via JSON
-        await attachAssigns(tasks)        // TODOS os Assigns via batch
+        attachLabelsVirtual(tasks)
+        await attachAssigns(tasks)
         return tasks
       })
   }

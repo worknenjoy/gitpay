@@ -23,10 +23,6 @@ const ExploreIssuesPrivatePage = ({
   user
 }) => {
 
-  useEffect(() => {
-    listTasks({})
-  }, [])
-
   return (
     <ExplorePaper elevation={ 0 }>
       <Container>
