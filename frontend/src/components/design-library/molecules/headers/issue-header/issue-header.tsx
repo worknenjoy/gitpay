@@ -35,6 +35,7 @@ import { IssueReportDialog as TaskReport } from '../../dialogs/issue-reports-dia
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 import useIssueAuthor from '../../../../../hooks/use-issue-author'
+import { useHistory } from 'react-router-dom'
 
 const TaskHeaderContainer = styled.div`
   box-sizing: border-box;
@@ -81,6 +82,7 @@ const IssueHeader = ({
   reportTask,
   updateTask
 }) => {
+  const history = useHistory()
   const issueAuthor = useIssueAuthor(task, user)
   const [anchorEl, setAnchorEl] = useState(null)
   const [deleteDialog, setDeleteDialog] = useState(false)
@@ -103,11 +105,31 @@ const IssueHeader = ({
     setReportDialog(false)
   }
 
+  const pathname = history.location.pathname
+
+  const breadcrumbRoot = pathname.startsWith('/profile/explore')
+    ? {
+      label: <FormattedMessage id="explore.issues.breadcrumbs" defaultMessage="Explore Issues" />,
+      link: '/profile/explore/tasks'
+    }
+    : pathname.startsWith('/profile')
+      ? {
+        label: <FormattedMessage id="user.profile.issues" defaultMessage="My Issues" />,
+        link: '/profile/tasks'
+      }
+      : {
+        label: <FormattedMessage id="organization.issues.breadcrumbs" defaultMessage="Explore Issues" />,
+        link: '/explore/issues'
+      }
+
   return (
     <TaskHeaderContainer>
       <Grid size={{ xs: 12, sm: 12, md: 12 }}>
         <div style={{ marginTop: 30, marginBottom: 20 }}>
-          <Breadcrumb task={task} />
+          <Breadcrumb
+            task={task}
+            root={breadcrumbRoot}
+          />
         </div>
         {
           !task.completed ? (
