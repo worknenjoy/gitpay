@@ -47,7 +47,7 @@ const OrganizationCard = ({ organization, completed }) => {
           style={{ display: 'inline-block', textAlign: 'center', width: '100%', marginTop: 0 }}
         > by {' '}
           {organization &&
-            <Link color="textSecondary" to={`/profile/${organization.User.username || organization.User.id}`}>
+            <Link color="textSecondary" to={`/profile/users/${organization.User.id}`}>
               {organization.User.name || organization.User.username}
             </Link>
           }

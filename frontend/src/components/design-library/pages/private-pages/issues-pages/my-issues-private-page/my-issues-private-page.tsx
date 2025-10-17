@@ -33,7 +33,7 @@ const MyIssuesPrivatePage = ({ user, issues }) => {
       <Container>
         <TopSection>
           <Breadcrumbs
-            root={{ link: '/profile/tasks', label: <FormattedMessage id="breadcrumbs.root.my.issues" defaultMessage="My Issues" /> }}
+            root={{ label: <FormattedMessage id="breadcrumbs.root.my.issues" defaultMessage="My Issues" /> }}
           />
         </TopSection>
         <TopSection>
