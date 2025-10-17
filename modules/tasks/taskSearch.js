@@ -66,25 +66,6 @@ function groupBy(arr, keyFn) {
   return map
 }
 
-async function attachAssigns(tasks) {
-  if (!tasks || tasks.length === 0) return
-  const ids = tasks.map(t => t.id)
-  const rows = await models.Assign.findAll({
-    where: { TaskId: { [Op.in]: ids } },
-    attributes: ['id', 'status', 'createdAt', 'TaskId', 'userId', 'message'],
-    include: [
-      { model: models.User, attributes: ['id', 'username', 'picture_url', 'name'] }
-    ],
-    order: [['createdAt', 'DESC']]
-  })
-  const byTask = groupBy(rows, r => r.TaskId)
-  for (const t of tasks) {
-    const list = byTask.get(t.id) || []
-    if (t.setDataValue) t.setDataValue('Assigns', list)
-    else t.Assigns = list
-  }
-}
-
 module.exports = Promise.method(function taskSearch(searchParams) {
   const whereBase = {
     [Op.or]: [{ private: null }, { private: false }]
@@ -137,6 +118,13 @@ module.exports = Promise.method(function taskSearch(searchParams) {
           include: [
             { model: models.User, attributes: ['id', 'name', 'username', 'picture_url', 'country', 'language'] },
             {
+              model: models.Assign,
+              separate: true,
+              attributes: ['id','status','message','createdAt','TaskId','userId'],
+              include: [{ model: models.User, attributes: ['id','username','picture_url','name'] }],
+              order: [['createdAt', 'DESC']]
+            },
+            {
               model: models.Project,
               attributes: ['id', 'name', 'repo'],
               include: [{
@@ -156,7 +144,6 @@ module.exports = Promise.method(function taskSearch(searchParams) {
       .then(async projects => {
         projects.forEach(p => p.Tasks.forEach(t => tasks.push(t)))
         attachLabelsVirtual(tasks)
-        await attachAssigns(tasks)
         return tasks
       })
   }
@@ -180,6 +167,13 @@ module.exports = Promise.method(function taskSearch(searchParams) {
       include: [
         { model: models.User, attributes: ['id', 'name', 'username', 'picture_url', 'country', 'language'] },
         {
+          model: models.Assign,
+          separate: true,
+          attributes: ['id','status','message','createdAt','TaskId','userId'],
+          include: [{ model: models.User, attributes: ['id','username','picture_url','name'] }],
+          order: [['createdAt', 'DESC']]
+        },
+        {
           model: models.Project,
           attributes: ['id','name','repo'],
           include: [{
@@ -196,7 +190,6 @@ module.exports = Promise.method(function taskSearch(searchParams) {
     })
     .then(async rows => {
       attachLabelsVirtual(rows)
-      await attachAssigns(rows)
       
       return rows.filter(task => {
         const project = task.Project
