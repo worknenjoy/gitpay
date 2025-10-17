@@ -22,7 +22,7 @@ const Template = (args) => {
 export const Default = Template.bind({});
 Default.args = {
   // Add default args here if needed
-  loggedIn: {
+  user: {
     completed: true,
     data: {
       email: 'user@test.com',

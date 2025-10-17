@@ -7,17 +7,17 @@ const stripe = require('../shared/stripe/stripe')();
 const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants');
 
 module.exports = async function invoicePaid(event, req, res) {
-        try {
-          const walletOrderUpdate = await models.WalletOrder.update({
-            status: event.data.object.status
-          }, {
-            where: {
-              source: event.data.object.id
-            }
-          })
-          return res.status(200).json(event);
-        } catch (error) {
-          console.log('error', error)
-          return res.status(200).json(event);
-        }
+  try {
+    const walletOrderUpdate = await models.WalletOrder.update({
+      status: event.data.object.status
+    }, {
+      where: {
+        source: event.data.object.id
+      }
+    })
+    return res.status(200).json(event);
+  } catch (error) {
+    console.log('error', error)
+    return res.status(200).json(event);
+  }
 }

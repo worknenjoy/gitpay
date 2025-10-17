@@ -13,7 +13,7 @@ import {
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import TopBarContainer from '../../../../../../containers/topbar'
-import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
+import Bottom from 'design-library/organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom-bar-layout'
 import messages from './messages'
 // removed withStyles/theme styles usage
 

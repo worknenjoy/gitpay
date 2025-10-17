@@ -20,7 +20,7 @@ const infoError = error => {
 const info = () => {
   return (dispatch) => {
     dispatch(infoRequested())
-    axios
+    return axios
       .get(api.API_URL + '/info/all')
       .then(response => {
         return dispatch(infoSuccess(response))

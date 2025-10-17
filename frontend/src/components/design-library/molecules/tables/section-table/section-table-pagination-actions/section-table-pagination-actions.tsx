@@ -11,7 +11,7 @@ import {
   KeyboardArrowRight,
   LastPage as LastPageIcon
 } from '@mui/icons-material';
-import messages from '../../../../../areas/public/features/task/messages/task-messages';
+import messages from '../../../../../../messages/messages';
 import { Root } from './section-table-pagination-actions.styles'
 
 const TablePaginationActions = ({ count, page, rowsPerPage, onPageChange }) => {

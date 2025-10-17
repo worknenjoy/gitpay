@@ -14,35 +14,72 @@ Default.args = {
     completed: true,
     data: {
       id: 1,
-      title: 'Task 1'
+      title: 'Task 1',
+      User: { id: 1, username: 'User 1' },
+      Project: {
+        id: 1,
+        name: 'Project 1',
+        Organization: { id: 1, name: 'Organization 1' }
+      }
     }
-  },
-  user: {
+  }
+};
+
+export const CustomRoot = Template.bind({});
+CustomRoot.args = {
+  task: {
     completed: true,
     data: {
       id: 1,
-      username: 'User 1'
+      title: 'Task 1',
+      User: { id: 1, username: 'User 1' },
+      Project: {
+        id: 1,
+        name: 'Project 1',
+        Organization: { id: 1, name: 'Organization 1' }
+      }
     }
   },
+  root: {
+    label: 'Dashboard',
+    link: '/dashboard'
+  }
+};
+
+export const ProjectOnly = Template.bind({});
+ProjectOnly.args = {
   project: {
     completed: true,
     data: {
       id: 1,
-      name: 'Project 1'
+      name: 'Project 1',
+      Organization: { id: 1, name: 'Organization 1' }
     }
-  },
+  }
+};
+
+export const OrganizationOnly = Template.bind({});
+OrganizationOnly.args = {
   organization: {
-    name: 'Organization 1'
+    completed: true,
+    data: {
+      id: 1,
+      name: 'Organization 1'
+    }
+  }
+};
+
+export const rootOnly = Template.bind({});
+rootOnly.args = {
+  root: {
+    label: 'Dashboard',
+    link: '/dashboard'
   }
 };
 
 export const Loading = Template.bind({});
 Loading.args = {
   task: {
-    completed: false,
-    data: {}
-  },
-  user: {
     completed: false,
     data: {}
   },

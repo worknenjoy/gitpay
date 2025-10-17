@@ -11,7 +11,7 @@ import {
   Tabs,
   Tab
 } from '@mui/material'
-import { messages } from '../../../public/features/task/messages/task-messages'
+import { messages } from '../../../../../messages/messages'
 import CustomPaginationActionsTable from './transfer-table'
 import TransferDetails from './transfer-detail'
 import { formatCurrency } from '../../../../../utils/format-currency'

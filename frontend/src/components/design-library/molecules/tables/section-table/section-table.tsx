@@ -59,7 +59,7 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
       return keys.reduce((obj, key) => (obj && obj[key] !== 'undefined') ? obj[key] : undefined, item);
     };
 
-    
+
 
     const metadata = tableHeaderMetadata[fieldId];
     if (!metadata) {
@@ -136,21 +136,21 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
 
   if (tableData.completed && tableData.data.length === 0) {
     return (
-  <RootPaper>
+      <RootPaper>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
           <Typography variant="caption">
             <FormattedMessage id="task.table.body.noData" defaultMessage="No data" />
           </Typography>
         </div>
-  </RootPaper>
+      </RootPaper>
     );
   }
 
-  const TableRowPlaceholder: React.FC = () => (
+  const TableRowPlaceholder: React.FC<{ size: number }> = ({ size }) => (
     <React.Fragment>
-      {[0, 1, 2, 3, 4, 5].map((_, rowIndex) => (
+      {[...Array(size)].map((_, rowIndex) => (
         <TableRow key={rowIndex}>
-          {[0, 1, 2, 3, 4, 5].map((_, cellIndex) => (
+          {[...Array(size)].map((_, cellIndex) => (
             <StyledTableCell key={cellIndex}>
               <div style={{ width: 80, padding: '8px 4px' }}>
                 {
@@ -176,22 +176,22 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
           <TableBody>
             {
               !tableData.completed ? (
-                <TableRowPlaceholder />
+                <TableRowPlaceholder size={Object.entries(tableHeaderMetadata).length} />
               ) : (
                 sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n) => (
                   <TableRow key={n.id}>
                     {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
-                    <StyledTableCell key={fieldId}>
-                      {
-                        !tableData.completed ? (
-                          <Skeleton variant="text" animation="wave" />
-                        ) : (
-                          <div>
-                            {customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](n) : n[fieldId]}
-                          </div>
-                        )
-                      }
-                    </StyledTableCell>
+                      <StyledTableCell key={fieldId}>
+                        {
+                          !tableData.completed ? (
+                            <Skeleton variant="text" animation="wave" />
+                          ) : (
+                            <div>
+                              {customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](n) : n[fieldId]}
+                            </div>
+                          )
+                        }
+                      </StyledTableCell>
                     ))}
                   </TableRow>
                 ))

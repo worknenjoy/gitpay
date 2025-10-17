@@ -2,7 +2,7 @@ import React from 'react';
 import BankAccountNumberForm from './bank-account-number-form';
 
 export default {
-  title: 'Design Library/Molecules/Forms/BankAccountNumberForm',
+  title: 'Design Library/Molecules/FormSection/BankAccountNumberForm',
   component: BankAccountNumberForm
 };
 

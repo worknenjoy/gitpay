@@ -28,3 +28,41 @@ Table.args = {
     action: (item) => <a href="#">{item.action}</a>
   }
 };
+
+export const Loading = Template.bind({});
+Loading.args = {
+  tableData: {
+    completed: false,
+    data: []
+  },
+  tableHeaderMetadata: {
+    "id": { sortable: true, numeric: true, dataBaseKey: "id", label: 'Id' },
+    "name": { sortable: true, dataBaseKey: "name", label: 'Name' },
+    "email": { sortable: true, dataBaseKey: "email", label: 'Email' },
+    "role": { sortable: true, dataBaseKey: "role", label: 'Role' },
+    "status": { sortable: true, dataBaseKey: "status", label: 'Status' },
+    "action": { sortable: false, dataBaseKey: "action", label: 'Action' }
+  },
+  customColumnRenderer: {
+    action: (item) => <a href="#">{item.action}</a>
+  }
+};
+
+export const Empty = Template.bind({});
+Empty.args = {
+  tableData: {
+    completed: true,
+    data: []
+  },
+  tableHeaderMetadata: {
+    "id": { sortable: true, numeric: true, dataBaseKey: "id", label: 'Id' },
+    "name": { sortable: true, dataBaseKey: "name", label: 'Name' },
+    "email": { sortable: true, dataBaseKey: "email", label: 'Email' },
+    "role": { sortable: true, dataBaseKey: "role", label: 'Role' },
+    "status": { sortable: true, dataBaseKey: "status", label: 'Status' },
+    "action": { sortable: false, dataBaseKey: "action", label: 'Action' }
+  },
+  customColumnRenderer: {
+    action: (item) => <a href="#">{item.action}</a>
+  }
+};

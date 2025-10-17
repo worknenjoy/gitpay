@@ -121,9 +121,9 @@ const messages = defineMessages({
     id: 'consts.account.statuses.progress',
     defaultMessage: 'In progress'
   },
-  statusFinish: {
-    id: 'consts.account.statuses.finish',
-    defaultMessage: 'Finished'
+  statusClosed: {
+    id: 'consts.account.statuses.closed',
+    defaultMessage: 'Closed'
   },
   statusUndefined: {
     id: 'consts.account.statuses.undefined',

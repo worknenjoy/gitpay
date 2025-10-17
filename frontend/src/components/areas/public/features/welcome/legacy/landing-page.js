@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import { styled } from '@mui/material/styles'
 import {
   Button,
   AppBar,
@@ -14,7 +13,7 @@ import peopleImage from 'images/landingPage_People.png'
 import logoGrey from 'images/logo-complete-gray.png'
 import screenImage from 'images/gitpay-explore-task-screenshot.png'
 import profileImage from 'images/avatar-alexandre.png'
-import Bottom from 'design-library/organisms/layouts/bottom-bar/bottom'
+import Bottom from 'design-library/organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom-bar-layout'
 import Clientlist from './clientlist'
 import TeamCard from 'design-library/molecules/cards/team-card/TeamCard'
 import ContactRecruiterFormContainer from '../../../../../../containers/contact-recruiter-form'

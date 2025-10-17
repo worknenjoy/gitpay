@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { listLabels } from '../actions/labelActions'
-import Label from '../components/areas/public/features/task/task-filter-labels'
+import Label from '../components/design-library/atoms/filters/labels-filter/labels-filter'
 import { listTasks } from '../actions/taskActions'
 
 const mapStateToProps = (state, ownProps) => {

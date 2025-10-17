@@ -29,7 +29,7 @@ const listOrganizationsRequested = () => {
 }
 
 const listOrganizationsSuccess = (response) => {
-  return { type: LIST_ORGANIZATIONS_SUCCESS, completed: true, organizations: response }
+  return { type: LIST_ORGANIZATIONS_SUCCESS, completed: true, data: response }
 }
 
 const listOrganizationsError = (error) => {
@@ -43,7 +43,7 @@ const listOrganizations = () => {
       .get(api.API_URL + '/organizations/list')
       .then(orgs => {
         if (orgs.data) {
-          return dispatch(listOrganizationsSuccess(orgs))
+          return dispatch(listOrganizationsSuccess(orgs.data))
         }
         dispatch(
           addNotification('actions.orgs.list.error')

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
-import PrimaryDataPage from 'design-library/pages/private/data-pages/primary-data-page/primary-data-page';
+import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page';
 import IssueLinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-link-field/issue-link-field'
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field';
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field';

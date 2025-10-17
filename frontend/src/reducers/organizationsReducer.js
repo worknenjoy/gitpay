@@ -16,30 +16,30 @@ import {
   UPDATE_ORGANIZATIONS_ERROR
 } from '../actions/organizationsActions'
 
-export const organizations = (state = { organizations: [], completed: true, error: {} }, action) => {
+export const organizations = (state = { data: [], completed: true, error: {} }, action) => {
   switch (action.type) {
     case LIST_ORGANIZATIONS_REQUESTED:
       return { ...state, completed: action.completed }
     case LIST_ORGANIZATIONS_SUCCESS:
-      return { ...state, organizations: action.organizations, completed: action.completed }
+      return { ...state, data: action.data, completed: action.completed }
     case LIST_ORGANIZATIONS_ERROR:
       return { ...state, error: action.error, completed: action.completed }
     case FETCH_ORGANIZATIONS_REQUESTED:
       return { ...state, completed: action.completed }
     case FETCH_ORGANIZATIONS_SUCCESS:
-      return { ...state, organizations: action.organizations, completed: action.completed }
+      return { ...state, data: action.data, completed: action.completed }
     case FETCH_ORGANIZATIONS_ERROR:
       return { ...state, error: action.error, completed: action.completed }
     case CREATE_ORGANIZATIONS_REQUESTED:
       return { ...state, completed: action.completed }
     case CREATE_ORGANIZATIONS_SUCCESS:
-      return { ...state, organizations: action.organizations, completed: action.completed }
+      return { ...state, data: action.data, completed: action.completed }
     case CREATE_ORGANIZATIONS_ERROR:
       return { ...state, error: action.error, completed: action.completed }
     case UPDATE_ORGANIZATIONS_REQUESTED:
       return { ...state, completed: action.completed }
     case UPDATE_ORGANIZATIONS_SUCCESS:
-      return { ...state, organizations: action.organizations, completed: action.completed }
+      return { ...state, data: action.data, completed: action.completed }
     case UPDATE_ORGANIZATIONS_ERROR:
       return { ...state, error: action.error, completed: action.completed }
     default:

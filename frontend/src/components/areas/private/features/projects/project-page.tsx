@@ -4,7 +4,7 @@ import { defineMessages, FormattedMessage } from 'react-intl'
 
 import { Tabs, Tab, Typography, Skeleton } from '@mui/material'
 import { tableHeaderDefault, tableHeaderWithProject } from '../../../../shared/table-metadata/task-header-metadata'
-import ProjectListSimple from 'design-library/molecules/cards/project-card/project-list-simple'
+import ProjectListSimple from 'design-library/molecules/lists/project-list/project-list-compact/project-list-compact'
 import { Breadcrumb } from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
 import { RootTabs } from './project-page.styles'
 
@@ -276,7 +276,7 @@ const TaskList: React.FC<TaskListProps> = ({ user, tasks, organization, fetchOrg
     <React.Fragment>
         { (project?.data?.id || organizationData?.id) &&
           <div style={{marginTop: 20}}>
-            <Breadcrumb project={project} organization={organizationData} user={user} task={{}}/>
+            <Breadcrumb project={project} organization={organizationData} />
           </div>
         }
         { isOrganizationPage &&
@@ -304,8 +304,6 @@ const TaskList: React.FC<TaskListProps> = ({ user, tasks, organization, fetchOrg
               </Typography>
               <ProjectListSimple 
                 projects={organizationData?.Projects?.length > 0 && { data: organizationData?.Projects }}
-                listProjects={listProjects}
-                user={user}
               />
             </>
           ))

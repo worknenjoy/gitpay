@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { connect } from 'react-redux'
-import OrganizationList from '../components/areas/public/features/organization/organization-list'
+import OrganizationList from '../components/design-library/molecules/cards/organization/organization-list'
 import { listOrganizations } from '../actions/organizationsActions'
 
 const mapStateToProps = (state, props) => {

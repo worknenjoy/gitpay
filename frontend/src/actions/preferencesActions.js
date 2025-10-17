@@ -1,6 +1,5 @@
 import axios from 'axios'
 import api from '../consts'
-import { loggedIn } from './loginActions'
 import { validToken } from './helpers'
 
 const FETCH_PREFERENCES_REQUESTED = 'FETCH_PREFERENCES_REQUESTED'
@@ -22,19 +21,17 @@ const fetchPreferencesError = (error) => {
 const fetchPreferences = () => {
   validToken()
   return (dispatch) => {
-    return dispatch(loggedIn()).then(user => {
-      dispatch(fetchPreferencesRequested())
-      return axios
-        .get(`${api.API_URL}/user/preferences`)
-        .then(response => {
-          return dispatch(fetchPreferencesSuccess(response.data))
-        })
-        .catch(error => {
-          // eslint-disable-next-line no-console
-          console.log(error)
-          return dispatch(fetchPreferencesError(error))
-        })
-    })
+    dispatch(fetchPreferencesRequested())
+    return axios
+      .get(`${api.API_URL}/user/preferences`)
+      .then(response => {
+        return dispatch(fetchPreferencesSuccess(response.data))
+      })
+      .catch(error => {
+        // eslint-disable-next-line no-console
+        console.log(error)
+        return dispatch(fetchPreferencesError(error))
+      })
   }
 }
 

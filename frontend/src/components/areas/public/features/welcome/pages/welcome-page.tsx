@@ -1,14 +1,11 @@
 import React from 'react';
-import About from 'design-library/pages/public/about/about';
-import useCommonActions from '../../../../../../hooks/use-common-actions'
+import About from 'design-library/pages/public-pages/about-public-page/about-public-page';
 
 const WelcomePage = (props) => {
 
-  const commonProps = useCommonActions(props);
-
   return (
     <About
-      { ...commonProps }
+      { ...props }
     />
   );
 }

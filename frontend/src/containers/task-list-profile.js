@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { connect } from 'react-redux'
-import TaskListProfile from '../components/areas/public/features/task/task-list-profile'
+import TaskListProfile from '../components/areas/public/features/issue/legacy/task-list-profile'
 import { listTasks, filterTasks } from '../actions/taskActions'
 import { fetchProject, listProjects } from '../actions/projectActions'
 import { fetchOrganization } from '../actions/organizationsActions'
