@@ -10,17 +10,20 @@ const Template = (args) => <PaymentRequestForm {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  user: {
-    completed: true,
-    data: {
-      country: 'US'
-    }
-  },
+  completed: true,
+};
+
+export const Edit = Template.bind({});
+Edit.args = {
+  completed: true,
   paymentRequest: {
     completed: true,
     data: {
+      id: 1,
+      active: true,
       amount: 100,
       currency: 'USD',
+      title: 'Web Development Services',
       description: 'Payment for services rendered'
     }
   }
@@ -29,16 +32,4 @@ Default.args = {
 export const Loading = Template.bind({});
 Loading.args = {
   completed: false,
-  user: {
-    completed: false,
-    data: {}
-  },
-  bankAccount: {
-    completed: false,
-    data: {}
-  },
-  countries: {
-    completed: false,
-    data: {}
-  }
 };

@@ -5,17 +5,38 @@ import Field from '../../../../atoms/inputs/fields/field/field';
 import Alert from '../../../../atoms/alerts/alert/alert';
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
 import { AlertWrapper, EndAdornment } from './payment-request-form.styles';
+import { check } from 'prettier';
 
-interface PaymentRequestFormProps {
+type PaymentRquestFormData = {
+  id?: number;
+  active?: boolean;
+  deactivate_after_payment?: boolean;
+  amount?: number;
+  custom_amount?: boolean;
+  currency?: string;
+  title?: string;
+  description?: string;
+};
+
+type PaymentRequestFormProps = {
   onSubmit?: (e: any, data: any) => void;
   completed?: boolean;
+  paymentRequest: {
+    completed: boolean;
+    data: PaymentRquestFormData;
+  };
 }
 
 type PaymentRequestFormHandle = {
   submit: () => void;
 };
 
-const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFormProps>(({ onSubmit, completed = true }, ref) => {
+const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFormProps>(({ 
+  onSubmit,
+  paymentRequest,
+  completed = true 
+}, ref) => {
+  const { data } = paymentRequest || {};
   const [error, setError] = useState<string | false>(false);
   const internalFormRef = useRef<HTMLFormElement>(null);
   const [customAmount, setCustomAmount] = useState(false);
@@ -45,6 +66,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     setCustomAmount(selected);
   };
 
+  const editMode = !!data.id;
+
   return (
     <form onSubmit={handleSubmit} ref={internalFormRef}>
       {error && (
@@ -70,6 +93,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             name="title"
             type="text"
             placeholder="Title of your service"
+            value={data?.title}
+            disabled={editMode}
             completed={completed}
           />
         </Grid>
@@ -85,6 +110,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                 name="description"
                 placeholder="Describe your service"
                 multiline
+                value={ data?.description }
+                disabled={editMode}
                 rows={4}
               />
             )
@@ -98,6 +125,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             placeholder="Enter the amount"
             inputProps={{ min: 0, step: '0.01' }}
             completed={completed}
+            value={customAmount ? '' : data?.amount?.toString() || ''}
             endAdornment={
               <EndAdornment>
                 <i>
@@ -105,23 +133,32 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                 </i>
               </EndAdornment>
             }
-            disabled={customAmount}
+            disabled={customAmount || !!data?.amount}
           />
         </Grid>
         <Grid size={{ xs: 12, md: 12 }}>
           <Checkboxes
+            completed={completed}
             checkboxes={[
+              data?.active !== undefined ? {
+                label: <FormattedMessage id="paymentRequest.form.active" defaultMessage="Active" />,
+                name: 'active',
+                value: true,
+                defaultChecked: data?.active,
+              } : null,
               {
                 label: <FormattedMessage id="paymentRequest.form.customAmount" defaultMessage="Custom Amount" />,
                 name: 'custom_amount',
                 value: true,
+                disabled: editMode,
                 onChange: handleCustomAmountChange
               },
               {
                 label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
                 name: 'deactivate_after_payment',
-                value: true
-              }
+                value: true,
+                disabled: editMode,
+              },
             ]}
             includeSelectAll={false}
           />

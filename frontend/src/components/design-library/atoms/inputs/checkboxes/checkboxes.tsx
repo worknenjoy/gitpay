@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, FormControlLabel } from '@mui/material';
 import { CheckboxesContainer, CheckboxItem, StyledCheckbox } from './checkboxes.styles';
+import CheckboxesPlaceholder from './checkboxes.placeholder';
 
 type CheckboxesProps = {
   checkboxes: any;
   includeSelectAll?: boolean;
   onChange?: (checked: Array<String>) => void;
+  completed?: boolean;
 };
 
-
-const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:CheckboxesProps) => {
+const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false, completed = true }:CheckboxesProps) => {
   const [checked, setChecked] = useState({});
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, onChangeCheckbox) => {
@@ -21,12 +22,13 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:Checkboxe
   };
 
   useEffect(() => {
+    if (!completed) return;
     const selectedCheckboxes = Object.keys(checked)
       .filter((key) => key !== 'all')
       .filter((key) => checked[key])
       .map((key) => checkboxes.find((checkbox) => checkbox.name === key)?.value);
     onChange?.(selectedCheckboxes);
-  }, [checked]);
+  }, [checked, completed, checkboxes]);
 
   const selectBoxesWithAll = [...checkboxes, {
     label: 'All',
@@ -55,6 +57,7 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:Checkboxe
   const checkboxesToRender = includeSelectAll ? selectBoxesWithAll : checkboxes;
 
   useEffect(() => {
+    if (!completed) return;
     const allOptionsChecked = checkboxes
       .filter((checkbox) => checkbox.name !== 'all')
       .every((checkbox) => checked[checkbox.name] || false);
@@ -65,10 +68,12 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:Checkboxe
         all: allOptionsChecked
       }));
     }
-  }, [checked, checkboxes]);
+  }, [checked, checkboxes, completed]);
 
+  const items = checkboxesToRender.length > 0 ? checkboxesToRender.length : 3;
 
   return (
+    completed ?
     <CheckboxesContainer>
       <Grid container spacing={3}>
         {checkboxesToRender.map((checkbox, index) => (
@@ -77,11 +82,13 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:Checkboxe
               <FormControlLabel
                 control={
                   <StyledCheckbox
-                    checked={checked[checkbox.name] || false}
+                    checked={checked[checkbox.name]}
                     onChange={(e) => handleChange(e, checkbox?.onChange)}
                     color="primary"
                     name={checkbox.name}
                     value={checkbox.value}
+                    defaultChecked={checkbox.defaultChecked}
+                    disabled={checkbox.disabled}
                   />
                 }
                 label={checkbox.label}
@@ -90,7 +97,7 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false }:Checkboxe
           </Grid>
         ))}
       </Grid>
-    </CheckboxesContainer>
+    </CheckboxesContainer> : <CheckboxesPlaceholder items={items} />
   );
 };
 
