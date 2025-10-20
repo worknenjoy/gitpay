@@ -1,41 +1,78 @@
 import React from 'react';
-import { IconButton, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
-import { MoreVert as MoreIcon, Visibility as VisibilityIcon } from '@mui/icons-material';
+import {
+  IconButton,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  ListItemText
+} from '@mui/material';
+import {
+  MoreVert as MoreIcon,
+  Visibility as VisibilityIcon
+} from '@mui/icons-material';
 
+type ActionsMenuProps = {
+  actions: {
+    children: React.ReactNode;
+    onClick: () => void;
+    icon?: React.ReactNode;
+  }[];
+};
 
-export const ActionsMenu = (props) => {
-  const { actions, ...rest } = props;
-  const [anchorEl, setAnchorEl] = React.useState(null);
+export const ActionsMenu = ({ actions }: ActionsMenuProps) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    setAnchorEl(event.currentTarget);
+  };
 
-  const handleMoreButton = (e) => {
-    e.preventDefault()
-    console.log('More button clicked')
-    setAnchorEl({ anchorEl: e.currentTarget });
-  }
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
 
   return (
-    <div className="actions-menu" {...rest}>
-      <IconButton onClick={handleMoreButton}>
+    <div className="actions-menu">
+      <IconButton onClick={handleOpenMenu}>
         <MoreIcon />
       </IconButton>
+
       <Menu
         anchorEl={anchorEl}
-        open={anchorEl}
-        onClose={() => setAnchorEl({ anchorEl: null })}
+        open={Boolean(anchorEl)}
+        onClose={handleCloseMenu}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'right'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        PaperProps={{
+          sx: {
+            mt: 1,
+            minWidth: 160
+          }
+        }}
       >
         {actions.map((action, index) => (
-          <MenuItem key={index} onClick={action.onClick} style={{ display: 'flex', alignItems: 'center' }}>
+          <MenuItem
+            key={index}
+            onClick={() => {
+              action.onClick();
+              handleCloseMenu(); // fecha o menu ao clicar em qualquer item
+            }}
+          >
             <ListItemIcon>
-              <VisibilityIcon />
+              {action.icon || <VisibilityIcon fontSize="small" />}
             </ListItemIcon>
             <ListItemText primary={action.children} />
           </MenuItem>
         ))}
-       
       </Menu>
     </div>
   );
-}
+};
 
 export default ActionsMenu;
