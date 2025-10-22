@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Skeleton } from '@mui/material'
 
-import { TableHead, TableCell, TableBody, TableFooter, TablePagination, TableRow, TableSortLabel, Typography } from '@mui/material';
+import { Paper, TableHead, TableCell, TableBody, TableFooter, TablePagination, TableRow, TableSortLabel, Typography } from '@mui/material';
 import { RootPaper, TableWrapper, StyledTable, StyledTableCell } from './section-table.styles'
 
 import TablePaginationActions from './section-table-pagination-actions/section-table-pagination-actions';
+import TablePlaceholder from './section-table.placeholder';
 
 type MetaDataProps = {
   numeric: boolean,
   dataBaseKey: string,
-  label: string
+  label: string,
+  minWidth?: number;
+  width?: number;
+  align?: 'left' | 'right' | 'center';
 };
 
 const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {} }) => {
@@ -146,79 +150,55 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
     );
   }
 
-  const TableRowPlaceholder: React.FC<{ size: number }> = ({ size }) => (
-    <React.Fragment>
-      {[...Array(size)].map((_, rowIndex) => (
-        <TableRow key={rowIndex}>
-          {[...Array(size)].map((_, cellIndex) => (
-            <StyledTableCell key={cellIndex}>
-              <div style={{ width: 80, padding: '8px 4px' }}>
-                {
-                  !tableData.completed ? (
-                    <Skeleton variant="text" animation="wave" />
-                  ) : (
-                    <div />
-                  )
-                }
-              </div>
-            </StyledTableCell>
-          ))}
-        </TableRow>
-      ))}
-    </React.Fragment>
-  );
-
   return (
-    <RootPaper>
-      <TableWrapper>
-        <StyledTable>
-          <TableHeadCustom />
-          <TableBody>
-            {
-              !tableData.completed ? (
-                <TableRowPlaceholder size={Object.entries(tableHeaderMetadata).length} />
-              ) : (
-                sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n) => (
-                  <TableRow key={n.id}>
-                    {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
-                      <StyledTableCell key={fieldId}>
-                        {
-                          !tableData.completed ? (
-                            <Skeleton variant="text" animation="wave" />
-                          ) : (
-                            <div>
-                              {customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](n) : n[fieldId]}
-                            </div>
-                          )
-                        }
-                      </StyledTableCell>
-                    ))}
-                  </TableRow>
-                ))
-              )
-            }
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 48 * emptyRows }}>
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                colSpan={3}
-                count={sortedData.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={(e, page) => handleChangePage(e, page)}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
+    <TableWrapper component={Paper}>
+      <StyledTable>
+        <TableHeadCustom />
+        <TableBody>
+          {
+            !tableData.completed ? (
+              <TablePlaceholder completed={tableData.completed} size={Object.entries(tableHeaderMetadata).length} />
+            ) : (
+              sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n) => (
+                <TableRow key={n.id}>
+                  {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
+                    <StyledTableCell key={fieldId}>
+                      {
+                        !tableData.completed ? (
+                          <Skeleton variant="text" animation="wave" />
+                        ) : (
+                          <div>
+                            {customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](n) : n[fieldId]}
+                          </div>
+                        )
+                      }
+                    </StyledTableCell>
+                  ))}
+                </TableRow>
+              ))
+            )
+          }
+          {emptyRows > 0 && (
+            <TableRow style={{ height: 48 * emptyRows }}>
+              <TableCell colSpan={Object.keys(tableHeaderMetadata).length} />
             </TableRow>
-          </TableFooter>
-        </StyledTable>
-      </TableWrapper>
-    </RootPaper>
+          )}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              colSpan={3}
+              count={sortedData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={(e, page) => handleChangePage(e, page)}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
+      </StyledTable>
+    </TableWrapper>
   );
 };
 

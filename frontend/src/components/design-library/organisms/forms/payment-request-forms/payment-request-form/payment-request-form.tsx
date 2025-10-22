@@ -5,7 +5,6 @@ import Field from '../../../../atoms/inputs/fields/field/field';
 import Alert from '../../../../atoms/alerts/alert/alert';
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
 import { AlertWrapper, EndAdornment } from './payment-request-form.styles';
-import { check } from 'prettier';
 
 type PaymentRquestFormData = {
   id?: number;
@@ -21,7 +20,7 @@ type PaymentRquestFormData = {
 type PaymentRequestFormProps = {
   onSubmit?: (e: any, data: any) => void;
   completed?: boolean;
-  paymentRequest: {
+  paymentRequest?: {
     completed: boolean;
     data: PaymentRquestFormData;
   };
@@ -66,7 +65,33 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     setCustomAmount(selected);
   };
 
-  const editMode = !!data.id;
+  const editMode = !!data?.id;
+
+  const checkboxes = [
+    {
+      label: <FormattedMessage id="paymentRequest.form.customAmount" defaultMessage="Custom Amount" />,
+      name: 'custom_amount',
+      value: true,
+      disabled: editMode,
+      onChange: handleCustomAmountChange
+    },
+    {
+      label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
+      name: 'deactivate_after_payment',
+      value: true,
+      disabled: editMode,
+    }
+  ]
+
+  if(data?.active !== undefined) {
+   checkboxes.push({
+      label: <FormattedMessage id="paymentRequest.form.active" defaultMessage="Active" />,
+      name: 'active',
+      value: true,
+      defaultChecked: data?.active,
+      disabled: editMode,
+    } as any);
+  }
 
   return (
     <form onSubmit={handleSubmit} ref={internalFormRef}>
@@ -125,7 +150,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             placeholder="Enter the amount"
             inputProps={{ min: 0, step: '0.01' }}
             completed={completed}
-            value={customAmount ? '' : data?.amount?.toString() || ''}
+            value={data?.amount}
             endAdornment={
               <EndAdornment>
                 <i>
@@ -139,27 +164,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         <Grid size={{ xs: 12, md: 12 }}>
           <Checkboxes
             completed={completed}
-            checkboxes={[
-              data?.active !== undefined ? {
-                label: <FormattedMessage id="paymentRequest.form.active" defaultMessage="Active" />,
-                name: 'active',
-                value: true,
-                defaultChecked: data?.active,
-              } : null,
-              {
-                label: <FormattedMessage id="paymentRequest.form.customAmount" defaultMessage="Custom Amount" />,
-                name: 'custom_amount',
-                value: true,
-                disabled: editMode,
-                onChange: handleCustomAmountChange
-              },
-              {
-                label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
-                name: 'deactivate_after_payment',
-                value: true,
-                disabled: editMode,
-              },
-            ]}
+            checkboxes={checkboxes}
             includeSelectAll={false}
           />
         </Grid>

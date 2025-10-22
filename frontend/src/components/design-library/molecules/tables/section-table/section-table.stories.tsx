@@ -23,7 +23,7 @@ Table.args = {
     "email": { sortable: true, dataBaseKey: "email", label: 'Email' },
     "role": { sortable: true, dataBaseKey: "role", label: 'Role' },
     "status": { sortable: true, dataBaseKey: "status", label: 'Status' },
-    "action": { sortable: false, dataBaseKey: "action", label: 'Action' }
+    "action": { sortable: false, label: 'Action' }
   },
   customColumnRenderer: {
     action: (item) => <ActionsField actions={[

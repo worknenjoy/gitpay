@@ -4,7 +4,7 @@ import { CheckboxesContainer, CheckboxItem, StyledCheckbox } from './checkboxes.
 import CheckboxesPlaceholder from './checkboxes.placeholder';
 
 type CheckboxesProps = {
-  checkboxes: any;
+  checkboxes: any[];
   includeSelectAll?: boolean;
   onChange?: (checked: Array<String>) => void;
   completed?: boolean;
