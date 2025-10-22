@@ -15,7 +15,7 @@ module.exports = Promise.method(function userCustomerCreate(id, customerParamete
           return new Error('customer.exists')
         }).catch(e => {
           // eslint-disable-next-line no-console
-          console.log('could not finde customer', e)
+          console.log('could not find customer', e)
           return e
         })
       } else {

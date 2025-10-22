@@ -46,7 +46,7 @@ To ensure full integration with the API services used by the platform, you will 
 
 You can do this with: `cp .env.example .env`
 
-#### You need to run create the .env in order to run the project: `cp .env.example .env`
+#### You need to create the .env in order to run the project: `cp .env.example .env`
 
 ### Important
 - Make sure to use Node v17 (you can use <a href="https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/"> Node Version Manager (NVM)</a> to manage and switch different Node versions)
@@ -67,7 +67,7 @@ You can do this with: `cp .env.example .env`
 1. Install by running the following command: `sudo apt install postgresql`
 2. Start the command service by running the following command: `sudo service postgresql start`
 3. Create a postgres user by running the following command: `createuser postgres -s`
-4. Login into the Postgres cli with by running the following command: `sudo -i -u postgres`
+4. Login into the Postgres cli by running the following command: `sudo -i -u postgres`
 5. Access the Postgres prompt by running the following command: `psql`
 6. Make sure the Postgres user has the correct password by typing the following command: `ALTER USER postgres WITH PASSWORD 'postgres';`
 7. Create a test database by running the following command: `CREATE DATABASE gitpay_test;`
