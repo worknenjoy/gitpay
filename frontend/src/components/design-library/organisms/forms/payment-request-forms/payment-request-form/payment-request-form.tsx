@@ -39,6 +39,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
   const [error, setError] = useState<string | false>(false);
   const internalFormRef = useRef<HTMLFormElement>(null);
   const [customAmount, setCustomAmount] = useState(false);
+  const editMode = !!data?.id;
 
   // Expose `submit` method to parent
   useImperativeHandle(ref, () => ({
@@ -51,21 +52,27 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
+    const fieldsToValidate = !data.title || !data.description || (!customAmount && !data.amount);
 
-    if (!data.title || !data.description || (!customAmount && !data.amount)) {
+    if (fieldsToValidate && !editMode) {
       setError('All fields are required.');
       return;
     }
 
     setError(false);
+    if(editMode) {
+      onSubmit?.(event, {
+        ...data,
+        active: formData.get('active') || false,
+      });
+      return;
+    }
     onSubmit?.(event, data);
   };
 
   const handleCustomAmountChange = (selected: boolean) => {
     setCustomAmount(selected);
   };
-
-  const editMode = !!data?.id;
 
   const checkboxes = [
     {

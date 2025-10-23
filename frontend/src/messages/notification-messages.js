@@ -544,6 +544,14 @@ const messages = defineMessages({
   notificationPayoutRequestSearchError: {
     id: 'actions.payoutRequest.search.error',
     defaultMessage: 'We could not list your payout requests'
+  },
+  notificationPaymentRequestUpdateSuccess: {
+    id: 'actions.paymentRequest.update.success',
+    defaultMessage: 'Payment request updated successfully'
+  },
+  notificationPaymentRequestUpdateError: {
+    id: 'actions.paymentRequest.update.error',
+    defaultMessage: 'We could not update this payment request'
   }
 })
 

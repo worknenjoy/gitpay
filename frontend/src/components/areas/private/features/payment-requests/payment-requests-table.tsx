@@ -26,7 +26,8 @@ const paymentRequestMetadata = {
   "actions": { sortable: false, numeric: false, label: 'Actions' }
 }
 
-export const PaymentRequestsTable = ({ paymentRequests, updatePaymentRequest }) => {
+export const PaymentRequestsTable = ({ paymentRequests, listPaymentRequests, updatePaymentRequest }) => {
+  const [ processingUpdatePaymentRequest, setProcessingUpdatePaymentRequest ] = React.useState(false)
   const [selectedPaymentRequest, setSelectedPaymentRequest] = React.useState<any | null>(null)
 
   const openEditPaymentRequest = (item:any) => {
@@ -37,9 +38,13 @@ export const PaymentRequestsTable = ({ paymentRequests, updatePaymentRequest }) 
     setSelectedPaymentRequest(null)
   }
 
-  const handleUpdatePaymentRequest = (paymentRequest) => {
-    console.log('Updated payment request:', paymentRequest);
-    //updatePaymentRequest(updatedRequest);
+  const handleUpdatePaymentRequest = async (e, paymentRequest) => {
+    e.preventDefault();
+    setProcessingUpdatePaymentRequest(true);
+    await updatePaymentRequest({id: selectedPaymentRequest.id, ...paymentRequest});
+    setProcessingUpdatePaymentRequest(false);
+    handleCloseDrawer();
+    listPaymentRequests();
   }
 
   const customColumnRenderer = {
@@ -111,7 +116,7 @@ export const PaymentRequestsTable = ({ paymentRequests, updatePaymentRequest }) 
         completed={true}
         onSuccess={handleUpdatePaymentRequest}
         paymentRequest={{
-          completed: true,
+          completed: !processingUpdatePaymentRequest,
           data: selectedPaymentRequest
         }}
       />
