@@ -41,7 +41,7 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
       completed={completed}
       open={open}
       onClose={onClose}
-      title={isEditMode ? "Update Payment Request" : "New Payment Request"}
+      title={isEditMode ? "Edit Payment Request" : "New Payment Request"}
       subtitle="Please fill out the form to request payment"
       actions={[
         {
@@ -50,7 +50,7 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
           variant: 'text'
         },
         {
-          label: isEditMode ? 'Update Payment Request' : 'Create Payment Request',
+          label: isEditMode ? 'Edit Payment Request' : 'Create Payment Request',
           onClick: () => {
             formRef.current?.submit();
           },

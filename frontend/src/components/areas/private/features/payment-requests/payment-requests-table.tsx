@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Edit as UpdateIcon,
+  Edit as EditIcon,
   Link as LinkIcon
 } from '@mui/icons-material'
 import TextField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field'
@@ -98,8 +98,8 @@ export const PaymentRequestsTable = ({ paymentRequests, updatePaymentRequest }) 
       <ActionField
         actions={[
           {
-            children: 'Update Payment Request',
-            icon: <UpdateIcon />,
+            children: 'Edit Payment Request',
+            icon: <EditIcon />,
             onClick: () => openEditPaymentRequest(item)
           }
         ]}
