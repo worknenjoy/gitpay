@@ -108,6 +108,7 @@ export const updatePaymentRequest = (paymentRequest) => {
       .then(response => {
         if (response.data) {
           dispatch(addNotification('actions.paymentRequest.update.success'))
+          dispatch(listPaymentRequests());
           return dispatch(updatePaymentRequestSuccess(response.data))
         }
         dispatch(addNotification('actions.paymentRequest.update.error'))

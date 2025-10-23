@@ -70,7 +70,6 @@ const PaymentRequests = ({ paymentRequests, paymentRequest, createPaymentRequest
       ) : (
         <PaymentRequestsTable
           paymentRequests={paymentRequests}
-          listPaymentRequests={listPaymentRequests}
           updatePaymentRequest={updatePaymentRequest}
         />
       )}

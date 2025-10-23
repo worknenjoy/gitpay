@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Edit as EditIcon,
+  Edit as UpdateIcon,
   Link as LinkIcon
 } from '@mui/icons-material'
 import TextField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field'
@@ -26,7 +26,7 @@ const paymentRequestMetadata = {
   "actions": { sortable: false, numeric: false, label: 'Actions' }
 }
 
-export const PaymentRequestsTable = ({ paymentRequests, listPaymentRequests, updatePaymentRequest }) => {
+export const PaymentRequestsTable = ({ paymentRequests, updatePaymentRequest }) => {
   const [ processingUpdatePaymentRequest, setProcessingUpdatePaymentRequest ] = React.useState(false)
   const [selectedPaymentRequest, setSelectedPaymentRequest] = React.useState<any | null>(null)
 
@@ -44,7 +44,6 @@ export const PaymentRequestsTable = ({ paymentRequests, listPaymentRequests, upd
     await updatePaymentRequest({id: selectedPaymentRequest.id, ...paymentRequest});
     setProcessingUpdatePaymentRequest(false);
     handleCloseDrawer();
-    listPaymentRequests();
   }
 
   const customColumnRenderer = {
@@ -99,8 +98,8 @@ export const PaymentRequestsTable = ({ paymentRequests, listPaymentRequests, upd
       <ActionField
         actions={[
           {
-            children: 'Edit',
-            icon: <EditIcon />,
+            children: 'Update Payment Request',
+            icon: <UpdateIcon />,
             onClick: () => openEditPaymentRequest(item)
           }
         ]}
