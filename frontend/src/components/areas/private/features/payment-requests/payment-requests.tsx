@@ -14,7 +14,7 @@ import PaymentRequestDrawer from 'design-library/molecules/drawers/payment-reque
 import ProfileHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header'
 import PaymentRequestsTable from './payment-requests-table'
 
-const PaymentRequests = ({ paymentRequests, createPaymentRequest, listPaymentRequests }) => {
+const PaymentRequests = ({ paymentRequests, createPaymentRequest, listPaymentRequests, updatePaymentRequest }) => {
   const classes = { gutterLeft: { marginLeft: 10 } } as const
   const { completed, data } = paymentRequests
 
@@ -70,6 +70,7 @@ const PaymentRequests = ({ paymentRequests, createPaymentRequest, listPaymentReq
       ) : (
         <PaymentRequestsTable
           paymentRequests={paymentRequests}
+          updatePaymentRequest={updatePaymentRequest}
         />
       )}
       <PaymentRequestDrawer
@@ -78,8 +79,6 @@ const PaymentRequests = ({ paymentRequests, createPaymentRequest, listPaymentReq
         onSuccess={handlePaymentRequestCreate}
         completed={createPaymentRequestCompleted}
       />
-
-
     </Container>
   )
 }

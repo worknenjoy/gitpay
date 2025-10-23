@@ -10,7 +10,7 @@ const Template = (args) => <PaymentRequestForm {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  completed: true,
+  completed: true
 };
 
 export const Edit = Template.bind({});
@@ -31,5 +31,5 @@ Edit.args = {
 
 export const Loading = Template.bind({});
 Loading.args = {
-  completed: false,
+  completed: false
 };

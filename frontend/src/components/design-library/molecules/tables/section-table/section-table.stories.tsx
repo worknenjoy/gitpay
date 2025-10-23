@@ -30,13 +30,13 @@ Table.args = {
       {
         children: 'View',
         onClick: () => alert(`View action clicked for ${item.name}`),
-        icon: null,
+        icon: null
       },
       {
         children: 'Edit',
         onClick: () => alert(`Edit action clicked for ${item.name}`),
-        icon: null,
-      },
+        icon: null
+      }
     ]} />
   }
 };

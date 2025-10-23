@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import ActionsField from './action-field';
 
@@ -7,7 +6,7 @@ import ActionsField from './action-field';
 const meta: Meta<typeof ActionsField> = {
   title:
     'Design Library/Molecules/Tables/Base/ActionsField',
-  component: ActionsField as any,
+  component: ActionsField as any
 };
 export default meta;
 
@@ -20,13 +19,13 @@ export const Default: Story = {
       {
         children: 'View',
         onClick: () => alert('View action clicked'),
-        icon: null,
+        icon: null
       },
       {
         children: 'Edit',
         onClick: () => alert('Edit action clicked'),
-        icon: null,
-      },
-    ],
-  } as any,
+        icon: null
+      }
+    ]
+  } as any
 };

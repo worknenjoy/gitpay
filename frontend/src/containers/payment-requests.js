@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import PaymentRequest from '../components/areas/private/features/payment-requests/payment-requests'
-import {  createPaymentRequest, listPaymentRequests  } from '../actions/paymentRequestActions'
+import {  createPaymentRequest, listPaymentRequests, updatePaymentRequest  } from '../actions/paymentRequestActions'
 import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
@@ -18,6 +18,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     listPaymentRequests: () => {
       return dispatch(listPaymentRequests())
+    },
+    updatePaymentRequest: (paymentRequest) => {
+      return dispatch(updatePaymentRequest(paymentRequest))
     }
   }
 }

@@ -6,7 +6,7 @@ export const RootPaper = styled(Paper)(({ theme }) => ({
 }))
 
 export const TableWrapper = styled(TableContainer)<TableContainerProps>(() => ({
-  overflowX: 'auto',
+  overflowX: 'auto'
 }))
 
 export const StyledTable = styled(Table)<TableProps>(() => ({
@@ -14,5 +14,5 @@ export const StyledTable = styled(Table)<TableProps>(() => ({
 }))
 
 export const StyledTableCell = styled(TableCell)(() => ({
-  padding: '5px 0 5px 16px',
+  padding: '5px 0 5px 16px'
 }))

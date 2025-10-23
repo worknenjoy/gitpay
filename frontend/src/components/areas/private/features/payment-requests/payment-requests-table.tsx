@@ -26,15 +26,20 @@ const paymentRequestMetadata = {
   "actions": { sortable: false, numeric: false, label: 'Actions' }
 }
 
-export const PaymentRequestsTable = ({ paymentRequests }) => {
-  const [openPaymentRequestDrawer, setOpenPaymentRequestDrawer] = React.useState(false);
+export const PaymentRequestsTable = ({ paymentRequests, updatePaymentRequest }) => {
+  const [selectedPaymentRequest, setSelectedPaymentRequest] = React.useState<any | null>(null)
 
-  const openEditPaymentRequest = () => {
-    setOpenPaymentRequestDrawer(true);
+  const openEditPaymentRequest = (item:any) => {
+    setSelectedPaymentRequest(item)
   }
 
-  const updatePaymentRequest = () => {
-    // Refresh table or item
+  const handleCloseDrawer = () => {
+    setSelectedPaymentRequest(null)
+  }
+
+  const handleUpdatePaymentRequest = (paymentRequest) => {
+    console.log('Updated payment request:', paymentRequest);
+    //updatePaymentRequest(updatedRequest);
   }
 
   const customColumnRenderer = {
@@ -86,32 +91,36 @@ export const PaymentRequestsTable = ({ paymentRequests }) => {
       />
     ),
     actions: (item:any) => (
-      <>
-        <PaymentRequestDrawer
-          open={openPaymentRequestDrawer}
-          onClose={() => setOpenPaymentRequestDrawer(false)}
-          completed={true}
-          onSuccess={updatePaymentRequest}
-        />
-        <ActionField
-          actions={[
-            {
-              children: 'Edit',
-              icon: <EditIcon />,
-              onClick: openEditPaymentRequest
-            }
-          ]}
-        />
-      </>
+      <ActionField
+        actions={[
+          {
+            children: 'Edit',
+            icon: <EditIcon />,
+            onClick: () => openEditPaymentRequest(item)
+          }
+        ]}
+      />
     )
   }
 
   return (
-    <SectionTable
-      tableData={paymentRequests}
-      tableHeaderMetadata={paymentRequestMetadata}
-      customColumnRenderer={customColumnRenderer}
-    />
+    <> 
+      <PaymentRequestDrawer
+        open={!!selectedPaymentRequest}
+        onClose={handleCloseDrawer}
+        completed={true}
+        onSuccess={handleUpdatePaymentRequest}
+        paymentRequest={{
+          completed: true,
+          data: selectedPaymentRequest
+        }}
+      />
+      <SectionTable
+        tableData={paymentRequests}
+        tableHeaderMetadata={paymentRequestMetadata}
+        customColumnRenderer={customColumnRenderer}
+      />
+    </>
   )
 }
 

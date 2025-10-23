@@ -79,17 +79,16 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
       label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
       name: 'deactivate_after_payment',
       value: true,
-      disabled: editMode,
+      disabled: editMode
     }
   ]
 
   if(data?.active !== undefined) {
-   checkboxes.push({
+   checkboxes.unshift({
       label: <FormattedMessage id="paymentRequest.form.active" defaultMessage="Active" />,
       name: 'active',
       value: true,
       defaultChecked: data?.active,
-      disabled: editMode,
     } as any);
   }
 
