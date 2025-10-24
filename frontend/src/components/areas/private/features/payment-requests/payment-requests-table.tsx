@@ -8,9 +8,7 @@ import SectionTable from 'design-library/molecules/tables/section-table/section-
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field'
 import LinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/link-field/link-field'
-import PaymentRequestStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payment-request/payment-request-status-field/payment-request-status-field'
 import PaymentRequestActiveField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payment-request/payment-request-active-field/payment-request-active-field'
-import PaymentRequestTransferStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payment-request/payment-request-transfer-status-field/payment-request-transfer-status-field'
 import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
 import PaymentRequestDrawer from 'design-library/molecules/drawers/payment-request-drawer/payment-request-drawer'
 
