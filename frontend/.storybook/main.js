@@ -5,10 +5,7 @@ module.exports = {
   ],
   "addons": [
     "@storybook/addon-links",
-    {
-      name: "@storybook/addon-essentials",
-      options: { docs: false, controls: false } // disable Controls to avoid @storybook/icons
-    },
+    "@storybook/addon-essentials",
     "@storybook/addon-interactions"
   ],
   "framework": "@storybook/react",

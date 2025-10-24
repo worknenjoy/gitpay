@@ -3,6 +3,7 @@ module.exports.currencyMap = {
   'AU': 'AUD',
   'AT': 'EUR',
   'BE': 'EUR',
+  'BD': 'BDT', // Bangladesh
   'BR': 'BRL',
   'BG': 'BGN', // Bulgaria
   'CA': 'CAD',

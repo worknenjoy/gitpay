@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import {
   Button,
@@ -42,7 +42,7 @@ const LoginFormSignup = ({
   roles,
   fetchRoles
 }: LoginFormSignupProps) => {
-  
+
   const [openTermsDialog, setOpenTermsDialog] = useState(false)
   const [openPrivacyDialog, setOpenPrivacyDialog] = useState(false)
   const [validating, setValidating] = useState(false)
@@ -68,9 +68,9 @@ const LoginFormSignup = ({
     setState({ ...state, [name]: value })
   }
 
-  const handleTypesChange = (name) => (checked) => {
-    setState({ ...state, [name]: checked })
-  }
+  const handleTypesChange = useCallback((checked) => {
+    setState(prev => ({ ...prev, Types: checked }))
+  }, [])
 
   const handleBlur = () => {
     setValidating(true)
@@ -351,12 +351,12 @@ const LoginFormSignup = ({
           defaultValue={state.confirmPassword}
         />
       </Margins>
-  <Margins>
+      <Margins>
         <UserRoleField
           roles={roles}
-          onChange={handleTypesChange('Types')}
+          onChange={handleTypesChange}
         />
-  </Margins>
+      </Margins>
       <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           {state.agreeTermsCheck
@@ -408,16 +408,16 @@ const LoginFormSignup = ({
           </Typography>
         </div>
       }
-  <Center style={{ marginTop: 20 }}>
+      <Center style={{ marginTop: 20 }}>
         <div>
           {noCancelButton ? null : (
-    <SpacedButton onClick={onClose} size="large" variant="text" color="primary">
+            <SpacedButton onClick={onClose} size="large" variant="text" color="primary">
               <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
-    </SpacedButton>
+            </SpacedButton>
           )}
-      <SpacedButton data-testid="signup-button" type="submit" size="large" variant="contained" color="primary">
+          <SpacedButton data-testid="signup-button" type="submit" size="large" variant="contained" color="primary">
             <FormattedMessage id="account.login.label.signup" defaultMessage="Sign up" />
-      </SpacedButton>
+          </SpacedButton>
           <div style={{ marginTop: 20, display: 'flex', alignItems: 'baseline' }}>
             <Typography variant="body1" component="span">
               <FormattedMessage id="account.login.label.or.signup" defaultMessage="Have an account?" />
@@ -427,7 +427,7 @@ const LoginFormSignup = ({
             </Button>
           </div>
         </div>
-  </Center>
+      </Center>
       <TermsDialog open={openTermsDialog} onClose={closeTermsDialog} />
       <PrivacyDialog open={openPrivacyDialog} onClose={closePrivacyDialog} />
     </form>

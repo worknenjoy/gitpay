@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, useRef, forwardRef, useImperativeHandle, useCallback, useMemo } from 'react';
 import { Grid, Typography, TextField, Skeleton } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import Field from '../../../../atoms/inputs/fields/field/field';
@@ -70,36 +70,46 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     onSubmit?.(event, data);
   };
 
-  const handleCustomAmountChange = (selected: boolean) => {
+  const handleCustomAmountChange = useCallback((selected: boolean) => {
     setCustomAmount(selected);
-  };
+  }, []);
 
-  const checkboxes = [
-    {
-      label: <FormattedMessage id="paymentRequest.form.customAmount" defaultMessage="Custom Amount" />,
-      name: 'custom_amount',
-      value: true,
-      disabled: editMode,
-      defaultChecked: data?.custom_amount,
-      onChange: handleCustomAmountChange
-    },
-    {
-      label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
-      name: 'deactivate_after_payment',
-      value: true,
-      defaultChecked: data?.deactivate_after_payment,
-      disabled: editMode
+  const checkboxes = useMemo(() => {
+    const items = [
+      {
+        label: <FormattedMessage id="paymentRequest.form.customAmount" defaultMessage="Custom Amount" />,
+        name: 'custom_amount',
+        value: true,
+        disabled: editMode,
+        defaultChecked: data?.custom_amount,
+        onChange: handleCustomAmountChange
+      },
+      {
+        label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
+        name: 'deactivate_after_payment',
+        value: true,
+        defaultChecked: data?.deactivate_after_payment,
+        disabled: editMode
+      }
+    ];
+
+    if (data?.active !== undefined) {
+      items.unshift({
+        label: <FormattedMessage id="paymentRequest.form.active" defaultMessage="Active" />,
+        name: 'active',
+        value: true,
+        defaultChecked: data?.active
+      } as any);
     }
-  ]
 
-  if(data?.active !== undefined) {
-   checkboxes.unshift({
-      label: <FormattedMessage id="paymentRequest.form.active" defaultMessage="Active" />,
-      name: 'active',
-      value: true,
-      defaultChecked: data?.active
-    } as any);
-  }
+    return items;
+  }, [
+    editMode,
+    data?.custom_amount,
+    data?.deactivate_after_payment,
+    data?.active,
+    handleCustomAmountChange
+  ]);
 
   return (
     <form onSubmit={handleSubmit} ref={internalFormRef}>

@@ -94,6 +94,7 @@ module.exports = {
   sll: { symbol: 'Le', decimalPlaces: 2 }, // Sierra Leonean Leone
   gmd: { symbol: 'D', decimalPlaces: 2 }, // Gambian Dalasi
   lrd: { symbol: 'L$', decimalPlaces: 2 }, // Liberian Dollar
+  bdt: { symbol: '৳', decimalPlaces: 2 }, // Bangladeshi Taka
   xag: { symbol: 'XAG', decimalPlaces: 2 }, // Silver (troy ounce)
   xau: { symbol: 'XAU', decimalPlaces: 2 }, // Gold (troy ounce)
   btc: { symbol: '₿', decimalPlaces: 8 }, // Bitcoin
