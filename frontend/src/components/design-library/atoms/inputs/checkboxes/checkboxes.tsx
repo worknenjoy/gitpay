@@ -22,13 +22,12 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false, completed 
   };
 
   useEffect(() => {
-    if (!completed) return;
     const selectedCheckboxes = Object.keys(checked)
       .filter((key) => key !== 'all')
       .filter((key) => checked[key])
       .map((key) => checkboxes.find((checkbox) => checkbox.name === key)?.value);
     onChange?.(selectedCheckboxes);
-  }, [checked, completed, checkboxes]);
+  }, [checked, onChange, checkboxes]);
 
   const selectBoxesWithAll = [...checkboxes, {
     label: 'All',
@@ -57,7 +56,6 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false, completed 
   const checkboxesToRender = includeSelectAll ? selectBoxesWithAll : checkboxes;
 
   useEffect(() => {
-    if (!completed) return;
     const allOptionsChecked = checkboxes
       .filter((checkbox) => checkbox.name !== 'all')
       .every((checkbox) => checked[checkbox.name] || false);
@@ -68,7 +66,15 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false, completed 
         all: allOptionsChecked
       }));
     }
-  }, [checked, checkboxes, completed]);
+  }, [checked, checkboxes]);
+
+  useEffect(() => {
+    const defaultCheckedState = checkboxes.reduce((acc, checkbox) => {
+      acc[checkbox.name] = checkbox.defaultChecked || false;
+      return acc;
+    }, {});
+    setChecked(defaultCheckedState);
+  }, [checkboxes]);
 
   const items = checkboxesToRender.length > 0 ? checkboxesToRender.length : 3;
 
@@ -82,7 +88,7 @@ const Checkboxes = ({ checkboxes, onChange, includeSelectAll = false, completed 
               <FormControlLabel
                 control={
                   <StyledCheckbox
-                    checked={checked[checkbox.name]}
+                    checked={checked[checkbox.name] || false}
                     onChange={(e) => handleChange(e, checkbox?.onChange)}
                     color="primary"
                     name={checkbox.name}
