@@ -63,7 +63,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     if(editMode) {
       onSubmit?.(event, {
         ...data,
-        active: formData.get('active') || false,
+        active: formData.get('active') || false
       });
       return;
     }
@@ -80,12 +80,14 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
       name: 'custom_amount',
       value: true,
       disabled: editMode,
+      defaultChecked: data?.custom_amount,
       onChange: handleCustomAmountChange
     },
     {
       label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
       name: 'deactivate_after_payment',
       value: true,
+      defaultChecked: data?.deactivate_after_payment,
       disabled: editMode
     }
   ]
@@ -95,7 +97,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
       label: <FormattedMessage id="paymentRequest.form.active" defaultMessage="Active" />,
       name: 'active',
       value: true,
-      defaultChecked: data?.active,
+      defaultChecked: data?.active
     } as any);
   }
 
@@ -164,7 +166,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                 </i>
               </EndAdornment>
             }
-            disabled={customAmount || !!data?.amount}
+            disabled={customAmount || !!data?.amount || data?.custom_amount }
           />
         </Grid>
         <Grid size={{ xs: 12, md: 12 }}>

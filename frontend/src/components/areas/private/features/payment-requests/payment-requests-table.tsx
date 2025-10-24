@@ -19,8 +19,6 @@ const paymentRequestMetadata = {
   "title": { sortable: true, numeric: false, dataBaseKey: "title", label: 'Title' },
   "description": { sortable: true, numeric: false, dataBaseKey: "description", label: 'Description' },
   "amount": { sortable: true, numeric: true, dataBaseKey: "amount", label: 'Amount' },
-  "status": { sortable: true, numeric: false, dataBaseKey: "description", label: 'Payment Status'},
-  "transfer_status": { sortable: true, numeric: false, dataBaseKey: "transfer_status", label: 'Transfer Status' },
   "paymentLink": { sortable: true, numeric: false, dataBaseKey: "payment_url", label: 'Payment Link' },
   "createdAt": { sortable: true, numeric: false, dataBaseKey: "createdAt", label: 'Created At' },
   "actions": { sortable: false, numeric: false, label: 'Actions' }
@@ -67,24 +65,14 @@ export const PaymentRequestsTable = ({ paymentRequests, updatePaymentRequest }) 
         value={item.amount}
       />
     ),
-    status: (item:any) => (
-      <PaymentRequestStatusField
-        status={item.status}
-      />
-    ),
-    transfer_status: (item:any) => (
-      <PaymentRequestTransferStatusField
-        status={item.transfer_status}
-      />
-    ),
     paymentLink: (item:any) => (
       <LinkField
         url={item.payment_url}
         icon={<LinkIcon />}
         title={item.payment_url}
         tooltipTitle="Open payment link in external browser"
-        limit={15}
-        width={150}
+        limit={25}
+        width={200}
         external
         copiable
       />
