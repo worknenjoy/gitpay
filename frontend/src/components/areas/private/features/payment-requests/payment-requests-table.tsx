@@ -98,7 +98,7 @@ export const PaymentRequestsTable = ({ paymentRequests, updatePaymentRequest }) 
       <PaymentRequestDrawer
         open={!!selectedPaymentRequest}
         onClose={handleCloseDrawer}
-        completed={true}
+        completed={!processingUpdatePaymentRequest}
         onSuccess={handleUpdatePaymentRequest}
         paymentRequest={{
           completed: !processingUpdatePaymentRequest,

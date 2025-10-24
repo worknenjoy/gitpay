@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Grid, Tooltip, Typography } from '@mui/material';
 import { Help } from '@mui/icons-material';
 import Checkboxes from '../../checkboxes/checkboxes';
@@ -7,11 +7,11 @@ import { FormattedMessage } from 'react-intl';
 const UserRoleField = ({ roles, onChange }) => {
   const { data, completed } = roles;
 
-  const checkBoxes = data.map((role) => ({
+  const checkBoxes = useMemo(() => data.map((role) => ({
     label: role.label,
     name: role.name,
     value: role.id
-  }));
+  })), [data]);
 
   return (
     <Grid container spacing={2} alignContent="center" alignItems="center">
@@ -28,6 +28,7 @@ const UserRoleField = ({ roles, onChange }) => {
           checkboxes={checkBoxes}
           includeSelectAll={true}
           onChange={onChange}
+          completed={completed}
         />
       </Grid>
     </Grid>
