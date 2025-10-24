@@ -6,19 +6,40 @@ import Alert from '../../../../atoms/alerts/alert/alert';
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes';
 import { AlertWrapper, EndAdornment } from './payment-request-form.styles';
 
-interface PaymentRequestFormProps {
+type PaymentRquestFormData = {
+  id?: number;
+  active?: boolean;
+  deactivate_after_payment?: boolean;
+  amount?: number;
+  custom_amount?: boolean;
+  currency?: string;
+  title?: string;
+  description?: string;
+};
+
+type PaymentRequestFormProps = {
   onSubmit?: (e: any, data: any) => void;
   completed?: boolean;
+  paymentRequest?: {
+    completed: boolean;
+    data: PaymentRquestFormData;
+  };
 }
 
 type PaymentRequestFormHandle = {
   submit: () => void;
 };
 
-const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFormProps>(({ onSubmit, completed = true }, ref) => {
+const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFormProps>(({ 
+  onSubmit,
+  paymentRequest,
+  completed = true 
+}, ref) => {
+  const { data } = paymentRequest || {};
   const [error, setError] = useState<string | false>(false);
   const internalFormRef = useRef<HTMLFormElement>(null);
   const [customAmount, setCustomAmount] = useState(false);
+  const editMode = !!data?.id;
 
   // Expose `submit` method to parent
   useImperativeHandle(ref, () => ({
@@ -31,19 +52,54 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = Object.fromEntries(formData.entries());
+    const fieldsToValidate = !data.title || !data.description || (!customAmount && !data.amount);
 
-    if (!data.title || !data.description || (!customAmount && !data.amount)) {
+    if (fieldsToValidate && !editMode) {
       setError('All fields are required.');
       return;
     }
 
     setError(false);
+    if(editMode) {
+      onSubmit?.(event, {
+        ...data,
+        active: formData.get('active') || false
+      });
+      return;
+    }
     onSubmit?.(event, data);
   };
 
   const handleCustomAmountChange = (selected: boolean) => {
     setCustomAmount(selected);
   };
+
+  const checkboxes = [
+    {
+      label: <FormattedMessage id="paymentRequest.form.customAmount" defaultMessage="Custom Amount" />,
+      name: 'custom_amount',
+      value: true,
+      disabled: editMode,
+      defaultChecked: data?.custom_amount,
+      onChange: handleCustomAmountChange
+    },
+    {
+      label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
+      name: 'deactivate_after_payment',
+      value: true,
+      defaultChecked: data?.deactivate_after_payment,
+      disabled: editMode
+    }
+  ]
+
+  if(data?.active !== undefined) {
+   checkboxes.unshift({
+      label: <FormattedMessage id="paymentRequest.form.active" defaultMessage="Active" />,
+      name: 'active',
+      value: true,
+      defaultChecked: data?.active
+    } as any);
+  }
 
   return (
     <form onSubmit={handleSubmit} ref={internalFormRef}>
@@ -70,6 +126,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             name="title"
             type="text"
             placeholder="Title of your service"
+            value={data?.title}
+            disabled={editMode}
             completed={completed}
           />
         </Grid>
@@ -85,6 +143,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                 name="description"
                 placeholder="Describe your service"
                 multiline
+                value={ data?.description }
+                disabled={editMode}
                 rows={4}
               />
             )
@@ -98,6 +158,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             placeholder="Enter the amount"
             inputProps={{ min: 0, step: '0.01' }}
             completed={completed}
+            value={data?.amount}
             endAdornment={
               <EndAdornment>
                 <i>
@@ -105,24 +166,13 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                 </i>
               </EndAdornment>
             }
-            disabled={customAmount}
+            disabled={customAmount || !!data?.amount || data?.custom_amount }
           />
         </Grid>
         <Grid size={{ xs: 12, md: 12 }}>
           <Checkboxes
-            checkboxes={[
-              {
-                label: <FormattedMessage id="paymentRequest.form.customAmount" defaultMessage="Custom Amount" />,
-                name: 'custom_amount',
-                value: true,
-                onChange: handleCustomAmountChange
-              },
-              {
-                label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
-                name: 'deactivate_after_payment',
-                value: true
-              }
-            ]}
+            completed={completed}
+            checkboxes={checkboxes}
             includeSelectAll={false}
           />
         </Grid>

@@ -160,4 +160,41 @@ describe("PaymentRequests", () => {
     expect(res.body[0].payment_url).to.equal('https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04');
     expect(res.body[0].deactivate_after_payment).to.equal(false);
   });
+
+  it('should update a payment request', async () => {
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
+      .reply(200, samplePaymentLink.stripe.paymentLinks.create);
+
+    const register = await registerAndLogin(agent);
+    const { body, headers } = register;
+
+    const paymentRequest = await models.PaymentRequest.create({
+      userId: body.id,
+      title: 'Old Title',
+      description: 'Old Description',
+      amount: 50.00,
+      currency: 'USD',
+      payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
+      payment_url: 'https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04',
+      status: 'open',
+      active: true
+    });
+
+    const res = await agent
+      .put(`/payment-requests/${paymentRequest.id}`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('authorization', headers.authorization)
+      .expect(200)
+      .send({
+        active: false
+      });
+    expect(res.body).to.exist;
+    expect(res.body.id).to.equal(paymentRequest.id);
+    expect(res.body.active).to.equal(false);
+  });
+
+
 });

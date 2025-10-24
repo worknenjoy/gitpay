@@ -1,4 +1,5 @@
 import React from 'react';
+import { AcUnit as AcUnitIcon } from '@mui/icons-material';
 
 import ActionsMenu from './actions-menu';
 
@@ -22,6 +23,22 @@ Primary.args = {
     {
       children: 'Action 1',
       onClick: () => {}
+    },
+    {
+      children: 'Action 2',
+      onClick: () => {}
+    }
+  ]
+};
+
+export const customIcons = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+customIcons.args = {
+  actions: [
+    {
+      children: 'View',
+      onClick: () => {},
+      icon: <AcUnitIcon fontSize="small" />
     },
     {
       children: 'Action 2',

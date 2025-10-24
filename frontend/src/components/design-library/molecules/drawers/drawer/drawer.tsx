@@ -34,9 +34,9 @@ const Drawer = ({
   const closeDialogButton = () => {
 
     return (
-  <CloseFab size="small" aria-label="close" onClick={onClose}>
+      <CloseFab size="small" aria-label="close" onClick={onClose}>
         <CloseIcon fontSize="small" />
-  </CloseFab>
+      </CloseFab>
     )
 
   }
@@ -53,30 +53,30 @@ const Drawer = ({
         height="100%"
         p={2}
       >
-        
-          <Box flexGrow={1}>
-            <div style={{ padding: 20 }}>
-              <div>
-                <Typography variant="h5" id="form-dialog-title" gutterBottom>
-                  {title}
-                </Typography>
-                { subtitle && 
-                  <Typography variant="subtitle2" gutterBottom>
-                    {subtitle}
-                  </Typography>
-                }
-              </div>
-              {closeDialogButton()}
-              {children}
-            </div>
-          </Box>
 
-          {actions.length > 0 &&
-            <Box>
-              <DrawerActions actions={actions} completed={completed} />
-            </Box>
-          }
-        
+        <Box flexGrow={1}>
+          <div style={{ padding: 20 }}>
+            <div>
+              <Typography variant="h5" id="form-dialog-title" gutterBottom>
+                {title}
+              </Typography>
+              {subtitle &&
+                <Typography variant="subtitle2" gutterBottom>
+                  {subtitle}
+                </Typography>
+              }
+            </div>
+            {closeDialogButton()}
+            {children}
+          </div>
+        </Box>
+
+        {actions.length > 0 &&
+          <Box>
+            <DrawerActions actions={actions} completed={completed} />
+          </Box>
+        }
+
       </Box>
     </MuiDrawer>
   )

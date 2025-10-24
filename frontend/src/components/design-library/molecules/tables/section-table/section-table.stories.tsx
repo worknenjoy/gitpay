@@ -1,6 +1,7 @@
 import React from 'react';
 import SectionTable from './section-table';
 import { generateTableData } from '../../../../../../.storybook/utils/generateTableData';
+import ActionsField from '../section-table/section-table-custom-fields/base/action-field/action-field';
 
 export default {
   title: 'Design Library/Molecules/Tables/SectionTable',
@@ -22,10 +23,21 @@ Table.args = {
     "email": { sortable: true, dataBaseKey: "email", label: 'Email' },
     "role": { sortable: true, dataBaseKey: "role", label: 'Role' },
     "status": { sortable: true, dataBaseKey: "status", label: 'Status' },
-    "action": { sortable: false, dataBaseKey: "action", label: 'Action' }
+    "action": { sortable: false, label: 'Action' }
   },
   customColumnRenderer: {
-    action: (item) => <a href="#">{item.action}</a>
+    action: (item) => <ActionsField actions={[
+      {
+        children: 'View',
+        onClick: () => alert(`View action clicked for ${item.name}`),
+        icon: null
+      },
+      {
+        children: 'Edit',
+        onClick: () => alert(`Edit action clicked for ${item.name}`),
+        icon: null
+      }
+    ]} />
   }
 };
 

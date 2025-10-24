@@ -14,7 +14,7 @@ const meta = {
 
 export default meta;
 
-const DefaultStory = (args) => {
+const Template = (args) => {
   const [open, setOpen] = useState(true);
 
   return (
@@ -26,6 +26,29 @@ const DefaultStory = (args) => {
   );
 };
 
-export const Default = {
-  render: (args) => <DefaultStory {...args} />
+export const Default = Template.bind({});
+Default.args = {
+  
 };
+
+export const Edit = Template.bind({});
+Edit.args = {
+  completed: true,
+  paymentRequest: {
+    compelted: true,
+    data: {
+      id: 1,
+      title: 'Website Development',
+      description: 'Development of a company website',
+      amount: 1500,
+      currency: 'USD',
+      active: true
+    }
+  }
+};
+
+export const Loading = Template.bind({});
+Loading.args = {
+  completed: false
+};
+
