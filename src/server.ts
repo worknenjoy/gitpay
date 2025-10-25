@@ -1,3 +1,5 @@
+import path from 'path'
+
 const express = require('express')
 const sslRedirect = require('heroku-ssl-redirect')
 const app = express()
@@ -41,11 +43,7 @@ app.use(passport.session())
 app.set('port', (process.env.PORT || 3000))
 
 app.use(compression())
-app.use(express.static(`${__dirname}/frontend/public/`))
-
-app.get('/recruitment', (req:any, res:any) => {
-  res.redirect('https://gitpay.me/#/recruitment')
-})
+app.use(express.static(path.join(__dirname, '../frontend/public')))
 
 load.init(app)
 
