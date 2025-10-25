@@ -3,9 +3,9 @@
 const assert = require('assert')
 const request = require('supertest')
 const expect = require('chai').expect
-const api = require('../server');
+const api = require('../src/server').default;
 const agent = request.agent(api);
-const models = require('../models');
+const models = require('../src/models');
 const { register, login } = require('./helpers')
 
 xdescribe("Organizations", () => {

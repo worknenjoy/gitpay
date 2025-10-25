@@ -1,4 +1,4 @@
-const models = require('../../models')
+const models = require('../../src/models')
 const testEmail = `teste+${Math.random() * 100}@gmail.com`
 const testPassword = 'test12345678'
 const testName = 'Test'

@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { handleAmount } = require('../modules/util/handle-amount/handle-amount');
+const { handleAmount } = require('../src/modules/util/handle-amount/handle-amount');
 
 describe('Amount Conversion', () => {
   it('should convert cents to decimal', () => {

@@ -1,7 +1,7 @@
-const models = require('../models')
+const models = require('../src/models')
 const expect = require('chai').expect
 const request = require('supertest')
-const api = require('../server')
+const api = require('../src/server').default
 const agent = request.agent(api)
 
 xdescribe("Projects", () => {
