@@ -106,7 +106,8 @@
     "url": "^0.11.0",
     "url-search-params": "^1.0.2",
     "x-frame-options": "^1.0.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "compression": "^1.7.4"
   },
   "devDependencies": {
     "@playwright/test": "^1.53.0",
@@ -117,7 +118,6 @@
     "@types/node": "^18.19.130",
     "chai": "^3.5.0",
     "chai-spies": "^1.0.0",
-    "compression": "^1.7.4",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
     "eslint": "^8.57.0",
