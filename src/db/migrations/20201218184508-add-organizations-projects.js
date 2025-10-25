@@ -1,4 +1,4 @@
-'use strict';
+
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
@@ -26,7 +26,7 @@ module.exports = {
           allowNull: true
         },
         createdAt: Sequelize.DATE,
-        updatedAt: Sequelize.DATE,
+        updatedAt: Sequelize.DATE
       }
     )},
   down: function (queryInterface, Sequelize) {

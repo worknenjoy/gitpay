@@ -1,4 +1,4 @@
-'use strict';
+
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -44,7 +44,7 @@ module.exports = {
         unique: true
       },
       status: {
-        type: Sequelize.ENUM('pending', 'draft', 'open', 'paid', 'failed', 'uncollectible', 'void', 'refunded'),
+        type: Sequelize.ENUM('pending', 'draft', 'open', 'paid', 'failed', 'uncollectible', 'void', 'refunded')
       },
       capture: {
         type: Sequelize.BOOLEAN

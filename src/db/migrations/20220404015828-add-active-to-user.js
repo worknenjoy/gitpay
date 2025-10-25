@@ -1,11 +1,11 @@
-"use strict";
+
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
     return queryInterface.addColumn("Users", "active", {
       type: Sequelize.BOOLEAN,
       allowNull: false,
-      defaultValue: true,
+      defaultValue: true
     });
   },
 
@@ -14,5 +14,5 @@ module.exports = {
       'Users',
       'active'
     );
-  },
+  }
 };

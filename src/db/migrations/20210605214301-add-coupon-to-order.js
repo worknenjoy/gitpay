@@ -1,4 +1,4 @@
-'use strict';
+
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -8,7 +8,7 @@ module.exports = {
           model: 'Coupons',
           key: 'id'
         },
-        allowNull: true,
+        allowNull: true
       }
     );
   },

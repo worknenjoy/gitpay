@@ -1,4 +1,4 @@
-'use strict';
+
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
@@ -26,7 +26,7 @@ module.exports = {
       },
       feePercentage: {
         type: Sequelize.INTEGER
-      },
+      }
     })
   },
   down: function (queryInterface, Sequelize) {

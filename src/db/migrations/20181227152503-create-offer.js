@@ -1,4 +1,4 @@
-'use strict';
+
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
@@ -30,10 +30,10 @@ module.exports = {
       },
       suggestedDate: {
         type: Sequelize.DATE,
-        allowNull: true,
+        allowNull: true
       },
       comment: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       learn: {
         type: Sequelize.BOOLEAN

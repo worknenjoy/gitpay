@@ -1,4 +1,4 @@
-'use strict';
+
 
 const { isAwaitKeyword } = require('typescript');
 

@@ -1,4 +1,4 @@
-'use strict';
+
 
 const nanoId = require('nanoid')
 

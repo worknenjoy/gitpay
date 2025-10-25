@@ -1,4 +1,4 @@
-'use strict';
+
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -26,7 +26,7 @@ module.exports = {
           model: 'Tasks',
           key: 'id'
         },
-        allowNull: false,
+        allowNull: false
       },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE
