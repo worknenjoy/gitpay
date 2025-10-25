@@ -1,4 +1,4 @@
-const models = require('../models')
+const models = require('../src/models')
 
 describe('authenticate', () => {
   it('should authenticate sequelize', (done) => {

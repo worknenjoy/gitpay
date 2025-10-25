@@ -1,9 +1,9 @@
 const expect = require('chai').expect
 const request = require('supertest')
 const nock = require('nock')
-const api = require('../server')
+const api = require('../src/server').default
 const agent = request.agent(api)
-const models = require('../models')
+const models = require('../src/models')
 const { truncateModels, registerAndLogin } = require('./helpers')
 const invoiceBasic = require('./data/stripe/stripe.invoice.basic')
 const invoiceItem = require('./data/stripe/stripe.invoiceitem')

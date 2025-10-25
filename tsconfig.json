@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+
+    "rootDir": "src",
+    "outDir": "dist",
+
+    "allowJs": true,          // <-- keep .js files
+    "checkJs": false,         // you can flip true later to typecheck .js
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+
+    "strict": true,
+    "noEmitOnError": true
+  },
+  "include": ["src/**/*"]
+}

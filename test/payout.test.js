@@ -4,11 +4,11 @@ const request = require('supertest')
 const expect = require('chai').expect
 const chai = require('chai')
 const spies = require('chai-spies')
-const api = require('../server')
+const api = require('../src/server').default
 const agent = request.agent(api)
 const nock = require('nock')
 const { registerAndLogin, truncateModels } = require('./helpers')
-const models = require('../models')
+const models = require('../src/models')
 const { register } = require('module')
 
 // Common function to create payout

@@ -2,14 +2,14 @@
 const request = require('supertest');
 const expect = require('chai').expect;
 const chai = require('chai');
-const api = require('../server');
+const api = require('../src/server').default;
 const agent = request.agent(api);
-const models = require('../models');
+const models = require('../src/models');
 const { register, createTask, truncateModels } = require('./helpers');
-const PaymentRequestMail = require('../modules/mail/paymentRequest');
+const PaymentRequestMail = require('../src/modules/mail/paymentRequest');
 const sinon = require('sinon');
-const constants = require('../modules/mail/constants');
-const { sendgrid } = require('../config/secrets')
+const constants = require('../src/modules/mail/constants');
+const { sendgrid } = require('../src/config/secrets')
 const nock = require('nock');
 
 describe('Mail', () => {

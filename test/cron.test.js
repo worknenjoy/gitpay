@@ -1,12 +1,12 @@
 const expect = require('chai').expect
 const Promise = require('bluebird')
-const api = require('../server')
-const models = require('../models')
+const api = require('../src/server').default
+const models = require('../src/models')
 const { truncateModels, createTask, createOrder } = require('./helpers')
 const nock = require('nock')
 const request = require('supertest')
 const agent = request.agent(api)
-const { TaskCron, OrderCron } = require('../cron')
+const { TaskCron, OrderCron } = require('../src/crons/cron')
 const MockDate = require('mockdate')
 const paypalOrder = require('./data/paypal/paypal.order')
 

@@ -4,13 +4,11 @@ const request = require('supertest')
 const expect = require('chai').expect
 const chai = require('chai')
 const spies = require('chai-spies')
-const api = require('../server')
+const api = require('../src/server').default
 const agent = request.agent(api)
 const nock = require('nock')
-const models = require('../models')
-const secrets = require('../config/secrets')
+const models = require('../src/models')
 const { registerAndLogin, createTask, truncateModels } = require('./helpers')
-const { account } = require('../modules/app/controllers/auth')
 
 describe("Task Solution", () => {
   beforeEach(async () => {

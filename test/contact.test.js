@@ -4,8 +4,8 @@ const request = require('supertest')
 const expect = require('chai').expect
 const chai = require('chai')
 const spies = require('chai-spies')
-const api = require('../server')
-const ContactMail = require('../modules/mail/contact')
+const api = require('../src/server').default
+const ContactMail = require('../src/modules/mail/contact')
 const agent = request.agent(api)
 
 describe("Contact", () => {

@@ -2,7 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
+version: "2.1"
 jobs:
   docs:
     docker:
@@ -67,6 +67,9 @@ jobs:
       #    name: Set up database
       #    command: psql -h localhost -p 5432 -c 'create database gitpay_test' -U postgres
       - run:
+          name: Build
+          command: npm run build
+      - run:
           name: Migrate
           command: npm run migrate-test
       # run seed!
@@ -81,7 +84,7 @@ jobs:
           no_output_timeout: 60m
       - run:
           name: install frontend dependencies
-          command: npm install --legacy-peer-deps
+          command: npm install
           working_directory: frontend
       - run:
           name: run frontend tests

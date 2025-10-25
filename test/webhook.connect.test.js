@@ -2,11 +2,11 @@
 const assert = require('assert')
 const request = require('supertest')
 const expect = require('chai').expect
-const api = require('../server')
+const api = require('../src/server').default
 const agent = request.agent(api)
 const nock = require('nock')
 const { truncateModels, registerAndLogin, createTransfer } = require('./helpers')
-const models = require('../models')
+const models = require('../src/models')
 
 const chargeData = require('./data/stripe/charge')
 const createdTransferData = require('./data/stripe/stripe.transfer.created')
