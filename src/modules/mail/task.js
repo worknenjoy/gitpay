@@ -1,4 +1,3 @@
-import path from 'path'
 const Signatures = require('./content')
 const request = require('./request')
 const moment = require('moment')

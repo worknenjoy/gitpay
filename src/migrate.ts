@@ -4,7 +4,6 @@ import { Umzug, SequelizeStorage } from 'umzug'
 import { Sequelize } from 'sequelize'
 import secrets from './config/secrets'
 
-// ---------- ENV / SEQUELIZE SETUP ----------
 const env = process.env.NODE_ENV || 'development'
 
 const database_env = {
@@ -57,23 +56,13 @@ sequelize
     console.log('✅ Connected to DB:', res[0].current_database)
   })
 
-// are we running migrations or seeders?
 const isSeed = process.env.TYPE === 'seed'
 
-// IMPORTANT: paths
-// When you run `tsx src/migrate.ts`, __dirname = <repo>/src
-// When you run `node dist/migrate.js`, __dirname = <repo>/dist
-// So `./db/migrations` works in both IF your migrations live under src/db/migrations
-// and get compiled to dist/db/migrations.
 const baseDir = isSeed
   ? path.join(__dirname, './db/seeders')
   : path.join(__dirname, './db/migrations')
 
-// ---------- UMZUG SETUP (v3+) ----------
 
-// We'll allow legacy and new migration styles in the same project.
-// legacy: module.exports.up = (qi, SequelizeCtor) => {}
-// new TS: export async function up({ queryInterface, SequelizeCtor }) {}
 const umzug = new Umzug({
   context: {
     sequelize,
@@ -84,21 +73,14 @@ const umzug = new Umzug({
   storage: new SequelizeStorage({ sequelize }),
 
   migrations: {
-    // FIX 1: glob must be a string, not [string]
     glob: path.join(baseDir, '*.{ts,js}'),
 
-    // For each file, build a migration object with up/down
     resolve: ({ name, path: filePath, context }) => {
       if (!filePath) {
         throw new Error(`Migration "${name}" is missing a file path`)
       }
       const mod = require(filePath)
 
-      // Old style (CommonJS)
-      //   module.exports = { up(qi, S) {}, down(qi, S) {} }
-      // New style (TS/ESM-ish)
-      //   export async function up(ctx) {}
-      //   export async function down(ctx) {}
       const upRaw =
         mod.up ||
         (mod.default && mod.default.up)
@@ -113,9 +95,6 @@ const umzug = new Umzug({
         )
       }
 
-      // We normalize call signatures here.
-      // If function expects 2 args, assume legacy (qi, SequelizeCtor)
-      // Otherwise assume new-style (ctx object).
       const runUp = () => {
         if (upRaw.length >= 2) {
           return upRaw(
@@ -144,11 +123,8 @@ const umzug = new Umzug({
     }
   },
 
-  // optional: you can silence this if you want
   logger: console
 })
-
-// ---------- COMMAND HELPERS ----------
 
 async function cmdStatus() {
   const executed = await umzug.executed()
@@ -176,7 +152,6 @@ async function cmdStatus() {
 }
 
 function cmdMigrate() {
-  // run all pending
   return umzug.up()
 }
 
@@ -189,14 +164,11 @@ async function cmdMigrateNext() {
   return umzug.up({ to: next })
 }
 
-// FIX 3: umzug.up({ from, to }) is not supported in v3
-// We'll just run all pending (this is equivalent in most flows)
 function cmdUpdateAll() {
   return umzug.up()
 }
 
 function cmdReset() {
-  // go all the way down
   return umzug.down({ to: 0 })
 }
 
@@ -225,9 +197,6 @@ function cmdHardReset() {
   })
 }
 
-// ---------- CLI DISPATCH ----------
-
-// FIX 2: ensure cmd is always a string
 const cmd = (process.argv[2] || 'up').trim()
 
 async function run() {
