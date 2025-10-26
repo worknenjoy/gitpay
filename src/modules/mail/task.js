@@ -25,15 +25,6 @@ const setMomentLocale = (lang) => {
   }
 }
 
-i18n.configure({
-  directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
-  locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
-  defaultLocale: 'en',
-  updateFiles: false
-})
-
-i18n.init()
-
 const TaskMail = {
   new: (user, task) => {},
   send: (user, task) => Promise.resolve({}),

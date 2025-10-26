@@ -3,11 +3,9 @@ const i18n = require('i18n');
 const models = require('../../models');
 const orderMail = require('../../modules/mail/order');
 
-const localeDir = path.join(process.cwd(), 'locales')
-const localeResultDir = path.join(process.cwd(), 'locales/result')
 
 i18n.configure({
-  directory: process.env.NODE_ENV !== 'production' ? localeDir : localeResultDir,
+  directory: process.env.NODE_ENV !== 'production' ? path.join(__dirname, '../locales') : path.join(__dirname, '../locales', 'result'),
   locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
   defaultLocale: 'en',
   updateFiles: false,

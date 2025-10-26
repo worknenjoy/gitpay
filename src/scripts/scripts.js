@@ -1,3 +1,4 @@
+import path from 'path'
 const models = require('../models')
 const Promise = require('bluebird')
 const url = require('url')
@@ -7,7 +8,7 @@ const stripe = require('../modules/shared/stripe/stripe')()
 const SendMail = require('../modules/mail/mail')
 
 i18n.configure({
-  directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
+  directory: process.env.NODE_ENV !== 'production' ? path.join(__dirname, '../locales') : path.join(__dirname, '../locales', 'result'),
   locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
   defaultLocale: 'en',
   updateFiles: false
