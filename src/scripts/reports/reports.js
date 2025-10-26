@@ -1,10 +1,12 @@
-const models = require('./models')
+import path from 'path'
+import { Op } from 'sequelize'
+const models = require('../../models')
 const moment = require('moment')
 const i18n = require('i18n')
-const DeadlineMail = require('./modules/mail/deadline')
+const DeadlineMail = require('../../modules/mail/deadline')
 
 i18n.configure({
-  directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
+  directory: process.env.NODE_ENV !== 'production' ? path.join(__dirname, '../locales') : path.join(__dirname, '../locales', 'result'),
   locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
   defaultLocale: 'en',
   updateFiles: false
@@ -16,7 +18,7 @@ const Report = {
   montlyBounties: async () => {
     const tasks = await models.Task.findAll({ where: {
       value: {
-        $gt: 0
+        [Op.gt]: 0
       }
     },
     include: [ models.User ]
@@ -71,8 +73,8 @@ const Report = {
     const tasks = await models.Task.findAll({ where: {
       status: 'in_progress',
       deadline: {
-        $lt: moment(new Date()).format(),
-        $gt: moment(new Date()).subtract(2, 'days').format()
+        [Op.lt]: moment(new Date()).format(),
+        [Op.gt]: moment(new Date()).subtract(2, 'days').format()
       }
     },
     include: [ models.User ]

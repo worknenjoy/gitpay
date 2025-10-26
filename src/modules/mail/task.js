@@ -1,3 +1,4 @@
+import path from 'path'
 const Signatures = require('./content')
 const request = require('./request')
 const moment = require('moment')
@@ -24,15 +25,6 @@ const setMomentLocale = (lang) => {
     moment.locale('en-gb', enLocale)
   }
 }
-
-i18n.configure({
-  directory: process.env.NODE_ENV !== 'production' ? `${__dirname}/locales` : `${__dirname}/locales/result`,
-  locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
-  defaultLocale: 'en',
-  updateFiles: false
-})
-
-i18n.init()
 
 const TaskMail = {
   new: (user, task) => {},

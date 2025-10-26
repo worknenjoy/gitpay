@@ -71,11 +71,11 @@ jobs:
           command: npm run build
       - run:
           name: Migrate
-          command: npm run migrate-test
+          command: npm run migrate:test
       # run seed!
       - run:
           name: run node seeds
-          command: npm run seed
+          command: npm run seed:test
           no_output_timeout: 60m
       # run tests!
       - run:
