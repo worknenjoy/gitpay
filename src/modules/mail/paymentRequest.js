@@ -2,6 +2,9 @@ const request = require('./request')
 const constants = require('./constants')
 const i18n = require('i18n')
 const emailTemplate = require('./templates/base-content')
+const TableTemplate = require('./templates/table-content')
+const currencyInfo = require('../util/currency-info')
+const paymentRequest = require('../../models/paymentRequest')
 
 const PaymentRequestMail = {
   paymentRequestInitiated: async (user, paymentRequest) => {
@@ -35,7 +38,7 @@ const PaymentRequestMail = {
       console.error('Error sending email:', error)
     }
   },
-  transferInitiatedForPaymentRequest: async (user, paymentRequest, transfer_amount) => {
+  transferInitiatedForPaymentRequest: async (user, paymentRequest, payment_amount, transfer_amount) => {
     const to = user.email
     const language = user.language || 'en'
     const receiveNotifications = user?.receiveNotifications
@@ -43,6 +46,7 @@ const PaymentRequestMail = {
       return
     }
     i18n.setLocale(language)
+    const currencySymbol = currencyInfo[paymentRequest.currency.toLowerCase()]?.symbol || ''
     try {
       return await request(
         to,
@@ -50,14 +54,67 @@ const PaymentRequestMail = {
         [
           {
             type: 'text/html',
-            value: emailTemplate.baseContentEmailTemplate(`
-        <p>${i18n.__('mail.paymentRequest.transferInitiated.message', {
-              title: paymentRequest.title,
-              description: paymentRequest.description,
-              amount: paymentRequest.amount,
-              currency: paymentRequest.currency,
-              transfer_amount: transfer_amount
-            })}</p>`)
+            value: TableTemplate.tableContentEmailTemplate(
+              i18n.__('mail.paymentRequest.transferInitiated.message'),
+              i18n.__('mail.paymentRequest.transferInitiated.details', {
+                title: paymentRequest.title,
+                description: paymentRequest.description,
+                currency: paymentRequest.currency,
+              }),
+             {
+                headers: ['Item', '<div style="text-align:right">Amount</div>'],
+                rows: [
+                  ['Payment amount', `<div style="text-align:right">${currencySymbol} ${payment_amount}</div>`],
+                  ['Platform Fee (8%)', `<div style="text-align:right">- ${currencySymbol} ${(payment_amount * 0.08).toFixed(2)}</div>`],
+                  ['Total', `<div style="text-align:right"><strong>${currencySymbol} ${transfer_amount}</strong></div>`]
+                ]
+              },
+              `<div style="text-align: right">${i18n.__('mail.paymentRequest.transferInitiated.bottom')}</div>`
+            )
+          }
+        ]
+      )
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+  paymentMadeForPaymentRequest: async (user, paymentRequestPayment) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+    if (!receiveNotifications) {
+      return
+    }
+    i18n.setLocale(language)
+    const currencySymbol = currencyInfo[paymentRequestPayment.currency.toLowerCase()]?.symbol || ''
+    try {
+      return await request(
+        to,
+        i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.subject'),
+        [
+          {
+            type: 'text/html',
+            value: TableTemplate.tableContentEmailTemplate(
+              i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.message', {
+                amount: paymentRequestPayment.amount,
+                currency: paymentRequestPayment.currency,
+              }),
+              i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.details', {
+                title: paymentRequestPayment.PaymentRequest.title,
+                description: paymentRequestPayment.PaymentRequest.description,
+                amount: paymentRequestPayment.amount,
+                currency: paymentRequestPayment.currency,
+                customer_name: paymentRequestPayment.PaymentRequestCustomer?.name || 'N/A',
+                customer_email: paymentRequestPayment.PaymentRequestCustomer?.email || 'N/A',
+              }),
+             {
+                headers: ['Item', 'status', '<div style="text-align:right">Amount</div>'],
+                rows: [
+                  ['Payment for Payment Request', paymentRequestPayment.status, `<div style="text-align:right">${currencySymbol} ${paymentRequestPayment.amount}</div>`],
+                ]
+              },
+              `<div style="text-align: right">${i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.bottom')}</div>`
+            )
           }
         ]
       )

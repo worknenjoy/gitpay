@@ -42,7 +42,8 @@
     "heroku-postbuild": "cd frontend && npm install && npm run production && npm run sitemap && cd .. && npm run build && npm run migrate",
     "stripe:webhook": "stripe listen --forward-to localhost:3000/webhooks",
     "simulate:webhook": "NODE_ENV=test node ./scripts/webhook_script.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "mail:preview": "tsx src/scripts/mail/mail_test.ts"
   },
   "husky": {
     "hooks": {

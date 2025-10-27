@@ -66,10 +66,18 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         paymentRequestId: paymentRequest.id,
         userId: paymentRequest.userId,
         amount: originalAmount.decimal,
-        currency: currency,
+        currency,
         source: payment_intent,
         status: payment_status,
         customerId: customer.id
+      });
+
+      await paymentRequestPayment.reload({
+        include: [
+          { model: models.PaymentRequest },
+          { model: models.User },
+          { model: models.PaymentRequestCustomer } // adjust alias if different
+        ]
       });
 
       if (!paymentRequestPayment) {
@@ -90,11 +98,6 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
       if (!transfer) {
         return res.status(500).json({ error: 'Failed to create transfer' });
       }
-      await PaymentRequestMail.transferInitiatedForPaymentRequest(
-        user,
-        paymentRequest,
-        transfer_amount
-      );
 
       const paymentRequestTransferUpdate = await paymentRequest.update({
         transfer_status: 'initiated',
@@ -104,6 +107,18 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
       if (!paymentRequestTransferUpdate) {
         return res.status(500).json({ error: 'Failed to update payment request transfer status' });
       }
+
+      await PaymentRequestMail.transferInitiatedForPaymentRequest(
+        user,
+        paymentRequest,
+        originalAmount.decimal,
+        transfer_amount
+      );
+
+      await PaymentRequestMail.paymentMadeForPaymentRequest(
+        user,
+        paymentRequestPayment
+      );
       
     }
     return res.json(req.body);
