@@ -57,8 +57,8 @@ module.exports.completed = {
             "postal_code": null,
             "state": null
           },
-          "email": "alexanmtz@gmail.com",
-          "name": "Alexandre Magno",
+          "email": "samplemail@gitpay.me",
+          "name": "GitPay User",
           "phone": null,
           "tax_exempt": "none",
           "tax_ids": [

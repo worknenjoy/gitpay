@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useHistory } from 'react-router-dom';
 import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page';
 import IssueLinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-link-field/issue-link-field'
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field';
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field';
 import TextField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field';
 import TransferStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/transfer/transfer-status-field/transfer-status-field';
+import EmptyClaim from 'design-library/molecules/content/empty/empty-claim/empty-claim';
 
 const Claims = ({
   user,
@@ -14,6 +16,7 @@ const Claims = ({
   paymentRequestTransfers,
   listPaymentRequestTransfers
 }) => {
+  const history = useHistory();
 
   useEffect(() => {
     searchTransfer({ to: user.id });
@@ -25,6 +28,11 @@ const Claims = ({
       title={<FormattedMessage id="account.profile.claims.title" defaultMessage="Claims" />}
       description={<FormattedMessage id="account.profile.claims.description" defaultMessage="List of claims made by contributors." />}
       activeTab="claims"
+      emptyComponent={
+        <EmptyClaim
+          onActionClick={() => history.push('/profile/payout-settings')}
+        />
+      }
       tabs={[
         {
           label: <FormattedMessage id="account.profile.claims.tab.label" defaultMessage="Claims for bounties" />,

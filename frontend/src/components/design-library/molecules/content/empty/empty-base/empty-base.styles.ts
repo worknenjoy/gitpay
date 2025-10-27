@@ -15,8 +15,14 @@ export const Root = styled('div')(({ theme }) => ({
 
 export const Message = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
-  marginBottom: theme.spacing(3),
+  marginBottom: theme.spacing(1),
   marginTop: theme.spacing(2)
+}))
+
+export const MessageSecondary = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  marginBottom: theme.spacing(0),
+  marginTop: theme.spacing(0)
 }))
 
 export const IconContainer = styled('div')(({ theme }) => ({

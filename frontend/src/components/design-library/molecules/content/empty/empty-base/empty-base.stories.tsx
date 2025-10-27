@@ -11,8 +11,13 @@ const Template = (args) => <EmptyBase {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  text: 'No data available',
-  actionText: 'Add Data',
-  onActionClick: () => alert('Action clicked!'),
-  icon: <AlarmIcon />
+
+}
+
+export const Custom = Template.bind({});
+Custom.args = {
+  text: 'Nothing here yet',
+  actionText: 'Get Started',
+  onActionClick: () => alert('Get Started clicked!'),
+  icon: <AlarmIcon style={{ fontSize: 60, color: 'gray' }} />
 }

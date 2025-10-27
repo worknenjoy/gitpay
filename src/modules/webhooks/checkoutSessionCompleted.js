@@ -10,7 +10,7 @@ const PaymentRequestMail = require('../mail/paymentRequest');
 module.exports = async function checkoutSessionCompleted(event, req, res) {
   try {
     const session = event.data.object;
-    const { payment_link, payment_status, amount_total } = session;
+    const { payment_link, payment_status, amount_total, payment_intent, customer_details } = session;
     if (payment_status === 'paid') {
       const paymentRequest = await models.PaymentRequest.findOne({
         where: {
@@ -48,11 +48,33 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           return res.status(500).json({ error: 'Failed to update payment link' });
         }
       }
+      const originalAmount = handleAmount(amount_total, 0, 'centavos', currency);
       const amountAfterFee = custom_amount ? 
         handleAmount(amount_total, 8, 'centavos', currency) :
         handleAmount(amount, 8, 'decimal', currency);
       const transfer_amount = amountAfterFee.decimal;
       const transfer_amount_cents = amountAfterFee.centavos;
+
+      const customer = await models.PaymentRequestCustomer.create({
+        name: customer_details.name,
+        email: customer_details.email,
+        userId: paymentRequest.userId,
+        sourceId: 'gcc_' + Math.random().toString(36).substring(2, 15) // Generating a random source ID
+      })
+
+      const paymentRequestPayment = await models.PaymentRequestPayment.create({
+        paymentRequestId: paymentRequest.id,
+        userId: paymentRequest.userId,
+        amount: originalAmount.decimal,
+        currency: currency,
+        source: payment_intent,
+        status: payment_status,
+        customerId: customer.id
+      });
+
+      if (!paymentRequestPayment) {
+        return res.status(500).json({ error: 'Failed to create payment request payment record' });
+      }
 
       const transfer = await stripe.transfers.create({
         amount: transfer_amount_cents,
