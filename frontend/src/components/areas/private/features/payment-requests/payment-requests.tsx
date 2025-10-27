@@ -27,7 +27,7 @@ const PaymentRequests = ({
   createPaymentRequest,
   listPaymentRequests,
   listPaymentRequestPayments,
-  updatePaymentRequest,
+  updatePaymentRequest
 }) => {
   const classes = { gutterLeft: { marginLeft: 10 } } as const
   const { completed, data } = paymentRequests

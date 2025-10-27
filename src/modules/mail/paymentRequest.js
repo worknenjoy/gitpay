@@ -59,7 +59,7 @@ const PaymentRequestMail = {
               i18n.__('mail.paymentRequest.transferInitiated.details', {
                 title: paymentRequest.title,
                 description: paymentRequest.description,
-                currency: paymentRequest.currency,
+                currency: paymentRequest.currency
               }),
              {
                 headers: ['Item', '<div style="text-align:right">Amount</div>'],
@@ -97,7 +97,7 @@ const PaymentRequestMail = {
             value: TableTemplate.tableContentEmailTemplate(
               i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.message', {
                 amount: paymentRequestPayment.amount,
-                currency: paymentRequestPayment.currency,
+                currency: paymentRequestPayment.currency
               }),
               i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.details', {
                 title: paymentRequestPayment.PaymentRequest.title,
@@ -105,12 +105,12 @@ const PaymentRequestMail = {
                 amount: paymentRequestPayment.amount,
                 currency: paymentRequestPayment.currency,
                 customer_name: paymentRequestPayment.PaymentRequestCustomer?.name || 'N/A',
-                customer_email: paymentRequestPayment.PaymentRequestCustomer?.email || 'N/A',
+                customer_email: paymentRequestPayment.PaymentRequestCustomer?.email || 'N/A'
               }),
              {
                 headers: ['Item', 'status', '<div style="text-align:right">Amount</div>'],
                 rows: [
-                  ['Payment for Payment Request', paymentRequestPayment.status, `<div style="text-align:right">${currencySymbol} ${paymentRequestPayment.amount}</div>`],
+                  ['Payment for Payment Request', paymentRequestPayment.status, `<div style="text-align:right">${currencySymbol} ${paymentRequestPayment.amount}</div>`]
                 ]
               },
               `<div style="text-align: right">${i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.bottom')}</div>`

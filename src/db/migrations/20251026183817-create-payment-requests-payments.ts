@@ -5,44 +5,44 @@ export async function up({ queryInterface }: { queryInterface: QueryInterface })
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: true
     },
     source: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     amount: {
       type: DataTypes.DECIMAL,
       allowNull: false,
-      defaultValue: 0,
+      defaultValue: 0
     },
     currency: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'USD',
+      defaultValue: 'USD'
     },
     status: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     transferStatus: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
     customerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'PaymentRequestCustomers',
-        key: 'id',
-      },
+        key: 'id'
+      }
     },
     paymentRequestId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'PaymentRequests',
-        key: 'id',
+        key: 'id'
       }
     },
     transferId: {
@@ -50,7 +50,7 @@ export async function up({ queryInterface }: { queryInterface: QueryInterface })
       allowNull: true,
       references: {
         model: 'PaymentRequestTransfers',
-        key: 'id',
+        key: 'id'
       }
     },
     userId: {
@@ -58,17 +58,17 @@ export async function up({ queryInterface }: { queryInterface: QueryInterface })
       allowNull: false,
       references: {
         model: 'Users',
-        key: 'id',
+        key: 'id'
       }
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: false
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false,
-    },
+      allowNull: false
+    }
   })
 }
 

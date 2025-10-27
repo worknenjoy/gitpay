@@ -48,7 +48,7 @@ describe('Payment Request Payment Webhook', () => {
     const { headers, body: currentUser } = user || {};
     const paymentRequest = await models.PaymentRequest.create({
       title: 'Payment for services',
-      amount: 1000,
+      amount: 1,
       currency: 'usd',
       description: 'Payment for services',
       payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
@@ -71,7 +71,7 @@ describe('Payment Request Payment Webhook', () => {
       }
     });
     expect(paymentRequestPayments).to.exist;
-    expect(paymentRequestPayments.amount).to.equal('10');
+    expect(paymentRequestPayments.amount).to.equal('1');
     expect(paymentRequestPayments.currency).to.equal('usd');
     expect(paymentRequestPayments.status).to.equal('paid');
     expect(paymentRequestPayments.userId).to.equal(currentUser.id);

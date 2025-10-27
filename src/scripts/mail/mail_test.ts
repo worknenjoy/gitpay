@@ -11,7 +11,6 @@
 
 import * as fs from 'fs'
 import * as path from 'path'
-import PaymentRequestCustomer from '../../models/paymentRequestCustomer'
 // i18n has no bundled typings in this project; import via require to avoid TS errors
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const i18n = require('i18n') as any
