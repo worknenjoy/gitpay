@@ -15,11 +15,18 @@ function handleAmount(amount, percent, type, currency = 'usd') {
   const percentDecimal = new Decimal(1).minus(new Decimal(percent).div(100));
   const resultDecimal = decimalAmount.mul(percentDecimal);
 
+  // Fee is the discounted portion
+  const feeDecimal = decimalAmount.minus(resultDecimal);
+
   const rawCentavos = resultDecimal.mul(centsFactor);
   const centavos = Math.ceil(rawCentavos.toNumber());
   const decimal = resultDecimal.toDecimalPlaces(decimalPlaces).toNumber();
 
-  return { centavos, decimal };
+  const rawCentavosFee = feeDecimal.mul(centsFactor);
+  const centavosFee = Math.ceil(rawCentavosFee.toNumber());
+  const decimalFee = feeDecimal.toDecimalPlaces(decimalPlaces).toNumber();
+
+  return { centavos, decimal, decimalFee, centavosFee };
 }
 
 module.exports = { handleAmount };

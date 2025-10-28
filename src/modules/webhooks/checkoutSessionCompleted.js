@@ -84,15 +84,25 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         return res.status(500).json({ error: 'Failed to create payment request payment record' });
       }
 
+      const paymentIntent = await stripe.paymentIntents.update(payment_intent, {
+        metadata: {
+          payment_request_payment_id: paymentRequestPayment.id,
+        }
+      });
+
+      if (!paymentIntent) {
+        return res.status(500).json({ error: 'Failed to retrieve payment intent' });
+      }
+
       const transfer = await stripe.transfers.create({
         amount: transfer_amount_cents,
         currency: currency,
         destination: account_id,
         description: `Payment for service using Payment Request id: ${paymentRequest.id}`,
         metadata: {
-          payment_request_id: paymentRequest.id,
-          user_id: paymentRequest.User.id
-        }
+          payment_request_payment_id: paymentRequestPayment.id,
+        },
+        transfer_group: `payment_request_payment_${paymentRequestPayment.id}`
       });
       
       if (!transfer) {

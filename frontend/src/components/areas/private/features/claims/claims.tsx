@@ -17,6 +17,18 @@ const Claims = ({
   listPaymentRequestTransfers
 }) => {
   const history = useHistory();
+  const [ currentActive, setCurrentActive ] = React.useState('claims');
+
+  useEffect(() => {
+    const { data: transferData, completed: transferCompleted } = transfers;
+    const { data: prtData, completed: prtCompleted } = paymentRequestTransfers;
+
+    if (transferCompleted && prtCompleted) {
+      if (prtData.length > 0 && transferData.length === 0) {
+        setCurrentActive('payment-request-transfers');
+      }
+    }
+  }, [transfers, paymentRequestTransfers]);
 
   useEffect(() => {
     searchTransfer({ to: user.id });
@@ -27,7 +39,7 @@ const Claims = ({
     <PrimaryDataPage
       title={<FormattedMessage id="account.profile.claims.title" defaultMessage="Claims" />}
       description={<FormattedMessage id="account.profile.claims.description" defaultMessage="List of claims made by contributors." />}
-      activeTab="claims"
+      activeTab={currentActive}
       emptyComponent={
         <EmptyClaim
           onActionClick={() => history.push('/profile/payout-settings')}

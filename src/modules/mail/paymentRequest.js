@@ -4,6 +4,7 @@ const i18n = require('i18n')
 const emailTemplate = require('./templates/base-content')
 const TableTemplate = require('./templates/table-content')
 const currencyInfo = require('../util/currency-info')
+const { handleAmount } = require('../util/handle-amount/handle-amount')
 const paymentRequest = require('../../models/paymentRequest')
 
 const PaymentRequestMail = {
@@ -46,7 +47,10 @@ const PaymentRequestMail = {
       return
     }
     i18n.setLocale(language)
+
     const currencySymbol = currencyInfo[paymentRequest.currency.toLowerCase()]?.symbol || ''
+    const { decimalFee } = handleAmount(payment_amount, 8, 'decimal', paymentRequest.currency)
+
     try {
       return await request(
         to,
@@ -65,7 +69,7 @@ const PaymentRequestMail = {
                 headers: ['Item', '<div style="text-align:right">Amount</div>'],
                 rows: [
                   ['Payment amount', `<div style="text-align:right">${currencySymbol} ${payment_amount}</div>`],
-                  ['Platform Fee (8%)', `<div style="text-align:right">- ${currencySymbol} ${(payment_amount * 0.08).toFixed(2)}</div>`],
+                  ['Platform Fee (8%)', `<div style="text-align:right">- ${currencySymbol} ${decimalFee}</div>`],
                   ['Total', `<div style="text-align:right"><strong>${currencySymbol} ${transfer_amount}</strong></div>`]
                 ]
               },
