@@ -15,6 +15,7 @@ const customerSourceCreated = require('../../../modules/webhooks/customerSourceC
 const chargeUpdated = require('../../../modules/webhooks/chargeUpdated')
 const chargeRefunded = require('../../../modules/webhooks/chargeRefunded')
 const chargeFailed = require('../../../modules/webhooks/chargeFailed')
+import { chargeDisputeClosedWebhookHandler } from '../../../modules/webhooks/chargeDisputeClosed'
 const invoiceCreated = require('../../../modules/webhooks/invoiceCreated')
 const invoiceUpdated = require('../../../modules/webhooks/invoiceUpdated')
 const invoicePaid = require('../../../modules/webhooks/invoicePaid')
@@ -33,7 +34,7 @@ const {
   formatStripeAmount
 } = require('../../../modules/webhooks/constants')
 
-exports.webhookPlatform = async (req, res) => {
+exports.webhookPlatform = async (req: any, res: any) => {
   const sig = req.headers['stripe-signature'];
   const secret = process.env.STRIPE_WEBHOOK_SECRET_PLATFORM;
 
@@ -47,7 +48,7 @@ exports.webhookPlatform = async (req, res) => {
     } else {
       event = stripe.webhooks.constructEvent(req.body, sig, secret);
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error('❌ Webhook signature verification failed:', err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
@@ -69,6 +70,8 @@ exports.webhookPlatform = async (req, res) => {
         return chargeSucceeded(event, paid, status, req, res)
       case 'charge.failed':
         return chargeFailed(event, paid, status, req, res)
+      case 'charge.dispute.closed':
+        return chargeDisputeClosedWebhookHandler(event, req, res)
       case 'invoice.created':
         return await invoiceCreated(event, req, res)
       case 'invoice.updated':

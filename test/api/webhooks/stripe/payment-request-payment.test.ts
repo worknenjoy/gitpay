@@ -44,6 +44,16 @@ describe('Payment Request Payment Webhook', () => {
         active: false,
       })
 
+    nock('https://api.stripe.com')
+      .post('/v1/payment_intents/pi_3RcoMHBrSjgsps2D1aOZ9Yl6')
+      .reply(200, {
+        id: 'pi_3RcoMHBrSjgsps2D1aOZ9Yl6',
+        object: 'payment_intent',
+        metadata: {
+          payment_request_payment_id: 1
+        }
+      });
+
     const user = await registerAndLogin(agent)
     const { headers, body: currentUser } = user || {};
     const paymentRequest = await models.PaymentRequest.create({
@@ -56,7 +66,7 @@ describe('Payment Request Payment Webhook', () => {
       userId: currentUser.id
     });
     const res = await agent
-      .post('/webhooks/stripe-connect')
+      .post('/webhooks/stripe-platform')
       .send(eventCheckout.completed.success)
       .expect('Content-Type', /json/)
       .expect(200)
