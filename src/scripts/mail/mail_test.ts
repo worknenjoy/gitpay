@@ -104,12 +104,27 @@ function buildSamples(moduleName: string, methodName: string): any[] {
       },
       PaymentRequest: paymentRequest
     }
+		const paymentRequestTransaction = {
+			amount: -5000,
+			reason: 'DISPUTE',
+			reason_details: 'product_not_received',
+			status: 'lost',
+			openedAt: new Date(123),
+			closedAt: new Date(456),
+			PaymentRequestBalance: {
+				userId: 1,
+				balance: -5000
+			}
+		}
 		if (/transferInitiated/i.test(methodName)) {
 			return [user, paymentRequest, 100, 92]
 		}
     if(/paymentMadeForPaymentRequest/i.test(methodName)) {
       return [user, paymentRequestPayment]
     }
+		if(/newBalanceTransactionForPaymentRequest/i.test(methodName)) {
+			return [user, paymentRequestPayment, paymentRequestTransaction]
+		}
      
 		return [user, paymentRequest]
 	}

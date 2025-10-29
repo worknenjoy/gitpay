@@ -18,6 +18,12 @@ describe('Payment Request Balance Webhook', () => {
   })
   it('should create a Payment Request Balance with two transactions for a user when a charge.dispute.closed event is received', async () => {
 
+    nock('https://api.stripe.com')
+      .get('/v1/disputes/du_test_123')
+      .reply(200, {
+        created: 123,
+      });
+
     const user = await registerAndLogin(agent)
     const { headers, body: currentUser } = user || {};
 
@@ -72,6 +78,9 @@ describe('Payment Request Balance Webhook', () => {
     expect(paymentRequestBalanceTransaction.amount).to.equal('-6495');
     expect(paymentRequestBalanceTransaction.type).to.equal('DEBIT');
     expect(paymentRequestBalanceTransaction.reason).to.equal('DISPUTE');
+    expect(paymentRequestBalanceTransaction.status).to.equal('lost');
+    expect(paymentRequestBalanceTransaction.openedAt).to.be.instanceOf(Date);
+    expect(paymentRequestBalanceTransaction.closedAt).to.be.instanceOf(Date);
 
     expect(paymentRequestBalance).to.exist;
     expect(paymentRequestBalance.balance).to.equal('-6495');

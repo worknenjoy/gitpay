@@ -1,3 +1,4 @@
+import { all } from 'bluebird'
 import { Model, DataTypes, Optional, Sequelize } from 'sequelize'
 
 export type BalanceTransactionType = 'CREDIT' | 'DEBIT'
@@ -6,9 +7,15 @@ export type BalanceTransactionReason = 'DISPUTE' | 'REFUND' | 'EXTRA_FEE' | 'ADJ
 export interface PaymentRequestBalanceTransactionAttributes {
   id: number
   amount: string
+  currency: string
+  sourceId: string
   type: BalanceTransactionType
   reason: BalanceTransactionReason
+  reason_details: string
+  status: string
   paymentRequestBalanceId: number
+  openedAt?: Date
+  closedAt?: Date
   createdAt?: Date
   updatedAt?: Date
 }
@@ -22,10 +29,16 @@ export default class PaymentRequestBalanceTransaction
   extends Model<PaymentRequestBalanceTransactionAttributes, PaymentRequestBalanceTransactionCreationAttributes>
   implements PaymentRequestBalanceTransactionAttributes {
   public id!: number
+  public sourceId!: string
   public amount!: string
+  public currency!: string
   public type!: BalanceTransactionType
   public reason!: BalanceTransactionReason
+  public reason_details!: string
+  public status!: string
   public paymentRequestBalanceId!: number
+  public openedAt?: Date
+  public closedAt?: Date
   public createdAt!: Date
   public updatedAt!: Date
 
@@ -37,9 +50,18 @@ export default class PaymentRequestBalanceTransaction
           primaryKey: true,
           autoIncrement: true
         },
+        sourceId: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
         amount: {
           type: DataTypes.BIGINT,
           allowNull: false
+        },
+        currency: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          defaultValue: 'usd'
         },
         type: {
           type: DataTypes.ENUM('CREDIT', 'DEBIT'),
@@ -49,9 +71,25 @@ export default class PaymentRequestBalanceTransaction
           type: DataTypes.ENUM('DISPUTE', 'REFUND', 'EXTRA_FEE', 'ADJUSTMENT'),
           allowNull: false
         },
+        reason_details: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        status: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
         paymentRequestBalanceId: {
           type: DataTypes.INTEGER,
           allowNull: false
+        },
+        openedAt: {
+          type: DataTypes.DATE,
+          allowNull: true
+        },
+        closedAt: {
+          type: DataTypes.DATE,
+          allowNull: true
         },
         createdAt: {
           type: DataTypes.DATE,

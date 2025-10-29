@@ -12,6 +12,11 @@ export async function up({ queryInterface }: { queryInterface: QueryInterface })
       allowNull: false,
       defaultValue: 0
     },
+    currency: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'usd'
+    },
     userId: {
       unique: true,
       type: DataTypes.INTEGER,

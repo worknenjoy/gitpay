@@ -3,6 +3,7 @@ import { Model, DataTypes, Optional, Sequelize } from 'sequelize'
 export interface PaymentRequestBalanceAttributes {
   id: number
   balance: string
+  currency: string
   userId: number
   createdAt?: Date
   updatedAt?: Date
@@ -18,6 +19,7 @@ export default class PaymentRequestBalance
   implements PaymentRequestBalanceAttributes {
   public id!: number
   public balance!: string
+  public currency!: string
   public userId!: number
   public createdAt!: Date
   public updatedAt!: Date
@@ -34,6 +36,11 @@ export default class PaymentRequestBalance
           type: DataTypes.BIGINT,
           allowNull: false,
           defaultValue: 0
+        },
+        currency: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          defaultValue: 'usd'
         },
         userId: {
           unique: true,
@@ -64,6 +71,10 @@ export default class PaymentRequestBalance
     models.PaymentRequestBalance.belongsTo(models.User, {
       //as: 'User',
       foreignKey: 'userId'
+    })
+    models.PaymentRequestBalance.hasMany(models.PaymentRequestBalanceTransaction, {
+      //as: 'transactions',
+      foreignKey: 'paymentRequestBalanceId'
     })
   }
 }

@@ -1,11 +1,21 @@
 const request = require('./request')
 const constants = require('./constants')
 const i18n = require('i18n')
+const moment = require('moment')
 const emailTemplate = require('./templates/base-content')
 const TableTemplate = require('./templates/table-content')
 const currencyInfo = require('../util/currency-info')
 const { handleAmount } = require('../util/handle-amount/handle-amount')
 const paymentRequest = require('../../models/paymentRequest')
+
+const getReason = (reason_details) => {
+  switch (reason_details) {
+    case 'product_not_received':
+      return i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.product_not_received')
+    default:
+      return reason_details
+  }
+}
 
 const PaymentRequestMail = {
   paymentRequestInitiated: async (user, paymentRequest) => {
@@ -118,6 +128,49 @@ const PaymentRequestMail = {
                 ]
               },
               `<div style="text-align: right">${i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.bottom')}</div>`
+            )
+          }
+        ]
+      )
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+  newBalanceTransactionForPaymentRequest: async (user, paymentRequestPayment, balanceTransaction) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+    if (!receiveNotifications) {
+      return
+    }
+    i18n.setLocale(language)
+
+    try {
+      return await request(
+        to,
+        i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.subject'),
+        [
+          {
+            type: 'text/html',
+            value: TableTemplate.tableContentEmailTemplate(
+              i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.message'),
+              i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.details', {
+                reason: balanceTransaction.reason,
+                reason_details: getReason(balanceTransaction.reason_details),
+                status: balanceTransaction.status,
+                customer_name: paymentRequestPayment.PaymentRequestCustomer?.name || 'N/A',
+                customer_email: paymentRequestPayment.PaymentRequestCustomer?.email || 'N/A',
+                opened_at: balanceTransaction.openedAt ? moment(balanceTransaction.openedAt).format('MMMM Do YYYY, h:mm:ss a') : 'N/A',
+                closed_at: balanceTransaction.closedAt ? moment(balanceTransaction.closedAt).format('MMMM Do YYYY, h:mm:ss a') : 'N/A'
+              }),
+             {
+                headers: ['Item', '<div style="text-align:right">Amount</div>'],
+                rows: [
+                  [balanceTransaction.reason, `<div style="text-align:right">${handleAmount(balanceTransaction.amount, '0', 'centavos').decimal} ${paymentRequestPayment.currency}</div>`],
+                  ['Current debt balance', `<div style="text-align:right">${handleAmount(balanceTransaction.PaymentRequestBalance.balance, '0', 'centavos').decimal} ${paymentRequestPayment.currency}</div>`]
+                ]
+              },
+              `<div style="text-align: right">${i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.bottom')}</div>`
             )
           }
         ]

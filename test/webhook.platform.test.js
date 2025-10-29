@@ -21,6 +21,7 @@ const invoiceCreated = require('./data/stripe/stripe.invoice.create')
 const invoicePaid = require('./data/stripe/stripe.invoice.paid')
 const invoiceWebhookPaid = require('./data/stripe/stripe.webhook.invoice')
 const eventCheckout = require('./data/stripe/stripe.webhook.checkout.session.completed')
+const { metadata } = require('core-js/fn/reflect')
 
 describe('webhooks for platform', () => {
   beforeEach(async () => {
@@ -671,6 +672,17 @@ describe('webhooks for platform', () => {
         .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
         .reply(200, {
           active: false,
+        })
+
+      nock('https://api.stripe.com')
+        .post('/v1/payment_intents/pi_3RcoMHBrSjgsps2D1aOZ9Yl6')
+        .reply(200, {
+          id: 'pi_3RcoMHBrSjgsps2D1aOZ9Yl6',
+          status: 'succeeded',
+          metadata: {
+            payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
+            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
+          }
         })
       const user = await registerAndLogin(agent)
       await models.PaymentRequest.create({

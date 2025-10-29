@@ -7,9 +7,18 @@ export async function up({ queryInterface }: { queryInterface: QueryInterface })
       primaryKey: true,
       autoIncrement: true
     },
+    sourceId: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     amount: {
       type: DataTypes.BIGINT,
       allowNull: false
+    },
+    currency: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'usd'
     },
     type: {
       type: DataTypes.ENUM('CREDIT', 'DEBIT'),
@@ -19,6 +28,14 @@ export async function up({ queryInterface }: { queryInterface: QueryInterface })
       type: DataTypes.ENUM('DISPUTE', 'REFUND', 'EXTRA_FEE', 'ADJUSTMENT'),
       allowNull: false
     },
+    reason_details: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     paymentRequestBalanceId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -26,6 +43,14 @@ export async function up({ queryInterface }: { queryInterface: QueryInterface })
         model: 'PaymentRequestBalances',
         key: 'id'
       }
+    },
+    openedAt: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    closedAt: {
+      type: DataTypes.DATE,
+      allowNull: true
     },
     createdAt: {
       type: DataTypes.DATE,
