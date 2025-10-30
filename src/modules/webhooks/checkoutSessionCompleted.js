@@ -87,6 +87,8 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
       const paymentIntent = await stripe.paymentIntents.update(payment_intent, {
         metadata: {
           payment_request_payment_id: paymentRequestPayment.id,
+          payment_request_id: paymentRequest.id,
+          user_id: paymentRequest.userId
         }
       });
 

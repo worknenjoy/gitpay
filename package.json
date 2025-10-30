@@ -43,7 +43,8 @@
     "stripe:webhook": "stripe listen --forward-to localhost:3000/webhooks",
     "simulate:webhook": "NODE_ENV=test node ./scripts/webhook_script.js",
     "typecheck": "tsc --noEmit",
-    "mail:preview": "tsx src/scripts/mail/mail_test.ts"
+    "mail:preview": "tsx src/scripts/mail/mail_test.ts",
+    "sync:payment_requests": "tsx src/scripts/sync/sync_payment_requests.ts"
   },
   "husky": {
     "hooks": {
