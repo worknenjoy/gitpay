@@ -52,7 +52,7 @@ const PaymentRequestMail = {
       console.error('Error sending email:', error)
     }
   },
-  transferInitiatedForPaymentRequest: async (user, paymentRequest, payment_amount, transfer_amount) => {
+  transferInitiatedForPaymentRequest: async (user, paymentRequest, payment_amount, transfer_amount, extraFee) => {
     const to = user.email
     const language = user.language || 'en'
     const receiveNotifications = user?.receiveNotifications
@@ -63,6 +63,22 @@ const PaymentRequestMail = {
 
     const currencySymbol = currencyInfo[paymentRequest.currency.toLowerCase()]?.symbol || ''
     const { decimalFee } = handleAmount(payment_amount, 8, 'decimal', paymentRequest.currency)
+
+    let rows = []
+    if(extraFee) {
+      rows = [
+        ['Payment amount', `<div style="text-align:right">${currencySymbol} ${payment_amount}</div>`],
+        ['Platform Fee (8%)', `<div style="text-align:right">- ${currencySymbol} ${decimalFee}</div>`],
+        ['Balance due', `<div style="text-align:right">- ${currencySymbol} ${extraFee.extraFee}</div>`],
+        ['Total', `<div style="text-align:right"><strong>${currencySymbol} ${extraFee.total}</strong></div>`]
+      ]
+    } else {
+      rows = [
+        ['Payment amount', `<div style="text-align:right">${currencySymbol} ${payment_amount}</div>`],
+        ['Platform Fee (8%)', `<div style="text-align:right">- ${currencySymbol} ${decimalFee}</div>`],
+        ['Total', `<div style="text-align:right"><strong>${currencySymbol} ${transfer_amount}</strong></div>`]
+      ]
+    }
 
     try {
       return await request(
@@ -80,11 +96,7 @@ const PaymentRequestMail = {
               }),
              {
                 headers: ['Item', '<div style="text-align:right">Amount</div>'],
-                rows: [
-                  ['Payment amount', `<div style="text-align:right">${currencySymbol} ${payment_amount}</div>`],
-                  ['Platform Fee (8%)', `<div style="text-align:right">- ${currencySymbol} ${decimalFee}</div>`],
-                  ['Total', `<div style="text-align:right"><strong>${currencySymbol} ${transfer_amount}</strong></div>`]
-                ]
+                rows: rows
               },
               `<div style="text-align: right">${i18n.__('mail.paymentRequest.transferInitiated.bottom')}</div>`
             )
@@ -164,8 +176,8 @@ const PaymentRequestMail = {
                 status: balanceTransaction.status,
                 customer_name: paymentRequestPayment.PaymentRequestCustomer?.name || 'N/A',
                 customer_email: paymentRequestPayment.PaymentRequestCustomer?.email || 'N/A',
-                opened_at: balanceTransaction.openedAt ? formatDate(balanceTransaction.openedAt) : formatDate(balanceTransaction.createdAt),
-                closed_at: balanceTransaction.closedAt ? formatDate(balanceTransaction.closedAt) : formatDate(balanceTransaction.createdAt)
+                opened_at: balanceTransaction.openedAt ? formatDate(balanceTransaction.openedAt) : moment(balanceTransaction.createdAt).format('LLL'),
+                closed_at: balanceTransaction.closedAt ? formatDate(balanceTransaction.closedAt) : moment(balanceTransaction.createdAt).format('LLL')
               }),
              {
                 headers: ['Item', '<div style="text-align:right">Amount</div>'],

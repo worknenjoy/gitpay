@@ -127,7 +127,6 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           reason_details: 'payment_request_payment_applied',
           status: 'completed',
         });
-        return res.json(req.body);
       }
       if(resultingBalance > 0) {
         if(previousBalance < 0) {
@@ -146,6 +145,8 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           destination: account_id,
           description: `Payment for service using Payment Request id: ${paymentRequest.id} and Payment Request Payment id: ${paymentRequestPayment.id}`,
           metadata: {
+            user_id: paymentRequest.userId,
+            payment_request_id: paymentRequest.id,
             payment_request_payment_id: paymentRequestPayment.id,
           },
           transfer_group: `payment_request_payment_${paymentRequestPayment.id}`
@@ -165,22 +166,29 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         }
 
         try {
-
           await PaymentRequestMail.transferInitiatedForPaymentRequest(
             user,
             paymentRequest,
             originalAmount.decimal,
-            transfer_amount
+            transfer_amount,
+            paymentRequestBalanceTransaction ? { 
+              extraFee: handleAmount(paymentRequestBalanceTransaction.amount, 0, 'centavos', currency).decimal,
+              total: handleAmount(resultingBalance, 0, 'centavos', currency).decimal
+            } : null
           );
         } catch (error) {
             console.error('Error sending transfer initiated email:', error);
         }
       }
       if(previousBalance < 0) {
+        const updatedBalanceTransaction = await models.PaymentRequestBalanceTransaction.findByPk(
+          paymentRequestBalanceTransaction.id,
+          { include: [models.PaymentRequestBalance] }
+        );
         PaymentRequestMail.newBalanceTransactionForPaymentRequest(
           user,
           paymentRequestPayment,
-          paymentRequestBalanceTransaction
+          updatedBalanceTransaction
         ).catch((mailError) => {
           console.error(`Failed to send email for Dispute ID: ${data.object.id}`, mailError);
         });
