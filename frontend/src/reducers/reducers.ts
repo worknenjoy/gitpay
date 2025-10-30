@@ -26,6 +26,7 @@ import { walletOrder, walletOrders } from './walletOrderReducer'
 import { paymentRequest, paymentRequests } from './paymentRequestReducer'
 import { paymentRequestTransfers } from './paymentRequestTransferReducer'
 import { paymentRequestPayments } from './paymentRequestPaymentReducer'
+import { paymentRequestBalances } from './paymentRequestBalanceReducer'
 
 const reducers = combineReducers({
   notification,
@@ -65,7 +66,8 @@ const reducers = combineReducers({
   paymentRequest,
   paymentRequests,
   paymentRequestTransfers,
-  paymentRequestPayments
+  paymentRequestPayments,
+  paymentRequestBalances
 })
 
 export default reducers

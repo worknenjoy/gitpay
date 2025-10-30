@@ -11,6 +11,8 @@ import {
   paymentRequestPaymentsCustomColumnRenderer
 } from './payment-requests-table'
 
+import { paymentRequestBalancesMetadata, paymentRequestBalancesCustomColumnRenderer } from './payment-requests-balance-table'
+
 import EmptyPaymentRequest from 'design-library/molecules/content/empty/empty-payment-request/empty-payment-request'
 import PaymentRequestDrawer from 'design-library/molecules/drawers/payment-request-drawer/payment-request-drawer'
 import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page'
@@ -24,9 +26,11 @@ import ActionField from 'design-library/molecules/tables/section-table/section-t
 const PaymentRequests = ({
   paymentRequests,
   paymentRequestPayments,
+  paymentRequestBalances,
   createPaymentRequest,
   listPaymentRequests,
   listPaymentRequestPayments,
+  listPaymentRequestBalances,
   updatePaymentRequest
 }) => {
   const classes = { gutterLeft: { marginLeft: 10 } } as const
@@ -122,7 +126,13 @@ const PaymentRequests = ({
   useEffect(() => {
     listPaymentRequests()
     listPaymentRequestPayments()
+    listPaymentRequestBalances()
   }, [])
+
+  const transactions = {
+    completed: paymentRequestBalances?.completed,
+    data: paymentRequestBalances?.data?.[0]?.PaymentRequestBalanceTransactions || []
+  }
 
   return (
     <>
@@ -147,6 +157,22 @@ const PaymentRequests = ({
               tableData: paymentRequestPayments,
               tableHeaderMetadata: paymentRequestPaymentsMetadata,
               customColumnRenderer: paymentRequestPaymentsCustomColumnRenderer
+            }
+          },
+          {
+            label: <FormattedMessage id="payment.request.balances.transactions.tab.label" defaultMessage="Disputes and refunds fees" />,
+            cards: [
+              {
+                title: <FormattedMessage id="payment.request.balances.card.title" defaultMessage="Disputes and refunds due" />,
+                amount: parseInt(paymentRequestBalances?.data?.[0]?.balance)*-1 || 0,
+                type: 'centavos'
+              }
+            ],
+            value: 'payment-request-balances',
+            table: {
+              tableData: transactions,
+              tableHeaderMetadata: paymentRequestBalancesMetadata,
+              customColumnRenderer: paymentRequestBalancesCustomColumnRenderer
             }
           }
         ]}

@@ -10,7 +10,7 @@ import * as types from '../../src/actions/paymentRequestPaymentActions'
 import api from '../../src/consts'
 
 const middlewares = [thunk]
-const mockStore = configureMockStore(middlewares)
+const mockStore = configureMockStore(middlewares as any[])
 
 describe('paymentRequestPayment actions', () => {
 	describe('action creators', () => {

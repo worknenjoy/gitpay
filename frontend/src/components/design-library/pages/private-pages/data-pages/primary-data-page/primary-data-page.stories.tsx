@@ -41,6 +41,9 @@ export const Default = {
       {
         label: 'Tab 2',
         value: 'tab2',
+        cards: [
+          { title: 'Total Users', amount: '1250' }
+        ],
         table: {
           tableData: {
             completed: true,

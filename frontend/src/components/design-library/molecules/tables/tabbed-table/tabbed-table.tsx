@@ -1,6 +1,7 @@
 import BaseTabs from 'design-library/molecules/tabs/base-tabs/base-tabs';
 import React, { useEffect } from 'react';
 import SectionTable from '../section-table/section-table';
+import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card';
 
 const TabbedTable = ({ tabs, activeTab }) => {
   const [ currentTab, setCurrentTab ] = React.useState(tabs.find(tab => tab.value === activeTab) || tabs[0]);
@@ -28,6 +29,13 @@ const TabbedTable = ({ tabs, activeTab }) => {
       onChange={handleTabChange}
       withCard={false} // Use withCard prop to wrap content in a card
     >
+      {currentTab.cards && currentTab.cards.length > 0 && (
+        <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', justifyContent: 'flex-end' }}>
+          {currentTab.cards.map((card, index) => (
+            <BalanceCard key={index} name={card.title} balance={card.amount} type={card.type} />
+          ))}
+        </div>
+      )}
       <SectionTable
         key={value}
         tableData={tableData}

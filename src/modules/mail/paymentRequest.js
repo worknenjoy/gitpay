@@ -2,6 +2,7 @@ const request = require('./request')
 const constants = require('./constants')
 const i18n = require('i18n')
 const moment = require('moment')
+const formatDate = require('../util/formatDate').default
 const emailTemplate = require('./templates/base-content')
 const TableTemplate = require('./templates/table-content')
 const currencyInfo = require('../util/currency-info')
@@ -12,6 +13,8 @@ const getReason = (reason_details) => {
   switch (reason_details) {
     case 'product_not_received':
       return i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.product_not_received')
+    case 'payment_request_payment_applied':
+      return i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.payment_request_payment_applied')
     default:
       return reason_details
   }
@@ -155,19 +158,20 @@ const PaymentRequestMail = {
             value: TableTemplate.tableContentEmailTemplate(
               i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.message'),
               i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.details', {
+                type: balanceTransaction.type,
                 reason: balanceTransaction.reason,
                 reason_details: getReason(balanceTransaction.reason_details),
                 status: balanceTransaction.status,
                 customer_name: paymentRequestPayment.PaymentRequestCustomer?.name || 'N/A',
                 customer_email: paymentRequestPayment.PaymentRequestCustomer?.email || 'N/A',
-                opened_at: balanceTransaction.openedAt ? moment(balanceTransaction.openedAt).format('MMMM Do YYYY, h:mm:ss a') : 'N/A',
-                closed_at: balanceTransaction.closedAt ? moment(balanceTransaction.closedAt).format('MMMM Do YYYY, h:mm:ss a') : 'N/A'
+                opened_at: balanceTransaction.openedAt ? formatDate(balanceTransaction.openedAt) : formatDate(balanceTransaction.createdAt),
+                closed_at: balanceTransaction.closedAt ? formatDate(balanceTransaction.closedAt) : formatDate(balanceTransaction.createdAt)
               }),
              {
                 headers: ['Item', '<div style="text-align:right">Amount</div>'],
                 rows: [
-                  [balanceTransaction.reason, `<div style="text-align:right">${handleAmount(balanceTransaction.amount, '0', 'centavos').decimal} ${paymentRequestPayment.currency}</div>`],
-                  ['Current debt balance', `<div style="text-align:right">${handleAmount(balanceTransaction.PaymentRequestBalance.balance, '0', 'centavos').decimal} ${paymentRequestPayment.currency}</div>`]
+                  [balanceTransaction.reason, `<div style="text-align:right">${handleAmount(balanceTransaction.amount, '0', 'centavos').decimal} ${balanceTransaction.currency}</div>`],
+                  ['Current debt balance', `<div style="text-align:right">${handleAmount(balanceTransaction.PaymentRequestBalance.balance, '0', 'centavos').decimal} ${balanceTransaction.currency}</div>`]
                 ]
               },
               `<div style="text-align: right">${i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.bottom')}</div>`

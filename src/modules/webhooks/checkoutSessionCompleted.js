@@ -94,42 +94,97 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         return res.status(500).json({ error: 'Failed to retrieve payment intent' });
       }
 
-      const transfer = await stripe.transfers.create({
-        amount: transfer_amount_cents,
-        currency: currency,
-        destination: account_id,
-        description: `Payment for service using Payment Request id: ${paymentRequest.id}`,
-        metadata: {
-          payment_request_payment_id: paymentRequestPayment.id,
-        },
-        transfer_group: `payment_request_payment_${paymentRequestPayment.id}`
-      });
-      
-      if (!transfer) {
-        return res.status(500).json({ error: 'Failed to create transfer' });
+      try {
+        await PaymentRequestMail.paymentMadeForPaymentRequest(
+          user,
+          paymentRequestPayment
+        );
+      } catch (error) {
+        console.error('Error sending payment made email:', error);
       }
 
-      const paymentRequestTransferUpdate = await paymentRequest.update({
-        transfer_status: 'initiated',
-        transfer_id: transfer.id
+      const paymentRequestBalance = await models.PaymentRequestBalance.findOrCreate({
+        where: {
+          userId: paymentRequest.userId
+        }
       });
 
-      if (!paymentRequestTransferUpdate) {
-        return res.status(500).json({ error: 'Failed to update payment request transfer status' });
+      if (!paymentRequestBalance) {
+        return res.status(500).json({ error: 'Failed to find or create payment request balance' });
       }
 
-      await PaymentRequestMail.transferInitiatedForPaymentRequest(
-        user,
-        paymentRequest,
-        originalAmount.decimal,
-        transfer_amount
-      );
+      const currentPaymentRequestBalance = paymentRequestBalance[0];
+      const previousBalance = parseInt(currentPaymentRequestBalance.balance);
+      const creditAmount = transfer_amount_cents;
+      const resultingBalance = creditAmount + previousBalance;
+      let paymentRequestBalanceTransaction;
+      if(resultingBalance <= 0) {
+        paymentRequestBalanceTransaction = await models.PaymentRequestBalanceTransaction.create({
+          paymentRequestBalanceId: currentPaymentRequestBalance.id,
+          amount: creditAmount,
+          type: 'CREDIT',
+          reason: 'ADJUSTMENT',
+          reason_details: 'payment_request_payment_applied',
+          status: 'completed',
+        });
+        return res.json(req.body);
+      }
+      if(resultingBalance > 0) {
+        if(previousBalance < 0) {
+          paymentRequestBalanceTransaction = await models.PaymentRequestBalanceTransaction.create({
+            paymentRequestBalanceId: currentPaymentRequestBalance.id,
+            amount: previousBalance * -1,
+            type: 'CREDIT',
+            reason: 'ADJUSTMENT',
+            reason_details: 'payment_request_payment_applied',
+            status: 'completed',
+          });
+        }
+        const transfer = await stripe.transfers.create({
+          amount: resultingBalance,
+          currency: currency,
+          destination: account_id,
+          description: `Payment for service using Payment Request id: ${paymentRequest.id} and Payment Request Payment id: ${paymentRequestPayment.id}`,
+          metadata: {
+            payment_request_payment_id: paymentRequestPayment.id,
+          },
+          transfer_group: `payment_request_payment_${paymentRequestPayment.id}`
+        });
+        
+        if (!transfer) {
+          return res.status(500).json({ error: 'Failed to create transfer' });
+        }
 
-      await PaymentRequestMail.paymentMadeForPaymentRequest(
-        user,
-        paymentRequestPayment
-      );
-      
+        const paymentRequestTransferUpdate = await paymentRequest.update({
+          transfer_status: 'initiated',
+          transfer_id: transfer.id
+        });
+
+        if (!paymentRequestTransferUpdate) {
+          return res.status(500).json({ error: 'Failed to update payment request transfer status' });
+        }
+
+        try {
+
+          await PaymentRequestMail.transferInitiatedForPaymentRequest(
+            user,
+            paymentRequest,
+            originalAmount.decimal,
+            transfer_amount
+          );
+        } catch (error) {
+            console.error('Error sending transfer initiated email:', error);
+        }
+      }
+      if(previousBalance < 0) {
+        PaymentRequestMail.newBalanceTransactionForPaymentRequest(
+          user,
+          paymentRequestPayment,
+          paymentRequestBalanceTransaction
+        ).catch((mailError) => {
+          console.error(`Failed to send email for Dispute ID: ${data.object.id}`, mailError);
+        });
+      }
     }
     return res.json(req.body);
   } catch (error) {

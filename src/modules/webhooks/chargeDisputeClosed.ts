@@ -24,7 +24,15 @@ export const chargeDisputeClosedWebhookHandler = async (event: any, req: any, re
     const paymentRequestPayment = await models.PaymentRequestPayment.findOne({
       where: {
         source: data.object.payment_intent
-      }
+      },
+      include: [
+        { 
+          model: models.PaymentRequest
+        },
+        {
+          model: models.PaymentRequestCustomer
+        }
+      ]
     });
 
     const userId = paymentRequestPayment.userId;

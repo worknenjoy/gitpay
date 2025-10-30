@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import PaymentRequest from '../components/areas/private/features/payment-requests/payment-requests'
 import {  createPaymentRequest, listPaymentRequests, updatePaymentRequest  } from '../actions/paymentRequestActions'
 import { listPaymentRequestPayments } from '../actions/paymentRequestPaymentActions'
+import { listPaymentRequestBalances } from '../actions/paymentRequestBalanceActions'
 import { getUserData } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
@@ -9,7 +10,8 @@ const mapStateToProps = (state, ownProps) => {
     user: getUserData(state),
     paymentRequests: state.paymentRequests,
     paymentRequest: state.paymentRequest,
-    paymentRequestPayments: state.paymentRequestPayments
+    paymentRequestPayments: state.paymentRequestPayments,
+    paymentRequestBalances: state.paymentRequestBalances
   }
 }
 
@@ -26,6 +28,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     listPaymentRequestPayments: () => {
       return dispatch(listPaymentRequestPayments())
+    },
+    listPaymentRequestBalances: () => {
+      return dispatch(listPaymentRequestBalances())
     }
   }
 }

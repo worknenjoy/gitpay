@@ -106,6 +106,8 @@ function buildSamples(moduleName: string, methodName: string): any[] {
     }
 		const paymentRequestTransaction = {
 			amount: -5000,
+			currency: 'USD',
+			type: 'DEBIT',
 			reason: 'DISPUTE',
 			reason_details: 'product_not_received',
 			status: 'lost',

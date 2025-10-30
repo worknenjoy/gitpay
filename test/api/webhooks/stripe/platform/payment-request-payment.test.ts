@@ -1,10 +1,10 @@
 import { expect } from 'chai'
 import nock from "nock";
 import request from 'supertest';
-import api from '../../../../src/server';
-import { registerAndLogin, truncateModels } from '../../../helpers';
-import Models from '../../../../src/models';
-import eventCheckout from '../../../data/stripe/stripe.webhook.checkout.session.completed';
+import api from '../../../../../src/server';
+import { registerAndLogin, truncateModels } from '../../../../helpers';
+import Models from '../../../../../src/models';
+import eventCheckout from '../../../../data/stripe/stripe.webhook.checkout.session.completed';
 
 const agent = request.agent(api) as any;
 const models = (Models as any);

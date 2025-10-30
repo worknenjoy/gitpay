@@ -14,7 +14,8 @@ export async function paymentRequestBalanceList({ userId }: PaymentRequestBalanc
     include: [
       {
         model: currentModels.PaymentRequestBalanceTransaction,
-        attributes: ['id', 'amount', 'currency', 'type', 'reason', 'status', 'openedAt', 'closedAt', 'createdAt']
+        attributes: ['id', 'amount', 'currency', 'type', 'reason', 'status', 'openedAt', 'closedAt', 'createdAt'],
+        order: [['createdAt', 'DESC']]
       },
     ],
     order: [['createdAt', 'DESC']]
