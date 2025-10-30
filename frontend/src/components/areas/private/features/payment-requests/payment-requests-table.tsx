@@ -1,18 +1,9 @@
-import React from 'react'
-import {
-  Edit as EditIcon,
-  Link as LinkIcon
-} from '@mui/icons-material'
-import TextField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field'
-import SectionTable from 'design-library/molecules/tables/section-table/section-table'
-import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
-import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field'
-import LinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/link-field/link-field'
-import PaymentRequestActiveField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payment-request/payment-request-active-field/payment-request-active-field'
-import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
-import PaymentRequestDrawer from 'design-library/molecules/drawers/payment-request-drawer/payment-request-drawer'
+import React from "react"
+import AmountField from "design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field"
+import TextField from "design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field"
+import CreatedField from "design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field"
 
-const paymentRequestMetadata = {
+export const paymentRequestMetadata = {
   "active": { sortable: true, numeric: false, dataBaseKey: "active", label: 'Is active?', width: 100 },
   "title": { sortable: true, numeric: false, dataBaseKey: "title", label: 'Title' },
   "description": { sortable: true, numeric: false, dataBaseKey: "description", label: 'Description' },
@@ -22,96 +13,34 @@ const paymentRequestMetadata = {
   "actions": { sortable: false, numeric: false, label: 'Actions' }
 }
 
-export const PaymentRequestsTable = ({ paymentRequests, updatePaymentRequest }) => {
-  const [ processingUpdatePaymentRequest, setProcessingUpdatePaymentRequest ] = React.useState(false)
-  const [selectedPaymentRequest, setSelectedPaymentRequest] = React.useState<any | null>(null)
-
-  const openEditPaymentRequest = (item:any) => {
-    setSelectedPaymentRequest(item)
-  }
-
-  const handleCloseDrawer = () => {
-    setSelectedPaymentRequest(null)
-  }
-
-  const handleUpdatePaymentRequest = async (e, paymentRequest) => {
-    e.preventDefault();
-    setProcessingUpdatePaymentRequest(true);
-    await updatePaymentRequest({id: selectedPaymentRequest.id, ...paymentRequest});
-    setProcessingUpdatePaymentRequest(false);
-    handleCloseDrawer();
-  }
-
-  const customColumnRenderer = {
-    active: (item:any) => (
-      <PaymentRequestActiveField
-        status={item.active ? 'yes' : 'no'}
-      />
-    ),
-    title: (item:any) => (
-      <TextField
-        title={item.title}
-      />
-    ),
-    description: (item:any) => (
-      <TextField
-        title={item.description}
-      />
-    ),
-    amount: (item:any) => (
-      <AmountField
-        value={item.amount}
-      />
-    ),
-    paymentLink: (item:any) => (
-      <LinkField
-        url={item.payment_url}
-        icon={<LinkIcon />}
-        title={item.payment_url}
-        tooltipTitle="Open payment link in external browser"
-        limit={25}
-        width={200}
-        external
-        copiable
-      />
-    ),
-    createdAt: (item:any) => (
-      <CreatedField
-        createdAt={item.createdAt}
-      />
-    ),
-    actions: (item:any) => (
-      <ActionField
-        actions={[
-          {
-            children: 'Edit Payment Request',
-            icon: <EditIcon />,
-            onClick: () => openEditPaymentRequest(item)
-          }
-        ]}
-      />
-    )
-  }
-
-  return (
-    <> 
-      <PaymentRequestDrawer
-        open={!!selectedPaymentRequest}
-        onClose={handleCloseDrawer}
-        completed={!processingUpdatePaymentRequest}
-        onSuccess={handleUpdatePaymentRequest}
-        paymentRequest={{
-          completed: !processingUpdatePaymentRequest,
-          data: selectedPaymentRequest
-        }}
-      />
-      <SectionTable
-        tableData={paymentRequests}
-        tableHeaderMetadata={paymentRequestMetadata}
-        customColumnRenderer={customColumnRenderer}
-      />
-    </>
-  )
+export const paymentRequestPaymentsMetadata = {
+  "status": { sortable: true, numeric: false, dataBaseKey: "status", label: 'Status' },
+  "paymentRequestTitle": { sortable: true, numeric: false, dataBaseKey: "PaymentRequest", label: 'Payment Request' },
+  //"transferStatus": { sortable: true, numeric: false, dataBaseKey: "transferStatus", label: 'Transfer Status' },
+  "customer": { sortable: true, numeric: true, dataBaseKey: "PaymentRequestCustomer", label: 'Customer e-mail' },
+  "amount": { sortable: true, numeric: true, dataBaseKey: "amount", label: 'Amount' },
+  "createdAt": { sortable: true, numeric: false, dataBaseKey: "createdAt", label: 'Created At' }
 }
 
-export default PaymentRequestsTable
+export const paymentRequestPaymentsCustomColumnRenderer = {
+  status: (item:any) => (
+    <TextField title={item.status} />
+  ),
+  paymentRequestTitle: (item:any) => (
+    <TextField title={item.PaymentRequest?.title} />
+  ),
+  /*
+  transferStatus: (item:any) => (
+    <TextField title={item.transferStatus} />
+  ),
+  */
+  customer: (item:any) => (
+    <TextField title={item.PaymentRequestCustomer?.email} />
+  ),
+  amount: (item:any) => (
+    <AmountField value={item.amount} />
+  ),
+  createdAt: (item:any) => (
+    <CreatedField createdAt={item.createdAt} />
+  )
+}

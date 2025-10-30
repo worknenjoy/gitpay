@@ -1,21 +1,24 @@
 import React from 'react';
 import { Box } from '@mui/material';
+import { DataObject as EmptyIcon } from '@mui/icons-material';
 import Button from '../../../../atoms/buttons/button/button';
-import { Root, Message, IconContainer } from './empty-base.styles'
+import { Root, Message, IconContainer, MessageSecondary } from './empty-base.styles'
 
 type EmptyBaseProps = {
-  onActionClick: () => void;
+  onActionClick?: () => void;
   icon?: React.ReactElement;
-  text: string | React.ReactNode;
-  actionText: string | React.ReactNode;
+  text?: string | React.ReactNode;
+  secondaryText?: string | React.ReactNode;
+  actionText?: string | React.ReactNode;
   completed?: boolean;
 };
 
 const EmptyBase = ({ 
-  onActionClick,
-  icon,
-  text,
-  actionText,
+  onActionClick = () => {},
+  icon = <EmptyIcon />,
+  text = "No Data",
+  secondaryText,
+  actionText = "Create your first item",
   completed = true
 }: EmptyBaseProps) => {
   return (
@@ -28,7 +31,13 @@ const EmptyBase = ({
       <Message variant="h6" gutterBottom>
         {text}
       </Message>
+      {secondaryText && (
+        <MessageSecondary variant="body1" color="textSecondary" gutterBottom>
+          {secondaryText}
+        </MessageSecondary>
+      )}
       <Button 
+        sx={{ mt: 2 }}
         variant="contained"
         color="secondary"
         onClick={onActionClick}
