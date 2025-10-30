@@ -1,0 +1,9 @@
+services:
+  frontend:
+    volumes:
+      - .:/gitpay
+      - /gitpay/frontend/node_modules
+  backend:
+    volumes:
+      - .:/gitpay
+      - /gitpay/node_modules
