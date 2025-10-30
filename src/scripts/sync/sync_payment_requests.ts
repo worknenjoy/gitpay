@@ -1,7 +1,7 @@
 import Stripe from '../../modules/shared/stripe/stripe'
 import Models from '../../models'
 import { UUIDV4 } from 'sequelize';
-import { get } from 'request';
+import { handleAmount } from '../../modules/util/handle-amount/handle-amount';
 
 const models = Models as any
 
@@ -120,9 +120,14 @@ async function createPaymentRequestPayment(intent: any, userId:any, paymentReque
       name: customer?.name || null
     },
   });
+  const amount = intent.amount_received ? 
+    handleAmount(intent.amount_received, 0, 'centavos') :
+    handleAmount(intent.amount, '0', 'centavos');
+
+  const amountDecimal = amount.decimal;
   const createdPaymentRequestPayment = await models.PaymentRequestPayment.create({
     source: intent.id,
-    amount: intent.amount_received,
+    amount: amountDecimal,
     currency: intent.currency,
     status: intent.status === 'succeeded' ? 'paid' : intent.status,
     customerId: paymentRequestCreatedCustomer[0].id,
