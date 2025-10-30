@@ -29,7 +29,7 @@ const TabbedTable = ({ tabs, activeTab }) => {
       onChange={handleTabChange}
       withCard={false} // Use withCard prop to wrap content in a card
     >
-      {currentTab.cards && currentTab.cards.length > 0 && (
+      {currentTab?.cards?.length > 0 && (
         <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', justifyContent: 'flex-end' }}>
           {currentTab.cards.map((card, index) => (
             <BalanceCard key={index} name={card.title} balance={card.amount} type={card.type} />
