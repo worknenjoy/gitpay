@@ -17,7 +17,7 @@ export async function paymentRequestBalanceList({ userId }: PaymentRequestBalanc
         attributes: ['id', 'amount', 'currency', 'type', 'reason', 'status', 'openedAt', 'closedAt', 'createdAt'],
         separate: true,
         order: [['createdAt', 'DESC']]
-      },
+      }
     ],
     order: [['createdAt', 'DESC']]
   })

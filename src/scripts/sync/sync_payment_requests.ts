@@ -15,7 +15,7 @@ const c = {
   red: '\x1b[31m',
   green: '\x1b[32m',
   cyan: '\x1b[36m',
-  yellow: '\x1b[33m',
+  yellow: '\x1b[33m'
 };
 function color(s: string, col: string) { return `${col}${s}${c.reset}`; }
 function bold(s: string) { return color(s, c.bold); }
@@ -98,7 +98,7 @@ function getPaymentRequestIdFromArgs(): string | null {
 
 async function listPaymentIntentsByID(paymentIntentId: string): Promise<any> {
   const result = await (stripe as any).paymentIntents.retrieve(paymentIntentId, {
-    expand: ['customer', 'payment_method', 'charges'],
+    expand: ['customer', 'payment_method', 'charges']
   });
   return result;
 }
@@ -111,14 +111,14 @@ async function createPaymentRequestPayment(intent: any, userId:any, paymentReque
   }
   const paymentRequestCreatedCustomer = await models.PaymentRequestCustomer.findOrCreate({
     where: {
-      email: customer?.email,
+      email: customer?.email
     },
     defaults: {
       userId: userId,
       sourceId: intent.customer?.id || 'gc_' + UUIDV4(),
       email: customer?.email,
       name: customer?.name || null
-    },
+    }
   });
   const amount = intent.amount_received ? 
     handleAmount(intent.amount_received, 0, 'centavos') :
@@ -132,7 +132,7 @@ async function createPaymentRequestPayment(intent: any, userId:any, paymentReque
     status: intent.status === 'succeeded' ? 'paid' : intent.status,
     customerId: paymentRequestCreatedCustomer[0].id,
     paymentRequestId: paymentRequestId,
-    userId: userId,
+    userId: userId
   });
   return createdPaymentRequestPayment;
 }
@@ -194,7 +194,7 @@ async function main() {
         const updatedMetadata:any = await updateMetadata(intent.id, {
           payment_request_payment_id: prPayment.id,
           userId: userId,
-          payment_request_id: paymentRequestId,
+          payment_request_id: paymentRequestId
         });
         kv('Updated Payment Intent metadata with payment_request_payment_id', prPayment.id); 
         kv('Created Payment Request Payment ID', prPayment.id);

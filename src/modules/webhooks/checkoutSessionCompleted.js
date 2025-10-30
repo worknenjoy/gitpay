@@ -127,7 +127,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           type: 'CREDIT',
           reason: 'ADJUSTMENT',
           reason_details: 'payment_request_payment_applied',
-          status: 'completed',
+          status: 'completed'
         });
       }
       if(resultingBalance > 0) {
@@ -138,7 +138,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
             type: 'CREDIT',
             reason: 'ADJUSTMENT',
             reason_details: 'payment_request_payment_applied',
-            status: 'completed',
+            status: 'completed'
           });
         }
         const transfer = await stripe.transfers.create({
@@ -149,7 +149,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           metadata: {
             user_id: paymentRequest.userId,
             payment_request_id: paymentRequest.id,
-            payment_request_payment_id: paymentRequestPayment.id,
+            payment_request_payment_id: paymentRequestPayment.id
           },
           transfer_group: `payment_request_payment_${paymentRequestPayment.id}`
         });
@@ -192,7 +192,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           paymentRequestPayment,
           updatedBalanceTransaction
         ).catch((mailError) => {
-          console.error(`Failed to send email for Dispute ID: ${data.object.id}`, mailError);
+          console.error(`Failed to send email for Payment Request Balance Transaction: ${updatedBalanceTransaction.id}`, mailError);
         });
       }
     }

@@ -1,4 +1,3 @@
-import { all } from 'bluebird'
 import { Model, DataTypes, Optional, Sequelize } from 'sequelize'
 
 export type BalanceTransactionType = 'CREDIT' | 'DEBIT'
