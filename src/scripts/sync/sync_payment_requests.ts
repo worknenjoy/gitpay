@@ -132,7 +132,8 @@ async function createPaymentRequestPayment(intent: any, userId:any, paymentReque
     status: intent.status === 'succeeded' ? 'paid' : intent.status,
     customerId: paymentRequestCreatedCustomer[0].id,
     paymentRequestId: paymentRequestId,
-    userId: userId
+    userId: userId,
+    createdAt: new Date(intent.created * 1000)
   });
   return createdPaymentRequestPayment;
 }
