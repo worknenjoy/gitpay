@@ -98,10 +98,19 @@ function getPaymentRequestIdFromArgs(): string | null {
 
 async function listPaymentIntentsByID(paymentIntentId: string): Promise<any> {
   const result = await (stripe as any).paymentIntents.retrieve(paymentIntentId, {
-    expand: ['customer', 'payment_method', 'charges']
+    expand: ['customer', 'payment_method', 'charges', 'latest_charge.refunds', 'charges.data.refunds', 'latest_charge']
   });
+  console.log('PaymentIntent', result);
   return result;
 }
+
+const getStatus = (intent: any) => {
+  if (!intent) return null;
+  if (intent?.latest_charge?.refunded === true) return 'refunded';
+  if (intent?.latest_charge?.status === 'failed') return 'failed';
+  if (intent.status === 'succeeded') return 'paid';
+  return intent.status;
+};
 
 async function createPaymentRequestPayment(intent: any, userId:any, paymentRequestId:any): Promise<any> {
   const customer = intent.customer_details || intent.payment_method?.billing_details || {};
@@ -129,7 +138,7 @@ async function createPaymentRequestPayment(intent: any, userId:any, paymentReque
     source: intent.id,
     amount: amountDecimal,
     currency: intent.currency,
-    status: intent.status === 'succeeded' ? 'paid' : intent.status,
+    status: getStatus(intent),
     customerId: paymentRequestCreatedCustomer[0].id,
     paymentRequestId: paymentRequestId,
     userId: userId,
