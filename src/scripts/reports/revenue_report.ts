@@ -112,7 +112,7 @@ function getYearRangeUnix(year: number): { start: number, end: number } {
 async function listChargesForRange(startUnix: number, endUnix: number): Promise<Charge[]> {
   const results: Charge[] = []
   let starting_after: string | undefined = undefined
-   // eslint-disable-next-line no-constant-condition-loop
+  // eslint-disable-next-line @typescript-eslint/no-constant-condition
   while (true) {
     const page:any = await stripe.charges.list({
       limit: 100,
