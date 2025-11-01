@@ -188,5 +188,10 @@
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.details": "<strong>Type: </strong>{{type}}<br /><strong>Reason: </strong>{{reason}}<br/><strong>Customer name: </strong> {{customer_name}}<br/><strong>Customer email: </strong> {{customer_email}}<br/><strong>Status: </strong> {{status}}<br/><strong>Reason detail: </strong>{{reason_details}}<br/><strong>Opened At: </strong> {{opened_at}}<br/><strong>Closed At: </strong> {{closed_at}}",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.bottom": "You can check the transaction details on <a href=\"https://gitpay.me/#/profile/payment-requests\">Gitpay</a>.",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.product_not_received": "Product not received",
-  "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.payment_request_payment_applied": "Payment request payment credit applied to balance"
+  "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.payment_request_payment_applied": "Payment request payment credit applied to balance",
+  "mail.paymentRequest.newDisputeCreatedForPaymentRequest.subject": "A new dispute was opened for your payment request on Gitpay",
+  "mail.paymentRequest.newDisputeCreatedForPaymentRequest.message": "A new dispute was created for a recent payment related to your payment request. <br /><br /><strong>Current status: </strong>{{status}}",
+  "mail.paymentRequest.newDisputeCreatedForPaymentRequest.details": "<strong>Reason:</strong> {{reason}}<br/><strong>Customer:</strong> {{customer_name}}<br/><strong>Customer e-mail:</strong> {{customer_email}}",
+  "mail.paymentRequest.newDisputeCreatedForPaymentRequest.bottom": "To submit evidence, please contact <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>. You can contact your customer asap to cancel the dispute with the bank. If there is no response, the dispute fee will be deducted from your balance in your next claims. You can review the dispute details on <a href=\"https://gitpay.me/#/profile/payment-requests\">Gitpay</a>.",
+  "mail.paymentRequest.newDisputeCreatedForPaymentRequest.reasons.needs_response": "Needs response"
 }
