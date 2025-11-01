@@ -1,12 +1,13 @@
-version: '3.7'
+# version: '3.7'
 
 services:
   frontend:
-    image: node:8.6
+    image: node:18-alpine
     command: sh -c "npm install && npm run dev"
     working_dir: /gitpay/frontend
     volumes: 
       - .:/gitpay
+      # - ./gitpay/node_modules
     network_mode: host
     ports:
       - "8082:8082"
@@ -15,8 +16,8 @@ services:
   backend:
     env_file:
       - .env
-    image: node:8.6
-    command: sh -c "npm install && npm run migrate && npm run start"
+    image: node:18-alpine
+    command: sh -c "npm install && npm run build && npm run migrate && npm run start"
     working_dir: /gitpay
     volumes: 
       - .:/gitpay
