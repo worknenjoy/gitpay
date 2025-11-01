@@ -274,7 +274,7 @@ const PaymentRequestMail = {
               i18n.__('mail.paymentRequest.newDisputeCreatedForPaymentRequest.details', {
                 reason: reason,
                 customer_name: dp?.evidence.customer_name || 'N/A',
-                customer_email: dp?.evidence.customer_email_address || 'N/A',
+                customer_email: dp?.evidence.customer_email_address || 'N/A'
               }),
               {
                 headers: ['Item', '<div style="text-align:right">Amount</div>'],
