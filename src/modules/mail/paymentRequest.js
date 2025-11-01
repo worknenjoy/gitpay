@@ -20,6 +20,15 @@ const getReason = (reason_details) => {
   }
 }
 
+const getStatusLabel = (status) => {
+  switch (status) {
+    case 'needs_response':
+      return i18n.__('mail.paymentRequest.newDisputeCreatedForPaymentRequest.reasons.needs_response')
+    default: 
+      return status.charAt(0).toUpperCase() + status.slice(1)
+  }
+}
+
 const PaymentRequestMail = {
   paymentRequestInitiated: async (user, paymentRequest) => {
     const { email, language, receiveNotifications } = user
@@ -187,6 +196,91 @@ const PaymentRequestMail = {
                 ]
               },
               `<div style="text-align: right">${i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.bottom')}</div>`
+            )
+          }
+        ]
+      )
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+  newDisputeCreatedForPaymentRequest: async (user, dispute, paymentRequestPayment) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+    if (!receiveNotifications) {
+      return
+    }
+    i18n.setLocale(language)
+
+    try {
+      const dp = dispute?.object || dispute
+      const currency = dp.currency?.toLowerCase?.() || 'usd'
+      const currencySymbol = currencyInfo[currency]?.symbol || ''
+
+      // Monetary values (Stripe amounts are in the smallest unit)
+      const disputedAmount = dp?.amount ?? null
+      const feeFromTxn = dp?.balance_transactions?.[0]?.fee
+      const netFromTxn = dp?.balance_transactions?.[0]?.net
+      const feeFromDetails = dp?.balance_transactions?.[0]?.fee_details?.find?.(f => f?.description === 'Dispute fee')?.amount
+      const fee = typeof feeFromTxn === 'number' ? feeFromTxn : (typeof feeFromDetails === 'number' ? feeFromDetails : null)
+
+      // Dates and response window
+      const dueBy = dp?.evidence_details?.due_by
+      const dueMoment = dueBy ? moment.unix(dueBy) : null
+      const daysToRespond = dueMoment ? Math.max(0, Math.ceil(dueMoment.diff(moment(), 'days', true))) : null
+      const dueFormatted = dueMoment ? dueMoment.format('LLL') : null
+
+      // Reason mapping using existing helper
+      const reason = dp?.reason ? getReason(dp.reason) : 'N/A'
+
+      const rows = []
+      if (typeof disputedAmount === 'number') {
+        rows.push([
+          'Disputed amount',
+          `<div style="text-align:right">${currencySymbol} ${handleAmount(disputedAmount, '0', 'centavos').decimal}</div>`
+        ])
+      }
+      if (typeof fee === 'number') {
+        rows.push([
+          'Dispute fee',
+          `<div style="text-align:right">- ${currencySymbol} ${handleAmount(fee, '0', 'centavos').decimal}</div>`
+        ])
+      }
+      if (typeof netFromTxn === 'number') {
+        const sign = netFromTxn < 0 ? '-' : ''
+        rows.push([
+          'Net impact',
+          `<div style="text-align:right">${sign} ${currencySymbol} ${handleAmount(Math.abs(netFromTxn), '0', 'centavos').decimal}</div>`
+        ])
+      }
+      if (daysToRespond !== null) {
+        rows.push([
+          'Days to respond',
+          `<div style="text-align:right">${daysToRespond} ${daysToRespond === 1 ? 'day' : 'days'}${dueFormatted ? ` (due ${dueFormatted})` : ''}</div>`
+        ])
+      }
+
+      return await request(
+        to,
+        i18n.__('mail.paymentRequest.newDisputeCreatedForPaymentRequest.subject'),
+        [
+          {
+            type: 'text/html',
+            value: TableTemplate.tableContentEmailTemplate(
+              i18n.__('mail.paymentRequest.newDisputeCreatedForPaymentRequest.message', {
+                status: getStatusLabel(dp?.status) || 'N/A'
+              }),
+              i18n.__('mail.paymentRequest.newDisputeCreatedForPaymentRequest.details', {
+                reason: reason,
+                customer_name: paymentRequestPayment?.PaymentRequestCustomer?.name || dp?.evidence?.customer_name || 'N/A',
+                customer_email: paymentRequestPayment?.PaymentRequestCustomer?.email || dp?.evidence?.customer_email_address || 'N/A'
+              }),
+              {
+                headers: ['Item', '<div style="text-align:right">Amount</div>'],
+                rows
+              },
+              `<div style="text-align: right">${i18n.__('mail.paymentRequest.newDisputeCreatedForPaymentRequest.bottom')}</div>`
             )
           }
         ]

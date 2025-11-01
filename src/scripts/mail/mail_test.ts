@@ -14,6 +14,7 @@ import * as path from 'path'
 // i18n has no bundled typings in this project; import via require to avoid TS errors
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const i18n = require('i18n') as any
+import { disputeCreated } from '../data/stripe.webhook.charge.dispute.created'
 
 // Ensure we never actually send emails while previewing
 process.env.NODE_ENV = 'test'
@@ -127,8 +128,9 @@ function buildSamples(moduleName: string, methodName: string): any[] {
 		if(/newBalanceTransactionForPaymentRequest/i.test(methodName)) {
 			return [user, paymentRequestPayment, paymentRequestTransaction]
 		}
-     
-		return [user, paymentRequest]
+		if(/newDisputeCreatedForPaymentRequest/i.test(methodName)) {
+			return [user, disputeCreated, paymentRequestPayment]
+		}
 	}
 
 	// Generic 2-arg default: (user, context)

@@ -15,6 +15,7 @@ const customerSourceCreated = require('../../../modules/webhooks/customerSourceC
 const chargeUpdated = require('../../../modules/webhooks/chargeUpdated')
 const chargeRefunded = require('../../../modules/webhooks/chargeRefunded')
 const chargeFailed = require('../../../modules/webhooks/chargeFailed')
+import { chargeDisputeCreatedWebhookHandler } from '../../../modules/webhooks/chargeDisputeCreated'
 import { chargeDisputeClosedWebhookHandler } from '../../../modules/webhooks/chargeDisputeClosed'
 const invoiceCreated = require('../../../modules/webhooks/invoiceCreated')
 const invoiceUpdated = require('../../../modules/webhooks/invoiceUpdated')
@@ -70,6 +71,8 @@ exports.webhookPlatform = async (req: any, res: any) => {
         return chargeSucceeded(event, paid, status, req, res)
       case 'charge.failed':
         return chargeFailed(event, paid, status, req, res)
+      case 'charge.dispute.created':
+        return chargeDisputeCreatedWebhookHandler(event, req, res)
       case 'charge.dispute.closed':
         return chargeDisputeClosedWebhookHandler(event, req, res)
       case 'invoice.created':
