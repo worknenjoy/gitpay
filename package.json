@@ -44,7 +44,9 @@
     "simulate:webhook": "NODE_ENV=test node ./scripts/webhook_script.js",
     "typecheck": "tsc --noEmit",
     "mail:preview": "tsx src/scripts/mail/mail_test.ts",
-    "sync:payment_requests": "tsx src/scripts/sync/sync_payment_requests.ts"
+    "sync:payment_requests": "tsx src/scripts/sync/sync_payment_requests.ts",
+    "reports:revenue": "tsx src/scripts/reports/revenue_report.ts"
+    
   },
   "husky": {
     "hooks": {
