@@ -204,7 +204,7 @@ const PaymentRequestMail = {
       console.error('Error sending email:', error)
     }
   },
-  newDisputeCreatedForPaymentRequest: async (user, dispute) => {
+  newDisputeCreatedForPaymentRequest: async (user, dispute, paymentRequestPayment) => {
     const to = user.email
     const language = user.language || 'en'
     const receiveNotifications = user?.receiveNotifications
@@ -273,8 +273,8 @@ const PaymentRequestMail = {
               }),
               i18n.__('mail.paymentRequest.newDisputeCreatedForPaymentRequest.details', {
                 reason: reason,
-                customer_name: dp?.evidence.customer_name || 'N/A',
-                customer_email: dp?.evidence.customer_email_address || 'N/A'
+                customer_name: paymentRequestPayment?.PaymentRequestCustomer?.name || dp?.evidence?.customer_name || 'N/A',
+                customer_email: paymentRequestPayment?.PaymentRequestCustomer?.email || dp?.evidence?.customer_email_address || 'N/A'
               }),
               {
                 headers: ['Item', '<div style="text-align:right">Amount</div>'],

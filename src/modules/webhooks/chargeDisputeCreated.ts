@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import Models from '../../models'
+import paymentRequest from '../../models/paymentRequest';
 import PaymentRequestMail from '../mail/paymentRequest';
 
 const models = (Models as any);
@@ -36,7 +37,8 @@ export const chargeDisputeCreatedWebhookHandler = async (event: any, req: any, r
 
     PaymentRequestMail.newDisputeCreatedForPaymentRequest(
       user,
-      data
+      data,
+      paymentRequestPayment
     ).catch((mailError: any) => {
       console.error(`Failed to send email for Dispute ID: ${data.object.id}`, mailError);
     });

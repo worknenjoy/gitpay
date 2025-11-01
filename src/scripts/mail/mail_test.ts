@@ -129,7 +129,7 @@ function buildSamples(moduleName: string, methodName: string): any[] {
 			return [user, paymentRequestPayment, paymentRequestTransaction]
 		}
 		if(/newDisputeCreatedForPaymentRequest/i.test(methodName)) {
-			return [user, disputeCreated]
+			return [user, disputeCreated, paymentRequestPayment]
 		}
 	}
 
