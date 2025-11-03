@@ -21,7 +21,7 @@ const C = {
   gray: "\x1b[90m",
   bgRed: "\x1b[41m",
   bgGreen: "\x1b[42m",
-  bgYellow: "\x1b[43m",
+  bgYellow: "\x1b[43m"
 };
 const hr = (w = 70) => `${C.gray}${"─".repeat(w)}${C.reset}`;
 const toCents = (n: number) => Math.round((Number(n) || 0) * 100);
@@ -106,7 +106,7 @@ async function getTotalAmountForPendingTasks() {
 
   let totalPendingTasksAmount = 0;
   for (const t of tasks) {
-    totalPendingTasksAmount += Number(t.value) || 0; // DB values in decimal (USD)
+    totalPendingTasksAmount += Number(t.value) * 0.92 || 0; // 8% platform fee; DB values in decimal (USD)
   }
 
   console.log(
@@ -139,12 +139,13 @@ async function getSummary() {
     const summary = await getSummary();
 
     // Convert to cents for consistent math:
-    const stripeAvailableCents = summary.stripeBalance.available.reduce((sum, a) => sum + a.amount, 0); // already in cents
+    const stripeAvailableCents = summary.stripeBalance.available.filter(a => a.currency === 'usd').reduce((sum, a) => sum + a.amount, 0); // already in cents
     const orderSpentCents = toCents(summary.totalOrderSpent); // DB decimal -> cents
+    const walletBalanceCents = toCents(summary.totalWalletBalance); // DB decimal -> cents
     const pendingTasksCents = toCents(summary.totalPendingTasksAmount); // DB decimal -> cents
 
     // Compute final available balance in cents
-    const totalAvailableCents = stripeAvailableCents - orderSpentCents - pendingTasksCents;
+    const totalAvailableCents = stripeAvailableCents - walletBalanceCents - orderSpentCents - pendingTasksCents;
 
     // Pretty values
     const stripeAvailableUSD = formatUSD(stripeAvailableCents);
@@ -159,7 +160,7 @@ async function getSummary() {
       `${C.gray}• Stripe Available (cents)${C.reset}: ${stripeAvailableCents} ${C.gray}=>${C.reset} ${stripeAvailableUSD}`
     );
     console.log(
-      `${C.gray}• Total Spent from Orders paid with Wallet (DB decimal → cents)${C.reset}: ${orderSpentCents} ${C.gray}=>${C.reset} ${orderSpentUSD}`
+      `${C.gray}• Total pending Orders paid with Wallet (DB decimal → cents)${C.reset}: ${orderSpentCents} ${C.gray}=>${C.reset} ${orderSpentUSD}`
     );
     console.log(
       `${C.gray}• Total Amount for Pending Tasks (DB decimal → cents)${C.reset}: ${pendingTasksCents} ${C.gray}=>${C.reset} ${pendingTasksUSD}`
