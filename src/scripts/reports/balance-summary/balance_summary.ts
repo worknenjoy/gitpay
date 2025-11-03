@@ -1,0 +1,197 @@
+import Stripe from "stripe";
+const stripe = new Stripe(process.env.STRIPE_KEY as string);
+
+import { Op } from "sequelize";
+import Models from "../../../models";
+
+const models = Models as any;
+const { Wallet, Order, Task } = models;
+
+// === Console helpers & formatters ===
+const C = {
+  reset: "\x1b[0m",
+  bold: "\x1b[1m",
+  dim: "\x1b[2m",
+  red: "\x1b[31m",
+  green: "\x1b[32m",
+  yellow: "\x1b[33m",
+  blue: "\x1b[34m",
+  magenta: "\x1b[35m",
+  cyan: "\x1b[36m",
+  gray: "\x1b[90m",
+  bgRed: "\x1b[41m",
+  bgGreen: "\x1b[42m",
+  bgYellow: "\x1b[43m"
+};
+const hr = (w = 70) => `${C.gray}${"─".repeat(w)}${C.reset}`;
+const toCents = (n: number) => Math.round((Number(n) || 0) * 100);
+const formatUSD = (cents: number) =>
+  (cents / 100).toLocaleString("en-US", { style: "currency", currency: "USD" });
+
+async function getCurrentStripeBalance() {
+  console.log(`${C.cyan}${C.bold}🔎 [Step] Fetching current Stripe balance...${C.reset}`);
+  console.time("[Step] Stripe balance fetch time");
+
+  const balance = await stripe.balance.retrieve();
+
+  const availablePretty = balance.available
+    .map((a) => `${formatUSD(a.amount)} ${a.currency.toUpperCase()}`)
+    .join(`${C.gray} | ${C.reset}`);
+  console.log(`${C.blue}ℹ️  [Stripe] Available: ${availablePretty}${C.reset}`);
+
+  console.timeEnd("[Step] Stripe balance fetch time");
+  return balance;
+}
+
+async function getTotalWalletBalance() {
+  console.log(`${C.cyan}${C.bold}🧮 [Step] Calculating total Wallet balance from database...${C.reset}`);
+  console.time("[Step] Wallet balance calculation time");
+
+  const wallets = await Wallet.findAll({
+    where: {
+      balance: { [Op.gt]: 0 }
+    }
+  });
+
+  let totalWalletBalance = 0;
+  for (const w of wallets) {
+    totalWalletBalance += Number(w.balance) || 0; // DB values in decimal (USD)
+  }
+
+  // Show both DB-decimal view and USD formatted (converted to cents for display)
+  console.log(
+    `${C.blue}ℹ️  [Database] Total Wallet balance (DB decimal USD): ${totalWalletBalance.toFixed(2)} ` +
+    `${C.gray}(${formatUSD(toCents(totalWalletBalance))})${C.reset}`
+  );
+
+  console.timeEnd("[Step] Wallet balance calculation time");
+  return totalWalletBalance; // keep returning decimal
+}
+
+async function getTotalWalletOrderSpent() {
+  console.log(`${C.cyan}${C.bold}🧾 [Step] Calculating total spent from Orders in database...${C.reset}`);
+  console.time("[Step] Order spent calculation time");
+
+  const orders = await Order.findAll({
+    where: {
+      amount: { [Op.gt]: 0 },
+      provider: 'wallet'
+    }
+  });
+
+  let totalOrderSpent = 0;
+  for (const o of orders) {
+    totalOrderSpent += Number(o.amount) || 0; // DB values in decimal (USD)
+  }
+
+  console.log(
+    `${C.blue}ℹ️  [Database] Total spent from Orders (DB decimal USD): ${totalOrderSpent.toFixed(2)} ` +
+    `${C.gray}(${formatUSD(toCents(totalOrderSpent))})${C.reset}`
+  );
+
+  console.timeEnd("[Step] Order spent calculation time");
+  return totalOrderSpent; // keep returning decimal
+}
+
+async function getTotalAmountForPendingTasks() {
+  console.log(`${C.cyan}${C.bold}📝 [Step] Calculating total amount for pending Tasks in database...${C.reset}`);
+  console.time("[Step] Pending Tasks amount calculation time");
+
+  const tasks = await Task.findAll({
+    where: {
+      paid: false,
+      value: { [Op.gt]: 0 }
+    }
+  });
+
+  let totalPendingTasksAmount = 0;
+  for (const t of tasks) {
+    totalPendingTasksAmount += Number(t.value) * 0.92 || 0; // 8% platform fee; DB values in decimal (USD)
+  }
+
+  console.log(
+    `${C.blue}ℹ️  [Database] Total amount for pending Tasks (DB decimal USD): ${totalPendingTasksAmount.toFixed(2)} ` +
+    `${C.gray}(${formatUSD(toCents(totalPendingTasksAmount))})${C.reset}`
+  );
+
+  console.timeEnd("[Step] Pending Tasks amount calculation time");
+  return totalPendingTasksAmount; // keep returning decimal
+}
+
+async function getSummary() {
+  const stripeBalance = await getCurrentStripeBalance();
+  const totalWalletBalance = await getTotalWalletBalance();
+  const totalOrderSpent = await getTotalWalletOrderSpent();
+  const totalPendingTasksAmount = await getTotalAmountForPendingTasks();
+
+  return {
+    stripeBalance,
+    totalWalletBalance,
+    totalOrderSpent,
+    totalPendingTasksAmount
+  };
+}
+
+(async () => {
+  console.log(`${C.bold}${C.magenta}🚀 Starting Gitpay Financial Summary (Simple)...${C.reset}`);
+  console.time("[Total] Financial summary time");
+  try {
+    const summary = await getSummary();
+
+    // Convert to cents for consistent math:
+    const stripeAvailableCents = summary.stripeBalance.available.filter(a => a.currency === 'usd').reduce((sum, a) => sum + a.amount, 0); // already in cents
+    const orderSpentCents = toCents(summary.totalOrderSpent); // DB decimal -> cents
+    const walletBalanceCents = toCents(summary.totalWalletBalance); // DB decimal -> cents
+    const pendingTasksCents = toCents(summary.totalPendingTasksAmount); // DB decimal -> cents
+
+    // Compute final available balance in cents
+    const totalAvailableCents = stripeAvailableCents - walletBalanceCents - orderSpentCents - pendingTasksCents;
+
+    // Pretty values
+    const stripeAvailableUSD = formatUSD(stripeAvailableCents);
+    const orderSpentUSD = formatUSD(orderSpentCents);
+    const pendingTasksUSD = formatUSD(pendingTasksCents);
+    const finalUSD = formatUSD(totalAvailableCents);
+
+    // Fancy output
+    console.log(hr());
+    console.log(`${C.bold}📊 Financial Summary${C.reset}`);
+    console.log(
+      `${C.gray}• Stripe Available (cents)${C.reset}: ${stripeAvailableCents} ${C.gray}=>${C.reset} ${stripeAvailableUSD}`
+    );
+    console.log(
+      `${C.gray}• Total pending Orders paid with Wallet (DB decimal → cents)${C.reset}: ${orderSpentCents} ${C.gray}=>${C.reset} ${orderSpentUSD}`
+    );
+    console.log(
+      `${C.gray}• Total Amount for Pending Tasks (DB decimal → cents)${C.reset}: ${pendingTasksCents} ${C.gray}=>${C.reset} ${pendingTasksUSD}`
+    );
+    console.log(hr());
+
+    console.log(`${C.cyan}${C.bold}🧠 Total Available Balance Calculation${C.reset}`);
+    console.log(`${C.gray}Formula:${C.reset} Available = Stripe Available - Orders Spent - Pending Tasks`);
+    console.log(
+      `= ${stripeAvailableUSD} ${C.gray}- ${C.reset}${orderSpentUSD} ${C.gray}- ${C.reset}${pendingTasksUSD}`
+    );
+
+    const bannerColor =
+      totalAvailableCents > 0 ? C.bgGreen : totalAvailableCents < 0 ? C.bgRed : C.bgYellow;
+    const bannerTextColor = totalAvailableCents >= 0 ? C.bold : `${C.bold}${C.reset}`;
+    console.log(hr());
+    console.log(
+      `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE: ${finalUSD}  ${C.reset}`
+    );
+    console.log(hr());
+
+    // Keep original JSON dump for debugging if desired (commented to reduce noise)
+    // console.log(JSON.stringify(summary, null, 2));
+    
+  } catch (err) {
+    console.error(`${C.red}❌ Failed to compute financial summary:${C.reset}`, err);
+    process.exitCode = 1;
+  } finally {
+    if (models?.sequelize?.close) {
+      await models.sequelize.close();
+    }
+    console.timeEnd("[Total] Financial summary time");
+  }
+})();
