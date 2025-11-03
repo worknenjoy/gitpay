@@ -11,7 +11,6 @@ const models = require('../src/models');
 const sampleProduct = require('./data/stripe/stripe.product.create')
 const samplePrice = require('./data/stripe/stripe.price.create');
 const samplePaymentLink = require('./data/stripe/stripe.paymentLinks.create');
-const { title } = require('process');
 
 
 describe("PaymentRequests", () => {
