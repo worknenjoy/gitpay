@@ -75,7 +75,8 @@ async function getTotalWalletOrderSpent() {
   const orders = await Order.findAll({
     where: {
       amount: { [Op.gt]: 0 },
-      provider: 'wallet'
+      provider: 'wallet',
+      status: 'succeeded'
     }
   });
 
