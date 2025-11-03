@@ -88,7 +88,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         label: <FormattedMessage id="paymentRequest.form.deactivateAfterPayment" defaultMessage="Deactivate after payment" />,
         name: 'deactivate_after_payment',
         value: true,
-        defaultChecked: data?.deactivate_after_payment,
+        defaultChecked: data?.deactivate_after_payment
       }
     ];
 

@@ -1,4 +1,3 @@
-import { handleAmount } from "../util/handle-amount/handle-amount";
 
 const stripe = require('../shared/stripe/stripe')();
 const Models = require('../../models');
@@ -39,7 +38,7 @@ module.exports = async function paymentRequestUpdate(paymentRequestParams: any) 
     productItemId,
     {
       name: paymentRequestUpdate.title,
-      description: paymentRequestUpdate.description,
+      description: paymentRequestUpdate.description
     }
   );
 
