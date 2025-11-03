@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import Models from '../../models'
-import paymentRequest from '../../models/paymentRequest';
 import PaymentRequestMail from '../mail/paymentRequest';
 
 const models = (Models as any);
