@@ -11,6 +11,7 @@ const models = require('../src/models');
 const sampleProduct = require('./data/stripe/stripe.product.create')
 const samplePrice = require('./data/stripe/stripe.price.create');
 const samplePaymentLink = require('./data/stripe/stripe.paymentLinks.create');
+const { title } = require('process');
 
 
 describe("PaymentRequests", () => {
@@ -167,6 +168,29 @@ describe("PaymentRequests", () => {
       .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
       .reply(200, samplePaymentLink.stripe.paymentLinks.create);
 
+    nock('https://api.stripe.com')
+      .persist()
+      .get('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km/line_items?limit=1')
+      .reply(200, {
+        data: [{
+          price: {
+            id: 'prc_1RcnYMBrSjgsps2D4k1eX2qK',
+            product: 'prod_1RcnYBBrSjgsps2D5oQd3q3V'
+          }
+        }]
+      });
+
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/products/prod_1RcnYBBrSjgsps2D5oQd3q3V')
+      .reply(200, {
+        data: [{
+          ...sampleProduct.stripe.product.create.success,
+          name: 'New Title',
+          description: 'New Description'
+        }]
+      });
+
     const register = await registerAndLogin(agent);
     const { body, headers } = register;
 
@@ -174,8 +198,8 @@ describe("PaymentRequests", () => {
       userId: body.id,
       title: 'Old Title',
       description: 'Old Description',
-      amount: 50.00,
       currency: 'USD',
+      amount: 50,
       payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
       payment_url: 'https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04',
       status: 'open',
@@ -189,11 +213,16 @@ describe("PaymentRequests", () => {
       .set('authorization', headers.authorization)
       .expect(200)
       .send({
-        active: false
+        active: false,
+        title: 'New Title',
+        description: 'New Description'
       });
     expect(res.body).to.exist;
     expect(res.body.id).to.equal(paymentRequest.id);
     expect(res.body.active).to.equal(false);
+    expect(res.body.amount).to.equal('50');
+    expect(res.body.title).to.equal('New Title');
+    expect(res.body.description).to.equal('New Description');
   });
 
 

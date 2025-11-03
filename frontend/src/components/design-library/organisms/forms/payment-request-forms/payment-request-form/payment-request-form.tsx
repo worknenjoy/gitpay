@@ -80,8 +80,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         label: <FormattedMessage id="paymentRequest.form.customAmount" defaultMessage="Custom Amount" />,
         name: 'custom_amount',
         value: true,
-        disabled: editMode,
         defaultChecked: data?.custom_amount,
+        disabled: editMode,
         onChange: handleCustomAmountChange
       },
       {
@@ -89,7 +89,6 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         name: 'deactivate_after_payment',
         value: true,
         defaultChecked: data?.deactivate_after_payment,
-        disabled: editMode
       }
     ];
 
@@ -136,8 +135,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
             name="title"
             type="text"
             placeholder="Title of your service"
-            value={data?.title}
-            disabled={editMode}
+            defaultValue={data?.title}
             completed={completed}
           />
         </Grid>
@@ -153,8 +151,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                 name="description"
                 placeholder="Describe your service"
                 multiline
-                value={ data?.description }
-                disabled={editMode}
+                defaultValue={ data?.description }
                 rows={4}
               />
             )
