@@ -3,6 +3,8 @@ const stripe = new Stripe(process.env.STRIPE_KEY as string);
 
 import { Op } from "sequelize";
 import Models from "../../../models";
+import formatDate from "../../../modules/util/formatDate";
+import moment from "moment";
 
 const models = Models as any;
 const { Wallet, Order, Task } = models;
@@ -100,15 +102,21 @@ async function getTotalAmountForPendingTasks() {
 
   const tasks = await Task.findAll({
     where: {
-      paid: false,
-      value: { [Op.gt]: 0 }
-    }
+      value: { [Op.gt]: 0 },
+    },
+    include: [
+      models.Transfer
+    ]
   });
 
   let totalPendingTasksAmount = 0;
+  console.log('---- List of pending tasks ----');
   for (const t of tasks) {
+    if(t?.Transfer?.id || t?.transfer_id) break;
+    console.log(`- Task ID: ${t.id}, Paid: ${t.paid ? 'Yes' : 'No'}, Value: ${formatUSD(toCents(t.value))}`, `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`, `Transfer ID: ${t.transfer_id || t.TransferId}`);
     totalPendingTasksAmount += Number(t.value) * 0.92 || 0; // 8% platform fee; DB values in decimal (USD)
   }
+  console.log('------------------------------');
 
   console.log(
     `${C.blue}ℹ️  [Database] Total amount for pending Tasks (DB decimal USD): ${totalPendingTasksAmount.toFixed(2)} ` +
@@ -146,11 +154,12 @@ async function getSummary() {
     const pendingTasksCents = toCents(summary.totalPendingTasksAmount); // DB decimal -> cents
 
     // Compute final available balance in cents
-    const totalAvailableCents = stripeAvailableCents - walletBalanceCents - orderSpentCents - pendingTasksCents;
+    const totalAvailableCents = stripeAvailableCents - walletBalanceCents - pendingTasksCents;
 
     // Pretty values
     const stripeAvailableUSD = formatUSD(stripeAvailableCents);
     const orderSpentUSD = formatUSD(orderSpentCents);
+    const walletBalanceUSD = formatUSD(walletBalanceCents);
     const pendingTasksUSD = formatUSD(pendingTasksCents);
     const finalUSD = formatUSD(totalAvailableCents);
 
@@ -164,14 +173,17 @@ async function getSummary() {
       `${C.gray}• Total pending Orders paid with Wallet (DB decimal → cents)${C.reset}: ${orderSpentCents} ${C.gray}=>${C.reset} ${orderSpentUSD}`
     );
     console.log(
+      `${C.gray}• Total Remaining Balance (DB decimal → cents)${C.reset}: ${walletBalanceCents} ${C.gray}=>${C.reset} ${walletBalanceUSD}`
+    );
+    console.log(
       `${C.gray}• Total Amount for Pending Tasks (DB decimal → cents)${C.reset}: ${pendingTasksCents} ${C.gray}=>${C.reset} ${pendingTasksUSD}`
     );
     console.log(hr());
 
     console.log(`${C.cyan}${C.bold}🧠 Total Available Balance Calculation${C.reset}`);
-    console.log(`${C.gray}Formula:${C.reset} Available = Stripe Available - Orders Spent - Pending Tasks`);
+    console.log(`${C.gray}Formula:${C.reset} Available = Stripe Available - Wallet Balance - Pending Tasks`);
     console.log(
-      `= ${stripeAvailableUSD} ${C.gray}- ${C.reset}${orderSpentUSD} ${C.gray}- ${C.reset}${pendingTasksUSD}`
+      `= ${stripeAvailableUSD} ${C.gray}- ${C.reset}${walletBalanceUSD} ${C.gray}- ${C.reset}${pendingTasksUSD}`
     );
 
     const bannerColor =
