@@ -104,11 +104,23 @@ async function getTotalAmountForPendingTasks() {
       value: { [Op.gt]: 0 }
     }
   });
-  const pendingTasks = tasks.filter((t: any) => t.paid === false || !t.transfer_id || !t.TransferId);
+
+  // A task is pending only if:
+  // - it's not paid AND
+  // - it has no transfer reference in either field (both null/undefined)
+  const pendingTasks = tasks.filter(
+    (t: any) => !t.paid && (t.transfer_id == null && t.TransferId == null)
+  );
+
   let totalPendingTasksAmount = 0;
   console.log('---- List of pending tasks ----');
   for (const t of pendingTasks) {
-    console.log(`- Task ID: ${t.id}, Paid: ${t.paid ? 'Yes' : 'No'}, Value: ${formatUSD(toCents(t.value))}`, `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`, `Transfer ID: ${t.transfer_id || t.TransferId}`);
+    console.log(
+      `- Task ID: ${t.id}, Paid: ${t.paid ? 'Yes' : 'No'}, Value: ${formatUSD(toCents(t.value))}`,
+      `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`,
+      `Transfer ID: ${t.TransferId}`,
+      `transfer_id: ${t.transfer_id}`
+    );
     totalPendingTasksAmount += Number(t.value) * 0.92 || 0; // 8% platform fee; DB values in decimal (USD)
   }
   console.log('------------------------------');
