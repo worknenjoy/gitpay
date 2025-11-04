@@ -102,12 +102,9 @@ async function getTotalAmountForPendingTasks() {
   const tasks = await Task.findAll({
     where: {
       value: { [Op.gt]: 0 }
-    },
-    include: [
-      models.Transfer
-    ]
+    }
   });
-  const pendingTasks = tasks.filter((t: any) => t.paid === false || !t.Transfer?.id);
+  const pendingTasks = tasks.filter((t: any) => t.paid === false || !t.transfer_id || !t.TransferId);
   let totalPendingTasksAmount = 0;
   console.log('---- List of pending tasks ----');
   for (const t of pendingTasks) {
