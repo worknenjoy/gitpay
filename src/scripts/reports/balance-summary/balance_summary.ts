@@ -107,7 +107,7 @@ async function getTotalAmountForPendingTasks() {
       models.Transfer
     ]
   });
-  const pendingTasks = tasks.filter((t: any) => !t.paid || !t.transfer_id || t.Transfer?.id);
+  const pendingTasks = tasks.filter((t: any) => t.paid === false || t.Transfer?.id);
   let totalPendingTasksAmount = 0;
   console.log('---- List of pending tasks ----');
   for (const t of pendingTasks) {
