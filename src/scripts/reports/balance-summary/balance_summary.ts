@@ -123,6 +123,7 @@ async function getTotalAmountForPendingTasks() {
   console.log('------------------------------');
 
   console.log(
+    `${C.blue}ℹ️  [Database] Total amount of Tasks (DB decimal USD): ${pendingTasks.length} ` +
     `${C.blue}ℹ️  [Database] Total amount for pending Tasks (DB decimal USD): ${totalPendingTasksAmount.toFixed(2)} ` +
     `${C.gray}(${formatUSD(toCents(totalPendingTasksAmount))})${C.reset}`
   );
