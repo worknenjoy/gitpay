@@ -3,7 +3,6 @@ const stripe = new Stripe(process.env.STRIPE_KEY as string);
 
 import { Op } from "sequelize";
 import Models from "../../../models";
-import formatDate from "../../../modules/util/formatDate";
 import moment from "moment";
 
 const models = Models as any;
@@ -102,17 +101,16 @@ async function getTotalAmountForPendingTasks() {
 
   const tasks = await Task.findAll({
     where: {
-      value: { [Op.gt]: 0 },
+      value: { [Op.gt]: 0 }
     },
     include: [
       models.Transfer
     ]
   });
-
+  const pendingTasks = tasks.filter((t: any) => !t.paid || !t.transfer_id || t.Transfer?.id);
   let totalPendingTasksAmount = 0;
   console.log('---- List of pending tasks ----');
-  for (const t of tasks) {
-    if(t?.Transfer?.id || t?.transfer_id) break;
+  for (const t of pendingTasks) {
     console.log(`- Task ID: ${t.id}, Paid: ${t.paid ? 'Yes' : 'No'}, Value: ${formatUSD(toCents(t.value))}`, `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`, `Transfer ID: ${t.transfer_id || t.TransferId}`);
     totalPendingTasksAmount += Number(t.value) * 0.92 || 0; // 8% platform fee; DB values in decimal (USD)
   }
