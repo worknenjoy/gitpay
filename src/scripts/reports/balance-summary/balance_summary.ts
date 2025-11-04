@@ -105,11 +105,8 @@ async function getTotalAmountForPendingTasks() {
     }
   });
 
-  // A task is pending only if:
-  // - it's not paid AND
-  // - it has no transfer reference in either field (both null/undefined)
   const pendingTasks = tasks.filter(
-    (t: any) => !t.paid && (t.transfer_id == null && t.TransferId == null)
+    (t: any) => !t.paid && (t.transfer_id === null && t.TransferId === null)
   );
 
   let totalPendingTasksAmount = 0;
