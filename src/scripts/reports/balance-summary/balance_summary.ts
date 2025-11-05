@@ -101,8 +101,9 @@ async function getTotalAmountForPendingTasks() {
 
   const tasks = await Task.findAll({
     where: {
-      value: { [Op.gt]: 0 }
-    }
+      value: { [Op.gt]: 0 },
+    },
+    include:[ models.Order ]
   });
 
   const pendingTasks = tasks.filter(
@@ -122,6 +123,25 @@ async function getTotalAmountForPendingTasks() {
   }
   console.log('------------------------------');
 
+  let totalPendingPaypalOrdersAmount = 0;
+  console.log('---- List of pending tasks with PayPal orders ----');
+  for (const t of pendingTasks) {
+    if (t.Order && t.Order.provider === 'paypal') {
+      console.log(
+        `- Task ID: ${t.id}, Paid: ${t.paid ? 'Yes' : 'No'}, Value: ${formatUSD(toCents(t.value))}`,
+        `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`,
+        `Order ID: ${t.Order.id}, Provider: ${t.Order.provider}, Amount: ${formatUSD(toCents(t.Order.amount))}`
+      );
+      totalPendingPaypalOrdersAmount += Number(t.Order.amount) || 0; // DB values in decimal (USD)
+    }
+  }
+
+  console.log('-----------------------------------------------');
+  console.log(
+    `${C.yellow}⚠️  Note: The total amount for pending Tasks includes $${totalPendingPaypalOrdersAmount.toFixed(2)} ` +
+    `from Tasks associated with PayPal Orders.${C.reset}`
+  );
+
   console.log(
     `${C.blue}ℹ️  [Database] Total amount of Tasks (DB decimal USD): ${pendingTasks.length} ` +
     `${C.blue}ℹ️  [Database] Total amount for pending Tasks (DB decimal USD): ${totalPendingTasksAmount.toFixed(2)} ` +
@@ -134,12 +154,14 @@ async function getTotalAmountForPendingTasks() {
 
 async function getSummary() {
   const stripeBalance = await getCurrentStripeBalance();
+  const paypalBalance = 448.67; // Placeholder for future PayPal integration
   const totalWalletBalance = await getTotalWalletBalance();
   const totalOrderSpent = await getTotalWalletOrderSpent();
   const totalPendingTasksAmount = await getTotalAmountForPendingTasks();
 
   return {
     stripeBalance,
+    paypalBalance,
     totalWalletBalance,
     totalOrderSpent,
     totalPendingTasksAmount
@@ -154,6 +176,7 @@ async function getSummary() {
 
     // Convert to cents for consistent math:
     const stripeAvailableCents = summary.stripeBalance.available.filter(a => a.currency === 'usd').reduce((sum, a) => sum + a.amount, 0); // already in cents
+    const paypalBalanceCents = toCents(summary.paypalBalance); // DB decimal -> cents
     const orderSpentCents = toCents(summary.totalOrderSpent); // DB decimal -> cents
     const walletBalanceCents = toCents(summary.totalWalletBalance); // DB decimal -> cents
     const pendingTasksCents = toCents(summary.totalPendingTasksAmount); // DB decimal -> cents
@@ -163,6 +186,7 @@ async function getSummary() {
 
     // Pretty values
     const stripeAvailableUSD = formatUSD(stripeAvailableCents);
+    const paypalBalanceUSD = formatUSD(paypalBalanceCents);
     const orderSpentUSD = formatUSD(orderSpentCents);
     const walletBalanceUSD = formatUSD(walletBalanceCents);
     const pendingTasksUSD = formatUSD(pendingTasksCents);
@@ -186,9 +210,9 @@ async function getSummary() {
     console.log(hr());
 
     console.log(`${C.cyan}${C.bold}🧠 Total Available Balance Calculation${C.reset}`);
-    console.log(`${C.gray}Formula:${C.reset} Available = Stripe Available - Wallet Balance - Pending Tasks`);
+    console.log(`${C.gray}Formula:${C.reset} Available = Stripe Available - Paypal Balance - Wallet Balance - Pending Tasks`);
     console.log(
-      `= ${stripeAvailableUSD} ${C.gray}- ${C.reset}${walletBalanceUSD} ${C.gray}- ${C.reset}${pendingTasksUSD}`
+      `= ${stripeAvailableUSD} ${C.gray}- ${C.reset}${paypalBalanceUSD} ${C.gray}- ${C.reset}${walletBalanceUSD} ${C.gray}- ${C.reset}${pendingTasksUSD}`
     );
 
     const bannerColor =
