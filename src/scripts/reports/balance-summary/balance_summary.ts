@@ -101,7 +101,7 @@ async function getTotalAmountForPendingTasks() {
 
   const tasks = await Task.findAll({
     where: {
-      value: { [Op.gt]: 0 },
+      value: { [Op.gt]: 0 }
     },
     include:[ models.Order ]
   });
@@ -126,13 +126,17 @@ async function getTotalAmountForPendingTasks() {
   let totalPendingPaypalOrdersAmount = 0;
   console.log('---- List of pending tasks with PayPal orders ----');
   for (const t of pendingTasks) {
-    if (t.Order && t.Order.provider === 'paypal') {
-      console.log(
-        `- Task ID: ${t.id}, Paid: ${t.paid ? 'Yes' : 'No'}, Value: ${formatUSD(toCents(t.value))}`,
-        `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`,
-        `Order ID: ${t.Order.id}, Provider: ${t.Order.provider}, Amount: ${formatUSD(toCents(t.Order.amount))}`
-      );
-      totalPendingPaypalOrdersAmount += Number(t.Order.amount) || 0; // DB values in decimal (USD)
+    if (t.Orders.length > 0) {
+      t.Orders.forEach((order: any) => {
+        if(order.provider === 'paypal' && order.status === 'succeeded') {
+          console.log(
+            `- Task ID: ${t.id}, Paid: ${t.paid ? 'Yes' : 'No'}, Value: ${formatUSD(toCents(t.value))}`,
+            `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`,
+            `Order ID: ${order.id}, Provider: ${order.provider}, Amount: ${formatUSD(toCents(order.amount))}`
+          );
+          totalPendingPaypalOrdersAmount += Number(order.amount) * 0.92 || 0; // 8% platform fee; DB values in decimal (USD)
+        }
+      });
     }
   }
 
@@ -154,7 +158,7 @@ async function getTotalAmountForPendingTasks() {
 
 async function getSummary() {
   const stripeBalance = await getCurrentStripeBalance();
-  const paypalBalance = 448.67; // Placeholder for future PayPal integration
+  const paypalBalance = 448.67 * 0.92; // Placeholder for future PayPal integration
   const totalWalletBalance = await getTotalWalletBalance();
   const totalOrderSpent = await getTotalWalletOrderSpent();
   const totalPendingTasksAmount = await getTotalAmountForPendingTasks();
