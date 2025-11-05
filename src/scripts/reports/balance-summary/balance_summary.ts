@@ -161,7 +161,7 @@ async function getTotalAmountForPendingTasks() {
 
 async function getSummary() {
   const stripeBalance = await getCurrentStripeBalance();
-  const paypalBalance = 448.67 * 0.92; // Placeholder for future PayPal integration
+  const paypalBalance = 448.67; // Placeholder for future PayPal integration
   const totalWalletBalance = await getTotalWalletBalance();
   const totalOrderSpent = await getTotalWalletOrderSpent();
   const { totalPendingTasksAmount, totalPendingPaypalOrdersAmount } = await getTotalAmountForPendingTasks();
