@@ -69,32 +69,6 @@ async function getTotalWalletBalance() {
   return totalWalletBalance; // keep returning decimal
 }
 
-async function getTotalWalletOrderSpent() {
-  console.log(`${C.cyan}${C.bold}🧾 [Step] Calculating total spent from Orders in database...${C.reset}`);
-  console.time("[Step] Order spent calculation time");
-
-  const orders = await Order.findAll({
-    where: {
-      amount: { [Op.gt]: 0 },
-      provider: 'wallet',
-      status: 'succeeded'
-    }
-  });
-
-  let totalOrderSpent = 0;
-  for (const o of orders) {
-    totalOrderSpent += Number(o.amount) || 0; // DB values in decimal (USD)
-  }
-
-  console.log(
-    `${C.blue}ℹ️  [Database] Total spent from Orders (DB decimal USD): ${totalOrderSpent.toFixed(2)} ` +
-    `${C.gray}(${formatUSD(toCents(totalOrderSpent))})${C.reset}`
-  );
-
-  console.timeEnd("[Step] Order spent calculation time");
-  return totalOrderSpent; // keep returning decimal
-}
-
 async function getTotalAmountForPendingTasks() {
   console.log(`${C.cyan}${C.bold}📝 [Step] Calculating total amount for pending Tasks in database...${C.reset}`);
   console.time("[Step] Pending Tasks amount calculation time");
@@ -116,6 +90,7 @@ async function getTotalAmountForPendingTasks() {
     console.log(
       `- Task ID: ${t.id}, Paid: ${t.paid ? 'Yes' : 'No'}, Value: ${formatUSD(toCents(t.value))}`,
       `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`,
+      `Source: ${t.Orders.map((o: any) => `${o.provider} - ${formatUSD(toCents(o.amount))}`).join(', ') || 'N/A'}`,
       `Transfer ID: ${t.TransferId}`,
       `transfer_id: ${t.transfer_id}`
     );
@@ -163,7 +138,6 @@ async function getSummary() {
   const stripeBalance = await getCurrentStripeBalance();
   const paypalBalance = 448.67; // Placeholder for future PayPal integration
   const totalWalletBalance = await getTotalWalletBalance();
-  const totalOrderSpent = await getTotalWalletOrderSpent();
   const { totalPendingTasksAmount, totalPendingPaypalOrdersAmount } = await getTotalAmountForPendingTasks();
   const totalPendingTasksAmountOnlyStripe = totalPendingTasksAmount - totalPendingPaypalOrdersAmount;
 
@@ -171,7 +145,6 @@ async function getSummary() {
     stripeBalance,
     paypalBalance,
     totalWalletBalance,
-    totalOrderSpent,
     totalPendingTasksAmount,
     totalPendingPaypalOrdersAmount,
     totalPendingTasksAmountOnlyStripe
@@ -187,7 +160,6 @@ async function getSummary() {
     // Convert to cents for consistent math:
     const stripeAvailableCents = summary.stripeBalance.available.filter(a => a.currency === 'usd').reduce((sum, a) => sum + a.amount, 0); // already in cents
     const paypalBalanceCents = toCents(summary.paypalBalance); // DB decimal -> cents
-    const orderSpentCents = toCents(summary.totalOrderSpent); // DB decimal -> cents
     const walletBalanceCents = toCents(summary.totalWalletBalance); // DB decimal -> cents
     const pendingTasksCents = toCents(summary.totalPendingTasksAmount); // DB decimal -> cents
     const pendingTasksCentsOnlyStripe = toCents(summary.totalPendingTasksAmountOnlyStripe); // DB decimal -> cents
@@ -200,7 +172,6 @@ async function getSummary() {
     // Pretty values
     const stripeAvailableUSD = formatUSD(stripeAvailableCents);
     const paypalBalanceUSD = formatUSD(paypalBalanceCents);
-    const orderSpentUSD = formatUSD(orderSpentCents);
     const walletBalanceUSD = formatUSD(walletBalanceCents);
     const pendingTasksUSD = formatUSD(pendingTasksCents);
     const pendingTasksUSDOnlyStripeUSD = formatUSD(pendingTasksCentsOnlyStripe);
@@ -213,9 +184,6 @@ async function getSummary() {
     console.log(`${C.bold}📊 Financial Summary${C.reset}`);
     console.log(
       `${C.gray}• Stripe Available (cents)${C.reset}: ${stripeAvailableCents} ${C.gray}=>${C.reset} ${stripeAvailableUSD}`
-    );
-    console.log(
-      `${C.gray}• Total pending Orders paid with Wallet (DB decimal → cents)${C.reset}: ${orderSpentCents} ${C.gray}=>${C.reset} ${orderSpentUSD}`
     );
     console.log(
       `${C.gray}• Total Remaining Balance (DB decimal → cents)${C.reset}: ${walletBalanceCents} ${C.gray}=>${C.reset} ${walletBalanceUSD}`
