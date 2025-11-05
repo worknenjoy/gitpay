@@ -153,7 +153,10 @@ async function getTotalAmountForPendingTasks() {
   );
 
   console.timeEnd("[Step] Pending Tasks amount calculation time");
-  return totalPendingTasksAmount; // keep returning decimal
+  return {
+    totalPendingTasksAmount,
+    totalPendingPaypalOrdersAmount
+  }; // keep returning decimal
 }
 
 async function getSummary() {
@@ -161,14 +164,17 @@ async function getSummary() {
   const paypalBalance = 448.67 * 0.92; // Placeholder for future PayPal integration
   const totalWalletBalance = await getTotalWalletBalance();
   const totalOrderSpent = await getTotalWalletOrderSpent();
-  const totalPendingTasksAmount = await getTotalAmountForPendingTasks();
+  const { totalPendingTasksAmount, totalPendingPaypalOrdersAmount } = await getTotalAmountForPendingTasks();
+  const totalPendingTasksAmountOnlyStripe = totalPendingTasksAmount - totalPendingPaypalOrdersAmount;
 
   return {
     stripeBalance,
     paypalBalance,
     totalWalletBalance,
     totalOrderSpent,
-    totalPendingTasksAmount
+    totalPendingTasksAmount,
+    totalPendingPaypalOrdersAmount,
+    totalPendingTasksAmountOnlyStripe,
   };
 }
 
@@ -184,9 +190,12 @@ async function getSummary() {
     const orderSpentCents = toCents(summary.totalOrderSpent); // DB decimal -> cents
     const walletBalanceCents = toCents(summary.totalWalletBalance); // DB decimal -> cents
     const pendingTasksCents = toCents(summary.totalPendingTasksAmount); // DB decimal -> cents
+    const pendingTasksCentsOnlyStripe = toCents(summary.totalPendingTasksAmountOnlyStripe); // DB decimal -> cents
+    const pendingPaypalOrdersCents = toCents(summary.totalPendingPaypalOrdersAmount); // DB decimal -> cents
 
     // Compute final available balance in cents
-    const totalAvailableCents = stripeAvailableCents - walletBalanceCents - pendingTasksCents;
+    const totalAvailableCents = stripeAvailableCents - paypalBalanceCents - walletBalanceCents - pendingTasksCents;
+    const totalAvailableCentsOnlyStripe = stripeAvailableCents - walletBalanceCents - pendingTasksCentsOnlyStripe;
 
     // Pretty values
     const stripeAvailableUSD = formatUSD(stripeAvailableCents);
@@ -194,6 +203,8 @@ async function getSummary() {
     const orderSpentUSD = formatUSD(orderSpentCents);
     const walletBalanceUSD = formatUSD(walletBalanceCents);
     const pendingTasksUSD = formatUSD(pendingTasksCents);
+    const pendingTasksUSDOnlyStripeUSD = formatUSD(totalAvailableCentsOnlyStripe);
+    const pendingPaypalOrdersUSD = formatUSD(pendingPaypalOrdersCents);
     const finalUSD = formatUSD(totalAvailableCents);
 
     // Fancy output
@@ -209,15 +220,19 @@ async function getSummary() {
       `${C.gray}• Total Remaining Balance (DB decimal → cents)${C.reset}: ${walletBalanceCents} ${C.gray}=>${C.reset} ${walletBalanceUSD}`
     );
     console.log(
-      `${C.gray}• Total Amount for Pending Tasks (DB decimal → cents)${C.reset}: ${pendingTasksCents} ${C.gray}=>${C.reset} ${pendingTasksUSD}`
+      `${C.gray}• Total Amount for Pending Tasks Total (DB decimal → cents)${C.reset}: ${pendingTasksCents} ${C.gray}=>${C.reset} ${pendingTasksUSD}`
+    );
+    console.log(
+      `${C.gray}• Total Amount for Pending Tasks only Stripe (DB decimal → cents)${C.reset}: ${pendingTasksCentsOnlyStripe} ${C.gray}=>${C.reset} ${pendingTasksUSDOnlyStripeUSD}`
     );
     console.log(hr());
 
-    console.log(`${C.cyan}${C.bold}🧠 Total Available Balance Calculation${C.reset}`);
+    console.log(`${C.cyan}${C.bold}🧠 Total Available Balance Calculation (Paypal + Stripe) ${C.reset}`);
     console.log(`${C.gray}Formula:${C.reset} Available = Stripe Available - Paypal Balance - Wallet Balance - Pending Tasks`);
     console.log(
       `= ${stripeAvailableUSD} ${C.gray}- ${C.reset}${paypalBalanceUSD} ${C.gray}- ${C.reset}${walletBalanceUSD} ${C.gray}- ${C.reset}${pendingTasksUSD}`
     );
+    console.log(hr());
 
     const bannerColor =
       totalAvailableCents > 0 ? C.bgGreen : totalAvailableCents < 0 ? C.bgRed : C.bgYellow;
@@ -225,6 +240,17 @@ async function getSummary() {
     console.log(hr());
     console.log(
       `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE: ${finalUSD}  ${C.reset}`
+    );
+    console.log(hr());
+
+    console.log(`${C.cyan}${C.bold}🧠 Total Available Balance Calculation (Stripe only)${C.reset}`);
+    console.log(`${C.gray}Formula:${C.reset} Available = Stripe Available - Wallet Balance - Pending Tasks - PayPal related Tasks orders`);
+    console.log(
+      `= ${stripeAvailableUSD} ${C.gray}- ${C.reset}${paypalBalanceUSD} ${C.gray}- ${C.reset}${walletBalanceUSD} ${C.gray}- ${C.reset}${pendingTasksUSD} ${C.gray} - ${C.reset}${pendingPaypalOrdersUSD}`
+    );
+    console.log(hr());
+    console.log(
+      `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE FOR STRIPE: ${pendingTasksUSDOnlyStripeUSD}  ${C.reset}`
     );
     console.log(hr());
 
