@@ -5,13 +5,12 @@ import {
   CardMembership,
   Assignment,
   AttachMoney,
-  TaskAlt,
+  TaskAlt
 } from '@mui/icons-material'
 
 import { useIntl, FormattedMessage } from 'react-intl'
 import { useHistory } from 'react-router-dom'
 
-import deal from 'images/collections/collection-flat-works.svg'
 import MainHero from 'design-library/molecules/heroes/main-hero/main-hero'
 import SecondaryHero from 'design-library/molecules/heroes/secondary-hero/secondary-hero'
 import CallToActionHero from 'design-library/molecules/heroes/call-to-action-hero/call-to-action-hero'
@@ -39,7 +38,7 @@ const Home = () => {
         ]}
       />
       <SecondaryHero
-        animation='/lottie/how-it-works.lottie'
+        animation="/lottie/how-it-works.lottie"
         title={intl.formatMessage({
           id: 'welcome.secondary.hero.title',
           defaultMessage: 'How Gitpay works'

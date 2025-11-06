@@ -46,7 +46,7 @@ export const ResponsiveImage = styled('img')(({ theme }) => ({
   maxWidth: '100%',
   height: 'auto',
   [theme.breakpoints.down('sm')]: {
-    width: '100%',
+    width: '100%'
   }
 }))
 

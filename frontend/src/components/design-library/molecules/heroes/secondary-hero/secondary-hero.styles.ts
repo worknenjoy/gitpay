@@ -1,4 +1,4 @@
-import { styled, Theme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Button, { ButtonProps } from '@mui/material/Button'
 import ListItem from '@mui/material/ListItem'

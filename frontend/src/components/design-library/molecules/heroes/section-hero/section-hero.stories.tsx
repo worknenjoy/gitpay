@@ -11,8 +11,8 @@ const meta: Meta<typeof SectionHero> = {
   title: 'Design Library/Molecules/Heroes/SectionHero',
   component: SectionHero,
   parameters: {
-    layout: 'fullscreen',
-  },
+    layout: 'fullscreen'
+  }
 }
 export default meta
 
@@ -22,26 +22,26 @@ const items = [
   {
     icon: <CheckCircleOutlineIcon />,
     primaryText: 'Get started quickly',
-    secondaryText: 'Kick off your project in minutes with simple setup.',
+    secondaryText: 'Kick off your project in minutes with simple setup.'
   },
   {
     icon: <RocketLaunchIcon />,
     primaryText: 'Scale with confidence',
-    secondaryText: 'Built for performance and growth.',
+    secondaryText: 'Built for performance and growth.'
   },
   {
     icon: <SecurityIcon />,
     primaryText: 'Secure by default',
-    secondaryText: 'Best practices and protections included.',
-  },
+    secondaryText: 'Best practices and protections included.'
+  }
 ]
 
 export const Default: Story = {
   args: {
     title: 'Build faster, launch smarter',
     image: freelancerImage,
-    items,
-  },
+    items
+  }
 }
 
 export const Contrast: Story = {
@@ -49,6 +49,6 @@ export const Contrast: Story = {
     contrast: true,
     title: 'Build faster, launch smarter',
     image: companiesImage,
-    items,
+    items
   }
 }

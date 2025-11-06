@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 import About from './about-public-page'
 import { withPublicTemplate } from '../../../../../../.storybook/decorators/withPublicTemplate';

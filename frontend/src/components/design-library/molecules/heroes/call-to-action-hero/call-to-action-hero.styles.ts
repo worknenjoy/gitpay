@@ -1,4 +1,4 @@
-import { styled, Theme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import Button, { ButtonProps } from '@mui/material/Button'
 import ListItem from '@mui/material/ListItem'
@@ -10,7 +10,7 @@ export const CallToActionHeroStyled = styled('div')(({ theme }) => ({
   height: 500,
   overflow: 'hidden',
   [theme.breakpoints.down('sm')]: {
-    height: 400,
+    height: 400
   }
 }))
 
@@ -25,7 +25,7 @@ export const DotLottieReactStyled = styled(DotLottieReact)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     top: 220,
     width: '100% !important',
-    height: 'auto !important',
+    height: 'auto !important'
   }
 }))
   
@@ -93,7 +93,7 @@ export const BottomCTASection = styled(BaseSection)(() => ({
 
 export const BottomCopy = styled(Typography)(() => ({
   padding: '0 60px',
-  lineHeight: 1.4,
+  lineHeight: 1.4
 }))
 
 interface MainTitleProps {

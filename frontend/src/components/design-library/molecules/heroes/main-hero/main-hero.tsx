@@ -21,7 +21,7 @@ const MainHero = ({
   description,
   actions,
   image,
-  animation,
+  animation
 }: MainHeroProps) => {
   return (
     <Section>

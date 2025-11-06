@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import { styled, Theme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 
 interface MainTitleProps {
   left?: boolean;
@@ -51,7 +51,7 @@ export const Section = styled('div', {
 }));
 
 export const HeroTitle = styled('div')({
-  lineHeight: 1.2,
+  lineHeight: 1.2
 })
 
 export const HeroSection = styled('div')({

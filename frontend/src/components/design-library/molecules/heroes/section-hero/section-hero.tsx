@@ -23,7 +23,7 @@ const SectionHero = ({
   animation,
   content,
   items,
-  contrast = false,
+  contrast = false
 }: SectionHeroProps) => {
   return (
     <Section alternative={contrast}>
