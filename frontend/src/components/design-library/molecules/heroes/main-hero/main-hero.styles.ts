@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import { styled, Theme } from '@mui/material/styles'
 
 interface MainTitleProps {
@@ -5,48 +6,9 @@ interface MainTitleProps {
   center?: boolean;
 }
 
-export const MainTitle = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'left' && prop !== 'center'
-})<MainTitleProps>(({ theme, left, center }: { theme: Theme } & MainTitleProps) => ({
-  textAlign: 'center',
-  display: 'block',
-  paddingBottom: 10,
-  borderBottom: '5px solid black',
-  width: '60%',
-
-  marginTop: 20,
-  marginLeft: 'auto',
-  marginBottom: 20,
-  marginRight: 'auto',
-
-  ...(left && {
-    marginRight: '18%'
-  }),
-
-  ...(center && {
-    marginRight: '5%',
-    width: '70%'
-  }),
-
-  [theme.breakpoints.down('sm')]: {
-    width: '60%',
-    margin: '20px auto',
-    ...(left && { marginLeft: 'auto' })
-  }
-}))
-
-export const MainList = styled('div')(({ theme }) => ({
-  textAlign: 'left',
-  [theme.breakpoints.down('sm')]: {
-    marginLeft: 0
-  }
-}))
-
 export const ResponsiveImage = styled('img')(({ theme }) => ({
-  maxWidth: '100%',
-  height: 'auto',
   [theme.breakpoints.down('sm')]: {
-    width: '100%',
+    width: '100%'
   }
 }))
 
@@ -82,13 +44,15 @@ interface SectionProps {
 
 export const Section = styled('div', {
   shouldForwardProp: (prop) => prop !== 'alternative'
-})<SectionProps>(({ alternative, theme }) => ({
+})<SectionProps>(({ alternative }) => ({
   textAlign: 'center',
   padding: '1rem',
-  ...(alternative && { backgroundColor: theme.palette.primary.contrastText })
+  ...(alternative && { backgroundColor: '#f1f0ea' })
 }));
 
-export const HeroTitle = styled('div')({})
+export const HeroTitle = styled('div')({
+  lineHeight: 1.2,
+})
 
 export const HeroSection = styled('div')({
   marginTop: 20,
@@ -97,7 +61,10 @@ export const HeroSection = styled('div')({
 
 export const HeroContent = styled('div')({
   marginTop: 28,
-  marginBottom: 20
+  marginBottom: 20,
+  '.MuiTypography-root': {
+    lineHeight: 1.6
+  }
 })
 
 export const HeroActions = styled('div')({
@@ -106,3 +73,12 @@ export const HeroActions = styled('div')({
   alignItems: 'center',
   padding: 10
 })
+
+// Image helpers
+export const HeroImage = styled(ResponsiveImage)(() => ({
+  width: '100%'
+}))
+
+export const SpacedButton = styled(Button)(() => ({
+  marginRight: 20
+}))
