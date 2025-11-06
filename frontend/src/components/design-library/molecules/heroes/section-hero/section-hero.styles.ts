@@ -7,7 +7,7 @@ export const Root = styled('div')(({ theme }) => ({
 }))
 
 export const ListItemTop = styled(ListItem)(({ theme }) => ({
-  marginTop: 20
+  marginTop: 0
 }))
 
 export const HeroContent = styled(Typography)(({ theme }) => ({

@@ -34,7 +34,7 @@ const Home = () => {
         />}
         animation={'/lottie/developer-main.lottie'}
         actions={[
-          { label: 'Learn More', variant: 'outlined', color: 'secondary', onClick: () => history.push('/about') },
+          { label: 'Learn More', variant: 'outlined', color: 'secondary', onClick: () => history.push('/welcome') },
           { label: 'Get Started', variant: 'contained', color: 'primary', onClick: () => history.push('/signup') }
         ]}
       />
@@ -89,16 +89,27 @@ const Home = () => {
               defaultMessage="Once the solution is verified, the payout is automatically sent to the contributor's bank account."
             />
           },
+          {
+            icon: <Work color="primary" />,
+            primaryText: <FormattedMessage
+              id="welcome.secondary.hero.item4.primary"
+              defaultMessage="The reverse flow is also possible"
+            />,
+            secondaryText: <FormattedMessage
+              id="welcome.secondary.hero.item4.secondary"
+              defaultMessage="With our Payment Request system, contributors can request payment for work done."
+            />
+          }
         ]}
       />
       <CallToActionHero
         title={<FormattedMessage
           id="welcome.cta.hero.title"
-          defaultMessage="Join thousands of developers solving issues and getting paid while contributing to open source projects"
+          defaultMessage="Join thousands of developers solving issues and getting paid while contributing to amazing projects."
         />}
         actions={[
           { label: <FormattedMessage id="welcome.cta.hero.action1" defaultMessage="Start now" /> , link: '/#/signup', variant: 'contained', color: 'primary', size: 'large' },
-          { label: <FormattedMessage id="welcome.cta.hero.action2" defaultMessage="Learn more" /> , link: '/#/about', variant: 'text', color: 'primary', size: 'large' }
+          { label: <FormattedMessage id="welcome.cta.hero.action2" defaultMessage="Learn more" /> , link: '/#/welcome', variant: 'text', color: 'primary', size: 'large' }
         ]}
       />
     </>
