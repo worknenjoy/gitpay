@@ -28,6 +28,7 @@ coverage
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 frontend/public/
+!/public/lottie/
 frontend/build
 
 # Dependency directories
