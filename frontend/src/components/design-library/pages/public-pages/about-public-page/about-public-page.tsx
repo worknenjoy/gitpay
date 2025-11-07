@@ -3,9 +3,6 @@ import React from 'react'
 
 import { AccountBalanceWallet, Work, Apps, Assignment, GroupWork, AttachMoney } from '@mui/icons-material'
 import { FormattedMessage } from 'react-intl'
-import freelancerImage from 'images/collections/collection-flat-community.svg'
-import companiesImage from 'images/collections/collection-flat-companies.svg'
-import teamImage from 'images/welcome-teamwork.png'
 
 import SectionHero from 'design-library/molecules/heroes/section-hero/section-hero'
 

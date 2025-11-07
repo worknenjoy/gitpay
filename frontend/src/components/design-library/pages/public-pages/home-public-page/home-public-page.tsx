@@ -48,11 +48,11 @@ const Home = () => {
             icon: <Assignment color="primary" />,
             primaryText: <FormattedMessage
               id="welcome.secondary.hero.item0.primary"
-              defaultMessage="Maintainers import an issue to Gitpay"
+              defaultMessage="Import an issue to Gitpay"
             />,
             secondaryText: <FormattedMessage
               id="welcome.secondary.hero.item0.secondary"
-              defaultMessage="Maintainers import an issue from their repo. Contributors pick issues they want to solve."
+              defaultMessage="Import an issue from a Git repository. Contributors pick issues they want to solve."
             />
           },
           {
@@ -96,7 +96,7 @@ const Home = () => {
             />,
             secondaryText: <FormattedMessage
               id="welcome.secondary.hero.item4.secondary"
-              defaultMessage="With our Payment Request system, contributors can request payment for work done."
+              defaultMessage="With our Payment Request system, contributors can request payment for work done directly through the platform."
             />
           }
         ]}
