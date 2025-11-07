@@ -41,7 +41,7 @@ const currentTeam = [
     image: imgAlexandre,
     linkedinUrl: 'https://www.linkedin.com/in/alexandremagnoteleszimerer/',
     githubUrl: 'https://github.com/alexanmtz'
-  },
+  }
 ]
 
 const pastContributors = [
@@ -97,20 +97,20 @@ export default function Team({
 
   return (
     <Page>
-      <HeroTitle level='h5'>
-        <FormattedMessage id='team.page.title' defaultMessage='Meet the Gitpay Team' />
+      <HeroTitle level="h5">
+        <FormattedMessage id="team.page.title" defaultMessage="Meet the Gitpay Team" />
       </HeroTitle>
       <Section>
         <Grid container spacing={3}>
-          <Grid size={{ xs: 12 }} justifyContent='center'>
+          <Grid size={{ xs: 12 }} justifyContent="center">
             <TeamCard
-              title={<FormattedMessage id='team.currentTeam' defaultMessage='Our Current maintainer' />}
+              title={<FormattedMessage id="team.currentTeam" defaultMessage="Our Current maintainer" />}
               data={currentTeam}
             />
           </Grid>
-          <Grid size={{ xs: 12 }} justifyContent='center'>
+          <Grid size={{ xs: 12 }} justifyContent="center">
             <TeamCard
-              title={<FormattedMessage id='team.pastContributors' defaultMessage='Our Past Contributors' />}
+              title={<FormattedMessage id="team.pastContributors" defaultMessage="Our Past Contributors" />}
               data={pastContributors}
             />
           </Grid>
@@ -120,19 +120,19 @@ export default function Team({
         <Section>
           <Grid container spacing={3} alignItems={'center'} justifyContent={'flex-start'} >
             <Grid size={{ lg: 8, md: 8, sm: 6 }}>
-              <img src={teamImage} alt='assets' />
+              <img src={teamImage} alt="assets" />
             </Grid>
             <Grid size={{ lg: 4, md: 4, sm: 6 }}>
               <form onChange={onChange} onSubmit={onSubmit} onBlur={onBlur}>
                 <CoreTeamForm container>
                   <Grid size={{ xs: 12 }} >
                     <Typography gutterBottom >
-                      <FormattedMessage id='team.joinCoreTeam' defaultMessage='Join our Core Team' />
+                      <FormattedMessage id="team.joinCoreTeam" defaultMessage="Join our Core Team" />
                     </Typography>
                   </Grid>
                   <Grid size={{ xs: 12 }} style={{ color: 'silver' }} >
                     <Typography gutterBottom >
-                      <FormattedMessage id='team.joinCoreTeamDescription' defaultMessage='Leave your e-mail if you are interested in joining our Core Team' />
+                      <FormattedMessage id="team.joinCoreTeamDescription" defaultMessage="Leave your e-mail if you are interested in joining our Core Team" />
                     </Typography>
                   </Grid>
                   <Grid size={{ xs: 12 }}>
@@ -140,18 +140,18 @@ export default function Team({
                       required
                       value={formData.email}
                       error={formErrors.email}
-                      id='email'
+                      id="email"
                       fullWidth
-                      label='Email Address'
-                      name='email'
-                      color='primary'
-                      autoComplete='email'
+                      label="Email Address"
+                      name="email"
+                      color="primary"
+                      autoComplete="email"
                     />
                   </Grid>
                   <Grid size={{ xs: 12 }}>
-                    <Button color='primary' fullWidth variant='contained' type='submit'>
+                    <Button color="primary" fullWidth variant="contained" type="submit">
                       <Typography gutterBottom >
-                        <FormattedMessage id='team.joinButton' defaultMessage='Join Now' />
+                        <FormattedMessage id="team.joinButton" defaultMessage="Join Now" />
                       </Typography>
                     </Button>
                   </Grid>
