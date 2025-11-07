@@ -12,7 +12,7 @@ const About = () => {
     <>
       <SectionHero
         title={<FormattedMessage id="aboutSectionHeroTitle" defaultMessage="About Us" />}
-        animation='/lottie/mission.lottie'
+        animation="/lottie/mission.lottie"
         content={<FormattedMessage
           id="aboutSectionHeroContent"
           defaultMessage="At Gitpay, our mission is to empower open-source developers and maintainers by providing a platform that connects them with sponsors and contributors. We believe in the power of collaboration and the importance of rewarding those who contribute to the open-source ecosystem."
@@ -21,7 +21,7 @@ const About = () => {
       <SectionHero
         contrast
         title={<FormattedMessage id="aboutSectionHeroTitle2" defaultMessage="Our vision" />}
-        animation='/lottie/startup-life.lottie'
+        animation="/lottie/startup-life.lottie"
         content={<FormattedMessage
           id="aboutSectionHeroContent2"
           defaultMessage="Building a sustainable open-source economy where collaboration and contribution are fairly rewarded."
@@ -51,7 +51,7 @@ const About = () => {
       />
       <SectionHero
         title={<FormattedMessage id="aboutSectionHeroTitle3" defaultMessage="Our values" />}
-        animation='/lottie/coworking.lottie'
+        animation="/lottie/coworking.lottie"
         content={<FormattedMessage
           id="aboutSectionHeroContent3"
           defaultMessage="The principles that guide how we build, collaborate, and support the open-source community."
