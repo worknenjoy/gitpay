@@ -4,7 +4,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { IntlProvider } from 'react-intl'
-import TeamCard from '../TeamCard'
+import TeamCard from '../team-card'
 
 const renderWithIntl = (content, { locale = 'en', messages = {} } = {}) =>
   render(

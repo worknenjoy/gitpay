@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Team from '../components/areas/public/features/team/team'
+import Team from '../components/areas/public/features/team/pages/team'
 import { joinTeam } from '../actions/teamActions'
 
 const mapStateToProps = (state, ownProps) => {

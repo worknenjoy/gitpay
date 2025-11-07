@@ -1,5 +1,5 @@
 import React from 'react';
-import TeamCard from './TeamCard';
+import TeamCard from './team-card';
 
 export default {
   title: 'Design Library/Molecules/Cards/TeamCard',
