@@ -1,12 +1,10 @@
 import React from 'react'
 import { Route, HashRouter, Switch, Redirect } from 'react-router-dom'
-
 import PrivateRoute from '../components/areas/private/components/session/private-route'
 import PublicPageContainer from '../containers/public-container'
 import Session from '../components/areas/private/components/session/session'
 import ProfileContainer from '../containers/profile'
 import AccountActivation from '../containers/account-activation'
-import TeamContainer from '../containers/team.js'
 import LoginPageContainer from '../containers/login-page'
 import FourOFour from '../components/design-library/pages/public-pages/four-o-four-public-page/four-o-four-public-page'
 import Stats from '../components/areas/public/features/stats/Stats-main-page'
@@ -24,7 +22,6 @@ export default props => (
       {/* Private area needs to appear before the broad "/" route */}
       <PrivateRoute path="/profile" component={ ProfileContainer } />
 
-      <Route exact path="/team" component={ TeamContainer } />
       <Route exact path="/signin" component={ LoginPageContainer } />
       <Route exact path="/signin/:status" component={ LoginPageContainer } />
       <Route exact path="/signup" component={ LoginPageContainer } />

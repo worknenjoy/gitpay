@@ -1,56 +1,37 @@
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
-import { styled } from '@mui/material/styles'
-import Card from '@mui/material/Card'
 import CardActionArea from '@mui/material/CardActionArea'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
-import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import GitHubIcon from '@mui/icons-material/GitHub'
+import Button from '@mui/material/Button'
+import {
+  Wrapper,
+  Root,
+  StyledCard,
+  Media
+} from './team-card.styles'
 
-const Wrapper = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  flexGrow: 1,
-  justifyContent: 'center'
-}))
+type TeamCardProps = {
+  title?: React.ReactNode | string,
+  data: Array<{
+    name: string,
+    description: string,
+    image: string,
+    linkedinUrl?: string,
+    githubUrl?: string
+  }>
+}
 
-const Root = styled('div')(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  flexDirection: 'row',
-  flexFlow: 'wrap',
-  [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column'
-  }
-}))
-
-const StyledCard = styled(Card)(({ theme }) => ({
-  maxWidth: 400,
-  minWidth: 350,
-  [theme.breakpoints.down('sm')]: {
-    minWidth: 0
-  },
-  margin: 40
-}))
-
-const Media = styled(CardMedia)(({ theme }) => ({
-  height: 220
-}))
-
-export default function TeamCard (props) {
-  const { data } = props
-
+export default function TeamCard ({
+  title,
+  data
+}: TeamCardProps) {
   return (
     <Wrapper>
-      <Typography variant="h5" gutterBottom>
-        <FormattedMessage
-          id="team.title"
-          defaultMessage="Team"
-        />
+      <Typography variant="h6" gutterBottom>
+        { title }
       </Typography>
       <Root>
         { data && data.map(member => {

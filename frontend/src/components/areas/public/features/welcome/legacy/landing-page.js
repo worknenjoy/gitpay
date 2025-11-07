@@ -15,7 +15,7 @@ import screenImage from 'images/gitpay-explore-task-screenshot.png'
 import profileImage from 'images/avatar-alexandre.png'
 import Bottom from 'design-library/organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom-bar-layout'
 import Clientlist from './clientlist'
-import TeamCard from 'design-library/molecules/cards/team-card/TeamCard'
+import TeamCard from 'design-library/molecules/cards/team-card/team-card'
 import ContactRecruiterFormContainer from '../../../../../../containers/contact-recruiter-form'
 
 import deal from 'images/deal.png'

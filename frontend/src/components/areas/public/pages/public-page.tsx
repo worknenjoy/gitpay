@@ -5,6 +5,7 @@ import HomePage from 'design-library/pages/public-pages/home-public-page/home-pu
 import TaskContainer from '../../../../containers/task'
 import TaskOrdersContainer from '../../../../containers/task-orders'
 import WelcomeContainer from '../../../../containers/welcome';
+import TeamContainer from '../../../../containers/team.js'
 import ProjectPageContainer from '../../../../containers/project-page'
 import OrganizationPageContainer from '../../../../containers/organization-page'
 import useCommonActions from '../../../../hooks/use-common-actions';
@@ -46,6 +47,7 @@ const PublicPage = ({
           <Route exact path="/" component={HomePage} />
           <Route exact path="/welcome" component={WelcomeContainer} />
           <Route path="/pricing" component={ PricingPage } />
+          <Route exact path="/team" component={ TeamContainer } />
           <Route exact path="/task/:id" component={TaskContainer} />
           <Route exact path="/task/:id/:slug" component={TaskContainer} />
           <Route exact path="/task/:id/orders" component={TaskContainer} />
