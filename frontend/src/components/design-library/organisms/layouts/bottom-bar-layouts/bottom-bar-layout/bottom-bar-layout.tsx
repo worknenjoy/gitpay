@@ -53,6 +53,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
       <Container>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, sm: 3 }}>
+<<<<<<< HEAD
             <VerticalMenuList 
               title={<FormattedMessage
                 id="bottom.menu.main"
@@ -60,6 +61,83 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
               />}
               items={mainMenuItems}
             />
+=======
+            <Typography component="div">
+              <strong>
+                <FormattedMessage
+                  id="bottom.header.subheading.primary"
+                  defaultMessage="Main menu"
+                />
+              </strong>
+            </Typography>
+            <List component="nav">
+              <ListItemButton component="a">
+                <Typography
+                  variant="subtitle1"
+                  component="div"
+                  style={{ display: 'block', width: '100%' }}
+                  onClick={() => window.location.assign('/#/welcome')}
+                >
+                  <FormattedMessage
+                    id="welcome.about.title"
+                    defaultMessage="About us"
+                  />
+                </Typography>
+              </ListItemButton>
+              <ListItemButton component="a">
+                <Typography
+                  variant="subtitle1"
+                  component="div"
+                  style={{ display: 'block', width: '100%' }}
+                  onClick={() => window.location.assign('/#/pricing')}
+                >
+                  <FormattedMessage
+                    id="welcome.pricing.title"
+                    defaultMessage="Pricing"
+                  />
+                </Typography>
+              </ListItemButton>
+              <ListItemButton component="a">
+                <Typography
+                  variant="subtitle1"
+                  component="div"
+                  style={{ display: 'block', width: '100%' }}
+                  onClick={() => window.location.assign('/#/team')}
+                >
+                  <FormattedMessage
+                    id="welcome.team.title"
+                    defaultMessage="Team"
+                  />
+                </Typography>
+              </ListItemButton>
+              <ListItemButton component="a">
+                <Typography
+                  variant="subtitle1"
+                  component="div"
+                  style={{ display: 'block', width: '100%' }}
+                  onClick={() => window.open('https://docs.gitpay.me/en')}
+                >
+                  <FormattedMessage
+                    id="welcome.docs.title"
+                    defaultMessage="Documentation"
+                  />
+                </Typography>
+              </ListItemButton>
+              <ListItemButton component="a">
+                <Typography
+                  variant="subtitle1"
+                  component="div"
+                  style={{ display: 'block', width: '100%' }}
+                  onClick={() => window.location.assign('/#/tasks/open')}
+                >
+                  <FormattedMessage
+                    id="welcome.explore.title"
+                    defaultMessage="Explore"
+                  />
+                </Typography>
+              </ListItemButton>
+            </List>
+>>>>>>> master
           </Grid>
           <Grid size={{ xs: 12, sm: 3 }}>
             <VerticalMenuList 
@@ -69,9 +147,46 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
                   id="bottom.menu.legal"
                   defaultMessage="Legal"
                 />
+<<<<<<< HEAD
               }
               items={legalMenuItems}
             />
+=======
+              </strong>
+            </Typography>
+            <List component="nav">
+              <BottomSectionDialog
+                key="privacy-policy"
+                classes={{}}
+                title="Legal"
+                header="Privacy policy"
+                subtitle={'Privacy Policy'}
+                content={
+                  <PrivacyPolicy extraStyles={false} />
+                }
+              />
+              <BottomSectionDialog
+                key="terms-of-service"
+                classes={{}}
+                title="Legal"
+                header="Terms of Service"
+                subtitle={'Terms of Service'}
+                content={
+                  <TermsOfService />
+                }
+              />
+              <BottomSectionDialog
+                key="cookie-policy"
+                classes={{}}
+                title="Legal"
+                header="Cookie Policy"
+                subtitle={'Cookie Policy'}
+                content={
+                  <CookiePolicy extraStyles={false} />
+                }
+              />
+            </List>
+>>>>>>> master
           </Grid>
           <Grid size={{ xs: 12, sm: 2 }}>
             <SlackCard />
