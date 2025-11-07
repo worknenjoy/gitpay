@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import media from '../../../../../../styleguide/media'
+import media from '../../../../../styleguide/media'
 
 export const MainTitle = styled.div`
   text-align: center;
@@ -55,7 +55,7 @@ export const ShadowImage = styled.img`
 
 export const InfoList = styled.div`
   text-align: left;
-  margin-left: 10%;
+  margin-left: 6%;
 
   ${media.phone`
     margin-left: 0;

@@ -1,63 +1,49 @@
 import React from 'react'
 import {
-  ListItemButton,
-  Typography,
   Dialog,
   Toolbar,
   IconButton,
-  Slide,
-  SlideProps
 } from '@mui/material'
 
 import {
-  Close
+  Close,
 } from '@mui/icons-material'
 
-import { InfoList, AppBarStyled, AppBarHeader, HeaderTypography } from './bottom-section-dialog.styles'
+import { InfoList } from './CommonStyles'
+import { AppBar as AppBarStyles, AppBarHeader } from './bottom-section-dialog.styles'
 
 
 const BottomSectionDialog = ({
-  Transition = React.forwardRef<unknown, SlideProps>((props, ref) => (
-    <Slide direction="up" ref={ ref } { ...props } />
-  )),
-  header,
+  open,
+  onClose,
   title,
-  subtitle,
-  content
+  content,
 }) => {
 
-  const [ open, setOpen ] = React.useState(false)
-
   return (
-    <ListItemButton component="a">
-  <Typography variant="subtitle1" onClick={ () => setOpen(!open) } component={HeaderTypography as any}>
-        {header}
-      </Typography>
-      <Dialog
-        fullScreen
-        TransitionComponent={ Transition }
-        open={ open }
-        onClose={ () => setOpen(false) }
-      >
-    <AppBarStyled>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              onClick={ () => setOpen(false) }
-              aria-label="Close"
-            >
-              <Close />
-            </IconButton>
-      <Typography variant="subtitle1" component={AppBarHeader as any}>
-              {title}
-            </Typography>
-          </Toolbar>
-          <InfoList>
-            {content}
-          </InfoList>
-    </AppBarStyled>
-      </Dialog>
-    </ListItemButton>
+    <Dialog
+      fullScreen
+      open={ open }
+      onClose={ onClose }
+    >
+      <AppBarStyles>
+        <Toolbar>
+          <IconButton
+            color='inherit'
+            onClick={ onClose }
+            aria-label='Close'
+          >
+            <Close />
+          </IconButton>
+          <AppBarHeader variant='subtitle1'>
+            {title}
+          </AppBarHeader>
+        </Toolbar>
+        <InfoList>
+          {content}
+        </InfoList>
+      </AppBarStyles>
+    </Dialog>
   )
 }
 

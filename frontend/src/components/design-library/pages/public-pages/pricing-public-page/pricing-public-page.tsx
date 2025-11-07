@@ -3,10 +3,8 @@ import React from 'react'
 import { Button, Card, CardActions, CardContent, CardHeader, Grid, Typography } from '@mui/material'
 
 import { FormattedMessage } from 'react-intl'
-import {
-  MainTitle
-} from '../../../../areas/public/features/welcome/components/CommonStyles'
 import { Layout, HeroContent, CardPricing } from './pricing-public-page.styles'
+import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 
 interface Tier {
   title: string
@@ -71,14 +69,10 @@ function PricingPublicPage() {
       <React.Fragment>
         { /* Hero unit */ }
         <HeroContent>
-          <MainTitle>
-            <Typography variant="h5" gutterBottom>
-              <FormattedMessage id="welcome.pricing.maintainers.title" defaultMessage="Fee for maintainers" />
-            </Typography>
-          </MainTitle>
-          <Typography variant="body1" align="center" color="textSecondary" sx={{ pt: 2 }}>
-            <FormattedMessage id="welcome.pricing.description" defaultMessage="These are the fees when you pay for an issue to be solved on Gitpay" />
-          </Typography>
+          <MainTitle
+            title={<FormattedMessage id="welcome.pricing.maintainers.title" defaultMessage="Fee for maintainers" />}
+            subtitle={<FormattedMessage id="welcome.pricing.description" defaultMessage="These are the fees when you pay for an issue to be solved on Gitpay" />}
+          />
         </HeroContent>
         { /* End hero unit */ }
         <Grid container spacing={ 5 } justifyContent="center">
