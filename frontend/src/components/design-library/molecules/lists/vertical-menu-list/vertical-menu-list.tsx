@@ -1,12 +1,13 @@
-import { List, ListItemButton, Typography } from '@mui/material'
-import BottomSectionDialog from 'design-library/molecules/dialogs/bottom-section-dialog/bottom-section-dialog'
 import React from 'react'
+import { Typography } from '@mui/material'
+import { ListStyled, ListItemButtonStyled, TitleStyled } from './vertical-menu-list.styles'
+import BottomSectionDialog from 'design-library/molecules/dialogs/bottom-section-dialog/bottom-section-dialog'
 
 type VerticalMenuListProps = {
   type?: 'link' | 'dialog'
-  title: string | React.ReactNode
+  title: React.ReactNode | string
   items: { 
-    label: string;
+    label: React.ReactNode | string
     onClick?: () => void
     component?: React.ReactNode
   }[]
@@ -22,23 +23,22 @@ const VerticalMenuList = ({
 
   return (
     <>
-      <Typography component="div">
-        <strong>{title}</strong>
-      </Typography>
-      <List component="nav">
+      <TitleStyled>
+        {title}
+      </TitleStyled>
+      <ListStyled>
         {items.map((item, index) => (
-          <ListItemButton component="a" key={index}>
+          <ListItemButtonStyled key={index}>
             <Typography
               variant="subtitle1"
-              component="div"
               style={{ display: 'block', width: '100%' }}
               {...type === 'link' ? { onClick: item.onClick } : { onClick: () => setOpen(index) }}
             >
               {item.label}
             </Typography>
-          </ListItemButton>
+          </ListItemButtonStyled>
         ))}
-      </List>
+      </ListStyled>
       { type === 'dialog' && open >= 0 && items[open].component &&
         <BottomSectionDialog
           title={ items[open].label }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Dialog, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import PrivacyPolicy from "../../content/privacy-policy/privacy-policy";
+import PrivacyPolicy from "../../content/terms/privacy-policy/privacy-policy";
 
 const PrivacyDialog = ({
   open,

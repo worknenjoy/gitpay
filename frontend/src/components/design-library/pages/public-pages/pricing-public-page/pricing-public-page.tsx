@@ -5,6 +5,8 @@ import { Button, Card, CardActions, CardContent, CardHeader, Grid, Typography } 
 import { FormattedMessage } from 'react-intl'
 import { Layout, HeroContent, CardPricing } from './pricing-public-page.styles'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
+import { HeroTitleStyled } from 'design-library/atoms/typography/hero-title/hero-title.styles'
+import HeroTitle from 'design-library/atoms/typography/hero-title/hero-title'
 
 interface Tier {
   title: string
@@ -67,63 +69,67 @@ function PricingPublicPage() {
   return (
     <Layout>
       <React.Fragment>
-        { /* Hero unit */ }
         <HeroContent>
-          <MainTitle
-            title={<FormattedMessage id="welcome.pricing.maintainers.title" defaultMessage="Fee for maintainers" />}
-            subtitle={<FormattedMessage id="welcome.pricing.description" defaultMessage="These are the fees when you pay for an issue to be solved on Gitpay" />}
-          />
+          <HeroTitle>
+            <FormattedMessage id="welcome.pricing.maintainers.title" defaultMessage="Our pricing model" />
+          </HeroTitle>
         </HeroContent>
-        { /* End hero unit */ }
-        <Grid container spacing={ 5 } justifyContent="center">
-          { tiersMaintainers.map(tier => (
-            // Enterprise card is full width at sm breakpoint
-            <Grid key={ tier.title } size={{ xs: 12, sm: tier.title === 'Enterprise' ? 12 : 6, md: 6 }}>
-              <Card style={{marginBottom: 20}}>
-                <CardHeader
-                  title={ tier.title }
-                  subheader={ tier.subheader }
-                  titleTypographyProps={ { align: 'center' } }
-                  subheaderTypographyProps={ { align: 'center' } }
-                  sx={{ backgroundColor: theme => theme.palette.primary.light }}
-                />
-                <CardContent>
-                  <CardPricing>
-                    <Typography variant="h5" color="textPrimary">
-                      <small>Fee</small> { tier.price }
-                    </Typography>
-                    <Typography variant="body1" color="textSecondary">
-                      <FormattedMessage id="welcome.pricing.month" defaultMessage=" / issue" />
-                    </Typography>
-                  </CardPricing>
-                  { tier.description.map((line, i) => (
-                    <Typography variant="body1" align="center" key={ line }>
-                      { line }
-                    </Typography>
-                  )) }
-                </CardContent>
-                { tier.link &&
-                  <CardActions sx={{ pb: { sm: 2 } }}>
-                    <Button component="a" href={ tier.link } fullWidth variant={ tier.buttonVariant } color="primary">
-                      { tier.buttonText }
-                    </Button>
-                  </CardActions>
-                }
-              </Card>
-            </Grid>
-          )) }
+        <Grid container spacing={ 0 } justifyContent="center">
+          <Grid size={{ xs: 12, sm: 12 }}>
+            <Card style={{marginBottom: 20}}>
+              <CardHeader
+                title={<FormattedMessage id="welcome.pricing.maintainers.title" defaultMessage="Our pricing model" />}
+                subheader={<FormattedMessage id="welcome.pricing.maintainers.subtitle" defaultMessage="For project maintainers" />}
+                sx={{ backgroundColor: theme => theme.palette.primary.light, textAlign: 'center' }}
+              />
+              <CardContent>
+                <Grid container spacing={ 2 } justifyContent="center">
+                { tiersMaintainers.map(tier => (
+                  <Grid key={ tier.title } size={{ xs: 12, sm: 6, md: 6 }}>
+                    <Card style={{marginBottom: 20}}>
+                      <CardHeader
+                        title={ tier.title }
+                        subheader={ tier.subheader }
+                        sx={{ backgroundColor: theme => theme.palette.primary.light, textAlign: 'center' }}
+                      />
+                      <CardContent>
+                        <CardPricing>
+                          <Typography variant="h5" color="textPrimary">
+                            <small>Fee</small> { tier.price }
+                          </Typography>
+                          <Typography variant="body1" color="textSecondary">
+                            <FormattedMessage id="welcome.pricing.month" defaultMessage=" / issue" />
+                          </Typography>
+                        </CardPricing>
+                        { tier.description.map((line, i) => (
+                          <Typography variant="body1" align="center" key={ line }>
+                            { line }
+                          </Typography>
+                        )) }
+                      </CardContent>
+                      { tier.link &&
+                        <CardActions sx={{ pb: { sm: 2 } }}>
+                          <Button component="a" href={ tier.link } fullWidth variant={ tier.buttonVariant } color="primary">
+                            { tier.buttonText }
+                          </Button>
+                        </CardActions>
+                      }
+                    </Card>
+                  </Grid>
+                )) }
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-        <Grid container spacing={ 5 } justifyContent="center">
+        <Grid container spacing={ 2 } justifyContent="center">
           { tiersContributors.map(tier => (
-            // Enterprise card is full width at sm breakpoint
             <Grid key={ tier.title } size={{ xs: 12, sm: tier.title === 'Enterprise' ? 12 : 6, md: 12 }}>
               <Card>
                 <CardHeader
                   title={ tier.title }
                   subheader={ tier.subheader }
-                  titleTypographyProps={ { align: 'center' } }
-                  subheaderTypographyProps={ { align: 'center' } }
-                  sx={{ backgroundColor: theme => theme.palette.primary.light }}
+                  sx={{ backgroundColor: theme => theme.palette.primary.light, textAlign: 'center' }}
                 />
                 <CardContent>
                   <CardPricing>

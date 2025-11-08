@@ -1,6 +1,6 @@
 import React from "react";
-import { Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
+import BaseTerms from "../base-terms/base-terms";
 
 
 const CookiePolicy = ({ extraStyles = true }) => {
@@ -56,24 +56,13 @@ Please note that this Cookie Policy should be read in conjunction with our Priva
 
   return (
     <>
-      <div style={extraStyles ? {padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, width: '100%', background: 'white'} : {}}>
-        <div style={{ marginBottom: 10 }}>
-          <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="cookie.policy.title" defaultMessage="Cookie Policy" />
-          </Typography>
-          <Typography variant="caption" gutterBottom>
-            <FormattedMessage id="cookie.policy.subtitle" defaultMessage="Updated 5 May, 2023" />
-          </Typography>
-        </div>
-        <Typography variant="body1" gutterBottom>
-          <FormattedMessage id="cookie.policy.subtitle.secondary" defaultMessage="About our Cookie Policy" />
-        </Typography>
-        <div style={{ overflow: 'scroll', height: 'calc(100vh - 200px)' }}>
-          <Typography variant="body1" gutterBottom>
-            <FormattedMessage id="cookie.policy.content" defaultMessage={content} values={{ br: <br /> }} />
-          </Typography>
-        </div>
-      </div>
+      <BaseTerms
+        title={<FormattedMessage id="cookie.policy.title" defaultMessage="Cookie Policy" />}
+        subtitle={<FormattedMessage id="cookie.policy.subtitle.secondary" defaultMessage="About our Cookie Policy" />}
+        updated={<FormattedMessage id="cookie.policy.updated" defaultMessage="Updated 5 May, 2023" />}
+        content={<FormattedMessage id="cookie.policy.content" defaultMessage={content} values={{ br: <br /> }} />}
+        extraStyles={extraStyles}
+      />
     </>
   )
 }

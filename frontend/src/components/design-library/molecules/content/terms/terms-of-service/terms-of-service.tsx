@@ -1,8 +1,6 @@
 import React from "react";
-import { Typography } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material"
 import { FormattedMessage } from "react-intl";
-import { Button, Paper } from "@mui/material";
+import BaseTerms from "../base-terms/base-terms";
 
 type TermsOfServiceProps = {
   onArrowBack?: () => void;
@@ -50,36 +48,15 @@ By using our platform, you agree to these terms and conditions. If you do not ag
   
   return (
     <>
-      <div style={extraStyles ? {padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, background: 'white', width: '100%'} : {}}>
-        <div style={{marginBottom: 10}}>
-          { onArrowBack && (
-            <a onClick={onArrowBack} href="#">
-              <ArrowBack />
-            </a>
-          )}
-          <Typography variant="h4" gutterBottom>
-            <FormattedMessage id="terms-of-service.title" defaultMessage="Terms of service" />
-          </Typography>
-          <Typography variant="caption" gutterBottom>
-            <FormattedMessage id="terms-of-service.date" defaultMessage="Updated 5 May, 2023" />
-          </Typography>
-        </div>
-        <Typography variant="body1" gutterBottom>
-          <FormattedMessage id="terms-of-service.subtitle" defaultMessage="About the terms" />
-        </Typography>
-        <div style={{overflow: 'scroll', height: 'calc(100vh - 200px)'}}>
-          <Typography variant="body1" gutterBottom>
-            <FormattedMessage id="terms-of-service.content" defaultMessage={content} values={{br: <br/>}} />
-          </Typography>
-        </div>
-        { onAgreeTerms && (
-          <Paper style={{position: 'absolute', bottom: 20, left: 0, height: 80, width: '100%', background: 'white'}}>
-            <Button onClick={onAgreeTerms} variant="contained" color="primary" size="large" style={{float: 'right', marginRight: 20, marginTop: 20}}>
-              <FormattedMessage id="terms-of-service.accept" defaultMessage="I agree" />
-            </Button>
-          </Paper>
-        )}
-      </div>
+      <BaseTerms
+        title={<FormattedMessage id="terms-of-service.title" defaultMessage="Terms of service" />}
+        subtitle={<FormattedMessage id="terms-of-service.subtitle" defaultMessage="About the terms" />}
+        updated={<FormattedMessage id="terms-of-service.date" defaultMessage="Updated 5 May, 2023" />}
+        content={<FormattedMessage id="terms-of-service.content" defaultMessage={content} values={{br: <br/>}} />}
+        extraStyles={extraStyles}
+        onArrowBack={onArrowBack}
+        onAgreeTerms={onAgreeTerms}
+      />
     </>
   )
 }

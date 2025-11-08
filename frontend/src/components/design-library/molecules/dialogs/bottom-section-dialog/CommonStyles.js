@@ -55,7 +55,7 @@ export const ShadowImage = styled.img`
 
 export const InfoList = styled.div`
   text-align: left;
-  margin-left: 6%;
+  margin-left: 3%;
 
   ${media.phone`
     margin-left: 0;
