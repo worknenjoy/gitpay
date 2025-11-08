@@ -6,19 +6,23 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import { FormattedMessage } from 'react-intl';
 
-const AccountActivation = ({ activateAccount, match, history }) => {
+const AccountActivation = ({ onActivateAccount }) => {
   const [open, setOpen] = React.useState(false);
   const [ activated, setActivated ] = React.useState(false);
 
+  const { token, userId } = useParams<{ token: string; userId: string }>();
+
    useEffect(() => {
-    const token = match.params.token;
-    const userId = match.params.userId;
-    activateAccount(token, userId).then((data) => {
-      if (!data.error) {
+    const activate = async () => {
+      const token = match.params.token;
+      const userId = match.params.userId;
+      const activateAccount = await onActivateAccount(token, userId);
+      if(!activateAccount.error){
         setActivated(true);
       }
-    });
-    setOpen(true);
+      setOpen(true);
+    };
+    activate();
   }, []);
 
   return (

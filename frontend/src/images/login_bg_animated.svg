@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Background gradient -->
+    <radialGradient id="bg" cx="0.3" cy="0.0" r="1.2">
+      <stop offset="0%" stop-color="#eef6ff"/>
+      <stop offset="60%" stop-color="#e7f0f6"/>
+      <stop offset="100%" stop-color="#d3e7f5"/>
+    </radialGradient>
+
+    <!-- Tree gradients -->
+    <linearGradient id="leaf1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b9f17a"/>
+      <stop offset="100%" stop-color="#6dd06d"/>
+    </linearGradient>
+    <linearGradient id="leaf2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9ae06c"/>
+      <stop offset="100%" stop-color="#47b96a"/>
+    </linearGradient>
+    <linearGradient id="trunk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#cc6a45"/>
+      <stop offset="100%" stop-color="#b34e33"/>
+    </linearGradient>
+
+    <!-- Cloud colors -->
+    <linearGradient id="cloudLight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#eaf3ff"/>
+      <stop offset="100%" stop-color="#d7e7fb"/>
+    </linearGradient>
+    <linearGradient id="cloudMid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#cfe2fb"/>
+      <stop offset="100%" stop-color="#b7d4f5"/>
+    </linearGradient>
+    <linearGradient id="cloudDeep" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a8c9ee"/>
+      <stop offset="100%" stop-color="#90b9e3"/>
+    </linearGradient>
+
+    <!-- Grass -->
+    <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8fe26b"/>
+      <stop offset="100%" stop-color="#5dd165"/>
+    </linearGradient>
+
+    <style>
+      .cloud { filter: drop-shadow(0 2px 0 rgba(120,160,210,0.25)); }
+      /* Cloud looping animation */
+      @keyframes driftSlow { from { transform: translateX(110%);} to { transform: translateX(-60%);} }
+      @keyframes driftMed  { from { transform: translateX(100%);} to { transform: translateX(-70%);} }
+      @keyframes driftFast { from { transform: translateX(120%);} to { transform: translateX(-80%);} }
+
+      /* Capybara subtle head motion */
+      @keyframes nod {
+        0%   { transform: rotate(-2deg) translateY(0px); }
+        50%  { transform: rotate(3deg) translateY(-2px); }
+        100% { transform: rotate(-2deg) translateY(0px); }
+      }
+      @keyframes blink {
+        0%, 46%, 48%, 100% { transform: scaleY(1); }
+        47% { transform: scaleY(0.1); }
+      }
+
+      /* Apply animation timing */
+      #clouds1 { animation: driftSlow 60s linear infinite; transform-box: fill-box; transform-origin: center; }
+      #clouds2 { animation: driftMed  45s linear infinite; transform-box: fill-box; transform-origin: center; }
+      #clouds3 { animation: driftFast 30s linear infinite; transform-box: fill-box; transform-origin: center; }
+
+      #capyHead { animation: nod 4s ease-in-out infinite; transform-box: fill-box; transform-origin: 1320px 760px; }
+      #eyeL, #eyeR { transform-origin: center; animation: blink 5.5s ease-in-out infinite; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- Far background rounded hill to the right -->
+  <path d="M1600,140 C1430,140 1380,40 1380,0 L1600,0 Z" fill="#a8c9ee" opacity="0.7"/>
+
+  <!-- CLOUDS LAYERS (each group moves across) -->
+  <g id="clouds1" class="cloud">
+    <!-- big cloud group -->
+    <g transform="translate(1200,150)">
+      <ellipse rx="150" ry="90" fill="url(#cloudMid)"/>
+      <ellipse rx="110" ry="70" transform="translate(-120,15)" fill="url(#cloudLight)"/>
+      <ellipse rx="95" ry="60" transform="translate(140,10)" fill="url(#cloudDeep)"/>
+      <rect x="-200" y="50" width="400" height="30" rx="15" fill="#a6c5e8"/>
+    </g>
+  </g>
+
+  <g id="clouds2" class="cloud">
+    <!-- smaller cloud -->
+    <g transform="translate(1400,95)">
+      <ellipse rx="80" ry="55" fill="url(#cloudLight)"/>
+      <ellipse rx="50" ry="35" transform="translate(-70,0)" fill="url(#cloudMid)"/>
+      <rect x="-110" y="30" width="220" height="16" rx="8" fill="#b6cff0"/>
+    </g>
+  </g>
+
+  <g id="clouds3" class="cloud">
+    <!-- tiny cloud -->
+    <g transform="translate(1500,220)">
+      <ellipse rx="65" ry="45" fill="url(#cloudDeep)"/>
+      <ellipse rx="40" ry="30" transform="translate(-55,-5)" fill="url(#cloudLight)"/>
+      <rect x="-90" y="20" width="180" height="14" rx="7" fill="#a2c2e6"/>
+    </g>
+  </g>
+
+  <!-- FOREST LEFT -->
+  <g transform="translate(0,560)">
+    <!-- repeated simple trees -->
+    <g transform="scale(1.05)">
+      <g transform="translate(30,120)">
+        <rect x="60" y="40" width="20" height="120" rx="8" fill="url(#trunk)"/>
+        <circle cx="70" cy="40" r="60" fill="url(#leaf1)"/>
+        <circle cx="120" cy="60" r="45" fill="url(#leaf2)"/>
+        <circle cx="20" cy="70" r="40" fill="url(#leaf2)"/>
+      </g>
+      <g transform="translate(160,140) scale(0.9)">
+        <rect x="60" y="40" width="18" height="120" rx="8" fill="url(#trunk)"/>
+        <circle cx="70" cy="40" r="55" fill="url(#leaf1)"/>
+        <circle cx="120" cy="60" r="42" fill="url(#leaf2)"/>
+        <circle cx="20" cy="70" r="38" fill="url(#leaf2)"/>
+      </g>
+      <g transform="translate(260,150) scale(0.8)">
+        <rect x="60" y="40" width="16" height="120" rx="8" fill="url(#trunk)"/>
+        <circle cx="70" cy="40" r="50" fill="url(#leaf1)"/>
+        <circle cx="120" cy="60" r="38" fill="url(#leaf2)"/>
+        <circle cx="20" cy="70" r="34" fill="url(#leaf2)"/>
+      </g>
+      <g transform="translate(350,165) scale(0.75)">
+        <rect x="60" y="40" width="14" height="120" rx="8" fill="url(#trunk)"/>
+        <circle cx="70" cy="40" r="46" fill="url(#leaf1)"/>
+        <circle cx="120" cy="60" r="36" fill="url(#leaf2)"/>
+        <circle cx="20" cy="70" r="30" fill="url(#leaf2)"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- RIGHT HILL & CAPYBARA -->
+  <g>
+    <!-- Hill -->
+    <path d="M1600,900 L1000,900 C1120,840 1210,800 1320,790 C1430,780 1500,820 1600,760 Z" fill="url(#grass)"/>
+    <!-- Leaves -->
+    <path d="M1570,700 C1510,620 1500,585 1510,560 C1540,600 1568,642 1600,680 L1600,760 Z" fill="#7ee16b"/>
+    <path d="M1530,730 C1490,650 1480,610 1490,585 C1515,623 1535,655 1565,695 L1565,760 Z" fill="#6cdb67"/>
+  </g>
+
+  <!-- Capybara (simplified, cartoon) -->
+  <g id="capybara" transform="translate(1250,690)">
+    <!-- Body hidden behind hill -->
+    <ellipse cx="150" cy="120" rx="120" ry="80" fill="#c45532" opacity="0.001"/>
+    <!-- Head group that moves -->
+    <g id="capyHead" transform="translate(135,120)">
+      <!-- head -->
+      <ellipse cx="0" cy="0" rx="85" ry="70" fill="#c45532" stroke="#b1482b" stroke-width="4"/>
+      <!-- cheeks -->
+      <ellipse cx="-30" cy="28" rx="30" ry="26" fill="#d46a43"/>
+      <ellipse cx="30" cy="28" rx="30" ry="26" fill="#d46a43"/>
+      <!-- snout -->
+      <path d="M-18,20 q18,25 36,0 v20 q-18,22 -36,0 z" fill="#f4c66a" stroke="#e0b25a" stroke-width="3"/>
+      <!-- nose -->
+      <circle cx="0" cy="18" r="4" fill="#7b3e2e"/>
+      <!-- eyes -->
+      <g id="eyeL" transform="translate(-28,-8)">
+        <ellipse cx="0" cy="0" rx="6" ry="8" fill="#2b1c16"/>
+      </g>
+      <g id="eyeR" transform="translate(28,-8)">
+        <ellipse cx="0" cy="0" rx="6" ry="8" fill="#2b1c16"/>
+      </g>
+      <!-- ear L -->
+      <path d="M-45,-35 q12,-16 28,0 q-10,8 -22,10 z" fill="#b1482b"/>
+      <!-- ear R -->
+      <path d="M45,-35 q-12,-16 -28,0 q10,8 22,10 z" fill="#b1482b"/>
+    </g>
+  </g>
+
+</svg>
