@@ -49,7 +49,7 @@ We may update this Cookie Policy from time to time to reflect changes in our pra
 {br}{br}
 Contact us
 {br}{br}
-If you have any questions or concerns about this Cookie Policy or our use of cookies on Gitpay, please contact us at [insert contact information].
+If you have any questions or concerns about this Cookie Policy or our use of cookies on Gitpay, please contact us at contact@gitpay.me.
 {br}
 Please note that this Cookie Policy should be read in conjunction with our Privacy Policy, which provides further information on how we collect, use, and disclose your personal data.
   `

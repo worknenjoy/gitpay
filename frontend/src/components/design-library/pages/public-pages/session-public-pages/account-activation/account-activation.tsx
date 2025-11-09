@@ -5,17 +5,17 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import { FormattedMessage } from 'react-intl';
+import { useHistory, useParams } from 'react-router-dom';
 
 const AccountActivation = ({ onActivateAccount }) => {
   const [open, setOpen] = React.useState(false);
   const [ activated, setActivated ] = React.useState(false);
 
+  const history = useHistory();
   const { token, userId } = useParams<{ token: string; userId: string }>();
 
    useEffect(() => {
     const activate = async () => {
-      const token = match.params.token;
-      const userId = match.params.userId;
       const activateAccount = await onActivateAccount(token, userId);
       if(!activateAccount.error){
         setActivated(true);

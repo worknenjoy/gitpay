@@ -4,7 +4,9 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
-const SigninPage = ({}) => {
+const SigninPage = ({
+  addNotification,
+}) => {
   const history = useHistory();
   return (
     <SpotCard
@@ -12,6 +14,7 @@ const SigninPage = ({}) => {
       description={<FormattedMessage id="signin.description" defaultMessage="Sign in to your account" />}
     >
       <LoginFormSignin
+        addNotification={addNotification}
         onSignup={() => history.push('/signup')}
         onForgot={() => history.push('/forgot')}
         noCancelButton

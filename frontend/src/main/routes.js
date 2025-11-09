@@ -2,8 +2,8 @@ import React from 'react'
 import { Route, HashRouter, Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from '../components/areas/private/components/session/private-route'
 import PublicPageContainer from '../containers/public-container'
-import Session from '../components/areas/private/components/session/session'
 import ProfileContainer from '../containers/profile'
+import SessionPage from '../components/areas/public/features/session/pages/session-page'
 
 import FourOFour from '../components/design-library/pages/public-pages/four-o-four-public-page/four-o-four-public-page'
 import Stats from '../components/areas/public/features/stats/Stats-main-page'
@@ -13,14 +13,7 @@ import Auth from '../modules/auth'
 export default props => (
   <HashRouter>
     <Switch>
-      {/* <Route exact path="/recruitment" component={ LandingPage } /> */}
-
-      {/* Make sure token auth happens before the broad "/" route */}
-      <Route exact path="/token/:token" component={ Session } />
-
-      {/* Private area needs to appear before the broad "/" route */}
       <PrivateRoute path="/profile" component={ ProfileContainer } />
-      
       <Route exact path="/stats" component={ Stats } />
       <Route exact path="/users/:usernameId" component={ TaskListUser } />
 
@@ -34,8 +27,7 @@ export default props => (
             : <PublicPageContainer />
         }
       />
-
-      {/* Keep this AFTER specific routes so they can match */}
+      <Route path="/" component={ SessionPage } />
       <Route path="/" component={ PublicPageContainer } />
 
       <Route path="/404" component={ FourOFour } />

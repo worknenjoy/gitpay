@@ -10,17 +10,21 @@ import ProviderLoginButtons from '../../../../atoms/buttons/provider-login-butto
 
 import api from '../../../../../../consts'
 import { Margins, Center, SpacedButton, StyledTextField } from './login-form-signin.styles'
+import { useParams } from 'react-router-dom'
 
 type LoginFormSigninProps = {
   onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void
   action?: string
   onClose?: () => void
   onSignup?: () => void
-  noCancelButton?: boolean,
+  noCancelButton?: boolean
   onForgot?: () => void
+  addNotification?: (message: string) => void
 }
 
-const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot }:LoginFormSigninProps) => {
+const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot, addNotification }: LoginFormSigninProps) => {
+  const { status } = useParams<{ status: string }>()
+  
   const [state, setState] = useState({
     username: '',
     password: '',
@@ -45,10 +49,6 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
     setState({ ...state, rememberMe: !state.rememberMe })
   }
 
-  const handleType = (type) => {
-    // handle type logic
-  }
-
   const validateEmail = (email, currentErrors) => {
     if (email.length < 3) {
       setState({
@@ -59,7 +59,7 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
         }
       })
       return false
-    } else if(email.length > 72) {
+    } else if (email.length > 72) {
       setState({
         ...state,
         error: {
@@ -94,7 +94,7 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
         }
       })
       return false
-    } else if(password.length > 72) {
+    } else if (password.length > 72) {
       setState({
         ...state,
         error: {
@@ -117,7 +117,7 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
     }
     const validEmail = validateEmail(state.username, state.error)
     const validPassword = validatePassword(state.password, state.error)
-    if(!validEmail || !validPassword) {
+    if (!validEmail || !validPassword) {
       return event && event.preventDefault();
     }
     onSubmit?.(event)
@@ -127,6 +127,12 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
     process.env.NODE_ENV === 'development' && setState({ ...state, captchaChecked: true })
     process.env.NODE_ENV === 'test' && setState({ ...state, captchaChecked: true })
   }, [])
+
+  useEffect(() => {
+    if (status === 'invalid') {
+      addNotification && addNotification('user.invalid')
+    }
+  }, [status, addNotification])
 
   const { error } = state
 
@@ -221,7 +227,7 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
             </Button>
           </div>
         </div>
-  </Center>
+      </Center>
     </form>
   )
 }

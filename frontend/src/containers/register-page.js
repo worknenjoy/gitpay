@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { addNotification } from '../actions/notificationActions'
 import { registerUser, forgotPassword, resetPassword } from '../actions/loginActions'
 import { fetchRoles } from '../actions/userRoleActions'
-import SigninPage from '../components/areas/public/features/session/pages/signin-page'
+import SignupPage from '../components/areas/public/features/session/pages/signup-page'
 
 const mapStateToProps = (state, props) => {
   return {
@@ -21,4 +21,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SigninPage)
+export default connect(mapStateToProps, mapDispatchToProps)(SignupPage)
