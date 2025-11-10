@@ -27,7 +27,18 @@ export default props => (
             : <PublicPageContainer />
         }
       />
-      <Route path="/" component={ SessionPage } />
+      <Route path={
+          [
+            '/reset-password',
+            '/signup',
+            '/signin',
+            '/forgot',
+            '/activate/user/:userId/token/:token',
+            '/token/:token'
+          ]
+        }
+        component={ SessionPage } 
+      />
       <Route path="/" component={ PublicPageContainer } />
 
       <Route path="/404" component={ FourOFour } />
