@@ -4,12 +4,12 @@ import { Toolbar, Typography } from '@mui/material'
 
 export const TopBarStyled = styled(Toolbar)(({ theme }) => ({
   borderBottom: `1px solid ${theme.palette.divider}`,
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(2)
 }))
 
 export const AppBarHeader = styled(Typography)(({ theme }) => ({
   width: '100%',
-  color: theme.palette.common.white,
+  color: theme.palette.common.white
 }))
 
 export const AppBar = styled(MuiAppBar)({

@@ -6,8 +6,8 @@ const meta: Meta<typeof BaseTerms> = {
   title: "Design Library/Molecules/Content/Terms/BaseTerms",
   component: BaseTerms,
   parameters: {
-    layout: "centered",
-  },
+    layout: "centered"
+  }
 };
 export default meta;
 
@@ -18,36 +18,36 @@ const baseArgs = {
   subtitle: "Please read these terms carefully before using our service.",
   updated: "Last updated: Jan 1, 2025",
   content:
-    "By accessing or using the service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the service.",
+    "By accessing or using the service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the service."
   // extraStyles defaults to true in the component
 };
 
 export const Default: Story = {
   args: {
-    ...baseArgs,
-  },
+    ...baseArgs
+  }
 };
 
 export const WithActions: Story = {
   args: {
     ...baseArgs,
     onArrowBack: action("onArrowBack"),
-    onAgreeTerms: action("onAgreeTerms"),
-  },
+    onAgreeTerms: action("onAgreeTerms")
+  }
 };
 
 export const NoHeader: Story = {
   args: {
     ...baseArgs,
-    noHeader: true,
-  },
+    noHeader: true
+  }
 };
 
 export const WithoutExtraStyles: Story = {
   args: {
     ...baseArgs,
-    extraStyles: false,
-  },
+    extraStyles: false
+  }
 };
 
 export const LongContent: Story = {
@@ -62,6 +62,6 @@ export const LongContent: Story = {
       "for any reason whatsoever, including without limitation if you breach the terms. " +
       "The service and its original content, features and functionality are and will remain the exclusive " +
       "property of the company and its licensors. " +
-      "We reserve the right, at our sole discretion, to modify or replace these terms at any time.",
-  },
+      "We reserve the right, at our sole discretion, to modify or replace these terms at any time."
+  }
 };

@@ -13,20 +13,20 @@ Default.args = {};
 
 export const WithoutHeader = Template.bind({});
 WithoutHeader.args = {
-  noHeader: true,
+  noHeader: true
 };
 
 export const WithAgreeButton = Template.bind({});
 WithAgreeButton.args = {
-  onAgreeTerms: () => alert('Agreed to Privacy Policy'),
+  onAgreeTerms: () => alert('Agreed to Privacy Policy')
 };
 
 export const WithExtraStyles = Template.bind({});
 WithExtraStyles.args = {
-  extraStyles: true,
+  extraStyles: true
 };
 
 export const WithArrowBack = Template.bind({});
 WithArrowBack.args = {
-  onArrowBack: () => alert('Arrow back clicked'),
+  onArrowBack: () => alert('Arrow back clicked')
 };

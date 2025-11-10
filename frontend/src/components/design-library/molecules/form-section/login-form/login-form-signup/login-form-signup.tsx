@@ -366,7 +366,7 @@ const LoginFormSignup = ({
             }
             <Typography variant="body1">
               <FormattedMessage id="account.login.label.terms.agree" defaultMessage="I agree with the " />
-              <a href='/#/terms' onClick={handleOpenTermsOfService} target="_blank" style={{ display: 'inline-block', marginRight: 5, marginLeft: 5 }}>
+              <a href="/#/terms" onClick={handleOpenTermsOfService} target="_blank" style={{ display: 'inline-block', marginRight: 5, marginLeft: 5 }}>
                 <FormattedMessage id="account.login.label.terms" defaultMessage="Terms of Service" />
               </a>
               <FormattedMessage id="account.login.label.terms.and" defaultMessage=" and" />

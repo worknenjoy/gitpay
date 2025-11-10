@@ -5,20 +5,20 @@ const meta: Meta<typeof CookiePolicy> = {
   title: 'Design Library/Molecules/Content/Terms/CookiePolicy',
   component: CookiePolicy,
   args: {
-    extraStyles: true,
+    extraStyles: true
   },
   argTypes: {
-    extraStyles: { control: 'boolean' },
-  },
+    extraStyles: { control: 'boolean' }
+  }
 };
 export default meta;
 
 type Story = StoryObj<typeof CookiePolicy>;
 
 export const Default: Story = {
-  args: { extraStyles: true },
+  args: { extraStyles: true }
 };
 
 export const NoExtraStyles: Story = {
-  args: { extraStyles: false },
+  args: { extraStyles: false }
 };

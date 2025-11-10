@@ -6,10 +6,10 @@ const meta: Meta<typeof SignupSigninBase> = {
   title: 'Design Library/Templates/Base/SignupSigninBase',
   component: SignupSigninBase,
   parameters: {
-    layout: 'fullscreen',
+    layout: 'fullscreen'
   },
   args: {
-    children: <div>Default Content</div>,
+    children: <div>Default Content</div>
   }
 };
 export default meta;
@@ -19,5 +19,5 @@ type Story = StoryObj<typeof SignupSigninBase>;
 export const Default: Story = {
   args: {
     
-  },
+  }
 };

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 
 import {
   Grid,
-  Typography,
+  Typography
 } from '@mui/material'
 
 import SubscribeForm from '../../../forms/subscribe-forms/subscribe-form/subscribe-form'

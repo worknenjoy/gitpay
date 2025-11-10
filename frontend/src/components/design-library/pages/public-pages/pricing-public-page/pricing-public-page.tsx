@@ -4,8 +4,6 @@ import { Button, Card, CardActions, CardContent, CardHeader, Grid, Typography } 
 
 import { FormattedMessage } from 'react-intl'
 import { Layout, HeroContent, CardPricing } from './pricing-public-page.styles'
-import MainTitle from 'design-library/atoms/typography/main-title/main-title'
-import { HeroTitleStyled } from 'design-library/atoms/typography/hero-title/hero-title.styles'
 import HeroTitle from 'design-library/atoms/typography/hero-title/hero-title'
 
 interface Tier {

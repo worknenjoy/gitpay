@@ -15,12 +15,12 @@ export const Default: Story = {};
 
 export const WithError: Story = {
   args: {
-    error: 'Unable to load session data',
-  },
+    error: 'Unable to load session data'
+  }
 };
 
 export const AlternateSession: Story = {
   args: {
-    sessionId: 'another-session-id',
-  },
+    sessionId: 'another-session-id'
+  }
 };

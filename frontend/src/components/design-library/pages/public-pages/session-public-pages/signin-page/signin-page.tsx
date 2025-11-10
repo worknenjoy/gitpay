@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
 const SigninPage = ({
-  addNotification,
+  addNotification
 }) => {
   const history = useHistory();
   return (

@@ -14,5 +14,5 @@ export const StyledCardContent = styled(CardContent)(() => ({
 }))
 
 export const Content = styled('div')({
-  marginTop: 20,
+  marginTop: 20
 });

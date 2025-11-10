@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 
 const ResetPasswordPage = ({
   user,
-  resetPassword,
+  resetPassword
 }) => {
   const history = useHistory()
   const { data, completed } = user || {}

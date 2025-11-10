@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 const SignupPage = ({
   handleSignup,
   roles,
-  fetchRoles,
+  fetchRoles
 }) => {
   const history = useHistory();
   return (

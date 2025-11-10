@@ -38,7 +38,7 @@ export const CloudsLayer = styled('div')({
   position: 'absolute',
   inset: 0,
   pointerEvents: 'none',
-  zIndex: 2,
+  zIndex: 2
 });
 
 export const Cloud = styled('div')<

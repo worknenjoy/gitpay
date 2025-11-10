@@ -5,7 +5,7 @@ import LoginFormForgot from 'design-library/molecules/form-section/login-form/lo
 import { useHistory } from 'react-router-dom';
 
 const ForgotUserPage = ({
-  forgotPassword,
+  forgotPassword
 }) => {
   const history = useHistory()
   return (
