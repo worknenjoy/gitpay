@@ -2,8 +2,8 @@ import React from 'react';
 import TextEllipsis from 'text-ellipsis';
 import slugify from '@sindresorhus/slugify';
 import { useHistory } from 'react-router-dom';
-import { useIntl } from 'react-intl';
-import { Tooltip, Typography } from '@mui/material';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { Avatar, Tooltip, Typography } from '@mui/material';
 
 import logoGithub from 'images/github-logo.png';
 import logoBitbucket from 'images/bitbucket-logo.png';
@@ -22,6 +22,17 @@ const IssueLinkField = ({ issue }) => {
     history.push(url);
   };
 
+  const getProviderLogo = (provider) => {
+    switch (provider.toLowerCase()) {
+      case 'github':
+        return logoGithub;
+      case 'bitbucket':
+        return logoBitbucket;
+      default:
+        return <Avatar><FormattedMessage id={`provider.label.notFound`} defaultMessage={'No provider'} /></Avatar>;
+    }
+  }
+
   return (
     <div style={{ width: 350, display: 'flex', alignItems: 'center' }}>
       <a style={{ cursor: 'pointer' }} onClick={() => handleClickListItem(issue)}>
@@ -37,8 +48,8 @@ const IssueLinkField = ({ issue }) => {
             placement="top"
           >
             <img
-              width="18"
-              src={issue.provider === 'github' ? logoGithub : logoBitbucket}
+              width="24"
+              src={getProviderLogo(issue.provider)}
               style={{
                 borderRadius: '50%',
                 padding: 3,

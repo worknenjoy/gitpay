@@ -153,7 +153,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
   }
 
   const taskAttrs = [
-    'id', 'private', 'not_listed', 'title', 'url', 'status', 'level', 'deadline', 'value', 'assigned',
+    'id','provider', 'private', 'not_listed', 'title', 'url', 'status', 'level', 'deadline', 'value', 'assigned',
     'createdAt', 'updatedAt', 'ProjectId', 'userId',
     makeLabelJsonAttr('Task')
   ]
