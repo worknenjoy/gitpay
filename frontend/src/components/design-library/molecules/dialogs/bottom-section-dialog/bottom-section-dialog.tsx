@@ -1,63 +1,62 @@
 import React from 'react'
 import {
-  ListItemButton,
-  Typography,
   Dialog,
-  Toolbar,
   IconButton,
-  Slide,
-  SlideProps
+  Slide
 } from '@mui/material'
 
 import {
   Close
 } from '@mui/icons-material'
 
-import { InfoList, AppBarStyled, AppBarHeader, HeaderTypography } from './bottom-section-dialog.styles'
+import { InfoList } from './CommonStyles'
+import { AppBar as AppBarStyles, AppBarHeader, TopBarStyled } from './bottom-section-dialog.styles'
+import { TransitionProps } from '@mui/material/transitions'
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 
 const BottomSectionDialog = ({
-  Transition = React.forwardRef<unknown, SlideProps>((props, ref) => (
-    <Slide direction="up" ref={ ref } { ...props } />
-  )),
-  header,
+  open,
+  onClose,
   title,
-  subtitle,
   content
 }) => {
 
-  const [ open, setOpen ] = React.useState(false)
-
   return (
-    <ListItemButton component="a">
-  <Typography variant="subtitle1" onClick={ () => setOpen(!open) } component={HeaderTypography as any}>
-        {header}
-      </Typography>
-      <Dialog
-        fullScreen
-        TransitionComponent={ Transition }
-        open={ open }
-        onClose={ () => setOpen(false) }
-      >
-    <AppBarStyled>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              onClick={ () => setOpen(false) }
-              aria-label="Close"
-            >
-              <Close />
-            </IconButton>
-      <Typography variant="subtitle1" component={AppBarHeader as any}>
-              {title}
-            </Typography>
-          </Toolbar>
-          <InfoList>
-            {content}
-          </InfoList>
-    </AppBarStyled>
-      </Dialog>
-    </ListItemButton>
+    <Dialog
+      fullScreen
+      open={ open }
+      onClose={ onClose }
+      slots={{
+        transition: Transition
+      }}
+    >
+      <AppBarStyles>
+      <TopBarStyled>
+        <IconButton
+        color="inherit"
+        onClick={ onClose }
+        aria-label="Close"
+        >
+        <Close />
+        </IconButton>
+        <AppBarHeader variant="subtitle1">
+        {title}
+        </AppBarHeader>
+      </TopBarStyled>
+      <InfoList>
+        {content}
+      </InfoList>
+      </AppBarStyles>
+    </Dialog>
   )
 }
 

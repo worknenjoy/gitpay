@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import {
   Button,
   Typography
@@ -17,7 +17,7 @@ type LoginFormResetProps = {
   action?: string
   onClose?: () => void
   onSignin?: () => void
-  onReset?: ({ password, token}:LoginOnResetProps) => void
+  onReset?: ({ password, token}:LoginOnResetProps) => Promise<void>
   noCancelButton?: boolean
 }
 
@@ -27,6 +27,7 @@ type ErrorStateType = {
 }
 
 const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:LoginFormResetProps) => {
+  const history = useHistory()
   
   const { token } = useParams<{ token: string }>()
 
@@ -70,6 +71,7 @@ const LoginFormReset = ({ action, noCancelButton, onClose, onSignin, onReset }:L
     const password = event.target.password.value
     if(validForm) {
       await onReset({ password, token })
+      history.push('/signin')
     }
   }
 

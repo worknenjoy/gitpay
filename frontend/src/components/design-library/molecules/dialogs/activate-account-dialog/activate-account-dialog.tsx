@@ -1,9 +1,38 @@
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Button from '../../../atoms/buttons/button/button';
 
-const ActivateAccountDialog = ({ open, onResend, completed }) => {
+interface ActivateAccountDialogProps {
+  open: boolean;
+  onResend: () => void;
+  completed?: boolean;
+}
+
+const RESEND_COOLDOWN_SECONDS = 60;
+
+const ActivateAccountDialog: React.FC<ActivateAccountDialogProps> = ({ open, onResend, completed }) => {
+  const [cooldown, setCooldown] = useState(0);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setInterval(() => {
+      setCooldown(prev => (prev > 1 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [cooldown]);
+
+  const handleResend = useCallback(() => {
+    if (cooldown > 0) return;
+    onResend?.();
+    setCooldown(RESEND_COOLDOWN_SECONDS);
+  }, [cooldown, onResend]);
+
+  const buttonLabel =
+    cooldown > 0
+      ? <FormattedMessage id="user.email.resend.link.label.cooldown" defaultMessage="Resend available in {seconds}s" values={{ seconds: cooldown }} />
+      : <FormattedMessage id="user.email.resend.link.label" defaultMessage="Resend verification link to your email" />;
+
   return (
     <Dialog open={ open }>
       <DialogTitle itemType="h4">
@@ -28,20 +57,22 @@ const ActivateAccountDialog = ({ open, onResend, completed }) => {
         <DialogContentText>
           <FormattedMessage
             id="account.profile.email.verification.message3"
-            defaultMessage="If you have not received the email, please click here to resend"
+            defaultMessage="If you have not received the email, please click below to resend"
           />
         </DialogContentText>
         <DialogActions>
-          <Button 
+          <Button
             completed={ completed }
-            onClick={ onResend }
+            onClick={ handleResend }
             color="primary"
             variant="contained"
-            label={<FormattedMessage id="user.email.resend.link.label" defaultMessage="Resend verification link to your email" />}
+            disabled={ cooldown > 0 }
+            label={ buttonLabel }
           />
         </DialogActions>
       </DialogContent>
     </Dialog>
   );
-}
+};
+
 export default ActivateAccountDialog;

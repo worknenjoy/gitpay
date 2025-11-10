@@ -1,6 +1,6 @@
 import React from "react";
-import { Dialog, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import TermsOfService from "../../content/terms-of-service/terms-of-service";
+import { Dialog, DialogContent } from "@mui/material";
+import TermsOfService from "../../content/terms/terms-of-service/terms-of-service";
 
 const TermsDialog = ({
   open,
@@ -9,11 +9,8 @@ const TermsDialog = ({
 
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>Terms and Conditions</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          <TermsOfService />
-        </DialogContentText>
+        <TermsOfService extraStyles={ false } />
       </DialogContent>
     </Dialog>  
   );

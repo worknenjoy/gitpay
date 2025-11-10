@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <!-- Grass gradient -->
+    <linearGradient id="grassL" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8fe26b"/>
+      <stop offset="100%" stop-color="#5dd165"/>
+    </linearGradient>
+
+    <!-- Trunk gradient -->
+    <linearGradient id="trunk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#cc6a45"/>
+      <stop offset="100%" stop-color="#b34e33"/>
+    </linearGradient>
+
+    <!-- Leaves gradients -->
+    <linearGradient id="leaf1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b9f17a"/>
+      <stop offset="100%" stop-color="#6dd06d"/>
+    </linearGradient>
+    <linearGradient id="leaf2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9ae06c"/>
+      <stop offset="100%" stop-color="#47b96a"/>
+    </linearGradient>
+
+    <!-- Soft shadow for foliage -->
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="rgba(0,0,0,0.12)" />
+    </filter>
+  </defs>
+
+  
+
+  <!-- Cluster of trees (static) -->
+  <g transform="translate(20,260)" filter="url(#softShadow)">
+    <!-- Tree 1 (largest, foreground) -->
+    <g transform="translate(40,100)">
+      <rect x="100" y="170" width="26" height="170" rx="10" fill="url(#trunk)"/>
+      <circle cx="115" cy="155" r="80" fill="url(#leaf1)"/>
+      <circle cx="175" cy="185" r="60" fill="url(#leaf2)"/>
+      <circle cx="55"  cy="205" r="55" fill="url(#leaf2)"/>
+    </g>
+
+    <!-- Tree 2 -->
+    <g transform="translate(220,80) scale(0.92)">
+      <rect x="100" y="170" width="24" height="170" rx="10" fill="url(#trunk)"/>
+      <circle cx="115" cy="155" r="72" fill="url(#leaf1)"/>
+      <circle cx="175" cy="185" r="55" fill="url(#leaf2)"/>
+      <circle cx="55"  cy="205" r="48" fill="url(#leaf2)"/>
+    </g>
+
+    <!-- Tree 3 -->
+    <g transform="translate(380,95) scale(0.86)">
+      <rect x="100" y="170" width="22" height="170" rx="10" fill="url(#trunk)"/>
+      <circle cx="115" cy="155" r="66" fill="url(#leaf1)"/>
+      <circle cx="175" cy="185" r="50" fill="url(#leaf2)"/>
+      <circle cx="55  " cy="205" r="44" fill="url(#leaf2)"/>
+    </g>
+
+    <!-- Tree 4 -->
+    <g transform="translate(520,115) scale(0.80)">
+      <rect x="100" y="170" width="20" height="170" rx="10" fill="url(#trunk)"/>
+      <circle cx="115" cy="155" r="60" fill="url(#leaf1)"/>
+      <circle cx="175" cy="185" r="46" fill="url(#leaf2)"/>
+      <circle cx="55"  cy="205" r="40" fill="url(#leaf2)"/>
+    </g>
+
+    <!-- Small background shrubs for depth -->
+    <g opacity="0.9">
+      <circle cx="120" cy="365" r="36" fill="url(#leaf2)"/>
+      <circle cx="180" cy="350" r="28" fill="url(#leaf2)"/>
+      <circle cx="260" cy="360" r="30" fill="url(#leaf2)"/>
+      <circle cx="330" cy="355" r="26" fill="url(#leaf2)"/>
+    </g>
+  </g>
+</svg>

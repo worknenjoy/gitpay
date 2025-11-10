@@ -289,148 +289,150 @@ const LoginFormSignup = ({
   const { error, password, confirmPassword } = state
 
   return (
-    <form onSubmit={handleForm} action={action} method="POST" autoComplete="off">
-      <Margins>
-        <StyledTextField
-          name="name"
-          onChange={handleChange('name')}
-          fullWidth
-          label="Name"
-          variant="outlined"
-          id="name"
-          error={!!error.name}
-          helperText={error.name}
-          defaultValue={state.name}
-        />
-      </Margins>
-      <Margins>
-        <StyledTextField
-          name="username"
-          onChange={handleChange('username')}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          fullWidth
-          label="E-mail"
-          variant="outlined"
-          id="username"
-          error={!!error.username}
-          helperText={error.username}
-          defaultValue={state.username}
-        />
-      </Margins>
-      <Margins>
-        <StyledTextField
-          name="password"
-          onChange={handleChange('password')}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          fullWidth
-          type="password"
-          label="Password"
-          variant="outlined"
-          id="password"
-          error={!!error.password}
-          helperText={error.password}
-          defaultValue={state.password}
-        />
-      </Margins>
-
-      <Margins>
-        <StyledTextField
-          error={validating && password !== confirmPassword}
-          helperText={validating && password !== confirmPassword ? <FormattedMessage id="user.confirm.password.error" defaultMessage="Passwords do not match" /> : ''}
-          name="confirm_password"
-          onChange={handleChange('confirmPassword')}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          fullWidth
-          type="password"
-          label="Confirm Password"
-          variant="outlined"
-          id="confirmPassword"
-          defaultValue={state.confirmPassword}
-        />
-      </Margins>
-      <Margins>
-        <UserRoleField
-          roles={roles}
-          onChange={handleTypesChange}
-        />
-      </Margins>
-      <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          {state.agreeTermsCheck
-            ? <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid="agree-terms-checkbox-checked" />
-            : <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid="agree-terms-checkbox" />
-          }
-          <Typography variant="body1">
-            <FormattedMessage id="account.login.label.terms.agree" defaultMessage="I agree with the " />
-            <a onClick={handleOpenTermsOfService} href="/#/terms" target="_blank" style={{ display: 'inline-block', marginRight: 5, marginLeft: 5 }}>
-              <FormattedMessage id="account.login.label.terms" defaultMessage="Terms of Service" />
-            </a>
-            <FormattedMessage id="account.login.label.terms.and" defaultMessage=" and" />
-            <a href="/#/privacy-policy" onClick={handleOpenPrivacyPolicy} target="_blank" style={{ display: 'inline-block', marginLeft: 5 }}>
-              <FormattedMessage id="account.login.label.privacy" defaultMessage="Privacy Policy" />
-            </a>
-          </Typography>
-        </div>
-      </div>
-      {agreeTermsCheckError &&
-        <div style={{
-          color: 'red',
-          fontSize: 10,
-          display: 'flex',
-          justifyContent: 'center'
-        }}>
-          <Typography variant="body1" component="span">
-            <FormattedMessage id="account.login.label.terms.agree.error" defaultMessage="You must agree with the Terms of Service and Privacy Policy" />
-          </Typography>
-        </div>
-      }
-
-      {process.env.NODE_ENV === 'production' && (
-        <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: 80, marginTop: 20 }}>
-          <ReCAPTCHA
-            sitekey={process.env.GOOGLE_RECAPTCHA_SITE_KEY}
-            onChange={captchaChecked => setState({ ...state, captchaChecked })}
+    <>
+      <form onSubmit={handleForm} action={action} method="POST" autoComplete="off">
+        <Margins>
+          <StyledTextField
+            name="name"
+            onChange={handleChange('name')}
+            fullWidth
+            label="Name"
+            variant="outlined"
+            id="name"
+            error={!!error.name}
+            helperText={error.name}
+            defaultValue={state.name}
           />
-        </div>
-      )}
-      {error.captcha &&
-        <div style={{
-          color: 'red',
-          fontSize: 10,
-          display: 'flex',
-          justifyContent: 'center'
-        }}>
-          <Typography variant="body1" component="span">
-            {error.captcha}
-          </Typography>
-        </div>
-      }
-      <Center style={{ marginTop: 20 }}>
-        <div>
-          {noCancelButton ? null : (
-            <SpacedButton onClick={onClose} size="large" variant="text" color="primary">
-              <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
-            </SpacedButton>
-          )}
-          <SpacedButton data-testid="signup-button" type="submit" size="large" variant="contained" color="primary">
-            <FormattedMessage id="account.login.label.signup" defaultMessage="Sign up" />
-          </SpacedButton>
-          <div style={{ marginTop: 20, display: 'flex', alignItems: 'baseline' }}>
-            <Typography variant="body1" component="span">
-              <FormattedMessage id="account.login.label.or.signup" defaultMessage="Have an account?" />
+        </Margins>
+        <Margins>
+          <StyledTextField
+            name="username"
+            onChange={handleChange('username')}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            fullWidth
+            label="E-mail"
+            variant="outlined"
+            id="username"
+            error={!!error.username}
+            helperText={error.username}
+            defaultValue={state.username}
+          />
+        </Margins>
+        <Margins>
+          <StyledTextField
+            name="password"
+            onChange={handleChange('password')}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            fullWidth
+            type="password"
+            label="Password"
+            variant="outlined"
+            id="password"
+            error={!!error.password}
+            helperText={error.password}
+            defaultValue={state.password}
+          />
+        </Margins>
+
+        <Margins>
+          <StyledTextField
+            error={validating && password !== confirmPassword}
+            helperText={validating && password !== confirmPassword ? <FormattedMessage id="user.confirm.password.error" defaultMessage="Passwords do not match" /> : ''}
+            name="confirm_password"
+            onChange={handleChange('confirmPassword')}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            fullWidth
+            type="password"
+            label="Confirm Password"
+            variant="outlined"
+            id="confirmPassword"
+            defaultValue={state.confirmPassword}
+          />
+        </Margins>
+        <Margins>
+          <UserRoleField
+            roles={roles}
+            onChange={handleTypesChange}
+          />
+        </Margins>
+        <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {state.agreeTermsCheck
+              ? <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid="agree-terms-checkbox-checked" />
+              : <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid="agree-terms-checkbox" />
+            }
+            <Typography variant="body1">
+              <FormattedMessage id="account.login.label.terms.agree" defaultMessage="I agree with the " />
+              <a href="/#/terms" onClick={handleOpenTermsOfService} target="_blank" style={{ display: 'inline-block', marginRight: 5, marginLeft: 5 }}>
+                <FormattedMessage id="account.login.label.terms" defaultMessage="Terms of Service" />
+              </a>
+              <FormattedMessage id="account.login.label.terms.and" defaultMessage=" and" />
+              <a href="/#/privacy-policy" onClick={handleOpenPrivacyPolicy} target="_blank" style={{ display: 'inline-block', marginLeft: 5 }}>
+                <FormattedMessage id="account.login.label.privacy" defaultMessage="Privacy Policy" />
+              </a>
             </Typography>
-            <Button onClick={onSignin} variant="text" size="large" color="primary">
-              <FormattedMessage id="account.login.label.signin" defaultMessage="Sign in" />
-            </Button>
           </div>
         </div>
-      </Center>
+        {agreeTermsCheckError &&
+          <div style={{
+            color: 'red',
+            fontSize: 10,
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <Typography variant="body1" component="span">
+              <FormattedMessage id="account.login.label.terms.agree.error" defaultMessage="You must agree with the Terms of Service and Privacy Policy" />
+            </Typography>
+          </div>
+        }
+
+        {process.env.NODE_ENV === 'production' && (
+          <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: 80, marginTop: 20 }}>
+            <ReCAPTCHA
+              sitekey={process.env.GOOGLE_RECAPTCHA_SITE_KEY}
+              onChange={captchaChecked => setState({ ...state, captchaChecked })}
+            />
+          </div>
+        )}
+        {error.captcha &&
+          <div style={{
+            color: 'red',
+            fontSize: 10,
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
+            <Typography variant="body1" component="span">
+              {error.captcha}
+            </Typography>
+          </div>
+        }
+        <Center style={{ marginTop: 20 }}>
+          <div>
+            {noCancelButton ? null : (
+              <SpacedButton onClick={onClose} size="large" variant="text" color="primary">
+                <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
+              </SpacedButton>
+            )}
+            <SpacedButton data-testid="signup-button" type="submit" size="large" variant="contained" color="primary">
+              <FormattedMessage id="account.login.label.signup" defaultMessage="Sign up" />
+            </SpacedButton>
+            <div style={{ marginTop: 20, display: 'flex', alignItems: 'baseline' }}>
+              <Typography variant="body1" component="span">
+                <FormattedMessage id="account.login.label.or.signup" defaultMessage="Have an account?" />
+              </Typography>
+              <Button onClick={onSignin} variant="text" size="large" color="primary">
+                <FormattedMessage id="account.login.label.signin" defaultMessage="Sign in" />
+              </Button>
+            </div>
+          </div>
+        </Center>
+      </form>
       <TermsDialog open={openTermsDialog} onClose={closeTermsDialog} />
       <PrivacyDialog open={openPrivacyDialog} onClose={closePrivacyDialog} />
-    </form>
+    </>
   )
 }
 

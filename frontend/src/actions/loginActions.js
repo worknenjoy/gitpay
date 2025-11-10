@@ -231,9 +231,9 @@ export const forgotPassword = data => {
       .post(api.API_URL + '/auth/forgot-password', data)
       .then(response => {
         if(response) {
-          dispatch(addNotification('user.forgot.password.successfull'))
+          return dispatch(addNotification('user.forgot.password.successfull'))
         } else {
-          dispatch(addNotification('user.forgot.password.error'))  
+          return dispatch(addNotification('user.forgot.password.error'))  
         }
       })
       .catch(error => {
@@ -286,7 +286,7 @@ const searchUserRequested = () => {
 }
 
 const searchUserSuccess = user => {
-  return { type: SEARCH_USER_SUCCESS, logged: false, completed: true, user: user }
+  return { type: SEARCH_USER_SUCCESS, logged: false, completed: true, data: user }
 }
 
 const searchUserError = error => {
