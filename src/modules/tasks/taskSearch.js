@@ -100,7 +100,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
     }
 
     const taskAttrsInProject = [
-      'id', 'private', 'not_listed', 'title', 'url', 'status', 'level', 'deadline', 'value',
+      'id', 'provider', 'private', 'not_listed', 'title', 'url', 'status', 'level', 'deadline', 'value',
       'createdAt', 'updatedAt', 'ProjectId', 'userId',
       makeLabelJsonAttr('Tasks')
     ]
@@ -163,7 +163,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
       where: whereTasks,
       attributes: taskAttrs,
       include: [
-        { model: models.User, attributes: ['id', 'name', 'username', 'picture_url', 'country', 'language'] },
+        { model: models.User, attributes: ['id', 'provider', 'name', 'username', 'picture_url', 'country', 'language'] },
         {
           model: models.Assign,
           separate: true,
