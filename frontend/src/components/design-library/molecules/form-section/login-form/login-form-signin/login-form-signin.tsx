@@ -178,7 +178,7 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
             <FormattedMessage id="account.login.label.remember" defaultMessage="Remember me" />
           </Typography>
         </div>
-        <Button variant="text" style={{ margin: 0, padding: 0 }} onClick={onForgot} component="a" size="small" color="primary">
+        <Button variant="text" style={{ margin: 0, padding: 0, fontSize: 14 }} onClick={onForgot} component="a" size="small" color="primary">
           <FormattedMessage id="account.login.label.forgot" defaultMessage="Forgot password?" />
         </Button>
       </div>

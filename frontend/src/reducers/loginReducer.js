@@ -39,7 +39,7 @@ export const loggedIn = (state = { logged: false, data: {}, completed: true, err
     case LOGOUT_COMPLETED:
       return { ...state, logged: action.logged, completed: action.completed }
     case SEARCH_USER_SUCCESS:
-      return { ...state, user: action.data }
+      return { ...state, data: action.data }
     case SEARCH_USER_ERROR:
       return { ...state, error: action.error }
     case FETCH_LOGGED_USER_REQUESTED:

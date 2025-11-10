@@ -5,6 +5,8 @@ import Session from '../components/session';
 import AccountActivation from '../../../../../../containers/account-activation'
 import LoginPageContainer from '../../../../../../containers/login-page'
 import RegisterPageContainer from '../../../../../../containers/register-page'
+import ForgotPasswordPageContainer from '../../../../../../containers/forgot-password-page'
+import ResetPasswordPageContainer from '../../../../../../containers/reset-password-page'
 
 const SessionPage = () => {
   return (
@@ -14,11 +16,11 @@ const SessionPage = () => {
           <Route exact path="/signin" component={ LoginPageContainer } />
           <Route exact path="/signin/:status" component={ LoginPageContainer } />
           <Route exact path="/signup" component={ RegisterPageContainer } />
-          <Route exact path="/reset-password/:token" component={ LoginPageContainer } />
+          <Route exact path="/reset-password/:token" component={ ResetPasswordPageContainer } />
           <Route exact path="/token/:token" component={ Session } />
           <Route exact path="/activate/user/:userId/token/:token" component={ AccountActivation } />
           <Route exact path="/signup/:status" component={ RegisterPageContainer } />
-          <Route exact path="/forgot" component={ LoginPageContainer } />
+          <Route exact path="/forgot" component={ ForgotPasswordPageContainer } />
         </Switch>
       </HashRouter>
     </SignupSigninPage>
