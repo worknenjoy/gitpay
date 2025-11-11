@@ -3,6 +3,7 @@ import { intlReducer } from 'react-intl-redux'
 
 import { notification, dialog } from './notificationReducer'
 import { loggedIn } from './loginReducer'
+import { user } from './userReducer'
 import { account, balance, countries, bankAccount } from './accountReducer'
 import { customer } from './customerReducer'
 import { project, projects } from './projectReducer'
@@ -32,6 +33,7 @@ const reducers = combineReducers({
   notification,
   dialog,
   loggedIn,
+  user,
   customer,
   account,
   balance,

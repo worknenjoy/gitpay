@@ -65,6 +65,10 @@ const UPDATE_BANKACCOUNT_REQUESTED = 'UPDATE_BANKACCOUNT_REQUESTED'
 const UPDATE_BANKACCOUNT_SUCCESS = 'UPDATE_BANKACCOUNT_SUCCESS'
 const UPDATE_BANKACCOUNT_ERROR = 'UPDATE_BANKACCOUNT_ERROR'
 
+const SEARCH_USER_REQUESTED = 'SEARCH_USER_REQUESTED'
+const SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS'
+const SEARCH_USER_ERROR = 'SEARCH_USER_ERROR'
+
 /*
  * Account fetch
  */
@@ -742,6 +746,40 @@ const updateBankAccount = (bank_account) => {
   }
 }
 
+const searchUserRequested = () => {
+  return { type: SEARCH_USER_REQUESTED, logged: false, completed: false }
+}
+
+const searchUserSuccess = user => {
+  return { type: SEARCH_USER_SUCCESS, logged: false, completed: true, data: user }
+}
+
+const searchUserError = error => {
+  return { type: SEARCH_USER_ERROR, logged: false, completed: true, error: error }
+}
+
+const searchUser = data => {
+  return dispatch => {
+    dispatch(searchUserRequested())
+    return axios
+      .get(api.API_URL + '/users', {
+        params: data
+      })
+      .then(response => {
+        if(response?.data) {
+          dispatch(searchUserSuccess(response.data[0]))
+        } else {
+          dispatch(addNotification('user.search.error'))  
+        }
+      })
+      .catch(error => {
+        console.log('error', error)
+        dispatch(addNotification('user.search.error'))
+        dispatch(searchUserError(error))
+      })
+  }
+}
+
 export {
   FETCH_USER_ACCOUNT_REQUESTED,
   FETCH_USER_ACCOUNT_SUCCESS,
@@ -788,6 +826,9 @@ export {
   UPDATE_BANKACCOUNT_REQUESTED,
   UPDATE_BANKACCOUNT_SUCCESS,
   UPDATE_BANKACCOUNT_ERROR,
+  SEARCH_USER_REQUESTED,
+  SEARCH_USER_SUCCESS,
+  SEARCH_USER_ERROR,
   fetchAccount,
   fetchAccountBalance,
   fetchAccountCountries,
@@ -803,5 +844,6 @@ export {
   createBankAccount,
   updateBankAccount,
   getBankAccount,
-  deleteUser
+  deleteUser,
+  searchUser
 }

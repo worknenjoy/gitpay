@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom'
 
 const UserProfilePublicPage = ({
   user,
+  searchUser,
   getUserTypes,
   tasks,
   listTasks,
@@ -19,32 +20,37 @@ const UserProfilePublicPage = ({
   const { userId } = useParams<{ userId: string }>()
   const { data: profile } = user || {}
 
-  const listTasksByUserId = () => {
-    listTasks({ userId: userId })
-    filterTasks('all')
+  const listTasksByUserId = async () => {
+    await listTasks({ userId: userId })
+    await filterTasks('all')
   }
 
-  const filterTasksWithOrders = () => {
-    filterTasks('supported')
+  const filterTasksWithOrders = async () => {
+    await filterTasks('supported')
   }
 
-  function filterTasksByState(value) {
+  const filterTasksByState = async (value) => {
     switch (value) {
       case 'created':
-        listTasksByUserId()
+        await listTasksByUserId()
         break
       case 'supported':
-        filterTasksWithOrders()
+        await filterTasksWithOrders()
         break
       default:
-        listTasksByUserId()
+        await listTasksByUserId()
         break
     }
   }
 
+  const handleTabbedTableChange = (newValue: string) => {
+    filterTasksByState(newValue)
+  };
+
   useEffect(() => {
-    filterTasksByState('created')
-  }, [])
+    searchUser({ id: userId })
+    listTasksByUserId()
+  }, [userId])
 
   return (
     <React.Fragment>
@@ -59,6 +65,7 @@ const UserProfilePublicPage = ({
           <Root container>
             <Grid size={{ xs: 12, md: 12 }}>
               <TabbedTable
+                onChange={handleTabbedTableChange}
                 activeTab={'created'}
                 tabs={[
                   {
@@ -71,7 +78,7 @@ const UserProfilePublicPage = ({
                     }
                   },
                   {
-                    value: 'sponsored',
+                    value: 'supported',
                     label: <FormattedMessage id="issues.user.profile.sponsored" defaultMessage="Issues sponsored" />,
                     table: {
                       tableData: tasks,

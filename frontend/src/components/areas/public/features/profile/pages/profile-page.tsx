@@ -4,12 +4,12 @@ import { useParams } from 'react-router-dom'
 
 const ProfilePage = ({
   user,
+  searchUser,
   getUserTypes,
   tasks,
   listTasks,
   filterTasks
 }) => {
-  const { username } = useParams<{ username: string }>()
 
   return (
     <UserProfilePublicPage
@@ -18,6 +18,7 @@ const ProfilePage = ({
       tasks={tasks}
       listTasks={listTasks}
       filterTasks={filterTasks}
+      searchUser={searchUser}
     />
   )
 }

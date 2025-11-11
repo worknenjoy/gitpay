@@ -4,8 +4,6 @@ import {
   LOGGED_IN_ERROR,
   LOGOUT_REQUESTED,
   LOGOUT_COMPLETED,
-  SEARCH_USER_SUCCESS,
-  SEARCH_USER_ERROR,
   FETCH_LOGGED_USER_REQUESTED,
   FETCH_LOGGED_USER_SUCCESS,
   FETCH_LOGGED_USER_ERROR
@@ -38,10 +36,6 @@ export const loggedIn = (state = { logged: false, data: {}, completed: true, err
       return { ...state, logged: action.logged, completed: action.completed }
     case LOGOUT_COMPLETED:
       return { ...state, logged: action.logged, completed: action.completed }
-    case SEARCH_USER_SUCCESS:
-      return { ...state, data: action.data }
-    case SEARCH_USER_ERROR:
-      return { ...state, error: action.error }
     case FETCH_LOGGED_USER_REQUESTED:
       return { ...state, completed: action.completed }
     case FETCH_LOGGED_USER_SUCCESS:
