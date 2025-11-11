@@ -13,7 +13,7 @@ const chargeSucceeded = require('../../../modules/webhooks/chargeSucceeded')
 const checkoutSessionCompleted = require('../../../modules/webhooks/checkoutSessionCompleted')
 const customerSourceCreated = require('../../../modules/webhooks/customerSourceCreated')
 const chargeUpdated = require('../../../modules/webhooks/chargeUpdated')
-const chargeRefunded = require('../../../modules/webhooks/chargeRefunded')
+const chargeRefunded = require('../../../modules/webhooks/chargeRefunded/chargeRefundedIssue')
 const chargeFailed = require('../../../modules/webhooks/chargeFailed')
 import { chargeDisputeCreatedWebhookHandler } from '../../../modules/webhooks/chargeDisputeCreated'
 import { chargeDisputeClosedWebhookHandler } from '../../../modules/webhooks/chargeDisputeClosed'
