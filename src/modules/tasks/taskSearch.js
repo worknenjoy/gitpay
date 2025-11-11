@@ -124,7 +124,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
             },
             {
               model: models.Project,
-              attributes: ['id', 'name', 'repo'],
+              attributes: ['id', 'name', 'repo', 'OrganizationId'],
               include: [{
                 model: models.ProgrammingLanguage,
                 as: 'ProgrammingLanguages',
@@ -173,7 +173,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
         },
         {
           model: models.Project,
-          attributes: ['id','name','repo'],
+          attributes: ['id','name','repo', 'OrganizationId'],
           include: [{
             model: models.ProgrammingLanguage,
             as: 'ProgrammingLanguages',

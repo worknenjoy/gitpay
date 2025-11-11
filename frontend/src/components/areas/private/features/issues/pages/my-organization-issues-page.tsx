@@ -23,6 +23,9 @@ const MyOrganizationIssuesPage = ({
       case 'interested':
         filterTasks('assigned')
         break;
+      case 'supported':
+        filterTasks('supported')
+        break;
       default:
         filterTasks('userId')
         break;
