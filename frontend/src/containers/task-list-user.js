@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { listTasks, filterTasks } from '../actions/taskActions'
 import { searchUser } from '../actions/userActions'
 import { getFilteredTasks } from '../selectors/tasks'
-import { getCurrentUser } from '../common/selectors/user/getUser'
 import ProfilePage from '../components/areas/public/features/profile/pages/profile-page'
 
 const mapStateToProps = (state) => {
