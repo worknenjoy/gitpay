@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Container, Tabs, Tab } from '@mui/material'
+import { Container } from '@mui/material'
 import { Grid } from '@mui/material'
 import ProfileUserHeader from 'design-library/molecules/headers/profile-user-header/profile-user-header'
 import { Root } from './user-profile-public-page.styles'
@@ -7,7 +7,7 @@ import { Page } from '../../../../../styleguide/components/Page'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
 import { issueMetadata, customColumnRenderer } from 'design-library/molecules/tables/issue-table/issue-table'
 import { FormattedMessage } from 'react-intl'
-import { useHistory, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 const UserProfilePublicPage = ({
   user,
@@ -49,13 +49,13 @@ const UserProfilePublicPage = ({
   return (
     <React.Fragment>
       <Page>
-        <Container fixed maxWidth='lg'>
+        <Container fixed maxWidth="lg">
           <ProfileUserHeader 
             profile={profile}
             getUserTypes={getUserTypes}
           />
         </Container>
-        <Container fixed maxWidth='lg'>
+        <Container fixed maxWidth="lg">
           <Root container>
             <Grid size={{ xs: 12, md: 12 }}>
               <TabbedTable

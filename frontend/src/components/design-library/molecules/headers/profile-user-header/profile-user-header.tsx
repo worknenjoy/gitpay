@@ -3,7 +3,7 @@ import nameInitials from 'name-initials'
 
 import {
   Typography,
-  Chip,
+  Chip
 } from '@mui/material'
 
 import {
