@@ -5,7 +5,6 @@ import {
  createCustomer,
  updateCustomer
 } from '../actions/userActions'
-import { searchUser } from '../actions/loginActions' 
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -26,9 +25,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateCustomer: data => {
       //eslint-disable-next-line
       dispatch(updateCustomer(_, data))
-    },
-    searchUser: data => {
-      dispatch(searchUser(data))
     }
   }
 }

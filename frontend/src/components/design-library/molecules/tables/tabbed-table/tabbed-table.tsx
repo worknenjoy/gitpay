@@ -3,11 +3,33 @@ import React, { useEffect } from 'react';
 import SectionTable from '../section-table/section-table';
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card';
 
-const TabbedTable = ({ tabs, activeTab }) => {
+type TabbedTableProps = {
+  tabs: Array<{
+    label: React.ReactNode;
+    value: string;
+    table: {
+      tableData: {
+        data: Array<any>;
+      };
+      tableHeaderMetadata: any;
+      customColumnRenderer?: { [key: string]: (value: any, rowData: any) => React.ReactNode };
+    };
+    cards?: Array<{
+      title: string;
+      amount: number;
+      type: 'decimal' | 'centavos';
+    }>;
+  }>;
+  activeTab?: string;
+  onChange?: (newValue: string) => void;
+};
+
+const TabbedTable = ({ tabs, activeTab, onChange }: TabbedTableProps) => {
   const [ currentTab, setCurrentTab ] = React.useState(tabs.find(tab => tab.value === activeTab) || tabs[0]);
 
   const handleTabChange = (event, newValue) => {
     setCurrentTab(tabs.find(tab => tab.value === newValue));
+    onChange?.(newValue);
   };
 
   useEffect(() => {

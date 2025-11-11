@@ -70,7 +70,7 @@ const ProfileSidebar = ({
               category: <FormattedMessage id="account.profile.sidemenu.issues" defaultMessage="Issues" />,
               items: [
                 {
-                  include: userTypes && (userTypes?.includes('contributor') || userTypes?.includes('maintainer')),
+                  include: userTypes && (userTypes?.includes('contributor') || userTypes?.includes('maintainer')) || userTypes?.includes('funding'),
                   onClick: () => history.push('/profile/tasks'),
                   icon: <LibraryBooks />,
                   label: <FormattedMessage id="account.profile.sidemenu.issues.network" defaultMessage="My issues" />,

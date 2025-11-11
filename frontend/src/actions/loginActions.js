@@ -15,10 +15,6 @@ export const REGISTER_USER_REQUESTED = 'REGISTER_USER_REQUESTED'
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS'
 export const REGISTER_USER_ERROR = 'REGISTER_USER_ERROR'
 
-export const SEARCH_USER_REQUESTED = 'SEARCH_USER_REQUESTED'
-export const SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS'
-export const SEARCH_USER_ERROR = 'SEARCH_USER_ERROR'
-
 export const AUTHORIZED_GITHUB_REQUESTED = 'AUTHORIZED_GITHUB_REQUESTED'
 export const AUTHORIZED_GITHUB_SUCCESS = 'AUTHORIZED_GITHUB_SUCCESS'
 export const AUTHORIZED_GITHUB_ERROR = 'AUTHORIZED_GITHUB_ERROR'
@@ -277,40 +273,6 @@ export const changePassword = data => {
       .catch(error => {
         const errorCode = error.response.data.error
         dispatch(addNotification(errorCode || 'user.change.password.error'))
-      })
-  }
-}
-
-const searchUserRequested = () => {
-  return { type: SEARCH_USER_REQUESTED, logged: false, completed: false }
-}
-
-const searchUserSuccess = user => {
-  return { type: SEARCH_USER_SUCCESS, logged: false, completed: true, data: user }
-}
-
-const searchUserError = error => {
-  return { type: SEARCH_USER_ERROR, logged: false, completed: true, error: error }
-}
-
-export const searchUser = data => {
-  return dispatch => {
-    dispatch(searchUserRequested())
-    return axios
-      .get(api.API_URL + '/users', {
-        params: data
-      })
-      .then(response => {
-        if(response?.data) {
-          dispatch(searchUserSuccess(response.data[0]))
-        } else {
-          dispatch(addNotification('user.search.error'))  
-        }
-      })
-      .catch(error => {
-        console.log('error', error)
-        dispatch(addNotification('user.search.error'))
-        dispatch(searchUserError(error))
       })
   }
 }

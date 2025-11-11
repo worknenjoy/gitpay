@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
 import { addNotification } from '../actions/notificationActions'
-import { registerUser, forgotPassword, resetPassword, searchUser } from '../actions/loginActions'
+import { registerUser, forgotPassword, resetPassword } from '../actions/loginActions'
+import { searchUser } from '../actions/userActions'
 import { fetchRoles } from '../actions/userRoleActions'
 import ResetPasswordPage from '../components/areas/public/features/session/pages/reset-page'
 
 const mapStateToProps = (state, props) => {
   return {
-    user: state.loggedIn,
+    user: state.user,
     roles: state.roles
   }
 }

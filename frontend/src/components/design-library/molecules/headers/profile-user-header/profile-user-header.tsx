@@ -1,46 +1,20 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import nameInitials from 'name-initials'
 
 import {
   Typography,
-  Chip,
-  Avatar
+  Chip
 } from '@mui/material'
-import { styled } from '@mui/material/styles'
-
 import {
   Person as PersonIcon
 } from '@mui/icons-material'
-import { withRouter } from 'react-router'
+import { Profile, BigAvatar, NameContainer, Website } from './profile-user-header.styles'
 
 import logoGithub from 'images/github-logo.png'
 
-const Profile = styled('div')(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  margin: '30px',
-  flexFlow: 'column',
-  flexDirection: 'column',
-  flexWrap: 'wrap',
-  height: 350
-}))
 
-const BigAvatar = styled(Avatar)({ width: 160, height: 160 })
+const ProfileUserHeader = ({ profile }) => {
 
-const NameContainer = styled('div')({ display: 'flex', alignItems: 'center' })
-
-const Website = styled(Typography)({ textAlign: 'center', color: '#515bc4', fontSize: '0.8rem' })
-
-const ProfileHead = (props) => {
-  const { profile } = props
-
-  useEffect(() => {
-    const userId = props.match.params.usernameId.split('-')[0]
-    if (!isNaN(userId)) {
-      props.getUserTypes(userId)
-    }
-  }, [props.match.params])
 
   return (
     <Profile>
@@ -93,4 +67,4 @@ const ProfileHead = (props) => {
   )
 }
 
-export default withRouter(ProfileHead)
+export default ProfileUserHeader

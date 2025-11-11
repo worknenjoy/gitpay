@@ -1,21 +1,22 @@
 import { connect } from 'react-redux'
-import TaskListUser from '../components/areas/public/features/issue/legacy/task-list-user'
 import { listTasks, filterTasks } from '../actions/taskActions'
+import { searchUser } from '../actions/userActions'
 import { getFilteredTasks } from '../selectors/tasks'
-import { getUserData } from '../common/selectors/user/getUser'
+import ProfilePage from '../components/areas/public/features/profile/pages/profile-page'
 
 const mapStateToProps = (state) => {
   return {
-    user: getUserData(state),
+    user: state.user,
     tasks: getFilteredTasks(state)
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    searchUser: (params) => dispatch(searchUser(params)),
     listTasks: ({ organizationId, projectId, userId, status }) => dispatch(listTasks({ organizationId, projectId, userId, status })),
     filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskListUser)
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage)

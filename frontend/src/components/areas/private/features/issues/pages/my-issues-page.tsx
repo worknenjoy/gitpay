@@ -21,6 +21,9 @@ const MyIssuesPage = ({
       case 'interested':
         filterTasks('Assigns')
         break;
+      case 'supported':
+        filterTasks('supported')
+        break;
       default:
         filterTasks('userId')
         break;
