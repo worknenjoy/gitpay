@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { Page } from 'app/styleguide/components/Page'
 import TopBarContainer from '../../../../../../containers/topbar'
 import Bottom from 'design-library/organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom-bar-layout'
-import PropTypes from 'prop-types'
 import { injectIntl, defineMessages } from 'react-intl'
 import CustomPaginationActionsTable from './task-table'
 import { tableHeaderDefault } from '../../../../../shared/table-metadata/task-header-metadata'
 
-import { Container, Grid, Typography, Tab, Tabs, AppBar } from '@mui/material'
+import { Container, Grid, Tab, Tabs } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import ProfileHead from '../../../../../../containers/profile-head'
 
@@ -126,7 +125,7 @@ const TaskListUser = (props) => {
             </Grid>
           </Root>
         </Container>
-  <Bottom />
+        <Bottom />
       </Page>
     </React.Fragment>
   )

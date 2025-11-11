@@ -15,7 +15,7 @@ export default props => (
     <Switch>
       <PrivateRoute path="/profile" component={ ProfileContainer } />
       <Route exact path="/stats" component={ Stats } />
-      <Route exact path="/users/:usernameId" component={ TaskListUser } />
+      <Route exact path="/users/:userId" component={ TaskListUser } />
 
       {/* Root redirect */}
       <Route
