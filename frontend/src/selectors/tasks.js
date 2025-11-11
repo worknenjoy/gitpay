@@ -28,10 +28,9 @@ const evaluateTaskWithoutBountyByValue = (value) => {
   return parseFloat(value) === parseFloat('0')
 }
 
-const getTaskWithAnyOrder = (task) => {
-  if (task.Orders.length > 0) {
-    return task
-  }
+const getTaskWithAnyOrder = (task, user) => {
+  const hasUserOrder = task.Orders.some(order => order.userId === user.id)
+  return hasUserOrder ? task : null
 }
 
 const getListed = (data) => {
@@ -93,7 +92,7 @@ export const getFilteredTasks = createSelector(
         break;
       case 'supported':
         filteredTasks = { ...tasks,
-          data: tasks.data.length ? tasks.data.filter(item => getTaskWithAnyOrder(item)) : [] }
+          data: tasks.data.length ? tasks.data.filter(item => getTaskWithAnyOrder(item, user)) : [] }
         break;
       default:
         filteredTasks = tasks
