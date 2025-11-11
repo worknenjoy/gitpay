@@ -8,6 +8,7 @@ import WelcomeContainer from '../../../../containers/welcome';
 import TeamContainer from '../../../../containers/team.js'
 import ProjectPageContainer from '../../../../containers/project-page'
 import OrganizationPageContainer from '../../../../containers/organization-page'
+import TaskListUser from '../../../../containers/task-list-user'
 import useCommonActions from '../../../../hooks/use-common-actions';
 import ExplorePage from '../features/explore/pages/explore-page'
 import PricingPage from '../features/pricing/pages/pricing-page';
@@ -70,6 +71,7 @@ const PublicPage = ({
 
           <Route path="/explore" component={ ExplorePage } />
           <Route exact path="/tasks/:filter" component={ () => <Redirect to="/explore" /> } />
+          <Route exact path="/users/:userId" component={ TaskListUser } />
         </Switch>
       </HashRouter>
     </PublicBase>

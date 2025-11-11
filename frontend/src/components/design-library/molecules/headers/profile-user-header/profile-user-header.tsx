@@ -5,26 +5,16 @@ import {
   Typography,
   Chip
 } from '@mui/material'
-
 import {
   Person as PersonIcon
 } from '@mui/icons-material'
-import { useParams } from 'react-router'
 import { Profile, BigAvatar, NameContainer, Website } from './profile-user-header.styles'
 
 import logoGithub from 'images/github-logo.png'
 
 
-const ProfileUserHeader = ({ profile, getUserTypes }) => {
+const ProfileUserHeader = ({ profile }) => {
 
-  const { usernameId } = useParams<{ usernameId: string }>()
-
-  useEffect(() => {
-    const userId = parseInt(usernameId?.split('-')[0])
-    if (!isNaN(userId)) {
-      getUserTypes?.(userId)
-    }
-  }, [usernameId])
 
   return (
     <Profile>

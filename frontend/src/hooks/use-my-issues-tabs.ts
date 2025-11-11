@@ -5,7 +5,7 @@ import useUserTypes from './use-user-types'
 const useMyIssuesTabs = ({ user, baseLink, issueTableData }) => {
   const history = useHistory()
   const { filter } = useParams<{ filter: string }>()
-  const { isContributor, isMaintainer } = useUserTypes({ user })
+  const { isContributor, isMaintainer, isFunding } = useUserTypes({ user })
   const [ activeTab, setActiveTab ] = React.useState('')
 
   const myIssuesTab = {
@@ -29,16 +29,24 @@ const useMyIssuesTabs = ({ user, baseLink, issueTableData }) => {
     table: issueTableData
   }
 
+  const sponsoringTabs = {
+    label: 'Sponsoring',
+    value: 'supported',
+    link: `${baseLink}/supported`,
+    table: issueTableData
+  }
+
   const currentTabs = [
     ...(isMaintainer ? [myIssuesTab] : []),
+     ...(isFunding ? [sponsoringTabs] : []),
     ...(isContributor ? [workingTabs, followingTabs] : [])
   ]
 
   React.useEffect(() => {
-    const currentFirstTabByRole = isMaintainer ? 'createdbyme' : isContributor ? 'assigned' : 'createdbyme'
+    const currentFirstTabByRole = isMaintainer ? 'createdbyme' : isContributor ? 'assigned' : isFunding ? 'supported' : ''
     history.push(`${baseLink}/${currentFirstTabByRole}`)
     setActiveTab(currentFirstTabByRole)
-  }, [isContributor, isMaintainer])
+  }, [isContributor, isMaintainer, isFunding])
 
   React.useEffect(() => {
    setActiveTab(filter)

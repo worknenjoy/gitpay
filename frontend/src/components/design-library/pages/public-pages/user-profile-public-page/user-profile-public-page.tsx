@@ -12,7 +12,6 @@ import { useParams } from 'react-router-dom'
 const UserProfilePublicPage = ({
   user,
   searchUser,
-  getUserTypes,
   tasks,
   listTasks,
   filterTasks
@@ -26,6 +25,7 @@ const UserProfilePublicPage = ({
   }
 
   const filterTasksWithOrders = async () => {
+    await listTasks({})
     await filterTasks('supported')
   }
 
@@ -58,7 +58,6 @@ const UserProfilePublicPage = ({
         <Container fixed maxWidth="lg">
           <ProfileUserHeader 
             profile={profile}
-            getUserTypes={getUserTypes}
           />
         </Container>
         <Container fixed maxWidth="lg">
