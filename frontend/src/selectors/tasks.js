@@ -29,7 +29,7 @@ const evaluateTaskWithoutBountyByValue = (value) => {
 }
 
 const getTaskWithAnyOrder = (task, user) => {
-  const hasUserOrder = task.Orders.some(order => order.userId === user.id)
+  const hasUserOrder = task.Orders.some(order => order.status === 'succeeded' && order.userId === user.id)
   return hasUserOrder ? task : null
 }
 
