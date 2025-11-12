@@ -78,7 +78,7 @@ describe('webhooks for platform', () => {
       expect(o.status).to.equal('succeeded')
     })
 
-    xit('should update balance after a refund is triggered', async () => {
+    it('should update balance after a refund is triggered', async () => {
       const user = await models.User.create({ email: 'testrefund@mail.com', password: 'teste' })
       const task = await models.Task.create({
         url: 'https://github.com/worknenjoy/truppie/issues/199',
