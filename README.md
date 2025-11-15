@@ -58,7 +58,7 @@ You can do this with: `cp .env.example .env`
 1. Install by running the following command: `brew install postgres`
 2. Start the command service by running the following command: `brew services start postgresql`
 3. Create a postgres user by running the following command: `createuser postgres -s`
-4. Login into the Postgres cli with by running the following command: `psql -U postgres`
+4. Login into the Postgres cli by running the following command: `psql -U postgres`
 5. Create a test database by typing the following command: `create database gitpay_test;`
 6. Create a dev database by running the following command: `create database gitpay_dev;`
 7. Run this command to exit: `\q`
@@ -133,7 +133,7 @@ Then you can access at http://localhost:8082
 
 ### Activating user account locally
 
-When you run your backend node server, the e-mail notifications will output in your console, so when setup a new user, you should look for the activation link:
+When you run your backend node server, the e-mail notifications will output in your console, so when setting up a new user, you should look for the activation link:
 
 ```
  ----- email / subject ----
