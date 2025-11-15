@@ -36,7 +36,7 @@ module.exports = Promise.method(function userChangePassword (userParameters) {
 
       const passwordIsValid = foundUser.verifyPassword(oldPassword, existingPassword)
       if (!passwordIsValid) {
-        throw new Error('user.password.incorerct.current')
+        throw new Error('user.password.incorrect.current')
       }
 
       const passwordHash = models.User.generateHash(newPassword)
