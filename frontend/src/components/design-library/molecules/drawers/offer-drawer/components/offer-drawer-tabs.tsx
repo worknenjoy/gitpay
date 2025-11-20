@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Tab, Tabs } from "@mui/material";
-
+import React, { useState } from 'react'
+import { Tab, Tabs } from '@mui/material'
 
 const OfferDrawerTabs = ({ tabs, onTabChange }) => {
   const [tabValue, setTabValue] = useState(0)
@@ -9,7 +8,7 @@ const OfferDrawerTabs = ({ tabs, onTabChange }) => {
     setTabValue(newValue)
     onTabChange(newValue)
   }
-  
+
   return (
     <>
       <Tabs
@@ -18,11 +17,13 @@ const OfferDrawerTabs = ({ tabs, onTabChange }) => {
         indicatorColor="secondary"
         textColor="secondary"
       >
-        {tabs.map((tab) => <Tab label={tab.label} value={tab.value} />)}
+        {tabs.map((tab) => (
+          <Tab label={tab.label} value={tab.value} />
+        ))}
       </Tabs>
       {tabs.map((tab) => tab.value === tabValue && tab.component)}
     </>
-  );
+  )
 }
 
-export default OfferDrawerTabs;
+export default OfferDrawerTabs

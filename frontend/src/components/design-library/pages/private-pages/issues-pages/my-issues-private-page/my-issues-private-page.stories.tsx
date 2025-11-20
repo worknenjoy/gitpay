@@ -1,19 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import MyIssuesPrivatePage from './my-issues-private-page';
-import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate';
+import type { Meta, StoryObj } from '@storybook/react'
+import MyIssuesPrivatePage from './my-issues-private-page'
+import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate'
 
 const meta: Meta<typeof MyIssuesPrivatePage> = {
   title: 'Design Library/Pages/Private/Issues/MyIssues',
   component: MyIssuesPrivatePage,
-  decorators: [ withProfileTemplate],
+  decorators: [withProfileTemplate],
   parameters: {
-    layout: 'fullscreen'
-  }
-};
+    layout: 'fullscreen',
+  },
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof MyIssuesPrivatePage>;
+type Story = StoryObj<typeof MyIssuesPrivatePage>
 
 export const Default: Story = {
   args: {
@@ -23,8 +23,8 @@ export const Default: Story = {
         id: 1,
         username: 'johndoe',
         email: 'johndoe@example.com',
-        Types: [{ name: 'contributor' }, { name: 'maintainer' }]
-      }
+        Types: [{ name: 'contributor' }, { name: 'maintainer' }],
+      },
     },
     issues: {
       completed: true,
@@ -36,7 +36,7 @@ export const Default: Story = {
           status: 'open',
           Project: { name: 'Project A' },
           User: { username: 'alice' },
-          createdAt: '2023-10-01T12:00:00Z'
+          createdAt: '2023-10-01T12:00:00Z',
         },
         {
           id: 2,
@@ -45,12 +45,12 @@ export const Default: Story = {
           status: 'closed',
           Project: { name: 'Project B' },
           User: { username: 'bob' },
-          createdAt: '2023-10-03T12:00:00Z'
-        }
-      ]
-    }
-  }
-};
+          createdAt: '2023-10-03T12:00:00Z',
+        },
+      ],
+    },
+  },
+}
 
 export const Contributor: Story = {
   args: {
@@ -60,8 +60,8 @@ export const Contributor: Story = {
         id: 1,
         username: 'johndoe',
         email: 'johndoe@example.com',
-        Types: [{ name: 'contributor' }]
-      }
+        Types: [{ name: 'contributor' }],
+      },
     },
     issues: {
       completed: true,
@@ -73,7 +73,7 @@ export const Contributor: Story = {
           status: 'open',
           Project: { name: 'Project A' },
           User: { username: 'alice' },
-          createdAt: '2023-10-01T12:00:00Z'
+          createdAt: '2023-10-01T12:00:00Z',
         },
         {
           id: 2,
@@ -82,9 +82,9 @@ export const Contributor: Story = {
           status: 'closed',
           Project: { name: 'Project B' },
           User: { username: 'bob' },
-          createdAt: '2023-10-03T12:00:00Z'
-        }
-      ]
-    }
-  }
-};
+          createdAt: '2023-10-03T12:00:00Z',
+        },
+      ],
+    },
+  },
+}

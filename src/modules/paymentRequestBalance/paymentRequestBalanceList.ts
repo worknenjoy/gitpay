@@ -1,6 +1,6 @@
-import models from '../../models';
+import models from '../../models'
 
-const currentModels = (models as any);
+const currentModels = models as any
 
 type PaymentRequestBalanceListParams = {
   userId: number
@@ -9,16 +9,26 @@ type PaymentRequestBalanceListParams = {
 export async function paymentRequestBalanceList({ userId }: PaymentRequestBalanceListParams) {
   return currentModels.PaymentRequestBalance.findAll({
     where: {
-      userId: userId
+      userId: userId,
     },
     include: [
       {
         model: currentModels.PaymentRequestBalanceTransaction,
-        attributes: ['id', 'amount', 'currency', 'type', 'reason', 'status', 'openedAt', 'closedAt', 'createdAt'],
+        attributes: [
+          'id',
+          'amount',
+          'currency',
+          'type',
+          'reason',
+          'status',
+          'openedAt',
+          'closedAt',
+          'createdAt',
+        ],
         separate: true,
-        order: [['createdAt', 'DESC']]
-      }
+        order: [['createdAt', 'DESC']],
+      },
     ],
-    order: [['createdAt', 'DESC']]
+    order: [['createdAt', 'DESC']],
   })
 }

@@ -1,6 +1,6 @@
-import React from "react"
-import { Root, Item } from "./project-list-compact.styles"
-import ProjectCardPlaceholder from "design-library/molecules/cards/project-card/project-card.placeholder"
+import React from 'react'
+import { Root, Item } from './project-list-compact.styles'
+import ProjectCardPlaceholder from 'design-library/molecules/cards/project-card/project-card.placeholder'
 
 const ProjectListCompactPlaceholder = () => {
   return (

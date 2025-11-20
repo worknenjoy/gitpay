@@ -1,8 +1,4 @@
-import {
-  JOIN_TEAM_REQUESTED,
-  JOIN_TEAM_SUCCESS,
-  JOIN_TEAM_ERROR
-} from '../actions/teamActions'
+import { JOIN_TEAM_REQUESTED, JOIN_TEAM_SUCCESS, JOIN_TEAM_ERROR } from '../actions/teamActions'
 
 export const team = (state = { completed: true }, action) => {
   switch (action.type) {

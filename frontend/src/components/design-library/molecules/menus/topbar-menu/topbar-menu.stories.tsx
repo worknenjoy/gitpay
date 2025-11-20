@@ -1,14 +1,14 @@
-import React from 'react';
-import TopbarMenu from './topbar-menu';
+import React from 'react'
+import TopbarMenu from './topbar-menu'
 
 export default {
   title: 'Design Library/Molecules/Menus/TopbarMenu',
-  component: TopbarMenu
-};
+  component: TopbarMenu,
+}
 
-const Template = (args) => <TopbarMenu {...args} />;
+const Template = (args) => <TopbarMenu {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   // Add default props here
-};
+}

@@ -70,22 +70,20 @@ const Percent = styled.p`
 `
 
 export default class AverageBountyPrice extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
-    this.state = {
-
-    }
+    this.state = {}
   }
 
-  render () {
+  render() {
     return (
       <Card>
-        <Icon><LocalMallIcon style={ { fontSize: '2em', margin: 'auto' } } /></Icon>
+        <Icon>
+          <LocalMallIcon style={{ fontSize: '2em', margin: 'auto' }} />
+        </Icon>
         <Info>
-          <Head>
-            Average Bounty Price
-          </Head>
+          <Head>Average Bounty Price</Head>
           <Wrapper>
             <Value>$1,234.89</Value>
             <Percent>-05%</Percent>

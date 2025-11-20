@@ -1,7 +1,6 @@
-import { styled } from "@mui/material/styles"
-import media from "../../../../../styleguide/media"
-import { Avatar, Button } from "@mui/material"
-
+import { styled } from '@mui/material/styles'
+import media from '../../../../../styleguide/media'
+import { Avatar, Button } from '@mui/material'
 
 export const StyledAvatar = styled(Avatar)`
   margin-left: 20px;

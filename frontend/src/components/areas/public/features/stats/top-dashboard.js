@@ -5,7 +5,7 @@ import media from '../../../../../styleguide/media'
 const Wrapper = styled.div`
   box-sizing: border-box;
   padding: 10px 20px;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   margin: 0.3em;
   position: relative;
   display: flex;
@@ -56,7 +56,7 @@ const Body = styled.p`
 `
 
 class TopDashboard extends Component {
-  render () {
+  render() {
     return (
       <Wrapper>
         <ListItem left>

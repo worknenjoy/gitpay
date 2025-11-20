@@ -1,32 +1,32 @@
-import React from 'react';
-import PrivacyPolicy from './privacy-policy';
+import React from 'react'
+import PrivacyPolicy from './privacy-policy'
 
 export default {
   title: 'Design Library/Molecules/Content/Terms/PrivacyPolicy',
-  component: PrivacyPolicy
-};
+  component: PrivacyPolicy,
+}
 
-const Template = (args) => <PrivacyPolicy {...args} />;
+const Template = (args) => <PrivacyPolicy {...args} />
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = Template.bind({})
+Default.args = {}
 
-export const WithoutHeader = Template.bind({});
+export const WithoutHeader = Template.bind({})
 WithoutHeader.args = {
-  noHeader: true
-};
+  noHeader: true,
+}
 
-export const WithAgreeButton = Template.bind({});
+export const WithAgreeButton = Template.bind({})
 WithAgreeButton.args = {
-  onAgreeTerms: () => alert('Agreed to Privacy Policy')
-};
+  onAgreeTerms: () => alert('Agreed to Privacy Policy'),
+}
 
-export const WithExtraStyles = Template.bind({});
+export const WithExtraStyles = Template.bind({})
 WithExtraStyles.args = {
-  extraStyles: true
-};
+  extraStyles: true,
+}
 
-export const WithArrowBack = Template.bind({});
+export const WithArrowBack = Template.bind({})
 WithArrowBack.args = {
-  onArrowBack: () => alert('Arrow back clicked')
-};
+  onArrowBack: () => alert('Arrow back clicked'),
+}

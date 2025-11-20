@@ -1,22 +1,17 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from 'react'
 
 import { messages } from '../../../../../../messages/messages'
 import MomentComponent from 'moment'
 import PaymentProvider from 'design-library/atoms/badges/payment-provider/payment-provider'
 
-import {
-  Container,
-  Button,
-  Link,
-  Typography
-} from "@mui/material";
+import { Container, Button, Link, Typography } from '@mui/material'
 
 import {
   Refresh as RefreshIcon,
   Cancel as CancelIcon,
   Info as InfoIcon,
   SwapHoriz as TransferIcon,
-  Receipt as ReceiptIcon
+  Receipt as ReceiptIcon,
 } from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
@@ -48,15 +43,14 @@ const Payments = ({
   transferOrder,
   refundOrder,
   updateOrder,
-  intl
+  intl,
 }) => {
-  const [cancelPaypalConfirmDialog, setCancelPaypalConfirmDialog] =
-    useState(false);
-  const [orderDetailsDialog, setOrderDetailsDialog] = useState(false);
-  const [transferDialogOpen, setTransferDialogOpen] = useState(false);
-  const [refundDialogOpen, setRefundDialogOpen] = useState(false);
-  const [currentOrderId, setCurrentOrderId] = useState(null);
-  const [transferOpened, setTransferOpened] = useState(false);
+  const [cancelPaypalConfirmDialog, setCancelPaypalConfirmDialog] = useState(false)
+  const [orderDetailsDialog, setOrderDetailsDialog] = useState(false)
+  const [transferDialogOpen, setTransferDialogOpen] = useState(false)
+  const [refundDialogOpen, setRefundDialogOpen] = useState(false)
+  const [currentOrderId, setCurrentOrderId] = useState(null)
+  const [transferOpened, setTransferOpened] = useState(false)
 
   const statuses = {
     open: intl.formatMessage(messages.openPaymentStatus),
@@ -65,81 +59,81 @@ const Payments = ({
     failed: intl.formatMessage(messages.failStatus),
     canceled: intl.formatMessage(messages.canceledStatus),
     refunded: intl.formatMessage(messages.refundedStatus),
-    expired: intl.formatMessage(messages.expiredStatus)
-  };
+    expired: intl.formatMessage(messages.expiredStatus),
+  }
 
   useEffect(() => {
-    listOrders({ userId: user.id });
-  }, []);
+    listOrders({ userId: user.id })
+  }, [])
 
   const handlePayPalDialogOpen = (e, id) => {
-    e.preventDefault();
-    setCancelPaypalConfirmDialog(true);
-    setCurrentOrderId(id);
-  };
+    e.preventDefault()
+    setCancelPaypalConfirmDialog(true)
+    setCurrentOrderId(id)
+  }
 
   const handlePayPalDialogClose = () => {
-    setCancelPaypalConfirmDialog(false);
-  };
+    setCancelPaypalConfirmDialog(false)
+  }
 
   const handleCancelPaypalPayment = async () => {
-    const orderId = currentOrderId;
-    setCancelPaypalConfirmDialog(false);
-    setOrderDetailsDialog(false);
-    await cancelPaypalPayment(orderId);
-  };
+    const orderId = currentOrderId
+    setCancelPaypalConfirmDialog(false)
+    setOrderDetailsDialog(false)
+    await cancelPaypalPayment(orderId)
+  }
 
   const openOrderDetailsDialog = async (e, id) => {
-    await getOrderDetails(id);
-    setOrderDetailsDialog(true);
-    setCurrentOrderId(id);
-  };
+    await getOrderDetails(id)
+    setOrderDetailsDialog(true)
+    setCurrentOrderId(id)
+  }
 
   const handleTransferDrawer = useCallback(async () => {
     if (!transferOpened) {
-      await listTasks({});
-      await filterTasks("userId");
-      setTransferOpened(true);
+      await listTasks({})
+      await filterTasks('userId')
+      setTransferOpened(true)
     }
-    setTransferDialogOpen(true);
-  }, []);
+    setTransferDialogOpen(true)
+  }, [])
 
   const openTransferDialog = async (e) => {
-    e.preventDefault();
-    await handleTransferDrawer();
-  };
+    e.preventDefault()
+    await handleTransferDrawer()
+  }
 
   const openRefundDialog = async (e, item) => {
-    setRefundDialogOpen(true);
-    setCurrentOrderId(item.id);
-  };
+    setRefundDialogOpen(true)
+    setCurrentOrderId(item.id)
+  }
 
   const closeRefundDialog = async () => {
-    setRefundDialogOpen(false);
-  };
+    setRefundDialogOpen(false)
+  }
 
   const closeTransferDialog = (e, item) => {
-    setTransferDialogOpen(false);
-  };
+    setTransferDialogOpen(false)
+  }
 
   const closeOrderDetailsDialog = () => {
-    setOrderDetailsDialog(false);
-  };
+    setOrderDetailsDialog(false)
+  }
 
   const retryPaypalPayment = (e, item) => {
-    e.preventDefault();
-    const { payment_url: paymentUrl, status } = item;
-    if (status === "expired") {
+    e.preventDefault()
+    const { payment_url: paymentUrl, status } = item
+    if (status === 'expired') {
       return updateOrder({ id: item.id }).then((order) => {
         if (order.order.payment_url) {
-          window.location.href = order.order.payment_url;
+          window.location.href = order.order.payment_url
         }
-      });
+      })
     }
     if (paymentUrl) {
-      window.location.href = paymentUrl;
+      window.location.href = paymentUrl
     }
-  };
+  }
 
   /*
   const cancelPaypalPayment = (e, id) => {
@@ -152,22 +146,22 @@ const Payments = ({
   */
 
   const retryPaypalPaymentButton = (item) => {
-    const { payment_url: paymentUrl } = item;
+    const { payment_url: paymentUrl } = item
     return (
       <Button
         variant="contained"
         size="small"
         color="secondary"
-  sx={{ width: 100, fontSize: 10, m: 0.5 }}
+        sx={{ width: 100, fontSize: 10, m: 0.5 }}
         onClick={(e) => {
-          retryPaypalPayment(e, item);
+          retryPaypalPayment(e, item)
         }}
       >
         <FormattedMessage id="general.buttons.retry" defaultMessage="Retry" />
-  <RefreshIcon sx={{ ml: 1 }} />
+        <RefreshIcon sx={{ ml: 1 }} />
       </Button>
-    );
-  };
+    )
+  }
 
   const cancelPaypalPaymentButton = (id) => {
     return (
@@ -175,19 +169,19 @@ const Payments = ({
         variant="contained"
         size="small"
         color="secondary"
-  sx={{ width: 100, fontSize: 10, m: 0.5 }}
+        sx={{ width: 100, fontSize: 10, m: 0.5 }}
         onClick={(e) => {
-          cancelPaypalPayment(id);
+          cancelPaypalPayment(id)
         }}
       >
         <FormattedMessage id="general.buttons.cancel" defaultMessage="Cancel" />
-  <CancelIcon sx={{ ml: 1 }} />
+        <CancelIcon sx={{ ml: 1 }} />
       </Button>
-    );
-  };
+    )
+  }
 
   const detailsOrderButton = (item, userId) => {
-    if (item.provider === "paypal") {
+    if (item.provider === 'paypal') {
       if (item.User && userId === item.User.id) {
         return (
           <Button
@@ -197,16 +191,13 @@ const Payments = ({
             sx={{ width: 100, fontSize: 10, m: 0.5 }}
             onClick={(e) => openOrderDetailsDialog(e, item.id)}
           >
-            <FormattedMessage
-              id="general.buttons.details"
-              defaultMessage="Details"
-            />
+            <FormattedMessage id="general.buttons.details" defaultMessage="Details" />
             <InfoIcon sx={{ ml: 1 }} />
           </Button>
-        );
+        )
       }
     }
-  };
+  }
 
   const issueRow = (issue) => {
     return (
@@ -215,46 +206,44 @@ const Payments = ({
           <Link
             href=""
             onClick={(e) => {
-              e.preventDefault();
-              window.location.href = `/#/task/${issue.id}/${slugify(
-                issue.title
-              )}`;
-              window.location.reload();
+              e.preventDefault()
+              window.location.href = `/#/task/${issue.id}/${slugify(issue.title)}`
+              window.location.reload()
             }}
           >
             {issue.title}
           </Link>
         ) : (
-          "no issue found"
+          'no issue found'
         )}
       </span>
-    );
-  };
+    )
+  }
 
   const retryOrCancelButton = (item, userId) => {
-    if (item.User && item.provider === "paypal" && userId === item.User.id) {
+    if (item.User && item.provider === 'paypal' && userId === item.User.id) {
       if (
-        (item.status === "fail" ||
-          item.status === "open" ||
-          item.status === "expired" ||
-          item.status === "canceled") &&
+        (item.status === 'fail' ||
+          item.status === 'open' ||
+          item.status === 'expired' ||
+          item.status === 'canceled') &&
         item.payment_url
       ) {
-        return retryPaypalPaymentButton(item);
-      } else if (item.status === "succeeded") {
-        return cancelPaypalPaymentButton(item.id);
+        return retryPaypalPaymentButton(item)
+      } else if (item.status === 'succeeded') {
+        return cancelPaypalPaymentButton(item.id)
       } else {
-        return "";
+        return ''
       }
     }
-  };
+  }
 
   const transferButton = (item, userId) => {
-    if (item.User && item.provider === "stripe" && userId === item.User.id) {
+    if (item.User && item.provider === 'stripe' && userId === item.User.id) {
       if (
-        item.status === "succeeded" &&
+        item.status === 'succeeded' &&
         item.Task &&
-        item.Task.status === "open" &&
+        item.Task.status === 'open' &&
         item.Task.paid === false &&
         !item.Task.transfer_id
       ) {
@@ -267,10 +256,7 @@ const Payments = ({
               sx={{ width: 100, fontSize: 10, m: 0.5 }}
               onClick={(e) => openTransferDialog(e)}
             >
-              <FormattedMessage
-                id="general.buttons.transfer"
-                defaultMessage="Transfer"
-              />
+              <FormattedMessage id="general.buttons.transfer" defaultMessage="Transfer" />
               <TransferIcon sx={{ ml: 1 }} />
             </Button>
             <TaskOrderTransfer
@@ -283,20 +269,20 @@ const Payments = ({
               listOrders={async () => await listOrders({ userId: user.id })}
             />
           </React.Fragment>
-        );
+        )
       } else {
-        return "";
+        return ''
       }
     }
-  };
+  }
 
   const refundButton = (item, userId) => {
     if (item.User && userId === item.User.id) {
       if (
-        item.status === "succeeded" &&
-        item.provider === "stripe" &&
+        item.status === 'succeeded' &&
+        item.provider === 'stripe' &&
         item.Task &&
-        item.Task.status === "open" &&
+        item.Task.status === 'open' &&
         item.Task.paid === false &&
         !item.Task.transfer_id
       ) {
@@ -309,40 +295,35 @@ const Payments = ({
               sx={{ width: 100, fontSize: 10, m: 0.5 }}
               onClick={(e) => openRefundDialog(e, item)}
             >
-              <FormattedMessage
-                id="general.buttons.refund"
-                defaultMessage="Refund"
-              />
+              <FormattedMessage id="general.buttons.refund" defaultMessage="Refund" />
               <ReceiptIcon sx={{ ml: 1 }} />
             </Button>
           </React.Fragment>
-        );
+        )
       } else {
-        return "";
+        return ''
       }
     }
-  };
+  }
 
   const displayOrders = (orders) => {
-    if (!orders) return [];
+    if (!orders) return []
 
     if (!orders.length) {
-      return [];
+      return []
     }
 
-    let userId;
+    let userId
 
     if (logged) {
-      userId = user.id;
+      userId = user.id
     }
 
     return orders.map((item, i) => [
-      item.paid
-        ? intl.formatMessage(messages.labelYes)
-        : intl.formatMessage(messages.labelNo),
-      item.source_type === "invoice-item" ? (
+      item.paid ? intl.formatMessage(messages.labelYes) : intl.formatMessage(messages.labelNo),
+      item.source_type === 'invoice-item' ? (
         <InvoiceStatus
-          status={item.status === "succeeded" ? "paid" : item.status}
+          status={item.status === 'succeeded' ? 'paid' : item.status}
           completed={item.completed}
         />
       ) : (
@@ -350,19 +331,16 @@ const Payments = ({
       ),
       issueRow(item.Task),
       `$ ${item.amount}`,
-      <PaymentProvider
-        provider={item.provider}
-        sourceType={item.source_type}
-      />,
+      <PaymentProvider provider={item.provider} sourceType={item.source_type} />,
       MomentComponent(item.createdAt).fromNow(),
-      <div style={{ display: "flex", justifyContent: "space-around" }}>
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         {detailsOrderButton(item, userId)}
         {retryOrCancelButton(item, userId)}
         {transferButton(item, userId)}
         {refundButton(item, userId)}
-      </div>
-    ]);
-  };
+      </div>,
+    ])
+  }
 
   return (
     <div style={{ marginTop: 40 }}>
@@ -379,7 +357,7 @@ const Payments = ({
               intl.formatMessage(messages.cardTableHeaderValue),
               intl.formatMessage(messages.cardTableHeaderPayment),
               intl.formatMessage(messages.cardTableHeaderCreated),
-              intl.formatMessage(messages.cardTableHeaderActions)
+              intl.formatMessage(messages.cardTableHeaderActions),
             ]}
             payments={
               orders && orders.data && orders.data.length
@@ -409,8 +387,8 @@ const Payments = ({
         listOrders={async () => listOrders({ userId: user.id })}
       />
     </div>
-  );
-};
+  )
+}
 
 Payments.propTypes = {
   handleTabChange: PropTypes.func,
@@ -421,7 +399,7 @@ Payments.propTypes = {
   cancelPaypalPayment: PropTypes.func,
   transferOrder: PropTypes.func,
   refundOrder: PropTypes.func,
-  intl: PropTypes.object
-};
+  intl: PropTypes.object,
+}
 
-export default injectIntl(Payments);
+export default injectIntl(Payments)

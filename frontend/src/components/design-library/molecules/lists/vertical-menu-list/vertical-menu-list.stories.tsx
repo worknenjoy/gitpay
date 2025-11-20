@@ -6,8 +6,8 @@ const meta: Meta<typeof VerticalMenulList> = {
   title: 'Design Library/Molecules/Lists/VerticalMenuList',
   component: VerticalMenulList,
   parameters: {
-    layout: 'centered'
-  }
+    layout: 'centered',
+  },
 }
 export default meta
 
@@ -19,9 +19,9 @@ export const Default: Story = {
     items: [
       { label: 'Dashboard', onClick: () => alert('Dashboard clicked') },
       { label: 'Settings', onClick: () => alert('Settings clicked') },
-      { label: 'Logout', onClick: () => alert('Logout clicked') }
-    ]
-  }
+      { label: 'Logout', onClick: () => alert('Logout clicked') },
+    ],
+  },
 }
 
 export const DialogType: Story = {
@@ -31,7 +31,7 @@ export const DialogType: Story = {
     items: [
       { label: 'Privacy Policy', component: <div>Privacy Policy Content</div> },
       { label: 'Terms of Service', component: <div>Terms of Service Content</div> },
-      { label: 'Cookie Policy', component: <div>Cookie Policy Content</div> }
-    ]
-  }
+      { label: 'Cookie Policy', component: <div>Cookie Policy Content</div> },
+    ],
+  },
 }

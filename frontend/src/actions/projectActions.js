@@ -18,34 +18,28 @@ const fetchProjectRequested = () => {
   return { type: FETCH_PROJECT_REQUESTED, completed: false }
 }
 
-const fetchProjectSuccess = project => {
+const fetchProjectSuccess = (project) => {
   return { type: FETCH_PROJECT_SUCCESS, completed: true, data: project.data }
 }
 
-const fetchProjectError = error => {
+const fetchProjectError = (error) => {
   return { type: FETCH_PROJECT_ERROR, completed: true, error: error }
 }
 
 const fetchProject = (projectId, params) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(fetchProjectRequested())
     axios
       .get(api.API_URL + `/projects/fetch/${projectId}`, { params })
-      .then(project => {
+      .then((project) => {
         if (project.data) {
           return dispatch(fetchProjectSuccess(project))
         }
-        dispatch(
-          addNotification('actions.task.fetch.error')
-        )
-        return dispatch(
-          fetchProjectError({ message: 'actions.task.fetch.unavailable' })
-        )
+        dispatch(addNotification('actions.task.fetch.error'))
+        return dispatch(fetchProjectError({ message: 'actions.task.fetch.unavailable' }))
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.task.fetch.other.error')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.task.fetch.other.error'))
         dispatch(fetchProjectError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')
@@ -63,34 +57,28 @@ const listProjectsRequested = () => {
   return { type: LIST_PROJECTS_REQUESTED, completed: false }
 }
 
-const listProjectsSuccess = projects => {
+const listProjectsSuccess = (projects) => {
   return { type: LIST_PROJECTS_SUCCESS, completed: true, data: projects.data }
 }
 
-const listProjectsError = error => {
+const listProjectsError = (error) => {
   return { type: LIST_PROJECTS_ERROR, completed: true, error: error }
 }
 
 const listProjects = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(listProjectsRequested())
     axios
       .get(api.API_URL + '/projects/list')
-      .then(projects => {
+      .then((projects) => {
         if (projects.data) {
           return dispatch(listProjectsSuccess(projects))
         }
-        dispatch(
-          addNotification('actions.task.fetch.error')
-        )
-        return dispatch(
-          listProjectsError({ message: 'actions.task.fetch.unavailable' })
-        )
+        dispatch(addNotification('actions.task.fetch.error'))
+        return dispatch(listProjectsError({ message: 'actions.task.fetch.unavailable' }))
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.task.fetch.other.error')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.task.fetch.other.error'))
         dispatch(listProjectsError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')
@@ -108,5 +96,5 @@ export {
   LIST_PROJECTS_SUCCESS,
   LIST_PROJECTS_ERROR,
   fetchProject,
-  listProjects
+  listProjects,
 }

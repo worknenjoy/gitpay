@@ -1,18 +1,9 @@
-
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    queryInterface.addColumn(
-      'Orders',
-      'payment_url',
-      Sequelize.STRING
-    );
+    queryInterface.addColumn('Orders', 'payment_url', Sequelize.STRING)
   },
 
   down: (queryInterface, Sequelize) => {
-    queryInterface.removeColumn(
-      'Orders',
-      'payment_url'
-    );
-  }
-};
+    queryInterface.removeColumn('Orders', 'payment_url')
+  },
+}

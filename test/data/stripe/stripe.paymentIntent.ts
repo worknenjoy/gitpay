@@ -1,63 +1,60 @@
 export const PaymentIntentData = {
   forPaymentRequest: {
-    "id": "pi_1TestPI",
-    "object": "payment_intent",
-    "amount": 2000,
-    "amount_capturable": 0,
-    "amount_details": {
-      "tip": {}
+    id: 'pi_1TestPI',
+    object: 'payment_intent',
+    amount: 2000,
+    amount_capturable: 0,
+    amount_details: {
+      tip: {},
     },
-    "amount_received": 0,
-    "application": null,
-    "application_fee_amount": null,
-    "automatic_payment_methods": {
-      "enabled": true
+    amount_received: 0,
+    application: null,
+    application_fee_amount: null,
+    automatic_payment_methods: {
+      enabled: true,
     },
-    "canceled_at": null,
-    "cancellation_reason": null,
-    "capture_method": "automatic",
-    "client_secret": "pi_test_1234567890abcdef_secret_test123456789",
-    "confirmation_method": "automatic",
-    "created": 1680800504,
-    "currency": "usd",
-    "customer": null,
-    "description": null,
-    "last_payment_error": null,
-    "latest_charge": null,
-    "livemode": false,
-    "metadata": {
-      "payment_request_payment_id": 1,
-      "payment_request_id": 1,
-      "user_id": 1
+    canceled_at: null,
+    cancellation_reason: null,
+    capture_method: 'automatic',
+    client_secret: 'pi_test_1234567890abcdef_secret_test123456789',
+    confirmation_method: 'automatic',
+    created: 1680800504,
+    currency: 'usd',
+    customer: null,
+    description: null,
+    last_payment_error: null,
+    latest_charge: null,
+    livemode: false,
+    metadata: {
+      payment_request_payment_id: 1,
+      payment_request_id: 1,
+      user_id: 1,
     },
-    "next_action": null,
-    "on_behalf_of": null,
-    "payment_method": null,
-    "payment_method_options": {
-      "card": {
-        "installments": null,
-        "mandate_options": null,
-        "network": null,
-        "request_three_d_secure": "automatic"
+    next_action: null,
+    on_behalf_of: null,
+    payment_method: null,
+    payment_method_options: {
+      card: {
+        installments: null,
+        mandate_options: null,
+        network: null,
+        request_three_d_secure: 'automatic',
       },
-      "link": {
-        "persistent_token": null
-      }
+      link: {
+        persistent_token: null,
+      },
     },
-    "payment_method_types": [
-      "card",
-      "link"
-    ],
-    "processing": null,
-    "receipt_email": null,
-    "review": null,
-    "setup_future_usage": null,
-    "shipping": null,
-    "source": null,
-    "statement_descriptor": null,
-    "statement_descriptor_suffix": null,
-    "status": "requires_payment_method",
-    "transfer_data": null,
-    "transfer_group": null
-  }
-};
+    payment_method_types: ['card', 'link'],
+    processing: null,
+    receipt_email: null,
+    review: null,
+    setup_future_usage: null,
+    shipping: null,
+    source: null,
+    statement_descriptor: null,
+    statement_descriptor_suffix: null,
+    status: 'requires_payment_method',
+    transfer_data: null,
+    transfer_group: null,
+  },
+}

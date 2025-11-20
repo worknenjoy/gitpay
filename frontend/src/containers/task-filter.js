@@ -5,11 +5,11 @@ import IssueFilter from '../components/design-library/atoms/filters/issue-filter
 
 const mapStateToProps = (state) => ({
   issues: state.issues.data,
-  filteredIssues: state.issues.filteredData
+  filteredIssues: state.issues.filteredData,
 })
 
 const mapDispatchToProps = {
-  filterTasks
+  filterTasks,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssueFilter)

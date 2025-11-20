@@ -13,9 +13,11 @@ import LoginFormContainer from '../../../../../containers/login-form'
 // removed legacy withStyles usage
 
 const Wrapper = styled.div<{ contrast?: boolean }>`
-  ${props => props.contrast && css`
-    color: white;
-  `}
+  ${(props) =>
+    props.contrast &&
+    css`
+      color: white;
+    `}
 `
 
 const Content = styled.div`
@@ -23,7 +25,7 @@ const Content = styled.div`
 `
 
 interface LoginButtonProps extends RouteComponentProps {
-  referrer?: Location;
+  referrer?: Location
   location: any
   contrast?: boolean
   includeForm?: boolean
@@ -37,14 +39,18 @@ interface LoginButtonProps extends RouteComponentProps {
 
 class LoginButton extends Component<LoginButtonProps> {
   static defaultProps: Partial<LoginButtonProps> = {
-    size: 'large'
+    size: 'large',
   }
 
   componentWillMount() {
     if (this.props.referrer) {
       Auth.storeReferrer(this.props.referrer.pathname)
     }
-    if (this.props.location && this.props.location.state && (this.props.location.state as any).from) {
+    if (
+      this.props.location &&
+      this.props.location.state &&
+      (this.props.location.state as any).from
+    ) {
       const referrer = (this.props.location.state as { from: { pathname: string } }).from.pathname
       if (referrer) {
         Auth.storeReferrer(referrer)
@@ -53,7 +59,8 @@ class LoginButton extends Component<LoginButtonProps> {
   }
 
   render() {
-  const { contrast, size, includeForm, hideExtra, mode, onClose, noCancelButton, user } = this.props
+    const { contrast, size, includeForm, hideExtra, mode, onClose, noCancelButton, user } =
+      this.props
 
     return (
       <Wrapper contrast={contrast}>
@@ -62,26 +69,74 @@ class LoginButton extends Component<LoginButtonProps> {
             <div>
               {mode !== 'reset' ? (
                 <>
-                  <Typography variant="h6" style={{ fontWeight: 'bold' }} color={contrast ? 'inherit' : 'primary'} gutterBottom>
-                    <FormattedMessage id="account.login.title.welcome" defaultMessage="Welcome to Gitpay!" />
+                  <Typography
+                    variant="h6"
+                    style={{ fontWeight: 'bold' }}
+                    color={contrast ? 'inherit' : 'primary'}
+                    gutterBottom
+                  >
+                    <FormattedMessage
+                      id="account.login.title.welcome"
+                      defaultMessage="Welcome to Gitpay!"
+                    />
                   </Typography>
-                  <Typography style={{ marginBottom: 20 }} variant="body2" color={contrast ? 'inherit' : 'primary'} gutterBottom noWrap>
-                    <FormattedMessage id="account.login.connect.form" defaultMessage="Connect or signup with your account" />
+                  <Typography
+                    style={{ marginBottom: 20 }}
+                    variant="body2"
+                    color={contrast ? 'inherit' : 'primary'}
+                    gutterBottom
+                    noWrap
+                  >
+                    <FormattedMessage
+                      id="account.login.connect.form"
+                      defaultMessage="Connect or signup with your account"
+                    />
                   </Typography>
                 </>
               ) : (
                 <>
-                  <Typography variant="caption" style={{ fontWeight: 'bold' }} color={contrast ? 'inherit' : 'primary'} gutterBottom>
-                    <FormattedMessage id="account.login.title.welcome.recover" defaultMessage="Welcome back to Gitpay!" />
+                  <Typography
+                    variant="caption"
+                    style={{ fontWeight: 'bold' }}
+                    color={contrast ? 'inherit' : 'primary'}
+                    gutterBottom
+                  >
+                    <FormattedMessage
+                      id="account.login.title.welcome.recover"
+                      defaultMessage="Welcome back to Gitpay!"
+                    />
                   </Typography>
-                  <Typography style={{ marginBottom: 20 }} variant="h5" color={contrast ? 'inherit' : 'primary'} gutterBottom noWrap>
+                  <Typography
+                    style={{ marginBottom: 20 }}
+                    variant="h5"
+                    color={contrast ? 'inherit' : 'primary'}
+                    gutterBottom
+                    noWrap
+                  >
                     {user?.email}
                   </Typography>
-                  <Typography variant="h6" style={{ fontWeight: 'bold' }} color={contrast ? 'inherit' : 'primary'} gutterBottom>
-                    <FormattedMessage id="account.login.title" defaultMessage="Recover your password" />
+                  <Typography
+                    variant="h6"
+                    style={{ fontWeight: 'bold' }}
+                    color={contrast ? 'inherit' : 'primary'}
+                    gutterBottom
+                  >
+                    <FormattedMessage
+                      id="account.login.title"
+                      defaultMessage="Recover your password"
+                    />
                   </Typography>
-                  <Typography style={{ marginBottom: 20 }} variant="body1" color={contrast ? 'inherit' : 'primary'} gutterBottom noWrap>
-                    <FormattedMessage id="account.login.connect.form.reset" defaultMessage="To reset your password, type the new password and confirm" />
+                  <Typography
+                    style={{ marginBottom: 20 }}
+                    variant="body1"
+                    color={contrast ? 'inherit' : 'primary'}
+                    gutterBottom
+                    noWrap
+                  >
+                    <FormattedMessage
+                      id="account.login.connect.form.reset"
+                      defaultMessage="To reset your password, type the new password and confirm"
+                    />
                   </Typography>
                 </>
               )}

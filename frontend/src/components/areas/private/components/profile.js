@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogActions,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
@@ -43,27 +43,26 @@ const TaskListProfileOrganization = (props) => <TaskListProfile noTopBar noBotto
 const RootGrid = styled(Grid)(({ theme }) => ({ backgroundColor: '#F7F7F7' }))
 
 class Profile extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       selected: null,
       orgsLoaded: false,
       openUpdateProfileDialog: false,
-      emailNotVerifiedDialog: false
+      emailNotVerifiedDialog: false,
     }
   }
 
-  
-  async componentDidMount () {
+  async componentDidMount() {
     await this.props.fetchOrganizations()
     this.setState({ orgsLoaded: true })
-    if (this.props.user.Types && !this.props.user.Types.length) this.setState({ openUpdateProfileDialog: true })
-    if (!this.props.user.provider && !this.props.user.email_verified) this.setState({ emailNotVerifiedDialog: true })
+    if (this.props.user.Types && !this.props.user.Types.length)
+      this.setState({ openUpdateProfileDialog: true })
+    if (!this.props.user.provider && !this.props.user.email_verified)
+      this.setState({ emailNotVerifiedDialog: true })
   }
 
-
-
-  setActive (path) {
+  setActive(path) {
     switch (path) {
       case '/profile':
         this.setState({ selected: 0 })
@@ -95,15 +94,17 @@ class Profile extends Component {
   getTitleNavigation = () => {
     switch (this.state.selected) {
       case 0:
-        return (<FormattedMessage id="account.profile.issues.setup" defaultMessage="Issues" />)
+        return <FormattedMessage id="account.profile.issues.setup" defaultMessage="Issues" />
       case 1:
-        return (<FormattedMessage id="account.profile.payment.setup" defaultMessage="Setup payment" />)
+        return (
+          <FormattedMessage id="account.profile.payment.setup" defaultMessage="Setup payment" />
+        )
       case 2:
-        return (<FormattedMessage id="account.profile.preferences" defaultMessage="Preferences" />)
+        return <FormattedMessage id="account.profile.preferences" defaultMessage="Preferences" />
       case 3:
-        return (<FormattedMessage id="account.profile.settings" defaultMessage="Settings" />)
+        return <FormattedMessage id="account.profile.settings" defaultMessage="Settings" />
       case 4:
-        return (<FormattedMessage id="account.profile.roles" defaultMessage="Roles" />)
+        return <FormattedMessage id="account.profile.roles" defaultMessage="Roles" />
       default:
         return null
     }
@@ -123,15 +124,15 @@ class Profile extends Component {
     this.props.resendActivationEmail(userId)
   }
 
-  render () {
-  const { user, roles } = this.props
+  render() {
+    const { user, roles } = this.props
     const { emailNotVerifiedDialog } = this.state
 
     let titleNavigation = this.getTitleNavigation()
 
     return (
       <Page>
-        <Dialog open={ emailNotVerifiedDialog }>
+        <Dialog open={emailNotVerifiedDialog}>
           <DialogTitle>
             <FormattedMessage
               id="account.profile.email.verification"
@@ -158,8 +159,14 @@ class Profile extends Component {
               />
             </DialogContentText>
             <DialogActions>
-              <Button onClick={ (e) => this.handlingResendActivationEmail(e, user.id) } color="primary">
-                <FormattedMessage id="user.email.resend.link.label" defaultMessage="Resend verification link to your email" />
+              <Button
+                onClick={(e) => this.handlingResendActivationEmail(e, user.id)}
+                color="primary"
+              >
+                <FormattedMessage
+                  id="user.email.resend.link.label"
+                  defaultMessage="Resend verification link to your email"
+                />
               </Button>
             </DialogActions>
           </DialogContent>
@@ -168,168 +175,161 @@ class Profile extends Component {
           component="div"
           color="primary"
           position="static"
-          elevation={ 0 }
+          elevation={0}
           sx={{ bgcolor: (theme) => theme.palette.primary.light }}
         />
-        { this.state.selected === 2 &&
-          <PreferencesBar />
-        }
+        {this.state.selected === 2 && <PreferencesBar />}
         <PageContent>
-           <RootGrid container spacing={ 0 }>
-              { user &&
+          <RootGrid container spacing={0}>
+            {user && (
               <ProfileSideBar
-                user={ user }
-                onLogout={ this.handleSignOut }
-                history={ this.props.history }
+                user={user}
+                onLogout={this.handleSignOut}
+                history={this.props.history}
               />
-            }
+            )}
             <Grid size={{ xs: 12, md: 10 }}>
-               <AccountHeader
-                user={ user }
-                onCreateTask={ this.props.createTask }
-                history={ this.props.history }
-                onLogout={ this.handleSignOut }
+              <AccountHeader
+                user={user}
+                onCreateTask={this.props.createTask}
+                history={this.props.history}
+                onLogout={this.handleSignOut}
               />
               <Container maxWidth="lg">
                 <HashRouter>
                   <Switch>
-                    <Route exact path="/profile" component={
-                      (props) =>
-                        (<ProfileOptions
-                          { ...props }
-                          user={ this.props.user }
-                          onCreateTask={ this.props.createTask }
-                          intl={ this.props.intl }
-                          updateUser={ this.props.updateUser }
-                          roles={ roles }
-                          updateRoles={ this.props.updateRoles }
-                          fetchRoles={ this.props.fetchRoles }
-                          createRoles={ this.props.createRoles }
-                          deleteRoles={ this.props.deleteRoles }
-                          addNotification={ this.props.addNotification }
-                          visible={ this.state.openUpdateProfileDialog }
-                          onClose={ () => this.setState({ openUpdateProfileDialog: false }) }
-                        />)
-                    } />
-                    <Route path="/profile/user-account" component={
-                      (props) =>
-                        (<UserAccount
-                          user={ this.props.user }
-                          updateUser={ this.props.updateUser }
-                          changePassword={ this.props.changePassword }
-                          addNotification={ this.props.addNotification }
-                          history={ this.props.history }
-                          deleteUser={ this.props.deleteUser }
-                        />)
-                    }
+                    <Route
+                      exact
+                      path="/profile"
+                      component={(props) => (
+                        <ProfileOptions
+                          {...props}
+                          user={this.props.user}
+                          onCreateTask={this.props.createTask}
+                          intl={this.props.intl}
+                          updateUser={this.props.updateUser}
+                          roles={roles}
+                          updateRoles={this.props.updateRoles}
+                          fetchRoles={this.props.fetchRoles}
+                          createRoles={this.props.createRoles}
+                          deleteRoles={this.props.deleteRoles}
+                          addNotification={this.props.addNotification}
+                          visible={this.state.openUpdateProfileDialog}
+                          onClose={() => this.setState({ openUpdateProfileDialog: false })}
+                        />
+                      )}
                     />
-                    { this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') &&
-                      <Route
-                        exact
-                        path="/profile/user/orgs"
-                        component={ (props) => (<UserOganizationTree { ...props }
-                          createOrganizations={ this.props.createOrganizations }
-                          updateOrganization={ this.props.updateOrganization }
-                          organizations={ this.props.organizations }
-                          history={ this.props.history }
-                        />) }
-                      />
-                    }
-                    { 
-                      this.props.user.Types && (
-                      this.props.user.Types.map(t => t.name).includes('contributor') ||
-                      this.props.user.Types.map(t => t.name).includes('funding')) &&
-                      <Route
-                        exact
-                        path="/profile/explore"
-                        component={ UserTasksExploreContainer }
-                      />
-                    }
-                    { this.props.user.Types && (
-                      this.props.user.Types.map(t => t.name).includes('contributor') ||
-                      this.props.user.Types.map(t => t.name).includes('funding')) &&
-                      <Route
-                        exact
-                        path="/profile/explore/:filter"
-                        component={ UserTasksExploreContainer }
-                      />
-                    }
-                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') ||
-                      this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer')) &&
-                      <Route
-                        exact
-                        path="/profile/tasks"
-                        component={ UserTasksContainer }
-                      />
-                    }
-                     
-                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor') ||
-                      this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer')) &&
-                      <Route
-                        exact
-                        path="/profile/tasks/:filter"
-                        component={ UserTasksContainer }
-                      />
+                    <Route
+                      path="/profile/user-account"
+                      component={(props) => (
+                        <UserAccount
+                          user={this.props.user}
+                          updateUser={this.props.updateUser}
+                          changePassword={this.props.changePassword}
+                          addNotification={this.props.addNotification}
+                          history={this.props.history}
+                          deleteUser={this.props.deleteUser}
+                        />
+                      )}
+                    />
+                    {this.props.user.Types &&
+                      this.props.user.Types.map((t) => t.name).includes('maintainer') && (
+                        <Route
+                          exact
+                          path="/profile/user/orgs"
+                          component={(props) => (
+                            <UserOganizationTree
+                              {...props}
+                              createOrganizations={this.props.createOrganizations}
+                              updateOrganization={this.props.updateOrganization}
+                              organizations={this.props.organizations}
+                              history={this.props.history}
+                            />
+                          )}
+                        />
+                      )}
+                    {this.props.user.Types &&
+                      (this.props.user.Types.map((t) => t.name).includes('contributor') ||
+                        this.props.user.Types.map((t) => t.name).includes('funding')) && (
+                        <Route
+                          exact
+                          path="/profile/explore"
+                          component={UserTasksExploreContainer}
+                        />
+                      )}
+                    {this.props.user.Types &&
+                      (this.props.user.Types.map((t) => t.name).includes('contributor') ||
+                        this.props.user.Types.map((t) => t.name).includes('funding')) && (
+                        <Route
+                          exact
+                          path="/profile/explore/:filter"
+                          component={UserTasksExploreContainer}
+                        />
+                      )}
+                    {((this.props.user.Types &&
+                      this.props.user.Types.map((t) => t.name).includes('contributor')) ||
+                      (this.props.user.Types &&
+                        this.props.user.Types.map((t) => t.name).includes('maintainer'))) && (
+                      <Route exact path="/profile/tasks" component={UserTasksContainer} />
+                    )}
 
-                    }
-                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') ||
-                      this.props.user.Types && this.props.user.Types.map(t => t.name).includes('funding')) &&
-                      <Route
-                        exact
-                        path="/profile/payments"
-                        component={ PaymentsContainer }
-                      />
-                    }
-                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') ||
-                      this.props.user.Types && this.props.user.Types.map(t => t.name).includes('funding')) &&
-                      <Route
-                        exact
-                        path="/profile/wallets"
-                        component={ WalletsContainer }
-                      />
-                    }
-                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') ||
-                      this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor')) &&
-                      <Route
-                        exact
-                        path="/profile/transfers"
-                        component={ TransfersContainer }
-                      />
-                    }
-                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('maintainer') ||
-                      this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor')) &&
+                    {((this.props.user.Types &&
+                      this.props.user.Types.map((t) => t.name).includes('contributor')) ||
+                      (this.props.user.Types &&
+                        this.props.user.Types.map((t) => t.name).includes('maintainer'))) && (
+                      <Route exact path="/profile/tasks/:filter" component={UserTasksContainer} />
+                    )}
+                    {((this.props.user.Types &&
+                      this.props.user.Types.map((t) => t.name).includes('maintainer')) ||
+                      (this.props.user.Types &&
+                        this.props.user.Types.map((t) => t.name).includes('funding'))) && (
+                      <Route exact path="/profile/payments" component={PaymentsContainer} />
+                    )}
+                    {((this.props.user.Types &&
+                      this.props.user.Types.map((t) => t.name).includes('maintainer')) ||
+                      (this.props.user.Types &&
+                        this.props.user.Types.map((t) => t.name).includes('funding'))) && (
+                      <Route exact path="/profile/wallets" component={WalletsContainer} />
+                    )}
+                    {((this.props.user.Types &&
+                      this.props.user.Types.map((t) => t.name).includes('maintainer')) ||
+                      (this.props.user.Types &&
+                        this.props.user.Types.map((t) => t.name).includes('contributor'))) && (
+                      <Route exact path="/profile/transfers" component={TransfersContainer} />
+                    )}
+                    {((this.props.user.Types &&
+                      this.props.user.Types.map((t) => t.name).includes('maintainer')) ||
+                      (this.props.user.Types &&
+                        this.props.user.Types.map((t) => t.name).includes('contributor'))) && (
                       <Route
                         exact
                         path="/profile/transfers/:transfer_id"
-                        component={ TransfersContainer }
+                        component={TransfersContainer}
                       />
-                    }
-                    { (this.props.user.Types && this.props.user.Types.map(t => t.name).includes('contributor')) &&
-                      <Route
-                        exact
-                        path="/profile/payouts"
-                        component={ PayoutsContainer }
-                      />
-                    }
+                    )}
+                    {this.props.user.Types &&
+                      this.props.user.Types.map((t) => t.name).includes('contributor') && (
+                        <Route exact path="/profile/payouts" component={PayoutsContainer} />
+                      )}
                     <Route
                       exact
                       path={[
                         '/profile/task/:id',
                         '/profile/task/:id/:slug',
                         '/profile/explore/task/:id',
-                        '/profile/explore/task/:id/:slug'
+                        '/profile/explore/task/:id/:slug',
                       ]}
-                      component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
+                      component={(props) => <TaskContainer noTopBar noBottomBar {...props} />}
                     />
                     <Route
                       exact
                       path="/profile/task/:id/offers"
-                      component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
+                      component={(props) => <TaskContainer noTopBar noBottomBar {...props} />}
                     />
                     <Route
                       exact
                       path="/profile/task/:id/:slug/offers"
-                      component={ (props) => <TaskContainer noTopBar noBottomBar { ...props } /> }
+                      component={(props) => <TaskContainer noTopBar noBottomBar {...props} />}
                     />
                     <Route
                       exact
@@ -337,7 +337,7 @@ class Profile extends Component {
                         '/profile/organizations/:organization_id',
                         '/profile/organizations/:organization_id/:slug',
                         '/profile/explore/organizations/:organization_id',
-                        '/profile/explore/organizations/:organization_id/:slug'
+                        '/profile/explore/organizations/:organization_id/:slug',
                       ]}
                       component={TaskListProfileOrganization}
                     />
@@ -352,7 +352,7 @@ class Profile extends Component {
                         '/profile/explore/organizations/:organization_id/projects/:project_id',
                         '/profile/explore/organizations/:organization_id/projects/:project_id/:filter',
                         '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
-                        '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter'
+                        '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
                       ]}
                     >
                       <TaskListProfileProjects noTopBar noBottomBar />
@@ -363,8 +363,8 @@ class Profile extends Component {
             </Grid>
           </RootGrid>
         </PageContent>
-        { /* Uncomment the below section to enable the 'Your Organizations section' */ }
-        { /* { this.state.orgsLoaded && organizations &&
+        {/* Uncomment the below section to enable the 'Your Organizations section' */}
+        {/* { this.state.orgsLoaded && organizations &&
             <Grid size={{ xs: 12, md: 12 }}>
                <div style={ { marginTop: 10, marginBottom: 10 } }>
                 <Typography variant='h5' component='h3'>
@@ -378,8 +378,8 @@ class Profile extends Component {
                 </div>
               </div>
             </Grid>
-          } */ }
-  <BottomContainer />
+          } */}
+        <BottomContainer />
       </Page>
     )
   }
@@ -391,7 +391,7 @@ Profile.propTypes = {
   user: PropTypes.object,
   history: PropTypes.object,
   roles: PropTypes.object,
-  addNotification: PropTypes.object
+  addNotification: PropTypes.object,
 }
 
 export default injectIntl(Profile)

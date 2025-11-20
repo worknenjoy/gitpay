@@ -1,53 +1,53 @@
-import React from 'react';
-import PaypalInfoForm from './paypal-info-form';
+import React from 'react'
+import PaypalInfoForm from './paypal-info-form'
 
 export default {
   title: 'Design Library/Organisms/Forms/PayoutForms/PaypalInfoForm',
-  component: PaypalInfoForm
-};
+  component: PaypalInfoForm,
+}
 
-const Template = (args) => <PaypalInfoForm {...args} />;
+const Template = (args) => <PaypalInfoForm {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   user: {
     data: {
       paypal_id: 'paypal-active@test.com',
       email: 'test@test.com',
-      country: 'US'
+      country: 'US',
     },
     completed: true,
-    error: {}
+    error: {},
   },
   updateUser: (id, data) => {
-    console.log(`User ${id} updated with data:`, data);
-  }
-};
+    console.log(`User ${id} updated with data:`, data)
+  },
+}
 
-export const NotActive = Template.bind({});
+export const NotActive = Template.bind({})
 NotActive.args = {
   user: {
     data: {
       paypal_id: null,
       email: 'test@worknenjoy.com',
-      country: 'US'
+      country: 'US',
     },
     completed: true,
-    error: {}
+    error: {},
   },
   updateUser: (id, data) => {
-    console.log(`User ${id} updated with data:`, data);
-  }
-};
+    console.log(`User ${id} updated with data:`, data)
+  },
+}
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({})
 Loading.args = {
   user: {
     data: null,
     completed: false,
-    error: {}
+    error: {},
   },
   updateUser: (id, data) => {
-    console.log(`User ${id} updated with data:`, data);
-  }
-};
+    console.log(`User ${id} updated with data:`, data)
+  },
+}

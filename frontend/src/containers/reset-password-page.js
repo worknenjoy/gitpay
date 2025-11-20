@@ -8,7 +8,7 @@ import ResetPasswordPage from '../components/areas/public/features/session/pages
 const mapStateToProps = (state, props) => {
   return {
     user: state.user,
-    roles: state.roles
+    roles: state.roles,
   }
 }
 
@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     registerUser: (data) => dispatch(registerUser(data)),
     forgotPassword: (data) => dispatch(forgotPassword(data)),
     resetPassword: (data) => dispatch(resetPassword(data)),
-    searchUser: (data) => dispatch(searchUser(data))
+    searchUser: (data) => dispatch(searchUser(data)),
   }
 }
 

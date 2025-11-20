@@ -1,6 +1,6 @@
-import React from "react"
-import { Root, Item } from "./organization-list-compact.styles"
-import OrganizationCardPlaceholder from "design-library/molecules/cards/organization-card/organization-card.placeholder"
+import React from 'react'
+import { Root, Item } from './organization-list-compact.styles'
+import OrganizationCardPlaceholder from 'design-library/molecules/cards/organization-card/organization-card.placeholder'
 
 const OrganizationListCompactPlaceholder = () => {
   return (

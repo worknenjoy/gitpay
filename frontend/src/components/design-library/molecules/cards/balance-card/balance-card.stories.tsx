@@ -1,5 +1,5 @@
 import React from 'react'
-import BalanceCard from './balance-card';
+import BalanceCard from './balance-card'
 
 const meta = {
   title: 'Design Library/Molecules/Cards/BalanceCard',
@@ -8,24 +8,23 @@ const meta = {
     balance: 1500,
     currency: 'USD',
     name: 'Available Balance',
-    completed: true
-  }
-};
+    completed: true,
+  },
+}
 
-const Template = (args) => <BalanceCard {...args} />;
+const Template = (args) => <BalanceCard {...args} />
 
-export default meta;
+export default meta
 
-export const Default = Template.bind({});
-Default.args = {
-};
+export const Default = Template.bind({})
+Default.args = {}
 
-export const Centavos = Template.bind({});
+export const Centavos = Template.bind({})
 Centavos.args = {
-  type: 'centavos'
-};
+  type: 'centavos',
+}
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({})
 Loading.args = {
-  completed: false
-};
+  completed: false,
+}

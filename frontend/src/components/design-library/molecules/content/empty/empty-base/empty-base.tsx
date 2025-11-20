@@ -1,33 +1,29 @@
-import React from 'react';
-import { Box } from '@mui/material';
-import { DataObject as EmptyIcon } from '@mui/icons-material';
-import Button from '../../../../atoms/buttons/button/button';
+import React from 'react'
+import { Box } from '@mui/material'
+import { DataObject as EmptyIcon } from '@mui/icons-material'
+import Button from '../../../../atoms/buttons/button/button'
 import { Root, Message, IconContainer, MessageSecondary } from './empty-base.styles'
 
 type EmptyBaseProps = {
-  onActionClick?: () => void;
-  icon?: React.ReactElement;
-  text?: string | React.ReactNode;
-  secondaryText?: string | React.ReactNode;
-  actionText?: string | React.ReactNode;
-  completed?: boolean;
-};
+  onActionClick?: () => void
+  icon?: React.ReactElement
+  text?: string | React.ReactNode
+  secondaryText?: string | React.ReactNode
+  actionText?: string | React.ReactNode
+  completed?: boolean
+}
 
-const EmptyBase = ({ 
+const EmptyBase = ({
   onActionClick = () => {},
   icon = <EmptyIcon />,
-  text = "No Data",
+  text = 'No Data',
   secondaryText,
-  actionText = "Create your first item",
-  completed = true
+  actionText = 'Create your first item',
+  completed = true,
 }: EmptyBaseProps) => {
   return (
     <Box component={Root as any}>
-      {icon && (
-        <IconContainer>
-          {icon}
-        </IconContainer>
-      )}
+      {icon && <IconContainer>{icon}</IconContainer>}
       <Message variant="h6" gutterBottom>
         {text}
       </Message>
@@ -36,7 +32,7 @@ const EmptyBase = ({
           {secondaryText}
         </MessageSecondary>
       )}
-      <Button 
+      <Button
         sx={{ mt: 2 }}
         variant="contained"
         color="secondary"
@@ -45,7 +41,7 @@ const EmptyBase = ({
         label={actionText}
       />
     </Box>
-  );
-};
+  )
+}
 
-export default EmptyBase;
+export default EmptyBase

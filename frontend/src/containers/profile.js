@@ -4,7 +4,11 @@ import { fetchPreferences } from '../actions/preferencesActions'
 import { logOut, changePassword } from '../actions/loginActions'
 import { listTasks, filterTasks, createTask } from '../actions/taskActions'
 import { updateUser, deleteUser, resendActivationEmail } from '../actions/userActions'
-import { fetchOrganizations, createOrganizations, updateOrganization } from '../actions/organizationsActions'
+import {
+  fetchOrganizations,
+  createOrganizations,
+  updateOrganization,
+} from '../actions/organizationsActions'
 import { addNotification, closeNotification } from '../actions/notificationActions'
 import { getFilteredTasks } from '../selectors/tasks'
 import { info } from '../actions/infoActions'
@@ -17,7 +21,7 @@ const mapStateToProps = (state, ownProps) => {
     tasks: getFilteredTasks(state),
     organizations: state.organizations.organizations,
     completed: state.loggedIn.completed,
-    info: state.info
+    info: state.info,
   }
 }
 
@@ -35,9 +39,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     closeNotification: (message) => dispatch(closeNotification(message)),
     createTask: (task, history) => dispatch(createTask(task, history)),
     listTasks: (params) => dispatch(listTasks(params)),
-    filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
+    filterTasks: (tasks, key, value, additional) =>
+      dispatch(filterTasks(tasks, key, value, additional)),
     signOut: () => dispatch(logOut()),
-    getInfo: () => dispatch(info())
+    getInfo: () => dispatch(info()),
   }
 }
 

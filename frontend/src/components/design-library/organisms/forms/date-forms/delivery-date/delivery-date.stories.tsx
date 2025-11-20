@@ -1,20 +1,20 @@
-import React from 'react';
-import DeliveryDate from './delivery-date';
+import React from 'react'
+import DeliveryDate from './delivery-date'
 
 export default {
   title: 'Design Library/Organisms/Forms/DateForms/DeliveryDate',
-  component: DeliveryDate
-};
+  component: DeliveryDate,
+}
 
-const Template = (args) => <DeliveryDate {...args} />;
+const Template = (args) => <DeliveryDate {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   // Add default props here
-  date: new Date()
-};
+  date: new Date(),
+}
 
-export const WithCustomDate = Template.bind({});
+export const WithCustomDate = Template.bind({})
 WithCustomDate.args = {
-  date: new Date('2023-12-25')
-};
+  date: new Date('2023-12-25'),
+}

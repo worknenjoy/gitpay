@@ -1,14 +1,14 @@
-import React from 'react';
-import IssueCard from './issue-card';
+import React from 'react'
+import IssueCard from './issue-card'
 
 export default {
   title: 'Design Library/Molecules/Cards/IssueCard',
-  component: IssueCard
-};
+  component: IssueCard,
+}
 
-const Template = (args) => <IssueCard {...args} />;
+const Template = (args) => <IssueCard {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   issue: {
     completed: true,
@@ -21,10 +21,10 @@ Default.args = {
         issue: {
           user: {
             login: 'user',
-            html_url: 'http://example.com'
-          }
-        }
-      }      
-    }
-  }
-};
+            html_url: 'http://example.com',
+          },
+        },
+      },
+    },
+  },
+}

@@ -18,25 +18,25 @@ const joinTeamSuccess = () => {
   return { type: JOIN_TEAM_SUCCESS, completed: true }
 }
 
-const joinTeamError = error => {
+const joinTeamError = (error) => {
   return { type: JOIN_TEAM_ERROR, completed: true, error: error }
 }
 
 const joinTeam = (email) => {
   const param = {
-    email: email
+    email: email,
   }
-  return dispatch => {
+  return (dispatch) => {
     dispatch(joinTeamRequested())
     return axios
       .post(api.API_URL + '/team/core/join', { param })
-      .then(task => {
+      .then((task) => {
         if (task.status === 200 && !task.data && !task.data.error) {
           dispatch(addNotification('Sent email successfully'))
           return dispatch(joinTeamSuccess())
         }
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(addNotification('Oops! Email could not be sent'))
         // eslint-disable-next-line no-console
         console.log('error on join team notification', error)
@@ -45,9 +45,4 @@ const joinTeam = (email) => {
   }
 }
 
-export {
-  JOIN_TEAM_REQUESTED,
-  JOIN_TEAM_SUCCESS,
-  JOIN_TEAM_ERROR,
-  joinTeam
-}
+export { JOIN_TEAM_REQUESTED, JOIN_TEAM_SUCCESS, JOIN_TEAM_ERROR, joinTeam }

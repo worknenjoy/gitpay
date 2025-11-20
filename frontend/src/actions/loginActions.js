@@ -28,36 +28,36 @@ export const FETCH_LOGGED_USER_SUCCESS = 'FETCH_LOGGED_IN_USER_SUCCESS'
 export const FETCH_LOGGED_USER_ERROR = 'FETCH_LOGGED_IN_USER_ERROR'
 
 /*
-*
-* Github authorize
-*
-*/
+ *
+ * Github authorize
+ *
+ */
 
 const authorizedGithubRequested = () => {
   return { type: AUTHORIZED_GITHUB_REQUESTED, logged: false, completed: false }
 }
 
-const authorizedGithubSuccess = user => {
+const authorizedGithubSuccess = (user) => {
   return { type: AUTHORIZED_GITHUB_SUCCESS, logged: false, completed: true, user: user }
 }
 
-const authorizedGithubError = error => {
+const authorizedGithubError = (error) => {
   return { type: AUTHORIZED_GITHUB_ERROR, logged: false, completed: true, error: error }
 }
 
 /*
-* Github disconnect
-*/
+ * Github disconnect
+ */
 
 const disconnectGithubRequested = () => {
   return { type: DISCONNECT_GITHUB_REQUESTED, logged: false, completed: false }
 }
 
-const disconnectGithubSuccess = user => {
+const disconnectGithubSuccess = (user) => {
   return { type: DISCONNECT_GITHUB_SUCCESS, logged: false, completed: true, user: user }
 }
 
-const disconnectGithubError = error => {
+const disconnectGithubError = (error) => {
   return { type: DISCONNECT_GITHUB_ERROR, logged: false, completed: true, error: error }
 }
 
@@ -71,11 +71,11 @@ const loggedInRequested = () => {
   return { type: LOGGED_IN_REQUESTED, logged: false, completed: false }
 }
 
-const loggedInSuccess = data => {
+const loggedInSuccess = (data) => {
   return { type: LOGGED_IN_SUCCESS, logged: true, completed: true, data }
 }
 
-const loggedInError = error => {
+const loggedInError = (error) => {
   return { type: LOGGED_IN_ERROR, logged: false, completed: true, error: error }
 }
 
@@ -95,10 +95,10 @@ export const loggedIn = () => {
       return axios
         .get(api.API_URL + '/authenticated', {
           headers: {
-            authorization: `Bearer ${token}`
-          }
+            authorization: `Bearer ${token}`,
+          },
         })
-        .then(response => {
+        .then((response) => {
           if (!Auth.getAuthNotified()) {
             dispatch(addNotification('user.login.successfull'))
             Auth.authNotified()
@@ -109,49 +109,48 @@ export const loggedIn = () => {
           }
           return dispatch(loggedInSuccess(response.data.user))
         })
-        .catch(error => {
+        .catch((error) => {
           dispatch(addNotification('user.login.error'))
           return dispatch(loggedInError(error))
         })
     }
-  }
-  else {
-    return dispatch => {
+  } else {
+    return (dispatch) => {
       return Promise.resolve(dispatch(loggedInError({ error: 'not logged' })))
     }
   }
 }
 
 /*
-  *
-  * Fetch logged in user
-  *
-  */
+ *
+ * Fetch logged in user
+ *
+ */
 
 export const fetchLoggedUserRequested = () => {
   return { type: FETCH_LOGGED_USER_REQUESTED, completed: false }
 }
 
-export const fetchLoggedUserSuccess = data => {
+export const fetchLoggedUserSuccess = (data) => {
   return { type: FETCH_LOGGED_USER_SUCCESS, completed: true, data }
 }
 
-export const fetchLoggedUserError = error => {
+export const fetchLoggedUserError = (error) => {
   return { type: FETCH_LOGGED_USER_ERROR, completed: true, error: error }
 }
 export const fetchLoggedUser = () => {
-  validToken();
+  validToken()
   return (dispatch, getState) => {
     dispatch(fetchLoggedUserRequested())
     return axios
-      .get(api.API_URL + '/user', )
-      .then(response => {
+      .get(api.API_URL + '/user')
+      .then((response) => {
         if (response.data) {
           return dispatch(fetchLoggedUserSuccess(response.data))
         }
         return dispatch(fetchLoggedUserError({}))
       })
-      .catch(error => {
+      .catch((error) => {
         const errorCode = error.response.data.error
         dispatch(addNotification(errorCode || 'user.fetch.error'))
         return dispatch(fetchLoggedUserError(error))
@@ -168,30 +167,30 @@ const registerRequested = () => {
   return { type: REGISTER_USER_REQUESTED, logged: false, completed: false }
 }
 
-const registerSuccess = user => {
+const registerSuccess = (user) => {
   return {
     type: REGISTER_USER_SUCCESS,
     logged: true,
     completed: true,
-    user: user
+    user: user,
   }
 }
 
-const registerError = error => {
+const registerError = (error) => {
   return {
     type: REGISTER_USER_ERROR,
     logged: false,
     completed: true,
-    error: error
+    error: error,
   }
 }
 
-export const registerUser = data => {
-  return dispatch => {
+export const registerUser = (data) => {
+  return (dispatch) => {
     dispatch(registerRequested())
     return axios
       .post(api.API_URL + '/auth/register', data)
-      .then(response => {
+      .then((response) => {
         if (response.data.email.length) {
           dispatch(addNotification('user.register.successfull'))
           return dispatch(registerSuccess(response.data))
@@ -199,12 +198,11 @@ export const registerUser = data => {
         dispatch(addNotification('user.register.error'))
         return dispatch(registerError({}))
       })
-      .catch(error => {
+      .catch((error) => {
         const responseError = error.response.data.message
         if (responseError !== 'user.exist') {
           dispatch(addNotification('user.login.error'))
-        }
-        else {
+        } else {
           dispatch(addNotification('user.exist'))
         }
         return dispatch(registerError(error))
@@ -221,46 +219,46 @@ export const logOut = () => {
   }
 }
 
-export const forgotPassword = data => {
-  return dispatch => {
+export const forgotPassword = (data) => {
+  return (dispatch) => {
     return axios
       .post(api.API_URL + '/auth/forgot-password', data)
-      .then(response => {
-        if(response) {
+      .then((response) => {
+        if (response) {
           return dispatch(addNotification('user.forgot.password.successfull'))
         } else {
-          return dispatch(addNotification('user.forgot.password.error'))  
+          return dispatch(addNotification('user.forgot.password.error'))
         }
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(addNotification('user.forgot.password.error'))
       })
   }
 }
 
-export const resetPassword = data => {
-  return dispatch => {
+export const resetPassword = (data) => {
+  return (dispatch) => {
     return axios
       .put(api.API_URL + '/auth/reset-password', data)
-      .then(response => {
-        if(response) {
+      .then((response) => {
+        if (response) {
           dispatch(addNotification('user.reset.password.successfull'))
         } else {
           dispatch(addNotification('user.reset.password.error'))
         }
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(addNotification('user.reset.password.error'))
       })
   }
 }
 
-export const changePassword = data => {
-  return dispatch => {
+export const changePassword = (data) => {
+  return (dispatch) => {
     return axios
       .put(api.API_URL + '/auth/change-password', data)
-      .then(response => {
-        if(response.data) {
+      .then((response) => {
+        if (response.data) {
           dispatch(addNotification('user.change.password.successfull'))
           logOut()
           window.setTimeout(() => {
@@ -270,7 +268,7 @@ export const changePassword = data => {
           dispatch(addNotification(response.error.message || 'user.change.password.error'))
         }
       })
-      .catch(error => {
+      .catch((error) => {
         const errorCode = error.response.data.error
         dispatch(addNotification(errorCode || 'user.change.password.error'))
       })
@@ -278,15 +276,15 @@ export const changePassword = data => {
 }
 
 export const authorizeGithub = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(authorizedGithubRequested())
-    window.location.href = `${api.API_URL}/connect/github/?token=${Auth.getToken()}`;
+    window.location.href = `${api.API_URL}/connect/github/?token=${Auth.getToken()}`
   }
 }
 
 export const disconnectGithub = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(disconnectGithubRequested())
-    window.location.href = `${api.API_URL}/authorize/github/disconnect/?token=${Auth.getToken()}`;
+    window.location.href = `${api.API_URL}/authorize/github/disconnect/?token=${Auth.getToken()}`
   }
 }

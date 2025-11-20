@@ -2,15 +2,15 @@ import { connect } from 'react-redux'
 import ProfileHead from '../components/areas/private/components/profile-head'
 import { getUserTypes } from '../actions/profileActions'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    profile: state.profileReducer.data
+    profile: state.profileReducer.data,
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getUserTypes: (userId) => dispatch(getUserTypes(userId))
+    getUserTypes: (userId) => dispatch(getUserTypes(userId)),
   }
 }
 

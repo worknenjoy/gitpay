@@ -6,9 +6,7 @@ import { withPublicTemplate } from '../../../../../../.storybook/decorators/with
 const meta: Meta<typeof Team> = {
   title: 'Design Library/Pages/Public/Team',
   component: Team,
-  decorators: [
-    withPublicTemplate
-  ]
+  decorators: [withPublicTemplate],
 }
 
 export default meta
@@ -21,6 +19,6 @@ export const Default: Story = {
       // stub API call
       console.log('joinTeamAPICall invoked with:', email)
       action('joinTeamAPICall')(email)
-    }
-  }
+    },
+  },
 }

@@ -1,24 +1,16 @@
-import React from 'react';
-import { Typography, Skeleton } from '@mui/material';
-import { StyledFieldset, StyledLegend } from './fieldset.styles';
+import React from 'react'
+import { Typography, Skeleton } from '@mui/material'
+import { StyledFieldset, StyledLegend } from './fieldset.styles'
 
 const Fieldset = ({ children, completed, legend }) => {
   return (
     <StyledFieldset>
       <StyledLegend>
-        <Typography>
-          {legend}
-        </Typography>
+        <Typography>{legend}</Typography>
       </StyledLegend>
-      {
-        !completed ? (
-          <Skeleton variant="text" animation="wave" width="100%" />
-        ) : (
-          children
-        )
-      }
+      {!completed ? <Skeleton variant="text" animation="wave" width="100%" /> : children}
     </StyledFieldset>
-  );
+  )
 }
 
-export default Fieldset;
+export default Fieldset

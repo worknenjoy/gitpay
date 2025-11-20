@@ -1,29 +1,29 @@
-import React, { useEffect } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import { FormattedMessage } from 'react-intl';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import { FormattedMessage } from 'react-intl'
+import { useHistory, useParams } from 'react-router-dom'
 
 const AccountActivation = ({ onActivateAccount }) => {
-  const [open, setOpen] = React.useState(false);
-  const [ activated, setActivated ] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
+  const [activated, setActivated] = React.useState(false)
 
-  const history = useHistory();
-  const { token, userId } = useParams<{ token: string; userId: string }>();
+  const history = useHistory()
+  const { token, userId } = useParams<{ token: string; userId: string }>()
 
-   useEffect(() => {
+  useEffect(() => {
     const activate = async () => {
-      const activateAccount = await onActivateAccount(token, userId);
-      if(!activateAccount.error){
-        setActivated(true);
+      const activateAccount = await onActivateAccount(token, userId)
+      if (!activateAccount.error) {
+        setActivated(true)
       }
-      setOpen(true);
-    };
-    activate();
-  }, []);
+      setOpen(true)
+    }
+    activate()
+  }, [])
 
   return (
     <div>
@@ -33,13 +33,19 @@ const AccountActivation = ({ onActivateAccount }) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-        {activated ? (
-          <DialogContentText id="alert-dialog-description">
-            <FormattedMessage id="account.activated" defaultMessage="Your account is active now, you can now back to login" />
-          </DialogContentText>
+          {activated ? (
+            <DialogContentText id="alert-dialog-description">
+              <FormattedMessage
+                id="account.activated"
+                defaultMessage="Your account is active now, you can now back to login"
+              />
+            </DialogContentText>
           ) : (
             <DialogContentText id="alert-dialog-description">
-              <FormattedMessage id="account.not.activated" defaultMessage="Your account is not active, please try again" />
+              <FormattedMessage
+                id="account.not.activated"
+                defaultMessage="Your account is not active, please try again"
+              />
             </DialogContentText>
           )}
         </DialogContent>
@@ -50,7 +56,7 @@ const AccountActivation = ({ onActivateAccount }) => {
         </DialogActions>
       </Dialog>
     </div>
-  );
+  )
 }
 
-export default AccountActivation;
+export default AccountActivation

@@ -1,5 +1,5 @@
-import React from 'react';
-import StatusCard from './status-card';
+import React from 'react'
+import StatusCard from './status-card'
 
 const meta = {
   title: 'Design Library/Molecules/Cards/StatusCard',
@@ -7,22 +7,22 @@ const meta = {
   args: {
     status: 'Done',
     name: 'Available Balance',
-    completed: true
-  }
-};
+    completed: true,
+  },
+}
 
-export default meta;
+export default meta
 
-const Template = (args) => <StatusCard {...args} />;
+const Template = (args) => <StatusCard {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   status: 'Done',
   name: 'Available Balance',
-  completed: true
-};
+  completed: true,
+}
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({})
 Loading.args = {
-  completed: false
+  completed: false,
 }

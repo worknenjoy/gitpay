@@ -8,40 +8,34 @@ import { styled } from '@mui/material/styles'
 
 const LabelsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
-  flexWrap: 'wrap'
+  flexWrap: 'wrap',
 }))
 
 class TaskLabels extends Component {
   static propTypes = {
-    labels: PropTypes.object
+    labels: PropTypes.object,
   }
 
-  handleListItemClick = () => {
-
-  }
+  handleListItemClick = () => {}
 
   taskLabels = (labels) => {
     return (
-  <LabelsContainer>
-        { labels.map((label, index) => (
+      <LabelsContainer>
+        {labels.map((label, index) => (
           <Chip
-            key={ index + 1 }
-            label={ label.name }
-    sx={{ mr: 1.25, mt: 1.25, mb: 1.25 }}
-            variant='outlined'
+            key={index + 1}
+            label={label.name}
+            sx={{ mr: 1.25, mt: 1.25, mb: 1.25 }}
+            variant="outlined"
           />
-        )) }
-  </LabelsContainer>
+        ))}
+      </LabelsContainer>
     )
   }
 
-  render () {
+  render() {
     const { labels } = this.props
-    return (
-      <LabelsContainer>
-        { labels && this.taskLabels(labels) }
-      </LabelsContainer>
-    )
+    return <LabelsContainer>{labels && this.taskLabels(labels)}</LabelsContainer>
   }
 }
 

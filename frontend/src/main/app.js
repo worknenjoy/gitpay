@@ -37,37 +37,39 @@ if (process.env.NODE_ENV === 'production' && cookieConsent) {
 }
 
 const messages = {
-  'br': process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
-  'en': process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
+  br: process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
+  en: process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal,
 }
 
 const composeEnhancers =
-  typeof window === 'object' && process.env.NODE_ENV === 'development' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
-    }) : compose
+  typeof window === 'object' &&
+  process.env.NODE_ENV === 'development' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+      })
+    : compose
 
 const enhancer = composeEnhancers(
   applyMiddleware(thunk),
   // other store enhancers if any
 )
 
-export const store = createStore(
-  reducers,
-  enhancer
-)
+export const store = createStore(reducers, enhancer)
 
 /* eslint-disable no-undef */
 const currentLang = localStorage.getItem('userLanguage') || 'en'
 
-store.dispatch(updateIntl({
-  locale: currentLang,
-  messages: messages[currentLang]
-}))
+store.dispatch(
+  updateIntl({
+    locale: currentLang,
+    messages: messages[currentLang],
+  }),
+)
 
 const theme = createTheme(Palette)
 
-function App () {
+function App() {
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
     setIsLoading(false)
@@ -75,8 +77,8 @@ function App () {
   if (!isLoading) {
     return (
       <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={ theme }>
-          <Provider store={ store }>
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
             <IntlProvider>
               <div>
                 <CssBaseline />
@@ -89,8 +91,7 @@ function App () {
         </ThemeProvider>
       </StyledEngineProvider>
     )
-  }
-  else {
+  } else {
     return <Loader />
   }
 }

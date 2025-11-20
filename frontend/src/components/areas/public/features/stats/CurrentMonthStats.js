@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import media from '../../../../../styleguide/media'
 const Wrapper = styled.div`
-  background-color: #0085FF;
+  background-color: #0085ff;
   width: 30em;
   height: 25em;
   display: flex;
@@ -57,15 +57,13 @@ const Money = styled.h2`
 `
 
 export default class CurrentMonthStats extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
-    this.state = {
-
-    }
+    this.state = {}
   }
 
-  render () {
+  render() {
     return (
       <Wrapper>
         <Head>August 2020</Head>
@@ -74,7 +72,7 @@ export default class CurrentMonthStats extends Component {
             <Percent>-05%</Percent>
             <Money>$213,314.52</Money>
           </InfoPart>
-          <img src={ require('./Asstes/graph.png').default } alt='graph' width='120px' />
+          <img src={require('./Asstes/graph.png').default} alt="graph" width="120px" />
         </Body>
       </Wrapper>
     )

@@ -1,18 +1,16 @@
-import React from "react";
-import { Typography } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material"
-import { FormattedMessage } from "react-intl";
-import { Button, Paper } from "@mui/material";
+import React from 'react'
+import { Typography } from '@mui/material'
+import { ArrowBack } from '@mui/icons-material'
+import { FormattedMessage } from 'react-intl'
+import { Button, Paper } from '@mui/material'
 
 type TermsOfServiceProps = {
-  onArrowBack?: () => void;
-  onAgreeTerms?: () => void;
-  extraStyles?: boolean;
+  onArrowBack?: () => void
+  onAgreeTerms?: () => void
+  extraStyles?: boolean
 }
 
-
-const TermsOfService = ({ onArrowBack, onAgreeTerms, extraStyles }:TermsOfServiceProps) => {
-
+const TermsOfService = ({ onArrowBack, onAgreeTerms, extraStyles }: TermsOfServiceProps) => {
   const content = `
   {br}
   Welcome to our bounty platform! Our platform provides a marketplace for contributors, maintainers, and sponsors to connect and collaborate on open source and private projects. By using our platform, you agree to the following terms and conditions:
@@ -47,12 +45,26 @@ const TermsOfService = ({ onArrowBack, onAgreeTerms, extraStyles }:TermsOfServic
 {br}{br}
 By using our platform, you agree to these terms and conditions. If you do not agree, you may not use our platform.
 {br}{br}`
-  
+
   return (
     <>
-      <div style={extraStyles ? {padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, background: 'white', width: '100%'} : {}}>
-        <div style={{marginBottom: 10}}>
-          { onArrowBack && (
+      <div
+        style={
+          extraStyles
+            ? {
+                padding: 20,
+                textAlign: 'left',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                background: 'white',
+                width: '100%',
+              }
+            : {}
+        }
+      >
+        <div style={{ marginBottom: 10 }}>
+          {onArrowBack && (
             <a onClick={onArrowBack} href="#">
               <ArrowBack />
             </a>
@@ -67,14 +79,33 @@ By using our platform, you agree to these terms and conditions. If you do not ag
         <Typography variant="body1" gutterBottom>
           <FormattedMessage id="terms-of-service.subtitle" defaultMessage="About the terms" />
         </Typography>
-        <div style={{overflow: 'scroll', height: 'calc(100vh - 200px)'}}>
+        <div style={{ overflow: 'scroll', height: 'calc(100vh - 200px)' }}>
           <Typography variant="body1" gutterBottom>
-            <FormattedMessage id="terms-of-service.content" defaultMessage={content} values={{br: <br/>}} />
+            <FormattedMessage
+              id="terms-of-service.content"
+              defaultMessage={content}
+              values={{ br: <br /> }}
+            />
           </Typography>
         </div>
-        { onAgreeTerms && (
-          <Paper style={{position: 'absolute', bottom: 20, left: 0, height: 80, width: '100%', background: 'white'}}>
-            <Button onClick={onAgreeTerms} variant="contained" color="primary" size="large" style={{float: 'right', marginRight: 20, marginTop: 20}}>
+        {onAgreeTerms && (
+          <Paper
+            style={{
+              position: 'absolute',
+              bottom: 20,
+              left: 0,
+              height: 80,
+              width: '100%',
+              background: 'white',
+            }}
+          >
+            <Button
+              onClick={onAgreeTerms}
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{ float: 'right', marginRight: 20, marginTop: 20 }}
+            >
               <FormattedMessage id="terms-of-service.accept" defaultMessage="I agree" />
             </Button>
           </Paper>
@@ -84,4 +115,4 @@ By using our platform, you agree to these terms and conditions. If you do not ag
   )
 }
 
-export default TermsOfService;
+export default TermsOfService

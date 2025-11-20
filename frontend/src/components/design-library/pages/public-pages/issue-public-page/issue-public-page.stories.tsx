@@ -1,16 +1,16 @@
-import IssuePublicPage from './issue-public-page';
-import { withPublicTemplate } from '../../../../../../.storybook/decorators/withPublicTemplate';
+import IssuePublicPage from './issue-public-page'
+import { withPublicTemplate } from '../../../../../../.storybook/decorators/withPublicTemplate'
 
 const meta = {
   title: 'Design Library/Pages/Public/Issue',
   component: IssuePublicPage,
   decorators: [withPublicTemplate],
   parameters: {
-    layout: 'fullscreen'
-  }
-};
+    layout: 'fullscreen',
+  },
+}
 
-export default meta;
+export default meta
 
 export const Default = {
   args: {
@@ -21,11 +21,13 @@ export const Default = {
         id: 1,
         name: 'Guest User',
         email: 'guest@example.com',
-        Types: [{
-          id: 1,
-          name: 'contributor'
-        }]
-      }
+        Types: [
+          {
+            id: 1,
+            name: 'contributor',
+          },
+        ],
+      },
     },
     task: {
       completed: true,
@@ -39,19 +41,19 @@ export const Default = {
         user: {
           id: 1,
           name: 'John Doe',
-          avatarUrl: 'https://via.placeholder.com/150'
+          avatarUrl: 'https://via.placeholder.com/150',
         },
         Project: {
           id: 1,
           name: 'Sample Project',
           Organization: {
             id: 1,
-            name: 'Sample Organization'
-          }
-        }
+            name: 'Sample Organization',
+          },
+        },
       },
       loading: false,
-      error: null
+      error: null,
     },
     bottomBarProps: {
       // Add necessary props for BottomBar if any
@@ -59,25 +61,25 @@ export const Default = {
     accountMenuProps: {
       // Add necessary props for AccountMenu if any
     },
-    onDeleteTask: () => { },
-    updateTask: () => { },
-    reportTask: () => { },
-    messageAuthor: () => { },
-    cleanPullRequestDataState: () => { },
+    onDeleteTask: () => {},
+    updateTask: () => {},
+    reportTask: () => {},
+    messageAuthor: () => {},
+    cleanPullRequestDataState: () => {},
     fetchAccount: () => Promise.resolve(),
     account: { completed: false, data: {} },
-    inviteTask: () => { },
-    fundingInviteTask: () => { },
+    inviteTask: () => {},
+    fundingInviteTask: () => {},
     taskSolution: null,
-    getTaskSolution: () => { },
-    createTaskSolution: () => { },
-    updateTaskSolution: () => { },
-    fetchPullRequestData: () => { },
+    getTaskSolution: () => {},
+    createTaskSolution: () => {},
+    updateTaskSolution: () => {},
+    fetchPullRequestData: () => {},
     pullRequestData: { completed: true, data: {} },
     // Synced additional props from component
     fetchCustomer: () => Promise.resolve(),
     customer: { completed: true, data: {} },
-    addNotification: () => { },
+    addNotification: () => {},
     createOrder: () => Promise.resolve(),
     order: { completed: true, data: {} },
     fetchWallet: () => Promise.resolve(),
@@ -85,9 +87,9 @@ export const Default = {
     listWallets: () => Promise.resolve(),
     wallets: { completed: true, data: [] },
     fetchTask: () => Promise.resolve(),
-    syncTask: () => Promise.resolve()
-  }
-};
+    syncTask: () => Promise.resolve(),
+  },
+}
 
 export const user = {
   args: {
@@ -98,8 +100,8 @@ export const user = {
         id: 1,
         name: 'Jane Smith',
         email: 'jane.smith@example.com',
-        avatarUrl: 'https://via.placeholder.com/150'
-      }
+        avatarUrl: 'https://via.placeholder.com/150',
+      },
     },
     user: {
       logged: true,
@@ -111,13 +113,13 @@ export const user = {
         Types: [
           {
             id: 1,
-            type: 'contributor'
-          }
-        ]
-      }
-    }
-  }
-};
+            type: 'contributor',
+          },
+        ],
+      },
+    },
+  },
+}
 
 export const loading = {
   args: {
@@ -126,10 +128,10 @@ export const loading = {
       completed: false,
       data: null,
       loading: true,
-      error: null
-    }
-  }
-};
+      error: null,
+    },
+  },
+}
 
 export const error = {
   args: {
@@ -138,7 +140,7 @@ export const error = {
       completed: true,
       data: null,
       loading: false,
-      error: 'Failed to load issue data.'
-    }
-  }
-};
+      error: 'Failed to load issue data.',
+    },
+  },
+}

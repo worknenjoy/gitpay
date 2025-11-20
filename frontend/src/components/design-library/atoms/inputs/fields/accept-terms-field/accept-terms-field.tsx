@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { FormControl, FormControlLabel, Typography, Switch } from '@mui/material';
-import { FormattedMessage, FormattedDate } from 'react-intl';
-import Moment from 'moment';
-import Fieldset from '../../fieldset/fieldset';
+import React, { useState } from 'react'
+import { FormControl, FormControlLabel, Typography, Switch } from '@mui/material'
+import { FormattedMessage, FormattedDate } from 'react-intl'
+import Moment from 'moment'
+import Fieldset from '../../fieldset/fieldset'
 
 const AcceptTermsField = ({ accepted, acceptanceDate, onAccept, country, completed }) => {
   const [terms, setTerms] = useState(false)
@@ -14,7 +14,12 @@ const AcceptTermsField = ({ accepted, acceptanceDate, onAccept, country, complet
   }
 
   return (
-    <Fieldset completed={completed} legend={<FormattedMessage id="account.details.terms.title" defaultMessage="Terms of Service" />}>
+    <Fieldset
+      completed={completed}
+      legend={
+        <FormattedMessage id="account.details.terms.title" defaultMessage="Terms of Service" />
+      }
+    >
       {!accepted ? (
         <>
           <FormControl>
@@ -28,20 +33,26 @@ const AcceptTermsField = ({ accepted, acceptanceDate, onAccept, country, complet
                   color="primary"
                 />
               }
-              label={<FormattedMessage
-                id="account.details.terms.read"
-                defaultMessage="I read and I accept the Stripe terms to receive transfers about payments directly on my account"
-              />}
+              label={
+                <FormattedMessage
+                  id="account.details.terms.read"
+                  defaultMessage="I read and I accept the Stripe terms to receive transfers about payments directly on my account"
+                />
+              }
             />
           </FormControl>
           <FormControl>
             <Typography color="primary" style={{ marginTop: 8 }}>
               <a
                 target="_blank"
-                href={`https://stripe.com/${country}/connect-account/legal`} rel="noreferrer"
+                href={`https://stripe.com/${country}/connect-account/legal`}
+                rel="noreferrer"
               >
                 {' '}
-                <FormattedMessage id="account.details.terms.access" defaultMessage="see stripe terms" />{' '}
+                <FormattedMessage
+                  id="account.details.terms.access"
+                  defaultMessage="see stripe terms"
+                />{' '}
               </a>
             </Typography>
           </FormControl>
@@ -49,15 +60,15 @@ const AcceptTermsField = ({ accepted, acceptanceDate, onAccept, country, complet
       ) : (
         <FormControl style={{ display: 'block' }}>
           <Typography color="primary" style={{ display: 'block' }}>
-            <FormattedMessage id="account.terms.accepted" defaultMessage="You agreed with the terms in " />
-            {' '}
-            <FormattedDate value={Moment.unix(
-              acceptanceDate
-            ).toDate()} />
+            <FormattedMessage
+              id="account.terms.accepted"
+              defaultMessage="You agreed with the terms in "
+            />{' '}
+            <FormattedDate value={Moment.unix(acceptanceDate).toDate()} />
           </Typography>
         </FormControl>
       )}
     </Fieldset>
-  );
+  )
 }
-export default AcceptTermsField;
+export default AcceptTermsField

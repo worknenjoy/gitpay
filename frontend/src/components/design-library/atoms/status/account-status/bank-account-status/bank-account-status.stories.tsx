@@ -1,58 +1,58 @@
-import BankAccountStatus from './bank-account-status';
+import BankAccountStatus from './bank-account-status'
 
 const meta = {
   title: 'Design Library/Atoms/Status/Account/BankAccountStatus',
   component: BankAccountStatus,
   args: {
     status: 'Active',
-    color: 'green'
+    color: 'green',
   },
   argTypes: {
     status: { control: 'text' },
-    color: { control: 'color' }
-  }
-};
+    color: { control: 'color' },
+  },
+}
 
-export default meta;
+export default meta
 
 export const Default = {
   args: {
-    status: 'new'
-  }
-};
+    status: 'new',
+  },
+}
 
 export const Validated = {
   args: {
-    status: 'validated'
-  }
-};
+    status: 'validated',
+  },
+}
 
 export const Verified = {
   args: {
-    status: 'verified'
-  }
-};
+    status: 'verified',
+  },
+}
 
 export const Invalid = {
   args: {
-    status: 'errored'
-  }
-};
+    status: 'errored',
+  },
+}
 
 export const VerificationFailed = {
   args: {
-    status: 'verification_failed'
-  }
-};
+    status: 'verification_failed',
+  },
+}
 
 export const Unknown = {
   args: {
-    status: 'unknown'
-  }
-};
+    status: 'unknown',
+  },
+}
 export const Loading = {
   args: {
     status: 'new',
-    completed: false
-  }
-};
+    completed: false,
+  },
+}

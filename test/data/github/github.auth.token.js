@@ -1,1 +1,5 @@
-module.exports.token = {"access_token":"e72e16c7e42f292c6912e7710c838347ae178b4a", "scope":"repo,gist", "token_type":"bearer"}
+module.exports.token = {
+  access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a',
+  scope: 'repo,gist',
+  token_type: 'bearer',
+}

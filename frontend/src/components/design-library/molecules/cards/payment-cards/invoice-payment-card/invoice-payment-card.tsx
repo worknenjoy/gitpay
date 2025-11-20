@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import InvoicePayment from 'design-library/organisms/forms/invoice-forms/invoice-payment/invoice-payment'
 
 interface InvoicePaymentCardProps {
-  price: any;
-  priceAfterFee: any;
-  customer: any;
-  user: any;
-  task: any;
-  createOrder: any;
-  fetchCustomer: any;
-  onPayment: () => void;
+  price: any
+  priceAfterFee: any
+  customer: any
+  user: any
+  task: any
+  createOrder: any
+  fetchCustomer: any
+  onPayment: () => void
 }
 
 const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
@@ -21,12 +21,12 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
   user,
   task,
   createOrder,
-  onPayment
+  onPayment,
 }) => {
   const history = useHistory()
   const location = useLocation()
 
-  const [ processingPayment, setProcessingPayment ] = React.useState(false)
+  const [processingPayment, setProcessingPayment] = React.useState(false)
 
   const onInvoicePayment = async () => {
     setProcessingPayment(true)
@@ -41,27 +41,27 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
       source_type: 'invoice-item',
       customer_id: user?.customer_id,
       metadata: {
-        user_id: user.id
+        user_id: user.id,
       },
-      plan: 'open source'
+      plan: 'open source',
     })
     onPayment()
     setProcessingPayment(false)
   }
 
   useEffect(() => {
-    user.id && fetchCustomer(user.id);
-  }, []);
+    user.id && fetchCustomer(user.id)
+  }, [])
 
   return (
-    <InvoicePayment 
+    <InvoicePayment
       price={priceAfterFee}
       customer={customer}
       onInvoicePayment={onInvoicePayment}
-      onInfoClick={ () => history.push('/profile/user-account/customer') }
+      onInfoClick={() => history.push('/profile/user-account/customer')}
       processingPayment={processingPayment}
     />
   )
 }
 
-export default InvoicePaymentCard;
+export default InvoicePaymentCard

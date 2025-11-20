@@ -1,19 +1,22 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import ExplorerIssuePublicPage from './explorer-issue-public-page';
-import { withPublicTemplate, withPublicExplorerTemplate } from '../../../../../../../.storybook/decorators/withPublicTemplate';
+import type { Meta, StoryObj } from '@storybook/react'
+import ExplorerIssuePublicPage from './explorer-issue-public-page'
+import {
+  withPublicTemplate,
+  withPublicExplorerTemplate,
+} from '../../../../../../../.storybook/decorators/withPublicTemplate'
 
 const meta = {
   title: 'Design Library/Pages/Public/Explorer/Issue',
   component: ExplorerIssuePublicPage,
   parameters: {
-    layout: 'fullscreen'
+    layout: 'fullscreen',
   },
-  decorators: [ withPublicExplorerTemplate, withPublicTemplate ]
-} satisfies Meta<typeof ExplorerIssuePublicPage>;
+  decorators: [withPublicExplorerTemplate, withPublicTemplate],
+} satisfies Meta<typeof ExplorerIssuePublicPage>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof ExplorerIssuePublicPage>;
+type Story = StoryObj<typeof ExplorerIssuePublicPage>
 
 export const Default: Story = {
   args: {
@@ -23,23 +26,31 @@ export const Default: Story = {
     listTasks: () => {},
     issues: {
       completed: true,
-      data: [{
-        id: 1,
-        title: 'Sample Issue 1',
-        description: 'This is a sample issue description.',
-        status: 'open',
-        labels: ['bug', 'frontend']
-      }]
+      data: [
+        {
+          id: 1,
+          title: 'Sample Issue 1',
+          description: 'This is a sample issue description.',
+          status: 'open',
+          labels: ['bug', 'frontend'],
+        },
+      ],
     },
     labels: {
       completed: true,
-      data: [{ id: 1, name: 'bug' }, { id: 2, name: 'feature' }]
+      data: [
+        { id: 1, name: 'bug' },
+        { id: 2, name: 'feature' },
+      ],
     },
     languages: {
       completed: true,
-      data: [{ id: 1, name: 'JavaScript' }, { id: 2, name: 'Python' }]
+      data: [
+        { id: 1, name: 'JavaScript' },
+        { id: 2, name: 'Python' },
+      ],
     },
     listLabels: () => {},
-    listLanguages: () => {}
-  }
-};
+    listLanguages: () => {},
+  },
+}

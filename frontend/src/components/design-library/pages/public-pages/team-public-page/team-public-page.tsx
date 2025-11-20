@@ -37,44 +37,46 @@ function checkEmail(emailAddress) {
 const currentTeam = [
   {
     name: 'Alexandre Magno',
-    description: 'Founder of Gitpay, and senior software engineer for 15+ years, Alexandre is an active open source maintainer, author of Mobile First Boostrap and he help the development community with your blog alexandremagno.net.',
+    description:
+      'Founder of Gitpay, and senior software engineer for 15+ years, Alexandre is an active open source maintainer, author of Mobile First Boostrap and he help the development community with your blog alexandremagno.net.',
     image: imgAlexandre,
     linkedinUrl: 'https://www.linkedin.com/in/alexandremagnoteleszimerer/',
-    githubUrl: 'https://github.com/alexanmtz'
-  }
+    githubUrl: 'https://github.com/alexanmtz',
+  },
 ]
 
 const pastContributors = [
   {
     name: 'Wharley Ornelas',
-    description: 'Fullstack developer, with 15+ development experience. First developer to contribute and he helped with the core, and a brazilian developer evangelist',
+    description:
+      'Fullstack developer, with 15+ development experience. First developer to contribute and he helped with the core, and a brazilian developer evangelist',
     image: imgWharley,
     linkedinUrl: 'https://in.linkedin.com/in/wharley-ornelas-da-rocha-65420932',
-    githubUrl: 'http://github.com/wharley'
+    githubUrl: 'http://github.com/wharley',
   },
   {
     name: 'Mayna Thais',
-    description: 'Project leader with 9+ years of experience. She has worked with software projects and IT infrastructure for many companies. Graduated in Information Systems, MBA in Project Management and Scrum Master certified.',
+    description:
+      'Project leader with 9+ years of experience. She has worked with software projects and IT infrastructure for many companies. Graduated in Information Systems, MBA in Project Management and Scrum Master certified.',
     image: imgMayna,
     linkedinUrl: 'https://br.linkedin.com/in/mayna-thais',
-    githubUrl: 'https://github.com/mthais'
+    githubUrl: 'https://github.com/mthais',
   },
   {
     name: 'Rafael Quintanilha',
-    description: 'Software Developer Intern at Gitpay. Graduated in IT Management and with a master\'s in e-business, Rafael has experience working as a digital project manager and now embraces a new career path as a web developer.',
+    description:
+      "Software Developer Intern at Gitpay. Graduated in IT Management and with a master's in e-business, Rafael has experience working as a digital project manager and now embraces a new career path as a web developer.",
     image: imgRafael,
     linkedinUrl: 'https://www.linkedin.com/in/rafael-quintanilha/',
-    githubUrl: 'https://github.com/RafaelQuintanilha18'
-  }
+    githubUrl: 'https://github.com/RafaelQuintanilha18',
+  },
 ]
 
 type TeamProps = {
   joinTeamAPICall: (email: string) => void
 }
 
-export default function Team({
-  joinTeamAPICall
-}: TeamProps) {
+export default function Team({ joinTeamAPICall }: TeamProps) {
   const [formData, setFormData] = useState<{ email: string }>({ email: '' })
   const [formErrors, setFormErrors] = useState<{ email?: boolean }>({})
 
@@ -104,13 +106,20 @@ export default function Team({
         <Grid container spacing={3}>
           <Grid size={{ xs: 12 }} justifyContent="center">
             <TeamCard
-              title={<FormattedMessage id="team.currentTeam" defaultMessage="Our Current maintainer" />}
+              title={
+                <FormattedMessage id="team.currentTeam" defaultMessage="Our Current maintainer" />
+              }
               data={currentTeam}
             />
           </Grid>
           <Grid size={{ xs: 12 }} justifyContent="center">
             <TeamCard
-              title={<FormattedMessage id="team.pastContributors" defaultMessage="Our Past Contributors" />}
+              title={
+                <FormattedMessage
+                  id="team.pastContributors"
+                  defaultMessage="Our Past Contributors"
+                />
+              }
               data={pastContributors}
             />
           </Grid>
@@ -118,21 +127,27 @@ export default function Team({
       </Section>
       <div style={{ backgroundColor: 'black', padding: '20px' }}>
         <Section>
-          <Grid container spacing={3} alignItems={'center'} justifyContent={'flex-start'} >
+          <Grid container spacing={3} alignItems={'center'} justifyContent={'flex-start'}>
             <Grid size={{ lg: 8, md: 8, sm: 6 }}>
               <img src={teamImage} alt="assets" />
             </Grid>
             <Grid size={{ lg: 4, md: 4, sm: 6 }}>
               <form onChange={onChange} onSubmit={onSubmit} onBlur={onBlur}>
                 <CoreTeamForm container>
-                  <Grid size={{ xs: 12 }} >
-                    <Typography gutterBottom >
-                      <FormattedMessage id="team.joinCoreTeam" defaultMessage="Join our Core Team" />
+                  <Grid size={{ xs: 12 }}>
+                    <Typography gutterBottom>
+                      <FormattedMessage
+                        id="team.joinCoreTeam"
+                        defaultMessage="Join our Core Team"
+                      />
                     </Typography>
                   </Grid>
-                  <Grid size={{ xs: 12 }} style={{ color: 'silver' }} >
-                    <Typography gutterBottom >
-                      <FormattedMessage id="team.joinCoreTeamDescription" defaultMessage="Leave your e-mail if you are interested in joining our Core Team" />
+                  <Grid size={{ xs: 12 }} style={{ color: 'silver' }}>
+                    <Typography gutterBottom>
+                      <FormattedMessage
+                        id="team.joinCoreTeamDescription"
+                        defaultMessage="Leave your e-mail if you are interested in joining our Core Team"
+                      />
                     </Typography>
                   </Grid>
                   <Grid size={{ xs: 12 }}>
@@ -150,7 +165,7 @@ export default function Team({
                   </Grid>
                   <Grid size={{ xs: 12 }}>
                     <Button color="primary" fullWidth variant="contained" type="submit">
-                      <Typography gutterBottom >
+                      <Typography gutterBottom>
                         <FormattedMessage id="team.joinButton" defaultMessage="Join Now" />
                       </Typography>
                     </Button>

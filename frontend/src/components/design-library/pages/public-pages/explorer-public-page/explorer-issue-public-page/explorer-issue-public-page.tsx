@@ -1,5 +1,5 @@
-import React from 'react';
-import IssueTable from 'design-library/molecules/tables/issue-table/issue-table';
+import React from 'react'
+import IssueTable from 'design-library/molecules/tables/issue-table/issue-table'
 
 const ExplorerIssuePublicPage = ({
   listTasks,
@@ -8,7 +8,7 @@ const ExplorerIssuePublicPage = ({
   labels,
   languages,
   listLabels,
-  listLanguages
+  listLanguages,
 }) => {
   return (
     <IssueTable
@@ -20,7 +20,7 @@ const ExplorerIssuePublicPage = ({
       filterTasks={filterTasks}
       listLanguages={listLanguages}
     />
-  );
+  )
 }
 
-export default ExplorerIssuePublicPage;
+export default ExplorerIssuePublicPage

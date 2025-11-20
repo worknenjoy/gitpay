@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
     logged: state.loggedIn,
     user: getUserData(state),
     task: getTaskOrdersByFilter(state),
-    orders: state.orders
+    orders: state.orders,
   }
 }
 
@@ -19,13 +19,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     updateTask: (task) => dispatch(updateTask(task)),
     assignTask: (taskId, assignId) => dispatch(assignTask(taskId, assignId)),
-    actionAssign: (taskId, assignId, action, message) => dispatch(actionAssign(taskId, assignId, action, message)),
+    actionAssign: (taskId, assignId, action, message) =>
+      dispatch(actionAssign(taskId, assignId, action, message)),
     removeAssignment: (id, message) => dispatch(removeAssignment(id, message)),
     paymentTask: (taskId, value) => dispatch(paymentTask(taskId, value)),
     transferTask: (taskId) => dispatch(transferTask(taskId)),
     paymentOrder: (order) => dispatch(payOrder(order)),
     createOrder: (order) => dispatch(createOrder(order)),
-    filterTaskOrders: (filter) => dispatch(filterTaskOrders(filter))
+    filterTaskOrders: (filter) => dispatch(filterTaskOrders(filter)),
   }
 }
 

@@ -17,7 +17,8 @@ export type PaymentRequestCustomerCreationAttributes = Optional<
 
 export default class PaymentRequestCustomer
   extends Model<PaymentRequestCustomerAttributes, PaymentRequestCustomerCreationAttributes>
-  implements PaymentRequestCustomerAttributes {
+  implements PaymentRequestCustomerAttributes
+{
   public id!: number
   public name!: string | null
   public email!: string
@@ -32,40 +33,40 @@ export default class PaymentRequestCustomer
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
-          autoIncrement: true
+          autoIncrement: true,
         },
         name: {
           type: DataTypes.STRING,
-          allowNull: true
+          allowNull: true,
         },
         email: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: false,
         },
         sourceId: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: false,
         },
         userId: {
           type: DataTypes.INTEGER,
-          allowNull: false
+          allowNull: false,
         },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
-          defaultValue: DataTypes.NOW
+          defaultValue: DataTypes.NOW,
         },
         updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
-          defaultValue: DataTypes.NOW
-        }
+          defaultValue: DataTypes.NOW,
+        },
       },
       {
         sequelize,
         tableName: 'PaymentRequestCustomers',
-        timestamps: true
-      }
+        timestamps: true,
+      },
     )
     return PaymentRequestCustomer
   }
@@ -75,15 +76,14 @@ export default class PaymentRequestCustomer
     models.PaymentRequestCustomer.hasMany(models.PaymentRequestPayment, {
       as: 'payments',
       foreignKey: 'customerId',
-      sourceKey: 'id'
+      sourceKey: 'id',
     })
 
     // PaymentRequestCustomer belongs to User
     models.PaymentRequestCustomer.belongsTo(models.User, {
       as: 'user',
-      foreignKey: 'userId'
+      foreignKey: 'userId',
     })
-
   }
 }
 
@@ -92,4 +92,3 @@ module.exports = (sequelize: Sequelize) => {
 }
 module.exports.PaymentRequestCustomer = PaymentRequestCustomer
 module.exports.default = PaymentRequestCustomer
-

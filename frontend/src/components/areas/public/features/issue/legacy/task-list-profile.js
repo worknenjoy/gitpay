@@ -17,20 +17,20 @@ const Root = styled(Grid)({ flexGrow: 1 })
 const messages = defineMessages({
   issuesTitle: {
     id: 'task.list.issue.title',
-    defaultMessage: 'Explore issues, projects and organizations'
+    defaultMessage: 'Explore issues, projects and organizations',
   },
   issuesLabel: {
     id: 'task.list.issue.label',
-    defaultMessage: 'Issues'
+    defaultMessage: 'Issues',
   },
   projectsLabel: {
     id: 'task.list.issue.projects',
-    defaultMessage: 'Projects'
+    defaultMessage: 'Projects',
   },
   organizationsLabel: {
     id: 'task.list.issue.organizations',
-    defaultMessage: 'Organizations'
-  }
+    defaultMessage: 'Organizations',
+  },
 })
 
 const TaskListProfile = (props) => {
@@ -38,9 +38,9 @@ const TaskListProfile = (props) => {
 
   return (
     <Page>
-      { !noTopBar && <TopBarContainer /> }
+      {!noTopBar && <TopBarContainer />}
       <PageContent>
-        <Container fixed maxWidth='lg'>
+        <Container fixed maxWidth="lg">
           <Root container>
             <Grid size={{ xs: 12, md: 12 }}>
               <TaskListContainer />
@@ -48,7 +48,7 @@ const TaskListProfile = (props) => {
           </Root>
         </Container>
       </PageContent>
-  { !noBottomBar && <Bottom /> }
+      {!noBottomBar && <Bottom />}
     </Page>
   )
 }

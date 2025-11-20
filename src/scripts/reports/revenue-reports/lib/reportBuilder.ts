@@ -1,9 +1,18 @@
 import { BuildTotals, Charge, ReportRow, BalanceTransaction } from './types'
 import { listChargesForRange, listTransfersForRange } from './stripe'
 import { centsToDecimal, formatDateForSheets } from './format'
-import { computeServiceType, getChargeUSDCents, getTransactionTypeForCharge, stripeFeeUSDCentsFromBT, transferUSDCents } from './finance'
+import {
+  computeServiceType,
+  getChargeUSDCents,
+  getTransactionTypeForCharge,
+  stripeFeeUSDCentsFromBT,
+  transferUSDCents,
+} from './finance'
 
-export async function buildRowsForYear(startUnix: number, endUnix: number): Promise<{ rows: ReportRow[]; totals: BuildTotals }> {
+export async function buildRowsForYear(
+  startUnix: number,
+  endUnix: number,
+): Promise<{ rows: ReportRow[]; totals: BuildTotals }> {
   const rows: ReportRow[] = []
   const totals: BuildTotals = { transferTotal: 0, chargeTotal: 0, fee: 0, revenue: 0 }
 
@@ -14,7 +23,8 @@ export async function buildRowsForYear(startUnix: number, endUnix: number): Prom
 
   const chargeByTG = new Map<string, Charge>()
   for (const ch of chargesWide) {
-    if (ch?.transfer_group && !chargeByTG.has(ch.transfer_group)) chargeByTG.set(ch.transfer_group, ch)
+    if (ch?.transfer_group && !chargeByTG.has(ch.transfer_group))
+      chargeByTG.set(ch.transfer_group, ch)
   }
 
   // Transfer rows
@@ -37,7 +47,7 @@ export async function buildRowsForYear(startUnix: number, endUnix: number): Prom
       'Stripe Fee': feeCents > 0 ? centsToDecimal(feeCents, 'usd') : '',
       'Transfer Date': formatDateForSheets(t?.created),
       'Charge Date': formatDateForSheets(ch?.created),
-      Revenue: (originalCents > 0 || transferCents > 0) ? centsToDecimal(revenueCents, 'usd') : ''
+      Revenue: originalCents > 0 || transferCents > 0 ? centsToDecimal(revenueCents, 'usd') : '',
     }
     rows.push(row)
 
@@ -56,7 +66,7 @@ export async function buildRowsForYear(startUnix: number, endUnix: number): Prom
     const feeCents = stripeFeeUSDCentsFromBT(ch?.balance_transaction)
     const txType = getTransactionTypeForCharge(ch)
     const isPending = txType === 'charge' || txType === 'payment_intent'
-    const revenueCents = isPending ? 0 : (originalCents - feeCents)
+    const revenueCents = isPending ? 0 : originalCents - feeCents
 
     const row: ReportRow = {
       Status: isPending ? 'pending' : 'completed',
@@ -69,7 +79,7 @@ export async function buildRowsForYear(startUnix: number, endUnix: number): Prom
       'Stripe Fee': feeCents > 0 ? centsToDecimal(feeCents, 'usd') : '',
       'Transfer Date': '',
       'Charge Date': formatDateForSheets(ch?.created),
-      Revenue: originalCents > 0 ? centsToDecimal(revenueCents, 'usd') : ''
+      Revenue: originalCents > 0 ? centsToDecimal(revenueCents, 'usd') : '',
     }
     rows.push(row)
 

@@ -7,10 +7,10 @@ import {
   CREATE_USER_CUSTOMER_ERROR,
   UPDATE_USER_CUSTOMER_REQUESTED,
   UPDATE_USER_CUSTOMER_SUCCESS,
-  UPDATE_USER_CUSTOMER_ERROR
+  UPDATE_USER_CUSTOMER_ERROR,
 } from '../actions/userActions'
 
-export const customer = (state = { data: { }, completed: true, error: {} }, action) => {
+export const customer = (state = { data: {}, completed: true, error: {} }, action) => {
   switch (action.type) {
     case FETCH_USER_CUSTOMER_REQUESTED:
       return { ...state, completed: false }

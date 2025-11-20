@@ -1,1 +1,1 @@
-export * from './paymentRequestPaymentList';
+export * from './paymentRequestPaymentList'

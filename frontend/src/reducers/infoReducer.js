@@ -1,17 +1,16 @@
-import {
-  INFO_REQUESTED,
-  INFO_SUCCESS,
-  INFO_ERROR
-} from '../actions/infoActions'
+import { INFO_REQUESTED, INFO_SUCCESS, INFO_ERROR } from '../actions/infoActions'
 
-export const info = (state = {
-  completed: true,
-  error: {
-    message: false
+export const info = (
+  state = {
+    completed: true,
+    error: {
+      message: false,
+    },
+    data: {},
+    filterValue: null,
   },
-  data: {},
-  filterValue: null
-}, action) => {
+  action,
+) => {
   switch (action.type) {
     case INFO_REQUESTED:
       return { ...state, completed: false }

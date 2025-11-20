@@ -1,12 +1,12 @@
 import { styled, Theme } from '@mui/material/styles'
 
 interface MainTitleProps {
-  left?: boolean;
-  center?: boolean;
+  left?: boolean
+  center?: boolean
 }
 
 export const HeroTitleStyled = styled('div', {
-  shouldForwardProp: (prop) => prop !== 'left' && prop !== 'center'
+  shouldForwardProp: (prop) => prop !== 'left' && prop !== 'center',
 })<MainTitleProps>(({ theme, left, center }: { theme: Theme } & MainTitleProps) => ({
   textAlign: 'center',
   display: 'block',
@@ -20,17 +20,17 @@ export const HeroTitleStyled = styled('div', {
   marginRight: 'auto',
 
   ...(left && {
-    marginRight: '18%'
+    marginRight: '18%',
   }),
 
   ...(center && {
     marginRight: '5%',
-    width: '70%'
+    width: '70%',
   }),
 
   [theme.breakpoints.down('sm')]: {
     width: '60%',
     margin: '20px auto',
-    ...(left && { marginLeft: 'auto' })
-  }
+    ...(left && { marginLeft: 'auto' }),
+  },
 }))

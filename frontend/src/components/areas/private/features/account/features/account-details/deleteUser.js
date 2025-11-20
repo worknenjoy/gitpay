@@ -9,7 +9,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Typography
+  Typography,
 } from '@mui/material'
 import { styled as muiStyled } from '@mui/material/styles'
 
@@ -22,26 +22,32 @@ const DeleteButton = muiStyled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.error.main,
   color: theme.palette.primary.contrastText,
   '&:hover': {
-    backgroundColor: theme.palette.error.light
-  }
+    backgroundColor: theme.palette.error.light,
+  },
 }))
 
 class DeleteUser extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = { open: false }
   }
 
-  static defaultProps = { visible: true, user: {}, onClose: () => {}, deleteUser: () => {}, onOpen: () => {} }
+  static defaultProps = {
+    visible: true,
+    user: {},
+    onClose: () => {},
+    deleteUser: () => {},
+    onOpen: () => {},
+  }
 
   static propTypes = {
     visible: PropTypes.bool,
     onClose: PropTypes.func,
-    deleteUser: PropTypes.func
+    deleteUser: PropTypes.func,
   }
 
-  onChangeInvite = event => this.setState({ [event.target.name]: event.target.value })
+  onChangeInvite = (event) => this.setState({ [event.target.name]: event.target.value })
 
   confirmDelete = (e) => {
     e.preventDefault()
@@ -49,30 +55,42 @@ class DeleteUser extends Component {
     this.props.onClose()
   }
 
-  render () {
-  const { visible } = this.props
+  render() {
+    const { visible } = this.props
 
     return (
       <Container>
         <Dialog
-          open={ visible }
-          onClose={ () => this.props.onClose() }
+          open={visible}
+          onClose={() => this.props.onClose()}
           aria-labelledby="alert-dialog-title"
         >
           <DialogTitle id="alert-dialog-title">
-            <FormattedMessage id="account.profile.settings.delete.user.title" defaultMessage="Delete User" />
+            <FormattedMessage
+              id="account.profile.settings.delete.user.title"
+              defaultMessage="Delete User"
+            />
           </DialogTitle>
           <DialogContent>
             <Typography type="subheading" gutterBottom>
-              <FormattedMessage id="account.profile.settings.delete.user.alert" defaultMessage="When you delete, you erase data associated with the user, such as tasks and interests." />
+              <FormattedMessage
+                id="account.profile.settings.delete.user.alert"
+                defaultMessage="When you delete, you erase data associated with the user, such as tasks and interests."
+              />
             </Typography>
           </DialogContent>
           <DialogActions>
-            <Button onClick={ () => this.props.onClose() } color="primary">
-              <FormattedMessage id="account.profile.settings.delete.user.form.cancel" defaultMessage="Cancel" />
+            <Button onClick={() => this.props.onClose()} color="primary">
+              <FormattedMessage
+                id="account.profile.settings.delete.user.form.cancel"
+                defaultMessage="Cancel"
+              />
             </Button>
-            <DeleteButton onClick={ this.confirmDelete } variant="contained">
-              <FormattedMessage id="account.profile.settings.delete.user.form.confirm" defaultMessage="Confirm" />
+            <DeleteButton onClick={this.confirmDelete} variant="contained">
+              <FormattedMessage
+                id="account.profile.settings.delete.user.form.confirm"
+                defaultMessage="Confirm"
+              />
             </DeleteButton>
           </DialogActions>
         </Dialog>

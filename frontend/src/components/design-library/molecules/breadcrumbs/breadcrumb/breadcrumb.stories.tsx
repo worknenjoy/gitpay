@@ -1,14 +1,14 @@
-import React from 'react';
-import { Breadcrumb } from './breadcrumb';
+import React from 'react'
+import { Breadcrumb } from './breadcrumb'
 
 export default {
   title: 'Design Library/Molecules/Breadcrumbs/Breadcrumb',
-  component: Breadcrumb
-};
+  component: Breadcrumb,
+}
 
-const Template = (args) => <Breadcrumb {...args} />;
+const Template = (args) => <Breadcrumb {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   task: {
     completed: true,
@@ -19,13 +19,13 @@ Default.args = {
       Project: {
         id: 1,
         name: 'Project 1',
-        Organization: { id: 1, name: 'Organization 1' }
-      }
-    }
-  }
-};
+        Organization: { id: 1, name: 'Organization 1' },
+      },
+    },
+  },
+}
 
-export const CustomRoot = Template.bind({});
+export const CustomRoot = Template.bind({})
 CustomRoot.args = {
   task: {
     completed: true,
@@ -36,59 +36,59 @@ CustomRoot.args = {
       Project: {
         id: 1,
         name: 'Project 1',
-        Organization: { id: 1, name: 'Organization 1' }
-      }
-    }
+        Organization: { id: 1, name: 'Organization 1' },
+      },
+    },
   },
   root: {
     label: 'Dashboard',
-    link: '/dashboard'
-  }
-};
+    link: '/dashboard',
+  },
+}
 
-export const ProjectOnly = Template.bind({});
+export const ProjectOnly = Template.bind({})
 ProjectOnly.args = {
   project: {
     completed: true,
     data: {
       id: 1,
       name: 'Project 1',
-      Organization: { id: 1, name: 'Organization 1' }
-    }
-  }
-};
+      Organization: { id: 1, name: 'Organization 1' },
+    },
+  },
+}
 
-export const OrganizationOnly = Template.bind({});
+export const OrganizationOnly = Template.bind({})
 OrganizationOnly.args = {
   organization: {
     completed: true,
     data: {
       id: 1,
-      name: 'Organization 1'
-    }
-  }
-};
+      name: 'Organization 1',
+    },
+  },
+}
 
-export const rootOnly = Template.bind({});
+export const rootOnly = Template.bind({})
 rootOnly.args = {
   root: {
     label: 'Dashboard',
-    link: '/dashboard'
-  }
-};
+    link: '/dashboard',
+  },
+}
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({})
 Loading.args = {
   task: {
     completed: false,
-    data: {}
+    data: {},
   },
   project: {
     completed: false,
-    data: {}
+    data: {},
   },
   organization: {
     completed: false,
-    data: {}
-  }
-};
+    data: {},
+  },
+}

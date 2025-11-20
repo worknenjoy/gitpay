@@ -11,23 +11,23 @@ import PaypalPaymentCard from '../../cards/payment-cards/paypal-payment-card/pay
 const taskPaymentFormMessages = defineMessages({
   tabPaymentMethodCrediCard: {
     id: 'task.payment.method.card',
-    defaultMessage: 'Credit Card'
+    defaultMessage: 'Credit Card',
   },
   tabPaymentMethodPaypal: {
     id: 'task.payment.method.paypal',
-    defaultMessage: 'Paypal'
+    defaultMessage: 'Paypal',
   },
   tabPaymentMethodInvoice: {
     id: 'task.payment.method.invoice',
-    defaultMessage: 'Invoice'
+    defaultMessage: 'Invoice',
   },
   tabPaymentMethodWallet: {
     id: 'task.payment.method.wallet',
-    defaultMessage: 'Wallet'
-  }
+    defaultMessage: 'Wallet',
+  },
 })
 
-const fee = { 'open source': 1.08, 'private': 1.18, 'full': 1.30 }
+const fee = { 'open source': 1.08, private: 1.18, full: 1.3 }
 
 function IssuePaymentDrawer({
   open,
@@ -45,7 +45,7 @@ function IssuePaymentDrawer({
   listWallets,
   wallets,
   fetchTask,
-  syncTask
+  syncTask,
 }: any) {
   const intl = useIntl()
 
@@ -78,28 +78,64 @@ function IssuePaymentDrawer({
     new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-      maximumSignificantDigits: 4
+      maximumSignificantDigits: 4,
     }).format(amount)
 
   const pickTaskPrice = (p: number) => setPrice(p)
 
   return (
     <PaymentDrawer
-      title={<FormattedMessage id="task.payment.headline" defaultMessage="New payment for an issue" />}
-      pickupTagListMessagesPrimaryText={<FormattedMessage id="issue.payment.headline.bounty.add" defaultMessage="Add a bounty for this issue" />}
-      pickupTagListMessagesSecondaryText={<FormattedMessage id="issue.payment.form.message.subheading" defaultMessage="Create a bounty for this issue and who you assign will receive the payment for this bounty" />}
+      title={
+        <FormattedMessage id="task.payment.headline" defaultMessage="New payment for an issue" />
+      }
+      pickupTagListMessagesPrimaryText={
+        <FormattedMessage
+          id="issue.payment.headline.bounty.add"
+          defaultMessage="Add a bounty for this issue"
+        />
+      }
+      pickupTagListMessagesSecondaryText={
+        <FormattedMessage
+          id="issue.payment.form.message.subheading"
+          defaultMessage="Create a bounty for this issue and who you assign will receive the payment for this bounty"
+        />
+      }
       onChangePrice={(p) => pickTaskPrice(p)}
       open={open}
       onClose={onClose}
       plan={{
         fee: feeValue,
-        category: <FormattedMessage id="actions.task.payment.plan.opensource" defaultMessage="Open Source" />,
-        title: <FormattedMessage id="actions.task.payment.plan.opensource.info" defaultMessage="For Open Source Project" />,
+        category: (
+          <FormattedMessage
+            id="actions.task.payment.plan.opensource"
+            defaultMessage="Open Source"
+          />
+        ),
+        title: (
+          <FormattedMessage
+            id="actions.task.payment.plan.opensource.info"
+            defaultMessage="For Open Source Project"
+          />
+        ),
         items: [
-          feeValue === 0 ? <FormattedMessage key="noFee" id="actions.task.payment.plan.bullet.noFee" defaultMessage="No fee for issues equal or above 5000" /> : undefined,
-          <FormattedMessage key="public" id="actions.task.payment.plan.bullet.public" defaultMessage="For Public Projects" />,
-          <FormattedMessage key="basic" id="actions.task.payment.plan.bullet.basic" defaultMessage="Basic Campaign" />
-        ]
+          feeValue === 0 ? (
+            <FormattedMessage
+              key="noFee"
+              id="actions.task.payment.plan.bullet.noFee"
+              defaultMessage="No fee for issues equal or above 5000"
+            />
+          ) : undefined,
+          <FormattedMessage
+            key="public"
+            id="actions.task.payment.plan.bullet.public"
+            defaultMessage="For Public Projects"
+          />,
+          <FormattedMessage
+            key="basic"
+            id="actions.task.payment.plan.bullet.basic"
+            defaultMessage="Basic Campaign"
+          />,
+        ],
       }}
       tabs={[
         {
@@ -117,7 +153,7 @@ function IssuePaymentDrawer({
               plan={plan}
               onClose={onClose}
             />
-          )
+          ),
         },
         {
           label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodInvoice),
@@ -133,7 +169,7 @@ function IssuePaymentDrawer({
               price={price}
               onPayment={onClose}
             />
-          )
+          ),
         },
         {
           label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodPaypal),
@@ -148,7 +184,7 @@ function IssuePaymentDrawer({
               order={order}
               plan={plan}
             />
-          )
+          ),
         },
         {
           label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodWallet),
@@ -168,8 +204,8 @@ function IssuePaymentDrawer({
               fetchTask={fetchTask}
               syncTask={syncTask}
             />
-          )
-        }
+          ),
+        },
       ]}
     />
   )

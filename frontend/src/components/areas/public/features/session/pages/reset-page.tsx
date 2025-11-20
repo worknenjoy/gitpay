@@ -1,6 +1,6 @@
-import React, { useEffect } from "react"
-import ResetPasswordPage from "design-library/pages/public-pages/session-public-pages/reset-password-page/reset-password-page"
-import { useParams } from "react-router-dom";
+import React, { useEffect } from 'react'
+import ResetPasswordPage from 'design-library/pages/public-pages/session-public-pages/reset-password-page/reset-password-page'
+import { useParams } from 'react-router-dom'
 
 const ResetPage = ({ user, searchUser, resetPassword }) => {
   const { token } = useParams<{ token: string }>()
@@ -11,12 +11,7 @@ const ResetPage = ({ user, searchUser, resetPassword }) => {
     }
   }, [token, searchUser])
 
-  return (
-    <ResetPasswordPage
-      user={user}
-      resetPassword={resetPassword}
-    />
-  );
+  return <ResetPasswordPage user={user} resetPassword={resetPassword} />
 }
 
-export default ResetPage;
+export default ResetPage

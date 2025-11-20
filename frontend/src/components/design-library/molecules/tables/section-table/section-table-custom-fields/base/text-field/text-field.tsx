@@ -1,14 +1,12 @@
-import React from 'react';
-import { Typography } from '@mui/material';
+import React from 'react'
+import { Typography } from '@mui/material'
 
-const TextField = ({
-  title
-}) => {
+const TextField = ({ title }) => {
   return (
     <Typography variant="body1" color="textPrimary" gutterBottom>
       {title}
     </Typography>
-  );
+  )
 }
 
-export default TextField;
+export default TextField

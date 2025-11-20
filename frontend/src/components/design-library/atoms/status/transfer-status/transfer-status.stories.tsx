@@ -1,50 +1,49 @@
-import TransferStatus from './transfer-status';
+import TransferStatus from './transfer-status'
 
 export default {
   title: 'Design Library/Atoms/Status/Transfer/TransferStatus',
-  component: TransferStatus
-};
+  component: TransferStatus,
+}
 
 export const Pending = {
   args: {
-    status: 'pending'
-  }
-};
+    status: 'pending',
+  },
+}
 
 export const Created = {
   args: {
-    status: 'created'
-  }
-};
+    status: 'created',
+  },
+}
 
 export const InTransit = {
   args: {
-    status: 'in_transit'
-  }
-};
+    status: 'in_transit',
+  },
+}
 
 export const Reversed = {
   args: {
-    status: 'reversed'
-  }
-};
+    status: 'reversed',
+  },
+}
 
 export const Completed = {
   args: {
-    status: 'completed'
-  }
-};
+    status: 'completed',
+  },
+}
 
 export const Unknown = {
   args: {
-    status: 'unknown'
-  }
-};
+    status: 'unknown',
+  },
+}
 
 export const Loading = {
   args: {
     status: 'pending',
-    completed: false
-  }
-};
-
+    completed: false,
+  },
+}

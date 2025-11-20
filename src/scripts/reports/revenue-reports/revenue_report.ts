@@ -12,9 +12,9 @@ import { rowsToCSV, writePayoutsExtraAndSummary } from './lib/exporters'
 import { buildRowsForYear } from './lib/reportBuilder'
 
 function readArg(names: string[]): string | null {
-  const withEq = process.argv.find(a => names.some(n => a.startsWith(`${n}=`)))
+  const withEq = process.argv.find((a) => names.some((n) => a.startsWith(`${n}=`)))
   if (withEq) return withEq.split('=')[1]
-  const idx = process.argv.findIndex(a => names.includes(a))
+  const idx = process.argv.findIndex((a) => names.includes(a))
   if (idx >= 0 && process.argv[idx + 1]) return process.argv[idx + 1]
   return null
 }

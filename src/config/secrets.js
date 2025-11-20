@@ -9,7 +9,7 @@ const databaseDev = {
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
-  logging: false
+  logging: false,
 }
 
 const databaseTest = {
@@ -19,7 +19,7 @@ const databaseTest = {
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
-  logging: false
+  logging: false,
 }
 
 const databaseProd = {
@@ -30,7 +30,7 @@ const databaseProd = {
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
-  protocol: 'postgres'
+  protocol: 'postgres',
 }
 
 const databaseStaging = {
@@ -41,48 +41,48 @@ const databaseStaging = {
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',
-  protocol: 'postgres'
+  protocol: 'postgres',
 }
 
 const facebook = {
   id: process.env.FACEBOOK_ID,
-  secret: process.env.FACEBOOK_SECRET
+  secret: process.env.FACEBOOK_SECRET,
 }
 
 const google = {
   id: process.env.GOOGLE_ID,
-  secret: process.env.GOOGLE_SECRET
+  secret: process.env.GOOGLE_SECRET,
 }
 
 const github = {
   id: process.env.GITHUB_ID,
-  secret: process.env.GITHUB_SECRET
+  secret: process.env.GITHUB_SECRET,
 }
 
 const bitbucket = {
   id: process.env.BITBUCKET_ID,
-  secret: process.env.BITBUCKET_SECRET
+  secret: process.env.BITBUCKET_SECRET,
 }
 
 const slack = {
   token: process.env.SLACK_TOKEN,
-  channelId: process.env.SLACK_CHANNEL_ID
+  channelId: process.env.SLACK_CHANNEL_ID,
 }
 
 const mailchimp = {
   apiKey: process.env.MAILCHIMP_API_KEY,
-  listId: process.env.MAILCHIMP_LIST_ID
+  listId: process.env.MAILCHIMP_LIST_ID,
 }
 
 const sendgrid = {
-  apiKey: process.env.SENDGRID_API_KEY
+  apiKey: process.env.SENDGRID_API_KEY,
 }
 
 const oauthCallbacks = {
   googleCallbackUrl: `${process.env.API_HOST}/callback/google`,
   githubCallbackUrl: `${process.env.API_HOST}/callback/github`,
   facebookCallbackUrl: `${process.env.API_HOST}/callback/facebook`,
-  bitbucketCallbackUrl: `${process.env.API_HOST}/callback/bitbucket`
+  bitbucketCallbackUrl: `${process.env.API_HOST}/callback/bitbucket`,
 }
 
 module.exports = {
@@ -97,5 +97,5 @@ module.exports = {
   slack,
   oauthCallbacks,
   mailchimp,
-  sendgrid
+  sendgrid,
 }

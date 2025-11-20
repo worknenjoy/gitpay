@@ -1,14 +1,14 @@
-import React from 'react';
-import AccountHeader from './account-header-layout';
+import React from 'react'
+import AccountHeader from './account-header-layout'
 
 export default {
   title: 'Design Library/Organisms/Layouts/Header/AccountHeader',
-  component: AccountHeader
-};
+  component: AccountHeader,
+}
 
-const Template = (args) => <AccountHeader {...args} />;
+const Template = (args) => <AccountHeader {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   user: {
     id: 1,
@@ -16,16 +16,16 @@ Default.args = {
     Types: [
       {
         id: 1,
-        name: 'contributor'
+        name: 'contributor',
       },
       {
         id: 2,
-        name: 'maintainer'
+        name: 'maintainer',
       },
       {
         id: 3,
-        name: 'funding'
-      }
-    ]
-  }
-};
+        name: 'funding',
+      },
+    ],
+  },
+}

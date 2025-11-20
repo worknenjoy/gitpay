@@ -1,18 +1,16 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import ConfirmDialog from './confirm-dialog';
+import type { Meta, StoryObj } from '@storybook/react'
+import ConfirmDialog from './confirm-dialog'
 
 const meta = {
   title: 'Design Library/Molecules/Dialogs/ConfirmDialog',
   component: ConfirmDialog,
   parameters: { layout: 'centered' },
-  argTypes: {
-    
-  }
-} satisfies Meta<typeof ConfirmDialog>;
+  argTypes: {},
+} satisfies Meta<typeof ConfirmDialog>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof ConfirmDialog>;
+type Story = StoryObj<typeof ConfirmDialog>
 
 export const DefaultOpen: Story = {
   args: {
@@ -22,9 +20,9 @@ export const DefaultOpen: Story = {
     alertMessage: 'Please confirm your action.',
     confirmLabel: 'Delete',
     cancelLabel: 'Cancel',
-    completed: true
-  }
-};
+    completed: true,
+  },
+}
 
 export const LongContent: Story = {
   args: {
@@ -33,18 +31,18 @@ export const LongContent: Story = {
     message:
       'Archiving will hide this project from active views and prevent new activity. You can unarchive it at any time from the settings page. Please confirm that you want to continue with this operation.',
     confirmLabel: 'Archive',
-    cancelLabel: 'Keep Active'
-  }
-};
+    cancelLabel: 'Keep Active',
+  },
+}
 
 export const WithoutTitle: Story = {
   args: {
     open: true,
     children: 'Proceed with this action?',
     confirmLabel: 'Confirm',
-    cancelLabel: 'Cancel'
-  }
-};
+    cancelLabel: 'Cancel',
+  },
+}
 
 export const Loading: Story = {
   args: {
@@ -52,6 +50,6 @@ export const Loading: Story = {
     message: 'Loading...',
     confirmLabel: 'Confirm',
     cancelLabel: 'Cancel',
-    completed: false
-  }
-};
+    completed: false,
+  },
+}

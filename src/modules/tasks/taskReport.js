@@ -11,10 +11,20 @@ module.exports = Promise.method(function ({ id }, { task, reason, baseUrl }) {
   const title = task.title.replace(/\s/g, '-')
   const formattedReason = reason.replace(/\s/g, '-')
   const userId = task.User ? task.User.id : ''
-  const approveURL = baseUrl + '/tasks/delete/' + id + '/' + userId + '?title=' + title + '&reason=' + formattedReason + '&token=' + token
-  return models.Task
-    .findByPk(id, { include: [ models.User, models.Order, models.Assign ] })
-    .then(task => {
+  const approveURL =
+    baseUrl +
+    '/tasks/delete/' +
+    id +
+    '/' +
+    userId +
+    '?title=' +
+    title +
+    '&reason=' +
+    formattedReason +
+    '&token=' +
+    token
+  return models.Task.findByPk(id, { include: [models.User, models.Order, models.Assign] }).then(
+    (task) => {
       const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
       i18n.setLocale('en')
       const receiveNotifications = task.User.receiveNotifications
@@ -25,9 +35,10 @@ module.exports = Promise.method(function ({ id }, { task, reason, baseUrl }) {
           title: task.title,
           url: taskUrl,
           approveURL: approveURL,
-          selectedReason: reason
+          selectedReason: reason,
         })}
-        `
+        `,
       )
-    })
+    },
+  )
 })

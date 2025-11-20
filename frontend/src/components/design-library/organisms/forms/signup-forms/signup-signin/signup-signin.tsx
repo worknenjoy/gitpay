@@ -1,23 +1,20 @@
-import React from 'react';
-import SigninButtons from '../../../../atoms/buttons/signin-buttons/signin-buttons';
-import SignupDialog from '../../../../molecules/dialogs/signup-dialog/signup-dialog';
+import React from 'react'
+import SigninButtons from '../../../../atoms/buttons/signin-buttons/signin-buttons'
+import SignupDialog from '../../../../molecules/dialogs/signup-dialog/signup-dialog'
 
-const SignupSignin = ({
-  loginFormSignupFormProps,
-  loginFormForgotFormProps
-}) => {
-  const [ open, setOpen] = React.useState(false);
-  const [ mode, setMode] = React.useState('signin');
+const SignupSignin = ({ loginFormSignupFormProps, loginFormForgotFormProps }) => {
+  const [open, setOpen] = React.useState(false)
+  const [mode, setMode] = React.useState('signin')
   return (
     <div>
       <SigninButtons
         onSignin={() => {
-          setOpen(true);
-          setMode('signin');
+          setOpen(true)
+          setMode('signin')
         }}
         onSignup={() => {
-          setOpen(true);
-          setMode('signup');
+          setOpen(true)
+          setMode('signup')
         }}
       />
       <SignupDialog
@@ -31,7 +28,7 @@ const SignupSignin = ({
         loginFormForgotFormProps={loginFormForgotFormProps}
       />
     </div>
-  );
+  )
 }
 
-export default SignupSignin;
+export default SignupSignin

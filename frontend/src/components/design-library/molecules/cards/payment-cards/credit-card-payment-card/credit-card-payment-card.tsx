@@ -1,10 +1,6 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import {
-  Card,
-  CardContent,
-  Typography
-} from '@mui/material'
+import { Card, CardContent, Typography } from '@mui/material'
 import StripeCheckout from './stripe-checkout'
 
 type CreditCardPaymentCardProps = React.ComponentProps<typeof StripeCheckout>
@@ -18,7 +14,10 @@ const CreditCardPaymentCard: React.FC<CreditCardPaymentCardProps> = (props) => {
             <FormattedMessage id="payment.new.title" defaultMessage="Make a new payment" />
           </Typography>
           <Typography variant="body1" gutterBottom>
-            <FormattedMessage id="payment.new.text" defaultMessage="Please fill your credit card details" />
+            <FormattedMessage
+              id="payment.new.text"
+              defaultMessage="Please fill your credit card details"
+            />
           </Typography>
           <StripeCheckout {...props} />
         </CardContent>

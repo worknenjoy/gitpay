@@ -1,19 +1,22 @@
-import React from "react";
-import { Typography } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material"
-import { FormattedMessage } from "react-intl";
-import { Button, Paper } from "@mui/material";
+import React from 'react'
+import { Typography } from '@mui/material'
+import { ArrowBack } from '@mui/icons-material'
+import { FormattedMessage } from 'react-intl'
+import { Button, Paper } from '@mui/material'
 
 type PrivacyPolicyProps = {
-  onArrowBack?: () => void;
-  onAgreeTerms?: () => void;
-  noHeader?: boolean;
-  extraStyles?: boolean;
+  onArrowBack?: () => void
+  onAgreeTerms?: () => void
+  noHeader?: boolean
+  extraStyles?: boolean
 }
 
-
-const PrivacyPolicy = ({ onArrowBack, onAgreeTerms, noHeader, extraStyles = true }:PrivacyPolicyProps) => {
-
+const PrivacyPolicy = ({
+  onArrowBack,
+  onAgreeTerms,
+  noHeader,
+  extraStyles = true,
+}: PrivacyPolicyProps) => {
   const content = `
   {br}
   Thank you for considering our bounty platform! Our platform takes your privacy very seriously, and we are committed to protecting your personal information. This privacy policy outlines how we collect, use, and protect your personal information when you use our platform.
@@ -44,14 +47,28 @@ Our platform is not intended for use by children under the age of 13, and we do 
 We reserve the right to modify this privacy policy at any time. If we make material changes to this policy, we will notify you by email or by posting a notice on our platform.
 {br}{br}
 If you have any questions or concerns about our privacy policy, please contact us at contact@gitpay.me`
-  
+
   return (
     <>
-      <div style={ extraStyles ? {padding: 20, textAlign: 'left', position: 'absolute', top: 0, left: 0, width: '100%', background: 'white'} : {}}>
-        { noHeader ? null : (
+      <div
+        style={
+          extraStyles
+            ? {
+                padding: 20,
+                textAlign: 'left',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                background: 'white',
+              }
+            : {}
+        }
+      >
+        {noHeader ? null : (
           <>
-            <div style={{marginBottom: 10}}>
-              { onArrowBack && (
+            <div style={{ marginBottom: 10 }}>
+              {onArrowBack && (
                 <a onClick={onArrowBack} href="#">
                   <ArrowBack />
                 </a>
@@ -64,25 +81,47 @@ If you have any questions or concerns about our privacy policy, please contact u
               </Typography>
             </div>
             <Typography variant="body1" gutterBottom>
-              <FormattedMessage id="terms-of-service.subtitle" defaultMessage="About our privacy policy" />
+              <FormattedMessage
+                id="terms-of-service.subtitle"
+                defaultMessage="About our privacy policy"
+              />
             </Typography>
           </>
         )}
-        <div style={{overflow: 'scroll', height: 'calc(100vh - 200px)'}}>
+        <div style={{ overflow: 'scroll', height: 'calc(100vh - 200px)' }}>
           <Typography variant="body1" gutterBottom>
-            <FormattedMessage id="terms-of-service.content" defaultMessage={content} values={{br: <br/>}} />
+            <FormattedMessage
+              id="terms-of-service.content"
+              defaultMessage={content}
+              values={{ br: <br /> }}
+            />
           </Typography>
         </div>
-        { onAgreeTerms && (
-        <Paper style={{position: 'absolute', bottom: 20, left: 0, height: 80, width: '100%', background: 'white'}}>
-          <Button onClick={onAgreeTerms} variant="contained" color="primary" size="large" style={{float: 'right', marginRight: 20, marginTop: 20}}>
-            <FormattedMessage id="terms-of-service.accept" defaultMessage="I agree" />
-          </Button>
-        </Paper>
+        {onAgreeTerms && (
+          <Paper
+            style={{
+              position: 'absolute',
+              bottom: 20,
+              left: 0,
+              height: 80,
+              width: '100%',
+              background: 'white',
+            }}
+          >
+            <Button
+              onClick={onAgreeTerms}
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{ float: 'right', marginRight: 20, marginTop: 20 }}
+            >
+              <FormattedMessage id="terms-of-service.accept" defaultMessage="I agree" />
+            </Button>
+          </Paper>
         )}
       </div>
     </>
   )
 }
 
-export default PrivacyPolicy;
+export default PrivacyPolicy

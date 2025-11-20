@@ -1,26 +1,30 @@
-import React from 'react';
-import { useIntl } from 'react-intl';
+import React from 'react'
+import { useIntl } from 'react-intl'
 import Constants from '../../../../../consts'
-import { ChipStatusClosed, ChipStatusSuccess, AvatarStatusClosed, AvatarStatusSuccess } from './issue-status-field.styles'
-
+import {
+  ChipStatusClosed,
+  ChipStatusSuccess,
+  AvatarStatusClosed,
+  AvatarStatusSuccess,
+} from './issue-status-field.styles'
 
 const IssueStatus = ({ status }) => {
-  const intl = useIntl(); 
+  const intl = useIntl()
   return (
     <div style={{ width: 80 }}>
       {status === 'closed' ? (
-        <ChipStatusClosed 
+        <ChipStatusClosed
           label={intl.formatMessage(Constants.STATUSES[status])}
-          avatar={<AvatarStatusClosed style={{ width: 8, height: 8 }}>{' '}</AvatarStatusClosed>}
+          avatar={<AvatarStatusClosed style={{ width: 8, height: 8 }}> </AvatarStatusClosed>}
         />
       ) : (
-        <ChipStatusSuccess 
+        <ChipStatusSuccess
           label={intl.formatMessage(Constants.STATUSES[status])}
-          avatar={<AvatarStatusSuccess style={{ width: 8, height: 8 }}>{' '}</AvatarStatusSuccess>}
+          avatar={<AvatarStatusSuccess style={{ width: 8, height: 8 }}> </AvatarStatusSuccess>}
         />
       )}
     </div>
-  );
+  )
 }
 
-export default IssueStatus;
+export default IssueStatus

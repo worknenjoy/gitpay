@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import TermsDialog from './terms-dialog';
+import React, { useState } from 'react'
+import TermsDialog from './terms-dialog'
 
 export default {
   title: 'Design Library/Molecules/Dialogs/TermsDialog',
-  component: TermsDialog
-};
+  component: TermsDialog,
+}
 
 const Template = (args) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <>
       <button onClick={handleClickOpen}>Open Terms Dialog</button>
       <TermsDialog {...args} open={open} onClose={handleClose} />
     </>
-  );
-};
+  )
+}
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   // Add default props here
-};
+}

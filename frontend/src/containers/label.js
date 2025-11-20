@@ -5,14 +5,14 @@ import { listTasks } from '../actions/taskActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    labels: state.labels
+    labels: state.labels,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     listLabels: (params) => dispatch(listLabels(params)),
-    listTasks: (params) => dispatch(listTasks(params))
+    listTasks: (params) => dispatch(listTasks(params)),
   }
 }
 

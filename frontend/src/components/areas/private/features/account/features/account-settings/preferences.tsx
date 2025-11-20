@@ -6,32 +6,42 @@ import MySkill from '../account-skills/my-skill'
 import { Root, Title, ChipContainer, InlineLabel, SkillsGrid, Section } from './preferences.styles'
 
 const skillsList = [
-  'Node.js', 'Ruby', 'Python', 'CSS', 'Design', 'Writing', 'Documentation',
-  'React', 'React Native', 'Angular', 'Vue.js', 'Blogging', 'Wordpress',
-  'PHP', 'Testing', 'Git', 'Continuous Integration'
+  'Node.js',
+  'Ruby',
+  'Python',
+  'CSS',
+  'Design',
+  'Writing',
+  'Documentation',
+  'React',
+  'React Native',
+  'Angular',
+  'Vue.js',
+  'Blogging',
+  'Wordpress',
+  'PHP',
+  'Testing',
+  'Git',
+  'Continuous Integration',
 ]
 
 const Preferences = (props) => {
   const { classes, preferences, updateUser, user } = props
   const { skills, os } = preferences
 
-  const skillsArray = typeof skills === 'string' && skills.trim() !== ''
-  ? skills.split(',')
-  : [];
-  const osArray = typeof os === 'string' && os.trim() !== ''
-  ? os.split(',')
-  : [];
+  const skillsArray = typeof skills === 'string' && skills.trim() !== '' ? skills.split(',') : []
+  const osArray = typeof os === 'string' && os.trim() !== '' ? os.split(',') : []
 
   const handleSkillClick = async (item) => {
-    const updatedSkills = skillsArray?.some(skill => skill === item)
-      ? skillsArray?.filter(skill => skill !== item)
+    const updatedSkills = skillsArray?.some((skill) => skill === item)
+      ? skillsArray?.filter((skill) => skill !== item)
       : [...skillsArray, item]
     await updateUser({ skills: updatedSkills?.join(',') })
   }
 
   const handleOSClick = async (item) => {
     const updatedOS = osArray?.includes(item)
-      ? osArray.filter(os => os !== item)
+      ? osArray.filter((os) => os !== item)
       : [...osArray, item]
     await updateUser({ os: updatedOS?.join(',') })
   }
@@ -68,19 +78,31 @@ const Preferences = (props) => {
           <Typography color="primary" variant="h5">
             <FormattedMessage id="preferences.os" defaultMessage="OS" />
           </Typography>
-          <Checkbox id="checkbox_windows" checked={osArray?.includes('Windows')} onClick={() => handleOSClick('Windows')} />
+          <Checkbox
+            id="checkbox_windows"
+            checked={osArray?.includes('Windows')}
+            onClick={() => handleOSClick('Windows')}
+          />
           <label htmlFor="checkbox_windows">
             <InlineLabel color="primary" variant="body2">
               Windows
             </InlineLabel>
           </label>
-          <Checkbox id="checkbox_linux" checked={osArray?.includes('Linux')} onClick={() => handleOSClick('Linux')} />
+          <Checkbox
+            id="checkbox_linux"
+            checked={osArray?.includes('Linux')}
+            onClick={() => handleOSClick('Linux')}
+          />
           <label htmlFor="checkbox_linux">
             <InlineLabel color="primary" variant="body2">
               Linux
             </InlineLabel>
           </label>
-          <Checkbox id="checkbox_mac" checked={osArray?.includes('Mac')} onClick={() => handleOSClick('Mac')} />
+          <Checkbox
+            id="checkbox_mac"
+            checked={osArray?.includes('Mac')}
+            onClick={() => handleOSClick('Mac')}
+          />
           <label htmlFor="checkbox_mac">
             <InlineLabel color="primary" variant="body2">
               Mac
@@ -100,7 +122,10 @@ const Preferences = (props) => {
         <Section>
           <Grid size={{ xs: 12 }}>
             <Typography color="primary" variant="h5">
-              <FormattedMessage id="prefences.header.sub" defaultMessage="My language preferences" />
+              <FormattedMessage
+                id="prefences.header.sub"
+                defaultMessage="My language preferences"
+              />
             </Typography>
             <Grid container size={{ xs: 12 }} style={{ padding: 10 }}>
               <ChipContainer>
@@ -108,7 +133,10 @@ const Preferences = (props) => {
                   selectedSkillsList
                 ) : (
                   <Typography color="textSecondary" variant="body2">
-                    <FormattedMessage id="prefences.my.skills.zero" defaultMessage="No skills selected" />
+                    <FormattedMessage
+                      id="prefences.my.skills.zero"
+                      defaultMessage="No skills selected"
+                    />
                   </Typography>
                 )}
               </ChipContainer>

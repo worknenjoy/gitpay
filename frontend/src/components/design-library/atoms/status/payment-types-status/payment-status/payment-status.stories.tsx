@@ -1,61 +1,61 @@
-import PaymentStatus from './payment-status';
+import PaymentStatus from './payment-status'
 
 export default {
   title: 'Design Library/Atoms/Status/Payments/PaymentStatus',
-  component: PaymentStatus
-};
+  component: PaymentStatus,
+}
 
 export const Open = {
   args: {
-    status: 'open'
-  }
-};
+    status: 'open',
+  },
+}
 
 export const Pending = {
   args: {
-    status: 'pending'
-  }
-};
+    status: 'pending',
+  },
+}
 
 export const Succeeded = {
   args: {
-    status: 'succeeded'
-  }
-};
+    status: 'succeeded',
+  },
+}
 
 export const Failed = {
   args: {
-    status: 'failed'
-  }
-};
+    status: 'failed',
+  },
+}
 
 export const Expired = {
   args: {
-    status: 'expired'
-  }
-};
+    status: 'expired',
+  },
+}
 
 export const Canceled = {
   args: {
-    status: 'canceled'
-  }
-};
+    status: 'canceled',
+  },
+}
 
 export const Refunded = {
   args: {
-    status: 'refunded'
-  }
-};
+    status: 'refunded',
+  },
+}
 
 export const Unknown = {
   args: {
-    status: 'unknown'
-  }
-};
+    status: 'unknown',
+  },
+}
 
 export const Loading = {
   args: {
     status: 'pending',
-    completed: false
-  }
-};
+    completed: false,
+  },
+}

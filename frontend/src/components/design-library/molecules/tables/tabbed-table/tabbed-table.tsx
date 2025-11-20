@@ -1,48 +1,54 @@
-import BaseTabs from 'design-library/molecules/tabs/base-tabs/base-tabs';
-import React, { useEffect } from 'react';
-import SectionTable from '../section-table/section-table';
-import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card';
+import BaseTabs from 'design-library/molecules/tabs/base-tabs/base-tabs'
+import React, { useEffect } from 'react'
+import SectionTable from '../section-table/section-table'
+import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
 
 type TabbedTableProps = {
   tabs: Array<{
-    label: React.ReactNode;
-    value: string;
+    label: React.ReactNode
+    value: string
     table: {
       tableData: {
-        data: Array<any>;
-      };
-      tableHeaderMetadata: any;
-      customColumnRenderer?: { [key: string]: (value: any, rowData: any) => React.ReactNode };
-    };
+        data: Array<any>
+      }
+      tableHeaderMetadata: any
+      customColumnRenderer?: { [key: string]: (value: any, rowData: any) => React.ReactNode }
+    }
     cards?: Array<{
-      title: string;
-      amount: number;
-      type: 'decimal' | 'centavos';
-    }>;
-  }>;
-  activeTab?: string;
-  onChange?: (newValue: string) => void;
-};
+      title: string
+      amount: number
+      type: 'decimal' | 'centavos'
+    }>
+  }>
+  activeTab?: string
+  onChange?: (newValue: string) => void
+}
 
 const TabbedTable = ({ tabs, activeTab, onChange }: TabbedTableProps) => {
-  const [ currentTab, setCurrentTab ] = React.useState(tabs.find(tab => tab.value === activeTab) || tabs[0]);
+  const [currentTab, setCurrentTab] = React.useState(
+    tabs.find((tab) => tab.value === activeTab) || tabs[0],
+  )
 
   const handleTabChange = (event, newValue) => {
-    setCurrentTab(tabs.find(tab => tab.value === newValue));
-    onChange?.(newValue);
-  };
+    setCurrentTab(tabs.find((tab) => tab.value === newValue))
+    onChange?.(newValue)
+  }
 
   useEffect(() => {
     if (activeTab) {
-      const activeTabData = tabs.find(tab => tab.value === activeTab);
+      const activeTabData = tabs.find((tab) => tab.value === activeTab)
       if (activeTabData) {
-        setCurrentTab(activeTabData);
+        setCurrentTab(activeTabData)
       }
     }
-  }, [activeTab, tabs]);
+  }, [activeTab, tabs])
 
-  const { label, value, table } = currentTab || {};
-  const { tableData, tableHeaderMetadata, customColumnRenderer } = table || { tableData: { data: [] }, tableHeaderMetadata: [], customColumnRenderer: {} };
+  const { label, value, table } = currentTab || {}
+  const { tableData, tableHeaderMetadata, customColumnRenderer } = table || {
+    tableData: { data: [] },
+    tableHeaderMetadata: [],
+    customColumnRenderer: {},
+  }
 
   return (
     <BaseTabs
@@ -52,7 +58,9 @@ const TabbedTable = ({ tabs, activeTab, onChange }: TabbedTableProps) => {
       withCard={false} // Use withCard prop to wrap content in a card
     >
       {currentTab?.cards?.length > 0 && (
-        <div style={{ display: 'flex', gap: '16px', marginBottom: '16px', justifyContent: 'flex-end' }}>
+        <div
+          style={{ display: 'flex', gap: '16px', marginBottom: '16px', justifyContent: 'flex-end' }}
+        >
           {currentTab.cards.map((card, index) => (
             <BalanceCard key={index} name={card.title} balance={card.amount} type={card.type} />
           ))}
@@ -65,7 +73,7 @@ const TabbedTable = ({ tabs, activeTab, onChange }: TabbedTableProps) => {
         customColumnRenderer={customColumnRenderer}
       />
     </BaseTabs>
-  );
-};
+  )
+}
 
-export default TabbedTable;
+export default TabbedTable

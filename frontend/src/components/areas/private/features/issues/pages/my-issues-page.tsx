@@ -2,31 +2,26 @@ import React, { useEffect } from 'react'
 import MyIssuesPrivatePage from 'design-library/pages/private-pages/issues-pages/my-issues-private-page/my-issues-private-page'
 import { useParams } from 'react-router'
 
-const MyIssuesPage = ({
-  user,
-  issues,
-  listTasks,
-  filterTasks
-}) => {
+const MyIssuesPage = ({ user, issues, listTasks, filterTasks }) => {
   const { filter } = useParams<{ filter: string }>()
 
   const getFilteredIssues = (filter) => {
     switch (filter) {
       case 'assigned':
         filterTasks('assigned')
-        break;
+        break
       case 'createdbyme':
         filterTasks('userId')
-        break;
+        break
       case 'interested':
         filterTasks('Assigns')
-        break;
+        break
       case 'supported':
         filterTasks('supported')
-        break;
+        break
       default:
         filterTasks('userId')
-        break;
+        break
     }
   }
 
@@ -38,11 +33,6 @@ const MyIssuesPage = ({
     getFilteredIssues(filter)
   }, [filter])
 
-  return (
-    <MyIssuesPrivatePage
-      user={user}
-      issues={issues}
-    />
-  )
+  return <MyIssuesPrivatePage user={user} issues={issues} />
 }
 export default MyIssuesPage

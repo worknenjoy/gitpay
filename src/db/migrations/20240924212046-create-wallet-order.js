@@ -1,8 +1,6 @@
-
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add altering commands here.
      *
@@ -14,69 +12,78 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       walletId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Wallets',
-          key: 'id'
+          key: 'id',
         },
-        allowNull: false
+        allowNull: false,
       },
       source_id: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       currency: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       amount: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL,
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       source_type: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       source: {
         type: Sequelize.STRING,
-        unique: true
+        unique: true,
       },
       status: {
-        type: Sequelize.ENUM('pending', 'draft', 'open', 'paid', 'failed', 'uncollectible', 'void', 'refunded')
+        type: Sequelize.ENUM(
+          'pending',
+          'draft',
+          'open',
+          'paid',
+          'failed',
+          'uncollectible',
+          'void',
+          'refunded',
+        ),
       },
       capture: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       ordered_in: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       destination: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       paid: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW')
-      }
-    });
+        defaultValue: Sequelize.fn('NOW'),
+      },
+    })
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
      *
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('WalletOrders');
-  }
-};
+    await queryInterface.dropTable('WalletOrders')
+  },
+}

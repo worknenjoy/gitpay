@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 
-import IssueLanguageField from './issue-language-field';
+import IssueLanguageField from './issue-language-field'
 
 export default {
   title: 'Design Library/Molecules/Tables/Fields/Issue/IssueLanguageField',
-  component: IssueLanguageField
-};
+  component: IssueLanguageField,
+}
 
-const Template = (args) => <IssueLanguageField {...args} />;
+const Template = (args) => <IssueLanguageField {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   // Add default props here
   issue: {
@@ -17,13 +17,13 @@ Default.args = {
       ProgrammingLanguages: [
         {
           id: 1,
-          name: 'Language 1'
+          name: 'Language 1',
         },
         {
           id: 2,
-          name: 'Language 2'
-        }
-      ]
-    }
-  }
-};
+          name: 'Language 2',
+        },
+      ],
+    },
+  },
+}

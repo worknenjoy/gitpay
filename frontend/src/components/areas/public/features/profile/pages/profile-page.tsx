@@ -2,14 +2,7 @@ import UserProfilePublicPage from 'design-library/pages/public-pages/user-profil
 import React from 'react'
 import { useParams } from 'react-router-dom'
 
-const ProfilePage = ({
-  user,
-  searchUser,
-  tasks,
-  listTasks,
-  filterTasks
-}) => {
-
+const ProfilePage = ({ user, searchUser, tasks, listTasks, filterTasks }) => {
   return (
     <UserProfilePublicPage
       user={user}

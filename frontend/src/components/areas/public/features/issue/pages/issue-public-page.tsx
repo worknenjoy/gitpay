@@ -1,25 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import IssuePublicPageComponent from 'design-library/pages/public-pages/issue-public-page/issue-public-page'
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom'
 
 const IssuePublicPage = (props) => {
-  const { fetchTask, syncTask } = props;
-  const { id } = useParams<{ id: string }>();
+  const { fetchTask, syncTask } = props
+  const { id } = useParams<{ id: string }>()
 
   useEffect(() => {
     if (fetchTask) {
-      fetchTask(id);
+      fetchTask(id)
     }
     if (syncTask) {
-      syncTask(id);
+      syncTask(id)
     }
-  }, [id]);
+  }, [id])
 
-  return (
-    <IssuePublicPageComponent
-      { ...props }
-    />
-  );
+  return <IssuePublicPageComponent {...props} />
 }
 
-export default IssuePublicPage;
+export default IssuePublicPage

@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { messages } from '../../../../../messages/messages'
-import {
-  Container,
-  Button,
-  Typography
-} from '@mui/material'
+import { Container, Button, Typography } from '@mui/material'
 import { FormattedMessage, useIntl } from 'react-intl'
 import moment from 'moment'
 
@@ -23,15 +19,15 @@ const classes = {
     marginTop: 10,
     marginBottom: 10,
     textAlign: 'left' as const,
-    color: 'inherit'
+    color: 'inherit',
   },
   button: {
     width: 100,
-    fontSize: 10
+    fontSize: 10,
   },
   icon: {
-    marginLeft: 5
-  }
+    marginLeft: 5,
+  },
 }
 
 const Wallets = ({
@@ -47,7 +43,7 @@ const Wallets = ({
   walletOrder,
   fetchWalletOrder,
   wallet,
-  fetchWallet
+  fetchWallet,
 }) => {
   const intl = useIntl()
   const [addFundsDialog, setAddFundsDialog] = useState(false)
@@ -67,7 +63,7 @@ const Wallets = ({
 
   const confirmWalletCreate = async () => {
     await createWallet({
-      name: walletName
+      name: walletName,
     })
     await listWallets(user.id)
   }
@@ -76,7 +72,7 @@ const Wallets = ({
     const walletId = wallets.data[0]?.id
     await createWalletOrder({
       walletId,
-      amount: price
+      amount: price,
     })
     await listWalletOrders(walletId)
     setAddFundsDialog(false)
@@ -134,7 +130,7 @@ const Wallets = ({
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
           }}
         >
           <Typography variant="h5" gutterBottom>
@@ -144,7 +140,7 @@ const Wallets = ({
         {wallet.data.id ? (
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
             <BalanceCard
-              name={wallet.data.name || `Wallet #${wallet.id}`} 
+              name={wallet.data.name || `Wallet #${wallet.id}`}
               balance={wallet.data.balance}
               onAdd={(e) => openAddFundsDialog(e)}
               action={<FormattedMessage id="wallets.addFunds" defaultMessage="Add funds" />}
@@ -152,7 +148,14 @@ const Wallets = ({
             />
           </div>
         ) : (
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '60vh',
+            }}
+          >
             <div style={classes.paper}>
               {showWalletName ? (
                 <WalletForm
@@ -161,17 +164,28 @@ const Wallets = ({
                   onCreate={confirmWalletCreate}
                 />
               ) : (
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  height: '60vh'
-                }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    height: '60vh',
+                  }}
+                >
                   <Typography variant="body1" gutterBottom>
-                    <FormattedMessage id="general.wallets.empty" defaultMessage="You dont have any active wallet" />
+                    <FormattedMessage
+                      id="general.wallets.empty"
+                      defaultMessage="You dont have any active wallet"
+                    />
                   </Typography>
-                  <Button style={{ marginTop: 12, ...classes.button }} onClick={createWalletName} variant="contained" size="large" color="secondary">
+                  <Button
+                    style={{ marginTop: 12, ...classes.button }}
+                    onClick={createWalletName}
+                    variant="contained"
+                    size="large"
+                    color="secondary"
+                  >
                     <FormattedMessage id="general.wallets.create" defaultMessage="Create wallet" />
                   </Button>
                 </div>
@@ -179,7 +193,7 @@ const Wallets = ({
             </div>
           </div>
         )}
-  {wallets.data && wallets.data.length > 0 && (
+        {wallets.data && wallets.data.length > 0 && (
           <div style={{ marginTop: 10, marginBottom: 30 }}>
             <CustomPaginationActionsTable
               tableHead={[
@@ -188,32 +202,57 @@ const Wallets = ({
                 intl.formatMessage(messages.cardTableHeaderValue),
                 intl.formatMessage(messages.cardTableHeaderCreated),
                 intl.formatMessage(messages.cardTableHeaderDueDate),
-                intl.formatMessage(messages.cardTableHeaderActions)
+                intl.formatMessage(messages.cardTableHeaderActions),
               ]}
               walletOrders={
-                walletOrders && walletOrders.data &&
-                {
-                  ...walletOrders,
-                  data: walletOrders?.data?.map( wo => [
-                    <InvoiceId key={wo.id} walletOrderId={wo.id} fetchWalletOrder={fetchWalletOrder} />,
-                    <InvoiceStatus status={wo.status} completed={wo.completed} />,
-                    formatCurrency(wo.amount),
-                    moment(wo.createdAt).fromNow(),
-                    <InvoiceDueDate key={wo.id} walletOrderId={wo.id} fetchWalletOrder={fetchWalletOrder} />,
-                    <>
-                      {(wo.status === 'open') &&
-                        <Button onClick={(e) => handleInvoicePayment(wo.id)} variant="contained" color="secondary" size="small">
-                          <FormattedMessage id="general.wallets.table.actions.pay" defaultMessage="Pay invoice" />
-                        </Button>
-                      }
-                      {(wo.status === 'paid') &&
-                        <Button onClick={(e) => downloadInvoicePayment(wo.id)} variant="contained" color="secondary" size="small">
-                          <FormattedMessage id="general.wallets.table.actions.download" defaultMessage="Download invoice" />
-                        </Button>
-                      }
-                    </>
-                  ])
-                } || {}
+                (walletOrders &&
+                  walletOrders.data && {
+                    ...walletOrders,
+                    data: walletOrders?.data?.map((wo) => [
+                      <InvoiceId
+                        key={wo.id}
+                        walletOrderId={wo.id}
+                        fetchWalletOrder={fetchWalletOrder}
+                      />,
+                      <InvoiceStatus status={wo.status} completed={wo.completed} />,
+                      formatCurrency(wo.amount),
+                      moment(wo.createdAt).fromNow(),
+                      <InvoiceDueDate
+                        key={wo.id}
+                        walletOrderId={wo.id}
+                        fetchWalletOrder={fetchWalletOrder}
+                      />,
+                      <>
+                        {wo.status === 'open' && (
+                          <Button
+                            onClick={(e) => handleInvoicePayment(wo.id)}
+                            variant="contained"
+                            color="secondary"
+                            size="small"
+                          >
+                            <FormattedMessage
+                              id="general.wallets.table.actions.pay"
+                              defaultMessage="Pay invoice"
+                            />
+                          </Button>
+                        )}
+                        {wo.status === 'paid' && (
+                          <Button
+                            onClick={(e) => downloadInvoicePayment(wo.id)}
+                            variant="contained"
+                            color="secondary"
+                            size="small"
+                          >
+                            <FormattedMessage
+                              id="general.wallets.table.actions.download"
+                              defaultMessage="Download invoice"
+                            />
+                          </Button>
+                        )}
+                      </>,
+                    ]),
+                  }) ||
+                {}
               }
             />
           </div>

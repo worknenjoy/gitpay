@@ -1,1 +1,1 @@
-export * from './paymentRequestBalanceList';
+export * from './paymentRequestBalanceList'

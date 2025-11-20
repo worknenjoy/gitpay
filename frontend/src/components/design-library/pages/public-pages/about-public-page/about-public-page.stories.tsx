@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import About from './about-public-page'
-import { withPublicTemplate } from '../../../../../../.storybook/decorators/withPublicTemplate';
+import { withPublicTemplate } from '../../../../../../.storybook/decorators/withPublicTemplate'
 
 const meta: Meta<typeof About> = {
   title: 'Design Library/Pages/Public/About',
   component: About,
   decorators: [withPublicTemplate],
   parameters: {
-    layout: 'fullscreen'
-  }
+    layout: 'fullscreen',
+  },
 }
 
 export default meta

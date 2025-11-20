@@ -6,29 +6,27 @@ import Earnings from './InformationCards/Earnings'
 import media from '../../../../../styleguide/media'
 
 const Wrapper = styled.div`
- margin: 0;
- display: flex;
- flex-direction: row;
- align-items: center;
- vertical-align: center;
- justify-content: space-around;
- margin-top: 5em;
- ${media.phone`
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: center;
+  justify-content: space-around;
+  margin-top: 5em;
+  ${media.phone`
     display: flex;
     flex-direction: column;
   `}
 `
 
 export default class InformationCard extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
-    this.state = {
-
-    }
+    this.state = {}
   }
 
-  render () {
+  render() {
     return (
       <Wrapper>
         <Bounties />

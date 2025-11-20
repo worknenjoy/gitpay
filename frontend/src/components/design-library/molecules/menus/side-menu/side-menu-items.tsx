@@ -1,11 +1,8 @@
-
 import { MenuList, Typography, ListItemIcon } from '@mui/material'
 import React from 'react'
 import { MenuItemStyled, Primary, Category } from './side-menu-items.styles'
 
-const SideMenuItems = ({
-  menuItems
-}) => {
+const SideMenuItems = ({ menuItems }) => {
   return (
     <MenuList>
       {menuItems.map((section, sectionIndex) => (
@@ -19,20 +16,25 @@ const SideMenuItems = ({
               {section.category}
             </Typography>
           )}
-          {section.items.map((item, index) => (
-            item.include && (
-              <MenuItemStyled
-                key={`item-${sectionIndex}-${index}`}
-                onClick={item.onClick}
-                selected={item.selected}
-              >
-                <ListItemIcon sx={(theme) => ({ color: theme.palette.getContrastText(theme.palette.primary.main) })}>
-                  {item.icon}
-                </ListItemIcon>
-                <Primary primary={item.label} />
-              </MenuItemStyled>
-            )
-          ))}
+          {section.items.map(
+            (item, index) =>
+              item.include && (
+                <MenuItemStyled
+                  key={`item-${sectionIndex}-${index}`}
+                  onClick={item.onClick}
+                  selected={item.selected}
+                >
+                  <ListItemIcon
+                    sx={(theme) => ({
+                      color: theme.palette.getContrastText(theme.palette.primary.main),
+                    })}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
+                  <Primary primary={item.label} />
+                </MenuItemStyled>
+              ),
+          )}
         </div>
       ))}
     </MenuList>

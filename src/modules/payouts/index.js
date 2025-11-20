@@ -5,5 +5,5 @@ const payoutSearch = require('./payoutSearch')
 module.exports = {
   payoutBuilds,
   payoutRequest,
-  payoutSearch
+  payoutSearch,
 }

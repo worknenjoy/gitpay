@@ -1,37 +1,37 @@
-import { IntlProvider } from 'react-intl';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { addDecorator } from '@storybook/react';
-import '../src/main/app.css';
-import messagesEnLocal from '../src/translations/generated/en.json';
-import Palette from '../src/styleguide/styles/palette';
+import { IntlProvider } from 'react-intl'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { addDecorator } from '@storybook/react'
+import '../src/main/app.css'
+import messagesEnLocal from '../src/translations/generated/en.json'
+import Palette from '../src/styleguide/styles/palette'
 
 const theme = createTheme(Palette)
 
 const withIntl = (Story, context) => {
-  const { locale = 'en' } = context.globals;
+  const { locale = 'en' } = context.globals
   return (
     <IntlProvider locale={locale} messages={messagesEnLocal[locale]}>
       <Story />
     </IntlProvider>
-  );
-};
+  )
+}
 
 const withMuiTheme = (Story) => (
-  <ThemeProvider theme={ theme }>
+  <ThemeProvider theme={theme}>
     <Story />
   </ThemeProvider>
-);
+)
 
 const withRouter = (Story) => (
   <Router>
     <Story />
   </Router>
-);
+)
 
-addDecorator(withIntl);
-addDecorator(withMuiTheme);
-addDecorator(withRouter);
+addDecorator(withIntl)
+addDecorator(withMuiTheme)
+addDecorator(withRouter)
 
 export const globalTypes = {
   locale: {
@@ -46,18 +46,17 @@ export const globalTypes = {
       ],
     },
   },
-};
-
+}
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
       color: /(background|color)$/i,
       date: /Date$/,
     },
   },
-  
+
   backgrounds: {
     default: 'white',
     values: [
@@ -66,6 +65,4 @@ export const parameters = {
       { name: 'gray', value: '#888888' },
     ],
   },
-  
-  
 }

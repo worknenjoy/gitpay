@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import { Route, Switch, HashRouter, useHistory } from 'react-router-dom'
-import PrivateBase from 'design-library/templates/base/private-base/private-base';
+import PrivateBase from 'design-library/templates/base/private-base/private-base'
 import ProfileOptions from '../features/dashboard/profile-options'
 import { UserAccount } from '../features/account/user-account'
 import UserTasksExploreContainer from '../../../../containers/user-tasks-explore'
@@ -29,15 +29,15 @@ const PrivatePage = ({
   deleteUser,
   signOut,
   info,
-  getInfo
+  getInfo,
 }) => {
   const history = useHistory()
 
-  const { data } = user;
+  const { data } = user
 
   useEffect(() => {
-    fetchOrganizations();
-  }, []);
+    fetchOrganizations()
+  }, [])
 
   return (
     <PrivateBase
@@ -45,83 +45,44 @@ const PrivatePage = ({
       signOut={signOut}
       onResendActivationEmail={resendActivationEmail}
       user={user}
-      bottomProps={
-        {
-          info: info.data,
-          getInfo
-        }
-      }
+      bottomProps={{
+        info: info.data,
+        getInfo,
+      }}
     >
       <HashRouter>
         <Switch>
-          <Route exact path="/profile" component={
-            (props) =>
-            (<ProfileOptions
-              {...props}
-              user={user}
-            />)
-          } />
-          <Route path="/profile/user-account" component={
-            (props) =>
-            (<UserAccount
-              user={data}
-              updateUser={updateUser}
-              changePassword={changePassword}
-              addNotification={addNotification}
-              history={history}
-              deleteUser={deleteUser}
-            />)
-          }
-          />
           <Route
             exact
-            path="/profile/explore"
-            component={UserTasksExploreContainer}
+            path="/profile"
+            component={(props) => <ProfileOptions {...props} user={user} />}
           />
           <Route
-            exact
-            path="/profile/explore/:filter"
-            component={UserTasksExploreContainer}
+            path="/profile/user-account"
+            component={(props) => (
+              <UserAccount
+                user={data}
+                updateUser={updateUser}
+                changePassword={changePassword}
+                addNotification={addNotification}
+                history={history}
+                deleteUser={deleteUser}
+              />
+            )}
           />
-          <Route
-            exact
-            path="/profile/tasks"
-            component={UserTasksContainer}
-          />
-          <Route
-            exact
-            path="/profile/tasks/:filter"
-            component={UserTasksContainer}
-          />
-          <Route
-            exact
-            path="/profile/payments"
-            component={PaymentsContainer}
-          />
+          <Route exact path="/profile/explore" component={UserTasksExploreContainer} />
+          <Route exact path="/profile/explore/:filter" component={UserTasksExploreContainer} />
+          <Route exact path="/profile/tasks" component={UserTasksContainer} />
+          <Route exact path="/profile/tasks/:filter" component={UserTasksContainer} />
+          <Route exact path="/profile/payments" component={PaymentsContainer} />
 
-          <Route
-            exact
-            path="/profile/payment-requests"
-            component={PaymentRequestContainer}
-          />
+          <Route exact path="/profile/payment-requests" component={PaymentRequestContainer} />
 
-          <Route
-            exact
-            path="/profile/wallets"
-            component={WalletsContainer}
-          />
+          <Route exact path="/profile/wallets" component={WalletsContainer} />
 
-          <Route
-            exact
-            path="/profile/claims"
-            component={ClaimsContainer}
-          />
+          <Route exact path="/profile/claims" component={ClaimsContainer} />
 
-          <Route
-            exact
-            path="/profile/payouts"
-            component={PayoutsContainer}
-          />
+          <Route exact path="/profile/payouts" component={PayoutsContainer} />
 
           <Route
             exact
@@ -129,7 +90,7 @@ const PrivatePage = ({
               '/profile/task/:id',
               '/profile/task/:id/:slug',
               '/profile/explore/task/:id',
-              '/profile/explore/task/:id/:slug'
+              '/profile/explore/task/:id/:slug',
             ]}
             component={TaskPrivateContainer}
           />
@@ -147,7 +108,7 @@ const PrivatePage = ({
             exact
             path={[
               '/profile/explore/organizations/:organization_id',
-              '/profile/explore/organizations/:organization_id/:slug'
+              '/profile/explore/organizations/:organization_id/:slug',
             ]}
             component={OrganizationIssuesExploreContainer}
           />
@@ -156,7 +117,7 @@ const PrivatePage = ({
             path={[
               '/profile/organizations/:organization_id',
               '/profile/organizations/:organization_id/:filter',
-              '/profile/organizations/:organization_id/:slug'
+              '/profile/organizations/:organization_id/:slug',
             ]}
             component={MyOrganizationIssuesContainer}
           />
@@ -166,7 +127,7 @@ const PrivatePage = ({
               '/profile/explore/organizations/:organization_id/projects/:project_id',
               '/profile/explore/organizations/:organization_id/projects/:project_id/:filter',
               '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
-              '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter'
+              '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
             ]}
             component={ProjectIssuesExploreContainer}
           />
@@ -177,19 +138,16 @@ const PrivatePage = ({
               '/profile/organizations/:organization_id/projects/:project_id/:filter',
               '/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
               '/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
-              '/profile/organizations/:organization_id/projects/:project_id/:filter'
+              '/profile/organizations/:organization_id/projects/:project_id/:filter',
             ]}
             component={MyProjectIssuesContainer}
           />
-            
-          <Route
-            
-            path={'/profile/payout-settings'} component={PayoutSettings}
-          />
+
+          <Route path={'/profile/payout-settings'} component={PayoutSettings} />
         </Switch>
       </HashRouter>
     </PrivateBase>
-  );
-};
+  )
+}
 
-export default PrivatePage;
+export default PrivatePage

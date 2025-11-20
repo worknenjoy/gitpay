@@ -18,16 +18,16 @@ const listLabelsError = (error) => {
 }
 
 const listLabels = (params) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(listLabelsRequested())
     return axios
       .get(api.API_URL + '/labels/search', { params })
-      .then(labels => {
+      .then((labels) => {
         if (labels.status === 200 && labels.data && !labels.data.error) {
           return dispatch(listLabelsSuccess(labels.data))
         }
       })
-      .catch(error => {
+      .catch((error) => {
         // eslint-disable-next-line no-console
         console.log('error on list labels', error)
         return dispatch(listLabelsError(error))
@@ -35,9 +35,4 @@ const listLabels = (params) => {
   }
 }
 
-export {
-  LIST_LABELS_REQUEST,
-  LIST_LABELS_SUCCESS,
-  LIST_LABELS_ERROR,
-  listLabels
-}
+export { LIST_LABELS_REQUEST, LIST_LABELS_SUCCESS, LIST_LABELS_ERROR, listLabels }

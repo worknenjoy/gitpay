@@ -1,4 +1,11 @@
-module.exports.mainContentEmailTemplate = (intro = '', subtitle1 = '', callToActionText = '', callToActionLink = '', subtitle2 = '', footerMessage = '') => `
+module.exports.mainContentEmailTemplate = (
+  intro = '',
+  subtitle1 = '',
+  callToActionText = '',
+  callToActionLink = '',
+  subtitle2 = '',
+  footerMessage = '',
+) => `
  <!-- START MAIN CONTENT AREA -->
     <tr>
       <td class="wrapper" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px;" valign="top">
@@ -24,4 +31,4 @@ module.exports.mainContentEmailTemplate = (intro = '', subtitle1 = '', callToAct
       </td>
     </tr>
   <!-- END MAIN CONTENT AREA -->
-`;
+`

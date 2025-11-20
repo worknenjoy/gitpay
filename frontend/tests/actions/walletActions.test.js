@@ -20,43 +20,43 @@ describe('wallet actions', () => {
   describe('action creators', () => {
     it('should create wallet action objects', () => {
       expect(walletActions.createWalletRequested()).to.eql({
-        type: types.CREATE_WALLET_REQUESTED
+        type: types.CREATE_WALLET_REQUESTED,
       })
       expect(walletActions.createWalletSuccess({ id: 1 })).to.eql({
         type: types.CREATE_WALLET_SUCCESS,
-        wallet: { id: 1 }
+        wallet: { id: 1 },
       })
       expect(walletActions.createWalletError({ error: true })).to.eql({
         type: types.CREATE_WALLET_ERROR,
-        error: { error: true }
+        error: { error: true },
       })
       expect(walletActions.listWalletsRequested()).to.eql({
         type: types.LIST_WALLETS_REQUESTED,
-        completed: false
+        completed: false,
       })
       expect(walletActions.listWalletsSuccess([{ id: 1 }])).to.eql({
         type: types.LIST_WALLETS_SUCCESS,
         completed: true,
-        wallets: [{ id: 1 }]
+        wallets: [{ id: 1 }],
       })
       expect(walletActions.listWalletsError({ error: true })).to.eql({
         type: types.LIST_WALLETS_ERROR,
         completed: true,
-        error: { error: true }
+        error: { error: true },
       })
       expect(walletActions.fetchWalletRequested()).to.eql({
         type: types.FETCH_WALLET_REQUESTED,
-        completed: false
+        completed: false,
       })
       expect(walletActions.fetchWalletSuccess({ id: 1 })).to.eql({
         type: types.FETCH_WALLET_SUCCESS,
         completed: true,
-        wallet: { id: 1 }
+        wallet: { id: 1 },
       })
       expect(walletActions.fetchWalletError({ error: true })).to.eql({
         type: types.FETCH_WALLET_ERROR,
         completed: true,
-        error: { error: true }
+        error: { error: true },
       })
     })
   })
@@ -74,13 +74,17 @@ describe('wallet actions', () => {
       const walletData = { id: 1 }
       moxios.stubRequest(`${api.API_URL}/wallets`, {
         status: 200,
-        response: walletData
+        response: walletData,
       })
 
       const expectedActions = [
         { type: types.CREATE_WALLET_REQUESTED },
-        { type: typesNotification.ADD_NOTIFICATION, text: 'actions.wallet.create.success', open: true },
-        { type: types.CREATE_WALLET_SUCCESS, wallet: walletData }
+        {
+          type: typesNotification.ADD_NOTIFICATION,
+          text: 'actions.wallet.create.success',
+          open: true,
+        },
+        { type: types.CREATE_WALLET_SUCCESS, wallet: walletData },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletActions.createWallet(walletData)).then(() => {
@@ -95,13 +99,20 @@ describe('wallet actions', () => {
 
     it('creates CREATE_WALLET_ERROR when creating wallet fails', () => {
       moxios.stubRequest(`${api.API_URL}/wallets`, {
-        status: 500
+        status: 500,
       })
 
       const expectedActions = [
         { type: types.CREATE_WALLET_REQUESTED },
-        { type: typesNotification.ADD_NOTIFICATION, text: 'actions.wallet.create.error', open: true },
-        { type: types.CREATE_WALLET_ERROR, error: new Error('Request failed with status code 500') }
+        {
+          type: typesNotification.ADD_NOTIFICATION,
+          text: 'actions.wallet.create.error',
+          open: true,
+        },
+        {
+          type: types.CREATE_WALLET_ERROR,
+          error: new Error('Request failed with status code 500'),
+        },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletActions.createWallet({})).then(() => {
@@ -119,12 +130,12 @@ describe('wallet actions', () => {
       const walletsData = [{ id: 1 }]
       moxios.stubRequest(`${api.API_URL}/wallets`, {
         status: 200,
-        response: walletsData
+        response: walletsData,
       })
 
       const expectedActions = [
         { type: types.LIST_WALLETS_REQUESTED, completed: false },
-        { type: types.LIST_WALLETS_SUCCESS, completed: true, wallets: walletsData }
+        { type: types.LIST_WALLETS_SUCCESS, completed: true, wallets: walletsData },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletActions.listWallets()).then(() => {
@@ -134,12 +145,16 @@ describe('wallet actions', () => {
 
     it('creates LIST_WALLETS_ERROR when listing wallets fails', () => {
       moxios.stubRequest(`${api.API_URL}/wallets`, {
-        status: 500
+        status: 500,
       })
 
       const expectedActions = [
         { type: types.LIST_WALLETS_REQUESTED, completed: false },
-        { type: types.LIST_WALLETS_ERROR, completed: true, error: new Error('Request failed with status code 500') }
+        {
+          type: types.LIST_WALLETS_ERROR,
+          completed: true,
+          error: new Error('Request failed with status code 500'),
+        },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletActions.listWallets()).then(() => {
@@ -155,12 +170,12 @@ describe('wallet actions', () => {
       const walletData = { id: 1 }
       moxios.stubRequest(`${api.API_URL}/wallets/1`, {
         status: 200,
-        response: walletData
+        response: walletData,
       })
 
       const expectedActions = [
         { type: types.FETCH_WALLET_REQUESTED, completed: false },
-        { type: types.FETCH_WALLET_SUCCESS, completed: true, wallet: walletData }
+        { type: types.FETCH_WALLET_SUCCESS, completed: true, wallet: walletData },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletActions.fetchWallet(1)).then(() => {
@@ -170,12 +185,16 @@ describe('wallet actions', () => {
 
     it('creates FETCH_WALLET_ERROR when fetching wallet fails', () => {
       moxios.stubRequest(`${api.API_URL}/wallets/1`, {
-        status: 500
+        status: 500,
       })
 
       const expectedActions = [
         { type: types.FETCH_WALLET_REQUESTED, completed: false },
-        { type: types.FETCH_WALLET_ERROR, completed: true, error: new Error('Request failed with status code 500') }
+        {
+          type: types.FETCH_WALLET_ERROR,
+          completed: true,
+          error: new Error('Request failed with status code 500'),
+        },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletActions.fetchWallet(1)).then(() => {

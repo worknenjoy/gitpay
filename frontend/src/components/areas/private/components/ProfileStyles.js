@@ -1,14 +1,11 @@
-import {
-  Card as BaseCard,
-  CardMedia as BaseCardMedia
-} from '@mui/material'
+import { Card as BaseCard, CardMedia as BaseCardMedia } from '@mui/material'
 
 import styled from 'styled-components'
 import media from '../../../../styleguide/media'
 
 export const Card = styled(BaseCard)`
   max-width: 280px;
-  margin: 1rem .5rem;
+  margin: 1rem 0.5rem;
   text-align: center;
 
   ${media.phone`

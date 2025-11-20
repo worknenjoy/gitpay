@@ -1,15 +1,15 @@
-import React from 'react';
-import ConfirmButton from './confirm-button';
+import React from 'react'
+import ConfirmButton from './confirm-button'
 
 export default {
   title: 'Design Library/Atoms/Buttons/ConfirmButton',
   component: ConfirmButton,
-  parameters: { layout: 'centered' }
-};
+  parameters: { layout: 'centered' },
+}
 
-const Template = (args) => <ConfirmButton {...args} />;
+const Template = (args) => <ConfirmButton {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   label: 'Delete',
   color: 'error',
@@ -19,10 +19,10 @@ Default.args = {
   confirmLabel: 'Delete',
   cancelLabel: 'Cancel',
   alertMessage: 'This will permanently remove the item.',
-  alertSeverity: 'warning'
-};
+  alertSeverity: 'warning',
+}
 
-export const SecondaryStyle = Template.bind({});
+export const SecondaryStyle = Template.bind({})
 SecondaryStyle.args = {
   label: 'Archive',
   color: 'secondary',
@@ -30,10 +30,10 @@ SecondaryStyle.args = {
   completed: true,
   dialogMessage: 'Archive this record? You can unarchive later in settings.',
   confirmLabel: 'Archive',
-  cancelLabel: 'Keep'
-};
+  cancelLabel: 'Keep',
+}
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({})
 Loading.args = {
   label: 'Delete',
   color: 'error',
@@ -43,5 +43,5 @@ Loading.args = {
   confirmLabel: 'Delete',
   cancelLabel: 'Cancel',
   alertMessage: 'This will permanently remove the item.',
-  alertSeverity: 'warning'
-};
+  alertSeverity: 'warning',
+}

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import ExploreProjectPage from 'design-library/pages/private-pages/project-pages/explore-project-issues-private-page/explore-project-issues-private-page';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import ExploreProjectPage from 'design-library/pages/private-pages/project-pages/explore-project-issues-private-page/explore-project-issues-private-page'
+import { useParams } from 'react-router-dom'
 
 const UserProjectIssuesExplorePage = ({
   filterTasks,
@@ -11,22 +11,21 @@ const UserProjectIssuesExplorePage = ({
   languages,
   listLanguages,
   fetchProject,
-  project
+  project,
 }) => {
-
-  const { project_id } = useParams<{ project_id: string }>();
+  const { project_id } = useParams<{ project_id: string }>()
 
   const listTasksWithProject = (params) => {
     listTasks({ ...params, projectId: project_id })
   }
 
   useEffect(() => {
-    fetchProject(project_id);
-  }, [project_id]);
+    fetchProject(project_id)
+  }, [project_id])
 
   useEffect(() => {
-    listTasksWithProject({ projectId: project_id });
-  }, [project_id]);
+    listTasksWithProject({ projectId: project_id })
+  }, [project_id])
 
   return (
     <ExploreProjectPage
@@ -39,7 +38,7 @@ const UserProjectIssuesExplorePage = ({
       languages={languages}
       listLanguages={listLanguages}
     />
-  );
-};
+  )
+}
 
-export default UserProjectIssuesExplorePage;
+export default UserProjectIssuesExplorePage

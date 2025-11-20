@@ -1,24 +1,19 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import {
-  Paper,
-  Container,
-  Typography
-} from '@mui/material'
-
+import { Paper, Container, Typography } from '@mui/material'
 
 const classes = {
   icon: {
-    backgroundColor: 'black'
+    backgroundColor: 'black',
   },
   card: {},
   gutterLeft: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   media: {
-    width: 600
-  }
+    width: 600,
+  },
 } as const
 
 const Payments = ({ orders, getOrders, user }) => {
@@ -41,11 +36,9 @@ const Payments = ({ orders, getOrders, user }) => {
           />
         </Typography>
         <div style={{ marginBottom: 20 }}>
-
           <div style={{ marginTop: 20, marginBottom: 20 }}>
             <></>
           </div>
-
         </div>
       </Container>
     </Paper>

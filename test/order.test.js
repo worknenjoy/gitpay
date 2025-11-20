@@ -15,12 +15,12 @@ const customerData = require('./data/stripe/stripe.customer')
 
 describe('orders', () => {
   beforeEach(async () => {
-    await truncateModels(models.Task);
-    await truncateModels(models.User);
-    await truncateModels(models.Assign);
-    await truncateModels(models.Order);
-    await truncateModels(models.Transfer);
-    await truncateModels(models.Wallet);
+    await truncateModels(models.Task)
+    await truncateModels(models.User)
+    await truncateModels(models.Assign)
+    await truncateModels(models.Order)
+    await truncateModels(models.Transfer)
+    await truncateModels(models.Wallet)
   })
   afterEach(async () => {
     nock.cleanAll()
@@ -50,17 +50,17 @@ describe('orders', () => {
           currency: 'BRL',
           amount: 200,
           email: 'testing@gitpay.me',
-          userId: user.body.id
+          userId: user.body.id,
         })
         .set('Authorization', user.headers.authorization)
         .expect('Content-Type', /json/)
         .expect(200)
 
-      expect(res.statusCode).to.equal(200);
-      expect(res.body).to.exist;
-      expect(res.body.source_id).to.equal('12345');
-      expect(res.body.currency).to.equal('BRL');
-      expect(res.body.amount).to.equal('200');
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.source_id).to.equal('12345')
+      expect(res.body.currency).to.equal('BRL')
+      expect(res.body.amount).to.equal('200')
     })
 
     describe('Order with Plan', () => {
@@ -71,18 +71,18 @@ describe('orders', () => {
           name: 'Open Source - default',
           description: 'open source',
           fee: 8,
-          feeType: 'charge'
-        });
+          feeType: 'charge',
+        })
         PlanSchema = await models.PlanSchema.build({
           plan: 'open source',
           name: 'Open Source - no fee',
           description: 'open source with no fee',
           fee: 0,
-          feeType: 'charge'
-        });
+          feeType: 'charge',
+        })
       })
       it('should create a new order with a plan', async () => {
-        const user = await registerAndLogin(agent);
+        const user = await registerAndLogin(agent)
         const res = await agent
           .post('/orders')
           .send({
@@ -91,27 +91,27 @@ describe('orders', () => {
             amount: 100,
             email: 'testing@gitpay.me',
             userId: user.body.id,
-            plan: 'open source'
+            plan: 'open source',
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
-          .expect(200);
+          .expect(200)
 
-        expect(res.statusCode).to.equal(200);
-        expect(res.body).to.exist;
-        expect(res.body.source_id).to.equal('12345');
-        expect(res.body.currency).to.equal('BRL');
-        expect(res.body.amount).to.equal('100');
-        expect(res.body.Plan.plan).to.equal('open source');
-        expect(res.body.Plan.fee).to.equal('8');
-        expect(res.body.Plan.feePercentage).to.equal(8);
-        expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - default');
-        expect(res.body.Plan.PlanSchema.feeType).to.equal('charge');
-      });
+        expect(res.statusCode).to.equal(200)
+        expect(res.body).to.exist
+        expect(res.body.source_id).to.equal('12345')
+        expect(res.body.currency).to.equal('BRL')
+        expect(res.body.amount).to.equal('100')
+        expect(res.body.Plan.plan).to.equal('open source')
+        expect(res.body.Plan.fee).to.equal('8')
+        expect(res.body.Plan.feePercentage).to.equal(8)
+        expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - default')
+        expect(res.body.Plan.PlanSchema.feeType).to.equal('charge')
+      })
 
       it('should create a new order with no exact amount with a plan', async () => {
-        const user = await registerAndLogin(agent, { email: 'test_order@gitpay.me' });
-        
+        const user = await registerAndLogin(agent, { email: 'test_order@gitpay.me' })
+
         const res = await agent
           .post('/orders')
           .send({
@@ -120,26 +120,26 @@ describe('orders', () => {
             amount: 832,
             email: 'testing@gitpay.me',
             userId: user.body.id,
-            plan: 'open source'
+            plan: 'open source',
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
-          .expect(200);
+          .expect(200)
 
-        expect(res.statusCode).to.equal(200);
-        expect(res.body).to.exist;
-        expect(res.body.source_id).to.equal('12345');
-        expect(res.body.currency).to.equal('BRL');
-        expect(res.body.amount).to.equal('832');
-        expect(res.body.Plan.plan).to.equal('open source');
-        expect(res.body.Plan.fee).to.equal('66.56');
-        expect(res.body.Plan.feePercentage).to.equal(8);
-        expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - default');
-        expect(res.body.Plan.PlanSchema.feeType).to.equal('charge');
-      });
+        expect(res.statusCode).to.equal(200)
+        expect(res.body).to.exist
+        expect(res.body.source_id).to.equal('12345')
+        expect(res.body.currency).to.equal('BRL')
+        expect(res.body.amount).to.equal('832')
+        expect(res.body.Plan.plan).to.equal('open source')
+        expect(res.body.Plan.fee).to.equal('66.56')
+        expect(res.body.Plan.feePercentage).to.equal(8)
+        expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - default')
+        expect(res.body.Plan.PlanSchema.feeType).to.equal('charge')
+      })
 
       xit('should create a new order with a plan above 5000', async () => {
-        const user = await registerAndLogin(agent);
+        const user = await registerAndLogin(agent)
         const res = await agent
           .post('/orders')
           .send({
@@ -148,23 +148,23 @@ describe('orders', () => {
             amount: 5000,
             email: 'testing@gitpay.me',
             userId: user.body.id,
-            plan: 'open source'
+            plan: 'open source',
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
-          .expect(200);
+          .expect(200)
 
-        expect(res.statusCode).to.equal(200);
-        expect(res.body).to.exist;
-        expect(res.body.source_id).to.equal('12345');
-        expect(res.body.currency).to.equal('BRL');
-        expect(res.body.amount).to.equal('5000');
-        expect(res.body.Plan.plan).to.equal('open source');
-        expect(res.body.Plan.fee).to.equal('0');
-        expect(res.body.Plan.feePercentage).to.equal(0);
-        expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - no fee');
-        expect(res.body.Plan.PlanSchema.feeType).to.equal('charge');
-      });
+        expect(res.statusCode).to.equal(200)
+        expect(res.body).to.exist
+        expect(res.body.source_id).to.equal('12345')
+        expect(res.body.currency).to.equal('BRL')
+        expect(res.body.amount).to.equal('5000')
+        expect(res.body.Plan.plan).to.equal('open source')
+        expect(res.body.Plan.fee).to.equal('0')
+        expect(res.body.Plan.feePercentage).to.equal(0)
+        expect(res.body.Plan.PlanSchema.name).to.equal('Open Source - no fee')
+        expect(res.body.Plan.PlanSchema.feeType).to.equal('charge')
+      })
     })
 
     it('should create a order type invoice-item and create customer if theres no customer associated', async () => {
@@ -187,7 +187,7 @@ describe('orders', () => {
         .post('/v1/customers')
         .reply(200, customerData.customer, { 'Content-Type': 'application/json' })
 
-      const user = await registerAndLogin(agent);
+      const user = await registerAndLogin(agent)
       const res = await agent
         .post('/orders')
         .send({
@@ -199,23 +199,23 @@ describe('orders', () => {
           customer_id: null,
           provider: 'stripe',
           userId: user.body.id,
-          plan: 'open source'
+          plan: 'open source',
         })
         .set('Authorization', user.headers.authorization)
         .expect('Content-Type', /json/)
-        .expect(200);
+        .expect(200)
 
-      expect(res.statusCode).to.equal(200);
-      expect(res.body).to.exist;
-      expect(res.body.source_id).to.exist;
-      expect(res.body.currency).to.equal('BRL');
-      expect(res.body.amount).to.equal('200');
-      expect(res.body.Plan).to.exist;
-      expect(res.body.Plan.plan).to.equal('open source');
-      expect(res.body.Plan.fee).to.equal('16');
-      expect(res.body.Plan.feePercentage).to.equal(8);
-      expect(res.body.User.id).to.equal(user.body.id);
-      expect(res.body.User.customer_id).to.exist;
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.source_id).to.exist
+      expect(res.body.currency).to.equal('BRL')
+      expect(res.body.amount).to.equal('200')
+      expect(res.body.Plan).to.exist
+      expect(res.body.Plan.plan).to.equal('open source')
+      expect(res.body.Plan.fee).to.equal('16')
+      expect(res.body.Plan.feePercentage).to.equal(8)
+      expect(res.body.User.id).to.equal(user.body.id)
+      expect(res.body.User.customer_id).to.exist
     })
 
     it('should create a order type invoice-item with a existing customer', async () => {
@@ -234,7 +234,7 @@ describe('orders', () => {
         .post('/v1/invoices/foo/finalize')
         .reply(200, { id: 'foo' }, { 'Content-Type': 'application/json' })
 
-      const user = await registerAndLogin(agent);
+      const user = await registerAndLogin(agent)
       const res = await agent
         .post('/orders')
         .send({
@@ -246,25 +246,25 @@ describe('orders', () => {
           customer_id: 'cus_12345',
           provider: 'stripe',
           userId: user.body.id,
-          plan: 'open source'
+          plan: 'open source',
         })
         .set('Authorization', user.headers.authorization)
         .expect('Content-Type', /json/)
-        .expect(200);
+        .expect(200)
 
-      expect(res.statusCode).to.equal(200);
-      expect(res.body).to.exist;
-      expect(res.body.source_id).to.exist;
-      expect(res.body.currency).to.equal('BRL');
-      expect(res.body.amount).to.equal('200');
-      expect(res.body.Plan).to.exist;
-      expect(res.body.Plan.plan).to.equal('open source');
-      expect(res.body.Plan.fee).to.equal('16');
-      expect(res.body.Plan.feePercentage).to.equal(8);
-    }) 
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.source_id).to.exist
+      expect(res.body.currency).to.equal('BRL')
+      expect(res.body.amount).to.equal('200')
+      expect(res.body.Plan).to.exist
+      expect(res.body.Plan.plan).to.equal('open source')
+      expect(res.body.Plan.fee).to.equal('16')
+      expect(res.body.Plan.feePercentage).to.equal(8)
+    })
 
     xit('should create a order type invoice-item above 5000', async () => {
-      chai.use(spies);
+      chai.use(spies)
       const invoiceItem = chai.spy.on(stripe.invoiceItems, 'create')
 
       nock('https://api.stripe.com')
@@ -283,7 +283,7 @@ describe('orders', () => {
         .reply(200, { id: 'foo' }, { 'Content-Type': 'application/json' })
 
       try {
-        const user = await registerAndLogin(agent);
+        const user = await registerAndLogin(agent)
         const res = await agent
           .post('/orders')
           .send({
@@ -295,24 +295,24 @@ describe('orders', () => {
             customer_id: 'cus_12345',
             provider: 'stripe',
             userId: user.body.id,
-            plan: 'open source'
+            plan: 'open source',
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
           .expect(200)
 
-        expect(res.statusCode).to.equal(200);
-        expect(res.body).to.exist;
-        expect(res.body.source_id).to.exist;
-        expect(res.body.currency).to.equal('BRL');
-        expect(res.body.amount).to.equal('5000');
-        expect(res.body.Plan).to.exist;
-        expect(res.body.Plan.plan).to.equal('open source');
-        expect(res.body.Plan.fee).to.equal('0');
-        expect(res.body.Plan.feePercentage).to.equal(0);
-        expect(invoiceItem).to.have.been.called();
+        expect(res.statusCode).to.equal(200)
+        expect(res.body).to.exist
+        expect(res.body.source_id).to.exist
+        expect(res.body.currency).to.equal('BRL')
+        expect(res.body.amount).to.equal('5000')
+        expect(res.body.Plan).to.exist
+        expect(res.body.Plan.plan).to.equal('open source')
+        expect(res.body.Plan.fee).to.equal('0')
+        expect(res.body.Plan.feePercentage).to.equal(0)
+        expect(invoiceItem).to.have.been.called()
       } finally {
-        chai.spy.restore(stripe.invoiceItems, 'create');
+        chai.spy.restore(stripe.invoiceItems, 'create')
       }
     })
 
@@ -321,16 +321,16 @@ describe('orders', () => {
       const newWallet = await models.Wallet.create({
         name: 'Test Wallet',
         balance: 0,
-        userId: user.body.id
-      });
+        userId: user.body.id,
+      })
       const WalletOrder = await models.WalletOrder.create({
         walletId: newWallet.id,
         amount: 400,
-        status: 'paid'
-      });
+        status: 'paid',
+      })
       const task = await models.Task.create({
         url: 'https://foo',
-        userId: user.body.id
+        userId: user.body.id,
       })
       const res = await agent
         .post('/orders')
@@ -341,20 +341,20 @@ describe('orders', () => {
           provider: 'wallet',
           source_type: 'wallet-funds',
           userId: user.body.id,
-          taskId: task.id
+          taskId: task.id,
         })
         .set('Authorization', user.headers.authorization)
         .expect(200)
-      expect(res.statusCode).to.equal(200);
-      expect(res.body).to.exist;
-      expect(res.body.source_id).to.exist;
-      expect(res.body.currency).to.equal('usd');
-      expect(res.body.amount).to.equal('200');
-      expect(res.body.status).to.equal('succeeded');
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.source_id).to.exist
+      expect(res.body.currency).to.equal('usd')
+      expect(res.body.amount).to.equal('200')
+      expect(res.body.status).to.equal('succeeded')
       const wallet = await models.Wallet.findOne({
         where: {
-          userId: user.body.id
-        }
+          userId: user.body.id,
+        },
       })
       expect(wallet.balance).to.equal('184.00')
     })
@@ -364,16 +364,16 @@ describe('orders', () => {
       const newWallet = await models.Wallet.create({
         name: 'Test Wallet',
         balance: 0,
-        userId: user.body.id
-      });
+        userId: user.body.id,
+      })
       const WalletOrder = await models.WalletOrder.create({
         walletId: newWallet.id,
         amount: 1929,
-        status: 'paid'
-      });
+        status: 'paid',
+      })
       const task = await models.Task.create({
         url: 'https://foo',
-        userId: user.body.id
+        userId: user.body.id,
       })
       const res = await agent
         .post('/orders')
@@ -384,20 +384,20 @@ describe('orders', () => {
           provider: 'wallet',
           source_type: 'wallet-funds',
           userId: user.body.id,
-          taskId: task.id
+          taskId: task.id,
         })
         .set('Authorization', user.headers.authorization)
         .expect(200)
-      expect(res.statusCode).to.equal(200);
-      expect(res.body).to.exist;
-      expect(res.body.source_id).to.exist;
-      expect(res.body.currency).to.equal('usd');
-      expect(res.body.amount).to.equal('250');
-      expect(res.body.status).to.equal('succeeded');
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.source_id).to.exist
+      expect(res.body.currency).to.equal('usd')
+      expect(res.body.amount).to.equal('250')
+      expect(res.body.status).to.equal('succeeded')
       const wallet = await models.Wallet.findOne({
         where: {
-          userId: user.body.id
-        }
+          userId: user.body.id,
+        },
       })
       expect(wallet.balance).to.equal('1659.00')
     })
@@ -411,20 +411,25 @@ describe('orders', () => {
         .reply(200, { access_token: 'foo' }, { 'Content-Type': 'application/json' })
       nock(url)
         .post(anotherPath)
-        .reply(200, {
-          id: 1,
-          links: [
-            { href: 'http://foo.com' },
-            { href: 'http://foo.com' }
-          ],
-          'purchase_units': [{
-            'payments': {
-              'authorizations': [{
-                id: 'foo'
-              }]
-            }
-          }]
-        }, { 'Content-Type': 'application/json' })
+        .reply(
+          200,
+          {
+            id: 1,
+            links: [{ href: 'http://foo.com' }, { href: 'http://foo.com' }],
+            purchase_units: [
+              {
+                payments: {
+                  authorizations: [
+                    {
+                      id: 'foo',
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+          { 'Content-Type': 'application/json' },
+        )
 
       const userAuth = await registerAndLogin(agent)
       const res = await agent
@@ -434,7 +439,7 @@ describe('orders', () => {
           currency: 'USD',
           provider: 'paypal',
           amount: 200,
-          userId: userAuth.body.id
+          userId: userAuth.body.id,
         })
         .expect(200)
 
@@ -455,24 +460,29 @@ describe('orders', () => {
         .reply(200, { access_token: 'foo' }, { 'Content-Type': 'application/json' })
       nock(url)
         .post(anotherPath)
-        .reply(200, {
-          id: 1,
-          links: [
-            { href: 'http://foo.com' },
-            { href: 'http://foo.com' }
-          ],
-          'purchase_units': [{
-            'payments': {
-              'authorizations': [{
-                id: 'foo'
-              }]
-            }
-          }]
-        }, { 'Content-Type': 'application/json' })
+        .reply(
+          200,
+          {
+            id: 1,
+            links: [{ href: 'http://foo.com' }, { href: 'http://foo.com' }],
+            purchase_units: [
+              {
+                payments: {
+                  authorizations: [
+                    {
+                      id: 'foo',
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+          { 'Content-Type': 'application/json' },
+        )
 
       const user = await registerAndLogin(agent, { email: 'testcancelorder@gitpay.me' })
 
-      chai.use(spies);
+      chai.use(spies)
       const mailSpySuccess = chai.spy.on(PaymentMail, 'cancel')
 
       try {
@@ -483,15 +493,13 @@ describe('orders', () => {
             currency: 'USD',
             provider: 'paypal',
             amount: 200,
-            userId: user.body.id
+            userId: user.body.id,
           })
           .expect(200)
 
         const orderData = order.body
         const cancelPath = `/v2/payments/authorizations/foo/void`
-        nock(url)
-          .post(cancelPath)
-          .reply(204)
+        nock(url).post(cancelPath).reply(204)
 
         const canceled = await agent
           .post(`/orders/${orderData.id}/cancel`)
@@ -521,20 +529,25 @@ describe('orders', () => {
         .reply(200, { access_token: 'foo' }, { 'Content-Type': 'application/json' })
       nock(url)
         .post(anotherPath)
-        .reply(200, {
-          id: 'order_foo',
-          links: [
-            { href: 'http://foo.com' },
-            { href: 'http://foo.com' }
-          ],
-          'purchase_units': [{
-            'payments': {
-              'authorizations': [{
-                id: 'auth_foo'
-              }]
-            }
-          }]
-        }, { 'Content-Type': 'application/json' })
+        .reply(
+          200,
+          {
+            id: 'order_foo',
+            links: [{ href: 'http://foo.com' }, { href: 'http://foo.com' }],
+            purchase_units: [
+              {
+                payments: {
+                  authorizations: [
+                    {
+                      id: 'auth_foo',
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+          { 'Content-Type': 'application/json' },
+        )
 
       const user = await registerAndLogin(agent, { email: 'testcancelorder@gitpay.me' })
 
@@ -545,18 +558,16 @@ describe('orders', () => {
           currency: 'USD',
           provider: 'paypal',
           amount: 200,
-          userId: user.body.id
+          userId: user.body.id,
         })
         .expect(200)
 
       const orderData = order.body
       const detailsPath = `/v2/checkout/orders/${orderData.source_id}`
-      nock(url)
-        .get(detailsPath)
-        .reply(200, {
-          id: 'order_foo',
-          status: 'CREATED'
-        })
+      nock(url).get(detailsPath).reply(200, {
+        id: 'order_foo',
+        status: 'CREATED',
+      })
 
       const orderDetails = await agent
         .get(`/orders/${orderData.id}`)
@@ -576,7 +587,7 @@ describe('orders', () => {
       const order = await models.Order.build({
         source_id: 'PAY-TEST',
         currency: 'USD',
-        amount: 200
+        amount: 200,
       }).save()
 
       await agent
@@ -595,26 +606,31 @@ describe('orders', () => {
         .reply(200, { access_token: 'foo' }, { 'Content-Type': 'application/json' })
       nock(url)
         .post(anotherPath)
-        .reply(200, {
-          id: 'order_foo',
-          links: [
-            { href: 'http://foo.com' },
-            { href: 'http://foo.com' }
-          ],
-          'purchase_units': [{
-            'payments': {
-              'authorizations': [{
-                id: 'auth_foo'
-              }]
-            }
-          }]
-        }, { 'Content-Type': 'application/json' })
+        .reply(
+          200,
+          {
+            id: 'order_foo',
+            links: [{ href: 'http://foo.com' }, { href: 'http://foo.com' }],
+            purchase_units: [
+              {
+                payments: {
+                  authorizations: [
+                    {
+                      id: 'auth_foo',
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+          { 'Content-Type': 'application/json' },
+        )
 
       const order = await models.Order.build({
         source_id: 'PAY-TEST',
         currency: 'USD',
         amount: 200,
-        provider: 'paypal'
+        provider: 'paypal',
       }).save()
 
       const res = await agent
@@ -623,8 +639,8 @@ describe('orders', () => {
         .send({ id: order.dataValues.id })
         .expect(200)
 
-      expect(res.body).to.exist;
-      expect(res.body.source_id).to.equal('order_foo');
+      expect(res.body).to.exist
+      expect(res.body.source_id).to.equal('order_foo')
     })
 
     it('should fetch order', async () => {
@@ -632,7 +648,7 @@ describe('orders', () => {
       const order = await models.Order.build({
         source_id: '12345',
         currency: 'BRL',
-        amount: 200
+        amount: 200,
       }).save()
 
       const res = await agent
@@ -641,43 +657,50 @@ describe('orders', () => {
         .expect('Content-Type', /json/)
         .expect(200)
 
-      expect(res.statusCode).to.equal(200);
-      expect(res.body).to.exist;
-      expect(res.body.source_id).to.equal('12345');
-      expect(res.body.currency).to.equal('BRL');
-      expect(res.body.amount).to.equal('200');
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.source_id).to.equal('12345')
+      expect(res.body.currency).to.equal('BRL')
+      expect(res.body.amount).to.equal('200')
     })
   })
-  
+
   it('should transfer a Stripe order', async () => {
     const user = await registerAndLogin(agent, { email: 'test_transfer_order@gitpay.me' })
 
     const tasks = await Promise.all([
-      models.Task.build({ url: 'https://github.com/worknenjoy/truppie/issues/7363', userId: user.body.id }).save(),
-      models.Task.build({ url: 'https://github.com/worknenjoy/truppie/issues/7364', userId: user.body.id, status: 'in_progress' }).save()
+      models.Task.build({
+        url: 'https://github.com/worknenjoy/truppie/issues/7363',
+        userId: user.body.id,
+      }).save(),
+      models.Task.build({
+        url: 'https://github.com/worknenjoy/truppie/issues/7364',
+        userId: user.body.id,
+        status: 'in_progress',
+      }).save(),
     ])
 
     const order = await models.Order.build({
       source_id: '12345',
       currency: 'BRL',
       amount: 200,
-      taskId: tasks[0].dataValues.id
+      taskId: tasks[0].dataValues.id,
     }).save()
 
     const transferRes = await agent
       .post(`/orders/${order.dataValues.id}/transfers`)
       .send({
-        taskId: tasks[1].dataValues.id
+        taskId: tasks[1].dataValues.id,
       })
       .set('Authorization', user.headers.authorization)
       .expect('Content-Type', /json/)
       .expect(200)
 
-    expect(transferRes.statusCode).to.equal(200);
-    expect(transferRes.body).to.exist;
-    expect(transferRes.body.source_id).to.equal('12345');
-    expect(transferRes.body.currency).to.equal('BRL');
-    expect(transferRes.body.amount).to.equal('200');
+    expect(transferRes.statusCode).to.equal(200)
+    expect(transferRes.body).to.exist
+    expect(transferRes.body.source_id).to.equal('12345')
+    expect(transferRes.body.currency).to.equal('BRL')
+    expect(transferRes.body.amount).to.equal('200')
   })
   it('should refund order', async () => {
     const stripeRefund = {
@@ -691,9 +714,9 @@ describe('orders', () => {
       metadata: {},
       reason: null,
       receipt_number: null,
-      status: 'succeeded'
+      status: 'succeeded',
     }
-    
+
     nock('https://api.stripe.com')
       .post('/v1/refunds')
       .reply(200, stripeRefund, { 'Content-Type': 'application/json' })
@@ -706,7 +729,7 @@ describe('orders', () => {
         currency: 'USD',
         amount: 200,
         provider: 'stripe',
-        userId: user.body.id
+        userId: user.body.id,
       }).save()
 
       const refundRes = await agent
@@ -715,11 +738,11 @@ describe('orders', () => {
         .expect('Content-Type', /json/)
         .expect(200)
 
-      expect(refundRes.statusCode).to.equal(200);
-      expect(refundRes.body).to.exist;
-      expect(refundRes.body.id).to.equal('re_1J2Yal2eZvKYlo2C0qvW9j8D');
+      expect(refundRes.statusCode).to.equal(200)
+      expect(refundRes.body).to.exist
+      expect(refundRes.body.id).to.equal('re_1J2Yal2eZvKYlo2C0qvW9j8D')
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
   })
 })

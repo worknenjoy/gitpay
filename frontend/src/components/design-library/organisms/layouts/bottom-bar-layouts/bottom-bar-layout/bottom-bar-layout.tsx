@@ -2,10 +2,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useHistory } from 'react-router-dom'
 
-import {
-  Grid,
-  Typography
-} from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 
 import SubscribeForm from '../../../forms/subscribe-forms/subscribe-form/subscribe-form'
 import StatsBar from '../../../../molecules/sections/stats-bar/stats-bar'
@@ -13,7 +10,14 @@ import SlackCard from './SlackCard'
 import GithubCard from './GithubCard'
 import VerticalMenuList from '../../../../molecules/lists/vertical-menu-list/vertical-menu-list'
 
-import { Container, BaseFooter, SubscribeFromWrapper, SecBlock, SpacedDivider, LogoImg } from './bottom-bar-layout.styles'
+import {
+  Container,
+  BaseFooter,
+  SubscribeFromWrapper,
+  SecBlock,
+  SpacedDivider,
+  LogoImg,
+} from './bottom-bar-layout.styles'
 import PrivacyPolicy from '../../../../molecules/content/terms/privacy-policy/privacy-policy'
 import TermsOfService from '../../../../molecules/content/terms/terms-of-service/terms-of-service'
 import CookiePolicy from '../../../../molecules/content/terms/cookie-policy/cookie-policy'
@@ -35,22 +39,24 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
     { label: 'Pricing', onClick: () => navigateTo('/pricing') },
     { label: 'Team', onClick: () => navigateTo('/team') },
     { label: 'Documentation', onClick: () => window.open('https://docs.gitpay.me/en') },
-    { label: 'Explore', onClick: () => navigateTo('/explore/issues') }
+    { label: 'Explore', onClick: () => navigateTo('/explore/issues') },
   ]
 
   const legalMenuItems = [
     {
       label: <FormattedMessage id="bottom.menu.privacy-policy" defaultMessage="Privacy Policy" />,
-      component: <PrivacyPolicy extraStyles={false} />
+      component: <PrivacyPolicy extraStyles={false} />,
     },
     {
-      label: <FormattedMessage id="bottom.menu.terms-of-service" defaultMessage="Terms of Service" />,
-      component: <TermsOfService extraStyles={false} />
+      label: (
+        <FormattedMessage id="bottom.menu.terms-of-service" defaultMessage="Terms of Service" />
+      ),
+      component: <TermsOfService extraStyles={false} />,
     },
     {
       label: <FormattedMessage id="bottom.menu.cookie-policy" defaultMessage="Cookie Policy" />,
-      component: <CookiePolicy extraStyles={false} />
-    }
+      component: <CookiePolicy extraStyles={false} />,
+    },
   ]
 
   return (
@@ -58,23 +64,15 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
       <Container>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, sm: 3 }}>
-            <VerticalMenuList 
-              title={<FormattedMessage
-                id="bottom.menu.main"
-                defaultMessage="Main menu"
-              />}
+            <VerticalMenuList
+              title={<FormattedMessage id="bottom.menu.main" defaultMessage="Main menu" />}
               items={mainMenuItems}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 3 }}>
-            <VerticalMenuList 
+            <VerticalMenuList
               type="dialog"
-              title={
-                <FormattedMessage
-                  id="bottom.menu.legal"
-                  defaultMessage="Legal"
-                />
-              }
+              title={<FormattedMessage id="bottom.menu.legal" defaultMessage="Legal" />}
               items={legalMenuItems}
             />
           </Grid>
@@ -93,9 +91,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
               <SubscribeForm render />
             </SubscribeFromWrapper>
             <div style={{ float: 'right' }}>
-              <BaseFooter
-                style={{ display: 'flex', alignItems: 'center' }}
-              >
+              <BaseFooter style={{ display: 'flex', alignItems: 'center' }}>
                 <div>
                   <LogoImg src={logoCompleteGray} width="100" />
                 </div>
@@ -104,13 +100,10 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
                   style={{
                     marginLeft: 10,
                     marginRight: 10,
-                    display: 'inline-block'
+                    display: 'inline-block',
                   }}
                 >
-                  <FormattedMessage
-                    id="bottom.company.org"
-                    defaultMessage="is part of"
-                  />
+                  <FormattedMessage id="bottom.company.org" defaultMessage="is part of" />
                 </Typography>
                 <a href="http://worknenjoy.com" target="_blank" rel="noreferrer">
                   <LogoImg src={logoWorknEnjoy} width="100" />
@@ -120,9 +113,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
                 <Typography variant={'caption'} component="span">
                   <a href="http://worknenjoy.com">worknenjoy, Inc.</a> <br />
                   <abbr>MA: </abbr>
-                  9450 SW Gemini Dr
-                  PMB 72684
-                  Beaverton, Oregon 97008-7105 US
+                  9450 SW Gemini Dr PMB 72684 Beaverton, Oregon 97008-7105 US
                 </Typography>
               </div>
             </div>

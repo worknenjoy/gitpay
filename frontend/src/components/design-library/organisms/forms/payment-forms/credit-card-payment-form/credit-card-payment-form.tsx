@@ -1,11 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
-import {
-  Grid,
-  Typography,
-  Button
-} from '@mui/material'
+import { Grid, Typography, Button } from '@mui/material'
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js'
 import Coupon from 'design-library/molecules/form-section/coupon-form/coupon'
 import UserBasicInfoFormSection from '../../../../molecules/form-section/user-basic-info-form-section/user-basic-info-form-section'
@@ -24,15 +20,15 @@ const CheckoutForm = (props) => {
       fullname: false,
       email: false,
       payment: false,
-      message: 'loading'
+      message: 'loading',
     },
-    paymentRequested: false
+    paymentRequested: false,
   })
 
   const [couponState, setCouponState] = useState({
     couponInput: false,
     coupon: '',
-    couponApplied: false
+    couponApplied: false,
   })
 
   const { couponStoreState = { completed: false, coupon: {} }, user, price, formatedPrice } = props
@@ -41,13 +37,25 @@ const CheckoutForm = (props) => {
     ev.preventDefault()
     setCheckoutFormState({ ...checkoutFormState, paymentRequested: true })
 
-    if ((!checkoutFormState.fullname || checkoutFormState.fullname.length < 3 ) && !checkoutFormState.authenticated && !checkoutFormState.userId) {
-      setCheckoutFormState((prev) => ({ ...prev, error: { ...prev.error, fullname: true }, paymentRequested: false }))
+    if (
+      (!checkoutFormState.fullname || checkoutFormState.fullname.length < 3) &&
+      !checkoutFormState.authenticated &&
+      !checkoutFormState.userId
+    ) {
+      setCheckoutFormState((prev) => ({
+        ...prev,
+        error: { ...prev.error, fullname: true },
+        paymentRequested: false,
+      }))
       return
     }
 
     if (!checkoutFormState.email) {
-      setCheckoutFormState((prev) => ({ ...prev, error: { ...prev.error, email: true }, paymentRequested: false }))
+      setCheckoutFormState((prev) => ({
+        ...prev,
+        error: { ...prev.error, email: true },
+        paymentRequested: false,
+      }))
       return
     }
 
@@ -72,12 +80,14 @@ const CheckoutForm = (props) => {
             amount: price,
             email: checkoutFormState.email,
             userId: checkoutFormState.userId,
-            plan: props.plan
+            plan: props.plan,
           },
-          coupon: couponState.couponApplied ? {
-            code: couponState.coupon || null,
-            originalOrderPrice: price
-          } : null
+          coupon: couponState.couponApplied
+            ? {
+                code: couponState.coupon || null,
+                originalOrderPrice: price,
+              }
+            : null,
         })
         props.onClose()
       } else {
@@ -95,7 +105,7 @@ const CheckoutForm = (props) => {
     setCheckoutFormState((prev) => ({
       ...prev,
       [ev.target.name]: ev.target.value,
-      paymentRequested: false
+      paymentRequested: false,
     }))
   }
 
@@ -106,7 +116,7 @@ const CheckoutForm = (props) => {
         authenticated: true,
         fullname: user.name,
         email: user.email,
-        userId: user.id
+        userId: user.id,
       }))
     }
   }, [user])
@@ -144,20 +154,20 @@ const CheckoutForm = (props) => {
   const logged = checkoutFormState.authenticated
 
   return (
-    <form onSubmit={ handleSubmit } onChange={ onChange } style={ { marginTop: 20 } }>
-      <Grid container spacing={ 3 }>
-        <Grid size={{ xs: 12 }} style={ { marginBottom: 20 } }>
+    <form onSubmit={handleSubmit} onChange={onChange} style={{ marginTop: 20 }}>
+      <Grid container spacing={3}>
+        <Grid size={{ xs: 12 }} style={{ marginBottom: 20 }}>
           {logged ? (
             <div>
               <Typography variant="caption">
                 <FormattedMessage id="checkout.loggedas" defaultMessage="Logged as" />
               </Typography>
               <Typography variant="body1">
-                { `${checkoutFormState.fullname} (${checkoutFormState.email})` }
+                {`${checkoutFormState.fullname} (${checkoutFormState.email})`}
               </Typography>
             </div>
           ) : (
-            <UserBasicInfoFormSection error={ checkoutFormState.error } />
+            <UserBasicInfoFormSection error={checkoutFormState.error} />
           )}
         </Grid>
 
@@ -167,29 +177,30 @@ const CheckoutForm = (props) => {
 
         <Grid size={{ xs: 12 }}>
           <Coupon
-            couponState={ couponState }
-            handleCouponInput={ handleCouponInput }
-            showCouponInput={ showCouponInput }
-            applyCoupon={ applyCoupon }
-            couponStoreState={ couponStoreState?.coupon || {} }
+            couponState={couponState}
+            handleCouponInput={handleCouponInput}
+            showCouponInput={showCouponInput}
+            applyCoupon={applyCoupon}
+            couponStoreState={couponStoreState?.coupon || {}}
           />
         </Grid>
 
         <Grid size={{ xs: 12 }}>
-          <div style={ { marginTop: 20, float: 'right' } }>
+          <div style={{ marginTop: 20, float: 'right' }}>
             <Button
               type="submit"
               variant="contained"
               color="secondary"
-              disabled={ checkoutFormState.paymentRequested || price === 0 }
+              disabled={checkoutFormState.paymentRequested || price === 0}
             >
               <FormattedMessage
                 id="checkout.payment.action"
                 defaultMessage="Pay {price}"
                 values={{
-                  price: couponState.couponApplied && (couponStoreState?.coupon?.orderPrice ?? -1) >= 0
-                    ? `$${couponStoreState?.coupon?.orderPrice}`
-                    : formatedPrice
+                  price:
+                    couponState.couponApplied && (couponStoreState?.coupon?.orderPrice ?? -1) >= 0
+                      ? `$${couponStoreState?.coupon?.orderPrice}`
+                      : formatedPrice,
                 }}
               />
             </Button>
@@ -211,7 +222,7 @@ CheckoutForm.propTypes = {
   user: PropTypes.object,
   plan: PropTypes.string,
   couponStoreState: PropTypes.object,
-  validateCoupon: PropTypes.func
+  validateCoupon: PropTypes.func,
 }
 
 export default CheckoutForm

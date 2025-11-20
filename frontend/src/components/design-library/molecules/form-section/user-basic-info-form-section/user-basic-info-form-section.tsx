@@ -2,16 +2,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import {
-  Input,
-  InputAdornment,
-  FormControl,
-  FormHelperText
-} from '@mui/material'
-import {
-  AccountCircle,
-  Email
-} from '@mui/icons-material'
+import { Input, InputAdornment, FormControl, FormHelperText } from '@mui/material'
+import { AccountCircle, Email } from '@mui/icons-material'
 
 type Props = {
   error: { fullname?: boolean; email?: boolean }
@@ -22,14 +14,14 @@ type Props = {
 const UserBasicInfoFormSection: React.FC<Props> = ({ error: errorProp, email, name }) => {
   const [error, setError] = useState<{ fullname: boolean; email: boolean }>({
     fullname: false,
-    email: false
+    email: false,
   })
 
   useEffect(() => {
     if (errorProp) {
       setError({
         fullname: Boolean(errorProp.fullname),
-        email: Boolean(errorProp.email)
+        email: Boolean(errorProp.email),
       })
     }
   }, [errorProp])
@@ -69,11 +61,7 @@ const UserBasicInfoFormSection: React.FC<Props> = ({ error: errorProp, email, na
         </FormattedMessage>
         {error.fullname && (
           <FormattedMessage id="user.data.fullname.error" defaultMessage="Provide your full name">
-            {(msg) => (
-              <FormHelperText error={error.fullname}>
-                {msg}
-              </FormHelperText>
-            )}
+            {(msg) => <FormHelperText error={error.fullname}>{msg}</FormHelperText>}
           </FormattedMessage>
         )}
       </FormControl>
@@ -95,12 +83,11 @@ const UserBasicInfoFormSection: React.FC<Props> = ({ error: errorProp, email, na
           onChange={onChangeEmail}
         />
         {error.email && (
-          <FormattedMessage id="user.data.email.error" defaultMessage="Provide your email correctly">
-            {(msg) => (
-              <FormHelperText error={error.email}>
-                {msg}
-              </FormHelperText>
-            )}
+          <FormattedMessage
+            id="user.data.email.error"
+            defaultMessage="Provide your email correctly"
+          >
+            {(msg) => <FormHelperText error={error.email}>{msg}</FormHelperText>}
           </FormattedMessage>
         )}
       </FormControl>

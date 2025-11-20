@@ -23,13 +23,13 @@ const invoiceWebhookPaid = require('./data/stripe/stripe.webhook.invoice')
 
 describe('webhooks for platform', () => {
   beforeEach(async () => {
-    await truncateModels(models.Task);
-    await truncateModels(models.User);
-    await truncateModels(models.Assign);
-    await truncateModels(models.Order);
-    await truncateModels(models.Transfer);
-    await truncateModels(models.PaymentRequest);
-    await truncateModels(models.PaymentRequestTransfer);
+    await truncateModels(models.Task)
+    await truncateModels(models.User)
+    await truncateModels(models.Assign)
+    await truncateModels(models.Order)
+    await truncateModels(models.Transfer)
+    await truncateModels(models.PaymentRequest)
+    await truncateModels(models.PaymentRequestTransfer)
   })
 
   afterEach(async () => {
@@ -53,14 +53,14 @@ describe('webhooks for platform', () => {
       const task = await models.Task.create({
         url: 'https://github.com/worknenjoy/truppie/issues/99',
         provider: 'github',
-        userId: user.id
+        userId: user.id,
       })
       const order = await task.createOrder({
         source_id: 'card_1CcdmoBrSjgsps2Dw7RRQDwp',
         currency: 'BRL',
         amount: 200,
         source: 'ch_1CcdmsBrSjgsps2DNZiZAyvG',
-        userId: user.id
+        userId: user.id,
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
@@ -81,14 +81,14 @@ describe('webhooks for platform', () => {
       const task = await models.Task.create({
         url: 'https://github.com/worknenjoy/truppie/issues/199',
         provider: 'github',
-        userId: user.id
+        userId: user.id,
       })
       const order = await task.createOrder({
         source_id: 'card_test_123',
         currency: 'BRL',
         amount: 200,
         source: 'ch_test_bounty_charge',
-        userId: user.id
+        userId: user.id,
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
@@ -113,14 +113,14 @@ describe('webhooks for platform', () => {
       const task = await models.Task.create({
         url: 'https://github.com/worknenjoy/truppie/issues/99',
         provider: 'github',
-        userId: user.id
+        userId: user.id,
       })
       const order = await task.createOrder({
         source_id: 'card_1CeLZgBrSjgsps2D46GUqEBB',
         currency: 'BRL',
         amount: 200,
         source: 'ch_1CeLZkBrSjgsps2DCNBQmnLA',
-        userId: user.id
+        userId: user.id,
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
@@ -144,7 +144,7 @@ describe('webhooks for platform', () => {
         id: 25,
         url: 'https://github.com/worknenjoy/truppie/issues/99',
         provider: 'github',
-        userId: user.id
+        userId: user.id,
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
@@ -166,14 +166,14 @@ describe('webhooks for platform', () => {
       const task = await models.Task.create({
         url: 'https://github.com/worknenjoy/truppie/issues/99',
         provider: 'github',
-        userId: user.id
+        userId: user.id,
       })
       const order = await task.createOrder({
         source_id: 'card_1D8FH6BrSjgsps2DtehhSR4l',
         currency: 'BRL',
         amount: 200,
         source: 'ch_1D8FHBBrSjgsps2DJawS1hYk',
-        userId: user.id
+        userId: user.id,
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
@@ -196,14 +196,14 @@ describe('webhooks for platform', () => {
       const task = await models.Task.create({
         url: 'https://github.com/worknenjoy/truppie/issues/99',
         provider: 'github',
-        userId: user.id
+        userId: user.id,
       })
       const order = await task.createOrder({
         source_id: 'card_1D8FH6BrSjgsps2DtehhSR4l',
         currency: 'BRL',
         amount: 200,
         source: 'ch_3Q9RUEBrSjgsps2D27S1mdjK',
-        userId: user.id
+        userId: user.id,
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
@@ -225,7 +225,7 @@ describe('webhooks for platform', () => {
         const user = await models.User.create({
           email: 'teste@gmail.com',
           password: 'teste',
-          customer_id: cardData.sourceCreated.data.object.customer
+          customer_id: cardData.sourceCreated.data.object.customer,
         })
         const res = await agent
           .post('/webhooks/stripe-platform')
@@ -244,11 +244,18 @@ describe('webhooks for platform', () => {
           url: 'https://github.com/worknenjoy/truppie/issues/99',
           provider: 'github',
           transfer_id: 'tr_test_123',
-          paid: true
+          paid: true,
         })
         const assign = await task.createAssign({ userId: user.id })
         await task.update({ assigned: assign.id }, { where: { id: task.id } })
-        const transfer = await createTransfer({ userId: user.id, transfer_method: 'stripe', taskId: task.id, transfer_id: 'tr_test_123', to: assign.userId, status: 'pending' })
+        const transfer = await createTransfer({
+          userId: user.id,
+          transfer_method: 'stripe',
+          taskId: task.id,
+          transfer_id: 'tr_test_123',
+          to: assign.userId,
+          status: 'pending',
+        })
         const res = await agent
           .post('/webhooks/stripe-platform')
           .send(createTransferData.created)
@@ -265,14 +272,14 @@ describe('webhooks for platform', () => {
       it('should update a transfer from a Payment Request when webhook transfer.reversed is triggered', async () => {
         const user = await models.User.create({
           email: 'teste@mail.com',
-          password: 'teste'
+          password: 'teste',
         })
 
         const paymentRequest = await models.PaymentRequest.create({
           userId: user.id,
           title: 'Test Payment Request',
           description: 'This is a test payment request',
-          amount: 100.00,
+          amount: 100.0,
           currency: 'USD',
           payment_link_id: 'prl_123',
         })
@@ -281,7 +288,7 @@ describe('webhooks for platform', () => {
           transfer_id: 'tr_test_00000000000000',
           paymentRequestId: paymentRequest.id,
           userId: user.id,
-          status: 'created'
+          status: 'created',
         })
 
         const res = await agent
@@ -296,7 +303,7 @@ describe('webhooks for platform', () => {
         expect(event.id).to.equal('evt_test_00000000000000')
 
         const transferUpdated = await models.PaymentRequestTransfer.findOne({
-          where: { id: paymentRequestTransfer.id }
+          where: { id: paymentRequestTransfer.id },
         })
         expect(transferUpdated.status).to.equal('reversed')
       })
@@ -305,14 +312,16 @@ describe('webhooks for platform', () => {
         const user = await models.User.create({
           email: 'teste@mail.com',
           password: 'teste',
-          account_id: 'acct_1CZ5vkLlCJ9CeQRe'
+          account_id: 'acct_1CZ5vkLlCJ9CeQRe',
         })
         const res = await agent
           .post('/webhooks/stripe-platform')
           .send(payoutData.created)
           .expect('Content-Type', /json/)
           .expect(200)
-        const payout = await models.Payout.findOne({ where: { source_id: res.body.data.object.id } })
+        const payout = await models.Payout.findOne({
+          where: { source_id: res.body.data.object.id },
+        })
         expect(res.statusCode).to.equal(200)
         const event = res.body
         expect(event).to.exist
@@ -324,7 +333,7 @@ describe('webhooks for platform', () => {
         const user = await models.User.create({
           email: 'teste@mail.com',
           password: 'teste',
-          account_id: 'acct_1CZ5vkLlCJ9CeQRe'
+          account_id: 'acct_1CZ5vkLlCJ9CeQRe',
         })
         await models.Payout.create({
           source_id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
@@ -346,7 +355,9 @@ describe('webhooks for platform', () => {
         expect(event).to.exist
         expect(event.id).to.equal('evt_1CdprOLlCJ9CeQRe4QDlbGRY')
         expect(payouts.length).to.equal(1)
-        const payout = await models.Payout.findOne({ where: { source_id: res.body.data.object.id } })
+        const payout = await models.Payout.findOne({
+          where: { source_id: res.body.data.object.id },
+        })
         expect(payout.status).to.equal('in_transit')
       })
 
@@ -354,7 +365,7 @@ describe('webhooks for platform', () => {
         const user = await models.User.create({
           email: 'teste@mail.com',
           password: 'teste',
-          account_id: 'acct_1CZ5vkLlCJ9CeQRe'
+          account_id: 'acct_1CZ5vkLlCJ9CeQRe',
         })
         const newPayout = await models.Payout.create({
           source_id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
@@ -384,7 +395,7 @@ describe('webhooks for platform', () => {
         const user = await models.User.create({
           email: 'teste@mail.com',
           password: 'teste',
-          account_id: 'acct_1CdjXFAcSPl6ox0l'
+          account_id: 'acct_1CdjXFAcSPl6ox0l',
         })
         const res = await agent
           .post('/webhooks/stripe-platform')
@@ -431,7 +442,7 @@ describe('webhooks for platform', () => {
         source_id: 'in_1Il9COBrSjgsps2DtvLrFalB',
         userId: userId,
         currency: 'usd',
-        amount: 200
+        amount: 200,
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
@@ -445,7 +456,7 @@ describe('webhooks for platform', () => {
       expect(event.data.object.id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
       const orderFinal = await models.Order.findOne({
         where: { id: order.id },
-        include: [models.Task]
+        include: [models.Task],
       })
       expect(orderFinal.paid).to.equal(false)
       expect(orderFinal.source_id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
@@ -468,7 +479,7 @@ describe('webhooks for platform', () => {
         source_id: 'in_1Il9COBrSjgsps2DtvLrFalB',
         userId: userId,
         currency: 'usd',
-        amount: 200
+        amount: 200,
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
@@ -482,7 +493,7 @@ describe('webhooks for platform', () => {
       expect(event.data.object.id).to.equal('in_1Il9COBrSjgsps2DtvLrFalB')
       const orderFinal = await models.Order.findOne({
         where: { id: order.id },
-        include: [models.Task]
+        include: [models.Task],
       })
       expect(orderFinal.paid).to.equal(true)
       expect(orderFinal.status).to.equal('succeeded')
@@ -509,7 +520,7 @@ describe('webhooks for platform', () => {
         taskId: task.id,
         customer_id: 'cus_J4zTz8uySTkLlL',
         email: 'test@fitnowbrasil.com.br',
-        source_id: 'in_1KknpoBrSjgsps2DMwiQEzJ9'
+        source_id: 'in_1KknpoBrSjgsps2DMwiQEzJ9',
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
@@ -523,16 +534,16 @@ describe('webhooks for platform', () => {
       expect(event.data.object.id[0]).to.equal('in_1KknpoBrSjgsps2DMwiQEzJ9')
       const orderFinal = await models.Order.findOne({
         where: { id: order.id },
-        include: [models.Task]
+        include: [models.Task],
       })
       expect(orderFinal.paid).to.equal(true)
       expect(orderFinal.status).to.equal('paid')
       expect(orderFinal.source).to.equal('ch_3KknvTBrSjgsps2D036v7gVJ')
       expect(orderFinal.Task.url).to.equal(github_url)
       const userFunding = await models.User.findOne({
-        where: { active: false, email: "test@fitnowbrasil.com.br" }
+        where: { active: false, email: 'test@fitnowbrasil.com.br' },
       })
-      const types = await userFunding.getTypes({ where: { name: "funding" } })
+      const types = await userFunding.getTypes({ where: { name: 'funding' } })
       expect(types).to.not.be.empty
     })
   })
@@ -543,7 +554,7 @@ describe('webhooks for platform', () => {
       const wallet = await models.Wallet.create({
         name: 'Test Wallet',
         userId: user.body.id,
-        balance: 0
+        balance: 0,
       })
       await models.WalletOrder.create({
         amount: 100,
@@ -551,7 +562,7 @@ describe('webhooks for platform', () => {
         source_id: 'ii_1Q2fh8BrSjgsps2DQqY9k2h3',
         source_type: 'invoice-item',
         source: 'in_1Q2fh8BrSjgsps2DUqQsGLDj',
-        walletId: wallet.id
+        walletId: wallet.id,
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
@@ -564,7 +575,7 @@ describe('webhooks for platform', () => {
       expect(event.id).to.equal('evt_1Q2fklBrSjgsps2Dx0mEXsXv')
       expect(event.data.object.id).to.equal('in_1Q2fh8BrSjgsps2DUqQsGLDj')
       const walletOrder = await models.WalletOrder.findOne({
-        where: { source: event.data.object.id }
+        where: { source: event.data.object.id },
       })
       expect(walletOrder).to.exist
       expect(walletOrder.status).to.equal('paid')
@@ -574,7 +585,7 @@ describe('webhooks for platform', () => {
       const wallet = await models.Wallet.create({
         name: 'Test Wallet',
         userId: user.body.id,
-        balance: 0
+        balance: 0,
       })
       const invoiceWebhookCreated = invoiceWebhookPaid.created
       invoiceWebhookCreated.data.object.metadata['wallet_id'] = wallet.id
@@ -589,7 +600,7 @@ describe('webhooks for platform', () => {
       expect(event.id).to.equal('evt_1Q8JR1BrSjgsps2DTYquL0UC')
       expect(event.data.object.id).to.equal('in_1Q8JR1BrSjgsps2DmN3iPASq')
       const walletOrder = await models.WalletOrder.findOne({
-        where: { source: event.data.object.id }
+        where: { source: event.data.object.id },
       })
       expect(walletOrder).to.exist
       expect(walletOrder.status).to.equal('draft')
@@ -600,7 +611,7 @@ describe('webhooks for platform', () => {
       const wallet = await models.Wallet.create({
         name: 'Test Wallet',
         userId: user.body.id,
-        balance: 0
+        balance: 0,
       })
       const invoiceWebhookUpdated = invoiceWebhookPaid.updated
       invoiceWebhookUpdated.data.object.metadata['wallet_id'] = wallet.id
@@ -615,7 +626,7 @@ describe('webhooks for platform', () => {
       expect(event.id).to.equal('evt_1Q8JR1BrSjgsps2DTYquL0UC')
       expect(event.data.object.id).to.equal('in_1Q8JR1BrSjgsps2DmN3iPASq')
       const walletOrder = await models.WalletOrder.findOne({
-        where: { source: event.data.object.id }
+        where: { source: event.data.object.id },
       })
       expect(walletOrder).to.exist
       expect(walletOrder.status).to.equal('draft')
@@ -626,7 +637,7 @@ describe('webhooks for platform', () => {
       const wallet = await models.Wallet.create({
         name: 'Test Wallet',
         userId: user.body.id,
-        balance: 0
+        balance: 0,
       })
       const invoiceWebhookUpdated = invoiceWebhookPaid.payment_failed
       invoiceWebhookUpdated.data.object.metadata['wallet_id'] = wallet.id
@@ -641,7 +652,7 @@ describe('webhooks for platform', () => {
       expect(event.id).to.equal('evt_1Q9RVHBrSjgsps2D9rGhy2En')
       expect(event.data.object.id).to.equal('in_1Q9RUDBrSjgsps2DRUgEGbgc')
       const walletOrder = await models.WalletOrder.findOne({
-        where: { source: event.data.object.id }
+        where: { source: event.data.object.id },
       })
       expect(walletOrder).to.exist
       expect(walletOrder.status).to.equal('open')

@@ -20,5 +20,4 @@ router.post('/:id/cancel', controllers.cancelOrder)
 router.post('/:id/payments', controllers.paymentOrder)
 router.put('/:id', controllers.updateOrder)
 
-
 module.exports = router

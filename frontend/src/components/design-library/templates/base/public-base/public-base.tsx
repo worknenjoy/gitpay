@@ -5,41 +5,39 @@ import Bottom from '../../../organisms/layouts/bottom-bar-layouts/bottom-bar-lay
 
 const Root = styled('div')(({ theme }) => ({
   flexGrow: 1,
-  marginTop: 0
+  marginTop: 0,
 }))
 
 type PublicBaseProps = {
   children: React.ReactNode
-  user?: any,
-  bottomBarProps?: any,
-  accountMenuProps?: any,
-  loginFormSignupFormProps?: any,
-  loginFormForgotFormProps?: any,
+  user?: any
+  bottomBarProps?: any
+  accountMenuProps?: any
+  loginFormSignupFormProps?: any
+  loginFormForgotFormProps?: any
   importIssuesProps?: any
 }
 
-const PublicBase = ({ 
+const PublicBase = ({
   children,
   user,
   bottomBarProps,
   accountMenuProps,
   loginFormSignupFormProps,
   loginFormForgotFormProps,
-  importIssuesProps
-}:PublicBaseProps) => {
+  importIssuesProps,
+}: PublicBaseProps) => {
   return (
     <Root>
       <TopBar
-        user={ user }
-        accountMenuProps={ accountMenuProps }
-        loginFormSignupFormProps={ loginFormSignupFormProps }
-        loginFormForgotFormProps={ loginFormForgotFormProps }
-        importIssuesProps={ importIssuesProps }
+        user={user}
+        accountMenuProps={accountMenuProps}
+        loginFormSignupFormProps={loginFormSignupFormProps}
+        loginFormForgotFormProps={loginFormForgotFormProps}
+        importIssuesProps={importIssuesProps}
       />
-        { children }
-      <Bottom
-        { ...bottomBarProps }
-      />
+      {children}
+      <Bottom {...bottomBarProps} />
     </Root>
   )
 }

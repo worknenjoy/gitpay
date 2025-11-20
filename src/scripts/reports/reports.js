@@ -6,22 +6,26 @@ const i18n = require('i18n')
 const DeadlineMail = require('../../modules/mail/deadline')
 
 i18n.configure({
-  directory: process.env.NODE_ENV !== 'production' ? path.join(__dirname, '../locales') : path.join(__dirname, '../locales', 'result'),
+  directory:
+    process.env.NODE_ENV !== 'production'
+      ? path.join(__dirname, '../locales')
+      : path.join(__dirname, '../locales', 'result'),
   locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
   defaultLocale: 'en',
-  updateFiles: false
+  updateFiles: false,
 })
 
 i18n.init()
 
 const Report = {
   montlyBounties: async () => {
-    const tasks = await models.Task.findAll({ where: {
-      value: {
-        [Op.gt]: 0
-      }
-    },
-    include: [ models.User ]
+    const tasks = await models.Task.findAll({
+      where: {
+        value: {
+          [Op.gt]: 0,
+        },
+      },
+      include: [models.User],
     })
     if (tasks[0]) {
       const taskSort = tasks.sort((ta, tb) => {
@@ -45,7 +49,7 @@ const Report = {
   montlyUsers: async () => {
     const users = await models.User.findAll({
       where: {},
-      order: [['id', 'DESC']]
+      order: [['id', 'DESC']],
     })
 
     if (users[0]) {
@@ -70,32 +74,44 @@ const Report = {
     return new Error('no issues found')
   },
   rememberDeadline: async () => {
-    const tasks = await models.Task.findAll({ where: {
-      status: 'in_progress',
-      deadline: {
-        [Op.lt]: moment(new Date()).format(),
-        [Op.gt]: moment(new Date()).subtract(2, 'days').format()
-      }
-    },
-    include: [ models.User ]
+    const tasks = await models.Task.findAll({
+      where: {
+        status: 'in_progress',
+        deadline: {
+          [Op.lt]: moment(new Date()).format(),
+          [Op.gt]: moment(new Date()).subtract(2, 'days').format(),
+        },
+      },
+      include: [models.User],
     })
     // eslint-disable-next-line no-console
     console.log('tasks from cron job to remember deadline', tasks)
     if (tasks[0]) {
-      tasks.map(async t => {
+      tasks.map(async (t) => {
         if (t.assigned) {
           if (t.dataValues && t.assigned) {
-            const userAssigned = await models.Assign.findAll({ where: { id: t.assigned }, include: [models.User] })
+            const userAssigned = await models.Assign.findAll({
+              where: { id: t.assigned },
+              include: [models.User],
+            })
             if (userAssigned[0].dataValues) {
-              DeadlineMail.deadlineEndOwner(t.User.dataValues, t.dataValues, t.User.name || t.User.username)
-              DeadlineMail.deadlineEndAssigned(userAssigned[0].dataValues.User, t.dataValues, userAssigned[0].dataValues.User.dataValues.name)
+              DeadlineMail.deadlineEndOwner(
+                t.User.dataValues,
+                t.dataValues,
+                t.User.name || t.User.username,
+              )
+              DeadlineMail.deadlineEndAssigned(
+                userAssigned[0].dataValues.User,
+                t.dataValues,
+                userAssigned[0].dataValues.User.dataValues.name,
+              )
             }
           }
         }
       })
     }
     return tasks
-  }
+  },
 }
 
 Report.montlyBounties()

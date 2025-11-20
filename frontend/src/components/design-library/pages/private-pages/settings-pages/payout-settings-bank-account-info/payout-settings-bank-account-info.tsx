@@ -6,9 +6,8 @@ const PayoutSetingsBankAccountHolder = ({
   bankAccount,
   countries,
   onSubmit,
-  onChangeBankCode
+  onChangeBankCode,
 }) => {
-  
   return (
     <BankAccountForm
       bankAccount={bankAccount}
@@ -17,7 +16,7 @@ const PayoutSetingsBankAccountHolder = ({
       onSubmit={onSubmit}
       onChangeBankCode={onChangeBankCode}
     />
-  );
+  )
 }
 
-export default PayoutSetingsBankAccountHolder;
+export default PayoutSetingsBankAccountHolder

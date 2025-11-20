@@ -28,29 +28,30 @@ const invoicePaymentFailed = require('../../../modules/webhooks/invoicePaymentFa
 const {
   FAILED_REASON,
   CURRENCIES,
-  formatStripeAmount
+  formatStripeAmount,
 } = require('../../../modules/webhooks/constants')
 
 exports.webhookConnect = async (req, res) => {
-  const sig = req.headers['stripe-signature'];
-  const secret = process.env.STRIPE_WEBHOOK_SECRET_CONNECT;
+  const sig = req.headers['stripe-signature']
+  const secret = process.env.STRIPE_WEBHOOK_SECRET_CONNECT
 
-  let event;
-  
+  let event
+
   try {
     if (process.env.NODE_ENV === 'test') {
-      event = typeof req.body === 'string' || Buffer.isBuffer(req.body)
-        ? JSON.parse(req.body.toString())
-        : req.body;
+      event =
+        typeof req.body === 'string' || Buffer.isBuffer(req.body)
+          ? JSON.parse(req.body.toString())
+          : req.body
     } else {
-      event = stripe.webhooks.constructEvent(req.body, sig, secret);
+      event = stripe.webhooks.constructEvent(req.body, sig, secret)
     }
   } catch (err) {
-    console.error('❌ Webhook signature verification failed:', err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    console.error('❌ Webhook signature verification failed:', err.message)
+    return res.status(400).send(`Webhook Error: ${err.message}`)
   }
 
-  console.log('✅ Received event:', event.type);
+  console.log('✅ Received event:', event.type)
 
   if (event) {
     const paid = event.data.object.paid || false
@@ -64,10 +65,9 @@ exports.webhookConnect = async (req, res) => {
       case 'payout.paid':
         return await payoutPaid(event, req, res)
       default:
-        return res.status(200).json(event);
+        return res.status(200).json(event)
     }
-  }
-  else {
+  } else {
     return res.send(false)
   }
 }

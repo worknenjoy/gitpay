@@ -1,20 +1,25 @@
 import React from 'react'
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 import { Grid, Typography, List, ListItemIcon, ListItemText, Container } from '@mui/material'
-import { Section, MainTitle, MainList, ResponsiveImage } from '../../../pages/public-pages/home-public-page/CommonStyles'
+import {
+  Section,
+  MainTitle,
+  MainList,
+  ResponsiveImage,
+} from '../../../pages/public-pages/home-public-page/CommonStyles'
 import { ListItemTop, AvatarPrimary, HeroContent } from './section-hero.styles'
 
 type SectionHeroProps = {
-  title: React.ReactNode;
-  image?: string;
-  animation?: string;
-  content?: React.ReactNode | string;
+  title: React.ReactNode
+  image?: string
+  animation?: string
+  content?: React.ReactNode | string
   items?: {
-    icon: React.ReactNode;
-    primaryText: React.ReactNode;
-    secondaryText: React.ReactNode;
-  }[];
-  contrast?: boolean;
+    icon: React.ReactNode
+    primaryText: React.ReactNode
+    secondaryText: React.ReactNode
+  }[]
+  contrast?: boolean
 }
 
 const SectionHero = ({
@@ -23,7 +28,7 @@ const SectionHero = ({
   animation,
   content,
   items,
-  contrast = false
+  contrast = false,
 }: SectionHeroProps) => {
   return (
     <Section alternative={contrast}>
@@ -46,14 +51,9 @@ const SectionHero = ({
                   {items.map((item, index) => (
                     <ListItemTop key={index}>
                       <ListItemIcon style={{ marginRight: 12 }}>
-                        <AvatarPrimary>
-                          {item.icon}
-                        </AvatarPrimary>
+                        <AvatarPrimary>{item.icon}</AvatarPrimary>
                       </ListItemIcon>
-                      <ListItemText
-                        primary={item.primaryText}
-                        secondary={item.secondaryText}
-                      />
+                      <ListItemText primary={item.primaryText} secondary={item.secondaryText} />
                     </ListItemTop>
                   ))}
                 </List>

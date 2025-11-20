@@ -4,11 +4,11 @@ describe('authenticate', () => {
   it('should authenticate sequelize', (done) => {
     models.sequelize
       .authenticate()
-      .then(err => {
+      .then((err) => {
         if (err) done(err)
         else done()
       })
-      .catch(err => {
+      .catch((err) => {
         done(err)
       })
   })

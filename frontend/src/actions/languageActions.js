@@ -18,16 +18,16 @@ const listLanguageError = (error) => {
 }
 
 const listLanguage = (params) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(listLanguageRequested())
     return axios
       .get(api.API_URL + '/languages/search', { params })
-      .then(languages => {
+      .then((languages) => {
         if (languages.status === 200 && languages.data && !languages.data.error) {
           return dispatch(listLanguageSuccess(languages.data))
         }
       })
-      .catch(error => {
+      .catch((error) => {
         // eslint-disable-next-line no-console
         console.log('error on list labels', error)
         return dispatch(listLanguageError(error))
@@ -35,9 +35,4 @@ const listLanguage = (params) => {
   }
 }
 
-export {
-  LIST_LAGUAGE_REQUEST,
-  LIST_LAGUAGE_SUCCESS,
-  LIST_LAGUAGE_ERROR,
-  listLanguage
-}
+export { LIST_LAGUAGE_REQUEST, LIST_LAGUAGE_SUCCESS, LIST_LAGUAGE_ERROR, listLanguage }

@@ -1,10 +1,10 @@
 import {
   GET_USER_TYPES_REQUESTED,
   GET_USER_TYPES_SUCCESS,
-  GET_USER_TYPES_ERROR
+  GET_USER_TYPES_ERROR,
 } from '../actions/profileActions'
 
-export const profileReducer = (state = { data: { }, completed: true, error: {} }, action) => {
+export const profileReducer = (state = { data: {}, completed: true, error: {} }, action) => {
   switch (action.type) {
     case GET_USER_TYPES_REQUESTED:
       return { ...state, completed: false }

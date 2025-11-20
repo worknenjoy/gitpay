@@ -6,10 +6,9 @@ export const StyledContainer = styled(Container)(({ theme }) => ({
   backgroundColor: (theme as any).palette?.background?.dark,
   minHeight: '100%',
   paddingBottom: theme.spacing(3),
-  paddingTop: theme.spacing(3)
+  paddingTop: theme.spacing(3),
 }))
 
-
 export const StyledProjectCard = styled(ProjectCard as any)({
-  height: '100%'
+  height: '100%',
 })

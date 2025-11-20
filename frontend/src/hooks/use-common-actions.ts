@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
-const useCommonActions = ({ 
+const useCommonActions = ({
   isLogged,
   user,
   registerUser,
@@ -11,49 +11,47 @@ const useCommonActions = ({
   getInfo,
   signOut,
   roles,
-  fetchRoles
+  fetchRoles,
 }) => {
-  const history = useHistory();
+  const history = useHistory()
 
   const handleSignupUser = async (data) => {
-    await registerUser(data);
-  };
+    await registerUser(data)
+  }
 
   const handleForgotPassword = async (data) => {
-    await forgotPassword(data);
-  };
+    await forgotPassword(data)
+  }
 
   const handleImportIssue = async (data) => {
-    await createTask(data, history);
-  };
+    await createTask(data, history)
+  }
 
-  
   useEffect(() => {
-    isLogged?.();
-  }, []);
-  
+    isLogged?.()
+  }, [])
 
   return {
     user: user,
     bottomBarProps: {
       info,
-      getInfo
+      getInfo,
     },
     accountMenuProps: {
-      signOut
+      signOut,
     },
     loginFormSignupFormProps: {
       onSubmit: handleSignupUser,
       roles,
-      fetchRoles
+      fetchRoles,
     },
     loginFormForgotFormProps: {
-      onSubmit: handleForgotPassword
+      onSubmit: handleForgotPassword,
     },
     importIssuesProps: {
-      onImport: handleImportIssue
-    }
-  };
-};
+      onImport: handleImportIssue,
+    },
+  }
+}
 
-export default useCommonActions;
+export default useCommonActions

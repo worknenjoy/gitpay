@@ -1,13 +1,13 @@
-import React from "react";
-import { Grid, Typography, Checkbox } from "@mui/material";
-import { SkillIcon } from "./skill-icon";
-import { SkillAvatar } from "./skill.styles";
+import React from 'react'
+import { Grid, Typography, Checkbox } from '@mui/material'
+import { SkillIcon } from './skill-icon'
+import { SkillAvatar } from './skill.styles'
 
 type SkillProps = {
-  title: string;
-  onClick?: () => void;
-  isSelected?: boolean;
-};
+  title: string
+  onClick?: () => void
+  isSelected?: boolean
+}
 
 function Skill({ title, onClick, isSelected }: SkillProps) {
   return (
@@ -26,7 +26,7 @@ function Skill({ title, onClick, isSelected }: SkillProps) {
         <Checkbox onClick={onClick} checked={isSelected ? true : false} />
       </Grid>
     </Grid>
-  );
+  )
 }
 
-export default Skill;
+export default Skill

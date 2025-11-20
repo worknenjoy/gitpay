@@ -1,16 +1,16 @@
-import { FormControl, FormControlLabel, Grid, Switch } from '@mui/material';
-import React from 'react';
-import Field from '../../../atoms/inputs/fields/field/field';
-import { FormattedMessage } from 'react-intl';
+import { FormControl, FormControlLabel, Grid, Switch } from '@mui/material'
+import React from 'react'
+import Field from '../../../atoms/inputs/fields/field/field'
+import { FormattedMessage } from 'react-intl'
 
 const BankAccountNumberForm = ({ bankAccount, defaultIbanMode }) => {
-  const { data, completed } = bankAccount || {};
-  const { id, account_number, routing_number, last4 } = data || {};
-  const [ibanMode, setIbanMode] = React.useState(defaultIbanMode);
+  const { data, completed } = bankAccount || {}
+  const { id, account_number, routing_number, last4 } = data || {}
+  const [ibanMode, setIbanMode] = React.useState(defaultIbanMode)
 
   const handleIbanModeChange = (event) => {
-    setIbanMode(event.target.checked);
-  };
+    setIbanMode(event.target.checked)
+  }
 
   return (
     <Grid container spacing={2}>
@@ -55,7 +55,7 @@ const BankAccountNumberForm = ({ bankAccount, defaultIbanMode }) => {
           </Grid>
         </>
       )}
-      { !defaultIbanMode && (
+      {!defaultIbanMode && (
         <Grid size={{ xs: 12 }}>
           <FormControl style={{ width: '100%' }} disabled={id}>
             <FormControlLabel
@@ -79,8 +79,8 @@ const BankAccountNumberForm = ({ bankAccount, defaultIbanMode }) => {
           </FormControl>
         </Grid>
       )}
-    </Grid >
-  );
+    </Grid>
+  )
 }
 
-export default BankAccountNumberForm;
+export default BankAccountNumberForm

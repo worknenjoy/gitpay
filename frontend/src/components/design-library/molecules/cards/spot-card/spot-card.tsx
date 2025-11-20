@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
-import { Typography, Dialog  } from '@mui/material';
-import CookiePolicy from 'design-library/molecules/content/terms/cookie-policy/cookie-policy';
-import PrivacyPolicy from 'design-library/molecules/content/terms/privacy-policy/privacy-policy';
-import TermsOfService from 'design-library/molecules/content/terms/terms-of-service/terms-of-service';
-import { StyledCard, StyledCardContent, Content } from './spot-card.styles';
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
+import { Typography, Dialog } from '@mui/material'
+import CookiePolicy from 'design-library/molecules/content/terms/cookie-policy/cookie-policy'
+import PrivacyPolicy from 'design-library/molecules/content/terms/privacy-policy/privacy-policy'
+import TermsOfService from 'design-library/molecules/content/terms/terms-of-service/terms-of-service'
+import { StyledCard, StyledCardContent, Content } from './spot-card.styles'
 
 import logo from 'images/logo-complete.png'
 
-const SpotCard = ({
-  title,
-  description,
-  children
-}) => {
+const SpotCard = ({ title, description, children }) => {
   const [openDialog, setOpenDialog] = useState(false)
   const [dialogType, setDialogType] = useState(null)
 
@@ -54,35 +50,49 @@ const SpotCard = ({
             <Typography style={{ marginBottom: 20 }} variant="body2" gutterBottom noWrap>
               {description}
             </Typography>
-            <div>
-              {children}
-            </div>
+            <div>{children}</div>
           </Content>
         </StyledCardContent>
       </StyledCard>
       <div style={{ marginTop: 10, textAlign: 'center' }}>
         <Typography variant="caption" color="default" gutterBottom noWrap component="span">
-          <FormattedMessage id="account.login.connect.bottom" defaultMessage="© 2023 Gitpay - All rights reserved" />
-          <Link to="#" color="inherit" onClick={(e) => handleOpenDialog(e, 'cookie')} style={{ display: 'inline-block', margin: '0 5px' }}>
+          <FormattedMessage
+            id="account.login.connect.bottom"
+            defaultMessage="© 2023 Gitpay - All rights reserved"
+          />
+          <Link
+            to="#"
+            color="inherit"
+            onClick={(e) => handleOpenDialog(e, 'cookie')}
+            style={{ display: 'inline-block', margin: '0 5px' }}
+          >
             <FormattedMessage id="legal.cookie.label" defaultMessage="Cookie Preferences" />
           </Link>
           |
-          <Link to="#" color="inherit" onClick={(e) => handleOpenDialog(e, 'privacy')} style={{ display: 'inline-block', margin: '0 5px' }}>
+          <Link
+            to="#"
+            color="inherit"
+            onClick={(e) => handleOpenDialog(e, 'privacy')}
+            style={{ display: 'inline-block', margin: '0 5px' }}
+          >
             <FormattedMessage id="legal.prviacy.label" defaultMessage="Privacy" />
           </Link>
           |
-          <Link to="#" color="inherit" onClick={(e) => handleOpenDialog(e, 'terms')} style={{ display: 'inline-block', margin: '0 5px' }}>
+          <Link
+            to="#"
+            color="inherit"
+            onClick={(e) => handleOpenDialog(e, 'terms')}
+            style={{ display: 'inline-block', margin: '0 5px' }}
+          >
             <FormattedMessage id="legal.terms.label" defaultMessage="Terms" />
           </Link>
         </Typography>
         <Dialog onClose={closeDialog} open={openDialog}>
-          <div style={{ padding: '10px 20px' }}>
-            {renderDialog()}
-          </div>
+          <div style={{ padding: '10px 20px' }}>{renderDialog()}</div>
         </Dialog>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SpotCard;
+export default SpotCard

@@ -1,7 +1,7 @@
 const requestPromise = require('request-promise')
 const Promise = require('bluebird')
 
-module.exports = Promise.method(async function bountyClosedNotPaidComment (task, userAssigned) {
+module.exports = Promise.method(async function bountyClosedNotPaidComment(task, userAssigned) {
   const { provider, url, id: issueId, value: amount } = task.dataValues
   const { provider_username: githubUser } = userAssigned
   if (provider !== 'github' || process.env.NODE_ENV !== 'production') return
@@ -19,7 +19,7 @@ module.exports = Promise.method(async function bountyClosedNotPaidComment (task,
     headers: {
       'User-Agent': 'Gitpay',
       'Content-Type': 'application/json',
-      'Authorization': 'token ' + process.env.GITHUB_BOT_ACCESS_TOKEN
+      Authorization: 'token ' + process.env.GITHUB_BOT_ACCESS_TOKEN,
     },
     json: true,
     body: {
@@ -33,8 +33,8 @@ If you have a Pull Request merged, please claim on Gitpay (https://gitpay.me) on
 ${gitPayURL}
 
 Please set the title of your pull request to *issue#${issueId}* and go in _Solve issue_ and send your Pull Request URL.
-If you already received your bounty, please ignore this message.`
-    }
+If you already received your bounty, please ignore this message.`,
+    },
   })
 
   return req

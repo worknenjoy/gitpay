@@ -3,7 +3,7 @@ import { HeroTitleStyled } from './hero-title.styles'
 import { Typography } from '@mui/material'
 
 type HeroTitleProps = {
-  children: React.ReactNode | string,
+  children: React.ReactNode | string
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 

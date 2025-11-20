@@ -1,26 +1,26 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import IssuePublicStatus from './issue-public-status';
+import type { Meta, StoryObj } from '@storybook/react'
+import IssuePublicStatus from './issue-public-status'
 
 const meta: Meta<typeof IssuePublicStatus> = {
   title: 'Design Library/Atoms/Status/Issue/IssuePublicStatus',
   component: IssuePublicStatus,
   parameters: {
-    layout: 'centered'
-  }
-};
+    layout: 'centered',
+  },
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof IssuePublicStatus>;
+type Story = StoryObj<typeof IssuePublicStatus>
 
 export const Default: Story = {
   args: {
-    status: 'public'
-  }
-};
+    status: 'public',
+  },
+}
 
 export const Private: Story = {
   args: {
-    status: 'private'
-  }
-};
+    status: 'private',
+  },
+}
