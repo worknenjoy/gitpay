@@ -2,13 +2,13 @@ import {
   ADD_NOTIFICATION,
   CLOSE_NOTIFICATION,
   ADD_DIALOG,
-  CLOSE_DIALOG
+  CLOSE_DIALOG,
 } from '../actions/notificationActions'
 
 export const notification = (state = { open: false }, action) => {
   switch (action.type) {
     case ADD_NOTIFICATION:
-      return { ...state, text: action.text, open: action.open, link: action.link}
+      return { ...state, text: action.text, open: action.open, link: action.link }
     case CLOSE_NOTIFICATION:
       return { ...state, open: action.open }
     default:

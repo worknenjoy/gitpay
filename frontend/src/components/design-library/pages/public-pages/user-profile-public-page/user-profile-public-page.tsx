@@ -5,17 +5,14 @@ import ProfileUserHeader from 'design-library/molecules/headers/profile-user-hea
 import { Root } from './user-profile-public-page.styles'
 import { Page } from '../../../../../styleguide/components/Page'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
-import { issueMetadata, customColumnRenderer } from 'design-library/molecules/tables/issue-table/issue-table'
+import {
+  issueMetadata,
+  customColumnRenderer,
+} from 'design-library/molecules/tables/issue-table/issue-table'
 import { FormattedMessage } from 'react-intl'
 import { useParams } from 'react-router-dom'
 
-const UserProfilePublicPage = ({
-  user,
-  searchUser,
-  tasks,
-  listTasks,
-  filterTasks
-}) => {
+const UserProfilePublicPage = ({ user, searchUser, tasks, listTasks, filterTasks }) => {
   const { userId } = useParams<{ userId: string }>()
   const { data: profile } = user || {}
 
@@ -45,7 +42,7 @@ const UserProfilePublicPage = ({
 
   const handleTabbedTableChange = (newValue: string) => {
     filterTasksByState(newValue)
-  };
+  }
 
   useEffect(() => {
     searchUser({ id: userId })
@@ -56,9 +53,7 @@ const UserProfilePublicPage = ({
     <React.Fragment>
       <Page>
         <Container fixed maxWidth="lg">
-          <ProfileUserHeader 
-            profile={profile}
-          />
+          <ProfileUserHeader profile={profile} />
         </Container>
         <Container fixed maxWidth="lg">
           <Root container>
@@ -69,22 +64,32 @@ const UserProfilePublicPage = ({
                 tabs={[
                   {
                     value: 'created',
-                    label: <FormattedMessage id="issues.user.profile.created" defaultMessage="Issues created" />,
+                    label: (
+                      <FormattedMessage
+                        id="issues.user.profile.created"
+                        defaultMessage="Issues created"
+                      />
+                    ),
                     table: {
                       tableData: tasks,
                       tableHeaderMetadata: issueMetadata,
-                      customColumnRenderer: customColumnRenderer
-                    }
+                      customColumnRenderer: customColumnRenderer,
+                    },
                   },
                   {
                     value: 'supported',
-                    label: <FormattedMessage id="issues.user.profile.sponsored" defaultMessage="Issues sponsored" />,
+                    label: (
+                      <FormattedMessage
+                        id="issues.user.profile.sponsored"
+                        defaultMessage="Issues sponsored"
+                      />
+                    ),
                     table: {
                       tableData: tasks,
                       tableHeaderMetadata: issueMetadata,
-                      customColumnRenderer: customColumnRenderer
-                    }
-                  }
+                      customColumnRenderer: customColumnRenderer,
+                    },
+                  },
                 ]}
               />
             </Grid>

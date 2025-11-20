@@ -40,6 +40,7 @@
     "test:e2e": "playwright test",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "prepush": "npm run lint-fix",
     "heroku-postbuild": "cd frontend && npm install && npm run production && npm run sitemap && cd .. && npm run build && npm run migrate",
     "stripe:webhook": "stripe listen --forward-to localhost:3000/webhooks/stripe-platform --forward-connect-to localhost:3000/webhooks/stripe-connect",

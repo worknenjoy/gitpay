@@ -1,10 +1,8 @@
-import React from "react";
-import { FormattedMessage } from "react-intl";
-import BaseTerms from "../base-terms/base-terms";
-
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
+import BaseTerms from '../base-terms/base-terms'
 
 const CookiePolicy = ({ extraStyles = true }) => {
-
   const content = `
   {br}
   Introduction
@@ -58,13 +56,26 @@ Please note that this Cookie Policy should be read in conjunction with our Priva
     <>
       <BaseTerms
         title={<FormattedMessage id="cookie.policy.title" defaultMessage="Cookie Policy" />}
-        subtitle={<FormattedMessage id="cookie.policy.subtitle.secondary" defaultMessage="About our Cookie Policy" />}
-        updated={<FormattedMessage id="cookie.policy.updated" defaultMessage="Updated 5 May, 2023" />}
-        content={<FormattedMessage id="cookie.policy.content" defaultMessage={content} values={{ br: <br /> }} />}
+        subtitle={
+          <FormattedMessage
+            id="cookie.policy.subtitle.secondary"
+            defaultMessage="About our Cookie Policy"
+          />
+        }
+        updated={
+          <FormattedMessage id="cookie.policy.updated" defaultMessage="Updated 5 May, 2023" />
+        }
+        content={
+          <FormattedMessage
+            id="cookie.policy.content"
+            defaultMessage={content}
+            values={{ br: <br /> }}
+          />
+        }
         extraStyles={extraStyles}
       />
     </>
   )
 }
 
-export default CookiePolicy;
+export default CookiePolicy

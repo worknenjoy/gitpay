@@ -4,28 +4,28 @@ const moment = require('moment')
 const SendMail = require('../mail/mail')
 
 module.exports = async function chargeUpdated(event, paid, status, req, res) {
-  if(event?.data?.object?.source?.id) {
+  if (event?.data?.object?.source?.id) {
     return models.Order.update(
       {
         paid: paid,
-        status: status
+        status: status,
       },
       {
         where: {
           source_id: event.data.object.source.id,
-          source: event.data.object.id
+          source: event.data.object.id,
         },
-        returning: true
-      }
+        returning: true,
+      },
     )
-      .then(order => {
+      .then((order) => {
         if (order[0]) {
           return models.User.findOne({
             where: {
-              id: order[1][0].dataValues.userId
-            }
+              id: order[1][0].dataValues.userId,
+            },
           })
-            .then(user => {
+            .then((user) => {
               if (user) {
                 if (paid && status === 'succeeded') {
                   const language = user.language || 'en'
@@ -33,20 +33,22 @@ module.exports = async function chargeUpdated(event, paid, status, req, res) {
                   SendMail.success(
                     user.dataValues,
                     i18n.__('mail.webhook.payment.update.subject'),
-                    i18n.__('mail.webhook.payment.update.message', { amount: event.data.object.amount / 100 })
+                    i18n.__('mail.webhook.payment.update.message', {
+                      amount: event.data.object.amount / 100,
+                    }),
                   )
                 }
               }
-              return res.status(200).json(event);
+              return res.status(200).json(event)
             })
-            .catch(e => {
+            .catch((e) => {
               return res.status(400).send(e)
             })
         }
       })
-      .catch(e => {
+      .catch((e) => {
         return res.status(400).send(e)
       })
   }
-  return res.status(200).json(event);
+  return res.status(200).json(event)
 }

@@ -1,9 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import {
-  Button,
-  Typography
-} from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import ReCAPTCHA from 'react-google-recaptcha'
 import Checkbox from '@mui/material/Checkbox'
 import TermsDialog from '../../../dialogs/terms-dialog/terms-dialog'
@@ -13,10 +10,10 @@ import { Center, SpacedButton, Margins, StyledTextField } from './login-form-sig
 
 const containUrl = (string) => {
   // Regular expression to match a basic URL structure
-  const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+  const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi
 
   // Test if the string matches the URL pattern
-  return urlPattern.test(string);
+  return urlPattern.test(string)
 }
 
 // styles migrated to styled-components
@@ -26,8 +23,8 @@ type LoginFormSignupProps = {
   action?: string
   onClose?: () => void
   noCancelButton?: boolean
-  agreeTermsCheckError?: boolean,
-  onSignin?: () => void,
+  agreeTermsCheckError?: boolean
+  onSignin?: () => void
   roles?: any
   fetchRoles?: () => void
 }
@@ -40,9 +37,8 @@ const LoginFormSignup = ({
   agreeTermsCheckError,
   onSignin,
   roles,
-  fetchRoles
+  fetchRoles,
 }: LoginFormSignupProps) => {
-
   const [openTermsDialog, setOpenTermsDialog] = useState(false)
   const [openPrivacyDialog, setOpenPrivacyDialog] = useState(false)
   const [validating, setValidating] = useState(false)
@@ -59,8 +55,8 @@ const LoginFormSignup = ({
       name: '',
       password: '',
       captcha: '',
-      general: ''
-    }
+      general: '',
+    },
   })
 
   const handleChange = (name) => (event) => {
@@ -69,7 +65,7 @@ const LoginFormSignup = ({
   }
 
   const handleTypesChange = useCallback((checked) => {
-    setState(prev => ({ ...prev, Types: checked }))
+    setState((prev) => ({ ...prev, Types: checked }))
   }, [])
 
   const handleBlur = () => {
@@ -87,7 +83,6 @@ const LoginFormSignup = ({
   const handleOpenTermsOfService = (e) => {
     e.preventDefault()
     setOpenTermsDialog(true)
-
   }
 
   const handleOpenPrivacyPolicy = (e) => {
@@ -111,8 +106,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          name: 'Name cannot be too short'
-        }
+          name: 'Name cannot be too short',
+        },
       })
       return false
     } else if (name.length > 72) {
@@ -120,8 +115,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          name: 'Name cannot be longer than 72 characters'
-        }
+          name: 'Name cannot be longer than 72 characters',
+        },
       })
       return false
     } else if (containUrl(name)) {
@@ -129,13 +124,12 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          name: 'Name should not include URL'
-        }
+          name: 'Name should not include URL',
+        },
       })
       return false
-    }
-    else {
-      return true;
+    } else {
+      return true
     }
   }
 
@@ -145,8 +139,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          username: 'Email cannot be empty'
-        }
+          username: 'Email cannot be empty',
+        },
       })
       return false
     } else if (email.length > 72) {
@@ -154,19 +148,23 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          username: 'Email cannot be longer than 72 characters'
-        }
+          username: 'Email cannot be longer than 72 characters',
+        },
       })
       return false
-    }
-    else {
-      if (email && !email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+    } else {
+      if (
+        email &&
+        !email.match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        )
+      ) {
         setState({
           ...state,
           error: {
             ...state.error,
-            username: 'Invalid email'
-          }
+            username: 'Invalid email',
+          },
         })
         return false
       }
@@ -180,8 +178,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          password: 'Password cannot be empty or too short'
-        }
+          password: 'Password cannot be empty or too short',
+        },
       })
       return false
     } else if (password.length > 72) {
@@ -189,12 +187,12 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          password: 'Password cannot be longer than 72 characters'
-        }
+          password: 'Password cannot be longer than 72 characters',
+        },
       })
       return false
     } else {
-      return true;
+      return true
     }
   }
 
@@ -204,8 +202,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          password: 'Password dont match'
-        }
+          password: 'Password dont match',
+        },
       })
       return false
     }
@@ -218,8 +216,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          captcha: 'You must agree with the Terms of Service and Privacy Policy'
-        }
+          captcha: 'You must agree with the Terms of Service and Privacy Policy',
+        },
       })
     }
     return agreeTermsCheck
@@ -227,7 +225,8 @@ const LoginFormSignup = ({
 
   const handleForm = async (e) => {
     e.preventDefault()
-    const { captchaChecked, agreeTermsCheck, name, username, password, confirmPassword, Types } = state
+    const { captchaChecked, agreeTermsCheck, name, username, password, confirmPassword, Types } =
+      state
     const termsAgreed = termsChecked(agreeTermsCheck)
     const validName = validateName(name)
     const validEmail = validateEmail(username)
@@ -246,13 +245,12 @@ const LoginFormSignup = ({
           name: name,
           email: username,
           password: password,
-          Types: Types
+          Types: Types,
         })
         const errorType = response?.error && response?.error?.response?.data.message
         if (errorType === 'user.exist') {
           window.location.assign('/#/signin')
-        }
-        else {
+        } else {
           window.location.assign('/#/signin')
           return false
         }
@@ -263,16 +261,16 @@ const LoginFormSignup = ({
             general: '',
             name: '',
             username: '',
-            password: ''
-          }
+            password: '',
+          },
         })
       } catch (error) {
         setState({
           ...state,
           error: {
             ...state.error,
-            'general': 'We couldnt register this user'
-          }
+            general: 'We couldnt register this user',
+          },
         })
         /* eslint-disable no-console */
         console.log(error)
@@ -339,7 +337,16 @@ const LoginFormSignup = ({
         <Margins>
           <StyledTextField
             error={validating && password !== confirmPassword}
-            helperText={validating && password !== confirmPassword ? <FormattedMessage id="user.confirm.password.error" defaultMessage="Passwords do not match" /> : ''}
+            helperText={
+              validating && password !== confirmPassword ? (
+                <FormattedMessage
+                  id="user.confirm.password.error"
+                  defaultMessage="Passwords do not match"
+                />
+              ) : (
+                ''
+              )
+            }
             name="confirm_password"
             onChange={handleChange('confirmPassword')}
             onBlur={handleBlur}
@@ -353,62 +360,102 @@ const LoginFormSignup = ({
           />
         </Margins>
         <Margins>
-          <UserRoleField
-            roles={roles}
-            onChange={handleTypesChange}
-          />
+          <UserRoleField roles={roles} onChange={handleTypesChange} />
         </Margins>
         <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            {state.agreeTermsCheck
-              ? <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid="agree-terms-checkbox-checked" />
-              : <Checkbox checked={state.agreeTermsCheck} onClick={handleAgreeTerms} data-testid="agree-terms-checkbox" />
-            }
+            {state.agreeTermsCheck ? (
+              <Checkbox
+                checked={state.agreeTermsCheck}
+                onClick={handleAgreeTerms}
+                data-testid="agree-terms-checkbox-checked"
+              />
+            ) : (
+              <Checkbox
+                checked={state.agreeTermsCheck}
+                onClick={handleAgreeTerms}
+                data-testid="agree-terms-checkbox"
+              />
+            )}
             <Typography variant="body1">
-              <FormattedMessage id="account.login.label.terms.agree" defaultMessage="I agree with the " />
-              <a href="/#/terms" onClick={handleOpenTermsOfService} target="_blank" style={{ display: 'inline-block', marginRight: 5, marginLeft: 5 }}>
-                <FormattedMessage id="account.login.label.terms" defaultMessage="Terms of Service" />
+              <FormattedMessage
+                id="account.login.label.terms.agree"
+                defaultMessage="I agree with the "
+              />
+              <a
+                href="/#/terms"
+                onClick={handleOpenTermsOfService}
+                target="_blank"
+                style={{ display: 'inline-block', marginRight: 5, marginLeft: 5 }}
+              >
+                <FormattedMessage
+                  id="account.login.label.terms"
+                  defaultMessage="Terms of Service"
+                />
               </a>
               <FormattedMessage id="account.login.label.terms.and" defaultMessage=" and" />
-              <a href="/#/privacy-policy" onClick={handleOpenPrivacyPolicy} target="_blank" style={{ display: 'inline-block', marginLeft: 5 }}>
-                <FormattedMessage id="account.login.label.privacy" defaultMessage="Privacy Policy" />
+              <a
+                href="/#/privacy-policy"
+                onClick={handleOpenPrivacyPolicy}
+                target="_blank"
+                style={{ display: 'inline-block', marginLeft: 5 }}
+              >
+                <FormattedMessage
+                  id="account.login.label.privacy"
+                  defaultMessage="Privacy Policy"
+                />
               </a>
             </Typography>
           </div>
         </div>
-        {agreeTermsCheckError &&
-          <div style={{
-            color: 'red',
-            fontSize: 10,
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
+        {agreeTermsCheckError && (
+          <div
+            style={{
+              color: 'red',
+              fontSize: 10,
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
             <Typography variant="body1" component="span">
-              <FormattedMessage id="account.login.label.terms.agree.error" defaultMessage="You must agree with the Terms of Service and Privacy Policy" />
+              <FormattedMessage
+                id="account.login.label.terms.agree.error"
+                defaultMessage="You must agree with the Terms of Service and Privacy Policy"
+              />
             </Typography>
           </div>
-        }
+        )}
 
         {process.env.NODE_ENV === 'production' && (
-          <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: 80, marginTop: 20 }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%',
+              height: 80,
+              marginTop: 20,
+            }}
+          >
             <ReCAPTCHA
               sitekey={process.env.GOOGLE_RECAPTCHA_SITE_KEY}
-              onChange={captchaChecked => setState({ ...state, captchaChecked })}
+              onChange={(captchaChecked) => setState({ ...state, captchaChecked })}
             />
           </div>
         )}
-        {error.captcha &&
-          <div style={{
-            color: 'red',
-            fontSize: 10,
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
+        {error.captcha && (
+          <div
+            style={{
+              color: 'red',
+              fontSize: 10,
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
             <Typography variant="body1" component="span">
               {error.captcha}
             </Typography>
           </div>
-        }
+        )}
         <Center style={{ marginTop: 20 }}>
           <div>
             {noCancelButton ? null : (
@@ -416,12 +463,21 @@ const LoginFormSignup = ({
                 <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
               </SpacedButton>
             )}
-            <SpacedButton data-testid="signup-button" type="submit" size="large" variant="contained" color="primary">
+            <SpacedButton
+              data-testid="signup-button"
+              type="submit"
+              size="large"
+              variant="contained"
+              color="primary"
+            >
               <FormattedMessage id="account.login.label.signup" defaultMessage="Sign up" />
             </SpacedButton>
             <div style={{ marginTop: 20, display: 'flex', alignItems: 'baseline' }}>
               <Typography variant="body1" component="span">
-                <FormattedMessage id="account.login.label.or.signup" defaultMessage="Have an account?" />
+                <FormattedMessage
+                  id="account.login.label.or.signup"
+                  defaultMessage="Have an account?"
+                />
               </Typography>
               <Button onClick={onSignin} variant="text" size="large" color="primary">
                 <FormattedMessage id="account.login.label.signin" defaultMessage="Sign in" />

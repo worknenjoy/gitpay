@@ -1,23 +1,28 @@
-import React, { useState } from "react";
-import { Typography, Chip, Button } from "@mui/material";
-import {
-  AttachMoney as MoneyIcon,
-  EmojiFoodBeverage as CoffeeIcon
-} from '@mui/icons-material'
-import { FormattedMessage, useIntl } from "react-intl";
+import React, { useState } from 'react'
+import { Typography, Chip, Button } from '@mui/material'
+import { AttachMoney as MoneyIcon, EmojiFoodBeverage as CoffeeIcon } from '@mui/icons-material'
+import { FormattedMessage, useIntl } from 'react-intl'
 import MomentComponent from 'moment'
-import OfferDrawer from "design-library/molecules/drawers/offer-drawer/offer-drawer";
-import { SidebarItem, SidebarSection, SpanText, TaskInfoContent, StatusChip, StatusAvatarDot, SidebarRoot } from "./issue-sidebar.styles";
-import IssuePublicStatus from "design-library/atoms/status/issue-public-status/issue-public-status";
-import TaskDeadlineDrawer from "design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer";
-import IssueActionsByRole from "design-library/atoms/buttons/issue-actions-by-role/issue-actions-by-role";
+import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer'
+import {
+  SidebarItem,
+  SidebarSection,
+  SpanText,
+  TaskInfoContent,
+  StatusChip,
+  StatusAvatarDot,
+  SidebarRoot,
+} from './issue-sidebar.styles'
+import IssuePublicStatus from 'design-library/atoms/status/issue-public-status/issue-public-status'
+import TaskDeadlineDrawer from 'design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer'
+import IssueActionsByRole from 'design-library/atoms/buttons/issue-actions-by-role/issue-actions-by-role'
 import Constants from '../../../../../consts'
 import inviteCover from 'images/funds.png'
-import IssueLevelDropdown from "design-library/atoms/inputs/dropdowns/issue-level-dropdown/issue-level-dropdown";
+import IssueLevelDropdown from 'design-library/atoms/inputs/dropdowns/issue-level-dropdown/issue-level-dropdown'
 import { messages } from '../../../../../messages/messages'
-import IssueInviteCard from "design-library/molecules/cards/issue-cards/issue-invite-card/issue-invite-card";
-import IssuePaymentsList from "design-library/molecules/lists/issue-payments-list/issue-payments-list";
-import useIssueAuthor from "../../../../../hooks/use-issue-author";
+import IssueInviteCard from 'design-library/molecules/cards/issue-cards/issue-invite-card/issue-invite-card'
+import IssuePaymentsList from 'design-library/molecules/lists/issue-payments-list/issue-payments-list'
+import useIssueAuthor from '../../../../../hooks/use-issue-author'
 
 const IssueSidebar = ({
   user,
@@ -45,9 +50,9 @@ const IssueSidebar = ({
   wallets,
   fetchTask,
   syncTask,
-  fetchCustomer
+  fetchCustomer,
 }) => {
-  const intl = useIntl();
+  const intl = useIntl()
   const issueAuthor = useIssueAuthor(task, user)
 
   const [deadlineForm, setDeadlineForm] = useState(false)
@@ -70,13 +75,15 @@ const IssueSidebar = ({
     setInterestedSuggestedDate(null)
   }
 
-  const deliveryDate = task?.data?.deadline !== null
-    ? MomentComponent(task.data.deadline).utc().format('MM-DD-YYYY')
-    : intl.formatMessage(messages.deliveryDateNotInformed)
+  const deliveryDate =
+    task?.data?.deadline !== null
+      ? MomentComponent(task.data.deadline).utc().format('MM-DD-YYYY')
+      : intl.formatMessage(messages.deliveryDateNotInformed)
 
-  const deadlineDiff = task?.data?.deadline !== null
-    ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days')
-    : false
+  const deadlineDiff =
+    task?.data?.deadline !== null
+      ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days')
+      : false
 
   const handleTaskFundingDialogOpen = () => {
     setInterestedSuggestedDate(null)
@@ -86,10 +93,17 @@ const IssueSidebar = ({
 
   const sendFundingInvite = (e) => {
     e.preventDefault()
-    fundingInviteTask(task.data.id, fundingInvite.email, fundingInvite.comment, currentPrice, interestedSuggestedDate, user)
+    fundingInviteTask(
+      task.data.id,
+      fundingInvite.email,
+      fundingInvite.comment,
+      currentPrice,
+      interestedSuggestedDate,
+      user,
+    )
     handleAssignFundingDialogClose()
   }
-  
+
   return (
     <SidebarRoot>
       {task.values && task.values.available > 0 && (
@@ -166,7 +180,12 @@ const IssueSidebar = ({
                       {deadlineDiff && deadlineDiff > 0 ? (
                         <small>in {deadlineDiff} days</small>
                       ) : (
-                        <Chip size="small" label={<FormattedMessage id="task.dealine.past" defaultMessage="Overdue" />} />
+                        <Chip
+                          size="small"
+                          label={
+                            <FormattedMessage id="task.dealine.past" defaultMessage="Overdue" />
+                          }
+                        />
                       )}
                     </div>
                   ) : (
@@ -185,7 +204,11 @@ const IssueSidebar = ({
             </Typography>
             <div>
               <Typography variant="h6">
-                <IssueLevelDropdown id={task.data.id} level={task.data.level} updateTask={updateTask} />
+                <IssueLevelDropdown
+                  id={task.data.id}
+                  level={task.data.level}
+                  updateTask={updateTask}
+                />
               </Typography>
             </div>
           </SidebarItem>
@@ -205,7 +228,12 @@ const IssueSidebar = ({
                       {deadlineDiff && deadlineDiff > 0 ? (
                         <small>in {deadlineDiff} days</small>
                       ) : (
-                        <Chip size="small" label={<FormattedMessage id="task.dealine.past" defaultMessage="Overdue" />} />
+                        <Chip
+                          size="small"
+                          label={
+                            <FormattedMessage id="task.dealine.past" defaultMessage="Overdue" />
+                          }
+                        />
                       )}
                     </div>
                   ) : (
@@ -231,7 +259,11 @@ const IssueSidebar = ({
 
       {task?.data && (task?.data?.orders?.length || task?.data?.Orders?.length) ? (
         <div>
-          <IssuePaymentsList orders={(task?.data?.orders || task?.data?.Orders)?.filter(o => o.paid && o.status === 'succeeded')} />
+          <IssuePaymentsList
+            orders={(task?.data?.orders || task?.data?.Orders)?.filter(
+              (o) => o.paid && o.status === 'succeeded',
+            )}
+          />
         </div>
       ) : null}
 
@@ -264,21 +296,58 @@ const IssueSidebar = ({
         syncTask={syncTask}
       />
 
-      <IssueInviteCard onInvite={inviteTask} onFunding={handleTaskFundingDialogOpen} user={user} id={task.data.id} />
+      <IssueInviteCard
+        onInvite={inviteTask}
+        onFunding={handleTaskFundingDialogOpen}
+        user={user}
+        id={task.data.id}
+      />
 
       <OfferDrawer
         hasEmailInput
-        title={<FormattedMessage id="issue.offer.drawer.invite.title" defaultMessage="Invite sponsor" />}
-        introTitle={<FormattedMessage id="task.funding.title" defaultMessage="Invite someone to add bounties to this issue" />}
+        title={
+          <FormattedMessage id="issue.offer.drawer.invite.title" defaultMessage="Invite sponsor" />
+        }
+        introTitle={
+          <FormattedMessage
+            id="task.funding.title"
+            defaultMessage="Invite someone to add bounties to this issue"
+          />
+        }
         introMessage={
-          <FormattedMessage id="task.funding.description" defaultMessage={'You can invite a investor, sponsor, or the project owner to fund this issue and let them know your suggestions'}>
+          <FormattedMessage
+            id="task.funding.description"
+            defaultMessage={
+              'You can invite a investor, sponsor, or the project owner to fund this issue and let them know your suggestions'
+            }
+          >
             {(msg) => <SpanText>{msg}</SpanText>}
           </FormattedMessage>
         }
-        simpleInfoText={<FormattedMessage id="issue.funding.invite.info" defaultMessage="You will invite a sponsor to add bounties to this issue" />}
-        commentAreaPlaceholder={<FormattedMessage id="task.funding.comment.value" defaultMessage="Leave a message to be sent together with the invite" />}
-        pickupTagListTitle={<FormattedMessage id="task.funding.invite.title" defaultMessage="Suggest a bounty for the sponsor" />}
-        pickutTagListDescription={<FormattedMessage id="task.funding.invite.headline" defaultMessage="You can suggest a bounty for the sponsor to add a bounty to this issue" />}
+        simpleInfoText={
+          <FormattedMessage
+            id="issue.funding.invite.info"
+            defaultMessage="You will invite a sponsor to add bounties to this issue"
+          />
+        }
+        commentAreaPlaceholder={
+          <FormattedMessage
+            id="task.funding.comment.value"
+            defaultMessage="Leave a message to be sent together with the invite"
+          />
+        }
+        pickupTagListTitle={
+          <FormattedMessage
+            id="task.funding.invite.title"
+            defaultMessage="Suggest a bounty for the sponsor"
+          />
+        }
+        pickutTagListDescription={
+          <FormattedMessage
+            id="task.funding.invite.headline"
+            defaultMessage="You can suggest a bounty for the sponsor to add a bounty to this issue"
+          />
+        }
         introImage={inviteCover}
         issue={task}
         open={taskFundingDialog}
@@ -291,19 +360,19 @@ const IssueSidebar = ({
         actions={[
           {
             label: <FormattedMessage id="task.funding.cancel" defaultMessage="Cancel" />,
-            onClick: handleAssignFundingDialogClose
+            onClick: handleAssignFundingDialogClose,
           },
           {
             disabled: !fundingInvite.email || !termsAgreed || !currentPrice || currentPrice === 0,
             label: <FormattedMessage id="task.funding.invite" defaultMessage="Invite" />,
             onClick: sendFundingInvite,
             variant: 'contained',
-            color: 'secondary'
-          }
+            color: 'secondary',
+          },
         ]}
       />
     </SidebarRoot>
-  );
+  )
 }
 
-export default IssueSidebar;
+export default IssueSidebar

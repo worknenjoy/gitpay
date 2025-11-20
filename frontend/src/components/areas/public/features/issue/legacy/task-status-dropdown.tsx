@@ -1,76 +1,72 @@
-import React from 'react';
-import { injectIntl } from 'react-intl';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Grow from '@mui/material/Grow';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
-import MenuItem from '@mui/material/MenuItem';
-import MenuList from '@mui/material/MenuList';
-import Constants from '../../../../../../consts';
+import React from 'react'
+import { injectIntl } from 'react-intl'
+import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import ClickAwayListener from '@mui/material/ClickAwayListener'
+import Grow from '@mui/material/Grow'
+import Paper from '@mui/material/Paper'
+import Popper from '@mui/material/Popper'
+import MenuItem from '@mui/material/MenuItem'
+import MenuList from '@mui/material/MenuList'
+import Constants from '../../../../../../consts'
 
-const options = [
-  'open',
-  'in_progress',
-  'closed'
-];
+const options = ['open', 'in_progress', 'closed']
 
-export function TaskStatusDropdown({
-  onSelect,
-  status,
-  intl
-}) {
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef<HTMLDivElement>(null);
-  const [selectedOption, setSelectedOption] = React.useState(status);
+export function TaskStatusDropdown({ onSelect, status, intl }) {
+  const [open, setOpen] = React.useState(false)
+  const anchorRef = React.useRef<HTMLDivElement>(null)
+  const [selectedOption, setSelectedOption] = React.useState(status)
 
   const handleClick = () => {
-    console.info(`You clicked ${selectedOption}`);
-  };
+    console.info(`You clicked ${selectedOption}`)
+  }
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
     name: string,
   ) => {
-    setSelectedOption(name);
-    setOpen(false);
-    onSelect(name);
-  };
+    setSelectedOption(name)
+    setOpen(false)
+    onSelect(name)
+  }
 
   const handleToggle = () => {
-    setOpen((prevOpen) => !prevOpen);
-  };
+    setOpen((prevOpen) => !prevOpen)
+  }
 
   const handleClose = (event: Event) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
-      return;
+    if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
+      return
     }
 
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const getColorByStatus = (status) => {
     switch (status) {
       case 'open':
-        return 'success';
+        return 'success'
       case 'in_progress':
-        return 'warning';
+        return 'warning'
       case 'closed':
-        return 'error';
+        return 'error'
       default:
-        return 'inherit';
+        return 'inherit'
     }
   }
 
   return (
     <React.Fragment>
-      <ButtonGroup variant="contained" disableElevation ref={anchorRef} aria-label="split button" size='small' color='inherit'>
-        <Button onClick={handleClick} size='small' color={getColorByStatus(selectedOption)}>
+      <ButtonGroup
+        variant="contained"
+        disableElevation
+        ref={anchorRef}
+        aria-label="split button"
+        size="small"
+        color="inherit"
+      >
+        <Button onClick={handleClick} size="small" color={getColorByStatus(selectedOption)}>
           {intl.formatMessage(Constants.STATUSES[selectedOption])}
         </Button>
         <Button
@@ -98,8 +94,7 @@ export function TaskStatusDropdown({
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin:
-                placement === 'bottom' ? 'center top' : 'center bottom',
+              transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
             }}
           >
             <Paper elevation={0}>
@@ -121,7 +116,7 @@ export function TaskStatusDropdown({
         )}
       </Popper>
     </React.Fragment>
-  );
+  )
 }
 
-export default injectIntl(TaskStatusDropdown);
+export default injectIntl(TaskStatusDropdown)

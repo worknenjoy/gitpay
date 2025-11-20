@@ -12,9 +12,10 @@ const orderRefund = require('../../modules/orders').orderRefund
 exports.createOrder = (req, res) => {
   const params = { ...req.body, ...{ userId: req.user.id } }
   orderBuild(params)
-    .then(data => {
+    .then((data) => {
       res.send(data)
-    }).catch(error => {
+    })
+    .catch((error) => {
       console.log('error on createOrder', error)
       res.status(401).send(error)
     })
@@ -23,9 +24,10 @@ exports.createOrder = (req, res) => {
 exports.cancelOrder = (req, res) => {
   const params = { ...req.body, ...{ userId: req.user.id } }
   orderCancel(params)
-    .then(data => {
+    .then((data) => {
       res.send(data)
-    }).catch(error => {
+    })
+    .catch((error) => {
       res.status(401).send(error)
     })
 }
@@ -33,9 +35,10 @@ exports.cancelOrder = (req, res) => {
 exports.refundOrder = (req, res) => {
   const params = { ...req.params, ...{ userId: req.user.id } }
   orderRefund(params)
-    .then(data => {
+    .then((data) => {
       res.send(data)
-    }).catch(error => {
+    })
+    .catch((error) => {
       res.status(401).send(error)
     })
 }
@@ -43,9 +46,10 @@ exports.refundOrder = (req, res) => {
 exports.detailsOrder = (req, res) => {
   const params = { ...req.params, ...{ userId: req.user.id } }
   orderDetails(params)
-    .then(data => {
+    .then((data) => {
       res.send(data)
-    }).catch(error => {
+    })
+    .catch((error) => {
       res.status(401).send(error)
     })
 }
@@ -53,9 +57,10 @@ exports.detailsOrder = (req, res) => {
 exports.listOrders = (req, res) => {
   const params = { ...req.params, ...{ userId: req.user.id } }
   orderSearch(params)
-    .then(data => {
+    .then((data) => {
       res.send(data)
-    }).catch(error => {
+    })
+    .catch((error) => {
       res.send(false)
     })
 }
@@ -63,22 +68,28 @@ exports.listOrders = (req, res) => {
 exports.fetchOrders = (req, res) => {
   const params = { ...req.params, ...{ userId: req.user.id } }
   orderFetch(params)
-    .then(data => {
+    .then((data) => {
       res.send(data)
-    }).catch(error => {
+    })
+    .catch((error) => {
       res.send(false)
     })
 }
 
 exports.authorizeOrder = (req, res) => {
   orderAuthorize(req.query)
-    .then(data => {
+    .then((data) => {
       if (data.paid) {
-        res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/success`)
+        res.redirect(
+          `${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/success`,
+        )
         return
       }
-      res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`)
-    }).catch(error => {
+      res.redirect(
+        `${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`,
+      )
+    })
+    .catch((error) => {
       res.redirect(process.env.FRONTEND_HOST)
     })
 }
@@ -86,9 +97,10 @@ exports.authorizeOrder = (req, res) => {
 exports.updateOrder = (req, res) => {
   const params = { ...req.body, ...{ userId: req.user.id, id: req.params.id } }
   orderUpdate(params)
-    .then(data => {
+    .then((data) => {
       res.send(data)
-    }).catch(error => {
+    })
+    .catch((error) => {
       res.status(401).send(error)
     })
 }
@@ -96,9 +108,10 @@ exports.updateOrder = (req, res) => {
 exports.paymentOrder = (req, res) => {
   const params = { ...req.body, ...{ userId: req.user.id, id: req.params.id } }
   orderPayment(params)
-    .then(data => {
+    .then((data) => {
       res.send(data)
-    }).catch(error => {
+    })
+    .catch((error) => {
       res.status(401).send(error)
     })
 }
@@ -106,9 +119,10 @@ exports.paymentOrder = (req, res) => {
 exports.transferOrder = (req, res) => {
   const params = { ...req.params, ...{ userId: req.user.id } }
   orderTransfer(params, req.body)
-    .then(data => {
+    .then((data) => {
       res.send(data)
-    }).catch(error => {
+    })
+    .catch((error) => {
       res.status(401).send(error)
     })
 }

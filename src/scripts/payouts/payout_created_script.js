@@ -1,36 +1,36 @@
 // simulatePayout.js
-const readline = require('readline');
-const payoutCreated = require('../modules/webhooks/payoutCreated');
+const readline = require('readline')
+const payoutCreated = require('../modules/webhooks/payoutCreated')
 
-process.stdin.setEncoding('utf8');
+process.stdin.setEncoding('utf8')
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
-});
+  output: process.stdout,
+})
 
-console.log('📥 Paste your payout event JSON, then press Enter and Ctrl+D (or Ctrl+Z on Windows):');
+console.log('📥 Paste your payout event JSON, then press Enter and Ctrl+D (or Ctrl+Z on Windows):')
 
-let json = '';
+let json = ''
 
 rl.on('line', (line) => {
-  json += line;
-});
+  json += line
+})
 
 rl.on('close', async () => {
   try {
-    const event = JSON.parse(json);
-    console.log('📦 Event received:', event);
+    const event = JSON.parse(json)
+    console.log('📦 Event received:', event)
     const result = await payoutCreated(event, {
       status: (code) => {
         return {
-          json: (res) => console.log(`Response status: ${code}`)
-        };
-      }
-    });
-    console.log('✅ Handler executed successfully:', result);
+          json: (res) => console.log(`Response status: ${code}`),
+        }
+      },
+    })
+    console.log('✅ Handler executed successfully:', result)
   } catch (err) {
-    console.error('❌ Error processing event:', err.message);
-    console.error(err);
+    console.error('❌ Error processing event:', err.message)
+    console.error(err)
   }
-});
+})

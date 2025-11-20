@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  Box,
-  CardContent,
-  Divider,
-  Grid,
-  Skeleton
-} from '@mui/material'
+import { Box, CardContent, Divider, Grid, Skeleton } from '@mui/material'
 import { RootCard, StatsItem } from './organization-card.styles'
 
 const OrganizationCardPlaceholder: React.FC = () => {

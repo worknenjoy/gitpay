@@ -5,9 +5,8 @@ const SendMail = require('../mail/mail')
 const i18n = require('i18n')
 
 module.exports = Promise.method(function ({ id }, { message, email, name }) {
-  return models.Task
-    .findByPk(id, { include: [ models.User, models.Order, models.Assign ] })
-    .then(task => {
+  return models.Task.findByPk(id, { include: [models.User, models.Order, models.Assign] }).then(
+    (task) => {
       const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
       const user = task.User.dataValues
       const language = user.language || 'en'
@@ -21,9 +20,10 @@ module.exports = Promise.method(function ({ id }, { message, email, name }) {
           title: task.title,
           url: taskUrl,
           value: task.value,
-          message: message
+          message: message,
         })}
-        `
+        `,
       )
-    })
+    },
+  )
 })

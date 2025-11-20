@@ -1,56 +1,55 @@
-import PayoutStatus from './payout-status';
+import PayoutStatus from './payout-status'
 
 export default {
   title: 'Design Library/Atoms/Status/Payouts/PayoutStatus',
-  component: PayoutStatus
-};
+  component: PayoutStatus,
+}
 
 export const Pending = {
   args: {
-    status: 'pending'
-  }
-};
+    status: 'pending',
+  },
+}
 
 export const Created = {
   args: {
-    status: 'created'
-  }
-};
+    status: 'created',
+  },
+}
 
 export const InTransit = {
   args: {
-    status: 'in_transit'
-  }
-};
+    status: 'in_transit',
+  },
+}
 
 export const failed = {
   args: {
-    status: 'failed'
-  }
-};
+    status: 'failed',
+  },
+}
 
 export const Canceled = {
   args: {
-    status: 'canceled'
-  }
-};
+    status: 'canceled',
+  },
+}
 
 export const Paid = {
   args: {
-    status: 'paid'
-  }
-};
+    status: 'paid',
+  },
+}
 
 export const Unknown = {
   args: {
-    status: 'unknown'
-  }
-};
+    status: 'unknown',
+  },
+}
 
 export const Loading = {
   args: {
     status: 'pending',
-    completed: false
-  }
-};
-
+    completed: false,
+  },
+}

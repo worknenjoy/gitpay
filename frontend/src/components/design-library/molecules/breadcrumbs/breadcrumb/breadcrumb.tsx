@@ -6,23 +6,18 @@ import { BreadcrumbRoot, BreadcrumbLink } from './breadcrumb.styles'
 import { Link, useHistory } from 'react-router-dom'
 
 type BreadcrumbRootItem = {
-  label: any;
-  link?: string;
+  label: any
+  link?: string
 }
 
 type BreadcrumbProps = {
-  task?: any;
-  project?: any;
-  organization?: any;
-  root?: BreadcrumbRootItem;
+  task?: any
+  project?: any
+  organization?: any
+  root?: BreadcrumbRootItem
 }
 
-export const Breadcrumb = ({ 
-  task,
-  project,
-  organization,
-  root
-}: BreadcrumbProps) => {
+export const Breadcrumb = ({ task, project, organization, root }: BreadcrumbProps) => {
   const history = useHistory()
   const isProfile = history.location.pathname.includes('/profile')
   const isExplore = history.location.pathname.includes('/explore')
@@ -34,8 +29,7 @@ export const Breadcrumb = ({
   const { completed: projectCompleted } = project || {}
   const { completed: organizationCompleted } = organization || {}
 
-  return (
-    completed || projectCompleted || organizationCompleted ?
+  return completed || projectCompleted || organizationCompleted ? (
     <BreadcrumbRoot>
       <Breadcrumbs aria-label="breadcrumb" separator={<NavigateNextIcon />}>
         {root ? (
@@ -46,9 +40,7 @@ export const Breadcrumb = ({
               </Typography>
             </Link>
           ) : (
-            <Typography variant="subtitle2">
-              {root.label}
-            </Typography>
+            <Typography variant="subtitle2">{root.label}</Typography>
           )
         ) : (
           <Link to={'/'}>
@@ -65,27 +57,25 @@ export const Breadcrumb = ({
           </Link>
         )}
         {breadcrumbProject?.id && !data.id && (
-          <Typography variant="subtitle2">
-            {breadcrumbProject?.name}
-          </Typography>
+          <Typography variant="subtitle2">{breadcrumbProject?.name}</Typography>
         )}
         {breadcrumbOrganization?.id && !breadcrumbProject?.id && (
-          <Typography variant="subtitle2">
-            {breadcrumbOrganization?.name}
-          </Typography>
+          <Typography variant="subtitle2">{breadcrumbOrganization?.name}</Typography>
         )}
         {data.id && (
-          <Link to={`${breadcrumbPathPrefix}organizations/${breadcrumbProject?.id}/projects/${data?.Project?.id}`}>
+          <Link
+            to={`${breadcrumbPathPrefix}organizations/${breadcrumbProject?.id}/projects/${data?.Project?.id}`}
+          >
             <Typography variant="subtitle2" component={BreadcrumbLink}>
               {breadcrumbProject?.name}
             </Typography>
           </Link>
         )}
-        <Typography variant="subtitle2">
-          ...
-        </Typography>
+        <Typography variant="subtitle2">...</Typography>
       </Breadcrumbs>
-    </BreadcrumbRoot> : <Skeleton variant="text" />
+    </BreadcrumbRoot>
+  ) : (
+    <Skeleton variant="text" />
   )
 }
 

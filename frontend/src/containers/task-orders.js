@@ -7,14 +7,14 @@ import { getUserData } from '../common/selectors/user/getUser'
 const mapStateToProps = (state, ownProps) => {
   return {
     user: getUserData(state),
-    task: state.task
+    task: state.task,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     addNotification: (message) => dispatch(addNotification(message)),
-    changeTab: (tab) => dispatch(changeTaskTab(tab))
+    changeTab: (tab) => dispatch(changeTaskTab(tab)),
   }
 }
 

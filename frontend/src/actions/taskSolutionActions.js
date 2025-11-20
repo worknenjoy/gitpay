@@ -23,41 +23,44 @@ const UPDATE_TASK_SOLUTION_ERROR = 'UPDATE_TASK_SOLUTION_ERROR'
 const CLEAN_PULL_REQUEST_DATA_STATE = 'CLEAN_PULL_REQUEST_DATA_STATE'
 
 const ERRORS = {
-  'COULD_NOT_GET_TASK_SOLUTION': 'issue.solution.dialog.get.error',
-  'COULD_NOT_UPDATE_TASK_SOLUTION': 'issue.solution.dialog.update.error',
-  'COULD_NOT_CREATE_TASK_SOLUTION': 'issue.solution.dialog.create.error',
-  'COULD_NOT_FETCH_PULL_REQUEST_DATA': 'issue.solution.dialog.fetch.error',
-  'PULL_REQUEST_NOT_FOUND': 'issue.solution.dialog.pullRequest.notFound'
+  COULD_NOT_GET_TASK_SOLUTION: 'issue.solution.dialog.get.error',
+  COULD_NOT_UPDATE_TASK_SOLUTION: 'issue.solution.dialog.update.error',
+  COULD_NOT_CREATE_TASK_SOLUTION: 'issue.solution.dialog.create.error',
+  COULD_NOT_FETCH_PULL_REQUEST_DATA: 'issue.solution.dialog.fetch.error',
+  PULL_REQUEST_NOT_FOUND: 'issue.solution.dialog.pullRequest.notFound',
 }
 
 const getTaskSolutionRequested = () => {
   return { type: GET_TASK_SOLUTION_REQUESTED, completed: false }
 }
 
-const getTaskSolutionSuccess = taskSolution => {
+const getTaskSolutionSuccess = (taskSolution) => {
   return { type: GET_TASK_SOLUTION_SUCCESS, completed: true, taskSolution: taskSolution }
 }
 
-const getTaskSolutionError = error => {
+const getTaskSolutionError = (error) => {
   return { type: GET_TASK_SOLUTION_ERROR, completed: true, error: error }
 }
 
 const getTaskSolution = (taskId) => {
   validToken()
-  return dispatch => {
+  return (dispatch) => {
     dispatch(getTaskSolutionRequested())
-    return axios.get(`${api.API_URL}/tasksolutions`, { params: { taskId: taskId } }).then(response => {
-      return dispatch(getTaskSolutionSuccess(response.data))
-    }).catch(error => {
-      if (error) {
-        console.log('error', error)
-        dispatch(addNotification(ERRORS[error]))
-        return dispatch(getTaskSolutionError(error))
-      }
+    return axios
+      .get(`${api.API_URL}/tasksolutions`, { params: { taskId: taskId } })
+      .then((response) => {
+        return dispatch(getTaskSolutionSuccess(response.data))
+      })
+      .catch((error) => {
+        if (error) {
+          console.log('error', error)
+          dispatch(addNotification(ERRORS[error]))
+          return dispatch(getTaskSolutionError(error))
+        }
 
-      dispatch(addNotification(ERRORS['COULD_NOT_GET_TASK_SOLUTION']))
-      return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_GET_TASK_SOLUTION'])))
-    })
+        dispatch(addNotification(ERRORS['COULD_NOT_GET_TASK_SOLUTION']))
+        return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_GET_TASK_SOLUTION'])))
+      })
   }
 }
 
@@ -65,35 +68,49 @@ const fetchPullRequestDataRequested = () => {
   return { type: FETCH_PULL_REQUEST_DATA_REQUESTED, completed: false }
 }
 
-const fetchPullRequestDataSuccess = pullRequestData => {
-  return { type: FETCH_PULL_REQUEST_DATA_SUCCESS, completed: true, pullRequestData: pullRequestData }
+const fetchPullRequestDataSuccess = (pullRequestData) => {
+  return {
+    type: FETCH_PULL_REQUEST_DATA_SUCCESS,
+    completed: true,
+    pullRequestData: pullRequestData,
+  }
 }
 
-const fetchPullRequestDataError = error => {
+const fetchPullRequestDataError = (error) => {
   return { type: FETCH_PULL_REQUEST_DATA_ERROR, completed: true, error: error }
 }
 
-const createTaskSolutionError = error => {
+const createTaskSolutionError = (error) => {
   return { type: CREATE_TASK_SOLUTION_ERROR, completed: true, error: error }
 }
 
 const fetchPullRequestData = (owner, repositoryName, pullRequestId, taskId) => {
   validToken()
-  return dispatch => {
+  return (dispatch) => {
     dispatch(fetchPullRequestDataRequested())
-    return axios.get(`${api.API_URL}/tasksolutions/fetch`, {
-      params: { owner: owner, repositoryName: repositoryName, pullRequestId: pullRequestId, taskId: taskId }
-    }).then(response => {
-      return dispatch(fetchPullRequestDataSuccess(response.data))
-    }).catch(error => {
-      if (error.response.data && error.response.data.error) {
-        dispatch(addNotification(ERRORS[error.response.data.error]))
-        return dispatch(fetchPullRequestDataError(error.response.data.error))
-      }
+    return axios
+      .get(`${api.API_URL}/tasksolutions/fetch`, {
+        params: {
+          owner: owner,
+          repositoryName: repositoryName,
+          pullRequestId: pullRequestId,
+          taskId: taskId,
+        },
+      })
+      .then((response) => {
+        return dispatch(fetchPullRequestDataSuccess(response.data))
+      })
+      .catch((error) => {
+        if (error.response.data && error.response.data.error) {
+          dispatch(addNotification(ERRORS[error.response.data.error]))
+          return dispatch(fetchPullRequestDataError(error.response.data.error))
+        }
 
-      dispatch(addNotification(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA']))
-      return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA'])))
-    })
+        dispatch(addNotification(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA']))
+        return dispatch(
+          getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA'])),
+        )
+      })
   }
 }
 
@@ -101,28 +118,38 @@ const createTaskSolutionRequested = () => {
   return { type: CREATE_TASK_SOLUTION_REQUESTED, completed: false }
 }
 
-const createTaskSolutionSuccess = taskSolution => {
+const createTaskSolutionSuccess = (taskSolution) => {
   return { type: CREATE_TASK_SOLUTION_SUCCESS, completed: true, taskSolution: taskSolution }
 }
 
 const createTaskSolution = (taskSolution) => {
   validToken()
-  return dispatch => {
+  return (dispatch) => {
     dispatch(createTaskSolutionRequested())
-    return axios.post(`${api.API_URL}/tasksolutions/create`, taskSolution).then(response => {
-      dispatch(addNotification('issue.solution.dialog.create.success'))
-      dispatch(fetchTask(taskSolution.taskId))
-      return dispatch(createTaskSolutionSuccess(response.data))
-    }).catch(error => {
-      if (error.response.data && error.response.data.error) {
-        dispatch(addNotification(ERRORS[error.response.data.error] || error.response.data.error, '', '/#/profile/payout-settings', 'Update your account'))
+    return axios
+      .post(`${api.API_URL}/tasksolutions/create`, taskSolution)
+      .then((response) => {
+        dispatch(addNotification('issue.solution.dialog.create.success'))
         dispatch(fetchTask(taskSolution.taskId))
-        return dispatch(createTaskSolutionError(error.response.data.error))
-      }
+        return dispatch(createTaskSolutionSuccess(response.data))
+      })
+      .catch((error) => {
+        if (error.response.data && error.response.data.error) {
+          dispatch(
+            addNotification(
+              ERRORS[error.response.data.error] || error.response.data.error,
+              '',
+              '/#/profile/payout-settings',
+              'Update your account',
+            ),
+          )
+          dispatch(fetchTask(taskSolution.taskId))
+          return dispatch(createTaskSolutionError(error.response.data.error))
+        }
 
-      dispatch(addNotification(ERRORS['COULD_NOT_CREATE_TASK_SOLUTION']))
-      return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_CREATE_TASK_SOLUTION'])))
-    })
+        dispatch(addNotification(ERRORS['COULD_NOT_CREATE_TASK_SOLUTION']))
+        return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_CREATE_TASK_SOLUTION'])))
+      })
   }
 }
 
@@ -130,31 +157,37 @@ const updateTaskSolutionRequested = () => {
   return { type: UPDATE_TASK_SOLUTION_REQUESTED, completed: false }
 }
 
-const updateTaskSolutionSuccess = taskSolution => {
+const updateTaskSolutionSuccess = (taskSolution) => {
   return { type: UPDATE_TASK_SOLUTION_SUCCESS, completed: true, taskSolution: taskSolution }
 }
 
-const updateTaskSolutionError = error => {
+const updateTaskSolutionError = (error) => {
   return { type: UPDATE_TASK_SOLUTION_ERROR, completed: true, error: error }
 }
 
 const updateTaskSolution = ({ taskSolutionId, pullRequestURL, taskId }) => {
   validToken()
-  return dispatch => {
+  return (dispatch) => {
     dispatch(updateTaskSolutionRequested())
-    return axios.patch(`${api.API_URL}/tasksolutions/${taskSolutionId}`, { pullRequestURL: pullRequestURL, taskId: taskId }).then(response => {
-      dispatch(addNotification('issue.solution.dialog.update.success'))
-      dispatch(fetchTask(taskId))
-      return dispatch(updateTaskSolutionSuccess(response.data))
-    }).catch(error => {
-      if (error.response.data && error.response.data.error) {
-        dispatch(addNotification(ERRORS[error.response.data.error]))
-        return dispatch(updateTaskSolutionError(error.response.data.error))
-      }
+    return axios
+      .patch(`${api.API_URL}/tasksolutions/${taskSolutionId}`, {
+        pullRequestURL: pullRequestURL,
+        taskId: taskId,
+      })
+      .then((response) => {
+        dispatch(addNotification('issue.solution.dialog.update.success'))
+        dispatch(fetchTask(taskId))
+        return dispatch(updateTaskSolutionSuccess(response.data))
+      })
+      .catch((error) => {
+        if (error.response.data && error.response.data.error) {
+          dispatch(addNotification(ERRORS[error.response.data.error]))
+          return dispatch(updateTaskSolutionError(error.response.data.error))
+        }
 
-      dispatch(addNotification(ERRORS['COULD_NOT_UPDATE_TASK_SOLUTION']))
-      return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_UPDATE_TASK_SOLUTION'])))
-    })
+        dispatch(addNotification(ERRORS['COULD_NOT_UPDATE_TASK_SOLUTION']))
+        return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_UPDATE_TASK_SOLUTION'])))
+      })
   }
 }
 
@@ -177,5 +210,5 @@ export {
   CREATE_TASK_SOLUTION_SUCCESS,
   UPDATE_TASK_SOLUTION_REQUESTED,
   UPDATE_TASK_SOLUTION_SUCCESS,
-  CLEAN_PULL_REQUEST_DATA_STATE
+  CLEAN_PULL_REQUEST_DATA_STATE,
 }

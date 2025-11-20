@@ -7,13 +7,13 @@ const mapStateToProps = (state, ownProps) => {
   return {
     logged: state.loggedIn.logged,
     user: getUserData(state),
-    tasks: state.tasks
+    tasks: state.tasks,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    listTasks: ({ projectId, userId }) => dispatch(listTasks({ projectId, userId }))
+    listTasks: ({ projectId, userId }) => dispatch(listTasks({ projectId, userId })),
   }
 }
 

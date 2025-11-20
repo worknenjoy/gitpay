@@ -8,38 +8,35 @@ import FourOFour from '../components/design-library/pages/public-pages/four-o-fo
 import Stats from '../components/areas/public/features/stats/Stats-main-page'
 import Auth from '../modules/auth'
 
-export default props => (
+export default (props) => (
   <HashRouter>
     <Switch>
-      <PrivateRoute path="/profile" component={ ProfileContainer } />
-      <Route exact path="/stats" component={ Stats } />
+      <PrivateRoute path="/profile" component={ProfileContainer} />
+      <Route exact path="/stats" component={Stats} />
 
       {/* Root redirect */}
       <Route
         exact
         path="/"
         render={() =>
-          Auth.isUserAuthenticated()
-            ? <Redirect to="/profile" />
-            : <PublicPageContainer />
+          Auth.isUserAuthenticated() ? <Redirect to="/profile" /> : <PublicPageContainer />
         }
       />
-      <Route path={
-          [
-            '/reset-password',
-            '/signup',
-            '/signin',
-            '/forgot',
-            '/activate/user/:userId/token/:token',
-            '/token/:token'
-          ]
-        }
-        component={ SessionPage } 
+      <Route
+        path={[
+          '/reset-password',
+          '/signup',
+          '/signin',
+          '/forgot',
+          '/activate/user/:userId/token/:token',
+          '/token/:token',
+        ]}
+        component={SessionPage}
       />
-      <Route path="/" component={ PublicPageContainer } />
+      <Route path="/" component={PublicPageContainer} />
 
-      <Route path="/404" component={ FourOFour } />
-      <Route component={ FourOFour } />
+      <Route path="/404" component={FourOFour} />
+      <Route component={FourOFour} />
     </Switch>
   </HashRouter>
 )

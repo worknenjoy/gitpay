@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useIntl } from 'react-intl';
-import { TextareaAutosize, FormControl } from '@mui/material';
-import getInputCommentStyles from './input-comment.styles';
-import { useTheme } from '@mui/material/styles';
+import React, { useState } from 'react'
+import { useIntl } from 'react-intl'
+import { TextareaAutosize, FormControl } from '@mui/material'
+import getInputCommentStyles from './input-comment.styles'
+import { useTheme } from '@mui/material/styles'
 
 const InputComment = ({ placeholder, onChange }) => {
   const intl = useIntl()
@@ -20,15 +20,18 @@ const InputComment = ({ placeholder, onChange }) => {
     <FormControl fullWidth>
       <TextareaAutosize
         id="interested-comment"
-        placeholder={intl.formatMessage({ id: 'issue.bounties.offer.comment.placeholder', defaultMessage: 'Leave a comment' })}
+        placeholder={intl.formatMessage({
+          id: 'issue.bounties.offer.comment.placeholder',
+          defaultMessage: 'Leave a comment',
+        })}
         minRows={8}
         maxLength={1000}
         value={interestedComment}
         onChange={handleInputInterestedCommentChange}
       />
-  <small style={styles.counter as React.CSSProperties}>{charactersCount + '/1000'}</small>
-    </FormControl >
-  );
-};
+      <small style={styles.counter as React.CSSProperties}>{charactersCount + '/1000'}</small>
+    </FormControl>
+  )
+}
 
-export default InputComment;
+export default InputComment

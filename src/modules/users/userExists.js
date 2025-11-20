@@ -10,22 +10,23 @@ module.exports = Promise.method(async function userExists(userAttributes) {
     conditions.email = userAttributes.email
   }
   try {
-    const user = await models.User
-      .findOne({
-        where: {
-          ...conditions
-        },
-        include: [
-          models.Type,
-          {
-            model: models.Organization,
-            include: [{
+    const user = await models.User.findOne({
+      where: {
+        ...conditions,
+      },
+      include: [
+        models.Type,
+        {
+          model: models.Organization,
+          include: [
+            {
               model: models.Project,
-              include: [models.Task]
-            }]
-          }
-        ]
-      })
+              include: [models.Task],
+            },
+          ],
+        },
+      ],
+    })
     if (!user) return false
 
     if (user && !user.dataValues) return false
@@ -47,10 +48,9 @@ module.exports = Promise.method(async function userExists(userAttributes) {
       createdAt: user.dataValues.createdAt,
       updatedAt: user.dataValues.updatedAt
     } */
-   
+
     return user
-  }
-  catch (error) {
+  } catch (error) {
     console.log('userExists error', error)
   }
 })

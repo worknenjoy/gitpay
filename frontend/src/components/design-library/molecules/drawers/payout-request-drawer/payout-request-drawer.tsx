@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Drawer from '../drawer/drawer';
-import PayoutRequestForm from '../../../organisms/forms/payout-forms/payout-request-form/payout-request-form';
+import React, { useEffect, useRef, useState } from 'react'
+import Drawer from '../drawer/drawer'
+import PayoutRequestForm from '../../../organisms/forms/payout-forms/payout-request-form/payout-request-form'
 
 interface PayoutRequestDrawerProps {
-  open: boolean;
-  onClose: () => void;
-  onSuccess?: (e:any, data:any) => void;
-  completed?: boolean;
-  balance?: number;
-  currency?: string;
+  open: boolean
+  onClose: () => void
+  onSuccess?: (e: any, data: any) => void
+  completed?: boolean
+  balance?: number
+  currency?: string
 }
 
 const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
@@ -17,24 +17,24 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
   onSuccess,
   completed = true,
   balance,
-  currency = 'usd'
+  currency = 'usd',
 }) => {
-  const formRef = useRef<{ submit: () => void }>(null);
-  const [ confirmCheck, setConfirmCheck ] = useState(false)
-  const [ amount, setAmount ] = useState<number>(0);
+  const formRef = useRef<{ submit: () => void }>(null)
+  const [confirmCheck, setConfirmCheck] = useState(false)
+  const [amount, setAmount] = useState<number>(0)
 
   const onConfirmPayoutCheck = (selected: boolean) => {
-    setConfirmCheck(selected);
-  };
+    setConfirmCheck(selected)
+  }
 
   const onSetAmount = (value) => {
-    setAmount(Number(value));
-  };
+    setAmount(Number(value))
+  }
 
   useEffect(() => {
-    console.log('amount', amount);
-  }, [amount]);
-  
+    console.log('amount', amount)
+  }, [amount])
+
   return (
     <Drawer
       completed={completed}
@@ -46,17 +46,17 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
         {
           label: 'Cancel',
           onClick: onClose,
-          variant: 'text'
+          variant: 'text',
         },
         {
           label: 'Request payout',
           onClick: () => {
-            formRef.current?.submit();
+            formRef.current?.submit()
           },
           variant: 'contained',
           color: 'secondary',
-          disabled: !confirmCheck || !amount || amount <= 0
-        }
+          disabled: !confirmCheck || !amount || amount <= 0,
+        },
       ]}
     >
       <PayoutRequestForm
@@ -69,7 +69,7 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
         onSetAmount={onSetAmount}
       />
     </Drawer>
-  );
-};
+  )
+}
 
-export default PayoutRequestDrawer;
+export default PayoutRequestDrawer

@@ -10,7 +10,7 @@ const renderWithIntl = (content, { locale = 'en', messages = {} } = {}) =>
   render(
     <IntlProvider locale={locale} messages={messages}>
       {content}
-    </IntlProvider>
+    </IntlProvider>,
   )
 
 xdescribe('TeamCard component', () => {

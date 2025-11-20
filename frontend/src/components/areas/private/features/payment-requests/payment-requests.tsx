@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import {
-  Edit as EditIcon,
-  Link as LinkIcon
-} from '@mui/icons-material'
+import { Edit as EditIcon, Link as LinkIcon } from '@mui/icons-material'
 
-import { 
+import {
   paymentRequestMetadata,
   paymentRequestPaymentsMetadata,
-  paymentRequestPaymentsCustomColumnRenderer
+  paymentRequestPaymentsCustomColumnRenderer,
 } from './payment-requests-table'
 
-import { paymentRequestBalancesMetadata, paymentRequestBalancesCustomColumnRenderer } from './payment-requests-balance-table'
+import {
+  paymentRequestBalancesMetadata,
+  paymentRequestBalancesCustomColumnRenderer,
+} from './payment-requests-balance-table'
 
 import EmptyPaymentRequest from 'design-library/molecules/content/empty/empty-payment-request/empty-payment-request'
 import PaymentRequestDrawer from 'design-library/molecules/drawers/payment-request-drawer/payment-request-drawer'
@@ -31,7 +31,7 @@ const PaymentRequests = ({
   listPaymentRequests,
   listPaymentRequestPayments,
   listPaymentRequestBalances,
-  updatePaymentRequest
+  updatePaymentRequest,
 }) => {
   const classes = { gutterLeft: { marginLeft: 10 } } as const
   const { completed, data } = paymentRequests
@@ -65,34 +65,18 @@ const PaymentRequests = ({
   }
 
   const handleUpdatePaymentRequest = async (e, paymentRequest) => {
-    e.preventDefault();
-    setProcessingUpdatePaymentRequest(true);
-    await updatePaymentRequest({ id: selectedPaymentRequest.id, ...paymentRequest });
-    setProcessingUpdatePaymentRequest(false);
-    handleCloseDrawer();
+    e.preventDefault()
+    setProcessingUpdatePaymentRequest(true)
+    await updatePaymentRequest({ id: selectedPaymentRequest.id, ...paymentRequest })
+    setProcessingUpdatePaymentRequest(false)
+    handleCloseDrawer()
   }
 
   const customColumnRenderer = {
-    active: (item: any) => (
-      <PaymentRequestActiveField
-        status={item.active ? 'yes' : 'no'}
-      />
-    ),
-    title: (item: any) => (
-      <TextField
-        title={item.title}
-      />
-    ),
-    description: (item: any) => (
-      <TextField
-        title={item.description}
-      />
-    ),
-    amount: (item: any) => (
-      <AmountField
-        value={item.amount}
-      />
-    ),
+    active: (item: any) => <PaymentRequestActiveField status={item.active ? 'yes' : 'no'} />,
+    title: (item: any) => <TextField title={item.title} />,
+    description: (item: any) => <TextField title={item.description} />,
+    amount: (item: any) => <AmountField value={item.amount} />,
     paymentLink: (item: any) => (
       <LinkField
         url={item.payment_url}
@@ -105,22 +89,18 @@ const PaymentRequests = ({
         copiable
       />
     ),
-    createdAt: (item: any) => (
-      <CreatedField
-        createdAt={item.createdAt}
-      />
-    ),
+    createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />,
     actions: (item: any) => (
       <ActionField
         actions={[
           {
             children: 'Edit Payment Request',
             icon: <EditIcon />,
-            onClick: () => openEditPaymentRequest(item)
-          }
+            onClick: () => openEditPaymentRequest(item),
+          },
         ]}
       />
-    )
+    ),
   }
 
   useEffect(() => {
@@ -131,55 +111,87 @@ const PaymentRequests = ({
 
   const transactions = {
     completed: paymentRequestBalances?.completed,
-    data: paymentRequestBalances?.data?.[0]?.PaymentRequestBalanceTransactions || []
+    data: paymentRequestBalances?.data?.[0]?.PaymentRequestBalanceTransactions || [],
   }
 
   return (
     <>
       <PrimaryDataPage
         title={<FormattedMessage id="payment.requests.title" defaultMessage="Payment requests" />}
-        description={<FormattedMessage id="payment.requests.description" defaultMessage="Here you can see all the payment requests on your account" />}
+        description={
+          <FormattedMessage
+            id="payment.requests.description"
+            defaultMessage="Here you can see all the payment requests on your account"
+          />
+        }
         activeTab="payment-requests"
         tabs={[
           {
-            label: <FormattedMessage id="payment.requests.tab.label" defaultMessage="Payment requests links" />,
+            label: (
+              <FormattedMessage
+                id="payment.requests.tab.label"
+                defaultMessage="Payment requests links"
+              />
+            ),
             value: 'payment-requests',
             table: {
               tableData: paymentRequests,
               tableHeaderMetadata: paymentRequestMetadata,
-              customColumnRenderer: customColumnRenderer
-            }
+              customColumnRenderer: customColumnRenderer,
+            },
           },
           {
-            label: <FormattedMessage id="payment.request.payments.tab.label" defaultMessage="Payments for payment requests" />,
+            label: (
+              <FormattedMessage
+                id="payment.request.payments.tab.label"
+                defaultMessage="Payments for payment requests"
+              />
+            ),
             value: 'payment-request-payments',
             table: {
               tableData: paymentRequestPayments,
               tableHeaderMetadata: paymentRequestPaymentsMetadata,
-              customColumnRenderer: paymentRequestPaymentsCustomColumnRenderer
-            }
+              customColumnRenderer: paymentRequestPaymentsCustomColumnRenderer,
+            },
           },
           {
-            label: <FormattedMessage id="payment.request.balances.transactions.tab.label" defaultMessage="Disputes and refunds fees" />,
+            label: (
+              <FormattedMessage
+                id="payment.request.balances.transactions.tab.label"
+                defaultMessage="Disputes and refunds fees"
+              />
+            ),
             cards: [
               {
-                title: <FormattedMessage id="payment.request.balances.card.title" defaultMessage="Disputes and refunds due" />,
-                amount: parseInt(paymentRequestBalances?.data?.[0]?.balance)*-1 || 0,
-                type: 'centavos'
-              }
+                title: (
+                  <FormattedMessage
+                    id="payment.request.balances.card.title"
+                    defaultMessage="Disputes and refunds due"
+                  />
+                ),
+                amount: parseInt(paymentRequestBalances?.data?.[0]?.balance) * -1 || 0,
+                type: 'centavos',
+              },
             ],
             value: 'payment-request-balances',
             table: {
               tableData: transactions,
               tableHeaderMetadata: paymentRequestBalancesMetadata,
-              customColumnRenderer: paymentRequestBalancesCustomColumnRenderer
-            }
-          }
+              customColumnRenderer: paymentRequestBalancesCustomColumnRenderer,
+            },
+          },
         ]}
         displayAction={true}
-        emptyComponent={<EmptyPaymentRequest onActionClick={() => setOpenNewPaymentRequestDrawer(true)} />}
+        emptyComponent={
+          <EmptyPaymentRequest onActionClick={() => setOpenNewPaymentRequestDrawer(true)} />
+        }
         onActionClick={() => setOpenNewPaymentRequestDrawer(true)}
-        onActionText={<FormattedMessage id="payment.requests.create" defaultMessage="Create new payment request" />}
+        onActionText={
+          <FormattedMessage
+            id="payment.requests.create"
+            defaultMessage="Create new payment request"
+          />
+        }
       />
       <PaymentRequestDrawer
         open={openNewPaymentRequestDrawer}
@@ -194,7 +206,7 @@ const PaymentRequests = ({
         onSuccess={handleUpdatePaymentRequest}
         paymentRequest={{
           completed: !processingUpdatePaymentRequest,
-          data: selectedPaymentRequest
+          data: selectedPaymentRequest,
         }}
       />
     </>

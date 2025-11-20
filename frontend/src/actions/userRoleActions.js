@@ -32,7 +32,12 @@ const createRoleRequested = () => {
 
 const createRoleSuccess = (response) => {
   return {
-    type: CREATE_ROLE_SUCCESS, completed: true, name: response.name, userId: response.userId, id: response.id }
+    type: CREATE_ROLE_SUCCESS,
+    completed: true,
+    name: response.name,
+    userId: response.userId,
+    id: response.id,
+  }
 }
 
 const createRoleError = (error) => {
@@ -45,7 +50,12 @@ const deleteRoleRequested = () => {
 
 const deleteRoleSuccess = (response) => {
   return {
-    type: DELETE_ROLE_SUCCESS, completed: true, name: response.name, userId: response.userId, id: response.id }
+    type: DELETE_ROLE_SUCCESS,
+    completed: true,
+    name: response.name,
+    userId: response.userId,
+    id: response.id,
+  }
 }
 
 const deleteRoleError = (error) => {
@@ -55,43 +65,41 @@ const deleteRoleError = (error) => {
 const fetchRoles = () => {
   validToken()
   return (dispatch) => {
-    
-      dispatch(fetchRolesRequested())
-      return axios
-        .get(`${api.API_URL}/types/search`)
-        .then(response => {
-          return dispatch(fetchRolesSuccess(response.data))
-        })
-        .catch(error => {
-          return dispatch(fetchRolesError(error))
-        })
-    
+    dispatch(fetchRolesRequested())
+    return axios
+      .get(`${api.API_URL}/types/search`)
+      .then((response) => {
+        return dispatch(fetchRolesSuccess(response.data))
+      })
+      .catch((error) => {
+        return dispatch(fetchRolesError(error))
+      })
   }
 }
 
 const createRoles = (rolesData) => {
   validToken()
   return (dispatch) => {
-    return dispatch(loggedIn()).then(user => {
+    return dispatch(loggedIn()).then((user) => {
       dispatch(createRoleRequested())
-      return axios
-        .post(`${api.API_URL}/roles/create`, {
-          name: rolesData.name
-        })
-        .then((resp) => {
-          // dispatch(addNotification('user.role.update.success'))
-          dispatch(addNotification('Role Updated Successfully'))
-          // return dispatch(createRoleSuccess(response.data))
-          return axios
-            .get(`${api.API_URL}/roles/fetch`)
-            .then(response => {
+      return (
+        axios
+          .post(`${api.API_URL}/roles/create`, {
+            name: rolesData.name,
+          })
+          .then((resp) => {
+            // dispatch(addNotification('user.role.update.success'))
+            dispatch(addNotification('Role Updated Successfully'))
+            // return dispatch(createRoleSuccess(response.data))
+            return axios.get(`${api.API_URL}/roles/fetch`).then((response) => {
               return dispatch(fetchRolesSuccess(response.data))
             })
-        })
-        // })
-        .catch(error => {
-          return dispatch(createRoleError(error))
-        })
+          })
+          // })
+          .catch((error) => {
+            return dispatch(createRoleError(error))
+          })
+      )
     })
   }
 }
@@ -99,23 +107,21 @@ const createRoles = (rolesData) => {
 const deleteRoles = (rolesData) => {
   validToken()
   return (dispatch) => {
-    return dispatch(loggedIn()).then(user => {
+    return dispatch(loggedIn()).then((user) => {
       dispatch(deleteRoleRequested())
       return axios
         .delete(`${api.API_URL}/roles/delete`, {
-          data: { name: rolesData.name }
+          data: { name: rolesData.name },
         })
-        .then(response => {
+        .then((response) => {
           // dispatch(addNotification('user.role.update.success'))
           dispatch(addNotification('Role Updated Successfully'))
           // return dispatch(deleteRoleSuccess(response.data))
-          return axios
-            .get(`${api.API_URL}/roles/fetch`)
-            .then(resp => {
-              return dispatch(fetchRolesSuccess(resp.data))
-            })
+          return axios.get(`${api.API_URL}/roles/fetch`).then((resp) => {
+            return dispatch(fetchRolesSuccess(resp.data))
+          })
         })
-        .catch(error => {
+        .catch((error) => {
           return dispatch(deleteRoleError(error))
         })
     })
@@ -143,5 +149,5 @@ export {
   deleteRoleRequested,
   deleteRoleSuccess,
   deleteRoleError,
-  deleteRoles
+  deleteRoles,
 }

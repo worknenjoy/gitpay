@@ -7,5 +7,5 @@ module.exports = {
   organizationList,
   organizationBuilds,
   organizationUpdate,
-  organizationFetch
+  organizationFetch,
 }

@@ -6,13 +6,13 @@ const mapStateToProps = (state, ownProps) => {
   return {
     tasks: state.info.data.tasks,
     bounties: state.info.data.bounties,
-    users: state.info.data.users
+    users: state.info.data.users,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    info: () => dispatch(info())
+    info: () => dispatch(info()),
   }
 }
 

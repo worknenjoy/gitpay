@@ -1,7 +1,7 @@
 import {
   SEARCH_USER_REQUESTED,
   SEARCH_USER_SUCCESS,
-  SEARCH_USER_ERROR
+  SEARCH_USER_ERROR,
 } from '../actions/userActions'
 
 export const user = (state = { data: {}, completed: true, error: {} }, action) => {

@@ -4,7 +4,7 @@ import LoginForm from '../components/areas/private/components/session/login-form
 
 const mapStateToProps = (state, props) => {
   return {
-    user: state.user
+    user: state.user,
   }
 }
 
@@ -12,7 +12,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     registerUser: (data) => dispatch(registerUser(data)),
     forgotPassword: (data) => dispatch(forgotPassword(data)),
-    resetPassword: (data) => dispatch(resetPassword(data))
+    resetPassword: (data) => dispatch(resetPassword(data)),
   }
 }
 

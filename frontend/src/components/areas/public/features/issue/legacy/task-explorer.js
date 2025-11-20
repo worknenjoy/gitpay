@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { defineMessages, injectIntl } from 'react-intl'
 
-import {
-  Container,
-  Typography,
-  Tabs,
-  Tab,
-  Grid,
-} from '@mui/material'
+import { Container, Typography, Tabs, Tab, Grid } from '@mui/material'
 
 import TopBarContainer from '../../../../../../containers/topbar'
 import Bottom from '../../../../../shared/bottom/bottom'
@@ -25,20 +19,20 @@ import TaskFiltersContainer from '../../../../../../containers/task-filter'
 const messages = defineMessages({
   issuesTitle: {
     id: 'task.list.issue.title',
-    defaultMessage: 'Explore issues, projects and organizations'
+    defaultMessage: 'Explore issues, projects and organizations',
   },
   issuesLabel: {
     id: 'task.list.issue.label',
-    defaultMessage: 'Issues'
+    defaultMessage: 'Issues',
   },
   projectsLabel: {
     id: 'task.list.issue.projects',
-    defaultMessage: 'Projects'
+    defaultMessage: 'Projects',
   },
   organizationsLabel: {
     id: 'task.list.issue.organizations',
-    defaultMessage: 'Organizations'
-  }
+    defaultMessage: 'Organizations',
+  },
 })
 
 const TaskExplorer = (props) => {
@@ -47,18 +41,18 @@ const TaskExplorer = (props) => {
     showNavigation: false,
     isOrganizationPage: false,
     isProjectPage: false,
-    currentPath: ''
+    currentPath: '',
   })
 
   useEffect(() => {
-    function handlePathNameChange () {
+    function handlePathNameChange() {
       const pathname = props.history.location.pathname
       setState({ ...state, currentPath: pathname })
       if (pathname.includes('organizations') && parseInt(pathname.split('/')[2])) {
         setState({ ...state, isOrganizationPage: true })
       }
-      if (pathname.includes('projects') && parseInt(pathname.split('/')[4])) { 
-        setState({ ...state, isProjectPage: true }) 
+      if (pathname.includes('projects') && parseInt(pathname.split('/')[4])) {
+        setState({ ...state, isProjectPage: true })
       }
       switch (pathname) {
         case '/tasks/open':
@@ -87,7 +81,6 @@ const TaskExplorer = (props) => {
 
     handlePathNameChange()
   }, [state.value, props.history.location.pathname])
-  
 
   const handleSectionTab = ({ currentTarget }, value) => {
     setState({ ...state, value })
@@ -115,68 +108,57 @@ const TaskExplorer = (props) => {
 
   return (
     <Page>
-      { !noTopBar && <TopBarContainer /> }
+      {!noTopBar && <TopBarContainer />}
       <PageContent>
-        { state.showNavigation &&
-          <Container maxWidth='lg'>
-            <Typography variant='h5' gutterBottom style={ { marginTop: 40 } }>
-              { props.intl.formatMessage(messages.issuesTitle) }
+        {state.showNavigation && (
+          <Container maxWidth="lg">
+            <Typography variant="h5" gutterBottom style={{ marginTop: 40 }}>
+              {props.intl.formatMessage(messages.issuesTitle)}
             </Typography>
             <Tabs
-              variant='scrollable'
-              value={ state.value ? state.value : 0 }
-              onChange={ handleSectionTab }
-              style={ { marginTop: 20, marginBottom: 20 } }
-              textColor='secondary'
-              indicatorColor='secondary'
+              variant="scrollable"
+              value={state.value ? state.value : 0}
+              onChange={handleSectionTab}
+              style={{ marginTop: 20, marginBottom: 20 }}
+              textColor="secondary"
+              indicatorColor="secondary"
             >
+              <Tab id="issues" value={0} label={props.intl.formatMessage(messages.issuesLabel)} />
               <Tab
-                id='issues'
-                value={ 0 }
-                label={ props.intl.formatMessage(messages.issuesLabel) }
+                id="projects"
+                value={1}
+                label={props.intl.formatMessage(messages.projectsLabel)}
               />
               <Tab
-                id='projects'
-                value={ 1 }
-                label={ props.intl.formatMessage(messages.projectsLabel) }
-              />
-              <Tab
-                id='organizations'
-                value={ 2 }
-                label={ props.intl.formatMessage(messages.organizationsLabel) }
+                id="organizations"
+                value={2}
+                label={props.intl.formatMessage(messages.organizationsLabel)}
               />
             </Tabs>
           </Container>
-        }
-        <Container fixed maxWidth='lg'>
+        )}
+        <Container fixed maxWidth="lg">
           <Grid container sx={{ flexGrow: 1 }}>
             <Grid size={{ xs: 12, md: 12 }}>
-              { state.value === 0 && (
+              {state.value === 0 && (
                 <div>
-                  <TaskFiltersContainer
-                    filterTasks={ props.filterTasks }
-                    baseUrl="/tasks/"
-                  />
+                  <TaskFiltersContainer filterTasks={props.filterTasks} baseUrl="/tasks/" />
                   <TaskListContainer />
                 </div>
               )}
-              { state.value === 1 &&
-                <ProjectListContainer />
-              }
-              { state.value === 2 &&
-                <OrganizationListContainer />
-              }
+              {state.value === 1 && <ProjectListContainer />}
+              {state.value === 2 && <OrganizationListContainer />}
             </Grid>
           </Grid>
         </Container>
       </PageContent>
-  { !noBottomBar && <Bottom /> }
+      {!noBottomBar && <Bottom />}
     </Page>
   )
 }
 
 TaskExplorer.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
 }
 
 export default injectIntl(TaskExplorer)

@@ -11,7 +11,7 @@ import {
   DialogContentText,
   DialogTitle,
   Typography,
-  TextField
+  TextField,
 } from '@mui/material'
 
 const Container = styled.div`
@@ -20,7 +20,7 @@ const Container = styled.div`
 `
 
 class MessageAssignment extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = { message: '' }
   }
@@ -34,7 +34,7 @@ class MessageAssignment extends Component {
     to: PropTypes.number,
   }
 
-  onChangeMessage = event => this.setState({ message: event.target.value })
+  onChangeMessage = (event) => this.setState({ message: event.target.value })
 
   messageAssignment = async () => {
     const { id, messageAction, to } = this.props
@@ -44,41 +44,48 @@ class MessageAssignment extends Component {
     this.props.onClose()
   }
 
-  render () {
+  render() {
     const { visible, onClose } = this.props
     const { message } = this.state
 
     return (
       <Container>
-        <Dialog
-          open={ visible }
-          onClose={ onClose }
-          aria-labelledby='form-dialog-title'
-        >
-          <DialogTitle id='form-dialog-title'>
-            <FormattedMessage id='task.assignment.message.user' defaultMessage='Send a message to this user' />
+        <Dialog open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">
+            <FormattedMessage
+              id="task.assignment.message.user"
+              defaultMessage="Send a message to this user"
+            />
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              <Typography component='div'>
-                <FormattedMessage id='task.assignment.message.reason' defaultMessage='Send a message to this user interested.' />
+              <Typography component="div">
+                <FormattedMessage
+                  id="task.assignment.message.reason"
+                  defaultMessage="Send a message to this user interested."
+                />
               </Typography>
             </DialogContentText>
             <TextField
-              onChange={ this.onChangeMessage }
+              onChange={this.onChangeMessage}
               autoFocus
-              name='message'
+              name="message"
               multiline
-              rows='3'
+              rows="3"
               fullWidth
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={ onClose } color='primary'>
-              <FormattedMessage id='task.assignment.actions.cancel' defaultMessage='Cancel' />
+            <Button onClick={onClose} color="primary">
+              <FormattedMessage id="task.assignment.actions.cancel" defaultMessage="Cancel" />
             </Button>
-            <Button disabled={ message.length === 0 } onClick={ this.messageAssignment } variant='contained' color='secondary' >
-              <FormattedMessage id='task.assignment.message.send' defaultMessage='Send Message' />
+            <Button
+              disabled={message.length === 0}
+              onClick={this.messageAssignment}
+              variant="contained"
+              color="secondary"
+            >
+              <FormattedMessage id="task.assignment.message.send" defaultMessage="Send Message" />
             </Button>
           </DialogActions>
         </Dialog>

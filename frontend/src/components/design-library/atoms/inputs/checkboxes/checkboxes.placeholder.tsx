@@ -1,13 +1,13 @@
-import React from 'react';
-import { Grid, Skeleton } from '@mui/material';
-import { CheckboxesContainer, CheckboxItem } from './checkboxes.styles';
+import React from 'react'
+import { Grid, Skeleton } from '@mui/material'
+import { CheckboxesContainer, CheckboxItem } from './checkboxes.styles'
 
 type CheckboxesPlaceholderProps = {
-  items?: number;
-};
+  items?: number
+}
 
 const CheckboxesPlaceholder: React.FC<CheckboxesPlaceholderProps> = ({ items = 3 }) => {
-  const placeholders = Array.from({ length: items });
+  const placeholders = Array.from({ length: items })
 
   return (
     <CheckboxesContainer>
@@ -24,7 +24,7 @@ const CheckboxesPlaceholder: React.FC<CheckboxesPlaceholderProps> = ({ items = 3
         ))}
       </Grid>
     </CheckboxesContainer>
-  );
-};
+  )
+}
 
-export default CheckboxesPlaceholder;
+export default CheckboxesPlaceholder

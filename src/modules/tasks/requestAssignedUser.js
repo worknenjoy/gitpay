@@ -7,40 +7,43 @@ const Signatures = require('../mail/content')
 
 const sendConfirmationEmail = (task, assign) => {
   const user = assign.User
-  const URL = reason => `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested/${assign.id}#${reason}`
+  const URL = (reason) =>
+    `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested/${assign.id}#${reason}`
   const language = user.language || 'en'
   i18n.setLocale(language)
 
   const body = `
       ${i18n.__('mail.assigned.request.body', {
-    name: user.name || user.username || '',
-    title: task.title,
-    url: task.url
-  })}
+        name: user.name || user.username || '',
+        title: task.title,
+        url: task.url,
+      })}
     ${Signatures.buttons(language, {
-    primary: {
-      label: 'mail.assigned.request.button.primary',
-      url: URL('accept')
-    },
-    secondary: {
-      label: 'mail.assigned.request.button.secondary',
-      url: URL('reject')
-    }
-  })
-}
+      primary: {
+        label: 'mail.assigned.request.button.primary',
+        url: URL('accept'),
+      },
+      secondary: {
+        label: 'mail.assigned.request.button.secondary',
+        url: URL('reject'),
+      },
+    })}
       `
 
-  return models.Assign.update({
-    status: 'pending-confirmation'
-  }, {
-    where: {
-      id: assign.id
-    }
-  }).then(res => {
+  return models.Assign.update(
+    {
+      status: 'pending-confirmation',
+    },
+    {
+      where: {
+        id: assign.id,
+      },
+    },
+  ).then((res) => {
     return SendMail.success(
       { email: user.email, language },
       i18n.__('mail.assigned.request.subject'),
-      body
+      body,
     )
   })
 }
@@ -49,9 +52,9 @@ const invite = Promise.method(async ({ taskId, assignId }) => {
   const task = await models.Task.findByPk(taskId)
   const assign = await models.Assign.findOne({
     where: {
-      id: assignId
+      id: assignId,
     },
-    include: [models.User]
+    include: [models.User],
   })
 
   if (task.status === 'in_progress') {
@@ -66,17 +69,19 @@ const invite = Promise.method(async ({ taskId, assignId }) => {
 })
 
 const actionAssign = async (data) => {
-  if (typeof data !== 'object' ||
-   !['taskId', 'assignId', 'confirm'].every(prop => prop in data)) {
+  if (
+    typeof data !== 'object' ||
+    !['taskId', 'assignId', 'confirm'].every((prop) => prop in data)
+  ) {
     return new Error('Bad Token')
   }
 
   const { taskId, assignId, confirm, message } = data
   const assign = await models.Assign.findOne({
     where: {
-      id: assignId
+      id: assignId,
     },
-    include: [models.User]
+    include: [models.User],
   })
 
   if (!assign || assign.status === 'in_progress' || assign.status === 'rejected') {
@@ -93,9 +98,9 @@ const actionAssign = async (data) => {
     await models.Assign.update({ status: 'rejected', message }, { where: { id: assignId } })
     const task = await models.Task.findOne({
       where: {
-        id: taskId
+        id: taskId,
       },
-      include: [models.User]
+      include: [models.User],
     })
     const user = assign.User
     const taskOwner = task.User
@@ -107,24 +112,25 @@ const actionAssign = async (data) => {
       user: user.name || user.username || '',
       title: task.title,
       url: task.url,
-      message
+      message,
     })}
       `
 
     SendMail.success(
-      { email: taskOwner.email, language, receiveNotifications: taskOwner.receiveNotifications},
-      i18n.__('mail.assigned.request.deny.subject'), body
+      { email: taskOwner.email, language, receiveNotifications: taskOwner.receiveNotifications },
+      i18n.__('mail.assigned.request.deny.subject'),
+      body,
     )
 
     return task.dataValues
   }
 }
 
-const confirm = Promise.method(async body => {
+const confirm = Promise.method(async (body) => {
   return actionAssign(body)
 })
 
 module.exports = {
   invite,
-  confirm
+  confirm,
 }

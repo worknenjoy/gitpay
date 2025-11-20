@@ -4,13 +4,16 @@ import {
   FETCH_PROJECT_ERROR,
   LIST_PROJECTS_REQUESTED,
   LIST_PROJECTS_SUCCESS,
-  LIST_PROJECTS_ERROR
+  LIST_PROJECTS_ERROR,
 } from '../actions/projectActions'
 
-export const project = (state = {
-  completed: true,
-  data: {}
-}, action) => {
+export const project = (
+  state = {
+    completed: true,
+    data: {},
+  },
+  action,
+) => {
   switch (action.type) {
     case FETCH_PROJECT_REQUESTED:
       return { ...state, completed: false }
@@ -23,10 +26,13 @@ export const project = (state = {
   }
 }
 
-export const projects = (state = {
-  completed: true,
-  data: []
-}, action) => {
+export const projects = (
+  state = {
+    completed: true,
+    data: [],
+  },
+  action,
+) => {
   switch (action.type) {
     case LIST_PROJECTS_REQUESTED:
       return { ...state, completed: false }

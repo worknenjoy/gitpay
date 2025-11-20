@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     login_strategy: {
       type: DataTypes.STRING,
-      defaultValue: 'local'
+      defaultValue: 'local',
     },
     provider: DataTypes.STRING,
     provider_id: DataTypes.STRING,
@@ -32,16 +32,16 @@ module.exports = (sequelize, DataTypes) => {
     activation_token: DataTypes.STRING,
     receiveNotifications: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true
+      defaultValue: true,
     },
     openForJobs: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
+      defaultValue: false,
     },
     active: {
       type: DataTypes.BOOLEAN,
-      defaultValue: true
-    }
+      defaultValue: true,
+    },
   })
 
   User.associate = (models) => {

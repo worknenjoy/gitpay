@@ -1,10 +1,10 @@
-import { connect } from 'react-redux';
-import { searchTransfer, updateTransfer, fetchTransfer } from '../actions/transferActions';
-import { listPaymentRequests } from '../actions/paymentRequestActions';
+import { connect } from 'react-redux'
+import { searchTransfer, updateTransfer, fetchTransfer } from '../actions/transferActions'
+import { listPaymentRequests } from '../actions/paymentRequestActions'
 import { fetchAccount } from '../actions/userActions'
-import Claims from '../components/areas/private/features/claims/claims';
+import Claims from '../components/areas/private/features/claims/claims'
 import { getUserData } from '../common/selectors/user/getUser'
-import { listPaymentRequestTransfers } from '../actions/paymentRequestTransferActions';
+import { listPaymentRequestTransfers } from '../actions/paymentRequestTransferActions'
 
 const mapStateToProps = (state: any) => {
   return {
@@ -12,7 +12,7 @@ const mapStateToProps = (state: any) => {
     account: state.account,
     transfers: state.transfers,
     transfer: state.transfer,
-    paymentRequestTransfers: state.paymentRequestTransfers
+    paymentRequestTransfers: state.paymentRequestTransfers,
   }
 }
 
@@ -23,8 +23,8 @@ const mapDispatchToProps = (dispatch: any) => {
     fetchTransfer: (id: any) => dispatch(fetchTransfer(id)),
     fetchAccount: () => dispatch(fetchAccount()),
     listPaymentRequests: (params: any) => dispatch(listPaymentRequests(params)),
-    listPaymentRequestTransfers: (params: any) => dispatch(listPaymentRequestTransfers(params))
+    listPaymentRequestTransfers: (params: any) => dispatch(listPaymentRequestTransfers(params)),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Claims);
+export default connect(mapStateToProps, mapDispatchToProps)(Claims)

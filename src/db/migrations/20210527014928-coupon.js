@@ -1,5 +1,3 @@
-
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Coupons', {
@@ -7,36 +5,36 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       code: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       amount: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL,
       },
       expires: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       validUntil: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       times: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW')
+        defaultValue: Sequelize.fn('NOW'),
       },
       updatedAt: {
         allowNull: true,
-        type: Sequelize.DATE
-      }
-    });
+        type: Sequelize.DATE,
+      },
+    })
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Coupons');
-  }
-};
+    return queryInterface.dropTable('Coupons')
+  },
+}

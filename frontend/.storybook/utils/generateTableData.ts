@@ -1,15 +1,15 @@
 type TableRow = {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-  status: string;
-  action: string;
-  other: string;
-};
+  id: number
+  name: string
+  email: string
+  role: string
+  status: string
+  action: string
+  other: string
+}
 
 export const generateTableData = (count: number): TableRow[] => {
-  const data: TableRow[] = [];
+  const data: TableRow[] = []
   for (let i = 0; i < count; i++) {
     data.push({
       id: i + 1,
@@ -18,8 +18,8 @@ export const generateTableData = (count: number): TableRow[] => {
       role: 'Contributor',
       status: 'Active',
       action: 'Edit',
-      other: 'Other'
-    });
+      other: 'Other',
+    })
   }
-  return data;
-};
+  return data
+}

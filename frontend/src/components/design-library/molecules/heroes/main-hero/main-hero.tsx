@@ -1,28 +1,30 @@
 import React from 'react'
-import { HeroSection, Section, HeroImage, HeroTitle, HeroContent, HeroActions, SpacedButton } from './main-hero.styles'
+import {
+  HeroSection,
+  Section,
+  HeroImage,
+  HeroTitle,
+  HeroContent,
+  HeroActions,
+  SpacedButton,
+} from './main-hero.styles'
 import { Grid, Typography } from '@mui/material'
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 
 type MainHeroProps = {
-  mainTitle: React.ReactNode;
-  description: React.ReactNode;
+  mainTitle: React.ReactNode
+  description: React.ReactNode
   actions: {
-    label: React.ReactNode;
-    variant?: 'text' | 'outlined' | 'contained';
-    color?: 'primary' | 'secondary' | 'inherit' | 'success' | 'error' | 'info' | 'warning';
-    onClick?: () => void;
-  }[];
-  image?: string;
-  animation?: string;
+    label: React.ReactNode
+    variant?: 'text' | 'outlined' | 'contained'
+    color?: 'primary' | 'secondary' | 'inherit' | 'success' | 'error' | 'info' | 'warning'
+    onClick?: () => void
+  }[]
+  image?: string
+  animation?: string
 }
 
-const MainHero = ({
-  mainTitle,
-  description,
-  actions,
-  image,
-  animation
-}: MainHeroProps) => {
+const MainHero = ({ mainTitle, description, actions, image, animation }: MainHeroProps) => {
   return (
     <Section>
       <HeroSection>

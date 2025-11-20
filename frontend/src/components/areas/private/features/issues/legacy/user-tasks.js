@@ -13,12 +13,12 @@ import {
   CardContent,
   CardMedia,
   Tabs,
-  Tab
+  Tab,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 // import TaskFilter from '../task/task-filters'
-import CustomPaginationActionsTable from '../../../../public/features/issue/legacy/task-table';
+import CustomPaginationActionsTable from '../../../../public/features/issue/legacy/task-table'
 
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
@@ -32,20 +32,20 @@ const Media = styled(CardMedia)({ width: 600 })
 const messages = defineMessages({
   allTasks: {
     id: 'task.list.lable.issues.all',
-    defaultMessage: 'All issues'
+    defaultMessage: 'All issues',
   },
   createdByMeTasks: {
     id: 'task.status.myissues',
-    defaultMessage: 'My issues'
+    defaultMessage: 'My issues',
   },
   interestedTasks: {
     id: 'tasks.status.interested',
-    defaultMessage: 'I\'m interested'
+    defaultMessage: "I'm interested",
   },
   assignedToMeTasks: {
     id: 'task.status.assigned',
-    defaultMessage: 'Assigned to me'
-  }
+    defaultMessage: 'Assigned to me',
+  },
 })
 
 const UserTasks = ({ intl, history, filterTasks, listTasks, tasks, user }) => {
@@ -59,8 +59,12 @@ const UserTasks = ({ intl, history, filterTasks, listTasks, tasks, user }) => {
         handleTabChange({}, 'all')
       }
       if (history.location.pathname === '/profile/tasks') {
-        user.Types && user.Types.map(t => t.name).includes('contributor') && handleTabChange({}, 'assigned')
-        user.Types && user.Types.map(t => t.name).includes('maintainer') && handleTabChange({}, 'createdbyme')
+        user.Types &&
+          user.Types.map((t) => t.name).includes('contributor') &&
+          handleTabChange({}, 'assigned')
+        user.Types &&
+          user.Types.map((t) => t.name).includes('maintainer') &&
+          handleTabChange({}, 'createdbyme')
       }
       if (history.location.pathname === '/profile/tasks/createdbyme') {
         handleTabChange({}, 'createdbyme')
@@ -80,7 +84,7 @@ const UserTasks = ({ intl, history, filterTasks, listTasks, tasks, user }) => {
     switch (value) {
       case 'all':
         filterTasks()
-      break
+        break
       case 'createdbyme':
         filterTasks('userId')
         break
@@ -95,9 +99,9 @@ const UserTasks = ({ intl, history, filterTasks, listTasks, tasks, user }) => {
   }
 
   return (
-    <Paper elevation={ 0 } style={{backgroundColor: 'transparent'}}>
+    <Paper elevation={0} style={{ backgroundColor: 'transparent' }}>
       <Container>
-        <Typography variant="h5" gutterBottom style={{marginTop: 40}}>
+        <Typography variant="h5" gutterBottom style={{ marginTop: 40 }}>
           <FormattedMessage id="issues.user.title" defaultMessage="My issues" />
         </Typography>
         <Typography variant="caption" gutterBottom>
@@ -107,41 +111,28 @@ const UserTasks = ({ intl, history, filterTasks, listTasks, tasks, user }) => {
           />
         </Typography>
         <Tabs
-          value={ currentTab }
-          onChange={ handleTabChange }
+          value={currentTab}
+          onChange={handleTabChange}
           scrollable
           scrollButtons="on"
           indicatorColor="secondary"
           textColor="secondary"
-          style={{marginTop: 20, marginBottom: 20}}
+          style={{ marginTop: 20, marginBottom: 20 }}
         >
-           { user.Types && user.Types.map(t => t.name).includes('maintainer') &&
-          <Tab
-            value={ 'createdbyme' }
-            label={ intl.formatMessage(messages.createdByMeTasks) }
-          />
-          }
-          { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-            <Tab
-              value={ 'assigned' }
-              label={ intl.formatMessage(
-                messages.assignedToMeTasks
-              ) }
-            />
-          }
-          { user.Types && user.Types.map(t => t.name).includes('contributor') &&
-            <Tab
-              value={ 'interested' }
-              label={ intl.formatMessage(messages.interestedTasks) }
-            />
-          }
+          {user.Types && user.Types.map((t) => t.name).includes('maintainer') && (
+            <Tab value={'createdbyme'} label={intl.formatMessage(messages.createdByMeTasks)} />
+          )}
+          {user.Types && user.Types.map((t) => t.name).includes('contributor') && (
+            <Tab value={'assigned'} label={intl.formatMessage(messages.assignedToMeTasks)} />
+          )}
+          {user.Types && user.Types.map((t) => t.name).includes('contributor') && (
+            <Tab value={'interested'} label={intl.formatMessage(messages.interestedTasks)} />
+          )}
         </Tabs>
-        <div style={{marginBottom: 20}}>
-          { !user.id ? (
+        <div style={{ marginBottom: 20 }}>
+          {!user.id ? (
             <Card>
-              <Media
-                src={ imageGettingStarted }
-              />
+              <Media src={imageGettingStarted} />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   <FormattedMessage
@@ -158,34 +149,38 @@ const UserTasks = ({ intl, history, filterTasks, listTasks, tasks, user }) => {
               </CardContent>
               <CardActions>
                 <Button
-                  style={ { marginRight: 10 } }
-                  href={ `${api.API_URL}/authorize/github` }
+                  style={{ marginRight: 10 }}
+                  href={`${api.API_URL}/authorize/github`}
                   variant="contained"
                   size="small"
                   color="secondary"
                   sx={{ ml: 1 }}
                 >
-                  <img width="16" src={ logoGithub } />
+                  <img width="16" src={logoGithub} />
                   <span style={{ marginLeft: 10 }}>Github</span>
                 </Button>
 
                 <Button
-                  href={ `${api.API_URL}/authorize/bitbucket` }
+                  href={`${api.API_URL}/authorize/bitbucket`}
                   variant="contained"
                   size="small"
                   color="secondary"
                   sx={{ ml: 1 }}
                 >
-                  <img width="16" src={ logoBitbucket } />
+                  <img width="16" src={logoBitbucket} />
                   <span style={{ marginLeft: 10 }}>Bitbucket</span>
                 </Button>
               </CardActions>
             </Card>
           ) : (
             <>
-              <CustomPaginationActionsTable tasks={ tasks } user={ user } tableHeaderMetadata={tableHeaderDefault}  />
+              <CustomPaginationActionsTable
+                tasks={tasks}
+                user={user}
+                tableHeaderMetadata={tableHeaderDefault}
+              />
             </>
-          ) }
+          )}
         </div>
       </Container>
     </Paper>
@@ -196,7 +191,7 @@ UserTasks.propTypes = {
   listTasks: PropTypes.func,
   filterTasks: PropTypes.func,
   tasks: PropTypes.object,
-  user: PropTypes.object
+  user: PropTypes.object,
 }
 
 export default injectIntl(UserTasks)

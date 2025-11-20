@@ -1,10 +1,9 @@
-import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormControl, FormControlLabel, Radio, RadioGroup, Typography } from '@mui/material'
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 const AccountTypeField = ({ disabled = false, type = 'individual' }) => {
-
-  const [bankAccountType, setBankAccountType] = React.useState(type);
+  const [bankAccountType, setBankAccountType] = React.useState(type)
 
   return (
     <FormControl component="fieldset">
@@ -32,6 +31,6 @@ const AccountTypeField = ({ disabled = false, type = 'individual' }) => {
         />
       </RadioGroup>
     </FormControl>
-  );
+  )
 }
-export default AccountTypeField;
+export default AccountTypeField

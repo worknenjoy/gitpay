@@ -1,10 +1,7 @@
 import React from 'react'
-import {
-  Avatar,
-  Chip
-} from '@mui/material'
+import { Avatar, Chip } from '@mui/material'
 import { withRouter } from 'react-router-dom'
-import { SkillIcon } from "./skill-icon"
+import { SkillIcon } from './skill-icon'
 
 const MySkill = (props) => {
   const { title, onDelete } = props
@@ -18,7 +15,7 @@ const MySkill = (props) => {
       }
       label={title}
       onDelete={onDelete}
-      style={{marginRight: 5}}
+      style={{ marginRight: 5 }}
     />
   )
 }

@@ -12,26 +12,26 @@ import ProfileHead from '../../../../../../containers/profile-head'
 
 const Root = styled(Grid)(({ theme }) => ({
   marginRight: theme.spacing(3),
-  marginBottom: theme.spacing(3)
+  marginBottom: theme.spacing(3),
 }))
 
 const messages = defineMessages({
   issuesCreated: {
     id: 'task.list.lable.issuesCreated',
-    defaultMessage: 'All issues created'
+    defaultMessage: 'All issues created',
   },
   issuesSupported: {
     id: 'task.list.lable.issuesSupported',
-    defaultMessage: 'Issues supported'
+    defaultMessage: 'Issues supported',
   },
   issuesList: {
     id: 'task.list.lable.issuesList',
-    defaultMessage: 'Issues list'
+    defaultMessage: 'Issues list',
   },
 })
 
 const TaskListUser = (props) => {
-  const { } = props
+  const {} = props
 
   const [taskListState, setTaskListState] = useState({
     tab: 0,
@@ -85,42 +85,36 @@ const TaskListUser = (props) => {
     setTaskListState({ ...taskListState, tab: value })
   }
 
-  const TabContainer = props => {
-    return (
-      <div style={{ padding: '24px 0' }}>
-        {props.children}
-      </div>
-    )
+  const TabContainer = (props) => {
+    return <div style={{ padding: '24px 0' }}>{props.children}</div>
   }
 
   return (
     <React.Fragment>
       <Page>
         <TopBarContainer />
-        <Container fixed maxWidth='lg'>
+        <Container fixed maxWidth="lg">
           <ProfileHead />
         </Container>
-        <Container fixed maxWidth='lg'>
+        <Container fixed maxWidth="lg">
           <Root container>
             <Grid size={{ xs: 12, md: 12 }}>
               <Tabs
                 value={taskListState.tab}
                 onChange={handleTabChange}
-                indicatorColor='secondary'
-                textColor='secondary'
+                indicatorColor="secondary"
+                textColor="secondary"
                 style={{ marginTop: 20, marginBottom: 20 }}
               >
-                <Tab
-                  value={0}
-                  label={props.intl.formatMessage(messages.issuesCreated)}
-                />
-                <Tab
-                  value={1}
-                  label={props.intl.formatMessage(messages.issuesSupported)}
-                />
+                <Tab value={0} label={props.intl.formatMessage(messages.issuesCreated)} />
+                <Tab value={1} label={props.intl.formatMessage(messages.issuesSupported)} />
               </Tabs>
               <TabContainer>
-                <CustomPaginationActionsTable tasks={props.tasks} user={props.user} tableHeaderMetadata={tableHeaderDefault} />
+                <CustomPaginationActionsTable
+                  tasks={props.tasks}
+                  user={props.user}
+                  tableHeaderMetadata={tableHeaderDefault}
+                />
               </TabContainer>
             </Grid>
           </Root>

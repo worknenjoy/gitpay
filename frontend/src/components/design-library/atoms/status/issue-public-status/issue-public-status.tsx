@@ -8,18 +8,14 @@ const IssuePublicStatus = ({ status }) => {
     if (status) {
       return (
         <React.Fragment>
-          { (status === 'private')
-            ? (
-              <StyledChip label="Private" icon={ <PrivateIconStyled fontSize="small" /> } />
-            )
-            : (
-              <StyledChip label="Public" icon={ <PublicIconStyled fontSize="small" /> } />
-            )
-          }
+          {status === 'private' ? (
+            <StyledChip label="Private" icon={<PrivateIconStyled fontSize="small" />} />
+          ) : (
+            <StyledChip label="Public" icon={<PublicIconStyled fontSize="small" />} />
+          )}
         </React.Fragment>
       )
-    }
-    else return <div />
+    } else return <div />
   }
   return (
     <React.Fragment>

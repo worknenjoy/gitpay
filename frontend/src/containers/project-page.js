@@ -11,16 +11,17 @@ const mapStateToProps = (state) => ({
   project: state.project,
   issues: getFilteredTasks(state),
   labels: state.labels,
-  languages: state.languages
+  languages: state.languages,
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     listTasks: (params) => dispatch(listTasks(params)),
-    filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
+    filterTasks: (tasks, key, value, additional) =>
+      dispatch(filterTasks(tasks, key, value, additional)),
     listLabels: () => dispatch(listLabels()),
     listLanguages: () => dispatch(listLanguage()),
-    fetchProject: (id) => dispatch(fetchProject(id))
+    fetchProject: (id) => dispatch(fetchProject(id)),
   }
 }
 

@@ -1,19 +1,19 @@
-import React from 'react';
-import Fieldset from './fieldset';
-import Field from '../fields/field/field';
+import React from 'react'
+import Fieldset from './fieldset'
+import Field from '../fields/field/field'
 
 export default {
   title: 'Design Library/Atoms/Inputs/Fieldset',
   component: Fieldset,
   argTypes: {
     legend: { control: 'text' },
-    children: { control: 'text' }
-  }
-};
+    children: { control: 'text' },
+  },
+}
 
-const Template = (args) => <Fieldset {...args} />;
+const Template = (args) => <Fieldset {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   legend: 'Custom Fieldset',
   completed: true,
@@ -28,14 +28,12 @@ Default.args = {
       disabled={false}
       required={false}
     />
-  )
-};
+  ),
+}
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({})
 Loading.args = {
   legend: 'Loading Fieldset',
   completed: false,
-  children: (
-    <></>
-  )
-};
+  children: <></>,
+}

@@ -1,33 +1,33 @@
-import { Meta, StoryObj } from '@storybook/react';
-import ExploreProjectPage from './explore-project-issues-private-page';
-import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate';
+import { Meta, StoryObj } from '@storybook/react'
+import ExploreProjectPage from './explore-project-issues-private-page'
+import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate'
 
 const meta: Meta<typeof ExploreProjectPage> = {
   title: 'Design Library/Pages/Private/Project/Explore',
   component: ExploreProjectPage,
-  decorators: [withProfileTemplate]
-};
+  decorators: [withProfileTemplate],
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof ExploreProjectPage>;
+type Story = StoryObj<typeof ExploreProjectPage>
 
 export const Default: Story = {
   args: {
-    project: { 
+    project: {
       completed: true,
       data: {
         id: '1',
         name: 'Demo Project',
-        Organization: { id: '1', name: 'Demo Organization' }
-      }
+        Organization: { id: '1', name: 'Demo Organization' },
+      },
     },
     issues: {
       completed: true,
       data: [
         { id: '1', title: 'Issue 1', status: 'open' },
-        { id: '2', title: 'Issue 2', status: 'closed' }
-      ]
+        { id: '2', title: 'Issue 2', status: 'closed' },
+      ],
     },
     labels: [],
     languages: [],
@@ -35,16 +35,14 @@ export const Default: Story = {
     listTasks: () => {},
     listLabels: () => {},
     listLanguages: () => {},
-    user: { 
+    user: {
       completed: true,
       data: {
         id: '1',
         name: 'Demo User',
         email: 'demo.user@example.com',
-        Types: [
-          { id: '1', name: 'contributor' }
-        ]
-      }
-    }
-  }
-};
+        Types: [{ id: '1', name: 'contributor' }],
+      },
+    },
+  },
+}

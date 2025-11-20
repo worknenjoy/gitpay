@@ -21,17 +21,22 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(xFrameOptions())
-app.use(session({
-  secret: process.env.SECRET_PHRASE,
-  saveUninitialized: true,
-  resave: true
-}))
+app.use(
+  session({
+    secret: process.env.SECRET_PHRASE,
+    saveUninitialized: true,
+    resave: true,
+  }),
+)
 
 i18n.configure({
-  directory: process.env.NODE_ENV !== 'production' ? path.join(__dirname, '../locales') : path.join(__dirname, '../locales', 'result'),
+  directory:
+    process.env.NODE_ENV !== 'production'
+      ? path.join(__dirname, '../locales')
+      : path.join(__dirname, '../locales', 'result'),
   locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
   defaultLocale: 'en',
-  updateFiles: false
+  updateFiles: false,
 })
 
 app.use(i18n.init)
@@ -40,7 +45,7 @@ dailyJob.start()
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.set('port', (process.env.PORT || 3000))
+app.set('port', process.env.PORT || 3000)
 
 app.use(compression())
 app.use(express.static(path.join(__dirname, '../frontend/public')))

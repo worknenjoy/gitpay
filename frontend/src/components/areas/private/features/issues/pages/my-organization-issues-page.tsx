@@ -8,33 +8,33 @@ const MyOrganizationIssuesPage = ({
   issues,
   listTasks,
   filterTasks,
-  fetchOrganization
+  fetchOrganization,
 }) => {
-  const { filter, organization_id } = useParams<{ filter: string, organization_id: string }>()
+  const { filter, organization_id } = useParams<{ filter: string; organization_id: string }>()
 
   const getFilteredIssues = (filter) => {
     switch (filter) {
       case 'assigned':
         filterTasks('Assigns')
-        break;
+        break
       case 'createdbyme':
         filterTasks('userId')
-        break;
+        break
       case 'interested':
         filterTasks('assigned')
-        break;
+        break
       case 'supported':
         filterTasks('supported')
-        break;
+        break
       default:
         filterTasks('userId')
-        break;
+        break
     }
   }
 
   useEffect(() => {
-    fetchOrganization(organization_id);
-  }, [organization_id]);
+    fetchOrganization(organization_id)
+  }, [organization_id])
 
   useEffect(() => {
     listTasks({ organizationId: organization_id })
@@ -44,12 +44,6 @@ const MyOrganizationIssuesPage = ({
     getFilteredIssues(filter)
   }, [filter])
 
-  return (
-    <MyOrganizationIssuesPrivatePage
-      organization={organization}
-      user={user}
-      issues={issues}
-    />
-  )
+  return <MyOrganizationIssuesPrivatePage organization={organization} user={user} issues={issues} />
 }
 export default MyOrganizationIssuesPage

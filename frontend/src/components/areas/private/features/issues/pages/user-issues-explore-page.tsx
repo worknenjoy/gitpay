@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
-import ExploreIssuesPrivatePage from 'design-library/pages/private-pages/issues-pages/explore-issues-private-page/explore-issues-private-page';
-import { useHistory } from 'react-router-dom';
+import ExploreIssuesPrivatePage from 'design-library/pages/private-pages/issues-pages/explore-issues-private-page/explore-issues-private-page'
+import { useHistory } from 'react-router-dom'
 
-
-const ExploreIssuesPage = ({ 
+const ExploreIssuesPage = ({
   filterTasks,
   listTasks,
   issues,
@@ -11,9 +10,8 @@ const ExploreIssuesPage = ({
   listLabels,
   languages,
   listLanguages,
-  user
+  user,
 }) => {
-
   const history = useHistory()
 
   useEffect(() => {
@@ -22,7 +20,7 @@ const ExploreIssuesPage = ({
   }, [history.location.pathname])
 
   return (
-    <ExploreIssuesPrivatePage 
+    <ExploreIssuesPrivatePage
       filterTasks={filterTasks}
       listTasks={listTasks}
       issues={issues}
@@ -35,4 +33,4 @@ const ExploreIssuesPage = ({
   )
 }
 
-export default ExploreIssuesPage;
+export default ExploreIssuesPage

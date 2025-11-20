@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import ExploreOrganizationPage from 'design-library/pages/private-pages/organization-pages/explore-organization-issues-private-page/explore-organization-issues-private-page';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import ExploreOrganizationPage from 'design-library/pages/private-pages/organization-pages/explore-organization-issues-private-page/explore-organization-issues-private-page'
+import { useParams } from 'react-router-dom'
 
 const UserOrganizationIssuesExplorePage = ({
   filterTasks,
@@ -12,22 +12,21 @@ const UserOrganizationIssuesExplorePage = ({
   listLanguages,
   fetchOrganization,
   user,
-  organization
+  organization,
 }) => {
-
-  const { organization_id } = useParams<{ organization_id: string }>();
+  const { organization_id } = useParams<{ organization_id: string }>()
 
   const listTasksWithOrganization = (params) => {
     listTasks({ ...params, organizationId: organization_id })
   }
 
   useEffect(() => {
-    fetchOrganization(organization_id);
-  }, [organization_id]);
+    fetchOrganization(organization_id)
+  }, [organization_id])
 
   useEffect(() => {
-    listTasksWithOrganization({ organizationId: organization_id });
-  }, [organization_id]);
+    listTasksWithOrganization({ organizationId: organization_id })
+  }, [organization_id])
 
   return (
     <ExploreOrganizationPage
@@ -41,7 +40,7 @@ const UserOrganizationIssuesExplorePage = ({
       listLanguages={listLanguages}
       user={user}
     />
-  );
-};
+  )
+}
 
-export default UserOrganizationIssuesExplorePage;
+export default UserOrganizationIssuesExplorePage

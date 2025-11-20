@@ -7,8 +7,8 @@
     "rootDir": "src",
     "outDir": "dist",
 
-    "allowJs": true,          // <-- keep .js files
-    "checkJs": false,         // you can flip true later to typecheck .js
+    "allowJs": true, // <-- keep .js files
+    "checkJs": false, // you can flip true later to typecheck .js
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,

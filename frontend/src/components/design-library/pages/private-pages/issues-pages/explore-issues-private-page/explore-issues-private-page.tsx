@@ -1,18 +1,12 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import {
-  Container
-} from '@mui/material'
-import {
-  ExplorePaper,
-  TopSection
-} from './explore-issues-private-page.styles'
-import IssuesTable from 'design-library/molecules/tables/issue-table/issue-table';
+import { Container } from '@mui/material'
+import { ExplorePaper, TopSection } from './explore-issues-private-page.styles'
+import IssuesTable from 'design-library/molecules/tables/issue-table/issue-table'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
-import Breadcrumb from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb';
+import Breadcrumb from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
 
-
-const ExploreIssuesPrivatePage = ({ 
+const ExploreIssuesPrivatePage = ({
   filterTasks,
   listTasks,
   issues,
@@ -20,21 +14,32 @@ const ExploreIssuesPrivatePage = ({
   listLabels,
   languages,
   listLanguages,
-  user
+  user,
 }) => {
-
   return (
-    <ExplorePaper elevation={ 0 }>
+    <ExplorePaper elevation={0}>
       <Container>
         <TopSection>
           <Breadcrumb
-            root={{ label: <FormattedMessage id="breadcrumb.root.profile.explore" defaultMessage="Explore Issues" /> }}
+            root={{
+              label: (
+                <FormattedMessage
+                  id="breadcrumb.root.profile.explore"
+                  defaultMessage="Explore Issues"
+                />
+              ),
+            }}
           />
         </TopSection>
         <TopSection>
-          <MainTitle 
+          <MainTitle
             title={<FormattedMessage id="issues.explore.title" defaultMessage="Explore issues" />}
-            subtitle={<FormattedMessage id="issues.explore.description" defaultMessage="Here you can see all the issues on our network" />}
+            subtitle={
+              <FormattedMessage
+                id="issues.explore.description"
+                defaultMessage="Here you can see all the issues on our network"
+              />
+            }
           />
         </TopSection>
         <TopSection>

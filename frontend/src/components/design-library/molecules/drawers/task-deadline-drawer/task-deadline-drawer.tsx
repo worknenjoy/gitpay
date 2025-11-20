@@ -11,21 +11,17 @@ type TaskDeadlineDrawerProps = {
   classes?: any
 }
 
-const TaskDeadlineDrawer = ({ 
+const TaskDeadlineDrawer = ({
   open,
   onClose,
   taskId,
   task,
   onUpdate,
-  classes
+  classes,
 }: TaskDeadlineDrawerProps) => {
   return (
-    <Drawer
-      open={open}
-      onClose={onClose}
-      title="Set task deadline"
-    >
-      <TaskDeadlineForm 
+    <Drawer open={open} onClose={onClose} title="Set task deadline">
+      <TaskDeadlineForm
         open={open}
         task={task}
         onHandleClearDeadline={() => {
@@ -41,4 +37,4 @@ const TaskDeadlineDrawer = ({
   )
 }
 
-export default TaskDeadlineDrawer 
+export default TaskDeadlineDrawer

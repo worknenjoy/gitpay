@@ -15,14 +15,14 @@ const StackWrapper = styled.div`
   width: 30em;
   height: 25em;
   align-items: center;
-  vertical-align: center; 
+  vertical-align: center;
   box-shadow: 1px 1px 10px #dadada;
   ${media.phone`
     width: 380px;
     margin: auto;
     margin-bottom: 1em;
     box-shadow: 1px 1px 30px #dadada;
-  `} 
+  `}
 `
 const NavMenu = styled.div`
   margin: 0;
@@ -59,7 +59,7 @@ const PieChartWrapper = styled.div`
   margin: auto;
   vertical-align: middle;
 `
-export default function StackData () {
+export default function StackData() {
   const [label, setLabel] = useState('flex')
   const [stack, setStack] = useState('none')
   const [status, setStatus] = useState('none')
@@ -69,13 +69,11 @@ export default function StackData () {
       setLabel('flex')
       setStack('none')
       setStatus('none')
-    }
-    else if (event.target.id === 'stack') {
+    } else if (event.target.id === 'stack') {
       setLabel('none')
       setStack('flex')
       setStatus('none')
-    }
-    else if (event.target.id === 'status') {
+    } else if (event.target.id === 'status') {
       setLabel('none')
       setStack('none')
       setStatus('flex')
@@ -85,14 +83,20 @@ export default function StackData () {
   return (
     <StackWrapper>
       <NavMenu>
-        <MenuItem onClick={ ChangeChart } id='stack'>Stacks</MenuItem>
-        <MenuItem onClick={ ChangeChart } id='label'>Labels</MenuItem>
-        <MenuItem onClick={ ChangeChart } id='status'>Status</MenuItem>
+        <MenuItem onClick={ChangeChart} id="stack">
+          Stacks
+        </MenuItem>
+        <MenuItem onClick={ChangeChart} id="label">
+          Labels
+        </MenuItem>
+        <MenuItem onClick={ChangeChart} id="status">
+          Status
+        </MenuItem>
       </NavMenu>
       <PieChartWrapper>
-        <LabelPieCharts display={ label } />
-        <StatusPieCharts display={ status } />
-        <StackPieCharts display={ stack } />
+        <LabelPieCharts display={label} />
+        <StatusPieCharts display={status} />
+        <StackPieCharts display={stack} />
       </PieChartWrapper>
     </StackWrapper>
   )

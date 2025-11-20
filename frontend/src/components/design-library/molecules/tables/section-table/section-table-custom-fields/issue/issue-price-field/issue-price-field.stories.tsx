@@ -1,17 +1,17 @@
-import React from 'react';
-import IssuePriceField from './issue-price-field';
+import React from 'react'
+import IssuePriceField from './issue-price-field'
 
 export default {
   title: 'Design Library/Molecules/Tables/Fields/Issue/IssuePriceField',
-  component: IssuePriceField
-};
+  component: IssuePriceField,
+}
 
-const Template = (args) => <IssuePriceField {...args} />;
+const Template = (args) => <IssuePriceField {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   // Add default props here
   issue: {
-    value: 100
-  }
-};
+    value: 100,
+  },
+}

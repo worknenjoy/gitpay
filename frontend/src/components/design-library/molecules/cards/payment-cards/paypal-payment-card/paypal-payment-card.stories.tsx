@@ -1,25 +1,25 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
-import PayPalPaymentCard, { PaypalPaymentCardProps } from './paypal-payment-card';
+import type { Meta, StoryObj } from '@storybook/react'
+import React from 'react'
+import PayPalPaymentCard, { PaypalPaymentCardProps } from './paypal-payment-card'
 
 const meta: Meta<typeof PayPalPaymentCard> = {
   title: 'Design Library/Molecules/Cards/PaymentCards/PayPalPaymentCard',
   component: PayPalPaymentCard,
   parameters: {
-    layout: 'centered'
+    layout: 'centered',
   },
   decorators: [
     (Story) => (
       <div style={{ width: 360 }}>
         <Story />
       </div>
-    )
-  ]
-};
+    ),
+  ],
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<PaypalPaymentCardProps>;
+type Story = StoryObj<PaypalPaymentCardProps>
 
 export const Default: Story = {
   args: {
@@ -27,37 +27,42 @@ export const Default: Story = {
     plan: 'basic',
     price: 20,
     user: {},
-    order: { 
+    order: {
       completed: true,
-      data: {} 
+      data: {},
     },
-    createOrder: () => Promise.resolve({ data: { payment_url: 'https://www.paypal.com/checkoutnow?token=EC-60U79048BN7719609' } }),
-    onClose: () => {}
-  }
-};
+    createOrder: () =>
+      Promise.resolve({
+        data: { payment_url: 'https://www.paypal.com/checkoutnow?token=EC-60U79048BN7719609' },
+      }),
+    onClose: () => {},
+  },
+}
 
 export const LoggedIn: Story = {
   args: {
     ...Default.args,
-    user: { 
+    user: {
       completed: true,
       data: {
-        id: 1, name: 'Jane Doe', email: 'jane.doe@example.com'
-      }
-    }
-  }
-};
+        id: 1,
+        name: 'Jane Doe',
+        email: 'jane.doe@example.com',
+      },
+    },
+  },
+}
 
-export const ProcessingOrder : Story = {
+export const ProcessingOrder: Story = {
   args: {
     ...Default.args,
-    user: { 
+    user: {
       completed: false,
-      data: null
+      data: null,
     },
     order: {
       completed: false,
-      data: null
-    }
-  }
-};
+      data: null,
+    },
+  },
+}

@@ -3,7 +3,7 @@ import { css } from 'styled-components'
 const sizes = {
   desktop: 992,
   tablet: 768,
-  phone: 414
+  phone: 414,
 }
 
 /**
@@ -21,18 +21,21 @@ const sizes = {
  * @see: https://www.styled-components.com/docs/advanced#media-templates
  */
 
-const media = Object.keys(sizes).reduce((acc, label) => {
-  acc[label] = (...args) => css`
-    @media (max-width: ${sizes[label] / 16}em) {
-      ${css(...args)}
-    }
-  `
+const media = Object.keys(sizes).reduce(
+  (acc, label) => {
+    acc[label] = (...args) => css`
+      @media (max-width: ${sizes[label] / 16}em) {
+        ${css(...args)}
+      }
+    `
 
-  return acc
-}, {
-  desktop: null,
-  tablet: null,
-  phone: null
-})
+    return acc
+  },
+  {
+    desktop: null,
+    tablet: null,
+    phone: null,
+  },
+)
 
 export default media

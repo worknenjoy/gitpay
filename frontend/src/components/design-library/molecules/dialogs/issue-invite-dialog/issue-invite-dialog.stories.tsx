@@ -1,18 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import IssueInviteDialog from './issue-invite-dialog';
+import type { Meta, StoryObj } from '@storybook/react'
+import IssueInviteDialog from './issue-invite-dialog'
 
-type IssueInviteDialogProps = React.ComponentProps<typeof IssueInviteDialog>;
+type IssueInviteDialogProps = React.ComponentProps<typeof IssueInviteDialog>
 
 const meta: Meta<IssueInviteDialogProps> = {
   title: 'Design Library/Molecules/Dialogs/IssueInviteDialog',
   component: IssueInviteDialog,
   parameters: { layout: 'centered' },
-  argTypes: {}
-};
+  argTypes: {},
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<IssueInviteDialogProps>;
+type Story = StoryObj<IssueInviteDialogProps>
 
 export const Default: Story = {
   args: {
@@ -20,6 +20,6 @@ export const Default: Story = {
     visible: true,
     onClose: () => {},
     onInvite: () => {},
-    user: {}
-  }
-};
+    user: {},
+  },
+}

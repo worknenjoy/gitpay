@@ -3,31 +3,36 @@
 const assert = require('assert')
 const request = require('supertest')
 const expect = require('chai').expect
-const api = require('../src/server').default;
-const agent = request.agent(api);
-const models = require('../src/models');
+const api = require('../src/server').default
+const agent = request.agent(api)
+const models = require('../src/models')
 const { register, login } = require('./helpers')
 
-xdescribe("Organizations", () => {
-
+xdescribe('Organizations', () => {
   beforeEach(() => {
+    models.User.destroy({ where: {}, truncate: true, cascade: true }).then(
+      function (rowDeleted) {
+        // rowDeleted will return number of rows deleted
+        if (rowDeleted === 1) {
+          //console.log('Deleted successfully');
+        }
+      },
+      function (err) {
+        //console.log(err);
+      },
+    )
 
-    models.User.destroy({ where: {}, truncate: true, cascade: true }).then(function (rowDeleted) { // rowDeleted will return number of rows deleted
-      if (rowDeleted === 1) {
-        //console.log('Deleted successfully');
-      }
-    }, function (err) {
-      //console.log(err);
-    });
-
-    models.Organization.destroy({ where: {}, truncate: true, cascade: true }).then(function (rowDeleted) { // rowDeleted will return number of rows deleted
-      if (rowDeleted === 1) {
-        //console.log('Deleted successfully');
-      }
-    }, function (err) {
-      //console.log(err);
-    });
-
+    models.Organization.destroy({ where: {}, truncate: true, cascade: true }).then(
+      function (rowDeleted) {
+        // rowDeleted will return number of rows deleted
+        if (rowDeleted === 1) {
+          //console.log('Deleted successfully');
+        }
+      },
+      function (err) {
+        //console.log(err);
+      },
+    )
   })
 
   xdescribe('findAll Organizations', () => {
@@ -37,9 +42,9 @@ xdescribe("Organizations", () => {
         .expect('Content-Type', /json/)
         .expect(200)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
-          done(err);
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.exist
+          done(err)
         })
     })
   })
@@ -50,25 +55,29 @@ xdescribe("Organizations", () => {
         email: 'test_register_organization@gmail.com',
         username: 'test',
         password: 'test',
-        provider: 'github'
-      }).then(res => {
+        provider: 'github',
+      })
+        .then((res) => {
           const UserId = res.body.id
           login(agent, {
             email: 'test_register_organization@gmail.com',
-            password: 'test'
-          }).then(user => {
-            agent
-            .post(`/organizations/create`)
-            .send({ UserId, name: 'foo' })
-            .set('Authorization', user.headers.authorization)
-            .expect(200)
-            .end((err, org) => {
-              expect(org.statusCode).to.equal(200);
-              expect(org.body.name).to.equal('foo');
-              done(err);
+            password: 'test',
+          })
+            .then((user) => {
+              agent
+                .post(`/organizations/create`)
+                .send({ UserId, name: 'foo' })
+                .set('Authorization', user.headers.authorization)
+                .expect(200)
+                .end((err, org) => {
+                  expect(org.statusCode).to.equal(200)
+                  expect(org.body.name).to.equal('foo')
+                  done(err)
+                })
             })
-          }).catch(done)
-        }).catch(done)
+            .catch(done)
+        })
+        .catch(done)
     })
     xit('dont allow register with the same organization', (done) => {
       agent
@@ -83,11 +92,11 @@ xdescribe("Organizations", () => {
             .expect('Content-Type', /json/)
             .expect(403)
             .end((err, res) => {
-              expect(res.statusCode).to.equal(403);
-              expect(res.body.error).to.equal('user.exist');
-              done();
+              expect(res.statusCode).to.equal(403)
+              expect(res.body.error).to.equal('user.exist')
+              done()
             })
         })
     })
   })
-});
+})

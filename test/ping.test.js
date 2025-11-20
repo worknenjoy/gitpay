@@ -1,11 +1,11 @@
 // test/ping.test.js
-const supertest = require('supertest');
-const express = require('express');
-const app = express();
+const supertest = require('supertest')
+const express = require('express')
+const app = express()
 
 app.get('/ping', (req, res) => {
-  res.status(200).json({ pong: true });
-});
+  res.status(200).json({ pong: true })
+})
 
 describe('Ping Test', () => {
   it('should respond to /ping', (done) => {
@@ -13,9 +13,9 @@ describe('Ping Test', () => {
       .get('/ping')
       .expect(200)
       .end((err, res) => {
-        if (err) return done(err);
-        console.log(res.body); // deve ser { pong: true }
-        done();
-      });
-  });
-});
+        if (err) return done(err)
+        console.log(res.body) // deve ser { pong: true }
+        done()
+      })
+  })
+})

@@ -6,7 +6,10 @@ export function ensureDir(dir: string) {
   }
 }
 
-export function centsToDecimal(amount: number | null | undefined, currency: string | undefined): string {
+export function centsToDecimal(
+  amount: number | null | undefined,
+  currency: string | undefined,
+): string {
   if (typeof amount !== 'number') return ''
   const zeroMinor = new Set(['JPY', 'KRW', 'VND'])
   const cur = (currency || '').toUpperCase()
@@ -14,7 +17,10 @@ export function centsToDecimal(amount: number | null | undefined, currency: stri
   return (amount / 100).toFixed(2)
 }
 
-export function formatCurrencyPtBR(amount: number | null | undefined, currency: string | undefined): string {
+export function formatCurrencyPtBR(
+  amount: number | null | undefined,
+  currency: string | undefined,
+): string {
   if (typeof amount !== 'number' || !currency) return ''
   const cur = currency.toUpperCase()
   try {

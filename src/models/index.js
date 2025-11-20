@@ -4,10 +4,10 @@ const basename = path.basename(module.filename)
 const env = process.env.NODE_ENV || 'development'
 
 const databaseEnv = {
-  'development': 'databaseDev',
-  'staging': 'databaseStaging',
-  'production': 'databaseProd',
-  'test': 'databaseTest'
+  development: 'databaseDev',
+  staging: 'databaseStaging',
+  production: 'databaseProd',
+  test: 'databaseTest',
 }
 
 const config = require('../config/secrets')[databaseEnv[env]]
@@ -29,31 +29,33 @@ if (env === 'production' || env === 'staging') {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false
-      }
-    }
+        rejectUnauthorized: false,
+      },
+    },
   })
   // eslint-disable-next-line no-console
   console.log('running production migration')
-}
-else {
+} else {
   sequelize = new Sequelize(config.database, config.username, config.password, config)
 }
 
 let db = {}
 
 /* eslint-disable no-sync */
-fs
-  .readdirSync(__dirname)
+fs.readdirSync(__dirname)
   .filter((file) => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js' || file.slice(-3) === '.ts')
+    return (
+      file.indexOf('.') !== 0 &&
+      file !== basename &&
+      (file.slice(-3) === '.js' || file.slice(-3) === '.ts')
+    )
   })
-  .forEach(file => {
+  .forEach((file) => {
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
     db[model.name] = model
   })
 
-Object.keys(db).forEach(modelName => {
+Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db)
   }

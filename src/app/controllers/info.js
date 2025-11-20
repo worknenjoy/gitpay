@@ -6,21 +6,19 @@ const fetchChannelUserCount = async () => {
   const data = await rp({
     uri: 'https://slack.com/api/conversations.list',
     headers: {
-      Authorization: 'Bearer ' + slack.token
+      Authorization: 'Bearer ' + slack.token,
     },
-    json: true
+    json: true,
   })
   if (data.ok) {
-    const channel = data.channels.find(channel => channel.id === slack.channelId)
+    const channel = data.channels.find((channel) => channel.id === slack.channelId)
     if (!channel) {
       // eslint-disable-next-line no-console
       console.error('Invalid channel id ' + slack.channelId)
-    }
-    else {
+    } else {
       return channel.num_members
     }
-  }
-  else {
+  } else {
     // throw new Error(data.error)
     return 0
   }
@@ -30,25 +28,24 @@ exports.info = async (req, res) => {
   try {
     const countTasks = await models.Task.count()
     const tasks = await models.Task.findAll({
-      attributes: ['value']
+      attributes: ['value'],
     })
     const countUsers = await models.User.count()
     if (tasks) {
-      const bounties = tasks.filter(t => t.value)
+      const bounties = tasks
+        .filter((t) => t.value)
         .reduce((accumulator, task) => accumulator + parseInt(task.value), 0)
       const channelUserCount = await fetchChannelUserCount()
       res.send({
         tasks: countTasks,
         bounties: bounties,
         users: countUsers,
-        channelUserCount
+        channelUserCount,
       })
-    }
-    else {
+    } else {
       res.send(500)
     }
-  }
-  catch (e) {
+  } catch (e) {
     // eslint-disable-next-line no-console
     console.error(e)
   }

@@ -1,8 +1,6 @@
-
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add altering commands here.
      *
@@ -15,43 +13,43 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       plan: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: false
+        unique: false,
       },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       description: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: true,
       },
       fee: {
         type: Sequelize.DECIMAL,
-        allowNull: false
+        allowNull: false,
       },
       feeType: {
         type: Sequelize.ENUM,
-        values: ['charge', 'refund']
+        values: ['charge', 'refund'],
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW')
-      }
+        defaultValue: Sequelize.fn('NOW'),
+      },
     })
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
      *
@@ -59,5 +57,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.dropTable('PlanSchemas')
-  }
-};
+  },
+}

@@ -2,7 +2,7 @@ const PaymentRequests = require('../../modules/paymentRequests')
 
 exports.createPaymentRequest = async function createPaymentRequest(req, res) {
   try {
-    const data = await PaymentRequests.paymentRequestBuilds({...req.body, userId: req.user.id})
+    const data = await PaymentRequests.paymentRequestBuilds({ ...req.body, userId: req.user.id })
     res.status(201).send(data)
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -13,7 +13,7 @@ exports.createPaymentRequest = async function createPaymentRequest(req, res) {
 
 exports.listPaymentRequests = async function listPaymentRequests(req, res) {
   try {
-    const data = await PaymentRequests.paymentRequestList({userId: req.user.id})
+    const data = await PaymentRequests.paymentRequestList({ userId: req.user.id })
     res.status(200).send(data)
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -27,7 +27,7 @@ exports.updatePaymentRequest = async function updatePaymentRequest(req, res) {
     const data = await PaymentRequests.paymentRequestUpdate({
       id: req.params.id,
       ...req.body,
-      userId: req.user.id
+      userId: req.user.id,
     })
     res.status(200).send(data)
   } catch (error) {

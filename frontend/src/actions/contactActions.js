@@ -14,20 +14,20 @@ const messageRecruitersSuccess = () => {
   return { type: MESSAGE_RECRUITERS_SUCCESS, completed: true }
 }
 
-const messageRecruitersError = error => {
+const messageRecruitersError = (error) => {
   return { type: MESSAGE_RECRUITERS_ERROR, completed: true, error: error }
 }
 
 const messageRecruiters = (params) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(messageRecruitersRequested())
     return axios
       .post(api.API_URL + '/contact/recruiters', params)
-      .then(response => {
+      .then((response) => {
         dispatch(addNotification('actions.message.recruiters.success'))
         return dispatch(messageRecruitersSuccess())
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(addNotification('actions.message.recruiters.error'))
         return dispatch(messageRecruitersError(error))
       })
@@ -41,5 +41,5 @@ export {
   messageRecruitersRequested,
   messageRecruitersSuccess,
   messageRecruitersError,
-  messageRecruiters
+  messageRecruiters,
 }

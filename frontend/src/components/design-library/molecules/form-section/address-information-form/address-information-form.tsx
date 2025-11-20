@@ -1,7 +1,7 @@
-import React from 'react';
-import { Grid } from '@mui/material';
-import Fieldset from '../../../atoms/inputs/fieldset/fieldset';
-import Field from '../../../atoms/inputs/fields/field/field';
+import React from 'react'
+import { Grid } from '@mui/material'
+import Fieldset from '../../../atoms/inputs/fieldset/fieldset'
+import Field from '../../../atoms/inputs/fields/field/field'
 
 const AddressInformationForm = ({
   completed,
@@ -10,10 +10,10 @@ const AddressInformationForm = ({
   city,
   state,
   zipCode,
-  country
+  country,
 }) => {
   return (
-  <Fieldset completed={completed} legend="Address Information">
+    <Fieldset completed={completed} legend="Address Information">
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 6 }}>
           <Field
@@ -64,6 +64,6 @@ const AddressInformationForm = ({
         </Grid>
       </Grid>
     </Fieldset>
-  );
+  )
 }
-export default AddressInformationForm;
+export default AddressInformationForm

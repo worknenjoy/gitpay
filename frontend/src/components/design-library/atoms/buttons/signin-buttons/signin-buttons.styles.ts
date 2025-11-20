@@ -1,5 +1,5 @@
-import { css, styled } from "@mui/material/styles"
-import Button, { ButtonProps } from "../button/button"
+import { css, styled } from '@mui/material/styles'
+import Button, { ButtonProps } from '../button/button'
 
 export const StyledButton = styled(Button)<ButtonProps>`
   min-width: 20px !important;
@@ -17,11 +17,16 @@ export const LinkButton = styled(StyledButton)`
 `
 
 export const LabelButton = styled('span', {
-  shouldForwardProp: (prop) => prop !== 'right'
+  shouldForwardProp: (prop) => prop !== 'right',
 })<{ right?: boolean }>`
-  ${({ right }) => right
-    ? css`margin-left: 10px;`
-    : css`margin-right: 10px;`}
+  ${({ right }) =>
+    right
+      ? css`
+          margin-left: 10px;
+        `
+      : css`
+          margin-right: 10px;
+        `}
 
   @media (min-width: 37.5em) {
     display: none;

@@ -27,15 +27,15 @@ describe('User Actions', () => {
     const accountData = { data: { id: 1, name: 'Test User' } }
     moxios.stubRequest(`${api.API_URL}/user/account`, {
       status: 200,
-      response: accountData.data
+      response: accountData.data,
     })
 
     const expectedActions = [
       { type: types.FETCH_USER_ACCOUNT_REQUESTED, completed: false },
-      { type: types.FETCH_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data }
+      { type: types.FETCH_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data },
     ]
     const store = mockStore({
-      intl: { messages: {} }
+      intl: { messages: {} },
     })
 
     return store.dispatch(actions.fetchAccount()).then(() => {
@@ -46,12 +46,16 @@ describe('User Actions', () => {
 
   it('creates FETCH_USER_ACCOUNT_ERROR when fetching user account fails', () => {
     moxios.stubRequest(`${api.API_URL}/user/account`, {
-      status: 500
+      status: 500,
     })
 
     const expectedActions = [
       { type: types.FETCH_USER_ACCOUNT_REQUESTED, completed: false },
-      { type: types.FETCH_USER_ACCOUNT_ERROR, completed: true, error: new Error('Request failed with status code 500') }
+      {
+        type: types.FETCH_USER_ACCOUNT_ERROR,
+        completed: true,
+        error: new Error('Request failed with status code 500'),
+      },
     ]
     const store = mockStore({ intl: { messages: {} } })
 
@@ -68,13 +72,17 @@ describe('User Actions', () => {
     const accountData = { data: { id: 1, name: 'Test User' } }
     moxios.stubRequest(`${api.API_URL}/user/account`, {
       status: 200,
-      response: accountData.data
+      response: accountData.data,
     })
 
     const expectedActions = [
       { type: types.CREATE_USER_ACCOUNT_REQUESTED, completed: false },
-      { type: typesNotification.ADD_NOTIFICATION, text: 'actions.user.account.create.success', open: true },
-      { type: types.CREATE_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data }
+      {
+        type: typesNotification.ADD_NOTIFICATION,
+        text: 'actions.user.account.create.success',
+        open: true,
+      },
+      { type: types.CREATE_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data },
     ]
     const store = mockStore({ loggedIn: { data: { account_id: null } }, intl: { messages: {} } })
 
@@ -89,13 +97,21 @@ describe('User Actions', () => {
 
   it('creates CREATE_USER_ACCOUNT_ERROR when creating user account fails', () => {
     moxios.stubRequest(`${api.API_URL}/user/account`, {
-      status: 500
+      status: 500,
     })
 
     const expectedActions = [
       { type: types.CREATE_USER_ACCOUNT_REQUESTED, completed: false },
-      { type: typesNotification.ADD_NOTIFICATION, text: 'actions.user.account.create.error', open: true },
-      { type: types.CREATE_USER_ACCOUNT_ERROR, completed: true, error: new Error('Request failed with status code 500') }
+      {
+        type: typesNotification.ADD_NOTIFICATION,
+        text: 'actions.user.account.create.error',
+        open: true,
+      },
+      {
+        type: types.CREATE_USER_ACCOUNT_ERROR,
+        completed: true,
+        error: new Error('Request failed with status code 500'),
+      },
     ]
     const store = mockStore({ loggedIn: { data: { account_id: null } }, intl: { messages: {} } })
 
@@ -112,13 +128,17 @@ describe('User Actions', () => {
     const accountData = { data: { id: 1, name: 'Updated User' } }
     moxios.stubRequest(`${api.API_URL}/user/account`, {
       status: 200,
-      response: accountData.data
+      response: accountData.data,
     })
 
     const expectedActions = [
       { type: types.UPDATE_USER_ACCOUNT_REQUESTED, completed: false },
-      { type: typesNotification.ADD_NOTIFICATION, text: 'actions.user.account.update.success', open: true },
-      { type: types.UPDATE_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data }
+      {
+        type: typesNotification.ADD_NOTIFICATION,
+        text: 'actions.user.account.update.success',
+        open: true,
+      },
+      { type: types.UPDATE_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data },
     ]
     const store = mockStore({ intl: { messages: {} } })
 
@@ -133,13 +153,21 @@ describe('User Actions', () => {
 
   it('creates UPDATE_USER_ACCOUNT_ERROR when updating user account fails', () => {
     moxios.stubRequest(`${api.API_URL}/user/account`, {
-      status: 500
+      status: 500,
     })
 
     const expectedActions = [
       { type: types.UPDATE_USER_ACCOUNT_REQUESTED, completed: false },
-      { type: typesNotification.ADD_NOTIFICATION, text: 'actions.user.account.update.error', open: true },
-      { type: types.UPDATE_USER_ACCOUNT_ERROR, completed: true, error: new Error('Request failed with status code 500') }
+      {
+        type: typesNotification.ADD_NOTIFICATION,
+        text: 'actions.user.account.update.error',
+        open: true,
+      },
+      {
+        type: types.UPDATE_USER_ACCOUNT_ERROR,
+        completed: true,
+        error: new Error('Request failed with status code 500'),
+      },
     ]
     const store = mockStore({ intl: { messages: {} } })
 
@@ -148,20 +176,28 @@ describe('User Actions', () => {
       expect(actions[0]).to.eql(expectedActions[0])
       expect(actions[1].type).to.equal(expectedActions[1].type)
       expect(actions[1].completed).to.equal(expectedActions[1].completed)
-      expect(actions[1].error).to.equal(expectedActions[1].error)  
+      expect(actions[1].error).to.equal(expectedActions[1].error)
     })
   })
   it('when user account update fails but returns 200 status code', () => {
     const accountData = { data: { id: 1, name: 'Updated User' } }
     moxios.stubRequest(`${api.API_URL}/user/account`, {
       status: 200,
-      response: accountData.data
+      response: accountData.data,
     })
 
     const expectedActions = [
       { type: types.UPDATE_USER_ACCOUNT_REQUESTED, completed: false },
-      { type: typesNotification.ADD_NOTIFICATION, text: 'actions.user.account.update.error', open: true },
-      { type: types.UPDATE_USER_ACCOUNT_ERROR, completed: true, error: new Error('Request failed with status code 200') }
+      {
+        type: typesNotification.ADD_NOTIFICATION,
+        text: 'actions.user.account.update.error',
+        open: true,
+      },
+      {
+        type: types.UPDATE_USER_ACCOUNT_ERROR,
+        completed: true,
+        error: new Error('Request failed with status code 200'),
+      },
     ]
     const store = mockStore({ intl: { messages: {} } })
 
@@ -170,21 +206,31 @@ describe('User Actions', () => {
       expect(actions[0]).to.eql(expectedActions[0])
       expect(actions[1].type).to.equal(expectedActions[1].type)
       expect(actions[1].completed).to.equal(expectedActions[1].completed)
-      expect(actions[1].error).to.equal(expectedActions[1].error)  
+      expect(actions[1].error).to.equal(expectedActions[1].error)
     })
   })
   it('when user account update fails but returns 401 status code', () => {
     moxios.stubRequest(`${api.API_URL}/user/account`, {
       status: 401,
-      response: StripeAccountInvalidRequest
+      response: StripeAccountInvalidRequest,
     })
 
     const expectedActions = [
       { type: types.UPDATE_USER_ACCOUNT_REQUESTED, completed: false },
-      { type: typesNotification.ADD_NOTIFICATION, text: 'actions.user.account.update.error.missing', open: true },
-      { type: types.UPDATE_USER_ACCOUNT_ERROR, completed: true, error: new Error('Request failed with status code 401') }
+      {
+        type: typesNotification.ADD_NOTIFICATION,
+        text: 'actions.user.account.update.error.missing',
+        open: true,
+      },
+      {
+        type: types.UPDATE_USER_ACCOUNT_ERROR,
+        completed: true,
+        error: new Error('Request failed with status code 401'),
+      },
     ]
-    const store = mockStore({ intl: { messages: { 'actions.user.account.update.error.phone': 'Invalid phone' } } })
+    const store = mockStore({
+      intl: { messages: { 'actions.user.account.update.error.phone': 'Invalid phone' } },
+    })
 
     return store.dispatch(actions.updateAccount(null, {})).then(() => {
       const actions = store.getActions()

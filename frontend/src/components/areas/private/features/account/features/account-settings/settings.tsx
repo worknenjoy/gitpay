@@ -1,14 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Typography,
-  Paper,
-  Grid,
-  Menu,
-  MenuItem,
-  Button,
-  Switch,
-  Checkbox
-} from '@mui/material'
+import { Typography, Paper, Grid, Menu, MenuItem, Button, Switch, Checkbox } from '@mui/material'
 import LanguageIcon from '@mui/icons-material/Language'
 import { updateIntl } from 'react-intl-redux'
 import { FormattedMessage } from 'react-intl'
@@ -20,8 +11,8 @@ import messagesEnLocal from '../../../../../../../translations/generated/en.json
 import { Title, LabelButton, StyledAvatarIconOnly } from './settings.styles'
 
 const messages = {
-  'br': process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
-  'en': process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
+  br: process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
+  en: process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal,
 }
 
 import logoLangEn from 'images/united-states-of-america.png'
@@ -44,10 +35,12 @@ const Settings = (props) => {
     try {
       await props.updateUser({ language: lang })
       localStorage.setItem('userLanguage', lang)
-      store.dispatch(updateIntl({
-        locale: lang,
-        messages: messages[lang]
-      }))
+      store.dispatch(
+        updateIntl({
+          locale: lang,
+          messages: messages[lang],
+        }),
+      )
     } catch (e) {
       console.log('error', e)
     }
@@ -107,7 +100,10 @@ const Settings = (props) => {
               <div>
                 <LanguageIcon />
                 <LabelButton>
-                  <FormattedMessage id="preferences.actions.choose.language" defaultMessage="Choose language" />
+                  <FormattedMessage
+                    id="preferences.actions.choose.language"
+                    defaultMessage="Choose language"
+                  />
                 </LabelButton>
               </div>
             )}
@@ -144,8 +140,16 @@ const Settings = (props) => {
           />
           &nbsp;
           <label htmlFor="switch_receive_notifications">
-            <Typography component="span" style={{ display: 'inline-block' }} color="primary" variant="body2">
-              <FormattedMessage id="preferences.notifications.receiveNotifications" defaultMessage="I want to receive relevant notifications from Gitpay" />
+            <Typography
+              component="span"
+              style={{ display: 'inline-block' }}
+              color="primary"
+              variant="body2"
+            >
+              <FormattedMessage
+                id="preferences.notifications.receiveNotifications"
+                defaultMessage="I want to receive relevant notifications from Gitpay"
+              />
             </Typography>
           </label>
         </Grid>
@@ -153,14 +157,19 @@ const Settings = (props) => {
           <Typography color="primary" variant="h5">
             <FormattedMessage id="prefences.my.openforjobs" defaultMessage="Open For Jobs" />
           </Typography>
-          <Checkbox
-            onClick={handleJobsCheck}
-            checked={openForJobs}
-          />
+          <Checkbox onClick={handleJobsCheck} checked={openForJobs} />
           &nbsp;
           <label htmlFor="check_open_for_jobs">
-            <Typography component="span" style={{ display: 'inline-block' }} color="primary" variant="body2">
-              <FormattedMessage id="preferences.jobs.checkbox" defaultMessage="Are you open for job opportunities?" />
+            <Typography
+              component="span"
+              style={{ display: 'inline-block' }}
+              color="primary"
+              variant="body2"
+            >
+              <FormattedMessage
+                id="preferences.jobs.checkbox"
+                defaultMessage="Are you open for job opportunities?"
+              />
             </Typography>
           </label>
         </Grid>

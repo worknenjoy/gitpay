@@ -10,7 +10,7 @@ import {
   OnlyDesktop,
   OnlyMobile,
   MenuMobile,
-  IconHamburger
+  IconHamburger,
 } from './TopbarStyles'
 import logo from 'images/gitpay-logo.png'
 
@@ -24,15 +24,15 @@ const Topbar = ({
   accountMenuProps,
   loginFormSignupFormProps,
   loginFormForgotFormProps,
-  importIssuesProps
+  importIssuesProps,
 }) => {
   const [isActive, setIsActive] = useState(false)
-  const [ isLoggedIn, setIsLoggedIn ] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const handleClickMenuMobile = () => {
     setIsActive(!isActive)
   }
-  
+
   useEffect(() => {
     const isLoggedIn = user?.logged
     setIsLoggedIn(isLoggedIn)
@@ -41,34 +41,30 @@ const Topbar = ({
   return (
     <Bar>
       <Container>
-        <LeftSide isActive={ isActive }>
-         <div>
+        <LeftSide isActive={isActive}>
+          <div>
             <StyledButton href="/">
-              <Logo src={ logo } />
+              <Logo src={logo} />
             </StyledButton>
           </div>
-          <OnlyDesktop style={ { marginTop: 12, marginLeft: 20 } }>
+          <OnlyDesktop style={{ marginTop: 12, marginLeft: 20 }}>
             <TopbarMenu />
           </OnlyDesktop>
-           <MenuMobile
-              onClick={ handleClickMenuMobile }
-              variant="text"
-              size="small"
-            >
-              <IconHamburger isActive={ isActive } />
-            </MenuMobile>
+          <MenuMobile onClick={handleClickMenuMobile} variant="text" size="small">
+            <IconHamburger isActive={isActive} />
+          </MenuMobile>
         </LeftSide>
-        <RightSide isActive={ isActive }>
+        <RightSide isActive={isActive}>
           <OnlyMobile>
             <TopbarMenu />
           </OnlyMobile>
-          { isLoggedIn ? (
+          {isLoggedIn ? (
             <>
-              <AccountSettings user={ user } accountMenuProps={accountMenuProps} />
+              <AccountSettings user={user} accountMenuProps={accountMenuProps} />
               <ImportIssue {...importIssuesProps} />
             </>
           ) : (
-            <div style={ { display: 'flex', justifyContent: 'space-around', marginRight: 20 } }>
+            <div style={{ display: 'flex', justifyContent: 'space-around', marginRight: 20 }}>
               <SignupSignin
                 loginFormSignupFormProps={loginFormSignupFormProps}
                 loginFormForgotFormProps={loginFormForgotFormProps}
@@ -89,6 +85,6 @@ const Topbar = ({
       </Container>
     </Bar>
   )
-};
+}
 
-export default Topbar;
+export default Topbar

@@ -21,10 +21,7 @@ import {
   Chip,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import {
-  PaymentOutlined as FilterListIcon,
-  Redeem as RedeemIcon
-} from '@mui/icons-material'
+import { PaymentOutlined as FilterListIcon, Redeem as RedeemIcon } from '@mui/icons-material'
 import { Link } from 'react-router-dom'
 import blue from '@mui/material/colors/blue'
 import PaymentTypeIcon from '../../../../private/features/payments/legacy/payment-type-icon'
@@ -38,14 +35,14 @@ import { formatCurrency } from '../../../../../../utils/format-currency'
 const styles = {
   avatar: {
     backgroundColor: blue[100],
-    color: blue[600]
-  }
+    color: blue[600],
+  },
 }
 
 const messages = defineMessages({
   statusOpen: {
     id: 'task.status.label.open',
-    defaultMessage: 'Open'
+    defaultMessage: 'Open',
   },
   statusSucceeded: {
     id: 'task.status.label.succeeded',
@@ -53,68 +50,69 @@ const messages = defineMessages({
   },
   statusFail: {
     id: 'task.status.label.fail',
-    defaultMessage: 'Payment canceled'
+    defaultMessage: 'Payment canceled',
   },
   statusCanceled: {
     id: 'task.status.label.canceled',
-    defaultMessage: 'Payment failed'
+    defaultMessage: 'Payment failed',
   },
   statusRefunded: {
     id: 'task.status.label.refunded',
-    defaultMessage: 'Refunded'
+    defaultMessage: 'Refunded',
   },
   labelCreditCard: {
     id: 'task.status.label.creditcard',
-    defaultMessage: 'Credit Card'
+    defaultMessage: 'Credit Card',
   },
   labelPayPal: {
     id: 'task.status.label.paypal',
-    defaultMessage: 'Paypal'
+    defaultMessage: 'Paypal',
   },
   labelNoPayment: {
     id: 'task.status.label.none',
-    defaultMessage: 'No payment type'
+    defaultMessage: 'No payment type',
   },
   statusAnd: {
     id: 'task.status.label.and',
-    defaultMessage: 'and'
+    defaultMessage: 'and',
   },
   allPayments: {
     id: 'task.payment.filter.all',
-    defaultMessage: 'All payments'
+    defaultMessage: 'All payments',
   },
   creditCardPayment: {
     id: 'task.payment.filter.creditcard',
-    defaultMessage: 'Credit Card payments'
+    defaultMessage: 'Credit Card payments',
   },
   payPalPayment: {
     id: 'task.payment.filter.paypal',
-    defaultMessage: 'Paypal payments'
+    defaultMessage: 'Paypal payments',
   },
   undefinedLabel: {
     id: 'task.payment.status.undefined',
-    defaultMessage: 'Undefined status'
+    defaultMessage: 'Undefined status',
   },
   transferMessage: {
     id: 'task.payment.transfer.notRegistered',
-    defaultMessage: 'The user {to} who will receive the payment, it has no {payments} registered. We will help him to register and send the payment to his registered account'
+    defaultMessage:
+      'The user {to} who will receive the payment, it has no {payments} registered. We will help him to register and send the payment to his registered account',
   },
   taskNoAssigned: {
     id: 'task.payment.noAssigned',
-    defaultMessage: 'Noboby assigned to this task, so you need to first assign and then we can conclude the payment'
-  }
-
+    defaultMessage:
+      'Noboby assigned to this task, so you need to first assign and then we can conclude the payment',
+  },
 })
 
 const StyledTab = styled(Tab)(({ theme }) => ({
   '& .MuiTab-wrapper': {
     flexDirection: 'row',
-    alignItems: 'inherit'
+    alignItems: 'inherit',
   },
   '& svg': {
     width: 16,
-    height: 16
-  }
+    height: 16,
+  },
 }))
 
 class TaskPayment extends Component {
@@ -126,15 +124,13 @@ class TaskPayment extends Component {
       confirmOrderDialog: false,
       currentOffer: null,
       interested: null,
-      messageType: 'assign'
+      messageType: 'assign',
     }
   }
 
-  componentDidMount() {
+  componentDidMount() {}
 
-  }
-
-  payTask = e => {
+  payTask = (e) => {
     const { task } = this.props
     //this.props.onPayTask(this.props.id, this.props.values.card)
     this.props.onTransferTask(task.data.id)
@@ -151,7 +147,7 @@ class TaskPayment extends Component {
     e.preventDefault()
     this.setState({ currentTab: value })
     this.props.filterTaskOrders({
-      provider: providerTab[value]
+      provider: providerTab[value],
     })
   }
 
@@ -161,7 +157,7 @@ class TaskPayment extends Component {
       succeeded: this.props.intl.formatMessage(messages.statusSucceeded),
       fail: this.props.intl.formatMessage(messages.statusFail),
       canceled: this.props.intl.formatMessage(messages.statusCanceled),
-      refunded: this.props.intl.formatMessage(messages.statusRefunded)
+      refunded: this.props.intl.formatMessage(messages.statusRefunded),
     }
     return possibles[status]
   }
@@ -169,9 +165,9 @@ class TaskPayment extends Component {
   render() {
     const { classes, task, orders, offers, ...other } = this.props
 
-    const TabContainer = props => {
+    const TabContainer = (props) => {
       return (
-        <Typography component='div' style={{ padding: 8 * 3 }}>
+        <Typography component="div" style={{ padding: 8 * 3 }}>
           {props.children}
         </Typography>
       )
@@ -189,22 +185,24 @@ class TaskPayment extends Component {
       const { task, loggedUser, createOrder, assignTask, assigns } = this.props
       event.preventDefault()
 
-      const assign = this.props.assigns.filter(item => item.userId === offer.userId)[0]
+      const assign = this.props.assigns.filter((item) => item.userId === offer.userId)[0]
 
-      await task.data.id && loggedUser.logged && await createOrder({
-        provider: 'stripe',
-        amount: offer.value,
-        userId: loggedUser?.user?.id,
-        email: loggedUser?.user?.email,
-        taskId: task.id,
-        currency: 'usd',
-        status: 'open',
-        source_type: 'invoice-item',
-        customer_id: loggedUser?.user?.customer_id,
-        metadata: {
-          offer_id: offer.id,
-        }
-      })
+      ;(await task.data.id) &&
+        loggedUser.logged &&
+        (await createOrder({
+          provider: 'stripe',
+          amount: offer.value,
+          userId: loggedUser?.user?.id,
+          email: loggedUser?.user?.email,
+          taskId: task.id,
+          currency: 'usd',
+          status: 'open',
+          source_type: 'invoice-item',
+          customer_id: loggedUser?.user?.customer_id,
+          metadata: {
+            offer_id: offer.id,
+          },
+        }))
       await assignTask(task.data.id, assign.id)
       await this.props.offerUpdate(task.data.id, offer.id, { status: 'accepted' })
       this.setState({ confirmOrderDialog: false, currentOffer: null })
@@ -215,11 +213,13 @@ class TaskPayment extends Component {
       this.props.offerUpdate(task.data.id, offer.id, { status: 'rejected' })
     }
 
-    const sendTo = id => {
-      const chosen = this.props.assigns && this.props.assigns.filter(item => {
-        return item.id === id
-      })
-      return chosen && chosen.length && chosen[0].User || {}
+    const sendTo = (id) => {
+      const chosen =
+        this.props.assigns &&
+        this.props.assigns.filter((item) => {
+          return item.id === id
+        })
+      return (chosen && chosen.length && chosen[0].User) || {}
     }
 
     const openMessageDialog = (id, messageType = 'assign') => {
@@ -233,30 +233,40 @@ class TaskPayment extends Component {
     return (
       <Drawer
         onClose={this.props.onClose}
-        aria-labelledby='simple-dialog-title'
+        aria-labelledby="simple-dialog-title"
         fullWidth
-        maxWidth='md'
-        anchor='right'
+        maxWidth="md"
+        anchor="right"
         {...other}
       >
         <Container style={{ padding: 20 }}>
-          <Typography variant='h5' id='simple-dialog-title' gutterBottom>
-            <FormattedMessage id='task.payment.action.title' defaultMessage='Send payment for this issue to an user' />
+          <Typography variant="h5" id="simple-dialog-title" gutterBottom>
+            <FormattedMessage
+              id="task.payment.action.title"
+              defaultMessage="Send payment for this issue to an user"
+            />
           </Typography>
           {this.props.paid && (
-            <Typography type='subheading' color='primary' gutterBottom noWrap>
-              <FormattedMessage id='task.payment.transfers.concluded' defaultMessage='All transfers was succeeded to the destination account' />
+            <Typography type="subheading" color="primary" gutterBottom noWrap>
+              <FormattedMessage
+                id="task.payment.transfers.concluded"
+                defaultMessage="All transfers was succeeded to the destination account"
+              />
             </Typography>
           )}
           <div>
-            <AppBar position='static' color='default' style={{ boxShadow: 'none', background: 'transparent' }}>
+            <AppBar
+              position="static"
+              color="default"
+              style={{ boxShadow: 'none', background: 'transparent' }}
+            >
               <Tabs
                 value={this.state.currentTab}
                 onChange={this.onTabChange}
                 scrollable
-                scrollButtons='on'
-                indicatorColor='secondary'
-                textColor='secondary'
+                scrollButtons="on"
+                indicatorColor="secondary"
+                textColor="secondary"
               >
                 <StyledTab
                   value={0}
@@ -264,57 +274,66 @@ class TaskPayment extends Component {
                   icon={<RedeemIcon style={{ marginRight: 10 }} />}
                 />
                 <StyledTab
-
                   value={1}
                   label={this.props.intl.formatMessage(messages.creditCardPayment)}
-                  icon={<PaymentTypeIcon type='card' notext style={{ marginRight: 10 }} />}
+                  icon={<PaymentTypeIcon type="card" notext style={{ marginRight: 10 }} />}
                 />
                 <StyledTab
-
                   value={2}
                   label={this.props.intl.formatMessage(messages.payPalPayment)}
-                  icon={<PaymentTypeIcon type='paypal' style={{ marginRight: 10 }} />}
+                  icon={<PaymentTypeIcon type="paypal" style={{ marginRight: 10 }} />}
                 />
               </Tabs>
             </AppBar>
             <TabContainer style={{ paddingBottom: 0 }}>
-              {(this.props.transferId || this.props.task?.Transfer) ? (
-                <Alert gutterBottom
-                  severity='success'
-                  action={<Link to={`/profile/claims`}>
-                    <Button size='small' variant='outlined' color='primary'>
-                      <FormattedMessage id='task.payment.claims.view' defaultMessage='view claims' />
-                    </Button>
-                  </Link>}
+              {this.props.transferId || this.props.task?.Transfer ? (
+                <Alert
+                  gutterBottom
+                  severity="success"
+                  action={
+                    <Link to={`/profile/claims`}>
+                      <Button size="small" variant="outlined" color="primary">
+                        <FormattedMessage
+                          id="task.payment.claims.view"
+                          defaultMessage="view claims"
+                        />
+                      </Button>
+                    </Link>
+                  }
                 >
                   <AlertTitle gutterBottom>
-                    <Typography type='subheading' color='primary' gutterBottom noWrap>
-                      <FormattedMessage id='task.payment.claim.done' defaultMessage='Your claim is concluded' />
+                    <Typography type="subheading" color="primary" gutterBottom noWrap>
+                      <FormattedMessage
+                        id="task.payment.claim.done"
+                        defaultMessage="Your claim is concluded"
+                      />
                     </Typography>
                   </AlertTitle>
 
-                  {this.props.transferId ?
-                    <Typography type='subheading' color='primary' gutterBottom noWrap>
+                  {this.props.transferId ? (
+                    <Typography type="subheading" color="primary" gutterBottom noWrap>
                       {`${this.props.transferId}`}
                     </Typography>
-                    :
+                  ) : (
                     <div>
-                      <Typography type='heading' color='primary' gutterBottom noWrap>
-                        <FormattedMessage id='task.payment.claim.value' defaultMessage='Claim of {value} requested' values={{
-                          value: formatCurrency(this.props.task?.Transfer?.value)
-                        }}
+                      <Typography type="heading" color="primary" gutterBottom noWrap>
+                        <FormattedMessage
+                          id="task.payment.claim.value"
+                          defaultMessage="Claim of {value} requested"
+                          values={{
+                            value: formatCurrency(this.props.task?.Transfer?.value),
+                          }}
                         />
                       </Typography>
-
                     </div>
-                  }
+                  )}
                 </Alert>
-              )
-                : <List>
-                  {orders.length > 0 ? orders.map((order, index) => (
-                    <div>
-                      {order.provider === 'paypal'
-                        ? (
+              ) : (
+                <List>
+                  {orders.length > 0 ? (
+                    orders.map((order, index) => (
+                      <div>
+                        {order.provider === 'paypal' ? (
                           <ListItem key={order.id}>
                             <ListItemAvatar>
                               <Avatar className={classes.avatar}>
@@ -325,19 +344,19 @@ class TaskPayment extends Component {
                               primary={`$ ${order.amount} by ${order?.User?.name || 'unknown'}`}
                               secondary={`${this.statuses(order.status) || this.props.intl.formatMessage(messages.undefinedLabel)}`}
                             />
-                            {!order.transfer_id
-                              ? (
-                                <Chip label={order.status} />
-                              ) : (
-                                <FormattedMessage id='task.payment.pay.button.paypal' defaultMessage='Paid with PayPal (id: {transfer}' values={{
-                                  transfer: order.transfer_id
-                                }} >
-                                  {(msg) => (
-                                    <Chip label={msg} />
-                                  )}
-                                </FormattedMessage>
-                              )
-                            }
+                            {!order.transfer_id ? (
+                              <Chip label={order.status} />
+                            ) : (
+                              <FormattedMessage
+                                id="task.payment.pay.button.paypal"
+                                defaultMessage="Paid with PayPal (id: {transfer}"
+                                values={{
+                                  transfer: order.transfer_id,
+                                }}
+                              >
+                                {(msg) => <Chip label={msg} />}
+                              </FormattedMessage>
+                            )}
                           </ListItem>
                         ) : (
                           <ListItem key={order.id}>
@@ -349,35 +368,44 @@ class TaskPayment extends Component {
                             <ListItemText
                               primary={
                                 <div style={{ display: 'flex', verticalAlign: 'center' }}>
-                                  <Typography variant='subtitle1' gutterBottom style={{ marginRight: 10 }}>
+                                  <Typography
+                                    variant="subtitle1"
+                                    gutterBottom
+                                    style={{ marginRight: 10 }}
+                                  >
                                     {`$ ${order.amount}`}
                                   </Typography>
-                                  <Typography variant='caption' style={{ marginTop: 3 }}>
+                                  <Typography variant="caption" style={{ marginTop: 3 }}>
                                     {order?.User ? 'by ' + order?.User?.name : ''}
                                   </Typography>
-                                </div>}
+                                </div>
+                              }
                               secondary={`${this.statuses(order.status) + ' ' + MomentComponent(order.createdAt).fromNow() || this.props.intl.formatMessage(messages.labelCreditCard)}`}
                             />
                             <Chip label={order.status} />
                           </ListItem>
-                        )
-                      }
-                    </div>
-                  )) : (
+                        )}
+                      </div>
+                    ))
+                  ) : (
                     <div>
-                      <Alert severity='info' gutterBottom>
-                        <FormattedMessage id='task.payment.noTransfers' defaultMessage='No bounties for this issue' />
+                      <Alert severity="info" gutterBottom>
+                        <FormattedMessage
+                          id="task.payment.noTransfers"
+                          defaultMessage="No bounties for this issue"
+                        />
                       </Alert>
                     </div>
                   )}
-                </List>}
+                </List>
+              )}
             </TabContainer>
           </div>
 
           <div>
-            {(!this.props.task?.data?.paid || this.props.task?.Transfer?.id) ? (
+            {!this.props.task?.data?.paid || this.props.task?.Transfer?.id ? (
               <div>
-                {this.props.assigned ?
+                {this.props.assigned ? (
                   <TaskAssigned
                     task={task.data}
                     assign={{ id: this.props.assigned }}
@@ -387,35 +415,48 @@ class TaskPayment extends Component {
                     removeAssignment={this.props.removeAssignment}
                     assignTask={this.props.assignTask}
                     messageTask={this.props.messageTask}
-                  /> : null
-                }
-                {this.props?.assigns?.length > 0 ?
+                  />
+                ) : null}
+                {this.props?.assigns?.length > 0 ? (
                   <div style={{ marginTop: 20 }}>
-                    <Typography variant='h5' gutterBottom noWrap>
-                      <FormattedMessage id='task.payment.interested' defaultMessage='Interested users' />
+                    <Typography variant="h5" gutterBottom noWrap>
+                      <FormattedMessage
+                        id="task.payment.interested"
+                        defaultMessage="Interested users"
+                      />
                     </Typography>
                     <InterestedUsers
                       assigned={this.props.assigned}
                       users={this.props.assigns}
                       onMessage={openMessageDialog}
                       onAccept={async (id) => await this.props.assignTask(this.props.id, id)}
-                      onReject={async (id) => await this.props.actionAssign(this.props.id, id, false)}
+                      onReject={async (id) =>
+                        await this.props.actionAssign(this.props.id, id, false)
+                      }
                     />
-                  </div> : null
-                }
+                  </div>
+                ) : null}
                 <MessageAssignment
                   visible={this.state.messageDialog}
                   onClose={closeMessageDialog}
                   id={this.props.id}
                   to={this.state.interested}
-                  messageAction={this.state.messageType === 'assign' ? this.props.messageTask : this.props.messageOffer}
+                  messageAction={
+                    this.state.messageType === 'assign'
+                      ? this.props.messageTask
+                      : this.props.messageOffer
+                  }
                 />
               </div>
             ) : (
               <div>
-                <FormattedMessage id='task.payment.done.to' defaultMessage='You made a payment to $ {user}' values={{
-                  user: sendTo(this.props.assigned).username
-                }} />
+                <FormattedMessage
+                  id="task.payment.done.to"
+                  defaultMessage="You made a payment to $ {user}"
+                  values={{
+                    user: sendTo(this.props.assigned).username,
+                  }}
+                />
               </div>
             )}
           </div>
@@ -427,31 +468,32 @@ class TaskPayment extends Component {
                 <Button
                   onClick={this.payTask}
                   style={{ float: 'right', margin: 10 }}
-                  variant='contained'
-                  color='primary'
-                  disabled={!this.props.assigned || this.props.transferId || this.props.task?.Transfer}
+                  variant="contained"
+                  color="primary"
+                  disabled={
+                    !this.props.assigned || this.props.transferId || this.props.task?.Transfer
+                  }
                 >
                   <RedeemIcon style={{ marginRight: 10 }} />
-                  <FormattedMessage id='task.payment.start.payTo' defaultMessage='Pay $ {value}' values={{
-                    value: this.props.task.data.values.card + this.props.task.data.values.paypal || 0
-                  }} />
+                  <FormattedMessage
+                    id="task.payment.start.payTo"
+                    defaultMessage="Pay $ {value}"
+                    values={{
+                      value:
+                        this.props.task.data.values.card + this.props.task.data.values.paypal || 0,
+                    }}
+                  />
                 </Button>
               )}
             </div>
           ) : null}
           {!this.props.paid ? (
-            <Button
-              onClick={this.props.onClose}
-              style={{ float: 'right', margin: 10 }}
-            >
-              <FormattedMessage id='task.payment.action.cancel' defaultMessage='Cancel' />
+            <Button onClick={this.props.onClose} style={{ float: 'right', margin: 10 }}>
+              <FormattedMessage id="task.payment.action.cancel" defaultMessage="Cancel" />
             </Button>
           ) : (
-            <Button
-              onClick={this.props.onClose}
-              style={{ float: 'right', margin: 10 }}
-            >
-              <FormattedMessage id='task.payment.action.close' defaultMessage='Close' />
+            <Button onClick={this.props.onClose} style={{ float: 'right', margin: 10 }}>
+              <FormattedMessage id="task.payment.action.close" defaultMessage="Close" />
             </Button>
           )}
         </Container>
@@ -467,7 +509,7 @@ TaskPayment.propTypes = {
   onTransfer: PropTypes.func,
   orders: PropTypes.array,
   assigns: PropTypes.array,
-  filterTaskOrders: PropTypes.func
+  filterTaskOrders: PropTypes.func,
 }
 
 export default injectIntl(TaskPayment)

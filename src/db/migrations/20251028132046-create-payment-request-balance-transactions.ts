@@ -5,61 +5,61 @@ export async function up({ queryInterface }: { queryInterface: QueryInterface })
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     sourceId: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
     amount: {
       type: DataTypes.BIGINT,
-      allowNull: false
+      allowNull: false,
     },
     currency: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'usd'
+      defaultValue: 'usd',
     },
     type: {
       type: DataTypes.ENUM('CREDIT', 'DEBIT'),
-      allowNull: false
+      allowNull: false,
     },
     reason: {
       type: DataTypes.ENUM('DISPUTE', 'REFUND', 'EXTRA_FEE', 'ADJUSTMENT'),
-      allowNull: false
+      allowNull: false,
     },
     reason_details: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
     status: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: true,
     },
     paymentRequestBalanceId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'PaymentRequestBalances',
-        key: 'id'
-      }
+        key: 'id',
+      },
     },
     openedAt: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
     },
     closedAt: {
       type: DataTypes.DATE,
-      allowNull: true
+      allowNull: true,
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false
-    }
+      allowNull: false,
+    },
   })
 }
 

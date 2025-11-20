@@ -1,15 +1,15 @@
-import React from 'react';
-import CheckboxTerms from './checkbox-terms';
+import React from 'react'
+import CheckboxTerms from './checkbox-terms'
 
 export default {
   title: 'Design Library/Atoms/inputs/CheckboxTerms',
-  component: CheckboxTerms
-};
+  component: CheckboxTerms,
+}
 
-const Template = (args) => <CheckboxTerms {...args} />;
+const Template = (args) => <CheckboxTerms {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   onchange: () => {},
-  onAccept: () => {}
-};
+  onAccept: () => {},
+}

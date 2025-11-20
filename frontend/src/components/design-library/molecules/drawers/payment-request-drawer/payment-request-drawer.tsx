@@ -1,27 +1,27 @@
-import React, { useRef } from 'react';
-import Drawer from '../drawer/drawer';
-import PaymentRequestForm from '../../../organisms/forms/payment-request-forms/payment-request-form/payment-request-form';
+import React, { useRef } from 'react'
+import Drawer from '../drawer/drawer'
+import PaymentRequestForm from '../../../organisms/forms/payment-request-forms/payment-request-form/payment-request-form'
 
 type PaymentRquestFormData = {
-  id?: number;
-  active?: boolean;
-  deactivate_after_payment?: boolean;
-  amount?: number;
-  custom_amount?: boolean;
-  currency?: string;
-  title?: string;
-  description?: string;
-};
+  id?: number
+  active?: boolean
+  deactivate_after_payment?: boolean
+  amount?: number
+  custom_amount?: boolean
+  currency?: string
+  title?: string
+  description?: string
+}
 
 interface PaymentRequestDrawerProps {
-  open: boolean;
-  onClose: () => void;
-  onSuccess?: (e:any, data:any) => void;
-  completed?: boolean;
+  open: boolean
+  onClose: () => void
+  onSuccess?: (e: any, data: any) => void
+  completed?: boolean
   paymentRequest?: {
-    completed: boolean;
-    data: PaymentRquestFormData;
-  };
+    completed: boolean
+    data: PaymentRquestFormData
+  }
 }
 
 const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
@@ -29,34 +29,34 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
   onClose,
   onSuccess,
   completed = true,
-  paymentRequest
+  paymentRequest,
 }) => {
-  const { completed: paymentRequestCompleted, data } = paymentRequest || {};
-  const formRef = useRef<{ submit: () => void }>(null);
+  const { completed: paymentRequestCompleted, data } = paymentRequest || {}
+  const formRef = useRef<{ submit: () => void }>(null)
 
-  const isEditMode = data?.id;
-  
+  const isEditMode = data?.id
+
   return (
     <Drawer
       completed={completed}
       open={open}
       onClose={onClose}
-      title={isEditMode ? "Edit Payment Request" : "New Payment Request"}
+      title={isEditMode ? 'Edit Payment Request' : 'New Payment Request'}
       subtitle="Please fill out the form to request payment"
       actions={[
         {
           label: 'Cancel',
           onClick: onClose,
-          variant: 'text'
+          variant: 'text',
         },
         {
           label: isEditMode ? 'Edit Payment Request' : 'Create Payment Request',
           onClick: () => {
-            formRef.current?.submit();
+            formRef.current?.submit()
           },
           variant: 'contained',
-          color: 'secondary'
-        }
+          color: 'secondary',
+        },
       ]}
     >
       <PaymentRequestForm
@@ -66,7 +66,7 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
         paymentRequest={paymentRequest}
       />
     </Drawer>
-  );
-};
+  )
+}
 
-export default PaymentRequestDrawer;
+export default PaymentRequestDrawer

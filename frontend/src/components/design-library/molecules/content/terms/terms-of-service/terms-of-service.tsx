@@ -1,16 +1,14 @@
-import React from "react";
-import { FormattedMessage } from "react-intl";
-import BaseTerms from "../base-terms/base-terms";
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
+import BaseTerms from '../base-terms/base-terms'
 
 type TermsOfServiceProps = {
-  onArrowBack?: () => void;
-  onAgreeTerms?: () => void;
-  extraStyles?: boolean;
+  onArrowBack?: () => void
+  onAgreeTerms?: () => void
+  extraStyles?: boolean
 }
 
-
-const TermsOfService = ({ onArrowBack, onAgreeTerms, extraStyles }:TermsOfServiceProps) => {
-
+const TermsOfService = ({ onArrowBack, onAgreeTerms, extraStyles }: TermsOfServiceProps) => {
   const content = `
   {br}
   Welcome to our bounty platform! Our platform provides a marketplace for contributors, maintainers, and sponsors to connect and collaborate on open source and private projects. By using our platform, you agree to the following terms and conditions:
@@ -45,14 +43,24 @@ const TermsOfService = ({ onArrowBack, onAgreeTerms, extraStyles }:TermsOfServic
 {br}{br}
 By using our platform, you agree to these terms and conditions. If you do not agree, you may not use our platform.
 {br}{br}`
-  
+
   return (
     <>
       <BaseTerms
         title={<FormattedMessage id="terms-of-service.title" defaultMessage="Terms of service" />}
-        subtitle={<FormattedMessage id="terms-of-service.subtitle" defaultMessage="About the terms" />}
-        updated={<FormattedMessage id="terms-of-service.date" defaultMessage="Updated 5 May, 2023" />}
-        content={<FormattedMessage id="terms-of-service.content" defaultMessage={content} values={{br: <br/>}} />}
+        subtitle={
+          <FormattedMessage id="terms-of-service.subtitle" defaultMessage="About the terms" />
+        }
+        updated={
+          <FormattedMessage id="terms-of-service.date" defaultMessage="Updated 5 May, 2023" />
+        }
+        content={
+          <FormattedMessage
+            id="terms-of-service.content"
+            defaultMessage={content}
+            values={{ br: <br /> }}
+          />
+        }
         extraStyles={extraStyles}
         onArrowBack={onArrowBack}
         onAgreeTerms={onAgreeTerms}
@@ -61,4 +69,4 @@ By using our platform, you agree to these terms and conditions. If you do not ag
   )
 }
 
-export default TermsOfService;
+export default TermsOfService

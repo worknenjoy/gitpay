@@ -1,26 +1,26 @@
-const Decimal = require('decimal.js');
+const Decimal = require('decimal.js')
 
 module.exports = (sequelize, DataTypes) => {
   const Wallet = sequelize.define('Wallet', {
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
     name: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     balance: {
       type: DataTypes.DECIMAL,
-      allowNull: false
-    }
+      allowNull: false,
+    },
   })
 
   Wallet.associate = function (models) {
     Wallet.hasMany(models.WalletOrder, {
-      foreignKey: 'walletId'
+      foreignKey: 'walletId',
     })
     Wallet.belongsTo(models.User, {
-      foreignKey: 'userId'
+      foreignKey: 'userId',
     })
   }
 
@@ -28,8 +28,8 @@ module.exports = (sequelize, DataTypes) => {
     const orders = await sequelize.models.WalletOrder.findAll({
       where: {
         walletId: this.id,
-        status: 'paid'
-      }
+        status: 'paid',
+      },
     })
     const balance = orders.reduce((acc, order) => {
       return acc.plus(order.amount)
@@ -43,12 +43,12 @@ module.exports = (sequelize, DataTypes) => {
         provider: 'wallet',
         source_type: 'wallet-funds',
         source_id: `${this.id}`,
-        status: 'succeeded'
-      }
+        status: 'succeeded',
+      },
     })
     const balance = orders.reduce((acc, order) => {
       const fee = order.amount >= 5000 ? 1 : 1.08
-      return acc.plus(order.amount*fee)
+      return acc.plus(order.amount * fee)
     }, new Decimal(0))
     return balance
   }
@@ -60,26 +60,26 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Wallet.addHook('afterFind', async (wallet, options) => {
-    if (!wallet) return;
-  
+    if (!wallet) return
+
     if (Array.isArray(wallet)) {
       // Handle findAll case
       for (const singleWallet of wallet) {
-        await updateWalletBalance(singleWallet, options);
+        await updateWalletBalance(singleWallet, options)
       }
     } else {
       // Handle findByPk or findOne case
-      await updateWalletBalance(wallet, options);
+      await updateWalletBalance(wallet, options)
     }
-  });
-  
+  })
+
   // Helper function to update the balance of a wallet
   async function updateWalletBalance(wallet, options) {
-    const totalBalance = await wallet.totalBalance();  // Calculate balance using your methods
-    wallet.balance = totalBalance.toFixed(2);  // Update the balance field in memory
+    const totalBalance = await wallet.totalBalance() // Calculate balance using your methods
+    wallet.balance = totalBalance.toFixed(2) // Update the balance field in memory
     await wallet.save({
-      transaction: options.transaction
-    });  // Persist the updated balance to the database (optional)
+      transaction: options.transaction,
+    }) // Persist the updated balance to the database (optional)
   }
 
   return Wallet

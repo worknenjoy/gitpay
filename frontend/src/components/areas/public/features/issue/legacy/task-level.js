@@ -3,97 +3,104 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
 
-import {
-  Typography
-} from '@mui/material'
+import { Typography } from '@mui/material'
 
-import {
-  BugReport,
-  Code,
-  Cloud
-} from '@mui/icons-material'
+import { BugReport, Code, Cloud } from '@mui/icons-material'
 
 import CustomTabs from '../styles/material-dashboard-react/components/CustomTabs/CustomTabs'
 
 const messages = defineMessages({
   easyStatus: {
     id: 'task.level.easy',
-    defaultMessage: 'Easy'
+    defaultMessage: 'Easy',
   },
   mediumStatus: {
     id: 'task.level.medium',
-    defaultMessage: 'Medium'
+    defaultMessage: 'Medium',
   },
   hardStatus: {
     id: 'task.level.hard',
-    defaultMessage: 'Hard'
-  }
+    defaultMessage: 'Hard',
+  },
 })
 
 // removed withStyles
 
-const levels = { 'easy': 0, 'medium': 1, 'hard': 2 }
+const levels = { easy: 0, medium: 1, hard: 2 }
 const levelsArray = ['easy', 'medium', 'hard']
 
 class TaskLevel extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      selected: null
+      selected: null,
     }
   }
 
   static propTypes = {
     id: PropTypes.number,
     onSelect: PropTypes.func,
-    level: PropTypes.string
+    level: PropTypes.string,
   }
 
   handleClick = (event, value) => {
     this.props.onSelect({
       id: this.props.id,
-      level: levelsArray[value]
+      level: levelsArray[value],
     })
   }
 
-  render () {
+  render() {
     const { intl, level, readOnly } = this.props
     return (
-      <div style={ { marginTop: 20, marginBottom: 20 } }>
+      <div style={{ marginTop: 20, marginBottom: 20 }}>
         <CustomTabs
-          value={ levels[level] }
-          title={ <Typography variant='body1'><FormattedMessage id='task.level.label' defaultMessage='Level' /></Typography> }
-          headerColor='info'
-          onTab={ !readOnly ? this.handleClick : null }
-          tabs={ [
+          value={levels[level]}
+          title={
+            <Typography variant="body1">
+              <FormattedMessage id="task.level.label" defaultMessage="Level" />
+            </Typography>
+          }
+          headerColor="info"
+          onTab={!readOnly ? this.handleClick : null}
+          tabs={[
             {
               tabName: intl.formatMessage(messages.easyStatus),
               tabIcon: BugReport,
               tabContent: (
                 <Typography>
-                  <FormattedMessage id='task.level.easy.description' defaultMessage='Easy issue to solve' />
+                  <FormattedMessage
+                    id="task.level.easy.description"
+                    defaultMessage="Easy issue to solve"
+                  />
                 </Typography>
-              )
+              ),
             },
             {
               tabName: intl.formatMessage(messages.mediumStatus),
               tabIcon: Code,
               tabContent: (
                 <Typography>
-                  <FormattedMessage id='task.level.medium.description' defaultMessage='Medium issue to solve' />
+                  <FormattedMessage
+                    id="task.level.medium.description"
+                    defaultMessage="Medium issue to solve"
+                  />
                 </Typography>
-              )
+              ),
             },
             {
               tabName: intl.formatMessage(messages.hardStatus),
               tabIcon: Cloud,
               tabContent: (
                 <Typography>
-                  <FormattedMessage id='task.level.hard.description' defaultMessage='Hard issue to solve' />
+                  <FormattedMessage
+                    id="task.level.hard.description"
+                    defaultMessage="Hard issue to solve"
+                  />
                 </Typography>
-              )
-            }
-          ] }
+              ),
+            },
+          ]}
         />
       </div>
     )

@@ -10,18 +10,13 @@ import Popper from '@mui/material/Popper'
 import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
 
-const options = [
-  '',
-  'easy',
-  'medium',
-  'hard'
-]
+const options = ['', 'easy', 'medium', 'hard']
 
 const optionLabels = {
   '': 'Choose level',
-  'easy': 'Easy',
-  'medium': 'Medium',
-  'hard': 'Hard'
+  easy: 'Easy',
+  medium: 'Medium',
+  hard: 'Hard',
 }
 
 export default function TaskLevelSplitButton({ id, level, updateTask }) {
@@ -53,9 +48,7 @@ export default function TaskLevelSplitButton({ id, level, updateTask }) {
     }
   }, [])
 
-  const handleClick = () => {
-
-  }
+  const handleClick = () => {}
 
   const handleMenuItemClick = async (event, index, currentLevel) => {
     setSelectedIndex(index)
@@ -80,7 +73,9 @@ export default function TaskLevelSplitButton({ id, level, updateTask }) {
     <Grid container direction="column" alignItems="center">
       <Grid size={{ xs: 12 }}>
         <ButtonGroup variant="outlined" color="secondary" ref={anchorRef} aria-label="split button">
-          <Button onClick={handleClick}>{selectedLevel || optionLabels[options[selectedIndex]]}</Button>
+          <Button onClick={handleClick}>
+            {selectedLevel || optionLabels[options[selectedIndex]]}
+          </Button>
           <Button
             color="secondary"
             size="small"
@@ -93,12 +88,19 @@ export default function TaskLevelSplitButton({ id, level, updateTask }) {
             <ArrowDropDownIcon />
           </Button>
         </ButtonGroup>
-        <Popper style={{ zIndex: 9999 }} open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+        <Popper
+          style={{ zIndex: 9999 }}
+          open={open}
+          anchorEl={anchorRef.current}
+          role={undefined}
+          transition
+          disablePortal
+        >
           {({ TransitionProps, placement }) => (
             <Grow
               {...TransitionProps}
               style={{
-                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'
+                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
               }}
             >
               <Paper>

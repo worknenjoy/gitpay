@@ -26,19 +26,19 @@ const Container = muiStyled('div')(() => ({
   backgroundImage: `url(${Background})`,
   backgroundSize: '100% 100%',
   backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat'
+  backgroundRepeat: 'no-repeat',
 }))
 
 const StyledCard = muiStyled(Card)(() => ({
   minWidth: 420,
   marginTop: 40,
   opacity: 0.8,
-  overflow: 'visible'
+  overflow: 'visible',
 }))
 
 const StyledCardContent = muiStyled(CardContent)(() => ({
   textAlign: 'center',
-  position: 'relative'
+  position: 'relative',
 }))
 
 const Content = styled.div`
@@ -55,7 +55,7 @@ const LoginPage = ({
   fetchRoles,
   registerUser,
   forgotPassword,
-  resetPassword
+  resetPassword,
 }) => {
   const history = useHistory()
   const { mode: modeParam, token, status } = useParams()
@@ -124,30 +124,49 @@ const LoginPage = ({
             </Link>
             <Content>
               <Typography variant="h6" style={{ fontWeight: 'bold' }} gutterBottom>
-                <FormattedMessage id="account.login.title.welcome" defaultMessage="Welcome to Gitpay!" />
+                <FormattedMessage
+                  id="account.login.title.welcome"
+                  defaultMessage="Welcome to Gitpay!"
+                />
               </Typography>
-              {mode === 'signin' || mode === 'singup' && (
-                <Typography style={{ marginBottom: 20 }} variant="body2" gutterBottom noWrap>
-                  <FormattedMessage id="account.login.connect.form" defaultMessage="Connect or signup with your account" />
-                </Typography>
-              )}
+              {mode === 'signin' ||
+                (mode === 'singup' && (
+                  <Typography style={{ marginBottom: 20 }} variant="body2" gutterBottom noWrap>
+                    <FormattedMessage
+                      id="account.login.connect.form"
+                      defaultMessage="Connect or signup with your account"
+                    />
+                  </Typography>
+                ))}
               {mode === 'reset' && (
                 <>
                   <Typography variant="h6" style={{ fontWeight: 'bold' }} gutterBottom>
-                    <FormattedMessage id="account.login.title" defaultMessage="Recover your password" />
+                    <FormattedMessage
+                      id="account.login.title"
+                      defaultMessage="Recover your password"
+                    />
                   </Typography>
                   <Typography style={{ marginBottom: 20 }} variant="body1" gutterBottom noWrap>
-                    <FormattedMessage id="account.login.connect.form.reset" defaultMessage="To reset your password, type the new password and confirm" />
+                    <FormattedMessage
+                      id="account.login.connect.form.reset"
+                      defaultMessage="To reset your password, type the new password and confirm"
+                    />
                   </Typography>
                 </>
               )}
               {mode === 'forgot' && (
                 <>
                   <Typography variant="h6" style={{ fontWeight: 'bold' }} gutterBottom>
-                    <FormattedMessage id="account.login.title" defaultMessage="Recover your password" />
+                    <FormattedMessage
+                      id="account.login.title"
+                      defaultMessage="Recover your password"
+                    />
                   </Typography>
                   <Typography style={{ marginBottom: 20 }} variant="body1" gutterBottom noWrap>
-                    <FormattedMessage id="account.login.connect.form.forgot" defaultMessage="To recover your password, type the email address you used to register and we will send you a link to reset it." />
+                    <FormattedMessage
+                      id="account.login.connect.form.forgot"
+                      defaultMessage="To recover your password, type the email address you used to register and we will send you a link to reset it."
+                    />
                   </Typography>
                 </>
               )}
@@ -191,23 +210,39 @@ const LoginPage = ({
         </StyledCard>
         <div style={{ marginTop: 10, textAlign: 'center' }}>
           <Typography variant="caption" color="default" gutterBottom noWrap component="span">
-            <FormattedMessage id="account.login.connect.bottom" defaultMessage="© 2023 Gitpay - All rights reserved" />
-            <Link to="#" color="inherit" onClick={(e) => handleOpenDialog(e, 'cookie')} style={{ display: 'inline-block', margin: '0 5px' }}>
+            <FormattedMessage
+              id="account.login.connect.bottom"
+              defaultMessage="© 2023 Gitpay - All rights reserved"
+            />
+            <Link
+              to="#"
+              color="inherit"
+              onClick={(e) => handleOpenDialog(e, 'cookie')}
+              style={{ display: 'inline-block', margin: '0 5px' }}
+            >
               <FormattedMessage id="legal.cookie.label" defaultMessage="Cookie Preferences" />
             </Link>
             |
-            <Link to="#" color="inherit" onClick={(e) => handleOpenDialog(e, 'privacy')} style={{ display: 'inline-block', margin: '0 5px' }}>
+            <Link
+              to="#"
+              color="inherit"
+              onClick={(e) => handleOpenDialog(e, 'privacy')}
+              style={{ display: 'inline-block', margin: '0 5px' }}
+            >
               <FormattedMessage id="legal.prviacy.label" defaultMessage="Privacy" />
             </Link>
             |
-            <Link to="#" color="inherit" onClick={(e) => handleOpenDialog(e, 'terms')} style={{ display: 'inline-block', margin: '0 5px' }}>
+            <Link
+              to="#"
+              color="inherit"
+              onClick={(e) => handleOpenDialog(e, 'terms')}
+              style={{ display: 'inline-block', margin: '0 5px' }}
+            >
               <FormattedMessage id="legal.terms.label" defaultMessage="Terms" />
             </Link>
           </Typography>
           <Dialog onClose={closeDialog} open={openDialog}>
-            <div style={{ padding: '10px 20px' }}>
-              {renderDialog()}
-            </div>
+            <div style={{ padding: '10px 20px' }}>{renderDialog()}</div>
           </Dialog>
         </div>
       </div>

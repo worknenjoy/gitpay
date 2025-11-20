@@ -2,7 +2,7 @@
 import React from 'react'
 
 class AddressSection extends React.Component {
-  render () {
+  render() {
     return <label />
   }
 }

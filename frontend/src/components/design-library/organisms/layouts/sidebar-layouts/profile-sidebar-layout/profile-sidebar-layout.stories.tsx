@@ -1,14 +1,14 @@
-import React from 'react';
-import ProfileSidebar from './profile-sidebar-layout';
+import React from 'react'
+import ProfileSidebar from './profile-sidebar-layout'
 
 export default {
   title: 'Design Library/Organisms/Layouts/ProfileSidebar/ProfileSidebar',
-  component: ProfileSidebar
-};
+  component: ProfileSidebar,
+}
 
-const Template = (args) => <ProfileSidebar {...args} />;
+const Template = (args) => <ProfileSidebar {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   user: {
     completed: true,
@@ -20,32 +20,32 @@ Default.args = {
         issue: {
           user: {
             login: 'octocat',
-            avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4'
-          }
-        }
+            avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+          },
+        },
       },
       Types: [
         {
           id: 1,
-          name: 'contributor'
+          name: 'contributor',
         },
         {
           id: 2,
-          name: 'maintainer'
+          name: 'maintainer',
         },
         {
           id: 3,
-          name: 'funding'
-        }
-      ]
-    }
-  }
-};
+          name: 'funding',
+        },
+      ],
+    },
+  },
+}
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({})
 Loading.args = {
   user: {
     completed: false,
-    data: {}
-  }
-};
+    data: {},
+  },
+}

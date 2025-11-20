@@ -1,18 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import PricingPublicPage from './pricing-public-page';
+import type { Meta, StoryObj } from '@storybook/react'
+import PricingPublicPage from './pricing-public-page'
 
 const meta: Meta<typeof PricingPublicPage> = {
   title: 'Design Library/Pages/Public/Pricing',
   component: PricingPublicPage,
   parameters: {
-    layout: 'fullscreen'
-  }
-};
+    layout: 'fullscreen',
+  },
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof PricingPublicPage>;
+type Story = StoryObj<typeof PricingPublicPage>
 
 export const Basic: Story = {
-  args: {}
-};
+  args: {},
+}

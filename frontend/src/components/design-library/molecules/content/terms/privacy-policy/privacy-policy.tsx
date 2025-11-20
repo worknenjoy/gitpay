@@ -1,17 +1,20 @@
-import React from "react";
-import { FormattedMessage } from "react-intl";
-import BaseTerms from "../base-terms/base-terms";
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
+import BaseTerms from '../base-terms/base-terms'
 
 type PrivacyPolicyProps = {
-  onArrowBack?: () => void;
-  onAgreeTerms?: () => void;
-  noHeader?: boolean;
-  extraStyles?: boolean;
+  onArrowBack?: () => void
+  onAgreeTerms?: () => void
+  noHeader?: boolean
+  extraStyles?: boolean
 }
 
-
-const PrivacyPolicy = ({ onArrowBack, onAgreeTerms, noHeader, extraStyles = true }:PrivacyPolicyProps) => {
-
+const PrivacyPolicy = ({
+  onArrowBack,
+  onAgreeTerms,
+  noHeader,
+  extraStyles = true,
+}: PrivacyPolicyProps) => {
   const content = `
   {br}
   Thank you for considering our bounty platform! Our platform takes your privacy very seriously, and we are committed to protecting your personal information. This privacy policy outlines how we collect, use, and protect your personal information when you use our platform.
@@ -42,14 +45,25 @@ Our platform is not intended for use by children under the age of 13, and we do 
 We reserve the right to modify this privacy policy at any time. If we make material changes to this policy, we will notify you by email or by posting a notice on our platform.
 {br}{br}
 If you have any questions or concerns about our privacy policy, please contact us at contact@gitpay.me`
-  
+
   return (
     <>
       <BaseTerms
         title={<FormattedMessage id="privacy-policy.title" defaultMessage="Privacy Policy" />}
-        subtitle={<FormattedMessage id="privacy-policy.subtitle.secondary" defaultMessage="About our privacy policy" />}
+        subtitle={
+          <FormattedMessage
+            id="privacy-policy.subtitle.secondary"
+            defaultMessage="About our privacy policy"
+          />
+        }
         updated={<FormattedMessage id="privacy-policy.date" defaultMessage="Updated 5 May, 2023" />}
-        content={<FormattedMessage id="privacy-policy.content" defaultMessage={content} values={{ br: <br /> }} />}
+        content={
+          <FormattedMessage
+            id="privacy-policy.content"
+            defaultMessage={content}
+            values={{ br: <br /> }}
+          />
+        }
         extraStyles={extraStyles}
         onArrowBack={onArrowBack}
         onAgreeTerms={onAgreeTerms}
@@ -59,4 +73,4 @@ If you have any questions or concerns about our privacy policy, please contact u
   )
 }
 
-export default PrivacyPolicy;
+export default PrivacyPolicy

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import ContextTitle from './context-title';
+import type { Meta, StoryObj } from '@storybook/react'
+import ContextTitle from './context-title'
 
 const meta: Meta<typeof ContextTitle> = {
   title: 'Design Library/Atoms/Typography/Titles/ContextTitle',
@@ -7,23 +7,23 @@ const meta: Meta<typeof ContextTitle> = {
   argTypes: {
     children: {
       control: 'text',
-      description: 'Text content of the context title'
-    }
-  }
-};
+      description: 'Text content of the context title',
+    },
+  },
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof ContextTitle>;
+type Story = StoryObj<typeof ContextTitle>
 
 export const Default: Story = {
   args: {
     context: {
       completed: true,
       data: {
-        name: 'Context Title'
-      }
+        name: 'Context Title',
+      },
     },
-    title: 'Main Title'
-  }
-};
+    title: 'Main Title',
+  },
+}

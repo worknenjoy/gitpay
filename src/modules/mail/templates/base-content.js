@@ -7,4 +7,4 @@ module.exports.baseContentEmailTemplate = (intro = '', content = '') => `
       </td>
     </tr>
   <!-- END MAIN CONTENT AREA -->
-`;
+`

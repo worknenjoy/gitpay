@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import {
-  Button,
-  Typography
-} from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import ReCAPTCHA from 'react-google-recaptcha'
 import Checkbox from '@mui/material/Checkbox'
 import ProviderLoginButtons from '../../../../atoms/buttons/provider-login-buttons/provider-login-buttons'
@@ -22,9 +19,16 @@ type LoginFormSigninProps = {
   addNotification?: (message: string) => void
 }
 
-const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot, addNotification }: LoginFormSigninProps) => {
+const LoginFormSignin = ({
+  onSubmit,
+  onClose,
+  onSignup,
+  noCancelButton,
+  onForgot,
+  addNotification,
+}: LoginFormSigninProps) => {
   const { status } = useParams<{ status: string }>()
-  
+
   const [state, setState] = useState({
     username: '',
     password: '',
@@ -33,8 +37,8 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
     error: {
       username: '',
       password: '',
-      captcha: ''
-    }
+      captcha: '',
+    },
   })
 
   const handleChange = (name) => (event) => {
@@ -55,8 +59,8 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
         ...state,
         error: {
           ...currentErrors,
-          username: 'Email cannot be empty'
-        }
+          username: 'Email cannot be empty',
+        },
       })
       return false
     } else if (email.length > 72) {
@@ -64,19 +68,23 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
         ...state,
         error: {
           ...currentErrors,
-          username: 'Email cannot be longer than 72 characters'
-        }
+          username: 'Email cannot be longer than 72 characters',
+        },
       })
       return false
-    }
-    else {
-      if (email && !email.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+    } else {
+      if (
+        email &&
+        !email.match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        )
+      ) {
         setState({
           ...state,
           error: {
             ...currentErrors,
-            username: 'Invalid email'
-          }
+            username: 'Invalid email',
+          },
         })
         return false
       }
@@ -90,8 +98,8 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
         ...state,
         error: {
           ...currentErrors,
-          password: 'Password cannot be empty or too short'
-        }
+          password: 'Password cannot be empty or too short',
+        },
       })
       return false
     } else if (password.length > 72) {
@@ -99,12 +107,12 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
         ...state,
         error: {
           ...currentErrors,
-          password: 'Password cannot be longer than 72 characters'
-        }
+          password: 'Password cannot be longer than 72 characters',
+        },
       })
       return false
     } else {
-      return true;
+      return true
     }
   }
 
@@ -118,7 +126,7 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
     const validEmail = validateEmail(state.username, state.error)
     const validPassword = validatePassword(state.password, state.error)
     if (!validEmail || !validPassword) {
-      return event && event.preventDefault();
+      return event && event.preventDefault()
     }
     onSubmit?.(event)
   }
@@ -137,7 +145,12 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
   const { error } = state
 
   return (
-    <form onSubmit={submitByFormType} action={`${api.API_URL}/authorize/local`} method="POST" autoComplete="off">
+    <form
+      onSubmit={submitByFormType}
+      action={`${api.API_URL}/authorize/local`}
+      method="POST"
+      autoComplete="off"
+    >
       <Margins>
         <StyledTextField
           name="username"
@@ -170,46 +183,71 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
       </Margins>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          {state.rememberMe
-            ? <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
-            : <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
-          }
+          {state.rememberMe ? (
+            <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
+          ) : (
+            <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
+          )}
           <Typography variant="caption">
             <FormattedMessage id="account.login.label.remember" defaultMessage="Remember me" />
           </Typography>
         </div>
-        <Button variant="text" style={{ margin: 0, padding: 0, fontSize: 14 }} onClick={onForgot} component="a" size="small" color="primary">
+        <Button
+          variant="text"
+          style={{ margin: 0, padding: 0, fontSize: 14 }}
+          onClick={onForgot}
+          component="a"
+          size="small"
+          color="primary"
+        >
           <FormattedMessage id="account.login.label.forgot" defaultMessage="Forgot password?" />
         </Button>
       </div>
 
       {process.env.NODE_ENV === 'production' && (
-        <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: 80, marginTop: 20 }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
+            height: 80,
+            marginTop: 20,
+          }}
+        >
           <ReCAPTCHA
             sitekey={process.env.GOOGLE_RECAPTCHA_SITE_KEY}
-            onChange={captchaChecked => setState({ ...state, captchaChecked })}
+            onChange={(captchaChecked) => setState({ ...state, captchaChecked })}
           />
         </div>
       )}
-      {error.captcha &&
-        <div style={{
-          color: 'red',
-          fontSize: 10,
-          display: 'flex',
-          justifyContent: 'center'
-        }}>
+      {error.captcha && (
+        <div
+          style={{
+            color: 'red',
+            fontSize: 10,
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
           <Typography variant="body1" component="span">
             {error.captcha}
           </Typography>
         </div>
-      }
+      )}
       <Center style={{ marginTop: 20 }}>
         <div>
           <SpacedButton fullWidth type="submit" size="large" variant="contained" color="primary">
             <FormattedMessage id="account.login.label.signin" defaultMessage="Sign in" />
           </SpacedButton>
           {noCancelButton ? null : (
-            <SpacedButton onClick={onClose} fullWidth size="large" variant="text" color="primary" style={{ marginTop: 10 }}>
+            <SpacedButton
+              onClick={onClose}
+              fullWidth
+              size="large"
+              variant="text"
+              color="primary"
+              style={{ marginTop: 10 }}
+            >
               <FormattedMessage id="account.login.label.cancel" defaultMessage="Cancel" />
             </SpacedButton>
           )}
@@ -219,8 +257,15 @@ const LoginFormSignin = ({ onSubmit, onClose, onSignup, noCancelButton, onForgot
           </div>
 
           <div style={{ marginTop: 10 }}>
-            <Typography variant="body1" component="span" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
-              <FormattedMessage id="account.login.label.or.signing" defaultMessage="Dont have an account?" />
+            <Typography
+              variant="body1"
+              component="span"
+              style={{ display: 'inline-block', verticalAlign: 'middle' }}
+            >
+              <FormattedMessage
+                id="account.login.label.or.signing"
+                defaultMessage="Dont have an account?"
+              />
             </Typography>
             <Button onClick={onSignup} variant="text" color="primary" size="large">
               <FormattedMessage id="account.login.label.signup" defaultMessage="Sign up" />

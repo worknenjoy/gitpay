@@ -1,69 +1,57 @@
-import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import MoreVert from '@mui/icons-material/MoreVert';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
-import Tooltip from '@mui/material/Tooltip';
-import Logout from '@mui/icons-material/Logout';
-import Person from '@mui/icons-material/Person';
-import Button from '@mui/material/Button';
-import {
-  Web,
-  AccountBox as AccountIcon,
-  ArrowDownward as SettingsIcon
-} from '@mui/icons-material'
-import nameInitials from 'name-initials';
-import { useHistory } from 'react-router-dom';
+import * as React from 'react'
+import { FormattedMessage } from 'react-intl'
+import Box from '@mui/material/Box'
+import Avatar from '@mui/material/Avatar'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import MoreVert from '@mui/icons-material/MoreVert'
+import Divider from '@mui/material/Divider'
+import Typography from '@mui/material/Typography'
+import Tooltip from '@mui/material/Tooltip'
+import Logout from '@mui/icons-material/Logout'
+import Person from '@mui/icons-material/Person'
+import Button from '@mui/material/Button'
+import { Web, AccountBox as AccountIcon, ArrowDownward as SettingsIcon } from '@mui/icons-material'
+import nameInitials from 'name-initials'
+import { useHistory } from 'react-router-dom'
 
-export default function ProfileAccountMenu({
-  user,
-  onLogout
-}) {
-  const { Types } = user;
-  const history = useHistory();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+export default function ProfileAccountMenu({ user, onLogout }) {
+  const { Types } = user
+  const history = useHistory()
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
-  const isFunding = Types && Types.some((type) => type.name === 'funding');
-  const isMaintainer = Types && Types.some((type) => type.name === 'maintainer');
-  const isContributor = Types && Types.some((type) => type.name === 'contributor');
+  const isFunding = Types && Types.some((type) => type.name === 'funding')
+  const isMaintainer = Types && Types.some((type) => type.name === 'maintainer')
+  const isContributor = Types && Types.some((type) => type.name === 'contributor')
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Account settings">
-          <Button
-            onClick={handleClick}
-            size="small"
-          >
-            { user?.picture_url
-              ? <Avatar
-                alt={ user.username || '' }
-                src={ user.picture_url }
-              />
-              : <Avatar alt={ user?.username || '' } src="">
-                { user?.username ? nameInitials(user.username) : <Person /> }
+          <Button onClick={handleClick} size="small">
+            {user?.picture_url ? (
+              <Avatar alt={user.username || ''} src={user.picture_url} />
+            ) : (
+              <Avatar alt={user?.username || ''} src="">
+                {user?.username ? nameInitials(user.username) : <Person />}
               </Avatar>
-            }
-            <div style={ { textAlign: 'left', marginLeft: 10, color: '#1c1c1f' } }>
+            )}
+            <div style={{ textAlign: 'left', marginLeft: 10, color: '#1c1c1f' }}>
               <Typography variant="body1" color="text">
-                { user?.username }
+                {user?.username}
               </Typography>
-              <Typography variant="body2" style={ { fontSize: 8, color: '#666' } }>
-                { user?.email }
+              <Typography variant="body2" style={{ fontSize: 8, color: '#666' }}>
+                {user?.email}
               </Typography>
             </div>
-            <MoreVert style={{marginLeft: 5}} />
+            <MoreVert style={{ marginLeft: 5 }} />
           </Button>
         </Tooltip>
       </Box>
@@ -83,7 +71,7 @@ export default function ProfileAccountMenu({
               width: 32,
               height: 32,
               ml: -0.5,
-              mr: 1
+              mr: 1,
             },
             '&:before': {
               content: '""',
@@ -95,39 +83,42 @@ export default function ProfileAccountMenu({
               height: 10,
               bgcolor: 'background.paper',
               transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0
-            }
-          }
+              zIndex: 0,
+            },
+          },
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={(e) => history.push(`/users/${user?.id}`)} style={{margin: 5}}>
+        <MenuItem onClick={(e) => history.push(`/users/${user?.id}`)} style={{ margin: 5 }}>
           <Avatar>
-            <Web fontSize={'small'} /> 
+            <Web fontSize={'small'} />
           </Avatar>
           <Typography variant="body2" color="text">
             <FormattedMessage id="profile.accountMenu.profile" defaultMessage="Profile" />
-           </Typography>
+          </Typography>
         </MenuItem>
         <Divider />
-        <MenuItem onClick={(e) => history.push('/profile/user-account')} style={{margin: 5}}>
+        <MenuItem onClick={(e) => history.push('/profile/user-account')} style={{ margin: 5 }}>
           <Avatar>
             <AccountIcon fontSize={'small'} />
           </Avatar>
           <Typography variant="body2" color="text">
             <FormattedMessage id="profile.accountMenu.myAccount" defaultMessage="My account" />
-           </Typography>
+          </Typography>
         </MenuItem>
-        { isContributor && (
-        <MenuItem onClick={(e) => history.push('/profile/payout-settings')} style={{margin: 5}}>
-          <Avatar>
-            <SettingsIcon fontSize={'small'} />
-          </Avatar>
-          <Typography variant="body2" color="text">
-            <FormattedMessage id="profile.accountMenu.payoutSettings" defaultMessage="Payout Settings" />
+        {isContributor && (
+          <MenuItem onClick={(e) => history.push('/profile/payout-settings')} style={{ margin: 5 }}>
+            <Avatar>
+              <SettingsIcon fontSize={'small'} />
+            </Avatar>
+            <Typography variant="body2" color="text">
+              <FormattedMessage
+                id="profile.accountMenu.payoutSettings"
+                defaultMessage="Payout Settings"
+              />
             </Typography>
-        </MenuItem>
+          </MenuItem>
         )}
         <Divider />
         {/* add later */}
@@ -145,5 +136,5 @@ export default function ProfileAccountMenu({
         </MenuItem>
       </Menu>
     </React.Fragment>
-  );
+  )
 }

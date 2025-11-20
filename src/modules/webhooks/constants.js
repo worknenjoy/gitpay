@@ -1,7 +1,7 @@
 const FAILED_REASON = {
   declined_by_network: 'Denied by card',
-  not_sent_to_network: 'Hight risk card, please provide all the information'
-};
+  not_sent_to_network: 'Hight risk card, please provide all the information',
+}
 
 const CURRENCIES = {
   usd: '$',
@@ -144,20 +144,20 @@ const CURRENCIES = {
   htg: 'G',
   bzd: 'BZ$',
   kyd: 'CI$',
-  sgd: 'S$'
+  sgd: 'S$',
   // Add more as needed
-};
+}
 
 function formatStripeAmount(amountInCents) {
-  let amount = Number(amountInCents);
+  let amount = Number(amountInCents)
   if (isNaN(amount)) {
-    return 'Invalid amount';
+    return 'Invalid amount'
   }
-  return (amount / 100).toFixed(2);
+  return (amount / 100).toFixed(2)
 }
 
 module.exports = {
   FAILED_REASON,
   CURRENCIES,
-  formatStripeAmount
-};
+  formatStripeAmount,
+}

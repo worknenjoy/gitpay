@@ -13,73 +13,73 @@ import {
   Typography,
   Paper,
   IconButton,
-  Skeleton
+  Skeleton,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
-  LastPage as LastPageIcon
+  LastPage as LastPageIcon,
 } from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
 const messages = defineMessages({
   firstPageLabel: {
     id: 'payouts.table.page.first',
-    defaultMessage: 'First page'
+    defaultMessage: 'First page',
   },
   previousPageLabel: {
     id: 'transfer.table.page.previous',
-    defaultMessage: 'Previous page'
+    defaultMessage: 'Previous page',
   },
   nextPageLabel: {
     id: 'transfer.table.page.next',
-    defaultMessage: 'Next page'
+    defaultMessage: 'Next page',
   },
   lastPageLabel: {
     id: 'transfer.table.page.last',
-    defaultMessage: 'Last page'
+    defaultMessage: 'Last page',
   },
   noDefined: {
     id: 'transfer.table.date.none',
-    defaultMessage: 'Not yet defined'
+    defaultMessage: 'Not yet defined',
   },
   noBounty: {
     id: 'transfer.table.value.none',
-    defaultMessage: 'No bounty added'
+    defaultMessage: 'No bounty added',
   },
   onHoverpaymentProvider: {
     id: 'transfer.table.onHover',
-    defaultMessage: 'See on'
-  }
+    defaultMessage: 'See on',
+  },
 })
 
 const ActionsRoot = styled('div')(({ theme }) => ({
   flexShrink: 0,
   color: theme.palette.text.secondary,
-  marginLeft: theme.spacing(2.5)
+  marginLeft: theme.spacing(2.5),
 }))
 
 class TablePaginationActions extends React.Component {
-  handleFirstPageButtonClick = event => {
+  handleFirstPageButtonClick = (event) => {
     this.props.onChangePage(event, 0)
-  };
+  }
 
-  handleBackButtonClick = event => {
+  handleBackButtonClick = (event) => {
     this.props.onChangePage(event, this.props.page - 1)
-  };
+  }
 
-  handleNextButtonClick = event => {
+  handleNextButtonClick = (event) => {
     this.props.onChangePage(event, this.props.page + 1)
-  };
+  }
 
-  handleLastPageButtonClick = event => {
+  handleLastPageButtonClick = (event) => {
     this.props.onChangePage(
       event,
       Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
     )
-  };
+  }
 
   render() {
     const { count, page, rowsPerPage, theme } = this.props
@@ -114,7 +114,7 @@ class TablePaginationActions extends React.Component {
         >
           {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
         </IconButton>
-  </ActionsRoot>
+      </ActionsRoot>
     )
   }
 }
@@ -125,7 +125,7 @@ TablePaginationActions.propTypes = {
   onChangePage: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  theme: PropTypes.object.isRequired
+  theme: PropTypes.object.isRequired,
 }
 
 const TablePaginationActionsWrapped = injectIntl((props) => <TablePaginationActions {...props} />)
@@ -139,19 +139,19 @@ class CustomPaginationActionsTable extends React.Component {
 
     this.state = {
       page: 0,
-      rowsPerPage: 10
+      rowsPerPage: 10,
     }
   }
 
   handleChangePage = (event, page) => {
     this.setState({ page })
-  };
+  }
 
-  handleChangeRowsPerPage = event => {
+  handleChangeRowsPerPage = (event) => {
     this.setState({ rowsPerPage: event.target.value })
-  };
+  }
 
-  handleClickListItem = transfer => {
+  handleClickListItem = (transfer) => {
     this.props.history.push(`/transfer/${transfer.id}/${slugify(transfer.title)}`)
   }
 
@@ -162,36 +162,37 @@ class CustomPaginationActionsTable extends React.Component {
   }
 
   render() {
-  const { payouts, tableHead } = this.props
+    const { payouts, tableHead } = this.props
     const { rowsPerPage, page } = this.state
-    const emptyRows = payouts?.data?.length ? rowsPerPage - Math.min(rowsPerPage, payouts.data.length - page * rowsPerPage) : 0
-
+    const emptyRows = payouts?.data?.length
+      ? rowsPerPage - Math.min(rowsPerPage, payouts.data.length - page * rowsPerPage)
+      : 0
 
     if (payouts?.data?.length === 0 && payouts?.completed) {
       return (
-  <RootPaper>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}>
+        <RootPaper>
+          <div
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}
+          >
             <Typography variant="h6" color="textSecondary" gutterBottom>
               <FormattedMessage id="transfer.table.body.noPayouts" defaultMessage="No Payouts" />
             </Typography>
           </div>
-  </RootPaper>
+        </RootPaper>
       )
     }
 
-    const TableRowPlaceholder = (
-      [0,1,2,3,4,5].map((_, rIdx) => (
-        <TableRow key={`ph-${rIdx}`}>
-          {[0,1,2,3,4,5].map((_, cIdx) => (
-            <TableCell key={`phc-${cIdx}`}>
-              <div style={{ width: 80 }}>
-                <Skeleton variant="text" />
-              </div>
-            </TableCell>
-          ))}
-        </TableRow>
-      ))
-    );
+    const TableRowPlaceholder = [0, 1, 2, 3, 4, 5].map((_, rIdx) => (
+      <TableRow key={`ph-${rIdx}`}>
+        {[0, 1, 2, 3, 4, 5].map((_, cIdx) => (
+          <TableCell key={`phc-${cIdx}`}>
+            <div style={{ width: 80 }}>
+              <Skeleton variant="text" />
+            </div>
+          </TableCell>
+        ))}
+      </TableRow>
+    ))
 
     return (
       <RootPaper>
@@ -199,11 +200,9 @@ class CustomPaginationActionsTable extends React.Component {
           <Table sx={{ minWidth: 500 }}>
             <TableHead>
               <TableRow>
-                {tableHead.map(t =>
-                  <TableCell>
-                    {t}
-                  </TableCell>
-                )}
+                {tableHead.map((t) => (
+                  <TableCell>{t}</TableCell>
+                ))}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -211,17 +210,23 @@ class CustomPaginationActionsTable extends React.Component {
                 <>{TableRowPlaceholder}</>
               ) : (
                 <>
-                  {payouts.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                    return (
-                      <TableRow key={n.id}>
-                        {n.map(p =>
-                          <TableCell component="th" scope="row" style={{ padding: 10, position: 'relative' }}>
-                            {p}
-                          </TableCell>
-                        )}
-                      </TableRow>
-                    )
-                  })}
+                  {payouts.data
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((n) => {
+                      return (
+                        <TableRow key={n.id}>
+                          {n.map((p) => (
+                            <TableCell
+                              component="th"
+                              scope="row"
+                              style={{ padding: 10, position: 'relative' }}
+                            >
+                              {p}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      )
+                    })}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: 48 * emptyRows }}>
                       <TableCell colSpan={6} />
@@ -253,7 +258,7 @@ class CustomPaginationActionsTable extends React.Component {
 CustomPaginationActionsTable.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
-  payments: PropTypes.object
+  payments: PropTypes.object,
 }
 
 export default injectIntl(withRouter(CustomPaginationActionsTable))

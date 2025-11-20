@@ -1,18 +1,18 @@
-import { Card, CardContent } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Card, CardContent } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 export const StyledCard = styled(Card)(() => ({
   minWidth: 420,
   marginTop: 40,
   opacity: 0.8,
-  overflow: 'visible'
+  overflow: 'visible',
 }))
 
 export const StyledCardContent = styled(CardContent)(() => ({
   textAlign: 'center',
-  position: 'relative'
+  position: 'relative',
 }))
 
 export const Content = styled('div')({
-  marginTop: 20
-});
+  marginTop: 20,
+})

@@ -70,22 +70,20 @@ const Percent = styled.p`
 `
 
 export default class Bounties extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
-    this.state = {
-
-    }
+    this.state = {}
   }
 
-  render () {
+  render() {
     return (
       <Card>
-        <Icon><LocalAtmIcon style={ { fontSize: '2em', margin: 'auto' } } /></Icon>
+        <Icon>
+          <LocalAtmIcon style={{ fontSize: '2em', margin: 'auto' }} />
+        </Icon>
         <Info>
-          <Head>
-            Bounties
-          </Head>
+          <Head>Bounties</Head>
           <Wrapper>
             <Value>$25,234.89</Value>
             <Percent>+09%</Percent>

@@ -14,7 +14,6 @@ Auth.getToken = () => true
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
-
 describe('task solution', () => {
   describe('task solution create', () => {
     it('should dispatch an action to create task solution', () => {
@@ -24,35 +23,48 @@ describe('task solution', () => {
         response: {
           authenticated: true,
           user: {
-            id: 1
-          }
-        }
+            id: 1,
+          },
+        },
       })
       moxios.wait(() => {
         const request = moxios.requests.mostRecent()
         request.respondWith({
           status: 200,
-          response: {}
+          response: {},
         })
       })
       const expectedActions = [
         { completed: false, type: 'CREATE_TASK_SOLUTION_REQUESTED' },
-        { open: true, text: 'issue.solution.dialog.create.success', type: 'ADD_NOTIFICATION', "link": undefined },
+        {
+          open: true,
+          text: 'issue.solution.dialog.create.success',
+          type: 'ADD_NOTIFICATION',
+          link: undefined,
+        },
         { completed: false, type: 'FETCH_TASK_REQUESTED' },
-        { completed: true, type: 'CREATE_TASK_SOLUTION_SUCCESS', taskSolution: {} }
+        { completed: true, type: 'CREATE_TASK_SOLUTION_SUCCESS', taskSolution: {} },
       ]
-      const store = mockStore({ intl: { messages: {} }, task: { completed: true, id: 1 }, loggedIn: { logged: true, user: { id: 1 } } })
-      return store.dispatch(taskSolutionActions.createTaskSolution({
-        pullRequestId: '2',
-        userId: 1,
-        repositoryName: 'test-repository',
-        owner: 'alexanmtz',
-        taskId: 1
-      })).then(() => {
-        // return of async actions
-        expect(store.getActions()).toEqual(expectedActions)
-        moxios.uninstall()
+      const store = mockStore({
+        intl: { messages: {} },
+        task: { completed: true, id: 1 },
+        loggedIn: { logged: true, user: { id: 1 } },
       })
+      return store
+        .dispatch(
+          taskSolutionActions.createTaskSolution({
+            pullRequestId: '2',
+            userId: 1,
+            repositoryName: 'test-repository',
+            owner: 'alexanmtz',
+            taskId: 1,
+          }),
+        )
+        .then(() => {
+          // return of async actions
+          expect(store.getActions()).toEqual(expectedActions)
+          moxios.uninstall()
+        })
     })
     it('should dispatch an action to create task solution and fail', () => {
       moxios.install()
@@ -61,37 +73,54 @@ describe('task solution', () => {
         response: {
           authenticated: true,
           user: {
-            id: 1
-          }
-        }
+            id: 1,
+          },
+        },
       })
       moxios.wait(() => {
         const request = moxios.requests.mostRecent()
         request.respondWith({
           status: 400,
           response: {
-            error: 'issue.solution.error.insufficient_capabilities_for_transfer'
-          }
+            error: 'issue.solution.error.insufficient_capabilities_for_transfer',
+          },
         })
       })
       const expectedActions = [
         { completed: false, type: 'CREATE_TASK_SOLUTION_REQUESTED' },
-        { open: true, text: 'issue.solution.error.insufficient_capabilities_for_transfer', type: 'ADD_NOTIFICATION', "link": "/#/profile/payout-settings" },
+        {
+          open: true,
+          text: 'issue.solution.error.insufficient_capabilities_for_transfer',
+          type: 'ADD_NOTIFICATION',
+          link: '/#/profile/payout-settings',
+        },
         { completed: false, type: 'FETCH_TASK_REQUESTED' },
-        { completed: true, type: 'CREATE_TASK_SOLUTION_ERROR', error: 'issue.solution.error.insufficient_capabilities_for_transfer' }
+        {
+          completed: true,
+          type: 'CREATE_TASK_SOLUTION_ERROR',
+          error: 'issue.solution.error.insufficient_capabilities_for_transfer',
+        },
       ]
-      const store = mockStore({ intl: { messages: {} }, task: { completed: true, id: 1 }, loggedIn: { logged: true, user: { id: 1 } } })
-      return store.dispatch(taskSolutionActions.createTaskSolution({
-        pullRequestId: '2',
-        userId: 1,
-        repositoryName: 'test-repository',
-        owner: 'alexanmtz',
-        taskId: 1
-      })).then(() => {
-        // return of async actions
-        expect(store.getActions()).toEqual(expectedActions)
-        moxios.uninstall()
+      const store = mockStore({
+        intl: { messages: {} },
+        task: { completed: true, id: 1 },
+        loggedIn: { logged: true, user: { id: 1 } },
       })
+      return store
+        .dispatch(
+          taskSolutionActions.createTaskSolution({
+            pullRequestId: '2',
+            userId: 1,
+            repositoryName: 'test-repository',
+            owner: 'alexanmtz',
+            taskId: 1,
+          }),
+        )
+        .then(() => {
+          // return of async actions
+          expect(store.getActions()).toEqual(expectedActions)
+          moxios.uninstall()
+        })
     })
   })
 })

@@ -37,25 +37,19 @@ const listOrganizationsError = (error) => {
 }
 
 const listOrganizations = () => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(listOrganizationsRequested())
     axios
       .get(api.API_URL + '/organizations/list')
-      .then(orgs => {
+      .then((orgs) => {
         if (orgs.data) {
           return dispatch(listOrganizationsSuccess(orgs.data))
         }
-        dispatch(
-          addNotification('actions.orgs.list.error')
-        )
-        return dispatch(
-          listOrganizationsError({ message: 'actions.orgs.list.unavailable' })
-        )
+        dispatch(addNotification('actions.orgs.list.error'))
+        return dispatch(listOrganizationsError({ message: 'actions.orgs.list.unavailable' }))
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.orgs.list.other.error')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.orgs.list.other.error'))
         dispatch(listOrganizationsError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')
@@ -80,14 +74,14 @@ const fetchOrganizationsError = (error) => {
 const fetchOrganizations = () => {
   validToken()
   return (dispatch) => {
-    return dispatch(loggedIn()).then(user => {
+    return dispatch(loggedIn()).then((user) => {
       dispatch(fetchOrganizationsRequested())
       return axios
         .get(`${api.API_URL}/user/organizations`)
-        .then(response => {
+        .then((response) => {
           return dispatch(fetchOrganizationsSuccess(response.data))
         })
-        .catch(error => {
+        .catch((error) => {
           // eslint-disable-next-line no-console
           console.log('error to fetch organizations', error)
           return dispatch(fetchOrganizationsError(error))
@@ -114,10 +108,10 @@ const fetchOrganization = (id) => {
     dispatch(fetchOrganizationRequested())
     return axios
       .get(`${api.API_URL}/organizations/fetch/${id}`)
-      .then(response => {
+      .then((response) => {
         return dispatch(fetchOrganizationSuccess(response.data))
       })
-      .catch(error => {
+      .catch((error) => {
         // eslint-disable-next-line no-console
         console.log('error to fetch organizations', error)
         return dispatch(fetchOrganizationError(error))
@@ -140,18 +134,18 @@ const createOrganizationsError = (error) => {
 const createOrganizations = (org) => {
   validToken()
   return (dispatch) => {
-    return dispatch(loggedIn()).then(userResponse => {
+    return dispatch(loggedIn()).then((userResponse) => {
       dispatch(createOrganizationsRequested())
       return axios
         .post(`${api.API_URL}/organizations/create`, {
           name: org.name,
-          UserId: userResponse.user.id
+          UserId: userResponse.user.id,
         })
-        .then(response => {
+        .then((response) => {
           dispatch(addNotification('actions.orgs.create.success'))
           return dispatch(createOrganizationsSuccess(response.data))
         })
-        .catch(error => {
+        .catch((error) => {
           dispatch(addNotification('actions.orgs.create.error'))
           // eslint-disable-next-line no-console
           console.log('error to fetch organizations', error)
@@ -176,15 +170,15 @@ const updateOrganizationsError = (error) => {
 const updateOrganization = (organization) => {
   validToken()
   return (dispatch) => {
-    return dispatch(loggedIn()).then(userResponse => {
+    return dispatch(loggedIn()).then((userResponse) => {
       dispatch(updateOrganizationsRequested())
       return axios
         .put(`${api.API_URL}/organizations/update`, organization)
-        .then(response => {
+        .then((response) => {
           dispatch(addNotification('actions.orgs.update.success'))
           return dispatch(updateOrganizationsSuccess(response.data))
         })
-        .catch(error => {
+        .catch((error) => {
           dispatch(addNotification('actions.orgs.update.error'))
           // eslint-disable-next-line no-console
           console.log('error to fetch organizations', error)
@@ -223,5 +217,5 @@ export {
   UPDATE_ORGANIZATIONS_REQUESTED,
   UPDATE_ORGANIZATIONS_SUCCESS,
   UPDATE_ORGANIZATIONS_ERROR,
-  updateOrganization
+  updateOrganization,
 }

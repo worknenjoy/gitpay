@@ -4,5 +4,5 @@ export const Container = styled('div')(({ theme }) => ({
   marginBottom: 20,
   display: 'flex',
   flexDirection: 'row',
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
 }))

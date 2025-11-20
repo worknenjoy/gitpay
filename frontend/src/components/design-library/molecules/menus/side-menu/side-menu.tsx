@@ -8,7 +8,7 @@ import {
   OnlyDesktop,
   OnlyMobile,
   RightSide,
-  StyledButton
+  StyledButton,
 } from './side-menu.styled.div'
 import { SidePaper, Row, MainHeaderWrapper, Profile } from './side-menu.styles'
 import SideMenuItems from './side-menu-items'
@@ -16,27 +16,23 @@ import SidebarMenuPlaceholder from './side-menu.placeholder'
 
 // styles moved to side-menu.styles.ts
 
-
 interface MenuItemProps {
-  include: boolean;
-  onClick: () => void;
-  icon: React.ReactElement;
-  label: React.ReactNode;
-  selected?: boolean;
+  include: boolean
+  onClick: () => void
+  icon: React.ReactElement
+  label: React.ReactNode
+  selected?: boolean
 }
 
 interface SideMenuProps {
-  completed: boolean;
+  completed: boolean
   menuItems: {
-    category?: React.ReactNode;
-    items: MenuItemProps[];
-  }[];
+    category?: React.ReactNode
+    items: MenuItemProps[]
+  }[]
 }
 
-export const SideMenu: React.FC<SideMenuProps> = ({
-  completed,
-  menuItems
-}) => {
+export const SideMenu: React.FC<SideMenuProps> = ({ completed, menuItems }) => {
   // removed useStyles
   const [selected, setSelected] = useState(0)
   const [isActive, setIsActive] = useState(false)
@@ -45,15 +41,15 @@ export const SideMenu: React.FC<SideMenuProps> = ({
     setIsActive(!isActive)
   }
 
-  const menuItemsMobile = menuItems.map(section => ({
+  const menuItemsMobile = menuItems.map((section) => ({
     ...section,
-    items: section.items.map(item => ({
+    items: section.items.map((item) => ({
       ...item,
       onClick: () => {
         setIsActive(false)
         item.onClick()
-      }
-    }))
+      },
+    })),
   }))
 
   return (
@@ -65,23 +61,21 @@ export const SideMenu: React.FC<SideMenuProps> = ({
               <StyledButton href="/">
                 <Logo src={logo} />
               </StyledButton>
-              <MenuMobile
-                onClick={handleClickMenuMobile}
-                variant="text"
-                size="small"
-              >
+              <MenuMobile onClick={handleClickMenuMobile} variant="text" size="small">
                 <IconHamburger isActive={isActive} />
               </MenuMobile>
             </MainHeaderWrapper>
           </LeftSide>
           <RightSide isActive={isActive}>
             <Row>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                flex: 1,
-                padding: '5px 20px'
-              }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  flex: 1,
+                  padding: '5px 20px',
+                }}
+              >
                 {completed ? (
                   <OnlyDesktop>
                     <SideMenuItems menuItems={menuItems} />
@@ -97,9 +91,9 @@ export const SideMenu: React.FC<SideMenuProps> = ({
                 ) : (
                   <SidebarMenuPlaceholder />
                 )}
-
               </div>
-            </Row></RightSide>
+            </Row>
+          </RightSide>
         </Profile>
       </div>
     </SidePaper>

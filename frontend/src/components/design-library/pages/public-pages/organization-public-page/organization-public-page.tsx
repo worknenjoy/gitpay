@@ -1,10 +1,10 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Container } from '@mui/material';
-import Breadcrumb from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb';
-import ContextTitle from 'design-library/atoms/typography/context-title/context-title';
-import IssuesTable from 'design-library/molecules/tables/issue-table/issue-table';
-import ProjectListCompact from 'design-library/molecules/lists/project-list/project-list-compact/project-list-compact';
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
+import { Container } from '@mui/material'
+import Breadcrumb from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
+import ContextTitle from 'design-library/atoms/typography/context-title/context-title'
+import IssuesTable from 'design-library/molecules/tables/issue-table/issue-table'
+import ProjectListCompact from 'design-library/molecules/lists/project-list/project-list-compact/project-list-compact'
 
 const OrganizationPublicPage = ({
   organization,
@@ -14,24 +14,27 @@ const OrganizationPublicPage = ({
   languages,
   listLabels,
   listLanguages,
-  listTasks
+  listTasks,
 }) => {
-  const { data, completed } = organization;
+  const { data, completed } = organization
   const projectList = { data: data?.Projects || [], completed }
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Breadcrumb
         organization={organization}
-        root={{ label: <FormattedMessage id="breadcrumb.explore.organizations.root" defaultMessage="Explore" />, link: '/explore/issues' }}
+        root={{
+          label: (
+            <FormattedMessage id="breadcrumb.explore.organizations.root" defaultMessage="Explore" />
+          ),
+          link: '/explore/issues',
+        }}
       />
       <ContextTitle
         context={organization}
         title={<FormattedMessage id="organization.title" defaultMessage="Organization" />}
       />
-      <ProjectListCompact
-        projects={projectList}
-      />
+      <ProjectListCompact projects={projectList} />
       <IssuesTable
         issues={issues}
         filterTasks={filterTasks}
@@ -42,7 +45,7 @@ const OrganizationPublicPage = ({
         listTasks={listTasks}
       />
     </Container>
-  );
-};
+  )
+}
 
-export default OrganizationPublicPage;
+export default OrganizationPublicPage

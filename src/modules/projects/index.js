@@ -3,5 +3,5 @@ const projectList = require('./projectList')
 
 module.exports = {
   projectFetch,
-  projectList
+  projectList,
 }

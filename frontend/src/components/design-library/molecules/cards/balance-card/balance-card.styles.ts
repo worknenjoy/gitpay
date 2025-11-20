@@ -5,16 +5,16 @@ export const RootCard = styled(MuiCard)(() => ({
   maxWidth: 500,
   margin: 10,
   textAlign: 'right',
-  padding: 10
+  padding: 10,
 }))
 
 export const Balance = styled(MuiTypography)(() => ({
   fontSize: 32,
-  fontWeight: 'bold'
+  fontWeight: 'bold',
 }))
 
 export const Name = styled(MuiTypography)(() => ({
-  fontSize: 18
+  fontSize: 18,
 }))
 
 export default { RootCard, Balance, Name }

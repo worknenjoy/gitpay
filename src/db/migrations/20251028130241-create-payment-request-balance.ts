@@ -5,17 +5,17 @@ export async function up({ queryInterface }: { queryInterface: QueryInterface })
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     balance: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: 0,
     },
     currency: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'usd'
+      defaultValue: 'usd',
     },
     userId: {
       unique: true,
@@ -23,17 +23,17 @@ export async function up({ queryInterface }: { queryInterface: QueryInterface })
       allowNull: false,
       references: {
         model: 'Users',
-        key: 'id'
-      }
+        key: 'id',
+      },
     },
     createdAt: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
     },
     updatedAt: {
       type: DataTypes.DATE,
-      allowNull: false
-    }
+      allowNull: false,
+    },
   })
 }
 

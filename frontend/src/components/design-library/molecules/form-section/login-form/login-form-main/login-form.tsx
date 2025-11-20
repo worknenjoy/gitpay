@@ -11,14 +11,16 @@ import LoginFormForgot from '../login-form-forgot/login-form-forgot'
 
 const styles = (theme: any) => ({
   gutterLeft: {
-    marginLeft: 10
-  }
+    marginLeft: 10,
+  },
 })
 
 const Wrapper = styled.div<{ contrast?: boolean }>`
-  ${props => props.contrast && css`
-    color: white;
-  `}
+  ${(props) =>
+    props.contrast &&
+    css`
+      color: white;
+    `}
 `
 
 const Content = styled.div`
@@ -26,7 +28,7 @@ const Content = styled.div`
 `
 
 interface LoginButtonProps extends RouteComponentProps {
-  referrer?: Location;
+  referrer?: Location
   location: any
   contrast?: boolean
   includeForm?: boolean
@@ -38,8 +40,8 @@ interface LoginButtonProps extends RouteComponentProps {
   user?: { email: string }
   onForgot?: () => void
   onSignup?: () => void
-  onSignin?: () => void,
-  loginFormSignupFormProps?: any,
+  onSignin?: () => void
+  loginFormSignupFormProps?: any
   loginFormForgotFormProps
 }
 
@@ -52,53 +54,93 @@ const LoginForm: React.FC<LoginButtonProps> = ({
   onSignup,
   onSignin,
   loginFormSignupFormProps,
-  loginFormForgotFormProps
+  loginFormForgotFormProps,
 }) => {
-
   return (
     <Wrapper contrast={contrast}>
       <Content>
-          <div>
-            {mode !== 'reset' ? (
-              <>
-                <Typography variant="h5" style={{ fontWeight: 'bold' }} color={contrast ? 'inherit' : 'primary'} gutterBottom>
-                  <FormattedMessage id="account.login.title.welcome" defaultMessage="Welcome to Gitpay!" />
-                </Typography>
-                <Typography style={{ marginBottom: 20 }} variant="body1" color={contrast ? 'inherit' : 'primary'} gutterBottom noWrap>
-                  <FormattedMessage id="account.login.connect.form" defaultMessage="Connect or signup with your account" />
-                </Typography>
-              </>
-            ) : (
-              <>
-                <Typography variant="caption" style={{ fontWeight: 'bold' }} color={contrast ? 'inherit' : 'primary'} gutterBottom>
-                  <FormattedMessage id="account.login.title.welcome.recover" defaultMessage="Welcome back to Gitpay!" />
-                </Typography>
-                <Typography style={{ marginBottom: 20 }} variant="h5" color={contrast ? 'inherit' : 'primary'} gutterBottom noWrap>
-                  {user?.email}
-                </Typography>
-                <Typography variant="h6" style={{ fontWeight: 'bold' }} color={contrast ? 'inherit' : 'primary'} gutterBottom>
-                  <FormattedMessage id="account.login.title" defaultMessage="Recover your password" />
-                </Typography>
-                <Typography style={{ marginBottom: 20 }} variant="body1" color={contrast ? 'inherit' : 'primary'} gutterBottom noWrap>
-                  <FormattedMessage id="account.login.connect.form.reset" defaultMessage="To reset your password, type the new password and confirm" />
-                </Typography>
-              </>
-            )}
-            { mode === 'signin' && (
-              <LoginFormSignin onClose={onClose} onForgot={onForgot} onSignup={onSignup} />
-            )}
-            { mode === 'signup' && (
-              <LoginFormSignup onClose={onClose} onSignin={onSignin} {...loginFormSignupFormProps} />
-            )}
-            {mode === 'forgot' && (
-              <LoginFormForgot onClose={onClose} onSignin={onSignin} {...loginFormForgotFormProps} />
-            )}
-            {mode === 'reset' && (
-              <LoginFormReset onClose={onClose} />
-            )}
-            
-          </div>
-        
+        <div>
+          {mode !== 'reset' ? (
+            <>
+              <Typography
+                variant="h5"
+                style={{ fontWeight: 'bold' }}
+                color={contrast ? 'inherit' : 'primary'}
+                gutterBottom
+              >
+                <FormattedMessage
+                  id="account.login.title.welcome"
+                  defaultMessage="Welcome to Gitpay!"
+                />
+              </Typography>
+              <Typography
+                style={{ marginBottom: 20 }}
+                variant="body1"
+                color={contrast ? 'inherit' : 'primary'}
+                gutterBottom
+                noWrap
+              >
+                <FormattedMessage
+                  id="account.login.connect.form"
+                  defaultMessage="Connect or signup with your account"
+                />
+              </Typography>
+            </>
+          ) : (
+            <>
+              <Typography
+                variant="caption"
+                style={{ fontWeight: 'bold' }}
+                color={contrast ? 'inherit' : 'primary'}
+                gutterBottom
+              >
+                <FormattedMessage
+                  id="account.login.title.welcome.recover"
+                  defaultMessage="Welcome back to Gitpay!"
+                />
+              </Typography>
+              <Typography
+                style={{ marginBottom: 20 }}
+                variant="h5"
+                color={contrast ? 'inherit' : 'primary'}
+                gutterBottom
+                noWrap
+              >
+                {user?.email}
+              </Typography>
+              <Typography
+                variant="h6"
+                style={{ fontWeight: 'bold' }}
+                color={contrast ? 'inherit' : 'primary'}
+                gutterBottom
+              >
+                <FormattedMessage id="account.login.title" defaultMessage="Recover your password" />
+              </Typography>
+              <Typography
+                style={{ marginBottom: 20 }}
+                variant="body1"
+                color={contrast ? 'inherit' : 'primary'}
+                gutterBottom
+                noWrap
+              >
+                <FormattedMessage
+                  id="account.login.connect.form.reset"
+                  defaultMessage="To reset your password, type the new password and confirm"
+                />
+              </Typography>
+            </>
+          )}
+          {mode === 'signin' && (
+            <LoginFormSignin onClose={onClose} onForgot={onForgot} onSignup={onSignup} />
+          )}
+          {mode === 'signup' && (
+            <LoginFormSignup onClose={onClose} onSignin={onSignin} {...loginFormSignupFormProps} />
+          )}
+          {mode === 'forgot' && (
+            <LoginFormForgot onClose={onClose} onSignin={onSignin} {...loginFormForgotFormProps} />
+          )}
+          {mode === 'reset' && <LoginFormReset onClose={onClose} />}
+        </div>
       </Content>
     </Wrapper>
   )

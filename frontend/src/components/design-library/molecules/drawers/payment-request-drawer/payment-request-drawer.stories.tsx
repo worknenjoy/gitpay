@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import PaymentRequestDrawer from './payment-request-drawer';
+import React, { useState } from 'react'
+import PaymentRequestDrawer from './payment-request-drawer'
 
 const meta = {
   title: 'Design Library/Molecules/Drawers/PaymentRequestDrawer',
@@ -8,30 +8,22 @@ const meta = {
     open: true,
     amount: 100,
     title: 'Request Payment',
-    description: 'Please fill out the form to request payment'
-  }
-};
+    description: 'Please fill out the form to request payment',
+  },
+}
 
-export default meta;
+export default meta
 
 const Template = (args) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(true)
 
-  return (
-    <PaymentRequestDrawer
-      {...args}
-      open={open}
-      onClose={() => setOpen(false)}
-    />
-  );
-};
+  return <PaymentRequestDrawer {...args} open={open} onClose={() => setOpen(false)} />
+}
 
-export const Default = Template.bind({});
-Default.args = {
-  
-};
+export const Default = Template.bind({})
+Default.args = {}
 
-export const Edit = Template.bind({});
+export const Edit = Template.bind({})
 Edit.args = {
   completed: true,
   paymentRequest: {
@@ -42,13 +34,12 @@ Edit.args = {
       description: 'Development of a company website',
       amount: 1500,
       currency: 'USD',
-      active: true
-    }
-  }
-};
+      active: true,
+    },
+  },
+}
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({})
 Loading.args = {
-  completed: false
-};
-
+  completed: false,
+}

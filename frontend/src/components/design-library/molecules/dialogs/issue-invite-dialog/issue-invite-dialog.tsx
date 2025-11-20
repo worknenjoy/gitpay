@@ -9,7 +9,7 @@ import {
   DialogTitle,
   FormControl,
   Typography,
-  TextField
+  TextField,
 } from '@mui/material'
 import { Container } from './issue-invite-dialog.styles'
 
@@ -39,46 +39,42 @@ const TaskInvite: React.FC<Props> = ({ id, visible = true, onClose, onInvite, us
 
   return (
     <Container>
-      <Dialog
-        open={ visible }
-        onClose={ (e) => onClose(e) }
-        aria-labelledby="form-dialog-title"
-      >
+      <Dialog open={visible} onClose={(e) => onClose(e)} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
-          <FormattedMessage id="task.invite.title" defaultMessage="Invite someone to work on this task" />
+          <FormattedMessage
+            id="task.invite.title"
+            defaultMessage="Invite someone to work on this task"
+          />
         </DialogTitle>
         <DialogContent>
-          <form onChange={ onChangeInvite } method="POST">
-            <FormControl fullWidth style={ { marginBottom: 20 } }>
+          <form onChange={onChangeInvite} method="POST">
+            <FormControl fullWidth style={{ marginBottom: 20 }}>
               <Typography variant="subtitle1" gutterBottom>
                 E-mail
               </Typography>
-              <TextField
-                type="email"
-                autoFocus
-                name="email"
-                fullWidth
-              />
+              <TextField type="email" autoFocus name="email" fullWidth />
             </FormControl>
             <FormControl fullWidth>
               <Typography variant="subtitle1" gutterBottom>
-                <FormattedMessage id="task.invite.text.label" defaultMessage="Write a text to be sent with the invite" />
+                <FormattedMessage
+                  id="task.invite.text.label"
+                  defaultMessage="Write a text to be sent with the invite"
+                />
               </Typography>
-              <TextField
-                autoFocus
-                name="message"
-                multiline
-                rows="3"
-                fullWidth
-              />
+              <TextField autoFocus name="message" multiline rows="3" fullWidth />
             </FormControl>
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={ (e) => onClose(e) } color="primary">
+          <Button onClick={(e) => onClose(e)} color="primary">
             <FormattedMessage id="task.invite.form.cancel" defaultMessage="Cancel" />
           </Button>
-          <Button disabled={ message.length === 0 } onClick={ sendInvite } variant="contained" color="secondary">
+          <Button
+            disabled={message.length === 0}
+            onClick={sendInvite}
+            variant="contained"
+            color="secondary"
+          >
             <FormattedMessage id="task.invite.form.send" defaultMessage="Send" />
           </Button>
         </DialogActions>
