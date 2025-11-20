@@ -4,10 +4,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: {
         model: 'Roles',
-        key: 'id',
+        key: 'id'
       },
-      allowNull: true,
-    },
+      allowNull: true
+    }
   })
 
   Member.associate = (models) => {

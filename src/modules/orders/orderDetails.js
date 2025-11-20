@@ -14,14 +14,14 @@ module.exports = Promise.method(function orderDetails(orderParams) {
           Authorization:
             'Basic ' +
             Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-              'base64',
+              'base64'
             ),
           'Content-Type': 'application/json',
-          grant_type: 'client_credentials',
+          grant_type: 'client_credentials'
         },
         form: {
-          grant_type: 'client_credentials',
-        },
+          grant_type: 'client_credentials'
+        }
       }).then((response) => {
         return requestPromise({
           method: 'GET',
@@ -31,8 +31,8 @@ module.exports = Promise.method(function orderDetails(orderParams) {
             Prefer: 'return=representation',
             'Accept-Language': 'en_US',
             Authorization: 'Bearer ' + JSON.parse(response)['access_token'],
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         }).then((orderDetails) => {
           const orderDetailsParsed = JSON.parse(orderDetails)
           const orderData = order.dataValues
@@ -41,8 +41,8 @@ module.exports = Promise.method(function orderDetails(orderParams) {
             paypal: {
               status: orderDetailsParsed.status,
               intent: orderDetailsParsed.intent,
-              created_at: orderDetailsParsed.create_time,
-            },
+              created_at: orderDetailsParsed.create_time
+            }
           }
         })
       })

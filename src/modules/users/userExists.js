@@ -12,7 +12,7 @@ module.exports = Promise.method(async function userExists(userAttributes) {
   try {
     const user = await models.User.findOne({
       where: {
-        ...conditions,
+        ...conditions
       },
       include: [
         models.Type,
@@ -21,11 +21,11 @@ module.exports = Promise.method(async function userExists(userAttributes) {
           include: [
             {
               model: models.Project,
-              include: [models.Task],
-            },
-          ],
-        },
-      ],
+              include: [models.Task]
+            }
+          ]
+        }
+      ]
     })
     if (!user) return false
 

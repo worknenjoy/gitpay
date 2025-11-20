@@ -17,7 +17,7 @@ export function rowsToCSV(rows: ReportRow[], totals?: BuildTotals): string {
     'Stripe Fee',
     'Transfer Date',
     'Charge Date',
-    'Revenue',
+    'Revenue'
   ]
 
   const lines: string[] = []
@@ -38,7 +38,7 @@ export function rowsToCSV(rows: ReportRow[], totals?: BuildTotals): string {
       csvEscape(centsToDecimal(totals.fee, 'usd')),
       csvEscape(''),
       csvEscape(''),
-      csvEscape(centsToDecimal(totals.revenue, 'usd')),
+      csvEscape(centsToDecimal(totals.revenue, 'usd'))
     ]
     lines.push(totalLine.join(','))
   }
@@ -50,7 +50,7 @@ export async function writePayoutsExtraAndSummary(
   start: number,
   end: number,
   outDir: string,
-  totals: BuildTotals,
+  totals: BuildTotals
 ) {
   ensureDir(outDir)
 
@@ -73,7 +73,7 @@ export async function writePayoutsExtraAndSummary(
       const page: any = await stripe.balanceTransactions.list({
         limit: 100,
         starting_after,
-        created: { gte: start, lt: end },
+        created: { gte: start, lt: end }
       })
       if (page && Array.isArray(page.data)) {
         for (const bt of page.data) {
@@ -105,7 +105,7 @@ export async function writePayoutsExtraAndSummary(
     'Currency',
     'Payout Date',
     'Arrival Date',
-    'Amount',
+    'Amount'
   ]
   const payoutsLines: string[] = [payoutsCsvHeaders.join(',')]
   for (const p of payouts) {
@@ -118,8 +118,8 @@ export async function writePayoutsExtraAndSummary(
       csvEscape(
         typeof p?.amount === 'number'
           ? centsToDecimal(p.amount, (p?.currency || '').toUpperCase())
-          : '',
-      ),
+          : ''
+      )
     ]
     payoutsLines.push(line.join(','))
   }
@@ -137,7 +137,7 @@ export async function writePayoutsExtraAndSummary(
       const page: any = await stripe.balanceTransactions.list({
         limit: 100,
         starting_after,
-        created: { gte: start, lt: end },
+        created: { gte: start, lt: end }
       })
       if (page && Array.isArray(page.data)) {
         for (const bt of page.data) {
@@ -152,9 +152,9 @@ export async function writePayoutsExtraAndSummary(
             csvEscape(
               typeof bt?.net === 'number'
                 ? centsToDecimal(bt.net, (bt?.currency || '').toUpperCase() || 'USD')
-                : '',
+                : ''
             ),
-            csvEscape(bt?.description || ''),
+            csvEscape(bt?.description || '')
           ]
           btLines.push(row.join(','))
         }
@@ -173,14 +173,14 @@ export async function writePayoutsExtraAndSummary(
   const summaryHeaders = ['Metric', 'Currency', 'Amount']
   const summaryLines: string[] = [summaryHeaders.join(',')]
   summaryLines.push(
-    ['Gross Revenue', 'USD', centsToDecimal(totals.revenue, 'USD')].map(csvEscape).join(','),
+    ['Gross Revenue', 'USD', centsToDecimal(totals.revenue, 'USD')].map(csvEscape).join(',')
   )
   summaryLines.push(['Payouts', 'USD', centsToDecimal(payoutsUSD, 'USD')].map(csvEscape).join(','))
   summaryLines.push(
-    ['Extra Fees', 'USD', centsToDecimal(extraFeesUSD, 'USD')].map(csvEscape).join(','),
+    ['Extra Fees', 'USD', centsToDecimal(extraFeesUSD, 'USD')].map(csvEscape).join(',')
   )
   summaryLines.push(
-    ['Net Revenue', 'USD', centsToDecimal(netRevenueUSD, 'USD')].map(csvEscape).join(','),
+    ['Net Revenue', 'USD', centsToDecimal(netRevenueUSD, 'USD')].map(csvEscape).join(',')
   )
   for (const [cur, amt] of Array.from(payoutsByCurrency.entries()).sort()) {
     if (cur === 'USD') continue
@@ -204,7 +204,7 @@ export async function writePayoutsExtraAndSummary(
         .split(/\n/)
         .map((l: string) => l.split(','))
     const wsRevenue = XLSX.utils.aoa_to_sheet(
-      toSheet(fs.readFileSync(path.join(outDir, `revenue_${year}.csv`), 'utf8')),
+      toSheet(fs.readFileSync(path.join(outDir, `revenue_${year}.csv`), 'utf8'))
     )
     const wsPayouts = XLSX.utils.aoa_to_sheet(toSheet(payoutsLines.join('\n')))
     const wsFees = XLSX.utils.aoa_to_sheet(toSheet(btLines.join('\n')))

@@ -32,7 +32,7 @@ MyLanguage.propTypes = {
   language: PropTypes.string,
   title: PropTypes.string,
   onDelete: PropTypes.func.isRequired,
-  isSelected: PropTypes.bool,
+  isSelected: PropTypes.bool
 }
 
 export default injectIntl(withRouter(MyLanguage))

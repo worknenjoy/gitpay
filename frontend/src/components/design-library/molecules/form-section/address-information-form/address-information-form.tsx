@@ -10,7 +10,7 @@ const AddressInformationForm = ({
   city,
   state,
   zipCode,
-  country,
+  country
 }) => {
   return (
     <Fieldset completed={completed} legend="Address Information">

@@ -3,7 +3,7 @@ import EmptyBankAccount from './empty-bank-account'
 
 export default {
   title: 'Design Library/Molecules/Empty/EmptyBankAccount',
-  component: EmptyBankAccount,
+  component: EmptyBankAccount
 }
 
 const Template = (args) => <EmptyBankAccount {...args} />

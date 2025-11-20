@@ -17,9 +17,9 @@ module.exports = Promise.method(function userSearch(params) {
       'paypal_id',
       'repos',
       'createdAt',
-      'updatedAt',
+      'updatedAt'
     ],
-    include: [models.Type],
+    include: [models.Type]
   })
     .then((users) => {
       if (!users) return false

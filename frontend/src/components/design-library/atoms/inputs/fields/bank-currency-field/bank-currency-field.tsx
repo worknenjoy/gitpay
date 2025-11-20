@@ -9,7 +9,7 @@ const BankCurrencyField = ({ currency, countries, disabled = false }) => {
 
   const {
     data: { default_currency, supported_bank_account_currencies },
-    completed,
+    completed
   } = countries
 
   const onChangeCurrency = (e) => {

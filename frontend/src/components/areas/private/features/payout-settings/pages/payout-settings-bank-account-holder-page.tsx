@@ -25,7 +25,7 @@ const BankAccountHolderPage = ({ user, account, countries, updateAccount, delete
       'individual[address][state]': e.target['state'].value,
       'individual[dob][day]': e.target['dob_day'].value,
       'individual[dob][month]': e.target['dob_month'].value,
-      'individual[dob][year]': e.target['dob_year'].value,
+      'individual[dob][year]': e.target['dob_year'].value
     }
 
     if (terms) {
@@ -38,7 +38,7 @@ const BankAccountHolderPage = ({ user, account, countries, updateAccount, delete
     await updateAccount(formData)
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
+      behavior: 'smooth'
     })
   }
 

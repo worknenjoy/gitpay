@@ -33,40 +33,40 @@ export default class PaymentRequestCustomer
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
-          autoIncrement: true,
+          autoIncrement: true
         },
         name: {
           type: DataTypes.STRING,
-          allowNull: true,
+          allowNull: true
         },
         email: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: false
         },
         sourceId: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: false
         },
         userId: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: false
         },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
-          defaultValue: DataTypes.NOW,
+          defaultValue: DataTypes.NOW
         },
         updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
-          defaultValue: DataTypes.NOW,
-        },
+          defaultValue: DataTypes.NOW
+        }
       },
       {
         sequelize,
         tableName: 'PaymentRequestCustomers',
-        timestamps: true,
-      },
+        timestamps: true
+      }
     )
     return PaymentRequestCustomer
   }
@@ -76,13 +76,13 @@ export default class PaymentRequestCustomer
     models.PaymentRequestCustomer.hasMany(models.PaymentRequestPayment, {
       as: 'payments',
       foreignKey: 'customerId',
-      sourceKey: 'id',
+      sourceKey: 'id'
     })
 
     // PaymentRequestCustomer belongs to User
     models.PaymentRequestCustomer.belongsTo(models.User, {
       as: 'user',
-      foreignKey: 'userId',
+      foreignKey: 'userId'
     })
   }
 }

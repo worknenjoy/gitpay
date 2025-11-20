@@ -5,8 +5,8 @@ module.exports = Promise.method(function offerExists(offerAttributes) {
   return models.Offer.findOne({
     where: {
       userId: offerAttributes.userId,
-      taskId: offerAttributes.taskId,
-    },
+      taskId: offerAttributes.taskId
+    }
   })
     .then((offer) => {
       if (!offer) return false

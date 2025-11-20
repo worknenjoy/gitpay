@@ -22,7 +22,7 @@ const ResetPasswordPage = ({ user, resetPassword }) => {
                 username: data?.username,
                 email: data?.email,
                 strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
-                br: <br />,
+                br: <br />
               }}
             />
           </div>

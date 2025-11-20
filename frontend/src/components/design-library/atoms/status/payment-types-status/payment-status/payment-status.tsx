@@ -4,7 +4,7 @@ import {
   CheckCircleOutlineTwoTone as ActiveIcon,
   InfoSharp as InfoIcon,
   HelpOutline as QuestionInfoIcon,
-  NotInterested as InactiveIcon,
+  NotInterested as InactiveIcon
 } from '@mui/icons-material'
 import { getPaymentStatusStyles } from './payment-status.styles'
 import { useTheme } from '@mui/material/styles'
@@ -30,53 +30,53 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({ status, completed = true 
       status: 'open',
       label: 'Open',
       color: 'open',
-      icon: <InfoIcon sx={styles.open} />,
+      icon: <InfoIcon sx={styles.open} />
     },
     {
       status: 'pending',
       label: 'Pending',
       color: 'pending',
       icon: <InfoIcon sx={styles.pending} />,
-      message: 'Your payment is pending. Please wait while we process it.',
+      message: 'Your payment is pending. Please wait while we process it.'
     },
     {
       status: 'succeeded',
       label: 'Succeeded',
       color: 'succeeded',
-      icon: <ActiveIcon />,
+      icon: <ActiveIcon />
     },
     {
       status: 'failed',
       label: 'Failed',
       color: 'failed',
       icon: <InactiveIcon sx={styles.failed} />,
-      message: 'Your payment has failed. Please try again or contact support.',
+      message: 'Your payment has failed. Please try again or contact support.'
     },
     {
       status: 'expired',
       label: 'Expired',
       color: 'expired',
-      icon: <InactiveIcon sx={styles.expired} />,
+      icon: <InactiveIcon sx={styles.expired} />
     },
     {
       status: 'canceled',
       label: 'Canceled',
       color: 'canceled',
-      icon: <InactiveIcon sx={styles.canceled} />,
+      icon: <InactiveIcon sx={styles.canceled} />
     },
     {
       status: 'refunded',
       label: 'Refunded',
       color: 'refunded',
-      icon: <InfoIcon sx={styles.refunded} />,
+      icon: <InfoIcon sx={styles.refunded} />
     },
     {
       status: 'unknown',
       label: 'Unknown',
       color: 'unknown',
       icon: <QuestionInfoIcon sx={styles.unknown} />,
-      message: 'Your status is unknown. Please check back later.',
-    },
+      message: 'Your status is unknown. Please check back later.'
+    }
   ]
 
   return (

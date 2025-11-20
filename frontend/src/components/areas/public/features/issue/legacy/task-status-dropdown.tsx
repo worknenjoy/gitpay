@@ -24,7 +24,7 @@ export function TaskStatusDropdown({ onSelect, status, intl }) {
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
-    name: string,
+    name: string
   ) => {
     setSelectedOption(name)
     setOpen(false)
@@ -82,7 +82,7 @@ export function TaskStatusDropdown({ onSelect, status, intl }) {
       </ButtonGroup>
       <Popper
         sx={{
-          zIndex: 1,
+          zIndex: 1
         }}
         open={open}
         anchorEl={anchorRef.current}
@@ -94,7 +94,7 @@ export function TaskStatusDropdown({ onSelect, status, intl }) {
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+              transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'
             }}
           >
             <Paper elevation={0}>

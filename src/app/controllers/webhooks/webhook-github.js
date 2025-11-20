@@ -28,28 +28,28 @@ exports.github = async (req, res) => {
         { status: status },
         {
           where: {
-            url: dbUrl,
+            url: dbUrl
           },
-          returning: true,
-        },
+          returning: true
+        }
       )
       const updatedTask = updated[1][0].dataValues
       const user = await models.User.findOne({
         where: {
-          id: updatedTask.userId,
-        },
+          id: updatedTask.userId
+        }
       })
       if (updated) {
         if (updatedTask.status === 'closed') {
           IssueClosedMail.success(user.dataValues, {
             name: user.dataValues.name,
             url: updatedTask.url,
-            title: updatedTask.title,
+            title: updatedTask.title
           })
         }
         return res.json({
           ...response,
-          task: updatedTask,
+          task: updatedTask
         })
       } else return res.status(500).json({})
     }
@@ -60,12 +60,12 @@ exports.github = async (req, res) => {
           labels.map(async (label) => {
             let persistedLabel = await models.Label.findOne({
               where: {
-                name: label.name,
-              },
+                name: label.name
+              }
             })
             if (persistedLabel === null) {
               persistedLabel = await models.Label.create({
-                name: label.name,
+                name: label.name
               })
             }
             const labelId = persistedLabel.dataValues.id
@@ -75,14 +75,14 @@ exports.github = async (req, res) => {
                 console.log('it is labeled notify')
                 const user = await models.User.findOne({
                   where: {
-                    username: response.issue.user.login,
-                  },
+                    username: response.issue.user.login
+                  }
                 })
                 const userData = user && user.dataValues
                 const task = await models.Task.findOne({
                   where: {
-                    url: response.issue.html_url,
-                  },
+                    url: response.issue.html_url
+                  }
                 })
                 const taskData = task.dataValues
                 const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
@@ -93,13 +93,13 @@ exports.github = async (req, res) => {
                   SendMail.success(
                     userData,
                     i18n.__('mail.webhook.github.issue.new.subject', {
-                      title: response.issue.title,
+                      title: response.issue.title
                     }),
                     i18n.__('mail.webhook.github.issue.new.message', {
                       task: taskUrl,
                       issue: response.issue.html_url,
-                      repo: response.repository.html_url,
-                    }),
+                      repo: response.repository.html_url
+                    })
                   )
                   await task.addLabels(labelId)
                 }
@@ -111,26 +111,26 @@ exports.github = async (req, res) => {
                     value: taskData.value > 0 ? taskData.value : null,
                     deadline: taskData.deadline
                       ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})`
-                      : null,
-                  },
+                      : null
+                  }
                 })
 
                 const taskUpdate = await models.Task.update(
                   {
-                    notified: true,
+                    notified: true
                   },
                   {
                     where: {
-                      url: response.issue.html_url,
-                    },
-                  },
+                      url: response.issue.html_url
+                    }
+                  }
                 )
 
                 if (!taskUpdate) {
                   SendMail.error(
                     'notifications@gitpay.me',
                     'Error to update task',
-                    `An error occurred to update the task ${task}`,
+                    `An error occurred to update the task ${task}`
                   )
                 }
                 finalResponse = {
@@ -144,8 +144,8 @@ exports.github = async (req, res) => {
                       : null,
                     userId: userData ? userData.id : null,
                     label: label.name,
-                    status: !taskUpdate ? 404 : 200,
-                  },
+                    status: !taskUpdate ? 404 : 200
+                  }
                 }
               } catch (e) {
                 finalResponse = {}
@@ -159,14 +159,14 @@ exports.github = async (req, res) => {
               try {
                 const user = await models.User.findOne({
                   where: {
-                    username: response.issue.user.login,
-                  },
+                    username: response.issue.user.login
+                  }
                 })
                 const userData = user && user.dataValues
                 const taskExist = await models.Task.findOne({
                   where: {
-                    url: response.issue.html_url,
-                  },
+                    url: response.issue.html_url
+                  }
                 })
                 const task =
                   taskExist ||
@@ -174,7 +174,7 @@ exports.github = async (req, res) => {
                     title: response.issue.title,
                     provider: 'github',
                     url: response.issue.html_url,
-                    userId: userData ? userData.id : null,
+                    userId: userData ? userData.id : null
                   }).save())
                 await task.addLabels(labelId)
                 const taskData = task.dataValues
@@ -185,13 +185,13 @@ exports.github = async (req, res) => {
                   SendMail.success(
                     userData,
                     i18n.__('mail.webhook.github.issue.new.subject', {
-                      title: response.issue.title,
+                      title: response.issue.title
                     }),
                     i18n.__('mail.webhook.github.issue.new.message', {
                       task: taskUrl,
                       issue: response.issue.html_url,
-                      repo: response.repository.html_url,
-                    }),
+                      repo: response.repository.html_url
+                    })
                   )
                 }
                 finalResponse = {
@@ -201,8 +201,8 @@ exports.github = async (req, res) => {
                     title: taskData.title,
                     userId: userData ? userData.id : null,
                     label: label.name,
-                    status: 200,
-                  },
+                    status: 200
+                  }
                 }
               } catch (e) {
                 // eslint-disable-next-line no-console
@@ -211,7 +211,7 @@ exports.github = async (req, res) => {
               }
               totalLabelResponse.push(finalResponse.task)
             }
-          }),
+          })
         )
         const allResponse = { ...response, totalLabelResponse }
         return res.json({ ...allResponse })

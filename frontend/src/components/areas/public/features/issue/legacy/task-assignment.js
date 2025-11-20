@@ -23,13 +23,13 @@ import {
   Link,
   FormControlLabel,
   DialogContentText,
-  TextareaAutosize,
+  TextareaAutosize
 } from '@mui/material'
 import {
   DateRange as DateIcon,
   CalendarToday as CalendarIcon,
   Warning as WarningIcon,
-  Info as InfoIcon,
+  Info as InfoIcon
 } from '@mui/icons-material'
 
 import Drawer from 'design-library/molecules/drawers/drawer/drawer'
@@ -79,7 +79,7 @@ const TaskAssignment = (props) => {
                             defaultMessage="TERMS OF USE"
                           />
                         </Link>
-                      ),
+                      )
                     }}
                   />
                 </Typography>
@@ -169,7 +169,7 @@ const TaskAssignment = (props) => {
                             defaultMessage="TERMS OF USE"
                           />
                         </Link>
-                      ),
+                      )
                     }}
                   />
                 </Typography>
@@ -280,7 +280,7 @@ const TaskAssignment = (props) => {
               fontFamily: 'Roboto',
               color: '#a9a9a9',
               marginTop: '10px',
-              textAlign: 'right',
+              textAlign: 'right'
             }}
           >
             {props.charactersCount + '/1000'}
@@ -311,7 +311,7 @@ const TaskAssignment = (props) => {
               fontFamily: 'Roboto',
               color: '#a9a9a9',
               marginTop: '10px',
-              textAlign: 'right',
+              textAlign: 'right'
             }}
           >
             {props.charactersCount + '/120'}
@@ -438,7 +438,7 @@ const TaskAssignment = (props) => {
                           values={{
                             name: task.data.metadata
                               ? task.data.metadata.issue.user.login
-                              : 'unknown',
+                              : 'unknown'
                           }}
                         >
                           {(msg) => (
@@ -507,7 +507,7 @@ const TaskAssignment = (props) => {
                     borderStyle: 'solid',
                     boxShadow: 'none',
                     padding: 10,
-                    paddingTop: 0,
+                    paddingTop: 0
                   }}
                 >
                   <div style={{ textAlign: 'center' }}>
@@ -544,7 +544,7 @@ const TaskAssignment = (props) => {
                         width: 25,
                         justifyContent: 'center',
                         display: 'flex',
-                        alignItems: 'center',
+                        alignItems: 'center'
                       }}
                     >
                       <CalendarIcon style={{ color: 'gray' }} />
@@ -656,8 +656,8 @@ const TaskAssignment = (props) => {
                       <FormattedMessage
                         id="actions.task.payment.plan.bullet.basic"
                         defaultMessage="Basic Campaign"
-                      />,
-                    ],
+                      />
+                    ]
                   }}
                   price={props.currentPrice}
                   onChange={() => {}}

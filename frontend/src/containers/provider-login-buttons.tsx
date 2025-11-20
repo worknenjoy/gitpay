@@ -5,7 +5,7 @@ import ProviderLoginButtons from '../components/areas/private/components/session
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     authorizeGithub: () => dispatch(authorizeGithub()),
-    disconnectGithub: () => dispatch(disconnectGithub()),
+    disconnectGithub: () => dispatch(disconnectGithub())
   }
 }
 

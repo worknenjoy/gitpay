@@ -10,7 +10,7 @@ const routes = [
   { path: '/tasks/finished' },
   { path: '/login', exact: true },
   // redirect (usually excluded from sitemap)
-  { path: '/tasks/explore', redirectTo: '/tasks/open' },
+  { path: '/tasks/explore', redirectTo: '/tasks/open' }
 ]
 
 export default routes

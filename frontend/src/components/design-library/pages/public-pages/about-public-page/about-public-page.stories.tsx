@@ -7,8 +7,8 @@ const meta: Meta<typeof About> = {
   component: About,
   decorators: [withPublicTemplate],
   parameters: {
-    layout: 'fullscreen',
-  },
+    layout: 'fullscreen'
+  }
 }
 
 export default meta

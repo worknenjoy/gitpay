@@ -27,7 +27,7 @@ function TextMaskCustom(props) {
         /\d/,
         /\d/,
         /\d/,
-        /\d/,
+        /\d/
       ]}
       placeholderChar={'\u2000'}
       showMask

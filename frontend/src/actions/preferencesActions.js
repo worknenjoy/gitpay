@@ -19,7 +19,7 @@ const fetchPreferencesSuccess = (response) => {
     languages: response.languages,
     skills: response.skills,
     receiveNotifications: response.receiveNotifications,
-    openForJobs: response.openForJobs,
+    openForJobs: response.openForJobs
   }
 }
 
@@ -51,5 +51,5 @@ export {
   fetchPreferencesRequested,
   fetchPreferencesSuccess,
   fetchPreferencesError,
-  fetchPreferences,
+  fetchPreferences
 }

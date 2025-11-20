@@ -5,5 +5,5 @@ const paymentRequestUpdate = require('./paymentRequestUpdate')
 module.exports = {
   paymentRequestBuilds,
   paymentRequestList,
-  paymentRequestUpdate,
+  paymentRequestUpdate
 }

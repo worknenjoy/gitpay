@@ -3,5 +3,5 @@ const projectlanguageSearch = require('./projectProgrammingLanguage')
 
 module.exports = {
   languageSearch,
-  projectlanguageSearch,
+  projectlanguageSearch
 }

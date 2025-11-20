@@ -18,7 +18,7 @@ import {
   AppBar,
   Tabs,
   Tab,
-  Chip,
+  Chip
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { PaymentOutlined as FilterListIcon, Redeem as RedeemIcon } from '@mui/icons-material'
@@ -35,84 +35,84 @@ import { formatCurrency } from '../../../../../../utils/format-currency'
 const styles = {
   avatar: {
     backgroundColor: blue[100],
-    color: blue[600],
-  },
+    color: blue[600]
+  }
 }
 
 const messages = defineMessages({
   statusOpen: {
     id: 'task.status.label.open',
-    defaultMessage: 'Open',
+    defaultMessage: 'Open'
   },
   statusSucceeded: {
     id: 'task.status.label.succeeded',
-    defaultMessage: 'Paid',
+    defaultMessage: 'Paid'
   },
   statusFail: {
     id: 'task.status.label.fail',
-    defaultMessage: 'Payment canceled',
+    defaultMessage: 'Payment canceled'
   },
   statusCanceled: {
     id: 'task.status.label.canceled',
-    defaultMessage: 'Payment failed',
+    defaultMessage: 'Payment failed'
   },
   statusRefunded: {
     id: 'task.status.label.refunded',
-    defaultMessage: 'Refunded',
+    defaultMessage: 'Refunded'
   },
   labelCreditCard: {
     id: 'task.status.label.creditcard',
-    defaultMessage: 'Credit Card',
+    defaultMessage: 'Credit Card'
   },
   labelPayPal: {
     id: 'task.status.label.paypal',
-    defaultMessage: 'Paypal',
+    defaultMessage: 'Paypal'
   },
   labelNoPayment: {
     id: 'task.status.label.none',
-    defaultMessage: 'No payment type',
+    defaultMessage: 'No payment type'
   },
   statusAnd: {
     id: 'task.status.label.and',
-    defaultMessage: 'and',
+    defaultMessage: 'and'
   },
   allPayments: {
     id: 'task.payment.filter.all',
-    defaultMessage: 'All payments',
+    defaultMessage: 'All payments'
   },
   creditCardPayment: {
     id: 'task.payment.filter.creditcard',
-    defaultMessage: 'Credit Card payments',
+    defaultMessage: 'Credit Card payments'
   },
   payPalPayment: {
     id: 'task.payment.filter.paypal',
-    defaultMessage: 'Paypal payments',
+    defaultMessage: 'Paypal payments'
   },
   undefinedLabel: {
     id: 'task.payment.status.undefined',
-    defaultMessage: 'Undefined status',
+    defaultMessage: 'Undefined status'
   },
   transferMessage: {
     id: 'task.payment.transfer.notRegistered',
     defaultMessage:
-      'The user {to} who will receive the payment, it has no {payments} registered. We will help him to register and send the payment to his registered account',
+      'The user {to} who will receive the payment, it has no {payments} registered. We will help him to register and send the payment to his registered account'
   },
   taskNoAssigned: {
     id: 'task.payment.noAssigned',
     defaultMessage:
-      'Noboby assigned to this task, so you need to first assign and then we can conclude the payment',
-  },
+      'Noboby assigned to this task, so you need to first assign and then we can conclude the payment'
+  }
 })
 
 const StyledTab = styled(Tab)(({ theme }) => ({
   '& .MuiTab-wrapper': {
     flexDirection: 'row',
-    alignItems: 'inherit',
+    alignItems: 'inherit'
   },
   '& svg': {
     width: 16,
-    height: 16,
-  },
+    height: 16
+  }
 }))
 
 class TaskPayment extends Component {
@@ -124,7 +124,7 @@ class TaskPayment extends Component {
       confirmOrderDialog: false,
       currentOffer: null,
       interested: null,
-      messageType: 'assign',
+      messageType: 'assign'
     }
   }
 
@@ -147,7 +147,7 @@ class TaskPayment extends Component {
     e.preventDefault()
     this.setState({ currentTab: value })
     this.props.filterTaskOrders({
-      provider: providerTab[value],
+      provider: providerTab[value]
     })
   }
 
@@ -157,7 +157,7 @@ class TaskPayment extends Component {
       succeeded: this.props.intl.formatMessage(messages.statusSucceeded),
       fail: this.props.intl.formatMessage(messages.statusFail),
       canceled: this.props.intl.formatMessage(messages.statusCanceled),
-      refunded: this.props.intl.formatMessage(messages.statusRefunded),
+      refunded: this.props.intl.formatMessage(messages.statusRefunded)
     }
     return possibles[status]
   }
@@ -200,8 +200,8 @@ class TaskPayment extends Component {
           source_type: 'invoice-item',
           customer_id: loggedUser?.user?.customer_id,
           metadata: {
-            offer_id: offer.id,
-          },
+            offer_id: offer.id
+          }
         }))
       await assignTask(task.data.id, assign.id)
       await this.props.offerUpdate(task.data.id, offer.id, { status: 'accepted' })
@@ -321,7 +321,7 @@ class TaskPayment extends Component {
                           id="task.payment.claim.value"
                           defaultMessage="Claim of {value} requested"
                           values={{
-                            value: formatCurrency(this.props.task?.Transfer?.value),
+                            value: formatCurrency(this.props.task?.Transfer?.value)
                           }}
                         />
                       </Typography>
@@ -351,7 +351,7 @@ class TaskPayment extends Component {
                                 id="task.payment.pay.button.paypal"
                                 defaultMessage="Paid with PayPal (id: {transfer}"
                                 values={{
-                                  transfer: order.transfer_id,
+                                  transfer: order.transfer_id
                                 }}
                               >
                                 {(msg) => <Chip label={msg} />}
@@ -454,7 +454,7 @@ class TaskPayment extends Component {
                   id="task.payment.done.to"
                   defaultMessage="You made a payment to $ {user}"
                   values={{
-                    user: sendTo(this.props.assigned).username,
+                    user: sendTo(this.props.assigned).username
                   }}
                 />
               </div>
@@ -480,7 +480,7 @@ class TaskPayment extends Component {
                     defaultMessage="Pay $ {value}"
                     values={{
                       value:
-                        this.props.task.data.values.card + this.props.task.data.values.paypal || 0,
+                        this.props.task.data.values.card + this.props.task.data.values.paypal || 0
                     }}
                   />
                 </Button>
@@ -509,7 +509,7 @@ TaskPayment.propTypes = {
   onTransfer: PropTypes.func,
   orders: PropTypes.array,
   assigns: PropTypes.array,
-  filterTaskOrders: PropTypes.func,
+  filterTaskOrders: PropTypes.func
 }
 
 export default injectIntl(TaskPayment)

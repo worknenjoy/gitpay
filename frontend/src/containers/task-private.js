@@ -9,7 +9,7 @@ import {
   messageTask,
   messageOffer,
   offerUpdate,
-  actionAssign,
+  actionAssign
 } from '../actions/assignActions'
 import {
   updateTask,
@@ -24,7 +24,7 @@ import {
   messageAuthor,
   reportTask,
   requestClaimTask,
-  transferTask,
+  transferTask
 } from '../actions/taskActions'
 import {
   createOrder,
@@ -32,7 +32,7 @@ import {
   transferOrder,
   cancelOrder,
   detailOrder,
-  listOrders,
+  listOrders
 } from '../actions/orderActions'
 import { fetchWallet, listWallets } from '../actions/walletActions'
 import {
@@ -40,7 +40,7 @@ import {
   createTaskSolution,
   updateTaskSolution,
   fetchPullRequestData,
-  cleanPullRequestDataState,
+  cleanPullRequestDataState
 } from '../actions/taskSolutionActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getProject } from '../selectors/tasks'
@@ -62,7 +62,7 @@ const mapStateToProps = (state, ownProps) => {
     order: state.order,
     customer: state.customer,
     wallets: state.wallets,
-    wallet: state.wallet,
+    wallet: state.wallet
   }
 }
 
@@ -115,7 +115,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchPullRequestData: (owner, repositoryName, pullRequestId, taskId) =>
       dispatch(fetchPullRequestData(owner, repositoryName, pullRequestId, taskId)),
     cleanPullRequestDataState: () => dispatch(cleanPullRequestDataState()),
-    fetchAccount: () => dispatch(fetchAccount()),
+    fetchAccount: () => dispatch(fetchAccount())
     // For account menu and bottom bar props
     // signOut and getInfo provided by profile container
   }

@@ -4,7 +4,7 @@ import { PieChart, Pie, Cell } from 'recharts'
 const data = [
   { name: 'Ongoing', value: 50 },
   { name: 'Completed', value: 70 },
-  { name: 'Pending', value: 30 },
+  { name: 'Pending', value: 30 }
 ]
 
 const RADIAN = Math.PI / 180
@@ -16,7 +16,7 @@ const COLORS = [
   '#FFA000',
   '#FF8F00',
   '#FF6F00',
-  '#DD2C00',
+  '#DD2C00'
 ]
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, index, name }) => {
@@ -47,7 +47,7 @@ export default class LabelPieCharts extends PureComponent {
           alignItems: 'center',
           margin: 'auto',
           marginLeft: '5.8em',
-          display: `${this.props.display}`,
+          display: `${this.props.display}`
         }}
       >
         <Pie

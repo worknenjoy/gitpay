@@ -38,7 +38,7 @@ const PrivateBase = ({
   onResendActivationEmail,
   signOut,
   profileHeaderProps = undefined,
-  bottomProps = { info: { bounties: 0, users: 0, tasks: 0 }, getInfo: () => {} },
+  bottomProps = { info: { bounties: 0, users: 0, tasks: 0 }, getInfo: () => {} }
 }: PrivateBaseProps) => {
   // removed useStyles
   const history = useHistory()

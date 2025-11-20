@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       status: {
         type: DataTypes.STRING,
-        defaultValue: 'pending',
+        defaultValue: 'pending'
       },
       value: DataTypes.DECIMAL,
       transfer_id: DataTypes.STRING,
@@ -13,28 +13,28 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: 'PaymentRequests',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: false,
+        allowNull: false
       },
       userId: {
         type: DataTypes.INTEGER,
         references: {
           model: 'Users',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: false,
-      },
+        allowNull: false
+      }
     },
-    {},
+    {}
   )
 
   PaymentRequestTransfer.associate = function (models) {
     PaymentRequestTransfer.belongsTo(models.PaymentRequest, {
-      foreignKey: 'paymentRequestId',
+      foreignKey: 'paymentRequestId'
     })
     PaymentRequestTransfer.belongsTo(models.User, {
-      foreignKey: 'userId',
+      foreignKey: 'userId'
     })
   }
 

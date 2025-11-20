@@ -18,5 +18,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     queryInterface.removeColumn('Offers', 'status')
-  },
+  }
 }

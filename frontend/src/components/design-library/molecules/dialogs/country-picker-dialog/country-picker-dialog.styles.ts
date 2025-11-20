@@ -11,8 +11,8 @@ export const CountryContainer = styled('div')(({ theme }) => ({
     padding: 8,
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 }))
 
 export const CountryItem = styled(Button)(({ theme }) => ({
@@ -27,8 +27,8 @@ export const CountryItem = styled(Button)(({ theme }) => ({
     boxSizing: 'border-box',
     flex: '1 1 100%',
     minWidth: 0,
-    fontSize: '0.8rem',
-  },
+    fontSize: '0.8rem'
+  }
 }))
 
 export const FullWidthMobile = styled('div')(({ theme }) => ({
@@ -40,8 +40,8 @@ export const FullWidthMobile = styled('div')(({ theme }) => ({
     minWidth: 0,
     width: '100%',
     boxSizing: 'border-box',
-    fontSize: '0.7rem',
-  },
+    fontSize: '0.7rem'
+  }
 }))
 
 export const CreditTextMobile = styled('div')(({ theme }) => ({
@@ -50,22 +50,22 @@ export const CreditTextMobile = styled('div')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    order: 3,
-  },
+    order: 3
+  }
 }))
 
 export const ButtonPrimaryMobile = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
-    order: 1,
-  },
+    order: 1
+  }
 }))
 
 export const ButtonSecondaryMobile = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     order: 2,
     marginTop: 8,
-    marginBottom: 8,
-  },
+    marginBottom: 8
+  }
 }))
 
 export default {
@@ -74,5 +74,5 @@ export default {
   FullWidthMobile,
   CreditTextMobile,
   ButtonPrimaryMobile,
-  ButtonSecondaryMobile,
+  ButtonSecondaryMobile
 }

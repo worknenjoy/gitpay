@@ -8,7 +8,7 @@ const MyOrganizationIssuesPage = ({
   issues,
   listTasks,
   filterTasks,
-  fetchOrganization,
+  fetchOrganization
 }) => {
   const { filter, organization_id } = useParams<{ filter: string; organization_id: string }>()
 

@@ -9,18 +9,18 @@ type PaymentRequestPaymentListParams = {
 export async function paymentRequestPaymentList({ userId }: PaymentRequestPaymentListParams) {
   return currentModels.PaymentRequestPayment.findAll({
     where: {
-      userId: userId,
+      userId: userId
     },
     include: [
       {
         model: currentModels.PaymentRequest,
-        attributes: ['title'],
+        attributes: ['title']
       },
       {
         model: currentModels.PaymentRequestCustomer,
-        attributes: ['email'],
-      },
+        attributes: ['email']
+      }
     ],
-    order: [['createdAt', 'DESC']],
+    order: [['createdAt', 'DESC']]
   })
 }

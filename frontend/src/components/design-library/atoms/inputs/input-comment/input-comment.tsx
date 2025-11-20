@@ -22,7 +22,7 @@ const InputComment = ({ placeholder, onChange }) => {
         id="interested-comment"
         placeholder={intl.formatMessage({
           id: 'issue.bounties.offer.comment.placeholder',
-          defaultMessage: 'Leave a comment',
+          defaultMessage: 'Leave a comment'
         })}
         minRows={8}
         maxLength={1000}

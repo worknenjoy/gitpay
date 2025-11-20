@@ -6,7 +6,7 @@ import { createWallet, listWallets, fetchWallet } from '../actions/walletActions
 import {
   createWalletOrder,
   listWalletOrders,
-  fetchWalletOrder,
+  fetchWalletOrder
 } from '../actions/walletOrderActions'
 
 const mapStateToProps = (state, ownProps) => {
@@ -16,7 +16,7 @@ const mapStateToProps = (state, ownProps) => {
     wallets: state.wallets,
     wallet: state.wallet,
     walletOrders: state.walletOrders,
-    walletOrder: state.walletOrder,
+    walletOrder: state.walletOrder
   }
 }
 
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     createWalletOrder: (walletOrder) => dispatch(createWalletOrder(walletOrder)),
     listWalletOrders: (walletId) => dispatch(listWalletOrders(walletId)),
     fetchWalletOrder: (id) => dispatch(fetchWalletOrder(id)),
-    fetchWallet: (id) => dispatch(fetchWallet(id)),
+    fetchWallet: (id) => dispatch(fetchWallet(id))
   }
 }
 

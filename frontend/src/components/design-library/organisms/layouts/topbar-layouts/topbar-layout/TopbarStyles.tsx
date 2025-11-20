@@ -34,7 +34,7 @@ export const MenuMobile = styled(Button)`
 `
 
 export const IconHamburger = styled('span', {
-  shouldForwardProp: (prop) => prop !== 'isActive',
+  shouldForwardProp: (prop) => prop !== 'isActive'
 })<{ isActive?: boolean }>`
   background-color: #009688;
   width: 25px;
@@ -91,7 +91,7 @@ export const IconHamburger = styled('span', {
 `
 
 export const LeftSide = styled(Side, {
-  shouldForwardProp: (prop) => prop !== 'isActive',
+  shouldForwardProp: (prop) => prop !== 'isActive'
 })<{ isActive?: boolean }>`
   display: flex;
   align-items: flex-start;
@@ -122,7 +122,7 @@ export const LeftSide = styled(Side, {
 `
 
 export const RightSide = styled(Side, {
-  shouldForwardProp: (prop) => prop !== 'isActive',
+  shouldForwardProp: (prop) => prop !== 'isActive'
 })<{ isActive?: boolean }>`
   justify-content: flex-start;
   align-items: flex-start;
@@ -196,7 +196,7 @@ export const StyledSlackButton = styled(StyledButton)`
 `
 
 export const LabelButton = styled('span', {
-  shouldForwardProp: (prop) => prop !== 'right',
+  shouldForwardProp: (prop) => prop !== 'right'
 })<{ right?: boolean }>`
   ${({ right }) =>
     right

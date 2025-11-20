@@ -9,8 +9,8 @@ const stripe = require('../shared/stripe/stripe')()
 module.exports = Promise.method(function orderUpdate(orderParameters) {
   return models.Order.findOne({
     where: {
-      id: orderParameters.id,
-    },
+      id: orderParameters.id
+    }
   }).then((order) => {
     const { id, provider, amount, plan, currency } = order.dataValues
     if (provider === 'paypal' && id) {
@@ -24,14 +24,14 @@ module.exports = Promise.method(function orderUpdate(orderParameters) {
           Authorization:
             'Basic ' +
             Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-              'base64',
+              'base64'
             ),
           'Content-Type': 'application/json',
-          grant_type: 'client_credentials',
+          grant_type: 'client_credentials'
         },
         form: {
-          grant_type: 'client_credentials',
-        },
+          grant_type: 'client_credentials'
+        }
       }).then((response) => {
         return requestPromise({
           method: 'POST',
@@ -41,7 +41,7 @@ module.exports = Promise.method(function orderUpdate(orderParameters) {
             Prefer: 'return=representation',
             'Accept-Language': 'en_US',
             Authorization: 'Bearer ' + JSON.parse(response)['access_token'],
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             intent: 'AUTHORIZE',
@@ -49,19 +49,19 @@ module.exports = Promise.method(function orderUpdate(orderParameters) {
               {
                 amount: {
                   value: totalPrice,
-                  currency_code: currency,
+                  currency_code: currency
                 },
-                description: 'Development services provided by Gitpay',
-              },
+                description: 'Development services provided by Gitpay'
+              }
             ],
             application_context: {
               return_url: `${process.env.API_HOST}/orders/authorize`,
-              cancel_url: `${process.env.API_HOST}/orders/authorize`,
+              cancel_url: `${process.env.API_HOST}/orders/authorize`
             },
             payer: {
-              payment_method: 'paypal',
-            },
-          }),
+              payment_method: 'paypal'
+            }
+          })
         }).then((payment) => {
           console.log('response from paypal payment', response)
           // eslint-disable-next-line no-console
@@ -79,13 +79,13 @@ module.exports = Promise.method(function orderUpdate(orderParameters) {
                   paymentData.purchase_units[0].payments &&
                   paymentData.purchase_units[0].payments.authorizations[0].id,
                 payment_url: paymentUrl,
-                token: searchParams.get('token'),
+                token: searchParams.get('token')
               },
               {
                 where: {
-                  id,
-                },
-              },
+                  id
+                }
+              }
             )
             .then((orderUpdated) => {
               return orderUpdated

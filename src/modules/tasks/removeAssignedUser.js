@@ -10,13 +10,13 @@ module.exports = Promise.method(function ({ id, userId }, { message }) {
       .findOne(
         {
           where: {
-            id,
+            id
             // userId
-          },
+          }
         },
         {
-          include: [models.User, models.Order, models.Assign],
-        },
+          include: [models.User, models.Order, models.Assign]
+        }
       )
       .then(async (task) => {
         const assignedId = task.assigned
@@ -36,7 +36,7 @@ module.exports = Promise.method(function ({ id, userId }, { message }) {
           assignedPromise,
           saveTaskPromise,
           changeStatusPromise,
-          changeStatusAssign,
+          changeStatusAssign
         ]).then(([assign]) => {
           const user = assign.User
           const language = user.language || 'en'
@@ -47,8 +47,8 @@ module.exports = Promise.method(function ({ id, userId }, { message }) {
             i18n.__('mail.assign.remove.message', {
               message,
               url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`,
-              title: task.title,
-            }),
+              title: task.title
+            })
           )
 
           const ownerUser = author
@@ -62,8 +62,8 @@ module.exports = Promise.method(function ({ id, userId }, { message }) {
               user: user.name || user.username,
               email: user.email,
               message: message,
-              url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`,
-            }),
+              url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}`
+            })
           )
           return task.dataValues
         })

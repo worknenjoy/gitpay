@@ -4,14 +4,14 @@ import { CardHeader, Avatar, Link } from '@mui/material'
 export const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     display: 'block',
-    textAlign: 'center',
-  },
+    textAlign: 'center'
+  }
 }))
 
 export const StyledCardAvatar = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
-    marginRight: 0,
-  },
+    marginRight: 0
+  }
 }))
 
 export const StyledAvatar = styled(Avatar)(({ theme }) => ({
@@ -21,16 +21,16 @@ export const StyledAvatar = styled(Avatar)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     margin: 'auto',
     display: 'block',
-    marginBottom: 5,
-  },
+    marginBottom: 5
+  }
 }))
 
 export const TaskTitle = styled(Link)(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 }))
 
 export default { StyledCardHeader, StyledCardAvatar, StyledAvatar, TaskTitle }

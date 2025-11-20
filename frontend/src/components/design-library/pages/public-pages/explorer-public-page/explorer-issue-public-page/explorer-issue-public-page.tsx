@@ -8,7 +8,7 @@ const ExplorerIssuePublicPage = ({
   labels,
   languages,
   listLabels,
-  listLanguages,
+  listLanguages
 }) => {
   return (
     <IssueTable

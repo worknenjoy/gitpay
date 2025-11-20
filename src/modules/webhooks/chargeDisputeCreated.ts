@@ -17,16 +17,16 @@ export const chargeDisputeCreatedWebhookHandler = async (event: any, req: any, r
   try {
     const paymentRequestPayment = await models.PaymentRequestPayment.findOne({
       where: {
-        source: data.object.payment_intent,
+        source: data.object.payment_intent
       },
       include: [
         {
-          model: models.PaymentRequest,
+          model: models.PaymentRequest
         },
         {
-          model: models.PaymentRequestCustomer,
-        },
-      ],
+          model: models.PaymentRequestCustomer
+        }
+      ]
     })
 
     const userId = paymentRequestPayment.userId
@@ -36,7 +36,7 @@ export const chargeDisputeCreatedWebhookHandler = async (event: any, req: any, r
     PaymentRequestMail.newDisputeCreatedForPaymentRequest(user, data, paymentRequestPayment).catch(
       (mailError: any) => {
         console.error(`Failed to send email for Dispute ID: ${data.object.id}`, mailError)
-      },
+      }
     )
 
     return res.json(req.body)

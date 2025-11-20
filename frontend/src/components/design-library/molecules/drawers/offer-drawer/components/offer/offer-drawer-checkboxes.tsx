@@ -17,7 +17,7 @@ const OfferDrawerCheckboxes = ({ currentPrice, onLearnCheckboxChange, onConfirmO
             </Typography>
           )}
         </FormattedMessage>
-      ),
+      )
     },
     {
       onChange: onLearnCheckboxChange,
@@ -29,8 +29,8 @@ const OfferDrawerCheckboxes = ({ currentPrice, onLearnCheckboxChange, onConfirmO
         >
           {(msg) => <Typography variant="caption"> {msg} </Typography>}
         </FormattedMessage>
-      ),
-    },
+      )
+    }
   ]
 
   return <Checkboxes checkboxes={checkboxes} />

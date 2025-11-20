@@ -12,7 +12,7 @@ export default () => {
         display: 'flex',
         flexDirection: 'column',
         fontFamily: 'monospace',
-        textAlign: 'center',
+        textAlign: 'center'
       }}
     >
       <div
@@ -20,18 +20,18 @@ export default () => {
           display: 'flex',
           height: '40vh',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'center'
         }}
       >
         <Block
           style={{
             fontSize: 200,
-            color: 'rgb(200,0,50)',
+            color: 'rgb(200,0,50)'
           }}
         />
         <p
           style={{
-            fontSize: 40,
+            fontSize: 40
           }}
         >
           <FormattedMessage id="page.404.message" defaultMessage="404 Page Not Found" />
@@ -45,7 +45,7 @@ export default () => {
           fontSize: 20,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
+          justifyContent: 'space-between'
         }}
       >
         <p>

@@ -3,7 +3,7 @@ import EmptyPaymentRequest from './empty-payment-request'
 
 export default {
   title: 'Design Library/Molecules/Empty/EmptyPaymentRequest',
-  component: EmptyPaymentRequest,
+  component: EmptyPaymentRequest
 }
 
 const Template = (args) => <EmptyPaymentRequest {...args} />

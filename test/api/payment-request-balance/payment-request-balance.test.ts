@@ -23,13 +23,13 @@ describe('Payment Request Balance', () => {
       description: 'A test payment request',
       amount: 1000,
       currency: 'USD',
-      userId: currentUser.id,
+      userId: currentUser.id
     })
     const paymentRequestCustomer = await currentModels.PaymentRequestCustomer.create({
       name: 'John Doe',
       email: 'john.doe@example.com',
       sourceId: 'src_123',
-      userId: currentUser.id,
+      userId: currentUser.id
     })
     const paymentRequestPayment = await currentModels.PaymentRequestPayment.create({
       amount: 1000,
@@ -38,12 +38,12 @@ describe('Payment Request Balance', () => {
       status: 'completed',
       customerId: paymentRequestCustomer.id,
       userId: currentUser.id,
-      paymentRequestId: paymentRequest.id,
+      paymentRequestId: paymentRequest.id
     })
 
     const paymentRequestBalance = await currentModels.PaymentRequestBalance.create({
       balance: 0,
-      userId: currentUser.id,
+      userId: currentUser.id
     })
 
     const paymentRequestBalanceTransaction =
@@ -53,7 +53,7 @@ describe('Payment Request Balance', () => {
         type: 'DEBIT',
         reason: 'DISPUTE',
         status: 'lost',
-        paymentRequestPaymentId: paymentRequestPayment.id,
+        paymentRequestPaymentId: paymentRequestPayment.id
       })
 
     const res = await agent
@@ -69,7 +69,7 @@ describe('Payment Request Balance', () => {
     expect(res.body[0].PaymentRequestBalanceTransactions).to.be.an('array')
     expect(res.body[0].PaymentRequestBalanceTransactions.length).to.equal(1)
     expect(res.body[0].PaymentRequestBalanceTransactions[0].id).to.equal(
-      paymentRequestBalanceTransaction.id,
+      paymentRequestBalanceTransaction.id
     )
     expect(res.body[0].PaymentRequestBalanceTransactions[0].amount).to.equal('-1000')
     expect(res.body[0].PaymentRequestBalanceTransactions[0].currency).to.equal('usd')

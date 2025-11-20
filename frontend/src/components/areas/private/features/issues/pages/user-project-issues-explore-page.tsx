@@ -11,7 +11,7 @@ const UserProjectIssuesExplorePage = ({
   languages,
   listLanguages,
   fetchProject,
-  project,
+  project
 }) => {
   const { project_id } = useParams<{ project_id: string }>()
 

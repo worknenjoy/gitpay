@@ -5,13 +5,13 @@ import { listOrganizations } from '../actions/organizationsActions'
 
 const mapStateToProps = (state, props) => {
   return {
-    organizations: state.organizations.organizations,
+    organizations: state.organizations.organizations
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    listOrganizations: () => dispatch(listOrganizations()),
+    listOrganizations: () => dispatch(listOrganizations())
   }
 }
 

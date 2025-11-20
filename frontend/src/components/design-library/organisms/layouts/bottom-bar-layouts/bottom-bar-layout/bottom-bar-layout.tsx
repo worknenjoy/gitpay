@@ -16,7 +16,7 @@ import {
   SubscribeFromWrapper,
   SecBlock,
   SpacedDivider,
-  LogoImg,
+  LogoImg
 } from './bottom-bar-layout.styles'
 import PrivacyPolicy from '../../../../molecules/content/terms/privacy-policy/privacy-policy'
 import TermsOfService from '../../../../molecules/content/terms/terms-of-service/terms-of-service'
@@ -39,24 +39,24 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
     { label: 'Pricing', onClick: () => navigateTo('/pricing') },
     { label: 'Team', onClick: () => navigateTo('/team') },
     { label: 'Documentation', onClick: () => window.open('https://docs.gitpay.me/en') },
-    { label: 'Explore', onClick: () => navigateTo('/explore/issues') },
+    { label: 'Explore', onClick: () => navigateTo('/explore/issues') }
   ]
 
   const legalMenuItems = [
     {
       label: <FormattedMessage id="bottom.menu.privacy-policy" defaultMessage="Privacy Policy" />,
-      component: <PrivacyPolicy extraStyles={false} />,
+      component: <PrivacyPolicy extraStyles={false} />
     },
     {
       label: (
         <FormattedMessage id="bottom.menu.terms-of-service" defaultMessage="Terms of Service" />
       ),
-      component: <TermsOfService extraStyles={false} />,
+      component: <TermsOfService extraStyles={false} />
     },
     {
       label: <FormattedMessage id="bottom.menu.cookie-policy" defaultMessage="Cookie Policy" />,
-      component: <CookiePolicy extraStyles={false} />,
-    },
+      component: <CookiePolicy extraStyles={false} />
+    }
   ]
 
   return (
@@ -100,7 +100,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
                   style={{
                     marginLeft: 10,
                     marginRight: 10,
-                    display: 'inline-block',
+                    display: 'inline-block'
                   }}
                 >
                   <FormattedMessage id="bottom.company.org" defaultMessage="is part of" />

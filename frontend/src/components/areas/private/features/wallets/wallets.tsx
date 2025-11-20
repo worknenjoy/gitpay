@@ -19,15 +19,15 @@ const classes = {
     marginTop: 10,
     marginBottom: 10,
     textAlign: 'left' as const,
-    color: 'inherit',
+    color: 'inherit'
   },
   button: {
     width: 100,
-    fontSize: 10,
+    fontSize: 10
   },
   icon: {
-    marginLeft: 5,
-  },
+    marginLeft: 5
+  }
 }
 
 const Wallets = ({
@@ -43,7 +43,7 @@ const Wallets = ({
   walletOrder,
   fetchWalletOrder,
   wallet,
-  fetchWallet,
+  fetchWallet
 }) => {
   const intl = useIntl()
   const [addFundsDialog, setAddFundsDialog] = useState(false)
@@ -63,7 +63,7 @@ const Wallets = ({
 
   const confirmWalletCreate = async () => {
     await createWallet({
-      name: walletName,
+      name: walletName
     })
     await listWallets(user.id)
   }
@@ -72,7 +72,7 @@ const Wallets = ({
     const walletId = wallets.data[0]?.id
     await createWalletOrder({
       walletId,
-      amount: price,
+      amount: price
     })
     await listWalletOrders(walletId)
     setAddFundsDialog(false)
@@ -130,7 +130,7 @@ const Wallets = ({
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
+            justifyContent: 'space-between'
           }}
         >
           <Typography variant="h5" gutterBottom>
@@ -153,7 +153,7 @@ const Wallets = ({
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              height: '60vh',
+              height: '60vh'
             }}
           >
             <div style={classes.paper}>
@@ -170,7 +170,7 @@ const Wallets = ({
                     justifyContent: 'center',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    height: '60vh',
+                    height: '60vh'
                   }}
                 >
                   <Typography variant="body1" gutterBottom>
@@ -202,7 +202,7 @@ const Wallets = ({
                 intl.formatMessage(messages.cardTableHeaderValue),
                 intl.formatMessage(messages.cardTableHeaderCreated),
                 intl.formatMessage(messages.cardTableHeaderDueDate),
-                intl.formatMessage(messages.cardTableHeaderActions),
+                intl.formatMessage(messages.cardTableHeaderActions)
               ]}
               walletOrders={
                 (walletOrders &&
@@ -249,8 +249,8 @@ const Wallets = ({
                             />
                           </Button>
                         )}
-                      </>,
-                    ]),
+                      </>
+                    ])
                   }) ||
                 {}
               }

@@ -3,7 +3,7 @@ import TopbarMenu from './topbar-menu'
 
 export default {
   title: 'Design Library/Molecules/Menus/TopbarMenu',
-  component: TopbarMenu,
+  component: TopbarMenu
 }
 
 const Template = (args) => <TopbarMenu {...args} />

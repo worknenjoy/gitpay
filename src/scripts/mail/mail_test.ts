@@ -29,7 +29,7 @@ i18n.configure({
   defaultLocale: 'en',
   updateFiles: false,
   logWarnFn: (msg: unknown) => console.warn('WARN:', msg),
-  logErrorFn: (msg: unknown) => console.error('ERROR:', msg),
+  logErrorFn: (msg: unknown) => console.error('ERROR:', msg)
 })
 i18n.setLocale('en')
 
@@ -55,7 +55,7 @@ function printHelp() {
   console.log('Examples:')
   console.log('  tsx src/scripts/mail/mail_test.ts paymentRequest.paymentRequestInitiated')
   console.log(
-    '  tsx src/scripts/mail/mail_test.ts PaymentRequestMail.transferInitiatedForPaymentRequest --out tmp/mail-previews',
+    '  tsx src/scripts/mail/mail_test.ts PaymentRequestMail.transferInitiatedForPaymentRequest --out tmp/mail-previews'
   )
 }
 
@@ -85,7 +85,7 @@ function buildSamples(moduleName: string, methodName: string): any[] {
   const user = {
     email: 'preview@example.com',
     language: 'en',
-    receiveNotifications: true,
+    receiveNotifications: true
   }
 
   if (moduleName === 'paymentRequest') {
@@ -95,7 +95,7 @@ function buildSamples(moduleName: string, methodName: string): any[] {
       amount: 123.45,
       custom_amount: false,
       currency: 'USD',
-      payment_url: 'https://example.com/pay/req_123',
+      payment_url: 'https://example.com/pay/req_123'
     }
     const paymentRequestPayment = {
       amount: 123.45,
@@ -103,9 +103,9 @@ function buildSamples(moduleName: string, methodName: string): any[] {
       status: 'paid',
       PaymentRequestCustomer: {
         name: 'John Doe',
-        email: 'john.doe@example.com',
+        email: 'john.doe@example.com'
       },
-      PaymentRequest: paymentRequest,
+      PaymentRequest: paymentRequest
     }
     const paymentRequestTransaction = {
       amount: -5000,
@@ -118,8 +118,8 @@ function buildSamples(moduleName: string, methodName: string): any[] {
       closedAt: new Date(456),
       PaymentRequestBalance: {
         userId: 1,
-        balance: -5000,
-      },
+        balance: -5000
+      }
     }
     if (/transferInitiated/i.test(methodName)) {
       return [user, paymentRequest, 100, 92]
@@ -174,7 +174,7 @@ async function run(): Promise<PreviewResult> {
     'modules',
     'mail',
     'templates',
-    'default.js',
+    'default.js'
   )
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const defaultTemplate = require(defaultTemplatePath)
@@ -198,7 +198,7 @@ async function run(): Promise<PreviewResult> {
 
   if (!rawContent) {
     throw new Error(
-      'Could not extract email HTML content from the result. Ensure NODE_ENV=test and that the mail method uses the request() helper.',
+      'Could not extract email HTML content from the result. Ensure NODE_ENV=test and that the mail method uses the request() helper.'
     )
   }
 

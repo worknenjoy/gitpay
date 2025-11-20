@@ -32,7 +32,7 @@ const invoicePaymentFailed = require('../../../modules/webhooks/invoicePaymentFa
 const {
   FAILED_REASON,
   CURRENCIES,
-  formatStripeAmount,
+  formatStripeAmount
 } = require('../../../modules/webhooks/constants')
 
 exports.webhookPlatform = async (req: any, res: any) => {

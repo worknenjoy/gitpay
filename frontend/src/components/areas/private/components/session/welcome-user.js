@@ -4,7 +4,7 @@ import {
   Typography,
   Button,
   DialogContentText,
-  MobileStepper,
+  MobileStepper
 } from '@mui/material'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -18,7 +18,7 @@ export default class WelcomeUser extends Component {
     super(props)
     this.state = {
       currentStepIndex: 0,
-      dialogueVisible: true,
+      dialogueVisible: true
     }
   }
   render() {
@@ -26,20 +26,20 @@ export default class WelcomeUser extends Component {
       0: {
         textHeading: 'Be rewarded by work done',
         textContent: 'Complete the course and you will be awarded with points and earn badges',
-        image: welcome1,
+        image: welcome1
       },
       1: {
         textHeading: 'Collaboration with others',
         textContent:
           'You can easily collaborate with your colleagues and will be able to help each other',
-        image: welcome2,
+        image: welcome2
       },
       2: {
         textHeading: 'Work with projects you love',
         textContent:
           'Get some fantastic online videos and content to learn more and gain extra knowledge',
-        image: welcome3,
-      },
+        image: welcome3
+      }
     }
     return (
       <Dialog open={this.state.dialogueVisible} maxWidth={'xs'} aria-labelledby="form-dialog-title">
@@ -84,7 +84,7 @@ export default class WelcomeUser extends Component {
                   window.localStorage.setItem('firstLogin', false)
                 } else {
                   this.setState((prevState) => ({
-                    currentStepIndex: prevState.currentStepIndex + 1,
+                    currentStepIndex: prevState.currentStepIndex + 1
                   }))
                 }
               }}
@@ -100,7 +100,7 @@ export default class WelcomeUser extends Component {
             <Button
               onClick={() =>
                 this.setState((prevState) => ({
-                  currentStepIndex: prevState.currentStepIndex - 1,
+                  currentStepIndex: prevState.currentStepIndex - 1
                 }))
               }
               disabled={this.state.currentStepIndex === 0}

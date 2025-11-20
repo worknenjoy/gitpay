@@ -12,34 +12,34 @@ const useMyIssuesTabs = ({ user, baseLink, issueTableData }) => {
     label: 'My imported issues',
     value: 'createdbyme',
     link: `${baseLink}/createdbyme`,
-    table: issueTableData,
+    table: issueTableData
   }
 
   const workingTabs = {
     label: "Issues I'm working on",
     value: 'assigned',
     link: `${baseLink}/assigned`,
-    table: issueTableData,
+    table: issueTableData
   }
 
   const followingTabs = {
     label: 'Following',
     value: 'interested',
     link: `${baseLink}/interested`,
-    table: issueTableData,
+    table: issueTableData
   }
 
   const sponsoringTabs = {
     label: 'Sponsoring',
     value: 'supported',
     link: `${baseLink}/supported`,
-    table: issueTableData,
+    table: issueTableData
   }
 
   const currentTabs = [
     ...(isMaintainer ? [myIssuesTab] : []),
     ...(isFunding ? [sponsoringTabs] : []),
-    ...(isContributor ? [workingTabs, followingTabs] : []),
+    ...(isContributor ? [workingTabs, followingTabs] : [])
   ]
 
   React.useEffect(() => {

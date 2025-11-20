@@ -6,7 +6,7 @@ const stripe = require('../shared/stripe/stripe')()
 
 module.exports = Promise.method(function userCustomerUpdate(id, customerParameters) {
   return models.User.findOne({
-    where: { id },
+    where: { id }
   })
     .then((data) => {
       if (data.dataValues.customer_id) {

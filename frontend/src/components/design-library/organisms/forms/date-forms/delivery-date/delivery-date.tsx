@@ -14,7 +14,7 @@ import {
   GrayCaption,
   DeliveryDateSuggestion,
   DateSuggestionBtn,
-  SpanText,
+  SpanText
 } from './delivery-date.styles'
 
 const DeliveryDate = ({ date, onDateChange }) => {
@@ -111,7 +111,7 @@ const DeliveryDate = ({ date, onDateChange }) => {
             }
             placeholder={intl.formatMessage({
               id: 'task.status.deadline.day.insert.label',
-              defaultMessage: 'Choose a date',
+              defaultMessage: 'Choose a date'
             })}
             type="date"
             value={

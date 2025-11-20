@@ -33,18 +33,18 @@ describe('Payment Request Payment Webhook', () => {
           livemode: false,
           metadata: {
             payment_link_id: 'plink_1KknpoBrSjgsps2DMwiQEzJ9',
-            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4',
-          },
+            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
+          }
         },
         {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       )
 
     nock('https://api.stripe.com')
       .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
       .reply(200, {
-        active: false,
+        active: false
       })
 
     nock('https://api.stripe.com')
@@ -53,8 +53,8 @@ describe('Payment Request Payment Webhook', () => {
         id: 'pi_3RcoMHBrSjgsps2D1aOZ9Yl6',
         object: 'payment_intent',
         metadata: {
-          payment_request_payment_id: 1,
-        },
+          payment_request_payment_id: 1
+        }
       })
 
     const user = await registerAndLogin(agent)
@@ -66,7 +66,7 @@ describe('Payment Request Payment Webhook', () => {
       description: 'Payment for services',
       payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
       deactivate_after_payment: true,
-      userId: currentUser.id,
+      userId: currentUser.id
     })
     const res = await agent
       .post('/webhooks/stripe-platform')
@@ -80,8 +80,8 @@ describe('Payment Request Payment Webhook', () => {
 
     const paymentRequestPayments = await models.PaymentRequestPayment.findOne({
       where: {
-        source: event.data.object.payment_intent,
-      },
+        source: event.data.object.payment_intent
+      }
     })
     expect(paymentRequestPayments).to.exist
     expect(paymentRequestPayments.amount).to.equal('1')

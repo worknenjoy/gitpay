@@ -6,7 +6,7 @@ process.stdin.setEncoding('utf8')
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output: process.stdout
 })
 
 console.log('📥 Paste your payout event JSON, then press Enter and Ctrl+D (or Ctrl+Z on Windows):')
@@ -24,9 +24,9 @@ rl.on('close', async () => {
     const result = await payoutCreated(event, {
       status: (code) => {
         return {
-          json: (res) => console.log(`Response status: ${code}`),
+          json: (res) => console.log(`Response status: ${code}`)
         }
-      },
+      }
     })
     console.log('✅ Handler executed successfully:', result)
   } catch (err) {

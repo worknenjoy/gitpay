@@ -4,18 +4,18 @@ const meta = {
   title: 'Design Library/Molecules/Tables/Fields/PaymentRequest/PaymentRequestActiveField',
   component: PaymentRequestActiveField,
   args: {
-    status: 'open',
-  },
+    status: 'open'
+  }
 }
 
 export const Yes = {
   args: {
-    status: 'Yes',
-  },
+    status: 'Yes'
+  }
 }
 
 export const No = {
   args: {
-    status: 'No',
-  },
+    status: 'No'
+  }
 }

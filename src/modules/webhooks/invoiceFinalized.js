@@ -12,14 +12,14 @@ module.exports = async function invoiceFinalized(event, req, res) {
     const invoiceId = invoice.id
     const walletOrder = await models.WalletOrder.findOne({
       where: {
-        source: invoiceId,
+        source: invoiceId
       },
       include: [
         {
           model: models.Wallet,
-          include: [models.User],
-        },
-      ],
+          include: [models.User]
+        }
+      ]
     })
     if (walletOrder?.id) {
       WalletMail.invoiceCreated(invoice, walletOrder, walletOrder.Wallet.User)

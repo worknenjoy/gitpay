@@ -9,14 +9,14 @@ const clientSecret = process.env.PAYPAL_SECRET
 const client = new paypal.Client({
   clientCredentialsAuthCredentials: {
     oAuthClientId: clientId,
-    oAuthClientSecret: clientSecret,
-  },
+    oAuthClientSecret: clientSecret
+  }
 })
 
 // Create readline interface for input
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output: process.stdout
 })
 
 // Function to get the authorization status

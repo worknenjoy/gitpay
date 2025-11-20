@@ -39,7 +39,7 @@ const ProfileUserHeader = ({ profile }) => {
               backgroundColor: 'black',
               borderColor: 'black',
               borderWidth: 1,
-              marginLeft: 10,
+              marginLeft: 10
             }}
           />
         </a>

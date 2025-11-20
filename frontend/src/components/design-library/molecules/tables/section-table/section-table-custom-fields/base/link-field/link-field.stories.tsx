@@ -4,7 +4,7 @@ import logoBitbucket from 'images/bitbucket-logo.png'
 
 export default {
   title: 'Design Library/Molecules/Tables/Base/LinkField',
-  component: LinkField,
+  component: LinkField
 }
 
 const Template = (args) => <LinkField {...args} />
@@ -16,5 +16,5 @@ Default.args = {
   title: 'Sample Issue',
   tooltipTitle: 'Open issue in external link',
   external: true,
-  copiable: true,
+  copiable: true
 }

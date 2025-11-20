@@ -4,15 +4,15 @@ import {
   FETCH_PROJECT_ERROR,
   LIST_PROJECTS_REQUESTED,
   LIST_PROJECTS_SUCCESS,
-  LIST_PROJECTS_ERROR,
+  LIST_PROJECTS_ERROR
 } from '../actions/projectActions'
 
 export const project = (
   state = {
     completed: true,
-    data: {},
+    data: {}
   },
-  action,
+  action
 ) => {
   switch (action.type) {
     case FETCH_PROJECT_REQUESTED:
@@ -29,9 +29,9 @@ export const project = (
 export const projects = (
   state = {
     completed: true,
-    data: [],
+    data: []
   },
-  action,
+  action
 ) => {
   switch (action.type) {
     case LIST_PROJECTS_REQUESTED:

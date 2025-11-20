@@ -15,11 +15,11 @@ module.exports = Promise.method(function orderAuthorize(orderParameters) {
         'Basic ' +
         Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString('base64'),
       'Content-Type': 'application/json',
-      grant_type: 'client_credentials',
+      grant_type: 'client_credentials'
     },
     form: {
-      grant_type: 'client_credentials',
-    },
+      grant_type: 'client_credentials'
+    }
   }).then((response) => {
     return requestPromise({
       method: 'POST',
@@ -29,8 +29,8 @@ module.exports = Promise.method(function orderAuthorize(orderParameters) {
         Prefer: 'return=representation',
         'Accept-Language': 'en_US',
         Authorization: 'Bearer ' + JSON.parse(response)['access_token'],
-        'Content-Type': 'application/json',
-      },
+        'Content-Type': 'application/json'
+      }
     }).then((authorize) => {
       const authorization = JSON.parse(authorize)
       return models.Order.update(
@@ -45,20 +45,20 @@ module.exports = Promise.method(function orderAuthorize(orderParameters) {
             authorization.purchase_units &&
             authorization.purchase_units[0] &&
             authorization.purchase_units[0].payments &&
-            authorization.purchase_units[0].payments.authorizations[0].id,
+            authorization.purchase_units[0].payments.authorizations[0].id
         },
         {
           where: {
-            token: orderParameters.token,
+            token: orderParameters.token
           },
           returning: true,
-          plain: true,
-        },
+          plain: true
+        }
       ).then((order) => {
         const orderData = order[1].dataValues
         return Promise.all([
           models.User.findByPk(orderData.userId),
-          models.Task.findByPk(orderData.TaskId),
+          models.Task.findByPk(orderData.TaskId)
         ]).spread((user, task) => {
           if (orderData.paid) {
             comment(orderData, task)
@@ -69,7 +69,7 @@ module.exports = Promise.method(function orderAuthorize(orderParameters) {
           if (task.dataValues.assigned) {
             const assignedId = task.dataValues.assigned
             return models.Assign.findByPk(assignedId, {
-              include: [models.User],
+              include: [models.User]
             }).then((assign) => {
               PaymentMail.assigned(assign.dataValues.User.dataValues, task, orderData.amount)
               return orderData

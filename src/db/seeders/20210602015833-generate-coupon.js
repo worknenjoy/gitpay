@@ -13,14 +13,14 @@ module.exports = {
           amount: 100,
           expires: false,
           validUntil: couponValidity,
-          times: 10,
-        },
+          times: 10
+        }
       ],
-      {},
+      {}
     )
   },
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('Coupons', null, {})
-  },
+  }
 }

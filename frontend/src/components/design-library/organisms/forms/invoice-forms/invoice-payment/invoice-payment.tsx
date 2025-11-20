@@ -14,7 +14,7 @@ const InvoicePayment = ({
   customer,
   onInvoicePayment,
   onInfoClick,
-  processingPayment = false,
+  processingPayment = false
 }) => {
   const { data, completed } = customer
   const { name, address } = data
@@ -68,7 +68,7 @@ const InvoicePayment = ({
             id="fund.payment.invoice.action"
             defaultMessage="Generate a {amount} invoice"
             values={{
-              amount: formatCurrency(price),
+              amount: formatCurrency(price)
             }}
           />
         }

@@ -26,7 +26,7 @@ type TabbedTableProps = {
 
 const TabbedTable = ({ tabs, activeTab, onChange }: TabbedTableProps) => {
   const [currentTab, setCurrentTab] = React.useState(
-    tabs.find((tab) => tab.value === activeTab) || tabs[0],
+    tabs.find((tab) => tab.value === activeTab) || tabs[0]
   )
 
   const handleTabChange = (event, newValue) => {
@@ -47,7 +47,7 @@ const TabbedTable = ({ tabs, activeTab, onChange }: TabbedTableProps) => {
   const { tableData, tableHeaderMetadata, customColumnRenderer } = table || {
     tableData: { data: [] },
     tableHeaderMetadata: [],
-    customColumnRenderer: {},
+    customColumnRenderer: {}
   }
 
   return (

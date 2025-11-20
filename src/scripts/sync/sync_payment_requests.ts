@@ -15,7 +15,7 @@ const c = {
   red: '\x1b[31m',
   green: '\x1b[32m',
   cyan: '\x1b[36m',
-  yellow: '\x1b[33m',
+  yellow: '\x1b[33m'
 }
 function color(s: string, col: string) {
   return `${col}${s}${c.reset}`
@@ -103,8 +103,8 @@ async function listPaymentIntentsByID(paymentIntentId: string): Promise<any> {
       'charges',
       'latest_charge.refunds',
       'charges.data.refunds',
-      'latest_charge',
-    ],
+      'latest_charge'
+    ]
   })
   console.log('PaymentIntent', result)
   return result
@@ -121,7 +121,7 @@ const getStatus = (intent: any) => {
 async function createPaymentRequestPayment(
   intent: any,
   userId: any,
-  paymentRequestId: any,
+  paymentRequestId: any
 ): Promise<any> {
   const customer = intent.customer_details || intent.payment_method?.billing_details || {}
   if (!customer?.email) {
@@ -130,14 +130,14 @@ async function createPaymentRequestPayment(
   }
   const paymentRequestCreatedCustomer = await models.PaymentRequestCustomer.findOrCreate({
     where: {
-      email: customer?.email,
+      email: customer?.email
     },
     defaults: {
       userId: userId,
       sourceId: intent.customer?.id || 'gc_' + UUIDV4(),
       email: customer?.email,
-      name: customer?.name || null,
-    },
+      name: customer?.name || null
+    }
   })
   const amount = intent.amount_received
     ? handleAmount(intent.amount_received, 0, 'centavos')
@@ -152,7 +152,7 @@ async function createPaymentRequestPayment(
     customerId: paymentRequestCreatedCustomer[0].id,
     paymentRequestId: paymentRequestId,
     userId: userId,
-    createdAt: new Date(intent.created * 1000),
+    createdAt: new Date(intent.created * 1000)
   })
   return createdPaymentRequestPayment
 }
@@ -186,7 +186,7 @@ async function main() {
       intent.customer ??
         intent.customer_details ??
         intent.payment_method?.billing_details?.email ??
-        '-',
+        '-'
     )
 
     const metadata = intent.metadata || {}
@@ -220,7 +220,7 @@ async function main() {
         const updatedMetadata: any = await updateMetadata(intent.id, {
           payment_request_payment_id: prPayment.id,
           user_id: userId,
-          payment_request_id: paymentRequestId,
+          payment_request_id: paymentRequestId
         })
         kv('Updated Payment Intent metadata with payment_request_payment_id', prPayment.id)
         kv('Created Payment Request Payment ID', prPayment.id)

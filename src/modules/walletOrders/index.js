@@ -7,5 +7,5 @@ module.exports = {
   walletOrderBuilds,
   walletOrderUpdate,
   walletOrderList,
-  walletOrderFetch,
+  walletOrderFetch
 }

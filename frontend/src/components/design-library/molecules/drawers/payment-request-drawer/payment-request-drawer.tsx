@@ -29,7 +29,7 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
   onClose,
   onSuccess,
   completed = true,
-  paymentRequest,
+  paymentRequest
 }) => {
   const { completed: paymentRequestCompleted, data } = paymentRequest || {}
   const formRef = useRef<{ submit: () => void }>(null)
@@ -47,7 +47,7 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
         {
           label: 'Cancel',
           onClick: onClose,
-          variant: 'text',
+          variant: 'text'
         },
         {
           label: isEditMode ? 'Edit Payment Request' : 'Create Payment Request',
@@ -55,8 +55,8 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
             formRef.current?.submit()
           },
           variant: 'contained',
-          color: 'secondary',
-        },
+          color: 'secondary'
+        }
       ]}
     >
       <PaymentRequestForm

@@ -95,8 +95,8 @@ export const loggedIn = () => {
       return axios
         .get(api.API_URL + '/authenticated', {
           headers: {
-            authorization: `Bearer ${token}`,
-          },
+            authorization: `Bearer ${token}`
+          }
         })
         .then((response) => {
           if (!Auth.getAuthNotified()) {
@@ -172,7 +172,7 @@ const registerSuccess = (user) => {
     type: REGISTER_USER_SUCCESS,
     logged: true,
     completed: true,
-    user: user,
+    user: user
   }
 }
 
@@ -181,7 +181,7 @@ const registerError = (error) => {
     type: REGISTER_USER_ERROR,
     logged: false,
     completed: true,
-    error: error,
+    error: error
   }
 }
 

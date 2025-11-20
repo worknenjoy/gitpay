@@ -43,7 +43,7 @@ const CookieConsentBar = () => {
               >
                 <FormattedMessage id="cookie.policy" defaultMessage="Cookie Policy" />
               </a>
-            ),
+            )
           }}
         />
       </span>

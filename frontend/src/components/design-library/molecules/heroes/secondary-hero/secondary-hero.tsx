@@ -7,7 +7,7 @@ import {
   ImageContainer,
   ResponsiveImage,
   SecList,
-  ListItemTop,
+  ListItemTop
 } from './secondary-hero.styles'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 

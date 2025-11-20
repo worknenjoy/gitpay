@@ -17,7 +17,7 @@ const PayoutSettingsBankAccountPage = ({
   fetchAccountCountries,
   getBankAccount,
   createBankAccount,
-  updateBankAccount,
+  updateBankAccount
 }) => {
   return (
     useEffect(() => {

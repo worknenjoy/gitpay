@@ -51,7 +51,7 @@ const OfferDrawerCreate: React.FC<OfferDrawerCreateProps> = ({
   onConfirmOfferChange,
   onTermsCheckboxChange,
   onEmailInviteChange,
-  hasEmailInput = false,
+  hasEmailInput = false
 }) => {
   return (
     <>
@@ -90,8 +90,8 @@ const OfferDrawerCreate: React.FC<OfferDrawerCreateProps> = ({
             <FormattedMessage
               id="actions.task.payment.plan.bullet.basic"
               defaultMessage="Basic Campaign"
-            />,
-          ],
+            />
+          ]
         }}
         price={currentPrice}
         onChange={(price) => setCurrentPrice(price)}

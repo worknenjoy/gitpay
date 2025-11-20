@@ -8,7 +8,7 @@ const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
 
 module.exports = async function invoicePaymentSucceeded(event, req, res) {
   return models.User.findOne({
-    where: { email: event.data.object.customer_email },
+    where: { email: event.data.object.customer_email }
   })
     .then((userFound) => {
       if (!userFound) {
@@ -17,7 +17,7 @@ module.exports = async function invoicePaymentSucceeded(event, req, res) {
           name: event.data.object.customer_name,
           country: event.data.object.account_country,
           customer_id: event.data.object.customer[0],
-          active: false,
+          active: false
         }).then(async (user) => {
           await user.addType(await models.Type.find({ name: 'funding' }))
           const source_id = event.data.object.id[0]
@@ -27,14 +27,14 @@ module.exports = async function invoicePaymentSucceeded(event, req, res) {
                 status: event.data.object.status,
                 source: event.data.object.charge[0],
                 paid: true,
-                userId: user.dataValues.id,
+                userId: user.dataValues.id
               },
               {
                 where: {
-                  source_id: event.data.object.id[0],
+                  source_id: event.data.object.id[0]
                 },
-                returning: true,
-              },
+                returning: true
+              }
             ).then((order) => {
               return res.status(200).json(event)
             })

@@ -18,27 +18,27 @@ describe('WalletOrder', () => {
   describe('creating wallet order', () => {
     beforeEach(() => {
       nock('https://api.stripe.com').post('/v1/invoices').reply(200, invoiceBasic.created, {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       })
       nock('https://api.stripe.com').post('/v1/invoiceitems').reply(200, invoiceItem.created, {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       })
 
       nock('https://api.stripe.com')
         .post('/v1/invoices/in_1Q2fh8BrSjgsps2DUqQsGLDj/finalize')
         .reply(200, invoiceBasic.created, {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         })
     })
     it('should create an initial wallet Order', async () => {
       nock('https://api.stripe.com').post('/v1/customers').reply(200, customer.customer, {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       })
       const user = await registerAndLogin(agent)
       const wallet = await models.Wallet.create({
         userId: user.body.id,
         name: 'Test Wallet',
-        balance: 0,
+        balance: 0
       })
       const res = await agent
         .post('/wallets/orders')
@@ -48,7 +48,7 @@ describe('WalletOrder', () => {
         .expect(201)
         .send({
           walletId: wallet.id,
-          amount: 100,
+          amount: 100
         })
       expect(res.body).to.exist
       expect(res.body.id).to.exist
@@ -63,8 +63,8 @@ describe('WalletOrder', () => {
 
       const walletUpdated = await models.Wallet.findOne({
         where: {
-          id: wallet.id,
-        },
+          id: wallet.id
+        }
       })
 
       expect(walletUpdated.balance).to.equal('0.00')
@@ -73,16 +73,16 @@ describe('WalletOrder', () => {
   describe('updating wallet order', () => {
     beforeEach(() => {
       nock('https://api.stripe.com').post('/v1/invoices').reply(200, invoiceBasic.created, {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       })
       nock('https://api.stripe.com').post('/v1/invoiceitems').reply(200, invoiceItem.created, {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       })
 
       nock('https://api.stripe.com')
         .post('/v1/invoices/in_1Q2fh8BrSjgsps2DUqQsGLDj/finalize')
         .reply(200, invoiceBasic.updated, {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         })
     })
     it('should update an initial wallet Order with balance updated when order is paid', async () => {
@@ -90,11 +90,11 @@ describe('WalletOrder', () => {
       const wallet = await models.Wallet.create({
         userId: user.body.id,
         name: 'Test Wallet',
-        balance: 0,
+        balance: 0
       })
       const walletOrder = await models.WalletOrder.create({
         walletId: wallet.id,
-        amount: 100,
+        amount: 100
       })
       const res = await agent
         .put(`/wallets/orders/${walletOrder.id}`)
@@ -103,7 +103,7 @@ describe('WalletOrder', () => {
         .set('authorization', user.headers.authorization)
         .expect(200)
         .send({
-          status: 'paid',
+          status: 'paid'
         })
 
       expect(res.body).to.exist
@@ -114,8 +114,8 @@ describe('WalletOrder', () => {
 
       const walletUpdated = await models.Wallet.findOne({
         where: {
-          id: wallet.id,
-        },
+          id: wallet.id
+        }
       })
 
       expect(walletUpdated.balance).to.equal('100.00')
@@ -125,12 +125,12 @@ describe('WalletOrder', () => {
       const wallet = await models.Wallet.create({
         userId: user.body.id,
         name: 'Test Wallet',
-        balance: 0,
+        balance: 0
       })
 
       const walletOrder = await models.WalletOrder.create({
         walletId: wallet.id,
-        amount: 100,
+        amount: 100
       })
       await agent
         .put(`/wallets/orders/${walletOrder.id}`)
@@ -139,12 +139,12 @@ describe('WalletOrder', () => {
         .set('authorization', user.headers.authorization)
         .expect(200)
         .send({
-          status: 'paid',
+          status: 'paid'
         })
 
       const walletOrder2 = await models.WalletOrder.create({
         walletId: wallet.id,
-        amount: 100,
+        amount: 100
       })
       await agent
         .put(`/wallets/orders/${walletOrder2.id}`)
@@ -153,12 +153,12 @@ describe('WalletOrder', () => {
         .set('authorization', user.headers.authorization)
         .expect(200)
         .send({
-          status: 'paid',
+          status: 'paid'
         })
 
       const walletOrder3 = await models.WalletOrder.create({
         walletId: wallet.id,
-        amount: 108,
+        amount: 108
       })
       await agent
         .put(`/wallets/orders/${walletOrder3.id}`)
@@ -167,13 +167,13 @@ describe('WalletOrder', () => {
         .set('authorization', user.headers.authorization)
         .expect(200)
         .send({
-          status: 'open',
+          status: 'open'
         })
 
       const walletUpdated = await models.Wallet.findOne({
         where: {
-          id: wallet.id,
-        },
+          id: wallet.id
+        }
       })
 
       expect(walletUpdated.balance).to.equal('200.00')
@@ -183,12 +183,12 @@ describe('WalletOrder', () => {
       const wallet = await models.Wallet.create({
         userId: user.body.id,
         name: 'Test Wallet',
-        balance: 0,
+        balance: 0
       })
       const walletOrder = await models.WalletOrder.create({
         walletId: wallet.id,
         amount: 100,
-        status: 'pending',
+        status: 'pending'
       })
       const res = await agent
         .put(`/wallets/orders/${walletOrder.id}`)
@@ -197,7 +197,7 @@ describe('WalletOrder', () => {
         .set('authorization', user.headers.authorization)
         .expect(200)
         .send({
-          status: 'paid',
+          status: 'paid'
         })
       expect(res.body).to.exist
       expect(res.body.id).to.exist
@@ -205,8 +205,8 @@ describe('WalletOrder', () => {
 
       const walletUpdated = await models.Wallet.findOne({
         where: {
-          id: wallet.id,
-        },
+          id: wallet.id
+        }
       })
 
       expect(walletUpdated.balance).to.equal('100.00')
@@ -218,12 +218,12 @@ describe('WalletOrder', () => {
       const wallet = await models.Wallet.create({
         userId: user.body.id,
         name: 'Test Wallet',
-        balance: 0,
+        balance: 0
       })
       const walletOrder = await models.WalletOrder.create({
         walletId: wallet.id,
         amount: 100,
-        status: 'pending',
+        status: 'pending'
       })
       const res = await agent
         .get('/wallets/orders')
@@ -244,7 +244,7 @@ describe('WalletOrder', () => {
       nock('https://api.stripe.com')
         .get(`/v1/invoices/in_1Q2fh8BrSjgsps2DUqQsGLDj`)
         .reply(200, invoiceBasic.updated, {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         })
     })
     it('should fetch wallet order', async () => {
@@ -252,7 +252,7 @@ describe('WalletOrder', () => {
       const wallet = await models.Wallet.create({
         userId: user.body.id,
         name: 'Test Wallet',
-        balance: 0,
+        balance: 0
       })
       const walletOrder = await models.WalletOrder.create({
         walletId: wallet.id,
@@ -261,7 +261,7 @@ describe('WalletOrder', () => {
         source_id: 'ii_1Q2fh8BrSjgsps2DQqY9k2h3',
         source_type: 'invoice-item',
         currency: 'usd',
-        source: 'in_1Q2fh8BrSjgsps2DUqQsGLDj',
+        source: 'in_1Q2fh8BrSjgsps2DUqQsGLDj'
       })
       const res = await agent
         .get(`/wallets/orders/${walletOrder.id}`)
@@ -275,7 +275,7 @@ describe('WalletOrder', () => {
       expect(res.body.status).to.equal('paid')
       expect(res.body.walletId).to.equal(wallet.id)
       expect(res.body.invoice.hosted_invoice_url).to.equal(
-        'https://stripe.com/invoice/invst_1Q2fh8BrSjgsps2DUqQsGLDj',
+        'https://stripe.com/invoice/invst_1Q2fh8BrSjgsps2DUqQsGLDj'
       )
     })
   })

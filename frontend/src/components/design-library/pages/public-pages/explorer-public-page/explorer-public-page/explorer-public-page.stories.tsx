@@ -8,9 +8,9 @@ const meta: Meta<typeof ExplorerPublicPage> = {
   title: 'Design Library/Pages/Public/Explorer/Main',
   component: ExplorerPublicPage,
   parameters: {
-    layout: 'fullscreen',
+    layout: 'fullscreen'
   },
-  decorators: [withPublicTemplate],
+  decorators: [withPublicTemplate]
 }
 export default meta
 
@@ -19,5 +19,5 @@ type Story = StoryObj<typeof ExplorerPublicPage>
 export const Default: Story = {
   args: {
     // Add prop mocks here if the component expects any
-  },
+  }
 }

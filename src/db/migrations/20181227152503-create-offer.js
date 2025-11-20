@@ -5,49 +5,49 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       userId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: true,
+        allowNull: true
       },
       taskId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Tasks',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: true,
+        allowNull: true
       },
       value: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL
       },
       suggestedDate: {
         type: Sequelize.DATE,
-        allowNull: true,
+        allowNull: true
       },
       comment: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       learn: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     })
   },
 
   down: function (queryInterface, Sequelize) {
     return queryInterface.dropTable('Offers')
-  },
+  }
 }

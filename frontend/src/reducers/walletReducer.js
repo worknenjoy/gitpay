@@ -7,7 +7,7 @@ import {
   LIST_WALLETS_ERROR,
   FETCH_WALLET_REQUESTED,
   FETCH_WALLET_SUCCESS,
-  FETCH_WALLET_ERROR,
+  FETCH_WALLET_ERROR
 } from '../actions/walletActions'
 
 export const wallet = (state = { data: {}, completed: true, error: {} }, action) => {

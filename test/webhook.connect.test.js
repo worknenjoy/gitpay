@@ -28,7 +28,7 @@ describe('webhooks for connect', () => {
       models.User.build({
         email: 'teste@mail.com',
         password: 'teste',
-        account_id: 'acct_1CZ5vkLlCJ9CeQRe',
+        account_id: 'acct_1CZ5vkLlCJ9CeQRe'
       })
         .save()
         .then((user) => {
@@ -57,7 +57,7 @@ describe('webhooks for connect', () => {
       models.User.build({
         email: 'teste@mail.com',
         password: 'teste',
-        account_id: 'acct_1CZ5vkLlCJ9CeQRe',
+        account_id: 'acct_1CZ5vkLlCJ9CeQRe'
       })
         .save()
         .then(async (user) => {
@@ -68,7 +68,7 @@ describe('webhooks for connect', () => {
             status: 'in_transit',
             description: 'STRIPE TRANSFER',
             userId: user.dataValues.id,
-            method: 'bank_account',
+            method: 'bank_account'
           })
           agent
             .post('/webhooks/stripe-connect')
@@ -89,7 +89,7 @@ describe('webhooks for connect', () => {
                   expect(event).to.exist
                   expect(event.id).to.equal('evt_1CdprOLlCJ9CeQRe4QDlbGRY')
                   expect(payout.dataValues.status).to.equal('in_transit')
-                },
+                }
               )
               done(err)
             })
@@ -101,7 +101,7 @@ describe('webhooks for connect', () => {
       models.User.build({
         email: 'teste@mail.com',
         password: 'teste',
-        account_id: 'acct_1CZ5vkLlCJ9CeQRe',
+        account_id: 'acct_1CZ5vkLlCJ9CeQRe'
       })
         .save()
         .then((user) => {
@@ -112,7 +112,7 @@ describe('webhooks for connect', () => {
             status: 'in_transit',
             description: 'STRIPE TRANSFER',
             userId: user.dataValues.id,
-            method: 'bank_account',
+            method: 'bank_account'
           })
             .save()
             .then((newPayout) => {
@@ -145,7 +145,7 @@ describe('webhooks for connect', () => {
       models.User.build({
         email: 'teste@mail.com',
         password: 'teste',
-        account_id: 'acct_1CdjXFAcSPl6ox0l',
+        account_id: 'acct_1CdjXFAcSPl6ox0l'
       })
         .save()
         .then((user) => {

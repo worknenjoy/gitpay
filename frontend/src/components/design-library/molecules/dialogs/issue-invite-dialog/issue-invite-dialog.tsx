@@ -9,7 +9,7 @@ import {
   DialogTitle,
   FormControl,
   Typography,
-  TextField,
+  TextField
 } from '@mui/material'
 import { Container } from './issue-invite-dialog.styles'
 

@@ -10,13 +10,13 @@ module.exports = async function invoicePaid(event, req, res) {
   try {
     const walletOrderUpdate = await models.WalletOrder.update(
       {
-        status: event.data.object.status,
+        status: event.data.object.status
       },
       {
         where: {
-          source: event.data.object.id,
-        },
-      },
+          source: event.data.object.id
+        }
+      }
     )
     return res.status(200).json(event)
   } catch (error) {

@@ -3,7 +3,7 @@ import TermsOfService from './terms-of-service'
 
 export default {
   title: 'Design Library/Molecules/Content/Terms/TermsOfService',
-  component: TermsOfService,
+  component: TermsOfService
 }
 
 const Template = (args) => <TermsOfService {...args} />
@@ -15,21 +15,21 @@ Default.args = {
 
 export const WithArrowBack = Template.bind({})
 WithArrowBack.args = {
-  onArrowBack: () => alert('Arrow back clicked'),
+  onArrowBack: () => alert('Arrow back clicked')
 }
 
 export const WithAgreeButton = Template.bind({})
 WithAgreeButton.args = {
-  onAgreeTerms: () => alert('Agreed to Terms of Service'),
+  onAgreeTerms: () => alert('Agreed to Terms of Service')
 }
 
 export const WithBothActions = Template.bind({})
 WithBothActions.args = {
   onArrowBack: () => alert('Arrow back clicked'),
-  onAgreeTerms: () => alert('Agreed to Terms of Service'),
+  onAgreeTerms: () => alert('Agreed to Terms of Service')
 }
 
 export const WithoutExtraStyles = Template.bind({})
 WithoutExtraStyles.args = {
-  extraStyles: false,
+  extraStyles: false
 }

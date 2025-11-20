@@ -38,9 +38,9 @@ xdescribe('CheckoutFormPure component', () => {
         user={{
           id: 1,
           name: 'Foo me',
-          email: 'foo@mail.com',
+          email: 'foo@mail.com'
         }}
-      />,
+      />
     )
 
     const fullNameInput = screen.getByLabelText(/full name/i)

@@ -45,5 +45,5 @@ module.exports = {
   userOrganizations: userOrganizations,
   userDeleteById: userDeleteById,
   userTasks: userTasks,
-  userTypes: userTypes,
+  userTypes: userTypes
 }

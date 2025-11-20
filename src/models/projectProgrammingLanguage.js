@@ -5,17 +5,17 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       references: {
         model: 'Projects',
-        key: 'id',
-      },
+        key: 'id'
+      }
     },
     programmingLanguageId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'ProgrammingLanguages',
-        key: 'id',
-      },
-    },
+        key: 'id'
+      }
+    }
   })
 
   return ProjectProgrammingLanguage

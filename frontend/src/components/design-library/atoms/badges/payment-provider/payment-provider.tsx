@@ -3,7 +3,7 @@ import {
   CreditCard as CreditCardIcon,
   Receipt as InvoiceIcon,
   AccountBalanceWallet as WalletIcon,
-  MoneyOff as UnknownPaymentIcon,
+  MoneyOff as UnknownPaymentIcon
 } from '@mui/icons-material'
 import { Chip } from '@mui/material'
 import { blue, green, grey, orange } from '@mui/material/colors'
@@ -23,13 +23,13 @@ type GetPaymentTypesProps = {
 }
 type GetPaymentType = (
   currentPaymentProvider: string,
-  currentPaymentSource: string,
+  currentPaymentSource: string
 ) => GetPaymentTypesProps
 
 export default function PaymentProvider({ provider, sourceType }: statusProps) {
   const getStatus: GetPaymentType = (
     currentPaymentProvider: string,
-    currentPaymentSource: string,
+    currentPaymentSource: string
   ) => {
     let choosenPayment: GetPaymentTypesProps = {}
     switch (currentPaymentProvider) {
@@ -38,19 +38,19 @@ export default function PaymentProvider({ provider, sourceType }: statusProps) {
           choosenPayment = {
             label: 'Invoice',
             color: 'invoice',
-            icon: <InvoiceIcon />,
+            icon: <InvoiceIcon />
           }
         } else if (currentPaymentSource === paymentSources.card) {
           choosenPayment = {
             label: 'Card',
             color: 'card',
-            icon: <CreditCardIcon />,
+            icon: <CreditCardIcon />
           }
         } else {
           choosenPayment = {
             label: 'Card',
             color: 'card',
-            icon: <CreditCardIcon />,
+            icon: <CreditCardIcon />
           }
         }
         break
@@ -58,21 +58,21 @@ export default function PaymentProvider({ provider, sourceType }: statusProps) {
         choosenPayment = {
           label: 'Paypal',
           color: 'paypal',
-          icon: <img src={logoPaypal} width={24} alt="Paypal" />,
+          icon: <img src={logoPaypal} width={24} alt="Paypal" />
         }
         break
       case paymentProviders.wallet:
         choosenPayment = {
           label: 'Wallet',
           color: 'wallet',
-          icon: <WalletIcon />,
+          icon: <WalletIcon />
         }
         break
       default:
         choosenPayment = {
           label: 'Unknown',
           color: 'unknown',
-          icon: <UnknownPaymentIcon />,
+          icon: <UnknownPaymentIcon />
         }
         break
     }

@@ -3,7 +3,7 @@ import PayoutScheduleForm from './payout-schedule-form'
 
 export default {
   title: 'Design Library/Organisms/Forms/PayoutForms/PayoutScheduleForm',
-  component: PayoutScheduleForm,
+  component: PayoutScheduleForm
 }
 
 const Template = (args) => <PayoutScheduleForm {...args} />

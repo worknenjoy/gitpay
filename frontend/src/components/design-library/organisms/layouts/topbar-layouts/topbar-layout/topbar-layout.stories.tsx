@@ -3,7 +3,7 @@ import Topbar from './topbar-layout'
 
 export default {
   title: 'Design Library/Organisms/Layouts/Topbar/Topbar',
-  component: Topbar,
+  component: Topbar
 }
 
 const Template = (args: any) => <Topbar {...args} />
@@ -20,15 +20,15 @@ LoggedIn.args = {
       Types: [
         {
           id: 1,
-          name: 'maintainer',
-        },
-      ],
-    },
-  },
+          name: 'maintainer'
+        }
+      ]
+    }
+  }
 }
 
 export const LoggedOut = Template.bind({})
 LoggedOut.args = {
   // Add default props here
-  user: {},
+  user: {}
 }

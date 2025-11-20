@@ -5,8 +5,8 @@ const meta: Meta<typeof PricingPublicPage> = {
   title: 'Design Library/Pages/Public/Pricing',
   component: PricingPublicPage,
   parameters: {
-    layout: 'fullscreen',
-  },
+    layout: 'fullscreen'
+  }
 }
 
 export default meta
@@ -14,5 +14,5 @@ export default meta
 type Story = StoryObj<typeof PricingPublicPage>
 
 export const Basic: Story = {
-  args: {},
+  args: {}
 }

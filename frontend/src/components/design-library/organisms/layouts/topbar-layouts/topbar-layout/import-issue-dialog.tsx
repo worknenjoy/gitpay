@@ -13,7 +13,7 @@ import {
   Typography,
   FormGroup,
   FormControlLabel,
-  Checkbox,
+  Checkbox
 } from '@mui/material'
 import isGithubUrl from 'is-github-url'
 import logoGithub from 'images/github-logo.png'
@@ -22,7 +22,7 @@ import api from '../../../../../../consts'
 import {
   FullWidthFormControl,
   ProvidersWrapper,
-  ProviderButton,
+  ProviderButton
 } from './import-issue-dialog.styles'
 
 const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
@@ -57,7 +57,7 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
           not_listed: !!notListed,
           url: url,
           provider: provider,
-          userId: user ? user.id : null,
+          userId: user ? user.id : null
         })
       } catch (e) {
         console.log(e)

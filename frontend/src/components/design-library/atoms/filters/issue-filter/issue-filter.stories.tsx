@@ -5,8 +5,8 @@ export default {
   title: 'Design Library/Atoms/Filters/Issue',
   component: IssueFilter,
   parameters: {
-    layout: 'fullscreen',
-  },
+    layout: 'fullscreen'
+  }
 }
 
 const Template = (args) => <IssueFilter {...args} />
@@ -15,7 +15,7 @@ const mockTasks = [
   { id: 1, value: '100', status: 'open', title: 'Task with bounty' },
   { id: 2, value: '0', status: 'open', title: 'Task without bounty' },
   { id: 3, value: '50', status: 'open', title: 'Another task with bounty' },
-  { id: 4, value: '0', status: 'open', title: 'Another task without bounty' },
+  { id: 4, value: '0', status: 'open', title: 'Another task without bounty' }
 ]
 
 const mockFilterTasks = (key, value) => {
@@ -28,7 +28,7 @@ Default.args = {
   tasks: mockTasks,
   filteredTasks: mockTasks,
   filterTasks: mockFilterTasks,
-  baseUrl: '/tasks/',
+  baseUrl: '/tasks/'
 }
 
 export const WithBounties = Template.bind({})
@@ -36,7 +36,7 @@ WithBounties.args = {
   tasks: mockTasks,
   filteredTasks: mockTasks.filter((task) => parseFloat(task.value) > 0),
   filterTasks: mockFilterTasks,
-  baseUrl: '/tasks/',
+  baseUrl: '/tasks/'
 }
 
 export const WithoutBounties = Template.bind({})
@@ -44,7 +44,7 @@ WithoutBounties.args = {
   tasks: mockTasks,
   filteredTasks: mockTasks.filter((task) => parseFloat(task.value) === 0),
   filterTasks: mockFilterTasks,
-  baseUrl: '/tasks/',
+  baseUrl: '/tasks/'
 }
 
 export const ProfileExplore = Template.bind({})
@@ -52,5 +52,5 @@ ProfileExplore.args = {
   tasks: mockTasks,
   filteredTasks: mockTasks,
   filterTasks: mockFilterTasks,
-  baseUrl: '/profile/explore/',
+  baseUrl: '/profile/explore/'
 }

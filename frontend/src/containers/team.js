@@ -8,7 +8,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    joinTeamAPICall: (email) => dispatch(joinTeam(email)),
+    joinTeamAPICall: (email) => dispatch(joinTeam(email))
   }
 }
 

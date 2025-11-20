@@ -19,20 +19,19 @@ xdescribe('task reducer', () => {
             body: '',
             state: 'open',
             user: {
-              avatar_url:
-                'https://loading.io/spinners/disqus/index.discuss-messesage-preloader.svg',
-            },
-          },
+              avatar_url: 'https://loading.io/spinners/disqus/index.discuss-messesage-preloader.svg'
+            }
+          }
         },
         orders: [],
         provider: null,
         url: '',
-        value: 0,
+        value: 0
       },
       error: { message: false },
       filterOrdersBy: {},
       tab: 0,
-      values: { available: 0, card: 0, failed: 0, paypal: 0, pending: 0, transferred: 0 },
+      values: { available: 0, card: 0, failed: 0, paypal: 0, pending: 0, transferred: 0 }
     })
   })
 })
@@ -48,7 +47,7 @@ describe('preferences reducer', () => {
       os: null,
       receiveNotifications: null,
       openForJobs: null,
-      skills: null,
+      skills: null
     })
   })
 })
@@ -58,7 +57,7 @@ describe('organizations reducer', () => {
     expect(organizations(undefined, {})).toEqual({
       completed: true,
       data: [],
-      error: {},
+      error: {}
     })
   })
 })

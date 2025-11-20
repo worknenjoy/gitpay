@@ -3,7 +3,7 @@ import Loader from './loader'
 
 export default {
   title: 'Design Library/Atoms/Loaders/Loader',
-  component: Loader,
+  component: Loader
 }
 
 const Template = (args) => <Loader {...args} />

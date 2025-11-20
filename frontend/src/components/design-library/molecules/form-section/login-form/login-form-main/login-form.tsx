@@ -11,8 +11,8 @@ import LoginFormForgot from '../login-form-forgot/login-form-forgot'
 
 const styles = (theme: any) => ({
   gutterLeft: {
-    marginLeft: 10,
-  },
+    marginLeft: 10
+  }
 })
 
 const Wrapper = styled.div<{ contrast?: boolean }>`
@@ -54,7 +54,7 @@ const LoginForm: React.FC<LoginButtonProps> = ({
   onSignup,
   onSignin,
   loginFormSignupFormProps,
-  loginFormForgotFormProps,
+  loginFormForgotFormProps
 }) => {
   return (
     <Wrapper contrast={contrast}>

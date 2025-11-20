@@ -29,7 +29,7 @@ module.exports.issue = {
       events_url: 'https://api.github.com/users/alexanmtz/events{/privacy}',
       received_events_url: 'https://api.github.com/users/alexanmtz/received_events',
       type: 'User',
-      site_admin: false,
+      site_admin: false
     },
     labels: [
       {
@@ -38,7 +38,7 @@ module.exports.issue = {
         url: 'https://api.github.com/repos/worknenjoy/gitpay/labels/gitpay',
         name: 'gitpay',
         color: 'e4ed6d',
-        default: false,
+        default: false
       },
       {
         id: 988235282,
@@ -46,7 +46,7 @@ module.exports.issue = {
         url: 'https://api.github.com/repos/worknenjoy/gitpay/labels/React',
         name: 'React',
         color: 'e4ed6d',
-        default: false,
+        default: false
       },
       {
         id: 577780158,
@@ -54,7 +54,7 @@ module.exports.issue = {
         url: 'https://api.github.com/repos/worknenjoy/gitpay/labels/bug',
         name: 'bug',
         color: 'ee0701',
-        default: true,
+        default: true
       },
       {
         id: 577780160,
@@ -62,8 +62,8 @@ module.exports.issue = {
         url: 'https://api.github.com/repos/worknenjoy/gitpay/labels/enhancement',
         name: 'enhancement',
         color: '84b6eb',
-        default: true,
-      },
+        default: true
+      }
     ],
     state: 'open',
     locked: false,
@@ -97,7 +97,7 @@ module.exports.issue = {
         events_url: 'https://api.github.com/users/alexanmtz/events{/privacy}',
         received_events_url: 'https://api.github.com/users/alexanmtz/received_events',
         type: 'User',
-        site_admin: false,
+        site_admin: false
       },
       open_issues: 31,
       closed_issues: 5,
@@ -105,14 +105,14 @@ module.exports.issue = {
       created_at: '2018-11-05T17:47:56Z',
       updated_at: '2019-01-04T18:03:57Z',
       due_on: null,
-      closed_at: null,
+      closed_at: null
     },
     comments: 3,
     created_at: '2018-12-28T14:38:35Z',
     updated_at: '2019-01-06T00:17:41Z',
     closed_at: null,
     author_association: 'CONTRIBUTOR',
-    body: 'On places that we have the task list like here: [https://gitpay.me/#/tasks/explore](https://gitpay.me/#/tasks/explore) we need to make the tabs and filter regular links to be able to open in a new tab (accessibility) and to be persisted as well (added on the url like https://gitpay.me/#/tasks/explore/open for open tasks, for example)\r\n\r\n### Why\r\nWe need to improve our task list for accessibility and to persist the states of filters and tabs\r\n\r\n### Level\r\nBeginner\r\n\r\n### Current behavior\r\nWhen the user click on any link on the task list, like the filters (open, in progress, done) or on the tabs (created by me etc) the links not persist and if we try to open a new tab is not possible.\r\n\r\n### Expected behavior\r\nWhen the user click on any link on the task list, like the filters (open, in progress, done) or on the tabs (created by me etc) the links should persist as a different url and we should be able to open in a new tab.\r\n\r\n### Useful links\r\n  - https://github.com/ReactTraining/react-router\r\n\r\n### How to solve this issue\r\n - Probably you will have to create new routes to handle the states\r\n - You will have to change the way we link using regular links, using `<Link />` from react-router\r\n\r\n### How to reproduce the user scenario\r\n - Open task list explore: [https://gitpay.me/#/tasks/explore](https://gitpay.me/#/tasks/explore)\r\n\r\n',
+    body: 'On places that we have the task list like here: [https://gitpay.me/#/tasks/explore](https://gitpay.me/#/tasks/explore) we need to make the tabs and filter regular links to be able to open in a new tab (accessibility) and to be persisted as well (added on the url like https://gitpay.me/#/tasks/explore/open for open tasks, for example)\r\n\r\n### Why\r\nWe need to improve our task list for accessibility and to persist the states of filters and tabs\r\n\r\n### Level\r\nBeginner\r\n\r\n### Current behavior\r\nWhen the user click on any link on the task list, like the filters (open, in progress, done) or on the tabs (created by me etc) the links not persist and if we try to open a new tab is not possible.\r\n\r\n### Expected behavior\r\nWhen the user click on any link on the task list, like the filters (open, in progress, done) or on the tabs (created by me etc) the links should persist as a different url and we should be able to open in a new tab.\r\n\r\n### Useful links\r\n  - https://github.com/ReactTraining/react-router\r\n\r\n### How to solve this issue\r\n - Probably you will have to create new routes to handle the states\r\n - You will have to change the way we link using regular links, using `<Link />` from react-router\r\n\r\n### How to reproduce the user scenario\r\n - Open task list explore: [https://gitpay.me/#/tasks/explore](https://gitpay.me/#/tasks/explore)\r\n\r\n'
   },
   comment: {
     url: 'https://api.github.com/repos/worknenjoy/gitpay/issues/comments/451703995',
@@ -138,12 +138,12 @@ module.exports.issue = {
       events_url: 'https://api.github.com/users/alexanmtz/events{/privacy}',
       received_events_url: 'https://api.github.com/users/alexanmtz/received_events',
       type: 'User',
-      site_admin: false,
+      site_admin: false
     },
     created_at: '2019-01-06T00:17:41Z',
     updated_at: '2019-01-06T00:17:41Z',
     author_association: 'CONTRIBUTOR',
-    body: 'great @yuritoledo and the migrations is working now as well?',
+    body: 'great @yuritoledo and the migrations is working now as well?'
   },
   repository: {
     id: 87405108,
@@ -169,7 +169,7 @@ module.exports.issue = {
       events_url: 'https://api.github.com/users/worknenjoy/events{/privacy}',
       received_events_url: 'https://api.github.com/users/worknenjoy/received_events',
       type: 'Organization',
-      site_admin: false,
+      site_admin: false
     },
     html_url: 'https://github.com/worknenjoy/gitpay',
     description:
@@ -240,12 +240,12 @@ module.exports.issue = {
       name: 'MIT License',
       spdx_id: 'MIT',
       url: 'https://api.github.com/licenses/mit',
-      node_id: 'MDc6TGljZW5zZTEz',
+      node_id: 'MDc6TGljZW5zZTEz'
     },
     forks: 24,
     open_issues: 45,
     watchers: 15,
-    default_branch: 'master',
+    default_branch: 'master'
   },
   organization: {
     login: 'worknenjoy',
@@ -259,7 +259,7 @@ module.exports.issue = {
     members_url: 'https://api.github.com/orgs/worknenjoy/members{/member}',
     public_members_url: 'https://api.github.com/orgs/worknenjoy/public_members{/member}',
     avatar_url: 'https://avatars1.githubusercontent.com/u/26957748?v=4',
-    description: '',
+    description: ''
   },
   sender: {
     login: 'alexanmtz',
@@ -279,10 +279,10 @@ module.exports.issue = {
     events_url: 'https://api.github.com/users/alexanmtz/events{/privacy}',
     received_events_url: 'https://api.github.com/users/alexanmtz/received_events',
     type: 'User',
-    site_admin: false,
+    site_admin: false
   },
   installation: {
     id: 1234,
-    node_id: 'MDIzOkludGVncmF0aW9uSW5zdGFsbGF0aW9uNTU5NjEx',
-  },
+    node_id: 'MDIzOkludGVncmF0aW9uSW5zdGFsbGF0aW9uNTU5NjEx'
+  }
 }

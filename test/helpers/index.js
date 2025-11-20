@@ -58,11 +58,11 @@ const createTask = (agent, params = {}, userParams = {}) => {
           provider: params.provider || 'github',
           url: params.url,
           status: params.status,
-          userId: user.id,
+          userId: user.id
         },
         {
-          include: [models.User],
-        },
+          include: [models.User]
+        }
       )
         .then((task) => {
           return task
@@ -83,24 +83,24 @@ const createAssign = (agent, params = {}, userParams = {}) => {
     password: '123345',
     confirmPassword: '123345',
     name: 'Foo Bar',
-    account_id: 'acct_1Gqj2tGjYvP2Yx5R',
+    account_id: 'acct_1Gqj2tGjYvP2Yx5R'
   })
     .then((res) => {
       const user = res.body
       return models.Assign.create(
         {
           TaskId: params.taskId,
-          userId: user.id,
+          userId: user.id
         },
         {
-          include: [models.User],
-        },
+          include: [models.User]
+        }
       )
         .then((assigned) => {
           const assignedData = assigned.dataValues
           return models.Task.update(
             { assigned: assignedData.id },
-            { where: { id: assignedData.TaskId } },
+            { where: { id: assignedData.TaskId } }
           )
             .then((task) => {
               return assigned
@@ -165,7 +165,7 @@ async function truncateModels(model) {
     },
     function (err) {
       console.log(err)
-    },
+    }
   )
 }
 
@@ -178,5 +178,5 @@ module.exports = {
   createAssign,
   createTransfer,
   createPayout,
-  truncateModels,
+  truncateModels
 }

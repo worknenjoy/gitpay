@@ -27,15 +27,15 @@ describe('User Actions', () => {
     const accountData = { data: { id: 1, name: 'Test User' } }
     moxios.stubRequest(`${api.API_URL}/user/account`, {
       status: 200,
-      response: accountData.data,
+      response: accountData.data
     })
 
     const expectedActions = [
       { type: types.FETCH_USER_ACCOUNT_REQUESTED, completed: false },
-      { type: types.FETCH_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data },
+      { type: types.FETCH_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data }
     ]
     const store = mockStore({
-      intl: { messages: {} },
+      intl: { messages: {} }
     })
 
     return store.dispatch(actions.fetchAccount()).then(() => {
@@ -46,7 +46,7 @@ describe('User Actions', () => {
 
   it('creates FETCH_USER_ACCOUNT_ERROR when fetching user account fails', () => {
     moxios.stubRequest(`${api.API_URL}/user/account`, {
-      status: 500,
+      status: 500
     })
 
     const expectedActions = [
@@ -54,8 +54,8 @@ describe('User Actions', () => {
       {
         type: types.FETCH_USER_ACCOUNT_ERROR,
         completed: true,
-        error: new Error('Request failed with status code 500'),
-      },
+        error: new Error('Request failed with status code 500')
+      }
     ]
     const store = mockStore({ intl: { messages: {} } })
 
@@ -72,7 +72,7 @@ describe('User Actions', () => {
     const accountData = { data: { id: 1, name: 'Test User' } }
     moxios.stubRequest(`${api.API_URL}/user/account`, {
       status: 200,
-      response: accountData.data,
+      response: accountData.data
     })
 
     const expectedActions = [
@@ -80,9 +80,9 @@ describe('User Actions', () => {
       {
         type: typesNotification.ADD_NOTIFICATION,
         text: 'actions.user.account.create.success',
-        open: true,
+        open: true
       },
-      { type: types.CREATE_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data },
+      { type: types.CREATE_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data }
     ]
     const store = mockStore({ loggedIn: { data: { account_id: null } }, intl: { messages: {} } })
 
@@ -97,7 +97,7 @@ describe('User Actions', () => {
 
   it('creates CREATE_USER_ACCOUNT_ERROR when creating user account fails', () => {
     moxios.stubRequest(`${api.API_URL}/user/account`, {
-      status: 500,
+      status: 500
     })
 
     const expectedActions = [
@@ -105,13 +105,13 @@ describe('User Actions', () => {
       {
         type: typesNotification.ADD_NOTIFICATION,
         text: 'actions.user.account.create.error',
-        open: true,
+        open: true
       },
       {
         type: types.CREATE_USER_ACCOUNT_ERROR,
         completed: true,
-        error: new Error('Request failed with status code 500'),
-      },
+        error: new Error('Request failed with status code 500')
+      }
     ]
     const store = mockStore({ loggedIn: { data: { account_id: null } }, intl: { messages: {} } })
 
@@ -128,7 +128,7 @@ describe('User Actions', () => {
     const accountData = { data: { id: 1, name: 'Updated User' } }
     moxios.stubRequest(`${api.API_URL}/user/account`, {
       status: 200,
-      response: accountData.data,
+      response: accountData.data
     })
 
     const expectedActions = [
@@ -136,9 +136,9 @@ describe('User Actions', () => {
       {
         type: typesNotification.ADD_NOTIFICATION,
         text: 'actions.user.account.update.success',
-        open: true,
+        open: true
       },
-      { type: types.UPDATE_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data },
+      { type: types.UPDATE_USER_ACCOUNT_SUCCESS, completed: true, data: accountData.data }
     ]
     const store = mockStore({ intl: { messages: {} } })
 
@@ -153,7 +153,7 @@ describe('User Actions', () => {
 
   it('creates UPDATE_USER_ACCOUNT_ERROR when updating user account fails', () => {
     moxios.stubRequest(`${api.API_URL}/user/account`, {
-      status: 500,
+      status: 500
     })
 
     const expectedActions = [
@@ -161,13 +161,13 @@ describe('User Actions', () => {
       {
         type: typesNotification.ADD_NOTIFICATION,
         text: 'actions.user.account.update.error',
-        open: true,
+        open: true
       },
       {
         type: types.UPDATE_USER_ACCOUNT_ERROR,
         completed: true,
-        error: new Error('Request failed with status code 500'),
-      },
+        error: new Error('Request failed with status code 500')
+      }
     ]
     const store = mockStore({ intl: { messages: {} } })
 
@@ -183,7 +183,7 @@ describe('User Actions', () => {
     const accountData = { data: { id: 1, name: 'Updated User' } }
     moxios.stubRequest(`${api.API_URL}/user/account`, {
       status: 200,
-      response: accountData.data,
+      response: accountData.data
     })
 
     const expectedActions = [
@@ -191,13 +191,13 @@ describe('User Actions', () => {
       {
         type: typesNotification.ADD_NOTIFICATION,
         text: 'actions.user.account.update.error',
-        open: true,
+        open: true
       },
       {
         type: types.UPDATE_USER_ACCOUNT_ERROR,
         completed: true,
-        error: new Error('Request failed with status code 200'),
-      },
+        error: new Error('Request failed with status code 200')
+      }
     ]
     const store = mockStore({ intl: { messages: {} } })
 
@@ -212,7 +212,7 @@ describe('User Actions', () => {
   it('when user account update fails but returns 401 status code', () => {
     moxios.stubRequest(`${api.API_URL}/user/account`, {
       status: 401,
-      response: StripeAccountInvalidRequest,
+      response: StripeAccountInvalidRequest
     })
 
     const expectedActions = [
@@ -220,16 +220,16 @@ describe('User Actions', () => {
       {
         type: typesNotification.ADD_NOTIFICATION,
         text: 'actions.user.account.update.error.missing',
-        open: true,
+        open: true
       },
       {
         type: types.UPDATE_USER_ACCOUNT_ERROR,
         completed: true,
-        error: new Error('Request failed with status code 401'),
-      },
+        error: new Error('Request failed with status code 401')
+      }
     ]
     const store = mockStore({
-      intl: { messages: { 'actions.user.account.update.error.phone': 'Invalid phone' } },
+      intl: { messages: { 'actions.user.account.update.error.phone': 'Invalid phone' } }
     })
 
     return store.dispatch(actions.updateAccount(null, {})).then(() => {

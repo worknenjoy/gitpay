@@ -3,7 +3,7 @@ import ProviderLoginButtons from './provider-login-buttons'
 
 export default {
   title: 'Design Library/Atoms/Buttons/ProviderLoginButtons',
-  component: ProviderLoginButtons,
+  component: ProviderLoginButtons
 }
 
 const Template = (args) => <ProviderLoginButtons {...args} />

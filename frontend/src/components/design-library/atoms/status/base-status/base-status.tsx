@@ -67,7 +67,7 @@ const BaseStatus = ({ status, statusList, classes, styles, completed = true }: s
 
   const extraProps = message && {
     deleteIcon: deleteIconWithTooltip,
-    onDelete: () => setTooltipOpen(true),
+    onDelete: () => setTooltipOpen(true)
   }
 
   return (

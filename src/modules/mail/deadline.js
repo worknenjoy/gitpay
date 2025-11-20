@@ -10,12 +10,12 @@ const enLocale = require('moment/locale/en-gb')
 const locales = {
   en: {
     label: 'en-gb',
-    file: enLocale,
+    file: enLocale
   },
   br: {
     label: 'pt-br',
-    file: ptLocale,
-  },
+    file: ptLocale
+  }
 }
 
 const DeadlineMail = {
@@ -24,7 +24,7 @@ const DeadlineMail = {
   rememberAssigned: (to, task, name) => {},
   deadlineEndAssigned: (to, task, name) => {},
   deadlineEndOwner: (to, task, name) => {},
-  error: (msg) => {},
+  error: (msg) => {}
 }
 
 if (constants.canSendEmail) {
@@ -40,8 +40,8 @@ if (constants.canSendEmail) {
           <p>Olá ${i18n.__('mail.hello', { name: name })}</p>
 ${i18n.__('mail.assigned.update.intro', { title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}
 ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
-          <p>${Signatures.sign(language)}</p>`,
-        },
+          <p>${Signatures.sign(language)}</p>`
+        }
       ])
   }
 
@@ -58,9 +58,9 @@ ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? mom
             type: 'text/html',
             value: `
           <p>Olá ${i18n.__('mail.hello', { name: name })}</p> ${i18n.__('mail.assigned.update.intro', { title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })} ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
-          <p>${Signatures.sign(language)}</p>`,
-          },
-        ],
+          <p>${Signatures.sign(language)}</p>`
+          }
+        ]
       )
   }
 
@@ -76,9 +76,9 @@ ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? mom
           {
             type: 'text/html',
             value: `
-          <p>Olá ${i18n.__('mail.hello', { name: name })}</p> ${i18n.__('mail.deadline.remember.intro', { title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })} ${i18n.__('mail.deadline.remember.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })} <p>${Signatures.sign(language)}</p>`,
-          },
-        ],
+          <p>Olá ${i18n.__('mail.hello', { name: name })}</p> ${i18n.__('mail.deadline.remember.intro', { title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })} ${i18n.__('mail.deadline.remember.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })} <p>${Signatures.sign(language)}</p>`
+          }
+        ]
       )
   }
 
@@ -104,16 +104,16 @@ ${i18n.__('mail.deadline.end.message', { deadlineFromNow: task.deadline ? moment
 ${Signatures.buttons(language, {
   primary: {
     label: 'mail.deadline.end.button.primary',
-    url: urlInterested,
+    url: urlInterested
   },
   secondary: {
     label: 'mail.deadline.end.button.secondary',
-    url: task.url,
-  },
+    url: task.url
+  }
 })}
-          <p>${Signatures.sign(language)}</p>`,
-          },
-        ],
+          <p>${Signatures.sign(language)}</p>`
+          }
+        ]
       )
   }
 
@@ -139,16 +139,16 @@ ${i18n.__('mail.deadline.end.owner.message', { deadlineFromNow: task.deadline ? 
 ${Signatures.buttons(language, {
   primary: {
     label: 'mail.deadline.end.owner.button.primary',
-    url: urlInterested,
+    url: urlInterested
   },
   secondary: {
     label: 'mail.deadline.end.owner.button.secondary',
-    url: task.url,
-  },
+    url: task.url
+  }
 })}
-          <p>${Signatures.sign(language)}</p>`,
-          },
-        ],
+          <p>${Signatures.sign(language)}</p>`
+          }
+        ]
       )
   }
 
@@ -156,8 +156,8 @@ ${Signatures.buttons(language, {
     request(constants.notificationEmail, i18n.__('mail.deadline.update.error'), [
       {
         type: 'text/html',
-        value: msg,
-      },
+        value: msg
+      }
     ])
   }
 }

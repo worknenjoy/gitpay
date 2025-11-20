@@ -5,7 +5,7 @@ const models = require('../../models')
 module.exports = Promise.method(function taskSync(taskParameters) {
   // eslint-disable-next-line no-console
   return models.Task.findByPk(taskParameters.id, {
-    include: [models.Order],
+    include: [models.Order]
   }).then((task) => {
     let finalValue = {
       available: new Decimal(0),
@@ -13,7 +13,7 @@ module.exports = Promise.method(function taskSync(taskParameters) {
       failed: new Decimal(0),
       card: new Decimal(0),
       paypal: new Decimal(0),
-      transferred: new Decimal(0),
+      transferred: new Decimal(0)
     }
     task.dataValues.Orders.map((item) => {
       const decimalAmount = new Decimal(item.amount)
@@ -51,7 +51,7 @@ module.exports = Promise.method(function taskSync(taskParameters) {
       .then((updatedTask) => {
         if (updatedTask) {
           return {
-            value: finalValue,
+            value: finalValue
           }
         }
       })

@@ -96,5 +96,5 @@ export {
   LIST_PROJECTS_SUCCESS,
   LIST_PROJECTS_ERROR,
   fetchProject,
-  listProjects,
+  listProjects
 }

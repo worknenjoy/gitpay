@@ -7,15 +7,15 @@ const meta: Meta<any> = {
   title: 'Design Library/Organisms/Forms/DateForms/TaskDeadlineForm',
   component: TaskDeadlineForm,
   parameters: {
-    layout: 'centered',
+    layout: 'centered'
   },
   decorators: [
     (Story) => (
       <div style={{ maxWidth: 480, width: '100%' }}>
         <Story />
       </div>
-    ),
-  ],
+    )
+  ]
 }
 export default meta
 
@@ -29,5 +29,5 @@ export const Default: Story = {
       onHandleClearDeadline={action('onHandleClearDeadline')}
       onHandleDeadline={action('onHandleDeadline')}
     />
-  ),
+  )
 }

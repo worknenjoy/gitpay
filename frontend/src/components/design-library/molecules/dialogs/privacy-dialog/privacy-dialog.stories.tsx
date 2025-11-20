@@ -3,7 +3,7 @@ import PrivacyDialog from './privacy-dialog'
 
 export default {
   title: 'Design Library/Molecules/Dialogs/PrivacyPolicyDialog',
-  component: PrivacyDialog,
+  component: PrivacyDialog
 }
 
 const Template = (args) => {

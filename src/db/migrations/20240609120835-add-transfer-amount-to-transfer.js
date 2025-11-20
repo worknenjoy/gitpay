@@ -9,11 +9,11 @@ module.exports = {
      */
     await queryInterface.addColumn('Transfers', 'paypal_transfer_amount', {
       type: Sequelize.DECIMAL,
-      allowNull: true,
+      allowNull: true
     })
     await queryInterface.addColumn('Transfers', 'stripe_transfer_amount', {
       type: Sequelize.DECIMAL,
-      allowNull: true,
+      allowNull: true
     })
   },
 
@@ -26,5 +26,5 @@ module.exports = {
      */
     queryInterface.removeColumn('Transfers', 'paypal_transfer_amount')
     queryInterface.removeColumn('Transfers', 'stripe_transfer_amount')
-  },
+  }
 }

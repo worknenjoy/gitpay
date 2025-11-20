@@ -22,7 +22,7 @@ import {
   DialogContentText,
   MobileStepper,
   Fab,
-  Collapse,
+  Collapse
 } from '@mui/material'
 
 import {
@@ -31,7 +31,7 @@ import {
   CreditCard as BountyIcon,
   Gavel as OfferIcon,
   Redeem as RedeemIcon,
-  EmojiFoodBeverage as CoffeeIcon,
+  EmojiFoodBeverage as CoffeeIcon
 } from '@mui/icons-material'
 
 import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer'
@@ -60,8 +60,8 @@ const SidebarGrid = styled(Grid)(({ theme }) => ({
   backgroundColor: '#eee',
   padding: 25,
   [theme.breakpoints.down('sm')]: {
-    padding: 15,
-  },
+    padding: 15
+  }
 }))
 
 const SidebarSection = styled('div')(({ theme }) => ({
@@ -73,16 +73,16 @@ const SidebarSection = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     alignItems: 'center',
     marginTop: 10,
-    marginBottom: 10,
-  },
+    marginBottom: 10
+  }
 }))
 
 const SidebarItem = styled('div')(({ theme }) => ({
   textAlign: 'center',
   [theme.breakpoints.down('sm')]: {
     marginBottom: 15,
-    maxWidth: '100%',
-  },
+    maxWidth: '100%'
+  }
 }))
 
 const TaskInfoContent = styled('div')(({ theme }) => ({
@@ -90,26 +90,26 @@ const TaskInfoContent = styled('div')(({ theme }) => ({
   marginLeft: 5,
   marginTop: 10,
   display: 'inline-block',
-  textAlign: 'middle',
+  textAlign: 'middle'
 }))
 
 const StatusChip = styled(Chip, { shouldForwardProp: (prop) => prop !== 'status' })(
   ({ theme, status }) => ({
     marginBottom: theme.spacing(1),
     backgroundColor: 'transparent',
-    color: status === 'closed' ? theme.palette.error.main : theme.palette.primary.success,
-  }),
+    color: status === 'closed' ? theme.palette.error.main : theme.palette.primary.success
+  })
 )
 
 const StatusAvatarDot = styled(Avatar, { shouldForwardProp: (prop) => prop !== 'status' })(
   ({ theme, status }) => ({
-    backgroundColor: status === 'closed' ? theme.palette.error.main : theme.palette.primary.success,
-  }),
+    backgroundColor: status === 'closed' ? theme.palette.error.main : theme.palette.primary.success
+  })
 )
 
 const SpanText = styled('span')(() => ({
   display: 'inline-block',
-  verticalAlign: 'middle',
+  verticalAlign: 'middle'
 }))
 
 function Task(props) {
@@ -148,7 +148,7 @@ function Task(props) {
     wallet,
     offerUpdate,
     assignTask,
-    messageOffer,
+    messageOffer
   } = props
 
   const intl = useIntl()
@@ -338,8 +338,8 @@ function Task(props) {
         suggestedDate: interestedSuggestedDate,
         value: currentPrice,
         learn: interestedLearn,
-        comment: interestedComment,
-      },
+        comment: interestedComment
+      }
     })
     setAssignDialog(false)
     setTermsAgreed(false)
@@ -451,7 +451,7 @@ function Task(props) {
               <FormattedMessage id="first.task.bounties.action" defaultMessage="Add bounties now" />
             </Button>
           </div>
-        ),
+        )
       }
     }
     if (firstTaskSteps === 1) {
@@ -473,7 +473,7 @@ function Task(props) {
               <FormattedMessage id="first.task.deadline.action" defaultMessage="Set deadline" />
             </Button>
           </div>
-        ),
+        )
       }
     }
     if (firstTaskSteps === 2) {
@@ -490,7 +490,7 @@ function Task(props) {
             id="first.task.community.description"
             defaultMessage="We will make a campaign to let our community know that you have an issue to be solved"
           />
-        ),
+        )
       }
     }
     return {}
@@ -513,7 +513,7 @@ function Task(props) {
       fundingInvite.comment,
       currentPrice,
       interestedSuggestedDate,
-      user,
+      user
     )
     handleAssignFundingDialogClose()
   }
@@ -798,7 +798,7 @@ function Task(props) {
             <div>
               <TaskPayments
                 orders={(task?.data?.orders || task?.data?.Orders)?.filter(
-                  (o) => o.paid && o.status === 'succeeded',
+                  (o) => o.paid && o.status === 'succeeded'
                 )}
               />
             </div>
@@ -886,7 +886,7 @@ function Task(props) {
             actions={[
               {
                 label: <FormattedMessage id="task.funding.cancel" defaultMessage="Cancel" />,
-                onClick: handleAssignFundingDialogClose,
+                onClick: handleAssignFundingDialogClose
               },
               {
                 disabled:
@@ -894,8 +894,8 @@ function Task(props) {
                 label: <FormattedMessage id="task.funding.invite" defaultMessage="Invite" />,
                 onClick: sendFundingInvite,
                 variant: 'contained',
-                color: 'secondary',
-              },
+                color: 'secondary'
+              }
             ]}
           />
         </SidebarGrid>
@@ -945,7 +945,7 @@ Task.propTypes = {
   messageOffer: PropTypes.func,
   messageAuthor: PropTypes.func,
   noTopBar: PropTypes.bool,
-  noBottomBar: PropTypes.bool,
+  noBottomBar: PropTypes.bool
 }
 
 export default Task

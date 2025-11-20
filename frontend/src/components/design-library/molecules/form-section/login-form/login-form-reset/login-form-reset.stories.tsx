@@ -3,7 +3,7 @@ import LoginFormReset from './login-form-reset'
 
 export default {
   title: 'Design Library/Molecules/FormSection/LoginForm/LoginFormReset',
-  component: LoginFormReset,
+  component: LoginFormReset
 }
 
 const Template = (args) => <LoginFormReset {...args} />

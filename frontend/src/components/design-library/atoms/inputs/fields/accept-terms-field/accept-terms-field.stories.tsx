@@ -3,7 +3,7 @@ import AcceptTermsField from './accept-terms-field'
 
 export default {
   title: 'Design Library/Atoms/Inputs/Fields/AcceptTermsField',
-  component: AcceptTermsField,
+  component: AcceptTermsField
 }
 
 const Template = (args) => <AcceptTermsField {...args} />
@@ -15,7 +15,7 @@ Default.args = {
   country: 'us',
   completed: true,
   onAccept: () => {},
-  onReject: () => {},
+  onReject: () => {}
 }
 
 export const Accepted = Template.bind({})
@@ -25,7 +25,7 @@ Accepted.args = {
   country: 'us',
   completed: true,
   onAccept: () => {},
-  onReject: () => {},
+  onReject: () => {}
 }
 
 export const Loading = Template.bind({})
@@ -35,5 +35,5 @@ Loading.args = {
   country: 'us',
   completed: false,
   onAccept: () => {},
-  onReject: () => {},
+  onReject: () => {}
 }

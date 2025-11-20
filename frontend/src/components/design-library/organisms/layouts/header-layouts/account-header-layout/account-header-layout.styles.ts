@@ -11,8 +11,8 @@ export const Container = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
     alignItems: 'center',
-    padding: '10px 0',
-  },
+    padding: '10px 0'
+  }
 }))
 
 export const Wrapper = styled('div')(({ theme }) => ({
@@ -25,8 +25,8 @@ export const Wrapper = styled('div')(({ theme }) => ({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
-  },
+    marginTop: 20
+  }
 }))
 
 export const Inner = styled('div')(({ theme }) => ({
@@ -41,16 +41,16 @@ export const Inner = styled('div')(({ theme }) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '100%',
-  },
+    width: '100%'
+  }
 }))
 
 export const ActionButton = styled(Button)(({ theme }) => ({
   marginRight: 10,
   [theme.breakpoints.down('sm')]: {
     marginTop: 20,
-    width: '100%',
-  },
+    width: '100%'
+  }
 }))
 
 export const Account = styled('div')(({ theme }) => ({
@@ -60,6 +60,6 @@ export const Account = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     marginTop: 20,
     width: '100%',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 }))

@@ -6,9 +6,9 @@ const meta: Meta<typeof OrganizationPublicPage> = {
   title: 'Design Library/Pages/Public/Organization',
   component: OrganizationPublicPage,
   parameters: {
-    layout: 'fullscreen',
+    layout: 'fullscreen'
   },
-  decorators: [withPublicTemplate],
+  decorators: [withPublicTemplate]
 }
 
 export default meta
@@ -27,11 +27,11 @@ export const Default = {
             Organization: { name: 'Organization Sample', provider: 'GitHub' },
             Tasks: [
               { status: 'open', value: 50 },
-              { status: 'closed', value: 0 },
-            ],
-          },
-        ],
-      },
+              { status: 'closed', value: 0 }
+            ]
+          }
+        ]
+      }
     },
     issues: {
       completed: true,
@@ -44,10 +44,10 @@ export const Default = {
           url: 'https://example.com/issue/1',
           Project: {
             id: '1',
-            name: 'Project Sample',
-          },
-        },
-      ],
-    },
-  },
+            name: 'Project Sample'
+          }
+        }
+      ]
+    }
+  }
 }

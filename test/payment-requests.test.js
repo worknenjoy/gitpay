@@ -28,8 +28,8 @@ describe('PaymentRequests', () => {
       .reply(202, [
         {
           type: 'text/html',
-          value: 'email content',
-        },
+          value: 'email content'
+        }
       ])
 
     // Mock the Stripe API to return a sample product
@@ -67,7 +67,7 @@ describe('PaymentRequests', () => {
         title: 'Test Payment Request',
         description: 'This is a test payment request',
         amount: 100.0,
-        currency: 'USD',
+        currency: 'USD'
       })
 
     expect(res.body).to.exist
@@ -90,8 +90,8 @@ describe('PaymentRequests', () => {
       .reply(202, [
         {
           type: 'text/html',
-          value: 'email content',
-        },
+          value: 'email content'
+        }
       ])
     nock('https://api.stripe.com')
       .persist()
@@ -121,7 +121,7 @@ describe('PaymentRequests', () => {
         description: 'This is a test payment request with custom amount',
         amount: 0.0,
         currency: 'USD',
-        custom_amount: true,
+        custom_amount: true
       })
   })
 
@@ -137,7 +137,7 @@ describe('PaymentRequests', () => {
       currency: 'USD',
       payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
       payment_url: 'https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04',
-      status: 'open',
+      status: 'open'
     })
 
     const res = await agent
@@ -173,10 +173,10 @@ describe('PaymentRequests', () => {
           {
             price: {
               id: 'prc_1RcnYMBrSjgsps2D4k1eX2qK',
-              product: 'prod_1RcnYBBrSjgsps2D5oQd3q3V',
-            },
-          },
-        ],
+              product: 'prod_1RcnYBBrSjgsps2D5oQd3q3V'
+            }
+          }
+        ]
       })
 
     nock('https://api.stripe.com')
@@ -187,9 +187,9 @@ describe('PaymentRequests', () => {
           {
             ...sampleProduct.stripe.product.create.success,
             name: 'New Title',
-            description: 'New Description',
-          },
-        ],
+            description: 'New Description'
+          }
+        ]
       })
 
     const register = await registerAndLogin(agent)
@@ -204,7 +204,7 @@ describe('PaymentRequests', () => {
       payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
       payment_url: 'https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04',
       status: 'open',
-      active: true,
+      active: true
     })
 
     const res = await agent
@@ -216,7 +216,7 @@ describe('PaymentRequests', () => {
       .send({
         active: false,
         title: 'New Title',
-        description: 'New Description',
+        description: 'New Description'
       })
     expect(res.body).to.exist
     expect(res.body.id).to.equal(paymentRequest.id)

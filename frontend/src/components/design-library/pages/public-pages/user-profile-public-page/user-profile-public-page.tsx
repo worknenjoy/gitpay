@@ -7,7 +7,7 @@ import { Page } from '../../../../../styleguide/components/Page'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
 import {
   issueMetadata,
-  customColumnRenderer,
+  customColumnRenderer
 } from 'design-library/molecules/tables/issue-table/issue-table'
 import { FormattedMessage } from 'react-intl'
 import { useParams } from 'react-router-dom'
@@ -73,8 +73,8 @@ const UserProfilePublicPage = ({ user, searchUser, tasks, listTasks, filterTasks
                     table: {
                       tableData: tasks,
                       tableHeaderMetadata: issueMetadata,
-                      customColumnRenderer: customColumnRenderer,
-                    },
+                      customColumnRenderer: customColumnRenderer
+                    }
                   },
                   {
                     value: 'supported',
@@ -87,9 +87,9 @@ const UserProfilePublicPage = ({ user, searchUser, tasks, listTasks, filterTasks
                     table: {
                       tableData: tasks,
                       tableHeaderMetadata: issueMetadata,
-                      customColumnRenderer: customColumnRenderer,
-                    },
-                  },
+                      customColumnRenderer: customColumnRenderer
+                    }
+                  }
                 ]}
               />
             </Grid>

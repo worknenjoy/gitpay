@@ -22,22 +22,22 @@ module.exports.created = {
         data: [],
         has_more: false,
         total_count: 0,
-        url: '/v1/transfers/tr_test_123/reversals',
+        url: '/v1/transfers/tr_test_123/reversals'
       },
       reversed: false,
       source_transaction: null,
       source_type: 'card',
-      transfer_group: 'task_test_1',
+      transfer_group: 'task_test_1'
     },
-    previous_attributes: null,
+    previous_attributes: null
   },
   livemode: false,
   pending_webhooks: 1,
   request: {
     id: 'req_test_123',
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'transfer.created',
+  type: 'transfer.created'
 }
 
 module.exports.createdFromPaymentRequest = {
@@ -60,27 +60,27 @@ module.exports.createdFromPaymentRequest = {
       livemode: false,
       metadata: {
         payment_request_id: '1',
-        user_id: '1',
+        user_id: '1'
       },
       reversals: {
         object: 'list',
         data: [],
         has_more: false,
         total_count: 0,
-        url: '/v1/transfers/tr_test_456/reversals',
+        url: '/v1/transfers/tr_test_456/reversals'
       },
       reversed: false,
       source_transaction: null,
       source_type: 'card',
-      transfer_group: null,
+      transfer_group: null
     },
-    previous_attributes: null,
+    previous_attributes: null
   },
   livemode: false,
   pending_webhooks: 1,
   request: {
     id: 'req_test_456',
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'transfer.created',
+  type: 'transfer.created'
 }

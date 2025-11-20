@@ -51,7 +51,7 @@ export default function AuthorList({ authors, logged, user, task, messageAuthor,
                                 style={{
                                   display: 'inline',
                                   verticalAlign: 'middle',
-                                  marginLeft: 10,
+                                  marginLeft: 10
                                 }}
                               />
                             )}

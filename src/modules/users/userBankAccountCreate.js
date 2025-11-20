@@ -11,7 +11,7 @@ module.exports = Promise.method(function userBankAccountCreate({ userParams, ban
   const userCountry = userParams.country
   const userCurrency = userParams.currency || getCurrency(userCountry)
   return models.User.findOne({
-    where: { id: userParams.id },
+    where: { id: userParams.id }
   }).then((data) => {
     if (data.dataValues.account_id) {
       return stripe.accounts
@@ -29,8 +29,8 @@ module.exports = Promise.method(function userBankAccountCreate({ userParams, ban
                 account_holder_type: bankAccountParams.account_holder_type,
                 account_holder_name: bankAccountParams.account_holder_name,
                 routing_number: bankAccountParams.routing_number,
-                account_number: bankAccountParams.account_number,
-              },
+                account_number: bankAccountParams.account_number
+              }
             })
             .then((account) => {
               return account

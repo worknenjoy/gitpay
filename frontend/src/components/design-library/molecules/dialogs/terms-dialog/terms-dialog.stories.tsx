@@ -3,7 +3,7 @@ import TermsDialog from './terms-dialog'
 
 export default {
   title: 'Design Library/Molecules/Dialogs/TermsDialog',
-  component: TermsDialog,
+  component: TermsDialog
 }
 
 const Template = (args) => {

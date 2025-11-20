@@ -3,7 +3,7 @@ import PayoutSettingsTabs from './payout-settings-tabs'
 
 export default {
   title: 'Design Library/Molecules/Tabs/PayoutSettingsTabs',
-  component: PayoutSettingsTabs,
+  component: PayoutSettingsTabs
 }
 
 const Template = (args) => <PayoutSettingsTabs {...args} />

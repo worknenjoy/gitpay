@@ -14,7 +14,7 @@ import RemoveAssignment from './assignment/RemoveAssignment'
 
 const Main = styled('div')(({ theme }) => ({
   marginTop: 10,
-  marginBottom: 10,
+  marginBottom: 10
 }))
 
 class TaskAssigned extends Component {
@@ -30,7 +30,7 @@ class TaskAssigned extends Component {
     user: PropTypes.object,
     loggedUser: PropTypes.object,
     removeAssignment: PropTypes.func,
-    assignTask: PropTypes.func,
+    assignTask: PropTypes.func
   }
 
   pickTaskPrice = (price) => {}
@@ -51,7 +51,7 @@ class TaskAssigned extends Component {
       removeAssignment,
       assignTask,
       messageTask,
-      createOrder,
+      createOrder
     } = this.props
     const hasAssignedUser = assign.id === task.assigned
     const updatedAtTimeString = MomentComponent(user.updated_at).utc().format('DD/MM/YYYY hh:mm A')
@@ -66,7 +66,7 @@ class TaskAssigned extends Component {
                 id="task.assigned.status.name"
                 defaultMessage="Assigned to {name}"
                 values={{
-                  name: user.name || user.username,
+                  name: user.name || user.username
                 }}
               >
                 {(msg) => (
@@ -96,7 +96,7 @@ class TaskAssigned extends Component {
                   id="task.assigned.status.name.create"
                   defaultMessage="Assigned to {name}"
                   values={{
-                    name: user.name || user.username,
+                    name: user.name || user.username
                   }}
                 />
                 {timePlaceholder}

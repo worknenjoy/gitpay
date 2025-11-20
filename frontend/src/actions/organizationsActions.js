@@ -139,7 +139,7 @@ const createOrganizations = (org) => {
       return axios
         .post(`${api.API_URL}/organizations/create`, {
           name: org.name,
-          UserId: userResponse.user.id,
+          UserId: userResponse.user.id
         })
         .then((response) => {
           dispatch(addNotification('actions.orgs.create.success'))
@@ -217,5 +217,5 @@ export {
   UPDATE_ORGANIZATIONS_REQUESTED,
   UPDATE_ORGANIZATIONS_SUCCESS,
   UPDATE_ORGANIZATIONS_ERROR,
-  updateOrganization,
+  updateOrganization
 }

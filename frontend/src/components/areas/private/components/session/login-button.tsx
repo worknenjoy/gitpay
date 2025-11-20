@@ -39,7 +39,7 @@ interface LoginButtonProps extends RouteComponentProps {
 
 class LoginButton extends Component<LoginButtonProps> {
   static defaultProps: Partial<LoginButtonProps> = {
-    size: 'large',
+    size: 'large'
   }
 
   componentWillMount() {

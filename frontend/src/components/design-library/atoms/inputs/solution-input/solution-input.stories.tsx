@@ -10,13 +10,13 @@ const meta: Meta<typeof SolutionInput> = {
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
     error: { control: 'text' },
-    onChange: { action: 'changed' },
-  },
+    onChange: { action: 'changed' }
+  }
 }
 
 export default meta
 type Story = StoryObj<typeof SolutionInput>
 
 export const Default: Story = {
-  args: {},
+  args: {}
 }

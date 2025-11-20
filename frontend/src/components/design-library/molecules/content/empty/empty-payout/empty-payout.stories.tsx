@@ -3,7 +3,7 @@ import EmptyPayout from './empty-payout'
 
 export default {
   title: 'Design Library/Molecules/Empty/EmptyPayout',
-  component: EmptyPayout,
+  component: EmptyPayout
 }
 
 const Template = (args) => <EmptyPayout {...args} />

@@ -19,7 +19,7 @@ module.exports.paid = {
       auto_advance: false,
       automatic_tax: {
         enabled: false,
-        status: null,
+        status: null
       },
       billing_reason: 'manual',
       charge: ['ch_3KknvTBrSjgsps2D036v7gVJ'], // (https://dashboard.stripe.com/payments/ch_3KknvTBrSjgsps2D036v7gVJ),
@@ -29,8 +29,8 @@ module.exports.paid = {
       custom_fields: [
         {
           name: 'task_id',
-          value: '609',
-        },
+          value: '609'
+        }
       ],
       customer: ['cus_J4zTz8uySTkLlL'], // (https://dashboard.stripe.com/customers/cus_J4zTz8uySTkLlL),
       customer_address: null,
@@ -44,10 +44,10 @@ module.exports.paid = {
           line1: '',
           line2: '',
           postal_code: '',
-          state: '',
+          state: ''
         },
         name: 'Test',
-        phone: '',
+        phone: ''
       },
       customer_tax_exempt: 'none',
       customer_tax_ids: [],
@@ -81,11 +81,11 @@ module.exports.paid = {
             livemode: true,
             metadata: {
               task_id: '609',
-              order_id: '444',
+              order_id: '444'
             },
             period: {
               end: 1649070756,
-              start: 1649070756,
+              start: 1649070756
             },
             plan: null,
             price: {
@@ -106,22 +106,22 @@ module.exports.paid = {
               transform_quantity: null,
               type: 'one_time',
               unit_amount: 37760,
-              unit_amount_decimal: '37760',
+              unit_amount_decimal: '37760'
             },
             proration: false,
             proration_details: {
-              credited_items: null,
+              credited_items: null
             },
             quantity: 1,
             subscription: null,
             tax_amounts: [],
             tax_rates: [],
-            type: 'invoiceitem',
-          },
+            type: 'invoiceitem'
+          }
         ],
         has_more: false,
         total_count: 1,
-        url: '/v1/invoices/in_1KknpoBrSjgsps2DMwiQEzJ9/lines',
+        url: '/v1/invoices/in_1KknpoBrSjgsps2DMwiQEzJ9/lines'
       },
       livemode: true,
       metadata: {},
@@ -133,7 +133,7 @@ module.exports.paid = {
       payment_intent: ['pi_3KknvTBrSjgsps2D0aJYD07Q'], // (https://dashboard.stripe.com/payments/pi_3KknvTBrSjgsps2D0aJYD07Q),
       payment_settings: {
         payment_method_options: null,
-        payment_method_types: null,
+        payment_method_types: null
       },
       period_end: 1649070748,
       period_start: 1649070748,
@@ -148,7 +148,7 @@ module.exports.paid = {
         finalized_at: 1649071107,
         marked_uncollectible_at: null,
         paid_at: 1649074409,
-        voided_at: null,
+        voided_at: null
       },
       subscription: null,
       subtotal: 37760,
@@ -159,14 +159,14 @@ module.exports.paid = {
       total_discount_amounts: [],
       total_tax_amounts: [],
       transfer_data: null,
-      webhooks_delivered_at: 1649070757,
-    },
+      webhooks_delivered_at: 1649070757
+    }
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: 'req_QIRDAI7gYvjpbj',
-    idempotency_key: '854d1616-b48d-492f-b47e-d5ba5c92595c',
+    idempotency_key: '854d1616-b48d-492f-b47e-d5ba5c92595c'
   },
-  type: 'invoice.payment_succeeded',
+  type: 'invoice.payment_succeeded'
 }

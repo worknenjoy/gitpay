@@ -9,12 +9,12 @@ const meta: Meta<typeof ProfileUserHeader> = {
       picture_url: 'https://avatars.githubusercontent.com/u/9919?s=200&v=4',
       username: 'octocat',
       name: 'The Octocat',
-      profile_url: 'https://github.com/octocat',
-    },
+      profile_url: 'https://github.com/octocat'
+    }
   },
   parameters: {
-    layout: 'centered',
-  },
+    layout: 'centered'
+  }
 }
 export default meta
 
@@ -28,9 +28,9 @@ export const WithLongName: Story = {
       picture_url: 'https://avatars.githubusercontent.com/u/9919?s=200&v=4',
       username: 'octocat',
       name: 'The Octocat with a Very Long Name to Test Overflow',
-      profile_url: 'https://github.com/octocat',
-    },
-  },
+      profile_url: 'https://github.com/octocat'
+    }
+  }
 }
 
 export const WithoutAvatar: Story = {
@@ -39,7 +39,7 @@ export const WithoutAvatar: Story = {
       picture_url: '',
       username: 'octocat',
       name: 'The Octocat',
-      profile_url: 'https://github.com/octocat',
-    },
-  },
+      profile_url: 'https://github.com/octocat'
+    }
+  }
 }

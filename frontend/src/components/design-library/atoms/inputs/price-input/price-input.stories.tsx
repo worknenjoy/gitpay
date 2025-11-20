@@ -5,7 +5,7 @@ import PriceInput from './price-input'
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Atoms/Inputs/Price Input',
-  component: PriceInput,
+  component: PriceInput
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
@@ -22,5 +22,5 @@ Primary.args = {
   value: 0,
   onChange: () => {},
   defaultValue: 0,
-  currency: '$',
+  currency: '$'
 }

@@ -8,24 +8,24 @@ import CustomPaginationActionsTable from './payout-table'
 const payoutMessages = defineMessages({
   title: {
     id: 'profile.payouts.title',
-    defaultMessage: 'Payouts',
+    defaultMessage: 'Payouts'
   },
   headerStatus: {
     id: 'profile.payouts.headerStatus',
-    defaultMessage: 'Status',
+    defaultMessage: 'Status'
   },
   headerMethod: {
     id: 'profile.payouts.headerMethod',
-    defaultMessage: 'Method',
+    defaultMessage: 'Method'
   },
   headerValue: {
     id: 'profile.payouts.headerValue',
-    defaultMessage: 'Value',
+    defaultMessage: 'Value'
   },
   headerCreated: {
     id: 'profile.payouts.headerCreated',
-    defaultMessage: 'Created',
-  },
+    defaultMessage: 'Created'
+  }
 })
 
 //Map for currency symbols
@@ -46,7 +46,7 @@ const currencyMap = {
   krw: '₩', // South Korean Won
   cop: 'COL$', // Colombian Peso
   php: '₱', // Philippine Peso
-  huf: 'Ft', // Hungarian Forint
+  huf: 'Ft' // Hungarian Forint
 }
 
 //Function to convert currency code to symbol
@@ -88,7 +88,7 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
               intl.formatMessage(payoutMessages.headerStatus),
               intl.formatMessage(payoutMessages.headerMethod),
               intl.formatMessage(payoutMessages.headerValue),
-              intl.formatMessage(payoutMessages.headerCreated),
+              intl.formatMessage(payoutMessages.headerCreated)
             ]}
             payouts={
               (payouts &&
@@ -98,8 +98,8 @@ const Payouts = ({ searchPayout, payouts, user, intl }) => {
                     <Chip label={t.status} />,
                     <Typography variant="body2">{t.method}</Typography>,
                     `${currencyCodeToSymbol(t.currency)} ${t.method === 'stripe' ? formatStripeAmount(t.amount) : t.amount}`,
-                    moment(t.createdAt).format('LLL'),
-                  ]),
+                    moment(t.createdAt).format('LLL')
+                  ])
                 }) ||
               {}
             }

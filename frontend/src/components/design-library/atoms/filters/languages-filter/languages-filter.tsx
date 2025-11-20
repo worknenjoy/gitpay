@@ -15,15 +15,15 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
+      width: 250
+    }
+  }
 }
 
 const TaskFilterLangauges = function ({
   languages,
   listLanguages,
-  listTasks,
+  listTasks
 }: {
   languages: any
   listLanguages: any
@@ -34,12 +34,12 @@ const TaskFilterLangauges = function ({
 
   const handleChange = (event: SelectChangeEvent<typeof languages>) => {
     const {
-      target: { value },
+      target: { value }
     } = event
 
     // Update currentLanguages based on selected values
     setCurrentLanguages(
-      Array.isArray(value) ? value : [], // Ensure `value` is an array
+      Array.isArray(value) ? value : [] // Ensure `value` is an array
     )
 
     // Prepare filters and update tasks

@@ -10,7 +10,7 @@ module.exports = {
     await queryInterface.addColumn('PaymentRequests', 'deactivate_after_payment', {
       type: Sequelize.BOOLEAN,
       defaultValue: false,
-      allowNull: false,
+      allowNull: false
     })
   },
 
@@ -22,5 +22,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.removeColumn('PaymentRequests', 'deactivate_after_payment')
-  },
+  }
 }

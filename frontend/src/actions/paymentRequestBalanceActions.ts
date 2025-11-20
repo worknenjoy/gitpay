@@ -7,17 +7,17 @@ const LIST_PAYMENT_REQUEST_BALANCE_FAILED = 'PAYMENT_REQUEST_BALANCE_FAILED'
 
 export const listPaymentRequestBalanceRequested = (data?: any) => ({
   type: LIST_PAYMENT_REQUEST_BALANCE_REQUESTED,
-  payload: data,
+  payload: data
 })
 
 export const listPaymentRequestBalanceSucceeded = (data: any) => ({
   type: LIST_PAYMENT_REQUEST_BALANCE_SUCCEEDED,
-  payload: data,
+  payload: data
 })
 
 export const listPaymentRequestBalanceFailed = (error: any) => ({
   type: LIST_PAYMENT_REQUEST_BALANCE_FAILED,
-  payload: error,
+  payload: error
 })
 
 export const listPaymentRequestBalances = () => async (dispatch: any) => {
@@ -38,5 +38,5 @@ export const listPaymentRequestBalances = () => async (dispatch: any) => {
 export {
   LIST_PAYMENT_REQUEST_BALANCE_REQUESTED,
   LIST_PAYMENT_REQUEST_BALANCE_SUCCEEDED,
-  LIST_PAYMENT_REQUEST_BALANCE_FAILED,
+  LIST_PAYMENT_REQUEST_BALANCE_FAILED
 }

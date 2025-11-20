@@ -22,20 +22,20 @@ module.exports.updated = {
         data: [],
         has_more: false,
         total_count: 0,
-        url: '/v1/transfers/tr_1CcGcaBrSjgsps2DGToaoNF5/reversals',
+        url: '/v1/transfers/tr_1CcGcaBrSjgsps2DGToaoNF5/reversals'
       },
       reversed: false,
       source_transaction: null,
       source_type: 'card',
-      transfer_group: 'task_1',
+      transfer_group: 'task_1'
     },
-    previous_attributes: null,
+    previous_attributes: null
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: 'req_7JDHTJnTPulDSK',
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'transfer.updated',
+  type: 'transfer.updated'
 }

@@ -14,7 +14,7 @@ const Claims = ({
   transfers,
   searchTransfer,
   paymentRequestTransfers,
-  listPaymentRequestTransfers,
+  listPaymentRequestTransfers
 }) => {
   const history = useHistory()
   const [currentActive, setCurrentActive] = React.useState('claims')
@@ -63,29 +63,25 @@ const Claims = ({
                 dataBaseKey: 'status',
                 label: (
                   <FormattedMessage id="account.profile.claims.status" defaultMessage="Status" />
-                ),
+                )
               },
               transfer_method: {
                 sortable: true,
                 dataBaseKey: 'transfer_method',
                 label: (
                   <FormattedMessage id="account.profile.claims.method" defaultMessage="Method" />
-                ),
+                )
               },
               issue: {
                 sortable: true,
                 dataBaseKey: 'issue',
-                label: (
-                  <FormattedMessage id="account.profile.claims.issue" defaultMessage="Issue" />
-                ),
+                label: <FormattedMessage id="account.profile.claims.issue" defaultMessage="Issue" />
               },
               value: {
                 sortable: true,
                 numeric: true,
                 dataBaseKey: 'value',
-                label: (
-                  <FormattedMessage id="account.profile.claims.value" defaultMessage="Value" />
-                ),
+                label: <FormattedMessage id="account.profile.claims.value" defaultMessage="Value" />
               },
               createdAt: {
                 sortable: true,
@@ -96,16 +92,16 @@ const Claims = ({
                     id="account.profile.claims.createdAt"
                     defaultMessage="Created At"
                   />
-                ),
-              },
+                )
+              }
             },
             customColumnRenderer: {
               status: (item: any) => <TransferStatusField status={item.status} />,
               issue: (item) => <IssueLinkField issue={item?.Task} />,
               value: (item: any) => <AmountField value={item.value} />,
-              createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />,
-            },
-          },
+              createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />
+            }
+          }
         },
         {
           label: (
@@ -126,29 +122,27 @@ const Claims = ({
                     id="account.profile.paymentRequestTransfer.title"
                     defaultMessage="Payment Request"
                   />
-                ),
+                )
               },
               status: {
                 sortable: true,
                 dataBaseKey: 'status',
                 label: (
                   <FormattedMessage id="account.profile.claims.status" defaultMessage="Status" />
-                ),
+                )
               },
               transfer_method: {
                 sortable: true,
                 dataBaseKey: 'transfer_method',
                 label: (
                   <FormattedMessage id="account.profile.claims.method" defaultMessage="Method" />
-                ),
+                )
               },
               value: {
                 sortable: true,
                 numeric: true,
                 dataBaseKey: 'value',
-                label: (
-                  <FormattedMessage id="account.profile.claims.value" defaultMessage="Value" />
-                ),
+                label: <FormattedMessage id="account.profile.claims.value" defaultMessage="Value" />
               },
               createdAt: {
                 sortable: true,
@@ -159,17 +153,17 @@ const Claims = ({
                     id="account.profile.claims.createdAt"
                     defaultMessage="Created At"
                   />
-                ),
-              },
+                )
+              }
             },
             customColumnRenderer: {
               status: (item: any) => <TransferStatusField status={item.status} />,
               title: (item: any) => <TextField title={item?.PaymentRequest?.title} />,
               value: (item: any) => <AmountField value={item.value} />,
-              createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />,
-            },
-          },
-        },
+              createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />
+            }
+          }
+        }
       ]}
     />
   )

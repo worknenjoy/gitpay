@@ -3,7 +3,7 @@ import StatsBar from './stats-bar'
 
 export default {
   title: 'Design Library/Molecules/Sections/StatsBar',
-  component: StatsBar,
+  component: StatsBar
 }
 
 const Template = (args) => <StatsBar {...args} />
@@ -14,5 +14,5 @@ Default.args = {
   info: () => {},
   tasks: '20',
   bounties: '2000',
-  users: '5000',
+  users: '5000'
 }

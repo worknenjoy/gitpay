@@ -47,7 +47,7 @@ function CloseSquare(props) {
 function TransitionComponent(props) {
   const style = useSpring({
     from: { opacity: 0, transform: 'translate3d(20px,0,0)' },
-    to: { opacity: props.in ? 1 : 0, transform: `translate3d(${props.in ? 0 : 20}px,0,0)` },
+    to: { opacity: props.in ? 1 : 0, transform: `translate3d(${props.in ? 0 : 20}px,0,0)` }
   })
 
   return (
@@ -61,7 +61,7 @@ TransitionComponent.propTypes = {
   /**
    * Show the component; triggers the enter or exit states
    */
-  in: PropTypes.bool,
+  in: PropTypes.bool
 }
 
 const StyledTreeItem = styled((props) => (
@@ -71,8 +71,8 @@ const StyledTreeItem = styled((props) => (
   '& .MuiTreeItem-group': {
     marginLeft: 7,
     paddingLeft: 18,
-    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`,
-  },
+    borderLeft: `1px dashed ${alpha(theme.palette.text.primary, 0.4)}`
+  }
 }))
 
 export default function UserOrganizationTree({
@@ -80,7 +80,7 @@ export default function UserOrganizationTree({
   updateOrganization,
   organizations,
   user,
-  history,
+  history
 }) {
   return (
     <div>

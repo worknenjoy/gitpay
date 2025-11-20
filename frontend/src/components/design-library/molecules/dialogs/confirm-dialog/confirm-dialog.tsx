@@ -26,7 +26,7 @@ export default function ConfirmDialog({
   cancelLabel = 'Cancel',
   alertMessage,
   alertSeverity = 'warning',
-  completed,
+  completed
 }: ConfirmDialogProps) {
   const handleConfirmClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()

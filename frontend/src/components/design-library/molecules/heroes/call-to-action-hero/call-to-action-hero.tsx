@@ -4,7 +4,7 @@ import {
   DotLottieReactStyled,
   BottomCTASection,
   BottomCopy,
-  GutterTopButton,
+  GutterTopButton
 } from './call-to-action-hero.styles'
 
 const CallToActionHero = ({ title, actions }) => {

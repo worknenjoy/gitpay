@@ -3,7 +3,7 @@ import PaymentRequest from '../components/areas/private/features/payment-request
 import {
   createPaymentRequest,
   listPaymentRequests,
-  updatePaymentRequest,
+  updatePaymentRequest
 } from '../actions/paymentRequestActions'
 import { listPaymentRequestPayments } from '../actions/paymentRequestPaymentActions'
 import { listPaymentRequestBalances } from '../actions/paymentRequestBalanceActions'
@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
     paymentRequests: state.paymentRequests,
     paymentRequest: state.paymentRequest,
     paymentRequestPayments: state.paymentRequestPayments,
-    paymentRequestBalances: state.paymentRequestBalances,
+    paymentRequestBalances: state.paymentRequestBalances
   }
 }
 
@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     listPaymentRequestBalances: () => {
       return dispatch(listPaymentRequestBalances())
-    },
+    }
   }
 }
 

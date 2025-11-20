@@ -5,7 +5,7 @@ import Bottom from '../../../organisms/layouts/bottom-bar-layouts/bottom-bar-lay
 
 const Root = styled('div')(({ theme }) => ({
   flexGrow: 1,
-  marginTop: 0,
+  marginTop: 0
 }))
 
 type PublicBaseProps = {
@@ -25,7 +25,7 @@ const PublicBase = ({
   accountMenuProps,
   loginFormSignupFormProps,
   loginFormForgotFormProps,
-  importIssuesProps,
+  importIssuesProps
 }: PublicBaseProps) => {
   return (
     <Root>

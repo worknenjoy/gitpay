@@ -6,14 +6,14 @@ import {
   DialogContent,
   DialogTitle,
   Typography,
-  Button,
+  Button
 } from '@mui/material'
 
 const TaskPaymentCancel = ({
   cancelPaypalConfirmDialog,
   handlePayPalDialogClose,
   handleCancelPaypalPayment,
-  listOrders,
+  listOrders
 }) => {
   const handleCancelOrder = async () => {
     await handleCancelPaypalPayment()

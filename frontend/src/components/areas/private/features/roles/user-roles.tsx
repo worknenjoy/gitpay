@@ -18,24 +18,24 @@ import {
   ActionBar,
   ButtonsRow,
   CancelButton,
-  SaveButton,
+  SaveButton
 } from './user-roles.styles'
 
 const messages = defineMessages({
   saveSuccess: {
     id: 'user.role.update.success',
-    defaultMessage: 'Role updated successfully',
+    defaultMessage: 'Role updated successfully'
   },
   saveError: {
     id: 'user.role.update.error',
-    defaultMessage: 'We couldnt update your information properly',
-  },
+    defaultMessage: 'We couldnt update your information properly'
+  }
 })
 
 const imageMap = {
   funding: funder,
   contributor: contributor,
-  maintainer: maintainer,
+  maintainer: maintainer
 }
 
 const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }) => {
@@ -66,7 +66,7 @@ const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }
     (item) => {
       return selectedRoles.some((s) => s.name === item.name)
     },
-    [selectedRoles],
+    [selectedRoles]
   )
 
   const handleCancelClick = useCallback(() => {
@@ -183,7 +183,7 @@ Roles.propTypes = {
   user: PropTypes.object,
   onClose: PropTypes.func,
   addNotification: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired,
+  intl: PropTypes.object.isRequired
 }
 
 export default Roles

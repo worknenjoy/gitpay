@@ -4,7 +4,7 @@ import IssueLanguageField from './issue-language-field'
 
 export default {
   title: 'Design Library/Molecules/Tables/Fields/Issue/IssueLanguageField',
-  component: IssueLanguageField,
+  component: IssueLanguageField
 }
 
 const Template = (args) => <IssueLanguageField {...args} />
@@ -17,13 +17,13 @@ Default.args = {
       ProgrammingLanguages: [
         {
           id: 1,
-          name: 'Language 1',
+          name: 'Language 1'
         },
         {
           id: 2,
-          name: 'Language 2',
-        },
-      ],
-    },
-  },
+          name: 'Language 2'
+        }
+      ]
+    }
+  }
 }

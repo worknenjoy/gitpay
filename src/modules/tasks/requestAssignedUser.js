@@ -16,34 +16,34 @@ const sendConfirmationEmail = (task, assign) => {
       ${i18n.__('mail.assigned.request.body', {
         name: user.name || user.username || '',
         title: task.title,
-        url: task.url,
+        url: task.url
       })}
     ${Signatures.buttons(language, {
       primary: {
         label: 'mail.assigned.request.button.primary',
-        url: URL('accept'),
+        url: URL('accept')
       },
       secondary: {
         label: 'mail.assigned.request.button.secondary',
-        url: URL('reject'),
-      },
+        url: URL('reject')
+      }
     })}
       `
 
   return models.Assign.update(
     {
-      status: 'pending-confirmation',
+      status: 'pending-confirmation'
     },
     {
       where: {
-        id: assign.id,
-      },
-    },
+        id: assign.id
+      }
+    }
   ).then((res) => {
     return SendMail.success(
       { email: user.email, language },
       i18n.__('mail.assigned.request.subject'),
-      body,
+      body
     )
   })
 }
@@ -52,9 +52,9 @@ const invite = Promise.method(async ({ taskId, assignId }) => {
   const task = await models.Task.findByPk(taskId)
   const assign = await models.Assign.findOne({
     where: {
-      id: assignId,
+      id: assignId
     },
-    include: [models.User],
+    include: [models.User]
   })
 
   if (task.status === 'in_progress') {
@@ -79,9 +79,9 @@ const actionAssign = async (data) => {
   const { taskId, assignId, confirm, message } = data
   const assign = await models.Assign.findOne({
     where: {
-      id: assignId,
+      id: assignId
     },
-    include: [models.User],
+    include: [models.User]
   })
 
   if (!assign || assign.status === 'in_progress' || assign.status === 'rejected') {
@@ -98,9 +98,9 @@ const actionAssign = async (data) => {
     await models.Assign.update({ status: 'rejected', message }, { where: { id: assignId } })
     const task = await models.Task.findOne({
       where: {
-        id: taskId,
+        id: taskId
       },
-      include: [models.User],
+      include: [models.User]
     })
     const user = assign.User
     const taskOwner = task.User
@@ -112,14 +112,14 @@ const actionAssign = async (data) => {
       user: user.name || user.username || '',
       title: task.title,
       url: task.url,
-      message,
+      message
     })}
       `
 
     SendMail.success(
       { email: taskOwner.email, language, receiveNotifications: taskOwner.receiveNotifications },
       i18n.__('mail.assigned.request.deny.subject'),
-      body,
+      body
     )
 
     return task.dataValues
@@ -132,5 +132,5 @@ const confirm = Promise.method(async (body) => {
 
 module.exports = {
   invite,
-  confirm,
+  confirm
 }

@@ -5,15 +5,15 @@ import { Paper, Container, Typography } from '@mui/material'
 
 const classes = {
   icon: {
-    backgroundColor: 'black',
+    backgroundColor: 'black'
   },
   card: {},
   gutterLeft: {
-    marginLeft: 10,
+    marginLeft: 10
   },
   media: {
-    width: 600,
-  },
+    width: 600
+  }
 } as const
 
 const Payments = ({ orders, getOrders, user }) => {

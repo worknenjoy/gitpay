@@ -6,13 +6,13 @@ const meta: Meta<typeof TaskDeadlineDrawer> = {
   title: 'Design Library/Molecules/Drawers/TaskDeadlineDrawer',
   component: TaskDeadlineDrawer as any,
   parameters: {
-    layout: 'fullscreen',
+    layout: 'fullscreen'
   },
   argTypes: {
     onClose: { action: 'onClose' },
     onSave: { action: 'onSave' },
-    onChange: { action: 'onChange' },
-  },
+    onChange: { action: 'onChange' }
+  }
 }
 
 export default meta
@@ -20,7 +20,7 @@ export default meta
 type Story = StoryObj<typeof TaskDeadlineDrawer>
 
 const TaskDeadlineDrawerStory: React.FC<React.ComponentProps<typeof TaskDeadlineDrawer>> = (
-  args,
+  args
 ) => {
   const [open, setOpen] = React.useState<boolean>(!!args.open)
 
@@ -47,7 +47,7 @@ export const Default: Story = {
   args: {
     open: true,
     // Provide a sample deadline if the component accepts one
-    deadline: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+    deadline: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
   },
   render: (args) => (
     <TaskDeadlineDrawerStory
@@ -62,5 +62,5 @@ export const Default: Story = {
       }}
       {...args}
     />
-  ),
+  )
 }

@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === 'production' && cookieConsent) {
 
 const messages = {
   br: process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
-  en: process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal,
+  en: process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
 }
 
 const composeEnhancers =
@@ -51,7 +51,7 @@ const composeEnhancers =
     : compose
 
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk),
+  applyMiddleware(thunk)
   // other store enhancers if any
 )
 
@@ -63,8 +63,8 @@ const currentLang = localStorage.getItem('userLanguage') || 'en'
 store.dispatch(
   updateIntl({
     locale: currentLang,
-    messages: messages[currentLang],
-  }),
+    messages: messages[currentLang]
+  })
 )
 
 const theme = createTheme(Palette)

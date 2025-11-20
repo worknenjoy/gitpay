@@ -13,7 +13,7 @@ export default function SlackCard(): JSX.Element {
   const hanldeInvite = () => {
     window.open(
       'https://join.slack.com/t/gitpay-workspace/shared_invite/zt-1ru4j0duc-mOPFRxkhRyMgavlGdlghmw',
-      '_blank',
+      '_blank'
     )
   }
 
@@ -25,15 +25,15 @@ export default function SlackCard(): JSX.Element {
           flexDirection: 'row',
           backgroundColor: '#F2F2F2',
           '&:hover': {
-            cursor: 'pointer',
-          },
+            cursor: 'pointer'
+          }
         }}
       >
         <div
           style={{
             display: 'flex',
             alignSelf: 'center',
-            padding: '0 10px',
+            padding: '0 10px'
           }}
         >
           <CardMedia component="img" image={SlackLogo} alt="Join our slack" />

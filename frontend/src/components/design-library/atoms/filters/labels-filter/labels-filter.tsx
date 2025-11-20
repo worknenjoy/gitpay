@@ -12,7 +12,7 @@ import { useHistory } from 'react-router-dom'
 const LabelsFilter = function ({
   labels,
   listLabels,
-  listTasks,
+  listTasks
 }: {
   labels: any
   listLabels: any
@@ -23,7 +23,7 @@ const LabelsFilter = function ({
 
   const handleChange = (event: SelectChangeEvent<typeof labels>) => {
     const {
-      target: { value },
+      target: { value }
     } = event
     setCurrentLabels(
       // On autofill we get a stringified value.
@@ -32,7 +32,7 @@ const LabelsFilter = function ({
             ?.filter((l) => l.id === value)
             .map((l) => l.name)
             .split(',')
-        : value,
+        : value
     )
     const filters = { labelIds: value }
     const splitUrl = history?.location?.pathname.split('/')

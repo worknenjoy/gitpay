@@ -8,7 +8,7 @@ import {
   detailOrder,
   refundOrder,
   cancelOrder,
-  updateOrder,
+  updateOrder
 } from '../actions/orderActions'
 import { getFilteredTasks } from '../selectors/tasks'
 import { getUserData } from '../common/selectors/user/getUser'
@@ -19,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
     orders: state.orders,
     order: state.order,
     tasks: getFilteredTasks(state),
-    logged: state.loggedIn.logged,
+    logged: state.loggedIn.logged
   }
 }
 
@@ -36,7 +36,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     cancelPaypalPayment: (id) => dispatch(cancelOrder(id)),
     transferOrder: (order, params) => dispatch(transferOrder(order, params)),
     updateOrder: (order) => dispatch(updateOrder(order)),
-    changeTab: (tab) => dispatch(changeTaskTab(tab)),
+    changeTab: (tab) => dispatch(changeTaskTab(tab))
   }
 }
 

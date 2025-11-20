@@ -8,7 +8,7 @@ import {
   Delete as DeleteIcon,
   BugReport as ReportIcon,
   Visibility as VisibilityIcon,
-  VisibilityOff as VisibilityOffIcon,
+  VisibilityOff as VisibilityOffIcon
 } from '@mui/icons-material'
 import {
   Button,
@@ -23,7 +23,7 @@ import {
   MenuItem,
   ListItemIcon,
   ListItemText,
-  Skeleton,
+  Skeleton
 } from '@mui/material'
 
 import { injectIntl, FormattedMessage } from 'react-intl'
@@ -61,7 +61,7 @@ class TaskHeader extends React.Component {
     this.state = {
       anchorEl: null,
       deleteDialog: false,
-      reportDialog: false,
+      reportDialog: false
     }
   }
 
@@ -216,7 +216,7 @@ class TaskHeader extends React.Component {
                       backgroundColor: 'black',
                       borderColor: 'black',
                       borderWidth: 1,
-                      verticalAlign: 'bottom',
+                      verticalAlign: 'bottom'
                     }}
                   />
                 </a>
@@ -237,7 +237,7 @@ class TaskHeader extends React.Component {
                       marginLeft: 5,
                       borderRadius: '50%',
                       padding: 3,
-                      verticalAlign: 'bottom',
+                      verticalAlign: 'bottom'
                     }}
                     width="16"
                     src={
@@ -263,7 +263,7 @@ class TaskHeader extends React.Component {
 }
 
 TaskHeader.propTypes = {
-  task: PropTypes.object,
+  task: PropTypes.object
 }
 
 export default injectIntl(TaskHeader)

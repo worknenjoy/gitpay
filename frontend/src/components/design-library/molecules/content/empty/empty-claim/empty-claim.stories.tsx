@@ -3,7 +3,7 @@ import EmptyClaim from './empty-claim'
 
 export default {
   title: 'Design Library/Molecules/Empty/EmptyClaim',
-  component: EmptyClaim,
+  component: EmptyClaim
 }
 
 const Template = (args) => <EmptyClaim {...args} />

@@ -25,16 +25,16 @@ module.exports.update = {
       source_type: 'card',
       statement_descriptor: null,
       status: 'in_transit',
-      type: 'bank_account',
-    },
+      type: 'bank_account'
+    }
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: null,
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'payout.created',
+  type: 'payout.created'
 }
 
 module.exports.created = {
@@ -64,16 +64,16 @@ module.exports.created = {
       source_type: 'card',
       statement_descriptor: null,
       status: 'in_transit',
-      type: 'bank_account',
-    },
+      type: 'bank_account'
+    }
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: null,
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'payout.created',
+  type: 'payout.created'
 }
 
 module.exports.done = {
@@ -103,16 +103,16 @@ module.exports.done = {
       source_type: 'card',
       statement_descriptor: null,
       status: 'paid',
-      type: 'bank_account',
-    },
+      type: 'bank_account'
+    }
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: null,
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'payout.paid',
+  type: 'payout.paid'
 }
 
 module.exports.failed = {
@@ -142,14 +142,14 @@ module.exports.failed = {
       source_type: 'card',
       statement_descriptor: 'Gitpay',
       status: 'failed',
-      type: 'bank_account',
-    },
+      type: 'bank_account'
+    }
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: null,
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'payout.failed',
+  type: 'payout.failed'
 }

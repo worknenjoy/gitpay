@@ -22,8 +22,8 @@ export default function GithubCard(): JSX.Element {
         flexDirection: 'column',
         margin: '20px 0',
         '&:hover': {
-          cursor: 'pointer',
-        },
+          cursor: 'pointer'
+        }
       }}
       onClick={hanldeGithubLink}
     >

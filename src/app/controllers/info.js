@@ -6,9 +6,9 @@ const fetchChannelUserCount = async () => {
   const data = await rp({
     uri: 'https://slack.com/api/conversations.list',
     headers: {
-      Authorization: 'Bearer ' + slack.token,
+      Authorization: 'Bearer ' + slack.token
     },
-    json: true,
+    json: true
   })
   if (data.ok) {
     const channel = data.channels.find((channel) => channel.id === slack.channelId)
@@ -28,7 +28,7 @@ exports.info = async (req, res) => {
   try {
     const countTasks = await models.Task.count()
     const tasks = await models.Task.findAll({
-      attributes: ['value'],
+      attributes: ['value']
     })
     const countUsers = await models.User.count()
     if (tasks) {
@@ -40,7 +40,7 @@ exports.info = async (req, res) => {
         tasks: countTasks,
         bounties: bounties,
         users: countUsers,
-        channelUserCount,
+        channelUserCount
       })
     } else {
       res.send(500)

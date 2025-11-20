@@ -10,7 +10,7 @@ const database_env = {
   development: 'databaseDev',
   staging: 'databaseStaging',
   production: 'databaseProd',
-  test: 'databaseTest',
+  test: 'databaseTest'
 } as const
 
 type EnvName = keyof typeof database_env
@@ -35,9 +35,9 @@ if (env === 'production' || env === 'staging') {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false,
-      },
-    },
+        rejectUnauthorized: false
+      }
+    }
   })
 
   console.log('running production-like migration')
@@ -59,7 +59,7 @@ const umzug = new Umzug({
   context: {
     sequelize,
     queryInterface: sequelize.getQueryInterface(),
-    SequelizeCtor: sequelize.constructor as typeof Sequelize,
+    SequelizeCtor: sequelize.constructor as typeof Sequelize
   },
 
   storage: new SequelizeStorage({ sequelize }),
@@ -98,12 +98,12 @@ const umzug = new Umzug({
       return {
         name,
         up: runUp,
-        down: runDown,
+        down: runDown
       }
-    },
+    }
   },
 
-  logger: console,
+  logger: console
 })
 
 async function cmdStatus() {
@@ -114,20 +114,20 @@ async function cmdStatus() {
   const norm = (list: { name: string }[]) =>
     list.map((m) => ({
       name: m.name,
-      file: m.name,
+      file: m.name
     }))
 
   const status = {
     current: executed.length > 0 ? executed[0].name : '<NO_MIGRATIONS>',
     executed: executed.map((m) => m.name),
-    pending: pending.map((m) => m.name),
+    pending: pending.map((m) => m.name)
   }
 
   console.log('Status:', JSON.stringify(status, null, 2))
 
   return {
     executed: norm(executed),
-    pending: norm(pending),
+    pending: norm(pending)
   }
 }
 

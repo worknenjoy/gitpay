@@ -23,13 +23,13 @@ describe('Payment Request Payment', () => {
       description: 'A test payment request',
       amount: 1000,
       currency: 'USD',
-      userId: currentUser.id,
+      userId: currentUser.id
     })
     const paymentRequestCustomer = await currentModels.PaymentRequestCustomer.create({
       name: 'John Doe',
       email: 'john.doe@example.com',
       sourceId: 'src_123',
-      userId: currentUser.id,
+      userId: currentUser.id
     })
     const paymentRequestPayment = await currentModels.PaymentRequestPayment.create({
       amount: 1000,
@@ -38,7 +38,7 @@ describe('Payment Request Payment', () => {
       status: 'completed',
       customerId: paymentRequestCustomer.id,
       userId: currentUser.id,
-      paymentRequestId: paymentRequest.id,
+      paymentRequestId: paymentRequest.id
     })
     const res = await agent
       .get('/payment-request-payments')

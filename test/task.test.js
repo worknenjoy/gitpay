@@ -78,7 +78,7 @@ describe('tasks', () => {
       userId: params.userId,
       url: github_url,
       provider: 'github',
-      title: params.title || 'Issue 76!',
+      title: params.title || 'Issue 76!'
     })
   }
 
@@ -129,7 +129,7 @@ describe('tasks', () => {
                   expect(history.oldValues).to.have.all.members([null, null])
                   expect(history.newValues).to.have.all.members([
                     'https://github.com/worknenjoy/truppie/issues/99',
-                    `${res.body.userId}`,
+                    `${res.body.userId}`
                   ])
                   done(err)
                 })
@@ -147,7 +147,7 @@ describe('tasks', () => {
               source_id: '12345',
               currency: 'BRL',
               amount: 256,
-              status: 'succeeded',
+              status: 'succeeded'
             })
             .then((order) => {
               agent
@@ -158,7 +158,7 @@ describe('tasks', () => {
                   if (err) done(err)
                   models.History.findAll({
                     where: { TaskId: task.dataValues.id },
-                    order: [['id', 'DESC']],
+                    order: [['id', 'DESC']]
                   }).then((histories) => {
                     expect(histories.length).to.equal(2)
                     const history = histories[0]
@@ -184,7 +184,7 @@ describe('tasks', () => {
       registerAndLogin(agent)
         .then((res) => {
           createTask(res.headers.authorization, {
-            url: 'https://github.com/worknenjoy/gitpay/issues/1080',
+            url: 'https://github.com/worknenjoy/gitpay/issues/1080'
           })
             .then((task) => {
               expect(task.url).to.equal('https://github.com/worknenjoy/gitpay/issues/1080')
@@ -201,12 +201,12 @@ describe('tasks', () => {
         .then((res) => {
           createTask(res.headers.authorization, {
             url: 'https://github.com/worknenjoy/gitpay/issues/1080',
-            provider: 'github',
+            provider: 'github'
           })
             .then(() => {
               createTask(res.headers.authorization, {
                 url: 'https://github.com/worknenjoy/gitpay/issues/1080',
-                provider: 'github',
+                provider: 'github'
               })
                 .then((task) => {
                   expect(task.errors).to.exist
@@ -226,7 +226,7 @@ describe('tasks', () => {
         .then((res) => {
           createTask(res.headers.authorization, {
             url: 'https://github.com/worknenjoy/gitpay/issues/1080',
-            provider: 'github',
+            provider: 'github'
           })
             .then((task) => {
               expect(task.error).exist
@@ -243,7 +243,7 @@ describe('tasks', () => {
         .then((res) => {
           createTask(res.headers.authorization, {
             url: 'https://github.com/worknenjoy/gitpay/issues/1080',
-            provider: 'github',
+            provider: 'github'
           })
             .then((task) => {
               nockAuthLimitExceeded()
@@ -285,7 +285,7 @@ describe('tasks', () => {
                 .send({
                   url: 'https://github.com/worknenjoy/truppie/issues/99',
                   provider: 'github',
-                  userId: user.body.id,
+                  userId: user.body.id
                 })
                 .set('Authorization', res.headers.authorization)
                 .expect('Content-Type', /json/)
@@ -311,7 +311,7 @@ describe('tasks', () => {
                 .post(`/tasks/${task.id}/invite/`)
                 .send({
                   email: 'https://github.com/worknenjoy/truppie/issues/99',
-                  message: 'a test invite',
+                  message: 'a test invite'
                 })
                 .expect(200)
                 .end((err, res) => {
@@ -339,7 +339,7 @@ describe('tasks', () => {
                   buildTask({
                     userId: firstUser.body.id,
                     Assigns: [{ userId }],
-                    userId: userId,
+                    userId: userId
                   })
                     .then((task) => {
                       task
@@ -351,7 +351,7 @@ describe('tasks', () => {
                             .post(`/tasks/${task.id}/message/`)
                             .send({
                               interested: assign.id,
-                              message: 'Hey, are you prepared to work on this?',
+                              message: 'Hey, are you prepared to work on this?'
                             })
                             .set('Authorization', res.headers.authorization)
                             .expect('Content-Type', /json/)
@@ -360,7 +360,7 @@ describe('tasks', () => {
                               expect(res.statusCode).to.equal(200)
                               expect(res.body).to.exist
                               expect(res.body.url).to.equal(
-                                'https://github.com/worknenjoy/truppie/issues/76',
+                                'https://github.com/worknenjoy/truppie/issues/76'
                               )
                               expect(mailSpySuccess).to.have.been.called()
                               done(err)
@@ -380,7 +380,7 @@ describe('tasks', () => {
     xit('should receive code on the platform from github auth to the redirected url for private tasks but invalid code', (done) => {
       agent
         .get(
-          '/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7',
+          '/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7'
         )
         .expect(401)
         .end((err, res) => {
@@ -415,7 +415,7 @@ describe('tasks', () => {
           const userId = res.body.id
           agent
             .get(
-              `/callback/github/private/?userId=${userId}&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7`,
+              `/callback/github/private/?userId=${userId}&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7`
             )
             .expect(200)
             .end((err, res) => {
@@ -471,7 +471,7 @@ describe('tasks', () => {
                 expect(res.body.metadata.company).to.equal('worknenjoy')
                 expect(res.body.metadata.projectName).to.equal('gitpay')
                 expect(res.body.metadata.issue.url).to.equal(
-                  'https://api.github.com/repos/worknenjoy/gitpay/issues/1080',
+                  'https://api.github.com/repos/worknenjoy/gitpay/issues/1080'
                 )
                 done(err)
               })
@@ -627,7 +627,7 @@ describe('tasks', () => {
         source_id: 'tok_visa',
         currency: 'BRL',
         amount: 200,
-        email: 'foo@mail.com',
+        email: 'foo@mail.com'
       }
 
       models.Task.build({ url: github_url, provider: 'github' })
@@ -661,7 +661,7 @@ describe('tasks', () => {
             currency: 'BRL',
             amount: 200,
             email: 'foo@mail.com',
-            userId: userId,
+            userId: userId
           }
 
           models.Task.build({ url: github_url, provider: 'github' })
@@ -699,7 +699,7 @@ describe('tasks', () => {
                   id: task.dataValues.id,
                   value: 200,
                   Offers: [{ userId: userId, value: 100 }],
-                  Assigns: [{ userId: userId }],
+                  Assigns: [{ userId: userId }]
                 })
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -731,7 +731,7 @@ describe('tasks', () => {
                   id: task.dataValues.id,
                   value: 200,
                   Assigns: [{ userId: userId }],
-                  Offers: [{ userId: userId, value: 100 }],
+                  Offers: [{ userId: userId, value: 100 }]
                 })
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -762,7 +762,7 @@ describe('tasks', () => {
                   id: task.dataValues.id,
                   value: 200,
                   Assigns: [{ userId: userId }],
-                  Offers: [{ userId: userId, value: 100 }],
+                  Offers: [{ userId: userId, value: 100 }]
                 })
                 .expect('Content-Type', /json/)
                 .expect(200)
@@ -802,7 +802,7 @@ describe('tasks', () => {
                     .send({
                       id: task.dataValues.id,
                       value: 200,
-                      Members: [{ userId: userId, roleId: role.dataValues.id }],
+                      Members: [{ userId: userId, roleId: role.dataValues.id }]
                     })
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -891,7 +891,7 @@ describe('tasks', () => {
               source_id: '12345',
               currency: 'BRL',
               amount: 256.56,
-              status: 'succeeded',
+              status: 'succeeded'
             })
             .then((order) => {
               agent
@@ -1005,7 +1005,7 @@ describe('tasks', () => {
       await agent
         .post(`/tasks/${task.id}/message/author`)
         .send({
-          message: 'foo message',
+          message: 'foo message'
         })
         .set('Authorization', res.headers.authorization)
         .expect(200)
@@ -1022,7 +1022,7 @@ describe('tasks', () => {
             .createOrder({
               source_id: '12345',
               currency: 'BRL',
-              amount: 200,
+              amount: 200
             })
             .then((order) => {
               agent
@@ -1049,7 +1049,7 @@ describe('tasks', () => {
               source_id: '12345',
               currency: 'BRL',
               amount: 200,
-              status: 'succeeded',
+              status: 'succeeded'
             })
             .then((order) => {
               agent
@@ -1083,7 +1083,7 @@ describe('tasks', () => {
               register(agent, {
                 name: 'Assigned User',
                 email: 'assigned@example.com',
-                password: '1234',
+                password: '1234'
               })
                 .then(({ body: { id } }) => {
                   const userToBeAssignedId = id
@@ -1093,7 +1093,7 @@ describe('tasks', () => {
                       // create Offer and Assign for task
                       taskUpdate({
                         id: taskId,
-                        Offer: { userId: userToBeAssignedId, taskId, value: 101 },
+                        Offer: { userId: userToBeAssignedId, taskId, value: 101 }
                       }).then((res) => {
                         // get Assign ID
                         models.Assign.findAll({ where: { TaskId: res.id } }).then((res) => {
@@ -1105,7 +1105,7 @@ describe('tasks', () => {
                             .set('Authorization', logged.headers.authorization)
                             .send({
                               assignId,
-                              taskId,
+                              taskId
                             })
                             .expect('Content-Type', /json/)
                             .expect(200)
@@ -1117,7 +1117,7 @@ describe('tasks', () => {
                                 .send({
                                   assignId,
                                   taskId,
-                                  confirm: true,
+                                  confirm: true
                                 })
                                 .expect(200)
                                 .end((err, res) => {
@@ -1125,7 +1125,7 @@ describe('tasks', () => {
 
                                   // check if Task updated correctly
                                   models.Task.findAll({
-                                    include: { all: true },
+                                    include: { all: true }
                                   })
                                     .then((res) => {
                                       const assign = res[0].Assigns[0]
@@ -1167,7 +1167,7 @@ describe('tasks', () => {
               register(agent, {
                 name: 'Assigned User',
                 email: 'assigned@example.com',
-                password: '1234',
+                password: '1234'
               })
                 .then(({ body: { id } }) => {
                   const userToBeAssignedId = id
@@ -1177,7 +1177,7 @@ describe('tasks', () => {
                       // create Offer and Assign for task
                       taskUpdate({
                         id: taskId,
-                        Offer: { userId: userToBeAssignedId, taskId, value: 101 },
+                        Offer: { userId: userToBeAssignedId, taskId, value: 101 }
                       }).then((res) => {
                         // get Assign ID
                         models.Assign.findAll({ where: { TaskId: res.id } }).then((res) => {
@@ -1189,7 +1189,7 @@ describe('tasks', () => {
                             .set('Authorization', logged.headers.authorization)
                             .send({
                               assignId,
-                              taskId,
+                              taskId
                             })
                             .expect('Content-Type', /json/)
                             .expect(200)
@@ -1202,7 +1202,7 @@ describe('tasks', () => {
                                   assignId,
                                   taskId,
                                   confirm: false,
-                                  message: 'reject message',
+                                  message: 'reject message'
                                 })
                                 .expect(200)
                                 .end((err, res) => {
@@ -1210,7 +1210,7 @@ describe('tasks', () => {
 
                                   // check if Task updated correctly
                                   models.Task.findAll({
-                                    include: { all: true },
+                                    include: { all: true }
                                   })
                                     .then((res) => {
                                       const assign = res[0].Assigns[0]

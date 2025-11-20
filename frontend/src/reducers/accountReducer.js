@@ -25,7 +25,7 @@ import {
   UPDATE_BANKACCOUNT_ERROR,
   CREATE_BANKACCOUNT_REQUESTED,
   CREATE_BANKACCOUNT_SUCCESS,
-  CREATE_BANKACCOUNT_ERROR,
+  CREATE_BANKACCOUNT_ERROR
 } from '../actions/userActions'
 
 export const account = (state = { data: {}, completed: true, error: {} }, action) => {

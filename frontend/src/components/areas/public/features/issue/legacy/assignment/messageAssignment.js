@@ -11,7 +11,7 @@ import {
   DialogContentText,
   DialogTitle,
   Typography,
-  TextField,
+  TextField
 } from '@mui/material'
 
 const Container = styled.div`
@@ -31,7 +31,7 @@ class MessageAssignment extends Component {
     visible: PropTypes.bool,
     id: PropTypes.object,
     messageAction: PropTypes.func,
-    to: PropTypes.number,
+    to: PropTypes.number
   }
 
   onChangeMessage = (event) => this.setState({ message: event.target.value })

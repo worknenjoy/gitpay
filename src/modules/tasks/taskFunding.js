@@ -6,7 +6,7 @@ const i18n = require('i18n')
 
 module.exports = Promise.method(function (
   { id },
-  { comment, email, suggestedValue, suggestedDate, username },
+  { comment, email, suggestedValue, suggestedDate, username }
 ) {
   return models.Task.findByPk(id, { include: [models.User, models.Order, models.Assign] }).then(
     (task) => {
@@ -24,10 +24,10 @@ module.exports = Promise.method(function (
           suggestedValue: suggestedValue,
           message: comment,
           username: username,
-          suggestedDate: suggestedDate,
+          suggestedDate: suggestedDate
         })}
-        `,
+        `
       )
-    },
+    }
   )
 })

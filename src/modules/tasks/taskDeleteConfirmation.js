@@ -7,8 +7,8 @@ const i18n = require('i18n')
 module.exports = Promise.method(function (taskParameters) {
   return models.User.findOne({
     where: {
-      id: taskParameters.userId,
-    },
+      id: taskParameters.userId
+    }
   }).then((user) => {
     const userEmail = user.dataValues.email
     const language = user.language || 'en'
@@ -20,9 +20,9 @@ module.exports = Promise.method(function (taskParameters) {
       `${i18n.__('mail.report.delete.send.message', {
         title: taskParameters.title.replace(/-/g, ' '),
         url: taskUrl,
-        selectedReason: taskParameters.reason.replace(/-/g, ' '),
+        selectedReason: taskParameters.reason.replace(/-/g, ' ')
       })}
-        `,
+        `
     )
   })
 })

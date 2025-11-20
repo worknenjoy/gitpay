@@ -26,14 +26,14 @@ describe('Payment Request Transfer', () => {
         description: 'This is a test payment request',
         amount: 100.0,
         currency: 'USD',
-        payment_link_id: 'prl_123',
+        payment_link_id: 'prl_123'
       })
       const transferData = {
         paymentRequestId: paymentRequest.id,
         status: 'pending',
         value: 100.0,
         transfer_id: 'tr_123',
-        transfer_method: 'stripe',
+        transfer_method: 'stripe'
       }
       const res = await agent
         .post('/payment-request-transfers')
@@ -73,7 +73,7 @@ describe('Payment Request Transfer', () => {
         description: 'This is a test payment request',
         amount: 100.0,
         currency: 'USD',
-        payment_link_id: 'prl_123',
+        payment_link_id: 'prl_123'
       })
       const transferData = {
         userId: body.id,
@@ -81,11 +81,11 @@ describe('Payment Request Transfer', () => {
         status: 'pending',
         value: 100.0,
         transfer_id: 'tr_123',
-        transfer_method: 'stripe',
+        transfer_method: 'stripe'
       }
       const transfer = await models.PaymentRequestTransfer.create(transferData)
       const updatedTransferData = {
-        status: 'completed',
+        status: 'completed'
       }
       const res = await agent
         .put(`/payment-request-transfers/${transfer.id}`)

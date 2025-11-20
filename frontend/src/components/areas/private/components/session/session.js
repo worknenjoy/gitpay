@@ -25,7 +25,7 @@ class Session extends Component {
 
 Session.propTypes = {
   match: PropTypes.object,
-  history: PropTypes.object,
+  history: PropTypes.object
 }
 
 export default Session

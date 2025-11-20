@@ -9,7 +9,7 @@ module.exports = Promise.method(function userAccountUpdate({ userParams, account
     accountParams['tos_acceptance[ip]'] = ip.address()
   }
   return models.User.findOne({
-    where: { id: userParams.id },
+    where: { id: userParams.id }
   }).then((user) => {
     if (!user && !user.dataValues && !user.dataValues.account_id) {
       return { error: 'You need to be logged to update account' }

@@ -185,9 +185,9 @@ const listOrders = (query) => {
         return dispatch(
           listOrdersError({
             error: {
-              type: 'create_order_failed',
-            },
-          }),
+              type: 'create_order_failed'
+            }
+          })
         )
       })
       .catch((e) => {
@@ -212,9 +212,9 @@ const createOrder = (order) => {
         return dispatch(
           payOrderError({
             error: {
-              type: 'create_order_failed',
-            },
-          }),
+              type: 'create_order_failed'
+            }
+          })
         )
       })
       .catch((e) => {
@@ -239,9 +239,9 @@ const updateOrder = (order) => {
         return dispatch(
           updateOrderError({
             error: {
-              type: 'update_order_failed',
-            },
-          }),
+              type: 'update_order_failed'
+            }
+          })
         )
       })
       .catch((e) => {
@@ -398,5 +398,5 @@ export {
   transferOrder,
   refundOrder,
   cancelOrder,
-  detailOrder,
+  detailOrder
 }

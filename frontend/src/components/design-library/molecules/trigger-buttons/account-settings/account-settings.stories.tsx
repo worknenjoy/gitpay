@@ -3,7 +3,7 @@ import AccountSettings from './account-settings'
 
 export default {
   title: 'Design Library/Molecules/TriggerButtons/AccountSettings',
-  component: AccountSettings,
+  component: AccountSettings
 }
 
 const Template = (args) => <AccountSettings {...args} />
@@ -23,13 +23,13 @@ Default.args = {
       Types: [
         {
           id: 1,
-          name: 'contributor',
+          name: 'contributor'
         },
         {
           id: 2,
-          name: 'maintainer',
-        },
-      ],
-    },
-  },
+          name: 'maintainer'
+        }
+      ]
+    }
+  }
 }

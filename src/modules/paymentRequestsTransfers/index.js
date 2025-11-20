@@ -9,5 +9,5 @@ module.exports = {
   paymentRequestsTransferSearch,
   paymentRequestsTransferUpdate,
   paymentRequestsTransferList,
-  paymentRequestsTransferFetch,
+  paymentRequestsTransferFetch
 }

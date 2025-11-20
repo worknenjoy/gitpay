@@ -3,7 +3,7 @@ import BankAccountTabs from './bank-account-tabs'
 
 export default {
   title: 'Design Library/Molecules/Tabs/BankAccountTabs',
-  component: BankAccountTabs,
+  component: BankAccountTabs
 }
 
 const Template = (args) => <BankAccountTabs {...args} />

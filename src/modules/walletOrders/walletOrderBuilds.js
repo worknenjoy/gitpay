@@ -11,16 +11,16 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
     params.walletId &&
     (await Wallet.findOne({
       where: {
-        id: params.walletId,
-      },
+        id: params.walletId
+      }
     }))
 
   const user =
     params.userId &&
     (await User.findOne({
       where: {
-        id: params.userId,
-      },
+        id: params.userId
+      }
     }))
 
   if (!user) {
@@ -36,12 +36,12 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
       ...params,
       currency: 'usd',
       status: 'pending',
-      paid: false,
+      paid: false
     },
     {
       hooks: true,
-      individualHooks: true,
-    },
+      individualHooks: true
+    }
   )
   try {
     let userCustomer = user.customer_id
@@ -54,8 +54,8 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
       collection_method: 'send_invoice',
       days_until_due: 30,
       metadata: {
-        wallet_order_id: walletOrder.id,
-      },
+        wallet_order_id: walletOrder.id
+      }
     })
 
     const invoiceItem = await stripe.invoiceItems.create({
@@ -65,8 +65,8 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
       unit_amount: Math.round(parseFloat(params.amount) * 100),
       invoice: invoice.id,
       metadata: {
-        wallet_order_id: walletOrder.id,
-      },
+        wallet_order_id: walletOrder.id
+      }
     })
 
     const finalizeInvoice = await stripe.invoices.finalizeInvoice(invoice.id)
@@ -77,14 +77,14 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
         source_id: invoiceItem.id,
         source_type: 'invoice-item',
         source: invoice.id,
-        status: finalizeInvoice.status || invoice.status,
+        status: finalizeInvoice.status || invoice.status
       },
       {
         where: {
-          id: walletOrder.id,
+          id: walletOrder.id
         },
-        returning: true,
-      },
+        returning: true
+      }
     )
 
     return updatedWalletOrder[1][0]

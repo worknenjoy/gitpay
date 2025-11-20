@@ -10,7 +10,7 @@ interface PaymentRequestTransferStatusFieldProps {
 
 const PaymentRequestTransferStatusField: React.FC<PaymentRequestTransferStatusFieldProps> = ({
   status,
-  completed = true,
+  completed = true
 }) => {
   const theme = useTheme()
   const styles = useStyles(theme)
@@ -19,23 +19,23 @@ const PaymentRequestTransferStatusField: React.FC<PaymentRequestTransferStatusFi
     {
       status: 'pending_payment',
       label: 'Pending Payment',
-      color: 'pending',
+      color: 'pending'
     },
     {
       status: 'initiated',
       label: 'Initiated',
-      color: 'initiated',
+      color: 'initiated'
     },
     {
       status: 'completed',
       label: 'Completed',
-      color: 'completed',
+      color: 'completed'
     },
     {
       status: 'error',
       label: 'Error',
-      color: 'error',
-    },
+      color: 'error'
+    }
   ]
 
   return (

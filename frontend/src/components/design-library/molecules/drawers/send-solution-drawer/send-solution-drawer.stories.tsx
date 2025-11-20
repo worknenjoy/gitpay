@@ -4,7 +4,7 @@ import SendSolutionDrawer from './send-solution-drawer'
 
 export default {
   title: 'Design Library/Molecules/Drawers/SendSolutionDrawer',
-  component: SendSolutionDrawer,
+  component: SendSolutionDrawer
 }
 
 const noop = () => {}
@@ -23,11 +23,11 @@ Default.args = {
   // data needed by component
   user: {
     completed: true,
-    data: { id: 1, account_id: 1, email: 'dev@example.com' },
+    data: { id: 1, account_id: 1, email: 'dev@example.com' }
   },
   account: {
     completed: true,
-    data: { requirements: { currently_due: [] } },
+    data: { requirements: { currently_due: [] } }
   },
   task: {
     completed: true,
@@ -36,15 +36,15 @@ Default.args = {
       value: '250',
       paid: false,
       transfer_id: null,
-      Transfer: null,
-    },
+      Transfer: null
+    }
   },
   pullRequestData: {
     isConnectedToGitHub: true,
     isAuthorOfPR: true,
     isPRMerged: true,
     isIssueClosed: true,
-    hasIssueReference: true,
+    hasIssueReference: true
   },
   taskSolution: {},
   taskSolutionCompleted: true,
@@ -54,7 +54,7 @@ Default.args = {
   cleanPullRequestDataState: noop,
   fetchPullRequestData: asyncResolve,
   createTaskSolution: asyncResolve,
-  updateTaskSolution: asyncResolve,
+  updateTaskSolution: asyncResolve
 }
 
 export const WithExistingSolution = Template.bind({})
@@ -63,6 +63,6 @@ WithExistingSolution.args = {
   taskSolution: {
     id: 555,
     pullRequestURL: 'https://github.com/org/repo/pull/123',
-    status: 'submitted',
-  },
+    status: 'submitted'
+  }
 }

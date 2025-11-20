@@ -1,7 +1,7 @@
 import React from 'react'
 import {
   convertStripeAmountByCurrency,
-  currencyCodeToSymbol,
+  currencyCodeToSymbol
 } from 'design-library/molecules/cards/balance-card/balance-card'
 import SectionTable from 'design-library/molecules/tables/section-table/section-table'
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field'
@@ -13,7 +13,7 @@ const PayoutsTable = ({ payouts }) => {
     status: { sortable: true, numeric: false, dataBaseKey: 'status', label: 'Status' },
     method: { sortable: true, numeric: false, dataBaseKey: 'method', label: 'Transfer Method' },
     amount: { sortable: true, numeric: true, dataBaseKey: 'amount', label: 'Amount' },
-    createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created At' },
+    createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created At' }
   }
 
   const customColumnRenderer = {
@@ -25,7 +25,7 @@ const PayoutsTable = ({ payouts }) => {
         currency={currencyCodeToSymbol(item.currency)}
       />
     ),
-    createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />,
+    createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />
   }
 
   return (

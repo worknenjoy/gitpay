@@ -11,7 +11,7 @@ moment.locale('pt-br', ptLocale)
 
 const StatusMail = {
   update: (to, task, name) => {},
-  error: (msg) => {},
+  error: (msg) => {}
 }
 
 const STATUSES = {
@@ -21,7 +21,7 @@ const STATUSES = {
   closed: i18n.__('mail.status.closed'),
   '': i18n.__('mail.status.notefined'),
   null: i18n.__('mail.status.notefined'),
-  undefined: i18n.__('mail.status.notefined'),
+  undefined: i18n.__('mail.status.notefined')
 }
 
 if (constants.canSendEmail) {
@@ -37,9 +37,9 @@ if (constants.canSendEmail) {
             i18n.__('mail.hello', { name: name }),
             `<p>${i18n.__('mail.status.message.first', { title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.status.message.second', { status: STATUSES[task.status] })}</p>
-          <p>${Signatures.sign(language)}</p>`,
-          ),
-        },
+          <p>${Signatures.sign(language)}</p>`
+          )
+        }
       ])
   }
 
@@ -47,8 +47,8 @@ if (constants.canSendEmail) {
     request(constants.notificationEmail, i18n.__('mail.status.error'), [
       {
         type: 'text/html',
-        value: emailTemplate.baseContentEmailTemplate(msg),
-      },
+        value: emailTemplate.baseContentEmailTemplate(msg)
+      }
     ])
   }
 }

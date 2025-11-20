@@ -7,7 +7,7 @@ module.exports = async function paymentRequestTransferUpdate(paymentRequestTrans
     throw new Error('Transfer not found')
   }
   await transfer.update(updateData, {
-    returning: true,
+    returning: true
   })
   transfer.reload()
   return transfer

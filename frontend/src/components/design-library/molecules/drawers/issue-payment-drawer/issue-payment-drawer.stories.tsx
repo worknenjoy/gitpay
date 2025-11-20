@@ -6,7 +6,7 @@ const IssuePaymentDrawer = require('./issue-payment-drawer').default
 
 const meta = {
   title: 'Design Library/Molecules/Drawers/IssuePaymentDrawer',
-  component: IssuePaymentDrawer,
+  component: IssuePaymentDrawer
 }
 
 export default meta
@@ -33,5 +33,5 @@ Default.args = {
   wallets: { completed: true, data: [{ id: 1, name: 'Main Wallet' }] },
   wallet: { completed: true, data: { id: 1, name: 'Main Wallet', balance: 1500 } },
   user: { id: 1, email: 'dev@example.com', name: 'Dev User', customer_id: 'cus_test_123' },
-  task: { completed: true, data: { id: 101, private: false } },
+  task: { completed: true, data: { id: 101, private: false } }
 }

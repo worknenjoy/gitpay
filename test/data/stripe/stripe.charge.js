@@ -16,11 +16,11 @@ module.exports.get = {
       line1: null,
       line2: null,
       postal_code: 'XXXXXX',
-      state: null,
+      state: null
     },
     email: null,
     name: 'Foo Bar',
-    phone: null,
+    phone: null
   },
   calculated_statement_descriptor: 'GITPAY.ME',
   captured: true,
@@ -38,7 +38,7 @@ module.exports.get = {
   invoice: null,
   livemode: true,
   metadata: {
-    order_id: '1',
+    order_id: '1'
   },
   on_behalf_of: null,
   order: null,
@@ -47,7 +47,7 @@ module.exports.get = {
     reason: null,
     risk_level: 'normal',
     seller_message: 'Payment complete.',
-    type: 'authorized',
+    type: 'authorized'
   },
   paid: true,
   payment_intent: null,
@@ -59,37 +59,37 @@ module.exports.get = {
       checks: {
         address_line1_check: null,
         address_postal_code_check: 'pass',
-        cvc_check: 'pass',
+        cvc_check: 'pass'
       },
       country: 'GB',
       exp_month: 1,
       exp_year: 2028,
       extended_authorization: {
-        status: 'disabled',
+        status: 'disabled'
       },
       fingerprint: 'xxxxx',
       funding: 'credit',
       incremental_authorization: {
-        status: 'unavailable',
+        status: 'unavailable'
       },
       installments: null,
       last4: '2003',
       mandate: null,
       multicapture: {
-        status: 'unavailable',
+        status: 'unavailable'
       },
       network: 'amex',
       network_token: {
-        used: false,
+        used: false
       },
       overcapture: {
         maximum_amount_capturable: 10800,
-        status: 'unavailable',
+        status: 'unavailable'
       },
       three_d_secure: null,
-      wallet: null,
+      wallet: null
     },
-    type: 'card',
+    type: 'card'
   },
   receipt_email: 'foo@example.com',
   receipt_number: null,
@@ -121,12 +121,12 @@ module.exports.get = {
     metadata: {},
     name: 'Foo Bar',
     tokenization_method: null,
-    wallet: null,
+    wallet: null
   },
   source_transfer: null,
   statement_descriptor: null,
   statement_descriptor_suffix: null,
   status: 'succeeded',
   transfer_data: null,
-  transfer_group: 'task_1',
+  transfer_group: 'task_1'
 }

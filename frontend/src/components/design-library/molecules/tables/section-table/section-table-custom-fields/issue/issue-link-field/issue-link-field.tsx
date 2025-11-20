@@ -60,7 +60,7 @@ const IssueLinkField = ({ issue }) => {
                 backgroundColor: 'black',
                 borderColor: 'black',
                 borderWidth: 1,
-                marginLeft: 10,
+                marginLeft: 10
               }}
             />
           </Tooltip>

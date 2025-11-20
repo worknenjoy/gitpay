@@ -32,7 +32,7 @@ const data = [
   { name: 'Sep', uv: 200, pv: 2400, amt: 2400 },
   { name: 'Oct', uv: 300, pv: 2400, amt: 2400 },
   { name: 'Nov', uv: 250, pv: 2400, amt: 2400 },
-  { name: 'Dec', uv: 220, pv: 2400, amt: 2400 },
+  { name: 'Dec', uv: 220, pv: 2400, amt: 2400 }
 ]
 export default class Barchart extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ export default class Barchart extends Component {
             paddingLeft: '2em',
             marginBottom: '1em',
             fontFamily: 'sans-serif',
-            fontWeight: 'bold',
+            fontWeight: 'bold'
           }}
           width={window.innerWidth < 520 ? 400 : 1000}
           height={window.innerWidth < 520 ? 300 : 500}

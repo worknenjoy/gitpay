@@ -31,29 +31,29 @@ describe('Task Solution', () => {
           pullRequestId: '2',
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
-          taskId: 1,
+          taskId: 1
         }
 
         nock('https://api.github.com')
           .persist()
           .get(
-            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`,
+            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`
           )
 
           .reply(200, {
             user: {
-              login: 'alexanmtz',
+              login: 'alexanmtz'
             },
             state: 'closed',
             merged: true,
             title: 'test PR #1',
-            body: 'closes #1',
+            body: 'closes #1'
           })
         // Await the login process
         const loginResponse = await registerAndLogin(agent, {
           email: 'tasksolutiontest@test.com',
           provider: 'github',
-          provider_username: 'alexanmtz',
+          provider_username: 'alexanmtz'
         })
         const { body: user, headers } = loginResponse
 
@@ -61,7 +61,7 @@ describe('Task Solution', () => {
         const task = await createTask(agent, {
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
-          status: 'closed',
+          status: 'closed'
         })
 
         // Create order
@@ -72,7 +72,7 @@ describe('Task Solution', () => {
           TaskId: task.id,
           source_id: '1234',
           status: 'succeeded',
-          paid: true,
+          paid: true
         })
 
         // Send a POST request to create a task solution
@@ -88,7 +88,7 @@ describe('Task Solution', () => {
             isIssueClosed: true,
             hasIssueReference: true,
             pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
-            taskId: task.id,
+            taskId: task.id
           })
         expect(taskSolutionCreateRes.body).to.have.property('id')
       } catch (err) {
@@ -102,7 +102,7 @@ describe('Task Solution', () => {
           pullRequestId: '2',
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
-          taskId: 1,
+          taskId: 1
         }
 
         nock('https://api.stripe.com')
@@ -113,31 +113,31 @@ describe('Task Solution', () => {
               message:
                 'Your destination account needs to have at least one of the following capabilities enabled: transfers, crypto_transfers, legacy_payments',
               request_log_url: 'https://dashboard.stripe.com/logs/req_agK5H7d0oxGetF?t=1730319991',
-              type: 'invalid_request_error',
-            },
+              type: 'invalid_request_error'
+            }
           })
 
         nock('https://api.github.com')
           .persist()
           .get(
-            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`,
+            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`
           )
 
           .reply(200, {
             user: {
-              login: 'alexanmtz',
+              login: 'alexanmtz'
             },
             state: 'closed',
             merged: true,
             title: 'test PR #1',
-            body: 'closes #1',
+            body: 'closes #1'
           })
         // Await the login process
         const loginResponse = await registerAndLogin(agent, {
           email: 'tasksolutiontest@test.com',
           provider: 'github',
           provider_username: 'alexanmtz',
-          account_id: 'acc_test',
+          account_id: 'acc_test'
         })
         const { body: user, headers } = loginResponse
 
@@ -145,7 +145,7 @@ describe('Task Solution', () => {
         const task = await createTask(agent, {
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
-          status: 'closed',
+          status: 'closed'
         })
 
         // Create order
@@ -156,7 +156,7 @@ describe('Task Solution', () => {
           TaskId: task.id,
           source_id: '1234',
           status: 'succeeded',
-          paid: true,
+          paid: true
         })
 
         // Send a POST request to create a task solution
@@ -172,11 +172,11 @@ describe('Task Solution', () => {
             isIssueClosed: true,
             hasIssueReference: true,
             pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
-            taskId: task.id,
+            taskId: task.id
           })
         expect(taskSolutionCreateRes.statusCode).to.equal(400)
         expect(taskSolutionCreateRes.body.error).to.equal(
-          'issue.solution.error.insufficient_capabilities_for_transfer',
+          'issue.solution.error.insufficient_capabilities_for_transfer'
         )
       } catch (err) {
         // Fail the test if any error occurs
@@ -189,28 +189,28 @@ describe('Task Solution', () => {
           pullRequestId: '2',
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
-          taskId: 1,
+          taskId: 1
         }
 
         nock('https://api.github.com')
           .get(
-            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`,
+            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`
           )
 
           .reply(200, {
             user: {
-              login: 'alexanmtz',
+              login: 'alexanmtz'
             },
             state: 'closed',
             merged: true,
             title: 'test PR #1',
-            body: 'closes #1',
+            body: 'closes #1'
           })
         // Await the login process
         const loginResponse = await registerAndLogin(agent, {
           email: 'tasksolutiontest2@test.com',
           provider: 'github',
-          provider_username: 'alexanmtz',
+          provider_username: 'alexanmtz'
         })
         const { body: user, headers } = loginResponse
 
@@ -218,7 +218,7 @@ describe('Task Solution', () => {
         const task = await createTask(agent, {
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
-          status: 'closed',
+          status: 'closed'
         })
 
         // Create order
@@ -228,7 +228,7 @@ describe('Task Solution', () => {
           TaskId: task.id,
           source_id: '1234',
           status: 'succeeded',
-          paid: true,
+          paid: true
         })
 
         const taskSolutionCreateRes = await models.TaskSolution.create({
@@ -239,7 +239,7 @@ describe('Task Solution', () => {
           hasIssueReference: true,
           pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
           userId: user.id,
-          taskId: task.id,
+          taskId: task.id
         })
 
         // Send a PUT request to update a task solution
@@ -255,7 +255,7 @@ describe('Task Solution', () => {
             isIssueClosed: true,
             hasIssueReference: true,
             pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
-            taskId: task.id,
+            taskId: task.id
           })
         expect(taskSolutionUpdateRes.body).to.have.property('isConnectedToGitHub')
         expect(taskSolutionUpdateRes.body).to.have.property('isAuthorOfPR')
@@ -275,50 +275,50 @@ describe('Task Solution', () => {
           pullRequestId: '2',
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
-          taskId: 1,
+          taskId: 1
         }
 
         nock('https://api.github.com')
           .get(
-            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`,
+            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`
           )
 
           .reply(200, {
             user: {
-              login: 'alexanmtz',
+              login: 'alexanmtz'
             },
             state: 'closed',
             merged: true,
             title: 'test PR',
-            body: 'closes #5 and #1 and #11111 and #1234',
+            body: 'closes #5 and #1 and #11111 and #1234'
           })
         // Await the login process
         const loginResponse = await registerAndLogin(agent, {
           email: 'tasksolutiontest2@test.com',
           provider: 'github',
-          provider_username: 'alexanmtz',
+          provider_username: 'alexanmtz'
         })
         const { body: user, headers } = loginResponse
         const task = await models.Task.create({
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
-          status: 'closed',
+          status: 'closed'
         })
         const taskAssignment = await models.Assign.create({
           userId: user.id,
-          TaskId: task.id,
+          TaskId: task.id
         })
 
         const params = {
           pullRequestId: solutionParams.pullRequestId,
           repositoryName: solutionParams.repositoryName,
           owner: solutionParams.owner,
-          taskId: solutionParams.taskId,
+          taskId: solutionParams.taskId
         }
         // Send a GET request to fetch task solution data
         const taskSolutionFetchDataRes = await agent
           .get(
-            `/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&taskId=${params.taskId}`,
+            `/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&taskId=${params.taskId}`
           )
           .set('Authorization', headers.authorization)
           .expect('Content-Type', /json/)
@@ -346,50 +346,50 @@ describe('Task Solution', () => {
           pullRequestId: '2',
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
-          taskId: 1,
+          taskId: 1
         }
 
         nock('https://api.github.com')
           .get(
-            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`,
+            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`
           )
 
           .reply(200, {
             user: {
-              login: 'alexanmtz',
+              login: 'alexanmtz'
             },
             state: 'closed',
             merged: true,
             title: 'test PR',
-            body: 'closes https://github.com/alexanmtz/test-repository/issues/1.',
+            body: 'closes https://github.com/alexanmtz/test-repository/issues/1.'
           })
         // Await the login process
         const loginResponse = await registerAndLogin(agent, {
           email: 'tasksolutiontest2@test.com',
           provider: 'github',
-          provider_username: 'alexanmtz',
+          provider_username: 'alexanmtz'
         })
         const { body: user, headers } = loginResponse
         const task = await models.Task.create({
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
-          status: 'closed',
+          status: 'closed'
         })
         const taskAssignment = await models.Assign.create({
           userId: user.id,
-          TaskId: task.id,
+          TaskId: task.id
         })
 
         const params = {
           pullRequestId: solutionParams.pullRequestId,
           repositoryName: solutionParams.repositoryName,
           owner: solutionParams.owner,
-          taskId: solutionParams.taskId,
+          taskId: solutionParams.taskId
         }
         // Send a GET request to fetch task solution data
         const taskSolutionFetchDataRes = await agent
           .get(
-            `/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&taskId=${params.taskId}`,
+            `/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&taskId=${params.taskId}`
           )
           .set('Authorization', headers.authorization)
           .expect('Content-Type', /json/)
@@ -416,40 +416,40 @@ describe('Task Solution', () => {
         const loginResponse = await registerAndLogin(agent, {
           email: 'test@gitpay.me',
           provider: 'github',
-          provider_username: 'test',
+          provider_username: 'test'
         })
         const { body: user, headers } = loginResponse
 
         const task = await models.Task.create({
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
-          status: 'closed',
+          status: 'closed'
         })
         const taskAssignment = await models.Assign.create({
           userId: user.id,
-          TaskId: task.id,
+          TaskId: task.id
         })
 
         const solutionParams = {
           pullRequestId: '2',
           repositoryName: 'test-repository',
           owner: 'alexanmtz',
-          taskId: task.id,
+          taskId: task.id
         }
 
         nock('https://api.github.com')
           .get(
-            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`,
+            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`
           )
 
           .reply(200, {
             user: {
-              login: 'alexanmtz',
+              login: 'alexanmtz'
             },
             state: 'closed',
             merged: true,
             title: 'test PR',
-            body: 'closes #5 and #1 and #11111 and #1234',
+            body: 'closes #5 and #1 and #11111 and #1234'
           })
         // Await the login process
 
@@ -457,12 +457,12 @@ describe('Task Solution', () => {
           pullRequestId: solutionParams.pullRequestId,
           repositoryName: solutionParams.repositoryName,
           owner: solutionParams.owner,
-          taskId: solutionParams.taskId,
+          taskId: solutionParams.taskId
         }
         // Send a GET request to fetch task solution data
         const taskSolutionFetchDataRes = await agent
           .get(
-            `/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&taskId=${params.taskId}`,
+            `/tasksolutions/fetch/?owner=${params.owner}&repositoryName=${params.repositoryName}&pullRequestId=${params.pullRequestId}&taskId=${params.taskId}`
           )
           .set('Authorization', headers.authorization)
           .expect('Content-Type', /json/)

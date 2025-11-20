@@ -10,7 +10,7 @@ import {
   OnlyDesktop,
   OnlyMobile,
   MenuMobile,
-  IconHamburger,
+  IconHamburger
 } from './TopbarStyles'
 import logo from 'images/gitpay-logo.png'
 
@@ -24,7 +24,7 @@ const Topbar = ({
   accountMenuProps,
   loginFormSignupFormProps,
   loginFormForgotFormProps,
-  importIssuesProps,
+  importIssuesProps
 }) => {
   const [isActive, setIsActive] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)

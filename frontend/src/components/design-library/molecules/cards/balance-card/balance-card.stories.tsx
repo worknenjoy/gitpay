@@ -8,8 +8,8 @@ const meta = {
     balance: 1500,
     currency: 'USD',
     name: 'Available Balance',
-    completed: true,
-  },
+    completed: true
+  }
 }
 
 const Template = (args) => <BalanceCard {...args} />
@@ -21,10 +21,10 @@ Default.args = {}
 
 export const Centavos = Template.bind({})
 Centavos.args = {
-  type: 'centavos',
+  type: 'centavos'
 }
 
 export const Loading = Template.bind({})
 Loading.args = {
-  completed: false,
+  completed: false
 }

@@ -23,7 +23,7 @@ describe('webhooks for payment request transfers', () => {
       currency: 'usd',
       description: 'Payment for services',
       userId: currentUser.id,
-      transfer_status: 'pending',
+      transfer_status: 'pending'
     })
 
     const res = await agent
@@ -37,7 +37,7 @@ describe('webhooks for payment request transfers', () => {
     expect(event.id).to.equal('evt_test_456')
     const transfer = await models.PaymentRequestTransfer.findOne({
       where: { paymentRequestId: paymentRequest.id },
-      include: [models.PaymentRequest],
+      include: [models.PaymentRequest]
     })
     expect(transfer).to.exist
     expect(transfer.id).to.equal(1)

@@ -14,8 +14,8 @@ module.exports = {
       allowNull: false,
       references: {
         model: 'PlanSchemas',
-        key: 'id',
-      },
+        key: 'id'
+      }
     })
   },
 
@@ -27,5 +27,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.removeColumn('Plans', 'PlanSchemaId')
-  },
+  }
 }

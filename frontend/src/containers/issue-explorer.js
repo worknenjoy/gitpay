@@ -9,7 +9,7 @@ import { getFilteredTasks } from '../selectors/tasks'
 const mapStateToProps = (state) => ({
   issues: getFilteredTasks(state),
   labels: state.labels,
-  languages: state.languages,
+  languages: state.languages
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     filterTasks: (tasks, key, value, additional) =>
       dispatch(filterTasks(tasks, key, value, additional)),
     listLabels: () => dispatch(listLabels()),
-    listLanguages: () => dispatch(listLanguage()),
+    listLanguages: () => dispatch(listLanguage())
   }
 }
 

@@ -7,7 +7,7 @@ import { StyledAvatarIconOnly } from './language-switcher.styles'
 
 const languagesIcons = {
   en: logoLangEn,
-  br: logoLangBr,
+  br: logoLangBr
 }
 
 const logoLang = (lang) => {

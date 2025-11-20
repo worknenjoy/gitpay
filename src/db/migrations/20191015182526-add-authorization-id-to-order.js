@@ -5,5 +5,5 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
     queryInterface.removeColumn('Orders', 'authorization_id')
-  },
+  }
 }

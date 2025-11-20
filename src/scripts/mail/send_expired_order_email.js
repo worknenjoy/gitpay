@@ -12,7 +12,7 @@ i18n.configure({
   defaultLocale: 'en',
   updateFiles: false,
   logWarnFn: (msg) => console.warn('WARN:', msg),
-  logErrorFn: (msg) => console.error('ERROR:', msg),
+  logErrorFn: (msg) => console.error('ERROR:', msg)
 })
 
 i18n.setLocale('en') // or 'br' depending on what you're testing
@@ -21,7 +21,7 @@ module.exports.sendExpiredOrderEmail = async (orderId) => {
   try {
     const order = await models.Order.findOne({
       where: { id: orderId },
-      include: [models.User, models.Task],
+      include: [models.User, models.Task]
     })
     if (!order) {
       console.log(`❌ [OrderCron][sendExpiredOrderEmail] Order ID: ${orderId} not found.`)
@@ -29,13 +29,13 @@ module.exports.sendExpiredOrderEmail = async (orderId) => {
     }
     orderMail.expiredOrders(order.dataValues)
     console.log(
-      `✅ [OrderCron][sendExpiredOrderEmail] Expired order email sent for order ID: ${orderId}.`,
+      `✅ [OrderCron][sendExpiredOrderEmail] Expired order email sent for order ID: ${orderId}.`
     )
     return true
   } catch (error) {
     console.log(
       `❗ [OrderCron][sendExpiredOrderEmail] Error sending expired order email for order ID: ${orderId}:`,
-      error,
+      error
     )
     return false
   }
@@ -45,14 +45,14 @@ module.exports.findExpiredOrders = async () => {
   try {
     const expiredOrders = await models.Order.findAll({
       where: {
-        status: 'expired',
+        status: 'expired'
       },
-      include: [models.User, models.Task],
+      include: [models.User, models.Task]
     })
     console.log(`🔍 [OrderCron][findExpiredOrders] Found ${expiredOrders.length} expired orders.`)
     console.log(
       `🔍 [OrderCron][findExpiredOrders] Expired orders:`,
-      expiredOrders.map((order) => order.id),
+      expiredOrders.map((order) => order.id)
     )
     return expiredOrders
   } catch (error) {

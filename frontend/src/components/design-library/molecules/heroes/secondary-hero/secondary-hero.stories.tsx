@@ -7,7 +7,7 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent'
 
 const meta: Meta<typeof SecondaryHero> = {
   title: 'Design Library/Molecules/Heroes/SecondaryHero',
-  component: SecondaryHero,
+  component: SecondaryHero
 }
 
 export default meta
@@ -21,18 +21,18 @@ export const Default: Story = {
       {
         icon: <CheckCircleOutlineIcon color="primary" />,
         primaryText: 'Easy setup',
-        secondaryText: 'Get started in minutes with minimal configuration.',
+        secondaryText: 'Get started in minutes with minimal configuration.'
       },
       {
         icon: <SecurityIcon color="primary" />,
         primaryText: 'Secure by default',
-        secondaryText: 'Built-in best practices to keep your data safe.',
+        secondaryText: 'Built-in best practices to keep your data safe.'
       },
       {
         icon: <SupportAgentIcon color="primary" />,
         primaryText: 'Great support',
-        secondaryText: 'We’re here to help whenever you need.',
-      },
-    ],
-  },
+        secondaryText: 'We’re here to help whenever you need.'
+      }
+    ]
+  }
 }

@@ -16,8 +16,8 @@ module.exports = async function transferReversed(event, req, res) {
         where: {
           transfer_id: transferId,
           paymentRequestId: paymentRequestId,
-          userId: userId,
-        },
+          userId: userId
+        }
       })
       console.log('paymentRequestTransfer', paymentRequestTransfer)
       if (paymentRequestTransfer) {
@@ -35,8 +35,8 @@ module.exports = async function transferReversed(event, req, res) {
   try {
     const existingTransfer = await models.Transfer.findOne({
       where: {
-        transfer_id: transferId,
-      },
+        transfer_id: transferId
+      }
     })
 
     if (existingTransfer) {
@@ -47,18 +47,18 @@ module.exports = async function transferReversed(event, req, res) {
 
     const task = await models.Task.findOne({
       where: {
-        transfer_id: event.data.object.id,
+        transfer_id: event.data.object.id
       },
-      include: [models.User],
+      include: [models.User]
     })
 
     if (task) {
       try {
         const assigned = await models.Assign.findOne({
           where: {
-            id: task.dataValues.assigned,
+            id: task.dataValues.assigned
           },
-          include: [models.User],
+          include: [models.User]
         })
 
         const language = assigned.dataValues.User.language || 'en'
@@ -70,8 +70,8 @@ module.exports = async function transferReversed(event, req, res) {
             currency: event.data.object.currency.toUpperCase(),
             amount: (event.data.object.amount / 100).toFixed(2),
             date: moment(new Date()).format('LLL'),
-            url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`,
-          }),
+            url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
+          })
         )
         return res.status(200).json(event)
       } catch (e) {

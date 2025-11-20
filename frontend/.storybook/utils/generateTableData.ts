@@ -18,7 +18,7 @@ export const generateTableData = (count: number): TableRow[] => {
       role: 'Contributor',
       status: 'Active',
       action: 'Edit',
-      other: 'Other',
+      other: 'Other'
     })
   }
   return data

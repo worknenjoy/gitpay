@@ -65,11 +65,11 @@ const TRANSFER_TASK_ERROR = 'TRANSFER_TASK_ERROR'
 
 const VALIDATION_ERRORS = {
   'url must be unique': 'actions.task.create.validation.url',
-  'Not Found': 'actions.task.create.validation.invalid',
+  'Not Found': 'actions.task.create.validation.invalid'
 }
 
 const ERROR_CODES = {
-  StatusCodeError: 'actions.task.issues.error.notfound',
+  StatusCodeError: 'actions.task.issues.error.notfound'
 }
 
 /*
@@ -198,7 +198,7 @@ const filterTaskSuccess = (filteredTasks, filter, value, additional) => {
     data: filteredTasks,
     filterType: filter,
     filterValue: value,
-    filterAdditional: additional,
+    filterAdditional: additional
   }
 }
 
@@ -215,7 +215,7 @@ const filterTaskOrdersSuccess = (task, filter) => {
     type: FILTER_TASK_ORDERS_SUCCESS,
     completed: true,
     data: task.data,
-    filterOrdersBy: filter,
+    filterOrdersBy: filter
   }
 }
 
@@ -298,7 +298,7 @@ const createTask = (task, history) => {
           const firstError = response.data.errors[0].message
           if (firstError === 'url must be unique') {
             dispatch(
-              addNotification(VALIDATION_ERRORS[firstError], '', `/#/task/${response.data.id}`),
+              addNotification(VALIDATION_ERRORS[firstError], '', `/#/task/${response.data.id}`)
             )
           }
           if (firstError === 'Not Found') {
@@ -371,10 +371,7 @@ const updateTask = (task) => {
         const errorResponse = error?.response?.data
         if (errorResponse.type === 'StripeCardError') {
           dispatch(
-            addNotification(
-              'actions.task.payment.notification.error',
-              `. ${errorResponse.message}`,
-            ),
+            addNotification('actions.task.payment.notification.error', `. ${errorResponse.message}`)
           )
           dispatch(changeTaskTab(1))
           return dispatch(updateTaskError(errorResponse))
@@ -422,7 +419,7 @@ const listTasks = ({ organizationId, projectId, userId, status, labelIds, langua
     dispatch(listTaskRequested())
     return axios
       .get(api.API_URL + '/tasks/list', {
-        params: { organizationId, projectId, userId, status, labelIds, languageIds },
+        params: { organizationId, projectId, userId, status, labelIds, languageIds }
       })
       .then((response) => {
         return dispatch(listTaskSuccess(response))
@@ -505,7 +502,7 @@ const transferTask = (taskId) => {
     dispatch(transferTaskRequested())
     axios
       .post(api.API_URL + `/transfers/create`, {
-        taskId,
+        taskId
       })
       .then((transfer) => {
         if (transfer.data) {
@@ -535,7 +532,7 @@ const paymentTask = (taskId, value) => {
     axios
       .post(`${api.API_URL}/tasks/payments/`, {
         taskId: taskId,
-        value: value,
+        value: value
       })
       .then((payment) => {
         if (payment.data.error) {
@@ -569,7 +566,7 @@ const inviteTask = (id, email, message, user) => {
       .post(api.API_URL + `/tasks/${id}/invite/`, {
         email,
         message,
-        name,
+        name
       })
       .then((task) => {
         if (task.status === 200) {
@@ -580,9 +577,9 @@ const inviteTask = (id, email, message, user) => {
         return dispatch(
           inviteTaskError({
             error: {
-              type: 'task_invite_failed',
-            },
-          }),
+              type: 'task_invite_failed'
+            }
+          })
         )
       })
       .catch((e) => {
@@ -602,7 +599,7 @@ const messageAuthor = (userId, taskId, message) => {
     return axios
       .post(api.API_URL + `/tasks/${taskId}/message/author/`, {
         userId,
-        message,
+        message
       })
       .then((task) => {
         if (task.status === 200) {
@@ -633,7 +630,7 @@ const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, us
         comment,
         suggestedValue,
         suggestedDate,
-        username,
+        username
       })
       .then((task) => {
         if (task.status === 200) {
@@ -644,9 +641,9 @@ const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, us
         return dispatch(
           fundingInviteTaskError({
             error: {
-              type: 'task_invite_failed',
-            },
-          }),
+              type: 'task_invite_failed'
+            }
+          })
         )
       })
       .catch((e) => {
@@ -672,9 +669,9 @@ const syncTask = (taskId) => {
         return dispatch(
           syncTaskError({
             error: {
-              type: 'task_sync_failed',
-            },
-          }),
+              type: 'task_sync_failed'
+            }
+          })
         )
       })
       .catch((e) => {
@@ -695,7 +692,7 @@ const reportTask = (task, reason) => {
       .post(api.API_URL + `/tasks/${task.id}/report`, {
         task,
         reason,
-        baseUrl: api.API_URL,
+        baseUrl: api.API_URL
       })
       .then((task) => {
         if (task.status === 200) {
@@ -706,9 +703,9 @@ const reportTask = (task, reason) => {
         return dispatch(
           reportTaskError({
             error: {
-              type: 'task_report_failed',
-            },
-          }),
+              type: 'task_report_failed'
+            }
+          })
         )
       })
       .catch((e) => {
@@ -748,7 +745,7 @@ const requestClaimTask = (taskId, userId, comments, isApproved, token, history) 
         comments,
         isApproved,
         token: token,
-        baseUrl: api.API_URL,
+        baseUrl: api.API_URL
       })
       .then((task) => {
         if (task.status === 200 && !task.data && !task.data.error) {
@@ -770,9 +767,9 @@ const requestClaimTask = (taskId, userId, comments, isApproved, token, history) 
         return dispatch(
           requestClaimTaskError({
             error: {
-              type: 'task_claim_failed',
-            },
-          }),
+              type: 'task_claim_failed'
+            }
+          })
         )
       })
       .catch((e) => {
@@ -848,5 +845,5 @@ export {
   changeTaskTab,
   reportTask,
   requestClaimTask,
-  transferTask,
+  transferTask
 }

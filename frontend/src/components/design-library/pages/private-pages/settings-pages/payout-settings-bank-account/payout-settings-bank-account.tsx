@@ -12,7 +12,7 @@ const PayoutSetingsBankAccount = ({ children, user, onSaveCountry }) => {
   const [country, setCountry] = React.useState({
     label: null,
     code: null,
-    image: null,
+    image: null
   })
 
   const handleCountryPicker = (item) => {
@@ -27,7 +27,7 @@ const PayoutSetingsBankAccount = ({ children, user, onSaveCountry }) => {
     setCountry({
       code: item.code,
       label: item.label,
-      image: item.image,
+      image: item.image
     })
   }
 
@@ -45,7 +45,7 @@ const PayoutSetingsBankAccount = ({ children, user, onSaveCountry }) => {
     setCountry({
       code: null,
       label: null,
-      image: null,
+      image: null
     })
   }, [user])
 

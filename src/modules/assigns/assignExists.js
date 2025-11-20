@@ -5,8 +5,8 @@ module.exports = Promise.method(function assignExists(assignAttributes) {
   return models.Assign.findOne({
     where: {
       userId: assignAttributes.userId,
-      TaskId: assignAttributes.taskId,
-    },
+      TaskId: assignAttributes.taskId
+    }
   })
     .then((assign) => {
       if (!assign) return false

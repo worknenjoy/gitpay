@@ -15,7 +15,7 @@ module.exports = async function balanceAvailable(event, req, res) {
                   <ul>
                   ${event.data.object.available.map((b) => `<li>${b.currency}: ${b.amount}</li>`).join('')}
                   </ul>
-              `,
+              `
   )
   return res.status(200).json(event)
 }

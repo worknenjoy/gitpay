@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles'
 import {
   CheckCircleOutlineTwoTone as ActiveIcon,
   HelpOutline as QuestionInfoIcon,
-  NotInterested as InactiveIcon,
+  NotInterested as InactiveIcon
 } from '@mui/icons-material'
 
 import BaseStatus from '../../base-status/base-status'
@@ -16,7 +16,7 @@ interface BankAccountStatusProps {
 
 const BankAccountStatus: React.FC<BankAccountStatusProps> = ({
   status,
-  completed = true, // Default to true if not provided
+  completed = true // Default to true if not provided
 }) => {
   const theme = useTheme()
   const styles = getBankAccountStatusStyles(theme)
@@ -27,13 +27,13 @@ const BankAccountStatus: React.FC<BankAccountStatusProps> = ({
       status: 'validated',
       label: 'Active',
       color: 'active',
-      icon: <ActiveIcon sx={styles.active} />,
+      icon: <ActiveIcon sx={styles.active} />
     },
     {
       status: 'verified',
       label: 'Active',
       color: 'active',
-      icon: <ActiveIcon sx={styles.active} />,
+      icon: <ActiveIcon sx={styles.active} />
     },
     {
       status: 'errored',
@@ -41,7 +41,7 @@ const BankAccountStatus: React.FC<BankAccountStatusProps> = ({
       color: 'inactive',
       icon: <InactiveIcon sx={styles.inactive} />,
       message:
-        'Your bank account is inactive. Please complete all required information. If your account remains inactive, contact support at issues@gitpay.me for assistance.',
+        'Your bank account is inactive. Please complete all required information. If your account remains inactive, contact support at issues@gitpay.me for assistance.'
     },
     {
       status: 'verification_failed',
@@ -49,15 +49,15 @@ const BankAccountStatus: React.FC<BankAccountStatusProps> = ({
       color: 'inactive',
       icon: <InactiveIcon sx={styles.inactive} />,
       message:
-        'Your bank account is inactive. Please complete all required information. If your account remains inactive, contact support at issues@gitpay.me for assistance.',
+        'Your bank account is inactive. Please complete all required information. If your account remains inactive, contact support at issues@gitpay.me for assistance.'
     },
     {
       status: 'unknown',
       label: 'Unknown',
       color: 'unknown',
       icon: <QuestionInfoIcon sx={styles.unknown} />,
-      message: 'Your status is unknown. Please check back later.',
-    },
+      message: 'Your status is unknown. Please check back later.'
+    }
   ]
 
   return (

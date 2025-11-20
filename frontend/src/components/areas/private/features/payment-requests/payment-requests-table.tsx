@@ -9,7 +9,7 @@ export const paymentRequestMetadata = {
     numeric: false,
     dataBaseKey: 'active',
     label: 'Is active?',
-    width: 100,
+    width: 100
   },
   title: { sortable: true, numeric: false, dataBaseKey: 'title', label: 'Title' },
   description: { sortable: true, numeric: false, dataBaseKey: 'description', label: 'Description' },
@@ -18,10 +18,10 @@ export const paymentRequestMetadata = {
     sortable: true,
     numeric: false,
     dataBaseKey: 'payment_url',
-    label: 'Payment Link',
+    label: 'Payment Link'
   },
   createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created At' },
-  actions: { sortable: false, numeric: false, label: 'Actions' },
+  actions: { sortable: false, numeric: false, label: 'Actions' }
 }
 
 export const paymentRequestPaymentsMetadata = {
@@ -30,17 +30,17 @@ export const paymentRequestPaymentsMetadata = {
     sortable: true,
     numeric: false,
     dataBaseKey: 'PaymentRequest',
-    label: 'Payment Request',
+    label: 'Payment Request'
   },
   //"transferStatus": { sortable: true, numeric: false, dataBaseKey: "transferStatus", label: 'Transfer Status' },
   customer: {
     sortable: true,
     numeric: true,
     dataBaseKey: 'PaymentRequestCustomer',
-    label: 'Customer e-mail',
+    label: 'Customer e-mail'
   },
   amount: { sortable: true, numeric: true, dataBaseKey: 'amount', label: 'Amount' },
-  createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created At' },
+  createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created At' }
 }
 
 export const paymentRequestPaymentsCustomColumnRenderer = {
@@ -53,5 +53,5 @@ export const paymentRequestPaymentsCustomColumnRenderer = {
   */
   customer: (item: any) => <TextField title={item.PaymentRequestCustomer?.email} />,
   amount: (item: any) => <AmountField value={item.amount} />,
-  createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />,
+  createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />
 }

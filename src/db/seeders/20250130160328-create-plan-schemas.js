@@ -20,7 +20,7 @@ module.exports = {
           fee: 8,
           feeType: 'charge',
           createdAt: new Date(),
-          updatedAt: new Date(),
+          updatedAt: new Date()
         },
         {
           plan: 'open source',
@@ -29,7 +29,7 @@ module.exports = {
           fee: 0,
           createdAt: new Date(),
           feeType: 'charge',
-          updatedAt: new Date(),
+          updatedAt: new Date()
         },
         {
           plan: 'open source',
@@ -38,7 +38,7 @@ module.exports = {
           fee: 5,
           feeType: 'refund',
           createdAt: new Date(),
-          updatedAt: new Date(),
+          updatedAt: new Date()
         },
         {
           plan: 'private',
@@ -47,7 +47,7 @@ module.exports = {
           fee: 18,
           feeType: 'charge',
           createdAt: new Date(),
-          updatedAt: new Date(),
+          updatedAt: new Date()
         },
         {
           plan: 'private',
@@ -56,10 +56,10 @@ module.exports = {
           fee: 5,
           feeType: 'refund',
           createdAt: new Date(),
-          updatedAt: new Date(),
-        },
+          updatedAt: new Date()
+        }
       ],
-      {},
+      {}
     )
   },
 
@@ -71,5 +71,5 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      */
     await queryInterface.bulkDelete('PlanSchemas', null, {})
-  },
+  }
 }

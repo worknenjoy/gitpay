@@ -5,8 +5,8 @@ const SendMail = require('../mail/mail')
 const sendEmailSuccess = (event, paid, status, order, req, res) => {
   return models.User.findOne({
     where: {
-      id: order[1][0].dataValues.userId,
-    },
+      id: order[1][0].dataValues.userId
+    }
   })
     .then((user) => {
       if (user) {
@@ -17,8 +17,8 @@ const sendEmailSuccess = (event, paid, status, order, req, res) => {
             user.dataValues,
             i18n.__('mail.webhook.payment.update.subject'),
             i18n.__('mail.webhook.payment.approved.message', {
-              amount: event.data.object.amount / 100,
-            }),
+              amount: event.data.object.amount / 100
+            })
           )
         }
       }
@@ -34,15 +34,15 @@ const updateOrder = (event, paid, status, req, res) => {
   return models.Order.update(
     {
       paid: paid,
-      status: status,
+      status: status
     },
     {
       where: {
         source_id: event.data.object.source.id,
-        source: event.data.object.id,
+        source: event.data.object.id
       },
-      returning: true,
-    },
+      returning: true
+    }
   )
     .then((order) => {
       if (order[0]) {
@@ -58,7 +58,7 @@ const createOrder = (event) => {
   const taskId = event.data.object?.transfer_group?.split('_')[1]
   if (!taskId) return Promise.resolve()
   return models.Task.findOne({
-    where: { id: taskId },
+    where: { id: taskId }
   }).then((task) => {
     return task.createOrder({
       id: event.data.object.metadata.order_id,
@@ -66,7 +66,7 @@ const createOrder = (event) => {
       currency: event.data.object.currency,
       amount: event.data.object.amount,
       source: event.data.object.id,
-      userId: task.dataValues.userId,
+      userId: task.dataValues.userId
     })
   })
 }
@@ -77,8 +77,8 @@ module.exports = (event, paid, status, req, res) => {
     return models.Order.findOne({
       where: {
         source_id: event?.data?.object?.source?.id,
-        source: event?.data?.object?.id,
-      },
+        source: event?.data?.object?.id
+      }
     }).then((order) => {
       if (order) {
         return updateOrder(event, paid, status, req, res)

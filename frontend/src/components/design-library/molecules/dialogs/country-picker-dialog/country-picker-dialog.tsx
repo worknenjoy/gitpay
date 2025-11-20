@@ -11,27 +11,27 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Typography,
+  Typography
 } from '@mui/material'
 import {
   CountryContainer,
   CountryItem,
   FullWidthMobile,
-  CreditTextMobile,
+  CreditTextMobile
 } from './country-picker-dialog.styles'
 
 const CountryPicker = ({ open, onClose, onSelectCountry }) => {
   const [currentCountry, setCurrentCountry] = useState({
     label: null,
     code: null,
-    image: null,
+    image: null
   })
 
   const handleCountry = (item) => {
     setCurrentCountry({
       code: item.code,
       label: item.country,
-      image: item.image,
+      image: item.image
     })
   }
 
@@ -46,7 +46,7 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}
           variant={currentCountry.code === item.code ? 'outlined' : 'text'}
           onClick={() => handleCountry(item)}
@@ -68,7 +68,7 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
           onClose(e, {
             code: null,
             country: null,
-            image: null,
+            image: null
           })
         }
         aria-labelledby="alert-dialog-title"
@@ -133,7 +133,7 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
                   onClose(e, {
                     country: null,
                     code: null,
-                    image: null,
+                    image: null
                   })
                 }
                 size="large"
@@ -147,7 +147,7 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
                   onClose(e, {
                     country: currentCountry.label,
                     code: currentCountry.code,
-                    image: currentCountry.image,
+                    image: currentCountry.image
                   })
                 }}
                 size="large"
@@ -155,14 +155,14 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
                 autoFocus
                 style={{
                   minWidth: 'auto',
-                  marginLeft: 10,
+                  marginLeft: 10
                 }}
               >
                 <FormattedMessage
                   id="dialog.picker.choose"
                   defaultMessage={`Choose {country}`}
                   values={{
-                    country: currentCountry.label,
+                    country: currentCountry.label
                   }}
                 />
               </Button>

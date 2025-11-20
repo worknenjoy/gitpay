@@ -17,7 +17,7 @@ import {
   RadioGroup,
   Radio,
   Typography,
-  TextField,
+  TextField
 } from '@mui/material'
 
 const Container = styled.div`
@@ -37,7 +37,7 @@ class TaskReport extends Component {
   static propTypes = {
     visible: PropTypes.bool,
     onClose: PropTypes.func,
-    reportTask: PropTypes.func,
+    reportTask: PropTypes.func
   }
 
   getLanguage = () => {
@@ -61,7 +61,7 @@ class TaskReport extends Component {
     } else {
       this.setState({
         reason: e.target.value === 0 ? '' : e.target.value,
-        anotherReasonListed: true,
+        anotherReasonListed: true
       })
     }
   }

@@ -25,7 +25,7 @@ module.exports.update = {
       invoice: null,
       livemode: true,
       metadata: {
-        order_id: '5',
+        order_id: '5'
       },
       on_behalf_of: null,
       order: null,
@@ -34,7 +34,7 @@ module.exports.update = {
         reason: null,
         risk_level: 'normal',
         seller_message: 'Payment complete.',
-        type: 'authorized',
+        type: 'authorized'
       },
       paid: true,
       receipt_email: 'alexanmtz@gmail.com',
@@ -45,7 +45,7 @@ module.exports.update = {
         data: [],
         has_more: false,
         total_count: 0,
-        url: '/v1/charges/ch_1CcdmsBrSjgsps2DNZiZAyvG/refunds',
+        url: '/v1/charges/ch_1CcdmsBrSjgsps2DNZiZAyvG/refunds'
       },
       review: null,
       shipping: null,
@@ -72,25 +72,25 @@ module.exports.update = {
         last4: '3670',
         metadata: {},
         name: 'Alexandre Magno',
-        tokenization_method: null,
+        tokenization_method: null
       },
       source_transfer: null,
       statement_descriptor: null,
       status: 'succeeded',
-      transfer_group: 'task_23',
+      transfer_group: 'task_23'
     },
     previous_attributes: {
       receipt_email: null,
-      receipt_number: null,
-    },
+      receipt_number: null
+    }
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: 'req_7JDHTJnTPulDSK',
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'charge.updated',
+  type: 'charge.updated'
 }
 
 module.exports.success = {
@@ -120,7 +120,7 @@ module.exports.success = {
       invoice: null,
       livemode: true,
       metadata: {
-        order_id: '7',
+        order_id: '7'
       },
       on_behalf_of: null,
       order: null,
@@ -129,7 +129,7 @@ module.exports.success = {
         reason: null,
         risk_level: 'normal',
         seller_message: 'Payment complete.',
-        type: 'authorized',
+        type: 'authorized'
       },
       paid: true,
       receipt_email: null,
@@ -140,7 +140,7 @@ module.exports.success = {
         data: [],
         has_more: false,
         total_count: 0,
-        url: '/v1/charges/ch_1CeLZkBrSjgsps2DCNBQmnLA/refunds',
+        url: '/v1/charges/ch_1CeLZkBrSjgsps2DCNBQmnLA/refunds'
       },
       review: null,
       shipping: null,
@@ -167,21 +167,21 @@ module.exports.success = {
         last4: '7743',
         metadata: {},
         name: 'Alexandre Magno',
-        tokenization_method: null,
+        tokenization_method: null
       },
       source_transfer: null,
       statement_descriptor: null,
       status: 'succeeded',
-      transfer_group: 'task_25',
-    },
+      transfer_group: 'task_25'
+    }
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: 'req_a3oEDW4y0pfI9z',
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'charge.succeeded',
+  type: 'charge.succeeded'
 }
 
 module.exports.failed = {
@@ -208,12 +208,12 @@ module.exports.failed = {
       failure_code: 'card_declined',
       failure_message: 'Your card was declined.',
       fraud_details: {
-        stripe_report: 'fraudulent',
+        stripe_report: 'fraudulent'
       },
       invoice: null,
       livemode: true,
       metadata: {
-        order_id: '47',
+        order_id: '47'
       },
       on_behalf_of: null,
       order: null,
@@ -223,7 +223,7 @@ module.exports.failed = {
         risk_level: 'highest',
         rule: 'block_if_high_risk__enabled',
         seller_message: 'Stripe blocked this payment as too risky.',
-        type: 'blocked',
+        type: 'blocked'
       },
       paid: false,
       receipt_email: null,
@@ -234,7 +234,7 @@ module.exports.failed = {
         data: [],
         has_more: false,
         total_count: 0,
-        url: '/v1/charges/ch_1D8FHBBrSjgsps2DJawS1hYk/refunds',
+        url: '/v1/charges/ch_1D8FHBBrSjgsps2DJawS1hYk/refunds'
       },
       review: null,
       shipping: null,
@@ -261,19 +261,19 @@ module.exports.failed = {
         last4: '1017',
         metadata: {},
         name: 'mthais',
-        tokenization_method: null,
+        tokenization_method: null
       },
       source_transfer: null,
       statement_descriptor: null,
       status: 'failed',
-      transfer_group: 'task_65',
-    },
+      transfer_group: 'task_65'
+    }
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: 'req_TJZ6NnHw55910F',
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'charge.failed',
+  type: 'charge.failed'
 }

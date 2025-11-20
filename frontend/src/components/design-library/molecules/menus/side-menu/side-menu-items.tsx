@@ -26,14 +26,14 @@ const SideMenuItems = ({ menuItems }) => {
                 >
                   <ListItemIcon
                     sx={(theme) => ({
-                      color: theme.palette.getContrastText(theme.palette.primary.main),
+                      color: theme.palette.getContrastText(theme.palette.primary.main)
                     })}
                   >
                     {item.icon}
                   </ListItemIcon>
                   <Primary primary={item.label} />
                 </MenuItemStyled>
-              ),
+              )
           )}
         </div>
       ))}

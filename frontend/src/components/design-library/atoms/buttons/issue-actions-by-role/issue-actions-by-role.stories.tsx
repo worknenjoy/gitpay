@@ -10,13 +10,13 @@ const mockIssue = {
     paid: false,
     transfer_id: null,
     Transfer: null,
-    private: false,
-  },
+    private: false
+  }
 }
 
 export default {
   title: 'Design Library/Atoms/Buttons/IssueActionsByRole',
-  component: IssueActionsByRole,
+  component: IssueActionsByRole
 } as ComponentMeta<typeof IssueActionsByRole>
 
 const Template: ComponentStory<typeof IssueActionsByRole> = (args) => (
@@ -26,11 +26,11 @@ const Template: ComponentStory<typeof IssueActionsByRole> = (args) => (
 export const Admin: typeof Template = Template.bind({})
 Admin.args = {
   issue: mockIssue,
-  currentRole: 'admin',
+  currentRole: 'admin'
 }
 
 export const User: typeof Template = Template.bind({})
 User.args = {
   issue: mockIssue,
-  currentRole: 'user',
+  currentRole: 'user'
 }

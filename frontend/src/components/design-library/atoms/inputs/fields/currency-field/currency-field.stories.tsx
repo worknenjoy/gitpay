@@ -3,7 +3,7 @@ import CurrencyField from './currency-field'
 
 export default {
   title: 'Design Library/Atoms/Inputs/Fields/CurrencyField',
-  component: CurrencyField,
+  component: CurrencyField
 }
 
 const Template = (args) => <CurrencyField {...args} />
@@ -19,10 +19,10 @@ Default.args = {
         eur: 'eur',
         gbp: 'gbp',
         jpy: 'jpy',
-        aud: 'aud',
-      },
-    },
-  },
+        aud: 'aud'
+      }
+    }
+  }
 }
 
 export const Disabled = Template.bind({})
@@ -31,5 +31,5 @@ Disabled.args = {
   placeholder: 'Enter amount',
   value: '50.00',
   disabled: true,
-  onChange: (value) => console.log('Currency value changed:', value),
+  onChange: (value) => console.log('Currency value changed:', value)
 }

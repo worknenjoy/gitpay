@@ -13,9 +13,9 @@ module.exports = Promise.method(async function transferSearch(params = {}) {
         Task,
         {
           model: User,
-          as: 'User',
-        },
-      ],
+          as: 'User'
+        }
+      ]
     })
   }
   if (params.to) {
@@ -25,9 +25,9 @@ module.exports = Promise.method(async function transferSearch(params = {}) {
         Task,
         {
           model: User,
-          as: 'User',
-        },
-      ],
+          as: 'User'
+        }
+      ]
     })
   }
   return transfers

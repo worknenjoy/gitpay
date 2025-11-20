@@ -3,7 +3,7 @@ import { Breadcrumb } from './breadcrumb'
 
 export default {
   title: 'Design Library/Molecules/Breadcrumbs/Breadcrumb',
-  component: Breadcrumb,
+  component: Breadcrumb
 }
 
 const Template = (args) => <Breadcrumb {...args} />
@@ -19,10 +19,10 @@ Default.args = {
       Project: {
         id: 1,
         name: 'Project 1',
-        Organization: { id: 1, name: 'Organization 1' },
-      },
-    },
-  },
+        Organization: { id: 1, name: 'Organization 1' }
+      }
+    }
+  }
 }
 
 export const CustomRoot = Template.bind({})
@@ -36,14 +36,14 @@ CustomRoot.args = {
       Project: {
         id: 1,
         name: 'Project 1',
-        Organization: { id: 1, name: 'Organization 1' },
-      },
-    },
+        Organization: { id: 1, name: 'Organization 1' }
+      }
+    }
   },
   root: {
     label: 'Dashboard',
-    link: '/dashboard',
-  },
+    link: '/dashboard'
+  }
 }
 
 export const ProjectOnly = Template.bind({})
@@ -53,9 +53,9 @@ ProjectOnly.args = {
     data: {
       id: 1,
       name: 'Project 1',
-      Organization: { id: 1, name: 'Organization 1' },
-    },
-  },
+      Organization: { id: 1, name: 'Organization 1' }
+    }
+  }
 }
 
 export const OrganizationOnly = Template.bind({})
@@ -64,31 +64,31 @@ OrganizationOnly.args = {
     completed: true,
     data: {
       id: 1,
-      name: 'Organization 1',
-    },
-  },
+      name: 'Organization 1'
+    }
+  }
 }
 
 export const rootOnly = Template.bind({})
 rootOnly.args = {
   root: {
     label: 'Dashboard',
-    link: '/dashboard',
-  },
+    link: '/dashboard'
+  }
 }
 
 export const Loading = Template.bind({})
 Loading.args = {
   task: {
     completed: false,
-    data: {},
+    data: {}
   },
   project: {
     completed: false,
-    data: {},
+    data: {}
   },
   organization: {
     completed: false,
-    data: {},
-  },
+    data: {}
+  }
 }

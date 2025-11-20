@@ -5,7 +5,7 @@ import PlanCard from './plan-card'
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Molecules/Cards/PlanCard',
-  component: PlanCard,
+  component: PlanCard
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
@@ -23,6 +23,6 @@ Primary.args = {
     title: 'Plan Title',
     category: 'Category',
     price: 100,
-    items: ['Feature 1', 'Feature 2', 'Feature 3'],
-  },
+    items: ['Feature 1', 'Feature 2', 'Feature 3']
+  }
 }

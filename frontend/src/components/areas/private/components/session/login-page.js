@@ -26,19 +26,19 @@ const Container = muiStyled('div')(() => ({
   backgroundImage: `url(${Background})`,
   backgroundSize: '100% 100%',
   backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
+  backgroundRepeat: 'no-repeat'
 }))
 
 const StyledCard = muiStyled(Card)(() => ({
   minWidth: 420,
   marginTop: 40,
   opacity: 0.8,
-  overflow: 'visible',
+  overflow: 'visible'
 }))
 
 const StyledCardContent = muiStyled(CardContent)(() => ({
   textAlign: 'center',
-  position: 'relative',
+  position: 'relative'
 }))
 
 const Content = styled.div`
@@ -55,7 +55,7 @@ const LoginPage = ({
   fetchRoles,
   registerUser,
   forgotPassword,
-  resetPassword,
+  resetPassword
 }) => {
   const history = useHistory()
   const { mode: modeParam, token, status } = useParams()

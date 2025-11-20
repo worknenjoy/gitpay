@@ -22,7 +22,7 @@ describe('Contact', () => {
           phone: 'phone',
           company: 'company',
           country: 'country',
-          message: 'message',
+          message: 'message'
         })
         .expect(200)
         .end((err, res) => {

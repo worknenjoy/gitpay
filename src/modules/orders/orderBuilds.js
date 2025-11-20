@@ -25,9 +25,9 @@ module.exports = async function orderBuilds(orderParameters) {
       models.User,
       {
         association: models.Order.Plan,
-        include: [models.Plan.plan],
-      },
-    ],
+        include: [models.Plan.plan]
+      }
+    ]
   }).save()
 
   if (plan === 'open source') {
@@ -36,15 +36,15 @@ module.exports = async function orderBuilds(orderParameters) {
       where: {
         plan: plan,
         name: planFeeBasedOnPrice,
-        feeType: 'charge',
-      },
+        feeType: 'charge'
+      }
     })
 
     await order.createPlan({
       plan: plan,
       PlanSchemaId: planSchema.id,
       fee: parseInt(planSchema.fee) > 0 ? (planSchema.fee / 100) * amount : 0,
-      feePercentage: planSchema.fee,
+      feePercentage: planSchema.fee
     })
   }
 
@@ -54,9 +54,9 @@ module.exports = async function orderBuilds(orderParameters) {
       { model: models.User },
       {
         model: models.Plan,
-        include: [{ model: models.PlanSchema }],
-      },
-    ],
+        include: [{ model: models.PlanSchema }]
+      }
+    ]
   })
   const orderUserModel = orderCreated.User
   const orderUser = orderUserModel.dataValues
@@ -79,8 +79,8 @@ module.exports = async function orderBuilds(orderParameters) {
       days_until_due: 30,
       metadata: {
         task_id: orderParameters.taskId,
-        order_id: orderCreated.dataValues.id,
-      },
+        order_id: orderCreated.dataValues.id
+      }
     })
 
     const invoiceItem = await stripe.invoiceItems.create({
@@ -93,27 +93,27 @@ module.exports = async function orderBuilds(orderParameters) {
       invoice: invoice.id,
       metadata: {
         task_id: orderParameters.taskId,
-        order_id: orderCreated.dataValues.id,
-      },
+        order_id: orderCreated.dataValues.id
+      }
     })
 
     const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id)
     Sendmail.success(
       { ...orderUser, email: orderParameters.email },
       'Invoice created',
-      `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`,
+      `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`
     )
 
     const orderUpdated = await orderCreated.update(
       {
-        source_id: invoice.id,
+        source_id: invoice.id
       },
       {
         where: {
-          id: orderCreated.dataValues.id,
+          id: orderCreated.dataValues.id
         },
-        include: [{ model: models.User }],
-      },
+        include: [{ model: models.User }]
+      }
     )
     await stripe.invoices.sendInvoice(invoice.id)
     return orderUpdated
@@ -130,14 +130,14 @@ module.exports = async function orderBuilds(orderParameters) {
         Authorization:
           'Basic ' +
           Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-            'base64',
+            'base64'
           ),
         'Content-Type': 'application/json',
-        grant_type: 'client_credentials',
+        grant_type: 'client_credentials'
       },
       form: {
-        grant_type: 'client_credentials',
-      },
+        grant_type: 'client_credentials'
+      }
     })
 
     const payment = await requestPromise({
@@ -148,7 +148,7 @@ module.exports = async function orderBuilds(orderParameters) {
         Prefer: 'return=representation',
         'Accept-Language': 'en_US',
         Authorization: 'Bearer ' + JSON.parse(response)['access_token'],
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         intent: 'AUTHORIZE',
@@ -156,19 +156,19 @@ module.exports = async function orderBuilds(orderParameters) {
           {
             amount: {
               value: totalPrice,
-              currency_code: orderParameters.currency,
+              currency_code: orderParameters.currency
             },
-            description: 'Development services provided by Gitpay',
-          },
+            description: 'Development services provided by Gitpay'
+          }
         ],
         application_context: {
           return_url: `${process.env.API_HOST}/orders/authorize`,
-          cancel_url: `${process.env.API_HOST}/orders/authorize`,
+          cancel_url: `${process.env.API_HOST}/orders/authorize`
         },
         payer: {
-          payment_method: 'paypal',
-        },
-      }),
+          payment_method: 'paypal'
+        }
+      })
     })
 
     const paymentData = JSON.parse(payment)
@@ -185,13 +185,13 @@ module.exports = async function orderBuilds(orderParameters) {
           paymentData.purchase_units[0].payments &&
           paymentData.purchase_units[0].payments.authorizations[0].id,
         payment_url: paymentUrl,
-        token: searchParams.get('token'),
+        token: searchParams.get('token')
       },
       {
         where: {
-          id: orderCreated.dataValues.id,
-        },
-      },
+          id: orderCreated.dataValues.id
+        }
+      }
     )
 
     return orderUpdated
@@ -200,18 +200,18 @@ module.exports = async function orderBuilds(orderParameters) {
   if (orderParameters.provider === 'wallet' && orderParameters.source_type === 'wallet-funds') {
     const wallet = await models.Wallet.findOne({
       where: {
-        id: orderParameters.walletId,
-      },
+        id: orderParameters.walletId
+      }
     })
 
     const currentBalance = wallet.balance
     const enoughBalance = new Decimal(currentBalance).greaterThanOrEqualTo(
-      new Decimal(orderParameters.amount),
+      new Decimal(orderParameters.amount)
     )
 
     if (!enoughBalance) {
       throw new Error(
-        `Not enough balance. current: ${currentBalance}, amount: ${orderParameters.amount}`,
+        `Not enough balance. current: ${currentBalance}, amount: ${orderParameters.amount}`
       )
     }
 
@@ -220,13 +220,13 @@ module.exports = async function orderBuilds(orderParameters) {
         status: 'succeeded',
         source_id: `${wallet.id}`,
         source_type: 'wallet-funds',
-        paid: true,
+        paid: true
       },
       {
         where: {
-          id: orderCreated.dataValues.id,
-        },
-      },
+          id: orderCreated.dataValues.id
+        }
+      }
     )
 
     return orderUpdated

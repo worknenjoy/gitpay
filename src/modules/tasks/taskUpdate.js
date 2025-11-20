@@ -46,7 +46,7 @@ const createSourceAndCharge = Promise.method(
             customer: customer.id,
             source: card.id,
             transfer_group: `task_${task.dataValues.id}`,
-            metadata: { order_id: order.dataValues.id },
+            metadata: { order_id: order.dataValues.id }
           })
           .then((charge) => {
             if (charge) {
@@ -60,19 +60,19 @@ const createSourceAndCharge = Promise.method(
             throw new Error(e)
           })
       })
-  },
+  }
 )
 
 const createCustomer = Promise.method((orderParameters, order, task, user, couponValidation) => {
   return stripe.customers
     .create({
-      email: orderParameters.email,
+      email: orderParameters.email
     })
     .then((customer) => {
       if (order.userId) {
         return models.User.update(
           { customer_id: customer.id },
-          { where: { id: order.userId } },
+          { where: { id: order.userId } }
         ).then((update) => {
           if (!update) {
             throw new Error('user not updated')
@@ -83,7 +83,7 @@ const createCustomer = Promise.method((orderParameters, order, task, user, coupo
             order,
             task,
             user,
-            couponValidation,
+            couponValidation
           )
         })
       }
@@ -95,8 +95,8 @@ const postCreateOrUpdateOffer = Promise.method((task, offer) => {
   if (offer) {
     return models.User.findOne({
       where: {
-        id: offer.userId,
-      },
+        id: offer.userId
+      }
     }).then((user) => {
       const usermail = user.dataValues.email
       const language = user.language || 'en'
@@ -124,16 +124,16 @@ module.exports = Promise.method(async function taskUpdate(taskParameters, notify
   return models.Task.update(taskParameters, {
     where: {
       id: taskParameters.id,
-      userId: taskParameters.userId,
+      userId: taskParameters.userId
     },
     individualHooks: true,
-    include: [models.User, models.Order, models.Offer, models.Member],
+    include: [models.User, models.Order, models.Offer, models.Member]
   }).then((data) => {
     if (!data) {
       return new Error('task_updated_failed')
     }
     return models.Task.findByPk(taskParameters.id, {
-      include: [models.User, models.Order, models.Assign, models.Member],
+      include: [models.User, models.Order, models.Assign, models.Member]
     }).then((task) => {
       if (!task) {
         return new Error('task_find_failed')
@@ -151,7 +151,7 @@ module.exports = Promise.method(async function taskUpdate(taskParameters, notify
                     order,
                     task,
                     user.dataValues,
-                    couponValidation,
+                    couponValidation
                   )
                 })
               } else {
@@ -160,7 +160,7 @@ module.exports = Promise.method(async function taskUpdate(taskParameters, notify
                   order,
                   task,
                   user.dataValues,
-                  couponValidation,
+                  couponValidation
                 )
               }
             })
@@ -170,7 +170,7 @@ module.exports = Promise.method(async function taskUpdate(taskParameters, notify
               order,
               task,
               { email: orderParameters.email },
-              couponValidation,
+              couponValidation
             )
           }
         })
@@ -180,15 +180,15 @@ module.exports = Promise.method(async function taskUpdate(taskParameters, notify
         if (task.dataValues.assigned) {
           return models.Assign.findOne({
             where: {
-              id: task.dataValues.assigned,
+              id: task.dataValues.assigned
             },
-            include: [models.User],
+            include: [models.User]
           }).then((assigned) => {
             const assignedUserDeadline = assigned.User.dataValues
             DeadlineMail.update(
               assignedUserDeadline.email,
               task.dataValues,
-              assignedUserDeadline.username,
+              assignedUserDeadline.username
             )
             return task.dataValues
           })
@@ -198,7 +198,7 @@ module.exports = Promise.method(async function taskUpdate(taskParameters, notify
       if (taskParameters.Offer) {
         return assignExist({
           userId: taskParameters.Offer.userId,
-          taskId: taskParameters.id,
+          taskId: taskParameters.id
         })
           .then((existingAssign) => {
             if (!existingAssign) {
@@ -208,7 +208,7 @@ module.exports = Promise.method(async function taskUpdate(taskParameters, notify
           .then((assign) => {
             return offerExists({
               userId: taskParameters.Offer.userId,
-              taskId: taskParameters.id,
+              taskId: taskParameters.id
             }).then((resp) => {
               if (!resp) {
                 return task.createOffer(taskParameters.Offer).then((offer) => {
@@ -216,7 +216,7 @@ module.exports = Promise.method(async function taskUpdate(taskParameters, notify
                 })
               } else {
                 return models.Offer.update(taskParameters.Offer, {
-                  where: { userId: taskParameters.Offer.userId, taskId: taskParameters.id },
+                  where: { userId: taskParameters.Offer.userId, taskId: taskParameters.id }
                 }).then((update) => {
                   return postCreateOrUpdateOffer(task, taskParameters.Offer)
                 })
@@ -227,7 +227,7 @@ module.exports = Promise.method(async function taskUpdate(taskParameters, notify
 
       if (taskParameters.Members) {
         return memberExists({
-          userId: taskParameters.Members[0].userId,
+          userId: taskParameters.Members[0].userId
         }).then((resp) => {
           if (!resp) {
             return task
@@ -242,8 +242,8 @@ module.exports = Promise.method(async function taskUpdate(taskParameters, notify
             return models.Member.update(taskParameters.Members[0], {
               where: {
                 userId: taskParameters.Members[0].userId,
-                taskId: taskParameters.id,
-              },
+                taskId: taskParameters.id
+              }
             }).then((update) => {
               return task.dataValues
             })
@@ -254,16 +254,16 @@ module.exports = Promise.method(async function taskUpdate(taskParameters, notify
       if (taskParameters.assigned) {
         return models.Assign.findOne({
           where: {
-            id: taskParameters.assigned,
+            id: taskParameters.assigned
           },
-          include: [models.User],
+          include: [models.User]
         })
           .then((assigned) => {
             return task.update({ status: 'in_progress' }).then(() => {
               const assignedUser = assigned.User.dataValues
               const ownerUser = task.dataValues.User.dataValues
               const interestedUsersId = task.Assigns.map((user) => user.userId).filter(
-                (user) => user !== assignedUser.id,
+                (user) => user !== assignedUser.id
               )
               notifyOnAssign && AssignMail.owner.assigned(ownerUser, task.dataValues, assignedUser)
               notifyOnAssign && AssignMail.assigned(assignedUser, task.dataValues)

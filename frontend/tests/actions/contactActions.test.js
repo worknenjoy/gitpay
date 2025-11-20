@@ -17,16 +17,16 @@ describe('recruitment landing page actions', () => {
     it('should dispatch an action to send message to recruitment team', () => {
       expect(contactActions.messageRecruitersRequested()).toEqual({
         type: 'MESSAGE_RECRUITERS_REQUESTED',
-        completed: false,
+        completed: false
       })
       expect(contactActions.messageRecruitersSuccess()).toEqual({
         type: 'MESSAGE_RECRUITERS_SUCCESS',
-        completed: true,
+        completed: true
       })
       expect(contactActions.messageRecruitersError({ code: 401 })).toEqual({
         type: 'MESSAGE_RECRUITERS_ERROR',
         completed: true,
-        error: { code: 401 },
+        error: { code: 401 }
       })
     })
     it('should dispatch an action to send message to recruiters async', () => {
@@ -35,13 +35,13 @@ describe('recruitment landing page actions', () => {
         const request = moxios.requests.mostRecent()
         request.respondWith({
           status: 200,
-          response: {},
+          response: {}
         })
       })
       const expectedActions = [
         { completed: false, type: 'MESSAGE_RECRUITERS_REQUESTED' },
         { open: true, text: 'actions.message.recruiters.success', type: 'ADD_NOTIFICATION' },
-        { completed: true, type: 'MESSAGE_RECRUITERS_SUCCESS' },
+        { completed: true, type: 'MESSAGE_RECRUITERS_SUCCESS' }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store
@@ -53,8 +53,8 @@ describe('recruitment landing page actions', () => {
             'phone',
             'company',
             'country',
-            'message',
-          ),
+            'message'
+          )
         )
         .then(() => {
           // return of async actions

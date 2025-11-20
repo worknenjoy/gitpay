@@ -20,14 +20,14 @@ import {
   Chip,
   Paper,
   IconButton,
-  Skeleton,
+  Skeleton
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
-  LastPage as LastPageIcon,
+  LastPage as LastPageIcon
 } from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
@@ -39,7 +39,7 @@ import messages from '../../../../../../messages/messages'
 const ActionsRoot = styled('div')(({ theme }) => ({
   flexShrink: 0,
   color: theme.palette.text.secondary,
-  marginLeft: theme.spacing(2.5),
+  marginLeft: theme.spacing(2.5)
 }))
 
 class TablePaginationActions extends React.Component {
@@ -58,7 +58,7 @@ class TablePaginationActions extends React.Component {
   handleLastPageButtonClick = (event) => {
     this.props.onChangePage(
       event,
-      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
+      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1)
     )
   }
 
@@ -106,7 +106,7 @@ TablePaginationActions.propTypes = {
   onChangePage: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 }
 
 const TablePaginationActionsWrapped = injectIntl((props) => <TablePaginationActions {...props} />)
@@ -123,7 +123,7 @@ class CustomPaginationActionsTable extends React.Component {
       rowsPerPage: 10,
       sortedBy: null,
       sortDirection: 'asc',
-      sortedData: this.props.tasks.data,
+      sortedData: this.props.tasks.data
     }
   }
 
@@ -132,7 +132,7 @@ class CustomPaginationActionsTable extends React.Component {
       const { sortedBy, sortDirection } = this.state
       const newSortedData = this.sortData(this.props.tasks.data, sortedBy, sortDirection)
       this.setState({
-        sortedData: newSortedData,
+        sortedData: newSortedData
       })
     }
   }
@@ -173,7 +173,7 @@ class CustomPaginationActionsTable extends React.Component {
       let comparator = String(aValue).localeCompare(String(bValue), 'en', {
         numeric: true,
         sensitivity: 'base',
-        ignorePunctuation: true,
+        ignorePunctuation: true
       })
       return sortDirection === 'asc' ? comparator : -comparator
     })
@@ -185,7 +185,7 @@ class CustomPaginationActionsTable extends React.Component {
       const keys = dataBaseKey.split('.')
       return keys.reduce(
         (obj, key) => (obj && obj[key] !== 'undefined' ? obj[key] : undefined),
-        item,
+        item
       )
     }
 
@@ -221,7 +221,7 @@ class CustomPaginationActionsTable extends React.Component {
     return {
       sortedBy: fieldId,
       sortDirection,
-      sortedData: newSortedData,
+      sortedData: newSortedData
     }
   }
 
@@ -374,7 +374,7 @@ class CustomPaginationActionsTable extends React.Component {
                                       backgroundColor: 'black',
                                       borderColor: 'black',
                                       borderWidth: 1,
-                                      marginLeft: 10,
+                                      marginLeft: 10
                                     }}
                                   />
                                 </Tooltip>
@@ -390,8 +390,7 @@ class CustomPaginationActionsTable extends React.Component {
                                     sx={{
                                       width: 12,
                                       height: 12,
-                                      bgcolor:
-                                        n.status === 'closed' ? 'error.main' : 'success.main',
+                                      bgcolor: n.status === 'closed' ? 'error.main' : 'success.main'
                                     }}
                                   >
                                     {' '}
@@ -442,7 +441,7 @@ class CustomPaginationActionsTable extends React.Component {
                                       size="small"
                                       label={TextEllipsis(`${language.name || ''}`, 10)}
                                     />
-                                  ),
+                                  )
                                 )}{' '}
                                 ...
                               </div>
@@ -492,7 +491,7 @@ CustomPaginationActionsTable.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
   tasks: PropTypes.object,
-  user: PropTypes.object,
+  user: PropTypes.object
 }
 
 export default injectIntl(withRouter(CustomPaginationActionsTable))

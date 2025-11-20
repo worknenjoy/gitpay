@@ -17,7 +17,7 @@ export const LinkButton = styled(StyledButton)`
 `
 
 export const LabelButton = styled('span', {
-  shouldForwardProp: (prop) => prop !== 'right',
+  shouldForwardProp: (prop) => prop !== 'right'
 })<{ right?: boolean }>`
   ${({ right }) =>
     right

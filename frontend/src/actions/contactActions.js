@@ -41,5 +41,5 @@ export {
   messageRecruitersRequested,
   messageRecruitersSuccess,
   messageRecruitersError,
-  messageRecruiters,
+  messageRecruiters
 }

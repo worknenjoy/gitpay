@@ -11,7 +11,7 @@ export const BillingInfoCard = ({ name, address, city, state, zipCode, country, 
     state,
     zipCode,
     country,
-    totalAmount,
+    totalAmount
   }
 
   return (

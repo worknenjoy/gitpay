@@ -11,7 +11,7 @@ import {
   DialogContentText,
   DialogTitle,
   Typography,
-  TextField,
+  TextField
 } from '@mui/material'
 import Icon from '@mui/icons-material/Delete'
 
@@ -36,7 +36,7 @@ class RemoveAssignment extends Component {
   static propTypes = {
     visible: PropTypes.bool,
     remove: PropTypes.func,
-    task: PropTypes.object,
+    task: PropTypes.object
   }
 
   openModal = () => this.setState({ open: true })

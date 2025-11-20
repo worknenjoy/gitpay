@@ -42,7 +42,7 @@ function TextMaskCustom(props: TextMaskCustomProps) {
         /\d/,
         /\d/,
         /\d/,
-        /\d/,
+        /\d/
       ]}
       guide={false}
     />

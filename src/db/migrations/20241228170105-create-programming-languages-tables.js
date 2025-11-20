@@ -6,21 +6,21 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true,
+        unique: true
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     })
 
     // Create ProjectProgrammingLanguages table
@@ -29,36 +29,36 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       projectId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Projects',
-          key: 'id',
+          key: 'id'
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       programmingLanguageId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'ProgrammingLanguages',
-          key: 'id',
+          key: 'id'
         },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     })
   },
 
@@ -68,5 +68,5 @@ module.exports = {
 
     // Drop ProgrammingLanguages table
     await queryInterface.dropTable('ProgrammingLanguages')
-  },
+  }
 }

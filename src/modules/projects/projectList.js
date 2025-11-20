@@ -7,9 +7,9 @@ module.exports = Promise.method(function listProjects() {
       models.Organization,
       {
         model: models.Task,
-        include: [models.User],
-      },
-    ],
+        include: [models.User]
+      }
+    ]
   })
     .then((data) => {
       return data

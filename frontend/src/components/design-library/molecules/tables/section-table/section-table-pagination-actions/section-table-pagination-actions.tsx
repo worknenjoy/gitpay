@@ -7,7 +7,7 @@ import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
-  LastPage as LastPageIcon,
+  LastPage as LastPageIcon
 } from '@mui/icons-material'
 import messages from '../../../../../../messages/messages'
 import { Root } from './section-table-pagination-actions.styles'

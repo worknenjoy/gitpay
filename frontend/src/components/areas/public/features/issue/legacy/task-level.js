@@ -12,16 +12,16 @@ import CustomTabs from '../styles/material-dashboard-react/components/CustomTabs
 const messages = defineMessages({
   easyStatus: {
     id: 'task.level.easy',
-    defaultMessage: 'Easy',
+    defaultMessage: 'Easy'
   },
   mediumStatus: {
     id: 'task.level.medium',
-    defaultMessage: 'Medium',
+    defaultMessage: 'Medium'
   },
   hardStatus: {
     id: 'task.level.hard',
-    defaultMessage: 'Hard',
-  },
+    defaultMessage: 'Hard'
+  }
 })
 
 // removed withStyles
@@ -33,20 +33,20 @@ class TaskLevel extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selected: null,
+      selected: null
     }
   }
 
   static propTypes = {
     id: PropTypes.number,
     onSelect: PropTypes.func,
-    level: PropTypes.string,
+    level: PropTypes.string
   }
 
   handleClick = (event, value) => {
     this.props.onSelect({
       id: this.props.id,
-      level: levelsArray[value],
+      level: levelsArray[value]
     })
   }
 
@@ -74,7 +74,7 @@ class TaskLevel extends Component {
                     defaultMessage="Easy issue to solve"
                   />
                 </Typography>
-              ),
+              )
             },
             {
               tabName: intl.formatMessage(messages.mediumStatus),
@@ -86,7 +86,7 @@ class TaskLevel extends Component {
                     defaultMessage="Medium issue to solve"
                   />
                 </Typography>
-              ),
+              )
             },
             {
               tabName: intl.formatMessage(messages.hardStatus),
@@ -98,8 +98,8 @@ class TaskLevel extends Component {
                     defaultMessage="Hard issue to solve"
                   />
                 </Typography>
-              ),
-            },
+              )
+            }
           ]}
         />
       </div>

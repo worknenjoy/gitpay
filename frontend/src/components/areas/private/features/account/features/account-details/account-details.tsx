@@ -17,12 +17,12 @@ import messages from '../../../../shared/messages'
 
 const fieldsetStyle = (theme?: any) => ({
   border: `1px solid ${theme?.palette?.primary?.light || '#ddd'}`,
-  marginBottom: 20,
+  marginBottom: 20
 })
 const legendStyle = (theme?: any) => ({
   fontSize: 18,
   fontWeight: 500,
-  color: theme?.palette?.primary?.dark || 'inherit',
+  color: theme?.palette?.primary?.dark || 'inherit'
 })
 
 const AccountDetails = ({
@@ -33,7 +33,7 @@ const AccountDetails = ({
   createAccount,
   fetchAccount,
   fetchAccountCountries,
-  setActiveStep,
+  setActiveStep
 }) => {
   const intl = useIntl()
   const [accountData, setAccountData] = useState({})
@@ -59,7 +59,7 @@ const AccountDetails = ({
       'individual[address][state]': e.target['individual[address][state]'].value,
       'individual[dob][day]': e.target['individual[dob][day]'].value,
       'individual[dob][month]': e.target['individual[dob][month]'].value,
-      'individual[dob][year]': e.target['individual[dob][year]'].value,
+      'individual[dob][year]': e.target['individual[dob][year]'].value
     }
     if (terms) {
       formData['tos_acceptance[date]'] = Math.round(+new Date() / 1000)
@@ -150,10 +150,10 @@ const AccountDetails = ({
                             width="48"
                             src={
                               require(
-                                `images/countries/${countryCodes.find((c) => c.code === account.data.country).image}.png`,
+                                `images/countries/${countryCodes.find((c) => c.code === account.data.country).image}.png`
                               ).default ||
                               require(
-                                `images/countries/${countryCodes.find((c) => c.code === account.data.country).image}.png`,
+                                `images/countries/${countryCodes.find((c) => c.code === account.data.country).image}.png`
                               )
                             }
                           />
@@ -188,10 +188,10 @@ const AccountDetails = ({
                           width="48"
                           src={
                             require(
-                              `images/countries/${countryCodes.find((c) => c.code === displayCurrentCountry.code).image}.png`,
+                              `images/countries/${countryCodes.find((c) => c.code === displayCurrentCountry.code).image}.png`
                             ).default ||
                             require(
-                              `images/countries/${countryCodes.find((c) => c.code === displayCurrentCountry.code).image}.png`,
+                              `images/countries/${countryCodes.find((c) => c.code === displayCurrentCountry.code).image}.png`
                             )
                           }
                         />
@@ -270,7 +270,7 @@ const AccountDetails = ({
                         [9, 'Set'],
                         [10, 'Oct'],
                         [11, 'Nov'],
-                        [12, 'Dec'],
+                        [12, 'Dec']
                       ].map((item, i) => {
                         return (
                           <option
@@ -471,7 +471,7 @@ const AccountDetails = ({
                         [9, 'Set'],
                         [10, 'Oct'],
                         [11, 'Nov'],
-                        [12, 'Dec'],
+                        [12, 'Dec']
                       ].map((item, i) => {
                         return (
                           <option

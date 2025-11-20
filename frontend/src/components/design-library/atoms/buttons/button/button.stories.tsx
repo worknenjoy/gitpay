@@ -3,7 +3,7 @@ import Button from './button'
 
 export default {
   title: 'Design Library/Atoms/Buttons/Button',
-  component: Button,
+  component: Button
 }
 
 const Template = (args) => <Button {...args} />
@@ -14,7 +14,7 @@ Primary.args = {
   variant: 'contained',
   color: 'primary',
   completed: true,
-  onClick: () => alert('Button clicked!'),
+  onClick: () => alert('Button clicked!')
 }
 
 export const Secondary = Template.bind({})
@@ -23,12 +23,12 @@ Secondary.args = {
   color: 'secondary',
   variant: 'contained',
   completed: true,
-  onClick: () => alert('Button clicked!'),
+  onClick: () => alert('Button clicked!')
 }
 
 export const Loading = Template.bind({})
 Loading.args = {
   label: 'Loading Button',
   variant: 'contained',
-  completed: false,
+  completed: false
 }

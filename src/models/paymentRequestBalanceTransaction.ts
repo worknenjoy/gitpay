@@ -51,59 +51,59 @@ export default class PaymentRequestBalanceTransaction
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
-          autoIncrement: true,
+          autoIncrement: true
         },
         sourceId: {
           type: DataTypes.STRING,
-          allowNull: true,
+          allowNull: true
         },
         amount: {
           type: DataTypes.BIGINT,
-          allowNull: false,
+          allowNull: false
         },
         currency: {
           type: DataTypes.STRING,
           allowNull: false,
-          defaultValue: 'usd',
+          defaultValue: 'usd'
         },
         type: {
           type: DataTypes.ENUM('CREDIT', 'DEBIT'),
-          allowNull: false,
+          allowNull: false
         },
         reason: {
           type: DataTypes.ENUM('DISPUTE', 'REFUND', 'EXTRA_FEE', 'ADJUSTMENT'),
-          allowNull: false,
+          allowNull: false
         },
         reason_details: {
           type: DataTypes.STRING,
-          allowNull: true,
+          allowNull: true
         },
         status: {
           type: DataTypes.STRING,
-          allowNull: true,
+          allowNull: true
         },
         paymentRequestBalanceId: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: false
         },
         openedAt: {
           type: DataTypes.DATE,
-          allowNull: true,
+          allowNull: true
         },
         closedAt: {
           type: DataTypes.DATE,
-          allowNull: true,
+          allowNull: true
         },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
-          defaultValue: DataTypes.NOW,
+          defaultValue: DataTypes.NOW
         },
         updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
-          defaultValue: DataTypes.NOW,
-        },
+          defaultValue: DataTypes.NOW
+        }
       },
       {
         sequelize,
@@ -119,12 +119,12 @@ export default class PaymentRequestBalanceTransaction
               { balance: sequelize.literal(`balance ${op} ${instance.amount}`) },
               {
                 where: { id: instance.paymentRequestBalanceId },
-                transaction: options?.transaction,
-              },
+                transaction: options?.transaction
+              }
             )
-          },
-        },
-      },
+          }
+        }
+      }
     )
     return PaymentRequestBalanceTransaction
   }
@@ -133,7 +133,7 @@ export default class PaymentRequestBalanceTransaction
     models.PaymentRequestBalanceTransaction.belongsTo(models.PaymentRequestBalance, {
       //as: 'PaymentRequestBalance',
       foreignKey: 'paymentRequestBalanceId',
-      targetKey: 'id',
+      targetKey: 'id'
     })
   }
 }

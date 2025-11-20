@@ -1,7 +1,7 @@
 import {
   GET_USER_TYPES_REQUESTED,
   GET_USER_TYPES_SUCCESS,
-  GET_USER_TYPES_ERROR,
+  GET_USER_TYPES_ERROR
 } from '../actions/profileActions'
 
 export const profileReducer = (state = { data: {}, completed: true, error: {} }, action) => {

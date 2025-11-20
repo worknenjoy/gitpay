@@ -8,7 +8,7 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
-  Divider,
+  Divider
 } from '@mui/material'
 import MessageIcon from '@mui/icons-material/Message'
 import MomentComponent from 'moment'

@@ -23,20 +23,20 @@ xdescribe('task actions', () => {
         response: {
           authenticated: true,
           user: {
-            id: 1,
-          },
-        },
+            id: 1
+          }
+        }
       })
       moxios.wait(() => {
         const firstRequest = moxios.requests.first()
         firstRequest.respondWith({
           status: 200,
-          response: {},
+          response: {}
         })
         const request = moxios.requests.mostRecent()
         request.respondWith({
           status: 200,
-          response: {},
+          response: {}
         })
       })
       const expectedActions = [
@@ -45,21 +45,21 @@ xdescribe('task actions', () => {
           open: true,
           text: 'actions.task.update.notification.success',
           type: 'ADD_NOTIFICATION',
-          link: undefined,
+          link: undefined
         },
         { completed: true, type: 'UPDATE_TASK_SUCCESS' },
-        { completed: false, type: 'FETCH_TASK_REQUESTED' },
+        { completed: false, type: 'FETCH_TASK_REQUESTED' }
       ]
       const store = mockStore({
         intl: { messages: {} },
         task: { completed: true, id: 1 },
-        loggedIn: { logged: true, user: { id: 1 } },
+        loggedIn: { logged: true, user: { id: 1 } }
       })
       return store
         .dispatch(
           taskActions.updateTask({
-            id: 1,
-          }),
+            id: 1
+          })
         )
         .then(() => {
           // return of async actions
@@ -73,16 +73,16 @@ xdescribe('task actions', () => {
     it('should dispatch an action to send message to author', () => {
       expect(taskActions.messageAuthorRequested()).toEqual({
         type: 'MESSAGE_AUTHOR_REQUESTED',
-        completed: false,
+        completed: false
       })
       expect(taskActions.messageAuthorSuccess()).toEqual({
         type: 'MESSAGE_AUTHOR_SUCCESS',
-        completed: true,
+        completed: true
       })
       expect(taskActions.messageAuthorError({ code: 401 })).toEqual({
         type: 'MESSAGE_AUTHOR_ERROR',
         completed: true,
-        error: { code: 401 },
+        error: { code: 401 }
       })
     })
     it('should dispatch an action to send message to author async', () => {
@@ -92,26 +92,26 @@ xdescribe('task actions', () => {
         response: {
           authenticated: true,
           user: {
-            id: 1,
-          },
-        },
+            id: 1
+          }
+        }
       })
       moxios.wait(() => {
         const request = moxios.requests.mostRecent()
         request.respondWith({
           status: 200,
-          response: {},
+          response: {}
         })
       })
       const expectedActions = [
         { completed: false, type: 'MESSAGE_AUTHOR_REQUESTED' },
         { open: true, text: 'actions.task.message.author.success', type: 'ADD_NOTIFICATION' },
-        { completed: true, type: 'MESSAGE_AUTHOR_SUCCESS' },
+        { completed: true, type: 'MESSAGE_AUTHOR_SUCCESS' }
       ]
       const store = mockStore({
         intl: { messages: {} },
         task: { completed: true, id: 1 },
-        loggedIn: { logged: true, user: { id: 1 } },
+        loggedIn: { logged: true, user: { id: 1 } }
       })
       return store.dispatch(taskActions.messageAuthor(1, 1, 'message')).then(() => {
         // return of async actions

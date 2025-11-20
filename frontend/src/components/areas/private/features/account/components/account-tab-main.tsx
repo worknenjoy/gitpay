@@ -15,7 +15,7 @@ const AccountTabMain = ({
   changePassword,
   addNotification,
   history,
-  deleteUser,
+  deleteUser
 }) => {
   const { login_strategy, provider, name, password } = user
   const [fieldName, setFieldName] = useState<string>(name)
@@ -66,7 +66,7 @@ const AccountTabMain = ({
     changePassword &&
       (await changePassword({
         old_password: currentPassword,
-        password: newPassword,
+        password: newPassword
       }))
   }
 

@@ -16,7 +16,7 @@ const ExploreProjectPage = ({
   labels,
   listLabels,
   languages,
-  listLanguages,
+  listLanguages
 }) => {
   return (
     <ExplorePaper elevation={0}>
@@ -31,7 +31,7 @@ const ExploreProjectPage = ({
                   defaultMessage="Explore Issues"
                 />
               ),
-              link: '/profile/explore',
+              link: '/profile/explore'
             }}
           />
         </TopSection>

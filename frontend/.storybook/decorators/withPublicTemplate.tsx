@@ -10,7 +10,7 @@ export const withPublicTemplate = (Story: any, context: any) => {
     bottomBarProps,
     importIssuesProps,
     loginFormForgotFormProps,
-    loginFormSignupFormProps,
+    loginFormSignupFormProps
   } = context.args
 
   return (

@@ -3,7 +3,7 @@ import ImportIssueDialog from './import-issue-dialog'
 
 export default {
   title: 'Design Library/Molecules/Dialogs/ImportIssueDialog',
-  component: ImportIssueDialog,
+  component: ImportIssueDialog
 }
 
 const Template = (args) => {
@@ -20,5 +20,5 @@ const Template = (args) => {
 export const Default = Template.bind({})
 Default.args = {
   // Add default args here if needed
-  onImport: () => {},
+  onImport: () => {}
 }

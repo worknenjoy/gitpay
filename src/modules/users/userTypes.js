@@ -5,16 +5,16 @@ const Promise = require('bluebird')
 module.exports = Promise.method(async function userTypes(userId) {
   return models.User.findOne({
     where: {
-      id: userId,
+      id: userId
     },
     include: [
       {
         model: models.Type,
         as: 'Types',
-        attributes: ['id', 'name'],
-      },
+        attributes: ['id', 'name']
+      }
     ],
-    attributes: ['id', 'name', 'profile_url', 'picture_url', 'website'],
+    attributes: ['id', 'name', 'profile_url', 'picture_url', 'website']
   })
     .then(async (user) => {
       if (!user) {

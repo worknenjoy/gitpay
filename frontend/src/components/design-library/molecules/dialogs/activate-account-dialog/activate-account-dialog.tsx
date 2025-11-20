@@ -14,7 +14,7 @@ const RESEND_COOLDOWN_SECONDS = 60
 const ActivateAccountDialog: React.FC<ActivateAccountDialogProps> = ({
   open,
   onResend,
-  completed,
+  completed
 }) => {
   const [cooldown, setCooldown] = useState(0)
 

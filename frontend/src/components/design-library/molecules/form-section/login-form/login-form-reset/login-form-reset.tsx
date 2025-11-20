@@ -28,7 +28,7 @@ const LoginFormReset = ({
   noCancelButton,
   onClose,
   onSignin,
-  onReset,
+  onReset
 }: LoginFormResetProps) => {
   const history = useHistory()
 
@@ -40,7 +40,7 @@ const LoginFormReset = ({
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState<ErrorStateType>({
     password: false,
-    confirmPassword: false,
+    confirmPassword: false
   })
 
   const handleChangePassword = (event) => {
@@ -88,7 +88,7 @@ const LoginFormReset = ({
               id="user.password.error.minimum"
               defaultMessage="Password must be at least 8 characters"
             />
-          ),
+          )
         })
       } else if (password.length > 72) {
         setError({
@@ -98,7 +98,7 @@ const LoginFormReset = ({
               id="user.password.error.maximum"
               defaultMessage="Password cannot be longer than 72 characters"
             />
-          ),
+          )
         })
       } else {
         setError({ ...error, password: false })
@@ -116,7 +116,7 @@ const LoginFormReset = ({
               id="user.confirm.password.error"
               defaultMessage="Passwords do not match"
             />
-          ),
+          )
         })
       } else {
         setError({ ...error, confirmPassword: false })

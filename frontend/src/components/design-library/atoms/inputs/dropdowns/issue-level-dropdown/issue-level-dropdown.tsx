@@ -16,7 +16,7 @@ const optionLabels = {
   '': 'Choose level',
   easy: 'Easy',
   medium: 'Medium',
-  hard: 'Hard',
+  hard: 'Hard'
 }
 
 export default function TaskLevelSplitButton({ id, level, updateTask }) {
@@ -100,7 +100,7 @@ export default function TaskLevelSplitButton({ id, level, updateTask }) {
             <Grow
               {...TransitionProps}
               style={{
-                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'
               }}
             >
               <Paper>

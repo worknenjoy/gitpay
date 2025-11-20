@@ -55,7 +55,7 @@ export const countryCodes = [
   { country: 'Turkey', code: 'TR', image: 'turkey' },
   { country: 'United Arab Emirates', code: 'AE', image: 'united-arab-emirates' },
   { country: 'United Kingdom', code: 'GB', image: 'united-kingdom' },
-  { country: 'United States', code: 'US', image: 'united-states-of-america' },
+  { country: 'United States', code: 'US', image: 'united-states-of-america' }
 ]
 
 export const countryCurrencies = [
@@ -84,8 +84,8 @@ export const countryCurrencies = [
       'PT',
       'SK',
       'SI',
-      'ES',
-    ],
+      'ES'
+    ]
   },
   { currency: 'Bangladeshi Taka', symbol: '৳', code: 'BDT', countries: ['BD'] },
   { currency: 'Brazilian Real', symbol: 'R$', code: 'BRL', countries: ['BR'] },
@@ -120,7 +120,7 @@ export const countryCurrencies = [
   { currency: 'United States Dollar', symbol: '$', code: 'USD', countries: ['US'] },
   { currency: 'Turkish Lira', symbol: '₺', code: 'TRY', countries: ['TR'] },
   { currency: 'Pakistani Rupee', symbol: '₨', code: 'PKR', countries: ['PK'] },
-  { currency: 'Jordanian Dinar', symbol: 'JD', code: 'JOD', countries: ['JO'] },
+  { currency: 'Jordanian Dinar', symbol: 'JD', code: 'JOD', countries: ['JO'] }
 ]
 
 export const countryCodesFull = [
@@ -317,7 +317,7 @@ export const countryCodesFull = [
   { country: 'Vietnam', code: 'VN' },
   { country: 'Yemen', code: 'YE' },
   { country: 'Zambia', code: 'ZM' },
-  { country: 'Zimbabwe', code: 'ZW' },
+  { country: 'Zimbabwe', code: 'ZW' }
 ]
 
 export const SEPA_COUNTRIES = [
@@ -356,5 +356,5 @@ export const SEPA_COUNTRIES = [
   'SI', // Slovenia
   'SK', // Slovakia
   'SM', // San Marino
-  'VA', // Vatican City
+  'VA' // Vatican City
 ]

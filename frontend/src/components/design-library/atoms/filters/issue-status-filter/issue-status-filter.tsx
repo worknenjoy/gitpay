@@ -13,7 +13,7 @@ const IssueStatusFilter = function ({ onFilter }) {
   const statuses = [
     { id: 'all', name: 'All Statuses' },
     { id: 'open', name: 'Open' },
-    { id: 'closed', name: 'Closed' },
+    { id: 'closed', name: 'Closed' }
   ]
 
   return (

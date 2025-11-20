@@ -3,128 +3,128 @@ import { defineMessages } from 'react-intl'
 let msgs: any = defineMessages({
   externalAccount: {
     id: 'consts.external.account',
-    defaultMessage: 'Bank account',
+    defaultMessage: 'Bank account'
   },
   city: {
     id: 'consts.address.city',
-    defaultMessage: 'City',
+    defaultMessage: 'City'
   },
   addressLine1: {
     id: 'consts.address.line1',
-    defaultMessage: 'Address line 1',
+    defaultMessage: 'Address line 1'
   },
   zipcode: {
     id: 'consts.address.zipcode',
-    defaultMessage: 'Zip code',
+    defaultMessage: 'Zip code'
   },
   state: {
     id: 'consts.address.state',
-    defaultMessage: 'State',
+    defaultMessage: 'State'
   },
   birthDay: {
     id: 'consts.address.birth.day',
-    defaultMessage: 'Day of birth',
+    defaultMessage: 'Day of birth'
   },
   birthMonth: {
     id: 'consts.address.birth.month',
-    defaultMessage: 'Month of Birth',
+    defaultMessage: 'Month of Birth'
   },
   birthYear: {
     id: 'consts.address.birth.year',
-    defaultMessage: 'Year of birth',
+    defaultMessage: 'Year of birth'
   },
   firstName: {
     id: 'consts.account.firstname',
-    defaultMessage: 'First name',
+    defaultMessage: 'First name'
   },
   lastName: {
     id: 'consts.account.lastname',
-    defaultMessage: 'Last name',
+    defaultMessage: 'Last name'
   },
   email: {
     id: 'consts.account.email',
-    defaultMessage: 'E-mail',
+    defaultMessage: 'E-mail'
   },
   phone: {
     id: 'consts.account.phone',
-    defaultMessage: 'Phone number',
+    defaultMessage: 'Phone number'
   },
   idNumber: {
     id: 'consts.account.id.number',
-    defaultMessage: 'document number',
+    defaultMessage: 'document number'
   },
   docNumber: {
     id: 'consts.account.id.doc',
-    defaultMessage: 'document',
+    defaultMessage: 'document'
   },
   idType: {
     id: 'consts.account.id.type',
-    defaultMessage: 'identification type',
+    defaultMessage: 'identification type'
   },
   termsDate: {
     id: 'consts.account.terms.date',
-    defaultMessage: 'Accepted terms date',
+    defaultMessage: 'Accepted terms date'
   },
   terms: {
     id: 'consts.account.terms.accept',
-    defaultMessage: 'Accepted terms',
+    defaultMessage: 'Accepted terms'
   },
   accountReasonsFieldsNeeded: {
     id: 'consts.account.reasons.fields.needed',
-    defaultMessage: 'Pending fields',
+    defaultMessage: 'Pending fields'
   },
   accountReasonsFieldsExternal: {
     id: 'consts.account.reasons.fields.external',
-    defaultMessage: 'Register bank account',
+    defaultMessage: 'Register bank account'
   },
   accountReasonsFieldsPending: {
     id: 'consts.account.reasons.fields.pending',
-    defaultMessage: 'Verification pending',
+    defaultMessage: 'Verification pending'
   },
   accountReasonsFieldsPendingOther: {
     id: 'consts.account.reasons.fields.pending.other',
-    defaultMessage: 'Pending',
+    defaultMessage: 'Pending'
   },
   statusOpen: {
     id: 'consts.account.statuses.open',
-    defaultMessage: 'Open',
+    defaultMessage: 'Open'
   },
   statusOpenTwo: {
     id: 'consts.account.statuses.open.two',
-    defaultMessage: 'Open',
+    defaultMessage: 'Open'
   },
   statusProgress: {
     id: 'consts.account.statuses.progress',
-    defaultMessage: 'In progress',
+    defaultMessage: 'In progress'
   },
   statusClosed: {
     id: 'consts.account.statuses.closed',
-    defaultMessage: 'Closed',
+    defaultMessage: 'Closed'
   },
   statusUndefined: {
     id: 'consts.account.statuses.undefined',
-    defaultMessage: 'Undefined',
+    defaultMessage: 'Undefined'
   },
   statusUndefinedTwo: {
     id: 'consts.account.statuses.undefined.two',
-    defaultMessage: 'Undefined',
+    defaultMessage: 'Undefined'
   },
   statusUndefinedThree: {
     id: 'consts.account.statuses.undefined.three',
-    defaultMessage: 'Undefined',
+    defaultMessage: 'Undefined'
   },
   statusBusinessProfileUrl: {
     id: 'consts.account.statuses.business_profile_url',
-    defaultMessage: 'Website',
+    defaultMessage: 'Website'
   },
   statusBusinessType: {
     id: 'consts.account.statuses.business_type',
-    defaultMessage: 'Business type',
+    defaultMessage: 'Business type'
   },
   statusBusinessTypeMCC: {
     id: 'consts.account.statuses.business_type.mcc',
-    defaultMessage: 'MCC Bksiness type',
-  },
+    defaultMessage: 'MCC Bksiness type'
+  }
 })
 
 msgs = msgs || {}
@@ -137,13 +137,13 @@ enum invoiceStatuses {
   failed = 'failed',
   uncollectible = 'uncollectible',
   void = 'void',
-  refunded = 'refunded',
+  refunded = 'refunded'
 }
 
 enum orderStripeStatuses {
   pending = 'pending',
   succeeded = 'succeeded',
-  failed = 'failed',
+  failed = 'failed'
 }
 
 enum orderSystemStatuses {
@@ -153,30 +153,30 @@ enum orderSystemStatuses {
   expired = 'expired',
   cancelled = 'cancelled',
   canceled = 'canceled', // TODO: fix temporary status name
-  refunded = 'refunded',
+  refunded = 'refunded'
 }
 
 const orderStatuses = {
   ...orderStripeStatuses,
-  ...orderSystemStatuses,
+  ...orderSystemStatuses
 }
 
 export const status = {
   invoice: invoiceStatuses,
-  order: orderStatuses,
+  order: orderStatuses
 }
 
 export enum paymentProviders {
   stripe = 'stripe',
   paypal = 'paypal',
   wallet = 'wallet',
-  unknown = 'unknown',
+  unknown = 'unknown'
 }
 
 export enum paymentSources {
   card = 'card',
   invoice = 'invoice-item',
-  unknown = 'unknown',
+  unknown = 'unknown'
 }
 
 const api = {
@@ -202,12 +202,12 @@ const api = {
     'business_profile.url': msgs.statusBusinessProfileUrl,
     business_type: msgs.statusBusinessType,
     'business_profile.mcc': msgs.statusBusinessTypeMCC,
-    'individual.id_number': msgs.idNumber,
+    'individual.id_number': msgs.idNumber
   },
   ACCOUNT_REASONS: {
     external_account: msgs.accountReasonsFieldsExternal,
     null: msgs.accountReasonsFieldsPending,
-    undefined: msgs.accountReasonsFieldsPendingOther,
+    undefined: msgs.accountReasonsFieldsPendingOther
   },
 
   STATUSES: {
@@ -217,7 +217,7 @@ const api = {
     closed: msgs.statusClosed,
     '': msgs.statusUndefined,
     null: msgs.statusUndefinedTwo,
-    undefined: msgs.statusUndefinedThree,
+    undefined: msgs.statusUndefinedThree
   },
 
   STATUSES_COLORS: {
@@ -227,7 +227,7 @@ const api = {
     closed: 'blue',
     '': 'black',
     null: 'gray',
-    undefined: 'brown',
+    undefined: 'brown'
   },
 
   BANK_NUMBERS: {
@@ -273,9 +273,9 @@ const api = {
       '479': 'BANCO ITAUBANK S.A.',
       '077': 'BANCO INTERMEDIUM S.A.',
       '212': 'BANCO ORIGINAL',
-      '085': 'CECRED-COOPERATIVA CENTRAL DE CREDITO URBANO',
-    },
-  },
+      '085': 'CECRED-COOPERATIVA CENTRAL DE CREDITO URBANO'
+    }
+  }
 }
 
 export default api

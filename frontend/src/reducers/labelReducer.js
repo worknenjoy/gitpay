@@ -1,15 +1,15 @@
 import {
   LIST_LABELS_REQUEST,
   LIST_LABELS_SUCCESS,
-  LIST_LABELS_ERROR,
+  LIST_LABELS_ERROR
 } from '../actions/labelActions'
 
 export const labels = (
   state = {
     completed: true,
-    data: [],
+    data: []
   },
-  action,
+  action
 ) => {
   switch (action.type) {
     case LIST_LABELS_REQUEST:

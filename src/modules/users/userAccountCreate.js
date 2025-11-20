@@ -5,7 +5,7 @@ const stripe = require('../shared/stripe/stripe')()
 module.exports = Promise.method(function userAccountCreate(userParameters) {
   const { country } = userParameters
   return models.User.findOne({
-    where: { id: userParameters.id },
+    where: { id: userParameters.id }
   }).then((user) => {
     if (user && user.dataValues && user.dataValues.account_id) {
       return { error: 'user already have an account' }
@@ -19,12 +19,12 @@ module.exports = Promise.method(function userAccountCreate(userParameters) {
         business_type: 'individual',
         capabilities: {
           transfers: {
-            requested: true,
-          },
+            requested: true
+          }
         },
         tos_acceptance: {
-          service_agreement: country === 'US' ? 'full' : 'recipient',
-        },
+          service_agreement: country === 'US' ? 'full' : 'recipient'
+        }
       })
       .then((account) => {
         // eslint-disable-next-line no-console
@@ -33,11 +33,11 @@ module.exports = Promise.method(function userAccountCreate(userParameters) {
           .update(
             {
               account_id: account.id,
-              country: country,
+              country: country
             },
             {
-              where: { id: userParameters.id },
-            },
+              where: { id: userParameters.id }
+            }
           )
           .then((userUpdated) => {
             return account

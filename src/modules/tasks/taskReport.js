@@ -35,10 +35,10 @@ module.exports = Promise.method(function ({ id }, { task, reason, baseUrl }) {
           title: task.title,
           url: taskUrl,
           approveURL: approveURL,
-          selectedReason: reason,
+          selectedReason: reason
         })}
-        `,
+        `
       )
-    },
+    }
   )
 })

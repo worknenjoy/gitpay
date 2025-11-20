@@ -12,7 +12,7 @@ const BankAccountTabs = ({ children }) => {
         />
       ),
       value: 'account-holder',
-      link: '/profile/payout-settings/bank-account/account-holder',
+      link: '/profile/payout-settings/bank-account/account-holder'
     },
     {
       label: (
@@ -22,7 +22,7 @@ const BankAccountTabs = ({ children }) => {
         />
       ),
       value: 'bank-info',
-      link: '/profile/payout-settings/bank-account/bank-account-info',
+      link: '/profile/payout-settings/bank-account/bank-account-info'
     },
     {
       label: (
@@ -32,8 +32,8 @@ const BankAccountTabs = ({ children }) => {
         />
       ),
       value: 'payout-schedule',
-      link: '/profile/payout-settings/bank-account/payout-schedule',
-    },
+      link: '/profile/payout-settings/bank-account/payout-schedule'
+    }
   ]
 
   return (

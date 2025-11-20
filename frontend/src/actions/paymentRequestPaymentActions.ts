@@ -7,17 +7,17 @@ const LIST_PAYMENT_REQUEST_PAYMENT_FAILED = 'PAYMENT_REQUEST_PAYMENT_FAILED'
 
 export const listPaymentRequestPaymentRequested = (data?: any) => ({
   type: LIST_PAYMENT_REQUEST_PAYMENT_REQUESTED,
-  payload: data,
+  payload: data
 })
 
 export const listPaymentRequestPaymentSucceeded = (data: any) => ({
   type: LIST_PAYMENT_REQUEST_PAYMENT_SUCCEEDED,
-  payload: data,
+  payload: data
 })
 
 export const listPaymentRequestPaymentFailed = (error: any) => ({
   type: LIST_PAYMENT_REQUEST_PAYMENT_FAILED,
-  payload: error,
+  payload: error
 })
 
 export const listPaymentRequestPayments = () => async (dispatch: any) => {
@@ -38,5 +38,5 @@ export const listPaymentRequestPayments = () => async (dispatch: any) => {
 export {
   LIST_PAYMENT_REQUEST_PAYMENT_REQUESTED,
   LIST_PAYMENT_REQUEST_PAYMENT_SUCCEEDED,
-  LIST_PAYMENT_REQUEST_PAYMENT_FAILED,
+  LIST_PAYMENT_REQUEST_PAYMENT_FAILED
 }

@@ -21,5 +21,5 @@ module.exports = {
   orderCancel,
   orderDetails,
   orderTransfer,
-  orderRefund,
+  orderRefund
 }

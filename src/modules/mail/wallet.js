@@ -6,7 +6,7 @@ const i18n = require('i18n')
 const WalletMail = {
   invoiceCreated: (invoice, wallet, user) => {
     // Send email to user
-  },
+  }
 }
 
 if (constants.canSendEmail) {
@@ -25,16 +25,16 @@ if (constants.canSendEmail) {
             i18n.__('mail.webhook.wallet.invoice.message', {
               amount: walletOrder.amount,
               currency: invoice.currency,
-              walletName: walletOrder.Wallet.name,
+              walletName: walletOrder.Wallet.name
             }),
             i18n.__('mail.webhook.wallet.invoice.button'),
             invoice.hosted_invoice_url,
             '',
-            i18n.__('mail.webhook.wallet.invoice.footer'),
-          ),
-        },
+            i18n.__('mail.webhook.wallet.invoice.footer')
+          )
+        }
       ],
-      constants.notificationEmail,
+      constants.notificationEmail
     )
   }
 }

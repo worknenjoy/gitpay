@@ -5,7 +5,7 @@ import Drawer from './drawer'
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Molecules/Drawers/Drawer',
-  component: Drawer,
+  component: Drawer
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
@@ -28,14 +28,14 @@ Primary.args = {
       onClick: () => {},
       variant: 'contained',
       color: 'primary',
-      disabled: false,
+      disabled: false
     },
     {
       label: 'Action 2',
       onClick: () => {},
       variant: 'contained',
       color: 'primary',
-      disabled: true,
-    },
-  ],
+      disabled: true
+    }
+  ]
 }

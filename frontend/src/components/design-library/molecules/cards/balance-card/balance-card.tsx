@@ -49,7 +49,7 @@ const BalanceCard = ({
   action,
   actionProps,
   completed,
-  type = 'decimal',
+  type = 'decimal'
 }: BalanceCardProps) => {
   const convertedBalance =
     type === 'decimal'

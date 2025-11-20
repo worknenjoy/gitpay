@@ -13,7 +13,7 @@ const ProjectPublicPage = ({
   languages,
   listLabels,
   listLanguages,
-  listTasks,
+  listTasks
 }) => {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -21,7 +21,7 @@ const ProjectPublicPage = ({
         project={project}
         root={{
           label: <FormattedMessage id="breadcrumb.explore.issues.root" defaultMessage="Explore" />,
-          link: '/explore/issues',
+          link: '/explore/issues'
         }}
       />
       <ContextTitle

@@ -1,7 +1,7 @@
 import {
   LIST_PAYMENT_REQUEST_BALANCE_REQUESTED,
   LIST_PAYMENT_REQUEST_BALANCE_SUCCEEDED,
-  LIST_PAYMENT_REQUEST_BALANCE_FAILED,
+  LIST_PAYMENT_REQUEST_BALANCE_FAILED
 } from '../actions/paymentRequestBalanceActions'
 
 type PaymentRequestBalanceState = {
@@ -18,31 +18,31 @@ type Action<T = any> = {
 const initialState: PaymentRequestBalanceState = {
   completed: false,
   error: null,
-  data: null,
+  data: null
 }
 
 export const paymentRequestBalances = (
   state: PaymentRequestBalanceState = initialState,
-  action: Action,
+  action: Action
 ): PaymentRequestBalanceState => {
   switch (action.type) {
     case LIST_PAYMENT_REQUEST_BALANCE_REQUESTED:
       return {
         ...state,
         completed: true,
-        error: null,
+        error: null
       }
     case LIST_PAYMENT_REQUEST_BALANCE_SUCCEEDED:
       return {
         ...state,
         completed: true,
-        data: action.payload,
+        data: action.payload
       }
     case LIST_PAYMENT_REQUEST_BALANCE_FAILED:
       return {
         ...state,
         completed: true,
-        error: action.payload,
+        error: action.payload
       }
     default:
       return state

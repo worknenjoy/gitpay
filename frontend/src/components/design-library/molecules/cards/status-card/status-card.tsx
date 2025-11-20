@@ -5,16 +5,16 @@ const Root = styled(Card)(() => ({
   maxWidth: 500,
   margin: 10,
   textAlign: 'right',
-  padding: 10,
+  padding: 10
 }))
 
 const Balance = styled(Typography)(() => ({
   fontSize: 32,
-  fontWeight: 'bold',
+  fontWeight: 'bold'
 }))
 
 const Name = styled(Typography)(() => ({
-  fontSize: 18,
+  fontSize: 18
 }))
 
 type StatusCardProps = {

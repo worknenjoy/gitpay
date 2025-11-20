@@ -7,8 +7,8 @@ const meta = {
   args: {
     status: 'Done',
     name: 'Available Balance',
-    completed: true,
-  },
+    completed: true
+  }
 }
 
 export default meta
@@ -19,10 +19,10 @@ export const Default = Template.bind({})
 Default.args = {
   status: 'Done',
   name: 'Available Balance',
-  completed: true,
+  completed: true
 }
 
 export const Loading = Template.bind({})
 Loading.args = {
-  completed: false,
+  completed: false
 }

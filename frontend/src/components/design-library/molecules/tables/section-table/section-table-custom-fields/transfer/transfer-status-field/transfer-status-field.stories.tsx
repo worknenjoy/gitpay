@@ -2,48 +2,48 @@ import TransferStatusField from './transfer-status-field'
 
 export default {
   title: 'Design Library/Molecules/Tables/Fields/Transfers/TransferStatusField',
-  component: TransferStatusField,
+  component: TransferStatusField
 }
 
 export const Pending = {
   args: {
-    status: 'pending',
-  },
+    status: 'pending'
+  }
 }
 
 export const Created = {
   args: {
-    status: 'created',
-  },
+    status: 'created'
+  }
 }
 
 export const InTransit = {
   args: {
-    status: 'in_transit',
-  },
+    status: 'in_transit'
+  }
 }
 
 export const Reversed = {
   args: {
-    status: 'reversed',
-  },
+    status: 'reversed'
+  }
 }
 
 export const Completed = {
   args: {
-    status: 'completed',
-  },
+    status: 'completed'
+  }
 }
 
 export const Unknown = {
   args: {
-    status: 'unknown',
-  },
+    status: 'unknown'
+  }
 }
 
 export const Loading = {
   args: {
     status: 'pending',
-    completed: false,
-  },
+    completed: false
+  }
 }

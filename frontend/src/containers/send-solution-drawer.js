@@ -5,7 +5,7 @@ import {
   createTaskSolution,
   updateTaskSolution,
   fetchPullRequestData,
-  cleanPullRequestDataState,
+  cleanPullRequestDataState
 } from '../actions/taskSolutionActions'
 import { getUserData } from '../common/selectors/user/getUser'
 import SendSolutionDrawer from '../components/design-library/molecules/drawers/send-solution-drawer/send-solution-drawer'
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
     taskSolution: state.taskSolutionReducer.taskSolution,
     pullRequestData: state.taskSolutionReducer.pullRequestData,
     task: state.task,
-    completed: state.taskSolutionReducer.completed,
+    completed: state.taskSolutionReducer.completed
   }
 }
 
@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchPullRequestData: (owner, repositoryName, pullRequestId, taskId) =>
       dispatch(fetchPullRequestData(owner, repositoryName, pullRequestId, taskId)),
     cleanPullRequestDataState: () => dispatch(cleanPullRequestDataState()),
-    fetchAccount: () => dispatch(fetchAccount()),
+    fetchAccount: () => dispatch(fetchAccount())
   }
 }
 

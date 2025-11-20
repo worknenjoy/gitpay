@@ -4,9 +4,9 @@ import { FormControlLabel as MuiFormControlLabel, Box as MuiBox } from '@mui/mat
 export const RowFormControlLabel = styled(MuiFormControlLabel)(({ theme }) => ({
   margin: '4px 0',
   display: 'flex',
-  alignItems: 'flex-start',
+  alignItems: 'flex-start'
 }))
 
 export const ContentBox = styled(MuiBox)(({ theme }) => ({
-  marginTop: 10,
+  marginTop: 10
 }))

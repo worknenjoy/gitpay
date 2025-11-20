@@ -14,12 +14,12 @@ module.exports.get = {
       application: null,
       currency: 'usd',
       description: 'Stripe processing fees',
-      type: 'stripe_fee',
-    },
+      type: 'stripe_fee'
+    }
   ],
   net: 10295,
   reporting_category: 'charge',
   source: 'ch_123',
   status: 'pending',
-  type: 'charge',
+  type: 'charge'
 }

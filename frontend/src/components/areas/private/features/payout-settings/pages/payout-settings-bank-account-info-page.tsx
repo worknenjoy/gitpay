@@ -6,7 +6,7 @@ const PayoutSettingsBankAccountInfoPage = ({
   bankAccount,
   updateBankAccount,
   createBankAccount,
-  countries,
+  countries
 }) => {
   const [bankCode, setBankCode] = React.useState(null)
 
@@ -26,7 +26,7 @@ const PayoutSettingsBankAccountInfoPage = ({
       country: e.target['bank_account_country'].value,
       account_holder_name: e.target['account_holder_name'].value,
       account_holder_type: e.target['bank_account_type'].value,
-      currency: e.target['bank_account_currency'].value,
+      currency: e.target['bank_account_currency'].value
       //'external_account[bank_name]': e.target['bankCode'].value
     }
 

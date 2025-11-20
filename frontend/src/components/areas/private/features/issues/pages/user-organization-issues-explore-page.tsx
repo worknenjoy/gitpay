@@ -12,7 +12,7 @@ const UserOrganizationIssuesExplorePage = ({
   listLanguages,
   fetchOrganization,
   user,
-  organization,
+  organization
 }) => {
   const { organization_id } = useParams<{ organization_id: string }>()
 

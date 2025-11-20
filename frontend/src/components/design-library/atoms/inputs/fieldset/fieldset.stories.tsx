@@ -7,8 +7,8 @@ export default {
   component: Fieldset,
   argTypes: {
     legend: { control: 'text' },
-    children: { control: 'text' },
-  },
+    children: { control: 'text' }
+  }
 }
 
 const Template = (args) => <Fieldset {...args} />
@@ -28,12 +28,12 @@ Default.args = {
       disabled={false}
       required={false}
     />
-  ),
+  )
 }
 
 export const Loading = Template.bind({})
 Loading.args = {
   legend: 'Loading Fieldset',
   completed: false,
-  children: <></>,
+  children: <></>
 }

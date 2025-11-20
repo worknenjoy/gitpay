@@ -13,7 +13,7 @@ module.exports.createOrUpdateCustomer = Promise.method((user) => {
   }
   return stripe.customers
     .create({
-      email: user.email,
+      email: user.email
     })
     .then((customer) => {
       if (customer.id) {
@@ -23,7 +23,7 @@ module.exports.createOrUpdateCustomer = Promise.method((user) => {
               throw new Error('user not updated')
             }
             return customer
-          },
+          }
         )
       }
     })

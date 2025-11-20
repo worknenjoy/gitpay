@@ -15,7 +15,7 @@ import {
   Checkbox,
   FormGroup,
   FormControlLabel,
-  MenuItem,
+  MenuItem
 } from '@mui/material'
 
 import { HowToReg as GroupWorkIcon, Message as MessageIcon } from '@mui/icons-material'
@@ -78,7 +78,7 @@ const AssignActions = ({
   task,
   assignTask,
   messageTask,
-  createOrder,
+  createOrder
 }) => {
   const hasAssignedUser = assign.id === task.assigned
   const [messageOpen, setMessageOpen] = useState(false)
@@ -138,7 +138,7 @@ const AssignActions = ({
         currency: 'usd',
         status: 'open',
         source_type: 'invoice-item',
-        customer_id: customerId || loggedUser.customer_id,
+        customer_id: customerId || loggedUser.customer_id
       }))
   }
 

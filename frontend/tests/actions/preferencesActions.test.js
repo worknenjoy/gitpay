@@ -17,21 +17,21 @@ describe('preference actions', () => {
     it('should dispatch a action to get the current language', () => {
       expect(preferencesActions.fetchPreferencesRequested()).toEqual({
         type: 'FETCH_PREFERENCES_REQUESTED',
-        completed: false,
+        completed: false
       })
       expect(
         preferencesActions.fetchPreferencesSuccess({
-          language: 'br',
-        }),
+          language: 'br'
+        })
       ).toEqual({
         type: 'FETCH_PREFERENCES_SUCCESS',
         completed: true,
-        language: 'br',
+        language: 'br'
       })
       expect(preferencesActions.fetchPreferencesError({ error: true })).toEqual({
         type: 'FETCH_PREFERENCES_ERROR',
         completed: true,
-        error: { error: true },
+        error: { error: true }
       })
     })
   })
@@ -52,17 +52,17 @@ describe('preference actions', () => {
           response: {
             authenticated: true,
             user: {
-              id: 1,
-            },
-          },
+              id: 1
+            }
+          }
         })
         moxios.wait(() => {
           const request = moxios.requests.mostRecent()
           request.respondWith({
             status: 200,
             response: {
-              language: 'br',
-            },
+              language: 'br'
+            }
           })
         })
         const expectedActions = [
@@ -70,12 +70,12 @@ describe('preference actions', () => {
           { open: true, text: 'user.login.successfull', type: 'ADD_NOTIFICATION' },
           { completed: true, logged: true, type: 'LOGGED_IN_SUCCESS', data: { id: 1 } },
           { completed: false, type: 'FETCH_PREFERENCES_REQUESTED' },
-          { completed: true, type: 'FETCH_PREFERENCES_SUCCESS', language: 'br' },
+          { completed: true, type: 'FETCH_PREFERENCES_SUCCESS', language: 'br' }
         ]
         const store = mockStore({
           intl: { messages: {} },
           preferences: { language: {} },
-          loggedIn: { logged: true, data: { id: 1 } },
+          loggedIn: { logged: true, data: { id: 1 } }
         })
         return store.dispatch(preferencesActions.fetchPreferences(1)).then(() => {
           // return of async actions

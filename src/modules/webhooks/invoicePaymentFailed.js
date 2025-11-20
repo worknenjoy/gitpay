@@ -10,8 +10,8 @@ module.exports = async function invoicePaymentFailed(event, req, res) {
   // eslint-disable-next-line no-case-declarations
   const walletOrderExists = await models.WalletOrder.findOne({
     where: {
-      source: event.data.object.id,
-    },
+      source: event.data.object.id
+    }
   })
   if (!walletOrderExists) {
     const walletId = event.data.object.metadata.wallet_id
@@ -27,18 +27,18 @@ module.exports = async function invoicePaymentFailed(event, req, res) {
         source: event.data.object.id,
         ordered_in: new Date(),
         paid: false,
-        status: event.data.object.status,
+        status: event.data.object.status
       }))
   } else {
     const walletOrderUpdate = await models.WalletOrder.update(
       {
-        status: event.data.object.status,
+        status: event.data.object.status
       },
       {
         where: {
-          source: event.data.object.id,
-        },
-      },
+          source: event.data.object.id
+        }
+      }
     )
   }
   return res.status(200).json(event)

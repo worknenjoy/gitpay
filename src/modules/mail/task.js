@@ -31,7 +31,7 @@ const TaskMail = {
   weeklyBounties: (data) => Promise.resolve({}),
   weeklyLatest: () => Promise.resolve({}),
   notifyPayment: () => Promise.resolve({}),
-  messageAuthor: (user, task, message) => {},
+  messageAuthor: (user, task, message) => {}
 }
 
 if (constants.canSendEmail) {
@@ -53,16 +53,16 @@ if (constants.canSendEmail) {
                 provider: capitalizeFirstLetter(task.provider),
                 providerUrl: task.url,
                 title: task.title,
-                url: constants.taskUrl(task.id),
+                url: constants.taskUrl(task.id)
               }),
               i18n.__('mail.issue.new.callToActionText'),
               constants.taskUrl(task.id),
               i18n.__('mail.issue.new.subtitle2'),
-              i18n.__('mail.issue.new.footerMessage'),
-            ),
-          },
+              i18n.__('mail.issue.new.footerMessage')
+            )
+          }
         ],
-        constants.notificationEmail,
+        constants.notificationEmail
       )
   }
 
@@ -79,8 +79,8 @@ if (constants.canSendEmail) {
         call_to_action: i18n.__('mail.issue.me.calltoaction'),
         instructions: i18n.__('mail.issue.me.instructions'),
         docs: i18n.__('mail.issue.docs.title'),
-        reason: i18n.__('mail.issue.reason'),
-      },
+        reason: i18n.__('mail.issue.reason')
+      }
     }
     return withTemplate(to, i18n.__('mail.issue.me.subject'), fullData)
   }
@@ -105,8 +105,8 @@ if (constants.canSendEmail) {
           instructions: i18n.__('mail.issue.instructions'),
           docs: i18n.__('mail.issue.docs.title'),
           reason: i18n.__('mail.issue.reason'),
-          subject: i18n.__('mail.issue.subject'),
-        },
+          subject: i18n.__('mail.issue.subject')
+        }
       })
     })
     return withTemplate(mailList, subjectData, templateData)
@@ -140,8 +140,8 @@ if (constants.canSendEmail) {
           instructions: i18n.__('mail.issue.instructions'),
           docs: i18n.__('mail.issue.docs.title'),
           reason: i18n.__('mail.issue.reason'),
-          subject: i18n.__('mail.issue.bounties.subject'),
-        },
+          subject: i18n.__('mail.issue.bounties.subject')
+        }
       })
     })
     return withTemplate(mailList, subjectData, templateData, 'bounties')
@@ -175,8 +175,8 @@ if (constants.canSendEmail) {
           instructions: i18n.__('mail.issue.instructions'),
           docs: i18n.__('mail.issue.docs.title'),
           reason: i18n.__('mail.issue.reason'),
-          subject: i18n.__('mail.issue.latest.subject'),
-        },
+          subject: i18n.__('mail.issue.latest.subject')
+        }
       })
     })
     return withTemplate(mailList, subjectData, templateData, 'latest')
@@ -193,7 +193,7 @@ if (constants.canSendEmail) {
       i18n.setLocale(language)
       mailList.push(u.email)
       subjectData.push(
-        i18n.__('mail.issue.payment.subject', { value: data.task.value, title: data.task.title }),
+        i18n.__('mail.issue.payment.subject', { value: data.task.value, title: data.task.title })
       )
       templateData.push({
         ...data,
@@ -206,9 +206,9 @@ if (constants.canSendEmail) {
           reason: i18n.__('mail.issue.reason'),
           subject: i18n.__('mail.issue.payment.subject', {
             value: data.task.value,
-            title: data.task.title,
-          }),
-        },
+            title: data.task.title
+          })
+        }
       })
     })
     return withTemplate(mailList, subjectData, templateData)
@@ -228,10 +228,10 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: basicEmailTemplate.baseContentEmailTemplate(`
            <p>${i18n.__('mail.messageAuthor.intro', { name: senderName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
-${i18n.__('mail.messageAuthor.message', { message })}`),
-        },
+${i18n.__('mail.messageAuthor.message', { message })}`)
+        }
       ],
-      senderEmail,
+      senderEmail
     )
   }
 }

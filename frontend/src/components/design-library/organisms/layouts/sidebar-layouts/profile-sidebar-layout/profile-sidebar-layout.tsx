@@ -12,7 +12,7 @@ import {
   Public as ExploreIcon,
   AccountBox as AccountIcon,
   AssignmentReturnedTwoTone as PayoutSettingsIcon,
-  AssignmentTurnedIn as ClaimIcon,
+  AssignmentTurnedIn as ClaimIcon
 } from '@mui/icons-material'
 import { SideMenu } from '../../../../molecules/menus/side-menu/side-menu'
 
@@ -68,9 +68,9 @@ const ProfileSidebar = ({ user }) => {
                     defaultMessage="Dashboard"
                   />
                 ),
-                selected: selected === 0,
-              },
-            ],
+                selected: selected === 0
+              }
+            ]
           },
           {
             category: (
@@ -90,7 +90,7 @@ const ProfileSidebar = ({ user }) => {
                     defaultMessage="My issues"
                   />
                 ),
-                selected: selected === 1,
+                selected: selected === 1
               },
               {
                 include:
@@ -104,9 +104,9 @@ const ProfileSidebar = ({ user }) => {
                     defaultMessage="Explore issues"
                   />
                 ),
-                selected: selected === 2,
-              },
-            ],
+                selected: selected === 2
+              }
+            ]
           },
           {
             category: (
@@ -125,7 +125,7 @@ const ProfileSidebar = ({ user }) => {
                 label: (
                   <FormattedMessage id="account.profile.payments.list" defaultMessage="Payments" />
                 ),
-                selected: selected === 3,
+                selected: selected === 3
               },
               {
                 include: userTypes && userTypes?.includes('contributor'),
@@ -137,7 +137,7 @@ const ProfileSidebar = ({ user }) => {
                     defaultMessage="Payment Requests"
                   />
                 ),
-                selected: selected === 4,
+                selected: selected === 4
               },
               {
                 include:
@@ -148,7 +148,7 @@ const ProfileSidebar = ({ user }) => {
                 label: (
                   <FormattedMessage id="account.profile.wallet.list" defaultMessage="Wallets" />
                 ),
-                selected: selected === 5,
+                selected: selected === 5
               },
               {
                 include: userTypes && userTypes?.includes('contributor'),
@@ -157,7 +157,7 @@ const ProfileSidebar = ({ user }) => {
                 label: (
                   <FormattedMessage id="account.profile.claims.list" defaultMessage="Claims" />
                 ),
-                selected: selected === 6,
+                selected: selected === 6
               },
               {
                 include: userTypes && userTypes?.includes('contributor'),
@@ -166,9 +166,9 @@ const ProfileSidebar = ({ user }) => {
                 label: (
                   <FormattedMessage id="account.profile.payout.list" defaultMessage="Payouts" />
                 ),
-                selected: selected === 7,
-              },
-            ],
+                selected: selected === 7
+              }
+            ]
           },
           {
             category: (
@@ -188,7 +188,7 @@ const ProfileSidebar = ({ user }) => {
                     defaultMessage="Account settings"
                   />
                 ),
-                selected: selected === 8,
+                selected: selected === 8
               },
               {
                 include: userTypes && userTypes?.includes('contributor'),
@@ -200,10 +200,10 @@ const ProfileSidebar = ({ user }) => {
                     defaultMessage="Payout settings"
                   />
                 ),
-                selected: selected === 9,
-              },
-            ],
-          },
+                selected: selected === 9
+              }
+            ]
+          }
         ]}
       />
     </Grid>

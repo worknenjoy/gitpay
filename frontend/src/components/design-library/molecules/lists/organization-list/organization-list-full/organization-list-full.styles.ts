@@ -6,9 +6,9 @@ export const Root = styled(Container)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   minHeight: '100%',
   paddingBottom: theme.spacing(3),
-  paddingTop: theme.spacing(3),
+  paddingTop: theme.spacing(3)
 }))
 
 export const StyledOrganizationCard = styled(OrganizationCard)({
-  height: '100%',
+  height: '100%'
 })

@@ -5,7 +5,7 @@ import {
   Section,
   MainTitle,
   MainList,
-  ResponsiveImage,
+  ResponsiveImage
 } from '../../../pages/public-pages/home-public-page/CommonStyles'
 import { ListItemTop, AvatarPrimary, HeroContent } from './section-hero.styles'
 
@@ -28,7 +28,7 @@ const SectionHero = ({
   animation,
   content,
   items,
-  contrast = false,
+  contrast = false
 }: SectionHeroProps) => {
   return (
     <Section alternative={contrast}>

@@ -11,7 +11,7 @@ import {
   DialogTitle,
   FormControl,
   Typography,
-  TextField,
+  TextField
 } from '@mui/material'
 
 const Container = styled.div`
@@ -33,7 +33,7 @@ class MessageAuthor extends Component {
     taskId: PropTypes.number,
     name: PropTypes.string,
     onClose: PropTypes.func,
-    onSend: PropTypes.func,
+    onSend: PropTypes.func
   }
 
   onChangeMessage = (event) => this.setState({ [event.target.name]: event.target.value })

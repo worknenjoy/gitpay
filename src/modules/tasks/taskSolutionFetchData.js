@@ -24,8 +24,8 @@ module.exports = Promise.method(async function fetchTaskSolutionData(solutionPar
   return requestPromise({
     uri: `https://api.github.com/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`,
     headers: {
-      'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
-    },
+      'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+    }
   })
     .then(async (response) => {
       let isConnectedToGitHub = false
@@ -36,15 +36,15 @@ module.exports = Promise.method(async function fetchTaskSolutionData(solutionPar
       const pullRequestData = JSON.parse(response)
 
       const user = await models.User.findOne({
-        where: { id: solutionParams.userId },
+        where: { id: solutionParams.userId }
       })
 
       const task = await models.Task.findOne({
-        where: { id: solutionParams.taskId },
+        where: { id: solutionParams.taskId }
       })
 
       const taskAssignment = await models.Assign.findOne({
-        where: { userId: solutionParams.userId, TaskId: task.dataValues.id },
+        where: { userId: solutionParams.userId, TaskId: task.dataValues.id }
       })
 
       // Verify if the current user is the owner of PR (currently used to verify if user is authenticated to GitHub too)
@@ -79,7 +79,7 @@ module.exports = Promise.method(async function fetchTaskSolutionData(solutionPar
       const issueReferences = extractIssueReferences(pullRequestData.body)
       const issueNumber = extractIssueNumberFromURL(task.dataValues.url)
       const issueReferencesMatch = issueReferences.some(
-        (issueReference) => issueNumber === issueReference,
+        (issueReference) => issueNumber === issueReference
       )
 
       const issueReferencesByURL = extractIssueReferenceByURL(pullRequestData.body, task.url)
@@ -101,7 +101,7 @@ module.exports = Promise.method(async function fetchTaskSolutionData(solutionPar
         isAuthorOfPR: isAuthorOfPR,
         isPRMerged: isPRMerged,
         isIssueClosed: isIssueClosed,
-        hasIssueReference: hasIssueReference,
+        hasIssueReference: hasIssueReference
       }
     })
     .catch((err) => {

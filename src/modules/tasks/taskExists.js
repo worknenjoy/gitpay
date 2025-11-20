@@ -4,8 +4,8 @@ const Promise = require('bluebird')
 module.exports = Promise.method(function taskExists(taskAttributes) {
   return models.Task.findOne({
     where: {
-      id: taskAttributes.id,
-    },
+      id: taskAttributes.id
+    }
   })
     .then((task) => {
       if (!task) return false

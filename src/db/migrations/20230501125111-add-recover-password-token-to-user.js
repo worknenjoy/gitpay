@@ -18,5 +18,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.removeColumn('Users', 'recover_password_token')
-  },
+  }
 }

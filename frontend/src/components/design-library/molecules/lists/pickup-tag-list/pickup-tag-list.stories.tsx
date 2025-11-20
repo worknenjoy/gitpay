@@ -5,7 +5,7 @@ import PickupTagList from './pickup-tag-list'
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Molecules/Lists/Pickup Tag List',
-  component: PickupTagList,
+  component: PickupTagList
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
@@ -19,5 +19,5 @@ export const Primary = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   primaryText: 'Primary Text',
-  secondaryText: 'Secondary Text',
+  secondaryText: 'Secondary Text'
 }

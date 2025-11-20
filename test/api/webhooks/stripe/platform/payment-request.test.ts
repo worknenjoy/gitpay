@@ -34,18 +34,18 @@ describe('webhooks for payment requests', () => {
             livemode: false,
             metadata: {
               payment_link_id: 'plink_1KknpoBrSjgsps2DMwiQEzJ9',
-              user_id: 'user_1KkomkBrSjgsps2DGGBtipW4',
-            },
+              user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
+            }
           },
           {
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         )
 
       nock('https://api.stripe.com')
         .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
         .reply(200, {
-          active: false,
+          active: false
         })
 
       nock('https://api.stripe.com')
@@ -55,8 +55,8 @@ describe('webhooks for payment requests', () => {
           status: 'succeeded',
           metadata: {
             payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
-            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4',
-          },
+            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
+          }
         })
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
@@ -67,7 +67,7 @@ describe('webhooks for payment requests', () => {
         description: 'Payment for services',
         payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
         deactivate_after_payment: true,
-        userId: currentUser.id,
+        userId: currentUser.id
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
@@ -80,7 +80,7 @@ describe('webhooks for payment requests', () => {
       expect(event.id).to.equal('evt_1Q2fklBrSjgsps2Dx0mEXsXv')
       expect(event.data.object.payment_link).to.equal('plink_1RcnYCBrSjgsps2DsAPjr1km')
       const paymentLink = await models.PaymentRequest.findOne({
-        where: { payment_link_id: event.data.object.payment_link },
+        where: { payment_link_id: event.data.object.payment_link }
       })
       expect(paymentLink).to.exist
       expect(paymentLink.status).to.equal('paid')
@@ -97,7 +97,7 @@ describe('webhooks for payment requests', () => {
       nock('https://api.stripe.com')
         .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
         .reply(200, {
-          active: false,
+          active: false
         })
 
       nock('https://api.stripe.com')
@@ -107,8 +107,8 @@ describe('webhooks for payment requests', () => {
           status: 'succeeded',
           metadata: {
             payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
-            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4',
-          },
+            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
+          }
         })
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
@@ -119,13 +119,13 @@ describe('webhooks for payment requests', () => {
         description: 'Payment for services',
         payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
         deactivate_after_payment: true,
-        userId: currentUser.id,
+        userId: currentUser.id
       })
       const customer = await models.PaymentRequestCustomer.create({
         name: 'Customer Name',
         email: 'customer@example.com',
         userId: currentUser.id,
-        sourceId: 'src_12345',
+        sourceId: 'src_12345'
       })
       await models.PaymentRequestPayment.create({
         amount: 1,
@@ -134,17 +134,17 @@ describe('webhooks for payment requests', () => {
         status: 'paid',
         paymentRequestId: paymentRequest.id,
         customerId: customer.id,
-        userId: currentUser.id,
+        userId: currentUser.id
       })
       await models.PaymentRequestBalance.create({
-        userId: currentUser.id,
+        userId: currentUser.id
       })
       await models.PaymentRequestBalanceTransaction.create({
         paymentRequestBalanceId: 1,
         amount: -92,
         type: 'DEBIT',
         reason: 'ADJUSTMENT',
-        status: 'completed',
+        status: 'completed'
       })
 
       const res = await agent
@@ -159,13 +159,13 @@ describe('webhooks for payment requests', () => {
       expect(event.data.object.payment_link).to.equal('plink_1RcnYCBrSjgsps2DsAPjr1km')
 
       const currentBalance = await models.PaymentRequestBalance.findOne({
-        where: { userId: currentUser.id },
+        where: { userId: currentUser.id }
       })
       expect(currentBalance).to.exist
       expect(currentBalance.balance).to.equal('0')
 
       const lastTransactionCreated = await models.PaymentRequestBalanceTransaction.findAll({
-        where: { paymentRequestBalanceId: currentBalance.id },
+        where: { paymentRequestBalanceId: currentBalance.id }
       })
       const transactionCreated = lastTransactionCreated[1]
       expect(transactionCreated).to.exist
@@ -178,7 +178,7 @@ describe('webhooks for payment requests', () => {
       nock('https://api.stripe.com')
         .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
         .reply(200, {
-          active: false,
+          active: false
         })
 
       nock('https://api.stripe.com')
@@ -188,8 +188,8 @@ describe('webhooks for payment requests', () => {
           status: 'succeeded',
           metadata: {
             payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
-            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4',
-          },
+            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
+          }
         })
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
@@ -200,13 +200,13 @@ describe('webhooks for payment requests', () => {
         description: 'Payment for services',
         payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
         deactivate_after_payment: true,
-        userId: currentUser.id,
+        userId: currentUser.id
       })
       const customer = await models.PaymentRequestCustomer.create({
         name: 'Customer Name',
         email: 'customer@example.com',
         userId: currentUser.id,
-        sourceId: 'src_12345',
+        sourceId: 'src_12345'
       })
       await models.PaymentRequestPayment.create({
         amount: 1,
@@ -215,17 +215,17 @@ describe('webhooks for payment requests', () => {
         status: 'paid',
         paymentRequestId: paymentRequest.id,
         customerId: customer.id,
-        userId: currentUser.id,
+        userId: currentUser.id
       })
       const paymentRequestBalance = await models.PaymentRequestBalance.create({
-        userId: currentUser.id,
+        userId: currentUser.id
       })
       await models.PaymentRequestBalanceTransaction.create({
         paymentRequestBalanceId: paymentRequestBalance.id,
         amount: -100,
         type: 'DEBIT',
         reason: 'DISPUTE',
-        status: 'completed',
+        status: 'completed'
       })
 
       const res = await agent
@@ -240,13 +240,13 @@ describe('webhooks for payment requests', () => {
       expect(event.data.object.payment_link).to.equal('plink_1RcnYCBrSjgsps2DsAPjr1km')
 
       const currentBalance = await models.PaymentRequestBalance.findOne({
-        where: { userId: currentUser.id },
+        where: { userId: currentUser.id }
       })
       expect(currentBalance).to.exist
       expect(currentBalance.balance).to.equal('-8')
 
       const lastTransactionCreated = await models.PaymentRequestBalanceTransaction.findAll({
-        where: { paymentRequestBalanceId: currentBalance.id },
+        where: { paymentRequestBalanceId: currentBalance.id }
       })
       const transactionCreated = lastTransactionCreated[1]
       expect(transactionCreated).to.exist
@@ -271,18 +271,18 @@ describe('webhooks for payment requests', () => {
             livemode: false,
             metadata: {
               payment_link_id: 'plink_1KknpoBrSjgsps2DMwiQEzJ9',
-              user_id: 'user_1KkomkBrSjgsps2DGGBtipW4',
-            },
+              user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
+            }
           },
           {
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         )
 
       nock('https://api.stripe.com')
         .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
         .reply(200, {
-          active: false,
+          active: false
         })
 
       nock('https://api.stripe.com')
@@ -292,8 +292,8 @@ describe('webhooks for payment requests', () => {
           status: 'succeeded',
           metadata: {
             payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
-            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4',
-          },
+            user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
+          }
         })
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
@@ -304,13 +304,13 @@ describe('webhooks for payment requests', () => {
         description: 'Payment for services',
         payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
         deactivate_after_payment: true,
-        userId: currentUser.id,
+        userId: currentUser.id
       })
       const customer = await models.PaymentRequestCustomer.create({
         name: 'Customer Name',
         email: 'customer@example.com',
         userId: currentUser.id,
-        sourceId: 'src_12345',
+        sourceId: 'src_12345'
       })
       await models.PaymentRequestPayment.create({
         amount: 1,
@@ -319,10 +319,10 @@ describe('webhooks for payment requests', () => {
         status: 'paid',
         paymentRequestId: paymentRequest.id,
         customerId: customer.id,
-        userId: currentUser.id,
+        userId: currentUser.id
       })
       const paymentRequestBalance = await models.PaymentRequestBalance.create({
-        userId: currentUser.id,
+        userId: currentUser.id
       })
 
       await models.PaymentRequestBalanceTransaction.create({
@@ -330,7 +330,7 @@ describe('webhooks for payment requests', () => {
         amount: -90,
         type: 'DEBIT',
         reason: 'ADJUSTMENT',
-        status: 'completed',
+        status: 'completed'
       })
 
       const res = await agent
@@ -345,13 +345,13 @@ describe('webhooks for payment requests', () => {
       expect(event.data.object.payment_link).to.equal('plink_1RcnYCBrSjgsps2DsAPjr1km')
 
       const currentBalance = await models.PaymentRequestBalance.findOne({
-        where: { userId: currentUser.id },
+        where: { userId: currentUser.id }
       })
       expect(currentBalance).to.exist
       expect(currentBalance.balance).to.equal('0')
 
       const lastTransactionCreated = await models.PaymentRequestBalanceTransaction.findAll({
-        where: { paymentRequestBalanceId: currentBalance.id },
+        where: { paymentRequestBalanceId: currentBalance.id }
       })
 
       const transactionCreated = lastTransactionCreated[1]

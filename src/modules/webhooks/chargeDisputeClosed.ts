@@ -23,24 +23,24 @@ export const chargeDisputeClosedWebhookHandler = async (event: any, req: any, re
   try {
     const paymentRequestPayment = await models.PaymentRequestPayment.findOne({
       where: {
-        source: data.object.payment_intent,
+        source: data.object.payment_intent
       },
       include: [
         {
-          model: models.PaymentRequest,
+          model: models.PaymentRequest
         },
         {
-          model: models.PaymentRequestCustomer,
-        },
-      ],
+          model: models.PaymentRequestCustomer
+        }
+      ]
     })
 
     const userId = paymentRequestPayment.userId
 
     const paymentRequestBalance = await models.PaymentRequestBalance.findOrCreate({
       where: {
-        userId,
-      },
+        userId
+      }
     })
 
     const dispute = await stripe.disputes.retrieve(data.object.id)
@@ -55,22 +55,22 @@ export const chargeDisputeClosedWebhookHandler = async (event: any, req: any, re
         reason_details: data.object.reason,
         status: data.object.status,
         openedAt: dispute.created,
-        closedAt: data.object.created,
+        closedAt: data.object.created
       })
 
     await paymentRequestBalanceTransactionForDisputeFee.reload({
       include: [
         {
-          model: models.PaymentRequestBalance,
-        },
-      ],
+          model: models.PaymentRequestBalance
+        }
+      ]
     })
 
     if (paymentRequestBalanceTransactionForDisputeFee) {
       console.log(`Created PaymentRequestBalanceTransaction for Dispute ID: ${data.object.id}`)
     } else {
       console.error(
-        `Failed to create PaymentRequestBalanceTransaction for Dispute ID: ${data.object.id}`,
+        `Failed to create PaymentRequestBalanceTransaction for Dispute ID: ${data.object.id}`
       )
     }
 
@@ -79,7 +79,7 @@ export const chargeDisputeClosedWebhookHandler = async (event: any, req: any, re
     PaymentRequestMail.newBalanceTransactionForPaymentRequest(
       user,
       paymentRequestPayment,
-      paymentRequestBalanceTransactionForDisputeFee,
+      paymentRequestBalanceTransactionForDisputeFee
     ).catch((mailError: any) => {
       console.error(`Failed to send email for Dispute ID: ${data.object.id}`, mailError)
     })

@@ -29,7 +29,7 @@ const PrivatePage = ({
   deleteUser,
   signOut,
   info,
-  getInfo,
+  getInfo
 }) => {
   const history = useHistory()
 
@@ -47,7 +47,7 @@ const PrivatePage = ({
       user={user}
       bottomProps={{
         info: info.data,
-        getInfo,
+        getInfo
       }}
     >
       <HashRouter>
@@ -90,7 +90,7 @@ const PrivatePage = ({
               '/profile/task/:id',
               '/profile/task/:id/:slug',
               '/profile/explore/task/:id',
-              '/profile/explore/task/:id/:slug',
+              '/profile/explore/task/:id/:slug'
             ]}
             component={TaskPrivateContainer}
           />
@@ -108,7 +108,7 @@ const PrivatePage = ({
             exact
             path={[
               '/profile/explore/organizations/:organization_id',
-              '/profile/explore/organizations/:organization_id/:slug',
+              '/profile/explore/organizations/:organization_id/:slug'
             ]}
             component={OrganizationIssuesExploreContainer}
           />
@@ -117,7 +117,7 @@ const PrivatePage = ({
             path={[
               '/profile/organizations/:organization_id',
               '/profile/organizations/:organization_id/:filter',
-              '/profile/organizations/:organization_id/:slug',
+              '/profile/organizations/:organization_id/:slug'
             ]}
             component={MyOrganizationIssuesContainer}
           />
@@ -127,7 +127,7 @@ const PrivatePage = ({
               '/profile/explore/organizations/:organization_id/projects/:project_id',
               '/profile/explore/organizations/:organization_id/projects/:project_id/:filter',
               '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
-              '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
+              '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter'
             ]}
             component={ProjectIssuesExploreContainer}
           />
@@ -138,7 +138,7 @@ const PrivatePage = ({
               '/profile/organizations/:organization_id/projects/:project_id/:filter',
               '/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
               '/profile/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
-              '/profile/organizations/:organization_id/projects/:project_id/:filter',
+              '/profile/organizations/:organization_id/projects/:project_id/:filter'
             ]}
             component={MyProjectIssuesContainer}
           />

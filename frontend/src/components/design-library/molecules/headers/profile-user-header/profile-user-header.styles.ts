@@ -9,7 +9,7 @@ export const Profile = styled('div')(({ theme }) => ({
   flexFlow: 'column',
   flexDirection: 'column',
   flexWrap: 'wrap',
-  height: 350,
+  height: 350
 }))
 
 export const BigAvatar = styled(Avatar)({ width: 160, height: 160 })
@@ -19,5 +19,5 @@ export const NameContainer = styled('div')({ display: 'flex', alignItems: 'cente
 export const Website = styled(Typography)({
   textAlign: 'center',
   color: '#515bc4',
-  fontSize: '0.8rem',
+  fontSize: '0.8rem'
 })

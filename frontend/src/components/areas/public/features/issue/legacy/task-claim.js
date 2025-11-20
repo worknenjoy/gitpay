@@ -12,7 +12,7 @@ import {
   FormControl,
   Typography,
   InputLabel,
-  Input,
+  Input
 } from '@mui/material'
 
 const Container = styled.div`
@@ -31,13 +31,13 @@ class TaskClaim extends Component {
   static propTypes = {
     open: PropTypes.bool,
     onClose: PropTypes.func,
-    requestClaimTask: PropTypes.func,
+    requestClaimTask: PropTypes.func
   }
 
   onChangeMessage = (event) =>
     this.setState({
       [event.target.name]: event.target.value,
-      charactersCount: event.target.value.length,
+      charactersCount: event.target.value.length
     })
 
   sendClaim = (e) => {
@@ -48,7 +48,7 @@ class TaskClaim extends Component {
       this.state.comments,
       false,
       null,
-      this.props.history,
+      this.props.history
     )
     this.setState({ comments: '', charactersCount: 0 })
     this.props.onClose()
@@ -97,7 +97,7 @@ class TaskClaim extends Component {
                     fontFamily: 'Roboto',
                     color: '#a9a9a9',
                     marginTop: '10px',
-                    textAlign: 'right',
+                    textAlign: 'right'
                   }}
                 >
                   {charactersCount + '/50'}

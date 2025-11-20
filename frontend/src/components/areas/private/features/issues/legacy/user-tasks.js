@@ -13,7 +13,7 @@ import {
   CardContent,
   CardMedia,
   Tabs,
-  Tab,
+  Tab
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
@@ -32,20 +32,20 @@ const Media = styled(CardMedia)({ width: 600 })
 const messages = defineMessages({
   allTasks: {
     id: 'task.list.lable.issues.all',
-    defaultMessage: 'All issues',
+    defaultMessage: 'All issues'
   },
   createdByMeTasks: {
     id: 'task.status.myissues',
-    defaultMessage: 'My issues',
+    defaultMessage: 'My issues'
   },
   interestedTasks: {
     id: 'tasks.status.interested',
-    defaultMessage: "I'm interested",
+    defaultMessage: "I'm interested"
   },
   assignedToMeTasks: {
     id: 'task.status.assigned',
-    defaultMessage: 'Assigned to me',
-  },
+    defaultMessage: 'Assigned to me'
+  }
 })
 
 const UserTasks = ({ intl, history, filterTasks, listTasks, tasks, user }) => {
@@ -191,7 +191,7 @@ UserTasks.propTypes = {
   listTasks: PropTypes.func,
   filterTasks: PropTypes.func,
   tasks: PropTypes.object,
-  user: PropTypes.object,
+  user: PropTypes.object
 }
 
 export default injectIntl(UserTasks)

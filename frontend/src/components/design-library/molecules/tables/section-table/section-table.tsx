@@ -11,7 +11,7 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Typography,
+  Typography
 } from '@mui/material'
 import { RootPaper, TableWrapper, StyledTable, StyledTableCell } from './section-table.styles'
 
@@ -71,7 +71,7 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
       let comparator = String(aValue).localeCompare(String(bValue), 'en', {
         numeric: true,
         sensitivity: 'base',
-        ignorePunctuation: true,
+        ignorePunctuation: true
       })
       return sortDirection === 'asc' ? comparator : -comparator
     })
@@ -82,7 +82,7 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
       const keys = dataBaseKey.split('.')
       return keys.reduce(
         (obj, key) => (obj && obj[key] !== 'undefined' ? obj[key] : undefined),
-        item,
+        item
       )
     }
 

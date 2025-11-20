@@ -14,7 +14,7 @@ const ExploreIssuesPrivatePage = ({
   listLabels,
   languages,
   listLanguages,
-  user,
+  user
 }) => {
   return (
     <ExplorePaper elevation={0}>
@@ -27,7 +27,7 @@ const ExploreIssuesPrivatePage = ({
                   id="breadcrumb.root.profile.explore"
                   defaultMessage="Explore Issues"
                 />
-              ),
+              )
             }}
           />
         </TopSection>

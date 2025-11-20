@@ -13,5 +13,5 @@ module.exports.get = {
   reporting_category: 'transfer',
   source: 'tr_1CZ5vkLlCJ9CeQRe',
   status: 'available',
-  type: 'transfer',
+  type: 'transfer'
 }

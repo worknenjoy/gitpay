@@ -11,7 +11,7 @@ const TransferMail = {
   paymentForInvalidAccount: (to) => {},
   futurePaymentForInvalidAccount: (to) => {},
   transferBounty: (order, taskFrom, taskTo, user) => {},
-  paymentRequestInitiated: async (user, paymentRequest) => {},
+  paymentRequestInitiated: async (user, paymentRequest) => {}
 }
 
 if (constants.canSendEmail) {
@@ -24,8 +24,8 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-            <p>${i18n.__('mail.transfer.new.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`),
-        },
+            <p>${i18n.__('mail.transfer.new.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
+        }
       ])
   }
 
@@ -38,9 +38,9 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(
-            `<p>${i18n.__('mail.transfer.notify.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`,
-          ),
-        },
+            `<p>${i18n.__('mail.transfer.notify.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`
+          )
+        }
       ])
   }
 
@@ -53,8 +53,8 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-          <p>${i18n.__('mail.transfer.error.message', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`),
-        },
+          <p>${i18n.__('mail.transfer.error.message', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
+        }
       ])
   }
 
@@ -67,9 +67,9 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(
-            `<p>${i18n.__('mail.transfer.missing.message')}</p>`,
-          ),
-        },
+            `<p>${i18n.__('mail.transfer.missing.message')}</p>`
+          )
+        }
       ])
   }
 
@@ -82,9 +82,9 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(
-            `<p>${i18n.__('mail.transfer.invalid.message')}</p>`,
-          ),
-        },
+            `<p>${i18n.__('mail.transfer.invalid.message')}</p>`
+          )
+        }
       ])
   }
 
@@ -102,9 +102,9 @@ if (constants.canSendEmail) {
             taskFromUrl: taskFrom.url,
             taskToTitle: taskTo.title,
             taskToUrl: taskTo.url,
-            amount: order.amount,
-          })}</p>`),
-        },
+            amount: order.amount
+          })}</p>`)
+        }
       ])
   }
 }

@@ -12,7 +12,7 @@ import { Title, LabelButton, StyledAvatarIconOnly } from './settings.styles'
 
 const messages = {
   br: process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
-  en: process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal,
+  en: process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
 }
 
 import logoLangEn from 'images/united-states-of-america.png'
@@ -38,8 +38,8 @@ const Settings = (props) => {
       store.dispatch(
         updateIntl({
           locale: lang,
-          messages: messages[lang],
-        }),
+          messages: messages[lang]
+        })
       )
     } catch (e) {
       console.log('error', e)

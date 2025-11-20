@@ -3,7 +3,7 @@ import IssueStatus from './issue-status'
 
 export default {
   title: 'Design Library/Atoms/Status/IssueStatus',
-  component: IssueStatus,
+  component: IssueStatus
 }
 
 const Template = (args) => <IssueStatus {...args} />
@@ -11,11 +11,11 @@ const Template = (args) => <IssueStatus {...args} />
 export const Default = Template.bind({})
 Default.args = {
   // Add default props here
-  status: 'open',
+  status: 'open'
 }
 
 export const Closed = Template.bind({})
 Closed.args = {
   // Add default props here
-  status: 'closed',
+  status: 'closed'
 }

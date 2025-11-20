@@ -40,7 +40,7 @@ class PreferencesBar extends Component {
 }
 
 PreferencesBar.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default injectIntl(withRouter(PreferencesBar))

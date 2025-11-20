@@ -19,14 +19,14 @@ export default {
             margin: '2rem auto',
             padding: '1rem',
             border: '1px solid #eee',
-            borderRadius: 8,
+            borderRadius: 8
           }}
         >
           <Story />
         </div>
       </Elements>
-    ),
-  ],
+    )
+  ]
 }
 
 const Template = (args) => <CheckoutForm {...args} />
@@ -40,16 +40,16 @@ Default.args = {
   user: {},
   couponStoreState: {
     completed: true,
-    coupon: { amount: 0, orderPrice: 20 },
+    coupon: { amount: 0, orderPrice: 20 }
   },
   onPayment: () => {},
   onClose: () => {},
   addNotification: () => {},
-  validateCoupon: () => {},
+  validateCoupon: () => {}
 }
 
 export const LoggedIn = Template.bind({})
 LoggedIn.args = {
   ...Default.args,
-  user: { id: 1, name: 'Jane Doe', email: 'jane@example.com' },
+  user: { id: 1, name: 'Jane Doe', email: 'jane@example.com' }
 }

@@ -9,7 +9,7 @@ const PriceInput = ({
   onChange,
   defaultValue,
   currency = '$',
-  endAdornment = true,
+  endAdornment = true
 }) => {
   const theme = useTheme()
   const styles = getPriceInputStyles(theme)

@@ -7,7 +7,7 @@ const databaseEnv = {
   development: 'databaseDev',
   staging: 'databaseStaging',
   production: 'databaseProd',
-  test: 'databaseTest',
+  test: 'databaseTest'
 }
 
 const config = require('../config/secrets')[databaseEnv[env]]
@@ -29,9 +29,9 @@ if (env === 'production' || env === 'staging') {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false,
-      },
-    },
+        rejectUnauthorized: false
+      }
+    }
   })
   // eslint-disable-next-line no-console
   console.log('running production migration')

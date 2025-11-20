@@ -10,15 +10,15 @@ export const handleChargeRefundedIssue = async (event: any) => {
   const order = await models.Order.update(
     {
       paid: false,
-      status: 'refunded',
+      status: 'refunded'
     },
     {
       where: {
         source_id: source.id,
-        source: id,
+        source: id
       },
-      returning: true,
-    },
+      returning: true
+    }
   )
 
   const orderStatus = order[0]
@@ -27,8 +27,8 @@ export const handleChargeRefundedIssue = async (event: any) => {
   if (orderStatus) {
     const user = await models.User.findOne({
       where: {
-        id: orderDetails.userId,
-      },
+        id: orderDetails.userId
+      }
     })
 
     if (user && paid && status === 'succeeded') {
@@ -36,8 +36,8 @@ export const handleChargeRefundedIssue = async (event: any) => {
         user.dataValues,
         i18n.__('mail.webhook.payment.refund.subject'),
         i18n.__('mail.webhook.payment.refund.message', {
-          amount: (event.data.object.amount / 100).toString(),
-        }),
+          amount: (event.data.object.amount / 100).toString()
+        })
       )
     }
   }

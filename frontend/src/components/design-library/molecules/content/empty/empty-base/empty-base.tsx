@@ -19,7 +19,7 @@ const EmptyBase = ({
   text = 'No Data',
   secondaryText,
   actionText = 'Create your first item',
-  completed = true,
+  completed = true
 }: EmptyBaseProps) => {
   return (
     <Box component={Root as any}>

@@ -7,17 +7,17 @@ const LIST_PAYMENT_REQUEST_TRANSFER_FAILED = 'PAYMENT_REQUEST_TRANSFER_FAILED'
 
 export const listPaymentRequestTransferRequested = (data) => ({
   type: LIST_PAYMENT_REQUEST_TRANSFER_REQUESTED,
-  payload: data,
+  payload: data
 })
 
 export const listPaymentRequestTransferSucceeded = (data) => ({
   type: LIST_PAYMENT_REQUEST_TRANSFER_SUCCEEDED,
-  payload: data,
+  payload: data
 })
 
 export const listPaymentRequestTransferFailed = (error) => ({
   type: LIST_PAYMENT_REQUEST_TRANSFER_FAILED,
-  payload: error,
+  payload: error
 })
 
 export const listPaymentRequestTransfers = (params) => (dispatch) => {
@@ -40,5 +40,5 @@ export const listPaymentRequestTransfers = (params) => (dispatch) => {
 export {
   LIST_PAYMENT_REQUEST_TRANSFER_REQUESTED,
   LIST_PAYMENT_REQUEST_TRANSFER_SUCCEEDED,
-  LIST_PAYMENT_REQUEST_TRANSFER_FAILED,
+  LIST_PAYMENT_REQUEST_TRANSFER_FAILED
 }

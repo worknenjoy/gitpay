@@ -4,7 +4,7 @@ import { Tabs, Tab, Typography, Skeleton } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import {
   tableHeaderDefault,
-  tableHeaderWithProject,
+  tableHeaderWithProject
 } from '../../../../../shared/table-metadata/task-header-metadata'
 import ProjectListSimple from 'design-library/molecules/lists/project-list/project-list-compact/project-list-compact'
 import { Breadcrumb } from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
@@ -20,34 +20,34 @@ import IssueStatusField from 'design-library/molecules/tables/section-table/sect
 
 const RootTabs = styled('div')(({ theme }) => ({
   marginRight: theme.spacing(3),
-  marginBottom: theme.spacing(3),
+  marginBottom: theme.spacing(3)
 }))
 
 const messages = defineMessages({
   allTasks: {
     id: 'task.list.lable.issues.all',
-    defaultMessage: 'All issues',
+    defaultMessage: 'All issues'
   },
   allPublicTasksWithBounties: {
     id: 'task.list.lable.allPublicTasksWithBounties',
-    defaultMessage: 'Issues with bounties',
+    defaultMessage: 'Issues with bounties'
   },
   allPublicTasksNoBounties: {
     id: 'task.list.lable.allPublicTasksNoBounties',
-    defaultMessage: 'Issues for contribution',
+    defaultMessage: 'Issues for contribution'
   },
   assignedToMeTasks: {
     id: 'task.status.assigned',
-    defaultMessage: 'Assigned to me',
+    defaultMessage: 'Assigned to me'
   },
   createdByMeTasks: {
     id: 'task.status.myissues',
-    defaultMessage: 'My issues',
+    defaultMessage: 'My issues'
   },
   interestedTasks: {
     id: 'tasks.status.interested',
-    defaultMessage: "I'm interested",
-  },
+    defaultMessage: "I'm interested"
+  }
 })
 
 interface TaskListProps {
@@ -75,7 +75,7 @@ const customColumnRenderer = {
   value: (item: any) => <IssuePriceField issue={item} />,
   labels: (item: any) => <IssueLabelsField issue={item} />,
   languages: (item: any) => <IssueLanguageField issue={item} />,
-  createdAt: (item: any) => <IssueCreatedField issue={item} />,
+  createdAt: (item: any) => <IssueCreatedField issue={item} />
 }
 
 const TaskList: React.FC<TaskListProps> = ({
@@ -87,7 +87,7 @@ const TaskList: React.FC<TaskListProps> = ({
   listProjects,
   project,
   fetchProject,
-  filterTasks,
+  filterTasks
 }) => {
   const intl = useIntl()
   const history = useHistory()
@@ -106,7 +106,7 @@ const TaskList: React.FC<TaskListProps> = ({
   const [currentTab, setCurrentTab] = useState('createdbyme')
   const [taskListState, setTaskListState] = useState({
     tab: 0,
-    loading: true,
+    loading: true
   })
 
   const isOrganizationPage = !!organization_id && !project_id
@@ -214,7 +214,7 @@ const TaskList: React.FC<TaskListProps> = ({
           filterTasks('all')
       }
     },
-    [baseUrl, history, filterTasks],
+    [baseUrl, history, filterTasks]
   )
 
   const handleSecTabChange = async (event: any, value: React.SetStateAction<string>) => {

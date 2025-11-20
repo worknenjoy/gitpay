@@ -23,17 +23,17 @@ xdescribe('Components - TaskSolutionDrawer', () => {
           taskSolution={{}}
           pullRequestData={{}}
           task={{
-            data: {},
+            data: {}
           }}
           user={{
             id: 1,
             provider: 'github',
-            provider_username: 'alexanmtz',
+            provider_username: 'alexanmtz'
           }}
           cleanPullRequestDataState={() => {}}
           getTaskSolution={() => {}}
         />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
     expect(screen.getByText('Send a solution for this issue')).toBeDefined()
   })
@@ -48,23 +48,23 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             isPRMerged: false,
             isIssueClosed: false,
             isConnectedToGitHub: false,
-            hasIssueReference: false,
+            hasIssueReference: false
           }}
           task={{
             data: {},
-            completed: true,
+            completed: true
           }}
           user={{
             id: 1,
             provider: 'github',
-            provider_username: 'alexanmtz',
+            provider_username: 'alexanmtz'
           }}
           cleanPullRequestDataState={() => {}}
           getTaskSolution={() => {}}
           fetchPullRequestData={() => {}}
           completed={true}
         />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
 
     userEvent.type(await screen.findByTestId('pull-request-url'), 'test')
@@ -75,14 +75,14 @@ xdescribe('Components - TaskSolutionDrawer', () => {
     const spy = jest.fn(
       new Promise((resolve) => {
         resolve({})
-      }),
+      })
     )
     const spyTaskSolution = jest.fn().mockImplementation(() => {
       return new Promise((resolve) => {
         resolve({
           pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
           taskId: 1,
-          userId: 1,
+          userId: 1
         })
       })
     })
@@ -98,17 +98,17 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             isIssueClosed: true,
             isConnectedToGitHub: true,
             hasIssueReference: true,
-            isAuthorOfPR: true,
+            isAuthorOfPR: true
           }}
           task={{
             id: 1,
             data: {},
-            completed: true,
+            completed: true
           }}
           user={{
             id: 1,
             provider: 'github',
-            provider_username: 'alexanmtz',
+            provider_username: 'alexanmtz'
           }}
           cleanPullRequestDataState={() => {}}
           getTaskSolution={() => {}}
@@ -117,19 +117,19 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             title: 'Fixes #1',
             body: 'Fixes #1',
             user: {
-              login: 'alexanmtz',
-            },
+              login: 'alexanmtz'
+            }
           })}
           completed={true}
           updateTaskSolution={spy}
           createTaskSolution={spyTaskSolution}
         />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
 
     userEvent.type(
       await screen.findByTestId('pull-request-url'),
-      'https://github.com/alexanmtz/test-repository/pull/2',
+      'https://github.com/alexanmtz/test-repository/pull/2'
     )
     jest.runAllTimers()
     expect(screen.getByTestId('send-solution-button')).toBeEnabled()
@@ -140,16 +140,16 @@ xdescribe('Components - TaskSolutionDrawer', () => {
     const spy = jest.fn(
       new Promise((resolve) => {
         resolve({
-          error: 'issue.solution.error.insufficient_capabilities_for_transfer',
+          error: 'issue.solution.error.insufficient_capabilities_for_transfer'
         })
-      }),
+      })
     )
     const spyTaskSolution = jest.fn().mockImplementation(() => {
       return new Promise((resolve) => {
         resolve({
           pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
           taskId: 1,
-          userId: 1,
+          userId: 1
         })
       })
     })
@@ -165,17 +165,17 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             isIssueClosed: true,
             isConnectedToGitHub: true,
             hasIssueReference: true,
-            isAuthorOfPR: true,
+            isAuthorOfPR: true
           }}
           task={{
             id: 1,
             data: {},
-            completed: true,
+            completed: true
           }}
           user={{
             id: 1,
             provider: 'github',
-            provider_username: 'alexanmtz',
+            provider_username: 'alexanmtz'
           }}
           cleanPullRequestDataState={() => {}}
           getTaskSolution={() => {}}
@@ -184,19 +184,19 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             title: 'Fixes #1',
             body: 'Fixes #1',
             user: {
-              login: 'alexanmtz',
-            },
+              login: 'alexanmtz'
+            }
           })}
           completed={true}
           updateTaskSolution={spy}
           createTaskSolution={spyTaskSolution}
         />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
 
     userEvent.type(
       await screen.findByTestId('pull-request-url'),
-      'https://github.com/alexanmtz/test-repository/pull/2',
+      'https://github.com/alexanmtz/test-repository/pull/2'
     )
     jest.runAllTimers()
     expect(screen.getByTestId('send-solution-button')).toBeEnabled()
@@ -218,18 +218,18 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             isAuthorOfPR: true,
             taskId: 1,
             userId: 1,
-            id: 1,
+            id: 1
           }}
           pullRequestData={{}}
           task={{
             id: 1,
             data: {},
-            completed: true,
+            completed: true
           }}
           user={{
             id: 1,
             provider: 'github',
-            provider_username: 'alexanmtz',
+            provider_username: 'alexanmtz'
           }}
           cleanPullRequestDataState={() => {}}
           getTaskSolution={() => {}}
@@ -238,14 +238,14 @@ xdescribe('Components - TaskSolutionDrawer', () => {
             title: 'Fixes #1',
             body: 'Fixes #1',
             user: {
-              login: 'alexanmtz',
-            },
+              login: 'alexanmtz'
+            }
           })}
           completed={true}
           updateTaskSolution={() => {}}
           createTaskSolution={() => {}}
         />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
     expect(screen.getByText('Pull Request # 2')).toBeDefined()
     //screen.getByTestId('edit-solution-button').click()

@@ -23,9 +23,9 @@ module.exports = async (to, subject, content, replyEmail) => {
         content: [
           {
             type: content[0].type || 'text/html',
-            value: emailTemplate.defaultEmailTemplate(content[0].value),
-          },
-        ],
+            value: emailTemplate.defaultEmailTemplate(content[0].value)
+          }
+        ]
       }
 
       const response = await sgMail.send(msg)
@@ -60,8 +60,8 @@ module.exports = async (to, subject, content, replyEmail) => {
         type: 'text/html',
         to,
         subject,
-        value: content,
-      },
+        value: content
+      }
     ]
   }
 }

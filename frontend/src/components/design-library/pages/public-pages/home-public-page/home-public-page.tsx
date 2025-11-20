@@ -35,21 +35,21 @@ const Home = () => {
             label: 'Learn More',
             variant: 'outlined',
             color: 'secondary',
-            onClick: () => history.push('/welcome'),
+            onClick: () => history.push('/welcome')
           },
           {
             label: 'Get Started',
             variant: 'contained',
             color: 'primary',
-            onClick: () => history.push('/signup'),
-          },
+            onClick: () => history.push('/signup')
+          }
         ]}
       />
       <SecondaryHero
         animation="/lottie/how-it-works.lottie"
         title={intl.formatMessage({
           id: 'welcome.secondary.hero.title',
-          defaultMessage: 'How Gitpay works',
+          defaultMessage: 'How Gitpay works'
         })}
         items={[
           {
@@ -65,7 +65,7 @@ const Home = () => {
                 id="welcome.secondary.hero.item0.secondary"
                 defaultMessage="Import an issue from a Git repository. Contributors pick issues they want to solve."
               />
-            ),
+            )
           },
           {
             icon: <AttachMoney color="primary" />,
@@ -80,7 +80,7 @@ const Home = () => {
                 id="welcome.secondary.hero.item1.secondary"
                 defaultMessage="Sponsors and maintainers fund the work. Bounties are held securely until completion."
               />
-            ),
+            )
           },
           {
             icon: <TaskAlt color="primary" />,
@@ -95,7 +95,7 @@ const Home = () => {
                 id="welcome.secondary.hero.item2.secondary"
                 defaultMessage="When your PR is merged, you can submit your solution on Gitpay."
               />
-            ),
+            )
           },
           {
             icon: <CardMembership color="primary" />,
@@ -110,7 +110,7 @@ const Home = () => {
                 id="welcome.secondary.hero.item3.secondary"
                 defaultMessage="Once the solution is verified, the payout is automatically sent to the contributor's bank account."
               />
-            ),
+            )
           },
           {
             icon: <Work color="primary" />,
@@ -125,8 +125,8 @@ const Home = () => {
                 id="welcome.secondary.hero.item4.secondary"
                 defaultMessage="With our Payment Request system, contributors can request payment for work done directly through the platform."
               />
-            ),
-          },
+            )
+          }
         ]}
       />
       <CallToActionHero
@@ -142,15 +142,15 @@ const Home = () => {
             link: '/#/signup',
             variant: 'contained',
             color: 'primary',
-            size: 'large',
+            size: 'large'
           },
           {
             label: <FormattedMessage id="welcome.cta.hero.action2" defaultMessage="Learn more" />,
             link: '/#/welcome',
             variant: 'text',
             color: 'primary',
-            size: 'large',
-          },
+            size: 'large'
+          }
         ]}
       />
     </>

@@ -9,22 +9,22 @@ import IssueFilterStatus from '../../../atoms/filters/issue-status-filter/issue-
 const classesStatic = {
   select: { backgroundColor: 'transparent' },
   chip: { marginLeft: 8 },
-  chipActive: { marginLeft: 8, color: '#1a237e', borderColor: '#90caf9' },
+  chipActive: { marginLeft: 8, color: '#1a237e', borderColor: '#90caf9' }
 } as const
 
 const messages = defineMessages({
   allTasks: {
     id: 'task.list.lable.filterAllTasks',
-    defaultMessage: 'All public issues available',
+    defaultMessage: 'All public issues available'
   },
   allPublicTasksWithBounties: {
     id: 'task.list.lable.filterWithBounties',
-    defaultMessage: 'Issues with bounties',
+    defaultMessage: 'Issues with bounties'
   },
   allPublicTasksNoBounties: {
     id: 'task.list.lable.filterNoBounties',
-    defaultMessage: 'Issues without bounties',
-  },
+    defaultMessage: 'Issues without bounties'
+  }
 })
 
 interface TaskFiltersProps {
@@ -44,7 +44,7 @@ const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
   listTasks,
   filterTasks,
   languages,
-  listLanguages,
+  listLanguages
 }) => {
   // Keep the currently applied filters here
   const [activeFilters, setActiveFilters] = React.useState<Record<string, any>>({})
@@ -55,13 +55,13 @@ const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
       setActiveFilters((prev) => {
         // Merge and remove keys explicitly set to undefined (to "clear" a filter)
         const next = Object.fromEntries(
-          Object.entries({ ...prev, ...partial }).filter(([, v]) => v !== undefined),
+          Object.entries({ ...prev, ...partial }).filter(([, v]) => v !== undefined)
         )
         listTasks?.(next)
         return next
       })
     },
-    [listTasks],
+    [listTasks]
   )
 
   const counts = useMemo(() => {
@@ -70,7 +70,7 @@ const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
     return {
       allIssues: base.length,
       withBounties: base.filter((t: any) => toNum(t.value) > 0).length,
-      noBounties: base.filter((t: any) => toNum(t.value) === 0).length,
+      noBounties: base.filter((t: any) => toNum(t.value) === 0).length
     }
   }, [issues])
 

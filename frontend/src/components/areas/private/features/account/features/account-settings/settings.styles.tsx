@@ -5,11 +5,11 @@ import media from '../../../../../../../styleguide/media'
 
 export const Title = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(2)
 }))
 
 export const LabelButton = styled('span', {
-  shouldForwardProp: (prop) => prop !== 'right',
+  shouldForwardProp: (prop) => prop !== 'right'
 })<{ right?: boolean }>`
   ${({ right }) =>
     right

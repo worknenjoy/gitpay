@@ -18,7 +18,7 @@ exports.fetchPullRequestData = (req, res) => {
     userId: req.user.id,
     repositoryName: req.query.repositoryName,
     owner: req.query.owner,
-    taskId: req.query.taskId,
+    taskId: req.query.taskId
   }
   Tasks.taskSolutionFetchData(params)
     .then((data) => {

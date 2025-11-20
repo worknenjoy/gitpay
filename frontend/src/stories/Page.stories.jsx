@@ -8,8 +8,8 @@ export default {
   component: Page,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
-    layout: 'fullscreen',
-  },
+    layout: 'fullscreen'
+  }
 }
 
 const Template = (args) => <Page {...args} />

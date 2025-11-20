@@ -11,7 +11,7 @@ import {
   Cancel as CancelIcon,
   Info as InfoIcon,
   SwapHoriz as TransferIcon,
-  Receipt as ReceiptIcon,
+  Receipt as ReceiptIcon
 } from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
@@ -43,7 +43,7 @@ const Payments = ({
   transferOrder,
   refundOrder,
   updateOrder,
-  intl,
+  intl
 }) => {
   const [cancelPaypalConfirmDialog, setCancelPaypalConfirmDialog] = useState(false)
   const [orderDetailsDialog, setOrderDetailsDialog] = useState(false)
@@ -59,7 +59,7 @@ const Payments = ({
     failed: intl.formatMessage(messages.failStatus),
     canceled: intl.formatMessage(messages.canceledStatus),
     refunded: intl.formatMessage(messages.refundedStatus),
-    expired: intl.formatMessage(messages.expiredStatus),
+    expired: intl.formatMessage(messages.expiredStatus)
   }
 
   useEffect(() => {
@@ -338,7 +338,7 @@ const Payments = ({
         {retryOrCancelButton(item, userId)}
         {transferButton(item, userId)}
         {refundButton(item, userId)}
-      </div>,
+      </div>
     ])
   }
 
@@ -357,7 +357,7 @@ const Payments = ({
               intl.formatMessage(messages.cardTableHeaderValue),
               intl.formatMessage(messages.cardTableHeaderPayment),
               intl.formatMessage(messages.cardTableHeaderCreated),
-              intl.formatMessage(messages.cardTableHeaderActions),
+              intl.formatMessage(messages.cardTableHeaderActions)
             ]}
             payments={
               orders && orders.data && orders.data.length
@@ -399,7 +399,7 @@ Payments.propTypes = {
   cancelPaypalPayment: PropTypes.func,
   transferOrder: PropTypes.func,
   refundOrder: PropTypes.func,
-  intl: PropTypes.object,
+  intl: PropTypes.object
 }
 
 export default injectIntl(Payments)

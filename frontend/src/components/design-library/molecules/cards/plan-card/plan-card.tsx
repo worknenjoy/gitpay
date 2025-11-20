@@ -9,7 +9,7 @@ import {
   PlanCardContent as StyledCardContent,
   PlanButton,
   PlanBullets,
-  PlanIcon,
+  PlanIcon
 } from './plan-card.styles'
 
 // styles migrated to plan-card.styles.ts
@@ -57,7 +57,7 @@ const PlanCard = ({ plan }: PlanProps) => {
                     <CheckIcon fontSize="small" color="primary" />
                     {item}
                   </Typography>
-                ),
+                )
             )}
           </PlanBullets>
         </StyledCardContent>

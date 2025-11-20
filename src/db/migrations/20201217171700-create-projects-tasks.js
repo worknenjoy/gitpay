@@ -7,8 +7,8 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'Projects',
-          key: 'id',
-        },
+          key: 'id'
+        }
       },
       TaskId: {
         primaryKey: true,
@@ -16,20 +16,20 @@ module.exports = {
         allowNull: false,
         references: {
           model: 'Tasks',
-          key: 'id',
-        },
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     })
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('projects_tasks')
-  },
+  }
 }

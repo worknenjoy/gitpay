@@ -20,15 +20,15 @@ const CheckoutForm = (props) => {
       fullname: false,
       email: false,
       payment: false,
-      message: 'loading',
+      message: 'loading'
     },
-    paymentRequested: false,
+    paymentRequested: false
   })
 
   const [couponState, setCouponState] = useState({
     couponInput: false,
     coupon: '',
-    couponApplied: false,
+    couponApplied: false
   })
 
   const { couponStoreState = { completed: false, coupon: {} }, user, price, formatedPrice } = props
@@ -45,7 +45,7 @@ const CheckoutForm = (props) => {
       setCheckoutFormState((prev) => ({
         ...prev,
         error: { ...prev.error, fullname: true },
-        paymentRequested: false,
+        paymentRequested: false
       }))
       return
     }
@@ -54,7 +54,7 @@ const CheckoutForm = (props) => {
       setCheckoutFormState((prev) => ({
         ...prev,
         error: { ...prev.error, email: true },
-        paymentRequested: false,
+        paymentRequested: false
       }))
       return
     }
@@ -80,14 +80,14 @@ const CheckoutForm = (props) => {
             amount: price,
             email: checkoutFormState.email,
             userId: checkoutFormState.userId,
-            plan: props.plan,
+            plan: props.plan
           },
           coupon: couponState.couponApplied
             ? {
                 code: couponState.coupon || null,
-                originalOrderPrice: price,
+                originalOrderPrice: price
               }
-            : null,
+            : null
         })
         props.onClose()
       } else {
@@ -105,7 +105,7 @@ const CheckoutForm = (props) => {
     setCheckoutFormState((prev) => ({
       ...prev,
       [ev.target.name]: ev.target.value,
-      paymentRequested: false,
+      paymentRequested: false
     }))
   }
 
@@ -116,7 +116,7 @@ const CheckoutForm = (props) => {
         authenticated: true,
         fullname: user.name,
         email: user.email,
-        userId: user.id,
+        userId: user.id
       }))
     }
   }, [user])
@@ -200,7 +200,7 @@ const CheckoutForm = (props) => {
                   price:
                     couponState.couponApplied && (couponStoreState?.coupon?.orderPrice ?? -1) >= 0
                       ? `$${couponStoreState?.coupon?.orderPrice}`
-                      : formatedPrice,
+                      : formatedPrice
                 }}
               />
             </Button>
@@ -222,7 +222,7 @@ CheckoutForm.propTypes = {
   user: PropTypes.object,
   plan: PropTypes.string,
   couponStoreState: PropTypes.object,
-  validateCoupon: PropTypes.func,
+  validateCoupon: PropTypes.func
 }
 
 export default CheckoutForm

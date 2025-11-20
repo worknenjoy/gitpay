@@ -10,22 +10,22 @@ module.exports = async function chargeFailed(event, paid, status, req, res) {
   return models.Order.update(
     {
       paid: paid,
-      status: status,
+      status: status
     },
     {
       where: {
         source_id: event.data.object.source.id,
-        source: event.data.object.id,
+        source: event.data.object.id
       },
-      returning: true,
-    },
+      returning: true
+    }
   )
     .then((order) => {
       if (order[0]) {
         models.User.findOne({
           where: {
-            id: order[1][0].dataValues.userId,
-          },
+            id: order[1][0].dataValues.userId
+          }
         }).then((user) => {
           if (user) {
             if (status === 'failed') {
@@ -35,8 +35,8 @@ module.exports = async function chargeFailed(event, paid, status, req, res) {
                 user.dataValues,
                 i18n.__('mail.webhook.payment.unapproved.subject'),
                 i18n.__('mail.webhook.payment.unapproved.message', {
-                  reason: FAILED_REASON[event.data.object.outcome.network_status],
-                }),
+                  reason: FAILED_REASON[event.data.object.outcome.network_status]
+                })
               )
               return res.status(200).json(event)
             }

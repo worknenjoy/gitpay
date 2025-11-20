@@ -14,7 +14,7 @@ function makeLabelJsonAttr(tableAlias) {
       JOIN "Labels" l ON l.id = tl."labelId"
       WHERE tl."taskId" = "${tableAlias}"."id"
     )`),
-    'labels',
+    'labels'
   ]
 }
 
@@ -71,7 +71,7 @@ function groupBy(arr, keyFn) {
 
 module.exports = Promise.method(function taskSearch(searchParams) {
   const whereBase = {
-    [Op.or]: [{ private: null }, { private: false }],
+    [Op.or]: [{ private: null }, { private: false }]
   }
 
   if (searchParams.projectId) whereBase.ProjectId = { [Op.eq]: parseInt(searchParams.projectId) }
@@ -99,9 +99,9 @@ module.exports = Promise.method(function taskSearch(searchParams) {
       'transfer_id',
       'payment_url',
       'destination',
-      'capture',
+      'capture'
     ],
-    order: [['createdAt', 'DESC']],
+    order: [['createdAt', 'DESC']]
   }
 
   if (searchParams.organizationId && !searchParams.projectId) {
@@ -127,7 +127,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
       'updatedAt',
       'ProjectId',
       'userId',
-      makeLabelJsonAttr('Tasks'),
+      makeLabelJsonAttr('Tasks')
     ]
 
     let tasks = []
@@ -141,16 +141,16 @@ module.exports = Promise.method(function taskSearch(searchParams) {
           include: [
             {
               model: models.User,
-              attributes: ['id', 'name', 'username', 'picture_url', 'country', 'language'],
+              attributes: ['id', 'name', 'username', 'picture_url', 'country', 'language']
             },
             {
               model: models.Assign,
               separate: true,
               attributes: ['id', 'status', 'message', 'createdAt', 'TaskId', 'userId'],
               include: [
-                { model: models.User, attributes: ['id', 'username', 'picture_url', 'name'] },
+                { model: models.User, attributes: ['id', 'username', 'picture_url', 'name'] }
               ],
-              order: [['createdAt', 'DESC']],
+              order: [['createdAt', 'DESC']]
             },
             {
               model: models.Project,
@@ -160,20 +160,20 @@ module.exports = Promise.method(function taskSearch(searchParams) {
                   model: models.ProgrammingLanguage,
                   as: 'ProgrammingLanguages',
                   attributes: ['id', 'name'],
-                  through: { attributes: [] },
-                },
-              ],
+                  through: { attributes: [] }
+                }
+              ]
             },
-            ordersInclude,
+            ordersInclude
           ],
           distinct: true,
           order: [
             ['status', 'DESC'],
-            ['id', 'DESC'],
-          ],
-        },
+            ['id', 'DESC']
+          ]
+        }
       ],
-      order: [['id', 'DESC']],
+      order: [['id', 'DESC']]
     }).then(async (projects) => {
       projects.forEach((p) => p.Tasks.forEach((t) => tasks.push(t)))
       attachLabelsVirtual(tasks)
@@ -203,7 +203,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
     'updatedAt',
     'ProjectId',
     'userId',
-    makeLabelJsonAttr('Task'),
+    makeLabelJsonAttr('Task')
   ]
 
   return models.Task.findAll({
@@ -212,14 +212,14 @@ module.exports = Promise.method(function taskSearch(searchParams) {
     include: [
       {
         model: models.User,
-        attributes: ['id', 'provider', 'name', 'username', 'picture_url', 'country', 'language'],
+        attributes: ['id', 'provider', 'name', 'username', 'picture_url', 'country', 'language']
       },
       {
         model: models.Assign,
         separate: true,
         attributes: ['id', 'status', 'message', 'createdAt', 'TaskId', 'userId'],
         include: [{ model: models.User, attributes: ['id', 'username', 'picture_url', 'name'] }],
-        order: [['createdAt', 'DESC']],
+        order: [['createdAt', 'DESC']]
       },
       {
         model: models.Project,
@@ -229,17 +229,17 @@ module.exports = Promise.method(function taskSearch(searchParams) {
             model: models.ProgrammingLanguage,
             as: 'ProgrammingLanguages',
             attributes: ['id', 'name'],
-            through: { attributes: [] },
-          },
-        ],
+            through: { attributes: [] }
+          }
+        ]
       },
-      ordersInclude,
+      ordersInclude
     ],
     distinct: true,
     order: [
       ['status', 'DESC'],
-      ['id', 'DESC'],
-    ],
+      ['id', 'DESC']
+    ]
   }).then(async (rows) => {
     attachLabelsVirtual(rows)
 
@@ -247,7 +247,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
       const project = task.Project
       if (searchParams.languageIds && searchParams.languageIds.length > 0) {
         return project?.ProgrammingLanguages?.some((pl) =>
-          searchParams.languageIds.includes(`${pl.id}`),
+          searchParams.languageIds.includes(`${pl.id}`)
         )
       }
       return true

@@ -10,7 +10,7 @@ const Notification = ({ open, onClose, message, link, linkLabel }) => {
     let actions = [
       <IconButton key="close" aria-label="Close" color="inherit" onClick={onClose}>
         <Close />
-      </IconButton>,
+      </IconButton>
     ]
     if (link) {
       actions = [getLink(), ...actions]
@@ -25,7 +25,7 @@ const Notification = ({ open, onClose, message, link, linkLabel }) => {
     <Snackbar
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'right',
+        horizontal: 'right'
       }}
       open={open}
       onClose={onClose}
@@ -41,7 +41,7 @@ Notification.propTypes = {
   onClose: PropTypes.func,
   message: PropTypes.string,
   link: PropTypes.string,
-  linkLabel: PropTypes.string,
+  linkLabel: PropTypes.string
 }
 
 export default Notification

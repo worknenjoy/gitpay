@@ -1,14 +1,14 @@
 import {
   MESSAGE_RECRUITERS_REQUESTED,
   MESSAGE_RECRUITERS_SUCCESS,
-  MESSAGE_RECRUITERS_ERROR,
+  MESSAGE_RECRUITERS_ERROR
 } from '../actions/contactActions'
 
 export const contact = (
   state = {
-    completed: true,
+    completed: true
   },
-  action,
+  action
 ) => {
   switch (action.type) {
     case MESSAGE_RECRUITERS_REQUESTED:

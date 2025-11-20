@@ -11,7 +11,7 @@ const useCommonActions = ({
   getInfo,
   signOut,
   roles,
-  fetchRoles,
+  fetchRoles
 }) => {
   const history = useHistory()
 
@@ -35,22 +35,22 @@ const useCommonActions = ({
     user: user,
     bottomBarProps: {
       info,
-      getInfo,
+      getInfo
     },
     accountMenuProps: {
-      signOut,
+      signOut
     },
     loginFormSignupFormProps: {
       onSubmit: handleSignupUser,
       roles,
-      fetchRoles,
+      fetchRoles
     },
     loginFormForgotFormProps: {
-      onSubmit: handleForgotPassword,
+      onSubmit: handleForgotPassword
     },
     importIssuesProps: {
-      onImport: handleImportIssue,
-    },
+      onImport: handleImportIssue
+    }
   }
 }
 

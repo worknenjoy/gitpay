@@ -8,8 +8,8 @@ module.exports = (to, subject, data, name = 'onetask') => {
     from: constants.fromEmail,
     templateId: constants.templates[name],
     asm: {
-      group_id: constants.groups[name],
-    },
+      group_id: constants.groups[name]
+    }
   }
   let msg = []
   if (Array.isArray(to)) {

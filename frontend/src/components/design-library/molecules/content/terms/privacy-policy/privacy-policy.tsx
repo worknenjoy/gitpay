@@ -13,7 +13,7 @@ const PrivacyPolicy = ({
   onArrowBack,
   onAgreeTerms,
   noHeader,
-  extraStyles = true,
+  extraStyles = true
 }: PrivacyPolicyProps) => {
   const content = `
   {br}

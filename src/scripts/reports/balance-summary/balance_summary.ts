@@ -22,7 +22,7 @@ const C = {
   gray: '\x1b[90m',
   bgRed: '\x1b[41m',
   bgGreen: '\x1b[42m',
-  bgYellow: '\x1b[43m',
+  bgYellow: '\x1b[43m'
 }
 const hr = (w = 70) => `${C.gray}${'─'.repeat(w)}${C.reset}`
 const toCents = (n: number) => Math.round((Number(n) || 0) * 100)
@@ -46,14 +46,14 @@ async function getCurrentStripeBalance() {
 
 async function getTotalWalletBalance() {
   console.log(
-    `${C.cyan}${C.bold}🧮 [Step] Calculating total Wallet balance from database...${C.reset}`,
+    `${C.cyan}${C.bold}🧮 [Step] Calculating total Wallet balance from database...${C.reset}`
   )
   console.time('[Step] Wallet balance calculation time')
 
   const wallets = await Wallet.findAll({
     where: {
-      balance: { [Op.gt]: 0 },
-    },
+      balance: { [Op.gt]: 0 }
+    }
   })
 
   let totalWalletBalance = 0
@@ -64,7 +64,7 @@ async function getTotalWalletBalance() {
   // Show both DB-decimal view and USD formatted (converted to cents for display)
   console.log(
     `${C.blue}ℹ️  [Database] Total Wallet balance (DB decimal USD): ${totalWalletBalance.toFixed(2)} ` +
-      `${C.gray}(${formatUSD(toCents(totalWalletBalance))})${C.reset}`,
+      `${C.gray}(${formatUSD(toCents(totalWalletBalance))})${C.reset}`
   )
 
   console.timeEnd('[Step] Wallet balance calculation time')
@@ -73,19 +73,19 @@ async function getTotalWalletBalance() {
 
 async function getTotalAmountForPendingTasks() {
   console.log(
-    `${C.cyan}${C.bold}📝 [Step] Calculating total amount for pending Tasks in database...${C.reset}`,
+    `${C.cyan}${C.bold}📝 [Step] Calculating total amount for pending Tasks in database...${C.reset}`
   )
   console.time('[Step] Pending Tasks amount calculation time')
 
   const tasks = await Task.findAll({
     where: {
-      value: { [Op.gt]: 0 },
+      value: { [Op.gt]: 0 }
     },
-    include: [models.Order],
+    include: [models.Order]
   })
 
   const pendingTasks = tasks.filter(
-    (t: any) => !t.paid && t.transfer_id === null && t.TransferId === null,
+    (t: any) => !t.paid && t.transfer_id === null && t.TransferId === null
   )
 
   let totalPendingTasksAmount = 0
@@ -96,7 +96,7 @@ async function getTotalAmountForPendingTasks() {
       `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`,
       `Source: ${t.Orders.map((o: any) => `${o.provider} - ${formatUSD(toCents(o.amount))}`).join(', ') || 'N/A'}`,
       `Transfer ID: ${t.TransferId}`,
-      `transfer_id: ${t.transfer_id}`,
+      `transfer_id: ${t.transfer_id}`
     )
     totalPendingTasksAmount += Number(t.value) * 0.92 || 0 // 8% platform fee; DB values in decimal (USD)
   }
@@ -111,7 +111,7 @@ async function getTotalAmountForPendingTasks() {
           console.log(
             `- Task ID: ${t.id}, Paid: ${t.paid ? 'Yes' : 'No'}, Value: ${formatUSD(toCents(t.value))}`,
             `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`,
-            `Order ID: ${order.id}, Provider: ${order.provider}, Amount: ${formatUSD(toCents(order.amount))}`,
+            `Order ID: ${order.id}, Provider: ${order.provider}, Amount: ${formatUSD(toCents(order.amount))}`
           )
           totalPendingPaypalOrdersAmount += Number(order.amount) * 0.92 || 0 // 8% platform fee; DB values in decimal (USD)
         }
@@ -122,19 +122,19 @@ async function getTotalAmountForPendingTasks() {
   console.log('-----------------------------------------------')
   console.log(
     `${C.yellow}⚠️  Note: The total amount for pending Tasks includes $${totalPendingPaypalOrdersAmount.toFixed(2)} ` +
-      `from Tasks associated with PayPal Orders.${C.reset}`,
+      `from Tasks associated with PayPal Orders.${C.reset}`
   )
 
   console.log(
     `${C.blue}ℹ️  [Database] Total amount of Tasks (DB decimal USD): ${pendingTasks.length} ` +
       `${C.blue}ℹ️  [Database] Total amount for pending Tasks (DB decimal USD): ${totalPendingTasksAmount.toFixed(2)} ` +
-      `${C.gray}(${formatUSD(toCents(totalPendingTasksAmount))})${C.reset}`,
+      `${C.gray}(${formatUSD(toCents(totalPendingTasksAmount))})${C.reset}`
   )
 
   console.timeEnd('[Step] Pending Tasks amount calculation time')
   return {
     totalPendingTasksAmount,
-    totalPendingPaypalOrdersAmount,
+    totalPendingPaypalOrdersAmount
   } // keep returning decimal
 }
 
@@ -152,7 +152,7 @@ async function getSummary() {
     totalWalletBalance,
     totalPendingTasksAmount,
     totalPendingPaypalOrdersAmount,
-    totalPendingTasksAmountOnlyStripe,
+    totalPendingTasksAmountOnlyStripe
   }
 }
 
@@ -192,27 +192,27 @@ async function getSummary() {
     console.log(hr())
     console.log(`${C.bold}📊 Financial Summary${C.reset}`)
     console.log(
-      `${C.gray}• Stripe Available (cents)${C.reset}: ${stripeAvailableCents} ${C.gray}=>${C.reset} ${stripeAvailableUSD}`,
+      `${C.gray}• Stripe Available (cents)${C.reset}: ${stripeAvailableCents} ${C.gray}=>${C.reset} ${stripeAvailableUSD}`
     )
     console.log(
-      `${C.gray}• Total Remaining Balance (DB decimal → cents)${C.reset}: ${walletBalanceCents} ${C.gray}=>${C.reset} ${walletBalanceUSD}`,
+      `${C.gray}• Total Remaining Balance (DB decimal → cents)${C.reset}: ${walletBalanceCents} ${C.gray}=>${C.reset} ${walletBalanceUSD}`
     )
     console.log(
-      `${C.gray}• Total Amount for Pending Tasks Total (DB decimal → cents)${C.reset}: ${pendingTasksCents} ${C.gray}=>${C.reset} ${pendingTasksUSD}`,
+      `${C.gray}• Total Amount for Pending Tasks Total (DB decimal → cents)${C.reset}: ${pendingTasksCents} ${C.gray}=>${C.reset} ${pendingTasksUSD}`
     )
     console.log(
-      `${C.gray}• Total Amount for Pending Tasks only Stripe (DB decimal → cents)${C.reset}: ${pendingTasksCentsOnlyStripe} ${C.gray}=>${C.reset} ${pendingTasksUSDOnlyStripeUSD}`,
+      `${C.gray}• Total Amount for Pending Tasks only Stripe (DB decimal → cents)${C.reset}: ${pendingTasksCentsOnlyStripe} ${C.gray}=>${C.reset} ${pendingTasksUSDOnlyStripeUSD}`
     )
     console.log(hr())
 
     console.log(
-      `${C.cyan}${C.bold}🧠 Total Available Balance Calculation (Paypal + Stripe) ${C.reset}`,
+      `${C.cyan}${C.bold}🧠 Total Available Balance Calculation (Paypal + Stripe) ${C.reset}`
     )
     console.log(
-      `${C.gray}Formula:${C.reset} Available = (Stripe Available + Paypal Balance) - Wallet Balance - Pending Tasks`,
+      `${C.gray}Formula:${C.reset} Available = (Stripe Available + Paypal Balance) - Wallet Balance - Pending Tasks`
     )
     console.log(
-      `= (${stripeAvailableUSD} ${C.gray} + ${C.reset}${paypalBalanceUSD}) ${C.gray}- ${C.reset}${walletBalanceUSD} ${C.gray}- ${C.reset}${pendingTasksUSD}`,
+      `= (${stripeAvailableUSD} ${C.gray} + ${C.reset}${paypalBalanceUSD}) ${C.gray}- ${C.reset}${walletBalanceUSD} ${C.gray}- ${C.reset}${pendingTasksUSD}`
     )
     console.log(hr())
 
@@ -221,20 +221,20 @@ async function getSummary() {
     const bannerTextColor = totalAvailableCents >= 0 ? C.bold : `${C.bold}${C.reset}`
     console.log(hr())
     console.log(
-      `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE: ${finalUSD}  ${C.reset}`,
+      `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE: ${finalUSD}  ${C.reset}`
     )
     console.log(hr())
 
     console.log(`${C.cyan}${C.bold}🧠 Total Available Balance Calculation (Stripe only)${C.reset}`)
     console.log(
-      `${C.gray}Formula:${C.reset} Available = Stripe Available - Wallet Balance - (Pending Tasks - PayPal related Tasks orders)`,
+      `${C.gray}Formula:${C.reset} Available = Stripe Available - Wallet Balance - (Pending Tasks - PayPal related Tasks orders)`
     )
     console.log(
-      `= ${stripeAvailableUSD} ${C.gray}- ${C.reset}${walletBalanceUSD} ${C.gray}- (${C.reset}${pendingTasksUSD} ${C.gray} - ${C.reset}${pendingPaypalOrdersUSD})`,
+      `= ${stripeAvailableUSD} ${C.gray}- ${C.reset}${walletBalanceUSD} ${C.gray}- (${C.reset}${pendingTasksUSD} ${C.gray} - ${C.reset}${pendingPaypalOrdersUSD})`
     )
     console.log(hr())
     console.log(
-      `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE FOR STRIPE: ${finalUSDOnlyStripe}  ${C.reset}`,
+      `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE FOR STRIPE: ${finalUSDOnlyStripe}  ${C.reset}`
     )
     console.log(hr())
 

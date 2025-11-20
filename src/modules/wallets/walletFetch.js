@@ -6,8 +6,8 @@ module.exports = Promise.method(async function walletFetch(params) {
     params.userId &&
     (await models.User.findOne({
       where: {
-        id: params.userId,
-      },
+        id: params.userId
+      }
     }))
 
   if (!user) {
@@ -17,8 +17,8 @@ module.exports = Promise.method(async function walletFetch(params) {
   const wallet = await models.Wallet.findOne({
     where: {
       id: params.id,
-      userId: user.id,
-    },
+      userId: user.id
+    }
   })
 
   if (!wallet) {

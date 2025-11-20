@@ -5,12 +5,12 @@ import { Edit as EditIcon, Link as LinkIcon } from '@mui/icons-material'
 import {
   paymentRequestMetadata,
   paymentRequestPaymentsMetadata,
-  paymentRequestPaymentsCustomColumnRenderer,
+  paymentRequestPaymentsCustomColumnRenderer
 } from './payment-requests-table'
 
 import {
   paymentRequestBalancesMetadata,
-  paymentRequestBalancesCustomColumnRenderer,
+  paymentRequestBalancesCustomColumnRenderer
 } from './payment-requests-balance-table'
 
 import EmptyPaymentRequest from 'design-library/molecules/content/empty/empty-payment-request/empty-payment-request'
@@ -31,7 +31,7 @@ const PaymentRequests = ({
   listPaymentRequests,
   listPaymentRequestPayments,
   listPaymentRequestBalances,
-  updatePaymentRequest,
+  updatePaymentRequest
 }) => {
   const classes = { gutterLeft: { marginLeft: 10 } } as const
   const { completed, data } = paymentRequests
@@ -96,11 +96,11 @@ const PaymentRequests = ({
           {
             children: 'Edit Payment Request',
             icon: <EditIcon />,
-            onClick: () => openEditPaymentRequest(item),
-          },
+            onClick: () => openEditPaymentRequest(item)
+          }
         ]}
       />
-    ),
+    )
   }
 
   useEffect(() => {
@@ -111,7 +111,7 @@ const PaymentRequests = ({
 
   const transactions = {
     completed: paymentRequestBalances?.completed,
-    data: paymentRequestBalances?.data?.[0]?.PaymentRequestBalanceTransactions || [],
+    data: paymentRequestBalances?.data?.[0]?.PaymentRequestBalanceTransactions || []
   }
 
   return (
@@ -137,8 +137,8 @@ const PaymentRequests = ({
             table: {
               tableData: paymentRequests,
               tableHeaderMetadata: paymentRequestMetadata,
-              customColumnRenderer: customColumnRenderer,
-            },
+              customColumnRenderer: customColumnRenderer
+            }
           },
           {
             label: (
@@ -151,8 +151,8 @@ const PaymentRequests = ({
             table: {
               tableData: paymentRequestPayments,
               tableHeaderMetadata: paymentRequestPaymentsMetadata,
-              customColumnRenderer: paymentRequestPaymentsCustomColumnRenderer,
-            },
+              customColumnRenderer: paymentRequestPaymentsCustomColumnRenderer
+            }
           },
           {
             label: (
@@ -170,16 +170,16 @@ const PaymentRequests = ({
                   />
                 ),
                 amount: parseInt(paymentRequestBalances?.data?.[0]?.balance) * -1 || 0,
-                type: 'centavos',
-              },
+                type: 'centavos'
+              }
             ],
             value: 'payment-request-balances',
             table: {
               tableData: transactions,
               tableHeaderMetadata: paymentRequestBalancesMetadata,
-              customColumnRenderer: paymentRequestBalancesCustomColumnRenderer,
-            },
-          },
+              customColumnRenderer: paymentRequestBalancesCustomColumnRenderer
+            }
+          }
         ]}
         displayAction={true}
         emptyComponent={
@@ -206,7 +206,7 @@ const PaymentRequests = ({
         onSuccess={handleUpdatePaymentRequest}
         paymentRequest={{
           completed: !processingUpdatePaymentRequest,
-          data: selectedPaymentRequest,
+          data: selectedPaymentRequest
         }}
       />
     </>

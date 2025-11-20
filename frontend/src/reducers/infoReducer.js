@@ -4,12 +4,12 @@ export const info = (
   state = {
     completed: true,
     error: {
-      message: false,
+      message: false
     },
     data: {},
-    filterValue: null,
+    filterValue: null
   },
-  action,
+  action
 ) => {
   switch (action.type) {
     case INFO_REQUESTED:

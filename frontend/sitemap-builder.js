@@ -4,9 +4,9 @@ require('@babel/register')({
   presets: [
     ['@babel/preset-env', { targets: { node: 'current' } }],
     '@babel/preset-react',
-    '@babel/preset-typescript',
+    '@babel/preset-typescript'
   ],
-  plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties'],
+  plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties']
 })
 
 const fs = require('node:fs')
@@ -42,7 +42,7 @@ function normalizeToObjects(input) {
   if (React.isValidElement(input)) {
     if (!createRoutesFromChildren) {
       console.warn(
-        '⚠️ createRoutesFromChildren not available. Export route objects instead of JSX.',
+        '⚠️ createRoutesFromChildren not available. Export route objects instead of JSX.'
       )
       return []
     }
@@ -145,7 +145,7 @@ const hostname = 'https://gitpay.me'
 const links = finalPaths.map((url) => ({
   url,
   changefreq: 'weekly',
-  priority: url === '/' ? 1.0 : 0.7,
+  priority: url === '/' ? 1.0 : 0.7
 }))
 
 const outDir = path.resolve(__dirname, 'public')

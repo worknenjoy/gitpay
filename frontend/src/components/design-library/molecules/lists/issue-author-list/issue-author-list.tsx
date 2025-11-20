@@ -54,7 +54,7 @@ export default function IssueAuthorList({ authors, user, task, messageAuthor }) 
                                 style={{
                                   display: 'inline',
                                   verticalAlign: 'middle',
-                                  marginLeft: 10,
+                                  marginLeft: 10
                                 }}
                               />
                             )}

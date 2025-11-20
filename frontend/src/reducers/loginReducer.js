@@ -6,7 +6,7 @@ import {
   LOGOUT_COMPLETED,
   FETCH_LOGGED_USER_REQUESTED,
   FETCH_LOGGED_USER_SUCCESS,
-  FETCH_LOGGED_USER_ERROR,
+  FETCH_LOGGED_USER_ERROR
 } from '../actions/loginActions'
 
 import {
@@ -15,12 +15,12 @@ import {
   UPDATE_USER_ERROR,
   DELETE_USER_ACCOUNT_REQUESTED,
   DELETE_USER_ACCOUNT_SUCCESS,
-  DELETE_USER_ACCOUNT_ERROR,
+  DELETE_USER_ACCOUNT_ERROR
 } from '../actions/userActions'
 
 export const loggedIn = (
   state = { logged: false, data: {}, completed: true, error: {} },
-  action,
+  action
 ) => {
   switch (action.type) {
     case LOGGED_IN_SUCCESS:

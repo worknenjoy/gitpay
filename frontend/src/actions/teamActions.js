@@ -24,7 +24,7 @@ const joinTeamError = (error) => {
 
 const joinTeam = (email) => {
   const param = {
-    email: email,
+    email: email
   }
   return (dispatch) => {
     dispatch(joinTeamRequested())

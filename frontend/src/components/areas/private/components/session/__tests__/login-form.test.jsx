@@ -13,10 +13,10 @@ const router = {
   history: {},
   route: {
     location: {
-      pathname: '/',
+      pathname: '/'
     },
-    match: {},
-  },
+    match: {}
+  }
 }
 
 xdescribe('Components - Session - LoginForm', () => {
@@ -24,7 +24,7 @@ xdescribe('Components - Session - LoginForm', () => {
     render(
       <BrowserRouter router={router}>
         <LoginForm mode="signup" />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
 
     userEvent.type(await screen.findByLabelText(/E-mail/i), 'test')
@@ -38,7 +38,7 @@ xdescribe('Components - Session - LoginForm', () => {
     render(
       <BrowserRouter router={router}>
         <LoginForm mode="signup" />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
 
     await userEvent.type(await screen.findByLabelText(/E-mail/i), 'test@example.com')
@@ -52,7 +52,7 @@ xdescribe('Components - Session - LoginForm', () => {
     render(
       <BrowserRouter router={router}>
         <LoginForm mode="signup" />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
 
     userEvent.type(await screen.findByLabelText(/E-mail/i), 'test@example.com')
@@ -67,7 +67,7 @@ xdescribe('Components - Session - LoginForm', () => {
     const { findByLabelText, findByTestId, findByText, unmount } = render(
       <BrowserRouter router={router}>
         <LoginForm mode="signup" />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
 
     await userEvent.type(await findByLabelText(/E-mail/i), 'test@example.com')
@@ -79,7 +79,7 @@ xdescribe('Components - Session - LoginForm', () => {
     expect(emailField.id).toBe('username')
     expect(emailField.value).toBe('test@example.com')
     expect(
-      await findByText(/You must agree with the Terms of Service and Privacy Policy/i),
+      await findByText(/You must agree with the Terms of Service and Privacy Policy/i)
     ).toBeDefined()
     unmount()
   }, 10000)
@@ -88,20 +88,20 @@ xdescribe('Components - Session - LoginForm', () => {
     const { findByLabelText, findByTestId, findByText, unmount } = render(
       <BrowserRouter router={router}>
         <LoginForm mode="signup" />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
 
     await userEvent.type(
       await findByLabelText(/E-mail/i),
-      'test-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-test@example.com',
+      'test-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-test@example.com'
     )
     await userEvent.type(
       await findByLabelText('Password'),
-      'test-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-test',
+      'test-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-test'
     )
     await userEvent.type(
       await findByLabelText('Confirm Password'),
-      'test-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-test',
+      'test-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-test'
     )
     await userEvent.click(await findByTestId('agree-terms-checkbox'))
     await userEvent.click(await findByTestId('signup-button'))
@@ -114,17 +114,17 @@ xdescribe('Components - Session - LoginForm', () => {
     const { findByLabelText, findByTestId, findByText, unmount } = render(
       <BrowserRouter router={router}>
         <LoginForm mode="signup" />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
 
     await userEvent.type(await findByLabelText(/E-mail/i), 'test@example.com')
     await userEvent.type(
       await findByLabelText('Password'),
-      'test-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-test',
+      'test-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-test'
     )
     await userEvent.type(
       await findByLabelText('Confirm Password'),
-      'test-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-test',
+      'test-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-testtest-another-test-test-test-test'
     )
     await userEvent.click(await findByTestId('agree-terms-checkbox'))
     await userEvent.click(await findByTestId('signup-button'))
@@ -138,11 +138,11 @@ xdescribe('Components - Session - LoginForm', () => {
     const { findByLabelText, findByTestId, unmount, findByText } = render(
       <BrowserRouter router={router}>
         <LoginForm mode="signup" registerUser={onRegisterUser} />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
     await userEvent.type(
       await findByLabelText(/Name/i),
-      'A big name with big letters and big words and big everything and other stuff A big name with big letters and big words and big everything and other stuff A big name with big letters and big words and big everything and other stuff A big name with big letters and big words and big everything and other stuff A big A big name with big letters and big words and big everything and other stuff',
+      'A big name with big letters and big words and big everything and other stuff A big name with big letters and big words and big everything and other stuff A big name with big letters and big words and big everything and other stuff A big name with big letters and big words and big everything and other stuff A big A big name with big letters and big words and big everything and other stuff'
     )
     await userEvent.type(await findByLabelText(/E-mail/i), 'test@example.com')
     await userEvent.type(await findByLabelText('Password'), '1234')
@@ -159,7 +159,7 @@ xdescribe('Components - Session - LoginForm', () => {
     const { findByLabelText, findByTestId, unmount, findByText } = render(
       <BrowserRouter router={router}>
         <LoginForm mode="signup" registerUser={onRegisterUser} />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
     await userEvent.type(await findByLabelText(/Name/i), 'Test with url https://alexandremagno.net')
     await userEvent.type(await findByLabelText(/E-mail/i), 'test@example.com')
@@ -176,7 +176,7 @@ xdescribe('Components - Session - LoginForm', () => {
     const { findByLabelText, findByTestId, unmount } = render(
       <BrowserRouter router={router}>
         <LoginForm mode="signup" registerUser={onRegisterUser} />
-      </BrowserRouter>,
+      </BrowserRouter>
     )
 
     await userEvent.type(await findByLabelText(/E-mail/i), 'test@example.com')

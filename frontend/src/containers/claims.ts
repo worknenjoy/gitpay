@@ -12,7 +12,7 @@ const mapStateToProps = (state: any) => {
     account: state.account,
     transfers: state.transfers,
     transfer: state.transfer,
-    paymentRequestTransfers: state.paymentRequestTransfers,
+    paymentRequestTransfers: state.paymentRequestTransfers
   }
 }
 
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch: any) => {
     fetchTransfer: (id: any) => dispatch(fetchTransfer(id)),
     fetchAccount: () => dispatch(fetchAccount()),
     listPaymentRequests: (params: any) => dispatch(listPaymentRequests(params)),
-    listPaymentRequestTransfers: (params: any) => dispatch(listPaymentRequestTransfers(params)),
+    listPaymentRequestTransfers: (params: any) => dispatch(listPaymentRequestTransfers(params))
   }
 }
 

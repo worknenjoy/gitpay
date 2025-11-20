@@ -4,10 +4,10 @@ const models = require('../../models')
 module.exports = Promise.method(function organizationUpdate(organizationParameters) {
   return models.Organization.update(organizationParameters, {
     where: {
-      id: organizationParameters.id,
+      id: organizationParameters.id
     },
     returning: true,
-    plain: true,
+    plain: true
   })
     .then((organization) => {
       if (!organization) return false

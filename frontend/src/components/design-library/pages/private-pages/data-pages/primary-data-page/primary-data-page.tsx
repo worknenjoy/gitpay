@@ -13,7 +13,7 @@ const PrimaryDataPage = ({
   emptyComponent = <EmptyBase />,
   displayAction = false,
   onActionClick = () => {},
-  onActionText = <>Create New</>,
+  onActionText = <>Create New</>
 }) => {
   const currentActiveTab = tabs.find((tab) => tab.value === activeTab)
   const emptyActiveTab = currentActiveTab?.table.tableData.data.length === 0

@@ -4,29 +4,29 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
       },
       OrganizationId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Organizations',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: false,
+        allowNull: false
       },
       ProjectId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Projects',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: true,
+        allowNull: true
       },
       createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE
     })
   },
   down: function (queryInterface, Sequelize) {
     return queryInterface.dropTable('organizations_projects')
-  },
+  }
 }

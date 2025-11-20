@@ -39,7 +39,7 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
   alertSeverity = 'warning',
   onConfirm,
   onCancel,
-  onOpenChange,
+  onOpenChange
 }) => {
   const [open, setOpen] = React.useState(false)
 

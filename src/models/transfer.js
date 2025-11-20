@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       status: {
         type: DataTypes.STRING,
-        defaultValue: 'pending',
+        defaultValue: 'pending'
       },
       value: DataTypes.DECIMAL,
       transfer_id: DataTypes.STRING,
@@ -16,37 +16,37 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: 'Tasks',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: false,
+        allowNull: false
       },
       userId: {
         type: DataTypes.INTEGER,
         references: {
           model: 'Users',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: false,
+        allowNull: false
       },
       to: {
         type: DataTypes.INTEGER,
         references: {
           model: 'Users',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: false,
-      },
+        allowNull: false
+      }
     },
-    {},
+    {}
   )
 
   Transfer.associate = function (models) {
     Transfer.belongsTo(models.Task, {
-      foreignKey: 'taskId',
+      foreignKey: 'taskId'
     })
     Transfer.belongsTo(models.User, {
       foreignKey: 'userId',
-      as: 'User',
+      as: 'User'
     })
 
     Transfer.belongsTo(models.User, { foreignKey: 'to', as: 'destination' })

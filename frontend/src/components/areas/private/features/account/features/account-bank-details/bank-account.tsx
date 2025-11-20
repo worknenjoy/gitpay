@@ -19,7 +19,7 @@ import {
   Radio,
   Switch,
   Avatar,
-  Skeleton,
+  Skeleton
 } from '@mui/material'
 import { Public as PublicIcon, Person as PersonIcon } from '@mui/icons-material'
 import Alert from 'design-library/atoms/alerts/alert/alert'
@@ -43,7 +43,7 @@ const BankAccount = ({
   createBankAccount,
   updateBankAccount,
   getBankAccount,
-  user,
+  user
 }) => {
   const intl = useIntl()
 
@@ -125,7 +125,7 @@ const BankAccount = ({
           if (editBankAccount) {
             updateBankAccount({
               account_holder_type: bankAccountType,
-              account_holder_name: bankAccountHolderName,
+              account_holder_name: bankAccountHolderName
             })
           } else {
             createBankAccount(
@@ -133,13 +133,13 @@ const BankAccount = ({
               ibanMode
                 ? {
                     account_number: accountNumber,
-                    country: userCountry,
+                    country: userCountry
                   }
                 : {
                     routing_number: routingNumber,
                     account_number: accountNumber,
-                    country: userCountry,
-                  },
+                    country: userCountry
+                  }
             )
           }
         }
@@ -151,7 +151,7 @@ const BankAccount = ({
       if (userCountry === 'DK' || userCountry === 'BE' || ibanMode) {
         accountInfo = {
           account_number: e.target.account_number.value,
-          country: userCountry,
+          country: userCountry
         }
       } else {
         accountInfo = {
@@ -160,13 +160,13 @@ const BankAccount = ({
           account_holder_type: bankAccountType,
           country: userCountry,
           currency: currentCurrency,
-          account_holder_name: bankAccountHolderName,
+          account_holder_name: bankAccountHolderName
         }
       }
       if (editBankAccount) {
         updateBankAccount({
           account_holder_type: bankAccountType,
-          account_holder_name: bankAccountHolderName,
+          account_holder_name: bankAccountHolderName
         })
       } else {
         createBankAccount(userId, accountInfo)
@@ -452,7 +452,7 @@ const BankAccount = ({
                                 name="account_number"
                                 placeholder={intl.formatMessage({
                                   id: 'account.details.iban',
-                                  defaultMessage: 'IBAN',
+                                  defaultMessage: 'IBAN'
                                 })}
                                 disabled={!!bankAccount.data.routing_number}
                                 defaultValue={
@@ -490,7 +490,7 @@ const BankAccount = ({
                                     name="routing_number"
                                     placeholder={intl.formatMessage({
                                       id: 'account.details.rountingNumber',
-                                      defaultMessage: 'Routing number',
+                                      defaultMessage: 'Routing number'
                                     })}
                                     style={{ marginRight: 20 }}
                                     disabled={!!bankAccount.data.routing_number}
@@ -511,7 +511,7 @@ const BankAccount = ({
                                 name="account_number"
                                 placeholder={intl.formatMessage({
                                   id: 'account.details.accountNumber',
-                                  defaultMessage: 'Account number',
+                                  defaultMessage: 'Account number'
                                 })}
                                 disabled={!!bankAccount.data.routing_number}
                                 defaultValue={

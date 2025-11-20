@@ -5,7 +5,7 @@ import {
   ChipStatusClosed,
   ChipStatusSuccess,
   AvatarStatusClosed,
-  AvatarStatusSuccess,
+  AvatarStatusSuccess
 } from './issue-status-field.styles'
 
 const IssueStatus = ({ status }) => {

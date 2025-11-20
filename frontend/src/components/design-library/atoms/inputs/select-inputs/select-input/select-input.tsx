@@ -10,8 +10,8 @@ const SelectInput = ({ options, value, onChange, completed = true }) => {
         onChange={onChange}
         MenuProps={{
           PaperProps: {
-            style: { maxHeight: 400 },
-          },
+            style: { maxHeight: 400 }
+          }
         }}
       >
         {options.map((option) => (

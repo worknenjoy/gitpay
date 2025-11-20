@@ -14,7 +14,7 @@ const SEARCH_PAYOUT_FAILED = 'SEARCH_PAYOUT_FAILED'
 const requestPayoutRequested = () => {
   return {
     type: REQUEST_PAYOUT_REQUESTED,
-    completed: false,
+    completed: false
   }
 }
 
@@ -22,7 +22,7 @@ const requestPayoutSuccess = (data) => {
   return {
     type: REQUEST_PAYOUT_SUCCESS,
     data: data,
-    completed: true,
+    completed: true
   }
 }
 
@@ -30,14 +30,14 @@ const requestPayoutFailed = (error) => {
   return {
     type: REQUEST_PAYOUT_FAILED,
     error: error,
-    completed: true,
+    completed: true
   }
 }
 
 const searchPayoutRequested = () => {
   return {
     type: SEARCH_PAYOUT_REQUESTED,
-    completed: false,
+    completed: false
   }
 }
 
@@ -45,7 +45,7 @@ const searchPayoutSuccess = (data) => {
   return {
     type: SEARCH_PAYOUT_SUCCESS,
     data: data,
-    completed: true,
+    completed: true
   }
 }
 
@@ -53,7 +53,7 @@ const searchPayoutFailed = (error) => {
   return {
     type: SEARCH_PAYOUT_FAILED,
     error: error,
-    completed: true,
+    completed: true
   }
 }
 
@@ -105,5 +105,5 @@ export {
   SEARCH_PAYOUT_SUCCESS,
   SEARCH_PAYOUT_FAILED,
   requestPayout,
-  searchPayout,
+  searchPayout
 }
