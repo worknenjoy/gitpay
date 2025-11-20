@@ -15,13 +15,11 @@ const reverseTransferData = require('./data/stripe/stripe.webhook.transfer.rever
 const payoutData = require('./data/stripe/payout')
 const cardData = require('./data/stripe/card')
 const balanceData = require('./data/stripe/balance')
-const refundData = require('./data/stripe/refund')
+const { refundCreated } = require('./data/stripe/stripe.webhook.charge.refunded')
 const invoiceUpdated = require('./data/stripe/stripe.invoice.update')
 const invoiceCreated = require('./data/stripe/stripe.invoice.create')
 const invoicePaid = require('./data/stripe/stripe.invoice.paid')
 const invoiceWebhookPaid = require('./data/stripe/stripe.webhook.invoice')
-const eventCheckout = require('./data/stripe/stripe.webhook.checkout.session.completed')
-const { metadata } = require('core-js/fn/reflect')
 
 describe('webhooks for platform', () => {
   beforeEach(async () => {
@@ -78,7 +76,7 @@ describe('webhooks for platform', () => {
       expect(o.status).to.equal('succeeded')
     })
 
-    xit('should update balance after a refund is triggered', async () => {
+    it('should update balance after a refund is triggered', async () => {
       const user = await models.User.create({ email: 'testrefund@mail.com', password: 'teste' })
       const task = await models.Task.create({
         url: 'https://github.com/worknenjoy/truppie/issues/199',
@@ -86,22 +84,26 @@ describe('webhooks for platform', () => {
         userId: user.id
       })
       const order = await task.createOrder({
-        source_id: 'card_1CcdmoBrSjgsps2Dw7RRQDwp',
+        source_id: 'card_test_123',
         currency: 'BRL',
         amount: 200,
-        source: 'card_1FTTdSBrSjgsps2DFfBwigSm',
+        source: 'ch_test_bounty_charge',
         userId: user.id
       })
       const res = await agent
         .post('/webhooks/stripe-platform')
-        .send(refundData.refund)
+        .send(refundCreated.successfullyWithBountyMetadata)
         .expect('Content-Type', /json/)
         .expect(200)
+
       expect(res.statusCode).to.equal(200)
       expect(res.body).to.exist
-      expect(res.body.id).to.equal('ch_1FTTdqBrSjgsps2DQjHwwqr4')
+
+      const event = JSON.parse(Buffer.from(res.body).toString())
+
+      expect(event.id).to.equal('evt_test_refund_bounty')
       const o = await models.Order.findByPk(order.id)
-      expect(o.source).to.equal('ch_1CcdmsBrSjgsps2DNZiZAyvG')
+      expect(o.source).to.equal('ch_test_bounty_charge')
       expect(o.paid).to.equal(false)
       expect(o.status).to.equal('refunded')
     })
