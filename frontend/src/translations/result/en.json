@@ -14,7 +14,7 @@
   "account.actions.cancel": "Cancel",
   "account.actions.close": "Close Account",
   "account.actions.close.alert": "Closing your account will remove all your data, including bank accounts, transfers, and claims from our system. This action cannot be undone.",
-  "account.actions.close.confirm": "Are you sure you want to close your account? By closing your account, you still have your account on Gitpay, but you will need to register your country and provide your information again or from your business. This is an option for those who changed countries or chose a country in which you are not residing legally.",
+  "account.actions.close.confirm": "Are you sure you want to close your account? By closing your account, you will still have your account on Gitpay, but you will need to register your country and provide your information again, or provide your business information. This is an option for those who have changed countries or are legally residing in a country other than where they live.",
   "account.actions.id.cancel": "Cancel",
   "account.actions.id.edit": "Change",
   "account.actions.update": "Update Bank Account",
