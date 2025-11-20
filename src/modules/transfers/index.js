@@ -7,5 +7,5 @@ module.exports = {
   transferBuilds,
   transferSearch,
   transferUpdate,
-  transferFetch,
+  transferFetch
 }

@@ -10,7 +10,7 @@ const PaymentMail = {
   error: (user, task, value) => {},
   cancel: (user, task, order) => {},
   support: (user, task, order) => {},
-  refund: (user, task, order) => {},
+  refund: (user, task, order) => {}
 }
 
 if (constants.canSendEmail) {
@@ -23,8 +23,8 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-          <p>${i18n.__('mail.payment.success.content.main', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`),
-        },
+          <p>${i18n.__('mail.payment.success.content.main', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`)
+        }
       ])
   }
 
@@ -36,8 +36,8 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value:
             emailTemplate.baseContentEmailTemplate(`Support was requested by the user ${user.name}, (${user.email})
-          for the task: ${task.id}, order: ${order.id}, for the value of ${order.amount}.`),
-        },
+          for the task: ${task.id}, order: ${order.id}, for the value of ${order.amount}.`)
+        }
       ])
   }
 
@@ -52,9 +52,9 @@ if (constants.canSendEmail) {
           value: emailTemplate.baseContentEmailTemplate(
             `
           <p>${i18n.__('mail.payment.assigned.content.main', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`,
-            `<p>${i18n.__('mail.payment.assigned.content.secondary')}</p>`,
-          ),
-        },
+            `<p>${i18n.__('mail.payment.assigned.content.secondary')}</p>`
+          )
+        }
       ])
   }
 
@@ -67,8 +67,8 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-            <p>${i18n.__('mail.payment.content.error', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`),
-        },
+            <p>${i18n.__('mail.payment.content.error', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`)
+        }
       ])
   }
 
@@ -81,8 +81,8 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-          <p>${i18n.__('mail.payment.content.cancel', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`),
-        },
+          <p>${i18n.__('mail.payment.content.cancel', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`)
+        }
       ])
   }
 
@@ -95,9 +95,9 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(
-            `<p>${i18n.__('mail.payment.content.refund', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`,
-          ),
-        },
+            `<p>${i18n.__('mail.payment.content.refund', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`
+          )
+        }
       ])
   }
 }

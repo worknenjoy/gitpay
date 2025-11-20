@@ -7,7 +7,7 @@ import {
   StyledTabsColumn,
   StyledTabsVertical,
   TabPanelRoot,
-  TabPanelVertical,
+  TabPanelVertical
 } from './base-tabs.styles'
 
 interface TabPanelProps {
@@ -56,7 +56,7 @@ const BaseTabs = ({
   orientation = 'horizontal',
   onChange,
   withCard = true,
-  children,
+  children
 }: BaseTabsProps) => {
   const history = useHistory()
   const [value, setValue] = React.useState(activeTab)

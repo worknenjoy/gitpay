@@ -21,7 +21,7 @@ const errorMapping = {
   'external_account[country]': 'Invalid country',
   'external_account[currency]': 'Invalid currency',
   'external_account[bank_code]': 'Invalid bank code',
-  'external_account[account_type]': 'Invalid bank account type',
+  'external_account[account_type]': 'Invalid bank account type'
 }
 
 const BankAccountForm = ({ user, bankAccount, countries, onChangeBankCode, onSubmit }) => {
@@ -35,7 +35,7 @@ const BankAccountForm = ({ user, bankAccount, countries, onChangeBankCode, onSub
     routing_number,
     last4,
     country,
-    currency,
+    currency
   } = data || {}
   const [ibanMode, setIbanMode] = React.useState(false)
   const [currentCountry, setCurrentCountry] = React.useState(country)

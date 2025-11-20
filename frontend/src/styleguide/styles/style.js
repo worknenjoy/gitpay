@@ -1,82 +1,82 @@
 const styles = (theme) => ({
   appBarHeader: {
-    color: theme.palette.primary,
+    color: theme.palette.primary
   },
   alignRight: {
-    textAlign: 'right',
+    textAlign: 'right'
   },
   alignLeft: {
-    textAlign: 'left',
+    textAlign: 'left'
   },
   gutterTop: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(2)
   },
   gutterTopSmall: {
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(1)
   },
   gutterBottomBig: {
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(3)
   },
   bgContrast: {
-    backgroundColor: '#D1DDE9',
+    backgroundColor: '#D1DDE9'
   },
   iconFill: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   iconFillAlt: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.primary.dark
   },
   sectionBgAlt: {
-    backgroundColor: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.primary.contrastText
   },
   appBar: {
     height: '100%',
-    widht: '100%',
+    widht: '100%'
   },
   root: {
     flexGrow: 1,
-    marginTop: 0,
+    marginTop: 0
   },
   icon: {
     marginTop: -4,
-    marginRight: 5,
+    marginRight: 5
   },
   button: {
     margin: theme.spacing(1),
     padding: [theme.spacing(2), theme.spacing(4)],
-    color: 'white',
+    color: 'white'
   },
   altButton: {
     margin: [theme.spacing(1)],
     padding: [theme.spacing(0.5), theme.spacing(6)],
     color: 'white',
-    fontSize: 12,
+    fontSize: 12
   },
   mainBlock: {
     textAlign: 'center',
     padding: 12,
-    color: theme.palette.text.primary,
+    color: theme.palette.text.primary
   },
   secBlock: {
     textAlign: 'center',
     padding: 8,
-    backgroundColor: '#f1f0ea',
+    backgroundColor: '#f1f0ea'
   },
   seclist: {
     textAlign: 'left',
-    width: '100%',
+    width: '100%'
   },
   listIconTop: {
-    alignItems: 'flex-start',
+    alignItems: 'flex-start'
   },
   spacedTop: {
-    marginTop: 10,
+    marginTop: 10
   },
   tagline: {
     fontSize: 18,
-    color: 'white',
+    color: 'white'
   },
-  svgs: {},
+  svgs: {}
 })
 
 export default styles

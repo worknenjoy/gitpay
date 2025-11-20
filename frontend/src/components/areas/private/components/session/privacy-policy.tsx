@@ -15,7 +15,7 @@ const PrivacyPolicy = ({
   onArrowBack,
   onAgreeTerms,
   noHeader,
-  extraStyles = true,
+  extraStyles = true
 }: PrivacyPolicyProps) => {
   const content = `
   {br}
@@ -60,7 +60,7 @@ If you have any questions or concerns about our privacy policy, please contact u
                 top: 0,
                 left: 0,
                 width: '100%',
-                background: 'white',
+                background: 'white'
               }
             : {}
         }
@@ -105,7 +105,7 @@ If you have any questions or concerns about our privacy policy, please contact u
               left: 0,
               height: 80,
               width: '100%',
-              background: 'white',
+              background: 'white'
             }}
           >
             <Button

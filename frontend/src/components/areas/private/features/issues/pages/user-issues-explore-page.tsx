@@ -10,7 +10,7 @@ const ExploreIssuesPage = ({
   listLabels,
   languages,
   listLanguages,
-  user,
+  user
 }) => {
   const history = useHistory()
 

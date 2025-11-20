@@ -23,7 +23,7 @@ const SendSolutionDrawer = ({
   cleanPullRequestDataState,
   fetchPullRequestData,
   pullRequestData,
-  taskSolutionCompleted,
+  taskSolutionCompleted
 }) => {
   const history = useHistory()
   const [pullRequestURL, setPullRequestURL] = useState('')
@@ -45,7 +45,7 @@ const SendSolutionDrawer = ({
         setTimeout(() => {
           const urlSplitted = pullRequestURL.split('/')
           fetchPullRequestData(urlSplitted[3], urlSplitted[4], urlSplitted[6], task.data.id)
-        }, 2500),
+        }, 2500)
       )
     }
   }, [pullRequestURL])
@@ -67,7 +67,7 @@ const SendSolutionDrawer = ({
       const payload = {
         pullRequestURL: pullRequestURL,
         taskId: task.data.id,
-        taskSolutionId: taskSolution.id,
+        taskSolutionId: taskSolution.id
       }
       updateTaskSolution(payload).then((solution) => {})
       setEditMode(false)
@@ -102,7 +102,7 @@ const SendSolutionDrawer = ({
             onClick: onClose,
             variant: 'text',
             color: 'default',
-            disabled: false,
+            disabled: false
           },
           Object.keys(taskSolution || {}).length !== 0 && !editMode
             ? {
@@ -112,7 +112,7 @@ const SendSolutionDrawer = ({
                 ),
                 variant: 'contained',
                 color: 'primary',
-                disabled: task?.data?.paid || task?.data?.Transfer || task?.data?.transfer_id,
+                disabled: task?.data?.paid || task?.data?.Transfer || task?.data?.transfer_id
               }
             : {
                 onClick: submitTaskSolution,
@@ -132,8 +132,8 @@ const SendSolutionDrawer = ({
                   task.data.paid ||
                   task.data.transfer_id ||
                   task.data.Transfer ||
-                  !validAccount(user?.data, account),
-              },
+                  !validAccount(user?.data, account)
+              }
         ]}
       >
         <Typography variant="body2" style={{ color: 'black' }} gutterBottom>

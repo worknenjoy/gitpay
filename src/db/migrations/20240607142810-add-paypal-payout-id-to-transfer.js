@@ -9,7 +9,7 @@ module.exports = {
      */
     await queryInterface.addColumn('Transfers', 'paypal_payout_id', {
       type: Sequelize.STRING,
-      allowNull: true,
+      allowNull: true
     })
   },
 
@@ -21,5 +21,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     queryInterface.removeColumn('Transfers', 'paypal_payout_id')
-  },
+  }
 }

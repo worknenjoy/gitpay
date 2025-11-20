@@ -20,29 +20,29 @@ describe('paymentRequest actions', () => {
   describe('action creators', () => {
     it('should create paymentRequest action objects', () => {
       expect(paymentRequestActions.createPaymentRequestRequested()).to.eql({
-        type: types.CREATE_PAYMENT_REQUEST_REQUESTED,
+        type: types.CREATE_PAYMENT_REQUEST_REQUESTED
       })
       expect(paymentRequestActions.createPaymentRequestSuccess({ id: 1 })).to.eql({
         type: types.CREATE_PAYMENT_REQUEST_SUCCESS,
-        paymentRequest: { id: 1 },
+        paymentRequest: { id: 1 }
       })
       expect(paymentRequestActions.createPaymentRequestError({ error: true })).to.eql({
         type: types.CREATE_PAYMENT_REQUEST_ERROR,
-        error: { error: true },
+        error: { error: true }
       })
       expect(paymentRequestActions.listPaymentRequestsRequested()).to.eql({
         type: types.LIST_PAYMENT_REQUESTS_REQUESTED,
-        completed: false,
+        completed: false
       })
       expect(paymentRequestActions.listPaymentRequestsSuccess([{ id: 1 }])).to.eql({
         type: types.LIST_PAYMENT_REQUESTS_SUCCESS,
         completed: true,
-        paymentRequests: [{ id: 1 }],
+        paymentRequests: [{ id: 1 }]
       })
       expect(paymentRequestActions.listPaymentRequestsError({ error: true })).to.eql({
         type: types.LIST_PAYMENT_REQUESTS_ERROR,
         completed: true,
-        error: { error: true },
+        error: { error: true }
       })
     })
   })
@@ -60,7 +60,7 @@ describe('paymentRequest actions', () => {
       const paymentRequestData = { id: 1 }
       moxios.stubRequest(`${api.API_URL}/payment-requests`, {
         status: 200,
-        response: paymentRequestData,
+        response: paymentRequestData
       })
 
       const expectedActions = [
@@ -68,9 +68,9 @@ describe('paymentRequest actions', () => {
         {
           type: typesNotification.ADD_NOTIFICATION,
           text: 'actions.paymentRequest.create.success',
-          open: true,
+          open: true
         },
-        { type: types.CREATE_PAYMENT_REQUEST_SUCCESS, paymentRequest: paymentRequestData },
+        { type: types.CREATE_PAYMENT_REQUEST_SUCCESS, paymentRequest: paymentRequestData }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store
@@ -87,7 +87,7 @@ describe('paymentRequest actions', () => {
 
     xit('creates CREATE_PAYMENT_REQUEST_ERROR when creating paymentRequest fails', () => {
       moxios.stubRequest(`${api.API_URL}/payment-requests`, {
-        status: 500,
+        status: 500
       })
 
       const expectedActions = [
@@ -95,12 +95,12 @@ describe('paymentRequest actions', () => {
         {
           type: typesNotification.ADD_NOTIFICATION,
           text: 'actions.paymentRequest.create.error',
-          open: true,
+          open: true
         },
         {
           type: types.CREATE_PAYMENT_REQUEST_ERROR,
-          error: new Error('Request failed with status code 500'),
-        },
+          error: new Error('Request failed with status code 500')
+        }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(paymentRequestActions.createPaymentRequest({})).then(() => {
@@ -118,7 +118,7 @@ describe('paymentRequest actions', () => {
       const paymentRequestsData = [{ id: 1 }]
       moxios.stubRequest(`${api.API_URL}/payment-requests`, {
         status: 200,
-        response: paymentRequestsData,
+        response: paymentRequestsData
       })
 
       const expectedActions = [
@@ -126,8 +126,8 @@ describe('paymentRequest actions', () => {
         {
           type: types.LIST_PAYMENT_REQUESTS_SUCCESS,
           completed: true,
-          paymentRequests: paymentRequestsData,
-        },
+          paymentRequests: paymentRequestsData
+        }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(paymentRequestActions.listPaymentRequests()).then(() => {
@@ -137,7 +137,7 @@ describe('paymentRequest actions', () => {
 
     xit('creates LIST_PAYMENT_REQUESTS_ERROR when listing paymentRequests fails', () => {
       moxios.stubRequest(`${api.API_URL}/payment-requests`, {
-        status: 500,
+        status: 500
       })
 
       const expectedActions = [
@@ -145,8 +145,8 @@ describe('paymentRequest actions', () => {
         {
           type: types.LIST_PAYMENT_REQUESTS_ERROR,
           completed: true,
-          error: new Error('Request failed with status code 500'),
-        },
+          error: new Error('Request failed with status code 500')
+        }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(paymentRequestActions.listPaymentRequests()).then(() => {

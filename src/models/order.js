@@ -19,18 +19,18 @@ module.exports = (sequelize, DataTypes) => {
       transfer_group: DataTypes.STRING,
       status: {
         type: DataTypes.STRING,
-        defaultValue: 'open',
+        defaultValue: 'open'
       },
       capture: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: false
       },
       ordered_in: DataTypes.DATE,
       destination: DataTypes.STRING,
       paid: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
+        defaultValue: false
+      }
     },
     {
       hooks: {
@@ -39,9 +39,9 @@ module.exports = (sequelize, DataTypes) => {
             const task = await sequelize.models.Task.findByPk(instance.TaskId || instance.taskId)
             task?.id && (await comment(instance, task))
           }
-        },
-      },
-    },
+        }
+      }
+    }
   )
 
   Order.associate = (models) => {

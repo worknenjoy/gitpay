@@ -71,7 +71,7 @@ export default function ProfileAccountMenu({ user, onLogout }) {
               width: 32,
               height: 32,
               ml: -0.5,
-              mr: 1,
+              mr: 1
             },
             '&:before': {
               content: '""',
@@ -83,9 +83,9 @@ export default function ProfileAccountMenu({ user, onLogout }) {
               height: 10,
               bgcolor: 'background.paper',
               transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0,
-            },
-          },
+              zIndex: 0
+            }
+          }
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}

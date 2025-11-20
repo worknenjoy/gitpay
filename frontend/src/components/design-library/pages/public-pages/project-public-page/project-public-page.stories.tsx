@@ -8,8 +8,8 @@ const meta: Meta<typeof ProjectPublicPage> = {
   component: ProjectPublicPage,
   decorators: [withPublicTemplate],
   parameters: {
-    layout: 'fullscreen',
-  },
+    layout: 'fullscreen'
+  }
 }
 
 export default meta
@@ -25,9 +25,9 @@ export const Default: Story = {
         id: '1',
         name: 'Project Name',
         Organization: {
-          name: 'Organization Name',
-        },
-      },
+          name: 'Organization Name'
+        }
+      }
     },
     issues: {
       completed: true,
@@ -38,16 +38,16 @@ export const Default: Story = {
           title: 'Issue 1',
           status: 'open',
           value: 50,
-          createdAt: '2024-01-01',
+          createdAt: '2024-01-01'
         },
         {
           id: '2',
           url: 'https://github.com/example/repo/issues/2',
           title: 'Issue 2',
           status: 'closed',
-          createdAt: '2024-01-02',
-        },
-      ],
-    },
-  },
+          createdAt: '2024-01-02'
+        }
+      ]
+    }
+  }
 }

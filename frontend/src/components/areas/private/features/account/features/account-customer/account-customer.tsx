@@ -43,12 +43,12 @@ const CustomerDetails = ({ customer, fetchCustomer, createCustomer, updateCustom
         line1: e.target['address[line1]'].value,
         line2: e.target['address[line2]'].value,
         postal_code: e.target['address[postal_code]'].value,
-        state: e.target['address[state]'].value,
+        state: e.target['address[state]'].value
       },
       metadata: {
-        user_id: data.id,
+        user_id: data.id
         //customer_type: e.target['customer_type'].value
-      },
+      }
     }
     setCustomerData(formData)
     if (!data.customer_id) {
@@ -62,7 +62,7 @@ const CustomerDetails = ({ customer, fetchCustomer, createCustomer, updateCustom
     if (!e.target) return false
     setCustomerData({
       ...customerData,
-      [e.target.name]: e.target.value || e.target.options?.[e.target.selectedIndex]?.value,
+      [e.target.name]: e.target.value || e.target.options?.[e.target.selectedIndex]?.value
     })
   }
 
@@ -186,7 +186,7 @@ const CustomerDetails = ({ customer, fetchCustomer, createCustomer, updateCustom
                       <option value="">
                         {intl.formatMessage({
                           id: 'select.country',
-                          defaultMessage: 'Select country',
+                          defaultMessage: 'Select country'
                         })}
                       </option>
                       {countryCodesFull.map((c, index) => (

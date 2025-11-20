@@ -14,7 +14,7 @@ export default function AccountTabs({
   changePassword,
   deleteUser,
   addNotification,
-  history,
+  history
 }) {
   const getCurrentTab = (location) => {
     if (location.pathname === '/profile/user-account') {
@@ -55,7 +55,7 @@ export default function AccountTabs({
           break
       }
     },
-    [history],
+    [history]
   )
 
   useEffect(() => {

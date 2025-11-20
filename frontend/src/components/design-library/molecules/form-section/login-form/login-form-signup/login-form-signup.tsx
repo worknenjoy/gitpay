@@ -37,7 +37,7 @@ const LoginFormSignup = ({
   agreeTermsCheckError,
   onSignin,
   roles,
-  fetchRoles,
+  fetchRoles
 }: LoginFormSignupProps) => {
   const [openTermsDialog, setOpenTermsDialog] = useState(false)
   const [openPrivacyDialog, setOpenPrivacyDialog] = useState(false)
@@ -55,8 +55,8 @@ const LoginFormSignup = ({
       name: '',
       password: '',
       captcha: '',
-      general: '',
-    },
+      general: ''
+    }
   })
 
   const handleChange = (name) => (event) => {
@@ -106,8 +106,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          name: 'Name cannot be too short',
-        },
+          name: 'Name cannot be too short'
+        }
       })
       return false
     } else if (name.length > 72) {
@@ -115,8 +115,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          name: 'Name cannot be longer than 72 characters',
-        },
+          name: 'Name cannot be longer than 72 characters'
+        }
       })
       return false
     } else if (containUrl(name)) {
@@ -124,8 +124,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          name: 'Name should not include URL',
-        },
+          name: 'Name should not include URL'
+        }
       })
       return false
     } else {
@@ -139,8 +139,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          username: 'Email cannot be empty',
-        },
+          username: 'Email cannot be empty'
+        }
       })
       return false
     } else if (email.length > 72) {
@@ -148,23 +148,23 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          username: 'Email cannot be longer than 72 characters',
-        },
+          username: 'Email cannot be longer than 72 characters'
+        }
       })
       return false
     } else {
       if (
         email &&
         !email.match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         )
       ) {
         setState({
           ...state,
           error: {
             ...state.error,
-            username: 'Invalid email',
-          },
+            username: 'Invalid email'
+          }
         })
         return false
       }
@@ -178,8 +178,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          password: 'Password cannot be empty or too short',
-        },
+          password: 'Password cannot be empty or too short'
+        }
       })
       return false
     } else if (password.length > 72) {
@@ -187,8 +187,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          password: 'Password cannot be longer than 72 characters',
-        },
+          password: 'Password cannot be longer than 72 characters'
+        }
       })
       return false
     } else {
@@ -202,8 +202,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          password: 'Password dont match',
-        },
+          password: 'Password dont match'
+        }
       })
       return false
     }
@@ -216,8 +216,8 @@ const LoginFormSignup = ({
         ...state,
         error: {
           ...state.error,
-          captcha: 'You must agree with the Terms of Service and Privacy Policy',
-        },
+          captcha: 'You must agree with the Terms of Service and Privacy Policy'
+        }
       })
     }
     return agreeTermsCheck
@@ -245,7 +245,7 @@ const LoginFormSignup = ({
           name: name,
           email: username,
           password: password,
-          Types: Types,
+          Types: Types
         })
         const errorType = response?.error && response?.error?.response?.data.message
         if (errorType === 'user.exist') {
@@ -261,16 +261,16 @@ const LoginFormSignup = ({
             general: '',
             name: '',
             username: '',
-            password: '',
-          },
+            password: ''
+          }
         })
       } catch (error) {
         setState({
           ...state,
           error: {
             ...state.error,
-            general: 'We couldnt register this user',
-          },
+            general: 'We couldnt register this user'
+          }
         })
         /* eslint-disable no-console */
         console.log(error)
@@ -414,7 +414,7 @@ const LoginFormSignup = ({
               color: 'red',
               fontSize: 10,
               display: 'flex',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}
           >
             <Typography variant="body1" component="span">
@@ -433,7 +433,7 @@ const LoginFormSignup = ({
               justifyContent: 'center',
               width: '100%',
               height: 80,
-              marginTop: 20,
+              marginTop: 20
             }}
           >
             <ReCAPTCHA
@@ -448,7 +448,7 @@ const LoginFormSignup = ({
               color: 'red',
               fontSize: 10,
               display: 'flex',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}
           >
             <Typography variant="body1" component="span">

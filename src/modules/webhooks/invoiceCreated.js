@@ -13,8 +13,8 @@ module.exports = async function invoiceCreated(event, req, res) {
     const walletId = event.data.object.metadata.wallet_id
     const walletOrderExists = await models.WalletOrder.findOne({
       where: {
-        source: event.data.object.id,
-      },
+        source: event.data.object.id
+      }
     })
     if (!walletOrderExists) {
       const walletOrder = await models.WalletOrder.create({
@@ -27,35 +27,35 @@ module.exports = async function invoiceCreated(event, req, res) {
         source: event.data.object.id,
         ordered_in: new Date(),
         paid: false,
-        status: event.data.object.status,
+        status: event.data.object.status
       })
     }
   }
   return models.Order.update(
     {
       status: event.data.object.status,
-      source: event.data.object.charge,
+      source: event.data.object.charge
     },
     {
       where: {
-        source_id: event.data.object.id,
+        source_id: event.data.object.id
       },
-      returning: true,
-    },
+      returning: true
+    }
   )
     .then(async (order) => {
       if (order[0] && order[1].length) {
         const orderUpdated = await models.Order.findOne({
           where: {
-            id: order[1][0].dataValues.id,
+            id: order[1][0].dataValues.id
           },
-          include: [models.Task, models.User],
+          include: [models.Task, models.User]
         })
         const userAssign = await models.Assign.findOne({
           where: {
-            id: orderUpdated.Task.dataValues.assigned,
+            id: orderUpdated.Task.dataValues.assigned
           },
-          include: [models.Task, models.User],
+          include: [models.Task, models.User]
         })
         const userAssigned = userAssign.dataValues.User.dataValues
         const userTask = orderUpdated.User.dataValues
@@ -66,8 +66,8 @@ module.exports = async function invoiceCreated(event, req, res) {
             userAssigned,
             i18n.__('mail.webhook.invoice.create.subject'),
             i18n.__('mail.webhook.invoice.create.message', {
-              amount: order[1][0].dataValues.amount,
-            }),
+              amount: order[1][0].dataValues.amount
+            })
           )
           const userTaskLanguage = userTask.language || 'en'
           i18n.setLocale(userTaskLanguage)
@@ -75,8 +75,8 @@ module.exports = async function invoiceCreated(event, req, res) {
             userTask,
             i18n.__('mail.webhook.payment.update.subject'),
             i18n.__('mail.webhook.payment.approved.message', {
-              amount: order[1][0].dataValues.amount,
-            }),
+              amount: order[1][0].dataValues.amount
+            })
           )
         }
         return res.status(200).json(event)

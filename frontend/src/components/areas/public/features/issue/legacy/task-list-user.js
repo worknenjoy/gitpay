@@ -12,22 +12,22 @@ import ProfileHead from '../../../../../../containers/profile-head'
 
 const Root = styled(Grid)(({ theme }) => ({
   marginRight: theme.spacing(3),
-  marginBottom: theme.spacing(3),
+  marginBottom: theme.spacing(3)
 }))
 
 const messages = defineMessages({
   issuesCreated: {
     id: 'task.list.lable.issuesCreated',
-    defaultMessage: 'All issues created',
+    defaultMessage: 'All issues created'
   },
   issuesSupported: {
     id: 'task.list.lable.issuesSupported',
-    defaultMessage: 'Issues supported',
+    defaultMessage: 'Issues supported'
   },
   issuesList: {
     id: 'task.list.lable.issuesList',
-    defaultMessage: 'Issues list',
-  },
+    defaultMessage: 'Issues list'
+  }
 })
 
 const TaskListUser = (props) => {
@@ -35,7 +35,7 @@ const TaskListUser = (props) => {
 
   const [taskListState, setTaskListState] = useState({
     tab: 0,
-    loading: true,
+    loading: true
   })
 
   const verifyUserId = () => {

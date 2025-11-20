@@ -3,7 +3,7 @@ const request = require('./request')
 const constants = require('./constants')
 
 const ContactMail = {
-  recruiters: (params) => {},
+  recruiters: (params) => {}
 }
 
 if (constants.canSendEmail) {
@@ -21,9 +21,9 @@ if (constants.canSendEmail) {
           company: ${params.company} <br />
           country: ${params.country} <br />
           message: ${params.message} <br />
-          ${Signatures.sign()}`,
-        },
-      ],
+          ${Signatures.sign()}`
+        }
+      ]
     )
   }
 }

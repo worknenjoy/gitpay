@@ -41,8 +41,8 @@ const currentTeam = [
       'Founder of Gitpay, and senior software engineer for 15+ years, Alexandre is an active open source maintainer, author of Mobile First Boostrap and he help the development community with your blog alexandremagno.net.',
     image: imgAlexandre,
     linkedinUrl: 'https://www.linkedin.com/in/alexandremagnoteleszimerer/',
-    githubUrl: 'https://github.com/alexanmtz',
-  },
+    githubUrl: 'https://github.com/alexanmtz'
+  }
 ]
 
 const pastContributors = [
@@ -52,7 +52,7 @@ const pastContributors = [
       'Fullstack developer, with 15+ development experience. First developer to contribute and he helped with the core, and a brazilian developer evangelist',
     image: imgWharley,
     linkedinUrl: 'https://in.linkedin.com/in/wharley-ornelas-da-rocha-65420932',
-    githubUrl: 'http://github.com/wharley',
+    githubUrl: 'http://github.com/wharley'
   },
   {
     name: 'Mayna Thais',
@@ -60,7 +60,7 @@ const pastContributors = [
       'Project leader with 9+ years of experience. She has worked with software projects and IT infrastructure for many companies. Graduated in Information Systems, MBA in Project Management and Scrum Master certified.',
     image: imgMayna,
     linkedinUrl: 'https://br.linkedin.com/in/mayna-thais',
-    githubUrl: 'https://github.com/mthais',
+    githubUrl: 'https://github.com/mthais'
   },
   {
     name: 'Rafael Quintanilha',
@@ -68,8 +68,8 @@ const pastContributors = [
       "Software Developer Intern at Gitpay. Graduated in IT Management and with a master's in e-business, Rafael has experience working as a digital project manager and now embraces a new career path as a web developer.",
     image: imgRafael,
     linkedinUrl: 'https://www.linkedin.com/in/rafael-quintanilha/',
-    githubUrl: 'https://github.com/RafaelQuintanilha18',
-  },
+    githubUrl: 'https://github.com/RafaelQuintanilha18'
+  }
 ]
 
 type TeamProps = {

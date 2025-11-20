@@ -12,53 +12,53 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       source_id: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: true
       },
       method: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       amount: {
         type: Sequelize.DECIMAL,
-        allowNull: false,
+        allowNull: false
       },
       currency: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       description: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: true
       },
       status: {
         type: Sequelize.STRING,
-        defaultValue: 'initiated',
+        defaultValue: 'initiated'
       },
       paid: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        defaultValue: false
       },
       userId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW'),
-      },
+        defaultValue: Sequelize.fn('NOW')
+      }
     })
   },
 
@@ -70,5 +70,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.dropTable('Payouts')
-  },
+  }
 }

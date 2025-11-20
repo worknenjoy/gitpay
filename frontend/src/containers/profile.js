@@ -7,7 +7,7 @@ import { updateUser, deleteUser, resendActivationEmail } from '../actions/userAc
 import {
   fetchOrganizations,
   createOrganizations,
-  updateOrganization,
+  updateOrganization
 } from '../actions/organizationsActions'
 import { addNotification, closeNotification } from '../actions/notificationActions'
 import { getFilteredTasks } from '../selectors/tasks'
@@ -21,7 +21,7 @@ const mapStateToProps = (state, ownProps) => {
     tasks: getFilteredTasks(state),
     organizations: state.organizations.organizations,
     completed: state.loggedIn.completed,
-    info: state.info,
+    info: state.info
   }
 }
 
@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     filterTasks: (tasks, key, value, additional) =>
       dispatch(filterTasks(tasks, key, value, additional)),
     signOut: () => dispatch(logOut()),
-    getInfo: () => dispatch(info()),
+    getInfo: () => dispatch(info())
   }
 }
 

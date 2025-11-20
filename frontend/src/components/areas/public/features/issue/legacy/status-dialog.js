@@ -10,7 +10,7 @@ import {
   ListItemText,
   Divider,
   Dialog,
-  DialogTitle,
+  DialogTitle
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { FilterList as FilterListIcon, Done as DoneIcon } from '@mui/icons-material'
@@ -24,33 +24,33 @@ const providerStatus = {
   github: {
     open: 'open',
     in_progress: 'in_progress',
-    closed: 'closed',
+    closed: 'closed'
   },
   bitbucket: {
     open: 'open',
     new: 'open',
-    resolved: 'closed',
-  },
+    resolved: 'closed'
+  }
 }
 
 const ColoredAvatar = styled(Avatar)(({ theme }) => ({
   backgroundColor: blue[100],
-  color: blue[600],
+  color: blue[600]
 }))
 
 const messages = defineMessages({
   openStatus: {
     id: 'task.status.filter.open',
-    defaultMessage: 'Open',
+    defaultMessage: 'Open'
   },
   inProgressStatus: {
     id: 'task.status.filter.progress',
-    defaultMessage: 'In progress',
+    defaultMessage: 'In progress'
   },
   closed: {
     id: 'task.status.filter.close',
-    defaultMessage: 'Finished',
-  },
+    defaultMessage: 'Finished'
+  }
 })
 
 class StatusDialog extends Component {
@@ -66,7 +66,7 @@ class StatusDialog extends Component {
       new: this.props.intl.formatMessage(messages.openStatus),
       in_progress: this.props.intl.formatMessage(messages.inProgressStatus),
       closed: this.props.intl.formatMessage(messages.closed),
-      resolved: this.props.intl.formatMessage(messages.closed),
+      resolved: this.props.intl.formatMessage(messages.closed)
     }
 
     return (
@@ -96,7 +96,7 @@ class StatusDialog extends Component {
               button
               onClick={() =>
                 this.handleListItemClick(
-                  providerStatus[this.props.provider][this.props.providerStatus],
+                  providerStatus[this.props.provider][this.props.providerStatus]
                 )
               }
             >
@@ -125,7 +125,7 @@ StatusDialog.propTypes = {
   onSelect: PropTypes.func,
   selectedValue: PropTypes.string,
   providerStatus: PropTypes.string,
-  id: PropTypes.number,
+  id: PropTypes.number
 }
 
 export default injectIntl(StatusDialog)

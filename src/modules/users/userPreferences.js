@@ -4,8 +4,8 @@ const Promise = require('bluebird')
 module.exports = Promise.method(function userPreferences(userAttributes) {
   return models.User.findOne({
     where: {
-      id: userAttributes.id,
-    },
+      id: userAttributes.id
+    }
   })
     .then((user) => {
       if (!user) return false
@@ -22,7 +22,7 @@ module.exports = Promise.method(function userPreferences(userAttributes) {
         languages: user.dataValues.languages,
         receiveNotifications:
           user.dataValues.receiveNotifications != null && user.dataValues.receiveNotifications,
-        openForJobs: user.dataValues.openForJobs != null && user.dataValues.openForJobs,
+        openForJobs: user.dataValues.openForJobs != null && user.dataValues.openForJobs
       }
     })
     .catch((error) => {

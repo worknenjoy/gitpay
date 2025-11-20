@@ -93,7 +93,7 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
                 id="payout.settings.schedule.manual.caption"
                 defaultMessage="You can manually initiate a payout from Gitpay whenever you want."
               />
-            ),
+            )
           },
           {
             value: 'automatic',
@@ -127,7 +127,7 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
                             id="payoutSchedule.automatic.daily"
                             defaultMessage="Daily"
                           />
-                        ),
+                        )
                       },
                       {
                         value: 'weekly',
@@ -136,7 +136,7 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
                             id="payoutSchedule.automatic.weekly"
                             defaultMessage="Weekly"
                           />
-                        ),
+                        )
                       },
                       {
                         value: 'monthly',
@@ -145,8 +145,8 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
                             id="payoutSchedule.automatic.monthly"
                             defaultMessage="Monthly"
                           />
-                        ),
-                      },
+                        )
+                      }
                     ]}
                     value={currentSelectValue}
                     onChange={handleSelectChange}
@@ -154,8 +154,8 @@ const PayoutScheduleForm = ({ completed = true, value, onSubmit }) => {
                   />
                 </div>
               </AutomaticOptions>
-            ),
-          },
+            )
+          }
         ]}
       />
       <RightActions>

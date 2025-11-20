@@ -23,15 +23,15 @@ describe('task solution', () => {
         response: {
           authenticated: true,
           user: {
-            id: 1,
-          },
-        },
+            id: 1
+          }
+        }
       })
       moxios.wait(() => {
         const request = moxios.requests.mostRecent()
         request.respondWith({
           status: 200,
-          response: {},
+          response: {}
         })
       })
       const expectedActions = [
@@ -40,15 +40,15 @@ describe('task solution', () => {
           open: true,
           text: 'issue.solution.dialog.create.success',
           type: 'ADD_NOTIFICATION',
-          link: undefined,
+          link: undefined
         },
         { completed: false, type: 'FETCH_TASK_REQUESTED' },
-        { completed: true, type: 'CREATE_TASK_SOLUTION_SUCCESS', taskSolution: {} },
+        { completed: true, type: 'CREATE_TASK_SOLUTION_SUCCESS', taskSolution: {} }
       ]
       const store = mockStore({
         intl: { messages: {} },
         task: { completed: true, id: 1 },
-        loggedIn: { logged: true, user: { id: 1 } },
+        loggedIn: { logged: true, user: { id: 1 } }
       })
       return store
         .dispatch(
@@ -57,8 +57,8 @@ describe('task solution', () => {
             userId: 1,
             repositoryName: 'test-repository',
             owner: 'alexanmtz',
-            taskId: 1,
-          }),
+            taskId: 1
+          })
         )
         .then(() => {
           // return of async actions
@@ -73,17 +73,17 @@ describe('task solution', () => {
         response: {
           authenticated: true,
           user: {
-            id: 1,
-          },
-        },
+            id: 1
+          }
+        }
       })
       moxios.wait(() => {
         const request = moxios.requests.mostRecent()
         request.respondWith({
           status: 400,
           response: {
-            error: 'issue.solution.error.insufficient_capabilities_for_transfer',
-          },
+            error: 'issue.solution.error.insufficient_capabilities_for_transfer'
+          }
         })
       })
       const expectedActions = [
@@ -92,19 +92,19 @@ describe('task solution', () => {
           open: true,
           text: 'issue.solution.error.insufficient_capabilities_for_transfer',
           type: 'ADD_NOTIFICATION',
-          link: '/#/profile/payout-settings',
+          link: '/#/profile/payout-settings'
         },
         { completed: false, type: 'FETCH_TASK_REQUESTED' },
         {
           completed: true,
           type: 'CREATE_TASK_SOLUTION_ERROR',
-          error: 'issue.solution.error.insufficient_capabilities_for_transfer',
-        },
+          error: 'issue.solution.error.insufficient_capabilities_for_transfer'
+        }
       ]
       const store = mockStore({
         intl: { messages: {} },
         task: { completed: true, id: 1 },
-        loggedIn: { logged: true, user: { id: 1 } },
+        loggedIn: { logged: true, user: { id: 1 } }
       })
       return store
         .dispatch(
@@ -113,8 +113,8 @@ describe('task solution', () => {
             userId: 1,
             repositoryName: 'test-repository',
             owner: 'alexanmtz',
-            taskId: 1,
-          }),
+            taskId: 1
+          })
         )
         .then(() => {
           // return of async actions

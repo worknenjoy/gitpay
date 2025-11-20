@@ -3,7 +3,7 @@ import BirthDateField from './birth-date-field'
 
 export default {
   title: 'Design Library/Atoms/Inputs/Fields/BirthDateField',
-  component: BirthDateField,
+  component: BirthDateField
 }
 
 const Template = (args) => <BirthDateField {...args} />
@@ -15,5 +15,5 @@ export const PreFilled = Template.bind({})
 PreFilled.args = {
   day: 15,
   month: 8,
-  year: 1990,
+  year: 1990
 }

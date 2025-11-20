@@ -25,11 +25,11 @@ const tiersMaintainers: Tier[] = [
       'Public projects from Github or Bitbucket',
       'We will match your issues with our contributor skills to find the right candidate',
       '8% fee for payment with Credit Card or Paypal',
-      'No fee for payments above $5000',
+      'No fee for payments above $5000'
     ],
     link: 'https://gitpay.me/#/signin',
     buttonText: 'Get started',
-    buttonVariant: 'text',
+    buttonVariant: 'text'
   },
   {
     title: 'Private',
@@ -38,12 +38,12 @@ const tiersMaintainers: Tier[] = [
     description: [
       'Private projects on Github or Bitbucket',
       'We will match your issues with our contributor skills to find the right candidate',
-      '18% fee for payment in Credit Card or Paypal',
+      '18% fee for payment in Credit Card or Paypal'
     ],
     link: 'https://gitpay.me/#/signin',
     buttonText: 'Get started',
-    buttonVariant: 'text',
-  },
+    buttonVariant: 'text'
+  }
 ]
 
 const tiersContributors: Tier[] = [
@@ -55,12 +55,12 @@ const tiersContributors: Tier[] = [
       'We support direct transfer for your bank account registered on Gitpay for credit card payments or invoice',
       'We support Paypal to receive payments when the bounty is paid using Paypal',
       '8% fee to withdraw your bounty after the Pull request is merged',
-      '⚠️ Note: You will receive the payouts according to the payment method used by the maintainer, if the maintainer paid with credit card, you will receive the payout in your bank account, if the maintainer paid with Paypal, you will receive the payout in your Paypal account',
+      '⚠️ Note: You will receive the payouts according to the payment method used by the maintainer, if the maintainer paid with credit card, you will receive the payout in your bank account, if the maintainer paid with Paypal, you will receive the payout in your Paypal account'
     ],
     link: 'https://gitpay.me/#/signin',
     buttonText: 'Get started',
-    buttonVariant: 'text',
-  },
+    buttonVariant: 'text'
+  }
 ]
 
 function PricingPublicPage() {
@@ -93,7 +93,7 @@ function PricingPublicPage() {
                 }
                 sx={{
                   backgroundColor: (theme) => theme.palette.primary.light,
-                  textAlign: 'center',
+                  textAlign: 'center'
                 }}
               />
               <CardContent>
@@ -106,7 +106,7 @@ function PricingPublicPage() {
                           subheader={tier.subheader}
                           sx={{
                             backgroundColor: (theme) => theme.palette.primary.light,
-                            textAlign: 'center',
+                            textAlign: 'center'
                           }}
                         />
                         <CardContent>
@@ -160,7 +160,7 @@ function PricingPublicPage() {
                   subheader={tier.subheader}
                   sx={{
                     backgroundColor: (theme) => theme.palette.primary.light,
-                    textAlign: 'center',
+                    textAlign: 'center'
                   }}
                 />
                 <CardContent>

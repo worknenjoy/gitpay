@@ -5,7 +5,7 @@ const data = [
   { name: 'MERN', value: 50 },
   { name: 'PEAN', value: 70 },
   { name: 'MEVN', value: 30 },
-  { name: 'PERN', value: 20 },
+  { name: 'PERN', value: 20 }
 ]
 
 const RADIAN = Math.PI / 180
@@ -17,7 +17,7 @@ const COLORS = [
   '#FFA000',
   '#FF8F00',
   '#FF6F00',
-  '#DD2C00',
+  '#DD2C00'
 ]
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, index, name }) => {
@@ -48,7 +48,7 @@ export default class LabelPieCharts extends PureComponent {
           alignItems: 'center',
           margin: 'auto',
           marginLeft: '5.8em',
-          display: `${this.props.display}`,
+          display: `${this.props.display}`
         }}
       >
         <Pie

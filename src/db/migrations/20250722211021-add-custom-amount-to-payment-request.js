@@ -9,7 +9,7 @@ module.exports = {
      */
     await queryInterface.addColumn('PaymentRequests', 'custom_amount', {
       type: Sequelize.BOOLEAN,
-      defaultValue: false,
+      defaultValue: false
     })
   },
 
@@ -21,5 +21,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.removeColumn('PaymentRequests', 'custom_amount')
-  },
+  }
 }

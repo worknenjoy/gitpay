@@ -13,12 +13,12 @@ module.exports = Promise.method(async function taskSolutionCreate(taskSolutionPa
     userId: taskSolutionParams.userId,
     repositoryName: pullRequestURLSplitted[4],
     owner: pullRequestURLSplitted[3],
-    taskId: taskSolutionParams.taskId,
+    taskId: taskSolutionParams.taskId
   }
 
   const fetchTaskSolutionData = await taskSolutionFetchData(params)
   const task = await models.Task.findOne({
-    where: { id: taskSolutionParams.taskId },
+    where: { id: taskSolutionParams.taskId }
   })
 
   if (
@@ -31,7 +31,7 @@ module.exports = Promise.method(async function taskSolutionCreate(taskSolutionPa
     if (!task.dataValues.paid && !task.dataValues.transfer_id) {
       const existingAssignment = await assignExist({
         userId: taskSolutionParams.userId,
-        taskId: taskSolutionParams.taskId,
+        taskId: taskSolutionParams.taskId
       })
 
       if (!existingAssignment) {
@@ -43,9 +43,9 @@ module.exports = Promise.method(async function taskSolutionCreate(taskSolutionPa
           {
             id: taskSolutionParams.taskId,
             userId: task.dataValues.userId,
-            assigned: assign.dataValues.id,
+            assigned: assign.dataValues.id
           },
-          false,
+          false
         )
         if (!taskUpdateAssign) {
           throw new Error('COULD_NOT_UPDATE_TASK')
@@ -55,7 +55,7 @@ module.exports = Promise.method(async function taskSolutionCreate(taskSolutionPa
     try {
       const transferSend = await transferBuilds({
         taskId: task.dataValues.id,
-        userId: task.dataValues.userId,
+        userId: task.dataValues.userId
       })
       if (transferSend.error) {
         throw new Error('transferSend.error')

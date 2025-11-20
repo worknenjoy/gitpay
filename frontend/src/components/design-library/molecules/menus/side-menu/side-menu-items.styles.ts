@@ -7,20 +7,20 @@ export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
   '&.Mui-selected': {
     backgroundColor: theme.palette.action.selected,
     '&:hover': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
+      backgroundColor: theme.palette.action.hover
+    }
+  }
 }))
 
 export const Primary = styled(ListItemText)(({ theme }) => ({
   color: theme.palette.primary.contrastText,
   fontSize: '11px !important',
-  fontWeight: 500,
+  fontWeight: 500
 }))
 
 export const Icon = styled('span')(({ theme }) => ({
   marginRight: 5,
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.primary.contrastText
 }))
 
 export const Category = styled('span')(({ theme }) => ({
@@ -29,7 +29,7 @@ export const Category = styled('span')(({ theme }) => ({
   textTransform: 'uppercase',
   fontWeight: 600,
   marginBottom: 16,
-  paddingLeft: 16,
+  paddingLeft: 16
 }))
 
 export default { MenuItemStyled, Primary, Icon, Category }

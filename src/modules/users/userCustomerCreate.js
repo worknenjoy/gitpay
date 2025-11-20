@@ -4,7 +4,7 @@ const stripe = require('../shared/stripe/stripe')()
 
 module.exports = Promise.method(function userCustomerCreate(id, customerParameters) {
   return models.User.findOne({
-    where: { id },
+    where: { id }
   })
     .then((data) => {
       if (data.dataValues.customer_id) {
@@ -23,19 +23,19 @@ module.exports = Promise.method(function userCustomerCreate(id, customerParamete
           .create({
             ...customerParameters,
             metadata: {
-              user_id: id,
-            },
+              user_id: id
+            }
           })
           .then((customer) => {
             return data
               .update(
                 {
-                  customer_id: customer.id,
+                  customer_id: customer.id
                 },
                 {
                   where: { id },
-                  returning: true,
-                },
+                  returning: true
+                }
               )
               .then((userUpdated) => {
                 return customer

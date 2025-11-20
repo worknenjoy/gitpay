@@ -25,12 +25,12 @@ export const refundCreated = {
             line1: '123 Test St',
             line2: 'Suite 100',
             postal_code: '94105',
-            state: 'CA',
+            state: 'CA'
           },
           email: 'customer@example.com',
           name: 'Test User',
           phone: null,
-          tax_id: null,
+          tax_id: null
         },
         calculated_statement_descriptor: 'EXAMPLE.COM',
         captured: true,
@@ -58,7 +58,7 @@ export const refundCreated = {
           reason: null,
           risk_level: 'normal',
           seller_message: 'Payment complete.',
-          type: 'authorized',
+          type: 'authorized'
         },
         paid: true,
         payment_intent: 'pi_1TestPI',
@@ -71,45 +71,45 @@ export const refundCreated = {
             checks: {
               address_line1_check: 'pass',
               address_postal_code_check: 'pass',
-              cvc_check: 'pass',
+              cvc_check: 'pass'
             },
             country: 'US',
             exp_month: 6,
             exp_year: 2031,
             extended_authorization: {
-              status: 'disabled',
+              status: 'disabled'
             },
             fingerprint: 'test_fingerprint_123',
             funding: 'credit',
             incremental_authorization: {
-              status: 'unavailable',
+              status: 'unavailable'
             },
             installments: null,
             last4: '4242',
             mandate: null,
             multicapture: {
-              status: 'unavailable',
+              status: 'unavailable'
             },
             network: 'visa',
             network_token: {
-              used: false,
+              used: false
             },
             network_transaction_id: 'test_nti_123',
             overcapture: {
               maximum_amount_capturable: 2000,
-              status: 'unavailable',
+              status: 'unavailable'
             },
             regulated_status: 'unregulated',
             three_d_secure: null,
             wallet: {
               apple_pay: {
-                type: 'apple_pay',
+                type: 'apple_pay'
               },
               dynamic_last4: '4242',
-              type: 'apple_pay',
-            },
+              type: 'apple_pay'
+            }
           },
-          type: 'card',
+          type: 'card'
         },
         radar_options: {},
         receipt_email: 'customer@example.com',
@@ -129,9 +129,9 @@ export const refundCreated = {
               currency: 'usd',
               destination_details: {
                 card: {
-                  type: 'pending',
+                  type: 'pending'
                 },
-                type: 'card',
+                type: 'card'
               },
               metadata: {},
               payment_intent: 'pi_1TestPI',
@@ -139,12 +139,12 @@ export const refundCreated = {
               receipt_number: '1111-1111',
               source_transfer_reversal: null,
               status: 'succeeded',
-              transfer_reversal: null,
-            },
+              transfer_reversal: null
+            }
           ],
           has_more: false,
           total_count: 1,
-          url: '/v1/charges/ch_1TestCharge/refunds',
+          url: '/v1/charges/ch_1TestCharge/refunds'
         },
         review: null,
         shipping: null,
@@ -154,7 +154,7 @@ export const refundCreated = {
         statement_descriptor_suffix: null,
         status: 'succeeded',
         transfer_data: null,
-        transfer_group: null,
+        transfer_group: null
       },
       previous_attributes: {
         amount_refunded: 0,
@@ -162,17 +162,17 @@ export const refundCreated = {
         refunded: false,
         refunds: {
           data: [],
-          total_count: 0,
-        },
-      },
+          total_count: 0
+        }
+      }
     },
     livemode: false,
     pending_webhooks: 2,
     request: {
       id: 'req_test_123',
-      idempotency_key: '00000000-0000-0000-0000-000000000000',
+      idempotency_key: '00000000-0000-0000-0000-000000000000'
     },
-    type: 'charge.refunded',
+    type: 'charge.refunded'
   },
   successfullyWithBountyMetadata: {
     id: 'evt_test_refund_bounty',
@@ -183,7 +183,7 @@ export const refundCreated = {
     pending_webhooks: 1,
     request: {
       id: 'req_test_123456789',
-      idempotency_key: null,
+      idempotency_key: null
     },
     type: 'charge.refunded',
     data: {
@@ -203,11 +203,11 @@ export const refundCreated = {
             line1: null,
             line2: null,
             postal_code: '00000',
-            state: null,
+            state: null
           },
           email: null,
           name: 'Test User',
-          phone: null,
+          phone: null
         },
         captured: true,
         created: 1571059878,
@@ -223,7 +223,7 @@ export const refundCreated = {
         invoice: null,
         livemode: false,
         metadata: {
-          order_id: 'test-25',
+          order_id: 'test-25'
         },
         on_behalf_of: null,
         order: null,
@@ -233,7 +233,7 @@ export const refundCreated = {
           risk_level: 'normal',
           risk_score: 58,
           seller_message: 'Payment complete.',
-          type: 'authorized',
+          type: 'authorized'
         },
         paid: true,
         payment_intent: null,
@@ -244,7 +244,7 @@ export const refundCreated = {
             checks: {
               address_line1_check: null,
               address_postal_code_check: 'pass',
-              cvc_check: 'pass',
+              cvc_check: 'pass'
             },
             country: 'US',
             exp_month: 4,
@@ -255,9 +255,9 @@ export const refundCreated = {
             last4: '4242',
             network: 'visa',
             three_d_secure: null,
-            wallet: null,
+            wallet: null
           },
-          type: 'card',
+          type: 'card'
         },
         receipt_email: 'customer@example.com',
         receipt_number: null,
@@ -280,12 +280,12 @@ export const refundCreated = {
               receipt_number: null,
               source_transfer_reversal: null,
               status: 'succeeded',
-              transfer_reversal: null,
-            },
+              transfer_reversal: null
+            }
           ],
           has_more: false,
           total_count: 1,
-          url: '/v1/charges/ch_test_bounty_charge/refunds',
+          url: '/v1/charges/ch_test_bounty_charge/refunds'
         },
         review: null,
         shipping: null,
@@ -312,23 +312,23 @@ export const refundCreated = {
           last4: '4242',
           metadata: {},
           name: 'Test User',
-          tokenization_method: null,
+          tokenization_method: null
         },
         source_transfer: null,
         statement_descriptor: null,
         statement_descriptor_suffix: null,
         status: 'succeeded',
         transfer_data: null,
-        transfer_group: 'task_test_123',
+        transfer_group: 'task_test_123'
       },
       previous_attributes: {
         amount_refunded: 0,
         refunded: false,
         refunds: {
           data: [],
-          total_count: 0,
-        },
-      },
-    },
-  },
+          total_count: 0
+        }
+      }
+    }
+  }
 }

@@ -50,7 +50,7 @@ describe('orders', () => {
           currency: 'BRL',
           amount: 200,
           email: 'testing@gitpay.me',
-          userId: user.body.id,
+          userId: user.body.id
         })
         .set('Authorization', user.headers.authorization)
         .expect('Content-Type', /json/)
@@ -71,14 +71,14 @@ describe('orders', () => {
           name: 'Open Source - default',
           description: 'open source',
           fee: 8,
-          feeType: 'charge',
+          feeType: 'charge'
         })
         PlanSchema = await models.PlanSchema.build({
           plan: 'open source',
           name: 'Open Source - no fee',
           description: 'open source with no fee',
           fee: 0,
-          feeType: 'charge',
+          feeType: 'charge'
         })
       })
       it('should create a new order with a plan', async () => {
@@ -91,7 +91,7 @@ describe('orders', () => {
             amount: 100,
             email: 'testing@gitpay.me',
             userId: user.body.id,
-            plan: 'open source',
+            plan: 'open source'
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
@@ -120,7 +120,7 @@ describe('orders', () => {
             amount: 832,
             email: 'testing@gitpay.me',
             userId: user.body.id,
-            plan: 'open source',
+            plan: 'open source'
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
@@ -148,7 +148,7 @@ describe('orders', () => {
             amount: 5000,
             email: 'testing@gitpay.me',
             userId: user.body.id,
-            plan: 'open source',
+            plan: 'open source'
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
@@ -199,7 +199,7 @@ describe('orders', () => {
           customer_id: null,
           provider: 'stripe',
           userId: user.body.id,
-          plan: 'open source',
+          plan: 'open source'
         })
         .set('Authorization', user.headers.authorization)
         .expect('Content-Type', /json/)
@@ -246,7 +246,7 @@ describe('orders', () => {
           customer_id: 'cus_12345',
           provider: 'stripe',
           userId: user.body.id,
-          plan: 'open source',
+          plan: 'open source'
         })
         .set('Authorization', user.headers.authorization)
         .expect('Content-Type', /json/)
@@ -295,7 +295,7 @@ describe('orders', () => {
             customer_id: 'cus_12345',
             provider: 'stripe',
             userId: user.body.id,
-            plan: 'open source',
+            plan: 'open source'
           })
           .set('Authorization', user.headers.authorization)
           .expect('Content-Type', /json/)
@@ -321,16 +321,16 @@ describe('orders', () => {
       const newWallet = await models.Wallet.create({
         name: 'Test Wallet',
         balance: 0,
-        userId: user.body.id,
+        userId: user.body.id
       })
       const WalletOrder = await models.WalletOrder.create({
         walletId: newWallet.id,
         amount: 400,
-        status: 'paid',
+        status: 'paid'
       })
       const task = await models.Task.create({
         url: 'https://foo',
-        userId: user.body.id,
+        userId: user.body.id
       })
       const res = await agent
         .post('/orders')
@@ -341,7 +341,7 @@ describe('orders', () => {
           provider: 'wallet',
           source_type: 'wallet-funds',
           userId: user.body.id,
-          taskId: task.id,
+          taskId: task.id
         })
         .set('Authorization', user.headers.authorization)
         .expect(200)
@@ -353,8 +353,8 @@ describe('orders', () => {
       expect(res.body.status).to.equal('succeeded')
       const wallet = await models.Wallet.findOne({
         where: {
-          userId: user.body.id,
-        },
+          userId: user.body.id
+        }
       })
       expect(wallet.balance).to.equal('184.00')
     })
@@ -364,16 +364,16 @@ describe('orders', () => {
       const newWallet = await models.Wallet.create({
         name: 'Test Wallet',
         balance: 0,
-        userId: user.body.id,
+        userId: user.body.id
       })
       const WalletOrder = await models.WalletOrder.create({
         walletId: newWallet.id,
         amount: 1929,
-        status: 'paid',
+        status: 'paid'
       })
       const task = await models.Task.create({
         url: 'https://foo',
-        userId: user.body.id,
+        userId: user.body.id
       })
       const res = await agent
         .post('/orders')
@@ -384,7 +384,7 @@ describe('orders', () => {
           provider: 'wallet',
           source_type: 'wallet-funds',
           userId: user.body.id,
-          taskId: task.id,
+          taskId: task.id
         })
         .set('Authorization', user.headers.authorization)
         .expect(200)
@@ -396,8 +396,8 @@ describe('orders', () => {
       expect(res.body.status).to.equal('succeeded')
       const wallet = await models.Wallet.findOne({
         where: {
-          userId: user.body.id,
-        },
+          userId: user.body.id
+        }
       })
       expect(wallet.balance).to.equal('1659.00')
     })
@@ -421,14 +421,14 @@ describe('orders', () => {
                 payments: {
                   authorizations: [
                     {
-                      id: 'foo',
-                    },
-                  ],
-                },
-              },
-            ],
+                      id: 'foo'
+                    }
+                  ]
+                }
+              }
+            ]
           },
-          { 'Content-Type': 'application/json' },
+          { 'Content-Type': 'application/json' }
         )
 
       const userAuth = await registerAndLogin(agent)
@@ -439,7 +439,7 @@ describe('orders', () => {
           currency: 'USD',
           provider: 'paypal',
           amount: 200,
-          userId: userAuth.body.id,
+          userId: userAuth.body.id
         })
         .expect(200)
 
@@ -470,14 +470,14 @@ describe('orders', () => {
                 payments: {
                   authorizations: [
                     {
-                      id: 'foo',
-                    },
-                  ],
-                },
-              },
-            ],
+                      id: 'foo'
+                    }
+                  ]
+                }
+              }
+            ]
           },
-          { 'Content-Type': 'application/json' },
+          { 'Content-Type': 'application/json' }
         )
 
       const user = await registerAndLogin(agent, { email: 'testcancelorder@gitpay.me' })
@@ -493,7 +493,7 @@ describe('orders', () => {
             currency: 'USD',
             provider: 'paypal',
             amount: 200,
-            userId: user.body.id,
+            userId: user.body.id
           })
           .expect(200)
 
@@ -539,14 +539,14 @@ describe('orders', () => {
                 payments: {
                   authorizations: [
                     {
-                      id: 'auth_foo',
-                    },
-                  ],
-                },
-              },
-            ],
+                      id: 'auth_foo'
+                    }
+                  ]
+                }
+              }
+            ]
           },
-          { 'Content-Type': 'application/json' },
+          { 'Content-Type': 'application/json' }
         )
 
       const user = await registerAndLogin(agent, { email: 'testcancelorder@gitpay.me' })
@@ -558,7 +558,7 @@ describe('orders', () => {
           currency: 'USD',
           provider: 'paypal',
           amount: 200,
-          userId: user.body.id,
+          userId: user.body.id
         })
         .expect(200)
 
@@ -566,7 +566,7 @@ describe('orders', () => {
       const detailsPath = `/v2/checkout/orders/${orderData.source_id}`
       nock(url).get(detailsPath).reply(200, {
         id: 'order_foo',
-        status: 'CREATED',
+        status: 'CREATED'
       })
 
       const orderDetails = await agent
@@ -587,7 +587,7 @@ describe('orders', () => {
       const order = await models.Order.build({
         source_id: 'PAY-TEST',
         currency: 'USD',
-        amount: 200,
+        amount: 200
       }).save()
 
       await agent
@@ -616,21 +616,21 @@ describe('orders', () => {
                 payments: {
                   authorizations: [
                     {
-                      id: 'auth_foo',
-                    },
-                  ],
-                },
-              },
-            ],
+                      id: 'auth_foo'
+                    }
+                  ]
+                }
+              }
+            ]
           },
-          { 'Content-Type': 'application/json' },
+          { 'Content-Type': 'application/json' }
         )
 
       const order = await models.Order.build({
         source_id: 'PAY-TEST',
         currency: 'USD',
         amount: 200,
-        provider: 'paypal',
+        provider: 'paypal'
       }).save()
 
       const res = await agent
@@ -648,7 +648,7 @@ describe('orders', () => {
       const order = await models.Order.build({
         source_id: '12345',
         currency: 'BRL',
-        amount: 200,
+        amount: 200
       }).save()
 
       const res = await agent
@@ -671,26 +671,26 @@ describe('orders', () => {
     const tasks = await Promise.all([
       models.Task.build({
         url: 'https://github.com/worknenjoy/truppie/issues/7363',
-        userId: user.body.id,
+        userId: user.body.id
       }).save(),
       models.Task.build({
         url: 'https://github.com/worknenjoy/truppie/issues/7364',
         userId: user.body.id,
-        status: 'in_progress',
-      }).save(),
+        status: 'in_progress'
+      }).save()
     ])
 
     const order = await models.Order.build({
       source_id: '12345',
       currency: 'BRL',
       amount: 200,
-      taskId: tasks[0].dataValues.id,
+      taskId: tasks[0].dataValues.id
     }).save()
 
     const transferRes = await agent
       .post(`/orders/${order.dataValues.id}/transfers`)
       .send({
-        taskId: tasks[1].dataValues.id,
+        taskId: tasks[1].dataValues.id
       })
       .set('Authorization', user.headers.authorization)
       .expect('Content-Type', /json/)
@@ -714,7 +714,7 @@ describe('orders', () => {
       metadata: {},
       reason: null,
       receipt_number: null,
-      status: 'succeeded',
+      status: 'succeeded'
     }
 
     nock('https://api.stripe.com')
@@ -729,7 +729,7 @@ describe('orders', () => {
         currency: 'USD',
         amount: 200,
         provider: 'stripe',
-        userId: user.body.id,
+        userId: user.body.id
       }).save()
 
       const refundRes = await agent

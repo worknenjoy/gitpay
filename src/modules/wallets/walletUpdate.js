@@ -8,8 +8,8 @@ module.exports = Promise.method(async function walletUpdate(params) {
     params.userId &&
     (await User.findOne({
       where: {
-        id: params.userId,
-      },
+        id: params.userId
+      }
     }))
 
   if (!user) {
@@ -19,14 +19,14 @@ module.exports = Promise.method(async function walletUpdate(params) {
   const wallet = await Wallet.update(
     {
       balance: amount,
-      name: name,
+      name: name
     },
     {
       where: {
-        id: id,
+        id: id
       },
-      returning: true,
-    },
+      returning: true
+    }
   )
   return wallet[1][0].dataValues
 })

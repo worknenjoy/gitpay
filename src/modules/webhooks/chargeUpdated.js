@@ -8,22 +8,22 @@ module.exports = async function chargeUpdated(event, paid, status, req, res) {
     return models.Order.update(
       {
         paid: paid,
-        status: status,
+        status: status
       },
       {
         where: {
           source_id: event.data.object.source.id,
-          source: event.data.object.id,
+          source: event.data.object.id
         },
-        returning: true,
-      },
+        returning: true
+      }
     )
       .then((order) => {
         if (order[0]) {
           return models.User.findOne({
             where: {
-              id: order[1][0].dataValues.userId,
-            },
+              id: order[1][0].dataValues.userId
+            }
           })
             .then((user) => {
               if (user) {
@@ -34,8 +34,8 @@ module.exports = async function chargeUpdated(event, paid, status, req, res) {
                     user.dataValues,
                     i18n.__('mail.webhook.payment.update.subject'),
                     i18n.__('mail.webhook.payment.update.message', {
-                      amount: event.data.object.amount / 100,
-                    }),
+                      amount: event.data.object.amount / 100
+                    })
                   )
                 }
               }

@@ -5,7 +5,7 @@ const TransferMail = require('../mail/transfer')
 module.exports = Promise.method(function orderTransfer(transferParams, transferData) {
   return models.Order.findOne({
     where: { id: transferParams.id },
-    include: [models.User, models.Task],
+    include: [models.User, models.Task]
   })
     .then(async (order) => {
       if (!order) throw new Error('no order found')
@@ -19,17 +19,15 @@ module.exports = Promise.method(function orderTransfer(transferParams, transferD
           {
             TaskId: transferTaskId,
             transfer_group:
-              !coupon || (coupon && coupon.amount < 100)
-                ? `task_${order.Task.dataValues.id}`
-                : null,
+              !coupon || (coupon && coupon.amount < 100) ? `task_${order.Task.dataValues.id}` : null
           },
           {
             where: {
-              id: transferOrderId,
+              id: transferOrderId
             },
             returning: true,
-            plain: true,
-          },
+            plain: true
+          }
         )
           .then(async (orderUpdated) => {
             const taskTo = await models.Task.findOne({ where: { id: transferTaskId } })

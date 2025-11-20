@@ -27,7 +27,7 @@ module.exports.issue = {
     events_url: 'https://api.github.com/users/alexanmtz/events{/privacy}',
     received_events_url: 'https://api.github.com/users/alexanmtz/received_events',
     type: 'User',
-    site_admin: false,
+    site_admin: false
   },
   labels: [
     {
@@ -37,8 +37,8 @@ module.exports.issue = {
       name: 'AIPR',
       color: '68BFD0',
       default: false,
-      description: '',
-    },
+      description: ''
+    }
   ],
   state: 'open',
   locked: false,
@@ -63,9 +63,9 @@ module.exports.issue = {
     confused: 0,
     heart: 0,
     rocket: 0,
-    eyes: 0,
+    eyes: 0
   },
   timeline_url: 'https://api.github.com/repos/worknenjoy/gitpay/issues/1080/timeline',
   performed_via_github_app: null,
-  state_reason: null,
+  state_reason: null
 }

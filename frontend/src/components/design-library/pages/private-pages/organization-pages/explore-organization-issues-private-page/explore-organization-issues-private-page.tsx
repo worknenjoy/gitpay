@@ -18,7 +18,7 @@ const ExploreOrganizationIssuesPrivatePage = ({
   listLabels,
   languages,
   listLanguages,
-  user,
+  user
 }) => {
   const { data, completed } = organization
   const projectList = { data: data?.Projects || [], completed }
@@ -36,7 +36,7 @@ const ExploreOrganizationIssuesPrivatePage = ({
                   defaultMessage="Explore Issues"
                 />
               ),
-              link: '/profile/explore',
+              link: '/profile/explore'
             }}
           />
         </TopSection>

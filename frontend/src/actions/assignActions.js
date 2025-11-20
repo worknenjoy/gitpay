@@ -29,7 +29,7 @@ const assignTask = (taskId, assignId) => {
     axios
       .post(api.API_URL + '/tasks/assignment/request', {
         taskId,
-        assignId,
+        assignId
       })
       .then((response) => {
         dispatch(addNotification('actions.assign.task.sucess'))
@@ -52,7 +52,7 @@ const actionAssign = (taskId, assignId, action, message) => {
         taskId,
         assignId,
         confirm: action,
-        message,
+        message
       })
       .then((response) => {
         dispatch(addNotification('actions.assign.task.sucess'))
@@ -92,7 +92,7 @@ const messageTask = (taskId, assignId, message) => {
     axios
       .post(`${api.API_URL}/tasks/${taskId}/message`, {
         message,
-        interested: assignId,
+        interested: assignId
       })
       .then((response) => {
         if (!response && !response.data) {
@@ -134,7 +134,7 @@ const messageOffer = (taskId, offerId, message) => {
     axios
       .post(`${api.API_URL}/tasks/${taskId}/offer/${offerId}/message`, {
         message,
-        offerId: offerId,
+        offerId: offerId
       })
       .then((response) => {
         if (!response && !response.data) {
@@ -177,7 +177,7 @@ const offerUpdate = (taskId, offerId, { status }) => {
     dispatch(offerUpdateRequested())
     axios
       .put(`${api.API_URL}/offers/${offerId}`, {
-        status,
+        status
       })
       .then((response) => {
         if (!response) {
@@ -250,5 +250,5 @@ export {
   messageTask,
   messageOffer,
   offerUpdate,
-  actionAssign,
+  actionAssign
 }

@@ -16,13 +16,13 @@ import PrivacyPolicy from './privacy-policy'
 
 const FormRow = styled('div')(({ theme }) => ({
   marginTop: 10,
-  marginBottom: 10,
+  marginBottom: 10
 }))
 
 const Center = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center',
+  alignItems: 'center'
 }))
 
 class LoginForm extends Component {
@@ -42,7 +42,7 @@ class LoginForm extends Component {
       termsOfServiceOpen: false,
       privacyPolicyOpen: false,
       agreeTermsCheck: false,
-      agreeTermsCheckError: false,
+      agreeTermsCheckError: false
     }
   }
 
@@ -98,24 +98,24 @@ class LoginForm extends Component {
       this.setState({
         error: {
           ...currentErrors,
-          name: 'Name cannot be too short',
-        },
+          name: 'Name cannot be too short'
+        }
       })
       return false
     } else if (name.length > 72) {
       this.setState({
         error: {
           ...currentErrors,
-          name: 'Name cannot be longer than 72 characters',
-        },
+          name: 'Name cannot be longer than 72 characters'
+        }
       })
       return false
     } else if (this.containUrl(name)) {
       this.setState({
         error: {
           ...currentErrors,
-          name: 'Name should not include URL',
-        },
+          name: 'Name should not include URL'
+        }
       })
       return false
     } else {
@@ -128,30 +128,30 @@ class LoginForm extends Component {
       this.setState({
         error: {
           ...currentErrors,
-          username: 'Email cannot be empty',
-        },
+          username: 'Email cannot be empty'
+        }
       })
       return false
     } else if (email.length > 72) {
       this.setState({
         error: {
           ...currentErrors,
-          username: 'Email cannot be longer than 72 characters',
-        },
+          username: 'Email cannot be longer than 72 characters'
+        }
       })
       return false
     } else {
       if (
         email &&
         !email.match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         )
       ) {
         this.setState({
           error: {
             ...currentErrors,
-            username: 'Invalid email',
-          },
+            username: 'Invalid email'
+          }
         })
         return false
       }
@@ -164,16 +164,16 @@ class LoginForm extends Component {
       this.setState({
         error: {
           ...currentErrors,
-          password: 'Password cannot be empty or too short',
-        },
+          password: 'Password cannot be empty or too short'
+        }
       })
       return false
     } else if (password.length > 72) {
       this.setState({
         error: {
           ...currentErrors,
-          password: 'Password cannot be longer than 72 characters',
-        },
+          password: 'Password cannot be longer than 72 characters'
+        }
       })
       return false
     } else {
@@ -187,8 +187,8 @@ class LoginForm extends Component {
       this.setState({
         error: {
           ...currentErrors,
-          password: 'Password dont match',
-        },
+          password: 'Password dont match'
+        }
       })
       return false
     }
@@ -205,7 +205,7 @@ class LoginForm extends Component {
       confirmPassword,
       agreeTermsCheck,
       formType,
-      error,
+      error
     } = this.state
     const currentErrors = error
     if (!captchaChecked) {
@@ -220,7 +220,7 @@ class LoginForm extends Component {
       const validPasswordConfirm = this.validatePasswordDontMatch(
         password,
         confirmPassword,
-        currentErrors,
+        currentErrors
       )
       const validEmail = this.validateEmail(username, currentErrors)
       validPassword &&
@@ -232,7 +232,7 @@ class LoginForm extends Component {
           .registerUser({
             name,
             email: username,
-            password: password,
+            password: password
           })
           .then((response) => {
             const errorType = response.error && response.error.response.data.message
@@ -249,8 +249,8 @@ class LoginForm extends Component {
             this.setState({
               error: {
                 ...currentErrors,
-                general: 'We couldnt register this user',
-              },
+                general: 'We couldnt register this user'
+              }
             })
             /* eslint-disable no-console */
             console.log(error)
@@ -385,9 +385,9 @@ class LoginForm extends Component {
               sx={{
                 '& .MuiInputLabel-root.Mui-focused': { color: purple[500] },
                 '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: purple[500],
+                  borderColor: purple[500]
                 },
-                '& .MuiInputBase-root.Mui-focused': { color: 'inherit' },
+                '& .MuiInputBase-root.Mui-focused': { color: 'inherit' }
               }}
               label="Name"
               variant="outlined"
@@ -408,8 +408,8 @@ class LoginForm extends Component {
               sx={{
                 '& .MuiInputLabel-root.Mui-focused': { color: purple[500] },
                 '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: purple[500],
-                },
+                  borderColor: purple[500]
+                }
               }}
               label="E-mail"
               variant="outlined"
@@ -430,8 +430,8 @@ class LoginForm extends Component {
               sx={{
                 '& .MuiInputLabel-root.Mui-focused': { color: purple[500] },
                 '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: purple[500],
-                },
+                  borderColor: purple[500]
+                }
               }}
               type="password"
               label="Password"
@@ -464,8 +464,8 @@ class LoginForm extends Component {
               sx={{
                 '& .MuiInputLabel-root.Mui-focused': { color: purple[500] },
                 '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: purple[500],
-                },
+                  borderColor: purple[500]
+                }
               }}
               type="password"
               label="Confirm Password"
@@ -561,7 +561,7 @@ class LoginForm extends Component {
                   color: 'red',
                   fontSize: 10,
                   display: 'flex',
-                  justifyContent: 'center',
+                  justifyContent: 'center'
                 }}
               >
                 <Typography type="body1" component="span">
@@ -581,7 +581,7 @@ class LoginForm extends Component {
               justifyContent: 'center',
               width: '100%',
               height: 80,
-              marginTop: 20,
+              marginTop: 20
             }}
           >
             <ReCAPTCHA
@@ -596,7 +596,7 @@ class LoginForm extends Component {
               color: 'red',
               fontSize: 10,
               display: 'flex',
-              justifyContent: 'center',
+              justifyContent: 'center'
             }}
           >
             <Typography type="body1" component="span">

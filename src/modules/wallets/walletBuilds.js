@@ -7,8 +7,8 @@ module.exports = Promise.method(async function walletBuilds(params) {
     params.userId &&
     (await User.findOne({
       where: {
-        id: params.userId,
-      },
+        id: params.userId
+      }
     }))
 
   if (!user) {
@@ -18,6 +18,6 @@ module.exports = Promise.method(async function walletBuilds(params) {
   return Wallet.create({
     userId: user.id,
     name: params.name,
-    balance: 0,
+    balance: 0
   })
 })

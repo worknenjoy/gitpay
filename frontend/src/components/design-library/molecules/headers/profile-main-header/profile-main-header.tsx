@@ -15,7 +15,7 @@ const ProfileMainHeader = ({ title, subtitle, aside }: ProfileMainHeaderProps) =
         marginBottom: 20,
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
       }}
     >
       <MainTitle title={title} subtitle={subtitle} />

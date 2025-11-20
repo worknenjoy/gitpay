@@ -10,29 +10,29 @@ module.exports = {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
       },
       taskId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Tasks',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: false,
+        allowNull: false
       },
       orderId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Orders',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: true,
+        allowNull: true
       },
       createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE
     })
   },
   down: function (queryInterface, Sequelize) {
     return queryInterface.dropTable('task_orders')
-  },
+  }
 }

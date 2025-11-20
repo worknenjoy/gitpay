@@ -23,7 +23,7 @@ const PublicPage = ({
   isLogged,
   registerUser,
   roles,
-  signOut,
+  signOut
 }) => {
   const commonProps = useCommonActions({
     user,
@@ -35,7 +35,7 @@ const PublicPage = ({
     isLogged,
     registerUser,
     roles,
-    signOut,
+    signOut
   })
 
   return (

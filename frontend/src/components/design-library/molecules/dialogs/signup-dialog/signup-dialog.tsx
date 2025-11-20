@@ -10,7 +10,7 @@ const SignupDialog = ({
   onSignup,
   onSignin,
   loginFormSignupFormProps,
-  loginFormForgotFormProps,
+  loginFormForgotFormProps
 }) => {
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">

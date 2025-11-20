@@ -3,7 +3,7 @@ import IssueLinkField from './issue-link-field'
 
 export default {
   title: 'Design Library/Molecules/Tables/Fields/Issue/IssueLinkField',
-  component: IssueLinkField,
+  component: IssueLinkField
 }
 
 const Template = (args) => <IssueLinkField {...args} />
@@ -15,6 +15,6 @@ Default.args = {
     title: 'Issue title',
     id: 1,
     url: 'https://github.com',
-    provider: 'github',
-  },
+    provider: 'github'
+  }
 }

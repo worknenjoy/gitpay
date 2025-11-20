@@ -5,7 +5,7 @@ import Input from '../../common/form/inputAuth'
 
 const cardStyle = {
   minWidth: 275,
-  position: 'relative',
+  position: 'relative'
 }
 
 class Auth extends Component {
@@ -16,7 +16,7 @@ class Auth extends Component {
       loginMode: true,
       username: '',
       email: '',
-      password: '',
+      password: ''
     }
 
     this.changeMode = this.changeMode.bind(this)

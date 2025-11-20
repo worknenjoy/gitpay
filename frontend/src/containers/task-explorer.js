@@ -6,14 +6,14 @@ import { getFilteredTasks } from '../selectors/tasks'
 
 const mapStateToProps = (state) => ({
   tasks: state.tasks.data,
-  filteredTasks: getFilteredTasks(state),
+  filteredTasks: getFilteredTasks(state)
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     listTasks: ({ status }) => dispatch(listTasks({ status })),
     filterTasks: (tasks, key, value, additional) =>
-      dispatch(filterTasks(tasks, key, value, additional)),
+      dispatch(filterTasks(tasks, key, value, additional))
   }
 }
 

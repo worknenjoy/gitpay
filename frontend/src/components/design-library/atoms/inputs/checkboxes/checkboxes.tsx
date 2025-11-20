@@ -14,14 +14,14 @@ const Checkboxes = ({
   checkboxes,
   onChange,
   includeSelectAll = false,
-  completed = true,
+  completed = true
 }: CheckboxesProps) => {
   const [checked, setChecked] = useState({})
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, onChangeCheckbox) => {
     setChecked({
       ...checked,
-      [event.target.name]: event.target.checked,
+      [event.target.name]: event.target.checked
     })
     onChangeCheckbox?.(event.target.checked)
   }
@@ -48,8 +48,8 @@ const Checkboxes = ({
                 acc[checkbox.name] = true
                 return acc
               },
-              { all: true },
-            ),
+              { all: true }
+            )
           )
         } else {
           setChecked(
@@ -58,12 +58,12 @@ const Checkboxes = ({
                 acc[checkbox.name] = false
                 return acc
               },
-              { all: false },
-            ),
+              { all: false }
+            )
           )
         }
-      },
-    },
+      }
+    }
   ]
   const checkboxesToRender = includeSelectAll ? selectBoxesWithAll : checkboxes
 
@@ -75,7 +75,7 @@ const Checkboxes = ({
     if (checked['all'] !== allOptionsChecked) {
       setChecked((prevChecked) => ({
         ...prevChecked,
-        all: allOptionsChecked,
+        all: allOptionsChecked
       }))
     }
   }, [checked, checkboxes])

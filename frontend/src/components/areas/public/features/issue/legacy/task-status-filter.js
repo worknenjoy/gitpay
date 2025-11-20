@@ -17,13 +17,13 @@ class TaskStatusFilter extends Component {
     super(props)
     this.state = {
       selected: 'all',
-      additionalSelected: null,
+      additionalSelected: null
     }
   }
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    onFilter: PropTypes.func,
+    onFilter: PropTypes.func
   }
 
   componentDidMount() {
@@ -122,7 +122,7 @@ class TaskStatusFilter extends Component {
     const possibles = {
       open: this.props.intl.formatMessage(messages.openStatus),
       in_progress: this.props.intl.formatMessage(messages.inProgressStatus),
-      closed: this.props.intl.formatMessage(messages.closed),
+      closed: this.props.intl.formatMessage(messages.closed)
     }
     return possibles[status]
   }
@@ -130,7 +130,7 @@ class TaskStatusFilter extends Component {
   additionalStatusDisplay = (status) => {
     const additional = {
       issuesWithBounties: this.props.intl.formatMessage(messages.issuesWithBounties),
-      contribution: this.props.intl.formatMessage(messages.contribution),
+      contribution: this.props.intl.formatMessage(messages.contribution)
     }
 
     return additional[status]
@@ -154,7 +154,7 @@ class TaskStatusFilter extends Component {
                   ? {
                       bgcolor: 'primary.main',
                       color: 'primary.contrastText',
-                      '&:active': { bgcolor: 'primary.main', color: 'primary.contrastText' },
+                      '&:active': { bgcolor: 'primary.main', color: 'primary.contrastText' }
                     }
                   : {}
               }
@@ -173,7 +173,7 @@ class TaskStatusFilter extends Component {
                 ? {
                     bgcolor: 'primary.main',
                     color: 'primary.contrastText',
-                    '&:active': { bgcolor: 'primary.main', color: 'primary.contrastText' },
+                    '&:active': { bgcolor: 'primary.main', color: 'primary.contrastText' }
                   }
                 : {}
             }
@@ -186,7 +186,7 @@ class TaskStatusFilter extends Component {
             margin: '.25em 0',
             padding: '5px 0.3em',
             borderLeft: '1px solid #CCC',
-            backgroundColor: '#FFF',
+            backgroundColor: '#FFF'
           }}
         />
         {additionalStatuses.map((status, index) => (
@@ -201,7 +201,7 @@ class TaskStatusFilter extends Component {
                 ? {
                     bgcolor: 'primary.main',
                     color: 'primary.contrastText',
-                    '&:active': { bgcolor: 'primary.main', color: 'primary.contrastText' },
+                    '&:active': { bgcolor: 'primary.main', color: 'primary.contrastText' }
                   }
                 : {}
             }

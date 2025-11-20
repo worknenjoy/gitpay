@@ -28,7 +28,7 @@ const WalletPaymentCard = ({
   wallets,
   onClose,
   fetchTask,
-  syncTask,
+  syncTask
 }) => {
   const onWalletPayment = async () => {
     await createOrder({
@@ -43,8 +43,8 @@ const WalletPaymentCard = ({
       source_type: 'wallet-funds',
       customer_id: user?.customer_id,
       metadata: {
-        user_id: user.id,
-      },
+        user_id: user.id
+      }
     })
     await syncTask(task.id)
     await fetchTask(task.id)
@@ -84,7 +84,7 @@ const WalletPaymentCard = ({
           id="task.payment.wallet.action"
           defaultMessage="Pay {amount} with your Wallet"
           values={{
-            amount: formatCurrency(priceAfterFee),
+            amount: formatCurrency(priceAfterFee)
           }}
         />
       </BtnPayment>

@@ -7,7 +7,7 @@ const taskUpdate = require('../tasks/taskUpdate')
 
 module.exports = Promise.method(function taskSolutionUpdate(taskSolution, taskSolutionId) {
   return models.TaskSolution.update(taskSolution, {
-    where: { id: taskSolutionId },
+    where: { id: taskSolutionId }
   })
     .then((data) => {
       if (!data) {
@@ -16,7 +16,7 @@ module.exports = Promise.method(function taskSolutionUpdate(taskSolution, taskSo
 
       if (data) {
         return models.Task.findOne({
-          where: { id: taskSolution.taskId },
+          where: { id: taskSolution.taskId }
         }).then((taskData) => {
           const pullRequestURLSplitted = taskSolution.pullRequestURL.split('/')
 
@@ -25,13 +25,13 @@ module.exports = Promise.method(function taskSolutionUpdate(taskSolution, taskSo
             userId: taskSolution.userId,
             repositoryName: pullRequestURLSplitted[4],
             owner: pullRequestURLSplitted[3],
-            taskId: taskSolution.taskId,
+            taskId: taskSolution.taskId
           })
             .then(async (response) => {
               const taskSolutionUpdate = await models.TaskSolution.update(response, {
                 where: { id: taskSolutionId },
                 returning: true,
-                plain: true,
+                plain: true
               })
               if (
                 response.isAuthorOfPR &&
@@ -44,11 +44,11 @@ module.exports = Promise.method(function taskSolutionUpdate(taskSolution, taskSo
                   //taskPayment({ taskId: taskData.dataValues.id, value: taskData.dataValues.value })
                   let existingAssignment = await assignExist({
                     userId: taskSolution.userId,
-                    taskId: taskSolution.taskId,
+                    taskId: taskSolution.taskId
                   })
                   if (!existingAssignment) {
                     existingAssignment = await taskData.createAssign({
-                      userId: taskSolution.userId,
+                      userId: taskSolution.userId
                     })
                     if (!existingAssignment) {
                       throw new Error('COULD_NOT_CREATE_ASSIGN')
@@ -58,16 +58,16 @@ module.exports = Promise.method(function taskSolutionUpdate(taskSolution, taskSo
                     {
                       id: taskSolution.taskId,
                       userId: taskData.dataValues.userId,
-                      assigned: existingAssignment.dataValues.id,
+                      assigned: existingAssignment.dataValues.id
                     },
-                    false,
+                    false
                   )
                   if (!taskUpdateAssign) {
                     throw new Error('COULD_NOT_UPDATE_TASK')
                   }
                   const transferSend = await transferBuilds({
                     taskId: taskData.dataValues.id,
-                    userId: existingAssignment.dataValues.id,
+                    userId: existingAssignment.dataValues.id
                   })
                   if (transferSend.error) {
                     throw new Error('transferSend.error')
@@ -87,7 +87,7 @@ module.exports = Promise.method(function taskSolutionUpdate(taskSolution, taskSo
       }
 
       return models.TaskSolution.findOne({
-        where: { id: taskSolutionId },
+        where: { id: taskSolutionId }
       })
     })
     .catch((err) => {

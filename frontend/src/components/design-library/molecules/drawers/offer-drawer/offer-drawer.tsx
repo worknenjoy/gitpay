@@ -55,7 +55,7 @@ const OfferDrawer = ({
   onConfirmOfferChange,
   onEmailInviteChange,
   tabs,
-  offersProps,
+  offersProps
 }: OfferDrawerProps) => {
   const [currentPrice, setCurrentPrice] = React.useState(0)
   const [enableActions, setEnableActions] = React.useState(true)
@@ -88,7 +88,7 @@ const OfferDrawer = ({
       value: 0,
       label: 'Your existing offers',
       default: true,
-      component: <OffersList {...offersProps} />,
+      component: <OffersList {...offersProps} />
     },
     {
       value: 1,
@@ -98,8 +98,8 @@ const OfferDrawer = ({
           <AddIcon fontSize="small" style={{ marginLeft: 3 }} />
         </div>
       ),
-      component: createSection,
-    },
+      component: createSection
+    }
   ]
 
   useEffect(() => {

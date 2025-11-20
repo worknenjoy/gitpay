@@ -4,13 +4,13 @@ import { getUserTypes } from '../actions/profileActions'
 
 const mapStateToProps = (state) => {
   return {
-    profile: state.profileReducer.data,
+    profile: state.profileReducer.data
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUserTypes: (userId) => dispatch(getUserTypes(userId)),
+    getUserTypes: (userId) => dispatch(getUserTypes(userId))
   }
 }
 

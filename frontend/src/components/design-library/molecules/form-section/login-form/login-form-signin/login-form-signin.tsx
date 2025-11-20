@@ -25,7 +25,7 @@ const LoginFormSignin = ({
   onSignup,
   noCancelButton,
   onForgot,
-  addNotification,
+  addNotification
 }: LoginFormSigninProps) => {
   const { status } = useParams<{ status: string }>()
 
@@ -37,8 +37,8 @@ const LoginFormSignin = ({
     error: {
       username: '',
       password: '',
-      captcha: '',
-    },
+      captcha: ''
+    }
   })
 
   const handleChange = (name) => (event) => {
@@ -59,8 +59,8 @@ const LoginFormSignin = ({
         ...state,
         error: {
           ...currentErrors,
-          username: 'Email cannot be empty',
-        },
+          username: 'Email cannot be empty'
+        }
       })
       return false
     } else if (email.length > 72) {
@@ -68,23 +68,23 @@ const LoginFormSignin = ({
         ...state,
         error: {
           ...currentErrors,
-          username: 'Email cannot be longer than 72 characters',
-        },
+          username: 'Email cannot be longer than 72 characters'
+        }
       })
       return false
     } else {
       if (
         email &&
         !email.match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         )
       ) {
         setState({
           ...state,
           error: {
             ...currentErrors,
-            username: 'Invalid email',
-          },
+            username: 'Invalid email'
+          }
         })
         return false
       }
@@ -98,8 +98,8 @@ const LoginFormSignin = ({
         ...state,
         error: {
           ...currentErrors,
-          password: 'Password cannot be empty or too short',
-        },
+          password: 'Password cannot be empty or too short'
+        }
       })
       return false
     } else if (password.length > 72) {
@@ -107,8 +107,8 @@ const LoginFormSignin = ({
         ...state,
         error: {
           ...currentErrors,
-          password: 'Password cannot be longer than 72 characters',
-        },
+          password: 'Password cannot be longer than 72 characters'
+        }
       })
       return false
     } else {
@@ -211,7 +211,7 @@ const LoginFormSignin = ({
             justifyContent: 'center',
             width: '100%',
             height: 80,
-            marginTop: 20,
+            marginTop: 20
           }}
         >
           <ReCAPTCHA
@@ -226,7 +226,7 @@ const LoginFormSignin = ({
             color: 'red',
             fontSize: 10,
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}
         >
           <Typography variant="body1" component="span">

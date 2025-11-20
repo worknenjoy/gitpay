@@ -69,7 +69,7 @@ const reducers = combineReducers({
   paymentRequests,
   paymentRequestTransfers,
   paymentRequestPayments,
-  paymentRequestBalances,
+  paymentRequestBalances
 })
 
 export default reducers

@@ -7,39 +7,39 @@ import { Section as BaseSection, ResponsiveImage } from './CommonStyles'
 // Root wrapper
 export const Root = styled('div')(() => ({
   flexGrow: 1,
-  marginTop: 0,
+  marginTop: 0
 }))
 
 // Section with alternate background
 export const AltSection = styled(BaseSection)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.contrastText,
+  backgroundColor: theme.palette.primary.contrastText
 }))
 
 // Image helpers
 export const HeroImage = styled(ResponsiveImage)(() => ({
-  width: '100%',
+  width: '100%'
 }))
 
 export const ImageContainer = styled('div')(() => ({
-  marginLeft: 20,
+  marginLeft: 20
 }))
 
 // Lists
 export const SecList = styled('div')(() => ({
-  padding: 20,
+  padding: 20
 }))
 
 export const ListItemTop = styled(ListItem)(() => ({
-  marginTop: 20,
+  marginTop: 20
 }))
 
 // Buttons
 export const GutterTopButton = styled(Button)<ButtonProps>(() => ({
-  marginTop: 20,
+  marginTop: 20
 }))
 
 export const MLButton = styled(Button)(() => ({
-  marginLeft: 20,
+  marginLeft: 20
 }))
 
 // Bottom call-to-action section and copy
@@ -48,9 +48,9 @@ export const BottomCTASection = styled(BaseSection)(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'center'
 }))
 
 export const BottomCopy = styled(Typography)(() => ({
-  padding: '0 60px',
+  padding: '0 60px'
 }))

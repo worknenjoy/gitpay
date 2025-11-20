@@ -3,7 +3,7 @@ import Coupon from './coupon'
 
 export default {
   title: 'Design Library/Molecules/FormSection/CouponForm',
-  component: Coupon,
+  component: Coupon
 }
 
 const Template = (args) => <Coupon {...args} />
@@ -13,13 +13,13 @@ Default.args = {
   couponState: {
     coupon: '',
     couponApplied: false,
-    couponInput: false,
+    couponInput: false
   },
   handleCouponInput: () => {},
   showCouponInput: () => {},
   applyCoupon: () => {},
   couponStoreState: {
     amount: 0,
-    orderPrice: 0,
-  },
+    orderPrice: 0
+  }
 }

@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Button,
+  Button
 } from '@mui/material'
 import Alert from '@mui/material/Alert'
 import { FormattedMessage } from 'react-intl'
@@ -41,7 +41,7 @@ const TaskOrderInvoiceConfirm = ({ visible, onClose, offer, onConfirm }) => {
               margin: '20px 0',
               display: 'flex',
               justifyContent: 'space-between',
-              textAlign: 'right',
+              textAlign: 'right'
             }}
           >
             <Typography component="div" gutterBottom>

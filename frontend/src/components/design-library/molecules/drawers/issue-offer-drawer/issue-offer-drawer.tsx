@@ -32,7 +32,7 @@ const IssueOfferDrawer = ({
   loggedUser,
   createOrder,
   assignTask,
-  assigns,
+  assigns
 }: TaskOfferDrawerProps) => {
   const { data } = issue
   const allOffers = data?.Offers || []
@@ -79,8 +79,8 @@ const IssueOfferDrawer = ({
         source_type: 'invoice-item',
         customer_id: loggedUser?.user?.customer_id,
         metadata: {
-          offer_id: data.id,
-        },
+          offer_id: data.id
+        }
       }))
     await assignTask(data.id, assign.id)
     await offerUpdate(data.id, offer.id, { status: 'accepted' })
@@ -101,8 +101,8 @@ const IssueOfferDrawer = ({
         suggestedDate: interestedSuggestedDate,
         value: currentPrice,
         learn: interestedLearn,
-        comment: interestedComment,
-      },
+        comment: interestedComment
+      }
     })
     onClose()
   }
@@ -180,7 +180,7 @@ const IssueOfferDrawer = ({
             label: (
               <FormattedMessage id="task.bounties.interested.cancel" defaultMessage="Cancel" />
             ),
-            onClick: onClose,
+            onClick: onClose
           },
           {
             label: (
@@ -192,8 +192,8 @@ const IssueOfferDrawer = ({
             onClick: handleOfferTask,
             variant: 'contained',
             color: 'secondary',
-            disabled: !confirmOffer || !termsAgreed || !currentPrice || currentPrice === 0,
-          },
+            disabled: !confirmOffer || !termsAgreed || !currentPrice || currentPrice === 0
+          }
         ]}
         onDeliveryDateChange={(date) => setInterestedSuggestedDate(date)}
         onChangePrice={(price) => setCurrentPrice(price)}
@@ -208,7 +208,7 @@ const IssueOfferDrawer = ({
           assigned: assigned,
           onAccept: (event, offer) => confirmAssignTaskAndCreateOrder(event, offer),
           onReject: (event, offer) => onReject(event, offer),
-          viewMode: data?.User?.id !== loggedUser?.user?.id,
+          viewMode: data?.User?.id !== loggedUser?.user?.id
         }}
       />
     </>

@@ -8,13 +8,13 @@ export const CoreTeamForm = styled(Grid)(({ theme }) => ({
   marginRight: theme.spacing(3),
   display: 'flex',
   flexDirection: 'column',
-  color: 'white',
+  color: 'white'
 }))
 
 export const UnderlineTextField = styled(TextField)(({ theme }) => ({
   '& .MuiInputBase-input': {
     color: theme.palette.common.white,
-    border: `1px solid ${theme.palette.common.white}`,
+    border: `1px solid ${theme.palette.common.white}`
   },
-  marginBottom: 16,
+  marginBottom: 16
 }))

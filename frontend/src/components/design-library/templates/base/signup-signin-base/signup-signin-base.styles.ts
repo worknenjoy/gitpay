@@ -23,22 +23,22 @@ export const GradientBackground = styled('div')(({ theme }) => ({
   minHeight: '100vh',
   backgroundImage: [
     'radial-gradient(120% 120% at 30% 0%, #eaf3ff 0%, #edf5f2 30%, #e9f1ed 55%, #e3eee8 75%, #d9e7df 100%)',
-    'radial-gradient(140% 140% at 90% -10%, rgba(176,209,238,0.25), rgba(176,209,238,0) 70%)',
+    'radial-gradient(140% 140% at 90% -10%, rgba(176,209,238,0.25), rgba(176,209,238,0) 70%)'
   ].join(', '),
   backgroundRepeat: 'no-repeat, no-repeat',
   backgroundAttachment: 'fixed, fixed',
   backgroundSize: '160% 160%, 140% 140%',
   backgroundPosition: '35% 0%, 60% 20%',
   '@media (prefers-reduced-motion: reduce)': {
-    animation: 'none',
-  },
+    animation: 'none'
+  }
 }))
 
 export const CloudsLayer = styled('div')({
   position: 'absolute',
   inset: 0,
   pointerEvents: 'none',
-  zIndex: 2,
+  zIndex: 2
 })
 
 export const Cloud = styled('div')<{
@@ -60,7 +60,7 @@ export const Cloud = styled('div')<{
     animationDelay: $delay,
     '@media (prefers-reduced-motion: reduce)': {
       animation: 'none',
-      transform: `translateX(0) scale(${$scale})`,
-    },
+      transform: `translateX(0) scale(${$scale})`
+    }
   }
 })

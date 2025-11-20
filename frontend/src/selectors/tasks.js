@@ -34,7 +34,7 @@ const evaluateTaskWithoutBountyByValue = (value) => {
 
 const getTaskWithAnyOrder = (task, user) => {
   const hasUserOrder = task.Orders.some(
-    (order) => order.status === 'succeeded' && order.userId === user.id,
+    (order) => order.status === 'succeeded' && order.userId === user.id
   )
   return hasUserOrder ? task : null
 }
@@ -62,7 +62,7 @@ export const getFilteredTasks = createSelector(
                 const interested = item.Assigns.filter((assign) => assign.userId === user.id)
                 return interested.length
               })
-            : [],
+            : []
         }
         break
       case 'status':
@@ -79,7 +79,7 @@ export const getFilteredTasks = createSelector(
                   return filterByAdditional(item, additionalFilter, filteredByPrincipal)
                 }
               })
-            : [],
+            : []
         }
         break
       case 'assigned':
@@ -92,7 +92,7 @@ export const getFilteredTasks = createSelector(
                   return item.assigned === interested[0].id
                 }
               })
-            : [],
+            : []
         }
         break
       case 'issuesWithBounties':
@@ -100,7 +100,7 @@ export const getFilteredTasks = createSelector(
           ...tasks,
           data: tasks.data.length
             ? tasks.data.filter((item) => evaluateTaskWithBountyByValue(item.value))
-            : [],
+            : []
         }
         break
       case 'contribution':
@@ -108,7 +108,7 @@ export const getFilteredTasks = createSelector(
           ...tasks,
           data: tasks.data.length
             ? tasks.data.filter((item) => evaluateTaskWithoutBountyByValue(item.value))
-            : [],
+            : []
         }
         break
       case 'supported':
@@ -116,7 +116,7 @@ export const getFilteredTasks = createSelector(
           ...tasks,
           data: tasks.data.length
             ? tasks.data.filter((item) => getTaskWithAnyOrder(item, user))
-            : [],
+            : []
         }
         break
       default:
@@ -127,5 +127,5 @@ export const getFilteredTasks = createSelector(
     } else {
       return { ...tasks, data: getListed(filteredTasks.data) }
     }
-  },
+  }
 )

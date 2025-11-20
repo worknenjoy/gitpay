@@ -7,19 +7,19 @@ module.exports = Promise.method(
     const orderPayload = couponFull
       ? {
           paid: true,
-          status: 'succeeded',
+          status: 'succeeded'
         }
       : {
           source: charge.id,
           source_id: card.id,
           paid: charge.paid,
-          status: charge.status,
+          status: charge.status
         }
 
     return models.Order.update(orderPayload, {
       where: {
-        id: order.dataValues.id,
-      },
+        id: order.dataValues.id
+      }
     })
       .then((updatedOrder) => {
         if (orderParameters.plan === 'full') {
@@ -29,7 +29,7 @@ module.exports = Promise.method(
         if (task.dataValues.assigned) {
           const assignedId = task.dataValues.assigned
           return models.Assign.findByPk(assignedId, {
-            include: [models.User],
+            include: [models.User]
           }).then((assign) => {
             PaymentMail.assigned(assign.dataValues.User.dataValues.email, task, order.amount)
             return task
@@ -42,5 +42,5 @@ module.exports = Promise.method(
         console.log(err)
         throw err
       })
-  },
+  }
 )

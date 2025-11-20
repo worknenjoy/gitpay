@@ -27,7 +27,7 @@ exports.updatePaymentRequest = async function updatePaymentRequest(req, res) {
     const data = await PaymentRequests.paymentRequestUpdate({
       id: req.params.id,
       ...req.body,
-      userId: req.user.id,
+      userId: req.user.id
     })
     res.status(200).send(data)
   } catch (error) {

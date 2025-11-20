@@ -28,12 +28,12 @@ const ProviderLoginButtons = ({
   position = 'center',
   textPosition = 'center',
   authorizeGithub,
-  disconnectGithub,
+  disconnectGithub
 }: ProviderLoginButtonsProps) => {
   const { ButtonWithMargin, TextMargin, LinkMargin } = stylesModule as any
   const styles = {
     textAlign: textPosition,
-    marginBottom: 10,
+    marginBottom: 10
   } as React.CSSProperties
 
   return (

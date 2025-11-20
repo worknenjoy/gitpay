@@ -4,13 +4,13 @@ module.exports = {
       type: Sequelize.INTEGER,
       references: {
         model: 'Organizations',
-        key: 'id',
+        key: 'id'
       },
-      allowNull: true,
+      allowNull: true
     })
   },
 
   down: (queryInterface, Sequelize) => {
     queryInterface.removeColumn('Projects', 'OrganizationId')
-  },
+  }
 }

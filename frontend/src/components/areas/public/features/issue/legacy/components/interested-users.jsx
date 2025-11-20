@@ -8,7 +8,7 @@ import {
   ListItemAvatar,
   Avatar,
   Divider,
-  Chip,
+  Chip
 } from '@mui/material'
 import MessageIcon from '@mui/icons-material/Message'
 import MomentComponent from 'moment'

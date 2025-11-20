@@ -14,7 +14,7 @@ import Bottom from 'design-library/organisms/layouts/bottom-bar-layouts/bottom-b
 const Root = styled(Grid)(() => ({
   flexGrow: 1,
   backgroundColor: 'black',
-  height: 180,
+  height: 180
 }))
 
 class Order extends Component {

@@ -7,7 +7,7 @@ import { generateTableData } from '../../../../../../../.storybook/utils/generat
 const meta = {
   title: 'Design Library/Pages/Private/DataPages/PrimaryData',
   component: PrimaryDataPage,
-  decorators: [withProfileTemplate],
+  decorators: [withProfileTemplate]
 }
 
 export default meta
@@ -23,7 +23,7 @@ export const Default = {
         table: {
           tableData: {
             completed: true,
-            data: generateTableData(25),
+            data: generateTableData(25)
           },
           tableHeaderMetadata: {
             id: { sortable: true, numeric: true, dataBaseKey: 'id', label: 'Id' },
@@ -31,12 +31,12 @@ export const Default = {
             email: { sortable: true, dataBaseKey: 'email', label: 'Email' },
             role: { sortable: true, dataBaseKey: 'role', label: 'Role' },
             status: { sortable: true, dataBaseKey: 'status', label: 'Status' },
-            action: { sortable: false, dataBaseKey: 'action', label: 'Action' },
+            action: { sortable: false, dataBaseKey: 'action', label: 'Action' }
           },
           customColumnRenderer: {
-            action: (item) => <a href="#">{item.action}</a>,
-          },
-        },
+            action: (item) => <a href="#">{item.action}</a>
+          }
+        }
       },
       {
         label: 'Tab 2',
@@ -45,7 +45,7 @@ export const Default = {
         table: {
           tableData: {
             completed: true,
-            data: generateTableData(5),
+            data: generateTableData(5)
           },
           tableHeaderMetadata: {
             id: { sortable: true, numeric: true, dataBaseKey: 'id', label: 'Id' },
@@ -53,23 +53,23 @@ export const Default = {
             email: { sortable: true, dataBaseKey: 'email', label: 'Email' },
             role: { sortable: true, dataBaseKey: 'role', label: 'Role' },
             status: { sortable: true, dataBaseKey: 'status', label: 'Status' },
-            action: { sortable: false, dataBaseKey: 'action', label: 'Action' },
+            action: { sortable: false, dataBaseKey: 'action', label: 'Action' }
           },
           customColumnRenderer: {
-            action: (item) => <a href="#">{item.action}</a>,
-          },
-        },
-      },
+            action: (item) => <a href="#">{item.action}</a>
+          }
+        }
+      }
     ],
     user: {
       completed: true,
       data: {
         id: '1',
         name: 'John Doe',
-        Types: [{ name: 'contributor' }, { name: 'maintainer' }, { name: 'funding' }],
-      },
-    },
-  },
+        Types: [{ name: 'contributor' }, { name: 'maintainer' }, { name: 'funding' }]
+      }
+    }
+  }
 }
 
 export const LoadingState = {
@@ -83,7 +83,7 @@ export const LoadingState = {
         table: {
           tableData: {
             completed: false,
-            data: [],
+            data: []
           },
           tableHeaderMetadata: {
             id: { sortable: true, numeric: true, dataBaseKey: 'id', label: 'Id' },
@@ -91,23 +91,23 @@ export const LoadingState = {
             email: { sortable: true, dataBaseKey: 'email', label: 'Email' },
             role: { sortable: true, dataBaseKey: 'role', label: 'Role' },
             status: { sortable: true, dataBaseKey: 'status', label: 'Status' },
-            action: { sortable: false, dataBaseKey: 'action', label: 'Action' },
+            action: { sortable: false, dataBaseKey: 'action', label: 'Action' }
           },
           customColumnRenderer: {
-            action: (item) => <a href="#">{item.action}</a>,
-          },
-        },
-      },
+            action: (item) => <a href="#">{item.action}</a>
+          }
+        }
+      }
     ],
     user: {
       completed: true,
       data: {
         id: '1',
         name: 'John Doe',
-        Types: [{ name: 'contributor' }, { name: 'maintainer' }, { name: 'funding' }],
-      },
-    },
-  },
+        Types: [{ name: 'contributor' }, { name: 'maintainer' }, { name: 'funding' }]
+      }
+    }
+  }
 }
 
 export const EmptyState = {
@@ -121,7 +121,7 @@ export const EmptyState = {
         table: {
           tableData: {
             completed: true,
-            data: [],
+            data: []
           },
           tableHeaderMetadata: {
             id: { sortable: true, numeric: true, dataBaseKey: 'id', label: 'Id' },
@@ -129,13 +129,13 @@ export const EmptyState = {
             email: { sortable: true, dataBaseKey: 'email', label: 'Email' },
             role: { sortable: true, dataBaseKey: 'role', label: 'Role' },
             status: { sortable: true, dataBaseKey: 'status', label: 'Status' },
-            action: { sortable: false, dataBaseKey: 'action', label: 'Action' },
+            action: { sortable: false, dataBaseKey: 'action', label: 'Action' }
           },
           customColumnRenderer: {
-            action: (item) => <a href="#">{item.action}</a>,
-          },
-        },
-      },
+            action: (item) => <a href="#">{item.action}</a>
+          }
+        }
+      }
     ],
     activeTab: 'tab1',
     user: {
@@ -143,10 +143,10 @@ export const EmptyState = {
       data: {
         id: '1',
         name: 'John Doe',
-        Types: [{ name: 'contributor' }, { name: 'maintainer' }, { name: 'funding' }],
-      },
-    },
-  },
+        Types: [{ name: 'contributor' }, { name: 'maintainer' }, { name: 'funding' }]
+      }
+    }
+  }
 }
 
 export const WithActionButton = {
@@ -160,7 +160,7 @@ export const WithActionButton = {
         table: {
           tableData: {
             completed: true,
-            data: generateTableData(10),
+            data: generateTableData(10)
           },
           tableHeaderMetadata: {
             id: { sortable: true, numeric: true, dataBaseKey: 'id', label: 'Id' },
@@ -168,13 +168,13 @@ export const WithActionButton = {
             email: { sortable: true, dataBaseKey: 'email', label: 'Email' },
             role: { sortable: true, dataBaseKey: 'role', label: 'Role' },
             status: { sortable: true, dataBaseKey: 'status', label: 'Status' },
-            action: { sortable: false, dataBaseKey: 'action', label: 'Action' },
+            action: { sortable: false, dataBaseKey: 'action', label: 'Action' }
           },
           customColumnRenderer: {
-            action: (item) => <a href="#">{item.action}</a>,
-          },
-        },
-      },
+            action: (item) => <a href="#">{item.action}</a>
+          }
+        }
+      }
     ],
     displayAction: true,
     onActionClick: action('onActionClick'),
@@ -184,8 +184,8 @@ export const WithActionButton = {
       data: {
         id: '1',
         name: 'John Doe',
-        Types: [{ name: 'contributor' }, { name: 'maintainer' }, { name: 'funding' }],
-      },
-    },
-  },
+        Types: [{ name: 'contributor' }, { name: 'maintainer' }, { name: 'funding' }]
+      }
+    }
+  }
 }

@@ -11,51 +11,51 @@ import {
   Typography,
   Paper,
   IconButton,
-  Skeleton,
+  Skeleton
 } from '@mui/material'
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
-  LastPage as LastPageIcon,
+  LastPage as LastPageIcon
 } from '@mui/icons-material'
 
 const messages = defineMessages({
   firstPageLabel: {
     id: 'payments.table.page.first',
-    defaultMessage: 'First page',
+    defaultMessage: 'First page'
   },
   previousPageLabel: {
     id: 'payment.table.page.previous',
-    defaultMessage: 'Previous page',
+    defaultMessage: 'Previous page'
   },
   nextPageLabel: {
     id: 'payment.table.page.next',
-    defaultMessage: 'Next page',
+    defaultMessage: 'Next page'
   },
   lastPageLabel: {
     id: 'payment.table.page.last',
-    defaultMessage: 'Last page',
+    defaultMessage: 'Last page'
   },
   noDefined: {
     id: 'payment.table.date.none',
-    defaultMessage: 'Not yet defined',
+    defaultMessage: 'Not yet defined'
   },
   noBounty: {
     id: 'payment.table.value.none',
-    defaultMessage: 'No bounty added',
+    defaultMessage: 'No bounty added'
   },
   onHoverpaymentProvider: {
     id: 'payment.table.onHover',
-    defaultMessage: 'See on',
-  },
+    defaultMessage: 'See on'
+  }
 })
 
 const actionsStyles = {
   root: {
     flexShrink: 0,
-    marginLeft: 20,
-  },
+    marginLeft: 20
+  }
 } as const
 
 const TablePaginationActions = (props) => {
@@ -119,7 +119,7 @@ TablePaginationActions.propTypes = {
   onChangePage: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 }
 
 // removed HOC
@@ -127,12 +127,12 @@ TablePaginationActions.propTypes = {
 const styles = {
   root: {
     width: '100%',
-    marginTop: 24,
+    marginTop: 24
   },
   table: {
-    minWidth: 500,
+    minWidth: 500
   },
-  tableWrapper: {},
+  tableWrapper: {}
 } as const
 
 const CustomPaginationActionsTable = (props) => {

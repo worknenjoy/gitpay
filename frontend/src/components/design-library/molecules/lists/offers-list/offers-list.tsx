@@ -8,7 +8,7 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
-  Divider,
+  Divider
 } from '@mui/material'
 import MessageIcon from '@mui/icons-material/Message'
 import MomentComponent from 'moment'
@@ -29,7 +29,7 @@ export default function OffersList({
   assigned,
   onAccept,
   onReject,
-  viewMode,
+  viewMode
 }: OfferListProps) {
   const onSendMessage = (id) => {
     onMessage(id)

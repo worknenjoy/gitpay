@@ -12,32 +12,32 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       userId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: true,
+        allowNull: true
       },
       payoutId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Payouts',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     })
   },
 
@@ -49,5 +49,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.dropTable('UserPayouts')
-  },
+  }
 }

@@ -17,8 +17,8 @@ module.exports = async function paymentRequestUpdate(paymentRequestParams: any) 
   const stripePaymentLinkActiveUpdate = await stripe.paymentLinks.update(
     paymentRequestUpdate.payment_link_id,
     {
-      active: paymentRequestUpdate.active,
-    },
+      active: paymentRequestUpdate.active
+    }
   )
 
   if (!stripePaymentLinkActiveUpdate) {
@@ -27,7 +27,7 @@ module.exports = async function paymentRequestUpdate(paymentRequestParams: any) 
 
   const paymentLinkLineItems = await stripe.paymentLinks.listLineItems(
     paymentRequestUpdate.payment_link_id,
-    { limit: 1 },
+    { limit: 1 }
   )
 
   if (!paymentLinkLineItems || paymentLinkLineItems.data.length === 0) {
@@ -38,7 +38,7 @@ module.exports = async function paymentRequestUpdate(paymentRequestParams: any) 
 
   const stripeProductUpdate = await stripe.products.update(productItemId, {
     name: paymentRequestUpdate.title,
-    description: paymentRequestUpdate.description,
+    description: paymentRequestUpdate.description
   })
 
   if (!stripeProductUpdate) {

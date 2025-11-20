@@ -3,7 +3,7 @@ import IssueReportsDialog from './issue-reports-dialog'
 
 export default {
   title: 'Design Library/Molecules/Dialogs/IssueReportsDialog',
-  component: IssueReportsDialog,
+  component: IssueReportsDialog
 }
 
 const Template = (args) => <IssueReportsDialog {...args} />
@@ -14,6 +14,6 @@ Default.args = {
   onClose: () => console.log('Dialog closed'),
   issueDetails: {
     title: 'Sample Issue',
-    description: 'This is a sample issue description.',
-  },
+    description: 'This is a sample issue description.'
+  }
 }

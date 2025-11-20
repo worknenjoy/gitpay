@@ -8,10 +8,10 @@ module.exports = Promise.method(function taskPayment(paymentParams) {
   return models.Task.findOne(
     {
       where: {
-        id: paymentParams.taskId,
-      },
+        id: paymentParams.taskId
+      }
     },
-    { include: [models.User, models.Order, models.Assign] },
+    { include: [models.User, models.Order, models.Assign] }
   ).then((task) => {
     if (!task) {
       throw new Error('find_task_error')
@@ -19,9 +19,9 @@ module.exports = Promise.method(function taskPayment(paymentParams) {
 
     return models.Assign.findOne({
       where: {
-        id: task.assigned,
+        id: task.assigned
       },
-      include: [models.User],
+      include: [models.User]
     }).then(async (assign) => {
       const user = assign.dataValues.User.dataValues
 
@@ -36,7 +36,7 @@ module.exports = Promise.method(function taskPayment(paymentParams) {
         amount: centavosAmount * 0.92, // 8% base fee
         currency: 'usd',
         destination: dest,
-        source_type: 'card',
+        source_type: 'card'
       }
 
       const order = await models.Order.findOne({ where: { TaskId: task.id } })
@@ -54,9 +54,9 @@ module.exports = Promise.method(function taskPayment(paymentParams) {
             { transfer_id: transfer.id },
             {
               where: {
-                id: task.id,
-              },
-            },
+                id: task.id
+              }
+            }
           ).then((update) => {
             if (!update) {
               TransferMail.error(user, task, task.value)

@@ -19,7 +19,7 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
           <li key={index}>
             {intl.formatMessage({
               id: 'consts.account.requirement.other',
-              defaultMessage: 'Other',
+              defaultMessage: 'Other'
             })}
           </li>
         )

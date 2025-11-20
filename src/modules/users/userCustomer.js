@@ -5,7 +5,7 @@ const stripe = require('../shared/stripe/stripe')()
 module.exports = Promise.method(function userCustomer(userParameters) {
   const { id } = userParameters
   return models.User.findOne({
-    where: { id },
+    where: { id }
   })
     .then((data) => {
       const { customer_id } = data.dataValues

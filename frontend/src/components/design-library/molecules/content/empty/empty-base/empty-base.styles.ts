@@ -10,19 +10,19 @@ export const Root = styled('div')(({ theme }) => ({
   textAlign: 'center',
   border: `1px dashed ${theme.palette.divider}`,
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.background.paper
 }))
 
 export const Message = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
   marginBottom: theme.spacing(1),
-  marginTop: theme.spacing(2),
+  marginTop: theme.spacing(2)
 }))
 
 export const MessageSecondary = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
   marginBottom: theme.spacing(0),
-  marginTop: theme.spacing(0),
+  marginTop: theme.spacing(0)
 }))
 
 export const IconContainer = styled('div')(({ theme }) => ({
@@ -33,6 +33,6 @@ export const IconContainer = styled('div')(({ theme }) => ({
   fontSize: 72,
   color: theme.palette.text.secondary,
   '& svg': {
-    fontSize: 'inherit',
-  },
+    fontSize: 'inherit'
+  }
 }))

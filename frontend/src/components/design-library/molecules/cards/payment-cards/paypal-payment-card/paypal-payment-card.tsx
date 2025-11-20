@@ -39,7 +39,7 @@ const PaypalPaymentCard: React.FC<PaypalPaymentCardProps> = (props) => {
           amount: price,
           plan,
           userId: user.id,
-          taskId,
+          taskId
         })
           .then((created: any) => {
             if (created) {
@@ -56,7 +56,7 @@ const PaypalPaymentCard: React.FC<PaypalPaymentCardProps> = (props) => {
           })
       }
     },
-    [termsPaypal, createOrder, price, plan, user, taskId, order, triggerPayment],
+    [termsPaypal, createOrder, price, plan, user, taskId, order, triggerPayment]
   )
 
   return (
@@ -82,7 +82,7 @@ const PaypalPaymentCard: React.FC<PaypalPaymentCardProps> = (props) => {
               width: '50%',
               marginTop: 40,
               background: '#ecf0f1',
-              padding: 20,
+              padding: 20
             }}
           >
             <Typography variant="body1" gutterBottom>

@@ -3,7 +3,7 @@ import IssueCard from './issue-card'
 
 export default {
   title: 'Design Library/Molecules/Cards/IssueCard',
-  component: IssueCard,
+  component: IssueCard
 }
 
 const Template = (args) => <IssueCard {...args} />
@@ -21,10 +21,10 @@ Default.args = {
         issue: {
           user: {
             login: 'user',
-            html_url: 'http://example.com',
-          },
-        },
-      },
-    },
-  },
+            html_url: 'http://example.com'
+          }
+        }
+      }
+    }
+  }
 }

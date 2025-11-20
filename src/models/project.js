@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: {
         model: 'Organizations',
-        key: 'id',
+        key: 'id'
       },
-      allowNull: true,
-    },
+      allowNull: true
+    }
   })
 
   Project.associate = (models) => {
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     Project.belongsToMany(models.ProgrammingLanguage, {
       through: 'ProjectProgrammingLanguages',
       foreignKey: 'projectId',
-      otherKey: 'programmingLanguageId',
+      otherKey: 'programmingLanguageId'
     })
   }
 

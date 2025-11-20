@@ -8,7 +8,7 @@ const SendSolutionRequirements = ({
   isPRMerged,
   isIssueClosed,
   hasIssueReference,
-  bountyAvailable,
+  bountyAvailable
 }) => {
   const requirements = [
     { done: bountyAvailable, label: 'The bounty is available' },
@@ -16,7 +16,7 @@ const SendSolutionRequirements = ({
     { done: isAuthorOfPR, label: "You're the author of this Pull Request on GitHub" },
     { done: isPRMerged, label: 'The Pull Request / Merge Request was merged' },
     { done: isIssueClosed, label: 'The issue is closed on GitHub' },
-    { done: hasIssueReference, label: 'The issue is referenced on the PR' },
+    { done: hasIssueReference, label: 'The issue is referenced on the PR' }
   ]
 
   return <RequirementList requirements={requirements} completed={completed} />

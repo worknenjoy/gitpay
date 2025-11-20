@@ -9,8 +9,8 @@ const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
 module.exports = async function payoutFailed(event, req, res) {
   return models.User.findOne({
     where: {
-      account_id: event.account,
-    },
+      account_id: event.account
+    }
   })
     .then((user) => {
       if (user) {
@@ -21,8 +21,8 @@ module.exports = async function payoutFailed(event, req, res) {
           i18n.__('mail.webhook.payment.transfer.intransit.fail.subject'),
           i18n.__('mail.webhook.payment.transfer.intransit.fail.message', {
             currency: CURRENCIES[event.data.object.currency],
-            amount: event.data.object.amount / 100,
-          }),
+            amount: event.data.object.amount / 100
+          })
         )
         return res.status(200).json(event)
       }

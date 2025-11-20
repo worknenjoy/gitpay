@@ -7,7 +7,7 @@ export const disputeClosed = {
   livemode: false,
   request: {
     id: null,
-    idempotency_key: null,
+    idempotency_key: null
   },
   pending_webhooks: 1,
   data: {
@@ -34,15 +34,15 @@ export const disputeClosed = {
               application: null,
               currency: 'usd',
               description: 'Dispute fee',
-              type: 'stripe_fee',
-            },
+              type: 'stripe_fee'
+            }
           ],
           net: -6495,
           reporting_category: 'dispute',
           source: 'du_test_123',
           status: 'available',
-          type: 'adjustment',
-        },
+          type: 'adjustment'
+        }
       ],
       charge: 'ch_test_123',
       created: 1758370363,
@@ -77,14 +77,14 @@ export const disputeClosed = {
         shipping_tracking_number: null,
         uncategorized_file: 'file_test_uncategorized',
         uncategorized_text:
-          'Customer opened a dispute. See refund policy: https://example.com/refund-policy',
+          'Customer opened a dispute. See refund policy: https://example.com/refund-policy'
       },
       evidence_details: {
         due_by: 1759795199,
         enhanced_eligibility: {},
         has_evidence: true,
         past_due: false,
-        submission_count: 1,
+        submission_count: 1
       },
       is_charge_refundable: false,
       livemode: false,
@@ -94,12 +94,12 @@ export const disputeClosed = {
         card: {
           brand: 'visa',
           case_type: 'chargeback',
-          network_reason_code: '13.1',
+          network_reason_code: '13.1'
         },
-        type: 'card',
+        type: 'card'
       },
       reason: 'product_not_received',
-      status: 'lost',
-    },
-  },
+      status: 'lost'
+    }
+  }
 }

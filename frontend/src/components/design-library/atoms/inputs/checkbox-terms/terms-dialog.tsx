@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  DialogContentText,
+  DialogContentText
 } from '@mui/material'
 
 const TermsDialog = ({ open, onClose, onAccept, onDisagree }) => {

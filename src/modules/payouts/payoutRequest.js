@@ -17,8 +17,8 @@ module.exports = Promise.method(async function payoutRequest(params) {
     params.source_id &&
     (await models.Payout.findOne({
       where: {
-        source_id: params.source_id,
-      },
+        source_id: params.source_id
+      }
     }))
 
   if (existingPayout) {
@@ -34,12 +34,12 @@ module.exports = Promise.method(async function payoutRequest(params) {
       amount: finalAmount.centavos,
       currency: params.currency,
       metadata: {
-        type: 'payout_request',
-      },
+        type: 'payout_request'
+      }
     },
     {
-      stripeAccount: user.account_id,
-    },
+      stripeAccount: user.account_id
+    }
   )
 
   if (!stripePayout) {
@@ -52,7 +52,7 @@ module.exports = Promise.method(async function payoutRequest(params) {
     amount: finalAmount.centavos,
     currency: params.currency,
     method: params.method,
-    status: stripePayout.status,
+    status: stripePayout.status
   })
 
   const newPayout = await payout.save()

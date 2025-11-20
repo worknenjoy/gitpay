@@ -5,12 +5,12 @@ module.exports = (sequelize, DataTypes) => {
     comment: DataTypes.STRING(1000),
     learn: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: false
     },
     status: {
       type: DataTypes.STRING,
-      defaultValue: 'pending',
-    },
+      defaultValue: 'pending'
+    }
   })
 
   Offer.associate = (models) => {

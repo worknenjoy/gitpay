@@ -12,9 +12,9 @@ const UserRoleField = ({ roles, onChange }) => {
       data.map((role) => ({
         label: role.label,
         name: role.name,
-        value: role.id,
+        value: role.id
       })),
-    [data],
+    [data]
   )
 
   return (

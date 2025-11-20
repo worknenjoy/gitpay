@@ -16,7 +16,7 @@ const AddFundsInvoiceTab: React.FC<AddFundsInvoiceTabProps> = ({
   priceAfterFee,
   customer,
   history,
-  onPay,
+  onPay
 }) => {
   const onInvoicePayment = async () => {
     await onPay(priceAfterFee)

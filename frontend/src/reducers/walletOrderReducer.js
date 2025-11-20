@@ -7,7 +7,7 @@ import {
   LIST_WALLET_ORDERS_ERROR,
   FETCH_WALLET_ORDER_REQUESTED,
   FETCH_WALLET_ORDER_SUCCESS,
-  FETCH_WALLET_ORDER_ERROR,
+  FETCH_WALLET_ORDER_ERROR
 } from '../actions/walletOrderActions'
 
 export const walletOrder = (state = { data: {}, completed: true, error: {} }, action) => {

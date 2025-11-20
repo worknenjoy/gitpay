@@ -31,39 +31,39 @@ export default class PaymentRequestBalance
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
-          autoIncrement: true,
+          autoIncrement: true
         },
         balance: {
           type: DataTypes.BIGINT,
           allowNull: false,
-          defaultValue: 0,
+          defaultValue: 0
         },
         currency: {
           type: DataTypes.STRING,
           allowNull: false,
-          defaultValue: 'usd',
+          defaultValue: 'usd'
         },
         userId: {
           unique: true,
           type: DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: false
         },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
-          defaultValue: DataTypes.NOW,
+          defaultValue: DataTypes.NOW
         },
         updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
-          defaultValue: DataTypes.NOW,
-        },
+          defaultValue: DataTypes.NOW
+        }
       },
       {
         sequelize,
         tableName: 'PaymentRequestBalances',
-        timestamps: true,
-      },
+        timestamps: true
+      }
     )
     return PaymentRequestBalance
   }
@@ -71,11 +71,11 @@ export default class PaymentRequestBalance
   static associate(models: any) {
     models.PaymentRequestBalance.belongsTo(models.User, {
       //as: 'User',
-      foreignKey: 'userId',
+      foreignKey: 'userId'
     })
     models.PaymentRequestBalance.hasMany(models.PaymentRequestBalanceTransaction, {
       //as: 'transactions',
-      foreignKey: 'paymentRequestBalanceId',
+      foreignKey: 'paymentRequestBalanceId'
     })
   }
 }

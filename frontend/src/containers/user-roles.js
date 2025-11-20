@@ -8,7 +8,7 @@ import { getUserData } from '../common/selectors/user/getUser'
 const mapStateToProps = (state, ownProps) => {
   return {
     roles: state.roles,
-    user: getUserData(state),
+    user: getUserData(state)
   }
 }
 
@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchRoles: () => dispatch(fetchRoles()),
     updateUser: (id, data) => dispatch(updateUser(id, data)),
     createRoles: (data) => dispatch(createRoles(data)),
-    deleteRoles: (data) => dispatch(deleteRoles(data)),
+    deleteRoles: (data) => dispatch(deleteRoles(data))
   }
 }
 

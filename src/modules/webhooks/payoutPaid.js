@@ -11,19 +11,19 @@ module.exports = async function payoutPaid(event, req, res) {
   return models.Payout.update(
     {
       status: event.data.object.status,
-      paid: true,
+      paid: true
     },
     {
       where: {
-        source_id: event.data.object.id,
-      },
-    },
+        source_id: event.data.object.id
+      }
+    }
   ).then((updatedPayout) => {
     if (updatedPayout[0] === 0) return res.status(400).send({ error: 'Error to update payout' })
     return models.User.findOne({
       where: {
-        account_id: event.account,
-      },
+        account_id: event.account
+      }
     })
       .then((user) => {
         if (user) {
@@ -39,10 +39,10 @@ module.exports = async function payoutPaid(event, req, res) {
                 event.data.object.amount,
                 0,
                 'centavos',
-                event.data.object.currency,
+                event.data.object.currency
               ).decimal,
-              date: date,
-            }),
+              date: date
+            })
           )
           return res.status(200).json(event)
         }

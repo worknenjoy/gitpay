@@ -25,8 +25,8 @@ app.use(
   session({
     secret: process.env.SECRET_PHRASE,
     saveUninitialized: true,
-    resave: true,
-  }),
+    resave: true
+  })
 )
 
 i18n.configure({
@@ -36,7 +36,7 @@ i18n.configure({
       : path.join(__dirname, '../locales', 'result'),
   locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
   defaultLocale: 'en',
-  updateFiles: false,
+  updateFiles: false
 })
 
 app.use(i18n.init)

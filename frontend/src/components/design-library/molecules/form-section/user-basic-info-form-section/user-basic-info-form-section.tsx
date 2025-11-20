@@ -14,14 +14,14 @@ type Props = {
 const UserBasicInfoFormSection: React.FC<Props> = ({ error: errorProp, email, name }) => {
   const [error, setError] = useState<{ fullname: boolean; email: boolean }>({
     fullname: false,
-    email: false,
+    email: false
   })
 
   useEffect(() => {
     if (errorProp) {
       setError({
         fullname: Boolean(errorProp.fullname),
-        email: Boolean(errorProp.email),
+        email: Boolean(errorProp.email)
       })
     }
   }, [errorProp])

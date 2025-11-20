@@ -9,7 +9,7 @@ import { Dialog } from '@mui/material'
 
 export default {
   title: 'Design Library/Atoms/Buttons/ActionButtons',
-  component: ActionButtons,
+  component: ActionButtons
 }
 
 const Template = (args) => <ActionButtons {...args} />
@@ -23,8 +23,8 @@ Default.args = {
       label: 'Create',
       disabled: false,
       icon: <AddIcon fontSize="small" />,
-      component: <Dialog open={false}>create</Dialog>,
-    },
+      component: <Dialog open={false}>create</Dialog>
+    }
   ],
   secondary: [
     {
@@ -33,9 +33,9 @@ Default.args = {
       label: 'Cancel',
       disabled: false,
       icon: <CancelIcon fontSize="small" />,
-      component: <Dialog open={false}>cancel</Dialog>,
-    },
-  ],
+      component: <Dialog open={false}>cancel</Dialog>
+    }
+  ]
 }
 
 export const WithManyActions = Template.bind({})
@@ -47,7 +47,7 @@ WithManyActions.args = {
       label: 'Create',
       disabled: false,
       icon: <AddIcon fontSize="small" />,
-      component: <Dialog open={false}>create 2</Dialog>,
+      component: <Dialog open={false}>create 2</Dialog>
     },
     {
       key: 'edit',
@@ -55,7 +55,7 @@ WithManyActions.args = {
       label: 'Edit',
       disabled: false,
       icon: <EditIcon fontSize="small" />,
-      component: <Dialog open={false}>edit</Dialog>,
+      component: <Dialog open={false}>edit</Dialog>
     },
     {
       key: 'delete',
@@ -63,8 +63,8 @@ WithManyActions.args = {
       label: 'Delete',
       disabled: false,
       icon: <DeleteIcon fontSize="small" />,
-      component: <Dialog open={false}>delete</Dialog>,
-    },
+      component: <Dialog open={false}>delete</Dialog>
+    }
   ],
   secondary: [
     {
@@ -73,7 +73,7 @@ WithManyActions.args = {
       label: 'Cancel',
       disabled: false,
       icon: <CancelIcon fontSize="small" />,
-      component: <Dialog open={false}>cancel secondary</Dialog>,
+      component: <Dialog open={false}>cancel secondary</Dialog>
     },
     {
       key: 'save secondary',
@@ -81,7 +81,7 @@ WithManyActions.args = {
       label: 'Save',
       disabled: false,
       icon: <SaveIcon fontSize="small" />,
-      component: <Dialog open={false}>save secondary</Dialog>,
-    },
-  ],
+      component: <Dialog open={false}>save secondary</Dialog>
+    }
+  ]
 }

@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles'
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
-  color: theme.palette.text.secondary,
+  color: theme.palette.text.secondary
 }))
 
 const darkTheme = createTheme({ palette: { mode: 'dark' } })
@@ -25,7 +25,7 @@ export default function TaskSolveInstructions({ instruction }) {
               bgcolor: 'background.default',
               display: 'grid',
               gridTemplateColumns: { md: '1fr 1fr' },
-              gap: 1,
+              gap: 1
             }}
           >
             <Typography variant="body1">

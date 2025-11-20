@@ -4,7 +4,7 @@ import IssueInviteCard from './issue-invite-card'
 const meta = {
   title: 'Design Library/Molecules/Cards/IssueInviteCard',
   component: IssueInviteCard,
-  args: {},
+  args: {}
 }
 
 const Template = (args) => <IssueInviteCard {...args} />
@@ -18,8 +18,8 @@ Default.args = {
     data: {
       id: 1,
       name: 'John Doe',
-      avatar: 'https://via.placeholder.com/150',
-    },
+      avatar: 'https://via.placeholder.com/150'
+    }
   },
   id: 1,
   onInvite: () => {
@@ -27,12 +27,12 @@ Default.args = {
   },
   onFunding: () => {
     console.log('Funding')
-  },
+  }
 }
 
 export const Loading = Template.bind({})
 Loading.args = {
   use: {
-    completed: false,
-  },
+    completed: false
+  }
 }

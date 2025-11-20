@@ -14,7 +14,7 @@ i18n.configure({
       : path.join(__dirname, '../locales', 'result'),
   locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
   defaultLocale: 'en',
-  updateFiles: false,
+  updateFiles: false
 })
 
 i18n.init()
@@ -23,17 +23,17 @@ const newOrExistingProject = async (userOrCompany, projectName, userId) => {
   try {
     const organizationExist = await models.Organization.find({
       where: {
-        name: userOrCompany,
+        name: userOrCompany
       },
-      include: [models.Project],
+      include: [models.Project]
     })
     if (organizationExist) {
       const projectFromOrg = await models.Project.find({
         where: {
           name: projectName,
-          OrganizationId: organizationExist.id,
+          OrganizationId: organizationExist.id
         },
-        include: [models.Organization],
+        include: [models.Organization]
       })
       if (projectFromOrg) {
         return projectFromOrg
@@ -59,9 +59,9 @@ const calculateTotal = async () => {
       {},
       {
         where: {
-          paid: true,
-        },
-      },
+          paid: true
+        }
+      }
     )) || []
   const total = orders.reduce(async (accPromise, order) => {
     const acc = await accPromise
@@ -70,7 +70,7 @@ const calculateTotal = async () => {
       try {
         const charge = await stripe.charges.retrieve(order.source)
         const balanceTransaction = await stripe.balanceTransactions.retrieve(
-          charge.balance_transaction,
+          charge.balance_transaction
         )
 
         if (balanceTransaction) {
@@ -104,7 +104,7 @@ const scripts = {
       console.log('totalFromTransfers', totalFromTransfers)
       return {
         payments_fee: totalFromOrders.toFixed(2),
-        payouts: totalFromTransfers.toFixed(2),
+        payouts: totalFromTransfers.toFixed(2)
       }
     } catch (e) {
       console.log('error on balance script', e)
@@ -122,14 +122,14 @@ const scripts = {
           if (!u.account_id) {
             return {
               user: u.email,
-              active_account: false,
+              active_account: false
             }
           }
           const accountDetails = stripe.accounts.retrieve(u.account_id).then((account) => {
             return {
               user: u.email,
               active_account: true,
-              account: account,
+              account: account
             }
           })
           return accountDetails
@@ -147,9 +147,9 @@ const scripts = {
   deleteInvalidTasks: () => {
     return models.Task.findAll({
       where: {
-        provider: 'github',
+        provider: 'github'
       },
-      include: [models.User],
+      include: [models.User]
     })
       .then((tasks) => {
         const tasksPromises = tasks.map((t) => {
@@ -161,7 +161,7 @@ const scripts = {
           if (!userOrCompany || !projectName || !issueId || isNaN(issueId)) return t
           return requestPromise({
             uri,
-            resolveWithFullResponse: true,
+            resolveWithFullResponse: true
           })
             .then((response) => {
               // eslint-disable-next-line no-console
@@ -186,12 +186,12 @@ const scripts = {
               models.Order.destroy({ where: { TaskId: invalidTask.id } }),
               models.Assign.destroy({ where: { TaskId: invalidTask.id } }),
               models.Offer.destroy({ where: { taskId: invalidTask.id } }),
-              models.Member.destroy({ where: { taskId: invalidTask.id } }),
+              models.Member.destroy({ where: { taskId: invalidTask.id } })
             ]).then((result) => {
               return models.Task.destroy({
                 where: {
-                  id: invalidTask.id,
-                },
+                  id: invalidTask.id
+                }
               }).then((task) => {
                 if (task) {
                   const user = invalidTask.User
@@ -201,8 +201,8 @@ const scripts = {
                     user,
                     i18n.__('task.invalid.script.subject'),
                     i18n.__('task.invalid.script.message', {
-                      url: invalidTask.url,
-                    }),
+                      url: invalidTask.url
+                    })
                   )
                 }
                 return invalidTask
@@ -221,9 +221,9 @@ const scripts = {
   createProjects: () => {
     return models.Task.findAll({
       where: {
-        provider: 'github',
+        provider: 'github'
       },
-      include: [models.User, models.Project],
+      include: [models.User, models.Project]
     })
       .then((tasks) => {
         const tasksPromises = tasks.filter((t) => {
@@ -257,8 +257,8 @@ const scripts = {
       models.Assign.findAll({
         attributes: ['id', 'TaskId'],
         where: {
-          status: null,
-        },
+          status: null
+        }
       })
         .then((assigns) => {
           return assigns.map((a) => {
@@ -266,8 +266,8 @@ const scripts = {
               models.Task.findOne({
                 attributes: ['status'],
                 where: {
-                  id: a.dataValues.TaskId,
-                },
+                  id: a.dataValues.TaskId
+                }
               })
                 .then((task) => {
                   if (
@@ -276,12 +276,12 @@ const scripts = {
                   ) {
                     return {
                       id: a.dataValues.id,
-                      status: 'accepted',
+                      status: 'accepted'
                     }
                   } else if (task.dataValues.status === 'open') {
                     return {
                       id: a.dataValues.id,
-                      status: 'pending',
+                      status: 'pending'
                     }
                   }
                 })
@@ -295,13 +295,13 @@ const scripts = {
           return updateFields.forEach((uf) => {
             return models.Assign.update(
               {
-                status: uf.status,
+                status: uf.status
               },
               {
                 where: {
-                  id: uf.id,
-                },
-              },
+                  id: uf.id
+                }
+              }
             )
           })
           // eslint-disable-next-line no-console
@@ -310,7 +310,7 @@ const scripts = {
         // eslint-disable-next-line no-console
         .catch((err) => console.log(`error while updating assigns status: ${err}`))
     )
-  },
+  }
 }
 
 // if (process.argv[2]) scripts[process.argv[2]]()

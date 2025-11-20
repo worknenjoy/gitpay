@@ -11,7 +11,7 @@ export const tableContentEmailTemplate = (
   intro: string = '',
   content: string = '',
   table: TableData = {},
-  footer: string = '',
+  footer: string = ''
 ): string => {
   const hasHeaders = Array.isArray(table.headers) && table.headers.length > 0
   const hasRows = Array.isArray(table.rows) && table.rows.length > 0
@@ -35,7 +35,7 @@ export const tableContentEmailTemplate = (
 						<th
 							align="left"
 							style="text-align: left; padding: 12px 16px; background: #f6f6f6; border-bottom: 1px solid #eaeaea; font-size: 14px; font-weight: 600; color: #333;"
-						>${String(h)}</th>`,
+						>${String(h)}</th>`
             )
             .join('')}
 				</tr>
@@ -55,10 +55,10 @@ export const tableContentEmailTemplate = (
 							<td
 								style="padding: 12px 16px; border-bottom: 1px solid #eaeaea; font-size: 14px; color: #444; vertical-align: top;"
 								valign="top"
-							>${String(cell)}</td>`,
+							>${String(cell)}</td>`
               )
               .join('')}
-					</tr>`,
+					</tr>`
           )
           .join('')}
 			</tbody>`

@@ -22,7 +22,7 @@ module.exports = {
         languages: null,
         receiveNotifications: true,
         createdAt: '2019-06-24',
-        updatedAt: '2019-06-24',
+        updatedAt: '2019-06-24'
       },
       {
         provider: null,
@@ -43,12 +43,12 @@ module.exports = {
         languages: null,
         receiveNotifications: false,
         createdAt: '2019-06-11',
-        updatedAt: '2019-06-24',
-      },
+        updatedAt: '2019-06-24'
+      }
     ])
   },
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('Users', null, {})
-  },
+  }
 }

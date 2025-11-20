@@ -45,13 +45,13 @@ describe('Scripts', () => {
           paid: true,
           provider: 'stripe',
           source: 'ch_123',
-          amount: 100,
+          amount: 100
         })
         const payout = await createPayout({
           userId: taskData.userId,
           source_id: '123',
           amount: 100,
-          method: 'stripe',
+          method: 'stripe'
         })
 
         const scriptBalance = await scripts.balance()
@@ -72,32 +72,32 @@ describe('Scripts', () => {
             models.Task.build({
               provider: 'github',
               url: 'https://github.com/worknenjoy/truppie/issues/120',
-              userId: res.body.id,
+              userId: res.body.id
             }).save(),
             models.Task.build({
               provider: 'github',
               url: 'https://github.com/worknenjoy/truppie/issues/130',
               userId: res.body.id,
-              status: 'in_progress',
+              status: 'in_progress'
             }).save(),
             models.Task.build({
               provider: 'github',
               url: 'https://github.com/worknenjoy/truppie/issues/143',
               userId: res.body.id,
               status: 'closed',
-              value: 100,
+              value: 100
             }).save(),
             models.Task.build({
               provider: 'github',
               url: 'https://github.com/worknenjoy/truppie/issues/7366',
-              userId: res.body.id,
+              userId: res.body.id
             }).save(),
             models.Task.build({
               provider: 'github',
               url: 'https://github.com/worknenjoy/truppie/issues/test',
               userId: res.body.id,
-              value: 50,
-            }).save(),
+              value: 50
+            }).save()
           ])
             .then((tasks) => {
               chai.use(spies)
@@ -110,20 +110,20 @@ describe('Scripts', () => {
                   expect(resulUrls).to.include('https://github.com/worknenjoy/truppie/issues/test')
                   const deletedArrays = [
                     models.Task.findOne({
-                      where: { url: 'https://github.com/worknenjoy/truppie/issues/7366' },
+                      where: { url: 'https://github.com/worknenjoy/truppie/issues/7366' }
                     }),
                     models.Task.findOne({
-                      where: { url: 'https://github.com/worknenjoy/truppie/issues/test' },
+                      where: { url: 'https://github.com/worknenjoy/truppie/issues/test' }
                     }),
                     models.Task.findOne({
-                      where: { url: 'https://github.com/worknenjoy/truppie/issues/120' },
+                      where: { url: 'https://github.com/worknenjoy/truppie/issues/120' }
                     }),
                     models.Task.findOne({
-                      where: { url: 'https://github.com/worknenjoy/truppie/issues/130' },
+                      where: { url: 'https://github.com/worknenjoy/truppie/issues/130' }
                     }),
                     models.Task.findOne({
-                      where: { url: 'https://github.com/worknenjoy/truppie/issues/143' },
-                    }),
+                      where: { url: 'https://github.com/worknenjoy/truppie/issues/143' }
+                    })
                   ]
                   Promise.all(deletedArrays)
                     .then((deletedTasks) => {

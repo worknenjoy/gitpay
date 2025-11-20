@@ -7,8 +7,8 @@ export default {
   argTypes: {
     title: { control: 'text' },
     subtitle: { control: 'text' },
-    status: { control: 'text' },
-  },
+    status: { control: 'text' }
+  }
 }
 
 const Template = (args) => <IssueHeader {...args} />
@@ -21,14 +21,14 @@ Default.args = {
   project: {
     completed: true,
     data: {
-      name: 'Project Name',
-    },
+      name: 'Project Name'
+    }
   },
   organization: {
     completed: true,
     data: {
-      name: 'Organization Name',
-    },
+      name: 'Organization Name'
+    }
   },
   task: {
     completed: true,
@@ -40,17 +40,17 @@ Default.args = {
         issue: {
           user: {
             login: 'octocat',
-            avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
-          },
+            avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4'
+          }
         },
         labels: [
           { id: 1, name: 'bug', color: '#d73a4a' },
           { id: 2, name: 'enhancement', color: '#a2eeef' },
-          { id: 3, name: 'documentation', color: '#0075ca' },
-        ],
-      },
-    },
-  },
+          { id: 3, name: 'documentation', color: '#0075ca' }
+        ]
+      }
+    }
+  }
 }
 
 export const Loading = Template.bind({})
@@ -60,14 +60,14 @@ Loading.args = {
   status: 'Loading...',
   project: {
     completed: false,
-    data: {},
+    data: {}
   },
   organization: {
     completed: false,
-    data: {},
+    data: {}
   },
   task: {
     completed: false,
-    data: {},
-  },
+    data: {}
+  }
 }

@@ -6,8 +6,8 @@ module.exports = Promise.method(async function walletListOrder(params) {
     params.walletId &&
     (await models.Wallet.findOne({
       where: {
-        id: params.walletId,
-      },
+        id: params.walletId
+      }
     }))
 
   if (!wallet) {
@@ -16,8 +16,8 @@ module.exports = Promise.method(async function walletListOrder(params) {
 
   return models.WalletOrder.findAll({
     where: {
-      walletId: wallet.id,
+      walletId: wallet.id
     },
-    order: [['id', 'DESC']],
+    order: [['id', 'DESC']]
   })
 })

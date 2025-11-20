@@ -3,7 +3,7 @@ import AddressInformationForm from './address-information-form'
 
 export default {
   title: 'Design Library/Molecules/FormSection/AddressInformationForm',
-  component: AddressInformationForm,
+  component: AddressInformationForm
 }
 
 const Template = (args) => <AddressInformationForm {...args} />
@@ -16,5 +16,5 @@ Default.args = {
   city: 'New York',
   state: 'NY',
   zipCode: '10001',
-  country: 'US',
+  country: 'US'
 }

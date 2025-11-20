@@ -19,7 +19,7 @@ module.exports.stripe = {
       transform_quantity: null,
       type: 'one_time',
       unit_amount: 100,
-      unit_amount_decimal: '100',
-    },
-  },
+      unit_amount_decimal: '100'
+    }
+  }
 }

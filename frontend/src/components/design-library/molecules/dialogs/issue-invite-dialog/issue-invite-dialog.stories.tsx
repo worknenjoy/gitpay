@@ -7,7 +7,7 @@ const meta: Meta<IssueInviteDialogProps> = {
   title: 'Design Library/Molecules/Dialogs/IssueInviteDialog',
   component: IssueInviteDialog,
   parameters: { layout: 'centered' },
-  argTypes: {},
+  argTypes: {}
 }
 
 export default meta
@@ -20,6 +20,6 @@ export const Default: Story = {
     visible: true,
     onClose: () => {},
     onInvite: () => {},
-    user: {},
-  },
+    user: {}
+  }
 }

@@ -5,7 +5,7 @@ const emailTemplate = require('./templates/base-content')
 
 const Sendmail = {
   success: (user, subject, msg) => {},
-  error: (to, subject, msg) => {},
+  error: (to, subject, msg) => {}
 }
 
 if (constants.canSendEmail) {
@@ -17,8 +17,8 @@ if (constants.canSendEmail) {
       request(to, subject, [
         {
           type: 'text/html',
-          value: emailTemplate.baseContentEmailTemplate(msg),
-        },
+          value: emailTemplate.baseContentEmailTemplate(msg)
+        }
       ])
   }
 
@@ -30,8 +30,8 @@ if (constants.canSendEmail) {
       request(to, subject, [
         {
           type: 'text/html',
-          value: emailTemplate.baseContentEmailTemplate(msg),
-        },
+          value: emailTemplate.baseContentEmailTemplate(msg)
+        }
       ])
   }
 }

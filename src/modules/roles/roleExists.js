@@ -4,8 +4,8 @@ const Promise = require('bluebird')
 module.exports = Promise.method(function memberExists(roleAttributes) {
   return models.Role.findOne({
     where: {
-      name: roleAttributes.name,
-    },
+      name: roleAttributes.name
+    }
   })
     .then((role) => {
       if (!role) return false

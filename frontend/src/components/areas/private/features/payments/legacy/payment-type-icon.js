@@ -28,7 +28,7 @@ const PaymentTypeIcon = (props) => {
 
 PaymentTypeIcon.propTypes = {
   type: PropTypes.string,
-  notext: PropTypes.bool,
+  notext: PropTypes.bool
 }
 
 export default PaymentTypeIcon

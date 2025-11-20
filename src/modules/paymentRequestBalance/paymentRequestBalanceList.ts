@@ -9,7 +9,7 @@ type PaymentRequestBalanceListParams = {
 export async function paymentRequestBalanceList({ userId }: PaymentRequestBalanceListParams) {
   return currentModels.PaymentRequestBalance.findAll({
     where: {
-      userId: userId,
+      userId: userId
     },
     include: [
       {
@@ -23,12 +23,12 @@ export async function paymentRequestBalanceList({ userId }: PaymentRequestBalanc
           'status',
           'openedAt',
           'closedAt',
-          'createdAt',
+          'createdAt'
         ],
         separate: true,
-        order: [['createdAt', 'DESC']],
-      },
+        order: [['createdAt', 'DESC']]
+      }
     ],
-    order: [['createdAt', 'DESC']],
+    order: [['createdAt', 'DESC']]
   })
 }

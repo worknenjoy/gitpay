@@ -8,9 +8,9 @@ export const tableHeaderDefault = {
     sortable: true,
     numeric: false,
     dataBaseKey: 'ProgrammingLanguage',
-    label: 'Language',
+    label: 'Language'
   },
-  createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created' },
+  createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created' }
 }
 
 export const tableHeaderWithProject = {
@@ -22,7 +22,7 @@ export const tableHeaderWithProject = {
     sortable: true,
     numeric: false,
     dataBaseKey: 'ProgrammingLanguage',
-    label: 'Language',
+    label: 'Language'
   },
-  createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created' },
+  createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created' }
 }

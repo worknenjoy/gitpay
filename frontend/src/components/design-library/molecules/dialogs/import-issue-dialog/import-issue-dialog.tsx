@@ -13,7 +13,7 @@ import {
   Typography,
   FormGroup,
   FormControlLabel,
-  Checkbox,
+  Checkbox
 } from '@mui/material'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'

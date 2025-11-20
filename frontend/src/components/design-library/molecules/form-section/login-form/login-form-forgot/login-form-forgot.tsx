@@ -18,15 +18,15 @@ const LoginFormForgot = ({
   noCancelButton,
   onClose,
   onSignin,
-  onSubmit,
+  onSubmit
 }: LoginFormForgotProps) => {
   const [state, setState] = useState({
     username: '',
     captchaChecked: false,
     error: {
       username: '',
-      captcha: '',
-    },
+      captcha: ''
+    }
   })
 
   const handleChange = (name) => (event) => {
@@ -43,8 +43,8 @@ const LoginFormForgot = ({
         ...state,
         error: {
           ...state.error,
-          username: 'Email cannot be empty',
-        },
+          username: 'Email cannot be empty'
+        }
       })
       return false
     } else if (email.length > 72) {
@@ -52,23 +52,23 @@ const LoginFormForgot = ({
         ...state,
         error: {
           ...state.error,
-          username: 'Email cannot be longer than 72 characters',
-        },
+          username: 'Email cannot be longer than 72 characters'
+        }
       })
       return false
     } else {
       if (
         email &&
         !email.match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         )
       ) {
         setState({
           ...state,
           error: {
             ...state.error,
-            username: 'Invalid email',
-          },
+            username: 'Invalid email'
+          }
         })
         return false
       }
@@ -91,7 +91,7 @@ const LoginFormForgot = ({
     if (onSubmit) {
       try {
         const forgotSubmit = await onSubmit({
-          email: username,
+          email: username
         })
         if (forgotSubmit) {
           window.location.assign('/#/signin')
@@ -134,7 +134,7 @@ const LoginFormForgot = ({
             justifyContent: 'center',
             width: '100%',
             height: 80,
-            marginTop: 20,
+            marginTop: 20
           }}
         >
           <ReCAPTCHA
@@ -149,7 +149,7 @@ const LoginFormForgot = ({
             color: 'red',
             fontSize: 10,
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'center'
           }}
         >
           <Typography variant="body1" component="span">

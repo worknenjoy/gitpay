@@ -6,12 +6,12 @@ module.exports = Promise.method(function listOrganizations() {
     include: [
       {
         model: models.Project,
-        include: [models.Organization],
+        include: [models.Organization]
       },
       {
-        model: models.User,
-      },
-    ],
+        model: models.User
+      }
+    ]
   })
     .then((data) => {
       return data

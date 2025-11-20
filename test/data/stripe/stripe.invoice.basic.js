@@ -16,7 +16,7 @@ module.exports.created = {
   automatic_tax: {
     enabled: false,
     liability: null,
-    status: null,
+    status: null
   },
   automatically_finalizes_at: null,
   billing_reason: 'manual',
@@ -47,7 +47,7 @@ module.exports.created = {
   hosted_invoice_url: null,
   invoice_pdf: null,
   issuer: {
-    type: 'self',
+    type: 'self'
   },
   last_finalization_error: null,
   latest_revision: null,
@@ -56,12 +56,12 @@ module.exports.created = {
     data: [],
     has_more: false,
     total_count: 0,
-    url: '/v1/invoices/in_1Q2fh8BrSjgsps2DUqQsGLDj/lines',
+    url: '/v1/invoices/in_1Q2fh8BrSjgsps2DUqQsGLDj/lines'
   },
   livemode: false,
   metadata: {
     order_id: '13',
-    task_id: '15',
+    task_id: '15'
   },
   next_payment_attempt: null,
   number: null,
@@ -72,7 +72,7 @@ module.exports.created = {
   payment_settings: {
     default_mandate: null,
     payment_method_options: null,
-    payment_method_types: null,
+    payment_method_types: null
   },
   period_end: 1727211050,
   period_start: 1727211050,
@@ -83,10 +83,10 @@ module.exports.created = {
   rendering: {
     amount_tax_display: null,
     pdf: {
-      page_size: 'auto',
+      page_size: 'auto'
     },
     template: null,
-    template_version: null,
+    template_version: null
   },
   rendering_options: null,
   shipping_cost: null,
@@ -98,11 +98,11 @@ module.exports.created = {
     finalized_at: null,
     marked_uncollectible_at: null,
     paid_at: null,
-    voided_at: null,
+    voided_at: null
   },
   subscription: null,
   subscription_details: {
-    metadata: null,
+    metadata: null
   },
   subtotal: 0,
   subtotal_excluding_tax: 0,
@@ -113,7 +113,7 @@ module.exports.created = {
   total_excluding_tax: 0,
   total_tax_amounts: [],
   transfer_data: null,
-  webhooks_delivered_at: null,
+  webhooks_delivered_at: null
 }
 
 module.exports.updated = {
@@ -134,7 +134,7 @@ module.exports.updated = {
   automatic_tax: {
     enabled: false,
     liability: null,
-    status: null,
+    status: null
   },
   automatically_finalizes_at: null,
   billing_reason: 'manual',
@@ -165,7 +165,7 @@ module.exports.updated = {
   hosted_invoice_url: 'https://stripe.com/invoice/invst_1Q2fh8BrSjgsps2DUqQsGLDj',
   invoice_pdf: null,
   issuer: {
-    type: 'self',
+    type: 'self'
   },
   last_finalization_error: null,
   latest_revision: null,
@@ -174,12 +174,12 @@ module.exports.updated = {
     data: [],
     has_more: false,
     total_count: 0,
-    url: '/v1/invoices/in_1Q2fh8BrSjgsps2DUqQsGLDj/lines',
+    url: '/v1/invoices/in_1Q2fh8BrSjgsps2DUqQsGLDj/lines'
   },
   livemode: false,
   metadata: {
     order_id: '13',
-    task_id: '15',
+    task_id: '15'
   },
   next_payment_attempt: null,
   number: null,
@@ -190,7 +190,7 @@ module.exports.updated = {
   payment_settings: {
     default_mandate: null,
     payment_method_options: null,
-    payment_method_types: null,
+    payment_method_types: null
   },
   period_end: 1727211050,
   period_start: 1727211050,
@@ -201,10 +201,10 @@ module.exports.updated = {
   rendering: {
     amount_tax_display: null,
     pdf: {
-      page_size: 'auto',
+      page_size: 'auto'
     },
     template: null,
-    template_version: null,
+    template_version: null
   },
   rendering_options: null,
   shipping_cost: null,
@@ -216,11 +216,11 @@ module.exports.updated = {
     finalized_at: null,
     marked_uncollectible_at: null,
     paid_at: null,
-    voided_at: null,
+    voided_at: null
   },
   subscription: null,
   subscription_details: {
-    metadata: null,
+    metadata: null
   },
   subtotal: 0,
   subtotal_excluding_tax: 0,
@@ -231,5 +231,5 @@ module.exports.updated = {
   total_excluding_tax: 0,
   total_tax_amounts: [],
   transfer_data: null,
-  webhooks_delivered_at: null,
+  webhooks_delivered_at: null
 }

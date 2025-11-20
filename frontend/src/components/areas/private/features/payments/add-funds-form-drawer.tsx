@@ -7,16 +7,16 @@ import AddFundsInvoiceTab from './add-funds-invoice-tab'
 const taskPaymentFormMessages = defineMessages({
   tabPaymentMethodCrediCard: {
     id: 'task.payment.method.card',
-    defaultMessage: 'Credit Card',
+    defaultMessage: 'Credit Card'
   },
   tabPaymentMethodPaypal: {
     id: 'task.payment.method.paypal',
-    defaultMessage: 'Paypal',
+    defaultMessage: 'Paypal'
   },
   tabPaymentMethodInvoice: {
     id: 'task.payment.method.invoice',
-    defaultMessage: 'Invoice',
-  },
+    defaultMessage: 'Invoice'
+  }
 })
 
 const AddFundsFormDrawer = ({ intl, open, onClose, customer, onPay }) => {
@@ -65,8 +65,8 @@ const AddFundsFormDrawer = ({ intl, open, onClose, customer, onPay }) => {
           <FormattedMessage
             id="actions.wallet.plan.bullet.two"
             defaultMessage="Use your funds to pay for bounties"
-          />,
-        ],
+          />
+        ]
       }}
       tabs={[
         {
@@ -81,8 +81,8 @@ const AddFundsFormDrawer = ({ intl, open, onClose, customer, onPay }) => {
               customer={customer}
               onPay={onPay}
             />
-          ),
-        },
+          )
+        }
       ]}
     />
   )

@@ -23,7 +23,7 @@ import {
   History as HistoryIcon,
   Cancel as CancelIcon,
   Info as InfoIcon,
-  SwapHoriz as TransferIcon,
+  SwapHoriz as TransferIcon
 } from '@mui/icons-material'
 
 import styled from 'styled-components'
@@ -50,7 +50,7 @@ class TaskTabs extends React.Component {
       cancelPaypalConfirmDialog: false,
       orderDetailsDialog: false,
       transferDialogOpen: false,
-      currentOrderId: null,
+      currentOrderId: null
     }
   }
 
@@ -106,14 +106,14 @@ class TaskTabs extends React.Component {
       succeeded: this.props.intl.formatMessage(messages.succeededStatus),
       fail: this.props.intl.formatMessage(messages.failStatus),
       canceled: this.props.intl.formatMessage(messages.canceledStatus),
-      refunded: this.props.intl.formatMessage(messages.refundedStatus),
+      refunded: this.props.intl.formatMessage(messages.refundedStatus)
     }
 
     const statusesDisplay = (status) => {
       const possibles = {
         open: this.props.intl.formatMessage(messages.openStatus),
         in_progress: this.props.intl.formatMessage(messages.inProgressStatus),
-        closed: this.props.intl.formatMessage(messages.closed),
+        closed: this.props.intl.formatMessage(messages.closed)
       }
       return possibles[status]
     }
@@ -196,7 +196,7 @@ class TaskTabs extends React.Component {
                 paddingBottom: 2,
                 width: 'auto',
                 marginLeft: 5,
-                marginRight: 5,
+                marginRight: 5
               }}
               variant="contained"
               size="small"
@@ -310,7 +310,7 @@ class TaskTabs extends React.Component {
                   paddingBottom: 2,
                   width: 'auto',
                   marginLeft: 5,
-                  marginRight: 5,
+                  marginRight: 5
                 }}
                 variant="contained"
                 size="small"
@@ -358,7 +358,7 @@ class TaskTabs extends React.Component {
               display: 'inline-block',
               width: '100%',
               marginRight: '1rem',
-              marginBottom: '1em',
+              marginBottom: '1em'
             }}
           >
             {statuses[item.status]}
@@ -370,7 +370,7 @@ class TaskTabs extends React.Component {
         `$ ${item.amount}`,
         MomentComponent(item.updatedAt).fromNow(),
         userRow(item.User),
-        <PaymentTypeIcon type={item.provider} />,
+        <PaymentTypeIcon type={item.provider} />
       ])
     }
 
@@ -391,7 +391,7 @@ class TaskTabs extends React.Component {
         item.User && userRow(item.User),
         `$ ${item.value}`,
         item.suggestedDate ? MomentComponent(item.suggestedDate).fromNow() : ' - ',
-        MomentComponent(item.updatedAt).fromNow(),
+        MomentComponent(item.updatedAt).fromNow()
       ])
     }
 
@@ -443,7 +443,7 @@ class TaskTabs extends React.Component {
         item && item.fields && item.oldValues && item.newValues && item.type === 'create'
           ? historyCreate(item)
           : historyUpdates(item),
-        MomentComponent(item.updatedAt).fromNow(),
+        MomentComponent(item.updatedAt).fromNow()
       ])
     }
 
@@ -526,7 +526,7 @@ class TaskTabs extends React.Component {
                     this.props.intl.formatMessage(messages.cardTableHeaderValue),
                     this.props.intl.formatMessage(messages.cardTableHeaderCreated),
                     this.props.intl.formatMessage(messages.cardTableHeaderUser),
-                    this.props.intl.formatMessage(messages.cardTableHeaderPayment),
+                    this.props.intl.formatMessage(messages.cardTableHeaderPayment)
                   ]}
                   tableData={
                     task.data.orders && task.data.orders.length
@@ -550,7 +550,7 @@ class TaskTabs extends React.Component {
                   tableHead={[
                     this.props.intl.formatMessage(messages.interestedTableLabelUser),
                     this.props.intl.formatMessage(messages.interestedTableLabelWhen),
-                    this.props.intl.formatMessage(messages.interestedTableLabelActions),
+                    this.props.intl.formatMessage(messages.interestedTableLabelActions)
                   ]}
                   tableData={
                     task && task.data.assigns && task.data.assigns.length
@@ -574,7 +574,7 @@ class TaskTabs extends React.Component {
                   tableHead={[
                     this.props.intl.formatMessage(messages.membersTableLabelUser),
                     this.props.intl.formatMessage(messages.membersTableLabelRole),
-                    this.props.intl.formatMessage(messages.membersTableLabelActions),
+                    this.props.intl.formatMessage(messages.membersTableLabelActions)
                   ]}
                   tableData={
                     task.data.members && task.data.members.length
@@ -599,7 +599,7 @@ class TaskTabs extends React.Component {
                     this.props.intl.formatMessage(messages.offersTableLabelUser),
                     this.props.intl.formatMessage(messages.offersTableLabelValue),
                     this.props.intl.formatMessage(messages.offersTableLabelDeadline),
-                    this.props.intl.formatMessage(messages.offersTableLabelCreated),
+                    this.props.intl.formatMessage(messages.offersTableLabelCreated)
                   ]}
                   tableData={
                     task.data.Offers && task.data.Offers.length
@@ -622,7 +622,7 @@ class TaskTabs extends React.Component {
                   tableHeaderColor="warning"
                   tableHead={[
                     this.props.intl.formatMessage(messages.historyTableLabelEntry),
-                    this.props.intl.formatMessage(messages.historyTableLabelCreated),
+                    this.props.intl.formatMessage(messages.historyTableLabelCreated)
                   ]}
                   tableData={
                     task.data.histories && task.data.histories.length
@@ -658,7 +658,7 @@ TaskTabs.propTypes = {
   logged: PropTypes.bool,
   removeAssignment: PropTypes.func,
   assignTask: PropTypes.func,
-  messageTask: PropTypes.func,
+  messageTask: PropTypes.func
 }
 
 export default injectIntl(TaskTabs)

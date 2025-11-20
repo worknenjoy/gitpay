@@ -4,7 +4,7 @@ import React, {
   forwardRef,
   useImperativeHandle,
   useCallback,
-  useMemo,
+  useMemo
 } from 'react'
 import { Grid, Typography, TextField, Skeleton } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
@@ -49,7 +49,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     useImperativeHandle(ref, () => ({
       submit: () => {
         internalFormRef.current?.requestSubmit() // Triggers native submit event
-      },
+      }
     }))
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -67,7 +67,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
       if (editMode) {
         onSubmit?.(event, {
           ...data,
-          active: formData.get('active') || false,
+          active: formData.get('active') || false
         })
         return
       }
@@ -91,7 +91,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           value: true,
           defaultChecked: data?.custom_amount,
           disabled: editMode,
-          onChange: handleCustomAmountChange,
+          onChange: handleCustomAmountChange
         },
         {
           label: (
@@ -102,8 +102,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           ),
           name: 'deactivate_after_payment',
           value: true,
-          defaultChecked: data?.deactivate_after_payment,
-        },
+          defaultChecked: data?.deactivate_after_payment
+        }
       ]
 
       if (data?.active !== undefined) {
@@ -111,7 +111,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           label: <FormattedMessage id="paymentRequest.form.active" defaultMessage="Active" />,
           name: 'active',
           value: true,
-          defaultChecked: data?.active,
+          defaultChecked: data?.active
         } as any)
       }
 
@@ -121,7 +121,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
       data?.custom_amount,
       data?.deactivate_after_payment,
       data?.active,
-      handleCustomAmountChange,
+      handleCustomAmountChange
     ])
 
     return (
@@ -191,7 +191,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         </Grid>
       </form>
     )
-  },
+  }
 )
 
 export default PaymentRequestForm

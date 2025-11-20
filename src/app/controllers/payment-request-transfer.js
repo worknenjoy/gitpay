@@ -3,7 +3,7 @@ const PaymentRequestTransfer = require('../../modules/paymentRequestsTransfers')
 exports.createPaymentRequestTransfer = (req, res) => {
   PaymentRequestTransfer.paymentRequestsTransfersBuilds({
     userId: req.user.id,
-    ...req.body,
+    ...req.body
   })
     .then((data) => {
       res.send(data)
@@ -16,7 +16,7 @@ exports.createPaymentRequestTransfer = (req, res) => {
 
 exports.listPaymentRequestTransfers = (req, res) => {
   PaymentRequestTransfer.paymentRequestsTransferList({
-    userId: req.user.id,
+    userId: req.user.id
   })
     .then((data) => {
       res.send(data)
@@ -31,7 +31,7 @@ exports.updatePaymentRequestTransfer = (req, res) => {
   PaymentRequestTransfer.paymentRequestsTransferUpdate({
     userId: req.user.id,
     id: req.params.id,
-    ...req.body,
+    ...req.body
   })
     .then((data) => {
       res.send(data)

@@ -9,7 +9,7 @@ import {
   Wrapper,
   Inner,
   ActionButton,
-  Account,
+  Account
 } from 'design-library/organisms/layouts/header-layouts/account-header-layout/account-header-layout.styles'
 
 const AccountHeader = ({ user, history, onCreateTask, onLogout }) => {

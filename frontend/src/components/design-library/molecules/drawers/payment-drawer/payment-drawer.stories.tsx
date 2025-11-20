@@ -5,7 +5,7 @@ import PaymentDrawer from './payment-drawer'
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Molecules/Drawers/Payment Drawer',
-  component: PaymentDrawer,
+  component: PaymentDrawer
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
@@ -23,13 +23,13 @@ Primary.args = {
       label: 'Tab 1',
       value: 'tab1',
       component: <div>Tab 1</div>,
-      default: true,
+      default: true
     },
     {
       label: 'Tab 2',
       value: 'tab2',
-      component: <div>Tab 2</div>,
-    },
+      component: <div>Tab 2</div>
+    }
   ],
   open: true,
   onClose: () => {},
@@ -39,9 +39,9 @@ Primary.args = {
     title: 'Plan Title',
     category: 'Category',
     price: 100,
-    items: ['Feature 1', 'Feature 2', 'Feature 3'],
+    items: ['Feature 1', 'Feature 2', 'Feature 3']
   },
   title: 'Title',
   pickupTagListMessagesPrimaryText: 'Primary Text',
-  pickupTagListMessagesSecondaryText: 'Secondary Text',
+  pickupTagListMessagesSecondaryText: 'Secondary Text'
 }

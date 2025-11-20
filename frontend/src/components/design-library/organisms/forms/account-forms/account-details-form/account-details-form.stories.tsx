@@ -3,7 +3,7 @@ import AccountDetailsForm from './account-details-form'
 
 export default {
   title: 'Design Library/Organisms/Forms/AccountForms/AccountDetailsForm',
-  component: AccountDetailsForm,
+  component: AccountDetailsForm
 }
 
 const Template = (args) => <AccountDetailsForm {...args} />
@@ -23,16 +23,16 @@ Default.args = {
         city: 'New York',
         state: 'NY',
         zip_code: '10001',
-        country: 'US',
+        country: 'US'
       },
       accepted_terms: {
         accepted: false,
         acceptance_date: 0,
-        country: 'us',
+        country: 'us'
       },
-      country: 'US',
+      country: 'US'
     },
-    error: {},
+    error: {}
   },
   countries: {
     completed: true,
@@ -43,11 +43,11 @@ Default.args = {
         eur: 'eur',
         gbp: 'gbp',
         jpy: 'jpy',
-        aud: 'aud',
-      },
+        aud: 'aud'
+      }
     },
-    error: {},
-  },
+    error: {}
+  }
 }
 
 export const Error = Template.bind({})
@@ -55,14 +55,14 @@ Error.args = {
   account: {
     completed: true,
     data: {
-      country: 'US',
+      country: 'US'
     },
     error: {
       raw: {
-        message: 'An error occurred while fetching account details.',
+        message: 'An error occurred while fetching account details.'
       },
-      params: 'individual[address][city]',
-    },
+      params: 'individual[address][city]'
+    }
   },
   countries: {
     completed: true,
@@ -73,10 +73,10 @@ Error.args = {
         eur: 'eur',
         gbp: 'gbp',
         jpy: 'jpy',
-        aud: 'aud',
-      },
-    },
-  },
+        aud: 'aud'
+      }
+    }
+  }
 }
 
 export const Loading = Template.bind({})
@@ -84,11 +84,11 @@ Loading.args = {
   account: {
     completed: false,
     data: {},
-    error: {},
+    error: {}
   },
   countries: {
     completed: false,
     data: {},
-    error: {},
-  },
+    error: {}
+  }
 }

@@ -17,7 +17,7 @@ const FETCH_TRANSFER_FAILED = 'FETCH_TRANSFER_FAILED'
 const searchTransferRequested = () => {
   return {
     type: SEARCH_TRANSFER_REQUESTED,
-    completed: false,
+    completed: false
   }
 }
 
@@ -25,7 +25,7 @@ const searchTransferSuccess = (data) => {
   return {
     type: SEARCH_TRANSFER_SUCCESS,
     data: data,
-    completed: true,
+    completed: true
   }
 }
 
@@ -33,7 +33,7 @@ const searchTransferFailed = (error) => {
   return {
     type: SEARCH_TRANSFER_FAILED,
     error: error,
-    completed: true,
+    completed: true
   }
 }
 
@@ -57,7 +57,7 @@ const searchTransfer = (params) => (dispatch) => {
 const updateTransferRequested = () => {
   return {
     type: UPDATE_TRANSFER_REQUESTED,
-    completed: false,
+    completed: false
   }
 }
 
@@ -65,7 +65,7 @@ const updateTransferSuccess = (data) => {
   return {
     type: UPDATE_TRANSFER_SUCCESS,
     data: data,
-    completed: true,
+    completed: true
   }
 }
 
@@ -73,7 +73,7 @@ const updateTransferFailed = (error) => {
   return {
     type: UPDATE_TRANSFER_FAILED,
     error: error,
-    completed: true,
+    completed: true
   }
 }
 
@@ -100,7 +100,7 @@ const updateTransfer = (params) => (dispatch) => {
 const fetchTransferRequested = () => {
   return {
     type: FETCH_TRANSFER_REQUESTED,
-    completed: false,
+    completed: false
   }
 }
 
@@ -108,7 +108,7 @@ const fetchTransferSuccess = (data) => {
   return {
     type: FETCH_TRANSFER_SUCCESS,
     data: data,
-    completed: true,
+    completed: true
   }
 }
 
@@ -116,7 +116,7 @@ const fetchTransferFailed = (error) => {
   return {
     type: FETCH_TRANSFER_FAILED,
     error: error,
-    completed: true,
+    completed: true
   }
 }
 
@@ -149,5 +149,5 @@ export {
   FETCH_TRANSFER_FAILED,
   searchTransfer,
   updateTransfer,
-  fetchTransfer,
+  fetchTransfer
 }

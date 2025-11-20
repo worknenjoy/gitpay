@@ -12,7 +12,7 @@ import {
   FormControl,
   FormControlLabel,
   RadioGroup,
-  Radio,
+  Radio
 } from '@mui/material'
 
 import { Sync as SyncIcon } from '@mui/icons-material'
@@ -24,13 +24,13 @@ class OrganizationUpdate extends Component {
     super(props)
     this.state = {
       dialogOpen: false,
-      provider: null,
+      provider: null
     }
   }
 
   static propTypes = {
     organization: PropTypes.object,
-    updateOrganization: PropTypes.func,
+    updateOrganization: PropTypes.func
   }
 
   handleClose = () => {
@@ -41,7 +41,7 @@ class OrganizationUpdate extends Component {
     this.props
       .updateOrganization({
         id,
-        provider: this.state.provider,
+        provider: this.state.provider
       })
       .then((org) => {
         this.setState({ dialogOpen: false })

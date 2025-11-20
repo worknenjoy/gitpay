@@ -6,8 +6,8 @@ export default {
   component: ProfileAccountMenu,
   argTypes: {
     onLogout: { action: 'logout' },
-    onProfileClick: { action: 'profileClick' },
-  },
+    onProfileClick: { action: 'profileClick' }
+  }
 }
 
 const Template = (args) => <ProfileAccountMenu {...args} />
@@ -20,16 +20,16 @@ Default.args = {
     Types: [
       {
         id: 1,
-        name: 'contributor',
+        name: 'contributor'
       },
       {
         id: 2,
-        name: 'maintainer',
+        name: 'maintainer'
       },
       {
         id: 3,
-        name: 'funding',
-      },
-    ],
-  },
+        name: 'funding'
+      }
+    ]
+  }
 }

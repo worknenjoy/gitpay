@@ -12,7 +12,7 @@ import {
   InputLabel,
   InputAdornment,
   Collapse,
-  FormControl,
+  FormControl
 } from '@mui/material'
 import DateIcon from '@mui/icons-material/DateRange'
 
@@ -21,26 +21,26 @@ import TimeIcon from 'images/time-icon.png'
 const messages = defineMessages({
   deadlineLevel1: {
     id: 'task.deadline.level1',
-    defaultMessage: ' In one week ',
+    defaultMessage: ' In one week '
   },
   deadlineLevel2: {
     id: 'task.deadline.level2',
-    defaultMessage: ' In fifteen days ',
+    defaultMessage: ' In fifteen days '
   },
   deadlineLevel3: {
     id: 'task.deadline.level3',
-    defaultMessage: ' In twenty days ',
+    defaultMessage: ' In twenty days '
   },
   deadlineLevel4: {
     id: 'task.deadline.level4',
-    defaultMessage: ' In on month ',
-  },
+    defaultMessage: ' In on month '
+  }
 })
 
 const ChipsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexWrap: 'wrap',
-  gap: theme.spacing(1.5),
+  gap: theme.spacing(1.5)
 }))
 
 const TaskDeadlineForm = ({ onHandleClearDeadline, onHandleDeadline, open, task }) => {
@@ -90,7 +90,7 @@ const TaskDeadlineForm = ({ onHandleClearDeadline, onHandleDeadline, open, task 
               alignItems: 'start',
               justifyContent: 'flex-start',
               gap: 10,
-              marginBottom: 16,
+              marginBottom: 16
             }}
           >
             <CardMedia
@@ -98,11 +98,11 @@ const TaskDeadlineForm = ({ onHandleClearDeadline, onHandleDeadline, open, task 
               image={TimeIcon}
               alt={intl.formatMessage({
                 id: 'task.status.deadline.subheading.main',
-                defaultMessage: 'Choose a date that this task should be finished',
+                defaultMessage: 'Choose a date that this task should be finished'
               })}
               title={intl.formatMessage({
                 id: 'task.status.deadline.subheading.main',
-                defaultMessage: 'Choose a date that this task should be finished',
+                defaultMessage: 'Choose a date that this task should be finished'
               })}
               sx={{ width: 40, height: 40, objectFit: 'contain' }}
             />
@@ -124,7 +124,7 @@ const TaskDeadlineForm = ({ onHandleClearDeadline, onHandleDeadline, open, task 
               { label: intl.formatMessage(messages.deadlineLevel1), value: 7 },
               { label: intl.formatMessage(messages.deadlineLevel2), value: 15 },
               { label: intl.formatMessage(messages.deadlineLevel3), value: 20 },
-              { label: intl.formatMessage(messages.deadlineLevel4), value: 30 },
+              { label: intl.formatMessage(messages.deadlineLevel4), value: 30 }
             ].map((item, index) => {
               return renderChip(item.label, item.value)
             })}
@@ -147,7 +147,7 @@ const TaskDeadlineForm = ({ onHandleClearDeadline, onHandleDeadline, open, task 
                 }
                 placeholder={intl.formatMessage({
                   id: 'task.status.deadline.day.insert.label',
-                  defaultMessage: 'Choose a date',
+                  defaultMessage: 'Choose a date'
                 })}
                 type="date"
                 value={
@@ -163,7 +163,7 @@ const TaskDeadlineForm = ({ onHandleClearDeadline, onHandleDeadline, open, task 
                 marginBottom: 8,
                 display: 'flex',
                 justifyContent: 'flex-end',
-                alignItems: 'center',
+                alignItems: 'center'
               }}
             >
               {deadline && (
@@ -191,7 +191,7 @@ const TaskDeadlineForm = ({ onHandleClearDeadline, onHandleDeadline, open, task 
                     id="task.status.deadline.set.target"
                     defaultMessage="set to target date to {date}"
                     values={{
-                      date: MomentComponent(deadline).format('MM/DD/YYYY'),
+                      date: MomentComponent(deadline).format('MM/DD/YYYY')
                     }}
                   />
                 ) : (

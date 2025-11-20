@@ -3,7 +3,7 @@ import FourOFour from './four-o-four-public-page'
 
 export default {
   title: 'Design Library/Pages/Public/FourOFour',
-  component: FourOFour,
+  component: FourOFour
 }
 
 const Template = (args) => <FourOFour {...args} />

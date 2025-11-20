@@ -65,7 +65,7 @@ const OrganizationCard = ({ organization, completed }) => {
                   clickable
                   onClick={() => {
                     history.push(
-                      `/organizations/${organization.id}/${organization.name}/projects/${p.id}/${slugify(p.name)}`,
+                      `/organizations/${organization.id}/${organization.name}/projects/${p.id}/${slugify(p.name)}`
                     )
                   }}
                   label={p.name}

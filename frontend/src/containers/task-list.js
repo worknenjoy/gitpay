@@ -13,7 +13,7 @@ const mapStateToProps = (state, props) => {
     tasks: getFilteredTasks(state),
     project: getProject(state),
     projects: state.projects,
-    organization: getOrganization(state),
+    organization: getOrganization(state)
   }
 }
 
@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(filterTasks(tasks, key, value, additional)),
     fetchProject: (projectId, params) => dispatch(fetchProject(projectId, params)),
     listProjects: () => dispatch(listProjects()),
-    fetchOrganization: (id) => dispatch(fetchOrganization(id)),
+    fetchOrganization: (id) => dispatch(fetchOrganization(id))
   }
 }
 

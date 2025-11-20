@@ -5,7 +5,7 @@ import Fieldset from '../../fieldset/fieldset'
 
 const CurrencyField = ({ countries, currency, disabled, completed, onChange }) => {
   const {
-    data: { default_currency, supported_bank_account_currencies },
+    data: { default_currency, supported_bank_account_currencies }
   } = countries
 
   return (
@@ -19,7 +19,7 @@ const CurrencyField = ({ countries, currency, disabled, completed, onChange }) =
           onChange={onChange}
           inputProps={{
             name: 'account_currency',
-            id: 'country-native-simple',
+            id: 'country-native-simple'
           }}
         >
           <option aria-label="None" value="" />

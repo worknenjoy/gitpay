@@ -17,7 +17,7 @@ const Payouts = ({
   requestPayout,
   user,
   account,
-  fetchAccount,
+  fetchAccount
 }) => {
   const history = useHistory()
   const { data: userData, completed: userCompleted } = user || {}
@@ -50,7 +50,7 @@ const Payouts = ({
       <div
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'space-between'
         }}
       >
         <ProfileHeader

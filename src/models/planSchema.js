@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     fee: DataTypes.DECIMAL,
-    feeType: DataTypes.ENUM('charge', 'refund'),
+    feeType: DataTypes.ENUM('charge', 'refund')
   })
 
   return PlanSchema

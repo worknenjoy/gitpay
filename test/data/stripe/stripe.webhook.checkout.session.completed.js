@@ -8,7 +8,7 @@ module.exports.completed = {
     pending_webhooks: 1,
     request: {
       id: null,
-      idempotency_key: 'db21b83a-4485-4496-95e6-2263c1ce99bf',
+      idempotency_key: 'db21b83a-4485-4496-95e6-2263c1ce99bf'
     },
     type: 'checkout.session.completed',
     data: {
@@ -16,7 +16,7 @@ module.exports.completed = {
         id: 'cs_test_a1zDc6832lrf6EdPjW6D0XB103xyLa7yBxqUYi87tdcCvUCjupD7ZO9prV',
         object: 'checkout.session',
         adaptive_pricing: {
-          enabled: true,
+          enabled: true
         },
         after_expiration: null,
         allow_promotion_codes: false,
@@ -26,7 +26,7 @@ module.exports.completed = {
           enabled: false,
           liability: null,
           provider: null,
-          status: null,
+          status: null
         },
         billing_address_collection: 'auto',
         cancel_url: 'https://stripe.com',
@@ -43,7 +43,7 @@ module.exports.completed = {
           after_submit: null,
           shipping_address: null,
           submit: null,
-          terms_of_service_acceptance: null,
+          terms_of_service_acceptance: null
         },
         customer: null,
         customer_creation: 'if_required',
@@ -54,13 +54,13 @@ module.exports.completed = {
             line1: null,
             line2: null,
             postal_code: null,
-            state: null,
+            state: null
           },
           email: 'samplemail@gitpay.me',
           name: 'GitPay User',
           phone: null,
           tax_exempt: 'none',
-          tax_ids: [],
+          tax_ids: []
         },
         customer_email: null,
         discounts: [],
@@ -75,8 +75,8 @@ module.exports.completed = {
             footer: null,
             issuer: null,
             metadata: {},
-            rendering_options: null,
-          },
+            rendering_options: null
+          }
         },
         livemode: false,
         locale: 'auto',
@@ -88,14 +88,14 @@ module.exports.completed = {
         payment_method_configuration_details: null,
         payment_method_options: {
           card: {
-            request_three_d_secure: 'automatic',
-          },
+            request_three_d_secure: 'automatic'
+          }
         },
         payment_method_types: ['card'],
         payment_status: 'paid',
         permissions: null,
         phone_number_collection: {
-          enabled: false,
+          enabled: false
         },
         recovered_from: null,
         saved_payment_method_options: null,
@@ -111,12 +111,12 @@ module.exports.completed = {
         total_details: {
           amount_discount: 0,
           amount_shipping: 0,
-          amount_tax: 0,
+          amount_tax: 0
         },
         ui_mode: 'hosted',
         url: null,
-        wallet_options: null,
-      },
-    },
-  },
+        wallet_options: null
+      }
+    }
+  }
 }

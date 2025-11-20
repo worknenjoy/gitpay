@@ -5,12 +5,12 @@ import { styled } from '@mui/material/styles'
 const CoverImg = styled('img')(({ theme }) => ({
   width: 160,
   [theme.breakpoints.down('sm')]: {
-    width: '100%',
-  },
+    width: '100%'
+  }
 }))
 
 const SpanText = styled('span')(() => ({
-  color: 'gray',
+  color: 'gray'
 }))
 
 const Introduction = ({ title, image, children }) => {

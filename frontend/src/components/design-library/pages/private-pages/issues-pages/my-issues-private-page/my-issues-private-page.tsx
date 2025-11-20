@@ -1,13 +1,13 @@
 import React from 'react'
 import {
   issueMetadata,
-  customColumnRenderer,
+  customColumnRenderer
 } from 'design-library/molecules/tables/issue-table/issue-table'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
 import { Container } from '@mui/material'
 import {
   ExplorePaper,
-  TopSection,
+  TopSection
 } from '../explore-issues-private-page/explore-issues-private-page.styles'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 import Breadcrumbs from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
@@ -18,13 +18,13 @@ const MyIssuesPrivatePage = ({ user, issues }) => {
   const issueTableData = {
     tableData: issues,
     tableHeaderMetadata: issueMetadata,
-    customColumnRenderer: customColumnRenderer,
+    customColumnRenderer: customColumnRenderer
   }
 
   const { currentTabs, activeTab } = useMyIssueTabs({
     user,
     baseLink: '/profile/tasks',
-    issueTableData,
+    issueTableData
   })
 
   return (
@@ -33,9 +33,7 @@ const MyIssuesPrivatePage = ({ user, issues }) => {
         <TopSection>
           <Breadcrumbs
             root={{
-              label: (
-                <FormattedMessage id="breadcrumbs.root.my.issues" defaultMessage="My Issues" />
-              ),
+              label: <FormattedMessage id="breadcrumbs.root.my.issues" defaultMessage="My Issues" />
             }}
           />
         </TopSection>

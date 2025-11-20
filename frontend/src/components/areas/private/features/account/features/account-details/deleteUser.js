@@ -9,7 +9,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Typography,
+  Typography
 } from '@mui/material'
 import { styled as muiStyled } from '@mui/material/styles'
 
@@ -22,8 +22,8 @@ const DeleteButton = muiStyled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.error.main,
   color: theme.palette.primary.contrastText,
   '&:hover': {
-    backgroundColor: theme.palette.error.light,
-  },
+    backgroundColor: theme.palette.error.light
+  }
 }))
 
 class DeleteUser extends Component {
@@ -38,13 +38,13 @@ class DeleteUser extends Component {
     user: {},
     onClose: () => {},
     deleteUser: () => {},
-    onOpen: () => {},
+    onOpen: () => {}
   }
 
   static propTypes = {
     visible: PropTypes.bool,
     onClose: PropTypes.func,
-    deleteUser: PropTypes.func,
+    deleteUser: PropTypes.func
   }
 
   onChangeInvite = (event) => this.setState({ [event.target.name]: event.target.value })

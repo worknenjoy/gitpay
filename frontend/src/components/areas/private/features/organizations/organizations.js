@@ -14,14 +14,14 @@ import Button from '@mui/material/Button'
 import {
   WorkRounded as WorkRoundedIcon,
   Done as DoneIcon,
-  Sync as ImportIcon,
+  Sync as ImportIcon
 } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 
 const Root = styled('div')(({ theme }) => ({
   display: 'flex',
   flexWrap: 'wrap',
-  padding: theme.spacing(0.5),
+  padding: theme.spacing(0.5)
 }))
 
 class Organizations extends Component {
@@ -29,7 +29,7 @@ class Organizations extends Component {
     super(props)
     this.state = {
       dialogOpen: false,
-      currentOrg: {},
+      currentOrg: {}
     }
   }
 
@@ -37,7 +37,7 @@ class Organizations extends Component {
     classes: PropTypes.object.isRequired,
     data: PropTypes.object,
     user: PropTypes.object,
-    onImport: PropTypes.func,
+    onImport: PropTypes.func
   }
 
   handleClick = (org) => {
@@ -52,7 +52,7 @@ class Organizations extends Component {
     this.props
       .onImport({
         name: this.state.currentOrg.name,
-        userId: this.props.user.id,
+        userId: this.props.user.id
       })
       .then((org) => {
         this.setState({ dialogOpen: false })

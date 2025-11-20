@@ -53,5 +53,5 @@ module.exports.currencyMap = {
   US: 'USD',
   CO: 'COP', // Colombia
   TR: 'TRY', // Turkey
-  PK: 'PKR', // Pakistan
+  PK: 'PKR' // Pakistan
 }

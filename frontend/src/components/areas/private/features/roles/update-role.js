@@ -17,7 +17,7 @@ const Container = styled.div`
 class UpdateRole extends Component {
   static propTypes = {
     visible: PropTypes.bool,
-    onClose: PropTypes.func,
+    onClose: PropTypes.func
   }
 
   confirmDelete = (e) => {

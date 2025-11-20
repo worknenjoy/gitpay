@@ -21,7 +21,7 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
   user,
   task,
   createOrder,
-  onPayment,
+  onPayment
 }) => {
   const history = useHistory()
   const location = useLocation()
@@ -41,9 +41,9 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
       source_type: 'invoice-item',
       customer_id: user?.customer_id,
       metadata: {
-        user_id: user.id,
+        user_id: user.id
       },
-      plan: 'open source',
+      plan: 'open source'
     })
     onPayment()
     setProcessingPayment(false)

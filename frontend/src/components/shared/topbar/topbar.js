@@ -24,7 +24,7 @@ import {
   CircularProgress,
   Menu,
   MenuItem,
-  Button,
+  Button
 } from '@mui/material'
 import {
   LibraryBooks,
@@ -36,7 +36,7 @@ import {
   Settings,
   AccountBox as AccountIcon,
   AccountBalance,
-  Payment as PaymentIcon,
+  Payment as PaymentIcon
 } from '@mui/icons-material'
 
 import { withRouter } from 'react-router-dom'
@@ -58,7 +58,7 @@ import {
   OnlyDesktop,
   OnlyMobile,
   MenuMobile,
-  IconHamburger,
+  IconHamburger
 } from './TopbarStyles'
 
 import messagesBr from '../../../translations/result/br.json'
@@ -79,12 +79,12 @@ import TopbarMenu from './topbar-menu'
 
 const languagesIcons = {
   en: logoLangEn,
-  br: logoLangBr,
+  br: logoLangBr
 }
 
 const messages = {
   br: process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
-  en: process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal,
+  en: process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
 }
 
 const browserLanguage = () => {
@@ -122,7 +122,7 @@ class TopBar extends Component {
       createTaskDialog: false,
       joinSlackDialog: false,
       isActive: false.value,
-      mode: null,
+      mode: null
     }
   }
 
@@ -137,8 +137,8 @@ class TopBar extends Component {
           store.dispatch(
             updateIntl({
               locale: currentLangSuccess,
-              messages: messages[currentLangSuccess],
-            }),
+              messages: messages[currentLangSuccess]
+            })
           )
         }
       })
@@ -147,8 +147,8 @@ class TopBar extends Component {
         store.dispatch(
           updateIntl({
             locale: currentLangError,
-            messages: messages[currentLangError],
-          }),
+            messages: messages[currentLangError]
+          })
         )
       })
     this.props.info()
@@ -219,7 +219,7 @@ class TopBar extends Component {
     this.setState({ anchorEl: null })
     if (this.props.logged) {
       this.props.updateUser(this.props.user.id, {
-        language: lang,
+        language: lang
       })
     }
     /* eslint-disable no-undef */
@@ -227,8 +227,8 @@ class TopBar extends Component {
     store.dispatch(
       updateIntl({
         locale: lang,
-        messages: messages[lang],
-      }),
+        messages: messages[lang]
+      })
     )
   }
 
@@ -590,7 +590,7 @@ TopBar.propTypes = {
   updateUser: PropTypes.func,
   signOut: PropTypes.func,
   logged: PropTypes.bool,
-  completed: PropTypes.bool,
+  completed: PropTypes.bool
 }
 
 export default withRouter(TopBar)

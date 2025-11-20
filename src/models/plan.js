@@ -6,20 +6,20 @@ module.exports = (sequelize, DataTypes) => {
     {
       plan: {
         type: DataTypes.ENUM,
-        values: ['open source', 'private', 'with support'],
+        values: ['open source', 'private', 'with support']
       },
       fee: DataTypes.DECIMAL,
       feePercentage: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER
       },
       createdAt: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+        defaultValue: DataTypes.NOW
       },
       updatedAt: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
+        defaultValue: DataTypes.NOW
+      }
     },
     {
       hook: {
@@ -32,9 +32,9 @@ module.exports = (sequelize, DataTypes) => {
             // eslint-disable-next-line no-console
             console.log('Saving Fee Percentage error', e)
           }
-        },
-      },
-    },
+        }
+      }
+    }
   )
 
   Plan.associate = (models) => {

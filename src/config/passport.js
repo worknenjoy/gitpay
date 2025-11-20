@@ -26,7 +26,7 @@ const mailChimpConnect = (mail) => {
   const mc = new Mailchimp(mailchimp.apiKey)
   mc.post(`/lists/${mailchimp.listId}/members`, {
     email_address: mail,
-    status: 'subscribed',
+    status: 'subscribed'
   })
     .then((results) => {
       // eslint-disable-next-line no-console
@@ -58,13 +58,13 @@ passport.use(
     {
       clientID: google.id,
       clientSecret: google.secret,
-      callbackURL: oauthCallbacks.googleCallbackUrl,
+      callbackURL: oauthCallbacks.googleCallbackUrl
     },
     (accessToken, refreshToken, profile, done) => {
       process.nextTick(() => {
         const attributes = {
           access_token: accessToken,
-          refresh_token: refreshToken,
+          refresh_token: refreshToken
         }
 
         const data = {
@@ -72,7 +72,7 @@ passport.use(
           social_id: profile.id,
           profile: profile,
           attribute: attributes,
-          email: profile.emails[0].value,
+          email: profile.emails[0].value
         }
 
         userExists(data)
@@ -114,8 +114,8 @@ passport.use(
             return done(null)
           })
       })
-    },
-  ),
+    }
+  )
 )
 
 passport.use(
@@ -123,13 +123,13 @@ passport.use(
     {
       clientID: facebook.id,
       clientSecret: facebook.secret,
-      callbackURL: oauthCallbacks.facebookCallbackUrl,
+      callbackURL: oauthCallbacks.facebookCallbackUrl
     },
     (accessToken, accessTokenSecret, profile, done) => {
       process.nextTick((_) => {
         const attributes = {
           access_token: accessToken,
-          access_token_secret: accessTokenSecret,
+          access_token_secret: accessTokenSecret
         }
 
         const data = {
@@ -137,7 +137,7 @@ passport.use(
           social_id: profile.id,
           profile: profile,
           attribute: attributes,
-          email: 'Checking a facebook setup',
+          email: 'Checking a facebook setup'
         }
 
         userExists(data)
@@ -178,8 +178,8 @@ passport.use(
             return done(null)
           })
       })
-    },
-  ),
+    }
+  )
 )
 
 passport.use(
@@ -189,7 +189,7 @@ passport.use(
       clientSecret: github.secret,
       callbackURL: oauthCallbacks.githubCallbackUrl,
       passReqToCallback: true,
-      scope: ['user:email', 'read:org'],
+      scope: ['user:email', 'read:org']
     },
     (req, accessToken, accessTokenSecret, profile, done) => {
       const githubEmail = profile.emails ? profile.emails[0].value : profile._json.email
@@ -207,7 +207,7 @@ passport.use(
           website: profile._json.blog,
           profile_url: profile.profileUrl,
           repos: 0,
-          email: email,
+          email: email
         }
 
         if (userEmail) {
@@ -224,8 +224,8 @@ passport.use(
           uri: `https://api.github.com/users/${profile.username}/repos`,
           headers: {
             'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
-            authorization: `token ${accessToken}`,
-          },
+            authorization: `token ${accessToken}`
+          }
         })
           .then((response) => {
             data.repos = JSON.parse(response).length
@@ -236,7 +236,7 @@ passport.use(
                     .then((user) => {
                       const token = jwt.sign(
                         { id: data.id, email: data.email },
-                        process.env.SECRET_PHRASE,
+                        process.env.SECRET_PHRASE
                       )
                       data.token = token
                       return done(null, data)
@@ -254,7 +254,7 @@ passport.use(
                     .then((user) => {
                       const token = jwt.sign(
                         { id: data.id, email: data.email },
-                        process.env.SECRET_PHRASE,
+                        process.env.SECRET_PHRASE
                       )
                       data.token = token
                       mailChimpConnect(data.email)
@@ -288,8 +288,8 @@ passport.use(
             return done(null)
           })
       })
-    },
-  ),
+    }
+  )
 )
 
 passport.use(
@@ -297,7 +297,7 @@ passport.use(
     {
       clientID: bitbucket.id,
       clientSecret: bitbucket.secret,
-      callbackURL: oauthCallbacks.bitbucketCallbackUrl,
+      callbackURL: oauthCallbacks.bitbucketCallbackUrl
     },
     function (accessToken, accessTokenSecret, profile, done) {
       process.nextTick(() => {
@@ -309,14 +309,14 @@ passport.use(
           picture_url: profile._json.links.avatar.href,
           website: profile._json.website,
           repos: 0,
-          email: profile.emails[0].value,
+          email: profile.emails[0].value
         }
 
         requestPromise({
           uri: `https://api.bitbucket.org/2.0/repositories/${profile.username}`,
           headers: {
-            authorization: `Bearer ${accessToken}`,
-          },
+            authorization: `Bearer ${accessToken}`
+          }
         })
           .then((response) => {
             data.repos = JSON.parse(response).size
@@ -327,7 +327,7 @@ passport.use(
                     .then((_) => {
                       const token = jwt.sign(
                         { id: data.id, email: data.email },
-                        process.env.SECRET_PHRASE,
+                        process.env.SECRET_PHRASE
                       )
                       data.token = token
                       return done(null, data)
@@ -374,14 +374,14 @@ passport.use(
             return done(null)
           })
       })
-    },
-  ),
+    }
+  )
 )
 
 passport.use(
   new LocalStrategy(async function verify(username, password, done) {
     const userAttributes = {
-      email: username,
+      email: username
     }
     try {
       const user = await userExists(userAttributes)
@@ -397,19 +397,19 @@ passport.use(
       console.log('err', err)
       return done(err)
     }
-  }),
+  })
 )
 
 passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.SECRET_PHRASE,
+      secretOrKey: process.env.SECRET_PHRASE
     },
     (jwtPayload, done) => {
       process.nextTick((_) => {
         const userAttributes = {
-          email: jwtPayload.email,
+          email: jwtPayload.email
         }
         userExists(userAttributes)
           .then((user) => {
@@ -420,6 +420,6 @@ passport.use(
             return done(error)
           })
       })
-    },
-  ),
+    }
+  )
 )

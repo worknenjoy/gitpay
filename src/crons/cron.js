@@ -15,7 +15,7 @@ i18n.configure({
       : path.join(__dirname, '../locales', 'result'),
   locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
   defaultLocale: 'en',
-  updateFiles: false,
+  updateFiles: false
 })
 
 i18n.init()
@@ -25,16 +25,16 @@ const TaskCron = {
     const tasks = await models.Task.findAll({
       where: {
         value: {
-          $gt: 0,
+          $gt: 0
         },
         assigned: {
-          $eq: null,
+          $eq: null
         },
         status: {
-          $eq: 'open',
-        },
+          $eq: 'open'
+        }
       },
-      include: [models.User],
+      include: [models.User]
     })
     if (tasks[0]) {
       TaskMail.weeklyBounties({ tasks })
@@ -45,15 +45,15 @@ const TaskCron = {
     const tasks = await models.Task.findAll({
       where: {
         assigned: {
-          $eq: null,
+          $eq: null
         },
         status: {
-          $eq: 'open',
-        },
+          $eq: 'open'
+        }
       },
       limit: 5,
       order: [['id', 'DESC']],
-      include: [models.User],
+      include: [models.User]
     })
     if (tasks[0]) {
       TaskMail.weeklyLatest({ tasks })
@@ -66,10 +66,10 @@ const TaskCron = {
         status: 'in_progress',
         deadline: {
           $lt: moment(new Date()).format(),
-          $gt: moment(new Date()).subtract(2, 'days').format(),
-        },
+          $gt: moment(new Date()).subtract(2, 'days').format()
+        }
       },
-      include: [models.User],
+      include: [models.User]
     })
     if (tasks[0]) {
       tasks.map(async (t) => {
@@ -77,18 +77,18 @@ const TaskCron = {
           if (t.dataValues && t.assigned) {
             const userAssigned = await models.Assign.findAll({
               where: { id: t.assigned },
-              include: [models.User],
+              include: [models.User]
             })
             if (userAssigned[0].dataValues) {
               DeadlineMail.deadlineEndOwner(
                 t.User.dataValues,
                 t.dataValues,
-                t.User.name || t.User.username,
+                t.User.name || t.User.username
               )
               DeadlineMail.deadlineEndAssigned(
                 userAssigned[0].dataValues.User,
                 t.dataValues,
-                userAssigned[0].dataValues.User.dataValues.name,
+                userAssigned[0].dataValues.User.dataValues.name
               )
             }
           }
@@ -101,16 +101,16 @@ const TaskCron = {
     const tasks = await models.Task.findAll({
       where: {
         value: {
-          $gt: 0,
+          $gt: 0
         },
         status: {
-          $eq: 'closed',
+          $eq: 'closed'
         },
         paid: {
-          $not: true,
-        },
+          $not: true
+        }
       },
-      include: [models.User],
+      include: [models.User]
     })
     if (tasks[0]) {
       tasks.map(async (t) => {
@@ -119,7 +119,7 @@ const TaskCron = {
           if (t.dataValues && t.assigned) {
             const userAssigned = await models.Assign.findAll({
               where: { id: t.assigned },
-              include: [models.User],
+              include: [models.User]
             })
             if (
               userAssigned[0].dataValues &&
@@ -133,7 +133,7 @@ const TaskCron = {
       })
     }
     return tasks
-  },
+  }
 }
 
 const dailyJob = new CronJob({
@@ -143,28 +143,28 @@ const dailyJob = new CronJob({
     //TaskCron.rememberDeadline()
     //OrderCron.verify()
     OrderCron.checkExpiredPaypalOrders()
-  },
+  }
 })
 
 const weeklyJob = new CronJob({
   cronTime: '5 8 * * 0',
   onTick: () => {
     TaskCron.weeklyBounties()
-  },
+  }
 })
 
 const weeklyJobLatest = new CronJob({
   cronTime: '5 8 * * 4',
   onTick: () => {
     TaskCron.latestTasks()
-  },
+  }
 })
 
 const weeklyJobBountiesClosedNotPaid = new CronJob({
   cronTime: '5 8 * * 0',
   onTick: () => {
     TaskCron.weeklyBountiesClosedNotPaid()
-  },
+  }
 })
 
 module.exports = {
@@ -173,5 +173,5 @@ module.exports = {
   weeklyJobLatest,
   weeklyJobBountiesClosedNotPaid,
   TaskCron,
-  OrderCron,
+  OrderCron
 }

@@ -7,7 +7,7 @@ export const CloseFab = styled(Fab)(({ theme }) => ({
   top: theme.spacing(2),
   backgroundColor: 'darkgray',
   color: 'white',
-  boxShadow: 'none',
+  boxShadow: 'none'
 }))
 
 export default { CloseFab }

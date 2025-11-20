@@ -8,7 +8,7 @@ import {
   OnlyDesktop,
   OnlyMobile,
   RightSide,
-  StyledButton,
+  StyledButton
 } from './side-menu.styled.div'
 import { SidePaper, Row, MainHeaderWrapper, Profile } from './side-menu.styles'
 import SideMenuItems from './side-menu-items'
@@ -48,8 +48,8 @@ export const SideMenu: React.FC<SideMenuProps> = ({ completed, menuItems }) => {
       onClick: () => {
         setIsActive(false)
         item.onClick()
-      },
-    })),
+      }
+    }))
   }))
 
   return (
@@ -73,7 +73,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ completed, menuItems }) => {
                   display: 'flex',
                   flexDirection: 'column',
                   flex: 1,
-                  padding: '5px 20px',
+                  padding: '5px 20px'
                 }}
               >
                 {completed ? (

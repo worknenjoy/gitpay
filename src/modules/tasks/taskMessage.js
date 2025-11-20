@@ -6,7 +6,7 @@ const i18n = require('i18n')
 
 module.exports = Promise.method(function ({ id }, { interested, message }, user) {
   return models.Task.findByPk(id, {
-    include: [models.User, models.Order, { model: models.Assign, include: [models.User] }],
+    include: [models.User, models.Order, { model: models.Assign, include: [models.User] }]
   }).then((task) => {
     const targetInterested = task.dataValues.Assigns.filter((a) => a.id === interested)[0]
     const taskUser = task.User.dataValues

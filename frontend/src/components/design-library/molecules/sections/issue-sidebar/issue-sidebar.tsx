@@ -11,7 +11,7 @@ import {
   TaskInfoContent,
   StatusChip,
   StatusAvatarDot,
-  SidebarRoot,
+  SidebarRoot
 } from './issue-sidebar.styles'
 import IssuePublicStatus from 'design-library/atoms/status/issue-public-status/issue-public-status'
 import TaskDeadlineDrawer from 'design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer'
@@ -50,7 +50,7 @@ const IssueSidebar = ({
   wallets,
   fetchTask,
   syncTask,
-  fetchCustomer,
+  fetchCustomer
 }) => {
   const intl = useIntl()
   const issueAuthor = useIssueAuthor(task, user)
@@ -99,7 +99,7 @@ const IssueSidebar = ({
       fundingInvite.comment,
       currentPrice,
       interestedSuggestedDate,
-      user,
+      user
     )
     handleAssignFundingDialogClose()
   }
@@ -261,7 +261,7 @@ const IssueSidebar = ({
         <div>
           <IssuePaymentsList
             orders={(task?.data?.orders || task?.data?.Orders)?.filter(
-              (o) => o.paid && o.status === 'succeeded',
+              (o) => o.paid && o.status === 'succeeded'
             )}
           />
         </div>
@@ -360,15 +360,15 @@ const IssueSidebar = ({
         actions={[
           {
             label: <FormattedMessage id="task.funding.cancel" defaultMessage="Cancel" />,
-            onClick: handleAssignFundingDialogClose,
+            onClick: handleAssignFundingDialogClose
           },
           {
             disabled: !fundingInvite.email || !termsAgreed || !currentPrice || currentPrice === 0,
             label: <FormattedMessage id="task.funding.invite" defaultMessage="Invite" />,
             onClick: sendFundingInvite,
             variant: 'contained',
-            color: 'secondary',
-          },
+            color: 'secondary'
+          }
         ]}
       />
     </SidebarRoot>

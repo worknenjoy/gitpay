@@ -6,7 +6,7 @@ import IssueStatusFilter from './issue-status-filter'
 const meta: Meta<typeof IssueStatusFilter> = {
   title: 'design-library/atoms/Filters/IssueStatus',
   component: IssueStatusFilter,
-  args: {},
+  args: {}
 }
 export default meta
 

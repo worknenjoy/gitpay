@@ -20,7 +20,7 @@ const StatsBar = ({ info, tasks, bounties, users }) => {
   const stats = {
     tasks: { value: tasks || '0' },
     bounties: { value: '$' + (bounties || '0') },
-    users: { value: users || '0' },
+    users: { value: users || '0' }
   }
 
   return (
@@ -38,7 +38,7 @@ const StatsBar = ({ info, tasks, bounties, users }) => {
                     id="info.status.tasks"
                     defaultMessage="{tasks} tasks"
                     values={{
-                      tasks: stats.tasks.value,
+                      tasks: stats.tasks.value
                     }}
                   />
                 }
@@ -53,12 +53,12 @@ const StatsBar = ({ info, tasks, bounties, users }) => {
                     id="info.status.users"
                     defaultMessage="{users} users"
                     values={{
-                      users: stats.users.value,
+                      users: stats.users.value
                     }}
                   />
                 }
               />
-            ),
+            )
           }}
         />
       </Typography>

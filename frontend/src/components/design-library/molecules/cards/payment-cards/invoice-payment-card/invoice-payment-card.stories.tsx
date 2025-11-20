@@ -6,8 +6,8 @@ const meta: Meta = {
   title: 'Design Library/Molecules/Cards/PaymentCards/InvoicePaymentCard',
   component: InvoicePaymentCard,
   parameters: {
-    layout: 'centered',
-  },
+    layout: 'centered'
+  }
 }
 
 export default meta
@@ -22,23 +22,23 @@ export const Default: Story = {
         id: 1,
         name: 'Jane Doe',
         address: '123 Main St, Anytown, USA',
-        email: 'jane.doe@example.com',
-      },
+        email: 'jane.doe@example.com'
+      }
     },
     user: {
       completed: true,
       data: {
         id: 1,
         name: 'John Smith',
-        email: 'john.smith@example.com',
-      },
+        email: 'john.smith@example.com'
+      }
     },
     task: {
       completed: true,
       data: {
         id: 1,
-        title: 'Sample Task',
-      },
+        title: 'Sample Task'
+      }
     },
     invoiceNumber: 'INV-001',
     amount: 199.99,
@@ -52,8 +52,8 @@ export const Default: Story = {
     priceAfterFee: 180,
     fetchCustomer: action('fetchCustomer'),
     createOrder: action('createOrder'),
-    onPayment: action('onPayment'),
-  },
+    onPayment: action('onPayment')
+  }
 }
 
 export const Loading: Story = {
@@ -61,17 +61,17 @@ export const Loading: Story = {
     ...Default.args,
     customer: {
       completed: false,
-      data: {},
+      data: {}
     },
     user: {
       completed: false,
-      data: {},
+      data: {}
     },
     task: {
       completed: false,
-      data: {},
-    },
-  },
+      data: {}
+    }
+  }
 }
 
 export const NoCustomer: Story = {
@@ -79,7 +79,7 @@ export const NoCustomer: Story = {
     ...Default.args,
     customer: {
       completed: true,
-      data: {},
-    },
-  },
+      data: {}
+    }
+  }
 }

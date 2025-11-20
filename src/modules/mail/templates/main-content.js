@@ -4,7 +4,7 @@ module.exports.mainContentEmailTemplate = (
   callToActionText = '',
   callToActionLink = '',
   subtitle2 = '',
-  footerMessage = '',
+  footerMessage = ''
 ) => `
  <!-- START MAIN CONTENT AREA -->
     <tr>

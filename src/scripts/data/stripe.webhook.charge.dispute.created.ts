@@ -22,15 +22,15 @@ export const disputeCreated = {
             application: null,
             currency: 'usd',
             description: 'Dispute fee',
-            type: 'stripe_fee',
-          },
+            type: 'stripe_fee'
+          }
         ],
         net: -6495,
         reporting_category: 'dispute',
         source: 'du_test_123',
         status: 'available',
-        type: 'adjustment',
-      },
+        type: 'adjustment'
+      }
     ],
     charge: 'ch_test_123',
     created: 1761968965,
@@ -64,14 +64,14 @@ export const disputeCreated = {
       shipping_documentation: null,
       shipping_tracking_number: null,
       uncategorized_file: null,
-      uncategorized_text: null,
+      uncategorized_text: null
     },
     evidence_details: {
       due_by: 1763337599,
       enhanced_eligibility: {},
       has_evidence: false,
       past_due: false,
-      submission_count: 0,
+      submission_count: 0
     },
     is_charge_refundable: false,
     livemode: false,
@@ -81,12 +81,12 @@ export const disputeCreated = {
       card: {
         brand: 'visa',
         case_type: 'chargeback',
-        network_reason_code: '13.1',
+        network_reason_code: '13.1'
       },
-      type: 'card',
+      type: 'card'
     },
     reason: 'product_not_received',
-    status: 'needs_response',
+    status: 'needs_response'
   },
-  previous_attributes: null,
+  previous_attributes: null
 }

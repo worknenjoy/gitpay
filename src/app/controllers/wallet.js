@@ -16,7 +16,7 @@ exports.updateWallet = async (req, res) => {
     const wallet = await Wallet.walletUpdate({
       ...req.body,
       id: req.params.id,
-      userId: req.user.id,
+      userId: req.user.id
     })
     res.status(200).send(wallet)
   } catch (error) {

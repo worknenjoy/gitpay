@@ -1,7 +1,7 @@
 import {
   SEARCH_PAYOUT_REQUESTED,
   SEARCH_PAYOUT_SUCCESS,
-  SEARCH_PAYOUT_FAILED,
+  SEARCH_PAYOUT_FAILED
 } from '../actions/payoutActions'
 
 export const payouts = (state = { data: [], completed: false }, action) => {

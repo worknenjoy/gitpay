@@ -1,7 +1,7 @@
 import {
   FETCH_PREFERENCES_REQUESTED,
   FETCH_PREFERENCES_SUCCESS,
-  FETCH_PREFERENCES_ERROR,
+  FETCH_PREFERENCES_ERROR
 } from '../actions/preferencesActions'
 
 export const preferences = (
@@ -14,9 +14,9 @@ export const preferences = (
     receiveNotifications: null,
     openForJobs: null,
     completed: true,
-    error: {},
+    error: {}
   },
-  action,
+  action
 ) => {
   switch (action.type) {
     case FETCH_PREFERENCES_REQUESTED:
@@ -31,7 +31,7 @@ export const preferences = (
         skills: action.skills,
         receiveNotifications: action.receiveNotifications,
         openForJobs: action.openForJobs,
-        completed: action.completed,
+        completed: action.completed
       }
     case FETCH_PREFERENCES_ERROR:
       return { ...state, error: action.error, completed: action.completed }

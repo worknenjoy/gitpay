@@ -1,5 +1,5 @@
 const memberExists = require('./memberExists')
 
 module.exports = {
-  memberExists,
+  memberExists
 }

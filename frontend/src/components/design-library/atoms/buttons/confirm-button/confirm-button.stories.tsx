@@ -4,7 +4,7 @@ import ConfirmButton from './confirm-button'
 export default {
   title: 'Design Library/Atoms/Buttons/ConfirmButton',
   component: ConfirmButton,
-  parameters: { layout: 'centered' },
+  parameters: { layout: 'centered' }
 }
 
 const Template = (args) => <ConfirmButton {...args} />
@@ -19,7 +19,7 @@ Default.args = {
   confirmLabel: 'Delete',
   cancelLabel: 'Cancel',
   alertMessage: 'This will permanently remove the item.',
-  alertSeverity: 'warning',
+  alertSeverity: 'warning'
 }
 
 export const SecondaryStyle = Template.bind({})
@@ -30,7 +30,7 @@ SecondaryStyle.args = {
   completed: true,
   dialogMessage: 'Archive this record? You can unarchive later in settings.',
   confirmLabel: 'Archive',
-  cancelLabel: 'Keep',
+  cancelLabel: 'Keep'
 }
 
 export const Loading = Template.bind({})
@@ -43,5 +43,5 @@ Loading.args = {
   confirmLabel: 'Delete',
   cancelLabel: 'Cancel',
   alertMessage: 'This will permanently remove the item.',
-  alertSeverity: 'warning',
+  alertSeverity: 'warning'
 }

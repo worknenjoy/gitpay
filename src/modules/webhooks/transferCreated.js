@@ -18,7 +18,7 @@ module.exports = async function transferCreated(event, req, res) {
         userId: userId,
         value: event.data.object.amount / 100,
         status: 'created',
-        transfer_method: 'stripe',
+        transfer_method: 'stripe'
       })
       return res.status(200).json(event)
     } catch (error) {
@@ -30,8 +30,8 @@ module.exports = async function transferCreated(event, req, res) {
   try {
     const existingTransfer = await models.Transfer.findOne({
       where: {
-        transfer_id: transferId,
-      },
+        transfer_id: transferId
+      }
     })
 
     if (existingTransfer) {
@@ -42,18 +42,18 @@ module.exports = async function transferCreated(event, req, res) {
 
     const task = await models.Task.findOne({
       where: {
-        transfer_id: event.data.object.id,
+        transfer_id: event.data.object.id
       },
-      include: [models.User],
+      include: [models.User]
     })
 
     if (task) {
       try {
         const assigned = await models.Assign.findOne({
           where: {
-            id: task.dataValues.assigned,
+            id: task.dataValues.assigned
           },
-          include: [models.User],
+          include: [models.User]
         })
 
         const language = assigned.dataValues.User.language || 'en'
@@ -64,8 +64,8 @@ module.exports = async function transferCreated(event, req, res) {
           i18n.__('mail.webhook.payment.transfer.subject'),
           i18n.__('mail.webhook.payment.transfer.message', {
             amount: event.data.object.amount / 100,
-            url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`,
-          }),
+            url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
+          })
         )
         return res.status(200).json(event)
       } catch (e) {
@@ -77,8 +77,8 @@ module.exports = async function transferCreated(event, req, res) {
         if (account || account.email) {
           const user = await models.User.findOne({
             where: {
-              email: account.email,
-            },
+              email: account.email
+            }
           })
 
           if (user) {
@@ -91,8 +91,8 @@ module.exports = async function transferCreated(event, req, res) {
             i18n.__('mail.webhook.payment.transfer.subject'),
             i18n.__('mail.webhook.payment.transfer.message', {
               amount: event.data.object.amount / 100,
-              url: `${event.data.object.id}`,
-            }),
+              url: `${event.data.object.id}`
+            })
           )
         }
         return res.status(200).json(event)

@@ -5,7 +5,7 @@ import OfferDrawer from './offer-drawer'
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Molecules/Drawers/Offer Drawer',
-  component: OfferDrawer,
+  component: OfferDrawer
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
@@ -29,15 +29,15 @@ Primary.args = {
       onClick: () => {},
       variant: 'contained',
       color: 'primary',
-      disabled: false,
+      disabled: false
     },
     {
       label: 'Action 2',
       onClick: () => {},
       variant: 'contained',
       color: 'primary',
-      disabled: true,
-    },
+      disabled: true
+    }
   ],
   onClose: () => {},
   issue: {
@@ -51,12 +51,12 @@ Primary.args = {
         issue: {
           user: {
             login: 'user',
-            html_url: 'http://example.com',
-          },
-        },
-      },
-    },
-  },
+            html_url: 'http://example.com'
+          }
+        }
+      }
+    }
+  }
 }
 
 export const WithTabs = Template.bind({})
@@ -67,12 +67,12 @@ WithTabs.args = {
       User: {
         username: 'username',
         picture_url: 'https://via.placeholder.com/150',
-        name: 'name',
+        name: 'name'
       },
       status: 'status',
       value: 100,
-      suggestedDate: new Date(),
-    },
+      suggestedDate: new Date()
+    }
   ],
-  tabs: true,
+  tabs: true
 }

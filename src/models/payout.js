@@ -5,27 +5,27 @@ module.exports = (sequelize, DataTypes) => {
     amount: DataTypes.DECIMAL,
     currency: {
       type: DataTypes.STRING,
-      defaultValue: 'usd',
+      defaultValue: 'usd'
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: true
     },
     status: {
       type: DataTypes.STRING,
-      defaultValue: 'initiated',
+      defaultValue: 'initiated'
     },
     paid: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: false
     },
     userId: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Users',
-        key: 'id',
-      },
-    },
+        key: 'id'
+      }
+    }
   })
 
   Payout.associate = (models) => {

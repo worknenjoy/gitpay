@@ -10,7 +10,7 @@ import {
   messageTask,
   messageOffer,
   offerUpdate,
-  actionAssign,
+  actionAssign
 } from '../actions/assignActions'
 import {
   listTasks,
@@ -27,7 +27,7 @@ import {
   messageAuthor,
   reportTask,
   requestClaimTask,
-  transferTask,
+  transferTask
 } from '../actions/taskActions'
 import {
   createOrder,
@@ -35,7 +35,7 @@ import {
   transferOrder,
   cancelOrder,
   detailOrder,
-  listOrders,
+  listOrders
 } from '../actions/orderActions'
 import { fetchWallet, listWallets } from '../actions/walletActions'
 import {
@@ -43,7 +43,7 @@ import {
   createTaskSolution,
   updateTaskSolution,
   fetchPullRequestData,
-  cleanPullRequestDataState,
+  cleanPullRequestDataState
 } from '../actions/taskSolutionActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getFilteredTasks, getProject } from '../selectors/tasks'
@@ -69,7 +69,7 @@ const mapStateToProps = (state, ownProps) => {
     order: state.order,
     customer: state.customer,
     wallets: state.wallets,
-    wallet: state.wallet,
+    wallet: state.wallet
   }
 }
 
@@ -127,7 +127,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchAccount: () => dispatch(fetchAccount()),
     // For account menu and bottom bar props
     signOut: () => dispatch(logOut()),
-    getInfo: () => dispatch(getInfoAction()),
+    getInfo: () => dispatch(getInfoAction())
   }
 }
 

@@ -3,7 +3,7 @@ import BankSelectField from './bank-select-field'
 
 export default {
   title: 'Design Library/Atoms/Inputs/Fields/BankSelectField',
-  component: BankSelectField,
+  component: BankSelectField
 }
 
 const Template = (args) => <BankSelectField {...args} />
@@ -13,5 +13,5 @@ Default.args = {
   routingNumber: '123456789',
   country: 'BR',
   onChange: (e) => console.log(e.target.value),
-  disabled: false,
+  disabled: false
 }

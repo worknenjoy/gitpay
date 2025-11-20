@@ -43,9 +43,9 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>(
       inputComponent,
       inputProps,
       endAdornment,
-      onChange,
+      onChange
     },
-    ref,
+    ref
   ) => {
     return (
       <RootFormControl>
@@ -71,7 +71,7 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>(
               // Force shrink only when there's content; otherwise let MUI handle focus-based shrink
               ...(inputComponent && (Boolean(value) || Boolean(defaultValue))
                 ? { shrink: true }
-                : {}),
+                : {})
             }}
             helperText={
               help ? (
@@ -83,17 +83,17 @@ export const Field = React.forwardRef<HTMLElement, FieldProps>(
             }
             InputProps={{
               ...(inputComponent ? { inputComponent } : {}),
-              ...(endAdornment ? { endAdornment } : {}),
+              ...(endAdornment ? { endAdornment } : {})
             }}
             inputProps={{
               ...inputProps,
-              ...(type === 'number' ? { min, max } : {}),
+              ...(type === 'number' ? { min, max } : {})
             }}
           />
         )}
       </RootFormControl>
     )
-  },
+  }
 )
 
 export default Field

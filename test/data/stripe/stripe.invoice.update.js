@@ -35,10 +35,10 @@ module.exports.updated = {
           line1: '',
           line2: '',
           postal_code: '',
-          state: '',
+          state: ''
         },
         name: 'Veridiana Reis',
-        phone: '',
+        phone: ''
       },
       customer_tax_exempt: 'none',
       customer_tax_ids: [],
@@ -71,11 +71,11 @@ module.exports.updated = {
             invoice_item: 'ii_1Il9COBrSjgsps2DjqLhtqBE',
             livemode: true,
             metadata: {
-              task_id: '452',
+              task_id: '452'
             },
             period: {
               end: 1619600208,
-              start: 1619600208,
+              start: 1619600208
             },
             plan: null,
             price: {
@@ -95,23 +95,23 @@ module.exports.updated = {
               transform_quantity: null,
               type: 'one_time',
               unit_amount: 7080,
-              unit_amount_decimal: '7080',
+              unit_amount_decimal: '7080'
             },
             proration: false,
             quantity: 1,
             subscription: null,
             tax_amounts: [],
             tax_rates: [],
-            type: 'invoiceitem',
-          },
+            type: 'invoiceitem'
+          }
         ],
         has_more: false,
         total_count: 1,
-        url: '/v1/invoices/in_1Il9COBrSjgsps2DtvLrFalB/lines',
+        url: '/v1/invoices/in_1Il9COBrSjgsps2DtvLrFalB/lines'
       },
       livemode: true,
       metadata: {
-        task_id: '452',
+        task_id: '452'
       },
       next_payment_attempt: null,
       number: 'AD894E6-0003',
@@ -120,7 +120,7 @@ module.exports.updated = {
       payment_intent: 'pi_1Il9NYBrSjgsps2DeYFzkJLY',
       payment_settings: {
         payment_method_options: null,
-        payment_method_types: null,
+        payment_method_types: null
       },
       period_end: 1619600208,
       period_start: 1619600208,
@@ -134,7 +134,7 @@ module.exports.updated = {
         finalized_at: 1619600899,
         marked_uncollectible_at: null,
         paid_at: 1619606087,
-        voided_at: null,
+        voided_at: null
       },
       subscription: null,
       subtotal: 7080,
@@ -144,7 +144,7 @@ module.exports.updated = {
       total_discount_amounts: [],
       total_tax_amounts: [],
       transfer_data: null,
-      webhooks_delivered_at: 1619600208,
+      webhooks_delivered_at: 1619600208
     },
     previous_attributes: {
       amount_paid: 0,
@@ -157,16 +157,16 @@ module.exports.updated = {
       receipt_number: null,
       status: 'open',
       status_transitions: {
-        paid_at: null,
-      },
+        paid_at: null
+      }
     },
-    previous_attributes: null,
+    previous_attributes: null
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: 'req_7JDHTJnTPulDSK',
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'invoice.updated',
+  type: 'invoice.updated'
 }

@@ -27,7 +27,7 @@ const ERRORS = {
   COULD_NOT_UPDATE_TASK_SOLUTION: 'issue.solution.dialog.update.error',
   COULD_NOT_CREATE_TASK_SOLUTION: 'issue.solution.dialog.create.error',
   COULD_NOT_FETCH_PULL_REQUEST_DATA: 'issue.solution.dialog.fetch.error',
-  PULL_REQUEST_NOT_FOUND: 'issue.solution.dialog.pullRequest.notFound',
+  PULL_REQUEST_NOT_FOUND: 'issue.solution.dialog.pullRequest.notFound'
 }
 
 const getTaskSolutionRequested = () => {
@@ -72,7 +72,7 @@ const fetchPullRequestDataSuccess = (pullRequestData) => {
   return {
     type: FETCH_PULL_REQUEST_DATA_SUCCESS,
     completed: true,
-    pullRequestData: pullRequestData,
+    pullRequestData: pullRequestData
   }
 }
 
@@ -94,8 +94,8 @@ const fetchPullRequestData = (owner, repositoryName, pullRequestId, taskId) => {
           owner: owner,
           repositoryName: repositoryName,
           pullRequestId: pullRequestId,
-          taskId: taskId,
-        },
+          taskId: taskId
+        }
       })
       .then((response) => {
         return dispatch(fetchPullRequestDataSuccess(response.data))
@@ -108,7 +108,7 @@ const fetchPullRequestData = (owner, repositoryName, pullRequestId, taskId) => {
 
         dispatch(addNotification(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA']))
         return dispatch(
-          getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA'])),
+          getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA']))
         )
       })
   }
@@ -140,8 +140,8 @@ const createTaskSolution = (taskSolution) => {
               ERRORS[error.response.data.error] || error.response.data.error,
               '',
               '/#/profile/payout-settings',
-              'Update your account',
-            ),
+              'Update your account'
+            )
           )
           dispatch(fetchTask(taskSolution.taskId))
           return dispatch(createTaskSolutionError(error.response.data.error))
@@ -172,7 +172,7 @@ const updateTaskSolution = ({ taskSolutionId, pullRequestURL, taskId }) => {
     return axios
       .patch(`${api.API_URL}/tasksolutions/${taskSolutionId}`, {
         pullRequestURL: pullRequestURL,
-        taskId: taskId,
+        taskId: taskId
       })
       .then((response) => {
         dispatch(addNotification('issue.solution.dialog.update.success'))
@@ -210,5 +210,5 @@ export {
   CREATE_TASK_SOLUTION_SUCCESS,
   UPDATE_TASK_SOLUTION_REQUESTED,
   UPDATE_TASK_SOLUTION_SUCCESS,
-  CLEAN_PULL_REQUEST_DATA_STATE,
+  CLEAN_PULL_REQUEST_DATA_STATE
 }

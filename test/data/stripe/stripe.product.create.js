@@ -22,8 +22,8 @@ module.exports.stripe = {
         type: 'service',
         unit_label: null,
         updated: 1750594645,
-        url: null,
-      },
-    },
-  },
+        url: null
+      }
+    }
+  }
 }

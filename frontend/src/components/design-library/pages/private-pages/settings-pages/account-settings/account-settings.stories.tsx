@@ -5,7 +5,7 @@ import AccountSettings from './account-settings'
 export default {
   title: 'Design Library/Pages/Private/AccountSettings',
   component: AccountSettings,
-  decorators: [withProfileTemplate],
+  decorators: [withProfileTemplate]
 }
 
 const Template = (args) => <AccountSettings {...args} />
@@ -17,7 +17,7 @@ Default.args = {
     data: {
       id: '1',
       name: 'John Doe',
-      Types: [{ name: 'contributor' }, { name: 'maintainer' }, { name: 'funding' }],
-    },
-  },
+      Types: [{ name: 'contributor' }, { name: 'maintainer' }, { name: 'funding' }]
+    }
+  }
 }

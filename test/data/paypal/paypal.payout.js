@@ -8,17 +8,17 @@ module.exports.get = {
     time_completed: '2018-03-13T12:44:55Z',
     time_closed: '2018-03-13T12:44:55Z',
     sender_batch_header: {
-      email_subject: 'You got a Test',
+      email_subject: 'You got a Test'
     },
     amount: {
       currency: 'USD',
-      value: '200.0',
+      value: '200.0'
     },
     fees: {
       currency: 'USD',
-      value: '2.75',
+      value: '2.75'
     },
-    displayable: true,
+    displayable: true
   },
   items: [
     {
@@ -28,27 +28,27 @@ module.exports.get = {
       transaction_status: 'SUCCESS',
       payout_item_fee: {
         currency: 'USD',
-        value: '0.25',
+        value: '0.25'
       },
       payout_batch_id: 'LEP6947CGTKRL',
       payout_item: {
         recipient_type: 'PHONE',
         amount: {
           currency: 'USD',
-          value: '50.0',
+          value: '50.0'
         },
         note: 'Mr. Rob',
         receiver: '93847858694',
-        sender_item_id: 'X1',
+        sender_item_id: 'X1'
       },
       time_processed: '2018-03-13T12:44:51Z',
       links: [
         {
           href: 'https://api-m.sandbox.paypal.com/v1/payments/payouts-item/5MYSR9GT8AEUG',
           rel: 'item',
-          method: 'GET',
-        },
-      ],
+          method: 'GET'
+        }
+      ]
     },
     {
       payout_item_id: 'ZV967ZUVUGL9L',
@@ -57,27 +57,27 @@ module.exports.get = {
       transaction_status: 'SUCCESS',
       payout_item_fee: {
         currency: 'USD',
-        value: '0.25',
+        value: '0.25'
       },
       payout_batch_id: 'LEP6947CGTKRL',
       payout_item: {
         recipient_type: 'PHONE',
         amount: {
           currency: 'USD',
-          value: '50.0',
+          value: '50.0'
         },
         note: 'Mr. Rob',
         receiver: '93847838694',
-        sender_item_id: 'X12',
+        sender_item_id: 'X12'
       },
       time_processed: '2018-03-13T12:44:51Z',
       links: [
         {
           href: 'https://api-m.sandbox.paypal.com/v1/payments/payouts-item/ZV967ZUVUGL9L',
           rel: 'item',
-          method: 'GET',
-        },
-      ],
+          method: 'GET'
+        }
+      ]
     },
     {
       payout_item_id: '7X73FYJYFQGES',
@@ -86,27 +86,27 @@ module.exports.get = {
       transaction_status: 'SUCCESS',
       payout_item_fee: {
         currency: 'USD',
-        value: '0.25',
+        value: '0.25'
       },
       payout_batch_id: 'LEP6947CGTKRL',
       payout_item: {
         recipient_type: 'PHONE',
         amount: {
           currency: 'USD',
-          value: '50.0',
+          value: '50.0'
         },
         note: 'Mr. Rob',
         receiver: '92847858694',
-        sender_item_id: 'X13',
+        sender_item_id: 'X13'
       },
       time_processed: '2018-03-13T12:44:54Z',
       links: [
         {
           href: 'https://api-m.sandbox.paypal.com/v1/payments/payouts-item/7X73FYJYFQGES',
           rel: 'item',
-          method: 'GET',
-        },
-      ],
+          method: 'GET'
+        }
+      ]
     },
     {
       payout_item_id: 'KBN2UQVSP8YDA',
@@ -115,27 +115,27 @@ module.exports.get = {
       transaction_status: 'SUCCESS',
       payout_item_fee: {
         currency: 'USD',
-        value: '0.25',
+        value: '0.25'
       },
       payout_batch_id: 'LEP6947CGTKRL',
       payout_item: {
         recipient_type: 'PHONE',
         amount: {
           currency: 'USD',
-          value: '50.0',
+          value: '50.0'
         },
         note: 'Mr. Rob',
         receiver: '93847878694',
-        sender_item_id: 'X14',
+        sender_item_id: 'X14'
       },
       time_processed: '2018-03-13T12:44:55Z',
       links: [
         {
           href: 'https://api-m.sandbox.paypal.com/v1/payments/payouts-item/KBN2UQVSP8YDA',
           rel: 'item',
-          method: 'GET',
-        },
-      ],
+          method: 'GET'
+        }
+      ]
     },
     {
       payout_item_id: 'X74HTBHMHAVG2',
@@ -144,44 +144,44 @@ module.exports.get = {
       activity_id: '0E158638XS0329108',
       payout_item_fee: {
         currency: 'USD',
-        value: '0.25',
+        value: '0.25'
       },
       payout_batch_id: 'LEP6947CGTKRL',
       payout_item: {
         recipient_type: 'PHONE',
         amount: {
           currency: 'USD',
-          value: '50.0',
+          value: '50.0'
         },
         note: 'Mr. Rob',
         receiver: '93847828694',
-        sender_item_id: 'X15',
+        sender_item_id: 'X15'
       },
       time_processed: '2018-03-13T12:44:51Z',
       links: [
         {
           href: 'https://api-m.sandbox.paypal.com/v1/payments/payouts-item/X74HTBHMHAVG2',
           rel: 'item',
-          method: 'GET',
-        },
-      ],
-    },
+          method: 'GET'
+        }
+      ]
+    }
   ],
   links: [
     {
       href: 'https://api-m.sandbox.paypal.com/v1/payments/payouts/LEP6947CGTKRL?page_size=5&page=2',
       rel: 'next',
-      method: 'GET',
+      method: 'GET'
     },
     {
       href: 'https://api-m.sandbox.paypal.com/v1/payments/payouts/LEP6947CGTKRL?page_size=5&page=3',
       rel: 'last',
-      method: 'GET',
+      method: 'GET'
     },
     {
       href: 'https://api-m.sandbox.paypal.com/v1/payments/payouts/LEP6947CGTKRL?page_size=5&page=1',
       rel: 'self',
-      method: 'GET',
-    },
-  ],
+      method: 'GET'
+    }
+  ]
 }

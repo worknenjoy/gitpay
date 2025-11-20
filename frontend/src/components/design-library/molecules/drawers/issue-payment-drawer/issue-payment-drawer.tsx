@@ -11,20 +11,20 @@ import PaypalPaymentCard from '../../cards/payment-cards/paypal-payment-card/pay
 const taskPaymentFormMessages = defineMessages({
   tabPaymentMethodCrediCard: {
     id: 'task.payment.method.card',
-    defaultMessage: 'Credit Card',
+    defaultMessage: 'Credit Card'
   },
   tabPaymentMethodPaypal: {
     id: 'task.payment.method.paypal',
-    defaultMessage: 'Paypal',
+    defaultMessage: 'Paypal'
   },
   tabPaymentMethodInvoice: {
     id: 'task.payment.method.invoice',
-    defaultMessage: 'Invoice',
+    defaultMessage: 'Invoice'
   },
   tabPaymentMethodWallet: {
     id: 'task.payment.method.wallet',
-    defaultMessage: 'Wallet',
-  },
+    defaultMessage: 'Wallet'
+  }
 })
 
 const fee = { 'open source': 1.08, private: 1.18, full: 1.3 }
@@ -45,7 +45,7 @@ function IssuePaymentDrawer({
   listWallets,
   wallets,
   fetchTask,
-  syncTask,
+  syncTask
 }: any) {
   const intl = useIntl()
 
@@ -78,7 +78,7 @@ function IssuePaymentDrawer({
     new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
-      maximumSignificantDigits: 4,
+      maximumSignificantDigits: 4
     }).format(amount)
 
   const pickTaskPrice = (p: number) => setPrice(p)
@@ -134,8 +134,8 @@ function IssuePaymentDrawer({
             key="basic"
             id="actions.task.payment.plan.bullet.basic"
             defaultMessage="Basic Campaign"
-          />,
-        ],
+          />
+        ]
       }}
       tabs={[
         {
@@ -153,7 +153,7 @@ function IssuePaymentDrawer({
               plan={plan}
               onClose={onClose}
             />
-          ),
+          )
         },
         {
           label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodInvoice),
@@ -169,7 +169,7 @@ function IssuePaymentDrawer({
               price={price}
               onPayment={onClose}
             />
-          ),
+          )
         },
         {
           label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodPaypal),
@@ -184,7 +184,7 @@ function IssuePaymentDrawer({
               order={order}
               plan={plan}
             />
-          ),
+          )
         },
         {
           label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodWallet),
@@ -204,8 +204,8 @@ function IssuePaymentDrawer({
               fetchTask={fetchTask}
               syncTask={syncTask}
             />
-          ),
-        },
+          )
+        }
       ]}
     />
   )

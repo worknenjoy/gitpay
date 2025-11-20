@@ -81,7 +81,7 @@ const fetchUserAccountSuccess = (account) => {
   return {
     type: FETCH_USER_ACCOUNT_SUCCESS,
     completed: true,
-    data: account.data,
+    data: account.data
   }
 }
 
@@ -101,7 +101,7 @@ const fetchUserBalanceSuccess = (balance) => {
   return {
     type: FETCH_USER_BALANCE_SUCCESS,
     completed: true,
-    data: balance.data,
+    data: balance.data
   }
 }
 
@@ -121,7 +121,7 @@ const fetchUserAccountCountriesSuccess = (countries) => {
   return {
     type: FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS,
     completed: true,
-    data: countries.data,
+    data: countries.data
   }
 }
 
@@ -141,7 +141,7 @@ const createUserAccountSuccess = (account) => {
   return {
     type: CREATE_USER_ACCOUNT_SUCCESS,
     completed: true,
-    data: account.data,
+    data: account.data
   }
 }
 
@@ -161,7 +161,7 @@ const updateUserAccountSuccess = (account) => {
   return {
     type: UPDATE_USER_ACCOUNT_SUCCESS,
     completed: true,
-    data: account.data,
+    data: account.data
   }
 }
 
@@ -181,7 +181,7 @@ const deleteUserAccountSuccess = (user) => {
   return {
     type: DELETE_USER_ACCOUNT_SUCCESS,
     completed: true,
-    data: user.data,
+    data: user.data
   }
 }
 
@@ -201,7 +201,7 @@ const fetchUserCustomerSuccess = (customer) => {
   return {
     type: FETCH_USER_CUSTOMER_SUCCESS,
     completed: true,
-    data: customer.data,
+    data: customer.data
   }
 }
 
@@ -221,7 +221,7 @@ const createUserCustomerSuccess = (customer) => {
   return {
     type: CREATE_USER_CUSTOMER_SUCCESS,
     completed: true,
-    data: customer.data,
+    data: customer.data
   }
 }
 
@@ -241,7 +241,7 @@ const updateUserCustomerSuccess = (customer) => {
   return {
     type: UPDATE_USER_CUSTOMER_SUCCESS,
     completed: true,
-    data: customer.data,
+    data: customer.data
   }
 }
 
@@ -261,7 +261,7 @@ const updateUserSuccess = (user) => {
   return {
     type: UPDATE_USER_SUCCESS,
     completed: true,
-    data: user.data,
+    data: user.data
   }
 }
 
@@ -281,7 +281,7 @@ const activateUserSuccess = (user) => {
   return {
     type: ACTIVATE_USER_SUCCESS,
     completed: true,
-    data: user.data,
+    data: user.data
   }
 }
 
@@ -301,7 +301,7 @@ const resendActivationEmailSuccess = (user) => {
   return {
     type: RESEND_ACTIVATION_EMAIL_SUCCESS,
     completed: true,
-    data: user.data,
+    data: user.data
   }
 }
 
@@ -337,7 +337,7 @@ const createBankAccountSuccess = (account) => {
   return {
     type: CREATE_BANKACCOUNT_SUCCESS,
     completed: true,
-    data: account.data,
+    data: account.data
   }
 }
 
@@ -357,7 +357,7 @@ const updateBankAccountSuccess = (account) => {
   return {
     type: UPDATE_BANKACCOUNT_SUCCESS,
     completed: true,
-    data: account.data,
+    data: account.data
   }
 }
 
@@ -675,7 +675,7 @@ const createBankAccount = (bank) => {
         country: bank.country,
         account_holder_type: bank.account_holder_type,
         account_holder_name: bank.account_holder_name,
-        currency: bank.currency,
+        currency: bank.currency
       })
       .then((bankAccount) => {
         if (bankAccount.data.statusCode === 400) {
@@ -736,7 +736,7 @@ const searchUser = (data) => {
     dispatch(searchUserRequested())
     return axios
       .get(api.API_URL + '/users', {
-        params: data,
+        params: data
       })
       .then((response) => {
         if (response?.data) {
@@ -818,5 +818,5 @@ export {
   updateBankAccount,
   getBankAccount,
   deleteUser,
-  searchUser,
+  searchUser
 }

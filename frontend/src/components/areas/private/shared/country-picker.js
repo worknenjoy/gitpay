@@ -12,7 +12,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Typography,
+  Typography
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
@@ -21,13 +21,13 @@ const CountryContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'center',
-  alignContent: 'center',
+  alignContent: 'center'
 }))
 
 class CountryPicker extends Component {
   static propTypes = {
     open: PropTypes.bool,
-    onClose: PropTypes.func,
+    onClose: PropTypes.func
   }
 
   constructor(props) {
@@ -35,7 +35,7 @@ class CountryPicker extends Component {
     this.state = {
       currentCountryLabel: null,
       currentCountryCode: null,
-      currentCountryImage: null,
+      currentCountryImage: null
     }
   }
 
@@ -43,7 +43,7 @@ class CountryPicker extends Component {
     this.setState({
       currentCountryCode: item.code,
       currentCountryLabel: item.country,
-      currentCountryImage: item.image,
+      currentCountryImage: item.image
     })
   }
 
@@ -60,7 +60,7 @@ class CountryPicker extends Component {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     }))
 
     const getCountryButtons = () => {
@@ -89,7 +89,7 @@ class CountryPicker extends Component {
             this.props.onClose(e, {
               code: null,
               country: null,
-              image: null,
+              image: null
             })
           }
           aria-labelledby="alert-dialog-title"
@@ -150,7 +150,7 @@ class CountryPicker extends Component {
                 this.props.onClose(e, {
                   country: null,
                   code: null,
-                  image: null,
+                  image: null
                 })
               }
               size="large"
@@ -163,14 +163,14 @@ class CountryPicker extends Component {
                 this.props.onClose(e, {
                   country: this.state.currentCountryLabel,
                   code: this.state.currentCountryCode,
-                  image: this.state.currentCountryImage,
+                  image: this.state.currentCountryImage
                 })
               }
               size="large"
               color="secondary"
               autoFocus
               style={{
-                minWidth: 'auto',
+                minWidth: 'auto'
               }}
             >
               Choose {this.state.currentCountryLabel}

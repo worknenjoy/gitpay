@@ -3,7 +3,7 @@ import { css } from 'styled-components'
 const sizes = {
   desktop: 992,
   tablet: 768,
-  phone: 414,
+  phone: 414
 }
 
 /**
@@ -34,8 +34,8 @@ const media = Object.keys(sizes).reduce(
   {
     desktop: null,
     tablet: null,
-    phone: null,
-  },
+    phone: null
+  }
 )
 
 export default media

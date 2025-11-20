@@ -1,6 +1,6 @@
 const FAILED_REASON = {
   declined_by_network: 'Denied by card',
-  not_sent_to_network: 'Hight risk card, please provide all the information',
+  not_sent_to_network: 'Hight risk card, please provide all the information'
 }
 
 const CURRENCIES = {
@@ -144,7 +144,7 @@ const CURRENCIES = {
   htg: 'G',
   bzd: 'BZ$',
   kyd: 'CI$',
-  sgd: 'S$',
+  sgd: 'S$'
   // Add more as needed
 }
 
@@ -159,5 +159,5 @@ function formatStripeAmount(amountInCents) {
 module.exports = {
   FAILED_REASON,
   CURRENCIES,
-  formatStripeAmount,
+  formatStripeAmount
 }

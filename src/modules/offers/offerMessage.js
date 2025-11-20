@@ -10,8 +10,8 @@ module.exports = Promise.method(function ({ id }, { offerId, message }, user) {
       models.User,
       models.Order,
       { model: models.Offer, include: [models.User] },
-      { model: models.Assign, include: [models.User] },
-    ],
+      { model: models.Assign, include: [models.User] }
+    ]
   }).then((task) => {
     const targetInterested = task.dataValues.Offers.filter((o) => o.id === offerId)[0]
     const taskUser = task.User.dataValues

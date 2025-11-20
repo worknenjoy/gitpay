@@ -15,11 +15,11 @@ const ProviderLoginButtons = ({
   position = 'center',
   textPosition = 'center',
   authorizeGithub,
-  disconnectGithub,
+  disconnectGithub
 }) => {
   const styles = {
     textAlign: textPosition,
-    marginBottom: 10,
+    marginBottom: 10
   } as React.CSSProperties
 
   return (

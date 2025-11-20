@@ -17,7 +17,7 @@ export const addNotification = (message, extra = '', link) => {
       type: ADD_NOTIFICATION,
       text: extra ? `${messages[message]} - ${extra}` : messages[message] || message,
       open: true,
-      link: link,
+      link: link
     })
   }
 }

@@ -7,8 +7,8 @@ module.exports = Promise.method(function userTasks(id) {
     attributes: ['TaskId'],
     where: {
       userId: id,
-      status: 'accepted',
-    },
+      status: 'accepted'
+    }
   })
     .then((assigns) => {
       /*
@@ -20,8 +20,8 @@ module.exports = Promise.method(function userTasks(id) {
           attributes: ['value', 'paid'],
           where: {
             id: a.dataValues.TaskId,
-            status: 'closed',
-          },
+            status: 'closed'
+          }
         })
           .then((res) => {
             if (res !== null) {
@@ -47,7 +47,7 @@ module.exports = Promise.method(function userTasks(id) {
       // return object containing number of tasks completed and total bounties collected.
       return {
         tasks: filteredRes.length.toString(),
-        bounties: bounties.toString(),
+        bounties: bounties.toString()
       }
     })
     .catch((error) => {

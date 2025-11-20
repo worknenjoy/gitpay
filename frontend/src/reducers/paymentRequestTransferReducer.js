@@ -1,13 +1,13 @@
 import {
   LIST_PAYMENT_REQUEST_TRANSFER_REQUESTED,
   LIST_PAYMENT_REQUEST_TRANSFER_SUCCEEDED,
-  LIST_PAYMENT_REQUEST_TRANSFER_FAILED,
+  LIST_PAYMENT_REQUEST_TRANSFER_FAILED
 } from '../actions/paymentRequestTransferActions'
 
 const initialState = {
   completed: false,
   error: null,
-  data: [],
+  data: []
 }
 
 export const paymentRequestTransfers = (state = initialState, action) => {
@@ -16,19 +16,19 @@ export const paymentRequestTransfers = (state = initialState, action) => {
       return {
         ...state,
         completed: true,
-        error: null,
+        error: null
       }
     case LIST_PAYMENT_REQUEST_TRANSFER_SUCCEEDED:
       return {
         ...state,
         completed: true,
-        data: action.payload,
+        data: action.payload
       }
     case LIST_PAYMENT_REQUEST_TRANSFER_FAILED:
       return {
         ...state,
         completed: true,
-        error: action.payload,
+        error: action.payload
       }
     default:
       return state

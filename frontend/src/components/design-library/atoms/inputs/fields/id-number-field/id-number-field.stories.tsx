@@ -3,7 +3,7 @@ import IdNumberField from './id-number-field'
 
 export default {
   title: 'Design Library/Atoms/Inputs/Fields/IdNumberField',
-  component: IdNumberField,
+  component: IdNumberField
 }
 
 const Template = (args) => <IdNumberField {...args} />
@@ -14,9 +14,9 @@ Default.args = {
     data: {
       'individual[id_number]': '123456789',
       individual: {
-        id_number_provided: false,
-      },
+        id_number_provided: false
+      }
     },
-    completed: true,
-  },
+    completed: true
+  }
 }

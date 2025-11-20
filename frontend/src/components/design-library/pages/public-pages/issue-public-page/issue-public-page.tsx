@@ -32,7 +32,7 @@ const IssuePublicPage = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask,
+  syncTask
 }) => {
   return (
     <IssuePage

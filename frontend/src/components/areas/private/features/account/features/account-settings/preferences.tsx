@@ -22,7 +22,7 @@ const skillsList = [
   'PHP',
   'Testing',
   'Git',
-  'Continuous Integration',
+  'Continuous Integration'
 ]
 
 const Preferences = (props) => {

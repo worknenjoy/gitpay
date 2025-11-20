@@ -7,9 +7,9 @@ const meta: Meta<typeof ContextTitle> = {
   argTypes: {
     children: {
       control: 'text',
-      description: 'Text content of the context title',
-    },
-  },
+      description: 'Text content of the context title'
+    }
+  }
 }
 
 export default meta
@@ -21,9 +21,9 @@ export const Default: Story = {
     context: {
       completed: true,
       data: {
-        name: 'Context Title',
-      },
+        name: 'Context Title'
+      }
     },
-    title: 'Main Title',
-  },
+    title: 'Main Title'
+  }
 }

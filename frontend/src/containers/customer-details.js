@@ -6,7 +6,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     logged: state.loggedIn.logged,
     user: state.loggedIn,
-    customer: state.customer,
+    customer: state.customer
   }
 }
 
@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateCustomer: (data) => {
       //eslint-disable-next-line
       dispatch(updateCustomer(_, data))
-    },
+    }
   }
 }
 

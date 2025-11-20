@@ -31,7 +31,7 @@ const TaskOrderDetails = ({ open, order, onClose, onCancel }) => {
                 display: 'flex',
                 flexWrap: 'wrap',
                 marginTop: 10,
-                justifyContent: 'space-between',
+                justifyContent: 'space-between'
               }}
             >
               <div style={{ marginBottom: 20, width: '30%', marginRight: 20 }}>

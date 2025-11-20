@@ -6,12 +6,12 @@ import { Redirect, BrowserRouter as Router } from 'react-router-dom'
 const messages = defineMessages({
   orderSuccess: {
     id: 'task.order.payment.success',
-    defaultMessage: 'Your order was completed successfully',
+    defaultMessage: 'Your order was completed successfully'
   },
   orderError: {
     id: 'task.order.payment.error',
-    defaultMessage: 'We had a issue to process your payment',
-  },
+    defaultMessage: 'We had a issue to process your payment'
+  }
 })
 
 class TaskOrders extends Component {
@@ -32,7 +32,7 @@ class TaskOrders extends Component {
           <Redirect
             to={{
               pathname: `/#/task/${this.props.match.params.id}`,
-              state: { from: this.props.location },
+              state: { from: this.props.location }
             }}
           />
         </Router>
@@ -46,7 +46,7 @@ TaskOrders.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   addNotification: PropTypes.func.isRequired,
-  changeTab: PropTypes.func.isRequired,
+  changeTab: PropTypes.func.isRequired
 }
 
 export default injectIntl(TaskOrders)

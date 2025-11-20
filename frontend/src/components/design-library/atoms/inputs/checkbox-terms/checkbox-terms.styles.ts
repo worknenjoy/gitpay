@@ -3,9 +3,9 @@ import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 
 export const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
-  paddingRight: 5,
+  paddingRight: 5
 }))
 
 export const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
-  paddingTop: 0,
+  paddingTop: 0
 }))

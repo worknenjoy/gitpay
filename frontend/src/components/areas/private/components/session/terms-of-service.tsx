@@ -58,7 +58,7 @@ By using our platform, you agree to these terms and conditions. If you do not ag
                 top: 0,
                 left: 0,
                 background: 'white',
-                width: '100%',
+                width: '100%'
               }
             : {}
         }
@@ -96,7 +96,7 @@ By using our platform, you agree to these terms and conditions. If you do not ag
               left: 0,
               height: 80,
               width: '100%',
-              background: 'white',
+              background: 'white'
             }}
           >
             <Button

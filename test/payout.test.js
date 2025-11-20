@@ -21,7 +21,7 @@ const createPayoutData = async (source_id, noLogin = false) => {
       source_id: source_id,
       method: 'stripe',
       amount: 200,
-      currency: 'usd',
+      currency: 'usd'
     })
   return res
 }
@@ -47,7 +47,7 @@ describe('Payouts', () => {
       const user = await models.User.build({
         email: 'teste@mail.com',
         password: 'teste',
-        account_id: 'acct_1CZ5vkLlCJ9CeQRe',
+        account_id: 'acct_1CZ5vkLlCJ9CeQRe'
       }).save()
       const payout = await models.Payout.create({
         source_id: '123',
@@ -55,7 +55,7 @@ describe('Payouts', () => {
         amount: 200,
         currency: 'usd',
         method: 'stripe',
-        status: 'in_transit',
+        status: 'in_transit'
       })
       const res = await createPayoutData('123')
       expect(res.body).to.exist
@@ -74,7 +74,7 @@ describe('Payouts', () => {
       const user = await registerAndLogin(agent, {
         email: 'teste@mail.com',
         password: 'teste',
-        account_id: 'acct_1CZ5vkLlCJ9CeQRe',
+        account_id: 'acct_1CZ5vkLlCJ9CeQRe'
       })
 
       const payout = await models.Payout.build({
@@ -84,7 +84,7 @@ describe('Payouts', () => {
         status: 'in_transit',
         description: 'STRIPE TRANSFER',
         userId: user.body.id,
-        method: 'bank_account',
+        method: 'bank_account'
       }).save()
       const res = await agent
         .get('/payouts/search')
@@ -100,10 +100,10 @@ describe('Payouts', () => {
         amount: 10000,
         currency: 'usd',
         status: 'created',
-        method: 'bank_account',
+        method: 'bank_account'
       })
       const user = await registerAndLogin(agent, {
-        account_id: 'acct_1CZ5vkLlCJ9CeQRe',
+        account_id: 'acct_1CZ5vkLlCJ9CeQRe'
       })
       const res = await agent
         .post('/payouts/request')
@@ -111,7 +111,7 @@ describe('Payouts', () => {
         .send({
           amount: 100,
           currency: 'usd',
-          method: 'bank_account',
+          method: 'bank_account'
         })
       expect(res.body).to.exist
       expect(res.body.id).to.exist

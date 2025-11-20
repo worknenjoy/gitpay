@@ -6,8 +6,8 @@ const WalletOrder = require('../../models').WalletOrder
 module.exports = Promise.method(async function walletOrderFetch(params) {
   const walletOrder = await WalletOrder.findOne({
     where: {
-      id: params.id,
-    },
+      id: params.id
+    }
   })
 
   if (!walletOrder) {
@@ -18,6 +18,6 @@ module.exports = Promise.method(async function walletOrderFetch(params) {
 
   return {
     ...walletOrder.dataValues,
-    invoice: invoice,
+    invoice: invoice
   }
 })

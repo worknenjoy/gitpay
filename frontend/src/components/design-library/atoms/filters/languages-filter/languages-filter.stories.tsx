@@ -10,8 +10,8 @@ export default {
       <BrowserRouter>
         <Story />
       </BrowserRouter>
-    ),
-  ],
+    )
+  ]
 }
 
 const Template = (args) => <LanguageFilter {...args} />
@@ -23,8 +23,8 @@ const mockLanguages = {
     { id: 3, name: 'Python' },
     { id: 4, name: 'Java' },
     { id: 5, name: 'React' },
-    { id: 6, name: 'Node.js' },
-  ],
+    { id: 6, name: 'Node.js' }
+  ]
 }
 
 const mockListLanguages = () => {
@@ -39,14 +39,14 @@ export const Default = Template.bind({})
 Default.args = {
   languages: mockLanguages,
   listLanguages: mockListLanguages,
-  listTasks: mockListTasks,
+  listTasks: mockListTasks
 }
 
 export const EmptyLanguages = Template.bind({})
 EmptyLanguages.args = {
   languages: { data: [] },
   listLanguages: mockListLanguages,
-  listTasks: mockListTasks,
+  listTasks: mockListTasks
 }
 
 export const ManyLanguages = Template.bind({})
@@ -64,9 +64,9 @@ ManyLanguages.args = {
       { id: 9, name: 'C++' },
       { id: 10, name: 'Go' },
       { id: 11, name: 'Rust' },
-      { id: 12, name: 'PHP' },
-    ],
+      { id: 12, name: 'PHP' }
+    ]
   },
   listLanguages: mockListLanguages,
-  listTasks: mockListTasks,
+  listTasks: mockListTasks
 }

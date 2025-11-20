@@ -11,26 +11,26 @@ module.exports.update = {
           currency: 'usd',
           amount: 6420,
           source_types: {
-            card: 6420,
-          },
+            card: 6420
+          }
         },
         {
           currency: 'brl',
           amount: -2448,
           source_types: {
-            card: -2448,
-          },
-        },
+            card: -2448
+          }
+        }
       ],
       connect_reserved: [
         {
           currency: 'usd',
-          amount: 0,
+          amount: 0
         },
         {
           currency: 'brl',
-          amount: 0,
-        },
+          amount: 0
+        }
       ],
       livemode: true,
       pending: [
@@ -38,24 +38,24 @@ module.exports.update = {
           currency: 'usd',
           amount: 0,
           source_types: {
-            card: 0,
-          },
+            card: 0
+          }
         },
         {
           currency: 'brl',
           amount: 0,
           source_types: {
-            card: 0,
-          },
-        },
-      ],
-    },
+            card: 0
+          }
+        }
+      ]
+    }
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: null,
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'balance.available',
+  type: 'balance.available'
 }

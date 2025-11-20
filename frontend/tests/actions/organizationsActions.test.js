@@ -18,21 +18,21 @@ describe('organization actions', () => {
     it('should dispatch a action to get the organizations', () => {
       expect(organizationsActions.fetchOrganizationsRequested()).toEqual({
         type: 'FETCH_ORGANIZATIONS_REQUESTED',
-        completed: false,
+        completed: false
       })
       expect(
         organizationsActions.fetchOrganizationsSuccess({
-          organizations: [],
-        }),
+          organizations: []
+        })
       ).toEqual({
         type: 'FETCH_ORGANIZATIONS_SUCCESS',
         completed: true,
-        organizations: { organizations: [] },
+        organizations: { organizations: [] }
       })
       expect(organizationsActions.fetchOrganizationsError({ error: true })).toEqual({
         type: 'FETCH_ORGANIZATIONS_ERROR',
         completed: true,
-        error: { error: true },
+        error: { error: true }
       })
     })
   })
@@ -41,25 +41,25 @@ describe('organization actions', () => {
       expect(
         organizationsActions.createOrganizationsRequested({
           name: 'test',
-          UserId: 1,
-        }),
+          UserId: 1
+        })
       ).toEqual({
         type: 'CREATE_ORGANIZATIONS_REQUESTED',
-        completed: false,
+        completed: false
       })
       expect(
         organizationsActions.createOrganizationsSuccess({
-          organizations: [],
-        }),
+          organizations: []
+        })
       ).toEqual({
         type: 'CREATE_ORGANIZATIONS_SUCCESS',
         completed: true,
-        organizations: { organizations: [] },
+        organizations: { organizations: [] }
       })
       expect(organizationsActions.createOrganizationsError({ error: true })).toEqual({
         type: 'CREATE_ORGANIZATIONS_ERROR',
         completed: true,
-        error: { error: true },
+        error: { error: true }
       })
     })
   })
@@ -78,17 +78,17 @@ describe('organization actions', () => {
         response: {
           authenticated: true,
           user: {
-            id: 2,
-          },
-        },
+            id: 2
+          }
+        }
       })
       moxios.wait(() => {
         const request = moxios.requests.mostRecent()
         request.respondWith({
           status: 200,
           response: {
-            organizations: [{ name: 'test org' }],
-          },
+            organizations: [{ name: 'test org' }]
+          }
         })
       })
       const expectedActions = [
@@ -99,13 +99,13 @@ describe('organization actions', () => {
         {
           completed: true,
           type: 'FETCH_ORGANIZATIONS_SUCCESS',
-          organizations: { organizations: [{ name: 'test org' }] },
-        },
+          organizations: { organizations: [{ name: 'test org' }] }
+        }
       ]
       const store = mockStore({
         intl: { messages: {} },
         organizations: { organizations: [{ name: 'test org' }] },
-        loggedIn: { logged: true, data: { id: 2 } },
+        loggedIn: { logged: true, data: { id: 2 } }
       })
       return store.dispatch(organizationsActions.fetchOrganizations(2)).then(() => {
         // return of async actions

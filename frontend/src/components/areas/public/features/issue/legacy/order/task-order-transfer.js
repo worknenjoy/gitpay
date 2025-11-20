@@ -9,7 +9,7 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Skeleton,
+  Skeleton
 } from '@mui/material'
 import { SwapHorizontalCircleRounded } from '@mui/icons-material'
 
@@ -29,7 +29,7 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task, listOrde
 
   const sendTransfer = async () => {
     await onSend(order, {
-      id: currentTaskId,
+      id: currentTaskId
     })
     await listOrders()
     onClose()
@@ -73,7 +73,7 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task, listOrde
                   overflowY: 'scroll',
                   height: '65vh',
                   margin: '20px 0',
-                  border: '1px solid #ccc',
+                  border: '1px solid #ccc'
                 }}
               >
                 {tasks &&

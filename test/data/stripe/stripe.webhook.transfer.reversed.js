@@ -8,7 +8,7 @@ module.exports = {
     pending_webhooks: 1,
     request: {
       id: null,
-      idempotency_key: 'test-idempotency-key',
+      idempotency_key: 'test-idempotency-key'
     },
     type: 'transfer.reversed',
     data: {
@@ -26,7 +26,7 @@ module.exports = {
         livemode: false,
         metadata: {
           payment_request_id: '1',
-          user_id: '1',
+          user_id: '1'
         },
         reversals: {
           object: 'list',
@@ -41,26 +41,26 @@ module.exports = {
               destination_payment_refund: 'pyr_test_00000000000000',
               metadata: {},
               source_refund: null,
-              transfer: 'tr_test_00000000000000',
-            },
+              transfer: 'tr_test_00000000000000'
+            }
           ],
           has_more: false,
           total_count: 1,
-          url: '/v1/transfers/tr_test_00000000000000/reversals',
+          url: '/v1/transfers/tr_test_00000000000000/reversals'
         },
         reversed: true,
         source_transaction: null,
         source_type: 'card',
-        transfer_group: 'group_test_00000000000000',
+        transfer_group: 'group_test_00000000000000'
       },
       previous_attributes: {
         amount_reversed: 0,
         reversals: {
           data: [],
-          total_count: 0,
+          total_count: 0
         },
-        reversed: false,
-      },
-    },
-  },
+        reversed: false
+      }
+    }
+  }
 }

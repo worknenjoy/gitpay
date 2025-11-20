@@ -1,20 +1,20 @@
 module.exports = (sequelize, DataTypes) => {
   const Coupon = sequelize.define('Coupon', {
     code: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     amount: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL
     },
     expires: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.BOOLEAN
     },
     validUntil: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     },
     times: {
-      type: DataTypes.INTEGER,
-    },
+      type: DataTypes.INTEGER
+    }
   })
 
   Coupon.associate = (models) => {

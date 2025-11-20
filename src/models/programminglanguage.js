@@ -5,17 +5,17 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true, // Ensures no duplicate names
-      },
+        unique: true // Ensures no duplicate names
+      }
     },
-    {},
+    {}
   )
 
   ProgrammingLanguage.associate = function (models) {
     ProgrammingLanguage.belongsToMany(models.Project, {
       through: 'ProjectProgrammingLanguages',
       foreignKey: 'programmingLanguageId',
-      otherKey: 'projectId',
+      otherKey: 'projectId'
     })
   }
 

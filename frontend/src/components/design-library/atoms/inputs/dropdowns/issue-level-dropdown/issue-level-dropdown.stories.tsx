@@ -3,7 +3,7 @@ import IssueLevelDropdown from './issue-level-dropdown'
 
 const meta: Meta<typeof IssueLevelDropdown> = {
   title: 'Design Library/Atoms/Inputs/Dropdowns/IssueLevelDropdown',
-  component: IssueLevelDropdown,
+  component: IssueLevelDropdown
 }
 
 export default meta
@@ -11,5 +11,5 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {},
+  args: {}
 }

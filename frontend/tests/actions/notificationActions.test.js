@@ -19,7 +19,7 @@ describe('Notification Actions', () => {
       type: types.ADD_NOTIFICATION,
       text: `${message} - ${extra}`,
       open: true,
-      link: link,
+      link: link
     }
 
     const store = mockStore({ intl: { messages: { [message]: message } } })
@@ -31,7 +31,7 @@ describe('Notification Actions', () => {
   it('should create an action to close a notification', () => {
     const expectedAction = {
       type: types.CLOSE_NOTIFICATION,
-      open: false,
+      open: false
     }
     expect(actions.closeNotification()).to.deep.equal(expectedAction)
   })
@@ -41,7 +41,7 @@ describe('Notification Actions', () => {
     const expectedAction = {
       type: types.ADD_DIALOG,
       dialog: true,
-      target: target,
+      target: target
     }
     expect(actions.addDialog(target)).to.deep.equal(expectedAction)
   })
@@ -50,7 +50,7 @@ describe('Notification Actions', () => {
     const expectedAction = {
       type: types.CLOSE_DIALOG,
       dialog: false,
-      target: null,
+      target: null
     }
     expect(actions.closeDialog()).to.deep.equal(expectedAction)
   })

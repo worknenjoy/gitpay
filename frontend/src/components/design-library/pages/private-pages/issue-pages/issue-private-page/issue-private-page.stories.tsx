@@ -6,8 +6,8 @@ const meta = {
   component: IssuePrivatePage,
   decorators: [withProfileTemplate],
   parameters: {
-    layout: 'fullscreen',
-  },
+    layout: 'fullscreen'
+  }
 }
 
 export default meta
@@ -25,22 +25,22 @@ export const Default = {
         Project: {
           id: 1,
           name: 'Sample Project',
-          Organization: { id: 1, name: 'Sample Org' },
-        },
-      },
+          Organization: { id: 1, name: 'Sample Org' }
+        }
+      }
     },
     account: {
       completed: true,
-      data: { id: 1, balance: 1000 },
+      data: { id: 1, balance: 1000 }
     },
     // New: top-level project and organization props
     project: {
       completed: true,
-      data: { id: 1, name: 'Sample Project' },
+      data: { id: 1, name: 'Sample Project' }
     },
     organization: {
       completed: true,
-      data: { id: 1, name: 'Sample Organization' },
+      data: { id: 1, name: 'Sample Organization' }
     },
     fundingInviteTask: () => console.log('Funding Invite Task Clicked'),
     createTaskSolution: () => console.log('Create Task Solution Clicked'),
@@ -49,7 +49,7 @@ export const Default = {
     fetchPullRequestData: () => console.log('Fetch Pull Request Data Clicked'),
     pullRequestData: {
       completed: true,
-      data: {},
+      data: {}
     },
     taskSolution: null,
     createTask: () => console.log('Create Task Clicked'),
@@ -74,19 +74,19 @@ export const Default = {
         user: {
           id: 2,
           name: 'John Doe',
-          avatarUrl: 'https://via.placeholder.com/150',
+          avatarUrl: 'https://via.placeholder.com/150'
         },
         Project: {
           id: 1,
           name: 'Sample Project',
           Organization: {
             id: 1,
-            name: 'Sample Organization',
-          },
-        },
+            name: 'Sample Organization'
+          }
+        }
       },
       loading: false,
-      error: null,
+      error: null
     },
     updateTask: () => console.log('Update Task Clicked'),
 
@@ -94,29 +94,29 @@ export const Default = {
     fetchCustomer: () => console.log('Fetch Customer Clicked'),
     customer: {
       completed: true,
-      data: { id: 1, name: 'Jane Customer' },
+      data: { id: 1, name: 'Jane Customer' }
     },
     addNotification: (...args: any[]) =>
       console.log(`Notification: ${args?.[0] || 'Sample notification'}`),
     createOrder: () => console.log('Create Order Clicked'),
     order: {
       completed: true,
-      data: { id: 101, status: 'pending', amount: 100, currency: 'USD' },
+      data: { id: 101, status: 'pending', amount: 100, currency: 'USD' }
     },
     fetchWallet: () => console.log('Fetch Wallet Clicked'),
     wallet: {
       completed: true,
-      data: { id: 10, balance: 500, currency: 'USD' },
+      data: { id: 10, balance: 500, currency: 'USD' }
     },
     listWallets: () => console.log('List Wallets Clicked'),
     wallets: {
       completed: true,
       data: [
         { id: 10, balance: 500, currency: 'USD' },
-        { id: 11, balance: 250, currency: 'USD' },
-      ],
+        { id: 11, balance: 250, currency: 'USD' }
+      ]
     },
     fetchTask: () => console.log('Fetch Task Clicked'),
-    syncTask: () => console.log('Sync Task Clicked'),
-  },
+    syncTask: () => console.log('Sync Task Clicked')
+  }
 }

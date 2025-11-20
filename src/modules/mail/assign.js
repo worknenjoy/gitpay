@@ -19,13 +19,13 @@ const setMomentLocale = (lang) => {
 const AssignMail = {
   owner: {
     interested: (to, task, name, offer) => {},
-    assigned: (to, task, name) => {},
+    assigned: (to, task, name) => {}
   },
   messageInterested: (user, task, message) => {},
   notifyInterestedUser: (user, task) => {},
   interested: (to, task, name) => {},
   assigned: (to, task) => {},
-  error: (msg) => {},
+  error: (msg) => {}
 }
 
 if (constants.canSendEmail) {
@@ -47,11 +47,11 @@ ${Signatures.buttons(language, {
   primary: {
     label: 'mail.assign.owner.button.offer',
     title: task.title,
-    url: `${process.env.FRONTEND_HOST}/#/profile/task/${task.id}/offers`,
-  },
-})}`,
-          ),
-        },
+    url: `${process.env.FRONTEND_HOST}/#/profile/task/${task.id}/offers`
+  }
+})}`
+          )
+        }
       ])
   }
 
@@ -77,9 +77,9 @@ ${Signatures.buttons(language, {
             `<p>${i18n.__('mail.assign.owner.assigned.main', { assignedName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.assign.owner.assigned.deadline.date', { date: deadline })}</p>
           <p>${i18n.__('mail.assign.owner.assigned.deadline.days', { days: deadlineFromNow })}</p>
-          <p>${i18n.__('mail.assign.owner.assigned.instructions')}</p>`,
-          ),
-        },
+          <p>${i18n.__('mail.assign.owner.assigned.instructions')}</p>`
+          )
+        }
       ])
   }
 
@@ -96,9 +96,9 @@ ${Signatures.buttons(language, {
             i18n.__('mail.assign.owner.hello'),
             `<p>${i18n.__('mail.interested.main', { email: user.email, name: user.name || user.username, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
           <p>${i18n.__('mail.interested.owner.sec')}</p>
-          `,
-          ),
-        },
+          `
+          )
+        }
       ])
   }
 
@@ -124,20 +124,20 @@ ${Signatures.buttons(language, {
                   : i18n.__('mail.assigned.nodate'),
                 deadlineFromNow: task.deadline
                   ? moment(task.deadline).fromNow()
-                  : i18n.__('mail.assigned.anytime'),
-              },
+                  : i18n.__('mail.assigned.anytime')
+              }
             )} ${Signatures.buttons(language, {
               primary: {
                 label: 'mail.assigned.end.owner.button.primary',
-                url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`,
+                url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
               },
               secondary: {
                 label: 'mail.assigned.end.owner.button.secondary',
-                url: `${task.url}`,
-              },
-            })}`,
-          ),
-        },
+                url: `${task.url}`
+              }
+            })}`
+          )
+        }
       ])
   }
 
@@ -154,9 +154,9 @@ ${Signatures.buttons(language, {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(
             i18n.__('mail.hello', { name: name }),
-            `<p>${i18n.__('mail.interested.user.assigned.main', { username: assignedUserName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`,
-          ),
-        },
+            `<p>${i18n.__('mail.interested.user.assigned.main', { username: assignedUserName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`
+          )
+        }
       ])
   }
 
@@ -178,11 +178,11 @@ ${Signatures.buttons(language, {
             value: emailTemplate.baseContentEmailTemplate(
               i18n.__('mail.hello', { name: name }),
               `<p>${i18n.__('mail.messageInterested.intro', { name: senderName, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>
-${i18n.__('mail.messageInterested.message', { message })} <p>${Signatures.sign(language)}</p>`,
-            ),
-          },
+${i18n.__('mail.messageInterested.message', { message })} <p>${Signatures.sign(language)}</p>`
+            )
+          }
         ],
-        senderEmail,
+        senderEmail
       )
   }
 
@@ -190,8 +190,8 @@ ${i18n.__('mail.messageInterested.message', { message })} <p>${Signatures.sign(l
     request(constants.notificationEmail, i18n.__('mail.assigned.error'), [
       {
         type: 'text/html',
-        value: emailTemplate.baseContentEmailTemplate(msg),
-      },
+        value: emailTemplate.baseContentEmailTemplate(msg)
+      }
     ])
   }
 }

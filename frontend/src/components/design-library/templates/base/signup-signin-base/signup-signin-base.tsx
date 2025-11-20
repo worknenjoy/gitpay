@@ -6,7 +6,7 @@ const CloudSvg = ({
   colorB = '#cfe2fb',
   colorC = '#a8c9ee',
   opacity = 1,
-  style = {},
+  style = {}
 }) => (
   <svg
     width="260"

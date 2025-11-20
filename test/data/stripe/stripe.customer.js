@@ -9,5 +9,5 @@ module.exports.customer = {
   delinquent: false,
   description: null,
   discount: null,
-  email: 'test@test.com',
+  email: 'test@test.com'
 }

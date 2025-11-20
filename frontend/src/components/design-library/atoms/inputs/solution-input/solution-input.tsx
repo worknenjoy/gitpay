@@ -18,7 +18,7 @@ const SolutionInput = (props) => {
           }
           placeholder={intl.formatMessage({
             id: 'task.solution.form.solutionURL.placeholder',
-            defaultMessage: 'Enter Pull Request URL',
+            defaultMessage: 'Enter Pull Request URL'
           })}
           type="string"
           value={props.pullRequestURL}

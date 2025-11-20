@@ -9,7 +9,7 @@ export const UserAccount = ({
   changePassword,
   addNotification,
   history,
-  deleteUser,
+  deleteUser
 }) => {
   return (
     <Container>

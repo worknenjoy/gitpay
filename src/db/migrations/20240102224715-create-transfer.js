@@ -12,7 +12,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       status: Sequelize.STRING,
       value: Sequelize.DECIMAL,
@@ -22,12 +22,12 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Tasks',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: false,
+        allowNull: false
       },
       createdAt: Sequelize.DATE,
-      updatedAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE
     })
   },
 
@@ -39,5 +39,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.dropTable('Transfers')
-  },
+  }
 }

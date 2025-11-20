@@ -4,7 +4,7 @@ import BaseStatus from './base-status'
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Atoms/Status/BaseStatus',
-  component: BaseStatus,
+  component: BaseStatus
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
@@ -22,12 +22,12 @@ Primary.args = {
     { status: 'active', color: 'green', label: 'Active' },
     { status: 'pending', color: 'yellow', label: 'Pending' },
     { status: 'unknown', color: 'gray', label: 'Unknown' },
-    { status: 'inactive', color: 'red' },
+    { status: 'inactive', color: 'red' }
   ],
   classes: {
-    green: { backgroundColor: 'green' },
+    green: { backgroundColor: 'green' }
   },
-  completed: true,
+  completed: true
 }
 
 export const Loading = Template.bind({})
@@ -35,7 +35,7 @@ Loading.args = {
   status: 'loading',
   statusList: [{ status: 'loading', color: 'blue', label: 'Loading' }],
   classes: {
-    blue: { backgroundColor: 'blue' },
+    blue: { backgroundColor: 'blue' }
   },
-  completed: false,
+  completed: false
 }

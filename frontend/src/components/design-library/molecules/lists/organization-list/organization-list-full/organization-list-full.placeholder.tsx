@@ -10,7 +10,7 @@ type Props = {
 
 const OrganizationListFullPlaceholder: React.FC<Props> = ({
   items = 12,
-  showPagination = true,
+  showPagination = true
 }) => {
   return (
     <Root maxWidth={false}>

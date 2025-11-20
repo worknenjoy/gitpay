@@ -4,7 +4,7 @@ const stripe = require('../shared/stripe/stripe')()
 
 module.exports = Promise.method(function userBankAccount(userParameters) {
   return models.User.findOne({
-    where: { id: userParameters.id },
+    where: { id: userParameters.id }
   }).then((data) => {
     if (data.dataValues.account_id) {
       return stripe.accounts

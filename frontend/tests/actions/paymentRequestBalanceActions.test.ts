@@ -18,30 +18,30 @@ describe('paymentRequestBalance actions', () => {
       // requested without payload
       expect(paymentRequestBalanceActions.listPaymentRequestBalanceRequested()).to.eql({
         type: types.LIST_PAYMENT_REQUEST_BALANCE_REQUESTED,
-        payload: undefined,
+        payload: undefined
       })
 
       // requested with payload
       const reqPayload = { page: 1 }
       expect(paymentRequestBalanceActions.listPaymentRequestBalanceRequested(reqPayload)).to.eql({
         type: types.LIST_PAYMENT_REQUEST_BALANCE_REQUESTED,
-        payload: reqPayload,
+        payload: reqPayload
       })
 
       // succeeded
       const successPayload = [{ id: 1 }]
       expect(
-        paymentRequestBalanceActions.listPaymentRequestBalanceSucceeded(successPayload),
+        paymentRequestBalanceActions.listPaymentRequestBalanceSucceeded(successPayload)
       ).to.eql({
         type: types.LIST_PAYMENT_REQUEST_BALANCE_SUCCEEDED,
-        payload: successPayload,
+        payload: successPayload
       })
 
       // failed
       const errorPayload = { error: true }
       expect(paymentRequestBalanceActions.listPaymentRequestBalanceFailed(errorPayload)).to.eql({
         type: types.LIST_PAYMENT_REQUEST_BALANCE_FAILED,
-        payload: errorPayload,
+        payload: errorPayload
       })
     })
   })
@@ -59,12 +59,12 @@ describe('paymentRequestBalance actions', () => {
       const balancesData = [{ id: 1 }]
       moxios.stubRequest(`${api.API_URL}/payment-request-balances`, {
         status: 200,
-        response: balancesData,
+        response: balancesData
       })
 
       const expectedActions = [
         { type: types.LIST_PAYMENT_REQUEST_BALANCE_REQUESTED, payload: undefined },
-        { type: types.LIST_PAYMENT_REQUEST_BALANCE_SUCCEEDED, payload: balancesData },
+        { type: types.LIST_PAYMENT_REQUEST_BALANCE_SUCCEEDED, payload: balancesData }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store
@@ -78,12 +78,12 @@ describe('paymentRequestBalance actions', () => {
       const apiError = 'Something went wrong'
       moxios.stubRequest(`${api.API_URL}/payment-request-balances`, {
         status: 200,
-        response: { error: apiError },
+        response: { error: apiError }
       })
 
       const expectedActions = [
         { type: types.LIST_PAYMENT_REQUEST_BALANCE_REQUESTED, payload: undefined },
-        { type: types.LIST_PAYMENT_REQUEST_BALANCE_FAILED, payload: apiError },
+        { type: types.LIST_PAYMENT_REQUEST_BALANCE_FAILED, payload: apiError }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store
@@ -95,7 +95,7 @@ describe('paymentRequestBalance actions', () => {
 
     it('creates LIST_PAYMENT_REQUEST_BALANCE_FAILED when listing balances fails (HTTP 500)', () => {
       moxios.stubRequest(`${api.API_URL}/payment-request-balances`, {
-        status: 500,
+        status: 500
       })
 
       const store = mockStore({ intl: { messages: {} } })
@@ -105,7 +105,7 @@ describe('paymentRequestBalance actions', () => {
           const actions = store.getActions()
           expect(actions[0]).to.eql({
             type: types.LIST_PAYMENT_REQUEST_BALANCE_REQUESTED,
-            payload: undefined,
+            payload: undefined
           })
           expect(actions[1].type).to.equal(types.LIST_PAYMENT_REQUEST_BALANCE_FAILED)
           expect(actions[1].payload).to.be.an('error')

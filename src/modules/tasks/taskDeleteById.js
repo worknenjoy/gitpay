@@ -11,25 +11,25 @@ module.exports = Promise.method(function taskDeleteById(taskParameters) {
     models.sequelize.query(`DELETE FROM "TaskLabels" WHERE "taskId" = ${taskParameters.id}`),
     models.Task.findAll({
       where: {
-        id: taskParameters.id,
+        id: taskParameters.id
       },
-      include: [models.Label],
+      include: [models.Label]
     }).then((task) => {
       if (task[0] && task[0].dataValues && task[0].dataValues.Labels) {
         task[0].dataValues.Labels.map((label) => {
           return models.Label.destroy({ where: { id: label.id } })
         })
       }
-    }),
+    })
   ]).then((result) => {
     let conditions = {
-      id: taskParameters.id,
+      id: taskParameters.id
     }
     if (taskParameters.userId) {
       conditions = { ...conditions, userId: taskParameters.userId }
     }
     return models.Task.destroy({
-      where: conditions,
+      where: conditions
     }).then((task) => {
       return task
     })

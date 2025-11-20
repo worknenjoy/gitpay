@@ -32,8 +32,8 @@ describe('Mail', () => {
       .reply(202, [
         {
           type: 'text/html',
-          value: 'email content',
-        },
+          value: 'email content'
+        }
       ])
 
     const user = await register(agent)
@@ -44,7 +44,7 @@ describe('Mail', () => {
       description: 'This is a test payment request',
       currency: 'USD',
       amount: 100.0,
-      paymentUrl: 'https://example.com/payment-link',
+      paymentUrl: 'https://example.com/payment-link'
     })
     expect(mailResponse[0].statusCode).to.equal(202)
   })

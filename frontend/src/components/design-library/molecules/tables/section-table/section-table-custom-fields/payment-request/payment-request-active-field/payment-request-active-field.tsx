@@ -10,7 +10,7 @@ interface PaymentRequestActiveFieldProps {
 
 const PaymentRequestActiveField: React.FC<PaymentRequestActiveFieldProps> = ({
   status,
-  completed = true,
+  completed = true
 }) => {
   const theme = useTheme()
   const styles = getStyles(theme)
@@ -19,13 +19,13 @@ const PaymentRequestActiveField: React.FC<PaymentRequestActiveFieldProps> = ({
     {
       status: 'yes',
       label: 'Yes',
-      color: 'yes',
+      color: 'yes'
     },
     {
       status: 'no',
       label: 'No',
-      color: 'no',
-    },
+      color: 'no'
+    }
   ]
 
   return (

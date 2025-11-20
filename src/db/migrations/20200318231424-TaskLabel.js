@@ -5,7 +5,7 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       labelId: {
         type: Sequelize.INTEGER,
@@ -13,8 +13,8 @@ module.exports = {
         onUpdate: 'CASCADE',
         references: {
           model: 'Labels',
-          key: 'id',
-        },
+          key: 'id'
+        }
       },
       taskId: {
         type: Sequelize.INTEGER,
@@ -22,17 +22,17 @@ module.exports = {
         onUpdate: 'CASCADE',
         references: {
           model: 'Tasks',
-          key: 'id',
-        },
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     }),
-  down: (queryInterface) => queryInterface.dropTable('TaskLabels'),
+  down: (queryInterface) => queryInterface.dropTable('TaskLabels')
 }

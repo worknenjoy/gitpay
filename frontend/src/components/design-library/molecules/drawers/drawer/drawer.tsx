@@ -24,7 +24,7 @@ const Drawer = ({
   subtitle,
   children,
   actions = [],
-  completed = true,
+  completed = true
 }: DrawerProps) => {
   const closeDialogButton = () => {
     return (

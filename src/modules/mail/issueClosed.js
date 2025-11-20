@@ -9,7 +9,7 @@ moment.locale('pt-br', ptLocale)
 
 const IssueClosedMail = {
   success: (to, data) => {},
-  error: (msg) => {},
+  error: (msg) => {}
 }
 
 if (constants.canSendEmail) {
@@ -23,8 +23,8 @@ if (constants.canSendEmail) {
         value: `
           <p>${i18n.__('mail.hello', { name: data.name })}</p>
           ${i18n.__('mail.status.when.closed', { url: data.url, title: data.title })}
-          <p>${Signatures.sign(language)}</p>`,
-      },
+          <p>${Signatures.sign(language)}</p>`
+      }
     ])
   }
 
@@ -32,8 +32,8 @@ if (constants.canSendEmail) {
     request(constants.notificationEmail, i18n.__('mail.status.error'), [
       {
         type: 'text/html',
-        value: msg,
-      },
+        value: msg
+      }
     ])
   }
 }

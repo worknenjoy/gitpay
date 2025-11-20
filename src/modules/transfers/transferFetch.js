@@ -14,13 +14,13 @@ module.exports = Promise.method(async function transferFetch(id) {
         Task,
         {
           model: User,
-          as: 'User',
+          as: 'User'
         },
         {
           model: User,
-          as: 'destination',
-        },
-      ],
+          as: 'destination'
+        }
+      ]
     })
     if (transfer.paypal_payout_id) {
       const paypalCredentials = await requestPromise({
@@ -32,14 +32,14 @@ module.exports = Promise.method(async function transferFetch(id) {
           Authorization:
             'Basic ' +
             Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-              'base64',
+              'base64'
             ),
           'Content-Type': 'application/json',
-          grant_type: 'client_credentials',
+          grant_type: 'client_credentials'
         },
         form: {
-          grant_type: 'client_credentials',
-        },
+          grant_type: 'client_credentials'
+        }
       })
       const paypalToken = JSON.parse(paypalCredentials)['access_token']
       try {
@@ -51,9 +51,9 @@ module.exports = Promise.method(async function transferFetch(id) {
             'Accept-Language': 'en_US',
             Prefer: 'return=representation',
             Authorization: 'Bearer ' + paypalToken,
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          json: true,
+          json: true
         })
         transfer.dataValues.paypalTransfer = paypalTransfer
       } catch (error) {

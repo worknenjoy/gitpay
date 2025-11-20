@@ -4,11 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       private: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: false
       },
       not_listed: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: false
       },
       provider: DataTypes.STRING,
       description: DataTypes.STRING,
@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       level: DataTypes.STRING,
       status: {
         type: DataTypes.STRING,
-        defaultValue: 'open',
+        defaultValue: 'open'
       },
       deadline: DataTypes.DATE,
       url: DataTypes.STRING,
@@ -24,37 +24,37 @@ module.exports = (sequelize, DataTypes) => {
       value: DataTypes.DECIMAL,
       paid: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: false
       },
       notified: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: false
       },
       transfer_id: DataTypes.STRING,
       assigned: {
         type: DataTypes.INTEGER,
         references: {
           model: 'Assigns',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: true,
+        allowNull: true
       },
       TransferId: {
         type: DataTypes.INTEGER,
         references: {
           model: 'Transfers',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: true,
+        allowNull: true
       },
       ProjectId: {
         type: DataTypes.INTEGER,
         references: {
           model: 'Projects',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: true,
-      },
+        allowNull: true
+      }
     },
     {
       hooks: {
@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
               type: 'create',
               fields: changed,
               oldValues: Object.values(instance.previous()),
-              newValues: changed.map((v) => instance.dataValues[v]),
+              newValues: changed.map((v) => instance.dataValues[v])
             })
           } catch (e) {
             // eslint-disable-next-line no-console
@@ -90,16 +90,16 @@ module.exports = (sequelize, DataTypes) => {
                 type: 'update',
                 fields: changed,
                 oldValues: previous,
-                newValues: newValues,
+                newValues: newValues
               })
             }
           } catch (e) {
             // eslint-disable-next-line no-console
             console.log('Task History update error', e)
           }
-        },
-      },
-    },
+        }
+      }
+    }
   )
 
   Task.associate = (models) => {
@@ -117,7 +117,7 @@ module.exports = (sequelize, DataTypes) => {
       through: 'TaskLabels',
       onUpdate: 'cascade',
       onDelete: 'cascade',
-      hooks: true,
+      hooks: true
     })
     Task.hasMany(models.TaskSolution, { foreignKey: 'taskId' })
     Task.hasOne(models.Transfer, { foreignKey: 'taskId' })

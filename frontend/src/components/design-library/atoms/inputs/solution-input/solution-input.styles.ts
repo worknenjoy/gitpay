@@ -5,6 +5,6 @@ import { SxProps, Theme } from '@mui/material/styles'
 
 export const solutionInputSx: SxProps<Theme> = {
   '& .MuiFilledInput-input': {
-    padding: '12px 14px',
-  },
+    padding: '12px 14px'
+  }
 }

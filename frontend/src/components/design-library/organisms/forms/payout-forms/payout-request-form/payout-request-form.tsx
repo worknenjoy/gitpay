@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import Field from '../../../../atoms/inputs/fields/field/field'
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes'
 import BalanceCard, {
-  convertStripeAmountByCurrency,
+  convertStripeAmountByCurrency
 } from 'design-library/molecules/cards/balance-card/balance-card'
 import currencyMap from 'design-library/molecules/cards/balance-card/currency-map'
 import { EndAdornment } from './payout-request-form.styles'
@@ -33,7 +33,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
     useImperativeHandle(ref, () => ({
       submit: () => {
         internalFormRef.current?.requestSubmit() // Triggers native submit event
-      },
+      }
     }))
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -112,7 +112,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
               inputProps={{
                 min: 0,
                 step: stepByCurrency,
-                max: convertStripeAmountByCurrency(balance, currency),
+                max: convertStripeAmountByCurrency(balance, currency)
               }}
               completed={completed}
               disabled={balance === 0}
@@ -136,8 +136,8 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
                   ),
                   name: 'custom_amount',
                   value: true,
-                  onChange: onConfirmPayoutCheck,
-                },
+                  onChange: onConfirmPayoutCheck
+                }
               ]}
               includeSelectAll={false}
             />
@@ -145,7 +145,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
         </Grid>
       </form>
     )
-  },
+  }
 )
 
 export default PayoutRequestForm

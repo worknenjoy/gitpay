@@ -4,7 +4,7 @@ import { generateTableData } from '../../../../../../.storybook/utils/generateTa
 
 const meta = {
   title: 'Design Library/Molecules/Tables/TabbedTable/TabbedTable',
-  component: TabbedTable,
+  component: TabbedTable
 }
 
 export default meta
@@ -16,7 +16,7 @@ const tabs = [
     table: {
       tableData: {
         completed: true,
-        data: generateTableData(25),
+        data: generateTableData(25)
       },
       tableHeaderMetadata: {
         id: { sortable: true, numeric: true, dataBaseKey: 'id', label: 'Id' },
@@ -24,12 +24,12 @@ const tabs = [
         email: { sortable: true, dataBaseKey: 'email', label: 'Email' },
         role: { sortable: true, dataBaseKey: 'role', label: 'Role' },
         status: { sortable: true, dataBaseKey: 'status', label: 'Status' },
-        action: { sortable: false, dataBaseKey: 'action', label: 'Action' },
+        action: { sortable: false, dataBaseKey: 'action', label: 'Action' }
       },
       customColumnRenderer: {
-        action: (item) => <a href="#">{item.action}</a>,
-      },
-    },
+        action: (item) => <a href="#">{item.action}</a>
+      }
+    }
   },
   {
     label: 'Tab 2',
@@ -38,7 +38,7 @@ const tabs = [
     table: {
       tableData: {
         completed: true,
-        data: generateTableData(5),
+        data: generateTableData(5)
       },
       tableHeaderMetadata: {
         id: { sortable: true, numeric: true, dataBaseKey: 'id', label: 'Id' },
@@ -46,17 +46,17 @@ const tabs = [
         email: { sortable: true, dataBaseKey: 'email', label: 'Email' },
         role: { sortable: true, dataBaseKey: 'role', label: 'Role' },
         status: { sortable: true, dataBaseKey: 'status', label: 'Status' },
-        action: { sortable: false, dataBaseKey: 'action', label: 'Action' },
+        action: { sortable: false, dataBaseKey: 'action', label: 'Action' }
       },
       customColumnRenderer: {
-        action: (item) => <a href="#">{item.action}</a>,
-      },
-    },
-  },
+        action: (item) => <a href="#">{item.action}</a>
+      }
+    }
+  }
 ]
 
 export const Default = {
   args: {
-    tabs,
-  },
+    tabs
+  }
 }

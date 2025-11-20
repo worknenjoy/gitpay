@@ -26,7 +26,7 @@ export default function Radios({
   options,
   value,
   onChange,
-  completed = true,
+  completed = true
 }: RadiosProps) {
   return (
     <>

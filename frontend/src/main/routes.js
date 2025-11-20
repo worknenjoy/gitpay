@@ -29,7 +29,7 @@ export default (props) => (
           '/signin',
           '/forgot',
           '/activate/user/:userId/token/:token',
-          '/token/:token',
+          '/token/:token'
         ]}
         component={SessionPage}
       />

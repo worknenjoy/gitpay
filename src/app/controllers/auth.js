@@ -43,7 +43,7 @@ exports.forgotPasswordNotification = async (req, res) => {
       const message = {
         to: foundUser.dataValues,
         subject,
-        html,
+        html
       }
       Sendmail.success(message.to, message.subject, message.html)
       res.send(true)
@@ -60,14 +60,14 @@ exports.forgotPasswordNotification = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   try {
     const foundUser = await models.User.findOne({
-      where: { recover_password_token: req.body.token },
+      where: { recover_password_token: req.body.token }
     })
     if (!foundUser) res.status(401)
     const passwordHash = models.User.generateHash(req.body.password)
     if (passwordHash) {
       await models.User.update(
         { password: passwordHash, recover_password_token: null },
-        { where: { id: foundUser.dataValues.id } },
+        { where: { id: foundUser.dataValues.id } }
       )
       res.send('successfully change password')
     } else {
@@ -116,12 +116,12 @@ exports.createPrivateTask = (req, res) => {
     headers: {
       'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
       Authorization:
-        'Basic ' + Buffer.from(`${githubClientId}:${githubClientSecret}`).toString('base64'),
+        'Basic ' + Buffer.from(`${githubClientId}:${githubClientSecret}`).toString('base64')
     },
     body: {
-      code,
+      code
     },
-    json: true,
+    json: true
   })
     .then((response) => {
       if (response.access_token) {
@@ -131,7 +131,7 @@ exports.createPrivateTask = (req, res) => {
             private: true,
             userId,
             url,
-            token: response.access_token,
+            token: response.access_token
           })
           .then((task) => {
             res.redirect(`${process.env.FRONTEND_HOST}/#/task/${task.id}`)
@@ -160,7 +160,7 @@ exports.activate_user = async (req, res) => {
     } else {
       const userUpdate = await models.User.update(
         { activation_token: null, email_verified: true },
-        { where: { id: foundUser.dataValues.id }, returning: true, plain: true },
+        { where: { id: foundUser.dataValues.id }, returning: true, plain: true }
       )
       res.send(userUpdate[1])
     }
@@ -182,13 +182,13 @@ exports.resend_activation_email = async (req, res) => {
       token &&
       (await models.User.update(
         { activation_token: token, email_verified: false },
-        { where: { id: foundUser.dataValues.id }, returning: true, plain: true },
+        { where: { id: foundUser.dataValues.id }, returning: true, plain: true }
       ))
     if (userUpdate[1].dataValues.id) {
       Sendmail.success(
         userUpdate[1].dataValues,
         'Activate your account',
-        `<p>Hi ${name || 'Gitpay user'},</p><p>Click <a href="${process.env.FRONTEND_HOST}/#/activate/user/${id}/token/${token}">here</a> to activate your account.</p>`,
+        `<p>Hi ${name || 'Gitpay user'},</p><p>Click <a href="${process.env.FRONTEND_HOST}/#/activate/user/${id}/token/${token}">here</a> to activate your account.</p>`
       )
     }
     res.send(userUpdate[1])
@@ -201,10 +201,10 @@ exports.resend_activation_email = async (req, res) => {
 exports.authorizeGithubPrivateIssue = (req, res) => {
   const params = req.query
   const uri = encodeURIComponent(
-    `${process.env.API_HOST}/callback/github/private?userId=${params.userId}&url=${params.url}`,
+    `${process.env.API_HOST}/callback/github/private?userId=${params.userId}&url=${params.url}`
   )
   res.redirect(
-    `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${uri}&scope=repo&client_id=${secrets.github.id}`,
+    `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${uri}&scope=repo&client_id=${secrets.github.id}`
   )
 }
 

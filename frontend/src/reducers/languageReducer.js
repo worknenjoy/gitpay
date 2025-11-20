@@ -1,15 +1,15 @@
 import {
   LIST_LAGUAGE_REQUEST,
   LIST_LAGUAGE_SUCCESS,
-  LIST_LAGUAGE_ERROR,
+  LIST_LAGUAGE_ERROR
 } from '../actions/languageActions'
 
 export const languages = (
   state = {
     completed: true,
-    data: [],
+    data: []
   },
-  action,
+  action
 ) => {
   switch (action.type) {
     case LIST_LAGUAGE_REQUEST:

@@ -3,7 +3,7 @@ import IssueSidebar from './issue-sidebar'
 
 export default {
   title: 'Design Library/Molecules/Sections/IssueSidebar',
-  component: IssueSidebar,
+  component: IssueSidebar
 }
 
 const Template = (args) => <IssueSidebar {...args} />
@@ -18,15 +18,15 @@ const baseArgs = {
       id: 1,
       name: 'John Doe',
       username: 'johndoe',
-      avatar_url: 'https://via.placeholder.com/64',
-    },
+      avatar_url: 'https://via.placeholder.com/64'
+    }
   },
   account: {
     completed: true,
     data: {
       id: 1,
-      name: 'Foo Bar',
-    },
+      name: 'Foo Bar'
+    }
   },
   updateTask: () => {},
   inviteTask: () => {},
@@ -40,31 +40,31 @@ const baseArgs = {
   updateTaskSolution: () => {},
   pullRequestData: {
     completed: true,
-    data: {},
+    data: {}
   },
   customer: {
     completed: true,
-    data: {},
+    data: {}
   },
   addNotification: () => {},
   createOrder: async () => {},
   order: {
     completed: true,
-    data: {},
+    data: {}
   },
   fetchWallet: () => {},
   wallet: {
     completed: true,
-    data: {},
+    data: {}
   },
   listWallets: () => {},
   wallets: {
     completed: true,
-    data: [],
+    data: []
   },
   fetchTask: () => {},
   syncTask: () => {},
-  fetchCustomer: () => {},
+  fetchCustomer: () => {}
 }
 
 export const AsUser = Template.bind({})
@@ -90,16 +90,16 @@ AsUser.args = {
           amount: 100,
           provider: 'stripe',
           updatedAt: new Date().toISOString(),
-          User: { name: 'Alice', username: 'alice' },
-        },
+          User: { name: 'Alice', username: 'alice' }
+        }
       ],
       metadata: {
         issue: {
-          user: { login: 'maintainer', html_url: 'https://example.com/maintainer' },
-        },
-      },
-    },
-  },
+          user: { login: 'maintainer', html_url: 'https://example.com/maintainer' }
+        }
+      }
+    }
+  }
 }
 
 export const AsOwner = Template.bind({})
@@ -125,16 +125,16 @@ AsOwner.args = {
           amount: 250,
           provider: 'paypal',
           updatedAt: new Date().toISOString(),
-          User: { name: 'Bob', username: 'bob' },
-        },
+          User: { name: 'Bob', username: 'bob' }
+        }
       ],
       metadata: {
         issue: {
-          user: { login: 'owner', html_url: 'https://example.com/owner' },
-        },
-      },
-    },
-  },
+          user: { login: 'owner', html_url: 'https://example.com/owner' }
+        }
+      }
+    }
+  }
 }
 
 export const Overdue = Template.bind({})
@@ -155,9 +155,9 @@ Overdue.args = {
       Orders: [],
       metadata: {
         issue: {
-          user: { login: 'qa', html_url: 'https://example.com/qa' },
-        },
-      },
-    },
-  },
+          user: { login: 'qa', html_url: 'https://example.com/qa' }
+        }
+      }
+    }
+  }
 }

@@ -8,7 +8,7 @@ const ExploreIssuesPage = ({
   labels,
   languages,
   listLabels,
-  listLanguages,
+  listLanguages
 }) => {
   useEffect(() => {
     filterTasks({})

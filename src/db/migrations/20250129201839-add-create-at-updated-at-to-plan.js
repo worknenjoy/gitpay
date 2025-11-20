@@ -10,13 +10,13 @@ module.exports = {
     queryInterface.addColumn('Plans', 'createdAt', {
       type: Sequelize.DATE,
       allowNull: false,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     })
 
     queryInterface.addColumn('Plans', 'updatedAt', {
       type: Sequelize.DATE,
       allowNull: false,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
     })
   },
 
@@ -29,5 +29,5 @@ module.exports = {
      */
     queryInterface.removeColumn('Plans', 'createdAt')
     queryInterface.removeColumn('Plans', 'updatedAt')
-  },
+  }
 }

@@ -5,13 +5,13 @@ import {
   GET_TASK_SOLUTION_SUCCESS,
   CREATE_TASK_SOLUTION_REQUESTED,
   CREATE_TASK_SOLUTION_SUCCESS,
-  CLEAN_PULL_REQUEST_DATA_STATE,
+  CLEAN_PULL_REQUEST_DATA_STATE
 } from '../actions/taskSolutionActions'
 
 const initialState = {
   taskSolution: {},
   pullRequestData: {},
-  completed: false,
+  completed: false
 }
 
 export const taskSolution = (state = initialState, action) => {

@@ -8,12 +8,12 @@ import { styled } from '@mui/material/styles'
 
 const LabelsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
-  flexWrap: 'wrap',
+  flexWrap: 'wrap'
 }))
 
 class TaskLabels extends Component {
   static propTypes = {
-    labels: PropTypes.object,
+    labels: PropTypes.object
   }
 
   handleListItemClick = () => {}

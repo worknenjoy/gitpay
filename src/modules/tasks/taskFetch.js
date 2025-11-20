@@ -11,41 +11,41 @@ const memberExists = require('../members').memberExists
 module.exports = Promise.method(function taskFetch(taskParams) {
   return models.Task.findOne({
     where: {
-      id: taskParams.id,
+      id: taskParams.id
     },
     include: [
       models.User,
       {
         model: models.Project,
-        include: [models.Organization],
+        include: [models.Organization]
       },
       {
         model: models.Order,
-        include: [models.User],
+        include: [models.User]
       },
       {
         model: models.Assign,
-        include: [models.User],
+        include: [models.User]
       },
       {
         model: models.Member,
-        include: [models.User, models.Role],
+        include: [models.User, models.Role]
       },
       {
         model: models.Offer,
         include: [models.User, models.Task],
-        order: [['createdAt', 'ASC']],
+        order: [['createdAt', 'ASC']]
       },
       {
-        model: models.History,
+        model: models.History
       },
       {
-        model: models.Label,
+        model: models.Label
       },
       {
-        model: models.Transfer,
-      },
-    ],
+        model: models.Transfer
+      }
+    ]
   }).then((data) => {
     const githubClientId = secrets.github.id
     const githubClientSecret = secrets.github.secret
@@ -62,17 +62,17 @@ module.exports = Promise.method(function taskFetch(taskParams) {
         return requestPromise({
           uri: `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
           headers: {
-            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
-          },
+            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+          }
         })
           .then(async (response) => {
             const issueDataJsonGithub = JSON.parse(response)
 
             const assigned = await models.Assign.findOne({
               where: {
-                id: data.assigned,
+                id: data.assigned
               },
-              include: [models.User],
+              include: [models.User]
             }).catch((e) => {})
 
             const role = await roleExists({ name: 'company_owner' })
@@ -80,15 +80,15 @@ module.exports = Promise.method(function taskFetch(taskParams) {
               const userInfo = await requestPromise({
                 uri: `https://api.github.com/users/${userOrCompany}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
                 headers: {
-                  'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
-                },
+                  'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+                }
               })
               const userInfoJSON = JSON.parse(userInfo)
               const userExist = userExists && (await userExists({ email: userInfoJSON.email }))
               if (userExist && userExist.dataValues && userExist.dataValues.id) {
                 const memberExist = await memberExists({
                   userId: userExist.dataValues.id,
-                  taskId: data.id,
+                  taskId: data.id
                 })
                 if (memberExist.dataValues && memberExist.dataValues.id) {
                   // already member
@@ -96,12 +96,12 @@ module.exports = Promise.method(function taskFetch(taskParams) {
                   // add member
                   const task = await models.Task.findOne({
                     where: {
-                      id: data.id,
-                    },
+                      id: data.id
+                    }
                   })
                   await task.createMember({
                     userId: userExist.dataValues.id,
-                    roleId: role.dataValues.id,
+                    roleId: role.dataValues.id
                   })
                 }
               } else {
@@ -112,8 +112,8 @@ module.exports = Promise.method(function taskFetch(taskParams) {
             const repoInfo = await requestPromise({
               uri: `${issueDataJsonGithub.repository_url}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
               headers: {
-                'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
-              },
+                'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+              }
             })
             const repoInfoJSON = JSON.parse(repoInfo)
             const repoUrl = repoInfoJSON.html_url
@@ -143,7 +143,7 @@ module.exports = Promise.method(function taskFetch(taskParams) {
                 repoUrl: repoUrl,
                 ownerUrl: ownerUrl,
                 labels: issueDataJsonGithub.labels,
-                issue: issueDataJsonGithub,
+                issue: issueDataJsonGithub
               },
               orders: data.dataValues.Orders,
               Transfer: data.dataValues.Transfer,
@@ -153,8 +153,8 @@ module.exports = Promise.method(function taskFetch(taskParams) {
               histories: data.dataValues.Histories,
               Project: data.dataValues.Project && {
                 ...data.dataValues.Project.dataValues,
-                organization: data.dataValues.Project.dataValues.Organization.dataValues,
-              },
+                organization: data.dataValues.Project.dataValues.Organization.dataValues
+              }
             }
 
             if (!data.title || data.title !== issueDataJsonGithub.title) {
@@ -163,9 +163,9 @@ module.exports = Promise.method(function taskFetch(taskParams) {
                 { title: issueDataJsonGithub.title },
                 {
                   where: {
-                    id: data.id,
-                  },
-                },
+                    id: data.id
+                  }
+                }
               )
               responseGithub.title = dataTitleUpdate.title
             }
@@ -175,10 +175,10 @@ module.exports = Promise.method(function taskFetch(taskParams) {
                 { status: issueDataJsonGithub.state },
                 {
                   where: {
-                    id: data.id,
+                    id: data.id
                   },
-                  returning: true,
-                },
+                  returning: true
+                }
               )
               responseGithub.status = dataStatusUpdateInProgress.status
             }
@@ -188,10 +188,10 @@ module.exports = Promise.method(function taskFetch(taskParams) {
                 { status: issueDataJsonGithub.state },
                 {
                   where: {
-                    id: data.id,
+                    id: data.id
                   },
-                  returning: true,
-                },
+                  returning: true
+                }
               )
               responseGithub.status = dataStatusUpdatedClosed.status
             }
@@ -204,9 +204,9 @@ module.exports = Promise.method(function taskFetch(taskParams) {
                   if (!taskLabels.includes(l['name'])) {
                     const label = await models.Label.findOrCreate({
                       where: {
-                        name: l['name'],
+                        name: l['name']
                       },
-                      include: [models.Task],
+                      include: [models.Task]
                     })
                     data.addLabel(label[0])
                   }
@@ -227,7 +227,7 @@ module.exports = Promise.method(function taskFetch(taskParams) {
 
       case 'bitbucket':
         return requestPromise({
-          uri: `https://api.bitbucket.org/2.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`,
+          uri: `https://api.bitbucket.org/2.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
         })
           .then((response) => {
             const issueDataJsonBitbucket = JSON.parse(response)
@@ -248,7 +248,7 @@ module.exports = Promise.method(function taskFetch(taskParams) {
               User: data.dataValues && data.dataValues.User && data.dataValues.User.dataValues,
               Project: data.dataValues.Project && {
                 ...data.dataValues.Project.dataValues,
-                organization: data.dataValues.Project.dataValues.Organization.dataValues,
+                organization: data.dataValues.Project.dataValues.Organization.dataValues
               },
               metadata: {
                 id: issueId,
@@ -261,15 +261,15 @@ module.exports = Promise.method(function taskFetch(taskParams) {
                   body: issueDataJsonBitbucket.content.raw,
                   user: {
                     login: issueDataJsonBitbucket.reporter.username,
-                    avatar_url: issueDataJsonBitbucket.reporter.links.avatar.href,
-                  },
-                },
+                    avatar_url: issueDataJsonBitbucket.reporter.links.avatar.href
+                  }
+                }
               },
               orders: data.dataValues.Orders,
               Transfer: data.dataValues.Transfer,
               assigns: data.dataValues.Assigns,
               members: data.dataValues.Members,
-              Offers: data.dataValues.Offers,
+              Offers: data.dataValues.Offers
             }
 
             /*

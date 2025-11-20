@@ -7,7 +7,7 @@ module.exports = Promise.method(function orderFetch(orderParams) {
       return {
         source_id: data.source_id,
         currency: data.currency,
-        amount: data.amount,
+        amount: data.amount
       }
     })
     .catch((error) => {

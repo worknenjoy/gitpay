@@ -22,7 +22,7 @@ module.exports.paid = {
       automatic_tax: {
         enabled: false,
         liability: null,
-        status: null,
+        status: null
       },
       automatically_finalizes_at: null,
       billing_reason: 'manual',
@@ -55,7 +55,7 @@ module.exports.paid = {
       invoice_pdf:
         'https://pay.stripe.com/invoice/acct_19qSWHBrSjgsps2D/test_YWNjdF8xOXFTV0hCclNqZ3NwczJELF9RdVVndzRGM21XWWJHMHY1YkJ5Ynk4OEhYNk5EQVpjLDExNzc1MjA3NQ0200jYcTOCX7/pdf?s=ap',
       issuer: {
-        type: 'self',
+        type: 'self'
       },
       last_finalization_error: null,
       latest_revision: null,
@@ -78,11 +78,11 @@ module.exports.paid = {
             livemode: false,
             metadata: {
               task_id: '15',
-              order_id: '13',
+              order_id: '13'
             },
             period: {
               end: 1727211051,
-              start: 1727211051,
+              start: 1727211051
             },
             plan: null,
             price: {
@@ -104,28 +104,28 @@ module.exports.paid = {
               transform_quantity: null,
               type: 'one_time',
               unit_amount: 10800,
-              unit_amount_decimal: '10800',
+              unit_amount_decimal: '10800'
             },
             proration: false,
             proration_details: {
-              credited_items: null,
+              credited_items: null
             },
             quantity: 1,
             subscription: null,
             tax_amounts: [],
             tax_rates: [],
             type: 'invoiceitem',
-            unit_amount_excluding_tax: '10800',
-          },
+            unit_amount_excluding_tax: '10800'
+          }
         ],
         has_more: false,
         total_count: 1,
-        url: '/v1/invoices/in_1Q2fh8BrSjgsps2DUqQsGLDj/lines',
+        url: '/v1/invoices/in_1Q2fh8BrSjgsps2DUqQsGLDj/lines'
       },
       livemode: false,
       metadata: {
         task_id: '15',
-        order_id: '13',
+        order_id: '13'
       },
       next_payment_attempt: null,
       number: '54B03F60-0003',
@@ -136,7 +136,7 @@ module.exports.paid = {
       payment_settings: {
         default_mandate: null,
         payment_method_options: null,
-        payment_method_types: null,
+        payment_method_types: null
       },
       period_end: 1727211050,
       period_start: 1727211050,
@@ -147,10 +147,10 @@ module.exports.paid = {
       rendering: {
         amount_tax_display: null,
         pdf: {
-          page_size: 'letter',
+          page_size: 'letter'
         },
         template: null,
-        template_version: null,
+        template_version: null
       },
       rendering_options: null,
       shipping_cost: null,
@@ -162,11 +162,11 @@ module.exports.paid = {
         finalized_at: 1727211052,
         marked_uncollectible_at: null,
         paid_at: 1727211272,
-        voided_at: null,
+        voided_at: null
       },
       subscription: null,
       subscription_details: {
-        metadata: null,
+        metadata: null
       },
       subtotal: 10800,
       subtotal_excluding_tax: 10800,
@@ -178,16 +178,16 @@ module.exports.paid = {
       total_excluding_tax: 10800,
       total_tax_amounts: [],
       transfer_data: null,
-      webhooks_delivered_at: 1727211088,
-    },
+      webhooks_delivered_at: 1727211088
+    }
   },
   livemode: false,
   pending_webhooks: 1,
   request: {
     id: 'req_NA1krZygl8GkIZ',
-    idempotency_key: '46badf96-62d0-4c33-af32-63a676fe0c4e',
+    idempotency_key: '46badf96-62d0-4c33-af32-63a676fe0c4e'
   },
-  type: 'invoice.paid',
+  type: 'invoice.paid'
 }
 
 module.exports.created = {
@@ -214,7 +214,7 @@ module.exports.created = {
       automatic_tax: {
         enabled: false,
         liability: null,
-        status: null,
+        status: null
       },
       automatically_finalizes_at: null,
       billing_reason: 'manual',
@@ -230,7 +230,7 @@ module.exports.created = {
         line1: 'Borgergade, 26',
         line2: 'sal 4 lej 3',
         postal_code: '1300',
-        state: 'Copenhagen',
+        state: 'Copenhagen'
       },
       customer_email: 'alexanmtz@gmail.com',
       customer_name: 'Work n Enjoy',
@@ -252,7 +252,7 @@ module.exports.created = {
       hosted_invoice_url: null,
       invoice_pdf: null,
       issuer: {
-        type: 'self',
+        type: 'self'
       },
       last_finalization_error: null,
       latest_revision: null,
@@ -261,12 +261,12 @@ module.exports.created = {
         data: [],
         has_more: false,
         total_count: 0,
-        url: '/v1/invoices/in_1Q8JR1BrSjgsps2DmN3iPASq/lines',
+        url: '/v1/invoices/in_1Q8JR1BrSjgsps2DmN3iPASq/lines'
       },
       livemode: false,
       metadata: {
         create_wallet_order: 'true',
-        wallet_id: '2',
+        wallet_id: '2'
       },
       next_payment_attempt: null,
       number: null,
@@ -277,7 +277,7 @@ module.exports.created = {
       payment_settings: {
         default_mandate: null,
         payment_method_options: null,
-        payment_method_types: null,
+        payment_method_types: null
       },
       period_end: 1728555451,
       period_start: 1728555451,
@@ -288,10 +288,10 @@ module.exports.created = {
       rendering: {
         amount_tax_display: null,
         pdf: {
-          page_size: 'auto',
+          page_size: 'auto'
         },
         template: null,
-        template_version: null,
+        template_version: null
       },
       rendering_options: null,
       shipping_cost: null,
@@ -303,11 +303,11 @@ module.exports.created = {
         finalized_at: null,
         marked_uncollectible_at: null,
         paid_at: null,
-        voided_at: null,
+        voided_at: null
       },
       subscription: null,
       subscription_details: {
-        metadata: null,
+        metadata: null
       },
       subtotal: 0,
       subtotal_excluding_tax: 0,
@@ -319,16 +319,16 @@ module.exports.created = {
       total_excluding_tax: 0,
       total_tax_amounts: [],
       transfer_data: null,
-      webhooks_delivered_at: null,
-    },
+      webhooks_delivered_at: null
+    }
   },
   livemode: false,
   pending_webhooks: 1,
   request: {
     id: 'req_oi0QaoOwvd8eiu',
-    idempotency_key: 'stripe-node-retry-5b01300e-5e0e-49de-b754-398913baee58',
+    idempotency_key: 'stripe-node-retry-5b01300e-5e0e-49de-b754-398913baee58'
   },
-  type: 'invoice.created',
+  type: 'invoice.created'
 }
 
 module.exports.updated = {
@@ -355,7 +355,7 @@ module.exports.updated = {
       automatic_tax: {
         enabled: false,
         liability: null,
-        status: null,
+        status: null
       },
       automatically_finalizes_at: null,
       billing_reason: 'manual',
@@ -371,7 +371,7 @@ module.exports.updated = {
         line1: 'Borgergade, 26',
         line2: 'sal 4 lej 3',
         postal_code: '1300',
-        state: 'Copenhagen',
+        state: 'Copenhagen'
       },
       customer_email: 'alexanmtz@gmail.com',
       customer_name: 'Work n Enjoy',
@@ -393,7 +393,7 @@ module.exports.updated = {
       hosted_invoice_url: null,
       invoice_pdf: null,
       issuer: {
-        type: 'self',
+        type: 'self'
       },
       last_finalization_error: null,
       latest_revision: null,
@@ -402,12 +402,12 @@ module.exports.updated = {
         data: [],
         has_more: false,
         total_count: 0,
-        url: '/v1/invoices/in_1Q8JR1BrSjgsps2DmN3iPASq/lines',
+        url: '/v1/invoices/in_1Q8JR1BrSjgsps2DmN3iPASq/lines'
       },
       livemode: false,
       metadata: {
         create_wallet_order: 'true',
-        wallet_id: '2',
+        wallet_id: '2'
       },
       next_payment_attempt: null,
       number: null,
@@ -418,7 +418,7 @@ module.exports.updated = {
       payment_settings: {
         default_mandate: null,
         payment_method_options: null,
-        payment_method_types: null,
+        payment_method_types: null
       },
       period_end: 1728555451,
       period_start: 1728555451,
@@ -429,10 +429,10 @@ module.exports.updated = {
       rendering: {
         amount_tax_display: null,
         pdf: {
-          page_size: 'auto',
+          page_size: 'auto'
         },
         template: null,
-        template_version: null,
+        template_version: null
       },
       rendering_options: null,
       shipping_cost: null,
@@ -444,11 +444,11 @@ module.exports.updated = {
         finalized_at: null,
         marked_uncollectible_at: null,
         paid_at: null,
-        voided_at: null,
+        voided_at: null
       },
       subscription: null,
       subscription_details: {
-        metadata: null,
+        metadata: null
       },
       subtotal: 0,
       subtotal_excluding_tax: 0,
@@ -460,16 +460,16 @@ module.exports.updated = {
       total_excluding_tax: 0,
       total_tax_amounts: [],
       transfer_data: null,
-      webhooks_delivered_at: null,
-    },
+      webhooks_delivered_at: null
+    }
   },
   livemode: false,
   pending_webhooks: 1,
   request: {
     id: 'req_oi0QaoOwvd8eiu',
-    idempotency_key: 'stripe-node-retry-5b01300e-5e0e-49de-b754-398913baee58',
+    idempotency_key: 'stripe-node-retry-5b01300e-5e0e-49de-b754-398913baee58'
   },
-  type: 'invoice.updated',
+  type: 'invoice.updated'
 }
 
 module.exports.payment_failed = {
@@ -496,7 +496,7 @@ module.exports.payment_failed = {
       automatic_tax: {
         enabled: false,
         liability: null,
-        status: null,
+        status: null
       },
       automatically_finalizes_at: null,
       billing_reason: 'manual',
@@ -512,7 +512,7 @@ module.exports.payment_failed = {
         line1: 'Tove Maës Vej 2',
         line2: '1.tv',
         postal_code: '2500',
-        state: 'Copenhagen',
+        state: 'Copenhagen'
       },
       customer_email: 'alexanmtz@gmail.com',
       customer_name: 'Alexandre Magno Teles Zimerer',
@@ -524,10 +524,10 @@ module.exports.payment_failed = {
           line1: '',
           line2: '',
           postal_code: '',
-          state: '',
+          state: ''
         },
         name: 'Veridiana Reis',
-        phone: '',
+        phone: ''
       },
       customer_tax_exempt: 'none',
       customer_tax_ids: [],
@@ -547,7 +547,7 @@ module.exports.payment_failed = {
       invoice_pdf:
         'https://pay.stripe.com/invoice/acct_19qSWHBrSjgsps2D/live_YWNjdF8xOXFTV0hCclNqZ3NwczJELF9SMVVUQlVLczBmQzI3ZkdzMW9nZG5ndzlZMW9IY3hsLDExOTM2NTU5NQ0200YE8yekiI/pdf?s=ap',
       issuer: {
-        type: 'self',
+        type: 'self'
       },
       last_finalization_error: null,
       latest_revision: null,
@@ -568,11 +568,11 @@ module.exports.payment_failed = {
             invoice_item: 'ii_1Q9RUEBrSjgsps2DYHlqDgeO',
             livemode: true,
             metadata: {
-              wallet_order_id: '2',
+              wallet_order_id: '2'
             },
             period: {
               end: 1728824730,
-              start: 1728824730,
+              start: 1728824730
             },
             plan: null,
             price: {
@@ -594,27 +594,27 @@ module.exports.payment_failed = {
               transform_quantity: null,
               type: 'one_time',
               unit_amount: 2100,
-              unit_amount_decimal: '2100',
+              unit_amount_decimal: '2100'
             },
             proration: false,
             proration_details: {
-              credited_items: null,
+              credited_items: null
             },
             quantity: 1,
             subscription: null,
             tax_amounts: [],
             tax_rates: [],
             type: 'invoiceitem',
-            unit_amount_excluding_tax: '2100',
-          },
+            unit_amount_excluding_tax: '2100'
+          }
         ],
         has_more: false,
         total_count: 1,
-        url: '/v1/invoices/in_1Q9RUDBrSjgsps2DRUgEGbgc/lines',
+        url: '/v1/invoices/in_1Q9RUDBrSjgsps2DRUgEGbgc/lines'
       },
       livemode: true,
       metadata: {
-        wallet_order_id: '2',
+        wallet_order_id: '2'
       },
       next_payment_attempt: null,
       number: 'AD894E6-0014',
@@ -625,7 +625,7 @@ module.exports.payment_failed = {
       payment_settings: {
         default_mandate: null,
         payment_method_options: null,
-        payment_method_types: null,
+        payment_method_types: null
       },
       period_end: 1728824729,
       period_start: 1728824729,
@@ -636,10 +636,10 @@ module.exports.payment_failed = {
       rendering: {
         amount_tax_display: null,
         pdf: {
-          page_size: 'letter',
+          page_size: 'letter'
         },
         template: null,
-        template_version: null,
+        template_version: null
       },
       rendering_options: null,
       shipping_cost: null,
@@ -651,11 +651,11 @@ module.exports.payment_failed = {
         finalized_at: 1728824730,
         marked_uncollectible_at: null,
         paid_at: null,
-        voided_at: null,
+        voided_at: null
       },
       subscription: null,
       subscription_details: {
-        metadata: null,
+        metadata: null
       },
       subtotal: 2100,
       subtotal_excluding_tax: 2100,
@@ -667,14 +667,14 @@ module.exports.payment_failed = {
       total_excluding_tax: 2100,
       total_tax_amounts: [],
       transfer_data: null,
-      webhooks_delivered_at: 1728824730,
-    },
+      webhooks_delivered_at: 1728824730
+    }
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: null,
-    idempotency_key: 'db21b83a-4485-4496-95e6-2263c1ce99bf',
+    idempotency_key: 'db21b83a-4485-4496-95e6-2263c1ce99bf'
   },
-  type: 'invoice.payment_failed',
+  type: 'invoice.payment_failed'
 }

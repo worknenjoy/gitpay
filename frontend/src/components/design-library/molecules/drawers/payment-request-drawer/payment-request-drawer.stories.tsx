@@ -8,8 +8,8 @@ const meta = {
     open: true,
     amount: 100,
     title: 'Request Payment',
-    description: 'Please fill out the form to request payment',
-  },
+    description: 'Please fill out the form to request payment'
+  }
 }
 
 export default meta
@@ -34,12 +34,12 @@ Edit.args = {
       description: 'Development of a company website',
       amount: 1500,
       currency: 'USD',
-      active: true,
-    },
-  },
+      active: true
+    }
+  }
 }
 
 export const Loading = Template.bind({})
 Loading.args = {
-  completed: false,
+  completed: false
 }

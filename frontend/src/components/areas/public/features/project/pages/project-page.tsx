@@ -23,7 +23,7 @@ const ProjectPage = ({
   listLabels,
   listLanguages,
   listTasks,
-  fetchProject,
+  fetchProject
 }: ProjectPageProps) => {
   const { project_id } = useParams<{ project_id: string }>()
 

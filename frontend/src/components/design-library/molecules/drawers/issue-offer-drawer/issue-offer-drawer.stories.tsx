@@ -4,7 +4,7 @@ import IssueOfferDrawer from './issue-offer-drawer'
 
 export default {
   title: 'Design Library/Molecules/Drawers/IssueOfferDrawer',
-  component: IssueOfferDrawer,
+  component: IssueOfferDrawer
 }
 
 const Template = (args) => <IssueOfferDrawer {...args} />
@@ -21,7 +21,7 @@ Default.args = {
   assignTask: async () => {},
   loggedUser: {
     logged: true,
-    user: { id: 1, email: 'dev@example.com', customer_id: 'cus_test_123' },
+    user: { id: 1, email: 'dev@example.com', customer_id: 'cus_test_123' }
   },
   assigns: [{ id: 11, userId: 1 }],
   issue: {
@@ -43,15 +43,15 @@ Default.args = {
             id: 1,
             username: 'devuser',
             name: 'Dev User',
-            picture_url: 'https://via.placeholder.com/64',
-          },
-        },
+            picture_url: 'https://via.placeholder.com/64'
+          }
+        }
       ],
       metadata: {
         issue: {
-          user: { login: 'maintainer', html_url: 'https://example.com/maintainer' },
-        },
-      },
-    },
-  },
+          user: { login: 'maintainer', html_url: 'https://example.com/maintainer' }
+        }
+      }
+    }
+  }
 }

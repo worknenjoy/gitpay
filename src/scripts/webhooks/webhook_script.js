@@ -5,7 +5,7 @@ console.log('environment', process.env.NODE_ENV)
 
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output: process.stdout
 })
 
 let step = 0
@@ -23,7 +23,7 @@ rl.on('line', (line) => {
     } else {
       step++
       console.log(
-        '👉 Step 2: Paste the full event JSON and press Enter + Ctrl+D (or Ctrl+Z on Windows):',
+        '👉 Step 2: Paste the full event JSON and press Enter + Ctrl+D (or Ctrl+Z on Windows):'
       )
     }
   } else {
@@ -42,13 +42,13 @@ rl.on('close', async () => {
     const res = {
       status: (code) => ({
         send: (output) => console.log(`Response status: ${code}`, output),
-        json: (output) => console.log(`✅ Response [${code}]:`, output),
-      }),
+        json: (output) => console.log(`✅ Response [${code}]:`, output)
+      })
     }
 
     const mockReq = {
       body: event,
-      headers: { 'stripe-signature': 'test_signature' }, // not verified, just for mock
+      headers: { 'stripe-signature': 'test_signature' } // not verified, just for mock
     }
 
     const handler =

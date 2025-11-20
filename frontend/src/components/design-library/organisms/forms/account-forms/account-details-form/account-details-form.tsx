@@ -22,7 +22,7 @@ const errorMapping = {
   'individual[address][postal_code]': 'Invalid postal code',
   'individual[phone]': 'Invalid phone number',
   'individual[first_name]': 'Invalid first name',
-  'individual[last_name]': 'Invalid last name',
+  'individual[last_name]': 'Invalid last name'
 }
 
 const AccountDetailsForm = ({ account, countries, onSubmit, onChange, onConfirmCloseAccount }) => {

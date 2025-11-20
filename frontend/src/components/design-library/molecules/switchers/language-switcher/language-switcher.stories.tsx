@@ -3,7 +3,7 @@ import LanguageSwitcher from './language-switcher'
 
 export default {
   title: 'Design Library/Molecules/Switchers/LanguageSwitcher',
-  component: LanguageSwitcher,
+  component: LanguageSwitcher
 }
 
 const Template = (args) => <LanguageSwitcher {...args} />
@@ -14,5 +14,5 @@ Default.args = {
   completed: true,
   onSwitchLang: () => {},
   userCurrentLanguage: 'en',
-  user: {},
+  user: {}
 }

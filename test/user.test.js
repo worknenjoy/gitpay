@@ -57,7 +57,7 @@ describe('Users', () => {
         .send({
           name: 'a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name',
           email: 'teste@gmail.com',
-          password: 'teste',
+          password: 'teste'
         })
         .expect('Content-Type', /json/)
         .expect(401)
@@ -74,7 +74,7 @@ describe('Users', () => {
         .send({
           email:
             'a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name@email.com',
-          password: 'teste',
+          password: 'teste'
         })
         .expect('Content-Type', /json/)
         .expect(401)
@@ -91,7 +91,7 @@ describe('Users', () => {
         .send({
           email: 'email@test.com',
           password:
-            'a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name@email.com',
+            'a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name a really llong name@email.com'
         })
         .expect('Content-Type', /json/)
         .expect(401)
@@ -207,7 +207,7 @@ describe('Users', () => {
 
     it('should reset password from the right token', (done) => {
       registerAndLogin(agent, {
-        recover_password_token: '123',
+        recover_password_token: '123'
       })
         .then((res) => {
           agent
@@ -226,7 +226,7 @@ describe('Users', () => {
 
     it('should not reset password from the wrong token', (done) => {
       registerAndLogin(agent, {
-        recover_password_token: '1234',
+        recover_password_token: '1234'
       })
         .then((res) => {
           agent
@@ -314,7 +314,7 @@ describe('Users', () => {
             .send({
               old_password: 'test12345678',
               password:
-                'test12345678test12345678test12345678test12345678test12345678test12345678test12345678',
+                'test12345678test12345678test12345678test12345678test12345678test12345678test12345678'
             })
             .set('Authorization', res.headers.authorization)
             .expect(400)
@@ -390,7 +390,7 @@ describe('Users', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(302)
           expect(res.headers.location).to.include(
-            'https://accounts.google.com/o/oauth2/v2/auth?access_type=',
+            'https://accounts.google.com/o/oauth2/v2/auth?access_type='
           )
           done()
         })
@@ -414,7 +414,7 @@ describe('Users', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(302)
           expect(res.headers.location).to.include(
-            'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub&scope=user%3Aemail&client_id=',
+            'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub&scope=user%3Aemail&client_id='
           )
           done()
         })
@@ -426,7 +426,7 @@ describe('Users', () => {
         .expect(200)
         .end((err, res) => {
           expect(res.headers.location).to.include(
-            'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate%3FuserId%3Dundefined%26url%3Dundefined&scope=repo&client_id=',
+            'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate%3FuserId%3Dundefined%26url%3Dundefined&scope=repo&client_id='
           )
           done(err)
         })
@@ -439,7 +439,7 @@ describe('Users', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(302)
           expect(res.headers.location).to.include(
-            'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate%3FuserId%3Dundefined%26url%3Dundefined&scope=repo&client_id=',
+            'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate%3FuserId%3Dundefined%26url%3Dundefined&scope=repo&client_id='
           )
           done(err)
         })
@@ -465,12 +465,12 @@ describe('Users', () => {
     it('should try get customer info with customer id set', (done) => {
       nock('https://api.stripe.com').get('/v1/customers/cus_Ec8ZOuHXnSlBh8').reply(200, {
         id: 'cus_Ec8ZOuHXnSlBh8',
-        object: 'customer',
+        object: 'customer'
       })
       nock('https://api.stripe.com').post('/v1/accounts').reply(200, {})
 
       registerAndLogin(agent, {
-        customer_id: 'cus_Ec8ZOuHXnSlBh8',
+        customer_id: 'cus_Ec8ZOuHXnSlBh8'
       })
         .then((res) => {
           agent
@@ -498,7 +498,7 @@ describe('Users', () => {
         id: 'cus_Ec8ZOuHXnSlBh8',
         object: 'customer',
         name: 'test',
-        email: 'test',
+        email: 'test'
       })
 
       registerAndLogin(agent)
@@ -525,11 +525,11 @@ describe('Users', () => {
         id: 'cus_Ec8ZOuHXnSlBh8',
         object: 'customer',
         name: 'test2',
-        email: 'test',
+        email: 'test'
       })
 
       registerAndLogin(agent, {
-        customer_id: 'cus_Ec8ZOuHXnSlBh8',
+        customer_id: 'cus_Ec8ZOuHXnSlBh8'
       })
         .then((res) => {
           agent
@@ -554,7 +554,7 @@ describe('Users', () => {
         email: 'teste@gmail.com',
         password: 'teste',
         country: 'usa',
-        language: 'en',
+        language: 'en'
       })
         .then((res) => {
           agent
@@ -576,20 +576,20 @@ describe('Users', () => {
     xit('should create organization and associate with an user', (done) => {
       nock('https://api.github.com')
         .get(
-          `/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`,
+          `/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`
         )
         .reply(200, githubOrg)
       register(agent, {
         email: 'test_user_organizations_create@gmail.com',
         username: 'test',
         password: 'test',
-        provider: 'github',
+        provider: 'github'
       })
         .then((res) => {
           const UserId = res.body.id
           login(agent, {
             email: 'test_user_organizations_create@gmail.com',
-            password: 'test',
+            password: 'test'
           })
             .then((login) => {
               agent
@@ -623,20 +623,20 @@ describe('Users', () => {
     xit('should retrieve user github organizations', (done) => {
       nock('https://api.github.com')
         .get(
-          `/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`,
+          `/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`
         )
         .reply(200, githubOrg)
       register(agent, {
         email: 'test_user_organizations@gmail.com',
         username: 'test',
         password: 'test',
-        provider: 'github',
+        provider: 'github'
       })
         .then((res) => {
           const userId = res.body.id
           login(agent, {
             email: 'test_user_organizations@gmail.com',
-            password: 'test',
+            password: 'test'
           })
             .then((login) => {
               agent
@@ -658,19 +658,19 @@ describe('Users', () => {
     xit('should check if that organizations exist, if exist return true if already imported', (done) => {
       nock('https://api.github.com')
         .get(
-          `/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`,
+          `/users/test/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`
         )
         .reply(200, githubOrg)
       register(agent, {
         email: 'test_user_organizations_exist@gmail.com',
         username: 'test',
         password: 'test',
-        provider: 'github',
+        provider: 'github'
       }).then((res) => {
         const userId = res.body.id
         login(agent, {
           email: 'test_user_organizations_exist@gmail.com',
-          password: 'test',
+          password: 'test'
         }).then((login) => {
           agent
             .get(`/user/organizations`)
@@ -690,19 +690,19 @@ describe('Users', () => {
   describe('user account', () => {
     it('should retrieve account for user', async () => {
       nock('https://api.stripe.com').get('/v1/accounts/acct_1CVSl2EI8tTzMKoL').reply(200, {
-        object: 'account',
+        object: 'account'
       })
 
       const reg = await register(agent, {
         email: 'test_user_account@gmail.com',
         password: 'test',
-        account_id: 'acct_1CVSl2EI8tTzMKoL',
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
       })
       const userId = reg.body.id
 
       const loginRes = await login(agent, {
         email: 'test_user_account@gmail.com',
-        password: 'test',
+        password: 'test'
       })
 
       const user = await agent
@@ -723,19 +723,19 @@ describe('Users', () => {
           available: [
             {
               amount: 1000,
-              currency: 'usd',
-            },
+              currency: 'usd'
+            }
           ],
           pending: [
             {
               amount: 500,
-              currency: 'usd',
-            },
-          ],
+              currency: 'usd'
+            }
+          ]
         })
 
       const res = await registerAndLogin(agent, {
-        account_id: 'acct_1CVSl2EI8tTzMKoL',
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
       })
 
       const account = await agent
@@ -754,23 +754,23 @@ describe('Users', () => {
     it('should retrieve country specs for user', async () => {
       nock('https://api.stripe.com').get('/v1/accounts/acct_1CVSl2EI8tTzMKoL').reply(200, {
         object: 'account',
-        country: 'US',
+        country: 'US'
       })
 
       nock('https://api.stripe.com').get('/v1/country_specs/US').reply(200, {
-        object: 'country_spec',
+        object: 'country_spec'
       })
 
       const reg = await register(agent, {
         email: 'test_user_account@gmail.com',
         password: 'test',
-        account_id: 'acct_1CVSl2EI8tTzMKoL',
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
       })
       const userId = reg.body.id
 
       const loginRes = await login(agent, {
         email: 'test_user_account@gmail.com',
-        password: 'test',
+        password: 'test'
       })
 
       const user = await agent
@@ -789,22 +789,22 @@ describe('Users', () => {
         {
           id: 'acct_1CVSl2EI8tTzMKoL',
           object: 'account',
-          country: 'US',
+          country: 'US'
         },
         {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       )
 
       const reg = await register(agent, {
         email: 'test_user_account_create@gmail.com',
-        password: 'test',
+        password: 'test'
       })
       const userId = reg.body.id
 
       const loginRes = await login(agent, {
         email: 'test_user_account_create@gmail.com',
-        password: 'test',
+        password: 'test'
       })
 
       const finalResponse = await agent
@@ -820,26 +820,26 @@ describe('Users', () => {
 
     xit('should update account for user', async () => {
       nock('https://api.stripe.com').post('/v1/accounts/acct_1CVSl2EI8tTzMKoL').reply(200, {
-        object: 'account',
+        object: 'account'
       })
 
       const reg = await register(agent, {
         email: 'test_user_account_update@gmail.com',
         password: 'test',
-        account_id: 'acct_1CVSl2EI8tTzMKoL',
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
       })
       const userId = reg.body.id
 
       const loginRes = await login(agent, {
         email: 'test_user_account_update@gmail.com',
-        password: 'test',
+        password: 'test'
       })
 
       const user = await agent
         .put(`/user/account`)
         .send({
           id: userId,
-          account: {},
+          account: {}
         })
         .set('Authorization', loginRes.headers.authorization)
         .expect(200)
@@ -850,20 +850,20 @@ describe('Users', () => {
 
     it('should delete account', async () => {
       nock('https://api.stripe.com').delete('/v1/accounts/acct_1CVSl2EI8tTzMKoL').reply(200, {
-        deleted: true,
+        deleted: true
       })
 
       const reg = await register(agent, {
         email: 'test_user_account_delete@gmail.com',
         password: 'test',
         account_id: 'acct_1CVSl2EI8tTzMKoL',
-        country: 'US',
+        country: 'US'
       })
       const userId = reg.body.id
 
       const loginRes = await login(agent, {
         email: 'test_user_account_delete@gmail.com',
-        password: 'test',
+        password: 'test'
       })
 
       const user = await agent
@@ -886,18 +886,18 @@ describe('Users', () => {
           data: [
             {
               object: 'bank_account',
-              id: 'ba_1CVSl2EI8tTzMKoL',
-            },
-          ],
+              id: 'ba_1CVSl2EI8tTzMKoL'
+            }
+          ]
         })
 
       nock('https://api.stripe.com')
         .post('/v1/accounts/acct_1CVSl2EI8tTzMKoL/external_accounts/ba_1CVSl2EI8tTzMKoL')
         .reply(200, {
-          object: 'account',
+          object: 'account'
         })
       registerAndLogin(agent, {
-        account_id: 'acct_1CVSl2EI8tTzMKoL',
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
       })
         .then((res) => {
           agent
@@ -906,7 +906,7 @@ describe('Users', () => {
               account_id: 'acct_1CVSl2EI8tTzMKoL',
               routing_number: '110000000',
               account_number: '000123456789',
-              country: 'US',
+              country: 'US'
             })
             .set('Authorization', res.headers.authorization)
             .expect(200)

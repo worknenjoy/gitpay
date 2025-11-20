@@ -6,7 +6,7 @@ import {
   Apps,
   Assignment,
   GroupWork,
-  AttachMoney,
+  AttachMoney
 } from '@mui/icons-material'
 import { FormattedMessage } from 'react-intl'
 
@@ -49,7 +49,7 @@ const About = () => {
                 id="aboutSectionHeroItem4Secondary"
                 defaultMessage="We aim to make open source sustainable by ensuring developers are compensated for their time and expertise."
               />
-            ),
+            )
           },
           {
             icon: <Assignment />,
@@ -64,7 +64,7 @@ const About = () => {
                 id="aboutSectionHeroItem5Secondary"
                 defaultMessage="Gitpay allows maintainers to import issues and bring in contributors, accelerating development and reducing maintenance overhead."
               />
-            ),
+            )
           },
           {
             icon: <Work />,
@@ -79,7 +79,7 @@ const About = () => {
                 id="aboutSectionHeroItem6Secondary"
                 defaultMessage="Every contribution counts — from bug fixes to new features — and each completed task earns transparent rewards."
               />
-            ),
+            )
           },
           {
             icon: <AttachMoney />,
@@ -94,8 +94,8 @@ const About = () => {
                 id="aboutSectionHeroItem3Secondary"
                 defaultMessage="Companies and individuals can fund issues that directly improve the tools and frameworks they rely on."
               />
-            ),
-          },
+            )
+          }
         ]}
       />
       <SectionHero
@@ -118,7 +118,7 @@ const About = () => {
                 id="aboutSectionHeroItem7Secondary"
                 defaultMessage="We believe in open collaboration and clear communication. Every transaction, bounty, and decision is visible to all participants."
               />
-            ),
+            )
           },
           {
             icon: <Apps />,
@@ -130,7 +130,7 @@ const About = () => {
                 id="aboutSectionHeroItem8Secondary"
                 defaultMessage="Everyone involved — maintainers, contributors, and sponsors — deserves equal respect and clear terms for participation and reward."
               />
-            ),
+            )
           },
           {
             icon: <Work />,
@@ -142,7 +142,7 @@ const About = () => {
                 id="aboutSectionHeroItem9Secondary"
                 defaultMessage="Gitpay thrives on collaboration. We encourage diverse voices, shared learning, and collective ownership of better software."
               />
-            ),
+            )
           },
           {
             icon: <Assignment />,
@@ -154,7 +154,7 @@ const About = () => {
                 id="aboutSectionHeroItem10Secondary"
                 defaultMessage="Every issue solved, every bounty completed, and every sponsorship funded brings open source one step closer to sustainability."
               />
-            ),
+            )
           },
           {
             icon: <AttachMoney />,
@@ -166,8 +166,8 @@ const About = () => {
                 id="aboutSectionHeroItem11Secondary"
                 defaultMessage="We handle every payment, agreement, and collaboration with reliability and integrity, ensuring confidence for all sides of the ecosystem."
               />
-            ),
-          },
+            )
+          }
         ]}
       />
     </>

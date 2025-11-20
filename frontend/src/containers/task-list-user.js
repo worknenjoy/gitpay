@@ -7,7 +7,7 @@ import ProfilePage from '../components/areas/public/features/profile/pages/profi
 const mapStateToProps = (state) => {
   return {
     user: state.user,
-    tasks: getFilteredTasks(state),
+    tasks: getFilteredTasks(state)
   }
 }
 
@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch) => {
     listTasks: ({ organizationId, projectId, userId, status }) =>
       dispatch(listTasks({ organizationId, projectId, userId, status })),
     filterTasks: (tasks, key, value, additional) =>
-      dispatch(filterTasks(tasks, key, value, additional)),
+      dispatch(filterTasks(tasks, key, value, additional))
   }
 }
 

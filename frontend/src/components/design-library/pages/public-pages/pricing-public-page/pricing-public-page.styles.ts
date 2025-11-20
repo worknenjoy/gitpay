@@ -9,8 +9,8 @@ export const Layout = styled('div')(({ theme }) => ({
   [theme.breakpoints.up(900)]: {
     width: 900,
     marginLeft: 'auto',
-    marginRight: 'auto',
-  },
+    marginRight: 'auto'
+  }
 }))
 
 export const HeroContent = styled('div')(({ theme }) => ({
@@ -18,12 +18,12 @@ export const HeroContent = styled('div')(({ theme }) => ({
   margin: '0 auto',
   padding: `${theme.spacing(2)}px 0 ${theme.spacing(2)}px`,
   marginTop: theme.spacing(3),
-  marginBottom: 0,
+  marginBottom: 0
 }))
 
 export const CardPricing = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'baseline',
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(2)
 }))

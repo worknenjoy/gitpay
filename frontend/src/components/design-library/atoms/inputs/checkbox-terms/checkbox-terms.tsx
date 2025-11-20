@@ -35,7 +35,7 @@ const CheckboxTerms = ({ onAccept }) => {
                       defaultMessage="TERMS OF USE"
                     />
                   </Link>
-                ),
+                )
               }}
             />
           </Typography>

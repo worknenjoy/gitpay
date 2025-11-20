@@ -10,8 +10,8 @@ const meta: Meta<typeof MainHero> = {
     mainTitle: { control: 'text' },
     description: { control: 'text' },
     image: { control: 'text' },
-    actions: { control: 'object' },
-  },
+    actions: { control: 'object' }
+  }
 }
 
 export default meta
@@ -27,14 +27,14 @@ export const Default: Story = {
         label: 'Get Started',
         variant: 'contained',
         color: 'primary',
-        onClick: action('get-started'),
+        onClick: action('get-started')
       },
       {
         label: 'Learn More',
         variant: 'outlined',
         color: 'secondary',
-        onClick: action('learn-more'),
-      },
-    ],
-  },
+        onClick: action('learn-more')
+      }
+    ]
+  }
 }

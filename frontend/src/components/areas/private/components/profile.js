@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions,
+  DialogActions
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
@@ -49,7 +49,7 @@ class Profile extends Component {
       selected: null,
       orgsLoaded: false,
       openUpdateProfileDialog: false,
-      emailNotVerifiedDialog: false,
+      emailNotVerifiedDialog: false
     }
   }
 
@@ -317,7 +317,7 @@ class Profile extends Component {
                         '/profile/task/:id',
                         '/profile/task/:id/:slug',
                         '/profile/explore/task/:id',
-                        '/profile/explore/task/:id/:slug',
+                        '/profile/explore/task/:id/:slug'
                       ]}
                       component={(props) => <TaskContainer noTopBar noBottomBar {...props} />}
                     />
@@ -337,7 +337,7 @@ class Profile extends Component {
                         '/profile/organizations/:organization_id',
                         '/profile/organizations/:organization_id/:slug',
                         '/profile/explore/organizations/:organization_id',
-                        '/profile/explore/organizations/:organization_id/:slug',
+                        '/profile/explore/organizations/:organization_id/:slug'
                       ]}
                       component={TaskListProfileOrganization}
                     />
@@ -352,7 +352,7 @@ class Profile extends Component {
                         '/profile/explore/organizations/:organization_id/projects/:project_id',
                         '/profile/explore/organizations/:organization_id/projects/:project_id/:filter',
                         '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug',
-                        '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter',
+                        '/profile/explore/organizations/:organization_id/:organization_slug/projects/:project_id/:project_slug/:filter'
                       ]}
                     >
                       <TaskListProfileProjects noTopBar noBottomBar />
@@ -391,7 +391,7 @@ Profile.propTypes = {
   user: PropTypes.object,
   history: PropTypes.object,
   roles: PropTypes.object,
-  addNotification: PropTypes.object,
+  addNotification: PropTypes.object
 }
 
 export default injectIntl(Profile)

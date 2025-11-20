@@ -9,7 +9,7 @@ import {
   updateAccount,
   deleteAccount,
   updateBankAccount,
-  getBankAccount,
+  getBankAccount
 } from '../../../actions/userActions'
 import { changePassword } from '../../../actions/loginActions'
 import { addNotification } from '../../../actions/notificationActions'
@@ -21,7 +21,7 @@ const mapStateToProps = (state: any) => {
     user: getCurrentUser(state),
     account: state.account,
     bankAccount: state.bankAccount,
-    countries: state.countries,
+    countries: state.countries
   }
 }
 
@@ -38,7 +38,7 @@ const mapDispatchToProps = (dispatch: any) => {
     deleteAccount: () => dispatch(deleteAccount()),
     createBankAccount: (bankAccount: any) => dispatch(createBankAccount(bankAccount)),
     updateBankAccount: (bankAccount: any) => dispatch(updateBankAccount(bankAccount)),
-    getBankAccount: () => dispatch(getBankAccount()),
+    getBankAccount: () => dispatch(getBankAccount())
   }
 }
 

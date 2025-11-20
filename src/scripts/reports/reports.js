@@ -12,7 +12,7 @@ i18n.configure({
       : path.join(__dirname, '../locales', 'result'),
   locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
   defaultLocale: 'en',
-  updateFiles: false,
+  updateFiles: false
 })
 
 i18n.init()
@@ -22,10 +22,10 @@ const Report = {
     const tasks = await models.Task.findAll({
       where: {
         value: {
-          [Op.gt]: 0,
-        },
+          [Op.gt]: 0
+        }
       },
-      include: [models.User],
+      include: [models.User]
     })
     if (tasks[0]) {
       const taskSort = tasks.sort((ta, tb) => {
@@ -49,7 +49,7 @@ const Report = {
   montlyUsers: async () => {
     const users = await models.User.findAll({
       where: {},
-      order: [['id', 'DESC']],
+      order: [['id', 'DESC']]
     })
 
     if (users[0]) {
@@ -79,10 +79,10 @@ const Report = {
         status: 'in_progress',
         deadline: {
           [Op.lt]: moment(new Date()).format(),
-          [Op.gt]: moment(new Date()).subtract(2, 'days').format(),
-        },
+          [Op.gt]: moment(new Date()).subtract(2, 'days').format()
+        }
       },
-      include: [models.User],
+      include: [models.User]
     })
     // eslint-disable-next-line no-console
     console.log('tasks from cron job to remember deadline', tasks)
@@ -92,18 +92,18 @@ const Report = {
           if (t.dataValues && t.assigned) {
             const userAssigned = await models.Assign.findAll({
               where: { id: t.assigned },
-              include: [models.User],
+              include: [models.User]
             })
             if (userAssigned[0].dataValues) {
               DeadlineMail.deadlineEndOwner(
                 t.User.dataValues,
                 t.dataValues,
-                t.User.name || t.User.username,
+                t.User.name || t.User.username
               )
               DeadlineMail.deadlineEndAssigned(
                 userAssigned[0].dataValues.User,
                 t.dataValues,
-                userAssigned[0].dataValues.User.dataValues.name,
+                userAssigned[0].dataValues.User.dataValues.name
               )
             }
           }
@@ -111,7 +111,7 @@ const Report = {
       })
     }
     return tasks
-  },
+  }
 }
 
 Report.montlyBounties()

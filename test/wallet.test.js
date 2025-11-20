@@ -21,7 +21,7 @@ describe('Wallet', () => {
       .set('authorization', user.headers.authorization)
       .expect(201)
       .send({
-        name: 'Test Wallet',
+        name: 'Test Wallet'
       })
     expect(res.body).to.exist
     expect(res.body.id).to.exist
@@ -33,7 +33,7 @@ describe('Wallet', () => {
     const wallet = await models.Wallet.create({
       userId: user.body.id,
       name: 'Test Wallet',
-      balance: 0,
+      balance: 0
     })
     const res = await agent
       .put(`/wallets/${wallet.id}`)
@@ -42,7 +42,7 @@ describe('Wallet', () => {
       .set('authorization', user.headers.authorization)
       .expect(200)
       .send({
-        amount: 100,
+        amount: 100
       })
     expect(res.body).to.exist
     expect(res.body.id).to.exist
@@ -54,7 +54,7 @@ describe('Wallet', () => {
     const wallet = await models.Wallet.create({
       userId: user.body.id,
       name: 'Test Wallet',
-      balance: 0,
+      balance: 0
     })
     const res = await agent
       .get('/wallets')
@@ -72,7 +72,7 @@ describe('Wallet', () => {
     const wallet = await models.Wallet.create({
       userId: user.body.id,
       name: 'Test Wallet',
-      balance: 0,
+      balance: 0
     })
     const res = await agent
       .get(`/wallets/${wallet.id}`)

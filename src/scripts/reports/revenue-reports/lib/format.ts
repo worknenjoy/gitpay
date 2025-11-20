@@ -8,7 +8,7 @@ export function ensureDir(dir: string) {
 
 export function centsToDecimal(
   amount: number | null | undefined,
-  currency: string | undefined,
+  currency: string | undefined
 ): string {
   if (typeof amount !== 'number') return ''
   const zeroMinor = new Set(['JPY', 'KRW', 'VND'])
@@ -19,7 +19,7 @@ export function centsToDecimal(
 
 export function formatCurrencyPtBR(
   amount: number | null | undefined,
-  currency: string | undefined,
+  currency: string | undefined
 ): string {
   if (typeof amount !== 'number' || !currency) return ''
   const cur = currency.toUpperCase()

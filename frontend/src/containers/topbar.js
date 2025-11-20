@@ -17,7 +17,7 @@ const mapStateToProps = (state, ownProps) => {
     completed: state.loggedIn.completed,
     task: state.task,
     preferences: state.preferences,
-    channelUserCount: state.info.data.channelUserCount,
+    channelUserCount: state.info.data.channelUserCount
   }
 }
 
@@ -31,7 +31,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchPreferences: (userId) => dispatch(fetchPreferences(userId)),
     updateUser: (userId, userData) => dispatch(updateUser(userId, userData)),
     createTask: (task, history) => dispatch(createTask(task, history)),
-    info: () => dispatch(info()),
+    info: () => dispatch(info())
   }
 }
 

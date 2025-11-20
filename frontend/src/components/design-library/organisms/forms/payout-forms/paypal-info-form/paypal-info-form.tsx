@@ -10,7 +10,7 @@ import {
   Title,
   Pos,
   FullWidthFormControl,
-  RightActions,
+  RightActions
 } from './paypal-info-form.styles'
 
 const PaypalInfoForm = ({ user, onSubmit }) => {

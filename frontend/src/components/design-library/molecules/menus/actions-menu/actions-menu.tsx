@@ -34,17 +34,17 @@ export const ActionsMenu = ({ actions }: ActionsMenuProps) => {
         onClose={handleCloseMenu}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'right',
+          horizontal: 'right'
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'right',
+          horizontal: 'right'
         }}
         PaperProps={{
           sx: {
             mt: 1,
-            minWidth: 160,
-          },
+            minWidth: 160
+          }
         }}
       >
         {actions.map((action, index) => (

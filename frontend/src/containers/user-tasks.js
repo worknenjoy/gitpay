@@ -7,7 +7,7 @@ import { getCurrentUser } from '../common/selectors/user/getUser'
 const mapStateToProps = (state, ownProps) => {
   return {
     user: getCurrentUser(state),
-    issues: getFilteredTasks(state),
+    issues: getFilteredTasks(state)
   }
 }
 
@@ -15,7 +15,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     listTasks: (params) => dispatch(listTasks(params)),
     filterTasks: (tasks, key, value, additional) =>
-      dispatch(filterTasks(tasks, key, value, additional)),
+      dispatch(filterTasks(tasks, key, value, additional))
   }
 }
 

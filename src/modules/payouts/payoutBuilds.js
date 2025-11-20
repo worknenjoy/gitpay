@@ -10,8 +10,8 @@ module.exports = Promise.method(async function payoutBuilds(params) {
     params.source_id &&
     (await models.Payout.findOne({
       where: {
-        source_id: params.source_id,
-      },
+        source_id: params.source_id
+      }
     }))
 
   if (existingPayout) {
@@ -24,7 +24,7 @@ module.exports = Promise.method(async function payoutBuilds(params) {
     amount: params.amount,
     currency: params.currency,
     method: params.method,
-    status: params.status,
+    status: params.status
   })
 
   const newPayout = await payout.save()

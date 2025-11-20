@@ -19,14 +19,14 @@ export default {
             margin: '2rem auto',
             padding: '1rem',
             border: '1px solid #eee',
-            borderRadius: 8,
+            borderRadius: 8
           }}
         >
           <Story />
         </div>
       </Elements>
-    ),
-  ],
+    )
+  ]
 }
 
 const Template = (args) => <CardPaymentForm {...args} />

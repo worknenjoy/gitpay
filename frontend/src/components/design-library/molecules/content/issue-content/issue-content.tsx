@@ -17,7 +17,7 @@ const IssueContent = ({
   reportTask,
   onDeleteTask,
   task,
-  messageAuthor,
+  messageAuthor
 }) => {
   return (
     <Container fixed maxWidth="md" sx={{ mt: 2 }}>
@@ -70,8 +70,8 @@ const IssueContent = ({
           {
             name: task.data?.User?.name || 'anonymous',
             email: task.data?.User?.email,
-            href: task.data?.User?.website,
-          },
+            href: task.data?.User?.website
+          }
         ]}
       />
     </Container>

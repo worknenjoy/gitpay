@@ -42,10 +42,10 @@ export const globalTypes = {
       icon: 'globe',
       items: [
         { value: 'en', right: '🇺🇸', title: 'English' },
-        { value: 'br', right: '🇧🇷', title: 'Português' },
-      ],
-    },
-  },
+        { value: 'br', right: '🇧🇷', title: 'Português' }
+      ]
+    }
+  }
 }
 
 export const parameters = {
@@ -53,8 +53,8 @@ export const parameters = {
   controls: {
     matchers: {
       color: /(background|color)$/i,
-      date: /Date$/,
-    },
+      date: /Date$/
+    }
   },
 
   backgrounds: {
@@ -62,7 +62,7 @@ export const parameters = {
     values: [
       { name: 'black', value: '#000000' },
       { name: 'white', value: '#ffffff' },
-      { name: 'gray', value: '#888888' },
-    ],
-  },
+      { name: 'gray', value: '#888888' }
+    ]
+  }
 }

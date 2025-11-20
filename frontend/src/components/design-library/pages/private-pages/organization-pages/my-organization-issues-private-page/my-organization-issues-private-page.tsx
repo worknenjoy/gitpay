@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { useParams } from 'react-router-dom'
 import {
   issueMetadata,
-  customColumnRenderer,
+  customColumnRenderer
 } from 'design-library/molecules/tables/issue-table/issue-table'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
 import { Container } from '@mui/material'
@@ -23,7 +23,7 @@ const MyOrganizationIssuesPrivatePage = ({ organization, user, issues }) => {
   const issueTableData = {
     tableData: issues,
     tableHeaderMetadata: issueMetadata,
-    customColumnRenderer: customColumnRenderer,
+    customColumnRenderer: customColumnRenderer
   }
 
   const baseLink = `/profile/organizations/${organization_id}`
@@ -31,7 +31,7 @@ const MyOrganizationIssuesPrivatePage = ({ organization, user, issues }) => {
   const { currentTabs, activeTab } = useMyIssueTabs({
     user,
     baseLink,
-    issueTableData,
+    issueTableData
   })
 
   return (
@@ -47,7 +47,7 @@ const MyOrganizationIssuesPrivatePage = ({ organization, user, issues }) => {
                   defaultMessage="My issues"
                 />
               ),
-              link: '/profile/tasks',
+              link: '/profile/tasks'
             }}
           />
         </TopSection>

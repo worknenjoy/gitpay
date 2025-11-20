@@ -11,9 +11,9 @@ module.exports = {
       type: Sequelize.INTEGER,
       references: {
         model: 'Users',
-        key: 'id',
+        key: 'id'
       },
-      allowNull: false,
+      allowNull: false
     })
   },
 
@@ -25,5 +25,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     queryInterface.removeColumn('Transfers', 'userId')
-  },
+  }
 }

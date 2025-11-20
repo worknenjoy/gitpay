@@ -19,7 +19,7 @@ import {
   DETAILS_ORDER_ERROR,
   REFUND_ORDER_REQUESTED,
   REFUND_ORDER_SUCCESS,
-  REFUND_ORDER_ERROR,
+  REFUND_ORDER_ERROR
 } from '../actions/orderActions'
 
 export const order = (state = { data: {}, order: {}, completed: true, error: {} }, action) => {

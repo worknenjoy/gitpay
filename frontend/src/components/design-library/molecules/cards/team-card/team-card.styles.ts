@@ -5,7 +5,7 @@ export const Wrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   flexGrow: 1,
-  justifyContent: 'center',
+  justifyContent: 'center'
 }))
 
 export const Root = styled('div')(({ theme }) => ({
@@ -14,19 +14,19 @@ export const Root = styled('div')(({ theme }) => ({
   flexDirection: 'row',
   flexFlow: 'wrap',
   [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column',
-  },
+    flexDirection: 'column'
+  }
 }))
 
 export const StyledCard = styled(Card)(({ theme }) => ({
   maxWidth: 400,
   minWidth: 350,
   [theme.breakpoints.down('sm')]: {
-    minWidth: 0,
+    minWidth: 0
   },
-  margin: 40,
+  margin: 40
 }))
 
 export const Media = styled(CardMedia)(({ theme }) => ({
-  height: 220,
+  height: 220
 }))

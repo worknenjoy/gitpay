@@ -15,14 +15,14 @@ module.exports = Promise.method(function orderPayment(orderParameters) {
           Authorization:
             'Basic ' +
             Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-              'base64',
+              'base64'
             ),
           'Content-Type': 'application/json',
-          grant_type: 'client_credentials',
+          grant_type: 'client_credentials'
         },
         form: {
-          grant_type: 'client_credentials',
-        },
+          grant_type: 'client_credentials'
+        }
       }).then((response) => {
         return requestPromise({
           method: 'POST',
@@ -32,23 +32,23 @@ module.exports = Promise.method(function orderPayment(orderParameters) {
             'Accept-Language': 'en_US',
             Prefer: 'return=representation',
             Authorization: 'Bearer ' + JSON.parse(response)['access_token'],
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         }).then((payment) => {
           const paymentData = JSON.parse(payment)
           return order
             .update(
               {
-                transfer_id: paymentData.id,
+                transfer_id: paymentData.id
               },
               {
                 where: {
-                  id: order.id,
+                  id: order.id
                 },
                 include: [models.Task, models.User],
                 returning: true,
-                plain: true,
-              },
+                plain: true
+              }
             )
             .then((updatedOrder) => {
               if (!updatedOrder) {
@@ -57,10 +57,10 @@ module.exports = Promise.method(function orderPayment(orderParameters) {
               const orderData = updatedOrder.dataValues || updatedOrder[0].dataValues
               return Promise.all([
                 models.User.findByPk(orderData.userId),
-                models.Task.findByPk(orderData.TaskId),
+                models.Task.findByPk(orderData.TaskId)
               ]).spread((user, task) => {
                 return models.Assign.findByPk(task.dataValues.assigned, {
-                  include: [models.User],
+                  include: [models.User]
                 }).then((assign) => {
                   TransferMail.notifyOwner(user.dataValues, task.dataValues, orderData.amount)
                   TransferMail.success(assign.dataValues.User, task.dataValues, orderData.amount)

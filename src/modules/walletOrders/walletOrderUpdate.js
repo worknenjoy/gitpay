@@ -10,8 +10,8 @@ module.exports = Promise.method(async function walletOrderUpdate(params) {
     params.userId &&
     (await User.findOne({
       where: {
-        id: userId,
-      },
+        id: userId
+      }
     }))
 
   if (!user) {
@@ -20,11 +20,11 @@ module.exports = Promise.method(async function walletOrderUpdate(params) {
 
   const wallet = await WalletOrder.update(params, {
     where: {
-      id: id,
+      id: id
     },
     returning: true,
     hooks: true, // Ensure hooks are enabled
-    individualHooks: true,
+    individualHooks: true
   })
   const updatedWalletOrder = wallet[1][0].dataValues
 

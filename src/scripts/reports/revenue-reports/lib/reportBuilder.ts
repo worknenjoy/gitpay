@@ -6,12 +6,12 @@ import {
   getChargeUSDCents,
   getTransactionTypeForCharge,
   stripeFeeUSDCentsFromBT,
-  transferUSDCents,
+  transferUSDCents
 } from './finance'
 
 export async function buildRowsForYear(
   startUnix: number,
-  endUnix: number,
+  endUnix: number
 ): Promise<{ rows: ReportRow[]; totals: BuildTotals }> {
   const rows: ReportRow[] = []
   const totals: BuildTotals = { transferTotal: 0, chargeTotal: 0, fee: 0, revenue: 0 }
@@ -47,7 +47,7 @@ export async function buildRowsForYear(
       'Stripe Fee': feeCents > 0 ? centsToDecimal(feeCents, 'usd') : '',
       'Transfer Date': formatDateForSheets(t?.created),
       'Charge Date': formatDateForSheets(ch?.created),
-      Revenue: originalCents > 0 || transferCents > 0 ? centsToDecimal(revenueCents, 'usd') : '',
+      Revenue: originalCents > 0 || transferCents > 0 ? centsToDecimal(revenueCents, 'usd') : ''
     }
     rows.push(row)
 
@@ -79,7 +79,7 @@ export async function buildRowsForYear(
       'Stripe Fee': feeCents > 0 ? centsToDecimal(feeCents, 'usd') : '',
       'Transfer Date': '',
       'Charge Date': formatDateForSheets(ch?.created),
-      Revenue: originalCents > 0 ? centsToDecimal(revenueCents, 'usd') : '',
+      Revenue: originalCents > 0 ? centsToDecimal(revenueCents, 'usd') : ''
     }
     rows.push(row)
 

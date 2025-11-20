@@ -21,7 +21,7 @@ module.exports = Promise.method(async function issueAddedComment(task) {
         Accept: 'application/vnd.github+json',
         'Content-Type': 'application/json',
         Authorization: 'token ' + process.env.GITHUB_BOT_ACCESS_TOKEN,
-        'X-GitHub-Api-Version': '2022-11-28',
+        'X-GitHub-Api-Version': '2022-11-28'
       },
       json: true,
       body: {
@@ -33,8 +33,8 @@ module.exports = Promise.method(async function issueAddedComment(task) {
   ### 🤔❓ Questions
   Leave a comment below!
 
-  This issue was a comment made by our GitpayBot [Gitpay Bot](https://github.com/gitpaybot).`,
-      },
+  This issue was a comment made by our GitpayBot [Gitpay Bot](https://github.com/gitpaybot).`
+      }
     })
     console.log('req response from github issue comment', req)
     return req

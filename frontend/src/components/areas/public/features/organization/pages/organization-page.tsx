@@ -11,7 +11,7 @@ const OrganizationPage = ({
   listLabels,
   listLanguages,
   listTasks,
-  fetchOrganization,
+  fetchOrganization
 }) => {
   const { organization_id } = useParams<{ organization_id: string }>()
 

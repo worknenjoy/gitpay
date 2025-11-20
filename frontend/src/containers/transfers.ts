@@ -9,7 +9,7 @@ const mapStateToProps = (state: any) => {
     user: getUserData(state),
     account: state.account,
     transfers: state.transfers,
-    transfer: state.transfer,
+    transfer: state.transfer
   }
 }
 
@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch: any) => {
     searchTransfer: (params: any) => dispatch(searchTransfer(params)),
     updateTransfer: (params: any) => dispatch(updateTransfer(params)),
     fetchTransfer: (id: any) => dispatch(fetchTransfer(id)),
-    fetchAccount: () => dispatch(fetchAccount()),
+    fetchAccount: () => dispatch(fetchAccount())
   }
 }
 

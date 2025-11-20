@@ -15,7 +15,7 @@ const CommonContainer = (WrappedComponent, customMapStateToProps = () => ({})) =
     info: state.info.data,
     roles: state.roles,
     ...customMapStateToProps(state), // 🔥 Allow dynamic Redux state injection!
-    ...ownProps, // Ensure extra props passed from Router are kept
+    ...ownProps // Ensure extra props passed from Router are kept
   })
 
   const mapDispatchToProps = (dispatch, ownProps) => {
@@ -27,7 +27,7 @@ const CommonContainer = (WrappedComponent, customMapStateToProps = () => ({})) =
       forgotPassword: (data) => dispatch(forgotPassword(data)),
       createTask: (task, history) => dispatch(createTask(task, history)),
       fetchRoles: () => dispatch(fetchRoles()),
-      ...ownProps, // Ensure extra props passed from Router are kept
+      ...ownProps // Ensure extra props passed from Router are kept
     }
   }
 

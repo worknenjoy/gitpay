@@ -31,7 +31,7 @@ const InviteDrawerCheckboxes = ({ termsAgreed, handleCheckboxTerms, ...props }) 
                         defaultMessage="TERMS OF USE"
                       />
                     </Link>
-                  ),
+                  )
                 }}
               />
             </Typography>

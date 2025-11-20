@@ -6,7 +6,7 @@ import {
   PrimaryLabel,
   SecondaryContainer,
   SecondaryButton,
-  SecondaryLabel,
+  SecondaryLabel
 } from './action-buttons.styles'
 
 interface ActionButtonsProps {
@@ -45,7 +45,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
           {action.component &&
             React.cloneElement(action.component, {
               open: action.key === currentKey,
-              onClose: () => setCurrentKey(''),
+              onClose: () => setCurrentKey('')
             })}
         </React.Fragment>
       ))}
@@ -66,7 +66,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
             {action.component &&
               React.cloneElement(action.component, {
                 open: action.key === currentKey,
-                onClose: () => setCurrentKey(''),
+                onClose: () => setCurrentKey('')
               })}
           </React.Fragment>
         ))}

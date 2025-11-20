@@ -14,7 +14,7 @@ const LinkField = ({
   external = false,
   copiable = false,
   limit = 42,
-  width = 350,
+  width = 350
 }) => {
   const history = useHistory()
   const intl = useIntl()
@@ -59,7 +59,7 @@ const LinkField = ({
                   backgroundColor: 'black',
                   borderColor: 'black',
                   borderWidth: 1,
-                  marginLeft: 10,
+                  marginLeft: 10
                 }}
               />
             )}

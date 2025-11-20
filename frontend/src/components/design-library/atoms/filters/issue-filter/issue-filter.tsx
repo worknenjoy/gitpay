@@ -7,22 +7,22 @@ import { MenuItemCustom } from './issue-filter.styles'
 const classesStatic = {
   select: { backgroundColor: 'transparent' },
   chip: { marginLeft: 8 },
-  chipActive: { marginLeft: 8, color: '#1a237e', borderColor: '#90caf9' },
+  chipActive: { marginLeft: 8, color: '#1a237e', borderColor: '#90caf9' }
 } as const
 
 const messages = defineMessages({
   allTasks: {
     id: 'task.list.lable.filterAllTasks',
-    defaultMessage: 'All public issues available',
+    defaultMessage: 'All public issues available'
   },
   allPublicTasksWithBounties: {
     id: 'task.list.lable.filterWithBounties',
-    defaultMessage: 'Issues with bounties',
+    defaultMessage: 'Issues with bounties'
   },
   allPublicTasksNoBounties: {
     id: 'task.list.lable.filterNoBounties',
-    defaultMessage: 'Issues without bounties',
-  },
+    defaultMessage: 'Issues without bounties'
+  }
 })
 
 interface IssueFilterProps {
@@ -43,7 +43,7 @@ const IssueFilter: React.FC<IssueFilterProps> = ({ onFilter, counts }) => {
 
   const [taskListState, setTaskListState] = useState({
     tab: 'all',
-    loading: true,
+    loading: true
   })
 
   const handleFilter = (value: string) => {

@@ -3,7 +3,7 @@ import { Paper, Grid, Card, CardContent, CardActions } from '@mui/material'
 
 // Container with padding used as the outer wrapper
 export const RolesContainer = styled(Paper)(({ theme }) => ({
-  padding: '10px 20px 20px 20px',
+  padding: '10px 20px 20px 20px'
 }))
 
 // Header section with title/description
@@ -11,15 +11,15 @@ export const BigRow = styled('div')(({ theme }) => ({
   margin: '2% 5% 0 0',
   padding: 0,
   '& h1': {
-    fontWeight: 500,
+    fontWeight: 500
   },
   '& h4': {
-    fontWeight: 500,
+    fontWeight: 500
   },
   '& p': {
     color: 'gray',
-    fontSize: 18,
-  },
+    fontSize: 18
+  }
 }))
 
 // Grid container row
@@ -27,25 +27,25 @@ export const RowGrid = styled(Grid)(({ theme }) => ({
   width: '100%',
   [theme.breakpoints.down('lg')]: {
     flexDirection: 'column',
-    margin: 'auto',
+    margin: 'auto'
   },
   [theme.breakpoints.up('lg')]: {
     flexDirection: 'row',
     width: '100%',
     padding: '3% 0',
     margin: 0,
-    alignItems: 'center',
-  },
+    alignItems: 'center'
+  }
 }))
 
 // Grid item wrapper for each role card
 export const RowListItem = styled(Grid)(({ theme }) => ({
   [theme.breakpoints.down('lg')]: {
-    margin: '0 0% 10% 0',
+    margin: '0 0% 10% 0'
   },
   [theme.breakpoints.up('lg')]: {
-    margin: '0 5% 0% 0',
-  },
+    margin: '0 5% 0% 0'
+  }
 }))
 
 // Card wrapper and inner elements
@@ -53,22 +53,22 @@ export const RowCard = styled(Card)(({ theme }) => ({
   borderRadius: 0,
   height: '100%',
   '& div': {
-    height: '100%',
+    height: '100%'
   },
   '& img': {
     backgroundColor: '#263238',
     objectFit: 'cover',
     width: '100%',
-    height: '100%',
-  },
+    height: '100%'
+  }
 }))
 
 export const RootLabel = styled(CardContent)(({ theme }) => ({
   padding: '5px 16px 0px',
   backgroundColor: '#455a64',
   '& h5': {
-    color: 'white',
-  },
+    color: 'white'
+  }
 }))
 
 export const ActionBar = styled(CardActions)(({ theme }) => ({
@@ -83,22 +83,22 @@ export const ActionBar = styled(CardActions)(({ theme }) => ({
     color: '#c7ced1',
     wordWrap: 'break-word',
     whiteSpace: 'pre-wrap',
-    fontSize: '0.78rem',
+    fontSize: '0.78rem'
   },
   '& span': {
     paddingTop: 0,
     paddingLeft: 0,
     '& svg': {
-      backgroundColor: 'white',
-    },
-  },
+      backgroundColor: 'white'
+    }
+  }
 }))
 
 // Bottom buttons row
 export const ButtonsRow = styled('div')(({ theme }) => ({
   width: '100%',
   display: 'flex',
-  justifyContent: 'flex-end',
+  justifyContent: 'flex-end'
 }))
 
 export const CancelButton = styled('button')(({ theme }) => ({
@@ -108,9 +108,9 @@ export const CancelButton = styled('button')(({ theme }) => ({
   fontWeight: 'bold',
   fontFamily: 'arial',
   '& button:focus': {
-    outline: 'none',
+    outline: 'none'
   },
-  cursor: 'pointer',
+  cursor: 'pointer'
 }))
 
 export const SaveButton = styled('button')(({ theme }) => ({
@@ -122,5 +122,5 @@ export const SaveButton = styled('button')(({ theme }) => ({
   height: '20%',
   color: '#FFFFFF',
   cursor: 'pointer',
-  fontWeight: 'bold',
+  fontWeight: 'bold'
 }))

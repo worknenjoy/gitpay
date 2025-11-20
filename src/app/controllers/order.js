@@ -81,12 +81,12 @@ exports.authorizeOrder = (req, res) => {
     .then((data) => {
       if (data.paid) {
         res.redirect(
-          `${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/success`,
+          `${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/success`
         )
         return
       }
       res.redirect(
-        `${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`,
+        `${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`
       )
     })
     .catch((error) => {

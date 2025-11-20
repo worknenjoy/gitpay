@@ -43,62 +43,62 @@ export default class PaymentRequestPayment
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
-          autoIncrement: true,
+          autoIncrement: true
         },
         source: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: false
         },
         amount: {
           type: DataTypes.DECIMAL,
           allowNull: false,
-          defaultValue: 0,
+          defaultValue: 0
         },
         currency: {
           type: DataTypes.STRING,
           allowNull: false,
-          defaultValue: 'USD',
+          defaultValue: 'USD'
         },
         status: {
           type: DataTypes.STRING,
-          allowNull: false,
+          allowNull: false
         },
         transferStatus: {
           type: DataTypes.STRING,
-          allowNull: true,
+          allowNull: true
         },
         customerId: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: false
         },
         paymentRequestId: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: false
         },
         transferId: {
           type: DataTypes.INTEGER,
-          allowNull: true,
+          allowNull: true
         },
         userId: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: false
         },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
-          defaultValue: DataTypes.NOW,
+          defaultValue: DataTypes.NOW
         },
         updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
-          defaultValue: DataTypes.NOW,
-        },
+          defaultValue: DataTypes.NOW
+        }
       },
       {
         sequelize,
         tableName: 'PaymentRequestPayments',
-        timestamps: true,
-      },
+        timestamps: true
+      }
     )
     return PaymentRequestPayment
   }
@@ -108,24 +108,24 @@ export default class PaymentRequestPayment
     models.PaymentRequestPayment.belongsTo(models.PaymentRequestCustomer, {
       //as: 'PaymentRequestCustomer',
       foreignKey: 'customerId',
-      targetKey: 'id',
+      targetKey: 'id'
     })
 
     // PaymentRequestPayment belongs to PaymentRequest
     models.PaymentRequestPayment.belongsTo(models.PaymentRequest, {
       //as: 'PaymentRequest',
-      foreignKey: 'paymentRequestId',
+      foreignKey: 'paymentRequestId'
     })
 
     // PaymentRequestPayment belongs to PaymentRequestTransfer
     models.PaymentRequestPayment.belongsTo(models.PaymentRequestTransfer, {
       //as: 'PaymentRequestTransfer',
-      foreignKey: 'transferId',
+      foreignKey: 'transferId'
     })
 
     models.PaymentRequestPayment.belongsTo(models.User, {
       //as: 'User',
-      foreignKey: 'userId',
+      foreignKey: 'userId'
     })
   }
 }

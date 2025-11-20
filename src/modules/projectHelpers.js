@@ -4,16 +4,16 @@ const project = async (userOrCompany, projectName, userId, provider) => {
   try {
     const organizationExist = await models.Organization.findOne({
       where: {
-        name: userOrCompany,
+        name: userOrCompany
       },
-      include: [models.Project],
+      include: [models.Project]
     })
     if (organizationExist) {
       const projectFromOrg = await models.Project.findOne({
         where: {
           name: projectName,
-          OrganizationId: organizationExist.id,
-        },
+          OrganizationId: organizationExist.id
+        }
       })
       if (projectFromOrg) {
         return projectFromOrg
@@ -25,7 +25,7 @@ const project = async (userOrCompany, projectName, userId, provider) => {
       const organization = await models.Organization.create({
         name: userOrCompany,
         UserId: userId,
-        provider: provider,
+        provider: provider
       })
       const project = await organization.createProject({ name: projectName })
       return project

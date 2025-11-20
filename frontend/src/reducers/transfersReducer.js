@@ -4,7 +4,7 @@ import {
   SEARCH_TRANSFER_FAILED,
   FETCH_TRANSFER_REQUESTED,
   FETCH_TRANSFER_SUCCESS,
-  FETCH_TRANSFER_FAILED,
+  FETCH_TRANSFER_FAILED
 } from '../actions/transferActions'
 
 export const transfers = (state = { data: [], completed: false }, action) => {

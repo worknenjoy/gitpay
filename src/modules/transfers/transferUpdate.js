@@ -10,15 +10,15 @@ module.exports = Promise.method(async function transferUpdate(params) {
     params.id &&
     (await Transfer.findOne({
       where: {
-        id: params.id,
+        id: params.id
       },
       include: [
         {
           model: models.User,
-          as: 'User',
+          as: 'User'
         },
-        models.Task,
-      ],
+        models.Task
+      ]
     }))
 
   if (!existingTransfer) {
@@ -27,8 +27,8 @@ module.exports = Promise.method(async function transferUpdate(params) {
 
   const destination = await models.User.findOne({
     where: {
-      id: existingTransfer.dataValues.to,
-    },
+      id: existingTransfer.dataValues.to
+    }
   })
 
   if (
@@ -48,7 +48,7 @@ module.exports = Promise.method(async function transferUpdate(params) {
       currency: 'usd',
       destination: destination.account_id,
       source_type: 'card',
-      transfer_group: `task_${existingTransfer.taskId}`,
+      transfer_group: `task_${existingTransfer.taskId}`
     }
     let stripeTransfer =
       existingTransfer.transfer_id &&
@@ -59,21 +59,21 @@ module.exports = Promise.method(async function transferUpdate(params) {
         { transfer_id: stripeTransfer.id },
         {
           where: {
-            id: existingTransfer.taskId,
-          },
-        },
+            id: existingTransfer.taskId
+          }
+        }
       )
       const updateTransfer = await models.Transfer.update(
         {
           transfer_id: stripeTransfer.id,
-          status: existingTransfer.transfer_method === 'stripe' ? 'in_transit' : 'pending',
+          status: existingTransfer.transfer_method === 'stripe' ? 'in_transit' : 'pending'
         },
         {
           where: {
-            id: existingTransfer.id,
+            id: existingTransfer.id
           },
-          returning: true,
-        },
+          returning: true
+        }
       )
       const { value, Task: task, User: user } = existingTransfer
       if (!updateTask || !updateTransfer) {
@@ -103,14 +103,14 @@ module.exports = Promise.method(async function transferUpdate(params) {
         Authorization:
           'Basic ' +
           Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-            'base64',
+            'base64'
           ),
         'Content-Type': 'application/json',
-        grant_type: 'client_credentials',
+        grant_type: 'client_credentials'
       },
       form: {
-        grant_type: 'client_credentials',
-      },
+        grant_type: 'client_credentials'
+      }
     })
     const paypalToken = JSON.parse(paypalCredentials)['access_token']
 
@@ -125,26 +125,26 @@ module.exports = Promise.method(async function transferUpdate(params) {
             'Accept-Language': 'en_US',
             Prefer: 'return=representation',
             Authorization: 'Bearer ' + paypalToken,
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: {
             sender_batch_header: {
-              email_subject: 'You have a payment',
+              email_subject: 'You have a payment'
             },
             items: [
               {
                 recipient_type: 'EMAIL',
                 amount: {
                   value: (existingTransfer.dataValues.paypal_transfer_amount * 0.92).toFixed(2),
-                  currency: 'USD',
+                  currency: 'USD'
                 },
                 receiver: destination.email,
                 note: 'Thank you.',
-                sender_item_id: 'item_1',
-              },
-            ],
+                sender_item_id: 'item_1'
+              }
+            ]
           },
-          json: true,
+          json: true
         }))
       if (paypalTransfer) {
         existingTransfer.paypal_payout_id = paypalTransfer.batch_header.payout_batch_id
@@ -163,7 +163,7 @@ module.exports = Promise.method(async function transferUpdate(params) {
     existingTransfer.paypal_payout_id &&
     (await models.Transfer.update(
       { status: 'in_transit' },
-      { where: { id: existingTransfer.id }, returning: true },
+      { where: { id: existingTransfer.id }, returning: true }
     ))
   if (updateTransferStatus && updateTransferStatus[1]) {
     existingTransfer = updateTransferStatus[1][0].dataValues

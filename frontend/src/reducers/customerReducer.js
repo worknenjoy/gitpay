@@ -7,7 +7,7 @@ import {
   CREATE_USER_CUSTOMER_ERROR,
   UPDATE_USER_CUSTOMER_REQUESTED,
   UPDATE_USER_CUSTOMER_SUCCESS,
-  UPDATE_USER_CUSTOMER_ERROR,
+  UPDATE_USER_CUSTOMER_ERROR
 } from '../actions/userActions'
 
 export const customer = (state = { data: {}, completed: true, error: {} }, action) => {

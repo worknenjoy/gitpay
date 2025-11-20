@@ -33,7 +33,7 @@ import {
   CHANGE_TASK_TAB,
   FUNDING_INVITE_TASK_REQUESTED,
   FUNDING_INVITE_TASK_SUCCESS,
-  FUNDING_INVITE_TASK_ERROR,
+  FUNDING_INVITE_TASK_ERROR
 } from '../actions/taskActions'
 
 import {
@@ -45,13 +45,13 @@ import {
   REMOVE_ASSIGNMENT_ERROR,
   MESSAGE_TASK_REQUESTED,
   MESSAGE_TASK_SUCCESS,
-  MESSAGE_TASK_ERROR,
+  MESSAGE_TASK_ERROR
 } from '../actions/assignActions'
 
 import {
   FETCH_PROJECT_REQUESTED,
   FETCH_PROJECT_SUCCESS,
-  FETCH_PROJECT_ERROR,
+  FETCH_PROJECT_ERROR
 } from '../actions/projectActions'
 
 export const task = (
@@ -64,10 +64,10 @@ export const task = (
       pending: 0,
       card: 0,
       paypal: 0,
-      transferred: 0,
+      transferred: 0
     },
     error: {
-      message: false,
+      message: false
     },
     tab: 0,
     data: {
@@ -84,13 +84,13 @@ export const task = (
           state: 'open',
           body: '',
           user: {
-            avatar_url: 'https://loading.io/spinners/disqus/index.discuss-messesage-preloader.svg',
-          },
-        },
-      },
-    },
+            avatar_url: 'https://loading.io/spinners/disqus/index.discuss-messesage-preloader.svg'
+          }
+        }
+      }
+    }
   },
-  action,
+  action
 ) => {
   switch (action.type) {
     case CREATE_TASK_REQUESTED:
@@ -189,15 +189,15 @@ export const tasks = (
   state = {
     completed: true,
     error: {
-      message: false,
+      message: false
     },
     data: [],
     filteredData: [],
     filterType: 'all',
     filterValue: null,
-    filterAdditional: null,
+    filterAdditional: null
   },
-  action,
+  action
 ) => {
   switch (action.type) {
     case LIST_TASK_REQUESTED:
@@ -220,7 +220,7 @@ export const tasks = (
         filteredData: action.data,
         filterType: action.filterType,
         filterValue: action.filterValue,
-        filterAdditional: action.filterAdditional,
+        filterAdditional: action.filterAdditional
       }
     default:
       return state

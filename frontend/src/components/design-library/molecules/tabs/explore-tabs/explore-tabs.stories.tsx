@@ -10,7 +10,7 @@ const meta: Meta<typeof ExploreTabs> = {
   args: {},
   parameters: {
     //layout: 'centered',
-  },
+  }
 }
 export default meta
 
@@ -19,5 +19,5 @@ type Story = StoryObj<typeof ExploreTabs>
 export const Default: Story = {
   args: {
     // Add prop mocks here if the component expects any
-  },
+  }
 }

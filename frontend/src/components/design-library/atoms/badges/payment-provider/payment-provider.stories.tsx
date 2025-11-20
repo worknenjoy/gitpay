@@ -5,7 +5,7 @@ import PaymentProvider from './payment-provider'
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Atoms/Badges/PaymentProvider',
-  component: PaymentProvider,
+  component: PaymentProvider
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
@@ -19,35 +19,35 @@ export const Primary = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   provider: 'stripe',
-  sourceType: 'card',
+  sourceType: 'card'
 }
 
 export const Card = Template.bind({})
 Card.args = {
   provider: 'stripe',
-  sourceType: 'card',
+  sourceType: 'card'
 }
 
 export const Invoice = Template.bind({})
 Invoice.args = {
   provider: 'stripe',
-  sourceType: 'invoice-item',
+  sourceType: 'invoice-item'
 }
 
 export const Paypal = Template.bind({})
 Paypal.args = {
   provider: 'paypal',
-  sourceType: 'unknown',
+  sourceType: 'unknown'
 }
 
 export const Wallet = Template.bind({})
 Wallet.args = {
   provider: 'wallet',
-  sourceType: 'unknown',
+  sourceType: 'unknown'
 }
 
 export const Unknown = Template.bind({})
 Unknown.args = {
   provider: 'unknown',
-  sourceType: 'unknown',
+  sourceType: 'unknown'
 }

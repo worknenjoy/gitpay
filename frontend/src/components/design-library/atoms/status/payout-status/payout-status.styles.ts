@@ -11,7 +11,7 @@ export const classes = {
   failed: `${PREFIX}-failed`,
   canceled: `${PREFIX}-canceled`,
   paid: `${PREFIX}-paid`,
-  unknown: `${PREFIX}-unknown`,
+  unknown: `${PREFIX}-unknown`
 } as const
 
 // Root wrapper that provides styles for the classnames above
@@ -20,51 +20,51 @@ export const PayoutStatusRoot = styled('div')(({ theme }) => ({
     backgroundColor: orange[500],
     color: theme.palette.common.white,
     '& .MuiSvgIcon-root': {
-      color: theme.palette.common.white,
-    },
+      color: theme.palette.common.white
+    }
   },
   [`.${classes.created}`]: {
     backgroundColor: green[500],
     color: theme.palette.common.white,
     '& .MuiSvgIcon-root': {
-      color: theme.palette.common.white,
-    },
+      color: theme.palette.common.white
+    }
   },
   [`.${classes.in_transit}`]: {
     backgroundColor: orange[700],
     color: theme.palette.common.white,
     '& .MuiSvgIcon-root': {
-      color: theme.palette.common.white,
-    },
+      color: theme.palette.common.white
+    }
   },
   [`.${classes.failed}`]: {
     backgroundColor: red[700],
     color: theme.palette.common.white,
     '& .MuiSvgIcon-root': {
-      color: theme.palette.common.white,
-    },
+      color: theme.palette.common.white
+    }
   },
   [`.${classes.canceled}`]: {
     backgroundColor: red[500],
     color: theme.palette.common.white,
     '& .MuiSvgIcon-root': {
-      color: theme.palette.common.white,
-    },
+      color: theme.palette.common.white
+    }
   },
   [`.${classes.paid}`]: {
     backgroundColor: green[500],
     color: theme.palette.common.white,
     '& .MuiSvgIcon-root': {
-      color: theme.palette.common.white,
-    },
+      color: theme.palette.common.white
+    }
   },
   [`.${classes.unknown}`]: {
     backgroundColor: theme.palette.grey[500],
     color: theme.palette.common.white,
     '& .MuiSvgIcon-root': {
-      color: theme.palette.common.white,
-    },
-  },
+      color: theme.palette.common.white
+    }
+  }
 }))
 
 export default classes

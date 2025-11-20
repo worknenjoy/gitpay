@@ -32,7 +32,7 @@ const IssuePrivatePage = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask,
+  syncTask
 }) => {
   return (
     <IssuePage

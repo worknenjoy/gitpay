@@ -7,8 +7,8 @@ const meta: Meta<typeof ExploreIssuesPrivatePage> = {
   component: ExploreIssuesPrivatePage,
   decorators: [withProfileTemplate],
   parameters: {
-    layout: 'fullscreen',
-  },
+    layout: 'fullscreen'
+  }
 }
 
 export default meta
@@ -29,9 +29,9 @@ export const Default: Story = {
           title: 'Issue 1',
           description: 'This is the first issue',
           status: 'open',
-          Project: { name: 'Project 1' },
-        },
-      ],
+          Project: { name: 'Project 1' }
+        }
+      ]
     },
     labels: [],
     languages: [],
@@ -40,8 +40,8 @@ export const Default: Story = {
       data: {
         id: 1,
         name: 'John Doe',
-        Types: [{ name: 'contributor' }],
-      },
-    },
-  },
+        Types: [{ name: 'contributor' }]
+      }
+    }
+  }
 }

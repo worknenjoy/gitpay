@@ -6,14 +6,14 @@ module.exports = Promise.method(function userUpdate(userParameters) {
   if (userParameters.id) {
     condition = {
       where: {
-        id: userParameters.id,
-      },
+        id: userParameters.id
+      }
     }
   } else {
     condition = {
       where: {
-        email: userParameters.email,
-      },
+        email: userParameters.email
+      }
     }
   }
   return models.User.update(userParameters, { ...condition, returning: true, plain: true })
@@ -29,7 +29,7 @@ module.exports = Promise.method(function userUpdate(userParameters) {
         return { ...currentUser.dataValues, Types: await Promise.all(types) }
       }
       const updatedUser = models.User.findByPk(currentUser.dataValues.id, {
-        include: [models.Type],
+        include: [models.Type]
       })
       return updatedUser
     })

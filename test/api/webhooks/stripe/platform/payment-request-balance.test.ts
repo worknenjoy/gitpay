@@ -33,14 +33,14 @@ describe('Payment Request Balance Webhook', () => {
         description: 'Testing dispute created',
         amount: 4995,
         currency: 'usd',
-        userId: currentUser.id,
+        userId: currentUser.id
       })
 
       const paymentRequestCustomer = await models.PaymentRequestCustomer.create({
         email: 'customer@example.com',
         name: 'Test Customer',
         sourceId: 'src_test_123',
-        userId: currentUser.id,
+        userId: currentUser.id
       })
 
       await models.PaymentRequestPayment.create({
@@ -50,7 +50,7 @@ describe('Payment Request Balance Webhook', () => {
         status: 'paid',
         customerId: paymentRequestCustomer.id,
         paymentRequestId: paymentRequest.id,
-        userId: currentUser.id,
+        userId: currentUser.id
       })
 
       // Spy/stub the mailer method to avoid sending emails and capture args
@@ -79,7 +79,7 @@ describe('Payment Request Balance Webhook', () => {
     })
     it('should create a Payment Request Balance with two transactions for a user when a charge.dispute.closed event is received', async () => {
       nock('https://api.stripe.com').get('/v1/disputes/du_test_123').reply(200, {
-        created: 123,
+        created: 123
       })
 
       const user = await registerAndLogin(agent)
@@ -90,14 +90,14 @@ describe('Payment Request Balance Webhook', () => {
         description: 'A test payment request',
         amount: 5000,
         currency: 'usd',
-        userId: currentUser.id,
+        userId: currentUser.id
       })
 
       const paymentRequestCustomer = await models.PaymentRequestCustomer.create({
         email: 'test@example.com',
         name: 'Test User',
         sourceId: 'src_test_123',
-        userId: currentUser.id,
+        userId: currentUser.id
       })
 
       const paymentRequestPayment = await models.PaymentRequestPayment.create({
@@ -107,7 +107,7 @@ describe('Payment Request Balance Webhook', () => {
         status: 'paid',
         customerId: paymentRequestCustomer.id,
         paymentRequestId: paymentRequest.id,
-        userId: currentUser.id,
+        userId: currentUser.id
       })
 
       const res = await agent
@@ -122,15 +122,15 @@ describe('Payment Request Balance Webhook', () => {
 
       const paymentRequestBalance = await models.PaymentRequestBalance.findOne({
         where: {
-          userId: currentUser.id,
-        },
+          userId: currentUser.id
+        }
       })
 
       const paymentRequestBalanceTransaction =
         await models.PaymentRequestBalanceTransaction.findOne({
           where: {
-            paymentRequestBalanceId: paymentRequestBalance.id,
-          },
+            paymentRequestBalanceId: paymentRequestBalance.id
+          }
         })
 
       expect(paymentRequestBalanceTransaction).to.exist
@@ -159,14 +159,14 @@ describe('Payment Request Balance Webhook', () => {
         description: 'A test payment request to verify refund balance update',
         amount: 10000,
         currency: 'usd',
-        userId: currentUser.id,
+        userId: currentUser.id
       })
 
       const paymentRequestCustomer = await models.PaymentRequestCustomer.create({
         email: 'test@example.com',
         name: 'Test User',
         sourceId: 'src_test_456',
-        userId: currentUser.id,
+        userId: currentUser.id
       })
 
       const paymentRequestPayment = await models.PaymentRequestPayment.create({
@@ -176,13 +176,13 @@ describe('Payment Request Balance Webhook', () => {
         status: 'paid',
         customerId: paymentRequestCustomer.id,
         paymentRequestId: paymentRequest.id,
-        userId: currentUser.id,
+        userId: currentUser.id
       })
 
       // Simulate initial balance creation after payment
       await models.PaymentRequestBalance.create({
         userId: currentUser.id,
-        balance: 0,
+        balance: 0
       })
 
       const res = await agent
@@ -197,22 +197,22 @@ describe('Payment Request Balance Webhook', () => {
 
       const paymentRequestBalance = await models.PaymentRequestBalance.findOne({
         where: {
-          userId: currentUser.id,
-        },
+          userId: currentUser.id
+        }
       })
 
       const paymentRequestBalanceTransaction =
         await models.PaymentRequestBalanceTransaction.findOne({
           where: {
-            paymentRequestBalanceId: paymentRequestBalance.id,
-          },
+            paymentRequestBalanceId: paymentRequestBalance.id
+          }
         })
       expect(paymentRequestBalanceTransaction).to.exist
       expect(paymentRequestBalanceTransaction.amount).to.equal('-160')
       expect(paymentRequestBalanceTransaction.type).to.equal('DEBIT')
       expect(paymentRequestBalanceTransaction.reason).to.equal('REFUND')
       expect(paymentRequestBalanceTransaction.reason_details).to.equal(
-        'refund_payment_request_requested_by_customer',
+        'refund_payment_request_requested_by_customer'
       )
       expect(paymentRequestBalanceTransaction.status).to.equal('completed')
       expect(paymentRequestBalanceTransaction.closedAt).to.be.instanceOf(Date)

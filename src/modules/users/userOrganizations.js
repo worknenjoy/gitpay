@@ -6,9 +6,9 @@ const secrets = require('../../config/secrets')
 module.exports = Promise.method(function userOrganizations(userAttributes) {
   return models.User.findOne({
     where: {
-      id: userAttributes.id,
+      id: userAttributes.id
     },
-    include: [models.Organization],
+    include: [models.Organization]
   })
     .then((user) => {
       if (!user) return false
@@ -26,14 +26,14 @@ module.exports = Promise.method(function userOrganizations(userAttributes) {
       return requestPromise({
         uri: `https://api.github.com/users/${user.dataValues.username}/orgs?client_id=${secrets.github.id}&client_secret=${secrets.github.secret}`,
         headers: {
-          'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
-        },
+          'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+        }
       }).then(async (response) => {
         const responseFromGithub = JSON.parse(response)
 
         const currentOrgs = user.dataValues.Organizations
         const allOrgs = await models.Organization.findAll({
-          include: [models.User],
+          include: [models.User]
         })
 
         const formatedResponse = responseFromGithub.map((org) => {
@@ -44,7 +44,7 @@ module.exports = Promise.method(function userOrganizations(userAttributes) {
             name: org.login,
             image: org.avatar_url,
             organizations: orgExist,
-            imported: isImported,
+            imported: isImported
           }
         })
         return formatedResponse

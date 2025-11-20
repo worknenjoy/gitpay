@@ -8,8 +8,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    validateCoupon: (code, originalOrderPrice) =>
-      dispatch(validateCoupon(code, originalOrderPrice)),
+    validateCoupon: (code, originalOrderPrice) => dispatch(validateCoupon(code, originalOrderPrice))
   }
 }
 

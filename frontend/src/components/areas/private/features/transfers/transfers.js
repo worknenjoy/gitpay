@@ -14,12 +14,12 @@ import AccountRequirements from 'design-library/atoms/alerts/account-requirement
 const transferMessages = defineMessages({
   cardTableHeaderFrom: {
     id: 'card.table.header.from',
-    defaultMessage: 'Transfers sent',
+    defaultMessage: 'Transfers sent'
   },
   cardTableHeaderTo: {
     id: 'card.table.header.to',
-    defaultMessage: 'Transfers received',
-  },
+    defaultMessage: 'Transfers received'
+  }
 })
 
 // removed withStyles usage; styles inlined via sx where needed
@@ -35,7 +35,7 @@ const Transfers = ({
   account,
   intl,
   match,
-  history,
+  history
 }) => {
   const [value, setValue] = React.useState(0)
   const [openTransferDetail, setOpenTransferDetail] = React.useState(0)
@@ -162,7 +162,7 @@ const Transfers = ({
               intl.formatMessage(messages.cardTableHeaderIssue),
               intl.formatMessage(messages.cardTableHeaderValue),
               intl.formatMessage(messages.cardTableHeaderCreated),
-              intl.formatMessage(messages.cardTableHeaderActions),
+              intl.formatMessage(messages.cardTableHeaderActions)
             ]}
             transfers={
               (transfers &&
@@ -189,8 +189,8 @@ const Transfers = ({
                       >
                         <FormattedMessage id="transfers.button.details" defaultMessage="Details" />
                       </Button>
-                    </>,
-                  ]),
+                    </>
+                  ])
                 }) ||
               {}
             }

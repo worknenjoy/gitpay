@@ -4,50 +4,50 @@ module.exports = (sequelize, DataTypes) => {
   const WalletOrder = sequelize.define('WalletOrder', {
     walletId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: false
     },
     source_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     currency: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     amount: {
       type: DataTypes.DECIMAL,
-      allowNull: false,
+      allowNull: false
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     source_type: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     source: {
       type: DataTypes.STRING,
-      unique: true,
+      unique: true
     },
     capture: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.BOOLEAN
     },
     ordered_in: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATE
     },
     destination: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     paid: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.BOOLEAN
     },
     status: {
       type: DataTypes.ENUM,
       values: ['pending', 'draft', 'open', 'paid', 'failed', 'uncollectible', 'void', 'refunded'],
-      defaultValue: 'pending',
-    },
+      defaultValue: 'pending'
+    }
   })
 
   WalletOrder.associate = function (models) {
     WalletOrder.belongsTo(models.Wallet, {
-      foreignKey: 'walletId',
+      foreignKey: 'walletId'
     })
   }
 

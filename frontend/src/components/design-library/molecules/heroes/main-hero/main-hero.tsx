@@ -6,7 +6,7 @@ import {
   HeroTitle,
   HeroContent,
   HeroActions,
-  SpacedButton,
+  SpacedButton
 } from './main-hero.styles'
 import { Grid, Typography } from '@mui/material'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'

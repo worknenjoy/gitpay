@@ -62,7 +62,7 @@ const IssueActionsByRole = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask,
+  syncTask
 }: IssueActionsProps) => {
   const { data } = issue
 
@@ -99,11 +99,11 @@ const IssueActionsByRole = ({
         syncTask={syncTask}
         price={data?.price || 0}
       />
-    ),
+    )
   }
   const roles = {
     admin: {
-      primary: [commonAction],
+      primary: [commonAction]
     },
     user: {
       primary: [
@@ -130,11 +130,11 @@ const IssueActionsByRole = ({
               fetchPullRequestData={fetchPullRequestData}
               taskSolutionCompleted={taskSolutionCompleted}
             />
-          ),
-        },
+          )
+        }
       ],
-      secondary: [commonAction],
-    },
+      secondary: [commonAction]
+    }
   }
   return <IssueActions role={currentRole} roles={roles} />
 }

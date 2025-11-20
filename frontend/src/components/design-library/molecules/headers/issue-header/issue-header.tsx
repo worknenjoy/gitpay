@@ -4,7 +4,7 @@ import {
   Delete as DeleteIcon,
   BugReport as ReportIcon,
   Visibility as VisibilityIcon,
-  VisibilityOff as VisibilityOffIcon,
+  VisibilityOff as VisibilityOffIcon
 } from '@mui/icons-material'
 import {
   Button,
@@ -18,7 +18,7 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
-  ListItemText,
+  ListItemText
 } from '@mui/material'
 import Skeleton from '@mui/material/Skeleton'
 
@@ -54,23 +54,23 @@ const TaskHeaderContainer = styled.div`
 const styles = (theme) => ({
   breadcrumbRoot: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   breadcrumbLink: {
-    textDecoration: 'underline',
+    textDecoration: 'underline'
   },
   chipStatusPaid: {
     marginLeft: 0,
     verticalAlign: 'middle',
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.primary.light
   },
   button: {
     width: 100,
-    font: 10,
+    font: 10
   },
   gutterRight: {
-    marginRight: 10,
-  },
+    marginRight: 10
+  }
 })
 
 const IssueHeader = ({
@@ -80,7 +80,7 @@ const IssueHeader = ({
   organization,
   handleDeleteTask,
   reportTask,
-  updateTask,
+  updateTask
 }) => {
   const history = useHistory()
   const issueAuthor = useIssueAuthor(task, user)
@@ -110,12 +110,12 @@ const IssueHeader = ({
   const breadcrumbRoot = pathname.startsWith('/profile/explore')
     ? {
         label: <FormattedMessage id="explore.issues.breadcrumbs" defaultMessage="Explore Issues" />,
-        link: '/profile/explore/tasks',
+        link: '/profile/explore/tasks'
       }
     : pathname.startsWith('/profile')
       ? {
           label: <FormattedMessage id="user.profile.issues" defaultMessage="My Issues" />,
-          link: '/profile/tasks',
+          link: '/profile/tasks'
         }
       : {
           label: (
@@ -124,7 +124,7 @@ const IssueHeader = ({
               defaultMessage="Explore Issues"
             />
           ),
-          link: '/explore/issues',
+          link: '/explore/issues'
         }
 
   return (
@@ -256,7 +256,7 @@ const IssueHeader = ({
                       backgroundColor: 'black',
                       borderColor: 'black',
                       borderWidth: 1,
-                      verticalAlign: 'middle',
+                      verticalAlign: 'middle'
                     }}
                   />
                 </a>
@@ -277,7 +277,7 @@ const IssueHeader = ({
                       marginLeft: 5,
                       borderRadius: '50%',
                       padding: 3,
-                      verticalAlign: 'middle',
+                      verticalAlign: 'middle'
                     }}
                     width="18"
                     src={

@@ -71,7 +71,7 @@ xdescribe('info', () => {
       xit('should return the sum of all bounties', (done) => {
         models.Task.bulkCreate([
           { value: 10, paid: true },
-          { value: 10, paid: true },
+          { value: 10, paid: true }
         ])
           .then((task) => {
             agent
@@ -92,7 +92,7 @@ xdescribe('info', () => {
     it('should return the sum of all bounties', (done) => {
       models.Task.bulkCreate([
         { value: null, paid: true },
-        { value: 10, paid: true },
+        { value: 10, paid: true }
       ])
         .then((task) => {
           agent
@@ -111,7 +111,7 @@ xdescribe('info', () => {
         { value: null, paid: true },
         { value: 10, paid: true },
         { value: null, paid: true },
-        { value: 10, paid: false },
+        { value: 10, paid: false }
       ])
         .then((task) => {
           agent

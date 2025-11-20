@@ -9,18 +9,18 @@ module.exports = Promise.method(function taskTransfer(taskParameters) {
   return models.Task.findOne(
     {
       where: {
-        id: taskParameters.id,
-      },
+        id: taskParameters.id
+      }
     },
-    { include: [models.User, models.Order, models.Assign] },
+    { include: [models.User, models.Order, models.Assign] }
   ).then((task) => {
     if (!task) {
       throw new Error('find_task_error')
     }
     return models.User.findOne({
       where: {
-        id: data.id,
-      },
+        id: data.id
+      }
     }).then((user) => {
       const dest = user.account_id
       if (!dest) {
@@ -33,9 +33,9 @@ module.exports = Promise.method(function taskTransfer(taskParameters) {
             { paid: true, transfer_id: transfer.id },
             {
               where: {
-                id: data.id,
-              },
-            },
+                id: data.id
+              }
+            }
           ).then((update) => {
             if (!update) {
               return new Error('update_task_reject')

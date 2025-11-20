@@ -7,7 +7,7 @@ const BirthDateField = ({
   day,
   month,
   year,
-  error = { month: false, day: false, year: false },
+  error = { month: false, day: false, year: false }
 }) => {
   return (
     <Grid container spacing={2}>
@@ -51,7 +51,7 @@ const BirthDateField = ({
               [9, 'Set'],
               [10, 'Oct'],
               [11, 'Nov'],
-              [12, 'Dec'],
+              [12, 'Dec']
             ].map((item, i) => {
               return (
                 <option selected={!!(item[0] === month)} key={i} value={item[0]}>

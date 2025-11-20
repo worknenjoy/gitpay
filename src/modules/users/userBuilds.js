@@ -24,13 +24,13 @@ module.exports = Promise.method(async function userBuilds(userParameters) {
         Sendmail.success(
           dataValues,
           'Activate your account',
-          `<p>Hi ${name || 'Gitpay user'},</p><p>Click <a href="${process.env.FRONTEND_HOST}/#/activate/user/${id}/token/${activation_token}">here</a> to activate your account.</p>`,
+          `<p>Hi ${name || 'Gitpay user'},</p><p>Click <a href="${process.env.FRONTEND_HOST}/#/activate/user/${id}/token/${activation_token}">here</a> to activate your account.</p>`
         )
       }
       if (selectedTypeIds && selectedTypeIds.length > 0) {
         await user.setTypes(selectedTypeIds)
         const userWithTypes = await models.User.findByPk(id, {
-          include: { model: models.Type },
+          include: { model: models.Type }
         })
         return userWithTypes
       }

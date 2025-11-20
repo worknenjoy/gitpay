@@ -4,13 +4,13 @@ import ContactRecruiterForm from '../components/areas/public/features/welcome/le
 
 const mapStateToProps = (state, props) => {
   return {
-    contact: state.contact,
+    contact: state.contact
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    contactRecruiters: (params) => dispatch(messageRecruiters(params)),
+    contactRecruiters: (params) => dispatch(messageRecruiters(params))
   }
 }
 

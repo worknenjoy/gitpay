@@ -17,7 +17,7 @@ const TaskDeadlineDrawer = ({
   taskId,
   task,
   onUpdate,
-  classes,
+  classes
 }: TaskDeadlineDrawerProps) => {
   return (
     <Drawer open={open} onClose={onClose} title="Set task deadline">

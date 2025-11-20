@@ -27,7 +27,7 @@ const meta: Meta<typeof IssueTable> = {
           Project: { name: 'Website Redesign' },
           value: '150',
           labels: ['bug', 'high priority'],
-          languages: ['JavaScript', 'React'],
+          languages: ['JavaScript', 'React']
         },
         {
           id: 102,
@@ -38,18 +38,18 @@ const meta: Meta<typeof IssueTable> = {
           Project: { name: 'Payment Gateway' },
           value: '100',
           labels: ['enhancement'],
-          languages: ['JavaScript', 'Node.js'],
+          languages: ['JavaScript', 'Node.js']
         },
         {
           id: 103,
           title: 'Update dependencies',
           status: 'closed',
           assignee: 'carol',
-          createdAt: '2025-10-03',
-        },
-      ] as Issue[],
-    },
-  },
+          createdAt: '2025-10-03'
+        }
+      ] as Issue[]
+    }
+  }
 }
 
 export default meta
@@ -61,18 +61,18 @@ export const Empty: Story = {
   args: {
     issues: {
       completed: true,
-      data: [],
-    } as any,
-  },
+      data: []
+    } as any
+  }
 }
 
 export const Loading: Story = {
   args: {
     issues: {
       completed: false,
-      data: [],
-    } as any,
-  },
+      data: []
+    } as any
+  }
 }
 
 export const ManyRows: Story = {
@@ -84,8 +84,8 @@ export const ManyRows: Story = {
         title: `Generated issue ${i + 1}`,
         status: i % 3 === 0 ? 'open' : i % 3 === 1 ? 'in_progress' : 'closed',
         assignee: ['alice', 'bob', 'carol', 'dave'][i % 4],
-        createdAt: new Date(Date.now() - i * 86400000).toISOString().slice(0, 10),
-      })) as Issue[],
-    },
-  },
+        createdAt: new Date(Date.now() - i * 86400000).toISOString().slice(0, 10)
+      })) as Issue[]
+    }
+  }
 }

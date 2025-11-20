@@ -3,5 +3,5 @@ import { Grid } from '@mui/material'
 
 // Styled container for the price plan form
 export const PlanGrid = styled(Grid)(({ theme }) => ({
-  alignItems: 'center',
+  alignItems: 'center'
 }))

@@ -17,7 +17,7 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
   onSuccess,
   completed = true,
   balance,
-  currency = 'usd',
+  currency = 'usd'
 }) => {
   const formRef = useRef<{ submit: () => void }>(null)
   const [confirmCheck, setConfirmCheck] = useState(false)
@@ -46,7 +46,7 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
         {
           label: 'Cancel',
           onClick: onClose,
-          variant: 'text',
+          variant: 'text'
         },
         {
           label: 'Request payout',
@@ -55,8 +55,8 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
           },
           variant: 'contained',
           color: 'secondary',
-          disabled: !confirmCheck || !amount || amount <= 0,
-        },
+          disabled: !confirmCheck || !amount || amount <= 0
+        }
       ]}
     >
       <PayoutRequestForm

@@ -14,13 +14,13 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
     if (payment_status === 'paid') {
       const paymentRequest = await models.PaymentRequest.findOne({
         where: {
-          payment_link_id: payment_link,
+          payment_link_id: payment_link
         },
         include: [
           {
-            model: models.User,
-          },
-        ],
+            model: models.User
+          }
+        ]
       })
 
       if (!paymentRequest) {
@@ -32,13 +32,13 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         custom_amount,
         currency,
         deactivate_after_payment,
-        User: user = {},
+        User: user = {}
       } = paymentRequest
       const { account_id } = user
 
       const paymentRequestUpdate = await paymentRequest.update({
         status: 'paid',
-        active: deactivate_after_payment ? false : true,
+        active: deactivate_after_payment ? false : true
       })
 
       if (!paymentRequestUpdate) {
@@ -47,7 +47,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
 
       if (deactivate_after_payment) {
         const paymentRequestLinkUpdate = await stripe.paymentLinks.update(payment_link, {
-          active: false,
+          active: false
         })
 
         if (!paymentRequestLinkUpdate) {
@@ -65,7 +65,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         name: customer_details.name,
         email: customer_details.email,
         userId: paymentRequest.userId,
-        sourceId: 'gcc_' + Math.random().toString(36).substring(2, 15), // Generating a random source ID
+        sourceId: 'gcc_' + Math.random().toString(36).substring(2, 15) // Generating a random source ID
       })
 
       const paymentRequestPayment = await models.PaymentRequestPayment.create({
@@ -75,15 +75,15 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         currency,
         source: payment_intent,
         status: payment_status,
-        customerId: customer.id,
+        customerId: customer.id
       })
 
       await paymentRequestPayment.reload({
         include: [
           { model: models.PaymentRequest },
           { model: models.User },
-          { model: models.PaymentRequestCustomer }, // adjust alias if different
-        ],
+          { model: models.PaymentRequestCustomer } // adjust alias if different
+        ]
       })
 
       if (!paymentRequestPayment) {
@@ -94,8 +94,8 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
         metadata: {
           payment_request_payment_id: paymentRequestPayment.id,
           payment_request_id: paymentRequest.id,
-          user_id: paymentRequest.userId,
-        },
+          user_id: paymentRequest.userId
+        }
       })
 
       if (!paymentIntent) {
@@ -110,8 +110,8 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
 
       const paymentRequestBalance = await models.PaymentRequestBalance.findOrCreate({
         where: {
-          userId: paymentRequest.userId,
-        },
+          userId: paymentRequest.userId
+        }
       })
 
       if (!paymentRequestBalance) {
@@ -130,7 +130,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           type: 'CREDIT',
           reason: 'ADJUSTMENT',
           reason_details: 'payment_request_payment_applied',
-          status: 'completed',
+          status: 'completed'
         })
       }
       if (resultingBalance > 0) {
@@ -141,7 +141,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
             type: 'CREDIT',
             reason: 'ADJUSTMENT',
             reason_details: 'payment_request_payment_applied',
-            status: 'completed',
+            status: 'completed'
           })
         }
         const transfer = await stripe.transfers.create({
@@ -152,9 +152,9 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
           metadata: {
             user_id: paymentRequest.userId,
             payment_request_id: paymentRequest.id,
-            payment_request_payment_id: paymentRequestPayment.id,
+            payment_request_payment_id: paymentRequestPayment.id
           },
-          transfer_group: `payment_request_payment_${paymentRequestPayment.id}`,
+          transfer_group: `payment_request_payment_${paymentRequestPayment.id}`
         })
 
         if (!transfer) {
@@ -163,7 +163,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
 
         const paymentRequestTransferUpdate = await paymentRequest.update({
           transfer_status: 'initiated',
-          transfer_id: transfer.id,
+          transfer_id: transfer.id
         })
 
         if (!paymentRequestTransferUpdate) {
@@ -182,11 +182,11 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
                     paymentRequestBalanceTransaction.amount,
                     0,
                     'centavos',
-                    currency,
+                    currency
                   ).decimal,
-                  total: handleAmount(resultingBalance, 0, 'centavos', currency).decimal,
+                  total: handleAmount(resultingBalance, 0, 'centavos', currency).decimal
                 }
-              : null,
+              : null
           )
         } catch (error) {
           console.error('Error sending transfer initiated email:', error)
@@ -195,16 +195,16 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
       if (previousBalance < 0) {
         const updatedBalanceTransaction = await models.PaymentRequestBalanceTransaction.findByPk(
           paymentRequestBalanceTransaction.id,
-          { include: [models.PaymentRequestBalance] },
+          { include: [models.PaymentRequestBalance] }
         )
         PaymentRequestMail.newBalanceTransactionForPaymentRequest(
           user,
           paymentRequestPayment,
-          updatedBalanceTransaction,
+          updatedBalanceTransaction
         ).catch((mailError) => {
           console.error(
             `Failed to send email for Payment Request Balance Transaction: ${updatedBalanceTransaction.id}`,
-            mailError,
+            mailError
           )
         })
       }

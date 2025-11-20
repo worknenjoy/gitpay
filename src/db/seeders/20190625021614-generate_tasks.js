@@ -15,7 +15,7 @@ module.exports = {
         transfer_id: 1,
         assigned: null,
         createdAt: '2019-06-24',
-        updatedAt: '2019-06-24',
+        updatedAt: '2019-06-24'
       },
       {
         provider: 'github',
@@ -31,7 +31,7 @@ module.exports = {
         transfer_id: 1,
         assigned: null,
         createdAt: '2019-06-24',
-        updatedAt: '2019-06-24',
+        updatedAt: '2019-06-24'
       },
       {
         provider: 'github',
@@ -47,12 +47,12 @@ module.exports = {
         transfer_id: 1,
         assigned: null,
         createdAt: '2019-06-01',
-        updatedAt: '2019-06-24',
-      },
+        updatedAt: '2019-06-24'
+      }
     ])
   },
 
   down: (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete('Tasks', null, {})
-  },
+  }
 }

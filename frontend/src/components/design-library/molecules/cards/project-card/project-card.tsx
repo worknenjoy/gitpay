@@ -8,7 +8,7 @@ import {
   Grid,
   Typography,
   IconButton,
-  Tooltip,
+  Tooltip
 } from '@mui/material'
 import slugify from '@sindresorhus/slugify'
 import { Link, useHistory } from 'react-router-dom'

@@ -5,13 +5,13 @@ export const PaymentIntentData = {
     amount: 2000,
     amount_capturable: 0,
     amount_details: {
-      tip: {},
+      tip: {}
     },
     amount_received: 0,
     application: null,
     application_fee_amount: null,
     automatic_payment_methods: {
-      enabled: true,
+      enabled: true
     },
     canceled_at: null,
     cancellation_reason: null,
@@ -28,7 +28,7 @@ export const PaymentIntentData = {
     metadata: {
       payment_request_payment_id: 1,
       payment_request_id: 1,
-      user_id: 1,
+      user_id: 1
     },
     next_action: null,
     on_behalf_of: null,
@@ -38,11 +38,11 @@ export const PaymentIntentData = {
         installments: null,
         mandate_options: null,
         network: null,
-        request_three_d_secure: 'automatic',
+        request_three_d_secure: 'automatic'
       },
       link: {
-        persistent_token: null,
-      },
+        persistent_token: null
+      }
     },
     payment_method_types: ['card', 'link'],
     processing: null,
@@ -55,6 +55,6 @@ export const PaymentIntentData = {
     statement_descriptor_suffix: null,
     status: 'requires_payment_method',
     transfer_data: null,
-    transfer_group: null,
-  },
+    transfer_group: null
+  }
 }

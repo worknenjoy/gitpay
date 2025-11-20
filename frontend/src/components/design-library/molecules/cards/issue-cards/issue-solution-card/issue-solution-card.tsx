@@ -86,7 +86,7 @@ const IssueSolutionCard = ({ task, taskSolution }) => {
                 id="issue.transfer.card.id"
                 defaultMessage="Transfer id: {value}"
                 values={{
-                  value: transferId,
+                  value: transferId
                 }}
               />
             </Typography>
@@ -97,7 +97,7 @@ const IssueSolutionCard = ({ task, taskSolution }) => {
                   id="issue.claim.card.value"
                   defaultMessage="Claim of {value} requested"
                   values={{
-                    value: formatCurrency(Transfer.value),
+                    value: formatCurrency(Transfer.value)
                   }}
                 />
               </Typography>
@@ -115,7 +115,7 @@ const IssueSolutionCard = ({ task, taskSolution }) => {
             display: 'flex',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
-            flexDirection: 'row',
+            flexDirection: 'row'
           }}
         >
           {taskSolution.isPRMerged && pullRequestMergedChip()}

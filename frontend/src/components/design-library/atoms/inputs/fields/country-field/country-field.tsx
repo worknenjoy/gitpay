@@ -14,10 +14,10 @@ const CountryField = ({ country, completed }) => {
             width="48"
             src={
               require(
-                `images/countries/${countryCodes.find((c) => c.code === country)?.image || 'default'}.png`,
+                `images/countries/${countryCodes.find((c) => c.code === country)?.image || 'default'}.png`
               ).default ||
               require(
-                `images/countries/${countryCodes.find((c) => c.code === country)?.image || 'default'}.png`,
+                `images/countries/${countryCodes.find((c) => c.code === country)?.image || 'default'}.png`
               )
             }
           />

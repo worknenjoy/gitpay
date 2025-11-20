@@ -9,8 +9,8 @@ const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
 module.exports = async function customerSourceCreated(event, req, res) {
   return models.User.findOne({
     where: {
-      customer_id: event.data.object.customer,
-    },
+      customer_id: event.data.object.customer
+    }
   })
     .then((user) => {
       if (!user) {
@@ -24,8 +24,8 @@ module.exports = async function customerSourceCreated(event, req, res) {
           i18n.__('mail.webhook.payment.success.subject'),
           i18n.__('mail.webhook.payment.success.message', {
             name: event.data.object.name,
-            number: event.data.object.last4,
-          }),
+            number: event.data.object.last4
+          })
         )
       }
       return res.status(200).json(event)

@@ -17,9 +17,9 @@ export const issueMetadata = {
     sortable: true,
     numeric: false,
     dataBaseKey: 'ProgrammingLanguage',
-    label: 'Languages',
+    label: 'Languages'
   },
-  createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created At' },
+  createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created At' }
 }
 
 export const customColumnRenderer = {
@@ -28,7 +28,7 @@ export const customColumnRenderer = {
   value: (item: any) => <AmountField value={item.value} />,
   labels: (item: any) => <IssueLabelsField issue={item} />,
   languages: (item: any) => <IssueLanguageField issue={item} />,
-  createdAt: (item: any) => <IssueCreatedField issue={item} />,
+  createdAt: (item: any) => <IssueCreatedField issue={item} />
 }
 
 export const ProjectIssuesTable = ({
@@ -38,7 +38,7 @@ export const ProjectIssuesTable = ({
   languages,
   listLabels,
   listLanguages,
-  listTasks,
+  listTasks
 }) => {
   return (
     <>

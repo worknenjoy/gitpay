@@ -20,10 +20,10 @@ module.exports = Promise.method(function ({ id }, { message, email, name }) {
           title: task.title,
           url: taskUrl,
           value: task.value,
-          message: message,
+          message: message
         })}
-        `,
+        `
       )
-    },
+    }
   )
 })

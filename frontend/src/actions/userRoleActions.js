@@ -36,7 +36,7 @@ const createRoleSuccess = (response) => {
     completed: true,
     name: response.name,
     userId: response.userId,
-    id: response.id,
+    id: response.id
   }
 }
 
@@ -54,7 +54,7 @@ const deleteRoleSuccess = (response) => {
     completed: true,
     name: response.name,
     userId: response.userId,
-    id: response.id,
+    id: response.id
   }
 }
 
@@ -85,7 +85,7 @@ const createRoles = (rolesData) => {
       return (
         axios
           .post(`${api.API_URL}/roles/create`, {
-            name: rolesData.name,
+            name: rolesData.name
           })
           .then((resp) => {
             // dispatch(addNotification('user.role.update.success'))
@@ -111,7 +111,7 @@ const deleteRoles = (rolesData) => {
       dispatch(deleteRoleRequested())
       return axios
         .delete(`${api.API_URL}/roles/delete`, {
-          data: { name: rolesData.name },
+          data: { name: rolesData.name }
         })
         .then((response) => {
           // dispatch(addNotification('user.role.update.success'))
@@ -149,5 +149,5 @@ export {
   deleteRoleRequested,
   deleteRoleSuccess,
   deleteRoleError,
-  deleteRoles,
+  deleteRoles
 }

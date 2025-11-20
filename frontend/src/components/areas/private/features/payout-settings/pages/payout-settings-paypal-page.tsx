@@ -5,7 +5,7 @@ const PayoutSettingsPaypalPage = ({ user, updateUser }) => {
   const handlePaypalAccount = (e) => {
     e.preventDefault()
     updateUser({
-      paypal_id: e.target.paypal_email.value,
+      paypal_id: e.target.paypal_email.value
     })
   }
 

@@ -9,7 +9,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
+  ListItemText
 } from '@mui/material'
 import {
   LibraryBooks,
@@ -21,7 +21,7 @@ import {
   Settings,
   AccountBox as AccountIcon,
   AccountBalance,
-  Payment as PaymentIcon,
+  Payment as PaymentIcon
 } from '@mui/icons-material'
 import { StyledAvatar } from './account-menu.styles'
 
@@ -46,7 +46,7 @@ const AccountMenu = ({ open, handleClose, user, signOut }) => {
       ),
       icon: <Home />,
       onClick: () => window.location.assign('/#/profile'),
-      type: ['contributor', 'maintainer', 'funding'],
+      type: ['contributor', 'maintainer', 'funding']
     },
     {
       name: (
@@ -57,13 +57,13 @@ const AccountMenu = ({ open, handleClose, user, signOut }) => {
         username
           ? window.location.assign(`/#/users/${id}-${username}/`)
           : window.location.assign(`/#/users/${id}`),
-      type: ['contributor', 'maintainer', 'funding'],
+      type: ['contributor', 'maintainer', 'funding']
     },
     {
       name: <FormattedMessage id="task.actions.menu.user.account" defaultMessage="Account" />,
       icon: <AccountIcon />,
       onClick: () => window.location.assign('/#/profile/user-account'),
-      type: ['contributor', 'maintainer', 'funding'],
+      type: ['contributor', 'maintainer', 'funding']
     },
     {
       name: (
@@ -74,7 +74,7 @@ const AccountMenu = ({ open, handleClose, user, signOut }) => {
       ),
       icon: <AccountBalance />,
       onClick: () => window.location.assign('/#/profile/payment-options'),
-      type: ['contributor'],
+      type: ['contributor']
     },
     {
       name: (
@@ -82,7 +82,7 @@ const AccountMenu = ({ open, handleClose, user, signOut }) => {
       ),
       icon: <LibraryBooks />,
       onClick: () => window.location.assign('/#/profile/tasks'),
-      type: ['maintainer'],
+      type: ['maintainer']
     },
     {
       name: (
@@ -90,7 +90,7 @@ const AccountMenu = ({ open, handleClose, user, signOut }) => {
       ),
       icon: <PaymentIcon />,
       onClick: () => window.location.assign('/#/profile/payments'),
-      type: ['funding', 'maintainer'],
+      type: ['funding', 'maintainer']
     },
     {
       name: (
@@ -101,20 +101,20 @@ const AccountMenu = ({ open, handleClose, user, signOut }) => {
       ),
       icon: <Tune />,
       onClick: () => window.location.assign('/#/profile/user-account/skills'),
-      type: ['contributor'],
+      type: ['contributor']
     },
     {
       name: <FormattedMessage id="task.actions.account.settings" defaultMessage="Settings" />,
       icon: <Settings />,
       onClick: () => window.location.assign('/#/profile/user-account/settings'),
-      type: ['contributor', 'maintainer', 'funding'],
+      type: ['contributor', 'maintainer', 'funding']
     },
     {
       name: <FormattedMessage id="task.actions.account.logout" defaultMessage="Logout" />,
       icon: <ExitToApp />,
       onClick: handleLogout,
-      type: ['contributor', 'maintainer', 'funding'],
-    },
+      type: ['contributor', 'maintainer', 'funding']
+    }
   ]
 
   return (
@@ -144,7 +144,7 @@ const AccountMenu = ({ open, handleClose, user, signOut }) => {
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText>{item.name}</ListItemText>
               </ListItemButton>
-            ),
+            )
         )}
       </List>
     </Drawer>

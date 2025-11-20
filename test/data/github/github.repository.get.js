@@ -22,7 +22,7 @@ module.exports.repo = {
     events_url: 'https://api.github.com/users/worknenjoy/events{/privacy}',
     received_events_url: 'https://api.github.com/users/worknenjoy/received_events',
     type: 'Organization',
-    site_admin: false,
+    site_admin: false
   },
   html_url: 'https://github.com/worknenjoy/gitpay',
   description:
@@ -94,7 +94,7 @@ module.exports.repo = {
     name: 'Other',
     spdx_id: 'NOASSERTION',
     url: null,
-    node_id: 'MDc6TGljZW5zZTA=',
+    node_id: 'MDc6TGljZW5zZTA='
   },
   allow_forking: true,
   is_template: false,
@@ -106,7 +106,7 @@ module.exports.repo = {
     'github',
     'issue-management',
     'marketplace',
-    'pull-requests',
+    'pull-requests'
   ],
   visibility: 'public',
   forks: 157,
@@ -133,8 +133,8 @@ module.exports.repo = {
     events_url: 'https://api.github.com/users/worknenjoy/events{/privacy}',
     received_events_url: 'https://api.github.com/users/worknenjoy/received_events',
     type: 'Organization',
-    site_admin: false,
+    site_admin: false
   },
   network_count: 157,
-  subscribers_count: 16,
+  subscribers_count: 16
 }

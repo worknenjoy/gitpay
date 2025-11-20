@@ -27,14 +27,14 @@ module.exports.sourceCreated = {
       last4: '7743',
       metadata: {},
       name: 'User Test',
-      tokenization_method: null,
-    },
+      tokenization_method: null
+    }
   },
   livemode: true,
   pending_webhooks: 1,
   request: {
     id: 'req_BMnICMT36tV8vh',
-    idempotency_key: null,
+    idempotency_key: null
   },
-  type: 'customer.source.created',
+  type: 'customer.source.created'
 }

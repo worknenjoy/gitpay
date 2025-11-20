@@ -12,7 +12,7 @@ const {
   createOrder,
   createAssign,
   createTransfer,
-  truncateModels,
+  truncateModels
 } = require('./helpers')
 const models = require('../src/models')
 const transfer = require('./data/stripe/stripe.transfer.updated').updated.data.object
@@ -23,7 +23,7 @@ const createTransferWithTaskData = async (taskData, userId, transferId) => {
   const res = await agent.post('/transfers/create').send({
     taskId: taskData.id,
     userId: userId,
-    transfer_id: transferId,
+    transfer_id: transferId
   })
   return res
 }
@@ -88,7 +88,7 @@ describe('Transfer', () => {
           userId: taskData.userId,
           TaskId: taskData.id,
           paid: true,
-          provider: 'stripe',
+          provider: 'stripe'
         })
         const assign = await createAssign(agent, { taskId: taskData.id })
         const res = await createTransferWithTaskData(taskData, taskData.userId)
@@ -112,13 +112,13 @@ describe('Transfer', () => {
           userId: taskData.userId,
           TaskId: taskData.id,
           paid: true,
-          provider: 'stripe',
+          provider: 'stripe'
         })
         const anotherOrder = await createOrder({
           userId: taskData.userId,
           TaskId: taskData.id,
           paid: true,
-          provider: 'stripe',
+          provider: 'stripe'
         })
         const assign = await createAssign(agent, { taskId: taskData.id })
         const res = await createTransferWithTaskData(taskData, taskData.userId)
@@ -142,19 +142,19 @@ describe('Transfer', () => {
           userId: taskData.userId,
           TaskId: taskData.id,
           paid: true,
-          provider: 'stripe',
+          provider: 'stripe'
         })
         const anotherOrder = await createOrder({
           userId: taskData.userId,
           TaskId: taskData.id,
           paid: false,
-          provider: 'stripe',
+          provider: 'stripe'
         })
         const oneMoreOrder = await createOrder({
           userId: taskData.userId,
           TaskId: taskData.id,
           paid: true,
-          provider: 'stripe',
+          provider: 'stripe'
         })
         const assign = await createAssign(agent, { taskId: taskData.id })
         const res = await createTransferWithTaskData(taskData, taskData.userId)
@@ -177,19 +177,19 @@ describe('Transfer', () => {
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: true,
-        provider: 'stripe',
+        provider: 'stripe'
       })
       const anotherOrder = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: true,
-        provider: 'stripe',
+        provider: 'stripe'
       })
       const oneMoreOrder = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: false,
-        provider: 'paypal',
+        provider: 'paypal'
       })
       const assign = await createAssign(agent, { taskId: taskData.id })
       const res = await createTransferWithTaskData(taskData, taskData.userId)
@@ -210,8 +210,8 @@ describe('Transfer', () => {
         200,
         { access_token: 'foo' },
         {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       )
       nock(url)
         .post(anotherPath)
@@ -222,15 +222,15 @@ describe('Transfer', () => {
               sender_batch_header: {
                 sender_batch_id: 'Payouts_2020_100007',
                 email_subject: 'You have a payout!',
-                email_message: 'You have received a payout! Thanks for using our service!',
+                email_message: 'You have received a payout! Thanks for using our service!'
               },
               payout_batch_id: '5UXD2E8A7EBQJ',
-              batch_status: 'PENDING',
-            },
+              batch_status: 'PENDING'
+            }
           },
           {
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         )
 
       const task = await createTask(agent)
@@ -239,24 +239,24 @@ describe('Transfer', () => {
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: true,
-        provider: 'stripe',
+        provider: 'stripe'
       })
       const anotherOrder = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: false,
-        provider: 'stripe',
+        provider: 'stripe'
       })
       const oneMoreOrder = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: true,
-        provider: 'paypal',
+        provider: 'paypal'
       })
       const assign = await createAssign(
         agent,
         { taskId: taskData.id },
-        { paypal_id: 'foo@example.com' },
+        { paypal_id: 'foo@example.com' }
       )
       const res = await createTransferWithTaskData(taskData, taskData.userId)
       expect(res.body).to.exist
@@ -282,12 +282,12 @@ describe('Transfer', () => {
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: true,
-        provider: 'stripe',
+        provider: 'stripe'
       })
       const assign = await createAssign(agent, { taskId: taskData.id })
       const transferData = await createTransferWithTaskData(taskData, taskData.userId)
       const res = await agent.put('/transfers/update').send({
-        id: transferData.body.id,
+        id: transferData.body.id
       })
       expect(res.status).to.equal(200)
       expect(res.body).to.exist
@@ -307,8 +307,8 @@ describe('Transfer', () => {
         200,
         { access_token: 'foo' },
         {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       )
       nock(url)
         .post(newPayoutPath)
@@ -319,19 +319,19 @@ describe('Transfer', () => {
               sender_batch_header: {
                 sender_batch_id: 'Payouts_2020_100007',
                 email_subject: 'You have a payout!',
-                email_message: 'You have received a payout! Thanks for using our service!',
+                email_message: 'You have received a payout! Thanks for using our service!'
               },
               payout_batch_id: '5UXD2E8A7EBQJ',
-              batch_status: 'PENDING',
-            },
+              batch_status: 'PENDING'
+            }
           },
           {
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         )
 
       nock(url).get(getPayoutPath).reply(200, paypalGetPayoutSample, {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       })
 
       nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
@@ -344,28 +344,28 @@ describe('Transfer', () => {
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: true,
-        provider: 'stripe',
+        provider: 'stripe'
       })
       const anotherOrder = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: true,
-        provider: 'paypal',
+        provider: 'paypal'
       })
       const assign = await createAssign(agent, { taskId: taskData.id }, { paypal_id: '123' })
       const transferData = await createTransferWithTaskData(taskData, taskData.userId)
       const updateAssign = await models.User.update(
         {
-          paypal_id: 'test',
+          paypal_id: 'test'
         },
         {
           where: {
-            id: assign.dataValues.userId,
-          },
-        },
+            id: assign.dataValues.userId
+          }
+        }
       )
       const res = await agent.put('/transfers/update').send({
-        id: transferData.body.id,
+        id: transferData.body.id
       })
       expect(res.status).to.equal(200)
       expect(res.body).to.exist
@@ -386,8 +386,8 @@ describe('Transfer', () => {
         200,
         { access_token: 'foo' },
         {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       )
       nock(url)
         .post(newPayoutPath)
@@ -398,19 +398,19 @@ describe('Transfer', () => {
               sender_batch_header: {
                 sender_batch_id: 'Payouts_2020_100007',
                 email_subject: 'You have a payout!',
-                email_message: 'You have received a payout! Thanks for using our service!',
+                email_message: 'You have received a payout! Thanks for using our service!'
               },
               payout_batch_id: '5UXD2E8A7EBQJ',
-              batch_status: 'PENDING',
-            },
+              batch_status: 'PENDING'
+            }
           },
           {
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         )
 
       nock(url).get(getPayoutPath).reply(200, paypalGetPayoutSample, {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       })
       nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
       nock('https://api.stripe.com').persist().get('/v1/transfers').reply(200, transfer)
@@ -420,18 +420,18 @@ describe('Transfer', () => {
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: true,
-        provider: 'stripe',
+        provider: 'stripe'
       })
       const anotherOrder = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: true,
-        provider: 'paypal',
+        provider: 'paypal'
       })
       const assign = await createAssign(agent, { taskId: taskData.id }, { paypal_id: 'foo' })
       const transferData = await createTransferWithTaskData(taskData, taskData.userId)
       const res = await agent.put('/transfers/update').send({
-        id: transferData.body.id,
+        id: transferData.body.id
       })
       expect(res.status).to.equal(200)
       expect(res.body).to.exist
@@ -449,7 +449,7 @@ describe('Transfer', () => {
       const transfer = await createTransfer({
         taskId: taskData.id,
         userId: taskData.userId,
-        to: assign.dataValues.userId,
+        to: assign.dataValues.userId
       })
       const res = await agent.get('/transfers/search').query({ userId: taskData.userId })
       expect(res.body).to.exist
@@ -465,7 +465,7 @@ describe('Transfer', () => {
         const transfer = await createTransfer({
           taskId: taskData.id,
           userId: taskData.userId,
-          to: assign.dataValues.userId,
+          to: assign.dataValues.userId
         })
         const transferId = transfer.dataValues.id
         const res = await agent.get('/transfers/fetch/' + transferId)
@@ -486,8 +486,8 @@ describe('Transfer', () => {
         200,
         { access_token: 'foo' },
         {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       )
       nock(url)
         .post(newPayoutPath)
@@ -498,15 +498,15 @@ describe('Transfer', () => {
               sender_batch_header: {
                 sender_batch_id: 'Payouts_2020_100007',
                 email_subject: 'You have a payout!',
-                email_message: 'You have received a payout! Thanks for using our service!',
+                email_message: 'You have received a payout! Thanks for using our service!'
               },
               payout_batch_id: '5UXD2E8A7EBQJ',
-              batch_status: 'PENDING',
-            },
+              batch_status: 'PENDING'
+            }
           },
           {
-            'Content-Type': 'application/json',
-          },
+            'Content-Type': 'application/json'
+          }
         )
 
       nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
@@ -520,11 +520,11 @@ describe('Transfer', () => {
         200,
         { access_token: 'foo' },
         {
-          'Content-Type': 'application/json',
-        },
+          'Content-Type': 'application/json'
+        }
       )
       nock(url).get(getPayoutPath).reply(200, paypalGetPayoutSample, {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       })
 
       const task = await createTask(agent)
@@ -533,24 +533,24 @@ describe('Transfer', () => {
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: true,
-        provider: 'stripe',
+        provider: 'stripe'
       })
       const anotherOrder = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: false,
-        provider: 'stripe',
+        provider: 'stripe'
       })
       const oneMoreOrder = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
         paid: true,
-        provider: 'paypal',
+        provider: 'paypal'
       })
       const assign = await createAssign(
         agent,
         { taskId: taskData.id },
-        { paypal_id: 'foo@example.com' },
+        { paypal_id: 'foo@example.com' }
       )
       const createTransfer = await createTransferWithTaskData(taskData, taskData.userId)
       const res = await agent.get('/transfers/fetch/' + createTransfer.body.id)
@@ -579,7 +579,7 @@ describe('Transfer', () => {
         const order = await createOrder({
           userId: taskData.userId,
           TaskId: taskData.id,
-          paid: true,
+          paid: true
         })
         const assign = await createAssign(agent, { taskId: taskData.id })
         const res1 = await createTransferWithTaskData(taskData, taskData.userId, '123')
@@ -598,7 +598,7 @@ describe('Transfer', () => {
         const order = await createOrder({
           userId: taskData.userId,
           TaskId: taskData.id,
-          paid: true,
+          paid: true
         })
         const assign = await createAssign(agent, { taskId: taskData.id })
         const res1 = await createTransferWithTaskData(taskData, taskData.userId)

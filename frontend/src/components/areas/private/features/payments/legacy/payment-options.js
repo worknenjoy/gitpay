@@ -12,7 +12,7 @@ class PaymentOptions extends Component {
     this.state = {
       tab: 0,
       cards: [],
-      notification: false,
+      notification: false
     }
   }
 

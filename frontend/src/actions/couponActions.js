@@ -22,7 +22,7 @@ const validateCouponError = (error) => {
 const ERRORS = {
   COUPON_FAILED: 'coupon.failed',
   COUPON_DOES_NOT_EXISTS: 'coupon.notFound',
-  COUPON_MAX_TIMES_EXCEEDED: 'coupon.maxTimesExceeded',
+  COUPON_MAX_TIMES_EXCEEDED: 'coupon.maxTimesExceeded'
 }
 
 const validateCoupon = (couponCode, originalOrderPrice) => {
@@ -32,7 +32,7 @@ const validateCoupon = (couponCode, originalOrderPrice) => {
 
     const payload = {
       code: couponCode,
-      originalOrderPrice: originalOrderPrice,
+      originalOrderPrice: originalOrderPrice
     }
 
     axios

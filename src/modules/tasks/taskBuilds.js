@@ -31,12 +31,12 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
         ? `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}`
         : `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
       headers = {
-        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
+        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
       }
       if (taskParameters.token) headers.Authorization = `token ${token}`
       return requestPromise({
         uri,
-        headers,
+        headers
       }).then(async (response) => {
         if (!response && !response.title) return false
         const issueDataJsonGithub = JSON.parse(response)
@@ -47,9 +47,9 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
         const programmingLanguagesResponse = await requestPromise({
           uri: programmingLanguagesUri,
           headers: {
-            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
+            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
           },
-          json: true,
+          json: true
         })
 
         const languages = Object.keys(programmingLanguagesResponse)
@@ -59,20 +59,20 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
             for (const language of languages) {
               // Check if the language exists
               let programmingLanguage = await models.ProgrammingLanguage.findOne({
-                where: { name: language },
+                where: { name: language }
               })
 
               // If it doesn't exist, create it
               if (!programmingLanguage) {
                 programmingLanguage = await models.ProgrammingLanguage.create({
-                  name: language,
+                  name: language
                 })
               }
 
               // Associate the programming language with the task
               await models.ProjectProgrammingLanguage.create({
                 projectId: task.ProjectId,
-                programmingLanguageId: programmingLanguage.id,
+                programmingLanguageId: programmingLanguage.id
               })
             }
 
@@ -81,15 +81,15 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
               const userInfo = await requestPromise({
                 uri: `https://api.github.com/users/${userOrCompany}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
                 headers: {
-                  'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
-                },
+                  'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+                }
               })
               const userInfoJSON = JSON.parse(userInfo)
               const userExist = userExists && (await userExists({ email: userInfoJSON.email }))
               if (userExist && userExist.dataValues && userExist.dataValues.id) {
                 await task.createMember({
                   userId: userExist.dataValues.id,
-                  roleId: role.dataValues.id,
+                  roleId: role.dataValues.id
                 })
               } else {
                 // send an email
@@ -113,7 +113,7 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
       })
     case 'bitbucket':
       return requestPromise({
-        uri: `https://api.bitbucket.org/2.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`,
+        uri: `https://api.bitbucket.org/2.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
       }).then((response) => {
         return project(userOrCompany, projectName, userId, 'bitbucket').then((p) => {
           return p.createTask({ ...taskParameters, private: true }).then((task) => {
@@ -124,7 +124,7 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
 
     default:
       return models.Task.build(taskParameters, {
-        include: [models.User, models.Member],
+        include: [models.User, models.Member]
       })
         .save()
         .then((data) => {

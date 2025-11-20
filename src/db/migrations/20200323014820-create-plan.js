@@ -5,29 +5,29 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       OrderId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Orders',
-          key: 'id',
+          key: 'id'
         },
-        allowNull: true,
+        allowNull: true
       },
       plan: {
         type: Sequelize.ENUM,
-        values: ['open source', 'private', 'with support'],
+        values: ['open source', 'private', 'with support']
       },
       fee: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL
       },
       feePercentage: {
-        type: Sequelize.INTEGER,
-      },
+        type: Sequelize.INTEGER
+      }
     })
   },
   down: function (queryInterface, Sequelize) {
     return queryInterface.dropTable('Plans')
-  },
+  }
 }

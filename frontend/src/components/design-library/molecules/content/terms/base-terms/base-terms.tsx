@@ -23,7 +23,7 @@ const BaseTerms = ({
   onArrowBack,
   onAgreeTerms,
   noHeader,
-  extraStyles = true,
+  extraStyles = true
 }: BaseTermsProps) => {
   return (
     <>

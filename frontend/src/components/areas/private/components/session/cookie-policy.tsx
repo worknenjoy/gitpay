@@ -64,7 +64,7 @@ Please note that this Cookie Policy should be read in conjunction with our Priva
                 top: 0,
                 left: 0,
                 width: '100%',
-                background: 'white',
+                background: 'white'
               }
             : {}
         }

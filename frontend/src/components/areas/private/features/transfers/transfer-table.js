@@ -13,52 +13,52 @@ import {
   Typography,
   Paper,
   IconButton,
-  Skeleton,
+  Skeleton
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import {
   FirstPage as FirstPageIcon,
   KeyboardArrowLeft,
   KeyboardArrowRight,
-  LastPage as LastPageIcon,
+  LastPage as LastPageIcon
 } from '@mui/icons-material'
 import slugify from '@sindresorhus/slugify'
 
 const messages = defineMessages({
   firstPageLabel: {
     id: 'transfers.table.page.first',
-    defaultMessage: 'First page',
+    defaultMessage: 'First page'
   },
   previousPageLabel: {
     id: 'transfer.table.page.previous',
-    defaultMessage: 'Previous page',
+    defaultMessage: 'Previous page'
   },
   nextPageLabel: {
     id: 'transfer.table.page.next',
-    defaultMessage: 'Next page',
+    defaultMessage: 'Next page'
   },
   lastPageLabel: {
     id: 'transfer.table.page.last',
-    defaultMessage: 'Last page',
+    defaultMessage: 'Last page'
   },
   noDefined: {
     id: 'transfer.table.date.none',
-    defaultMessage: 'Not yet defined',
+    defaultMessage: 'Not yet defined'
   },
   noBounty: {
     id: 'transfer.table.value.none',
-    defaultMessage: 'No bounty added',
+    defaultMessage: 'No bounty added'
   },
   onHoverpaymentProvider: {
     id: 'transfer.table.onHover',
-    defaultMessage: 'See on',
-  },
+    defaultMessage: 'See on'
+  }
 })
 
 const ActionsRoot = styled('div')(({ theme }) => ({
   flexShrink: 0,
   color: theme.palette.text.secondary,
-  marginLeft: theme.spacing(2.5),
+  marginLeft: theme.spacing(2.5)
 }))
 
 class TablePaginationActions extends React.Component {
@@ -77,7 +77,7 @@ class TablePaginationActions extends React.Component {
   handleLastPageButtonClick = (event) => {
     this.props.onChangePage(
       event,
-      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1),
+      Math.max(0, Math.ceil(this.props.count / this.props.rowsPerPage) - 1)
     )
   }
 
@@ -125,7 +125,7 @@ TablePaginationActions.propTypes = {
   onChangePage: PropTypes.func.isRequired,
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 }
 
 const TablePaginationActionsWrapped = injectIntl((props) => <TablePaginationActions {...props} />)
@@ -139,7 +139,7 @@ class CustomPaginationActionsTable extends React.Component {
 
     this.state = {
       page: 0,
-      rowsPerPage: 10,
+      rowsPerPage: 10
     }
   }
 
@@ -258,7 +258,7 @@ class CustomPaginationActionsTable extends React.Component {
 CustomPaginationActionsTable.propTypes = {
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
-  payments: PropTypes.object,
+  payments: PropTypes.object
 }
 
 export default injectIntl(withRouter(CustomPaginationActionsTable))

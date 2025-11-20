@@ -61,5 +61,5 @@ module.exports = {
   isAuthOrRedirect: isAuthOrRedirect,
   isNotAuthOrRedirect: isNotAuthOrRedirect,
   isAuth: isAuth,
-  isNotAuth: isNotAuth,
+  isNotAuth: isNotAuth
 }

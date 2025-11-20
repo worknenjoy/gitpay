@@ -5,18 +5,18 @@ const meta = {
   component: BaseTitle,
   args: {
     title: 'Sample Title',
-    subtitle: 'This is a subtitle',
+    subtitle: 'This is a subtitle'
   },
   argTypes: {
     level: {
       control: { type: 'string', options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] },
-      description: 'Heading level (1-6)',
+      description: 'Heading level (1-6)'
     },
     children: {
       control: 'text',
-      description: 'Title text',
-    },
-  },
+      description: 'Title text'
+    }
+  }
 }
 
 export default meta
@@ -24,6 +24,6 @@ export default meta
 export const Default = {
   args: {
     title: 'Default Title',
-    subtitle: 'This is a default subtitle',
-  },
+    subtitle: 'This is a default subtitle'
+  }
 }

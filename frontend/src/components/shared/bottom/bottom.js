@@ -25,7 +25,7 @@ class Bottom extends Component {
         style={{
           textAlign: 'center',
           padding: 8,
-          backgroundColor: '#f1f0ea',
+          backgroundColor: '#f1f0ea'
         }}
       >
         <Container>
@@ -146,7 +146,7 @@ class Bottom extends Component {
                     style={{
                       marginLeft: 10,
                       marginRight: 10,
-                      display: 'inline-block',
+                      display: 'inline-block'
                     }}
                   >
                     <FormattedMessage id="bottom.company.org" defaultMessage="is part of" />

@@ -3,7 +3,7 @@ import ImportIssueButton from './import-issue-button'
 
 export default {
   title: 'Design Library/Atoms/Buttons/ImportIssueButton',
-  component: ImportIssueButton,
+  component: ImportIssueButton
 }
 
 const Template = (args) => <ImportIssueButton {...args} />

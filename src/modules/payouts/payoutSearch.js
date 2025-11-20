@@ -6,7 +6,7 @@ module.exports = Promise.method(async function payoutSearch(params = {}) {
   if (params.userId) {
     payouts = await models.Payout.findAll({
       where: { userId: params.userId },
-      include: [models.User],
+      include: [models.User]
     })
   }
   return payouts

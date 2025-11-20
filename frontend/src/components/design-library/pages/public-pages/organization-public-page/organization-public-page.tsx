@@ -14,7 +14,7 @@ const OrganizationPublicPage = ({
   languages,
   listLabels,
   listLanguages,
-  listTasks,
+  listTasks
 }) => {
   const { data, completed } = organization
   const projectList = { data: data?.Projects || [], completed }
@@ -27,7 +27,7 @@ const OrganizationPublicPage = ({
           label: (
             <FormattedMessage id="breadcrumb.explore.organizations.root" defaultMessage="Explore" />
           ),
-          link: '/explore/issues',
+          link: '/explore/issues'
         }}
       />
       <ContextTitle

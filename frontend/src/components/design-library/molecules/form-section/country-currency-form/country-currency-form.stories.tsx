@@ -3,7 +3,7 @@ import CountryCurrencyForm from './country-currency-form'
 
 export default {
   title: 'Design Library/Molecules/FormSection/CountryCurrencyForm',
-  component: CountryCurrencyForm,
+  component: CountryCurrencyForm
 }
 
 const Template = (args) => <CountryCurrencyForm {...args} />
@@ -20,8 +20,8 @@ Default.args = {
         eur: 'eur',
         gbp: 'gbp',
         jpy: 'jpy',
-        aud: 'aud',
-      },
-    },
-  },
+        aud: 'aud'
+      }
+    }
+  }
 }

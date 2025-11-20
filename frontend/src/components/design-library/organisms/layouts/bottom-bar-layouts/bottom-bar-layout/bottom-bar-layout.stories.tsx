@@ -3,7 +3,7 @@ import Bottom from './bottom-bar-layout'
 
 export default {
   title: 'Design Library/Organisms/Layouts/BottomBar/BottomBar',
-  component: Bottom,
+  component: Bottom
 }
 
 const Template = (args) => <Bottom {...args} />
@@ -14,5 +14,5 @@ Default.args = {
   getInfo: () => {},
   tasks: '20',
   bounties: '2000',
-  users: '5000',
+  users: '5000'
 }

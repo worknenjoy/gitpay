@@ -20,7 +20,7 @@ const PayoutSettingsBankAccountPayoutSchedulePage = ({ account, updateAccount })
     const formData = {
       'settings[payouts][schedule][interval]': value,
       ...(value === 'weekly' ? { 'settings[payouts][schedule][weekly_anchor]': 'monday' } : {}),
-      ...(value === 'monthly' ? { 'settings[payouts][schedule][monthly_anchor]': '1' } : {}),
+      ...(value === 'monthly' ? { 'settings[payouts][schedule][monthly_anchor]': '1' } : {})
     }
     updateAccount(formData)
   }

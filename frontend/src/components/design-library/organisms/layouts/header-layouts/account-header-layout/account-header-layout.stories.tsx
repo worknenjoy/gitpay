@@ -3,7 +3,7 @@ import AccountHeader from './account-header-layout'
 
 export default {
   title: 'Design Library/Organisms/Layouts/Header/AccountHeader',
-  component: AccountHeader,
+  component: AccountHeader
 }
 
 const Template = (args) => <AccountHeader {...args} />
@@ -16,16 +16,16 @@ Default.args = {
     Types: [
       {
         id: 1,
-        name: 'contributor',
+        name: 'contributor'
       },
       {
         id: 2,
-        name: 'maintainer',
+        name: 'maintainer'
       },
       {
         id: 3,
-        name: 'funding',
-      },
-    ],
-  },
+        name: 'funding'
+      }
+    ]
+  }
 }

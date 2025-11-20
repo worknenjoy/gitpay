@@ -26,7 +26,7 @@ const IssueCard = ({ issue }) => {
             id="task.status.created.name.short"
             defaultMessage="by {name}"
             values={{
-              name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown',
+              name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
             }}
           />
         </Link>
@@ -37,7 +37,7 @@ const IssueCard = ({ issue }) => {
           id="task.status.created.name.short"
           defaultMessage="by {name}"
           values={{
-            name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown',
+            name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
           }}
         />
       )
@@ -56,7 +56,7 @@ const IssueCard = ({ issue }) => {
             id="task.status.created.name"
             defaultMessage="Created by {name}"
             values={{
-              name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown',
+              name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
             }}
           >
             {(msg) => (

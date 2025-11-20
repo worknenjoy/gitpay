@@ -13,7 +13,7 @@ import {
   Chip,
   IconButton,
   Tooltip,
-  Skeleton,
+  Skeleton
 } from '@mui/material'
 
 import Constants from '../../../../../../consts'
@@ -57,7 +57,7 @@ class TaskItem extends Component {
           style={{
             marginRight: 10,
             backgroundColor: 'green',
-            color: 'white',
+            color: 'white'
           }}
         />
         <Chip
@@ -65,7 +65,7 @@ class TaskItem extends Component {
           style={{
             marginRight: 20,
             backgroundColor: 'green',
-            color: 'white',
+            color: 'white'
           }}
         />
         <ListItemSecondaryAction>
@@ -91,7 +91,7 @@ TaskItem.propTypes = {
   item: PropTypes.object,
   key: PropTypes.string,
   ready: PropTypes.func,
-  classes: PropTypes.string,
+  classes: PropTypes.string
 }
 
 export default injectIntl(withRouter(TaskItem))

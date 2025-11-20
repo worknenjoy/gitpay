@@ -3,7 +3,7 @@ import AccountMenu from './account-menu'
 
 export default {
   title: 'Design Library/Molecules/Menus/AccountMenu',
-  component: AccountMenu,
+  component: AccountMenu
 }
 
 const Template = (args) => {
@@ -31,17 +31,17 @@ Default.args = {
       Types: [
         {
           id: 1,
-          name: 'contributor',
+          name: 'contributor'
         },
         {
           id: 2,
-          name: 'maintainer',
+          name: 'maintainer'
         },
         {
           id: 3,
-          name: 'funding',
-        },
-      ],
-    },
-  },
+          name: 'funding'
+        }
+      ]
+    }
+  }
 }

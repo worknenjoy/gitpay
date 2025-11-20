@@ -9,7 +9,7 @@ module.exports = {
      */
     await queryInterface.addColumn('Tasks', 'not_listed', {
       type: Sequelize.BOOLEAN,
-      defaultValue: false,
+      defaultValue: false
     })
   },
 
@@ -21,5 +21,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.removeColumn('Tasks', 'not_listed')
-  },
+  }
 }

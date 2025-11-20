@@ -21,17 +21,17 @@ async function fetchAllStripeData(listFn: any, label: string, params = {}) {
   while (hasMore) {
     page++
     console.log(
-      `[Stripe] ${label}: requesting page ${page}${startingAfter ? ` (starting_after=${startingAfter})` : ''}`,
+      `[Stripe] ${label}: requesting page ${page}${startingAfter ? ` (starting_after=${startingAfter})` : ''}`
     )
     const response: any = await listFn({
       limit: 100,
       ...params,
-      ...(startingAfter && { starting_after: startingAfter }),
+      ...(startingAfter && { starting_after: startingAfter })
     })
 
     results = results.concat(response.data)
     console.log(
-      `[Stripe] ${label}: received ${response.data.length} items, total=${results.length}, has_more=${response.has_more}`,
+      `[Stripe] ${label}: received ${response.data.length} items, total=${results.length}, has_more=${response.has_more}`
     )
     hasMore = response.has_more
     startingAfter = response.data.length ? response.data[response.data.length - 1].id : null
@@ -49,12 +49,12 @@ async function getStripeData() {
   const payments = await fetchAllStripeData((params: any) => stripe.charges.list(params), 'charges')
   const transfers = await fetchAllStripeData(
     (params: any) => stripe.transfers.list(params),
-    'transfers',
+    'transfers'
   )
   const payouts = await fetchAllStripeData((params: any) => stripe.payouts.list(params), 'payouts')
   const invoices = await fetchAllStripeData(
     (params: any) => stripe.invoices.list(params),
-    'invoices',
+    'invoices'
   )
 
   let totalPayments = 0
@@ -76,13 +76,13 @@ async function getStripeData() {
         totalStripeFees += txn.fee / 100
       } catch (err: any) {
         console.warn(
-          `[Stripe] Failed to retrieve balance transaction ${p.balance_transaction} for charge ${p.id}: ${err?.message || err}`,
+          `[Stripe] Failed to retrieve balance transaction ${p.balance_transaction} for charge ${p.id}: ${err?.message || err}`
         )
       }
     }
     if (idx % 50 === 0 || idx === totalCount) {
       console.log(
-        `[Stripe] Processed ${idx}/${totalCount} charges... so far: payments=$${totalPayments.toFixed(2)}, refunds=$${totalRefunds.toFixed(2)}, fees=$${totalStripeFees.toFixed(2)}`,
+        `[Stripe] Processed ${idx}/${totalCount} charges... so far: payments=$${totalPayments.toFixed(2)}, refunds=$${totalRefunds.toFixed(2)}, fees=$${totalStripeFees.toFixed(2)}`
       )
     }
   }
@@ -99,7 +99,7 @@ async function getStripeData() {
   }, 0)
 
   console.log(
-    `[Stripe] Aggregates -> payments=$${totalPayments.toFixed(2)}, refunds=$${totalRefunds.toFixed(2)}, fees=$${totalStripeFees.toFixed(2)}, transfers=$${totalTransfers.toFixed(2)}, payouts=$${totalPayouts.toFixed(2)}, subscriptions=$${subscriptionRevenue.toFixed(2)}`,
+    `[Stripe] Aggregates -> payments=$${totalPayments.toFixed(2)}, refunds=$${totalRefunds.toFixed(2)}, fees=$${totalStripeFees.toFixed(2)}, transfers=$${totalTransfers.toFixed(2)}, payouts=$${totalPayouts.toFixed(2)}, subscriptions=$${subscriptionRevenue.toFixed(2)}`
   )
   console.timeEnd('[Step] Stripe data total time')
 
@@ -109,7 +109,7 @@ async function getStripeData() {
     totalRefunds,
     totalTransfers,
     totalPayouts,
-    subscriptionRevenue,
+    subscriptionRevenue
   }
 }
 
@@ -129,9 +129,9 @@ async function getDatabaseData() {
   const unpaidTasksList = await Task.findAll({
     where: {
       value: { [Op.gt]: 0 },
-      paid: false,
+      paid: false
     },
-    include: [Order],
+    include: [Order]
   })
   console.log(`[DB] Unpaid tasks count: ${unpaidTasksList.length}`)
 
@@ -140,8 +140,8 @@ async function getDatabaseData() {
     (await Task.sum('value', {
       where: {
         value: { [Op.gt]: 0 },
-        paid: false,
-      },
+        paid: false
+      }
     })) || 0
   console.log(`[DB] Unpaid tasks total: $${unpaidTasks.toFixed(2)}`)
 

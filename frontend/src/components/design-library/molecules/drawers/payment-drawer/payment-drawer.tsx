@@ -10,7 +10,7 @@ import PricePlan from '../../../organisms/forms/price-forms/price-plan-form/pric
 
 const Details = styled('div')(() => ({
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'column'
 }))
 
 type PaymentDrawerProps = {
@@ -34,7 +34,7 @@ const PaymentDrawer = ({
   title,
   pickupTagListMessagesPrimaryText,
   pickupTagListMessagesSecondaryText,
-  classes,
+  classes
 }: PaymentDrawerProps) => {
   const [tabValue, setTabValue] = useState(tabs.find((tab) => tab.default)?.value)
   const [price, setPrice] = useState(0)

@@ -4,7 +4,7 @@ import IssuePage from './issue-page-layout'
 const meta = {
   title: 'Design Library/Organisms/Layouts/IssuePage/IssuePage',
   component: IssuePage,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen' }
 }
 
 export default meta
@@ -18,13 +18,13 @@ Default.args = {
     data: {
       id: 1,
       name: 'John Doe',
-      avatar: 'https://via.placeholder.com/150',
+      avatar: 'https://via.placeholder.com/150'
     },
     Project: {
       id: 1,
       name: 'Sample Project',
-      Organization: { id: 1, name: 'Sample Org' },
-    },
+      Organization: { id: 1, name: 'Sample Org' }
+    }
   },
   task: {
     completed: true,
@@ -37,20 +37,20 @@ Default.args = {
         issue: {
           user: {
             login: 'octocat',
-            avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
-          },
+            avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4'
+          }
         },
         labels: [
           { id: 1, name: 'bug', color: '#d73a4a' },
           { id: 2, name: 'enhancement', color: '#a2eeef' },
-          { id: 3, name: 'documentation', color: '#0075ca' },
-        ],
-      },
-    },
+          { id: 3, name: 'documentation', color: '#0075ca' }
+        ]
+      }
+    }
   },
   account: {
     completed: true,
-    data: { id: 1, balance: 1000 },
+    data: { id: 1, balance: 1000 }
   },
   updateTask: () => console.log('Task updated'),
   reportTask: () => console.log('Task reported'),
@@ -62,7 +62,7 @@ Default.args = {
   fetchAccount: () => console.log('Fetched account data'),
   taskSolution: {
     completed: true,
-    data: {},
+    data: {}
   },
   customer: { completed: true, data: {} },
   addNotification: () => console.log('Notification added'),
@@ -79,5 +79,5 @@ Default.args = {
   createTaskSolution: () => console.log('Create task solution'),
   updateTaskSolution: () => console.log('Update task solution'),
   fetchPullRequestData: () => console.log('Fetch pull request data'),
-  pullRequestData: { completed: true, data: null },
+  pullRequestData: { completed: true, data: null }
 }

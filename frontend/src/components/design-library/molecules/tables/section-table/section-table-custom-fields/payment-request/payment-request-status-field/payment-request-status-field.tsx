@@ -11,7 +11,7 @@ interface PaymentRequestStatusFieldProps {
 
 const PaymentRequestStatusField: React.FC<PaymentRequestStatusFieldProps> = ({
   status,
-  completed = true,
+  completed = true
 }) => {
   const theme = useTheme()
   const styles = getStyles(theme)
@@ -20,13 +20,13 @@ const PaymentRequestStatusField: React.FC<PaymentRequestStatusFieldProps> = ({
     {
       status: 'open',
       label: 'Open',
-      color: 'open',
+      color: 'open'
     },
     {
       status: 'paid',
       label: 'Paid',
-      color: 'paid',
-    },
+      color: 'paid'
+    }
   ]
 
   return (

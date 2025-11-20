@@ -124,7 +124,7 @@ exports.deleteTaskFromReport = (req, res) => {
     id: req.params.taskId,
     userId: req.params.userId,
     title: req.query.title,
-    reason: req.query.reason,
+    reason: req.query.reason
   }
   Tasks.taskDeleteById(params)
     .then((deleted) => {
@@ -132,7 +132,7 @@ exports.deleteTaskFromReport = (req, res) => {
         ? res
             .status(200)
             .send(
-              'There was an error in deleting the task from the database, or the task was already deleted',
+              'There was an error in deleting the task from the database, or the task was already deleted'
             )
         : res.status(200).send(`${deleted} rows were deleted from the database`)
     })

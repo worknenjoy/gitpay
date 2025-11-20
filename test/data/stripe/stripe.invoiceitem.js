@@ -7,8 +7,8 @@ module.exports.created = {
   invoice: 'in_1Q2fh8BrSjgsps2DUqQsGLDj',
   metadata: {
     order_id: '13',
-    task_id: '15',
+    task_id: '15'
   },
   quantity: '1',
-  unit_amount: '10800',
+  unit_amount: '10800'
 }

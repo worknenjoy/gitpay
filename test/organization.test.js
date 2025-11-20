@@ -19,7 +19,7 @@ xdescribe('Organizations', () => {
       },
       function (err) {
         //console.log(err);
-      },
+      }
     )
 
     models.Organization.destroy({ where: {}, truncate: true, cascade: true }).then(
@@ -31,7 +31,7 @@ xdescribe('Organizations', () => {
       },
       function (err) {
         //console.log(err);
-      },
+      }
     )
   })
 
@@ -55,13 +55,13 @@ xdescribe('Organizations', () => {
         email: 'test_register_organization@gmail.com',
         username: 'test',
         password: 'test',
-        provider: 'github',
+        provider: 'github'
       })
         .then((res) => {
           const UserId = res.body.id
           login(agent, {
             email: 'test_register_organization@gmail.com',
-            password: 'test',
+            password: 'test'
           })
             .then((user) => {
               agent
