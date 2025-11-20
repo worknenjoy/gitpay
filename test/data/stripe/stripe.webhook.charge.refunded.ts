@@ -1,7 +1,7 @@
 import { object } from "@paypal/paypal-server-sdk/dist/types/schema";
 
 export const refundCreated = {
-  successfully: {
+  successfullyForPaymentRequestMetadata: {
     id: "evt_1TestChargeRefunded",
     object: "event",
     api_version: "2020-03-02",
@@ -10,9 +10,9 @@ export const refundCreated = {
       object: {
         id: "ch_1TestCharge",
         object: "charge",
-        amount: 1495,
-        amount_captured: 1495,
-        amount_refunded: 1495,
+        amount: 2000,
+        amount_captured: 2000,
+        amount_refunded: 2000,
         amount_updates: [],
         application: null,
         application_fee: null,
@@ -65,7 +65,7 @@ export const refundCreated = {
         payment_method: "pm_1TestPM",
         payment_method_details: {
           card: {
-            amount_authorized: 1495,
+            amount_authorized: 2000,
             authorization_code: "AUTH123",
             brand: "visa",
             checks: {
@@ -96,7 +96,7 @@ export const refundCreated = {
             },
             network_transaction_id: "test_nti_123",
             overcapture: {
-              maximum_amount_capturable: 1495,
+              maximum_amount_capturable: 2000,
               status: "unavailable"
             },
             regulated_status: "unregulated",
@@ -122,7 +122,7 @@ export const refundCreated = {
             {
               id: "re_1TestRefund",
               object: "refund",
-              amount: 1495,
+              amount: 2000,
               balance_transaction: "txn_1TestRefund",
               charge: "ch_1TestCharge",
               created: 1762903160,

@@ -11,6 +11,7 @@ const sinon = require('sinon')
 import { disputeCreated } from '../../../../data/stripe/stripe.webhook.charge.dispute.created';
 import { disputeClosed } from '../../../../data/stripe/stripe.webhook.charge.dispute.closed';
 import { refundCreated } from '../../../../data/stripe/stripe.webhook.charge.refunded';
+import { PaymentIntentData } from '../../../../data/stripe/stripe.paymentIntent'
 
 const agent = request.agent(api) as any;
 const models = (Models as any);
@@ -148,6 +149,11 @@ describe('Payment Request Balance Webhook', () => {
   });
   describe('For refunds', () => {
     it('should update balance after a refund from a payment request is triggered', async () => {
+
+      nock('https://api.stripe.com')
+        .get('/v1/payment_intents/pi_1TestPI')
+        .reply(200, PaymentIntentData.forPaymentRequest);
+
       const user = await registerAndLogin(agent)
       const { body: currentUser } = user || {};
 
@@ -184,13 +190,13 @@ describe('Payment Request Balance Webhook', () => {
 
       const res = await agent
         .post('/webhooks/stripe-platform')
-        .send(refundCreated.successfully)
+        .send(refundCreated.successfullyForPaymentRequestMetadata)
         .expect('Content-Type', /json/)
         .expect(200)
 
       const event = JSON.parse(Buffer.from(res.body).toString())
         expect(event).to.exist
-        expect(event.id).to.equal('evt_test_dispute_closed_1')
+        expect(event.id).to.equal('evt_1TestChargeRefunded')
 
       const paymentRequestBalance = await models.PaymentRequestBalance.findOne({
         where: {
@@ -204,14 +210,15 @@ describe('Payment Request Balance Webhook', () => {
         }
       });
       expect(paymentRequestBalanceTransaction).to.exist;
-      expect(paymentRequestBalanceTransaction.amount).to.equal('-10000');
+      expect(paymentRequestBalanceTransaction.amount).to.equal('-160');
       expect(paymentRequestBalanceTransaction.type).to.equal('DEBIT');
       expect(paymentRequestBalanceTransaction.reason).to.equal('REFUND');
+      expect(paymentRequestBalanceTransaction.reason_details).to.equal('refund_payment_request_requested_by_customer');
       expect(paymentRequestBalanceTransaction.status).to.equal('completed');
       expect(paymentRequestBalanceTransaction.closedAt).to.be.instanceOf(Date);
 
       expect(paymentRequestBalance).to.exist;
-      expect(paymentRequestBalance.balance).to.equal('-10000');
+      expect(paymentRequestBalance.balance).to.equal('-160');
     });
   });
 });

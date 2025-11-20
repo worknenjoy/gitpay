@@ -15,6 +15,8 @@ const getReason = (reason_details) => {
       return i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.product_not_received')
     case 'payment_request_payment_applied':
       return i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.payment_request_payment_applied')
+    case 'refund_payment_request_requested_by_customer':
+      return i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.refund_payment_request')
     default:
       return reason_details
   }
