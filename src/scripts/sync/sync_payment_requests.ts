@@ -203,7 +203,7 @@ async function main() {
       if(prPayment.id) {
         const updatedMetadata:any = await updateMetadata(intent.id, {
           payment_request_payment_id: prPayment.id,
-          userId: userId,
+          user_id: userId,
           payment_request_id: paymentRequestId
         });
         kv('Updated Payment Intent metadata with payment_request_payment_id', prPayment.id); 
