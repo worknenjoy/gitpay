@@ -33,7 +33,7 @@ const ChartWrapper = styled.div`
   `}
 `
 const StatsPageWrapper = styled.div`
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   width: 1150px;
   margin: 0 auto;
   ${media.phone`
@@ -42,10 +42,10 @@ const StatsPageWrapper = styled.div`
 `
 
 class Stats extends Component {
-  render () {
+  render() {
     return (
       <React.Fragment>
-        <div style={ { background: '#FFFFFF' } }>
+        <div style={{ background: '#FFFFFF' }}>
           <TopBarContiner />
           <StatsPageWrapper>
             <TopDashboard />
@@ -55,7 +55,7 @@ class Stats extends Component {
             </Wrapper>
             <InformationCard />
             <ChartWrapper>
-              <Barchart style={ { width: '400px' } } />
+              <Barchart style={{ width: '400px' }} />
             </ChartWrapper>
           </StatsPageWrapper>
           <Bottom />

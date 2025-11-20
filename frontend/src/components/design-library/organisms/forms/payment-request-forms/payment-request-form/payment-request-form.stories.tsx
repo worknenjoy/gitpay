@@ -1,19 +1,19 @@
-import React from 'react';
-import PaymentRequestForm from './payment-request-form';
+import React from 'react'
+import PaymentRequestForm from './payment-request-form'
 
 export default {
   title: 'Design Library/Organisms/Forms/PaymentRequestForms/PaymentRequestForm',
-  component: PaymentRequestForm
-};
+  component: PaymentRequestForm,
+}
 
-const Template = (args) => <PaymentRequestForm {...args} />;
+const Template = (args) => <PaymentRequestForm {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
-  completed: true
-};
+  completed: true,
+}
 
-export const Edit = Template.bind({});
+export const Edit = Template.bind({})
 Edit.args = {
   completed: true,
   paymentRequest: {
@@ -24,12 +24,12 @@ Edit.args = {
       amount: 100,
       currency: 'USD',
       title: 'Web Development Services',
-      description: 'Payment for services rendered'
-    }
-  }
-};
+      description: 'Payment for services rendered',
+    },
+  },
+}
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({})
 Loading.args = {
-  completed: false
-};
+  completed: false,
+}

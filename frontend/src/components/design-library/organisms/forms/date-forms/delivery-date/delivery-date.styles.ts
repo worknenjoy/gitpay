@@ -8,32 +8,32 @@ export const Container = styled(MuiPaper)(({ theme }) => ({
   borderStyle: 'solid',
   boxShadow: 'none',
   padding: 10,
-  paddingTop: 0
+  paddingTop: 0,
 }))
 
 export const Header = styled('div')({
-  textAlign: 'center'
+  textAlign: 'center',
 })
 
 export const Row = styled('div')({
   display: 'flex',
   marginTop: 10,
-  marginBottom: 10
+  marginBottom: 10,
 })
 
 export const IconBox = styled('div')({
   width: 25,
   justifyContent: 'center',
   display: 'flex',
-  alignItems: 'center'
+  alignItems: 'center',
 })
 
 export const Content = styled('div')({
-  paddingLeft: 5
+  paddingLeft: 5,
 })
 
 export const GrayCaption = styled(MuiTypography)({
-  color: 'gray'
+  color: 'gray',
 })
 
 export const DeliveryDateSuggestion = styled('div')(({ theme }) => ({
@@ -42,18 +42,18 @@ export const DeliveryDateSuggestion = styled('div')(({ theme }) => ({
   alignItems: 'center',
   [theme.breakpoints.down('sm')]: {
     flexDirection: 'column',
-    alignItems: 'flex-start'
-  }
+    alignItems: 'flex-start',
+  },
 }))
 
 export const DateSuggestionBtn = styled(MuiLink)(({ theme }) => ({
   cursor: 'pointer',
   [theme.breakpoints.up('sm')]: {
     marginTop: 4,
-    marginLeft: 10
-  }
+    marginLeft: 10,
+  },
 }))
 
 export const SpanText = styled('span')({
-  color: 'gray'
+  color: 'gray',
 })

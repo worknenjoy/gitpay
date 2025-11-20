@@ -1,32 +1,28 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useParams } from 'react-router-dom'
-import { issueMetadata, customColumnRenderer } from 'design-library/molecules/tables/project-issue-table/project-issue-table'
+import {
+  issueMetadata,
+  customColumnRenderer,
+} from 'design-library/molecules/tables/project-issue-table/project-issue-table'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
-import {
-  Container
-} from '@mui/material'
-import {
-  ExplorePaper,
-  TopSection
-} from './my-project-issues-private-page.styles'
-import Breadcrumbs from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb';
+import { Container } from '@mui/material'
+import { ExplorePaper, TopSection } from './my-project-issues-private-page.styles'
+import Breadcrumbs from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 import ContextTitle from 'design-library/atoms/typography/context-title/context-title'
 import useMyIssueTabs from '../../../../../../hooks/use-my-issues-tabs'
 
-
-const MyProjectIssuesPrivatePage = ({ 
-  project,
-  user,
-  issues 
-}) => {
-  const { project_id, organization_id } = useParams<{ project_id: string, organization_id: string }>()
+const MyProjectIssuesPrivatePage = ({ project, user, issues }) => {
+  const { project_id, organization_id } = useParams<{
+    project_id: string
+    organization_id: string
+  }>()
 
   const issueTableData = {
     tableData: issues,
     tableHeaderMetadata: issueMetadata,
-    customColumnRenderer: customColumnRenderer
+    customColumnRenderer: customColumnRenderer,
   }
 
   const baseLink = `/profile/organizations/${organization_id}/projects/${project_id}`
@@ -34,7 +30,7 @@ const MyProjectIssuesPrivatePage = ({
   const { currentTabs, activeTab } = useMyIssueTabs({
     user,
     baseLink,
-    issueTableData
+    issueTableData,
   })
 
   return (
@@ -43,7 +39,15 @@ const MyProjectIssuesPrivatePage = ({
         <TopSection>
           <Breadcrumbs
             project={project}
-            root={{ label: <FormattedMessage id="breadcrumbs.root.my.project.issues" defaultMessage="My issues" />, link: '/profile/tasks' }}
+            root={{
+              label: (
+                <FormattedMessage
+                  id="breadcrumbs.root.my.project.issues"
+                  defaultMessage="My issues"
+                />
+              ),
+              link: '/profile/tasks',
+            }}
           />
         </TopSection>
         <TopSection>
@@ -55,14 +59,13 @@ const MyProjectIssuesPrivatePage = ({
         <TopSection>
           <ContextTitle
             context={project}
-            title={<FormattedMessage id="projects.explore.project.issues" defaultMessage="Project" />}
+            title={
+              <FormattedMessage id="projects.explore.project.issues" defaultMessage="Project" />
+            }
           />
         </TopSection>
         <TopSection>
-          <TabbedTable
-            tabs={currentTabs}
-            activeTab={activeTab}
-          />
+          <TabbedTable tabs={currentTabs} activeTab={activeTab} />
         </TopSection>
       </Container>
     </ExplorePaper>

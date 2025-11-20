@@ -5,14 +5,14 @@ import { listTasks } from '../actions/taskActions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    languages: state.languages
+    languages: state.languages,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     listLanguages: (params) => dispatch(listLanguage(params)),
-    listTasks: (params) => dispatch(listTasks(params))
+    listTasks: (params) => dispatch(listTasks(params)),
   }
 }
 

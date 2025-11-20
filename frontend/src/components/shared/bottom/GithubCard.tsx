@@ -1,15 +1,15 @@
-import React from 'react';
-import { useTheme } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import { FormattedMessage } from 'react-intl';
-import Typography from '@mui/material/Typography';
-import GithubLogo from 'images/github-logo-bottom.png';
+import React from 'react'
+import { useTheme } from '@mui/material/styles'
+import Card from '@mui/material/Card'
+import { FormattedMessage } from 'react-intl'
+import Typography from '@mui/material/Typography'
+import GithubLogo from 'images/github-logo-bottom.png'
 
 export default function GithubCard(): JSX.Element {
-  const theme = useTheme();
+  const theme = useTheme()
 
   const hanldeGithubLink = () => {
-    window.open('https://github.com/worknenjoy/gitpay', '_blank');
+    window.open('https://github.com/worknenjoy/gitpay', '_blank')
   }
 
   return (
@@ -22,8 +22,8 @@ export default function GithubCard(): JSX.Element {
         flexDirection: 'column',
         margin: '20px 0',
         '&:hover': {
-          cursor: 'pointer'
-        }
+          cursor: 'pointer',
+        },
       }}
       onClick={hanldeGithubLink}
     >
@@ -32,5 +32,5 @@ export default function GithubCard(): JSX.Element {
       </Typography>
       <img src={GithubLogo} width={160} />
     </Card>
-  );
+  )
 }

@@ -4,17 +4,17 @@ import TextField from '@mui/material/TextField'
 import If from '../operator/if'
 
 class InputAuth extends Component {
-  render () {
+  render() {
     const { hide, label, type, name, value } = this.props
 
     return (
-      <If test={ !hide }>
+      <If test={!hide}>
         <TextField
-          hintText={ label }
-          floatingLabelText={ label }
-          type={ type }
-          name={ name }
-          value={ value }
+          hintText={label}
+          floatingLabelText={label}
+          type={type}
+          name={name}
+          value={value}
         />
       </If>
     )
@@ -26,7 +26,7 @@ InputAuth.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
-  value: PropTypes.any
+  value: PropTypes.any,
 }
 
 export default InputAuth

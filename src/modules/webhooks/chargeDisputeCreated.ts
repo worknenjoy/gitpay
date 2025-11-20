@@ -4,47 +4,44 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import Models from '../../models'
-import PaymentRequestMail from '../mail/paymentRequest';
+import PaymentRequestMail from '../mail/paymentRequest'
 
-const models = (Models as any);
+const models = Models as any
 
 export const chargeDisputeCreatedWebhookHandler = async (event: any, req: any, res: any) => {
   // Handle the charge.dispute.created event
-  const { data } = event;
+  const { data } = event
 
-  console.log(`Handling charge.dispute.created for Dispute ID: ${data.object.id}`);
-
+  console.log(`Handling charge.dispute.created for Dispute ID: ${data.object.id}`)
 
   try {
     const paymentRequestPayment = await models.PaymentRequestPayment.findOne({
       where: {
-        source: data.object.payment_intent
+        source: data.object.payment_intent,
       },
       include: [
-        { 
-          model: models.PaymentRequest
+        {
+          model: models.PaymentRequest,
         },
         {
-          model: models.PaymentRequestCustomer
-        }
-      ]
-    });
+          model: models.PaymentRequestCustomer,
+        },
+      ],
+    })
 
-    const userId = paymentRequestPayment.userId;
+    const userId = paymentRequestPayment.userId
 
-    const user = await models.User.findByPk(userId);
+    const user = await models.User.findByPk(userId)
 
-    PaymentRequestMail.newDisputeCreatedForPaymentRequest(
-      user,
-      data,
-      paymentRequestPayment
-    ).catch((mailError: any) => {
-      console.error(`Failed to send email for Dispute ID: ${data.object.id}`, mailError);
-    });
+    PaymentRequestMail.newDisputeCreatedForPaymentRequest(user, data, paymentRequestPayment).catch(
+      (mailError: any) => {
+        console.error(`Failed to send email for Dispute ID: ${data.object.id}`, mailError)
+      },
+    )
 
-    return res.json(req.body);
+    return res.json(req.body)
   } catch (error) {
-    console.error(`Error handling charge.dispute.created for Dispute ID: ${data.object.id}`, error);
-    return res.status(500).json({ error: 'Internal Server Error' });
+    console.error(`Error handling charge.dispute.created for Dispute ID: ${data.object.id}`, error)
+    return res.status(500).json({ error: 'Internal Server Error' })
   }
-};
+}

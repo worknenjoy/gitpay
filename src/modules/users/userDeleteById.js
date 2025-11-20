@@ -7,27 +7,29 @@ const userDeleteById = async (userParameters) => {
     return await db.sequelize.transaction(async (t) => {
       const tasks = await models.Task.findAll({
         where: {
-          userId: userParameters.id
-        }
+          userId: userParameters.id,
+        },
       })
 
       for (const task of tasks) {
         await taskDeleteById({
           id: task.dataValues.id,
-          userId: userParameters.id
+          userId: userParameters.id,
         })
       }
 
       await models.Assign.destroy({ where: { userId: userParameters.id }, transaction: t })
       await models.Offer.destroy({ where: { userId: userParameters.id }, transaction: t })
-      await db.sequelize.query(`DELETE FROM "User_Types" WHERE "UserId" = ${userParameters.id}`, { transaction: t })
+      await db.sequelize.query(`DELETE FROM "User_Types" WHERE "UserId" = ${userParameters.id}`, {
+        transaction: t,
+      })
 
       const user = await models.User.destroy({
         where: {
-          id: userParameters.id
+          id: userParameters.id,
         },
         force: true,
-        transaction: t
+        transaction: t,
       })
 
       // eslint-disable-next-line no-console
@@ -35,8 +37,7 @@ const userDeleteById = async (userParameters) => {
 
       return user
     })
-  }
-  catch (err) {
+  } catch (err) {
     // eslint-disable-next-line no-console
     console.log('error to delete user', err)
   }

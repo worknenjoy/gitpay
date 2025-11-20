@@ -13,7 +13,7 @@ import {
   CREATE_ORGANIZATIONS_ERROR,
   UPDATE_ORGANIZATIONS_REQUESTED,
   UPDATE_ORGANIZATIONS_SUCCESS,
-  UPDATE_ORGANIZATIONS_ERROR
+  UPDATE_ORGANIZATIONS_ERROR,
 } from '../actions/organizationsActions'
 
 export const organizations = (state = { data: [], completed: true, error: {} }, action) => {

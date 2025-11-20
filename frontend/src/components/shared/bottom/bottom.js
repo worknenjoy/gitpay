@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 
-import {
-  Grid,
-  Typography,
-  Divider,
-  List,
-  ListItem
-} from '@mui/material'
+import { Grid, Typography, Divider, List, ListItem } from '@mui/material'
 
 import SubscribeForm from 'design-library/organisms/forms/subscribe-forms/subscribe-form/subscribe-form'
 import InfoContainer from '../../../containers/info'
@@ -26,13 +20,14 @@ import logoWorknEnjoy from 'images/worknenjoy-logo.png'
 
 class Bottom extends Component {
   render() {
-
     return (
-      <div style={{
-        textAlign: 'center',
-        padding: 8,
-        backgroundColor: '#f1f0ea'
-      }}>
+      <div
+        style={{
+          textAlign: 'center',
+          padding: 8,
+          backgroundColor: '#f1f0ea',
+        }}
+      >
         <Container>
           <Grid container spacing={3}>
             <Grid size={{ xs: 12, sm: 3 }}>
@@ -52,10 +47,7 @@ class Bottom extends Component {
                     style={{ display: 'block', width: '100%' }}
                     onClick={() => window.location.assign('/#/welcome')}
                   >
-                    <FormattedMessage
-                      id="welcome.about.title"
-                      defaultMessage="About us"
-                    />
+                    <FormattedMessage id="welcome.about.title" defaultMessage="About us" />
                   </Typography>
                 </ListItem>
                 <ListItem button component="a">
@@ -65,10 +57,7 @@ class Bottom extends Component {
                     style={{ display: 'block', width: '100%' }}
                     onClick={() => window.location.assign('/#/pricing')}
                   >
-                    <FormattedMessage
-                      id="welcome.pricing.title"
-                      defaultMessage="Pricing"
-                    />
+                    <FormattedMessage id="welcome.pricing.title" defaultMessage="Pricing" />
                   </Typography>
                 </ListItem>
                 <ListItem button component="a">
@@ -78,10 +67,7 @@ class Bottom extends Component {
                     style={{ display: 'block', width: '100%' }}
                     onClick={() => window.location.assign('/#/team')}
                   >
-                    <FormattedMessage
-                      id="welcome.team.title"
-                      defaultMessage="Team"
-                    />
+                    <FormattedMessage id="welcome.team.title" defaultMessage="Team" />
                   </Typography>
                 </ListItem>
                 <ListItem button component="a">
@@ -91,10 +77,7 @@ class Bottom extends Component {
                     style={{ display: 'block', width: '100%' }}
                     onClick={() => window.open('https://docs.gitpay.me/en')}
                   >
-                    <FormattedMessage
-                      id="welcome.docs.title"
-                      defaultMessage="Documentation"
-                    />
+                    <FormattedMessage id="welcome.docs.title" defaultMessage="Documentation" />
                   </Typography>
                 </ListItem>
                 <ListItem button component="a">
@@ -104,13 +87,9 @@ class Bottom extends Component {
                     style={{ display: 'block', width: '100%' }}
                     onClick={() => window.location.assign('/#/tasks/open')}
                   >
-                    <FormattedMessage
-                      id="welcome.explore.title"
-                      defaultMessage="Explore"
-                    />
+                    <FormattedMessage id="welcome.explore.title" defaultMessage="Explore" />
                   </Typography>
                 </ListItem>
-
               </List>
             </Grid>
             <Grid size={{ xs: 12, sm: 3 }}>
@@ -127,25 +106,19 @@ class Bottom extends Component {
                   title="Legal"
                   header="Privacy policy"
                   subtitle={'Privacy Policy'}
-                  content={
-                    <PrivacyPolicy extraStyles={false} />
-                  }
+                  content={<PrivacyPolicy extraStyles={false} />}
                 />
                 <BottomSectionDialog
                   title="Legal"
                   header="Terms of Service"
                   subtitle={'Terms of Service'}
-                  content={
-                    <TermsOfService extraStyles={false} />
-                  }
+                  content={<TermsOfService extraStyles={false} />}
                 />
                 <BottomSectionDialog
                   title="Legal"
                   header="Cookie Policy"
                   subtitle={'Cookie Policy'}
-                  content={
-                    <CookiePolicy extraStyles={false} />
-                  }
+                  content={<CookiePolicy extraStyles={false} />}
                 />
               </List>
             </Grid>
@@ -164,9 +137,7 @@ class Bottom extends Component {
                 <SubscribeForm render />
               </SubscribeFromWrapper>
               <div style={{ float: 'right' }}>
-                <BaseFooter
-                  style={{ display: 'flex', alignItems: 'center' }}
-                >
+                <BaseFooter style={{ display: 'flex', alignItems: 'center' }}>
                   <div>
                     <img src={logoCompleteGray} width="100" />
                   </div>
@@ -175,13 +146,10 @@ class Bottom extends Component {
                     style={{
                       marginLeft: 10,
                       marginRight: 10,
-                      display: 'inline-block'
+                      display: 'inline-block',
                     }}
                   >
-                    <FormattedMessage
-                      id="bottom.company.org"
-                      defaultMessage="is part of"
-                    />
+                    <FormattedMessage id="bottom.company.org" defaultMessage="is part of" />
                   </Typography>
                   <a href="http://worknenjoy.com" target="_blank" rel="noreferrer">
                     <img src={logoWorknEnjoy} width="100" />
@@ -191,9 +159,7 @@ class Bottom extends Component {
                   <Typography variant={'caption'} component="span">
                     <a href="http://worknenjoy.com">worknenjoy, Inc.</a> <br />
                     <abbr>MA: </abbr>
-                    9450 SW Gemini Dr
-                    PMB 72684
-                    Beaverton, Oregon 97008-7105 US
+                    9450 SW Gemini Dr PMB 72684 Beaverton, Oregon 97008-7105 US
                   </Typography>
                 </div>
               </div>

@@ -5,5 +5,5 @@ const updateOffer = require('./updateOffer')
 module.exports = {
   offerExists,
   offerMessage,
-  updateOffer
+  updateOffer,
 }

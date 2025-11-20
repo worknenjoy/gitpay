@@ -1,8 +1,8 @@
-import OrganizationPublicPage from 'design-library/pages/public-pages/organization-public-page/organization-public-page';
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import OrganizationPublicPage from 'design-library/pages/public-pages/organization-public-page/organization-public-page'
+import React from 'react'
+import { useParams } from 'react-router-dom'
 
-const OrganizationPage = ({ 
+const OrganizationPage = ({
   organization,
   issues,
   filterTasks,
@@ -11,9 +11,8 @@ const OrganizationPage = ({
   listLabels,
   listLanguages,
   listTasks,
-  fetchOrganization
+  fetchOrganization,
 }) => {
-
   const { organization_id } = useParams<{ organization_id: string }>()
 
   const listTasksWithOrganization = (params) => {
@@ -27,9 +26,9 @@ const OrganizationPage = ({
   React.useEffect(() => {
     listTasksWithOrganization({})
   }, [organization])
- 
+
   return (
-    <OrganizationPublicPage 
+    <OrganizationPublicPage
       organization={organization}
       issues={issues}
       filterTasks={filterTasks}
@@ -39,7 +38,7 @@ const OrganizationPage = ({
       listLanguages={listLanguages}
       listTasks={listTasksWithOrganization}
     />
-  );
+  )
 }
 
-export default OrganizationPage;
+export default OrganizationPage

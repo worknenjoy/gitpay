@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import AccountMenu from './account-menu';
+import React, { useState } from 'react'
+import AccountMenu from './account-menu'
 
 export default {
   title: 'Design Library/Molecules/Menus/AccountMenu',
-  component: AccountMenu
-};
+  component: AccountMenu,
+}
 
 const Template = (args) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   return (
     <div>
@@ -16,10 +16,10 @@ const Template = (args) => {
       </button>
       <AccountMenu {...args} open={open} handleClose={() => setOpen(false)} />
     </div>
-  );
-};
+  )
+}
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   // Add default args here if needed
   user: {
@@ -31,18 +31,17 @@ Default.args = {
       Types: [
         {
           id: 1,
-          name: 'contributor'
+          name: 'contributor',
         },
         {
           id: 2,
-          name: 'maintainer'
+          name: 'maintainer',
         },
         {
           id: 3,
-          name: 'funding'
-        }
-      ]
-    }
-
-  }
-};
+          name: 'funding',
+        },
+      ],
+    },
+  },
+}

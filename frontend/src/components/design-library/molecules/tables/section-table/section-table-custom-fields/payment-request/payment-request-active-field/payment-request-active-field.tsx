@@ -1,41 +1,36 @@
-import React from 'react';
-import { useTheme } from '@mui/material/styles';
-import getStyles from './payment-request-active-field.styles';
-import BaseStatus from 'design-library/atoms/status/base-status/base-status';
+import React from 'react'
+import { useTheme } from '@mui/material/styles'
+import getStyles from './payment-request-active-field.styles'
+import BaseStatus from 'design-library/atoms/status/base-status/base-status'
 
 interface PaymentRequestActiveFieldProps {
-  status: 'yes' | 'no';
-  completed?: boolean;
+  status: 'yes' | 'no'
+  completed?: boolean
 }
 
 const PaymentRequestActiveField: React.FC<PaymentRequestActiveFieldProps> = ({
   status,
-  completed = true
+  completed = true,
 }) => {
-  const theme = useTheme();
-  const styles = getStyles(theme);
+  const theme = useTheme()
+  const styles = getStyles(theme)
 
   const statusList = [
     {
       status: 'yes',
       label: 'Yes',
-      color: 'yes'
+      color: 'yes',
     },
     {
       status: 'no',
       label: 'No',
-      color: 'no'
-    }
-  ];
+      color: 'no',
+    },
+  ]
 
   return (
-    <BaseStatus
-      status={status}
-      statusList={statusList}
-      styles={styles}
-      completed={completed}
-    />
-  );
-};
+    <BaseStatus status={status} statusList={statusList} styles={styles} completed={completed} />
+  )
+}
 
-export default PaymentRequestActiveField;
+export default PaymentRequestActiveField

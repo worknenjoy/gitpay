@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Box,
-  Grid,
-  Pagination
-} from '@mui/material'
+import { Box, Grid, Pagination } from '@mui/material'
 import { Root, StyledOrganizationCard } from './organization-list-full.styles'
 import OrganizationListFullPlaceholder from './organization-list-full.placeholder'
 
@@ -34,30 +30,33 @@ const OrganizationList = ({ organizations }) => {
 
   const pages = Math.ceil(total / recordsPerPage)
 
-  return (
-    completed ?
-    <Root maxWidth={ false }>
-      <Box mt={ 3 } mb={ 3 }>
-        <Grid container spacing={ 3 }>
-          { currentOrganizations && currentOrganizations.length && currentOrganizations.map(organization => (
-            <Grid key={ organization.id } size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-              <StyledOrganizationCard organization={ organization } completed={ completed } />
-            </Grid>
-          )) }
+  return completed ? (
+    <Root maxWidth={false}>
+      <Box mt={3} mb={3}>
+        <Grid container spacing={3}>
+          {currentOrganizations &&
+            currentOrganizations.length &&
+            currentOrganizations.map((organization) => (
+              <Grid key={organization.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                <StyledOrganizationCard organization={organization} completed={completed} />
+              </Grid>
+            ))}
         </Grid>
       </Box>
-      { total - 1 > recordsPerPage &&
-        <Box mt={ 3 } mb={ 3 } display="flex" justifyContent="center">
+      {total - 1 > recordsPerPage && (
+        <Box mt={3} mb={3} display="flex" justifyContent="center">
           <Pagination
             color="primary"
-            count={ pages }
+            count={pages}
             size="small"
-            page={ page }
-            onChange={ handlePagination }
+            page={page}
+            onChange={handlePagination}
           />
         </Box>
-      }
-    </Root> : <OrganizationListFullPlaceholder />
+      )}
+    </Root>
+  ) : (
+    <OrganizationListFullPlaceholder />
   )
 }
 

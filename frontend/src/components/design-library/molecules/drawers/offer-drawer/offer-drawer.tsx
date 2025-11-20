@@ -1,38 +1,38 @@
 import React, { useEffect } from 'react'
 
 import Drawer from '../drawer/drawer'
-import OfferDrawerCreate from './components/offer-drawer-create';
-import OfferDrawerTabs from './components/offer-drawer-tabs';
-import OffersList from '../../lists/offers-list/offers-list';
-import { AddCircleTwoTone as AddIcon } from '@mui/icons-material';
+import OfferDrawerCreate from './components/offer-drawer-create'
+import OfferDrawerTabs from './components/offer-drawer-tabs'
+import OffersList from '../../lists/offers-list/offers-list'
+import { AddCircleTwoTone as AddIcon } from '@mui/icons-material'
 
 export type OfferDrawerProps = {
-  title: any;
-  introTitle: any;
-  introMessage: any;
-  introImage: any;
-  open: boolean;
-  onClose: any;
-  issue: any;
-  actions?: Array<any>;
-  offerCheckboxes?: boolean;
-  pickupTagListTitle: any;
-  pickutTagListDescription: any;
-  simpleInfoText: any;
-  commentAreaPlaceholder: any;
-  hasEmailInput?: boolean;
-  onDeliveryDateChange?: any;
-  onChangePrice?: any;
-  onLearnCheckboxChange?: any;
-  onCommentChange?: any;
-  onTermsCheckboxChange?: any;
-  onConfirmOfferChange?: any;
-  onEmailInviteChange?: any;
-  tabs?: any;
-  offersProps?: any;
+  title: any
+  introTitle: any
+  introMessage: any
+  introImage: any
+  open: boolean
+  onClose: any
+  issue: any
+  actions?: Array<any>
+  offerCheckboxes?: boolean
+  pickupTagListTitle: any
+  pickutTagListDescription: any
+  simpleInfoText: any
+  commentAreaPlaceholder: any
+  hasEmailInput?: boolean
+  onDeliveryDateChange?: any
+  onChangePrice?: any
+  onLearnCheckboxChange?: any
+  onCommentChange?: any
+  onTermsCheckboxChange?: any
+  onConfirmOfferChange?: any
+  onEmailInviteChange?: any
+  tabs?: any
+  offersProps?: any
 }
 
-const OfferDrawer = ({ 
+const OfferDrawer = ({
   title,
   introTitle,
   introMessage,
@@ -55,14 +55,12 @@ const OfferDrawer = ({
   onConfirmOfferChange,
   onEmailInviteChange,
   tabs,
-  offersProps
+  offersProps,
 }: OfferDrawerProps) => {
-  const [ currentPrice, setCurrentPrice ] = React.useState(0);
-  const [ enableActions, setEnableActions ] = React.useState(true);
+  const [currentPrice, setCurrentPrice] = React.useState(0)
+  const [enableActions, setEnableActions] = React.useState(true)
 
-  
-
-  const createSection =
+  const createSection = (
     <OfferDrawerCreate
       introTitle={introTitle}
       introMessage={introMessage}
@@ -83,24 +81,25 @@ const OfferDrawer = ({
       onEmailInviteChange={onEmailInviteChange}
       hasEmailInput={hasEmailInput}
     />
+  )
 
   const drawerTabs = [
     {
       value: 0,
       label: 'Your existing offers',
       default: true,
-      component: <OffersList {...offersProps} />
+      component: <OffersList {...offersProps} />,
     },
     {
       value: 1,
       label: (
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <span>Make a new offer</span>
-            <AddIcon fontSize="small"  style={{ marginLeft: 3 }} />
+          <AddIcon fontSize="small" style={{ marginLeft: 3 }} />
         </div>
       ),
-      component: createSection
-    }
+      component: createSection,
+    },
   ]
 
   useEffect(() => {
@@ -112,20 +111,19 @@ const OfferDrawer = ({
   }, [tabs])
 
   return (
-    <Drawer
-      open={open}
-      onClose={onClose}
-      actions={enableActions ? actions : []}
-      title={title}
-    >
-      {tabs ? 
-      <div>
-        <OfferDrawerTabs tabs={drawerTabs} onTabChange={(value) => value !== 0 ? setEnableActions(true) : setEnableActions(false)} />
-      </div>
-      : <div>
-          {createSection}
+    <Drawer open={open} onClose={onClose} actions={enableActions ? actions : []} title={title}>
+      {tabs ? (
+        <div>
+          <OfferDrawerTabs
+            tabs={drawerTabs}
+            onTabChange={(value) =>
+              value !== 0 ? setEnableActions(true) : setEnableActions(false)
+            }
+          />
         </div>
-      }
+      ) : (
+        <div>{createSection}</div>
+      )}
     </Drawer>
   )
 }

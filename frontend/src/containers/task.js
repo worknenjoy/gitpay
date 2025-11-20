@@ -4,11 +4,47 @@ import { addNotification, addDialog, closeDialog } from '../actions/notification
 import { loggedIn, logOut } from '../actions/loginActions'
 import { info as getInfoAction } from '../actions/infoActions'
 import { fetchCustomer, fetchAccount } from '../actions/userActions'
-import { assignTask, removeAssignment, messageTask, messageOffer, offerUpdate, actionAssign } from '../actions/assignActions'
-import { listTasks, filterTasks, updateTask, deleteTask, fetchTask, paymentTask, syncTask, changeTaskTab, filterTaskOrders, inviteTask, fundingInviteTask, messageAuthor, reportTask, requestClaimTask, transferTask } from '../actions/taskActions'
-import { createOrder, payOrder, transferOrder, cancelOrder, detailOrder, listOrders } from '../actions/orderActions'
+import {
+  assignTask,
+  removeAssignment,
+  messageTask,
+  messageOffer,
+  offerUpdate,
+  actionAssign,
+} from '../actions/assignActions'
+import {
+  listTasks,
+  filterTasks,
+  updateTask,
+  deleteTask,
+  fetchTask,
+  paymentTask,
+  syncTask,
+  changeTaskTab,
+  filterTaskOrders,
+  inviteTask,
+  fundingInviteTask,
+  messageAuthor,
+  reportTask,
+  requestClaimTask,
+  transferTask,
+} from '../actions/taskActions'
+import {
+  createOrder,
+  payOrder,
+  transferOrder,
+  cancelOrder,
+  detailOrder,
+  listOrders,
+} from '../actions/orderActions'
 import { fetchWallet, listWallets } from '../actions/walletActions'
-import { getTaskSolution, createTaskSolution, updateTaskSolution, fetchPullRequestData, cleanPullRequestDataState } from '../actions/taskSolutionActions'
+import {
+  getTaskSolution,
+  createTaskSolution,
+  updateTaskSolution,
+  fetchPullRequestData,
+  cleanPullRequestDataState,
+} from '../actions/taskSolutionActions'
 import { getTaskOrdersByFilter } from '../selectors/task'
 import { getFilteredTasks, getProject } from '../selectors/tasks'
 import { getCurrentUser } from '../common/selectors/user/getUser'
@@ -33,7 +69,7 @@ const mapStateToProps = (state, ownProps) => {
     order: state.order,
     customer: state.customer,
     wallets: state.wallets,
-    wallet: state.wallet
+    wallet: state.wallet,
   }
 }
 
@@ -49,14 +85,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     closeDialog: () => dispatch(closeDialog()),
     addNotification: (message) => dispatch(addNotification(message)),
     assignTask: (taskId, assignId) => dispatch(assignTask(taskId, assignId)),
-    actionAssign: (taskId, assignId, action, message) => dispatch(actionAssign(taskId, assignId, action, message)),
+    actionAssign: (taskId, assignId, action, message) =>
+      dispatch(actionAssign(taskId, assignId, action, message)),
     messageTask: (taskId, assignId, message) => dispatch(messageTask(taskId, assignId, message)),
     messageOffer: (taskId, offerId, message) => dispatch(messageOffer(taskId, offerId, message)),
-    offerUpdate: (taskId, offerId, { status }) => dispatch(offerUpdate(taskId, offerId, { status })),
+    offerUpdate: (taskId, offerId, { status }) =>
+      dispatch(offerUpdate(taskId, offerId, { status })),
     removeAssignment: (id, message) => dispatch(removeAssignment(id, message)),
     inviteTask: (id, email, message, user) => dispatch(inviteTask(id, email, message, user)),
     messageAuthor: (userId, taskId, message) => dispatch(messageAuthor(userId, taskId, message)),
-    fundingInviteTask: (id, email, message, suggestedPrice, suggestedDate, user) => dispatch(fundingInviteTask(id, email, message, suggestedPrice, suggestedDate, user)),
+    fundingInviteTask: (id, email, message, suggestedPrice, suggestedDate, user) =>
+      dispatch(fundingInviteTask(id, email, message, suggestedPrice, suggestedDate, user)),
     fetchTask: (taskId) => dispatch(fetchTask(taskId)),
     syncTask: (taskId) => dispatch(syncTask(taskId)),
     paymentTask: (taskId, value) => dispatch(paymentTask(taskId, value)),
@@ -68,11 +107,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     filterTaskOrders: (filter) => dispatch(filterTaskOrders(filter)),
     transferOrder: (order, params) => dispatch(transferOrder(order, params)),
     listTasks: () => dispatch(listTasks()),
-    filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
+    filterTasks: (tasks, key, value, additional) =>
+      dispatch(filterTasks(tasks, key, value, additional)),
     cancelPaypalPayment: (id) => dispatch(cancelOrder(id)),
     getOrderDetails: (id) => dispatch(detailOrder(id)),
     reportTask: (task, reason) => dispatch(reportTask(task, reason)),
-    requestClaimTask: (taskId, userId, comments, isApproved, token, history) => dispatch(requestClaimTask(taskId, userId, comments, isApproved, token, history)),
+    requestClaimTask: (taskId, userId, comments, isApproved, token, history) =>
+      dispatch(requestClaimTask(taskId, userId, comments, isApproved, token, history)),
     fetchCustomer: (id) => dispatch(fetchCustomer(id)),
     fetchWallet: (id) => dispatch(fetchWallet(id)),
     listWallets: () => dispatch(listWallets()),
@@ -80,14 +121,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getTaskSolution: (taskId) => dispatch(getTaskSolution(taskId)),
     createTaskSolution: (taskSolution) => dispatch(createTaskSolution(taskSolution)),
     updateTaskSolution: (payload) => dispatch(updateTaskSolution(payload)),
-    fetchPullRequestData: (owner, repositoryName, pullRequestId, taskId) => dispatch(
-      fetchPullRequestData(owner, repositoryName, pullRequestId, taskId)
-    ),
+    fetchPullRequestData: (owner, repositoryName, pullRequestId, taskId) =>
+      dispatch(fetchPullRequestData(owner, repositoryName, pullRequestId, taskId)),
     cleanPullRequestDataState: () => dispatch(cleanPullRequestDataState()),
     fetchAccount: () => dispatch(fetchAccount()),
     // For account menu and bottom bar props
     signOut: () => dispatch(logOut()),
-    getInfo: () => dispatch(getInfoAction())
+    getInfo: () => dispatch(getInfoAction()),
   }
 }
 

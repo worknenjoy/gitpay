@@ -19,17 +19,19 @@ const CustomPlaceholder = () => {
 
 export const IssueLabelsList = ({ labels, completed }) => {
   const taskLabels = (labels) => {
-    return (
-        completed ? (
-          labels?.map((label) => (
-            <Chip
-              key={label.id}
-              label={label?.name}
-              style={{ marginRight: 10, marginTop: 10, marginBottom: 10 }}
-              variant="outlined"
-            />
-          ))) : <CustomPlaceholder />
-  )}
+    return completed ? (
+      labels?.map((label) => (
+        <Chip
+          key={label.id}
+          label={label?.name}
+          style={{ marginRight: 10, marginTop: 10, marginBottom: 10 }}
+          variant="outlined"
+        />
+      ))
+    ) : (
+      <CustomPlaceholder />
+    )
+  }
 
   return <div>{taskLabels(labels)}</div>
 }

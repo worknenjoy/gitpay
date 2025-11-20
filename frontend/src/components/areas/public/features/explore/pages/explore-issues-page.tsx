@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import ExplorerIssuePublicPage from "design-library/pages/public-pages/explorer-public-page/explorer-issue-public-page/explorer-issue-public-page";
+import React, { useEffect } from 'react'
+import ExplorerIssuePublicPage from 'design-library/pages/public-pages/explorer-public-page/explorer-issue-public-page/explorer-issue-public-page'
 
 const ExploreIssuesPage = ({
   filterTasks,
@@ -8,14 +8,13 @@ const ExploreIssuesPage = ({
   labels,
   languages,
   listLabels,
-  listLanguages
+  listLanguages,
 }) => {
-
   useEffect(() => {
-    filterTasks({});
-    listTasks({});
-  }, []);
-  
+    filterTasks({})
+    listTasks({})
+  }, [])
+
   return (
     <>
       <ExplorerIssuePublicPage

@@ -1,21 +1,21 @@
-import PaymentRequestStatusField from './payment-request-status-field';
+import PaymentRequestStatusField from './payment-request-status-field'
 
 const meta = {
   title: 'Design Library/Molecules/Tables/Fields/PaymentRequest/PaymentRequestStatusField',
   component: PaymentRequestStatusField,
   args: {
-    status: 'open'
-  }
-};
+    status: 'open',
+  },
+}
 
 export const Open = {
   args: {
-    status: 'open'
-  }
-};
+    status: 'open',
+  },
+}
 
 export const Paid = {
   args: {
-    status: 'paid'
-  }
-};
+    status: 'paid',
+  },
+}

@@ -1,13 +1,13 @@
 import {
   VALIDATE_COUPON_REQUESTED,
   VALIDATE_COUPON_SUCCESS,
-  VALIDATE_COUPON_ERROR
+  VALIDATE_COUPON_ERROR,
 } from '../actions/couponActions'
 
 const initialState = {
   coupon: {},
   completed: false,
-  error: { message: false }
+  error: { message: false },
 }
 
 export const couponReducer = (state = initialState, action) => {

@@ -8,24 +8,26 @@ module.exports = (to, subject, data, name = 'onetask') => {
     from: constants.fromEmail,
     templateId: constants.templates[name],
     asm: {
-      group_id: constants.groups[name]
-    }
+      group_id: constants.groups[name],
+    },
   }
   let msg = []
   if (Array.isArray(to)) {
     msg = to.map((item, i) => {
       return { ...baseMsg, to: item, dynamic_template_data: data[i], subject: subject[i] }
     })
-  }
-  else {
+  } else {
     msg = [{ ...baseMsg, to, bcc: constants.copyEmail, dynamic_template_data: data, subject }]
   }
-  return sgMail.send(msg).then((response) => {
-    // eslint-disable-next-line no-console
-    console.log('response from sgMail', response)
-    return response
-  }).catch(e => {
-    // eslint-disable-next-line no-console
-    console.log('error to send email', e)
-  })
+  return sgMail
+    .send(msg)
+    .then((response) => {
+      // eslint-disable-next-line no-console
+      console.log('response from sgMail', response)
+      return response
+    })
+    .catch((e) => {
+      // eslint-disable-next-line no-console
+      console.log('error to send email', e)
+    })
 }

@@ -1,4 +1,4 @@
-import SelectInput from './select-input';
+import SelectInput from './select-input'
 
 const meta = {
   title: 'Design Library/Atoms/Inputs/SelectInputs/SelectInput',
@@ -8,23 +8,23 @@ const meta = {
     options: [
       { value: 'option1', label: 'Option 1' },
       { value: 'option2', label: 'Option 2' },
-      { value: 'option3', label: 'Option 3' }
+      { value: 'option3', label: 'Option 3' },
     ],
     value: '',
-    onChange: () => {}
-  }
-};
+    onChange: () => {},
+  },
+}
 
-export default meta;
+export default meta
 
 export const Default = {
   args: {
     options: [
       { value: 'option1', label: 'Option 1' },
       { value: 'option2', label: 'Option 2' },
-      { value: 'option3', label: 'Option 3' }
+      { value: 'option3', label: 'Option 3' },
     ],
     value: '',
-    onChange: () => {}
-  }
-};
+    onChange: () => {},
+  },
+}

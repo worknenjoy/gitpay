@@ -5,14 +5,12 @@ import TaskSolve from '../components/areas/public/features/issue/task-solve'
 const mapStateToProps = (state, ownProps) => {
   return {
     logged: state.loggedIn,
-    task: getTaskOrdersByFilter(state)
+    task: getTaskOrdersByFilter(state),
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    
-  }
+  return {}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskSolve)

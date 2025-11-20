@@ -1,8 +1,6 @@
-
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add altering commands here.
      *
@@ -11,17 +9,17 @@ module.exports = {
      */
     await queryInterface.addColumn('Tasks', 'not_listed', {
       type: Sequelize.BOOLEAN,
-      defaultValue: false
-    });
+      defaultValue: false,
+    })
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
      *
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.removeColumn('Tasks', 'not_listed');
-  }
-};
+    await queryInterface.removeColumn('Tasks', 'not_listed')
+  },
+}

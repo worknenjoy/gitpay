@@ -10,18 +10,22 @@ const filterByAdditional = (task, additional, filteredByPrincipal) => {
   const filteringAllOfAdditional = typeof filteredByPrincipal === 'undefined'
 
   if (additional === 'issuesWithBounties') {
-    return filteringAllOfAdditional ? evaluateTaskWithBountyByValue(task.value) : ((filteredByPrincipal) && (evaluateTaskWithBountyByValue(task.value)))
+    return filteringAllOfAdditional
+      ? evaluateTaskWithBountyByValue(task.value)
+      : filteredByPrincipal && evaluateTaskWithBountyByValue(task.value)
   }
 
   if (additional === 'contribution') {
-    return filteringAllOfAdditional ? evaluateTaskWithoutBountyByValue(task.value) : ((filteredByPrincipal) && (evaluateTaskWithoutBountyByValue(task.value)))
+    return filteringAllOfAdditional
+      ? evaluateTaskWithoutBountyByValue(task.value)
+      : filteredByPrincipal && evaluateTaskWithoutBountyByValue(task.value)
   }
 
   return task
 }
 
 const evaluateTaskWithBountyByValue = (value) => {
-  return (parseFloat(value) > parseFloat('0'))
+  return parseFloat(value) > parseFloat('0')
 }
 
 const evaluateTaskWithoutBountyByValue = (value) => {
@@ -29,12 +33,14 @@ const evaluateTaskWithoutBountyByValue = (value) => {
 }
 
 const getTaskWithAnyOrder = (task, user) => {
-  const hasUserOrder = task.Orders.some(order => order.status === 'succeeded' && order.userId === user.id)
+  const hasUserOrder = task.Orders.some(
+    (order) => order.status === 'succeeded' && order.userId === user.id,
+  )
   return hasUserOrder ? task : null
 }
 
 const getListed = (data) => {
-  return data.filter(t => t.not_listed === false)
+  return data.filter((t) => t.not_listed === false)
 }
 
 export const getFilteredTasks = createSelector(
@@ -44,63 +50,82 @@ export const getFilteredTasks = createSelector(
     switch (visibilityFilter) {
       case 'all':
         filteredTasks = tasks
-        break;
+        break
       case 'userId':
-        filteredTasks = { ...tasks, data: tasks.data.filter(item => item.userId === user.id) }
-        break;
+        filteredTasks = { ...tasks, data: tasks.data.filter((item) => item.userId === user.id) }
+        break
       case 'Assigns':
         filteredTasks = {
           ...tasks,
-          data: tasks.data.length ? tasks.data.filter(item => {
-            const interested = item.Assigns.filter(assign => assign.userId === user.id)
-            return interested.length
-          }) : []  
+          data: tasks.data.length
+            ? tasks.data.filter((item) => {
+                const interested = item.Assigns.filter((assign) => assign.userId === user.id)
+                return interested.length
+              })
+            : [],
         }
-        break;
+        break
       case 'status':
         filteredTasks = {
           ...tasks,
-          data: tasks.data.length ? tasks.data.filter(item => {
-            const additionalFilter = tasks.filterAdditional
+          data: tasks.data.length
+            ? tasks.data.filter((item) => {
+                const additionalFilter = tasks.filterAdditional
 
-            if (tasks.filterValue === 'all') {
-              return filterByAdditional(item, additionalFilter)
-            }
-            else {
-              const filteredByPrincipal = item.status === tasks.filterValue
-              return filterByAdditional(item, additionalFilter, filteredByPrincipal)
-            }
-          }) : []
+                if (tasks.filterValue === 'all') {
+                  return filterByAdditional(item, additionalFilter)
+                } else {
+                  const filteredByPrincipal = item.status === tasks.filterValue
+                  return filterByAdditional(item, additionalFilter, filteredByPrincipal)
+                }
+              })
+            : [],
         }
-        break;
+        break
       case 'assigned':
         filteredTasks = {
           ...tasks,
-          data: tasks.data.length ? tasks.data.filter(item => {
-            const interested = item.Assigns.filter(assign => assign.userId === user.id)
-            if (interested.length) {
-              return item.assigned === interested[0].id
-            }
-          }) : []
+          data: tasks.data.length
+            ? tasks.data.filter((item) => {
+                const interested = item.Assigns.filter((assign) => assign.userId === user.id)
+                if (interested.length) {
+                  return item.assigned === interested[0].id
+                }
+              })
+            : [],
         }
-        break;
+        break
       case 'issuesWithBounties':
-        filteredTasks = { ...tasks, data: tasks.data.length ? tasks.data.filter(item => evaluateTaskWithBountyByValue(item.value)) : [] }
-        break;
+        filteredTasks = {
+          ...tasks,
+          data: tasks.data.length
+            ? tasks.data.filter((item) => evaluateTaskWithBountyByValue(item.value))
+            : [],
+        }
+        break
       case 'contribution':
-        filteredTasks = { ...tasks, data: tasks.data.length ? tasks.data.filter(item => evaluateTaskWithoutBountyByValue(item.value)) : [] }
-        break;
+        filteredTasks = {
+          ...tasks,
+          data: tasks.data.length
+            ? tasks.data.filter((item) => evaluateTaskWithoutBountyByValue(item.value))
+            : [],
+        }
+        break
       case 'supported':
-        filteredTasks = { ...tasks,
-          data: tasks.data.length ? tasks.data.filter(item => getTaskWithAnyOrder(item, user)) : [] }
-        break;
+        filteredTasks = {
+          ...tasks,
+          data: tasks.data.length
+            ? tasks.data.filter((item) => getTaskWithAnyOrder(item, user))
+            : [],
+        }
+        break
       default:
         filteredTasks = tasks
-      }
-      if(visibilityFilter === 'userId') {
-        return filteredTasks
-      } else {
-        return {...tasks, data: getListed(filteredTasks.data)}
-      }
-  }
+    }
+    if (visibilityFilter === 'userId') {
+      return filteredTasks
+    } else {
+      return { ...tasks, data: getListed(filteredTasks.data) }
+    }
+  },
 )

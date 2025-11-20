@@ -9,7 +9,7 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Skeleton
+  Skeleton,
 } from '@mui/material'
 import { SwapHorizontalCircleRounded } from '@mui/icons-material'
 
@@ -29,7 +29,7 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task, listOrde
 
   const sendTransfer = async () => {
     await onSend(order, {
-      id: currentTaskId
+      id: currentTaskId,
     })
     await listOrders()
     onClose()
@@ -37,23 +37,29 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task, listOrde
 
   return (
     <Drawer
-      anchor='right'
-      open={ open }
-      onClose={ onClose }
-      aria-labelledby='drawer-payment-transfer'
+      anchor="right"
+      open={open}
+      onClose={onClose}
+      aria-labelledby="drawer-payment-transfer"
       PaperProps={{ style: { width: '40%', padding: 20 } }}
     >
       <Container>
         <Typography variant="h5" gutterBottom>
-          <FormattedMessage id='task.bounties.order.transfer.title' defaultMessage='Transfer bounty to another task' />
+          <FormattedMessage
+            id="task.bounties.order.transfer.title"
+            defaultMessage="Transfer bounty to another task"
+          />
         </Typography>
         <div>
-          <Typography type='caption'>
-            <FormattedMessage id='task.bounties.order.transfer.message' defaultMessage='You can transfer the bounty paid to one of these issues you created:' />
+          <Typography type="caption">
+            <FormattedMessage
+              id="task.bounties.order.transfer.message"
+              defaultMessage="You can transfer the bounty paid to one of these issues you created:"
+            />
           </Typography>
           <div>
             {!tasks.completed ? (
-              <div style={{overflowY: 'hidden', height: '65vh', margin: '20px 0' }}>
+              <div style={{ overflowY: 'hidden', height: '65vh', margin: '20px 0' }}>
                 <Skeleton variant="rectangular" height={48} animation="wave" />
                 <Skeleton variant="rectangular" height={48} animation="wave" />
                 <Skeleton variant="rectangular" height={48} animation="wave" />
@@ -61,32 +67,55 @@ const TaskOrderTransfer = ({ open, tasks, order, onSend, onClose, task, listOrde
                 <Skeleton variant="rectangular" height={48} animation="wave" />
               </div>
             ) : (
-              <List component='nav' style={{overflowY: 'scroll', height: '65vh', margin: '20px 0', border: '1px solid #ccc'}}>
-                { tasks && tasks.data.map((t, index) => {
-                  return (
-                    !t.paid &&
-                    <ListItem
-                      button
-                      selected={ selectedIndex === t.id }
-                      onClick={ (event) => handleListItemClick(event, t.id, index) }
-                    >
-                      <ListItemAvatar>
-                        <SwapHorizontalCircleRounded />
-                      </ListItemAvatar>
-                      <ListItemText primary={ t.title } secondary={ t.status } />
-                    </ListItem>
-                  )
-                }) }
+              <List
+                component="nav"
+                style={{
+                  overflowY: 'scroll',
+                  height: '65vh',
+                  margin: '20px 0',
+                  border: '1px solid #ccc',
+                }}
+              >
+                {tasks &&
+                  tasks.data.map((t, index) => {
+                    return (
+                      !t.paid && (
+                        <ListItem
+                          button
+                          selected={selectedIndex === t.id}
+                          onClick={(event) => handleListItemClick(event, t.id, index)}
+                        >
+                          <ListItemAvatar>
+                            <SwapHorizontalCircleRounded />
+                          </ListItemAvatar>
+                          <ListItemText primary={t.title} secondary={t.status} />
+                        </ListItem>
+                      )
+                    )
+                  })}
               </List>
             )}
           </div>
         </div>
-        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-          <Button onClick={ onClose } variant='outlined' color='secondary' style={{marginRight: 10}} >
-            <FormattedMessage id='general.buttons.close' defaultMessage='Close' />
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Button
+            onClick={onClose}
+            variant="outlined"
+            color="secondary"
+            style={{ marginRight: 10 }}
+          >
+            <FormattedMessage id="general.buttons.close" defaultMessage="Close" />
           </Button>
-          <Button disabled={ selectedIndex === null } onClick={ sendTransfer } variant='contained' color='secondary'>
-            <FormattedMessage id='task.bounties.order.transfer.action' defaultMessage='transfer bounty order' />
+          <Button
+            disabled={selectedIndex === null}
+            onClick={sendTransfer}
+            variant="contained"
+            color="secondary"
+          >
+            <FormattedMessage
+              id="task.bounties.order.transfer.action"
+              defaultMessage="transfer bounty order"
+            />
           </Button>
         </div>
       </Container>

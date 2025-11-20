@@ -1,18 +1,18 @@
-import React from 'react';
-import ProfileAccountMenu from './profile-account-menu';
+import React from 'react'
+import ProfileAccountMenu from './profile-account-menu'
 
 export default {
   title: 'Design Library/Molecules/Menus/ProfileAccountMenu',
   component: ProfileAccountMenu,
   argTypes: {
     onLogout: { action: 'logout' },
-    onProfileClick: { action: 'profileClick' }
-  }
-};
+    onProfileClick: { action: 'profileClick' },
+  },
+}
 
-const Template = (args) => <ProfileAccountMenu {...args} />;
+const Template = (args) => <ProfileAccountMenu {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   user: {
     id: 1,
@@ -20,16 +20,16 @@ Default.args = {
     Types: [
       {
         id: 1,
-        name: 'contributor'
+        name: 'contributor',
       },
       {
         id: 2,
-        name: 'maintainer'
+        name: 'maintainer',
       },
       {
         id: 3,
-        name: 'funding'
-      }
-    ]
-  }
-};
+        name: 'funding',
+      },
+    ],
+  },
+}

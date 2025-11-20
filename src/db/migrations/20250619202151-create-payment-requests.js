@@ -1,8 +1,6 @@
-
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add altering commands here.
      *
@@ -14,19 +12,19 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       userId: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Users',
-          key: 'id'
+          key: 'id',
         },
-        allowNull: false
+        allowNull: false,
       },
       active: {
         type: Sequelize.BOOLEAN,
-        defaultValue: true
+        defaultValue: true,
       },
       title: Sequelize.STRING,
       description: Sequelize.STRING,
@@ -36,31 +34,31 @@ module.exports = {
       payment_url: Sequelize.STRING,
       status: {
         type: Sequelize.STRING,
-        defaultValue: 'open'
+        defaultValue: 'open',
       },
       transfer_status: {
         type: Sequelize.STRING,
-        defaultValue: 'pending_payment'
+        defaultValue: 'pending_payment',
       },
       transfer_id: Sequelize.STRING,
       createdAt: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW')
+        defaultValue: Sequelize.fn('NOW'),
       },
       updatedAt: {
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW')
-      }
-    });
+        defaultValue: Sequelize.fn('NOW'),
+      },
+    })
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
      *
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable('PaymentRequests');
-  }
-};
+    await queryInterface.dropTable('PaymentRequests')
+  },
+}

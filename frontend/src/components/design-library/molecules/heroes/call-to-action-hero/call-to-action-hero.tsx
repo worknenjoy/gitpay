@@ -1,17 +1,16 @@
 import React from 'react'
-import { CallToActionHeroStyled, DotLottieReactStyled, BottomCTASection, BottomCopy, GutterTopButton } from './call-to-action-hero.styles'
+import {
+  CallToActionHeroStyled,
+  DotLottieReactStyled,
+  BottomCTASection,
+  BottomCopy,
+  GutterTopButton,
+} from './call-to-action-hero.styles'
 
-const CallToActionHero = ({
-  title,
-  actions
-}) => {
+const CallToActionHero = ({ title, actions }) => {
   return (
     <CallToActionHeroStyled>
-      <DotLottieReactStyled
-        src={'/lottie/developer-team.lottie'}
-        loop
-        autoplay  
-      />
+      <DotLottieReactStyled src={'/lottie/developer-team.lottie'} loop autoplay />
       <BottomCTASection>
         <BottomCopy variant="h6" gutterBottom>
           {title}

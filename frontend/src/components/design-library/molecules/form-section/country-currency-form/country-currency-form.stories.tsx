@@ -1,14 +1,14 @@
-import React from 'react';
-import CountryCurrencyForm from './country-currency-form';
+import React from 'react'
+import CountryCurrencyForm from './country-currency-form'
 
 export default {
   title: 'Design Library/Molecules/FormSection/CountryCurrencyForm',
-  component: CountryCurrencyForm
-};
+  component: CountryCurrencyForm,
+}
 
-const Template = (args) => <CountryCurrencyForm {...args} />;
+const Template = (args) => <CountryCurrencyForm {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   country: 'US',
   countries: {
@@ -20,8 +20,8 @@ Default.args = {
         eur: 'eur',
         gbp: 'gbp',
         jpy: 'jpy',
-        aud: 'aud'
-      }
-    }
-  }
-};
+        aud: 'aud',
+      },
+    },
+  },
+}

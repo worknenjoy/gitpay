@@ -1,19 +1,19 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import ExploreIssuesPrivatePage from './explore-issues-private-page';
-import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate';
+import type { Meta, StoryObj } from '@storybook/react'
+import ExploreIssuesPrivatePage from './explore-issues-private-page'
+import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate'
 
 const meta: Meta<typeof ExploreIssuesPrivatePage> = {
   title: 'Design Library/Pages/Private/Issues/ExploreIssues',
   component: ExploreIssuesPrivatePage,
-  decorators: [ withProfileTemplate ],
+  decorators: [withProfileTemplate],
   parameters: {
-    layout: 'fullscreen'
-  }
-};
+    layout: 'fullscreen',
+  },
+}
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof ExploreIssuesPrivatePage>;
+type Story = StoryObj<typeof ExploreIssuesPrivatePage>
 
 export const Default: Story = {
   args: {
@@ -23,23 +23,25 @@ export const Default: Story = {
     listLanguages: () => {},
     issues: {
       completed: true,
-      data: [{
-        id: 1,
-        title: 'Issue 1',
-        description: 'This is the first issue',
-        status: 'open',
-        Project: { name: 'Project 1' }
-      }]
+      data: [
+        {
+          id: 1,
+          title: 'Issue 1',
+          description: 'This is the first issue',
+          status: 'open',
+          Project: { name: 'Project 1' },
+        },
+      ],
     },
     labels: [],
     languages: [],
-    user: { 
+    user: {
       completed: true,
-      data: { 
+      data: {
         id: 1,
         name: 'John Doe',
-        Types: [{ name: 'contributor' }]
-      } 
-    }
-  }
-};
+        Types: [{ name: 'contributor' }],
+      },
+    },
+  },
+}

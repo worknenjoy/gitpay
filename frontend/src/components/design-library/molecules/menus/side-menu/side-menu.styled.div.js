@@ -1,8 +1,5 @@
 import styled, { css } from 'styled-components'
-import {
-  Button,
-  Avatar
-} from '@mui/material'
+import { Button, Avatar } from '@mui/material'
 
 import media from '../../../../../styleguide/media'
 
@@ -28,10 +25,10 @@ export const Side = styled.div`
   display: flex;
 `
 export const MenuMobile = styled(Button)`
-    margin: 10px 0;
-    @media (min-width: 37.5em) {
-      display: none;
-      visibility: hidden;
+  margin: 10px 0;
+  @media (min-width: 37.5em) {
+    display: none;
+    visibility: hidden;
   }
 `
 
@@ -44,9 +41,11 @@ export const IconHamburger = styled.span`
   transition-delay: 200ms;
   transform-origin: 50% 50%;
 
-  ${({ isActive }) => isActive && css`
-    background-color: transparent;
-  `}
+  ${({ isActive }) =>
+    isActive &&
+    css`
+      background-color: transparent;
+    `}
 
   &::after,
   &::before {
@@ -59,24 +58,28 @@ export const IconHamburger = styled.span`
     transition: all ease 400ms;
   }
 
-  &::after{
+  &::after {
     top: -6px;
 
-    ${({ isActive }) => isActive && css`
-      top: 0;
-      background-color: #f2f2f2;
-      transform: rotate(135deg)
-    `}
+    ${({ isActive }) =>
+      isActive &&
+      css`
+        top: 0;
+        background-color: #f2f2f2;
+        transform: rotate(135deg);
+      `}
   }
 
-  &::before{
+  &::before {
     bottom: -6px;
 
-    ${({ isActive }) => isActive && css`
-      bottom: 0;
-      background-color: #f2f2f2;
-      transform: rotate(-135deg)
-    `}
+    ${({ isActive }) =>
+      isActive &&
+      css`
+        bottom: 0;
+        background-color: #f2f2f2;
+        transform: rotate(-135deg);
+      `}
   }
   &:hover {
     cursor: pointer;
@@ -85,7 +88,7 @@ export const IconHamburger = styled.span`
 
 export const LeftSide = styled(Side)`
   display: block;
-  
+
   z-index: 1300;
   padding: 0;
   width: 100%;
@@ -94,15 +97,17 @@ export const LeftSide = styled(Side)`
     margin-bottom: 0 !important;
   }
 
-  ${({ isActive }) => isActive && css`
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: #2c5c46;
-    padding: 10px 20px;
-    box-sizing: border-box;
-  `}
+  ${({ isActive }) =>
+    isActive &&
+    css`
+      position: fixed !important;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #2c5c46;
+      padding: 10px 20px;
+      box-sizing: border-box;
+    `}
 
   @media (max-width: 37.5em) {
     align-items: flex-start;
@@ -114,7 +119,7 @@ export const RightSide = styled(Side)`
   display: block;
   width: 100%;
 
-@media (max-width: 37.5em) {
+  @media (max-width: 37.5em) {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -129,19 +134,20 @@ export const RightSide = styled(Side)`
     transition: all ease-in-out 400ms;
     z-index: 1200;
 
-  ${({ isActive }) => isActive && css`
-      transform: translateY(0);
-      overflow: hidden;
-    `}
+    ${({ isActive }) =>
+      isActive &&
+      css`
+        transform: translateY(0);
+        overflow: hidden;
+      `}
 
     ${({ isActive }) => {
-    if (isActive) {
-      // document.body.style.overflowY = 'hidden'
-    }
-    else {
-      // document.body.style.overflowY = 'auto'
-    }
-  }}
+      if (isActive) {
+        // document.body.style.overflowY = 'hidden'
+      } else {
+        // document.body.style.overflowY = 'auto'
+      }
+    }}
   }
 `
 
@@ -181,10 +187,14 @@ export const StyledSlackButton = styled(StyledButton)`
 `
 
 export const LabelButton = styled.span`
-
-  ${props => props.right
-    ? css`margin-left: 10px;`
-    : css`margin-right: 10px;`}
+  ${(props) =>
+    props.right
+      ? css`
+          margin-left: 10px;
+        `
+      : css`
+          margin-right: 10px;
+        `}
 
   @media (min-width: 37.5em) {
     display: none;
@@ -201,7 +211,6 @@ export const StyledAvatar = styled(Avatar)`
   margin-left: 20px;
   cursor: pointer;
 
-
   ${media.phone`margin-left: 15px;`}
 `
 
@@ -211,13 +220,13 @@ export const StyledAvatarIconOnly = styled(Avatar)`
   align-items: center;
   ${media.phone`margin-left: 15px;`}
 
-  @media(max-width: 37.5em){
+  @media(max-width: 37.5em) {
     margin-bottom: 20px !important;
   }
 `
 
 export const OnlyDesktop = styled.div`
-  @media(max-width: 37.5em){
+  @media (max-width: 37.5em) {
     display: none;
   }
 `

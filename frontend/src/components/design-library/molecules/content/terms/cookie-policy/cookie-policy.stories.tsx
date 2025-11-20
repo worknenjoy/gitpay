@@ -1,24 +1,24 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import CookiePolicy from './cookie-policy';
+import type { Meta, StoryObj } from '@storybook/react'
+import CookiePolicy from './cookie-policy'
 
 const meta: Meta<typeof CookiePolicy> = {
   title: 'Design Library/Molecules/Content/Terms/CookiePolicy',
   component: CookiePolicy,
   args: {
-    extraStyles: true
+    extraStyles: true,
   },
   argTypes: {
-    extraStyles: { control: 'boolean' }
-  }
-};
-export default meta;
+    extraStyles: { control: 'boolean' },
+  },
+}
+export default meta
 
-type Story = StoryObj<typeof CookiePolicy>;
+type Story = StoryObj<typeof CookiePolicy>
 
 export const Default: Story = {
-  args: { extraStyles: true }
-};
+  args: { extraStyles: true },
+}
 
 export const NoExtraStyles: Story = {
-  args: { extraStyles: false }
-};
+  args: { extraStyles: false },
+}

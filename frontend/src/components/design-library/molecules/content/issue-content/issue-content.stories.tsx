@@ -1,14 +1,14 @@
-import React from 'react';
-import IssueContent from './issue-content';
+import React from 'react'
+import IssueContent from './issue-content'
 
 export default {
   title: 'Design Library/Molecules/Content/IssueContent',
-  component: IssueContent
-};
+  component: IssueContent,
+}
 
-const Template = (args) => <IssueContent {...args} />;
+const Template = (args) => <IssueContent {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   logged: true,
   user: {
@@ -16,8 +16,8 @@ Default.args = {
     data: {
       id: 1,
       name: 'John Doe',
-      avatar: 'https://via.placeholder.com/150'
-    }
+      avatar: 'https://via.placeholder.com/150',
+    },
   },
   task: {
     completed: true,
@@ -30,34 +30,34 @@ Default.args = {
         issue: {
           user: {
             login: 'octocat',
-            avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4'
-          }
+            avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4',
+          },
         },
         labels: [
           { id: 1, name: 'bug', color: '#d73a4a' },
           { id: 2, name: 'enhancement', color: '#a2eeef' },
-          { id: 3, name: 'documentation', color: '#0075ca' }
-        ]
-      }
-    }
+          { id: 3, name: 'documentation', color: '#0075ca' },
+        ],
+      },
+    },
   },
   organization: {
     completed: true,
     data: {
-      name: 'Organization Name'
-    }
+      name: 'Organization Name',
+    },
   },
   project: {
     completed: true,
     data: {
-      name: 'Project Name'
-    }
+      name: 'Project Name',
+    },
   },
   updateTask: () => console.log('Task updated'),
-  reportTask: () => console.log('Task reported')
-};
+  reportTask: () => console.log('Task reported'),
+}
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({})
 Loading.args = {
   logged: true,
   user: {
@@ -65,11 +65,11 @@ Loading.args = {
     data: {
       id: 1,
       name: 'John Doe',
-      avatar: 'https://via.placeholder.com/150'
-    }
+      avatar: 'https://via.placeholder.com/150',
+    },
   },
   task: {
     completed: false,
-    data: {}
-  }
+    data: {},
+  },
 }

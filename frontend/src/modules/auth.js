@@ -5,23 +5,23 @@ class Auth {
    * @param {string} token
    */
   /* eslint-disable no-undef */
-  static authenticateUser (token) {
+  static authenticateUser(token) {
     localStorage.setItem('token', token)
   }
 
-  static authNotified () {
+  static authNotified() {
     localStorage.setItem('authNotified', true)
   }
 
-  static getAuthNotified () {
+  static getAuthNotified() {
     return localStorage.getItem('authNotified')
   }
 
-  static storeReferrer (path) {
+  static storeReferrer(path) {
     localStorage.setItem('referer', path)
   }
 
-  static getReferer () {
+  static getReferer() {
     return localStorage.getItem('referer')
   }
 
@@ -30,7 +30,7 @@ class Auth {
    *
    * @returns {boolean}
    */
-  static isUserAuthenticated () {
+  static isUserAuthenticated() {
     return localStorage.getItem('token') !== null
   }
 
@@ -38,7 +38,7 @@ class Auth {
    * Deauthenticate a user. Remove a token from Local Storage.
    *
    */
-  static deauthenticateUser () {
+  static deauthenticateUser() {
     localStorage.removeItem('token')
     localStorage.removeItem('authNotified')
   }
@@ -49,7 +49,7 @@ class Auth {
    * @returns {string}
    */
 
-  static getToken () {
+  static getToken() {
     return localStorage.getItem('token')
   }
 }

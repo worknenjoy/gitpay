@@ -1,25 +1,16 @@
 import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  Snackbar,
-  IconButton
-} from '@mui/material'
+import { Snackbar, IconButton } from '@mui/material'
 
 import Close from '@mui/icons-material/Close'
 
 const Notification = ({ open, onClose, message, link, linkLabel }) => {
-
   const getActions = useCallback(() => {
     let actions = [
-      <IconButton
-        key="close"
-        aria-label="Close"
-        color="inherit"
-        onClick={onClose}
-      >
+      <IconButton key="close" aria-label="Close" color="inherit" onClick={onClose}>
         <Close />
-      </IconButton>
+      </IconButton>,
     ]
     if (link) {
       actions = [getLink(), ...actions]
@@ -28,15 +19,13 @@ const Notification = ({ open, onClose, message, link, linkLabel }) => {
     return actions
   }, [onClose, link])
 
-  const getLink = useCallback(() => (
-    <a href={link}>{linkLabel || 'View'}</a>
-  ), [link, linkLabel])
+  const getLink = useCallback(() => <a href={link}>{linkLabel || 'View'}</a>, [link, linkLabel])
 
   return (
     <Snackbar
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'right'
+        horizontal: 'right',
       }}
       open={open}
       onClose={onClose}
@@ -52,7 +41,7 @@ Notification.propTypes = {
   onClose: PropTypes.func,
   message: PropTypes.string,
   link: PropTypes.string,
-  linkLabel: PropTypes.string
+  linkLabel: PropTypes.string,
 }
 
 export default Notification

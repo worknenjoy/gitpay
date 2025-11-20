@@ -138,4 +138,4 @@ module.exports.defaultEmailTemplate = (content) => `
     </table>
   </body>
 </html>
-`;
+`

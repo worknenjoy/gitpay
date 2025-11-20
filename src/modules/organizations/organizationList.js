@@ -1,22 +1,22 @@
 const Promise = require('bluebird')
 const models = require('../../models')
 
-module.exports = Promise.method(function listOrganizations () {
+module.exports = Promise.method(function listOrganizations() {
   return models.Organization.findAll({
     include: [
       {
         model: models.Project,
-        include: [models.Organization]
+        include: [models.Organization],
       },
       {
-        model: models.User
-      }
-    ]
+        model: models.User,
+      },
+    ],
   })
-    .then(data => {
+    .then((data) => {
       return data
     })
-    .catch(error => {
+    .catch((error) => {
       // eslint-disable-next-line no-console
       console.log(error)
       return false

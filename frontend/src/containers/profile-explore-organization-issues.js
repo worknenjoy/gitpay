@@ -14,17 +14,19 @@ const mapStateToProps = (state, props) => {
     issues: getFilteredTasks(state),
     organization: getOrganization(state),
     labels: state.labels,
-    languages: state.languages
+    languages: state.languages,
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     listTasks: (params) => dispatch(listTasks(params)),
-    filterTasks: (tasks, key, value, additional) => dispatch(filterTasks(tasks, key, value, additional)),
-    fetchOrganization: (organizationId, params) => dispatch(fetchOrganization(organizationId, params)),
+    filterTasks: (tasks, key, value, additional) =>
+      dispatch(filterTasks(tasks, key, value, additional)),
+    fetchOrganization: (organizationId, params) =>
+      dispatch(fetchOrganization(organizationId, params)),
     listLabels: () => dispatch(listLabels()),
-    listLanguages: () => dispatch(listLanguage())
+    listLanguages: () => dispatch(listLanguage()),
   }
 }
 

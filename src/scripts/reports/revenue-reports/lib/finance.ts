@@ -2,25 +2,40 @@ import { BalanceTransaction, Charge, Transfer } from './types'
 
 export function amountUSDCentsFromCharge(charge: Charge): number {
   const bt: BalanceTransaction | undefined = charge?.balance_transaction
-  if (bt && bt.currency && bt.currency.toLowerCase() === 'usd' && typeof bt.amount === 'number') return bt.amount
-  if (charge?.currency?.toLowerCase() === 'usd' && typeof charge.amount === 'number') return charge.amount
+  if (bt && bt.currency && bt.currency.toLowerCase() === 'usd' && typeof bt.amount === 'number')
+    return bt.amount
+  if (charge?.currency?.toLowerCase() === 'usd' && typeof charge.amount === 'number')
+    return charge.amount
   return 0
 }
 
 export function stripeFeeUSDCentsFromBT(bt: BalanceTransaction | null | undefined): number {
-  if (bt && bt.currency && bt.currency.toLowerCase() === 'usd' && typeof bt.fee === 'number') return bt.fee
+  if (bt && bt.currency && bt.currency.toLowerCase() === 'usd' && typeof bt.fee === 'number')
+    return bt.fee
   return 0
 }
 
 export function transferUSDCents(transfer: Transfer | null | undefined): number {
-  if (transfer && transfer.currency && transfer.currency.toLowerCase() === 'usd' && typeof transfer.amount === 'number') return transfer.amount
+  if (
+    transfer &&
+    transfer.currency &&
+    transfer.currency.toLowerCase() === 'usd' &&
+    typeof transfer.amount === 'number'
+  )
+    return transfer.amount
   return 0
 }
 
 export function getChargeUSDCents(charge: Charge | null | undefined): number {
   if (!charge) return 0
   const inv: any = charge.invoice
-  if (inv && typeof inv.amount_paid === 'number' && inv.currency && inv.currency.toLowerCase() === 'usd') return inv.amount_paid
+  if (
+    inv &&
+    typeof inv.amount_paid === 'number' &&
+    inv.currency &&
+    inv.currency.toLowerCase() === 'usd'
+  )
+    return inv.amount_paid
   return amountUSDCentsFromCharge(charge)
 }
 

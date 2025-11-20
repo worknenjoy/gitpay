@@ -1,16 +1,16 @@
-import React from 'react';
-import Home from './home-public-page';
-import { withPublicTemplate } from '../../../../../../.storybook/decorators/withPublicTemplate';
+import React from 'react'
+import Home from './home-public-page'
+import { withPublicTemplate } from '../../../../../../.storybook/decorators/withPublicTemplate'
 
 export default {
   title: 'Design Library/Pages/Public/Home',
   component: Home,
-  decorators: [withPublicTemplate]
-};
+  decorators: [withPublicTemplate],
+}
 
-const Template = (args) => <Home {...args} />;
+const Template = (args) => <Home {...args} />
 
-export const LoggedIn = Template.bind({});
+export const LoggedIn = Template.bind({})
 LoggedIn.args = {
   user: {
     logged: true,
@@ -21,42 +21,41 @@ LoggedIn.args = {
       Types: [
         {
           id: 1,
-          type: 'contributor'
-        }
-      ]
+          type: 'contributor',
+        },
+      ],
     },
-    error: null
+    error: null,
   },
   bottomBarProps: {
     info: {
       tasks: 0,
       bounties: 0,
-      users: 0
+      users: 0,
     },
-    getInfo: () => {}
+    getInfo: () => {},
   },
   accountMenuProps: {
-    signOut: () => {}
+    signOut: () => {},
+  },
+}
 
-  }
-};
-
-export const LoggedOut = Template.bind({});
+export const LoggedOut = Template.bind({})
 LoggedOut.args = {
   user: {
     logged: false,
     user: null,
-    error: null
+    error: null,
   },
   bottomBarProps: {
     info: {
       tasks: 0,
       bounties: 0,
-      users: 0
+      users: 0,
     },
-    getInfo: () => {}
+    getInfo: () => {},
   },
   accountMenuProps: {
-    signOut: () => {}
-  }
-};
+    signOut: () => {},
+  },
+}

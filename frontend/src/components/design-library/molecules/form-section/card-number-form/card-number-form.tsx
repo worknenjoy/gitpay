@@ -7,8 +7,8 @@ const CardSection = (props) => {
       <CardElement
         options={{
           style: {
-            base: { fontSize: '22px' }
-          }
+            base: { fontSize: '22px' },
+          },
         }}
       />
     </label>

@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     private: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
+      defaultValue: false,
     },
     name: DataTypes.STRING,
     description: DataTypes.TEXT,
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     image: DataTypes.STRING,
     customer_id: DataTypes.STRING,
     account_id: DataTypes.STRING,
-    paypal_id: DataTypes.STRING
+    paypal_id: DataTypes.STRING,
   })
 
   Organization.associate = (models) => {

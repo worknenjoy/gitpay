@@ -6,7 +6,7 @@ const PayoutSetingsBankAccountHolder = ({
   countries,
   onSubmit,
   onChange,
-  onConfirmCloseAccount
+  onConfirmCloseAccount,
 }) => {
   return (
     <>
@@ -18,7 +18,7 @@ const PayoutSetingsBankAccountHolder = ({
         onConfirmCloseAccount={onConfirmCloseAccount}
       />
     </>
-  );
+  )
 }
 
-export default PayoutSetingsBankAccountHolder;
+export default PayoutSetingsBankAccountHolder

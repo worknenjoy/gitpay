@@ -93,18 +93,18 @@ const TaskInfoContent = styled('div')(({ theme }) => ({
   textAlign: 'middle',
 }))
 
-const StatusChip = styled(Chip, { shouldForwardProp: prop => prop !== 'status' })(
+const StatusChip = styled(Chip, { shouldForwardProp: (prop) => prop !== 'status' })(
   ({ theme, status }) => ({
     marginBottom: theme.spacing(1),
     backgroundColor: 'transparent',
     color: status === 'closed' ? theme.palette.error.main : theme.palette.primary.success,
-  })
+  }),
 )
 
-const StatusAvatarDot = styled(Avatar, { shouldForwardProp: prop => prop !== 'status' })(
+const StatusAvatarDot = styled(Avatar, { shouldForwardProp: (prop) => prop !== 'status' })(
   ({ theme, status }) => ({
     backgroundColor: status === 'closed' ? theme.palette.error.main : theme.palette.primary.success,
-  })
+  }),
 )
 
 const SpanText = styled('span')(() => ({
@@ -189,9 +189,10 @@ function Task(props) {
   const taskOwner = useCallback(() => {
     const t = task
     const creator = logged && t.data?.User && user?.id === t.data.User.id
-    const owner = (t.data?.members && t.data.members.length)
-      ? t.data.members.filter(m => m.User.id === user?.id).length > 0
-      : false
+    const owner =
+      t.data?.members && t.data.members.length
+        ? t.data.members.filter((m) => m.User.id === user?.id).length > 0
+        : false
     return creator || owner
   }, [logged, task, user])
 
@@ -337,8 +338,8 @@ function Task(props) {
         suggestedDate: interestedSuggestedDate,
         value: currentPrice,
         learn: interestedLearn,
-        comment: interestedComment
-      }
+        comment: interestedComment,
+      },
     })
     setAssignDialog(false)
     setTermsAgreed(false)
@@ -355,13 +356,13 @@ function Task(props) {
 
   const togglePaymentForm = (e) => {
     e.preventDefault()
-    setPaymentForm(p => !p)
+    setPaymentForm((p) => !p)
     setDeadlineForm(false)
   }
 
   const toggleDeadlineForm = (e) => {
     e.preventDefault()
-    setDeadlineForm(d => !d)
+    setDeadlineForm((d) => !d)
     setPaymentForm(false)
   }
 
@@ -388,7 +389,7 @@ function Task(props) {
 
   const handleCheckboxTerms = (e) => setTermsAgreed(e.target.checked)
   const handleCheckboxIwillDoFor = (e) => setPriceConfirmed(e.target.checked)
-  const handleSuggestAnotherDate = () => setShowSuggestAnotherDateField(s => !s)
+  const handleSuggestAnotherDate = () => setShowSuggestAnotherDateField((s) => !s)
   const handleInputChangeCalendar = (e) => setInterestedSuggestedDate(e.target.value)
 
   const pickTaskPrice = (price) => {
@@ -402,10 +403,10 @@ function Task(props) {
   const renderIssueAuthorLink = () => {
     if (task.data.metadata && task.data.metadata.issue.user.html_url) {
       return (
-        <Link href={`${task.data.metadata.issue.user.html_url}`} target='_blank'>
+        <Link href={`${task.data.metadata.issue.user.html_url}`} target="_blank">
           <FormattedMessage
-            id='task.status.created.name.short'
-            defaultMessage='by {name}'
+            id="task.status.created.name.short"
+            defaultMessage="by {name}"
             values={{ name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown' }}
           />
         </Link>
@@ -413,8 +414,8 @@ function Task(props) {
     }
     return (
       <FormattedMessage
-        id='task.status.created.name.short'
-        defaultMessage='by {name}'
+        id="task.status.created.name.short"
+        defaultMessage="by {name}"
         values={{ name: task.data.metadata ? task.data.metadata.issue.user.login : 'unknown' }}
       />
     )
@@ -434,36 +435,62 @@ function Task(props) {
     if (firstTaskSteps === 0) {
       return {
         image: bounty,
-        title: <FormattedMessage id='first.task.bounties.title' defaultMessage='Add Bounties' />,
+        title: <FormattedMessage id="first.task.bounties.title" defaultMessage="Add Bounties" />,
         description: (
           <div>
-            <FormattedMessage id='first.task.bounties.description' defaultMessage='Add bounties to reward contributors to solve your issue' />
-            <Button onClick={handleFirstTaskBounties} color='primary' variant='contained' style={{ display: 'block', margin: '20px auto' }}>
-              <FormattedMessage id='first.task.bounties.action' defaultMessage='Add bounties now' />
+            <FormattedMessage
+              id="first.task.bounties.description"
+              defaultMessage="Add bounties to reward contributors to solve your issue"
+            />
+            <Button
+              onClick={handleFirstTaskBounties}
+              color="primary"
+              variant="contained"
+              style={{ display: 'block', margin: '20px auto' }}
+            >
+              <FormattedMessage id="first.task.bounties.action" defaultMessage="Add bounties now" />
             </Button>
           </div>
-        )
+        ),
       }
     }
     if (firstTaskSteps === 1) {
       return {
         image: notifications,
-        title: <FormattedMessage id='first.task.deadline.title' defaultMessage='Set a deadline' />,
+        title: <FormattedMessage id="first.task.deadline.title" defaultMessage="Set a deadline" />,
         description: (
           <div>
-            <FormattedMessage id='first.task.deadline.description' defaultMessage='Set a deadline in order to define when your issues should be solved' />
-            <Button onClick={handleFirstTaskNotifications} color='primary' variant='contained' style={{ display: 'block', margin: '20px auto' }}>
-              <FormattedMessage id='first.task.deadline.action' defaultMessage='Set deadline' />
+            <FormattedMessage
+              id="first.task.deadline.description"
+              defaultMessage="Set a deadline in order to define when your issues should be solved"
+            />
+            <Button
+              onClick={handleFirstTaskNotifications}
+              color="primary"
+              variant="contained"
+              style={{ display: 'block', margin: '20px auto' }}
+            >
+              <FormattedMessage id="first.task.deadline.action" defaultMessage="Set deadline" />
             </Button>
           </div>
-        )
+        ),
       }
     }
     if (firstTaskSteps === 2) {
       return {
         image: sharing,
-        title: <FormattedMessage id='first.task.community.title' defaultMessage='Send to our community' />,
-        description: <FormattedMessage id='first.task.community.description' defaultMessage='We will make a campaign to let our community know that you have an issue to be solved' />
+        title: (
+          <FormattedMessage
+            id="first.task.community.title"
+            defaultMessage="Send to our community"
+          />
+        ),
+        description: (
+          <FormattedMessage
+            id="first.task.community.description"
+            defaultMessage="We will make a campaign to let our community know that you have an issue to be solved"
+          />
+        ),
       }
     }
     return {}
@@ -480,7 +507,14 @@ function Task(props) {
 
   const sendFundingInvite = (e) => {
     e.preventDefault()
-    fundingInviteTask(task.data.id, fundingInvite.email, fundingInvite.comment, currentPrice, interestedSuggestedDate, user)
+    fundingInviteTask(
+      task.data.id,
+      fundingInvite.email,
+      fundingInvite.comment,
+      currentPrice,
+      interestedSuggestedDate,
+      user,
+    )
     handleAssignFundingDialogClose()
   }
 
@@ -490,59 +524,68 @@ function Task(props) {
     return null
   }
 
-  const updatedAtTimeString = task.data.metadata ? MomentComponent(task.data.metadata.issue.updated_at).utc().fromNow() : 'not available'
+  const updatedAtTimeString = task.data.metadata
+    ? MomentComponent(task.data.metadata.issue.updated_at).utc().fromNow()
+    : 'not available'
   const timePlaceholder = (
-    <Typography type='subheading' variant='caption' style={{ padding: 10, color: 'gray', marginRight: 10 }}>
-      <FormattedMessage id='task.bounties.interested.created' defaultMessage='created' /> {updatedAtTimeString}
+    <Typography
+      type="subheading"
+      variant="caption"
+      style={{ padding: 10, color: 'gray', marginRight: 10 }}
+    >
+      <FormattedMessage id="task.bounties.interested.created" defaultMessage="created" />{' '}
+      {updatedAtTimeString}
     </Typography>
   )
 
-  const deliveryDate = task.data.deadline !== null
-    ? MomentComponent(task.data.deadline).utc().format('MM-DD-YYYY')
-    : intl.formatMessage(messages.deliveryDateNotInformed)
+  const deliveryDate =
+    task.data.deadline !== null
+      ? MomentComponent(task.data.deadline).utc().format('MM-DD-YYYY')
+      : intl.formatMessage(messages.deliveryDateNotInformed)
 
-  const deadlineDiff = task.data.deadline !== null
-    ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days')
-    : false
+  const deadlineDiff =
+    task.data.deadline !== null
+      ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days')
+      : false
 
   const firstStepsContent = handleFirstTaskContent()
 
   return (
     <div>
-      <Dialog open={isFirstTask} maxWidth='xs' aria-labelledby='form-dialog-title'>
+      <Dialog open={isFirstTask} maxWidth="xs" aria-labelledby="form-dialog-title">
         <DialogContent>
           <div style={{ textAlign: 'center' }}>
-            <img src={firstStepsContent.image} style={{ margin: '20px auto 0' }} width='70%' />
+            <img src={firstStepsContent.image} style={{ margin: '20px auto 0' }} width="70%" />
             <DialogTitle style={{ marginTop: 20 }}>
-              <Fab size='small' aria-label='close' onClick={() => setIsFirstTask(false)}>
+              <Fab size="small" aria-label="close" onClick={() => setIsFirstTask(false)}>
                 <CloseIcon />
               </Fab>
-              <Typography variant='h4'>{firstStepsContent.title}</Typography>
+              <Typography variant="h4">{firstStepsContent.title}</Typography>
             </DialogTitle>
             <DialogContentText>{firstStepsContent.description}</DialogContentText>
           </div>
         </DialogContent>
         <MobileStepper
-          variant='dots'
+          variant="dots"
           steps={3}
-          position='static'
+          position="static"
           activeStep={firstTaskSteps}
           nextButton={
             <Button
-              size='small'
-              onClick={() => setFirstTaskSteps(s => s + 1)}
+              size="small"
+              onClick={() => setFirstTaskSteps((s) => s + 1)}
               disabled={firstTaskSteps === 2}
             >
-              <FormattedMessage id='first.task.next' defaultMessage='Next' />
+              <FormattedMessage id="first.task.next" defaultMessage="Next" />
             </Button>
           }
           backButton={
             <Button
-              onClick={() => setFirstTaskSteps(s => s - 1)}
+              onClick={() => setFirstTaskSteps((s) => s - 1)}
               disabled={firstTaskSteps === 0}
-              size='small'
+              size="small"
             >
-              <FormattedMessage id='first.task.back' defaultMessage='Back' />
+              <FormattedMessage id="first.task.back" defaultMessage="Back" />
             </Button>
           }
         />
@@ -606,14 +649,14 @@ function Task(props) {
         <SidebarGrid item size={{ xs: 12, sm: 12, md: 4 }}>
           {task.values && task.values.available > 0 && (
             <div style={{ textAlign: 'center', marginTop: 10 }}>
-              <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
-                <FormattedMessage id='task.value.label' defaultMessage='Value offered' />
+              <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+                <FormattedMessage id="task.value.label" defaultMessage="Value offered" />
               </Typography>
               <div>
                 <MoneyIcon style={{ verticalAlign: 'middle' }} />
-                <Typography variant='h5' component="span" sx={{ verticalAlign: 'middle', ml: 1 }}>
+                <Typography variant="h5" component="span" sx={{ verticalAlign: 'middle', ml: 1 }}>
                   {task.values.available}
-                  {task.data.paid && <Chip sx={{ ml: 1 }} size='small' label='paid' />}
+                  {task.data.paid && <Chip sx={{ ml: 1 }} size="small" label="paid" />}
                 </Typography>
               </div>
             </div>
@@ -621,8 +664,8 @@ function Task(props) {
 
           <SidebarSection>
             <SidebarItem>
-              <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
-                <FormattedMessage id='task.publicy.label' defaultMessage='Publicy' />
+              <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+                <FormattedMessage id="task.publicy.label" defaultMessage="Publicy" />
               </Typography>
               <div>
                 <TaskStatusIcons status={task.data.private ? 'private' : 'public'} bounty />
@@ -631,8 +674,8 @@ function Task(props) {
 
             {task.data.status && (
               <SidebarItem>
-                <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
-                  <FormattedMessage id='task.status.label' defaultMessage='Status' />
+                <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+                  <FormattedMessage id="task.status.label" defaultMessage="Status" />
                 </Typography>
                 <div>
                   <StatusChip
@@ -648,12 +691,12 @@ function Task(props) {
           <SidebarSection>
             {task.data.level && !taskOwner() && (
               <SidebarItem>
-                <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
-                  <FormattedMessage id='task.level.label' defaultMessage='Level' />
+                <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+                  <FormattedMessage id="task.level.label" defaultMessage="Level" />
                 </Typography>
                 <div>
                   <CoffeeIcon />
-                  <Typography variant='h6' className={TaskInfoContent}>
+                  <Typography variant="h6" className={TaskInfoContent}>
                     <TaskInfoContent>{task.data.level}</TaskInfoContent>
                   </Typography>
                 </div>
@@ -662,11 +705,11 @@ function Task(props) {
 
             {task.data.deadline && !taskOwner() && (
               <SidebarItem>
-                <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
-                  <FormattedMessage id='task.deadline.label' defaultMessage='Deadline' />
+                <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+                  <FormattedMessage id="task.deadline.label" defaultMessage="Deadline" />
                 </Typography>
                 <div>
-                  <Typography variant='h6'>
+                  <Typography variant="h6">
                     <Button onClick={() => setDeadlineForm(true)}>
                       {task.data.deadline ? (
                         <div>
@@ -674,11 +717,16 @@ function Task(props) {
                           {deadlineDiff && parseInt(deadlineDiff) > 0 ? (
                             <small>in {deadlineDiff} days</small>
                           ) : (
-                            <Chip size='small' label={<FormattedMessage id='task.dealine.past' defaultMessage='Overdue' />} />
+                            <Chip
+                              size="small"
+                              label={
+                                <FormattedMessage id="task.dealine.past" defaultMessage="Overdue" />
+                              }
+                            />
                           )}
                         </div>
                       ) : (
-                        <FormattedMessage id='task.deadline.call' defaultMessage='Set deadline' />
+                        <FormattedMessage id="task.deadline.call" defaultMessage="Set deadline" />
                       )}
                     </Button>
                   </Typography>
@@ -688,12 +736,16 @@ function Task(props) {
 
             {taskOwner() && (
               <SidebarItem>
-                <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
-                  <FormattedMessage id='task.level.label' defaultMessage='Level' />
+                <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+                  <FormattedMessage id="task.level.label" defaultMessage="Level" />
                 </Typography>
                 <div>
-                  <Typography variant='h6'>
-                    <TaskLevelSplitButton id={task.data.id} level={task.data.level} updateTask={updateTask} />
+                  <Typography variant="h6">
+                    <TaskLevelSplitButton
+                      id={task.data.id}
+                      level={task.data.level}
+                      updateTask={updateTask}
+                    />
                   </Typography>
                 </div>
               </SidebarItem>
@@ -701,11 +753,11 @@ function Task(props) {
 
             {taskOwner() && (
               <SidebarItem>
-                <Typography variant='caption' style={{ textTransform: 'uppercase' }}>
-                  <FormattedMessage id='task.deadline.label' defaultMessage='Deadline' />
+                <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+                  <FormattedMessage id="task.deadline.label" defaultMessage="Deadline" />
                 </Typography>
                 <div>
-                  <Typography variant='h6'>
+                  <Typography variant="h6">
                     <Button onClick={() => setDeadlineForm(true)}>
                       {task.data.deadline ? (
                         <div>
@@ -713,11 +765,16 @@ function Task(props) {
                           {deadlineDiff && parseInt(deadlineDiff) > 0 ? (
                             <small>in {deadlineDiff} days</small>
                           ) : (
-                            <Chip size='small' label={<FormattedMessage id='task.dealine.past' defaultMessage='Overdue' />} />
+                            <Chip
+                              size="small"
+                              label={
+                                <FormattedMessage id="task.dealine.past" defaultMessage="Overdue" />
+                              }
+                            />
                           )}
                         </div>
                       ) : (
-                        <FormattedMessage id='task.deadline.call' defaultMessage='Set deadline' />
+                        <FormattedMessage id="task.deadline.call" defaultMessage="Set deadline" />
                       )}
                     </Button>
                   </Typography>
@@ -739,13 +796,22 @@ function Task(props) {
 
           {task?.data && (task?.data?.orders?.length || task?.data?.Orders?.length) ? (
             <div>
-              <TaskPayments orders={(task?.data?.orders || task?.data?.Orders)?.filter(o => o.paid && o.status === 'succeeded')} />
+              <TaskPayments
+                orders={(task?.data?.orders || task?.data?.Orders)?.filter(
+                  (o) => o.paid && o.status === 'succeeded',
+                )}
+              />
             </div>
           ) : null}
 
           <IssueActionsByRole issue={task} currentRole={taskOwner() ? 'admin' : 'user'} />
 
-          <TaskInviteCard onInvite={inviteTask} onFunding={handleTaskFundingDialogOpen} user={user} id={task.data.id} />
+          <TaskInviteCard
+            onInvite={inviteTask}
+            onFunding={handleTaskFundingDialogOpen}
+            user={user}
+            id={task.data.id}
+          />
 
           <TaskOfferDrawer
             issue={task}
@@ -762,17 +828,52 @@ function Task(props) {
 
           <OfferDrawer
             hasEmailInput
-            title={<FormattedMessage id='issue.offer.drawer.invite.title' defaultMessage='Invite sponsor' />}
-            introTitle={<FormattedMessage id='task.funding.title' defaultMessage='Invite someone to add bounties to this issue' />}
+            title={
+              <FormattedMessage
+                id="issue.offer.drawer.invite.title"
+                defaultMessage="Invite sponsor"
+              />
+            }
+            introTitle={
+              <FormattedMessage
+                id="task.funding.title"
+                defaultMessage="Invite someone to add bounties to this issue"
+              />
+            }
             introMessage={
-              <FormattedMessage id='task.funding.description' defaultMessage={'You can invite a investor, sponsor, or the project owner to fund this issue and let them know your suggestions'}>
+              <FormattedMessage
+                id="task.funding.description"
+                defaultMessage={
+                  'You can invite a investor, sponsor, or the project owner to fund this issue and let them know your suggestions'
+                }
+              >
                 {(msg) => <SpanText>{msg}</SpanText>}
               </FormattedMessage>
             }
-            simpleInfoText={<FormattedMessage id='issue.funding.invite.info' defaultMessage='You will invite a sponsor to add bounties to this issue' />}
-            commentAreaPlaceholder={<FormattedMessage id='task.funding.comment.value' defaultMessage='Leave a message to be sent together with the invite' />}
-            pickupTagListTitle={<FormattedMessage id='task.funding.invite.title' defaultMessage='Suggest a bounty for the sponsor' />}
-            pickutTagListDescription={<FormattedMessage id='task.funding.invite.headline' defaultMessage='You can suggest a bounty for the sponsor to add a bounty to this issue' />}
+            simpleInfoText={
+              <FormattedMessage
+                id="issue.funding.invite.info"
+                defaultMessage="You will invite a sponsor to add bounties to this issue"
+              />
+            }
+            commentAreaPlaceholder={
+              <FormattedMessage
+                id="task.funding.comment.value"
+                defaultMessage="Leave a message to be sent together with the invite"
+              />
+            }
+            pickupTagListTitle={
+              <FormattedMessage
+                id="task.funding.invite.title"
+                defaultMessage="Suggest a bounty for the sponsor"
+              />
+            }
+            pickutTagListDescription={
+              <FormattedMessage
+                id="task.funding.invite.headline"
+                defaultMessage="You can suggest a bounty for the sponsor to add a bounty to this issue"
+              />
+            }
             introImage={inviteCover}
             issue={task}
             open={taskFundingDialog}
@@ -784,16 +885,17 @@ function Task(props) {
             onTermsCheckboxChange={(checked) => setTermsAgreed(checked)}
             actions={[
               {
-                label: <FormattedMessage id='task.funding.cancel' defaultMessage='Cancel' />,
-                onClick: handleAssignFundingDialogClose
+                label: <FormattedMessage id="task.funding.cancel" defaultMessage="Cancel" />,
+                onClick: handleAssignFundingDialogClose,
               },
               {
-                disabled: !fundingInvite.email || !termsAgreed || !currentPrice || currentPrice === 0,
-                label: <FormattedMessage id='task.funding.invite' defaultMessage='Invite' />,
+                disabled:
+                  !fundingInvite.email || !termsAgreed || !currentPrice || currentPrice === 0,
+                label: <FormattedMessage id="task.funding.invite" defaultMessage="Invite" />,
                 onClick: sendFundingInvite,
                 variant: 'contained',
                 color: 'secondary',
-              }
+              },
             ]}
           />
         </SidebarGrid>

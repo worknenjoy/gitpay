@@ -7,7 +7,7 @@ import {
   LIST_PAYMENT_REQUESTS_ERROR,
   UPDATE_PAYMENT_REQUEST_REQUESTED,
   UPDATE_PAYMENT_REQUEST_SUCCESS,
-  UPDATE_PAYMENT_REQUEST_ERROR
+  UPDATE_PAYMENT_REQUEST_ERROR,
 } from '../actions/paymentRequestActions'
 
 export const paymentRequest = (state = { data: {}, completed: true, error: {} }, action) => {

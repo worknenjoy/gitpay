@@ -77,55 +77,55 @@ const fetchUserAccountRequested = () => {
   return { type: FETCH_USER_ACCOUNT_REQUESTED, completed: false }
 }
 
-const fetchUserAccountSuccess = account => {
+const fetchUserAccountSuccess = (account) => {
   return {
     type: FETCH_USER_ACCOUNT_SUCCESS,
     completed: true,
-    data: account.data
+    data: account.data,
   }
 }
 
-const fetchUserAccountError = error => {
+const fetchUserAccountError = (error) => {
   return { type: FETCH_USER_ACCOUNT_ERROR, completed: true, error: error }
 }
 
-/* 
-  * Account fetch balance
-*/
+/*
+ * Account fetch balance
+ */
 
 const fetchUserBalanceRequested = () => {
   return { type: FETCH_USER_BALANCE_REQUESTED, completed: false }
 }
 
-const fetchUserBalanceSuccess = balance => {
+const fetchUserBalanceSuccess = (balance) => {
   return {
     type: FETCH_USER_BALANCE_SUCCESS,
     completed: true,
-    data: balance.data
+    data: balance.data,
   }
 }
 
-const fetchUserBalanceError = error => {
+const fetchUserBalanceError = (error) => {
   return { type: FETCH_USER_BALANCE_ERROR, completed: true, error: error }
 }
 
 /*
-  * Account fetch countries
-*/
+ * Account fetch countries
+ */
 
 const fetchUserAccountCountriesRequested = () => {
   return { type: FETCH_USER_ACCOUNT_COUNTRIES_REQUESTED, completed: false }
 }
 
-const fetchUserAccountCountriesSuccess = countries => {
+const fetchUserAccountCountriesSuccess = (countries) => {
   return {
     type: FETCH_USER_ACCOUNT_COUNTRIES_SUCCESS,
     completed: true,
-    data: countries.data
+    data: countries.data,
   }
 }
 
-const fetchUserAccountCountriesError = error => {
+const fetchUserAccountCountriesError = (error) => {
   return { type: FETCH_USER_ACCOUNT_COUNTRIES_ERROR, completed: true, error: error }
 }
 
@@ -137,15 +137,15 @@ const createUserAccountRequested = () => {
   return { type: CREATE_USER_ACCOUNT_REQUESTED, completed: false }
 }
 
-const createUserAccountSuccess = account => {
+const createUserAccountSuccess = (account) => {
   return {
     type: CREATE_USER_ACCOUNT_SUCCESS,
     completed: true,
-    data: account.data
+    data: account.data,
   }
 }
 
-const createUserAccountError = error => {
+const createUserAccountError = (error) => {
   return { type: CREATE_USER_ACCOUNT_ERROR, completed: true, error: error }
 }
 
@@ -157,11 +157,11 @@ const updateUserAccountRequested = () => {
   return { type: UPDATE_USER_ACCOUNT_REQUESTED, completed: false }
 }
 
-const updateUserAccountSuccess = account => {
+const updateUserAccountSuccess = (account) => {
   return {
     type: UPDATE_USER_ACCOUNT_SUCCESS,
     completed: true,
-    data: account.data
+    data: account.data,
   }
 }
 
@@ -177,75 +177,75 @@ const deleteUserAccountRequested = () => {
   return { type: DELETE_USER_ACCOUNT_REQUESTED, completed: false }
 }
 
-const deleteUserAccountSuccess = user => {
+const deleteUserAccountSuccess = (user) => {
   return {
     type: DELETE_USER_ACCOUNT_SUCCESS,
     completed: true,
-    data: user.data
+    data: user.data,
   }
 }
 
-const deleteUserAccountError = error => {
+const deleteUserAccountError = (error) => {
   return { type: DELETE_USER_ACCOUNT_ERROR, completed: true, error: error }
 }
 
 /*
-* User customer fetch
-*/
+ * User customer fetch
+ */
 
 const fetchUserCustomerRequested = () => {
   return { type: FETCH_USER_CUSTOMER_REQUESTED, completed: false }
 }
 
-const fetchUserCustomerSuccess = customer => {
+const fetchUserCustomerSuccess = (customer) => {
   return {
     type: FETCH_USER_CUSTOMER_SUCCESS,
     completed: true,
-    data: customer.data
+    data: customer.data,
   }
 }
 
-const fetchUserCustomerError = error => {
+const fetchUserCustomerError = (error) => {
   return { type: FETCH_USER_CUSTOMER_ERROR, completed: true, error: error }
 }
 
 /*
-* User customer create
-*/
+ * User customer create
+ */
 
 const createUserCustomerRequested = () => {
   return { type: CREATE_USER_CUSTOMER_REQUESTED, completed: false }
 }
 
-const createUserCustomerSuccess = customer => {
+const createUserCustomerSuccess = (customer) => {
   return {
     type: CREATE_USER_CUSTOMER_SUCCESS,
     completed: true,
-    data: customer.data
+    data: customer.data,
   }
 }
 
-const createUserCustomerError = error => {
+const createUserCustomerError = (error) => {
   return { type: CREATE_USER_CUSTOMER_ERROR, completed: true, error: error }
 }
 
 /*
-* User customer update
-*/
+ * User customer update
+ */
 
 const updateUserCustomerRequested = () => {
   return { type: UPDATE_USER_CUSTOMER_REQUESTED, completed: false }
 }
 
-const updateUserCustomerSuccess = customer => {
+const updateUserCustomerSuccess = (customer) => {
   return {
     type: UPDATE_USER_CUSTOMER_SUCCESS,
     completed: true,
-    data: customer.data
+    data: customer.data,
   }
 }
 
-const updateUserCustomerError = error => {
+const updateUserCustomerError = (error) => {
   return { type: UPDATE_USER_CUSTOMER_ERROR, completed: true, error: error }
 }
 
@@ -257,55 +257,55 @@ const updateUserRequested = () => {
   return { type: UPDATE_USER_REQUESTED, completed: false }
 }
 
-const updateUserSuccess = user => {
+const updateUserSuccess = (user) => {
   return {
     type: UPDATE_USER_SUCCESS,
     completed: true,
-    data: user.data
+    data: user.data,
   }
 }
 
-const updateUserError = error => {
+const updateUserError = (error) => {
   return { type: UPDATE_USER_ERROR, completed: true, error: error }
 }
 
 /*
-  * User activate
-*/
+ * User activate
+ */
 
 const activateUserRequested = () => {
   return { type: ACTIVATE_USER_REQUESTED, completed: false }
 }
 
-const activateUserSuccess = user => {
+const activateUserSuccess = (user) => {
   return {
     type: ACTIVATE_USER_SUCCESS,
     completed: true,
-    data: user.data
+    data: user.data,
   }
 }
 
-const activateUserError = error => {
+const activateUserError = (error) => {
   return { type: ACTIVATE_USER_ERROR, completed: true, error: error }
 }
 
 /*
-  * User resend activation
-*/
+ * User resend activation
+ */
 
 const resendActivationEmailRequested = () => {
   return { type: RESEND_ACTIVATION_EMAIL_REQUESTED, completed: false }
 }
 
-const resendActivationEmailSuccess = user => {
+const resendActivationEmailSuccess = (user) => {
   return {
     type: RESEND_ACTIVATION_EMAIL_SUCCESS,
     completed: true,
-    data: user.data
+    data: user.data,
   }
 }
 
-const resendActivationEmailError = error => {
+const resendActivationEmailError = (error) => {
   return { type: RESEND_ACTIVATION_EMAIL_ERROR, completed: true, error: error }
 }
 
@@ -317,11 +317,11 @@ const getBankAccountRequested = () => {
   return { type: GET_BANKACCOUNT_REQUESTED, completed: false }
 }
 
-const getBankAccountSuccess = account => {
+const getBankAccountSuccess = (account) => {
   return { type: GET_BANKACCOUNT_SUCCESS, completed: true, data: account.data }
 }
 
-const getBankAccountError = error => {
+const getBankAccountError = (error) => {
   return { type: GET_BANKACCOUNT_ERROR, completed: true, error: error }
 }
 
@@ -333,11 +333,11 @@ const createBankAccountRequested = () => {
   return { type: CREATE_BANKACCOUNT_REQUESTED, completed: false }
 }
 
-const createBankAccountSuccess = account => {
+const createBankAccountSuccess = (account) => {
   return {
     type: CREATE_BANKACCOUNT_SUCCESS,
     completed: true,
-    data: account.data
+    data: account.data,
   }
 }
 
@@ -346,18 +346,18 @@ const createBankAccountError = (error, data) => {
 }
 
 /*
-  * Account bank update
-*/
+ * Account bank update
+ */
 
 const updateBankAccountRequested = () => {
   return { type: UPDATE_BANKACCOUNT_REQUESTED, completed: false }
 }
 
-const updateBankAccountSuccess = account => {
+const updateBankAccountSuccess = (account) => {
   return {
     type: UPDATE_BANKACCOUNT_SUCCESS,
     completed: true,
-    data: account.data
+    data: account.data,
   }
 }
 
@@ -365,17 +365,16 @@ const updateBankAccountError = (error, data) => {
   return { type: UPDATE_BANKACCOUNT_ERROR, completed: true, error, data }
 }
 
-
 const fetchCustomer = () => {
   validToken()
   return (dispatch) => {
     dispatch(fetchUserCustomerRequested())
     return axios
       .get(api.API_URL + '/user/customer')
-      .then(customer => {
+      .then((customer) => {
         return dispatch(fetchUserCustomerSuccess(customer))
       })
-      .catch(e => {
+      .catch((e) => {
         // eslint-disable-next-line no-console
         console.log('fetch user customer error', e)
         return dispatch(fetchUserCustomerError(e))
@@ -391,21 +390,19 @@ const createCustomer = (customerData) => {
 
     if (customerId) {
       dispatch(addNotification('actions.customer.exist'))
-      return dispatch(
-        createUserCustomerError({ message: 'actions.customer.exist' })
-      )
+      return dispatch(createUserCustomerError({ message: 'actions.customer.exist' }))
     }
     axios
       .post(api.API_URL + '/user/customer', customerData)
-      .then(customer => {
-        if(!customer.data) {
+      .then((customer) => {
+        if (!customer.data) {
           dispatch(addNotification('actions.customer.create.error'))
           return dispatch(createUserCustomerError({ message: 'actions.customer.create.error' }))
         }
         dispatch(addNotification('actions.customer.create.success'))
         return dispatch(createUserCustomerSuccess(customer))
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(addNotification('actions.customer.create.error'))
         // eslint-disable-next-line no-console
         console.log('error on create customer', error)
@@ -420,17 +417,13 @@ const updateCustomer = (_, customerData) => {
     dispatch(updateUserCustomerRequested())
     axios
       .put(api.API_URL + '/user/customer', customerData)
-      .then(customer => {
+      .then((customer) => {
         dispatch(addNotification('actions.customer.update.success'))
         return dispatch(updateUserCustomerSuccess(customer))
       })
-      .catch(error => {
+      .catch((error) => {
         const errorMessage = error.response.data
-        dispatch(
-          addNotification(
-            'actions.customer.update.error'
-          )
-        )
+        dispatch(addNotification('actions.customer.update.error'))
         // eslint-disable-next-line no-console
         console.log('error on update customer', error)
         return dispatch(updateUserCustomerError('actions.customer.update.error'))
@@ -439,8 +432,8 @@ const updateCustomer = (_, customerData) => {
 }
 
 /*
-* Connected Account
-*/
+ * Connected Account
+ */
 
 const fetchAccount = () => {
   validToken()
@@ -448,10 +441,10 @@ const fetchAccount = () => {
     dispatch(fetchUserAccountRequested())
     return axios
       .get(api.API_URL + '/user/account')
-      .then(account => {
+      .then((account) => {
         return dispatch(fetchUserAccountSuccess(account))
       })
-      .catch(e => {
+      .catch((e) => {
         // eslint-disable-next-line no-console
         console.log('fetch user account error', e)
         return dispatch(fetchUserAccountError(e))
@@ -465,10 +458,10 @@ const fetchAccountBalance = () => {
     dispatch(fetchUserBalanceRequested())
     return axios
       .get(api.API_URL + '/user/account/balance')
-      .then(balance => {
+      .then((balance) => {
         return dispatch(fetchUserBalanceSuccess(balance))
       })
-      .catch(e => {
+      .catch((e) => {
         // eslint-disable-next-line no-console
         console.log('fetch user account balance error', e)
         return dispatch(fetchUserBalanceError(e))
@@ -482,10 +475,10 @@ const fetchAccountCountries = () => {
     dispatch(fetchUserAccountCountriesRequested())
     return axios
       .get(api.API_URL + '/user/account/countries')
-      .then(countries => {
+      .then((countries) => {
         return dispatch(fetchUserAccountCountriesSuccess(countries))
       })
-      .catch(e => {
+      .catch((e) => {
         // eslint-disable-next-line no-console
         console.log('fetch user account countries error', e)
         return dispatch(fetchUserAccountCountriesError(e))
@@ -501,23 +494,21 @@ const createAccount = (country) => {
 
     if (accountId) {
       dispatch(addNotification('actions.user.account.exist'))
-      return dispatch(
-        createUserAccountError({ message: 'actions.user.account.exist' })
-      )
+      return dispatch(createUserAccountError({ message: 'actions.user.account.exist' }))
     }
     return axios
       .post(api.API_URL + '/user/account', { country })
-      .then(account => {
-        if(!account.data) {
+      .then((account) => {
+        if (!account.data) {
           dispatch(addNotification('actions.user.account.create.error'))
           return dispatch(createUserAccountError({ message: 'actions.user.account.create.error' }))
         }
         dispatch(addNotification('actions.user.account.create.success'))
-        dispatch(fetchLoggedUser());
-        dispatch(fetchAccountCountries());
+        dispatch(fetchLoggedUser())
+        dispatch(fetchAccountCountries())
         return dispatch(createUserAccountSuccess(account))
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(addNotification('actions.user.account.create.error'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
@@ -530,25 +521,21 @@ const updateAccount = (account) => {
   validToken()
   const accountData = convertParamsToStripeObject(account)
   const accountUpdateParams = { ...account }
-  delete accountUpdateParams.country;
+  delete accountUpdateParams.country
   return (dispatch, getState) => {
     dispatch(updateUserAccountRequested())
     return axios
       .put(api.API_URL + '/user/account', accountUpdateParams)
-      .then(account => {
+      .then((account) => {
         dispatch(addNotification('actions.user.account.update.success'))
         return dispatch(updateUserAccountSuccess(account))
       })
-      .catch(error => {
+      .catch((error) => {
         const errorData = error.response.data
-        dispatch(
-          addNotification(
-            'actions.user.account.update.error.missing',
-          )
-        )
+        dispatch(addNotification('actions.user.account.update.error.missing'))
         // eslint-disable-next-line no-console
         console.log('error on update account', error)
-        
+
         return dispatch(updateUserAccountError(error.response.data, accountData))
       })
   }
@@ -560,14 +547,12 @@ const deleteAccount = () => {
     dispatch(deleteUserAccountRequested())
     return axios
       .delete(api.API_URL + '/user/account')
-      .then(user => {
+      .then((user) => {
         dispatch(addNotification('actions.user.account.delete.success'))
         return dispatch(deleteUserAccountSuccess(user))
       })
-      .catch(error => {
-        dispatch(
-          addNotification('actions.user.account.delete.error')
-        )
+      .catch((error) => {
+        dispatch(addNotification('actions.user.account.delete.error'))
         // eslint-disable-next-line no-console
         console.log('error on delete account', error)
         return dispatch(deleteUserAccountError(error))
@@ -576,8 +561,8 @@ const deleteAccount = () => {
 }
 
 /*
-* User
-*/
+ * User
+ */
 
 const updateUser = (userData) => {
   validToken()
@@ -585,15 +570,13 @@ const updateUser = (userData) => {
     dispatch(updateUserRequested())
     return axios
       .put(api.API_URL + '/user/update', userData)
-      .then(user => {
+      .then((user) => {
         dispatch(addNotification('notifications.account.update'))
-        dispatch(fetchLoggedUser());
+        dispatch(fetchLoggedUser())
         return dispatch(updateUserSuccess(user))
       })
-      .catch(error => {
-        dispatch(
-          addNotification('notifications.account.update.error')
-        )
+      .catch((error) => {
+        dispatch(addNotification('notifications.account.update.error'))
         // eslint-disable-next-line no-console
         console.log('error on update user', error)
         return dispatch(updateUserError(error))
@@ -606,15 +589,13 @@ const activateUser = (userId, token) => {
     dispatch(activateUserRequested())
     return axios
       .get(api.API_URL + `/auth/activate?token=${token}&userId=${userId}`, { userId, token })
-      .then(user => {
+      .then((user) => {
         dispatch(addNotification('notifications.account.activate'))
         // dispatch(fetchAccount());
         return dispatch(activateUserSuccess(user))
       })
-      .catch(error => {
-        dispatch(
-          addNotification('notifications.account.activate.error')
-        )
+      .catch((error) => {
+        dispatch(addNotification('notifications.account.activate.error'))
         // eslint-disable-next-line no-console
         console.log('error on activate user', error)
         return dispatch(activateUserError(error))
@@ -628,15 +609,13 @@ const resendActivationEmail = () => {
     dispatch(resendActivationEmailRequested())
     return axios
       .get(api.API_URL + `/auth/resend-activation-email`)
-      .then(user => {
+      .then((user) => {
         dispatch(addNotification('notifications.account.resend_activation_email.success'))
         // dispatch(fetchAccount());
         return dispatch(resendActivationEmailSuccess(user))
       })
-      .catch(error => {
-        dispatch(
-          addNotification('notifications.account.resend_activation_email.error')
-        )
+      .catch((error) => {
+        dispatch(addNotification('notifications.account.resend_activation_email.error'))
         // eslint-disable-next-line no-console
         console.log('error on resend activation email', error)
         return dispatch(resendActivationEmailError(error))
@@ -649,15 +628,13 @@ const deleteUser = (user) => {
   return (dispatch) => {
     return axios
       .delete(api.API_URL + `/user/delete/`, {})
-      .then(result => {
+      .then((result) => {
         dispatch(addNotification('account.profile.settings.delete.user.notification'))
         dispatch(logOut())
         return result
       })
-      .catch(error => {
-        dispatch(
-          addNotification('account.profile.settings.delete.user.notification.error')
-        )
+      .catch((error) => {
+        dispatch(addNotification('account.profile.settings.delete.user.notification.error'))
         // eslint-disable-next-line no-console
         console.log('error on delete account', error)
         return error
@@ -671,14 +648,14 @@ const getBankAccount = () => {
     dispatch(getBankAccountRequested())
     axios
       .get(`${api.API_URL}/user/bank_accounts`)
-      .then(bankAccount => {
+      .then((bankAccount) => {
         if (bankAccount.data.statusCode === 400) {
           dispatch(addNotification('notifications.bank.get.success'))
           return dispatch(getBankAccountError(bankAccount.data))
         }
         return dispatch(getBankAccountSuccess(bankAccount))
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(addNotification('notifications.bank.get.error'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
@@ -698,22 +675,18 @@ const createBankAccount = (bank) => {
         country: bank.country,
         account_holder_type: bank.account_holder_type,
         account_holder_name: bank.account_holder_name,
-        currency: bank.currency
+        currency: bank.currency,
       })
-      .then(bankAccount => {
+      .then((bankAccount) => {
         if (bankAccount.data.statusCode === 400) {
-          dispatch(
-            addNotification(
-              'notifications.bank.create.other.error'
-            )
-          )
+          dispatch(addNotification('notifications.bank.create.other.error'))
           return dispatch(createBankAccountError(bankAccount.data, bank))
         }
         dispatch(addNotification('notifications.bank.create.success'))
 
         return dispatch(createBankAccountSuccess(bankAccount))
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(addNotification('notifications.bank.create.other.error'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
@@ -728,7 +701,7 @@ const updateBankAccount = (bank_account) => {
     dispatch(updateBankAccountRequested())
     return axios
       .put(api.API_URL + '/user/bank_accounts', bank_account)
-      .then(bankAccount => {
+      .then((bankAccount) => {
         if (bankAccount.data.statusCode === 400) {
           dispatch(addNotification('notifications.bank.update.error'))
           return dispatch(updateBankAccountError(bankAccount.data))
@@ -737,7 +710,7 @@ const updateBankAccount = (bank_account) => {
 
         return dispatch(updateBankAccountSuccess(bankAccount))
       })
-      .catch(error => {
+      .catch((error) => {
         dispatch(addNotification('notifications.bank.update.other.error'))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
@@ -750,29 +723,29 @@ const searchUserRequested = () => {
   return { type: SEARCH_USER_REQUESTED, logged: false, completed: false }
 }
 
-const searchUserSuccess = user => {
+const searchUserSuccess = (user) => {
   return { type: SEARCH_USER_SUCCESS, logged: false, completed: true, data: user }
 }
 
-const searchUserError = error => {
+const searchUserError = (error) => {
   return { type: SEARCH_USER_ERROR, logged: false, completed: true, error: error }
 }
 
-const searchUser = data => {
-  return dispatch => {
+const searchUser = (data) => {
+  return (dispatch) => {
     dispatch(searchUserRequested())
     return axios
       .get(api.API_URL + '/users', {
-        params: data
+        params: data,
       })
-      .then(response => {
-        if(response?.data) {
+      .then((response) => {
+        if (response?.data) {
           dispatch(searchUserSuccess(response.data[0]))
         } else {
-          dispatch(addNotification('user.search.error'))  
+          dispatch(addNotification('user.search.error'))
         }
       })
-      .catch(error => {
+      .catch((error) => {
         console.log('error', error)
         dispatch(addNotification('user.search.error'))
         dispatch(searchUserError(error))
@@ -845,5 +818,5 @@ export {
   updateBankAccount,
   getBankAccount,
   deleteUser,
-  searchUser
+  searchUser,
 }

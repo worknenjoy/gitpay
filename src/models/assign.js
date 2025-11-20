@@ -2,11 +2,11 @@ module.exports = (sequelize, DataTypes) => {
   const Assign = sequelize.define('Assign', {
     status: {
       type: DataTypes.STRING,
-      defaultValue: 'pending'
+      defaultValue: 'pending',
     },
     message: {
-      type: DataTypes.STRING
-    }
+      type: DataTypes.STRING,
+    },
   })
 
   Assign.associate = (models) => {

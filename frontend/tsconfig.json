@@ -15,7 +15,7 @@
     "paths": {
       "images/*": ["src/images/*"],
       "app": ["src/"],
-      "design-library/*": ["src/components/design-library/*"],
+      "design-library/*": ["src/components/design-library/*"]
     }
   },
   "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],

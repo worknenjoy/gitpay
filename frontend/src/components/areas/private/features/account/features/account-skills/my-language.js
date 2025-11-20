@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 
-import {
-  Avatar,
-  Chip
-} from '@mui/material'
+import { Avatar, Chip } from '@mui/material'
 import Folder from '@mui/icons-material/Folder'
 
 import { withRouter } from 'react-router-dom'
@@ -11,7 +8,7 @@ import { injectIntl } from 'react-intl'
 import PropTypes from 'prop-types'
 
 class MyLanguage extends Component {
-  render () {
+  render() {
     const { classes, title } = this.props
 
     return (
@@ -21,9 +18,9 @@ class MyLanguage extends Component {
             <Folder />
           </Avatar>
         }
-        label={ title }
-        className={ classes.chipLanguage }
-        onDelete={ this.props.onDelete }
+        label={title}
+        className={classes.chipLanguage}
+        onDelete={this.props.onDelete}
       />
     )
   }
@@ -35,7 +32,7 @@ MyLanguage.propTypes = {
   language: PropTypes.string,
   title: PropTypes.string,
   onDelete: PropTypes.func.isRequired,
-  isSelected: PropTypes.bool
+  isSelected: PropTypes.bool,
 }
 
 export default injectIntl(withRouter(MyLanguage))

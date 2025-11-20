@@ -10,7 +10,7 @@ const PaymentMail = {
   error: (user, task, value) => {},
   cancel: (user, task, order) => {},
   support: (user, task, order) => {},
-  refund: (user, task, order) => {}
+  refund: (user, task, order) => {},
 }
 
 if (constants.canSendEmail) {
@@ -18,101 +18,87 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    user?.receiveNotifications && request(
-      to,
-      i18n.__('mail.payment.success.subject'),
-      [
+    user?.receiveNotifications &&
+      request(to, i18n.__('mail.payment.success.subject'), [
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-          <p>${i18n.__('mail.payment.success.content.main', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`)
-        }
-      ]
-    )
+          <p>${i18n.__('mail.payment.success.content.main', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`),
+        },
+      ])
   }
 
   PaymentMail.support = (user, task, order) => {
     i18n.setLocale('en')
-    user?.receiveNotifications && request(
-      constants.notificationEmail,
-      i18n.__('mail.payment.support'),
-      [
+    user?.receiveNotifications &&
+      request(constants.notificationEmail, i18n.__('mail.payment.support'), [
         {
           type: 'text/html',
-          value: emailTemplate.baseContentEmailTemplate(`Support was requested by the user ${user.name}, (${user.email})
-          for the task: ${task.id}, order: ${order.id}, for the value of ${order.amount}.`)
-        }
-      ]
-    )
+          value:
+            emailTemplate.baseContentEmailTemplate(`Support was requested by the user ${user.name}, (${user.email})
+          for the task: ${task.id}, order: ${order.id}, for the value of ${order.amount}.`),
+        },
+      ])
   }
 
   PaymentMail.assigned = (user, task, value) => {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    user?.receiveNotifications && request(
-      to,
-      i18n.__('mail.payment.assigned.subject'),
-      [
+    user?.receiveNotifications &&
+      request(to, i18n.__('mail.payment.assigned.subject'), [
         {
           type: 'text/html',
-          value: emailTemplate.baseContentEmailTemplate(`
+          value: emailTemplate.baseContentEmailTemplate(
+            `
           <p>${i18n.__('mail.payment.assigned.content.main', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`,
-          `<p>${i18n.__('mail.payment.assigned.content.secondary')}</p>`)
-        }
-      ]
-    )
+            `<p>${i18n.__('mail.payment.assigned.content.secondary')}</p>`,
+          ),
+        },
+      ])
   }
 
   PaymentMail.error = (user, task, value) => {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    user?.receiveNotifications && request(
-      to,
-      i18n.__('mail.payment.subject.error'),
-      [
+    user?.receiveNotifications &&
+      request(to, i18n.__('mail.payment.subject.error'), [
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-            <p>${i18n.__('mail.payment.content.error', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`
-          )
-        }
-      ]
-    )
+            <p>${i18n.__('mail.payment.content.error', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`),
+        },
+      ])
   }
 
   PaymentMail.cancel = (user, task, order) => {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    user?.receiveNotifications && request(
-      to,
-      i18n.__('mail.payment.subject.cancel'),
-      [
+    user?.receiveNotifications &&
+      request(to, i18n.__('mail.payment.subject.cancel'), [
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-          <p>${i18n.__('mail.payment.content.cancel', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`)
-        }
-      ]
-    )
+          <p>${i18n.__('mail.payment.content.cancel', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`),
+        },
+      ])
   }
 
   PaymentMail.refund = (user, task, order) => {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    user?.receiveNotifications && request(
-      to,
-      i18n.__('mail.payment.subject.refund'),
-      [
+    user?.receiveNotifications &&
+      request(to, i18n.__('mail.payment.subject.refund'), [
         {
           type: 'text/html',
-          value: emailTemplate.baseContentEmailTemplate(`<p>${i18n.__('mail.payment.content.refund', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`)
-        }
-      ]
-    )
+          value: emailTemplate.baseContentEmailTemplate(
+            `<p>${i18n.__('mail.payment.content.refund', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`,
+          ),
+        },
+      ])
   }
 }
 module.exports = PaymentMail

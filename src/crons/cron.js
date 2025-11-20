@@ -9,28 +9,32 @@ const OrderCron = require('./orders/orderCron')
 const bountyClosedNotPaidComment = require('../modules/bot/bountyClosedNotPaidComment')
 
 i18n.configure({
-  directory: process.env.NODE_ENV !== 'production' ? path.join(__dirname, '../locales') : path.join(__dirname, '../locales', 'result'),
+  directory:
+    process.env.NODE_ENV !== 'production'
+      ? path.join(__dirname, '../locales')
+      : path.join(__dirname, '../locales', 'result'),
   locales: process.env.NODE_ENV !== 'production' ? ['en'] : ['en', 'br'],
   defaultLocale: 'en',
-  updateFiles: false
+  updateFiles: false,
 })
 
 i18n.init()
 
 const TaskCron = {
   weeklyBounties: async () => {
-    const tasks = await models.Task.findAll({ where: {
-      value: {
-        $gt: 0
+    const tasks = await models.Task.findAll({
+      where: {
+        value: {
+          $gt: 0,
+        },
+        assigned: {
+          $eq: null,
+        },
+        status: {
+          $eq: 'open',
+        },
       },
-      assigned: {
-        $eq: null
-      },
-      status: {
-        $eq: 'open'
-      }
-    },
-    include: [ models.User ]
+      include: [models.User],
     })
     if (tasks[0]) {
       TaskMail.weeklyBounties({ tasks })
@@ -41,15 +45,15 @@ const TaskCron = {
     const tasks = await models.Task.findAll({
       where: {
         assigned: {
-          $eq: null
+          $eq: null,
         },
         status: {
-          $eq: 'open'
-        }
+          $eq: 'open',
+        },
       },
       limit: 5,
       order: [['id', 'DESC']],
-      include: [ models.User ]
+      include: [models.User],
     })
     if (tasks[0]) {
       TaskMail.weeklyLatest({ tasks })
@@ -57,23 +61,35 @@ const TaskCron = {
     return tasks
   },
   rememberDeadline: async () => {
-    const tasks = await models.Task.findAll({ where: {
-      status: 'in_progress',
-      deadline: {
-        $lt: moment(new Date()).format(),
-        $gt: moment(new Date()).subtract(2, 'days').format()
-      }
-    },
-    include: [ models.User ]
+    const tasks = await models.Task.findAll({
+      where: {
+        status: 'in_progress',
+        deadline: {
+          $lt: moment(new Date()).format(),
+          $gt: moment(new Date()).subtract(2, 'days').format(),
+        },
+      },
+      include: [models.User],
     })
     if (tasks[0]) {
-      tasks.map(async t => {
+      tasks.map(async (t) => {
         if (t.assigned) {
           if (t.dataValues && t.assigned) {
-            const userAssigned = await models.Assign.findAll({ where: { id: t.assigned }, include: [models.User] })
+            const userAssigned = await models.Assign.findAll({
+              where: { id: t.assigned },
+              include: [models.User],
+            })
             if (userAssigned[0].dataValues) {
-              DeadlineMail.deadlineEndOwner(t.User.dataValues, t.dataValues, t.User.name || t.User.username)
-              DeadlineMail.deadlineEndAssigned(userAssigned[0].dataValues.User, t.dataValues, userAssigned[0].dataValues.User.dataValues.name)
+              DeadlineMail.deadlineEndOwner(
+                t.User.dataValues,
+                t.dataValues,
+                t.User.name || t.User.username,
+              )
+              DeadlineMail.deadlineEndAssigned(
+                userAssigned[0].dataValues.User,
+                t.dataValues,
+                userAssigned[0].dataValues.User.dataValues.name,
+              )
             }
           }
         }
@@ -85,24 +101,30 @@ const TaskCron = {
     const tasks = await models.Task.findAll({
       where: {
         value: {
-          $gt: 0
+          $gt: 0,
         },
         status: {
-          $eq: 'closed'
+          $eq: 'closed',
         },
         paid: {
-          $not: true
-        }
+          $not: true,
+        },
       },
-      include: [models.User]
+      include: [models.User],
     })
     if (tasks[0]) {
-      tasks.map(async t => {
+      tasks.map(async (t) => {
         let userInformation = {}
         if (t.assigned) {
           if (t.dataValues && t.assigned) {
-            const userAssigned = await models.Assign.findAll({ where: { id: t.assigned }, include: [models.User] })
-            if (userAssigned[0].dataValues && userAssigned[0].dataValues.User.provider === 'github') {
+            const userAssigned = await models.Assign.findAll({
+              where: { id: t.assigned },
+              include: [models.User],
+            })
+            if (
+              userAssigned[0].dataValues &&
+              userAssigned[0].dataValues.User.provider === 'github'
+            ) {
               userInformation = userAssigned[0].dataValues.User
             }
           }
@@ -111,7 +133,7 @@ const TaskCron = {
       })
     }
     return tasks
-  }
+  },
 }
 
 const dailyJob = new CronJob({
@@ -121,28 +143,35 @@ const dailyJob = new CronJob({
     //TaskCron.rememberDeadline()
     //OrderCron.verify()
     OrderCron.checkExpiredPaypalOrders()
-  }
+  },
 })
 
 const weeklyJob = new CronJob({
   cronTime: '5 8 * * 0',
   onTick: () => {
     TaskCron.weeklyBounties()
-  }
+  },
 })
 
 const weeklyJobLatest = new CronJob({
   cronTime: '5 8 * * 4',
   onTick: () => {
     TaskCron.latestTasks()
-  }
+  },
 })
 
 const weeklyJobBountiesClosedNotPaid = new CronJob({
   cronTime: '5 8 * * 0',
   onTick: () => {
     TaskCron.weeklyBountiesClosedNotPaid()
-  }
+  },
 })
 
-module.exports = { dailyJob, weeklyJob, weeklyJobLatest, weeklyJobBountiesClosedNotPaid, TaskCron, OrderCron }
+module.exports = {
+  dailyJob,
+  weeklyJob,
+  weeklyJobLatest,
+  weeklyJobBountiesClosedNotPaid,
+  TaskCron,
+  OrderCron,
+}

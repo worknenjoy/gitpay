@@ -5,13 +5,7 @@ import funder from 'images/bounty.png'
 import contributor from 'images/sharing.png'
 import maintainer from 'images/notifications.png'
 
-import {
-  Paper,
-  Typography,
-  Checkbox,
-  CardMedia,
-  Skeleton
-} from '@mui/material'
+import { Paper, Typography, Checkbox, CardMedia, Skeleton } from '@mui/material'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import {
@@ -24,40 +18,33 @@ import {
   ActionBar,
   ButtonsRow,
   CancelButton,
-  SaveButton
+  SaveButton,
 } from './user-roles.styles'
 
 const messages = defineMessages({
   saveSuccess: {
     id: 'user.role.update.success',
-    defaultMessage: 'Role updated successfully'
+    defaultMessage: 'Role updated successfully',
   },
   saveError: {
     id: 'user.role.update.error',
-    defaultMessage: 'We couldnt update your information properly'
-  }
+    defaultMessage: 'We couldnt update your information properly',
+  },
 })
 
 const imageMap = {
-  'funding': funder,
-  'contributor': contributor,
-  'maintainer': maintainer
+  funding: funder,
+  contributor: contributor,
+  maintainer: maintainer,
 }
 
-const Roles = ({
-  roles,
-  user,
-  fetchRoles,
-  updateUser,
-  onClose,
-  addNotification
-}) => {
+const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }) => {
   const { data, completed } = roles
   const intl = useIntl()
   const [selectedRoles, setSelectedRoles] = useState([])
 
-  useEffect(() => { 
-   fetchRoles().catch(console.log)   
+  useEffect(() => {
+    fetchRoles().catch(console.log)
   }, [])
 
   useEffect(() => {
@@ -65,19 +52,22 @@ const Roles = ({
   }, [user.Types])
 
   const handleRoleClick = useCallback((event, item) => {
-    setSelectedRoles(prev => {
-      const exists = prev.find(i => i.id === item.id)
+    setSelectedRoles((prev) => {
+      const exists = prev.find((i) => i.id === item.id)
       if (exists) {
-        return prev.filter(i => i.id !== item.id)
+        return prev.filter((i) => i.id !== item.id)
       } else {
         return [...prev, item]
       }
     })
   }, [])
 
-  const shouldBeChecked = useCallback((item) => {
-    return selectedRoles.some(s => s.name === item.name)
-  }, [selectedRoles])
+  const shouldBeChecked = useCallback(
+    (item) => {
+      return selectedRoles.some((s) => s.name === item.name)
+    },
+    [selectedRoles],
+  )
 
   const handleCancelClick = useCallback(() => {
     onClose && onClose()
@@ -95,7 +85,7 @@ const Roles = ({
     }
   }
 
-  const placeholders = Array(3).fill(null);
+  const placeholders = Array(3).fill(null)
 
   const CardListPlaceholder = (
     <>
@@ -121,7 +111,7 @@ const Roles = ({
         </RowListItem>
       ))}
     </>
-  );
+  )
 
   return (
     <RolesContainer elevation={2}>
@@ -130,7 +120,10 @@ const Roles = ({
           <FormattedMessage id="user.type.title" defaultMessage="What type of user are you?" />
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p" noWrap>
-          <FormattedMessage id="user.type.description" defaultMessage="Define how you will use Gitpay. You can choose multiple types of user roles you want." />
+          <FormattedMessage
+            id="user.type.description"
+            defaultMessage="Define how you will use Gitpay. You can choose multiple types of user roles you want."
+          />
         </Typography>
       </BigRow>
       <RowGrid container direction="row" alignItems="stretch">
@@ -138,7 +131,7 @@ const Roles = ({
           CardListPlaceholder
         ) : (
           <>
-            {data.map(r => (
+            {data.map((r) => (
               <RowListItem key={r.id} size={{ xs: 12, md: 3 }} spacing={2}>
                 <Paper>
                   <RowCard variant="outlined">
@@ -146,16 +139,19 @@ const Roles = ({
                       <img src={imageMap[r.name]} alt={r.name} width={250} height={270} />
                     </CardMedia>
                     <RootLabel>
-                      <Typography variant="h5">
-                        {r.label}
-                      </Typography>
+                      <Typography variant="h5">{r.label}</Typography>
                     </RootLabel>
                     <ActionBar>
                       <Typography variant="body2" color="textSecondary" component="p">
                         {r.description}
                       </Typography>
                       <Checkbox
-                        icon={<CheckBoxOutlineBlankIcon fontSize="large" style={{ color: 'transparent' }} />}
+                        icon={
+                          <CheckBoxOutlineBlankIcon
+                            fontSize="large"
+                            style={{ color: 'transparent' }}
+                          />
+                        }
                         checkedIcon={<CheckBoxIcon fontSize="large" />}
                         color="primary"
                         inputProps={{ 'aria-label': r.name }}
@@ -187,7 +183,7 @@ Roles.propTypes = {
   user: PropTypes.object,
   onClose: PropTypes.func,
   addNotification: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired
+  intl: PropTypes.object.isRequired,
 }
 
 export default Roles

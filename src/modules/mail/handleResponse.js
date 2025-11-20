@@ -1,4 +1,4 @@
-module.exports = response => {
+module.exports = (response) => {
   // eslint-disable-next-line no-console
   console.log(response[0].statusCode)
   // eslint-disable-next-line no-console

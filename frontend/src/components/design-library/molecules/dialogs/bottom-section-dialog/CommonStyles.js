@@ -14,11 +14,15 @@ export const MainTitle = styled.div`
   margin-bottom: 20px;
   margin-right: auto;
 
-  ${props => props.left && `
+  ${(props) =>
+    props.left &&
+    `
     margin-right: 18%;
   `}
 
-  ${props => props.center && `
+  ${(props) =>
+    props.center &&
+    `
     margin-right: 5%;
     width: 70%;
   `}
@@ -27,7 +31,7 @@ export const MainTitle = styled.div`
     width: 60%;
     margin: 20px auto;
 
-    ${props => props.left && 'margin-left: auto;'}
+    ${(props) => props.left && 'margin-left: auto;'}
   `}
 `
 
@@ -46,9 +50,9 @@ export const ResponsiveImage = styled.img`
 `
 
 export const ShadowImage = styled.img`
-    box-shadow: 1px 1px 3px 2px #ccc;
+  box-shadow: 1px 1px 3px 2px #ccc;
 
-    ${media.phone`
+  ${media.phone`
       max-width: 100%;
     `}
 `
@@ -77,14 +81,14 @@ export const Section = styled.div`
   text-align: center;
   padding: 1rem;
 
-  ${props => props.alternative && css`
-    background-color: #f1f0ea;
-  `}
+  ${(props) =>
+    props.alternative &&
+    css`
+      background-color: #f1f0ea;
+    `}
 `
 
-export const HeroTitle = styled.div`
-
-`
+export const HeroTitle = styled.div``
 
 export const HeroSection = styled.div`
   margin-top: 20px;

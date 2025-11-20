@@ -1,19 +1,20 @@
-import React from 'react';
-import IssueMessageAuthorDiialog from './issue-message-author-dialog';
+import React from 'react'
+import IssueMessageAuthorDiialog from './issue-message-author-dialog'
 
 export default {
   title: 'Design Library/Molecules/Dialogs/IssueMessageAuthor',
-  component: IssueMessageAuthorDiialog
-};
+  component: IssueMessageAuthorDiialog,
+}
 
-const Template = (args) => <IssueMessageAuthorDiialog {...args} />;
+const Template = (args) => <IssueMessageAuthorDiialog {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   open: true,
   userId: '123',
   taskId: '456',
   name: 'John Doe',
   onClose: () => console.log('Dialog closed'),
-  onSend: (userId, taskId, message) => console.log(`Message sent to user ${userId} for task ${taskId}: ${message}`)
-};
+  onSend: (userId, taskId, message) =>
+    console.log(`Message sent to user ${userId} for task ${taskId}: ${message}`),
+}

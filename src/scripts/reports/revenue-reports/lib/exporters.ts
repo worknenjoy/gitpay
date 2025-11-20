@@ -17,7 +17,7 @@ export function rowsToCSV(rows: ReportRow[], totals?: BuildTotals): string {
     'Stripe Fee',
     'Transfer Date',
     'Charge Date',
-    'Revenue'
+    'Revenue',
   ]
 
   const lines: string[] = []
@@ -38,14 +38,20 @@ export function rowsToCSV(rows: ReportRow[], totals?: BuildTotals): string {
       csvEscape(centsToDecimal(totals.fee, 'usd')),
       csvEscape(''),
       csvEscape(''),
-      csvEscape(centsToDecimal(totals.revenue, 'usd'))
+      csvEscape(centsToDecimal(totals.revenue, 'usd')),
     ]
     lines.push(totalLine.join(','))
   }
   return lines.join('\n') + '\n'
 }
 
-export async function writePayoutsExtraAndSummary(year: number, start: number, end: number, outDir: string, totals: BuildTotals) {
+export async function writePayoutsExtraAndSummary(
+  year: number,
+  start: number,
+  end: number,
+  outDir: string,
+  totals: BuildTotals,
+) {
   ensureDir(outDir)
 
   const payouts = await listPayoutsForRange(start, end)
@@ -64,7 +70,11 @@ export async function writePayoutsExtraAndSummary(year: number, start: number, e
     // eslint-disable-next-line no-constant-condition
     while (true) {
       // eslint-disable-next-line no-await-in-loop
-      const page: any = await stripe.balanceTransactions.list({ limit: 100, starting_after, created: { gte: start, lt: end } })
+      const page: any = await stripe.balanceTransactions.list({
+        limit: 100,
+        starting_after,
+        created: { gte: start, lt: end },
+      })
       if (page && Array.isArray(page.data)) {
         for (const bt of page.data) {
           const cur = (bt?.currency || '').toUpperCase()
@@ -89,7 +99,14 @@ export async function writePayoutsExtraAndSummary(year: number, start: number, e
   }
 
   // payouts_<year>.csv
-  const payoutsCsvHeaders = ['Payout Id', 'Status', 'Currency', 'Payout Date', 'Arrival Date', 'Amount']
+  const payoutsCsvHeaders = [
+    'Payout Id',
+    'Status',
+    'Currency',
+    'Payout Date',
+    'Arrival Date',
+    'Amount',
+  ]
   const payoutsLines: string[] = [payoutsCsvHeaders.join(',')]
   for (const p of payouts) {
     const line = [
@@ -98,7 +115,11 @@ export async function writePayoutsExtraAndSummary(year: number, start: number, e
       csvEscape((p?.currency || '').toUpperCase()),
       csvEscape(formatDateForSheets(p?.created)),
       csvEscape(formatDateForSheets(p?.arrival_date)),
-      csvEscape(typeof p?.amount === 'number' ? centsToDecimal(p.amount, (p?.currency || '').toUpperCase()) : '')
+      csvEscape(
+        typeof p?.amount === 'number'
+          ? centsToDecimal(p.amount, (p?.currency || '').toUpperCase())
+          : '',
+      ),
     ]
     payoutsLines.push(line.join(','))
   }
@@ -113,7 +134,11 @@ export async function writePayoutsExtraAndSummary(year: number, start: number, e
     // eslint-disable-next-line no-constant-condition
     while (true) {
       // eslint-disable-next-line no-await-in-loop
-      const page: any = await stripe.balanceTransactions.list({ limit: 100, starting_after, created: { gte: start, lt: end } })
+      const page: any = await stripe.balanceTransactions.list({
+        limit: 100,
+        starting_after,
+        created: { gte: start, lt: end },
+      })
       if (page && Array.isArray(page.data)) {
         for (const bt of page.data) {
           const fee = typeof bt?.fee === 'number' ? bt.fee : 0
@@ -124,8 +149,12 @@ export async function writePayoutsExtraAndSummary(year: number, start: number, e
             csvEscape((bt?.currency || '').toUpperCase()),
             csvEscape(formatDateForSheets(bt?.created)),
             csvEscape(centsToDecimal(fee, (bt?.currency || '').toUpperCase() || 'USD')),
-            csvEscape(typeof bt?.net === 'number' ? centsToDecimal(bt.net, (bt?.currency || '').toUpperCase() || 'USD') : ''),
-            csvEscape(bt?.description || '')
+            csvEscape(
+              typeof bt?.net === 'number'
+                ? centsToDecimal(bt.net, (bt?.currency || '').toUpperCase() || 'USD')
+                : '',
+            ),
+            csvEscape(bt?.description || ''),
           ]
           btLines.push(row.join(','))
         }
@@ -138,15 +167,21 @@ export async function writePayoutsExtraAndSummary(year: number, start: number, e
   fs.writeFileSync(extraFeesFile, btLines.join('\n') + '\n', 'utf8')
 
   // summary_<year>.csv
-  const payoutsUSD = (payoutsByCurrency.get('USD') || 0)
-  const extraFeesUSD = (extraFeesByCurrency.get('USD') || 0)
+  const payoutsUSD = payoutsByCurrency.get('USD') || 0
+  const extraFeesUSD = extraFeesByCurrency.get('USD') || 0
   const netRevenueUSD = totals.revenue - payoutsUSD - extraFeesUSD
   const summaryHeaders = ['Metric', 'Currency', 'Amount']
   const summaryLines: string[] = [summaryHeaders.join(',')]
-  summaryLines.push(['Gross Revenue', 'USD', centsToDecimal(totals.revenue, 'USD')].map(csvEscape).join(','))
+  summaryLines.push(
+    ['Gross Revenue', 'USD', centsToDecimal(totals.revenue, 'USD')].map(csvEscape).join(','),
+  )
   summaryLines.push(['Payouts', 'USD', centsToDecimal(payoutsUSD, 'USD')].map(csvEscape).join(','))
-  summaryLines.push(['Extra Fees', 'USD', centsToDecimal(extraFeesUSD, 'USD')].map(csvEscape).join(','))
-  summaryLines.push(['Net Revenue', 'USD', centsToDecimal(netRevenueUSD, 'USD')].map(csvEscape).join(','))
+  summaryLines.push(
+    ['Extra Fees', 'USD', centsToDecimal(extraFeesUSD, 'USD')].map(csvEscape).join(','),
+  )
+  summaryLines.push(
+    ['Net Revenue', 'USD', centsToDecimal(netRevenueUSD, 'USD')].map(csvEscape).join(','),
+  )
   for (const [cur, amt] of Array.from(payoutsByCurrency.entries()).sort()) {
     if (cur === 'USD') continue
     summaryLines.push(['Payouts', cur, centsToDecimal(amt, cur)].map(csvEscape).join(','))
@@ -163,8 +198,14 @@ export async function writePayoutsExtraAndSummary(year: number, start: number, e
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const XLSX = require('xlsx')
     const wb = XLSX.utils.book_new()
-    const toSheet = (csvStr: string) => csvStr.trim().split(/\n/).map((l: string) => l.split(','))
-    const wsRevenue = XLSX.utils.aoa_to_sheet(toSheet(fs.readFileSync(path.join(outDir, `revenue_${year}.csv`), 'utf8')))
+    const toSheet = (csvStr: string) =>
+      csvStr
+        .trim()
+        .split(/\n/)
+        .map((l: string) => l.split(','))
+    const wsRevenue = XLSX.utils.aoa_to_sheet(
+      toSheet(fs.readFileSync(path.join(outDir, `revenue_${year}.csv`), 'utf8')),
+    )
     const wsPayouts = XLSX.utils.aoa_to_sheet(toSheet(payoutsLines.join('\n')))
     const wsFees = XLSX.utils.aoa_to_sheet(toSheet(btLines.join('\n')))
     const wsSummary = XLSX.utils.aoa_to_sheet(toSheet(summaryLines.join('\n')))

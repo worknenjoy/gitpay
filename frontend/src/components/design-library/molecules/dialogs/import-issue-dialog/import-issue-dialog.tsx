@@ -1,48 +1,53 @@
 import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, TextField, FormControl, FormHelperText, Typography, FormGroup, FormControlLabel, Checkbox } from '@mui/material'
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  TextField,
+  FormControl,
+  FormHelperText,
+  Typography,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+} from '@mui/material'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 
 type ImportIssueDialogProps = {
-  open: boolean,
-  onClose: () => void,
-  onImport?: (data: any) => void,
+  open: boolean
+  onClose: () => void
+  onImport?: (data: any) => void
 }
 
-const ImportIssueDialog = ({ 
-  open,
-  onClose,
-  onImport
-}:ImportIssueDialogProps) => {
-  const [ error, setError ] = useState(false)
-  const [ url, setUrl ] = useState('')
-  const [ provider, setProvider ] = useState('github')
-  const [ privateRepo, setPrivateRepo ] = useState(false)
-  const [ notListed, setNotListed ] = useState(false)
+const ImportIssueDialog = ({ open, onClose, onImport }: ImportIssueDialogProps) => {
+  const [error, setError] = useState(false)
+  const [url, setUrl] = useState('')
+  const [provider, setProvider] = useState('github')
+  const [privateRepo, setPrivateRepo] = useState(false)
+  const [notListed, setNotListed] = useState(false)
 
-
-  const onChange = (e:any) => {
+  const onChange = (e: any) => {
     setUrl(e.target.value)
     setError(false)
   }
 
-  const handleCreateTask = async (e:any) => {
-    try { 
+  const handleCreateTask = async (e: any) => {
+    try {
       await onImport({ url, privateRepo, notListed, provider })
     } catch (e) {
       setError(true)
       console.log(e)
     }
   }
-  
+
   return (
     <form onSubmit={handleCreateTask} action="POST">
-      <Dialog
-        open={ open }
-        onClose={onClose}
-        aria-label="form-dialog-title"
-      >
+      <Dialog open={open} onClose={onClose} aria-label="form-dialog-title">
         <DialogTitle id="form-dialog-title">
           <FormattedMessage id="task.actions.insert.new" defaultMessage="Insert a new task" />
         </DialogTitle>
@@ -52,11 +57,13 @@ const ImportIssueDialog = ({
             <Typography variant="subtitle1" gutterBottom>
               <FormattedMessage
                 id="task.actions.insert.subheading"
-                defaultMessage="Paste the url of an incident of Github or Bitbucket" />
+                defaultMessage="Paste the url of an incident of Github or Bitbucket"
+              />
             </Typography>
           </DialogContentText>
-          <FormControl style={{width: '100%'}} error={error}>
-            <TextField error={error}
+          <FormControl style={{ width: '100%' }} error={error}>
+            <TextField
+              error={error}
               onChange={onChange}
               autoFocus
               margin="dense"
@@ -66,7 +73,7 @@ const ImportIssueDialog = ({
               type="url"
               fullWidth
             />
-            {provider === 'github' &&
+            {provider === 'github' && (
               <FormControl component="fieldset">
                 <FormGroup aria-label="position" row>
                   <FormControlLabel
@@ -85,7 +92,7 @@ const ImportIssueDialog = ({
                   />
                 </FormGroup>
               </FormControl>
-            }
+            )}
             <div style={{ marginTop: 10, marginBottom: 10 }}>
               <Button
                 style={{ marginRight: 10 }}
@@ -109,11 +116,14 @@ const ImportIssueDialog = ({
               </Button>
             </div>
 
-            {error &&
+            {error && (
               <FormHelperText error={error}>
-                <FormattedMessage id="task.actions.insert.novalid" defaultMessage="This is not a valid URL" />
+                <FormattedMessage
+                  id="task.actions.insert.novalid"
+                  defaultMessage="This is not a valid URL"
+                />
               </FormHelperText>
-            }
+            )}
           </FormControl>
         </DialogContent>
 
@@ -121,7 +131,7 @@ const ImportIssueDialog = ({
           <Button onClick={onClose} color="primary">
             <FormattedMessage id="task.actions.cancel" defaultMessage="Cancel" />
           </Button>
-          <Button disabled={!url} onClick={handleCreateTask} variant="contained" color="secondary" >
+          <Button disabled={!url} onClick={handleCreateTask} variant="contained" color="secondary">
             <FormattedMessage id="task.actions.insert.label" defaultMessage="Insert" />
           </Button>
         </DialogActions>
@@ -130,4 +140,4 @@ const ImportIssueDialog = ({
   )
 }
 
-export default ImportIssueDialog;
+export default ImportIssueDialog

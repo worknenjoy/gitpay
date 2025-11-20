@@ -1,15 +1,12 @@
-import PayoutScheduleForm from 'design-library/organisms/forms/payout-forms/payout-schedule-form/payout-schedule-form';
-import React from 'react';
+import PayoutScheduleForm from 'design-library/organisms/forms/payout-forms/payout-schedule-form/payout-schedule-form'
+import React from 'react'
 
-const PayoutSettingsBankAccountPayoutSchedulePage = ({
-  account,
-  updateAccount
-}) => {
-  const { data, completed } = account || {};
-  const { settings = {} } = data || {};
-  const { payouts } = settings || {};
-  const { schedule } = payouts || {};
-  const { interval } = schedule || {};
+const PayoutSettingsBankAccountPayoutSchedulePage = ({ account, updateAccount }) => {
+  const { data, completed } = account || {}
+  const { settings = {} } = data || {}
+  const { payouts } = settings || {}
+  const { schedule } = payouts || {}
+  const { interval } = schedule || {}
 
   /*
   useEffect(() => {
@@ -18,16 +15,16 @@ const PayoutSettingsBankAccountPayoutSchedulePage = ({
   */
 
   const handlePayoutScheduleUpdate = (event, value) => {
-    event.preventDefault();
-    
+    event.preventDefault()
+
     const formData = {
       'settings[payouts][schedule][interval]': value,
       ...(value === 'weekly' ? { 'settings[payouts][schedule][weekly_anchor]': 'monday' } : {}),
-      ...(value === 'monthly' ? { 'settings[payouts][schedule][monthly_anchor]': '1' } : {})
-    };
-    updateAccount(formData);
-  }; 
-  
+      ...(value === 'monthly' ? { 'settings[payouts][schedule][monthly_anchor]': '1' } : {}),
+    }
+    updateAccount(formData)
+  }
+
   return (
     <div>
       <PayoutScheduleForm
@@ -36,7 +33,7 @@ const PayoutSettingsBankAccountPayoutSchedulePage = ({
         onSubmit={handlePayoutScheduleUpdate}
       />
     </div>
-  );
-};
+  )
+}
 
-export default PayoutSettingsBankAccountPayoutSchedulePage;
+export default PayoutSettingsBankAccountPayoutSchedulePage

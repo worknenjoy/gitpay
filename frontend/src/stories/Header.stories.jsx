@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-import { Header } from './Header';
+import { Header } from './Header'
 
 export default {
   title: 'Example/Header',
@@ -9,16 +9,16 @@ export default {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: 'fullscreen',
   },
-};
+}
 
-const Template = (args) => <Header {...args} />;
+const Template = (args) => <Header {...args} />
 
-export const LoggedIn = Template.bind({});
+export const LoggedIn = Template.bind({})
 LoggedIn.args = {
   user: {
     name: 'Jane Doe',
   },
-};
+}
 
-export const LoggedOut = Template.bind({});
-LoggedOut.args = {};
+export const LoggedOut = Template.bind({})
+LoggedOut.args = {}

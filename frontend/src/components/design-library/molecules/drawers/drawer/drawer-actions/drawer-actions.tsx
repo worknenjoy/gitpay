@@ -1,12 +1,12 @@
-import React from 'react';
-import Button from 'design-library/atoms/buttons/button/button';
+import React from 'react'
+import Button from 'design-library/atoms/buttons/button/button'
 import { Root } from './drawer-actions.styles'
 
 const DrawerActions = ({ actions, completed = true }) => {
   return (
-  <Root>
-      { actions.map ((action, index) => (
-        <Button 
+    <Root>
+      {actions.map((action, index) => (
+        <Button
           onClick={action.onClick}
           variant={action.variant}
           color={action.color}
@@ -15,8 +15,8 @@ const DrawerActions = ({ actions, completed = true }) => {
           completed={completed}
         />
       ))}
-  </Root>
-  );
-};
+    </Root>
+  )
+}
 
-export default DrawerActions;
+export default DrawerActions

@@ -1,31 +1,30 @@
 import React from 'react'
-import { issueMetadata, customColumnRenderer } from 'design-library/molecules/tables/issue-table/issue-table'
-import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
 import {
-  Container
-} from '@mui/material'
+  issueMetadata,
+  customColumnRenderer,
+} from 'design-library/molecules/tables/issue-table/issue-table'
+import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
+import { Container } from '@mui/material'
 import {
   ExplorePaper,
-  TopSection
+  TopSection,
 } from '../explore-issues-private-page/explore-issues-private-page.styles'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
-import Breadcrumbs from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb';
+import Breadcrumbs from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
 import useMyIssueTabs from '../../../../../../hooks/use-my-issues-tabs'
 import { FormattedMessage } from 'react-intl'
 
-
 const MyIssuesPrivatePage = ({ user, issues }) => {
-  
   const issueTableData = {
     tableData: issues,
     tableHeaderMetadata: issueMetadata,
-    customColumnRenderer: customColumnRenderer
+    customColumnRenderer: customColumnRenderer,
   }
 
   const { currentTabs, activeTab } = useMyIssueTabs({
     user,
     baseLink: '/profile/tasks',
-    issueTableData
+    issueTableData,
   })
 
   return (
@@ -33,7 +32,11 @@ const MyIssuesPrivatePage = ({ user, issues }) => {
       <Container>
         <TopSection>
           <Breadcrumbs
-            root={{ label: <FormattedMessage id="breadcrumbs.root.my.issues" defaultMessage="My Issues" /> }}
+            root={{
+              label: (
+                <FormattedMessage id="breadcrumbs.root.my.issues" defaultMessage="My Issues" />
+              ),
+            }}
           />
         </TopSection>
         <TopSection>
@@ -43,10 +46,7 @@ const MyIssuesPrivatePage = ({ user, issues }) => {
           />
         </TopSection>
         <TopSection>
-          <TabbedTable
-            tabs={currentTabs}
-            activeTab={activeTab}
-          />
+          <TabbedTable tabs={currentTabs} activeTab={activeTab} />
         </TopSection>
       </Container>
     </ExplorePaper>

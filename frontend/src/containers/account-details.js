@@ -7,7 +7,7 @@ import {
   updateUser,
   createBankAccount,
   getBankAccount,
-  deleteUser
+  deleteUser,
 } from '../actions/userActions'
 
 const mapStateToProps = (state, ownProps) => {
@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
     logged: state.loggedIn.logged,
     user: state.loggedIn,
     account: state.account,
-    bankAccount: state.bankAccount
+    bankAccount: state.bankAccount,
   }
 }
 
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateUser: (userId, user) => dispatch(updateUser(userId, user)),
     deleteUser: (user) => dispatch(deleteUser(user)),
     getBankAccount: (userId) => dispatch(getBankAccount(userId)),
-    createBankAccount: (userId, bank) => dispatch(createBankAccount(userId, bank))
+    createBankAccount: (userId, bank) => dispatch(createBankAccount(userId, bank)),
   }
 }
 

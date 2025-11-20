@@ -8,10 +8,10 @@ const api = require('../src/server').default
 const ContactMail = require('../src/modules/mail/contact')
 const agent = request.agent(api)
 
-describe("Contact", () => {
+describe('Contact', () => {
   describe('Contact recruiters', () => {
     xit('should contact recruiters', (done) => {
-      chai.use(spies);
+      chai.use(spies)
       const mailSpySuccess = chai.spy.on(ContactMail, 'recruiters')
       agent
         .post('/contact/recruiters')
@@ -22,15 +22,15 @@ describe("Contact", () => {
           phone: 'phone',
           company: 'company',
           country: 'country',
-          message: 'message'
+          message: 'message',
         })
         .expect(200)
         .end((err, res) => {
-          expect(res.statusCode).to.equal(200);
-          expect(res.body).to.exist;
+          expect(res.statusCode).to.equal(200)
+          expect(res.body).to.exist
           expect(mailSpySuccess).to.have.been.called()
-          done(err);
+          done(err)
         })
     })
   })
-});
+})

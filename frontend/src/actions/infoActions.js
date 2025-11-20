@@ -9,11 +9,11 @@ const infoRequested = () => {
   return { type: INFO_REQUESTED, completed: false }
 }
 
-const infoSuccess = info => {
+const infoSuccess = (info) => {
   return { type: INFO_SUCCESS, completed: true, data: info.data }
 }
 
-const infoError = error => {
+const infoError = (error) => {
   return { type: INFO_ERROR, completed: true, error: error }
 }
 
@@ -22,10 +22,10 @@ const info = () => {
     dispatch(infoRequested())
     return axios
       .get(api.API_URL + '/info/all')
-      .then(response => {
+      .then((response) => {
         return dispatch(infoSuccess(response))
       })
-      .catch(error => {
+      .catch((error) => {
         // eslint-disable-next-line no-console
         console.log(error)
         return dispatch(infoError(error))
@@ -33,9 +33,4 @@ const info = () => {
   }
 }
 
-export {
-  INFO_REQUESTED,
-  INFO_SUCCESS,
-  INFO_ERROR,
-  info
-}
+export { INFO_REQUESTED, INFO_SUCCESS, INFO_ERROR, info }

@@ -70,22 +70,20 @@ const Percent = styled.p`
 `
 
 export default class Earnings extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
-    this.state = {
-
-    }
+    this.state = {}
   }
 
-  render () {
+  render() {
     return (
       <Card>
-        <Icon><LocalMallIcon style={ { fontSize: '2em', margin: 'auto' } } /></Icon>
+        <Icon>
+          <LocalMallIcon style={{ fontSize: '2em', margin: 'auto' }} />
+        </Icon>
         <Info>
-          <Head>
-            Earnings
-          </Head>
+          <Head>Earnings</Head>
           <Wrapper>
             <Value>$5,204.89</Value>
             <Percent>+10%</Percent>

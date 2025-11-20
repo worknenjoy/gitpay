@@ -1,13 +1,6 @@
-import React from 'react';
-import {
-  CardContent,
-  Divider,
-  Grid,
-  Skeleton,
-  Box,
-  IconButton
-} from '@mui/material';
-import { RootCard, StatsItem } from './project-card.styles';
+import React from 'react'
+import { CardContent, Divider, Grid, Skeleton, Box, IconButton } from '@mui/material'
+import { RootCard, StatsItem } from './project-card.styles'
 
 export default function ProjectCardPlaceholder() {
   return (
@@ -55,5 +48,5 @@ export default function ProjectCardPlaceholder() {
         </Grid>
       </Box>
     </RootCard>
-  );
+  )
 }

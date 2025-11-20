@@ -1,9 +1,9 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Container } from '@mui/material';
-import Breadcrumb from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb';
-import ContextTitle from 'design-library/atoms/typography/context-title/context-title';
-import ProjectIssuesTable from 'design-library/molecules/tables/project-issue-table/project-issue-table';
+import React from 'react'
+import { FormattedMessage } from 'react-intl'
+import { Container } from '@mui/material'
+import Breadcrumb from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
+import ContextTitle from 'design-library/atoms/typography/context-title/context-title'
+import ProjectIssuesTable from 'design-library/molecules/tables/project-issue-table/project-issue-table'
 
 const ProjectPublicPage = ({
   project,
@@ -13,13 +13,16 @@ const ProjectPublicPage = ({
   languages,
   listLabels,
   listLanguages,
-  listTasks
+  listTasks,
 }) => {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Breadcrumb
         project={project}
-        root={{ label: <FormattedMessage id="breadcrumb.explore.issues.root" defaultMessage="Explore" />, link: '/explore/issues' }}
+        root={{
+          label: <FormattedMessage id="breadcrumb.explore.issues.root" defaultMessage="Explore" />,
+          link: '/explore/issues',
+        }}
       />
       <ContextTitle
         context={project}
@@ -35,7 +38,7 @@ const ProjectPublicPage = ({
         listTasks={listTasks}
       />
     </Container>
-  );
+  )
 }
 
-export default ProjectPublicPage;
+export default ProjectPublicPage

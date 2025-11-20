@@ -1,5 +1,5 @@
-import IssuePage from 'design-library/organisms/layouts/page-layouts/issue-page-layout/issue-page-layout';
-import React from 'react';
+import IssuePage from 'design-library/organisms/layouts/page-layouts/issue-page-layout/issue-page-layout'
+import React from 'react'
 
 const IssuePrivatePage = ({
   user,
@@ -32,7 +32,7 @@ const IssuePrivatePage = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask
+  syncTask,
 }) => {
   return (
     <IssuePage
@@ -67,8 +67,8 @@ const IssuePrivatePage = ({
       wallets={wallets}
       fetchTask={fetchTask}
       syncTask={syncTask}
-    />   
-  );
-};
+    />
+  )
+}
 
-export default IssuePrivatePage;
+export default IssuePrivatePage

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import App from './app'
 
 class AuthOrApp extends Component {
-  render () {
+  render() {
     return <App />
   }
 }

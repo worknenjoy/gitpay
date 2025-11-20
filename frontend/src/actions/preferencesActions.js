@@ -11,7 +11,16 @@ const fetchPreferencesRequested = () => {
 }
 
 const fetchPreferencesSuccess = (response) => {
-  return { type: FETCH_PREFERENCES_SUCCESS, completed: true, language: response.language, os: response.os, languages: response.languages, skills: response.skills, receiveNotifications: response.receiveNotifications, openForJobs: response.openForJobs }
+  return {
+    type: FETCH_PREFERENCES_SUCCESS,
+    completed: true,
+    language: response.language,
+    os: response.os,
+    languages: response.languages,
+    skills: response.skills,
+    receiveNotifications: response.receiveNotifications,
+    openForJobs: response.openForJobs,
+  }
 }
 
 const fetchPreferencesError = (error) => {
@@ -24,10 +33,10 @@ const fetchPreferences = () => {
     dispatch(fetchPreferencesRequested())
     return axios
       .get(`${api.API_URL}/user/preferences`)
-      .then(response => {
+      .then((response) => {
         return dispatch(fetchPreferencesSuccess(response.data))
       })
-      .catch(error => {
+      .catch((error) => {
         // eslint-disable-next-line no-console
         console.log(error)
         return dispatch(fetchPreferencesError(error))
@@ -42,5 +51,5 @@ export {
   fetchPreferencesRequested,
   fetchPreferencesSuccess,
   fetchPreferencesError,
-  fetchPreferences
+  fetchPreferences,
 }

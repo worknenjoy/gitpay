@@ -26,12 +26,12 @@ const ProjectListFull = ({ projects }) => {
   }
 
   const hasOpenIssues = (project) => {
-    const hasOpenTasks = project.Tasks.filter(t => t.status === 'open')
+    const hasOpenTasks = project.Tasks.filter((t) => t.status === 'open')
     return hasOpenTasks.length > 0
   }
 
   const projectsSort = (data) => {
-    const projectWithOpenIssues = data.filter(p => hasOpenIssues(p))
+    const projectWithOpenIssues = data.filter((p) => hasOpenIssues(p))
     return projectWithOpenIssues.sort((a, b) => parseInt(b.Tasks.length) - parseInt(a.Tasks.length))
   }
 
@@ -40,7 +40,9 @@ const ProjectListFull = ({ projects }) => {
   }
 
   const projectBounties = (data) => {
-    return data.map(task => task.value ? task.value : 0).reduce((prev, next) => parseInt(prev) + parseInt(next))
+    return data
+      .map((task) => (task.value ? task.value : 0))
+      .reduce((prev, next) => parseInt(prev) + parseInt(next))
   }
 
   const filter = (data) => {
@@ -53,40 +55,32 @@ const ProjectListFull = ({ projects }) => {
 
   const pages = Math.ceil(total / recordsPerPage)
 
-  return (
-    completed ?
-    <StyledContainer maxWidth={ false }>
-      <Box mt={ 3 } mb={ 3 }>
-        <Grid
-          container
-          spacing={ 3 }
-        >
-          { currentProjects
-            .map(p => (
-              <Grid key={ p.id } size={ { lg: 4, md: 6, xs: 12 } }>
-                <StyledProjectCard project={ p } completed={ completed } />
-              </Grid>
-            )) }
+  return completed ? (
+    <StyledContainer maxWidth={false}>
+      <Box mt={3} mb={3}>
+        <Grid container spacing={3}>
+          {currentProjects.map((p) => (
+            <Grid key={p.id} size={{ lg: 4, md: 6, xs: 12 }}>
+              <StyledProjectCard project={p} completed={completed} />
+            </Grid>
+          ))}
         </Grid>
       </Box>
-      { total - 1 > recordsPerPage &&
-      <Box
-        mt={ 3 }
-        mb={ 3 }
-        display="flex"
-        justifyContent="center"
-      >
-        <Pagination
-          color="primary"
-          count={ pages }
-          size="small"
-          page={ page } onChange={ handlePagination }
-        />
-      </Box>
-      }
-    </StyledContainer> : <ProjectListFullPlaceholder />
+      {total - 1 > recordsPerPage && (
+        <Box mt={3} mb={3} display="flex" justifyContent="center">
+          <Pagination
+            color="primary"
+            count={pages}
+            size="small"
+            page={page}
+            onChange={handlePagination}
+          />
+        </Box>
+      )}
+    </StyledContainer>
+  ) : (
+    <ProjectListFullPlaceholder />
   )
 }
 
 export default ProjectListFull
-

@@ -1,14 +1,14 @@
-import React from 'react';
-import Topbar from './topbar-layout';
+import React from 'react'
+import Topbar from './topbar-layout'
 
 export default {
   title: 'Design Library/Organisms/Layouts/Topbar/Topbar',
-  component: Topbar
-};
+  component: Topbar,
+}
 
-const Template = (args: any) => <Topbar {...args} />;
+const Template = (args: any) => <Topbar {...args} />
 
-export const LoggedIn = Template.bind({});
+export const LoggedIn = Template.bind({})
 LoggedIn.args = {
   user: {
     logged: true,
@@ -17,18 +17,18 @@ LoggedIn.args = {
       id: 1,
       email: 'test@gmail.com',
       username: 'test',
-      Types: [{
-        id: 1,
-        name: 'maintainer'
-      }]
-    }
-  }
-};
+      Types: [
+        {
+          id: 1,
+          name: 'maintainer',
+        },
+      ],
+    },
+  },
+}
 
-export const LoggedOut = Template.bind({});
+export const LoggedOut = Template.bind({})
 LoggedOut.args = {
   // Add default props here
-  user: {
-    
-  }
-};
+  user: {},
+}

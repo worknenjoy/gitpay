@@ -4,7 +4,7 @@ import {
   Delete as DeleteIcon,
   BugReport as ReportIcon,
   Visibility as VisibilityIcon,
-  VisibilityOff as VisibilityOffIcon
+  VisibilityOff as VisibilityOffIcon,
 } from '@mui/icons-material'
 import {
   Button,
@@ -18,7 +18,7 @@ import {
   Menu,
   MenuItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
 } from '@mui/material'
 import Skeleton from '@mui/material/Skeleton'
 
@@ -51,26 +51,26 @@ const TaskHeaderContainer = styled.div`
   `}
 `
 
-const styles = theme => ({
+const styles = (theme) => ({
   breadcrumbRoot: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   breadcrumbLink: {
-    textDecoration: 'underline'
+    textDecoration: 'underline',
   },
   chipStatusPaid: {
     marginLeft: 0,
     verticalAlign: 'middle',
-    backgroundColor: theme.palette.primary.light
+    backgroundColor: theme.palette.primary.light,
   },
   button: {
     width: 100,
-    font: 10
+    font: 10,
   },
   gutterRight: {
-    marginRight: 10
-  }
+    marginRight: 10,
+  },
 })
 
 const IssueHeader = ({
@@ -80,7 +80,7 @@ const IssueHeader = ({
   organization,
   handleDeleteTask,
   reportTask,
-  updateTask
+  updateTask,
 }) => {
   const history = useHistory()
   const issueAuthor = useIssueAuthor(task, user)
@@ -109,82 +109,88 @@ const IssueHeader = ({
 
   const breadcrumbRoot = pathname.startsWith('/profile/explore')
     ? {
-      label: <FormattedMessage id="explore.issues.breadcrumbs" defaultMessage="Explore Issues" />,
-      link: '/profile/explore/tasks'
-    }
+        label: <FormattedMessage id="explore.issues.breadcrumbs" defaultMessage="Explore Issues" />,
+        link: '/profile/explore/tasks',
+      }
     : pathname.startsWith('/profile')
       ? {
-        label: <FormattedMessage id="user.profile.issues" defaultMessage="My Issues" />,
-        link: '/profile/tasks'
-      }
+          label: <FormattedMessage id="user.profile.issues" defaultMessage="My Issues" />,
+          link: '/profile/tasks',
+        }
       : {
-        label: <FormattedMessage id="organization.issues.breadcrumbs" defaultMessage="Explore Issues" />,
-        link: '/explore/issues'
-      }
+          label: (
+            <FormattedMessage
+              id="organization.issues.breadcrumbs"
+              defaultMessage="Explore Issues"
+            />
+          ),
+          link: '/explore/issues',
+        }
 
   return (
     <TaskHeaderContainer>
       <Grid size={{ xs: 12, sm: 12, md: 12 }}>
         <div style={{ marginTop: 30, marginBottom: 20 }}>
-          <Breadcrumb
-            task={task}
-            root={breadcrumbRoot}
-          />
+          <Breadcrumb task={task} root={breadcrumbRoot} />
         </div>
-        {
-          !task.completed ? (
-            <Skeleton variant="text" animation="wave" style={{ marginTop: 32, marginBottom: 26 }} />
-          ) : (
-            <div style={{ marginTop: 20, marginBottom: 0 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h5" gutterBottom>
-                  <strong>
-                    {task.data.title}
-                  </strong>
-                </Typography>
-                <IconButton onClick={handleMoreButton}>
-                  <MoreIcon />
-                </IconButton>
-              </div>
+        {!task.completed ? (
+          <Skeleton variant="text" animation="wave" style={{ marginTop: 32, marginBottom: 26 }} />
+        ) : (
+          <div style={{ marginTop: 20, marginBottom: 0 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography variant="h5" gutterBottom>
+                <strong>{task.data.title}</strong>
+              </Typography>
+              <IconButton onClick={handleMoreButton}>
+                <MoreIcon />
+              </IconButton>
             </div>
-          )
-        }
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleCloseMoreButton}
-        >
-          {issueAuthor &&
-            <MenuItem onClick={async () => {
-              await updateTask({ id: task.data.id, not_listed: !task.data.not_listed })
-              handleCloseMoreButton()
-            }}>
+          </div>
+        )}
+        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMoreButton}>
+          {issueAuthor && (
+            <MenuItem
+              onClick={async () => {
+                await updateTask({ id: task.data.id, not_listed: !task.data.not_listed })
+                handleCloseMoreButton()
+              }}
+            >
               <ListItemIcon>
-                {task.data.not_listed ? <VisibilityIcon fontSize="small" /> : <VisibilityOffIcon fontSize="small" />}
+                {task.data.not_listed ? (
+                  <VisibilityIcon fontSize="small" />
+                ) : (
+                  <VisibilityOffIcon fontSize="small" />
+                )}
               </ListItemIcon>
-              <ListItemText primary={task.data.not_listed ? 'Change to public' : 'Change to not listed'} />
+              <ListItemText
+                primary={task.data.not_listed ? 'Change to public' : 'Change to not listed'}
+              />
             </MenuItem>
-          }
-          <MenuItem onClick={() => {
-            setAnchorEl(null)
-            setReportDialog(true)
-          }}>
+          )}
+          <MenuItem
+            onClick={() => {
+              setAnchorEl(null)
+              setReportDialog(true)
+            }}
+          >
             <ListItemIcon>
               <ReportIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText primary="Report" />
           </MenuItem>
-          {issueAuthor &&
-            <MenuItem onClick={() => {
-              setAnchorEl(null)
-              setDeleteDialog(true)
-            }}>
+          {issueAuthor && (
+            <MenuItem
+              onClick={() => {
+                setAnchorEl(null)
+                setDeleteDialog(true)
+              }}
+            >
               <ListItemIcon>
                 <DeleteIcon fontSize="small" />
               </ListItemIcon>
               <ListItemText primary="Delete" />
             </MenuItem>
-          }
+          )}
         </Menu>
         <TaskReport
           taskData={task.data}
@@ -200,51 +206,91 @@ const IssueHeader = ({
         >
           <div>
             <DialogTitle id="form-dialog-title">
-              <FormattedMessage id="task.bounties.delete.confirmation" defaultMessage="Are you sure you want to delete this issue?" />
+              <FormattedMessage
+                id="task.bounties.delete.confirmation"
+                defaultMessage="Are you sure you want to delete this issue?"
+              />
             </DialogTitle>
             <DialogContent>
               <Typography variant="caption">
-                <FormattedMessage id="task.bounties.delete.caution" defaultMessage="If you delete this issue, all the records related about orders and payments will be lost" />
+                <FormattedMessage
+                  id="task.bounties.delete.caution"
+                  defaultMessage="If you delete this issue, all the records related about orders and payments will be lost"
+                />
               </Typography>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleDeleteDialogClose} color="primary">
                 <FormattedMessage id="task.actions.cancel" defaultMessage="Cancel" />
               </Button>
-              <Button onClick={handleDeleteTask} variant="contained" color="secondary" >
+              <Button onClick={handleDeleteTask} variant="contained" color="secondary">
                 <FormattedMessage id="task.actions.delete" defaultMessage="Delete" />
               </Button>
             </DialogActions>
           </div>
         </Dialog>
-        {
-          !task.completed ? (
-            <Skeleton variant="text" animation="wave" style={{ marginTop: 20, marginBottom: 20, width: '40%' }} />
-          ) : (
-            <Typography variant="caption" style={{ display: 'inline-block', marginBottom: 20, marginRight: 0 }}>
-              {task.data.provider &&
-                <div>
-                  Created on <a
-                    href={task.data.url}
-                    style={{ textDecoration: 'underline' }}
-                  >
-                    {task.data.provider} <img width="18" src={task.data.provider === 'github' ? logoGithub : logoBitbucket} style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, backgroundColor: 'black', borderColor: 'black', borderWidth: 1, verticalAlign: 'middle' }} />
-                  </a>
-                  by {' '}
-                  <a
-                    href={task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.html_url : ''}
-                  >
-                    {task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.login : task.data.metadata && task.data.metadata.user}
-                    <img
-                      style={{ marginRight: 5, marginLeft: 5, borderRadius: '50%', padding: 3, verticalAlign: 'middle' }}
-                      width="18"
-                      src={task.data.metadata && task.data.provider === 'github' ? task.data.metadata.issue.user.avatar_url : ''}
-                    />
-                  </a>
-                </div>}
-            </Typography>
-          )
-        }
+        {!task.completed ? (
+          <Skeleton
+            variant="text"
+            animation="wave"
+            style={{ marginTop: 20, marginBottom: 20, width: '40%' }}
+          />
+        ) : (
+          <Typography
+            variant="caption"
+            style={{ display: 'inline-block', marginBottom: 20, marginRight: 0 }}
+          >
+            {task.data.provider && (
+              <div>
+                Created on{' '}
+                <a href={task.data.url} style={{ textDecoration: 'underline' }}>
+                  {task.data.provider}{' '}
+                  <img
+                    width="18"
+                    src={task.data.provider === 'github' ? logoGithub : logoBitbucket}
+                    style={{
+                      marginRight: 5,
+                      marginLeft: 5,
+                      borderRadius: '50%',
+                      padding: 3,
+                      backgroundColor: 'black',
+                      borderColor: 'black',
+                      borderWidth: 1,
+                      verticalAlign: 'middle',
+                    }}
+                  />
+                </a>
+                by{' '}
+                <a
+                  href={
+                    task.data.metadata && task.data.provider === 'github'
+                      ? task.data.metadata.issue.user.html_url
+                      : ''
+                  }
+                >
+                  {task.data.metadata && task.data.provider === 'github'
+                    ? task.data.metadata.issue.user.login
+                    : task.data.metadata && task.data.metadata.user}
+                  <img
+                    style={{
+                      marginRight: 5,
+                      marginLeft: 5,
+                      borderRadius: '50%',
+                      padding: 3,
+                      verticalAlign: 'middle',
+                    }}
+                    width="18"
+                    src={
+                      task.data.metadata && task.data.provider === 'github'
+                        ? task.data.metadata.issue.user.avatar_url
+                        : ''
+                    }
+                  />
+                </a>
+              </div>
+            )}
+          </Typography>
+        )}
         <TaskLabels labels={task.data?.metadata?.labels} completed={task.completed} />
       </Grid>
     </TaskHeaderContainer>

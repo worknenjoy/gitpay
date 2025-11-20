@@ -9,7 +9,7 @@ moment.locale('pt-br', ptLocale)
 
 const IssueClosedMail = {
   success: (to, data) => {},
-  error: (msg) => {}
+  error: (msg) => {},
 }
 
 if (constants.canSendEmail) {
@@ -17,32 +17,24 @@ if (constants.canSendEmail) {
     const to = user.email
     const language = user.language || 'en'
     i18n.setLocale(language)
-    request(
-      to,
-      i18n.__('mail.status.subject'),
-      [
-        {
-          type: 'text/html',
-          value: `
+    request(to, i18n.__('mail.status.subject'), [
+      {
+        type: 'text/html',
+        value: `
           <p>${i18n.__('mail.hello', { name: data.name })}</p>
           ${i18n.__('mail.status.when.closed', { url: data.url, title: data.title })}
-          <p>${Signatures.sign(language)}</p>`
-        }
-      ]
-    )
+          <p>${Signatures.sign(language)}</p>`,
+      },
+    ])
   }
 
   IssueClosedMail.error = (msg) => {
-    request(
-      constants.notificationEmail,
-      i18n.__('mail.status.error'),
-      [
-        {
-          type: 'text/html',
-          value: msg
-        }
-      ]
-    )
+    request(constants.notificationEmail, i18n.__('mail.status.error'), [
+      {
+        type: 'text/html',
+        value: msg,
+      },
+    ])
   }
 }
 

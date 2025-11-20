@@ -1,7 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-  const Label = sequelize.define('Label', {
-    name: DataTypes.STRING
-  }, {})
+  const Label = sequelize.define(
+    'Label',
+    {
+      name: DataTypes.STRING,
+    },
+    {},
+  )
   Label.associate = function (models) {
     Label.belongsToMany(models.Task, {
       alloqNull: false,
@@ -10,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       through: 'TaskLabels',
       onUpdate: 'cascade',
       onDelete: 'cascade',
-      hooks: true
+      hooks: true,
     })
   }
 

@@ -1,12 +1,8 @@
-import React from "react";
-import ActionsMenu from "design-library/molecules/menus/actions-menu/actions-menu";
+import React from 'react'
+import ActionsMenu from 'design-library/molecules/menus/actions-menu/actions-menu'
 
-const ActionField = ({
-  actions
-}) => {
-  return (
-    <ActionsMenu actions={actions} />
-  );
-};
+const ActionField = ({ actions }) => {
+  return <ActionsMenu actions={actions} />
+}
 
-export default ActionField;
+export default ActionField

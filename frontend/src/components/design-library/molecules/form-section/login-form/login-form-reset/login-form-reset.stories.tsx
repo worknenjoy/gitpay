@@ -1,14 +1,14 @@
-import React from 'react';
-import LoginFormReset from './login-form-reset';
+import React from 'react'
+import LoginFormReset from './login-form-reset'
 
 export default {
   title: 'Design Library/Molecules/FormSection/LoginForm/LoginFormReset',
-  component: LoginFormReset
-};
+  component: LoginFormReset,
+}
 
-const Template = (args) => <LoginFormReset {...args} />;
+const Template = (args) => <LoginFormReset {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   // Add default props here
-};
+}

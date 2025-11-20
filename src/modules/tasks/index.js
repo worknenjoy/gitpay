@@ -41,5 +41,5 @@ module.exports = {
   taskSolutionFetchData,
   taskSolutionCreate,
   taskSolutionGet,
-  taskSolutionUpdate
+  taskSolutionUpdate,
 }

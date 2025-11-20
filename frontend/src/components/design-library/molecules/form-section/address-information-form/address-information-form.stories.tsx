@@ -1,14 +1,14 @@
-import React from 'react';
-import AddressInformationForm from './address-information-form';
+import React from 'react'
+import AddressInformationForm from './address-information-form'
 
 export default {
   title: 'Design Library/Molecules/FormSection/AddressInformationForm',
-  component: AddressInformationForm
-};
+  component: AddressInformationForm,
+}
 
-const Template = (args) => <AddressInformationForm {...args} />;
+const Template = (args) => <AddressInformationForm {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   completed: true,
   addressLine1: '123 Main St',
@@ -16,5 +16,5 @@ Default.args = {
   city: 'New York',
   state: 'NY',
   zipCode: '10001',
-  country: 'US'
-};
+  country: 'US',
+}

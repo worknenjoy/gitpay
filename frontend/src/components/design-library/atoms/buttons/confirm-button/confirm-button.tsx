@@ -1,29 +1,29 @@
-import React from 'react';
-import Button from 'design-library/atoms/buttons/button/button';
-import ConfirmDialog from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog';
-import type { AlertColor } from '@mui/material/Alert';
+import React from 'react'
+import Button from 'design-library/atoms/buttons/button/button'
+import ConfirmDialog from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
+import type { AlertColor } from '@mui/material/Alert'
 
 type ConfirmButtonProps = {
   // Button props
-  label?: React.ReactNode;
-  type?: 'button' | 'submit' | 'reset';
-  variant?: 'text' | 'outlined' | 'contained';
-  color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
-  disabled?: boolean;
-  completed?: boolean; // when false, show loading spinner like other buttons
+  label?: React.ReactNode
+  type?: 'button' | 'submit' | 'reset'
+  variant?: 'text' | 'outlined' | 'contained'
+  color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
+  disabled?: boolean
+  completed?: boolean // when false, show loading spinner like other buttons
 
   // Dialog props
-  dialogMessage: React.ReactNode;
-  confirmLabel?: React.ReactNode;
-  cancelLabel?: React.ReactNode;
-  alertMessage?: React.ReactNode;
-  alertSeverity?: AlertColor;
+  dialogMessage: React.ReactNode
+  confirmLabel?: React.ReactNode
+  cancelLabel?: React.ReactNode
+  alertMessage?: React.ReactNode
+  alertSeverity?: AlertColor
 
   // Callbacks
-  onConfirm?: () => Promise<void> | void;
-  onCancel?: () => void;
-  onOpenChange?: (open: boolean) => void;
-};
+  onConfirm?: () => Promise<void> | void
+  onCancel?: () => void
+  onOpenChange?: (open: boolean) => void
+}
 
 const ConfirmButton: React.FC<ConfirmButtonProps> = ({
   label,
@@ -39,28 +39,28 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
   alertSeverity = 'warning',
   onConfirm,
   onCancel,
-  onOpenChange
+  onOpenChange,
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false)
 
   const openDialog = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setOpen(true);
-    onOpenChange?.(true);
-  };
+    e.preventDefault()
+    setOpen(true)
+    onOpenChange?.(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-    onOpenChange?.(false);
-  };
+    setOpen(false)
+    onOpenChange?.(false)
+  }
 
   const handleConfirm = async () => {
-    await onConfirm?.();
-  };
+    await onConfirm?.()
+  }
 
   const handleCancel = () => {
-    onCancel?.();
-  };
+    onCancel?.()
+  }
 
   return (
     <>
@@ -85,7 +85,7 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
         completed={completed}
       />
     </>
-  );
-};
+  )
+}
 
-export default ConfirmButton;
+export default ConfirmButton

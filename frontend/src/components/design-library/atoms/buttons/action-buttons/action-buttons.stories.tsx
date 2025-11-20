@@ -1,20 +1,20 @@
-import React from 'react';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import CancelIcon from '@mui/icons-material/Cancel';
-import SaveIcon from '@mui/icons-material/Save';
-import ActionButtons from './action-buttons';
-import { Dialog } from '@mui/material';
+import React from 'react'
+import AddIcon from '@mui/icons-material/Add'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import CancelIcon from '@mui/icons-material/Cancel'
+import SaveIcon from '@mui/icons-material/Save'
+import ActionButtons from './action-buttons'
+import { Dialog } from '@mui/material'
 
 export default {
   title: 'Design Library/Atoms/Buttons/ActionButtons',
-  component: ActionButtons
-};
+  component: ActionButtons,
+}
 
-const Template = (args) => <ActionButtons {...args} />;
+const Template = (args) => <ActionButtons {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   primary: [
     {
@@ -23,8 +23,8 @@ Default.args = {
       label: 'Create',
       disabled: false,
       icon: <AddIcon fontSize="small" />,
-      component: <Dialog open={false}>create</Dialog>
-    }
+      component: <Dialog open={false}>create</Dialog>,
+    },
   ],
   secondary: [
     {
@@ -33,12 +33,12 @@ Default.args = {
       label: 'Cancel',
       disabled: false,
       icon: <CancelIcon fontSize="small" />,
-      component: <Dialog open={false}>cancel</Dialog>
-    }
-  ]
-};
+      component: <Dialog open={false}>cancel</Dialog>,
+    },
+  ],
+}
 
-export const WithManyActions = Template.bind({});
+export const WithManyActions = Template.bind({})
 WithManyActions.args = {
   primary: [
     {
@@ -47,7 +47,7 @@ WithManyActions.args = {
       label: 'Create',
       disabled: false,
       icon: <AddIcon fontSize="small" />,
-      component: <Dialog open={false}>create 2</Dialog>
+      component: <Dialog open={false}>create 2</Dialog>,
     },
     {
       key: 'edit',
@@ -55,7 +55,7 @@ WithManyActions.args = {
       label: 'Edit',
       disabled: false,
       icon: <EditIcon fontSize="small" />,
-      component: <Dialog open={false}>edit</Dialog>
+      component: <Dialog open={false}>edit</Dialog>,
     },
     {
       key: 'delete',
@@ -63,8 +63,8 @@ WithManyActions.args = {
       label: 'Delete',
       disabled: false,
       icon: <DeleteIcon fontSize="small" />,
-      component: <Dialog open={false}>delete</Dialog>
-    }
+      component: <Dialog open={false}>delete</Dialog>,
+    },
   ],
   secondary: [
     {
@@ -73,7 +73,7 @@ WithManyActions.args = {
       label: 'Cancel',
       disabled: false,
       icon: <CancelIcon fontSize="small" />,
-      component: <Dialog open={false}>cancel secondary</Dialog>
+      component: <Dialog open={false}>cancel secondary</Dialog>,
     },
     {
       key: 'save secondary',
@@ -81,7 +81,7 @@ WithManyActions.args = {
       label: 'Save',
       disabled: false,
       icon: <SaveIcon fontSize="small" />,
-      component: <Dialog open={false}>save secondary</Dialog>
-    }
-  ]
-};
+      component: <Dialog open={false}>save secondary</Dialog>,
+    },
+  ],
+}

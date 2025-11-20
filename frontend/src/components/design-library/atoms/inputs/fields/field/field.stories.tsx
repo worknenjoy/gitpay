@@ -1,21 +1,21 @@
-import React from 'react';
+import React from 'react'
 
-import Field from './field';
+import Field from './field'
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Design Library/Atoms/Inputs/Fields/Field',
-  component: Field
+  component: Field,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   //argTypes: {
   //  tags: { control: '' },
   //},
-};
+}
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template = (args) => <Field {...args} />;
+const Template = (args) => <Field {...args} />
 
-export const Primary = Template.bind({});
+export const Primary = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   name: 'name',
@@ -27,10 +27,10 @@ Primary.args = {
   disabled: false,
   help: false,
   completed: true,
-  onChange: () => {}
-};
+  onChange: () => {},
+}
 
-export const Empty = Template.bind({});
+export const Empty = Template.bind({})
 Empty.args = {
   name: 'name',
   label: 'Label',
@@ -41,10 +41,10 @@ Empty.args = {
   disabled: false,
   help: false,
   completed: true,
-  onChange: () => {}
-};
+  onChange: () => {},
+}
 
-export const Loading = Template.bind({});
+export const Loading = Template.bind({})
 Loading.args = {
-  completed: false
-};
+  completed: false,
+}

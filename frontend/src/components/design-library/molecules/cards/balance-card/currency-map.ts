@@ -98,7 +98,7 @@ const currencyMap = {
   xag: { symbol: 'XAG', decimalPlaces: 2 }, // Silver (troy ounce)
   xau: { symbol: 'XAU', decimalPlaces: 2 }, // Gold (troy ounce)
   btc: { symbol: '₿', decimalPlaces: 8 }, // Bitcoin
-  eth: { symbol: 'Ξ', decimalPlaces: 8 } // Ethereum
-};
+  eth: { symbol: 'Ξ', decimalPlaces: 8 }, // Ethereum
+}
 
 export default currencyMap

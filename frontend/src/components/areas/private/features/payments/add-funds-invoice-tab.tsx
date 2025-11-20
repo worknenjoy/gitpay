@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import InvoicePayment from 'design-library/organisms/forms/invoice-forms/invoice-payment/invoice-payment';
+import InvoicePayment from 'design-library/organisms/forms/invoice-forms/invoice-payment/invoice-payment'
 
 interface AddFundsInvoiceTabProps extends RouteComponentProps {
-  price: any;
-  history: any;
-  priceAfterFee: any;
-  customer: any;
-  onPay: (amount: any) => Promise<void>;
-  onClose: () => void;
+  price: any
+  history: any
+  priceAfterFee: any
+  customer: any
+  onPay: (amount: any) => Promise<void>
+  onClose: () => void
 }
 
 const AddFundsInvoiceTab: React.FC<AddFundsInvoiceTabProps> = ({
@@ -16,25 +16,22 @@ const AddFundsInvoiceTab: React.FC<AddFundsInvoiceTabProps> = ({
   priceAfterFee,
   customer,
   history,
-  onPay
+  onPay,
 }) => {
-
   const onInvoicePayment = async () => {
     await onPay(priceAfterFee)
   }
 
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, [])
 
   return (
-    <InvoicePayment 
+    <InvoicePayment
       price={priceAfterFee}
       customer={customer}
       onInvoicePayment={onInvoicePayment}
-      onInfoClick={ () => history.push('/profile/user-account/customer') }
+      onInfoClick={() => history.push('/profile/user-account/customer')}
     />
   )
 }
 
-export default withRouter(AddFundsInvoiceTab);
+export default withRouter(AddFundsInvoiceTab)

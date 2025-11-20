@@ -65,11 +65,11 @@ const TRANSFER_TASK_ERROR = 'TRANSFER_TASK_ERROR'
 
 const VALIDATION_ERRORS = {
   'url must be unique': 'actions.task.create.validation.url',
-  'Not Found': 'actions.task.create.validation.invalid'
+  'Not Found': 'actions.task.create.validation.invalid',
 }
 
 const ERROR_CODES = {
-  StatusCodeError: 'actions.task.issues.error.notfound'
+  StatusCodeError: 'actions.task.issues.error.notfound',
 }
 
 /*
@@ -84,7 +84,7 @@ const createTaskSuccess = () => {
   return { type: CREATE_TASK_SUCCESS, completed: true }
 }
 
-const createTaskError = error => {
+const createTaskError = (error) => {
   return { type: CREATE_TASK_ERROR, completed: true, error: error }
 }
 
@@ -100,12 +100,12 @@ const updateTaskSuccess = () => {
   return { type: UPDATE_TASK_SUCCESS, completed: true }
 }
 
-const updateTaskError = error => {
+const updateTaskError = (error) => {
   return { type: UPDATE_TASK_ERROR, completed: true, error: error }
 }
 
 /*
-*  Task message to author
+ *  Task message to author
  */
 
 const messageAuthorRequested = () => {
@@ -116,12 +116,12 @@ const messageAuthorSuccess = () => {
   return { type: MESSAGE_AUTHOR_SUCCESS, completed: true }
 }
 
-const messageAuthorError = error => {
+const messageAuthorError = (error) => {
   return { type: MESSAGE_AUTHOR_ERROR, completed: true, error }
 }
 
 /*
-*  Task invite
+ *  Task invite
  */
 
 const inviteTaskRequested = () => {
@@ -132,12 +132,12 @@ const inviteTaskSuccess = () => {
   return { type: INVITE_TASK_SUCCESS, completed: true }
 }
 
-const inviteTaskError = error => {
+const inviteTaskError = (error) => {
   return { type: UPDATE_TASK_ERROR, completed: true, error }
 }
 
 /*
-*  Task funding
+ *  Task funding
  */
 
 const fundingInviteTaskRequested = () => {
@@ -148,7 +148,7 @@ const fundingInviteTaskSuccess = () => {
   return { type: FUNDING_INVITE_TASK_SUCCESS, completed: true }
 }
 
-const fundingInviteTaskError = error => {
+const fundingInviteTaskError = (error) => {
   return { type: UPDATE_TASK_ERROR, completed: true, error }
 }
 
@@ -160,11 +160,11 @@ const listTaskRequested = () => {
   return { type: LIST_TASK_REQUESTED, completed: false }
 }
 
-const listTaskSuccess = tasks => {
+const listTaskSuccess = (tasks) => {
   return { type: LIST_TASK_SUCCESS, completed: true, data: tasks.data }
 }
 
-const listTaskError = error => {
+const listTaskError = (error) => {
   return { type: LIST_TASK_ERROR, completed: true, error: error }
 }
 
@@ -180,7 +180,7 @@ const deleteTaskSuccess = () => {
   return { type: DELETE_TASK_SUCCESS, completed: true }
 }
 
-const deleteTaskError = error => {
+const deleteTaskError = (error) => {
   return { type: DELETE_TASK_ERROR, completed: true, error: error }
 }
 /*
@@ -191,17 +191,16 @@ const filterTaskRequested = () => {
   return { type: FILTER_TASK_REQUESTED, completed: false }
 }
 
-
 const filterTaskSuccess = (filteredTasks, filter, value, additional) => {
-   return {
+  return {
     type: FILTER_TASK_SUCCESS,
     completed: true,
     data: filteredTasks,
     filterType: filter,
     filterValue: value,
-    filterAdditional: additional
-  };
-};
+    filterAdditional: additional,
+  }
+}
 
 /*
  * Task order filter
@@ -216,7 +215,7 @@ const filterTaskOrdersSuccess = (task, filter) => {
     type: FILTER_TASK_ORDERS_SUCCESS,
     completed: true,
     data: task.data,
-    filterOrdersBy: filter
+    filterOrdersBy: filter,
   }
 }
 
@@ -228,31 +227,31 @@ const fetchTaskRequested = () => {
   return { type: FETCH_TASK_REQUESTED, completed: false }
 }
 
-const fetchTaskSuccess = task => {
+const fetchTaskSuccess = (task) => {
   return { type: FETCH_TASK_SUCCESS, completed: true, data: task.data }
 }
 
-const fetchTaskError = error => {
+const fetchTaskError = (error) => {
   return { type: FETCH_TASK_ERROR, completed: true, error: error }
 }
 
 /*
  * Task payment
-*/
+ */
 
 const paymentTaskRequested = () => {
   return { type: PAYMENT_TASK_REQUESTED, completed: false }
 }
 
-const paymentTaskSuccess = payment => {
+const paymentTaskSuccess = (payment) => {
   return { type: PAYMENT_TASK_SUCCESS, completed: true }
 }
 
-const paymentTaskError = error => {
+const paymentTaskError = (error) => {
   return { type: CREATE_TASK_ERROR, completed: true, error: error }
 }
 
-const changeTaskTab = tab => {
+const changeTaskTab = (tab) => {
   return { type: CHANGE_TASK_TAB, tab: tab }
 }
 
@@ -264,11 +263,11 @@ const syncTaskRequested = () => {
   return { type: SYNC_TASK_REQUESTED, completed: false }
 }
 
-const syncTaskSuccess = values => {
+const syncTaskSuccess = (values) => {
   return { type: SYNC_TASK_SUCCESS, completed: true, values: values }
 }
 
-const syncTaskError = error => {
+const syncTaskError = (error) => {
   return { type: SYNC_TASK_ERROR, completed: true, error: error }
 }
 
@@ -284,28 +283,26 @@ const reportTaskSuccess = () => {
   return { type: REPORT_TASK_SUCCESS, completed: true }
 }
 
-const reportTaskError = error => {
+const reportTaskError = (error) => {
   return { type: REPORT_TASK_ERROR, completed: true, error: error }
 }
 
 const createTask = (task, history) => {
   validToken()
-  return dispatch => {
+  return (dispatch) => {
     dispatch(createTaskRequested())
     axios
       .post(api.API_URL + '/tasks/create', task)
-      .then(response => {
+      .then((response) => {
         if (response.data && response.data.errors) {
           const firstError = response.data.errors[0].message
-          if(firstError === 'url must be unique') {
+          if (firstError === 'url must be unique') {
             dispatch(
-              addNotification(VALIDATION_ERRORS[firstError], '', `/#/task/${response.data.id}`)
+              addNotification(VALIDATION_ERRORS[firstError], '', `/#/task/${response.data.id}`),
             )
           }
-          if(firstError === 'Not Found') {
-            dispatch(
-              addNotification(VALIDATION_ERRORS[firstError])
-            )
+          if (firstError === 'Not Found') {
+            dispatch(addNotification(VALIDATION_ERRORS[firstError]))
           }
           return dispatch(createTaskError(response.data.errors))
         }
@@ -318,12 +315,16 @@ const createTask = (task, history) => {
         history.push(`/task/${response.data.id}`)
         return dispatch(fetchTask(response.data.id))
       })
-      .catch(error => {
+      .catch((error) => {
         if (error.response && error.response.status === 401) {
           dispatch(addNotification('actions.task.create.auth.error'))
           return dispatch(createTaskError(error))
         }
-        if (error.response && error.response.status === 403 && error.response.data.error === 'API rate limit exceeded') {
+        if (
+          error.response &&
+          error.response.status === 403 &&
+          error.response.data.error === 'API rate limit exceeded'
+        ) {
           dispatch(addNotification('actions.task.create.validation.limit'))
           return dispatch(createTaskError(error))
         }
@@ -333,12 +334,12 @@ const createTask = (task, history) => {
   }
 }
 
-const updateTask = task => {
-  return dispatch => {
+const updateTask = (task) => {
+  return (dispatch) => {
     dispatch(updateTaskRequested())
     return axios
       .put(api.API_URL + '/tasks/update', task)
-      .then(response => {
+      .then((response) => {
         const task = response.data
         /* TODO: REVIEW THIS LOGIC TO HANLDE UPDATE WITH ORDERS
         if (task?.Orders?.[0]?.id) {
@@ -356,7 +357,7 @@ const updateTask = task => {
           dispatch(addNotification('actions.task.update.notification.success'))
           dispatch(updateTaskSuccess())
         }*/
-       if(task.id) {
+        if (task.id) {
           dispatch(addNotification('actions.task.update.notification.success'))
           dispatch(updateTaskSuccess())
           dispatch(syncTask(task.id))
@@ -366,14 +367,23 @@ const updateTask = task => {
           return dispatch(updateTaskError({ message: 'actions.task.update.unavailable' }))
         }
       })
-      .catch(error => {
+      .catch((error) => {
         const errorResponse = error?.response?.data
         if (errorResponse.type === 'StripeCardError') {
-          dispatch(addNotification('actions.task.payment.notification.error', `. ${errorResponse.message}`))
+          dispatch(
+            addNotification(
+              'actions.task.payment.notification.error',
+              `. ${errorResponse.message}`,
+            ),
+          )
           dispatch(changeTaskTab(1))
           return dispatch(updateTaskError(errorResponse))
         }
-        if (error.response && error.response.status === 403 && error.response.data.error === 'API rate limit exceeded') {
+        if (
+          error.response &&
+          error.response.status === 403 &&
+          error.response.data.error === 'API rate limit exceeded'
+        ) {
           dispatch(addNotification('actions.task.create.validation.limit'))
           return dispatch(updateTaskError(error.response.data.error))
         }
@@ -383,17 +393,17 @@ const updateTask = task => {
   }
 }
 
-const deleteTask = task => {
+const deleteTask = (task) => {
   validToken()
-  return dispatch => {
+  return (dispatch) => {
     dispatch(deleteTaskRequested())
     return axios
       .delete(api.API_URL + `/tasks/delete/${task.id}`, task)
-      .then(response => {
+      .then((response) => {
         dispatch(deleteTaskSuccess())
         dispatch(addNotification('actions.task.delete.notification.success'))
       })
-      .catch(error => {
+      .catch((error) => {
         // eslint-disable-next-line no-console
         console.log(error)
         if (error.response && error.response.status === 403) {
@@ -412,12 +422,12 @@ const listTasks = ({ organizationId, projectId, userId, status, labelIds, langua
     dispatch(listTaskRequested())
     return axios
       .get(api.API_URL + '/tasks/list', {
-        params: { organizationId, projectId, userId, status, labelIds, languageIds }
+        params: { organizationId, projectId, userId, status, labelIds, languageIds },
       })
-      .then(response => {
+      .then((response) => {
         return dispatch(listTaskSuccess(response))
       })
-      .catch(error => {
+      .catch((error) => {
         // eslint-disable-next-line no-console
         console.log(error)
         return dispatch(listTaskError(error))
@@ -425,26 +435,24 @@ const listTasks = ({ organizationId, projectId, userId, status, labelIds, langua
   }
 }
 
-
-const filterTasks = (key = "all", value, additional) => {
+const filterTasks = (key = 'all', value, additional) => {
   return (dispatch, getState) => {
-    const tasks = getState().tasks.data;
-    dispatch(filterTaskRequested());
-    let filteredTasks;
-    if (key === "status") {
-      filteredTasks = tasks.filter((task) => task.status === value);
-    } else if (key === "issuesWithBounties") {
-      filteredTasks = tasks.filter((task) => parseFloat(task.value) > 0);
-    } else if (key === "contribution") {
-      filteredTasks = tasks.filter((task) => parseFloat(task.value) === 0);
+    const tasks = getState().tasks.data
+    dispatch(filterTaskRequested())
+    let filteredTasks
+    if (key === 'status') {
+      filteredTasks = tasks.filter((task) => task.status === value)
+    } else if (key === 'issuesWithBounties') {
+      filteredTasks = tasks.filter((task) => parseFloat(task.value) > 0)
+    } else if (key === 'contribution') {
+      filteredTasks = tasks.filter((task) => parseFloat(task.value) === 0)
     } else {
-      filteredTasks = tasks;
+      filteredTasks = tasks
     }
-    dispatch(filterTaskSuccess(filteredTasks, key, value, additional));
-    return filteredTasks;
-  };
-};
-
+    dispatch(filterTaskSuccess(filteredTasks, key, value, additional))
+    return filteredTasks
+  }
+}
 
 const filterTaskOrders = (filter = {}) => {
   return (dispatch, getState) => {
@@ -454,27 +462,21 @@ const filterTaskOrders = (filter = {}) => {
   }
 }
 
-const fetchTask = taskId => {
+const fetchTask = (taskId) => {
   validToken()
-  return dispatch => {
+  return (dispatch) => {
     dispatch(fetchTaskRequested())
     axios
       .get(api.API_URL + `/tasks/fetch/${taskId}`)
-      .then(task => {
+      .then((task) => {
         if (task.data) {
           return dispatch(fetchTaskSuccess(task))
         }
-        dispatch(
-          addNotification('actions.task.fetch.error')
-        )
-        return dispatch(
-          fetchTaskError({ message: 'actions.task.fetch.unavailable' })
-        )
+        dispatch(addNotification('actions.task.fetch.error'))
+        return dispatch(fetchTaskError({ message: 'actions.task.fetch.unavailable' }))
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.task.fetch.other.error')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.task.fetch.other.error'))
         dispatch(fetchTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')
@@ -490,40 +492,34 @@ const transferTaskRequested = () => {
   return { type: TRANSFER_TASK_REQUESTED, completed: false }
 }
 
-const transferTaskSuccess = task => {
+const transferTaskSuccess = (task) => {
   return { type: TRANSFER_TASK_SUCCESS, completed: true, data: task.data }
 }
 
-const transferTaskError = error => {
+const transferTaskError = (error) => {
   return { type: TRANSFER_TASK_ERROR, completed: true, error: error }
 }
 
 const transferTask = (taskId) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(transferTaskRequested())
     axios
       .post(api.API_URL + `/transfers/create`, {
-        taskId
+        taskId,
       })
-      .then(transfer => {
+      .then((transfer) => {
         if (transfer.data) {
-          if(transfer.data.error) {
-            return dispatch(
-              addNotification(transfer.data.error)
-            )
+          if (transfer.data.error) {
+            return dispatch(addNotification(transfer.data.error))
           }
           dispatch(addNotification('actions.task.transfer.success'))
           dispatch(transferTaskSuccess(transfer))
           return dispatch(fetchTask(taskId))
         }
-        return dispatch(
-          transferTaskError({ message: 'actions.task.transfer.unavailable' })
-        )
+        return dispatch(transferTaskError({ message: 'actions.task.transfer.unavailable' }))
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.task.transfer.other.error')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.task.transfer.other.error'))
         dispatch(transferTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to transfer issue')
@@ -539,31 +535,23 @@ const paymentTask = (taskId, value) => {
     axios
       .post(`${api.API_URL}/tasks/payments/`, {
         taskId: taskId,
-        value: value
+        value: value,
       })
-      .then(payment => {
+      .then((payment) => {
         if (payment.data.error) {
           if (payment.data.error.code === 'balance_insufficient') {
-            dispatch(
-              addNotification('actions.task.payment.balance.error')
-            )
+            dispatch(addNotification('actions.task.payment.balance.error'))
+          } else {
+            dispatch(addNotification('actions.task.payment.balance.other.error'))
           }
-          else {
-            dispatch(
-              addNotification('actions.task.payment.balance.other.error')
-            )
-          }
-        }
-        else {
+        } else {
           dispatch(addNotification('actions.task.payment.transfer.sucess'))
         }
         dispatch(paymentTaskSuccess(payment))
         return dispatch(fetchTask(taskId))
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.task.payment.error.send')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.task.payment.error.send'))
         dispatch(paymentTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to pay task')
@@ -574,14 +562,16 @@ const paymentTask = (taskId, value) => {
 }
 
 const inviteTask = (id, email, message, user) => {
-  return dispatch => {
+  return (dispatch) => {
     const name = user.name
     dispatch(inviteTaskRequested())
     axios
       .post(api.API_URL + `/tasks/${id}/invite/`, {
-        email, message, name
+        email,
+        message,
+        name,
       })
-      .then(task => {
+      .then((task) => {
         if (task.status === 200) {
           dispatch(addNotification('actions.task.invite.success'))
           return dispatch(inviteTaskSuccess())
@@ -590,15 +580,13 @@ const inviteTask = (id, email, message, user) => {
         return dispatch(
           inviteTaskError({
             error: {
-              type: 'task_invite_failed'
-            }
-          })
+              type: 'task_invite_failed',
+            },
+          }),
         )
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.task.invite.error')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.task.invite.error'))
         dispatch(inviteTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible send invite')
@@ -609,28 +597,23 @@ const inviteTask = (id, email, message, user) => {
 }
 
 const messageAuthor = (userId, taskId, message) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(messageAuthorRequested())
     return axios
       .post(api.API_URL + `/tasks/${taskId}/message/author/`, {
-        userId, message
+        userId,
+        message,
       })
-      .then(task => {
+      .then((task) => {
         if (task.status === 200) {
           dispatch(addNotification('actions.task.message.author.success'))
           return dispatch(messageAuthorSuccess())
         }
         dispatch(addNotification('actions.task.message.author.error'))
-        return dispatch(
-          messageAuthorError(
-            { code: task.status }
-          )
-        )
+        return dispatch(messageAuthorError({ code: task.status }))
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.task.message.author.error')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.task.message.author.error'))
         dispatch(inviteTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible send invite')
@@ -641,14 +624,18 @@ const messageAuthor = (userId, taskId, message) => {
 }
 
 const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, user) => {
-  return dispatch => {
+  return (dispatch) => {
     const username = user.name
     dispatch(fundingInviteTaskRequested())
     return axios
       .post(api.API_URL + `/tasks/${id}/funding/`, {
-        email, comment, suggestedValue, suggestedDate, username
+        email,
+        comment,
+        suggestedValue,
+        suggestedDate,
+        username,
       })
-      .then(task => {
+      .then((task) => {
         if (task.status === 200) {
           dispatch(addNotification('actions.task.invite.success'))
           return dispatch(fundingInviteTaskSuccess())
@@ -657,15 +644,13 @@ const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, us
         return dispatch(
           fundingInviteTaskError({
             error: {
-              type: 'task_invite_failed'
-            }
-          })
+              type: 'task_invite_failed',
+            },
+          }),
         )
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.task.invite.error')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.task.invite.error'))
         return dispatch(fundingInviteTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible send invite')
@@ -675,27 +660,25 @@ const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, us
   }
 }
 
-const syncTask = taskId => {
-  return dispatch => {
+const syncTask = (taskId) => {
+  return (dispatch) => {
     dispatch(syncTaskRequested())
     axios
       .get(api.API_URL + `/tasks/${taskId}/sync/value`)
-      .then(task => {
+      .then((task) => {
         if (task.data) {
           return dispatch(syncTaskSuccess(task.data))
         }
         return dispatch(
           syncTaskError({
             error: {
-              type: 'task_sync_failed'
-            }
-          })
+              type: 'task_sync_failed',
+            },
+          }),
         )
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.task.fetch.other.error')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.task.fetch.other.error'))
         dispatch(syncTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')
@@ -706,13 +689,15 @@ const syncTask = taskId => {
 }
 
 const reportTask = (task, reason) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(reportTaskRequested())
     return axios
       .post(api.API_URL + `/tasks/${task.id}/report`, {
-        task, reason, baseUrl: api.API_URL
+        task,
+        reason,
+        baseUrl: api.API_URL,
       })
-      .then(task => {
+      .then((task) => {
         if (task.status === 200) {
           dispatch(addNotification('actions.task.report.success'))
           return dispatch(reportTaskSuccess())
@@ -721,15 +706,13 @@ const reportTask = (task, reason) => {
         return dispatch(
           reportTaskError({
             error: {
-              type: 'task_report_failed'
-            }
-          })
+              type: 'task_report_failed',
+            },
+          }),
         )
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.task.report.error')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.task.report.error'))
         dispatch(reportTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to send report')
@@ -751,18 +734,23 @@ const requestClaimTaskSuccess = () => {
   return { type: CLAIM_TASK_SUCCESS, completed: true }
 }
 
-const requestClaimTaskError = error => {
+const requestClaimTaskError = (error) => {
   return { type: CLAIM_TASK_ERROR, completed: true, error: error }
 }
 
 const requestClaimTask = (taskId, userId, comments, isApproved, token, history) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(requestClaimTaskRequested())
     return axios
       .post(api.API_URL + `/tasks/${taskId}/claim`, {
-        taskId, userId, comments, isApproved, token: token, baseUrl: api.API_URL
+        taskId,
+        userId,
+        comments,
+        isApproved,
+        token: token,
+        baseUrl: api.API_URL,
       })
-      .then(task => {
+      .then((task) => {
         if (task.status === 200 && !task.data && !task.data.error) {
           dispatch(addNotification('actions.task.claim.success'))
           if (isApproved) {
@@ -774,25 +762,21 @@ const requestClaimTask = (taskId, userId, comments, isApproved, token, history) 
 
         if (task.data.error === 'user_is_not_the_owner') {
           dispatch(addNotification('actions.task.claim.error.user_is_not_the_owner'))
-        }
-        else if (task.data.error === 'invalid_provider') {
+        } else if (task.data.error === 'invalid_provider') {
           dispatch(addNotification('actions.task.claim.error.invalid_provider'))
-        }
-        else {
+        } else {
           dispatch(addNotification('actions.task.claim.error'))
         }
         return dispatch(
           requestClaimTaskError({
             error: {
-              type: 'task_claim_failed'
-            }
-          })
+              type: 'task_claim_failed',
+            },
+          }),
         )
       })
-      .catch(e => {
-        dispatch(
-          addNotification('actions.task.claim.error')
-        )
+      .catch((e) => {
+        dispatch(addNotification('actions.task.claim.error'))
         dispatch(requestClaimTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible request claim')
@@ -864,5 +848,5 @@ export {
   changeTaskTab,
   reportTask,
   requestClaimTask,
-  transferTask
+  transferTask,
 }

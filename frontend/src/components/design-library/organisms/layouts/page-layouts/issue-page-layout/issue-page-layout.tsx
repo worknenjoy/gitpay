@@ -1,9 +1,9 @@
-import React from 'react';
-import { Grid } from '@mui/material';
-import IssueContent from 'design-library/molecules/content/issue-content/issue-content';
-import IssueSidebar from 'design-library/molecules/sections/issue-sidebar/issue-sidebar';
+import React from 'react'
+import { Grid } from '@mui/material'
+import IssueContent from 'design-library/molecules/content/issue-content/issue-content'
+import IssueSidebar from 'design-library/molecules/sections/issue-sidebar/issue-sidebar'
 
-const IssuePage = ({ 
+const IssuePage = ({
   user,
   task,
   project,
@@ -34,7 +34,7 @@ const IssuePage = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask
+  syncTask,
 }) => {
   return (
     <Grid container style={{ marginBottom: 4 }} alignItems="stretch">
@@ -81,7 +81,7 @@ const IssuePage = ({
         />
       </Grid>
     </Grid>
-  );
+  )
 }
 
-export default IssuePage;
+export default IssuePage

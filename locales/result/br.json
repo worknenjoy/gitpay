@@ -189,6 +189,7 @@
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.bottom": "Você pode verificar os detalhes da transação em <a href=\"https://gitpay.me/#/profile/payment-requests\">Gitpay</a>.",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.product_not_received": "Produto não recebido",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.payment_request_payment_applied": "Solicitação de pagamento de crédito aplicada ao saldo",
+  "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.refund_payment_request": "Pedido de pagamento de reembolso solicitado pelo cliente",
   "mail.paymentRequest.newDisputeCreatedForPaymentRequest.subject": "Nova disputa foi aberta para a sua solicitação de pagamento no Gitpay",
   "mail.paymentRequest.newDisputeCreatedForPaymentRequest.message": "Uma nova disputa foi criada para um pagamento recente relacionado com sua solicitação de pagamento. <br /><br /><strong>Status atual: </strong>{{status}}",
   "mail.paymentRequest.newDisputeCreatedForPaymentRequest.details": "<strong>Reason:</strong> {{reason}}<br/><strong>Cliente:</strong> {{customer_name}}<br/><strong>Cliente e-mail:</strong> {{customer_email}}",

@@ -4,9 +4,7 @@ import Button from '@mui/material/Button'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import { FormattedMessage } from 'react-intl'
 
-export default function ImportIssueButton ({
-  onAddIssueClick
-}) {
+export default function ImportIssueButton({ onAddIssueClick }) {
   const anchorRef = React.useRef(null)
 
   const handleClick = (e) => {
@@ -16,9 +14,9 @@ export default function ImportIssueButton ({
 
   return (
     <Grid container direction="column" alignItems="center">
-  <Grid size={{ xs: 12 }}>
-        <ButtonGroup variant="contained" color="primary" ref={ anchorRef } aria-label="split button">
-          <Button onClick={ handleClick }>
+      <Grid size={{ xs: 12 }}>
+        <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
+          <Button onClick={handleClick}>
             <FormattedMessage
               id="home.hero.headline.button.secondary"
               defaultMessage="Import issue"

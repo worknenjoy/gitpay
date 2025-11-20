@@ -20,40 +20,40 @@ xdescribe('wallet order actions', () => {
   describe('action creators', () => {
     it('should create wallet order action objects', () => {
       expect(walletOrderActions.createWalletOrderRequested()).to.eql({
-        type: types.CREATE_WALLET_ORDER_REQUESTED
+        type: types.CREATE_WALLET_ORDER_REQUESTED,
       })
       expect(walletOrderActions.createWalletOrderSuccess({ id: 1 })).to.eql({
         type: types.CREATE_WALLET_ORDER_SUCCESS,
-        walletOrder: { id: 1 }
+        walletOrder: { id: 1 },
       })
       expect(walletOrderActions.createWalletOrderError({ error: true })).to.eql({
         type: types.CREATE_WALLET_ORDER_ERROR,
-        error: { error: true }
+        error: { error: true },
       })
       expect(walletOrderActions.listWalletOrdersRequested()).to.eql({
         type: types.LIST_WALLET_ORDERS_REQUESTED,
-        completed: false
+        completed: false,
       })
       expect(walletOrderActions.listWalletOrdersSuccess([{ id: 1 }])).to.eql({
         type: types.LIST_WALLET_ORDERS_SUCCESS,
         completed: true,
-        walletOrders: [{ id: 1 }]
+        walletOrders: [{ id: 1 }],
       })
       expect(walletOrderActions.listWalletOrdersError({ error: true })).to.eql({
         type: types.LIST_WALLET_ORDERS_ERROR,
         completed: true,
-        error: { error: true }
+        error: { error: true },
       })
       expect(walletOrderActions.fetchWalletOrderRequested()).to.eql({
-        type: types.FETCH_WALLET_ORDER_REQUESTED
+        type: types.FETCH_WALLET_ORDER_REQUESTED,
       })
       expect(walletOrderActions.fetchWalletOrderSuccess({ id: 1 })).to.eql({
         type: types.FETCH_WALLET_ORDER_SUCCESS,
-        walletOrder: { id: 1 }
+        walletOrder: { id: 1 },
       })
       expect(walletOrderActions.fetchWalletOrderError({ error: true })).to.eql({
         type: types.FETCH_WALLET_ORDER_ERROR,
-        error: { error: true }
+        error: { error: true },
       })
     })
   })
@@ -71,13 +71,17 @@ xdescribe('wallet order actions', () => {
       const walletOrderData = { id: 1 }
       moxios.stubRequest(`${api.API_URL}/wallets/orders`, {
         status: 200,
-        response: walletOrderData
+        response: walletOrderData,
       })
 
       const expectedActions = [
         { type: types.CREATE_WALLET_ORDER_REQUESTED },
-        { type: typesNotification.ADD_NOTIFICATION, text: 'actions.walletOrder.create.success', open: true },
-        { type: types.CREATE_WALLET_ORDER_SUCCESS, walletOrder: walletOrderData }
+        {
+          type: typesNotification.ADD_NOTIFICATION,
+          text: 'actions.walletOrder.create.success',
+          open: true,
+        },
+        { type: types.CREATE_WALLET_ORDER_SUCCESS, walletOrder: walletOrderData },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletOrderActions.createWalletOrder(walletOrderData)).then(() => {
@@ -92,13 +96,20 @@ xdescribe('wallet order actions', () => {
 
     it('creates CREATE_WALLET_ORDER_ERROR when creating wallet order fails', () => {
       moxios.stubRequest(`${api.API_URL}/wallets/orders`, {
-        status: 500
+        status: 500,
       })
 
       const expectedActions = [
         { type: types.CREATE_WALLET_ORDER_REQUESTED },
-        { type: typesNotification.ADD_NOTIFICATION, text: 'actions.walletOrder.create.error', open: true },
-        { type: types.CREATE_WALLET_ORDER_ERROR, error: new Error('Request failed with status code 500') }
+        {
+          type: typesNotification.ADD_NOTIFICATION,
+          text: 'actions.walletOrder.create.error',
+          open: true,
+        },
+        {
+          type: types.CREATE_WALLET_ORDER_ERROR,
+          error: new Error('Request failed with status code 500'),
+        },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletOrderActions.createWalletOrder({})).then(() => {
@@ -116,12 +127,12 @@ xdescribe('wallet order actions', () => {
       const walletOrdersData = [{ id: 1 }]
       moxios.stubRequest(`${api.API_URL}/wallets/orders`, {
         status: 200,
-        response: walletOrdersData
+        response: walletOrdersData,
       })
 
       const expectedActions = [
         { type: types.LIST_WALLET_ORDERS_REQUESTED, completed: false },
-        { type: types.LIST_WALLET_ORDERS_SUCCESS, completed: true, walletOrders: walletOrdersData }
+        { type: types.LIST_WALLET_ORDERS_SUCCESS, completed: true, walletOrders: walletOrdersData },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletOrderActions.listWalletOrders(1)).then(() => {
@@ -131,12 +142,16 @@ xdescribe('wallet order actions', () => {
 
     it('creates LIST_WALLET_ORDERS_ERROR when listing wallet orders fails', () => {
       moxios.stubRequest(`${api.API_URL}/wallets/orders`, {
-        status: 500
+        status: 500,
       })
 
       const expectedActions = [
         { type: types.LIST_WALLET_ORDERS_REQUESTED, completed: false },
-        { type: types.LIST_WALLET_ORDERS_ERROR, completed: true, error: new Error('Request failed with status code 500') }
+        {
+          type: types.LIST_WALLET_ORDERS_ERROR,
+          completed: true,
+          error: new Error('Request failed with status code 500'),
+        },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletOrderActions.listWalletOrders(1)).then(() => {
@@ -152,12 +167,12 @@ xdescribe('wallet order actions', () => {
       const walletOrderData = { id: 1 }
       moxios.stubRequest(`${api.API_URL}/wallets/orders/1`, {
         status: 200,
-        response: walletOrderData
+        response: walletOrderData,
       })
 
       const expectedActions = [
         { type: types.FETCH_WALLET_ORDER_REQUESTED },
-        { type: types.FETCH_WALLET_ORDER_SUCCESS, walletOrder: walletOrderData }
+        { type: types.FETCH_WALLET_ORDER_SUCCESS, walletOrder: walletOrderData },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletOrderActions.fetchWalletOrder(1)).then(() => {
@@ -167,12 +182,15 @@ xdescribe('wallet order actions', () => {
 
     it('creates FETCH_WALLET_ORDER_ERROR when fetching wallet order fails', () => {
       moxios.stubRequest(`${api.API_URL}/wallets/orders/1`, {
-        status: 500
+        status: 500,
       })
 
       const expectedActions = [
         { type: types.FETCH_WALLET_ORDER_REQUESTED },
-        { type: types.FETCH_WALLET_ORDER_ERROR, error: new Error('Request failed with status code 500') }
+        {
+          type: types.FETCH_WALLET_ORDER_ERROR,
+          error: new Error('Request failed with status code 500'),
+        },
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(walletOrderActions.fetchWalletOrder(1)).then(() => {

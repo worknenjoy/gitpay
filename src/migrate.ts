@@ -10,7 +10,7 @@ const database_env = {
   development: 'databaseDev',
   staging: 'databaseStaging',
   production: 'databaseProd',
-  test: 'databaseTest'
+  test: 'databaseTest',
 } as const
 
 type EnvName = keyof typeof database_env
@@ -35,26 +35,19 @@ if (env === 'production' || env === 'staging') {
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false
-      }
-    }
+        rejectUnauthorized: false,
+      },
+    },
   })
 
   console.log('running production-like migration')
 } else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  )
+  sequelize = new Sequelize(config.database, config.username, config.password, config)
 }
 
-sequelize
-  .query('SELECT current_database();')
-  .then(([res]: any) => {
-    console.log('✅ Connected to DB:', res[0].current_database)
-  })
+sequelize.query('SELECT current_database();').then(([res]: any) => {
+  console.log('✅ Connected to DB:', res[0].current_database)
+})
 
 const isSeed = process.env.TYPE === 'seed'
 
@@ -62,12 +55,11 @@ const baseDir = isSeed
   ? path.join(__dirname, './db/seeders')
   : path.join(__dirname, './db/migrations')
 
-
 const umzug = new Umzug({
   context: {
     sequelize,
     queryInterface: sequelize.getQueryInterface(),
-    SequelizeCtor: sequelize.constructor as typeof Sequelize
+    SequelizeCtor: sequelize.constructor as typeof Sequelize,
   },
 
   storage: new SequelizeStorage({ sequelize }),
@@ -81,36 +73,24 @@ const umzug = new Umzug({
       }
       const mod = require(filePath)
 
-      const upRaw =
-        mod.up ||
-        (mod.default && mod.default.up)
+      const upRaw = mod.up || (mod.default && mod.default.up)
 
-      const downRaw =
-        mod.down ||
-        (mod.default && mod.default.down)
+      const downRaw = mod.down || (mod.default && mod.default.down)
 
       if (!upRaw || !downRaw) {
-        throw new Error(
-          `Migration "${name}" in ${filePath} does not export up/down`
-        )
+        throw new Error(`Migration "${name}" in ${filePath} does not export up/down`)
       }
 
       const runUp = () => {
         if (upRaw.length >= 2) {
-          return upRaw(
-            context.queryInterface,
-            context.SequelizeCtor
-          )
+          return upRaw(context.queryInterface, context.SequelizeCtor)
         }
         return upRaw(context)
       }
 
       const runDown = () => {
         if (downRaw.length >= 2) {
-          return downRaw(
-            context.queryInterface,
-            context.SequelizeCtor
-          )
+          return downRaw(context.queryInterface, context.SequelizeCtor)
         }
         return downRaw(context)
       }
@@ -118,12 +98,12 @@ const umzug = new Umzug({
       return {
         name,
         up: runUp,
-        down: runDown
+        down: runDown,
       }
-    }
+    },
   },
 
-  logger: console
+  logger: console,
 })
 
 async function cmdStatus() {
@@ -132,22 +112,22 @@ async function cmdStatus() {
 
   // normalize for printing
   const norm = (list: { name: string }[]) =>
-    list.map(m => ({
+    list.map((m) => ({
       name: m.name,
-      file: m.name
+      file: m.name,
     }))
 
   const status = {
     current: executed.length > 0 ? executed[0].name : '<NO_MIGRATIONS>',
-    executed: executed.map(m => m.name),
-    pending: pending.map(m => m.name)
+    executed: executed.map((m) => m.name),
+    pending: pending.map((m) => m.name),
   }
 
   console.log('Status:', JSON.stringify(status, null, 2))
 
   return {
     executed: norm(executed),
-    pending: norm(pending)
+    pending: norm(pending),
   }
 }
 

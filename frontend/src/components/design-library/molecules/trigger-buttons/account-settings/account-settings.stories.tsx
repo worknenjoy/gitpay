@@ -1,14 +1,14 @@
-import React from 'react';
-import AccountSettings from './account-settings';
+import React from 'react'
+import AccountSettings from './account-settings'
 
 export default {
   title: 'Design Library/Molecules/TriggerButtons/AccountSettings',
-  component: AccountSettings
-};
+  component: AccountSettings,
+}
 
-const Template = (args) => <AccountSettings {...args} />;
+const Template = (args) => <AccountSettings {...args} />
 
-export const Default = Template.bind({});
+export const Default = Template.bind({})
 Default.args = {
   // Add default props here
   user: {
@@ -23,13 +23,13 @@ Default.args = {
       Types: [
         {
           id: 1,
-          name: 'contributor'
+          name: 'contributor',
         },
         {
           id: 2,
-          name: 'maintainer'
-        }
-      ]
-    }
-  }
-};
+          name: 'maintainer',
+        },
+      ],
+    },
+  },
+}

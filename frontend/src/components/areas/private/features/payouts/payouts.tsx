@@ -9,7 +9,16 @@ import EmptyPayout from 'design-library/molecules/content/empty/empty-payout/emp
 import { useHistory } from 'react-router-dom'
 import PayoutRequestDrawer from 'design-library/molecules/drawers/payout-request-drawer/payout-request-drawer'
 
-const Payouts = ({ payouts, balance, fetchAccountBalance, searchPayout, requestPayout, user, account, fetchAccount }) => {
+const Payouts = ({
+  payouts,
+  balance,
+  fetchAccountBalance,
+  searchPayout,
+  requestPayout,
+  user,
+  account,
+  fetchAccount,
+}) => {
   const history = useHistory()
   const { data: userData, completed: userCompleted } = user || {}
   const { data, completed } = balance || {}
@@ -17,7 +26,7 @@ const Payouts = ({ payouts, balance, fetchAccountBalance, searchPayout, requestP
   const { data: accountData, completed: accountCompleted } = account || {}
   const payoutSchedule = accountData?.settings?.payouts?.schedule?.interval
 
-  const [ payoutRequestDrawer, setPayoutRequestDrawer ] = React.useState(false)
+  const [payoutRequestDrawer, setPayoutRequestDrawer] = React.useState(false)
 
   const handlePayoutRequestDrawer = () => {
     setPayoutRequestDrawer(!payoutRequestDrawer)
@@ -41,20 +50,22 @@ const Payouts = ({ payouts, balance, fetchAccountBalance, searchPayout, requestP
       <div
         style={{
           display: 'flex',
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
         }}
       >
         <ProfileHeader
           title={<FormattedMessage id="payouts.title" defaultMessage="Payouts" />}
-          subtitle={<FormattedMessage id="payouts.subtitle" defaultMessage="Manage your payouts on the way to your bank account" />}
+          subtitle={
+            <FormattedMessage
+              id="payouts.subtitle"
+              defaultMessage="Manage your payouts on the way to your bank account"
+            />
+          }
         />
-
       </div>
-      {(!userData?.account_id && userCompleted) ? (
+      {!userData?.account_id && userCompleted ? (
         <Paper elevation={0} style={{ padding: 20, marginTop: 10 }}>
-          <EmptyPayout
-            onActionClick={() => history.push('/profile/payout-settings')}
-          />
+          <EmptyPayout onActionClick={() => history.push('/profile/payout-settings')} />
         </Paper>
       ) : (
         <>
@@ -63,19 +74,26 @@ const Payouts = ({ payouts, balance, fetchAccountBalance, searchPayout, requestP
               name={<FormattedMessage id="payouts.schedule" defaultMessage="Payout Schedule" />}
               status={payoutSchedule || 'No Info'}
               onAdd={() => history.push('/profile/payout-settings/bank-account/payout-schedule')}
-              action={<FormattedMessage id="payouts.editSchedule" defaultMessage="Change payout schedule" />}
+              action={
+                <FormattedMessage
+                  id="payouts.editSchedule"
+                  defaultMessage="Change payout schedule"
+                />
+              }
               actionProps={{ disabled: !accountCompleted }}
               completed={accountCompleted}
             />
             {available.map((item, index) => (
-             <>
+              <>
                 <BalanceCard
                   key={index}
                   name={<FormattedMessage id="payouts.balance" defaultMessage="Balance" />}
                   balance={item.amount}
                   currency={item.currency}
                   onAdd={handlePayoutRequestDrawer}
-                  action={<FormattedMessage id="payouts.requestPayout" defaultMessage="Request payout" />}
+                  action={
+                    <FormattedMessage id="payouts.requestPayout" defaultMessage="Request payout" />
+                  }
                   actionProps={{ disabled: item.amount === 0 || payoutSchedule !== 'manual' }}
                   completed={completed}
                   type="centavos"

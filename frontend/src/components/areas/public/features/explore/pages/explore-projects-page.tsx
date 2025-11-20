@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
-import ProjectListFull from 'design-library/molecules/lists/project-list/project-list-full/project-list-full';
+import React, { useEffect } from 'react'
+import ProjectListFull from 'design-library/molecules/lists/project-list/project-list-full/project-list-full'
 
 const ExploreProjectsPage = ({ listProjects, projects }) => {
-
   useEffect(() => {
-    listProjects();
-  }, []);
+    listProjects()
+  }, [])
 
   return (
     <>
       <ProjectListFull projects={projects} />
     </>
-  );
-};
+  )
+}
 
-export default ExploreProjectsPage;
+export default ExploreProjectsPage

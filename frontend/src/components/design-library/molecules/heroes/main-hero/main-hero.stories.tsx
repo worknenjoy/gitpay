@@ -10,8 +10,8 @@ const meta: Meta<typeof MainHero> = {
     mainTitle: { control: 'text' },
     description: { control: 'text' },
     image: { control: 'text' },
-    actions: { control: 'object' }
-  }
+    actions: { control: 'object' },
+  },
 }
 
 export default meta
@@ -23,8 +23,18 @@ export const Default: Story = {
     description: 'Ship work faster with bounties and contributors.',
     image: freelancerImage,
     actions: [
-      { label: 'Get Started', variant: 'contained', color: 'primary', onClick: action('get-started') },
-      { label: 'Learn More', variant: 'outlined', color: 'secondary', onClick: action('learn-more') }
-    ]
-  }
+      {
+        label: 'Get Started',
+        variant: 'contained',
+        color: 'primary',
+        onClick: action('get-started'),
+      },
+      {
+        label: 'Learn More',
+        variant: 'outlined',
+        color: 'secondary',
+        onClick: action('learn-more'),
+      },
+    ],
+  },
 }

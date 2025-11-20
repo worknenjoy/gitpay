@@ -1,18 +1,9 @@
-
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    queryInterface.addColumn(
-      'Users',
-      'receiveNotifications',
-      Sequelize.BOOLEAN
-    );
+    queryInterface.addColumn('Users', 'receiveNotifications', Sequelize.BOOLEAN)
   },
 
   down: (queryInterface, Sequelize) => {
-    queryInterface.removeColumn(
-      'Users',
-      'receiveNotifications'
-    );
-  }
-};
+    queryInterface.removeColumn('Users', 'receiveNotifications')
+  },
+}

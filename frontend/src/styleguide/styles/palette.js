@@ -2,46 +2,44 @@ import { grey, green } from '@mui/material/colors'
 
 const Palette = {
   typography: {
-  fontFamily: 'Roboto, Inter, Helvetica, Arial, sans-serif',
+    fontFamily: 'Roboto, Inter, Helvetica, Arial, sans-serif',
     h3: {
       fontWeight: 200,
       fontSize: 42,
       lineHeight: '52px',
-      color: '#353A42'
-
+      color: '#353A42',
     },
     h4: {
       fontWeight: 200,
       fontSize: 28,
       lineHeight: '24px',
-      color: '#353A42'
-
+      color: '#353A42',
     },
     h5: {
       fontWeight: 500,
       fontSize: 28,
       lineHeight: '28px',
-      color: '#353A42'
+      color: '#353A42',
     },
     h6: {
       fontWeight: 400,
       fontSize: 21,
       lineHeight: '20px',
-      color: '#353A42'
+      color: '#353A42',
     },
     body1: {
-      fontSize: 14
+      fontSize: 14,
     },
     caption: {
       fontSize: 12,
-      color: '#9B9B9B'
+      color: '#9B9B9B',
     },
     subtitle1: {
-      fontWeight: 500
+      fontWeight: 500,
     },
     subtitle2: {
-      fontWeight: 400
-    }
+      fontWeight: 400,
+    },
   },
   palette: {
     /*
@@ -58,21 +56,21 @@ const Palette = {
       contrastText: grey[100],
       // keep these custom keys for backward compatibility with usages like theme.palette.primary.success
       success: green[400],
-      error: '#FF0000'
+      error: '#FF0000',
     },
     secondary: {
       light: '#d0722a',
       main: '#d0722a',
       // dark: will be calculated from palette.secondary.main,
-      contrastText: '#fff'
+      contrastText: '#fff',
     },
     // MUI v5+ expects success/error at the top-level palette as well
     success: {
-      main: green[400]
+      main: green[400],
     },
     error: {
-      main: '#FF0000'
-    }
+      main: '#FF0000',
+    },
   },
   components: {
     // Name of the component
@@ -83,29 +81,29 @@ const Palette = {
         },
         paper: {
           // Some CSS
-          width: 700
-        }
-      }
+          width: 700,
+        },
+      },
     },
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          backgroundColor: '#4D7E6F'
-        }
+          backgroundColor: '#4D7E6F',
+        },
         /*
         root: {
           backgroundColor: '#4D7E6F'
         }
         */
-      }
+      },
     },
     MuiTabs: {
       styleOverrides: {
         root: {
-          background: 'transparent'
+          background: 'transparent',
           // color: '#000'
-        }
-      }
+        },
+      },
     },
     MuiTab: {
       styleOverrides: {
@@ -113,16 +111,16 @@ const Palette = {
           textTransform: 'none',
           minWidth: 72,
           padding: 0,
-          margin: '0 24px 0 0'
-        }
-      }
+          margin: '0 24px 0 0',
+        },
+      },
     },
     MuiTableCell: {
       styleOverrides: {
         root: {
-          padding: '8px 0 8px 16px'
-        }
-      }
+          padding: '8px 0 8px 16px',
+        },
+      },
     },
     MuiMenuItem: {
       styleOverrides: {
@@ -137,23 +135,23 @@ const Palette = {
             // color: 'white'
           }
           */
-        }
-      }
+        },
+      },
     },
     MuiListItemIcon: {
       styleOverrides: {
         root: {
-          minWidth: 32
-        }
-      }
+          minWidth: 32,
+        },
+      },
     },
     MuiButtonBase: {
       styleOverrides: {
         root: {
           textTransform: 'none',
-          whiteSpace: 'nowrap'
-        }
-      }
+          whiteSpace: 'nowrap',
+        },
+      },
     },
     MuiButton: {
       styleOverrides: {
@@ -162,23 +160,22 @@ const Palette = {
           textTransform: 'none',
           fontSize: 16,
           '&:hover': {
-            boxShadow: 'none'
-          }
-        }
-        
-      }
+            boxShadow: 'none',
+          },
+        },
+      },
     },
     MuiButtonGroup: {
       styleOverrides: {
         contained: {
-          boxShadow: 'none'
-        }
-      }
+          boxShadow: 'none',
+        },
+      },
     },
     MuiInput: {
       styleOverrides: {
         root: {
-          margin: '2px 0'
+          margin: '2px 0',
         },
         input: {
           border: '2px solid #E2E5EA',
@@ -187,21 +184,21 @@ const Palette = {
           height: 52,
           zIndex: 1,
           '&:focus': {
-            border: '2px solid #353A42'
-          }
+            border: '2px solid #353A42',
+          },
         },
         underline: {
           '&:before': {
-            borderBottom: 'none'
+            borderBottom: 'none',
           },
           '&:after': {
-            borderBottom: 'none'
+            borderBottom: 'none',
           },
           '&:hover:not(.Mui-disabled):before': {
-            borderBottom: 'none'
-          }
-        }
-      }
+            borderBottom: 'none',
+          },
+        },
+      },
     },
     MuiInputLabel: {
       styleOverrides: {
@@ -211,24 +208,24 @@ const Palette = {
           marginLeft: 10,
           backgroundColor: 'white',
           padding: 2,
-          zIndex: 2
+          zIndex: 2,
         },
         outlined: {
           margin: 0,
-          padding: 0
-        }
-      }
+          padding: 0,
+        },
+      },
     },
     MuiFormLabel: {
       styleOverrides: {
         root: {
           '&.Mui-focused': {
-            color: '#353A42'
-          }
-        }
-      }
-    }
-  }
+            color: '#353A42',
+          },
+        },
+      },
+    },
+  },
 }
 
 export default Palette

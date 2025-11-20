@@ -2,9 +2,10 @@ const Projects = require('../../modules/projects')
 
 exports.fetchProject = (req, res) => {
   Projects.projectFetch(req.params, req.query)
-    .then(data => {
+    .then((data) => {
       res.send(data)
-    }).catch(error => {
+    })
+    .catch((error) => {
       // eslint-disable-next-line no-console
       console.log(error)
       res.send(false)
@@ -13,9 +14,10 @@ exports.fetchProject = (req, res) => {
 
 exports.listProjects = (req, res) => {
   Projects.projectList(req.params)
-    .then(data => {
+    .then((data) => {
       res.send(data)
-    }).catch(error => {
+    })
+    .catch((error) => {
       // eslint-disable-next-line no-console
       console.log(error)
       res.send(false)

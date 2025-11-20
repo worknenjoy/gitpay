@@ -6,7 +6,6 @@ const { copyEmail, notificationEmail, fromEmail, canSendEmail } = require('./con
 const emailTemplate = require('./templates/default')
 
 module.exports = async (to, subject, content, replyEmail) => {
-
   if (!sendgrid.apiKey) {
     console.warn('SendGrid API key is missing')
   }
@@ -24,9 +23,9 @@ module.exports = async (to, subject, content, replyEmail) => {
         content: [
           {
             type: content[0].type || 'text/html',
-            value: emailTemplate.defaultEmailTemplate(content[0].value)
-          }
-        ]
+            value: emailTemplate.defaultEmailTemplate(content[0].value),
+          },
+        ],
       }
 
       const response = await sgMail.send(msg)
@@ -56,13 +55,13 @@ module.exports = async (to, subject, content, replyEmail) => {
     // eslint-disable-next-line no-console
     console.log(' ----- end email full content ---- ')
     return [
-        {
-          statusCode: 202,
-          type: 'text/html',
-          to,
-          subject,
-          value: content
-        }
-      ]
+      {
+        statusCode: 202,
+        type: 'text/html',
+        to,
+        subject,
+        value: content,
+      },
+    ]
   }
 }

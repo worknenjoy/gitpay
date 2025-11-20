@@ -16,12 +16,13 @@ const sendConfirmationEmail = (task, user, comments) => {
   const body = `${i18n.__('mail.issue.claim.request.body', {
     title: task.title,
     url: task.url,
-    approveURL: approveURL
+    approveURL: approveURL,
   })}`
 
   return SendMail.success(
     { email: user.email, language, receiveNotifications: user.receiveNotifications },
-    i18n.__('mail.issue.claim.request.subject'), body
+    i18n.__('mail.issue.claim.request.subject'),
+    body,
   )
 }
 
@@ -51,12 +52,13 @@ const verifyIssueAndClaim = async (task, user, comments, token) => {
     const body = `${i18n.__('mail.issue.claim.confirmation.body', {
       title: task.title,
       url: task.url,
-      comments: comments
+      comments: comments,
     })}`
 
     return SendMail.success(
       { email: taskUser.email, language, receiveNotifications: taskUser.receiveNotifications },
-      i18n.__('mail.issue.claim.confirmation.subject'), body
+      i18n.__('mail.issue.claim.confirmation.subject'),
+      body,
     )
   })
 }
@@ -65,18 +67,17 @@ const requestClaim = Promise.method(async ({ taskId, userId, comments, isApprove
   const task = await taskFetch({ id: taskId })
   const user = await models.User.findOne({
     where: {
-      id: userId
-    }
+      id: userId,
+    },
   })
 
   if (isApproved) {
     return verifyIssueAndClaim(task, user, comments, token)
-  }
-  else {
+  } else {
     return sendConfirmationEmail(task, user, comments)
   }
 })
 
 module.exports = {
-  requestClaim
+  requestClaim,
 }

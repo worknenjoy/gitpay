@@ -32,29 +32,30 @@ const invoicePaymentFailed = require('../../../modules/webhooks/invoicePaymentFa
 const {
   FAILED_REASON,
   CURRENCIES,
-  formatStripeAmount
+  formatStripeAmount,
 } = require('../../../modules/webhooks/constants')
 
 exports.webhookPlatform = async (req: any, res: any) => {
-  const sig = req.headers['stripe-signature'];
-  const secret = process.env.STRIPE_WEBHOOK_SECRET_PLATFORM;
+  const sig = req.headers['stripe-signature']
+  const secret = process.env.STRIPE_WEBHOOK_SECRET_PLATFORM
 
-  let event;
-  
+  let event
+
   try {
     if (process.env.NODE_ENV === 'test') {
-      event = typeof req.body === 'string' || Buffer.isBuffer(req.body)
-        ? JSON.parse(req.body.toString())
-        : req.body;
+      event =
+        typeof req.body === 'string' || Buffer.isBuffer(req.body)
+          ? JSON.parse(req.body.toString())
+          : req.body
     } else {
-      event = stripe.webhooks.constructEvent(req.body, sig, secret);
+      event = stripe.webhooks.constructEvent(req.body, sig, secret)
     }
   } catch (err: any) {
-    console.error('❌ Webhook signature verification failed:', err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    console.error('❌ Webhook signature verification failed:', err.message)
+    return res.status(400).send(`Webhook Error: ${err.message}`)
   }
 
-  console.log('✅ Received event:', event.type);
+  console.log('✅ Received event:', event.type)
 
   if (event) {
     const paid = event.data.object.paid || false
@@ -102,10 +103,9 @@ exports.webhookPlatform = async (req: any, res: any) => {
       case 'checkout.session.completed':
         return await checkoutSessionCompleted(event, req, res)
       default:
-        return res.status(200).json(event); // Respond with 200 OK for unhandled events
+        return res.status(200).json(event) // Respond with 200 OK for unhandled events
     }
-  }
-  else {
+  } else {
     return res.send(false)
   }
 }

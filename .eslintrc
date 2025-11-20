@@ -2,10 +2,12 @@
   "root": true,
   "extends": [
     "eslint:recommended",
-    "react-app"
+    "react-app",
+    "plugin:prettier/recommended"
   ],
   "plugins": [
-    "unused-imports"
+    "unused-imports",
+    "prettier"
   ],
   "globals": {
     "DEV": false,
@@ -15,13 +17,17 @@
     "xit": false
   },
   "rules": {
+    /** Let Prettier handle all formatting */
+    "prettier/prettier": "error",
+
+    /** Keep your existing logic / code-quality rules */
     "no-mixed-operators": 0,
     "import/first": 0,
     "prefer-promise-reject-errors": 0,
     "react/prop-types": 0,
     "react/jsx-no-bind": 0,
-    "comma-dangle": ["error", "never"],
-    "jsx-quotes": ["error", "prefer-double"],
+
+    /** unused-imports setup */
     "unused-imports/no-unused-imports": "error",
     "no-unused-vars": "off",
     "unused-imports/no-unused-vars": [
@@ -33,5 +39,38 @@
         "argsIgnorePattern": "^_"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      /** Node / backend scripts, migration, etc. */
+      "files": [
+        "migrate.js",
+        "migration/**/*",
+        "scripts/**/*",
+        "*.config.js"
+      ],
+      "env": {
+        "node": true
+      }
+    },
+    {
+      /** Frontend React (if you want to be explicit) */
+      "files": [
+        "frontend/**/*.{js,jsx,ts,tsx}"
+      ],
+      "env": {
+        "browser": true
+      }
+    },
+    {
+      /** Tests (if you use Jest / testing libs) */
+      "files": [
+        "**/*.test.{js,jsx,ts,tsx}",
+        "**/__tests__/**/*.{js,jsx,ts,tsx}"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }

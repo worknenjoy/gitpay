@@ -1,20 +1,19 @@
-import React from "react";
-import { Typography } from "@mui/material";
-import { ArrowBack } from "@mui/icons-material"
-import { FormattedMessage } from "react-intl";
-import { TermsContainer, Header, ContentArea, ActionsBar, ActionButton } from "./base-terms.styles";
+import React from 'react'
+import { Typography } from '@mui/material'
+import { ArrowBack } from '@mui/icons-material'
+import { FormattedMessage } from 'react-intl'
+import { TermsContainer, Header, ContentArea, ActionsBar, ActionButton } from './base-terms.styles'
 
 type BaseTermsProps = {
-  title: React.ReactNode | string;
-  subtitle: React.ReactNode | string;
-  updated: React.ReactNode | string;
-  content: React.ReactNode | string;
-  onArrowBack?: () => void;
-  onAgreeTerms?: () => void;
-  noHeader?: boolean;
-  extraStyles?: boolean;
-};
-
+  title: React.ReactNode | string
+  subtitle: React.ReactNode | string
+  updated: React.ReactNode | string
+  content: React.ReactNode | string
+  onArrowBack?: () => void
+  onAgreeTerms?: () => void
+  noHeader?: boolean
+  extraStyles?: boolean
+}
 
 const BaseTerms = ({
   title,
@@ -24,16 +23,15 @@ const BaseTerms = ({
   onArrowBack,
   onAgreeTerms,
   noHeader,
-  extraStyles = true 
-}:BaseTermsProps) => {
-  
+  extraStyles = true,
+}: BaseTermsProps) => {
   return (
     <>
       <TermsContainer extraStyles={extraStyles}>
-        { noHeader ? null : (
+        {noHeader ? null : (
           <>
             <Header>
-              { onArrowBack && (
+              {onArrowBack && (
                 <a onClick={onArrowBack} href="#">
                   <ArrowBack />
                 </a>
@@ -55,7 +53,7 @@ const BaseTerms = ({
             {content}
           </Typography>
         </ContentArea>
-        { onAgreeTerms && (
+        {onAgreeTerms && (
           <ActionsBar>
             <ActionButton onClick={onAgreeTerms} variant="contained" color="primary" size="large">
               <FormattedMessage id="terms-base.accept" defaultMessage="I agree" />
@@ -67,4 +65,4 @@ const BaseTerms = ({
   )
 }
 
-export default BaseTerms;
+export default BaseTerms

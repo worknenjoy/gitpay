@@ -5,8 +5,8 @@ export const getInputCommentStyles = (theme: Theme) => ({
     fontFamily: 'Roboto',
     color: '#a9a9a9',
     marginTop: '10px',
-    textAlign: 'right'
-  }
+    textAlign: 'right',
+  },
 })
 
 export default getInputCommentStyles

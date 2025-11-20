@@ -4,12 +4,12 @@ import ExploreProjectsPage from '../components/areas/public/features/explore/pag
 import { listProjects } from '../actions/projectActions'
 
 const mapStateToProps = (state) => ({
-  projects: state.projects
+  projects: state.projects,
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    listProjects: () => dispatch(listProjects())
+    listProjects: () => dispatch(listProjects()),
   }
 }
 

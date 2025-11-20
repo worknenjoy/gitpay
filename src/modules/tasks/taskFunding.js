@@ -4,10 +4,12 @@ const models = require('../../models')
 const SendMail = require('../mail/mail')
 const i18n = require('i18n')
 
-module.exports = Promise.method(function ({ id }, { comment, email, suggestedValue, suggestedDate, username }) {
-  return models.Task
-    .findByPk(id, { include: [ models.User, models.Order, models.Assign ] })
-    .then(task => {
+module.exports = Promise.method(function (
+  { id },
+  { comment, email, suggestedValue, suggestedDate, username },
+) {
+  return models.Task.findByPk(id, { include: [models.User, models.Order, models.Assign] }).then(
+    (task) => {
       const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
       const user = task.User.dataValues
       const language = user.language || 'en'
@@ -22,9 +24,10 @@ module.exports = Promise.method(function ({ id }, { comment, email, suggestedVal
           suggestedValue: suggestedValue,
           message: comment,
           username: username,
-          suggestedDate: suggestedDate
+          suggestedDate: suggestedDate,
         })}
-        `
+        `,
       )
-    })
+    },
+  )
 })

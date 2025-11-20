@@ -6,11 +6,13 @@ const User = require('../../models').User
 
 module.exports = Promise.method(async function walletOrderUpdate(params) {
   const { amount, name, id, userId } = params
-  const user = params.userId && await User.findOne({
-    where: {
-      id: userId
-    }
-  })
+  const user =
+    params.userId &&
+    (await User.findOne({
+      where: {
+        id: userId,
+      },
+    }))
 
   if (!user) {
     return { error: 'No valid user' }
@@ -18,11 +20,11 @@ module.exports = Promise.method(async function walletOrderUpdate(params) {
 
   const wallet = await WalletOrder.update(params, {
     where: {
-      id: id
+      id: id,
     },
     returning: true,
-    hooks: true,  // Ensure hooks are enabled
-    individualHooks: true
+    hooks: true, // Ensure hooks are enabled
+    individualHooks: true,
   })
   const updatedWalletOrder = wallet[1][0].dataValues
 
