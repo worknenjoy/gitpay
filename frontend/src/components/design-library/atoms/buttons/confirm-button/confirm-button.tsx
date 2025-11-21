@@ -1,7 +1,7 @@
 import React from 'react'
+import { AlertColor, ListItemText, ListItemIcon } from '@mui/material'
 import Button from 'design-library/atoms/buttons/button/button'
 import ConfirmDialog from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
-import type { AlertColor } from '@mui/material/Alert'
 
 type ConfirmButtonProps = {
   // Button props
@@ -9,6 +9,10 @@ type ConfirmButtonProps = {
   type?: 'button' | 'submit' | 'reset'
   variant?: 'text' | 'outlined' | 'contained'
   color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
+  size?: 'small' | 'medium' | 'large'
+  startIcon?: React.ReactNode
+  component?: React.ElementType
+  componentName?: string
   disabled?: boolean
   completed?: boolean // when false, show loading spinner like other buttons
 
@@ -20,7 +24,7 @@ type ConfirmButtonProps = {
   alertSeverity?: AlertColor
 
   // Callbacks
-  onConfirm?: () => Promise<void> | void
+  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>) => void
   onCancel?: () => void
   onOpenChange?: (open: boolean) => void
 }
@@ -30,6 +34,9 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
   type = 'button',
   variant = 'contained',
   color = 'primary',
+  size = 'medium',
+  component,
+  componentName,
   disabled,
   completed = true,
   dialogMessage,
@@ -37,6 +44,7 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
   cancelLabel = 'Cancel',
   alertMessage,
   alertSeverity = 'warning',
+  startIcon,
   onConfirm,
   onCancel,
   onOpenChange
@@ -54,24 +62,48 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
     onOpenChange?.(false)
   }
 
-  const handleConfirm = async () => {
-    await onConfirm?.()
+  const handleConfirm = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    onConfirm?.(e)
   }
 
   const handleCancel = () => {
     onCancel?.()
   }
 
+  const CustomComponent = component
+
+  const Component = component
+    ? () => (
+        <CustomComponent onClick={openDialog}>
+          {componentName === 'MenuItem' ? (
+            <>
+              <ListItemIcon>{startIcon}</ListItemIcon>
+              <ListItemText primary={label} />
+            </>
+          ) : (
+            <>
+              <span style={{ display: 'inline-block', marginRight: 8 }}>{startIcon}</span>
+              <span>{label}</span>
+            </>
+          )}
+        </CustomComponent>
+      )
+    : () => (
+        <Button
+          type={type}
+          variant={variant}
+          color={color}
+          size={size}
+          label={label}
+          startIcon={startIcon}
+          disabled={disabled}
+          onClick={openDialog}
+          completed={completed}
+        />
+      )
   return (
     <>
-      <Button
-        type={type}
-        variant={variant}
-        color={color}
-        label={label}
-        disabled={disabled}
-        onClick={openDialog}
-      />
+      <Component />
       <ConfirmDialog
         open={open}
         handleClose={handleClose}

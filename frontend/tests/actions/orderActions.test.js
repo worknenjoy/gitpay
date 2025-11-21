@@ -137,7 +137,7 @@ describe('order actions', () => {
 
       const expectedActions = [
         { type: types.DETAILS_ORDER_REQUESTED, completed: false },
-        { type: types.DETAILS_ORDER_SUCCESS, completed: true, order: orderData }
+        { type: types.DETAILS_ORDER_SUCCESS, completed: true, data: orderData }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(orderActions.detailOrder(1)).then(() => {
@@ -176,7 +176,7 @@ describe('order actions', () => {
     })
     it('creates REFUND_ORDER_SUCCESS when refunding order has been done', () => {
       const orderData = { id: 1 }
-      moxios.stubRequest(`${api.API_URL}/orders/1/refund`, {
+      moxios.stubRequest(`${api.API_URL}/orders/1/refunds`, {
         status: 200,
         response: orderData
       })
@@ -188,7 +188,7 @@ describe('order actions', () => {
           text: 'actions.order.refund.success',
           open: true
         },
-        { type: types.REFUND_ORDER_SUCCESS, completed: true, order: orderData }
+        { type: types.REFUND_ORDER_SUCCESS, completed: true, data: orderData }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(orderActions.refundOrder(1)).then(() => {
@@ -244,7 +244,7 @@ describe('order actions', () => {
           text: 'actions.order.create.payment.send.success',
           open: true
         },
-        { type: types.PAY_ORDER_SUCCESS, completed: true, order: orderData }
+        { type: types.PAY_ORDER_SUCCESS, completed: true, data: orderData }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(orderActions.payOrder({ id: 1 })).then(() => {
@@ -255,7 +255,7 @@ describe('order actions', () => {
         expect(actions[1].open).to.equal(expectedActions[1].open)
         expect(actions[2].type).to.eql(expectedActions[2].type)
         expect(actions[2].completed).to.eql(expectedActions[2].completed)
-        expect(actions[2].order.data).to.eql(expectedActions[2].order)
+        expect(actions[2]).to.eql(expectedActions[2])
       })
     })
     it('creates PAY_ORDER_ERROR when paying order fails', () => {
@@ -295,6 +295,11 @@ describe('order actions', () => {
         response: orderData
       })
 
+      moxios.stubRequest(`${api.API_URL}/orders`, {
+        status: 200,
+        response: [orderData]
+      })
+
       const expectedActions = [
         { type: types.CANCEL_ORDER_REQUESTED, completed: false },
         {
@@ -302,7 +307,9 @@ describe('order actions', () => {
           text: 'actions.order.cancel.success',
           open: true
         },
-        { type: types.CANCEL_ORDER_SUCCESS, completed: true, order: orderData }
+        { type: types.CANCEL_ORDER_SUCCESS, completed: true, data: orderData },
+        { type: types.LIST_ORDERS_REQUESTED, completed: false },
+        { type: types.LIST_ORDERS_SUCCESS, completed: true, data: [orderData] }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(orderActions.cancelOrder(1)).then(() => {
@@ -313,7 +320,8 @@ describe('order actions', () => {
         expect(actions[1].open).to.equal(expectedActions[1].open)
         expect(actions[2].type).to.equal(expectedActions[2].type)
         expect(actions[2].completed).to.equal(expectedActions[2].completed)
-        expect(actions[2].order.data).to.eql(expectedActions[2].order)
+        expect(actions[2].data).to.eql(expectedActions[2].data)
+        expect(actions[3]).to.eql(expectedActions[3])
       })
     })
     it('creates CANCEL_ORDER_ERROR when canceling order fails', () => {

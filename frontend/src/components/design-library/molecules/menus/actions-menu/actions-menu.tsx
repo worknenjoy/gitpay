@@ -1,12 +1,17 @@
 import React from 'react'
 import { IconButton, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material'
 import { MoreVert as MoreIcon, Visibility as VisibilityIcon } from '@mui/icons-material'
+import ConfirmButton from 'design-library/atoms/buttons/confirm-button/confirm-button'
 
 type ActionsMenuProps = {
   actions: {
     children: React.ReactNode
     onClick: () => void
     icon?: React.ReactNode
+    confirm?: {
+      dialogMessage?: string | React.ReactNode
+      alertMessage?: string | React.ReactNode
+    }
   }[]
 }
 
@@ -40,20 +45,32 @@ export const ActionsMenu = ({ actions }: ActionsMenuProps) => {
           vertical: 'top',
           horizontal: 'right'
         }}
-        PaperProps={{
-          sx: {
-            mt: 1,
-            minWidth: 160
-          }
-        }}
       >
         {actions.map((action, index) => (
           <MenuItem
             key={index}
             onClick={() => {
               action.onClick()
-              handleCloseMenu() // fecha o menu ao clicar em qualquer item
+              handleCloseMenu()
             }}
+            {...(action.confirm
+              ? {
+                  component: () => (
+                    <ConfirmButton
+                      type="button"
+                      dialogMessage={action.confirm.dialogMessage}
+                      alertMessage={action.confirm.alertMessage}
+                      label={action.children}
+                      onConfirm={action.onClick}
+                      variant="text"
+                      size="small"
+                      startIcon={action.icon || <VisibilityIcon fontSize="small" />}
+                      component={MenuItem}
+                      componentName={'MenuItem'}
+                    />
+                  )
+                }
+              : {})}
           >
             <ListItemIcon>{action.icon || <VisibilityIcon fontSize="small" />}</ListItemIcon>
             <ListItemText primary={action.children} />

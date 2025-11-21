@@ -8,17 +8,26 @@ export type ButtonProps = MUIButtonProps & {
   completed?: boolean
 }
 
-const Button = ({ label, completed = true, children, disabled, ...rest }: ButtonProps) => {
+const Button = ({
+  label,
+  completed = true,
+  children,
+  disabled,
+  component,
+  ...rest
+}: ButtonProps) => {
   const { Progress } = styles as any
   const isDisabled = !completed ? true : disabled
 
+  const Component = component || MaterialButton
+
   return (
-    <MaterialButton disabled={isDisabled} {...rest}>
+    <Component disabled={isDisabled} {...rest}>
       <>
         {children ?? label}
         {!completed && <Progress size={24} color="inherit" />}
       </>
-    </MaterialButton>
+    </Component>
   )
 }
 export default Button

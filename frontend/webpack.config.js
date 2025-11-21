@@ -32,7 +32,8 @@ module.exports = {
       modules: `${__dirname}/node_modules`,
       app: `${__dirname}/src`,
       images: path.resolve(__dirname, 'src/images'),
-      'design-library': path.resolve(__dirname, 'src/components/design-library')
+      'design-library': path.resolve(__dirname, 'src/components/design-library'),
+      types: path.resolve(__dirname, 'src/types')
     },
     fallback: {
       stream: 'stream-browserify'
