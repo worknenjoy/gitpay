@@ -34,6 +34,7 @@ const PrimaryDataPage = ({
   const emptyActiveTab = currentActiveTab?.table.tableData.data.length === 0
   const activeTabCompleted = currentActiveTab?.table.tableData.completed || false
   const isEmpty = (emptyActiveTab || tabs.length === 0) && activeTabCompleted
+  const isSingleTableEmpty = table?.tableData.data.length === 0 && table?.tableData.completed
 
   return (
     <Container>
@@ -54,7 +55,7 @@ const PrimaryDataPage = ({
           ) : null
         }
       />
-      {isEmpty ? (
+      {(isEmpty || isSingleTableEmpty) ? (
         <Paper sx={{ p: 2 }}>{emptyComponent}</Paper>
       ) : table ? (
         <SectionTable

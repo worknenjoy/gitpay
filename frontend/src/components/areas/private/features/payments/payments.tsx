@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { SwapHoriz as TransferIcon, Receipt as ReceiptIcon } from '@mui/icons-material'
+import { SwapHoriz as TransferIcon, Receipt as ReceiptIcon, PaymentsOutlined as PaymentIcon } from '@mui/icons-material'
 import { messages } from '../../../../../messages/messages'
 import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page'
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field'
@@ -12,6 +12,8 @@ import CreatedField from 'design-library/molecules/tables/section-table/section-
 import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
 import IssueOrderDetailsAction from 'design-library/molecules/drawers/actions/payments/issue-order-details-action/issue-order-details-action'
 import IssueOrderTransferAction from 'design-library/molecules/drawers/actions/payments/issue-order-transfer-action/issue-order-transfer-action'
+import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
+import { useHistory } from 'react-router-dom'
 
 const Payments = ({
   orders,
@@ -25,6 +27,7 @@ const Payments = ({
   listTasks,
   refundOrder
 }) => {
+  const history = useHistory()
   const intl = useIntl()
   const [selectedOrder, setSelectedOrder] = React.useState<any | null>(null)
   const [selectedTransferOrder, setSelectedTransferOrder] = React.useState<any | null>(null)
@@ -45,6 +48,20 @@ const Payments = ({
         title={<FormattedMessage id="payments.title" defaultMessage="Payments" />}
         description={
           <FormattedMessage id="payments.description" defaultMessage="Manage your payments here." />
+        }
+        emptyComponent={
+          <EmptyBase
+            icon={<PaymentIcon />}
+            completed={orders.completed}
+            text={<FormattedMessage id="payments.empty" defaultMessage="No payments found." />}
+            actionText={
+              <FormattedMessage
+                id="payments.empty.action"
+                defaultMessage="Make your first payment for a bounty"
+              />
+            }
+            onActionClick={() => history.push('/profile/explore')}
+          />
         }
         displayAction={false}
         table={{
