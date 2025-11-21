@@ -57,7 +57,7 @@ export const order = (state = { data: {}, completed: true, error: {} }, action) 
     case REFUND_ORDER_REQUESTED:
       return { ...state, completed: action.completed }
     case REFUND_ORDER_SUCCESS:
-      return { ...state, completed: action.completed, data: action.order }
+      return { ...state, completed: action.completed, data: action.data }
     case REFUND_ORDER_ERROR:
       return { ...state, completed: action.completed, error: action.error }
     default:

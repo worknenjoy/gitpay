@@ -31,6 +31,27 @@ Primary.args = {
   ]
 }
 
+export const ConfirmButton = Template.bind({})
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+ConfirmButton.args = {
+  actions: [
+    {
+      children: 'Delete Item',
+      onClick: () => {
+        console.log('Item deleted')
+      },
+      confirm: {
+        dialogMessage: 'Are you sure you want to delete this item?',
+        alertMessage: 'Item has been deleted.'
+      }
+    },
+    {
+      children: 'Action 2',
+      onClick: () => {}
+    }
+  ]
+} 
+
 export const customIcons = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 customIcons.args = {

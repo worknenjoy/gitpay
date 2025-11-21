@@ -109,7 +109,7 @@ const cancelOrderRequested = () => {
 }
 
 const cancelOrderSuccess = (order) => {
-  return { type: CANCEL_ORDER_SUCCESS, completed: true, order }
+  return { type: CANCEL_ORDER_SUCCESS, completed: true, data: order }
 }
 
 const cancelOrderError = (error) => {
@@ -141,7 +141,7 @@ const refundOrderRequested = () => {
 }
 
 const refundOrderSuccess = (order) => {
-  return { type: REFUND_ORDER_SUCCESS, completed: true, order }
+  return { type: REFUND_ORDER_SUCCESS, completed: true, data: order }
 }
 
 const refundOrderError = (error) => {
@@ -305,7 +305,6 @@ const cancelOrder = (id) => {
     return axios
       .post(api.API_URL + `/orders/${id}/cancel`, { id })
       .then((order) => {
-        console.log('order cancel data', order)
         if (order.data) {
           dispatch(addNotification('actions.order.cancel.success'))
           dispatch(cancelOrderSuccess(order.data))
@@ -349,7 +348,7 @@ const refundOrder = (id) => {
   return (dispatch) => {
     dispatch(refundOrderRequested())
     return axios
-      .post(api.API_URL + `/orders/${id}/refund`)
+      .post(api.API_URL + `/orders/${id}/refunds`)
       .then((order) => {
         if (order.data) {
           dispatch(addNotification('actions.order.refund.success'))
@@ -360,7 +359,7 @@ const refundOrder = (id) => {
         }
       })
       .catch((e) => {
-        dispatch(addNotification('actions.order.cancel.payment.error'))
+        dispatch(addNotification('actions.order.refund.error'))
         return dispatch(refundOrderError(e))
       })
   }

@@ -1,7 +1,8 @@
 import React from 'react'
+import { AlertColor, ListItemText, ListItemIcon, ListItem } from '@mui/material'
 import Button from 'design-library/atoms/buttons/button/button'
 import ConfirmDialog from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
-import type { AlertColor } from '@mui/material/Alert'
+
 
 type ConfirmButtonProps = {
   // Button props
@@ -9,6 +10,10 @@ type ConfirmButtonProps = {
   type?: 'button' | 'submit' | 'reset'
   variant?: 'text' | 'outlined' | 'contained'
   color?: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
+  size?: 'small' | 'medium' | 'large'
+  startIcon?: React.ReactNode
+  component?: React.ElementType
+  componentName?: string
   disabled?: boolean
   completed?: boolean // when false, show loading spinner like other buttons
 
@@ -30,6 +35,9 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
   type = 'button',
   variant = 'contained',
   color = 'primary',
+  size = 'medium',
+  component,
+  componentName,
   disabled,
   completed = true,
   dialogMessage,
@@ -37,6 +45,7 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
   cancelLabel = 'Cancel',
   alertMessage,
   alertSeverity = 'warning',
+  startIcon,
   onConfirm,
   onCancel,
   onOpenChange
@@ -62,16 +71,40 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
     onCancel?.()
   }
 
-  return (
-    <>
+  const CustomComponent = component
+
+  const Component = component ? 
+    () => 
+      <CustomComponent
+        onClick={openDialog}
+      >
+        {
+          componentName === 'MenuItem' ?
+          <>
+            <ListItemIcon>{startIcon}</ListItemIcon>
+            <ListItemText primary={label} />
+          </> :
+          <>
+            <span style={{ display: 'inline-block', marginRight: 8 }}>{startIcon}</span>
+            <span>{label}</span>
+          </>
+        }
+      </CustomComponent> :
+    () => 
       <Button
         type={type}
         variant={variant}
         color={color}
+        size={size}
         label={label}
+        startIcon={startIcon}
         disabled={disabled}
         onClick={openDialog}
+        completed={completed}
       />
+  return (
+    <>
+      <Component />
       <ConfirmDialog
         open={open}
         handleClose={handleClose}

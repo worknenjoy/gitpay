@@ -1,6 +1,7 @@
 const models = require('../../models')
 const PaymentMail = require('../mail/payment')
 const requestPromise = require('request-promise')
+const { handleAmount } = require('../util/handle-amount/handle-amount')
 const stripe = require('../shared/stripe/stripe')()
 
 module.exports = async function orderRefund(orderParams) {
@@ -11,7 +12,8 @@ module.exports = async function orderRefund(orderParams) {
 
   switch (order.provider) {
     case 'stripe': {
-      const refund = await stripe.refunds.create({ charge: order.source })
+      const refundAmountExcludingFees = handleAmount(order.amount, 8, 'decimal').centavos
+      const refund = await stripe.refunds.create({ charge: order.source, amount: refundAmountExcludingFees })
       if (refund && refund.id) {
         const orderUpdate = await models.Order.update(
           {

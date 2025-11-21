@@ -1,6 +1,7 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Drawer, Typography, Button } from '@mui/material'
+import { Typography, Button } from '@mui/material'
+import Drawer from 'design-library/molecules/drawers/drawer/drawer'
 import DetailsList from 'design-library/molecules/lists/details-list/details-list'
 import ConfirmButton from 'design-library/atoms/buttons/confirm-button/confirm-button'
 
@@ -72,19 +73,19 @@ const IssueOrderDetailsAction = ({ open, order, onClose, onCancel }) => {
   ]
 
   return (
-    <Drawer anchor="right" open={open} onClose={onClose} aria-labelledby="form-dialog-title">
-      <div style={{ padding: 20 }}>
-        <Typography variant="h5">
-          <FormattedMessage id="task.bounties.order.details.title" defaultMessage="Order details" />
-        </Typography>
+    <Drawer 
+      open={open}
+      onClose={onClose}
+      title={<FormattedMessage id="task.bounties.order.details.title" defaultMessage="Order details" />}
+      subtitle={
+        <FormattedMessage
+          id="task.bounties.order.details.message"
+          defaultMessage="We have here more info about your order"
+        />
+      }
+    >
+      <div>
         <div>
-          <Typography variant="caption">
-            <FormattedMessage
-              id="task.bounties.order.details.message"
-              defaultMessage="We have here more info about your order"
-            />
-          </Typography>
-
           <DetailsList
             completed={completed}
             details={[
