@@ -56,10 +56,14 @@ const PrimaryDataPage = ({
       />
       {isEmpty ? (
         <Paper sx={{ p: 2 }}>{emptyComponent}</Paper>
+      ) : table ? (
+        <SectionTable
+          tableData={table.tableData}
+          tableHeaderMetadata={table.tableHeaderMetadata}
+          customColumnRenderer={table.customColumnRenderer}
+        />
       ) : (
-        table ? 
-          <SectionTable tableData={table.tableData} tableHeaderMetadata={table.tableHeaderMetadata} customColumnRenderer={table.customColumnRenderer} /> : 
-          <TabbedTable tabs={tabs} activeTab={activeTab} />
+        <TabbedTable tabs={tabs} activeTab={activeTab} />
       )}
     </Container>
   )

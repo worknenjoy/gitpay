@@ -93,7 +93,7 @@ const payOrderRequested = () => {
 }
 
 const payOrderSuccess = (order) => {
-  return { type: PAY_ORDER_SUCCESS, completed: true, data: order}
+  return { type: PAY_ORDER_SUCCESS, completed: true, data: order }
 }
 
 const payOrderError = (error) => {

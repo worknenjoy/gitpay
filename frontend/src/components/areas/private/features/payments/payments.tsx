@@ -44,31 +44,73 @@ const Payments = ({ orders, order, user, listOrders, getOrderDetails, cancelPayp
     <>
       <PrimaryDataPage
         title={<FormattedMessage id="payments.title" defaultMessage="Payments" />}
-        description={<FormattedMessage id="payments.description" defaultMessage="Manage your payments here." />}
+        description={
+          <FormattedMessage id="payments.description" defaultMessage="Manage your payments here." />
+        }
         displayAction={false}
         table={{
           tableData: orders,
           tableHeaderMetadata: {
-            paid: { sortable: true, dataBaseKey: 'paid', label: intl.formatMessage(messages.cardTableHeaderPaid) },
-            status: { sortable: true, dataBaseKey: 'status', label: intl.formatMessage(messages.cardTableHeaderStatus) },
-            issue: { sortable: true, dataBaseKey: 'issue', label: intl.formatMessage(messages.cardTableHeaderIssue) },
-            amount: { sortable: true, dataBaseKey: 'amount', label: intl.formatMessage(messages.cardTableHeaderValue) },
-            paymentMethod: { sortable: false, dataBaseKey: 'paymentMethod', label: intl.formatMessage(messages.cardTableHeaderPayment) },
-            created: { sortable: true, dataBaseKey: 'created', label: intl.formatMessage(messages.cardTableHeaderCreated) },
-            actions: { sortable: false, dataBaseKey: 'actions', label: intl.formatMessage(messages.cardTableHeaderActions) }
+            paid: {
+              sortable: true,
+              dataBaseKey: 'paid',
+              label: intl.formatMessage(messages.cardTableHeaderPaid)
+            },
+            status: {
+              sortable: true,
+              dataBaseKey: 'status',
+              label: intl.formatMessage(messages.cardTableHeaderStatus)
+            },
+            issue: {
+              sortable: true,
+              dataBaseKey: 'issue',
+              label: intl.formatMessage(messages.cardTableHeaderIssue)
+            },
+            amount: {
+              sortable: true,
+              dataBaseKey: 'amount',
+              label: intl.formatMessage(messages.cardTableHeaderValue)
+            },
+            paymentMethod: {
+              sortable: false,
+              dataBaseKey: 'paymentMethod',
+              label: intl.formatMessage(messages.cardTableHeaderPayment)
+            },
+            created: {
+              sortable: true,
+              dataBaseKey: 'created',
+              label: intl.formatMessage(messages.cardTableHeaderCreated)
+            },
+            actions: {
+              sortable: false,
+              dataBaseKey: 'actions',
+              label: intl.formatMessage(messages.cardTableHeaderActions)
+            }
           },
           customColumnRenderer: {
-            paid: (item) => item.paid ? intl.formatMessage(messages.labelYes) : intl.formatMessage(messages.labelNo),
-            status: (item) => item.source_type === 'invoice-item' ? <InvoiceStatus status={item.status} /> : <PaymentStatus status={item.status} />,
+            paid: (item) =>
+              item.paid
+                ? intl.formatMessage(messages.labelYes)
+                : intl.formatMessage(messages.labelNo),
+            status: (item) =>
+              item.source_type === 'invoice-item' ? (
+                <InvoiceStatus status={item.status} />
+              ) : (
+                <PaymentStatus status={item.status} />
+              ),
             issue: (item) => <IssueLinkField issue={item.Task} />,
             amount: (item) => <AmountField value={item.amount} />,
-            paymentMethod: (item) => <PaymentProvider provider={item.provider} sourceType={item.source_type} />,
+            paymentMethod: (item) => (
+              <PaymentProvider provider={item.provider} sourceType={item.source_type} />
+            ),
             created: (item) => <CreatedField createdAt={item.createdAt} />,
             actions: (item) => (
               <ActionField
                 actions={[
                   {
-                    children: <FormattedMessage id="payments.viewDetails" defaultMessage="View details" />,
+                    children: (
+                      <FormattedMessage id="payments.viewDetails" defaultMessage="View details" />
+                    ),
                     onClick: () => {
                       setSelectedOrder(item)
                     }
@@ -79,13 +121,13 @@ const Payments = ({ orders, order, user, listOrders, getOrderDetails, cancelPayp
           }
         }}
       />
-      { selectedOrder && (
+      {selectedOrder && (
         <IssueOrderDetailsAction
           open={!!selectedOrder}
           order={order}
           onClose={() => setSelectedOrder(null)}
           onCancel={() => cancelPaypalPayment(selectedOrder.id)}
-        />  
+        />
       )}
     </>
   )

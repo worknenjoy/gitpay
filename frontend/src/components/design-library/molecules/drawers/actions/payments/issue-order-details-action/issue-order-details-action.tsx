@@ -14,30 +14,60 @@ const IssueOrderDetailsAction = ({ open, order, onClose, onCancel }) => {
       valueType: 'chip'
     },
     {
-      label: <FormattedMessage id="task.bounties.order.details.provider" defaultMessage="Provider:" />,
-      value: data?.provider ? data.provider : <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
+      label: (
+        <FormattedMessage id="task.bounties.order.details.provider" defaultMessage="Provider:" />
+      ),
+      value: data?.provider ? (
+        data.provider
+      ) : (
+        <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
+      )
     }
   ]
 
   const paypalOrderDetails = [
     {
       label: <FormattedMessage id="task.bounties.order.details.status" defaultMessage="Status:" />,
-      value: data?.paypal ? data.paypal.status : <FormattedMessage id="paypal.status.canceled" defaultMessage="Canceled" />
+      value: data?.paypal ? (
+        data.paypal.status
+      ) : (
+        <FormattedMessage id="paypal.status.canceled" defaultMessage="Canceled" />
+      )
     },
     {
-      label: <FormattedMessage id="task.bounties.order.details.order_id" defaultMessage="Order ID:" />,
-      value: data?.source_id ? data.source_id : <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
+      label: (
+        <FormattedMessage id="task.bounties.order.details.order_id" defaultMessage="Order ID:" />
+      ),
+      value: data?.source_id ? (
+        data.source_id
+      ) : (
+        <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
+      )
     },
     {
-      label: <FormattedMessage id="task.bounties.order.details.authorization_id" defaultMessage="Authorization ID:" />,
-      value: data?.authorization_id ? data.authorization_id : <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
+      label: (
+        <FormattedMessage
+          id="task.bounties.order.details.authorization_id"
+          defaultMessage="Authorization ID:"
+        />
+      ),
+      value: data?.authorization_id ? (
+        data.authorization_id
+      ) : (
+        <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
+      )
     }
   ]
 
   const stripeOrderDetails = [
     {
       label: <FormattedMessage id="task.bounties.order.details.id" defaultMessage="Order ID:" />,
-      value: data && data.source_id ? data.source_id : <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
+      value:
+        data && data.source_id ? (
+          data.source_id
+        ) : (
+          <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
+        )
     }
   ]
 
@@ -54,8 +84,8 @@ const IssueOrderDetailsAction = ({ open, order, onClose, onCancel }) => {
               defaultMessage="We have here more info about your order"
             />
           </Typography>
-          
-          <DetailsList 
+
+          <DetailsList
             completed={completed}
             details={[
               ...commonOrderDetails,
