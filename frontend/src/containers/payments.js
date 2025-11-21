@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Payments from '../components/areas/private/features/payments/legacy/payments'
+import Payments from '../components/areas/private/features/payments/payments'
 import { addNotification } from '../actions/notificationActions'
 import { listTasks, filterTasks, changeTaskTab } from '../actions/taskActions'
 import {
@@ -11,11 +11,11 @@ import {
   updateOrder
 } from '../actions/orderActions'
 import { getFilteredTasks } from '../selectors/tasks'
-import { getUserData } from '../common/selectors/user/getUser'
+import { getCurrentUser } from '../common/selectors/user/getUser'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: getUserData(state),
+    user: getCurrentUser(state),
     orders: state.orders,
     order: state.order,
     tasks: getFilteredTasks(state),

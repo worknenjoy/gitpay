@@ -2,24 +2,10 @@ import BaseTabs from 'design-library/molecules/tabs/base-tabs/base-tabs'
 import React, { useEffect } from 'react'
 import SectionTable from '../section-table/section-table'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
+import { TableTabsProps } from 'types/table'
 
 type TabbedTableProps = {
-  tabs: Array<{
-    label: React.ReactNode
-    value: string
-    table: {
-      tableData: {
-        data: Array<any>
-      }
-      tableHeaderMetadata: any
-      customColumnRenderer?: { [key: string]: (value: any, rowData: any) => React.ReactNode }
-    }
-    cards?: Array<{
-      title: string
-      amount: number
-      type: 'decimal' | 'centavos'
-    }>
-  }>
+  tabs: TableTabsProps
   activeTab?: string
   onChange?: (newValue: string) => void
 }

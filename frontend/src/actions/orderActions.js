@@ -93,7 +93,7 @@ const payOrderRequested = () => {
 }
 
 const payOrderSuccess = (order) => {
-  return { type: PAY_ORDER_SUCCESS, completed: true, order }
+  return { type: PAY_ORDER_SUCCESS, completed: true, data: order}
 }
 
 const payOrderError = (error) => {
@@ -125,11 +125,11 @@ const detailOrderRequested = () => {
 }
 
 const detailOrderSuccess = (order) => {
-  return { type: DETAILS_ORDER_SUCCESS, completed: true, order }
+  return { type: DETAILS_ORDER_SUCCESS, completed: true, data: order }
 }
 
 const detailOrderError = (error) => {
-  return { type: DETAILS_ORDER_SUCCESS, completed: true, error: error }
+  return { type: DETAILS_ORDER_ERROR, completed: true, error: error }
 }
 
 /*
@@ -261,7 +261,7 @@ const payOrder = (order) => {
         // eslint-disable-next-line no-console
         if (order.data.transfer_id) {
           dispatch(addNotification('actions.order.create.payment.send.success'))
-          dispatch(payOrderSuccess(order))
+          dispatch(payOrderSuccess(order.data))
           return dispatch(fetchTask(order.data.TaskId))
         } else {
           dispatch(addNotification('actions.order.create.payment.send.error'))
@@ -308,8 +308,8 @@ const cancelOrder = (id) => {
         console.log('order cancel data', order)
         if (order.data) {
           dispatch(addNotification('actions.order.cancel.success'))
-          dispatch(cancelOrderSuccess(order))
-          return dispatch(fetchTask(order.data.TaskId))
+          dispatch(cancelOrderSuccess(order.data))
+          return dispatch(listOrders())
         } else {
           addNotification('actions.order.cancel.error')
           return dispatch(cancelOrderError(new Error('cancel_order_failed')))

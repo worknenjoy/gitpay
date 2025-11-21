@@ -19,7 +19,8 @@ module.exports = {
       images: path.resolve(__dirname, '../src/images'),
       app: path.resolve(__dirname, '../src'),
       images: path.resolve(__dirname, '../src/images'),
-      'design-library': path.resolve(__dirname, '../src/components/design-library')
+      'design-library': path.resolve(__dirname, '../src/components/design-library'),
+      types: path.resolve(__dirname, '../src/types')
     }
     config.resolve.fallback = {
       ...config.resolve.fallback,

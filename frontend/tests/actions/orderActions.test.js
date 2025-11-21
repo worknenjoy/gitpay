@@ -137,7 +137,7 @@ describe('order actions', () => {
 
       const expectedActions = [
         { type: types.DETAILS_ORDER_REQUESTED, completed: false },
-        { type: types.DETAILS_ORDER_SUCCESS, completed: true, order: orderData }
+        { type: types.DETAILS_ORDER_SUCCESS, completed: true, data: orderData }
       ]
       const store = mockStore({ intl: { messages: {} } })
       return store.dispatch(orderActions.detailOrder(1)).then(() => {

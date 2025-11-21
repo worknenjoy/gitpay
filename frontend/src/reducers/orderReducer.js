@@ -22,7 +22,7 @@ import {
   REFUND_ORDER_ERROR
 } from '../actions/orderActions'
 
-export const order = (state = { data: {}, order: {}, completed: true, error: {} }, action) => {
+export const order = (state = { data: {}, completed: true, error: {} }, action) => {
   switch (action.type) {
     case CREATE_ORDER_REQUESTED:
       return { ...state, completed: action.completed }
@@ -33,7 +33,7 @@ export const order = (state = { data: {}, order: {}, completed: true, error: {} 
     case PAY_ORDER_REQUESTED:
       return { ...state, completed: action.completed }
     case PAY_ORDER_SUCCESS:
-      return { ...state, completed: action.completed, data: action.order }
+      return { ...state, completed: action.completed, data: action.data }
     case PAY_ORDER_ERROR:
       return { ...state, completed: action.completed, error: action.error }
     case TRANSFER_ORDER_REQUESTED:
@@ -51,7 +51,7 @@ export const order = (state = { data: {}, order: {}, completed: true, error: {} 
     case DETAILS_ORDER_REQUESTED:
       return { ...state, completed: action.completed }
     case DETAILS_ORDER_SUCCESS:
-      return { ...state, completed: action.completed, data: action.order }
+      return { ...state, completed: action.completed, data: action.data }
     case DETAILS_ORDER_ERROR:
       return { ...state, completed: action.completed, error: action.error }
     case REFUND_ORDER_REQUESTED:
@@ -65,7 +65,7 @@ export const order = (state = { data: {}, order: {}, completed: true, error: {} 
   }
 }
 
-export const orders = (state = { data: {}, completed: true, error: {} }, action) => {
+export const orders = (state = { data: [], completed: true, error: {} }, action) => {
   switch (action.type) {
     case LIST_ORDERS_REQUESTED:
       return { ...state, completed: action.completed }

@@ -6,7 +6,7 @@ import Button from '../../../atoms/buttons/button/button'
 type ConfirmDialogProps = {
   open: boolean
   message: React.ReactNode
-  onConfirm?: () => Promise<void> | void
+  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>) => void
   onCancel?: () => void
   handleClose?: () => void
   confirmLabel?: React.ReactNode
@@ -28,9 +28,9 @@ export default function ConfirmDialog({
   alertSeverity = 'warning',
   completed
 }: ConfirmDialogProps) {
-  const handleConfirmClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleConfirmClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    if (onConfirm) await onConfirm()
+    if (onConfirm) onConfirm(event)
     handleClose()
   }
 

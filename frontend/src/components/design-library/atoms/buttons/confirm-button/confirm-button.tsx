@@ -20,7 +20,7 @@ type ConfirmButtonProps = {
   alertSeverity?: AlertColor
 
   // Callbacks
-  onConfirm?: () => Promise<void> | void
+  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>) => void
   onCancel?: () => void
   onOpenChange?: (open: boolean) => void
 }
@@ -54,8 +54,8 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
     onOpenChange?.(false)
   }
 
-  const handleConfirm = async () => {
-    await onConfirm?.()
+  const handleConfirm = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    onConfirm?.(e)
   }
 
   const handleCancel = () => {
