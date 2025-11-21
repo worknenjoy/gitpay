@@ -13,7 +13,10 @@ module.exports = async function orderRefund(orderParams) {
   switch (order.provider) {
     case 'stripe': {
       const refundAmountExcludingFees = handleAmount(order.amount, 8, 'decimal').centavos
-      const refund = await stripe.refunds.create({ charge: order.source, amount: refundAmountExcludingFees })
+      const refund = await stripe.refunds.create({
+        charge: order.source,
+        amount: refundAmountExcludingFees
+      })
       if (refund && refund.id) {
         const orderUpdate = await models.Order.update(
           {

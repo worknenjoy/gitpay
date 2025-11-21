@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Typography, Button } from '@mui/material'
+import { Button } from '@mui/material'
 import Drawer from 'design-library/molecules/drawers/drawer/drawer'
 import DetailsList from 'design-library/molecules/lists/details-list/details-list'
 import ConfirmButton from 'design-library/atoms/buttons/confirm-button/confirm-button'
@@ -73,10 +73,12 @@ const IssueOrderDetailsAction = ({ open, order, onClose, onCancel }) => {
   ]
 
   return (
-    <Drawer 
+    <Drawer
       open={open}
       onClose={onClose}
-      title={<FormattedMessage id="task.bounties.order.details.title" defaultMessage="Order details" />}
+      title={
+        <FormattedMessage id="task.bounties.order.details.title" defaultMessage="Order details" />
+      }
       subtitle={
         <FormattedMessage
           id="task.bounties.order.details.message"

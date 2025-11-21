@@ -1,8 +1,7 @@
 import React from 'react'
-import { AlertColor, ListItemText, ListItemIcon, ListItem } from '@mui/material'
+import { AlertColor, ListItemText, ListItemIcon } from '@mui/material'
 import Button from 'design-library/atoms/buttons/button/button'
 import ConfirmDialog from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
-
 
 type ConfirmButtonProps = {
   // Button props
@@ -73,35 +72,35 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
 
   const CustomComponent = component
 
-  const Component = component ? 
-    () => 
-      <CustomComponent
-        onClick={openDialog}
-      >
-        {
-          componentName === 'MenuItem' ?
-          <>
-            <ListItemIcon>{startIcon}</ListItemIcon>
-            <ListItemText primary={label} />
-          </> :
-          <>
-            <span style={{ display: 'inline-block', marginRight: 8 }}>{startIcon}</span>
-            <span>{label}</span>
-          </>
-        }
-      </CustomComponent> :
-    () => 
-      <Button
-        type={type}
-        variant={variant}
-        color={color}
-        size={size}
-        label={label}
-        startIcon={startIcon}
-        disabled={disabled}
-        onClick={openDialog}
-        completed={completed}
-      />
+  const Component = component
+    ? () => (
+        <CustomComponent onClick={openDialog}>
+          {componentName === 'MenuItem' ? (
+            <>
+              <ListItemIcon>{startIcon}</ListItemIcon>
+              <ListItemText primary={label} />
+            </>
+          ) : (
+            <>
+              <span style={{ display: 'inline-block', marginRight: 8 }}>{startIcon}</span>
+              <span>{label}</span>
+            </>
+          )}
+        </CustomComponent>
+      )
+    : () => (
+        <Button
+          type={type}
+          variant={variant}
+          color={color}
+          size={size}
+          label={label}
+          startIcon={startIcon}
+          disabled={disabled}
+          onClick={openDialog}
+          completed={completed}
+        />
+      )
   return (
     <>
       <Component />

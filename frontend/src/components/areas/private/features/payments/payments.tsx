@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import {
-  SwapHoriz as TransferIcon,
-  Receipt as ReceiptIcon
-} from '@mui/icons-material'
+import { SwapHoriz as TransferIcon, Receipt as ReceiptIcon } from '@mui/icons-material'
 import { messages } from '../../../../../messages/messages'
 import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page'
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field'
@@ -16,10 +13,21 @@ import ActionField from 'design-library/molecules/tables/section-table/section-t
 import IssueOrderDetailsAction from 'design-library/molecules/drawers/actions/payments/issue-order-details-action/issue-order-details-action'
 import IssueOrderTransferAction from 'design-library/molecules/drawers/actions/payments/issue-order-transfer-action/issue-order-transfer-action'
 
-const Payments = ({ orders, tasks, order, user, listOrders, getOrderDetails, cancelPaypalPayment, transferOrder, listTasks, refundOrder }) => {
+const Payments = ({
+  orders,
+  tasks,
+  order,
+  user,
+  listOrders,
+  getOrderDetails,
+  cancelPaypalPayment,
+  transferOrder,
+  listTasks,
+  refundOrder
+}) => {
   const intl = useIntl()
   const [selectedOrder, setSelectedOrder] = React.useState<any | null>(null)
-  const [ selectedTransferOrder, setSelectedTransferOrder ] = React.useState<any | null>(null)
+  const [selectedTransferOrder, setSelectedTransferOrder] = React.useState<any | null>(null)
 
   useEffect(() => {
     listOrders({ userId: user.id })
@@ -106,53 +114,56 @@ const Payments = ({ orders, tasks, order, user, listOrders, getOrderDetails, can
                       setSelectedOrder(item)
                     }
                   },
-                  (
-                    item.provider === 'stripe' &&
-                    item.status === 'succeeded' &&
-                    item.Task &&
-                    item.Task.status === 'open' &&
-                    item.Task.paid === false &&
-                    !item.Task.transfer_id 
-                  ) ?
-                  {
-                    children: (
-                      <FormattedMessage id="payments.order.transferBounty" defaultMessage="Transfer Bounty" />
-                    ),
-                    icon: <TransferIcon />,
-                    onClick: () => {
-                      setSelectedTransferOrder(item)
-                    }
-                  } : null,
-                  (
-                    item.status === 'succeeded' &&
-                    item.provider === 'stripe' &&
-                    item.Task &&
-                    item.Task.status === 'open' &&
-                    item.Task.paid === false &&
-                    !item.Task.transfer_id
-                  ) ?
-                  {
-                    children: <FormattedMessage id="general.buttons.refund" defaultMessage="Refund" />,
-                    icon: <ReceiptIcon />,
-                    confirm: {
-                      dialogMessage: (
-                        <FormattedMessage
-                          id="user.profile.payments.refund.confirm"
-                          defaultMessage="Are you sure you want to refund?"
-                        />
-                      ),
-                      alertMessage: (
-                        <FormattedMessage
-                          id="user.profile.payments.refund.message"
-                          defaultMessage="You will be refunded with the value paid for the issue, excluding fees"
-                        />
-                      )
-                    },
-                    onClick: async () => {
-                      await refundOrder(item.id)
-                      await listOrders({ userId: user.id })
-                    }
-                  } : null
+                  item.provider === 'stripe' &&
+                  item.status === 'succeeded' &&
+                  item.Task &&
+                  item.Task.status === 'open' &&
+                  item.Task.paid === false &&
+                  !item.Task.transfer_id
+                    ? {
+                        children: (
+                          <FormattedMessage
+                            id="payments.order.transferBounty"
+                            defaultMessage="Transfer Bounty"
+                          />
+                        ),
+                        icon: <TransferIcon />,
+                        onClick: () => {
+                          setSelectedTransferOrder(item)
+                        }
+                      }
+                    : null,
+                  item.status === 'succeeded' &&
+                  item.provider === 'stripe' &&
+                  item.Task &&
+                  item.Task.status === 'open' &&
+                  item.Task.paid === false &&
+                  !item.Task.transfer_id
+                    ? {
+                        children: (
+                          <FormattedMessage id="general.buttons.refund" defaultMessage="Refund" />
+                        ),
+                        icon: <ReceiptIcon />,
+                        confirm: {
+                          dialogMessage: (
+                            <FormattedMessage
+                              id="user.profile.payments.refund.confirm"
+                              defaultMessage="Are you sure you want to refund?"
+                            />
+                          ),
+                          alertMessage: (
+                            <FormattedMessage
+                              id="user.profile.payments.refund.message"
+                              defaultMessage="You will be refunded with the value paid for the issue, excluding fees"
+                            />
+                          )
+                        },
+                        onClick: async () => {
+                          await refundOrder(item.id)
+                          await listOrders({ userId: user.id })
+                        }
+                      }
+                    : null
                 ].filter(Boolean)}
               />
             )

@@ -6,7 +6,6 @@ import {
   Typography,
   Button,
   List,
-  ListItem,
   ListItemAvatar,
   ListItemText,
   Skeleton,
@@ -14,7 +13,16 @@ import {
 } from '@mui/material'
 import { SwapHorizontalCircleRounded } from '@mui/icons-material'
 
-const IssueOrderTransferAction = ({ open, tasks, order, onSend, onClose, task, listOrders, listTasks }) => {
+const IssueOrderTransferAction = ({
+  open,
+  tasks,
+  order,
+  onSend,
+  onClose,
+  task,
+  listOrders,
+  listTasks
+}) => {
   const [selectedIndex, setSelectedIndex] = React.useState(null)
   const [currentTaskId, setCurrentTaskId] = React.useState(null)
 

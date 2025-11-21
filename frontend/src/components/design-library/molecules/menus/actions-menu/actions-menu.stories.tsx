@@ -50,7 +50,7 @@ ConfirmButton.args = {
       onClick: () => {}
     }
   ]
-} 
+}
 
 export const customIcons = Template.bind({})
 // More on args: https://storybook.js.org/docs/react/writing-stories/args

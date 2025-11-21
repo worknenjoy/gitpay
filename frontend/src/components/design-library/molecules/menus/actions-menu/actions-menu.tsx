@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconButton, Menu, MenuItem, ListItemIcon, ListItemText, Button } from '@mui/material'
+import { IconButton, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material'
 import { MoreVert as MoreIcon, Visibility as VisibilityIcon } from '@mui/icons-material'
 import ConfirmButton from 'design-library/atoms/buttons/confirm-button/confirm-button'
 
@@ -9,7 +9,7 @@ type ActionsMenuProps = {
     onClick: () => void
     icon?: React.ReactNode
     confirm?: {
-      dialogMessage?: string | React.ReactNode,
+      dialogMessage?: string | React.ReactNode
       alertMessage?: string | React.ReactNode
     }
   }[]
@@ -53,23 +53,24 @@ export const ActionsMenu = ({ actions }: ActionsMenuProps) => {
               action.onClick()
               handleCloseMenu()
             }}
-            { ...action.confirm ?
-              { component: 
-                () => 
-                  <ConfirmButton
-                    type="button"
-                    dialogMessage={action.confirm.dialogMessage}
-                    alertMessage={action.confirm.alertMessage}
-                    label={action.children}
-                    onConfirm={action.onClick}
-                    variant="text"
-                    size="small"
-                    startIcon={action.icon || <VisibilityIcon fontSize="small" />}
-                    component={MenuItem}
-                    componentName={'MenuItem'}
-                  />
-                } : {}
-            }
+            {...(action.confirm
+              ? {
+                  component: () => (
+                    <ConfirmButton
+                      type="button"
+                      dialogMessage={action.confirm.dialogMessage}
+                      alertMessage={action.confirm.alertMessage}
+                      label={action.children}
+                      onConfirm={action.onClick}
+                      variant="text"
+                      size="small"
+                      startIcon={action.icon || <VisibilityIcon fontSize="small" />}
+                      component={MenuItem}
+                      componentName={'MenuItem'}
+                    />
+                  )
+                }
+              : {})}
           >
             <ListItemIcon>{action.icon || <VisibilityIcon fontSize="small" />}</ListItemIcon>
             <ListItemText primary={action.children} />
