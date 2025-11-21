@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { SwapHoriz as TransferIcon, Receipt as ReceiptIcon, PaymentsOutlined as PaymentIcon } from '@mui/icons-material'
+import {
+  SwapHoriz as TransferIcon,
+  Receipt as ReceiptIcon,
+  PaymentsOutlined as PaymentIcon
+} from '@mui/icons-material'
 import { messages } from '../../../../../messages/messages'
 import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page'
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field'

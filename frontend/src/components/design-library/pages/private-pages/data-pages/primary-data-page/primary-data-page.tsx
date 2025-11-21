@@ -55,7 +55,7 @@ const PrimaryDataPage = ({
           ) : null
         }
       />
-      {(isEmpty || isSingleTableEmpty) ? (
+      {isEmpty || isSingleTableEmpty ? (
         <Paper sx={{ p: 2 }}>{emptyComponent}</Paper>
       ) : table ? (
         <SectionTable
