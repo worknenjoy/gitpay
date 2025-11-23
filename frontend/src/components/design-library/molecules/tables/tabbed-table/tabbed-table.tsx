@@ -5,7 +5,7 @@ import BalanceCard from 'design-library/molecules/cards/balance-card/balance-car
 import { TableTabsProps } from 'types/table'
 
 type TabbedTableProps = {
-  tabs: TableTabsProps
+  tabs: Array<TableTabsProps>
   activeTab?: string
   onChange?: (newValue: string) => void
 }

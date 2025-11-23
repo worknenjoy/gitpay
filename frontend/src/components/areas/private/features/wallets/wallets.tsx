@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { messages } from '../../../../../messages/messages'
-import { Container, Button, Typography } from '@mui/material'
+import { Container, Button, Paper } from '@mui/material'
 import { FormattedMessage, useIntl } from 'react-intl'
-import moment from 'moment'
-
-import CustomPaginationActionsTable from './wallets-table'
 import AddFundsFormDrawer from '../payments/add-funds-form-drawer'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
-import WalletForm from './wallet-form'
+import WalletForm from './components/wallet-form'
 import InvoiceStatus from 'design-library/atoms/status/payment-types-status/invoice-status/invoice-status'
-import InvoiceId from './invoice-id'
+import InvoiceId from './components/invoice-id'
 import { formatCurrency } from '../../../../../utils/format-currency'
-import InvoiceDueDate from './invoice-due-date'
+import InvoiceDueDate from './components/invoice-due-date'
+import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
+import { WalletOutlined } from '@mui/icons-material'
+import SectionTable from 'design-library/molecules/tables/section-table/section-table'
+import ProfileMainHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header'
+import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
 
 const classes = {
   paper: {
@@ -127,17 +129,17 @@ const Wallets = ({
         onPay={payFunds}
       />
       <Container>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between'
-          }}
-        >
-          <Typography variant="h5" gutterBottom>
-            <FormattedMessage id="general.wallets" defaultMessage="Wallets" />
-          </Typography>
-        </div>
-        {wallet.data.id ? (
+        <ProfileMainHeader
+          title={<FormattedMessage id="wallets.page.title" defaultMessage="My Wallets" />}
+          subtitle={
+            <FormattedMessage
+              id="wallets.page.description"
+              defaultMessage="Manage your wallets and wallet orders"
+            />
+          }
+        />
+
+        {wallet.data.id && wallet.completed ? (
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
             <BalanceCard
               name={wallet.data.name || `Wallet #${wallet.id}`}
@@ -164,96 +166,116 @@ const Wallets = ({
                   onCreate={confirmWalletCreate}
                 />
               ) : (
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    height: '60vh'
-                  }}
-                >
-                  <Typography variant="body1" gutterBottom>
-                    <FormattedMessage
-                      id="general.wallets.empty"
-                      defaultMessage="You dont have any active wallet"
-                    />
-                  </Typography>
-                  <Button
-                    style={{ marginTop: 12, ...classes.button }}
-                    onClick={createWalletName}
-                    variant="contained"
-                    size="large"
-                    color="secondary"
-                  >
-                    <FormattedMessage id="general.wallets.create" defaultMessage="Create wallet" />
-                  </Button>
-                </div>
+                <Paper style={{ padding: 20 }}>
+                  <EmptyBase
+                    actionText={
+                      <FormattedMessage
+                        id="general.wallets.create"
+                        defaultMessage="Create wallet"
+                      />
+                    }
+                    text={
+                      <FormattedMessage
+                        id="general.wallets.empty"
+                        defaultMessage="You dont have any active wallet"
+                      />
+                    }
+                    secondaryText={
+                      <FormattedMessage
+                        id="general.wallets.empty.subtitle"
+                        defaultMessage="Create a wallet to start adding funds and making payments using your balance."
+                      />
+                    }
+                    icon={<WalletOutlined />}
+                    completed={wallets.completed}
+                    onActionClick={createWalletName}
+                  />
+                </Paper>
               )}
             </div>
           </div>
         )}
-        {wallets.data && wallets.data.length > 0 && (
-          <div style={{ marginTop: 10, marginBottom: 30 }}>
-            <CustomPaginationActionsTable
-              tableHead={[
-                intl.formatMessage(messages.cardTableHeaderId),
-                intl.formatMessage(messages.cardTableHeaderStatus),
-                intl.formatMessage(messages.cardTableHeaderValue),
-                intl.formatMessage(messages.cardTableHeaderCreated),
-                intl.formatMessage(messages.cardTableHeaderDueDate),
-                intl.formatMessage(messages.cardTableHeaderActions)
-              ]}
-              walletOrders={
-                (walletOrders &&
-                  walletOrders.data && {
-                    ...walletOrders,
-                    data: walletOrders?.data?.map((wo) => [
-                      <InvoiceId
-                        key={wo.id}
-                        walletOrderId={wo.id}
-                        fetchWalletOrder={fetchWalletOrder}
-                      />,
-                      <InvoiceStatus status={wo.status} completed={wo.completed} />,
-                      formatCurrency(wo.amount),
-                      moment(wo.createdAt).fromNow(),
-                      <InvoiceDueDate
-                        key={wo.id}
-                        walletOrderId={wo.id}
-                        fetchWalletOrder={fetchWalletOrder}
-                      />,
-                      <>
-                        {wo.status === 'open' && (
-                          <Button
-                            onClick={(e) => handleInvoicePayment(wo.id)}
-                            variant="contained"
-                            color="secondary"
-                            size="small"
-                          >
-                            <FormattedMessage
-                              id="general.wallets.table.actions.pay"
-                              defaultMessage="Pay invoice"
-                            />
-                          </Button>
-                        )}
-                        {wo.status === 'paid' && (
-                          <Button
-                            onClick={(e) => downloadInvoicePayment(wo.id)}
-                            variant="contained"
-                            color="secondary"
-                            size="small"
-                          >
-                            <FormattedMessage
-                              id="general.wallets.table.actions.download"
-                              defaultMessage="Download invoice"
-                            />
-                          </Button>
-                        )}
-                      </>
-                    ])
-                  }) ||
-                {}
+        {walletOrders?.data?.length === 0 && walletOrders.completed ? (
+          <Paper sx={{ p: 2, mt: 2 }}>
+            <EmptyBase
+              text={
+                <FormattedMessage
+                  id="wallets.table.body.noData"
+                  defaultMessage="No wallet orders"
+                />
               }
+              icon={<WalletOutlined />}
+              completed={walletOrders.completed}
+              actionText={
+                <FormattedMessage
+                  id="wallets.table.body.noData.action"
+                  defaultMessage="Add funds to your wallet"
+                />
+              }
+              onActionClick={(e) => openAddFundsDialog(e)}
+            />
+          </Paper>
+        ) : (
+          <div style={{ marginTop: 10, marginBottom: 30 }}>
+            <SectionTable
+              tableHeaderMetadata={{
+                id: { label: intl.formatMessage(messages.cardTableHeaderId) },
+                status: { label: intl.formatMessage(messages.cardTableHeaderStatus) },
+                value: { label: intl.formatMessage(messages.cardTableHeaderValue) },
+                created: { label: intl.formatMessage(messages.cardTableHeaderCreated) },
+                dueDate: { label: intl.formatMessage(messages.cardTableHeaderDueDate) },
+                actions: { label: intl.formatMessage(messages.cardTableHeaderActions) }
+              }}
+              tableData={walletOrders}
+              customColumnRenderer={{
+                status: (item) => <InvoiceStatus status={item.status} completed={item.completed} />,
+                value: (item) => formatCurrency(item.amount),
+                created: (item) => <CreatedField createdAt={item.createdAt} />,
+                dueDate: (item) => (
+                  <InvoiceDueDate
+                    key={item.id}
+                    walletOrderId={item.id}
+                    fetchWalletOrder={fetchWalletOrder}
+                  />
+                ),
+                id: (item) => (
+                  <InvoiceId
+                    key={item.id}
+                    walletOrderId={item.id}
+                    fetchWalletOrder={fetchWalletOrder}
+                  />
+                ),
+                actions: (item) => (
+                  <div style={{ display: 'flex', gap: 10 }}>
+                    {item.status === 'open' && (
+                      <Button
+                        onClick={(e) => handleInvoicePayment(item.id)}
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                      >
+                        <FormattedMessage
+                          id="general.wallets.table.actions.pay"
+                          defaultMessage="Pay invoice"
+                        />
+                      </Button>
+                    )}
+                    {item.status === 'paid' && (
+                      <Button
+                        onClick={(e) => downloadInvoicePayment(item.id)}
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                      >
+                        <FormattedMessage
+                          id="general.wallets.table.actions.download"
+                          defaultMessage="Download invoice"
+                        />
+                      </Button>
+                    )}
+                  </div>
+                )
+              }}
             />
           </div>
         )}

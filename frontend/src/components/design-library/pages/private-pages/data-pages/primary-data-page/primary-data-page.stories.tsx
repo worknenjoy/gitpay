@@ -104,6 +104,42 @@ export const SingleTableMode = {
   }
 }
 
+export const SinglePageModeWithCards = {
+  args: {
+    title: 'Primary Data Page',
+    description: 'This is a simple primary data page for demonstration.',
+    table: {
+      tableData: {
+        completed: true,
+        data: generateTableData(15)
+      },
+      tableHeaderMetadata: {
+        id: { sortable: true, numeric: true, dataBaseKey: 'id', label: 'Id' },
+        name: { sortable: true, dataBaseKey: 'name', label: 'Name' },
+        email: { sortable: true, dataBaseKey: 'email', label: 'Email' },
+        role: { sortable: true, dataBaseKey: 'role', label: 'Role' },
+        status: { sortable: true, dataBaseKey: 'status', label: 'Status' },
+        action: { sortable: false, dataBaseKey: 'action', label: 'Action' }
+      },
+      customColumnRenderer: {
+        action: (item) => <a href="#">{item.action}</a>
+      }
+    },
+    cards: [
+      { title: 'Total Users', amount: '1500' },
+      { title: 'Active Users', amount: '1230' }
+    ],
+    user: {
+      completed: true,
+      data: {
+        id: '1',
+        name: 'John Doe',
+        Types: [{ name: 'contributor' }, { name: 'maintainer' }, { name: 'funding' }]
+      }
+    }
+  }
+}
+
 export const LoadingState = {
   args: {
     title: 'Primary Data Page',

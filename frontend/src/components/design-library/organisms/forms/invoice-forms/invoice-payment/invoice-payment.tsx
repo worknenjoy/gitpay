@@ -72,7 +72,7 @@ const InvoicePayment = ({
             }}
           />
         }
-        completed={!processingPayment}
+        completed={!processingPayment || customer.completed}
       />
     </>
   )

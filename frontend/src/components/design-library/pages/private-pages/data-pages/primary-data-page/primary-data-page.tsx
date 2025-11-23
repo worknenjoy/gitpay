@@ -6,13 +6,16 @@ import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-tab
 import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
 import SectionTable from 'design-library/molecules/tables/section-table/section-table'
 import { TableTabsProps, TableTabsContentProps } from 'types/table'
+import { CardProps } from 'types/card'
+import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
 
 type PrimaryPageProps = {
   title: string | React.ReactNode
   description: string | React.ReactNode
   activeTab?: string
-  tabs?: TableTabsProps
+  tabs?: Array<TableTabsProps>
   table?: TableTabsContentProps
+  cards?: Array<CardProps>
   emptyComponent?: React.ReactNode
   displayAction?: boolean
   onActionClick?: () => void
@@ -25,6 +28,7 @@ const PrimaryDataPage = ({
   activeTab,
   tabs = [],
   table,
+  cards = [],
   emptyComponent = <EmptyBase />,
   displayAction = false,
   onActionClick = () => {},
@@ -58,11 +62,27 @@ const PrimaryDataPage = ({
       {isEmpty || isSingleTableEmpty ? (
         <Paper sx={{ p: 2 }}>{emptyComponent}</Paper>
       ) : table ? (
-        <SectionTable
-          tableData={table.tableData}
-          tableHeaderMetadata={table.tableHeaderMetadata}
-          customColumnRenderer={table.customColumnRenderer}
-        />
+        <>
+          {cards?.length > 0 && (
+            <div
+              style={{
+                display: 'flex',
+                gap: '16px',
+                marginBottom: '16px',
+                justifyContent: 'flex-end'
+              }}
+            >
+              {cards.map((card, index) => (
+                <BalanceCard key={index} name={card.title} balance={card.amount} type={card.type} />
+              ))}
+            </div>
+          )}
+          <SectionTable
+            tableData={table.tableData}
+            tableHeaderMetadata={table.tableHeaderMetadata}
+            customColumnRenderer={table.customColumnRenderer}
+          />
+        </>
       ) : (
         <TabbedTable tabs={tabs} activeTab={activeTab} />
       )}
