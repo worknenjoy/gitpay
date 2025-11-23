@@ -139,7 +139,7 @@ const Wallets = ({
           }
         />
 
-        {(wallet.data.id && wallet.completed) ? (
+        {wallet.data.id && wallet.completed ? (
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
             <BalanceCard
               name={wallet.data.name || `Wallet #${wallet.id}`}
@@ -166,11 +166,26 @@ const Wallets = ({
                   onCreate={confirmWalletCreate}
                 />
               ) : (
-                <Paper style={{ padding: 20}}>
-                  <EmptyBase 
-                    actionText={<FormattedMessage id="general.wallets.create" defaultMessage="Create wallet" />}
-                    text={<FormattedMessage id="general.wallets.empty" defaultMessage="You dont have any active wallet" />}
-                    secondaryText={<FormattedMessage id="general.wallets.empty.subtitle" defaultMessage="Create a wallet to start adding funds and making payments using your balance." />}
+                <Paper style={{ padding: 20 }}>
+                  <EmptyBase
+                    actionText={
+                      <FormattedMessage
+                        id="general.wallets.create"
+                        defaultMessage="Create wallet"
+                      />
+                    }
+                    text={
+                      <FormattedMessage
+                        id="general.wallets.empty"
+                        defaultMessage="You dont have any active wallet"
+                      />
+                    }
+                    secondaryText={
+                      <FormattedMessage
+                        id="general.wallets.empty.subtitle"
+                        defaultMessage="Create a wallet to start adding funds and making payments using your balance."
+                      />
+                    }
                     icon={<WalletOutlined />}
                     completed={wallets.completed}
                     onActionClick={createWalletName}
@@ -180,13 +195,23 @@ const Wallets = ({
             </div>
           </div>
         )}
-        {(walletOrders?.data?.length === 0 && walletOrders.completed) ? (
+        {walletOrders?.data?.length === 0 && walletOrders.completed ? (
           <Paper sx={{ p: 2, mt: 2 }}>
-            <EmptyBase 
-              text={<FormattedMessage id="wallets.table.body.noData" defaultMessage="No wallet orders" />}
+            <EmptyBase
+              text={
+                <FormattedMessage
+                  id="wallets.table.body.noData"
+                  defaultMessage="No wallet orders"
+                />
+              }
               icon={<WalletOutlined />}
               completed={walletOrders.completed}
-              actionText={<FormattedMessage id="wallets.table.body.noData.action" defaultMessage="Add funds to your wallet" />}
+              actionText={
+                <FormattedMessage
+                  id="wallets.table.body.noData.action"
+                  defaultMessage="Add funds to your wallet"
+                />
+              }
               onActionClick={(e) => openAddFundsDialog(e)}
             />
           </Paper>
@@ -253,8 +278,7 @@ const Wallets = ({
               }}
             />
           </div>
-        )
-      }
+        )}
       </Container>
     </div>
   )

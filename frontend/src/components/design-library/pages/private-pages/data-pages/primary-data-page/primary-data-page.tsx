@@ -65,7 +65,12 @@ const PrimaryDataPage = ({
         <>
           {cards?.length > 0 && (
             <div
-              style={{ display: 'flex', gap: '16px', marginBottom: '16px', justifyContent: 'flex-end' }}
+              style={{
+                display: 'flex',
+                gap: '16px',
+                marginBottom: '16px',
+                justifyContent: 'flex-end'
+              }}
             >
               {cards.map((card, index) => (
                 <BalanceCard key={index} name={card.title} balance={card.amount} type={card.type} />

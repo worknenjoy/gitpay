@@ -1,4 +1,4 @@
-import { type CardProps } from "./card"
+import { type CardProps } from './card'
 
 export type TableTabsContentProps = {
   tableData: {
