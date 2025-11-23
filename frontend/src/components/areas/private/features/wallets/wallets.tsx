@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { messages } from '../../../../../messages/messages'
-import { Container, Button, Typography, Paper } from '@mui/material'
+import { Container, Button, Paper } from '@mui/material'
 import { FormattedMessage, useIntl } from 'react-intl'
-import moment from 'moment'
-
-import CustomPaginationActionsTable from './wallets-table'
 import AddFundsFormDrawer from '../payments/add-funds-form-drawer'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
-import WalletForm from './wallet-form'
+import WalletForm from './components/wallet-form'
 import InvoiceStatus from 'design-library/atoms/status/payment-types-status/invoice-status/invoice-status'
-import InvoiceId from './invoice-id'
+import InvoiceId from './components/invoice-id'
 import { formatCurrency } from '../../../../../utils/format-currency'
-import InvoiceDueDate from './invoice-due-date'
+import InvoiceDueDate from './components/invoice-due-date'
 import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
 import { WalletOutlined } from '@mui/icons-material'
 import SectionTable from 'design-library/molecules/tables/section-table/section-table'
@@ -197,33 +194,33 @@ const Wallets = ({
           <div style={{ marginTop: 10, marginBottom: 30 }}>
             <SectionTable
               tableHeaderMetadata={{
-                0: { label: intl.formatMessage(messages.cardTableHeaderId) },
-                1: { label: intl.formatMessage(messages.cardTableHeaderStatus) },
-                2: { label: intl.formatMessage(messages.cardTableHeaderValue) },
-                3: { label: intl.formatMessage(messages.cardTableHeaderCreated) },
-                4: { label: intl.formatMessage(messages.cardTableHeaderDueDate) },
-                5: { label: intl.formatMessage(messages.cardTableHeaderActions) }
+                id: { label: intl.formatMessage(messages.cardTableHeaderId) },
+                status: { label: intl.formatMessage(messages.cardTableHeaderStatus) },
+                value: { label: intl.formatMessage(messages.cardTableHeaderValue) },
+                created: { label: intl.formatMessage(messages.cardTableHeaderCreated) },
+                dueDate: { label: intl.formatMessage(messages.cardTableHeaderDueDate) },
+                actions: { label: intl.formatMessage(messages.cardTableHeaderActions) }
               }}
               tableData={walletOrders}
               customColumnRenderer={{
-                1: (item) => <InvoiceStatus status={item.status} completed={item.completed} />,
-                2: (item) => formatCurrency(item.amount),
-                3: (item) => <CreatedField createdAt={item.createdAt} />,
-                4: (item) => (
+                status: (item) => <InvoiceStatus status={item.status} completed={item.completed} />,
+                value: (item) => formatCurrency(item.amount),
+                created: (item) => <CreatedField createdAt={item.createdAt} />,
+                dueDate: (item) => (
                   <InvoiceDueDate
                     key={item.id}
                     walletOrderId={item.id}
                     fetchWalletOrder={fetchWalletOrder}
                   />
                 ),
-                0: (item) => (
+                id: (item) => (
                   <InvoiceId
                     key={item.id}
                     walletOrderId={item.id}
                     fetchWalletOrder={fetchWalletOrder}
                   />
                 ),
-                5: (item) => (
+                actions: (item) => (
                   <div style={{ display: 'flex', gap: 10 }}>
                     {item.status === 'open' && (
                       <Button
