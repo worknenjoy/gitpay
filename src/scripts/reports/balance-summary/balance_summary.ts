@@ -38,10 +38,32 @@ async function getCurrentStripeBalance() {
   const availablePretty = balance.available
     .map((a) => `${formatUSD(a.amount)} ${a.currency.toUpperCase()}`)
     .join(`${C.gray} | ${C.reset}`)
+
+  const pendingPretty = balance.pending
+    .map((a) => `${formatUSD(a.amount)} ${a.currency.toUpperCase()}`)
+    .join(`${C.gray} | ${C.reset}`)
+
+  console.log(`${C.blue}ℹ️  [Stripe] Pending: ${pendingPretty}${C.reset}`)
   console.log(`${C.blue}ℹ️  [Stripe] Available: ${availablePretty}${C.reset}`)
 
+  const pendingAmount = balance.pending
+    .filter((a) => a.currency === 'usd')
+    .reduce((sum, a) => sum + a.amount, 0) // already in cents
+  const availableAmount = balance.available
+    .filter((a) => a.currency === 'usd')
+    .reduce((sum, a) => sum + a.amount, 0) // already in cents
+
+  const totalAmount = pendingAmount + availableAmount
+  console.log(
+    `${C.blue}ℹ️  [Stripe] Total Balance (Available + Pending): ${formatUSD(totalAmount)}${C.reset}`
+  )
+
   console.timeEnd('[Step] Stripe balance fetch time')
-  return balance
+  return {
+    available: balance.available,
+    pending: balance.pending,
+    total: totalAmount
+  }
 }
 
 async function getTotalWalletBalance() {
@@ -163,9 +185,7 @@ async function getSummary() {
     const summary = await getSummary()
 
     // Convert to cents for consistent math:
-    const stripeAvailableCents = summary.stripeBalance.available
-      .filter((a) => a.currency === 'usd')
-      .reduce((sum, a) => sum + a.amount, 0) // already in cents
+    const stripeAvailableCents = summary.stripeBalance.total
     const paypalBalanceCents = toCents(summary.paypalBalance) // DB decimal -> cents
     const walletBalanceCents = toCents(summary.totalWalletBalance) // DB decimal -> cents
     const pendingTasksCents = toCents(summary.totalPendingTasksAmount) // DB decimal -> cents
