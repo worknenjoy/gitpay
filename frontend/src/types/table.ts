@@ -1,3 +1,5 @@
+import { type CardProps } from "./card"
+
 export type TableTabsContentProps = {
   tableData: {
     completed: boolean
@@ -7,13 +9,9 @@ export type TableTabsContentProps = {
   customColumnRenderer?: { [key: string]: (value: any, rowData: any) => React.ReactNode }
 }
 
-export type TableTabsProps = Array<{
+export type TableTabsProps = {
   label: React.ReactNode
   value: string
   table: TableTabsContentProps
-  cards?: Array<{
-    title: string | React.ReactNode
-    amount: number
-    type: 'decimal' | 'centavos'
-  }>
-}>
+  cards?: Array<CardProps>
+}

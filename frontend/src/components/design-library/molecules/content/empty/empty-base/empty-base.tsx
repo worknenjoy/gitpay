@@ -5,7 +5,7 @@ import Button from '../../../../atoms/buttons/button/button'
 import { Root, Message, IconContainer, MessageSecondary } from './empty-base.styles'
 
 type EmptyBaseProps = {
-  onActionClick?: () => void
+  onActionClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   icon?: React.ReactElement
   text?: string | React.ReactNode
   secondaryText?: string | React.ReactNode
