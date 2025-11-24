@@ -35,7 +35,10 @@ const SideMenuItems = ({ menuItems, compactMode, setCompactMode }: SideMenuItems
       <SideMenuCollapseButton collapsed={compactMode} setCollapsed={handleCompactModeToggle} />
       <MenuListStyled compact={compactMode}>
         {menuItems.map((section, sectionIndex) => (
-          <div key={`section-${sectionIndex}`} style={{ width: '100%', ...(compactMode ? { textAlign: 'center' } : {}) }}>
+          <div
+            key={`section-${sectionIndex}`}
+            style={{ width: '100%', ...(compactMode ? { textAlign: 'center' } : {}) }}
+          >
             {section.category && (
               <Typography
                 variant="caption"
@@ -53,7 +56,10 @@ const SideMenuItems = ({ menuItems, compactMode, setCompactMode }: SideMenuItems
                     onClick={item.onClick}
                     selected={item.selected}
                   >
-                    <ListItemIconStyled sx={{ pr: compactMode ? 0 : 2 }} title={item.label as string}>
+                    <ListItemIconStyled
+                      sx={{ pr: compactMode ? 0 : 2 }}
+                      title={item.label as string}
+                    >
                       {item.icon}
                     </ListItemIconStyled>
                     {!compactMode && <Primary primary={item.label} />}
