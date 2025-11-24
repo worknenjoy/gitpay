@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Grid } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 import {
   Dashboard as DashboardIcon,
@@ -52,7 +51,7 @@ const ProfileSidebar = ({ user }) => {
   }, [history.location.pathname])
 
   return (
-    <Grid size={{ xs: 12, md: 2 }}>
+    <div>
       <SideMenu
         completed={completed}
         menuItems={[
@@ -206,7 +205,7 @@ const ProfileSidebar = ({ user }) => {
           }
         ]}
       />
-    </Grid>
+    </div>
   )
 }
 

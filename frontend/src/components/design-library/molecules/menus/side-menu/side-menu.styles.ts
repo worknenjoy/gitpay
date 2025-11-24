@@ -2,7 +2,11 @@ import { styled } from '@mui/material/styles'
 
 export const SidePaper = styled('div')(({ theme }) => ({
   backgroundColor: '#2c5c46',
-  height: '100%'
+  height: 'fit-content',
+  width: 'fit-content',
+  [theme.breakpoints.down('sm')]: {
+    width: '100%'
+  }
 }))
 
 export const Row = styled('div')(({ theme }) => ({
@@ -14,10 +18,10 @@ export const Row = styled('div')(({ theme }) => ({
 }))
 
 export const MainHeaderWrapper = styled('div')(({ theme }) => ({
+  padding: '10px 0',
   display: 'flex',
   justifyContent: 'center',
-  padding: 20,
-  paddingBottom: 0,
+  alignItems: 'center',
   [theme.breakpoints.down('sm')]: {
     width: '100%',
     justifyContent: 'space-between',

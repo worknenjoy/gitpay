@@ -1,6 +1,13 @@
 import { ListItemText, MenuItem } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
+export const MenuListStyled = styled('div')<{ compact?: boolean }>(({ theme, compact }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: compact ? 'center' : 'flex-start',
+  flexGrow: 1
+}))
+
 export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
   marginTop: 10,
   marginBottom: 10,
@@ -10,6 +17,10 @@ export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
       backgroundColor: theme.palette.action.hover
     }
   }
+}))
+
+export const ListItemIconStyled = styled('div')(({ theme }) => ({
+  color: theme.palette.primary.contrastText
 }))
 
 export const Primary = styled(ListItemText)(({ theme }) => ({
@@ -29,7 +40,7 @@ export const Category = styled('span')(({ theme }) => ({
   textTransform: 'uppercase',
   fontWeight: 600,
   marginBottom: 16,
-  paddingLeft: 16
+  textAlign: 'center'
 }))
 
 export default { MenuItemStyled, Primary, Icon, Category }
