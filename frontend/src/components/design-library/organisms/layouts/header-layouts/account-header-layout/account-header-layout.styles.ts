@@ -48,7 +48,8 @@ export const Inner = styled('div')(({ theme }) => ({
 export const ActionButton = styled(Button)(({ theme }) => ({
   marginRight: 10,
   [theme.breakpoints.down('sm')]: {
-    marginTop: 20,
+    marginTop: 0,
+    marginBottom: 20,
     width: '100%'
   }
 }))

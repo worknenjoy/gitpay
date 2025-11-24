@@ -13,5 +13,6 @@ export const ChipContainer = styled('div')(({ theme }) => ({
 }))
 
 export const SpacedChip = styled(Chip)(({ theme }) => ({
-  marginRight: theme.spacing(1)
+  marginRight: theme.spacing(1),
+  marginBottom: theme.spacing(1)
 }))

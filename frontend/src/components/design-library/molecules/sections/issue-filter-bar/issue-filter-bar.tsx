@@ -1,10 +1,17 @@
 import React, { useCallback, useMemo } from 'react'
-import { AppBar, Toolbar } from '@mui/material'
+import { AppBar } from '@mui/material'
 import { defineMessages } from 'react-intl'
 import LabelsFilter from '../../../atoms/filters/labels-filter/labels-filter'
 import LanguageFilter from '../../../atoms/filters/languages-filter/languages-filter'
 import IssueFilter from '../../../atoms/filters/issue-filter/issue-filter'
 import IssueFilterStatus from '../../../atoms/filters/issue-status-filter/issue-status-filter'
+import {
+  FiltersToolbar,
+  IssueFilterWrapper,
+  IssueStatusFilterWrapper,
+  LabelsFilterWrapper,
+  LanguageFilterWrapper
+} from './issue-filter.styles'
 
 const classesStatic = {
   select: { backgroundColor: 'transparent' },
@@ -105,25 +112,25 @@ const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
   }
 
   return (
-    <AppBar position="static" color="transparent" elevation={0}>
-      <Toolbar style={{ display: 'flex', placeContent: 'space-between', margin: 0, padding: 0 }}>
-        <div style={{ width: '25%', marginRight: 12 }}>
+    <AppBar position="static" color="transparent" elevation={0} sx={{ md: { p: 0, m: 0 } }}>
+      <FiltersToolbar>
+        <IssueFilterWrapper>
           <IssueFilter onFilter={handleFilter} counts={counts} />
-        </div>
-        <div style={{ width: '15%', marginRight: 12 }}>
+        </IssueFilterWrapper>
+        <IssueStatusFilterWrapper>
           <IssueFilterStatus onFilter={handleStatusFilter} />
-        </div>
-        <div style={{ width: '30%', marginRight: 12 }}>
+        </IssueStatusFilterWrapper>
+        <LabelsFilterWrapper>
           <LabelsFilter labels={labels} listLabels={listLabels} listTasks={mergedListTasks} />
-        </div>
-        <div style={{ width: '30%', marginRight: 12 }}>
+        </LabelsFilterWrapper>
+        <LanguageFilterWrapper>
           <LanguageFilter
             languages={languages}
             listLanguages={listLanguages}
             listTasks={mergedListTasks}
           />
-        </div>
-      </Toolbar>
+        </LanguageFilterWrapper>
+      </FiltersToolbar>
     </AppBar>
   )
 }
