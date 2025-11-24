@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Typography, Tooltip } from '@mui/material'
 import React from 'react'
 import {
   MenuItemStyled,
@@ -56,12 +56,17 @@ const SideMenuItems = ({ menuItems, compactMode, setCompactMode }: SideMenuItems
                     onClick={item.onClick}
                     selected={item.selected}
                   >
-                    <ListItemIconStyled
-                      sx={{ pr: compactMode ? 0 : 2 }}
-                      title={item.label as string}
+                    <Tooltip 
+                      title={compactMode ? item.label : ''} 
+                      placement="right"
+                      disableHoverListener={!compactMode}
                     >
-                      {item.icon}
-                    </ListItemIconStyled>
+                      <ListItemIconStyled
+                        sx={{ pr: compactMode ? 0 : 2 }}
+                      >
+                        {item.icon}
+                      </ListItemIconStyled>
+                    </Tooltip>
                     {!compactMode && <Primary primary={item.label} />}
                   </MenuItemStyled>
                 )
