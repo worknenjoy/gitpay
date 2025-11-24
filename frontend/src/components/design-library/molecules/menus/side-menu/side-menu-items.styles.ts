@@ -5,7 +5,7 @@ export const MenuListStyled = styled('div')<{ compact?: boolean }>(({ theme, com
   display: 'flex',
   flexDirection: 'column',
   alignItems: compact ? 'center' : 'flex-start',
-  flexGrow: 1,
+  flexGrow: 1
 }))
 
 export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
@@ -20,7 +20,7 @@ export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
 }))
 
 export const ListItemIconStyled = styled('div')(({ theme }) => ({
-  color: theme.palette.primary.contrastText,
+  color: theme.palette.primary.contrastText
 }))
 
 export const Primary = styled(ListItemText)(({ theme }) => ({
@@ -40,7 +40,7 @@ export const Category = styled('span')(({ theme }) => ({
   textTransform: 'uppercase',
   fontWeight: 600,
   marginBottom: 16,
-  textAlign: 'center',
+  textAlign: 'center'
 }))
 
 export default { MenuItemStyled, Primary, Icon, Category }

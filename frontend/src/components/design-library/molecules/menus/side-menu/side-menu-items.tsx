@@ -1,6 +1,12 @@
 import { Typography } from '@mui/material'
 import React from 'react'
-import { MenuItemStyled, Primary, Category, ListItemIconStyled, MenuListStyled } from './side-menu-items.styles'
+import {
+  MenuItemStyled,
+  Primary,
+  Category,
+  ListItemIconStyled,
+  MenuListStyled
+} from './side-menu-items.styles'
 import SideMenuCollapseButton from './side-menu-collapse-button'
 
 type SideMenuItemsProps = {
@@ -25,14 +31,11 @@ const SideMenuItems = ({ menuItems, compactMode, setCompactMode }: SideMenuItems
     }
   }
   return (
-    <div style={{position: 'relative'}}>
-      <SideMenuCollapseButton
-        collapsed={compactMode}
-        setCollapsed={handleCompactModeToggle}
-      />
+    <div style={{ position: 'relative' }}>
+      <SideMenuCollapseButton collapsed={compactMode} setCollapsed={handleCompactModeToggle} />
       <MenuListStyled compact={compactMode}>
         {menuItems.map((section, sectionIndex) => (
-          <div key={`section-${sectionIndex}`} style={{ width: '100%' }}>
+          <div key={`section-${sectionIndex}`} style={{ width: '100%', ...(compactMode ? { textAlign: 'center' } : {}) }}>
             {section.category && (
               <Typography
                 variant="caption"
@@ -50,10 +53,10 @@ const SideMenuItems = ({ menuItems, compactMode, setCompactMode }: SideMenuItems
                     onClick={item.onClick}
                     selected={item.selected}
                   >
-                    <ListItemIconStyled sx={{ pr: compactMode ? 0 : 2 }}>
+                    <ListItemIconStyled sx={{ pr: compactMode ? 0 : 2 }} title={item.label as string}>
                       {item.icon}
                     </ListItemIconStyled>
-                    { !compactMode && <Primary primary={item.label} /> }
+                    {!compactMode && <Primary primary={item.label} />}
                   </MenuItemStyled>
                 )
             )}

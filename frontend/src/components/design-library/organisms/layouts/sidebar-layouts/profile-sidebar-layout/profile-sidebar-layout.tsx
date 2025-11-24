@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Grid } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 import {
   Dashboard as DashboardIcon,

@@ -1,12 +1,11 @@
 import { styled } from '@mui/material/styles'
-import { alignContent } from '@mui/system'
 
 export const PageContent = styled('div')(({ theme }) => ({
-  padding: '0 0 0 0',
+  padding: '0 0 0 0'
 }))
 
 export const Page = styled('div')({
-  overflowX: 'hidden',
+  overflowX: 'hidden'
 })
 
 export const PageContentWrapper = styled('div')(({ theme }) => ({
@@ -16,5 +15,5 @@ export const PageContentWrapper = styled('div')(({ theme }) => ({
   [theme.breakpoints.down('sm')]: {
     display: 'flex',
     flexDirection: 'column'
-  },
+  }
 }))

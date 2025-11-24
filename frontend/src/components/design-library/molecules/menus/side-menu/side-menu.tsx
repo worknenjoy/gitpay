@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import logo from 'images/gitpay-logo-small.png'
+import logo from 'images/gitpay-logo.png'
 import compactLogo from 'images/logo-symbol-small.png'
 import {
   IconHamburger,
@@ -33,7 +33,7 @@ interface SideMenuProps {
 }
 
 export const SideMenu: React.FC<SideMenuProps> = ({ completed, menuItems }) => {
-  const [ compactMode, setCompactMode ] = useState(false)
+  const [compactMode, setCompactMode] = useState(false)
   const [isActive, setIsActive] = useState(false)
   const handleClickMenuMobile = () => {
     setIsActive(!isActive)
@@ -56,12 +56,14 @@ export const SideMenu: React.FC<SideMenuProps> = ({ completed, menuItems }) => {
         <LeftSide isActive={isActive}>
           <MainHeaderWrapper>
             <StyledButton href="/">
-              {compactMode ?
-                <Logo compact src={compactLogo} /> :
-                <Logo src={logo} width={120} />
-              }
+              {compactMode ? <Logo compact src={compactLogo} /> : <Logo src={logo} />}
             </StyledButton>
-            <MenuMobile onClick={handleClickMenuMobile} variant="text" size="small" sx={{ display: { md: 'none' } }}>
+            <MenuMobile
+              onClick={handleClickMenuMobile}
+              variant="text"
+              size="small"
+              sx={{ display: { md: 'none' } }}
+            >
               <IconHamburger isActive={isActive} />
             </MenuMobile>
           </MainHeaderWrapper>
@@ -78,7 +80,11 @@ export const SideMenu: React.FC<SideMenuProps> = ({ completed, menuItems }) => {
             >
               {completed ? (
                 <OnlyDesktop>
-                  <SideMenuItems menuItems={menuItems} compactMode={compactMode} setCompactMode={setCompactMode} />
+                  <SideMenuItems
+                    menuItems={menuItems}
+                    compactMode={compactMode}
+                    setCompactMode={setCompactMode}
+                  />
                 </OnlyDesktop>
               ) : (
                 <SidebarMenuPlaceholder />
@@ -95,7 +101,6 @@ export const SideMenu: React.FC<SideMenuProps> = ({ completed, menuItems }) => {
           </Row>
         </RightSide>
       </Profile>
-
     </SidePaper>
   )
 }
