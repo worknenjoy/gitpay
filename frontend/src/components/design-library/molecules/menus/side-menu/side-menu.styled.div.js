@@ -26,10 +26,6 @@ export const Side = styled.div`
 `
 export const MenuMobile = styled(Button)`
   margin: 10px 0;
-  @media (min-width: 37.5em) {
-    display: none;
-    visibility: hidden;
-  }
 `
 
 export const IconHamburger = styled.span`
@@ -88,8 +84,6 @@ export const IconHamburger = styled.span`
 
 export const LeftSide = styled(Side)`
   display: block;
-
-  z-index: 1300;
   padding: 0;
   width: 100%;
 
@@ -100,6 +94,7 @@ export const LeftSide = styled(Side)`
   ${({ isActive }) =>
     isActive &&
     css`
+      z-index: 1300;
       position: fixed !important;
       top: 0;
       left: 0;
@@ -116,9 +111,6 @@ export const LeftSide = styled(Side)`
 `
 
 export const RightSide = styled(Side)`
-  display: block;
-  width: 100%;
-
   @media (max-width: 37.5em) {
     display: flex;
     flex-direction: column;
@@ -152,16 +144,16 @@ export const RightSide = styled(Side)`
 `
 
 export const Logo = styled.img`
-  width: 96px;
-
-  ${media.phone`width: 100px !important;`}
+${(props) =>
+  !props.compact && css`width: 96px;`
+}
+${media.phone`width: 100px !important;`}
 `
 
 export const StyledButton = styled(Button)`
-  min-width: 20px !important;
+  
   font-size: 12px;
   cursor: pointer;
-  margin-left: 10px !important;
 `
 
 export const LogoButton = styled(StyledButton)`

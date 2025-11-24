@@ -1,15 +1,12 @@
 import React, { useEffect } from 'react'
-import { Grid } from '@mui/material'
-import { Page, PageContent } from '../../../../../styleguide/components/Page'
+import { Page, PageContent, PageContentWrapper } from '../../../../../styleguide/components/Page'
 import ProfileSideBar from '../../../organisms/layouts/sidebar-layouts/profile-sidebar-layout/profile-sidebar-layout'
 import AccountHeader from '../../../organisms/layouts/header-layouts/account-header-layout/account-header-layout'
 import Bottom from '../../../organisms/layouts/bottom-bar-layouts/bottom-bar-layout/bottom-bar-layout'
 import { useHistory } from 'react-router-dom'
 import ProfileHeader from '../../../molecules/headers/profile-main-header/profile-main-header'
 import ActivateAccountDialog from '../../../molecules/dialogs/activate-account-dialog/activate-account-dialog'
-import { RootGrid, SecondaryBar, ContainerRoot } from './private-base.styles'
-
-// styles migrated to private-base.styles.ts
+import { SecondaryBar, ContainerRoot } from './private-base.styles'
 
 type PrivateBaseProps = {
   children: React.ReactNode
@@ -68,11 +65,10 @@ const PrivateBase = ({
       )}
       <SecondaryBar color="primary" position="static" elevation={0} />
       <PageContent>
-        <RootGrid container spacing={0}>
+        <PageContentWrapper>
           <ProfileSideBar user={user} />
-          <Grid size={{ xs: 12, md: 10 }}>
+          <div style={{ flexGrow: 1 }}>
             <AccountHeader user={data} onCreateTask={createTask} onLogout={handleSignOut} />
-
             <ContainerRoot maxWidth="lg">
               {profileHeaderProps && (
                 <ProfileHeader
@@ -82,8 +78,8 @@ const PrivateBase = ({
               )}
               {children}
             </ContainerRoot>
-          </Grid>
-        </RootGrid>
+          </div>
+        </PageContentWrapper>
       </PageContent>
       <Bottom {...bottomProps} />
     </Page>

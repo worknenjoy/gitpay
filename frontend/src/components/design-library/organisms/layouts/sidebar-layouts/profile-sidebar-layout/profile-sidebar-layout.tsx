@@ -52,7 +52,7 @@ const ProfileSidebar = ({ user }) => {
   }, [history.location.pathname])
 
   return (
-    <Grid size={{ xs: 12, md: 2 }}>
+    <div>
       <SideMenu
         completed={completed}
         menuItems={[
@@ -206,7 +206,7 @@ const ProfileSidebar = ({ user }) => {
           }
         ]}
       />
-    </Grid>
+    </div>
   )
 }
 
