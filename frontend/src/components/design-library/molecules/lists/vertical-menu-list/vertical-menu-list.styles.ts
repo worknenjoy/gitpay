@@ -7,7 +7,7 @@ export const TitleStyled = styled(Typography)(({ theme }) => ({
 
 export const ListStyled = styled(List)(({ theme }) => ({
   marginLeft: theme.spacing(0),
-  paddingLeft: theme.spacing(0),
+  paddingLeft: theme.spacing(0)
 }))
 
 export const ListItemButtonStyled = styled(ListItemButton)(({ theme }) => ({

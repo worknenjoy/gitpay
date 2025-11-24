@@ -10,26 +10,26 @@ export const Bar = styled('div')(({ theme }) => ({
   margin: 0,
   position: 'relative',
   ...media.phone({
-    padding: '10px 15px',
-  }),
+    padding: '10px 15px'
+  })
 }))
 
 export const Container = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
+  alignItems: 'center'
 })
 
 export const Side = styled('div')({
-  display: 'flex',
+  display: 'flex'
 })
 
 export const MenuMobile = styled(Button)({
   margin: '10px 0',
   '@media (min-width: 37.5em)': {
     display: 'none',
-    visibility: 'hidden',
-  },
+    visibility: 'hidden'
+  }
 })
 
 export const IconHamburger = styled('span', {
@@ -44,7 +44,7 @@ export const IconHamburger = styled('span', {
   transformOrigin: '50% 50%',
   cursor: 'pointer',
   ...(isActive && {
-    backgroundColor: 'transparent',
+    backgroundColor: 'transparent'
   }),
   '&::after, &::before': {
     content: '""',
@@ -53,24 +53,24 @@ export const IconHamburger = styled('span', {
     height: '3px',
     position: 'absolute',
     left: 0,
-    transition: 'all ease 400ms',
+    transition: 'all ease 400ms'
   },
   '&::after': {
     top: '-6px',
     ...(isActive && {
       top: 0,
       backgroundColor: '#f2f2f2',
-      transform: 'rotate(135deg)',
-    }),
+      transform: 'rotate(135deg)'
+    })
   },
   '&::before': {
     bottom: '-6px',
     ...(isActive && {
       bottom: 0,
       backgroundColor: '#f2f2f2',
-      transform: 'rotate(-135deg)',
-    }),
-  },
+      transform: 'rotate(-135deg)'
+    })
+  }
 }))
 
 export const LeftSide = styled(Side, {
@@ -82,7 +82,7 @@ export const LeftSide = styled(Side, {
   zIndex: 1300,
   flex: 1,
   '& a': {
-    marginBottom: '0 !important',
+    marginBottom: '0 !important'
   },
   ...(isActive && {
     position: 'fixed',
@@ -91,12 +91,12 @@ export const LeftSide = styled(Side, {
     width: '100%',
     backgroundColor: '#000',
     padding: '10px 20px',
-    boxSizing: 'border-box',
+    boxSizing: 'border-box'
   }),
   '@media (min-width: 37.5em)': {
     alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
+    justifyContent: 'flex-start'
+  }
 }))
 
 export const RightSide = styled(Side, {
@@ -120,29 +120,29 @@ export const RightSide = styled(Side, {
     zIndex: 1200,
     ...(isActive && {
       transform: 'translateY(0)',
-      overflow: 'hidden',
-    }),
-  },
+      overflow: 'hidden'
+    })
+  }
 }))
 
 export const Logo = styled('img')(({ theme }) => ({
   width: '96px',
   ...media.phone({
-    width: '100px !important',
-  }),
+    width: '100px !important'
+  })
 }))
 
 export const StyledButton = styled(Button)({
   minWidth: '20px !important',
   fontSize: '12px',
   cursor: 'pointer',
-  marginLeft: '10px !important',
+  marginLeft: '10px !important'
 })
 
 export const LogoButton = styled(StyledButton)(({ theme }) => ({
   ...media.phone({
-    padding: '0px !important',
-  }),
+    padding: '0px !important'
+  })
 }))
 
 export const LinkButtonsListStyled = styled('div')(({ theme }) => ({
@@ -150,28 +150,28 @@ export const LinkButtonsListStyled = styled('div')(({ theme }) => ({
   flexDirection: 'column',
   alignItems: 'center',
   [theme.breakpoints.up('sm')]: {
-    flexDirection: 'row',
-  },
+    flexDirection: 'row'
+  }
 }))
 
 export const LinkButton = styled(StyledButton)(({ theme }) => ({
   color: '#fff !important',
   [theme.breakpoints.down('sm')]: {
     marginBottom: '28px',
-    fontSize: '21px',
-  },
+    fontSize: '21px'
+  }
 }))
 
 export const StyledLanguageButton = styled(StyledButton)(({ theme }) => ({
   ...media.phone({
-    display: 'none !important',
-  }),
+    display: 'none !important'
+  })
 }))
 
 export const StyledSlackButton = styled(StyledButton)(({ theme }) => ({
   ...media.phone({
-    display: 'none !important',
-  }),
+    display: 'none !important'
+  })
 }))
 
 export const LabelButton = styled('span', {
@@ -179,27 +179,27 @@ export const LabelButton = styled('span', {
 })<{ right?: boolean }>(({ right }) => ({
   ...(right
     ? {
-        marginLeft: '10px',
+        marginLeft: '10px'
       }
     : {
-        marginRight: '10px',
+        marginRight: '10px'
       }),
   '@media (min-width: 37.5em)': {
     display: 'none',
-    marginRight: 0,
+    marginRight: 0
   },
   '@media (min-width: 64em)': {
     display: 'block',
-    marginRight: '10px',
-  },
+    marginRight: '10px'
+  }
 }))
 
 export const StyledAvatar = styled(Avatar)(({ theme }) => ({
   marginLeft: '20px',
   cursor: 'pointer',
   ...media.phone({
-    marginLeft: '15px',
-  }),
+    marginLeft: '15px'
+  })
 }))
 
 export const StyledAvatarIconOnly = styled(Avatar)(({ theme }) => ({
@@ -207,17 +207,17 @@ export const StyledAvatarIconOnly = styled(Avatar)(({ theme }) => ({
   cursor: 'pointer',
   alignItems: 'center',
   ...media.phone({
-    marginLeft: '15px',
+    marginLeft: '15px'
   }),
   '@media(max-width: 37.5em)': {
-    marginBottom: '20px !important',
-  },
+    marginBottom: '20px !important'
+  }
 }))
 
 export const OnlyDesktop = styled('div')({
   '@media (max-width: 37.5em)': {
-    display: 'none',
-  },
+    display: 'none'
+  }
 })
 
 export const OnlyMobile = styled('div')({
@@ -225,6 +225,6 @@ export const OnlyMobile = styled('div')({
   justifyContent: 'space-around',
   flexDirection: 'column',
   '@media (max-width: 37.5em)': {
-    display: 'flex',
-  },
+    display: 'flex'
+  }
 })

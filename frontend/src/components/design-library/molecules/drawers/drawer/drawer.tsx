@@ -26,13 +26,8 @@ const Drawer = ({
   actions = [],
   completed = true
 }: DrawerProps) => {
-<<<<<<< HEAD
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-=======
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
->>>>>>> master
   const closeDialogButton = () => {
     return (
       <CloseFab size="small" aria-label="close" onClick={onClose}>
