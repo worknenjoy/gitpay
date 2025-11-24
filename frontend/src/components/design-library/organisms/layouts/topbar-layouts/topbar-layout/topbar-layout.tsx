@@ -64,7 +64,7 @@ const Topbar = ({
               <ImportIssue {...importIssuesProps} />
             </>
           ) : (
-            <div style={{ display: 'flex', justifyContent: 'space-around', marginRight: 20 }}>
+            <>
               <SignupSignin
                 loginFormSignupFormProps={loginFormSignupFormProps}
                 loginFormForgotFormProps={loginFormForgotFormProps}
@@ -79,7 +79,7 @@ const Topbar = ({
                 />
               </div>
               */}
-            </div>
+            </>
           )}
         </RightSide>
       </Container>

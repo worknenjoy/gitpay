@@ -56,14 +56,12 @@ const SideMenuItems = ({ menuItems, compactMode, setCompactMode }: SideMenuItems
                     onClick={item.onClick}
                     selected={item.selected}
                   >
-                    <Tooltip 
-                      title={compactMode ? item.label : ''} 
+                    <Tooltip
+                      title={compactMode ? item.label : ''}
                       placement="right"
                       disableHoverListener={!compactMode}
                     >
-                      <ListItemIconStyled
-                        sx={{ pr: compactMode ? 0 : 2 }}
-                      >
+                      <ListItemIconStyled sx={{ pr: compactMode ? 0 : 2 }}>
                         {item.icon}
                       </ListItemIconStyled>
                     </Tooltip>

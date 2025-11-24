@@ -1,12 +1,13 @@
 import React from 'react'
 import SigninButtons from '../../../../atoms/buttons/signin-buttons/signin-buttons'
 import SignupDialog from '../../../../molecules/dialogs/signup-dialog/signup-dialog'
+import { SecondaryActionsContainerStyled } from './signup-signin.styles'
 
 const SignupSignin = ({ loginFormSignupFormProps, loginFormForgotFormProps }) => {
   const [open, setOpen] = React.useState(false)
   const [mode, setMode] = React.useState('signin')
   return (
-    <div>
+    <SecondaryActionsContainerStyled>
       <SigninButtons
         onSignin={() => {
           setOpen(true)
@@ -27,7 +28,7 @@ const SignupSignin = ({ loginFormSignupFormProps, loginFormForgotFormProps }) =>
         loginFormSignupFormProps={loginFormSignupFormProps}
         loginFormForgotFormProps={loginFormForgotFormProps}
       />
-    </div>
+    </SecondaryActionsContainerStyled>
   )
 }
 
