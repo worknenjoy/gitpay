@@ -85,7 +85,7 @@ export default function AccountMenu({ user, history, onLogout }) {
       >
         <MenuItem onClick={(e) => history.push(`/users/${user.id}`)} style={{ margin: 5 }}>
           <Avatar>
-           <Web fontSize="small" sx={{ color: 'primary.main' }} />
+            <Web fontSize="small" sx={{ color: 'primary.main' }} />
           </Avatar>
           <Typography variant="body2" color="text">
             <FormattedMessage id="profile.accountMenu.profile" defaultMessage="Profile" />

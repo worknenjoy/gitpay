@@ -5,8 +5,8 @@ export const StyledAvatar = styled(Avatar)(({ theme }) => ({
   marginLeft: 20,
   cursor: 'pointer',
   [theme.breakpoints.down('sm')]: {
-    marginLeft: 15,
-  },
+    marginLeft: 15
+  }
 }))
 
 export const StyledButton = styled(Button)(({ theme }) => ({
@@ -16,6 +16,6 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   cursor: 'pointer',
   marginLeft: '10px !important',
   [theme.breakpoints.down('sm')]: {
-    marginTop: 15,
-  },
+    marginTop: 15
+  }
 }))

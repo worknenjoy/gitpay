@@ -7,18 +7,12 @@ import { ProfileAvatar } from './profile-account-menu.styles'
 import { useHistory } from 'react-router-dom'
 import useUserTypes from '../../../../../hooks/use-user-types'
 
-const ProfileAccountMenuItems = ({
-  open,
-  anchorEl,
-  handleClose,
-  user,
-  onLogout,
-}) => {
+const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout }) => {
   const history = useHistory()
   const { isContributor, isFunding, isMaintainer } = useUserTypes(user)
 
-  const bgColor = "#d8e2d9ff"
-  
+  const bgColor = '#d8e2d9ff'
+
   return (
     <Menu
       anchorEl={anchorEl}
@@ -55,7 +49,11 @@ const ProfileAccountMenuItems = ({
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      <MenuItem color="primary" onClick={(e) => history.push(`/users/${user?.id}`)} style={{ margin: 5 }}>
+      <MenuItem
+        color="primary"
+        onClick={(e) => history.push(`/users/${user?.id}`)}
+        style={{ margin: 5 }}
+      >
         <ListItemIcon>
           <ProfileAvatar bgColor={bgColor}>
             <Web color="primary" fontSize="small" />

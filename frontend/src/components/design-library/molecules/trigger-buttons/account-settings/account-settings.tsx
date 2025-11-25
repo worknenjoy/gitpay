@@ -15,7 +15,7 @@ const AccountSettings = ({ user, accountMenuProps }) => {
     setOpen(false)
   }
   return (
-    <div style={{display: 'flex', alignContent: 'center'}}>
+    <div style={{ display: 'flex', alignContent: 'center' }}>
       <AccountButton handleMenu={handleMenuOpen} user={user} />
       <ProfileAccountMenuItems
         open={open}
