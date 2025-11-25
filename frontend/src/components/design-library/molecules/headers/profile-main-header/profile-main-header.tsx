@@ -1,5 +1,6 @@
 import React from 'react'
 import MainTitle from '../../../atoms/typography/main-title/main-title'
+import { ProfileHeaderContainer } from './profile-main-header.styles'
 
 type ProfileMainHeaderProps = {
   title: string | React.ReactNode // Allow title to be a string or a React node
@@ -10,17 +11,10 @@ type ProfileMainHeaderProps = {
 
 const ProfileMainHeader = ({ title, subtitle, aside }: ProfileMainHeaderProps) => {
   return (
-    <div
-      style={{
-        marginBottom: 20,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-      }}
-    >
+    <ProfileHeaderContainer>
       <MainTitle title={title} subtitle={subtitle} />
       {aside && aside}
-    </div>
+    </ProfileHeaderContainer>
   )
 }
 

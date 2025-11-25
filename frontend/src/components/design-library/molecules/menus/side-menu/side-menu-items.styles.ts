@@ -20,7 +20,10 @@ export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
 }))
 
 export const ListItemIconStyled = styled('div')(({ theme }) => ({
-  color: theme.palette.primary.contrastText
+  color: theme.palette.primary.contrastText,
+  'svg': {
+    verticalAlign: 'middle'
+  }
 }))
 
 export const Primary = styled(ListItemText)(({ theme }) => ({

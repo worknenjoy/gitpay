@@ -38,7 +38,7 @@ const Drawer = ({
 
   return (
     <MuiDrawer
-      variant={isMobile ? 'temporary' : 'persistent'}
+      variant={isMobile ? 'temporary' : null}
       open={open}
       onClose={onClose}
       aria-labelledby="form-dialog-title"

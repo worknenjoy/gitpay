@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles'
 
 export const SidePaper = styled('div')(({ theme }) => ({
   backgroundColor: '#2c5c46',
-  height: 'fit-content',
+  height: '100%',
   width: 'fit-content',
   [theme.breakpoints.down('sm')]: {
     width: '100%'

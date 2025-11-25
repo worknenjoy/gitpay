@@ -53,6 +53,7 @@ const PrimaryDataPage = ({
               size="small"
               onClick={onActionClick}
               endIcon={<AddIcon />}
+              sx={{ marginTop: { xs: 2, sm: 0 }, width: { xs: '100%', sm: 'auto' } }}
             >
               {onActionText}
             </Button>
