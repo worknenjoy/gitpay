@@ -2,7 +2,11 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { LinkButton, LabelButton, LinkButtonsListStyled } from './TopbarStyles'
 
-export const TopbarMenu = () => {
+type TopbarMenuProps = {
+  onClick?: () => void
+}
+
+export const TopbarMenu = ({ onClick }: TopbarMenuProps) => {
   const menuItems = [
     {
       onClick: () => window.location.assign('/#/welcome'),
@@ -26,10 +30,21 @@ export const TopbarMenu = () => {
     }
   ]
 
+  const handleClick = (itemClick?: () => void) => {
+    onClick?.()
+    itemClick?.()
+  }
+
   return (
     <LinkButtonsListStyled>
       {menuItems.map((item, index) => (
-        <LinkButton key={index} onClick={item.onClick} variant="text" size="small" color="primary">
+        <LinkButton
+          key={index}
+          onClick={() => handleClick(item.onClick)}
+          variant="text"
+          size="small"
+          color="primary"
+        >
           <LabelButton>{item.message}</LabelButton>
         </LinkButton>
       ))}

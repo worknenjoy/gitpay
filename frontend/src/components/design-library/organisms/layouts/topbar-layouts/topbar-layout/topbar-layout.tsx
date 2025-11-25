@@ -57,7 +57,7 @@ const Topbar = ({
         </LeftSide>
         <RightSide isActive={isActive}>
           <OnlyMobile>
-            <TopbarMenu />
+            <TopbarMenu onClick={handleClickMenuMobile} />
           </OnlyMobile>
           {isLoggedIn ? (
             <AccountWrapper>
