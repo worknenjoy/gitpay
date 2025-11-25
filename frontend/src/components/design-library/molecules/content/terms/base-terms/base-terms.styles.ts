@@ -5,7 +5,7 @@ type TermsContainerProps = {
   extraStyles?: boolean
 }
 
-export const TermsContainer = styled('div')<TermsContainerProps>(({ extraStyles }) => ({
+export const TermsContainer = styled('div')<TermsContainerProps>(({ theme, extraStyles }) => ({
   ...(extraStyles
     ? {
         padding: 20,
@@ -16,7 +16,10 @@ export const TermsContainer = styled('div')<TermsContainerProps>(({ extraStyles 
         width: '100%',
         background: 'white'
       }
-    : {})
+    : {}),
+  [theme.breakpoints.down('sm')]: {
+    padding: 20
+  }
 }))
 
 export const Header = styled('div')({
