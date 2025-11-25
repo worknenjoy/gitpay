@@ -95,8 +95,8 @@ const BaseTabs = ({
           textColor="secondary"
           indicatorColor="secondary"
           orientation={isMobile ? 'horizontal' : orientation}
-          variant={ isVertical ? 'standard' : 'scrollable' }
-          scrollButtons={ isVertical ? false : 'auto' }
+          variant={isVertical ? 'standard' : 'scrollable'}
+          scrollButtons={isVertical ? false : 'auto'}
         >
           {tabs.map((tab) => (
             <Tab

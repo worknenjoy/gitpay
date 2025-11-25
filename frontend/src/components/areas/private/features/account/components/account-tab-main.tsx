@@ -115,7 +115,7 @@ const AccountTabMain = ({
                   </FormattedMessage>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 12, md: 12 }}>
-                  <div {...(isDesktop ? {float: 'right'} : { style: { textAlign: 'center' } })}>
+                  <div {...(isDesktop ? { float: 'right' } : { style: { textAlign: 'center' } })}>
                     <Button
                       {...(isMobile ? { fullWidth: true, style: { marginBottom: 10 } } : {})}
                       type="submit"
@@ -184,7 +184,7 @@ const AccountTabMain = ({
                   </FormattedMessage>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 12, md: 12 }}>
-                  <div {...(isDesktop ? {float: 'right'} : { style: { textAlign: 'center' } })}>
+                  <div {...(isDesktop ? { float: 'right' } : { style: { textAlign: 'center' } })}>
                     <Button
                       {...(isDesktop ? {} : { fullWidth: true, style: { textAlign: 'center' } })}
                       type="submit"

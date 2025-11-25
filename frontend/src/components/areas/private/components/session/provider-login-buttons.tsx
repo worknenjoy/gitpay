@@ -72,7 +72,9 @@ const ProviderLoginButtons = ({
       <div style={{ display: 'flex', justifyContent: position }}>
         <div>
           <Button
-            {...(isDesktop ? { style: { marginRight: 10 } } : { fullWidth: true, style: { marginBottom: 10 } })}
+            {...(isDesktop
+              ? { style: { marginRight: 10 } }
+              : { fullWidth: true, style: { marginBottom: 10 } })}
             {...(authorizeGithub
               ? { onClick: () => authorizeGithub() }
               : { href: `${api.API_URL}/authorize/github` })}

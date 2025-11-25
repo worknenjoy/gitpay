@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Drawer from '../drawer/drawer'
 import PayoutRequestForm from '../../../organisms/forms/payout-forms/payout-request-form/payout-request-form'
 

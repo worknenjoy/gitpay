@@ -8,7 +8,6 @@ import StatusCard from 'design-library/molecules/cards/status-card/status-card'
 import EmptyPayout from 'design-library/molecules/content/empty/empty-payout/empty-payout'
 import { useHistory } from 'react-router-dom'
 import PayoutRequestDrawer from 'design-library/molecules/drawers/payout-request-drawer/payout-request-drawer'
-import { is } from 'bluebird'
 
 const Payouts = ({
   payouts,
@@ -72,8 +71,12 @@ const Payouts = ({
         </Paper>
       ) : (
         <>
-          <div 
-            style={isMobile ? { display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' } : { display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}
+          <div
+            style={
+              isMobile
+                ? { display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }
+                : { display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }
+            }
           >
             <StatusCard
               name={<FormattedMessage id="payouts.schedule" defaultMessage="Payout Schedule" />}

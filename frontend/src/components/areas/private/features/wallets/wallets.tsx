@@ -143,7 +143,13 @@ const Wallets = ({
         />
 
         {wallet.data.id && wallet.completed ? (
-          <div style={isMobile ? { display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' } : { display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+          <div
+            style={
+              isMobile
+                ? { display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }
+                : { display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }
+            }
+          >
             <BalanceCard
               name={wallet.data.name || `Wallet #${wallet.id}`}
               balance={wallet.data.balance}

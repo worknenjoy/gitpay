@@ -5,7 +5,7 @@ export const RootCard = styled(MuiCard)(({ theme }) => ({
   maxWidth: 500,
   margin: 10,
   textAlign: 'right',
-  padding: 10,
+  padding: 10
 }))
 
 export const Balance = styled(MuiTypography)(() => ({

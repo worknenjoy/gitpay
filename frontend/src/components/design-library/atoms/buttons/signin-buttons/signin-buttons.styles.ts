@@ -13,7 +13,7 @@ export const SigninButtonsStyled = styled('div')(({ theme }) => ({
       marginBottom: 20,
       marginRight: 0,
       marginLeft: 0,
-      padding: 0,
+      padding: 0
     }
   }
 }))
