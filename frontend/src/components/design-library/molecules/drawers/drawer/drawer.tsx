@@ -26,8 +26,8 @@ const Drawer = ({
   actions = [],
   completed = true
 }: DrawerProps) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const closeDialogButton = () => {
     return (
       <CloseFab size="small" aria-label="close" onClick={onClose}>
@@ -37,19 +37,19 @@ const Drawer = ({
   }
 
   return (
-    <MuiDrawer 
-      variant={ isMobile ? "temporary" : "persistent" }
+    <MuiDrawer
+      variant={isMobile ? 'temporary' : 'persistent'}
       open={open}
       onClose={onClose}
       aria-labelledby="form-dialog-title"
       anchor="right"
       sx={{
-        "& .MuiDrawer-paper": {
-          boxSizing: "border-box",
-          width: isMobile ? "90vw" : null,
-          maxWidth: "100vw",
-          height: "100vh",
-        },
+        '& .MuiDrawer-paper': {
+          boxSizing: 'border-box',
+          width: isMobile ? '90vw' : null,
+          maxWidth: '100vw',
+          height: '100vh'
+        }
       }}
     >
       <Box display="flex" flexDirection="column" height="100%" p={2}>

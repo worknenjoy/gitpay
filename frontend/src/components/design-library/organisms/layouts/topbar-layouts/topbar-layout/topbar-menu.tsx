@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { LinkButton, LabelButton } from './TopbarStyles'
+import { LinkButton, LabelButton, LinkButtonsListStyled } from './TopbarStyles'
 
 export const TopbarMenu = () => {
   const menuItems = [
@@ -27,13 +27,13 @@ export const TopbarMenu = () => {
   ]
 
   return (
-    <>
+    <LinkButtonsListStyled>
       {menuItems.map((item, index) => (
         <LinkButton key={index} onClick={item.onClick} variant="text" size="small" color="primary">
           <LabelButton>{item.message}</LabelButton>
         </LinkButton>
       ))}
-    </>
+    </LinkButtonsListStyled>
   )
 }
 

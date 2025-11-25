@@ -1,6 +1,18 @@
 import { css, styled } from '@mui/material/styles'
 import Button, { ButtonProps } from '../button/button'
 
+export const SigninButtonsStyled = styled('div')(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginRight: 0,
+    marginLeft: 0,
+    marginTop: 20
+  }
+}))
+
 export const StyledButton = styled(Button)<ButtonProps>`
   min-width: 20px !important;
   font-size: 12px;
@@ -9,6 +21,8 @@ export const StyledButton = styled(Button)<ButtonProps>`
 
   @media (max-width: 37.5em) {
     margin-bottom: 20px !important;
+    margin-left: 0 !important;
+    font-size: 28px;
   }
 `
 
