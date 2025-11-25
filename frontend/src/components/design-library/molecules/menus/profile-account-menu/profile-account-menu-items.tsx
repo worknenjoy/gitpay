@@ -49,10 +49,7 @@ const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout }
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      <MenuItem
-        color="primary"
-        onClick={(e) => history.push(`/users/${user?.id}`)}
-      >
+      <MenuItem color="primary" onClick={(e) => history.push(`/users/${user?.id}`)}>
         <ListItemIcon>
           <ProfileAvatar bgColor={bgColor}>
             <Web color="primary" fontSize="small" />
