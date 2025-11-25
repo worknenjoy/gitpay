@@ -16,7 +16,7 @@ export default function ImportIssueButton({ onAddIssueClick }) {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" width="100%">
       <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
-        <Button onClick={handleClick}>
+        <Button onClick={handleClick} size="small">
           <FormattedMessage
             id="home.hero.headline.button.secondary"
             defaultMessage="Import issue"

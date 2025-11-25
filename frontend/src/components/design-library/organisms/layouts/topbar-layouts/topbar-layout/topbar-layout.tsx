@@ -18,6 +18,7 @@ import TopbarMenu from './topbar-menu'
 import SignupSignin from '../../../forms/signup-forms/signup-signin/signup-signin'
 import ImportIssue from '../../../forms/issue-forms/import-issue/import-issue'
 import AccountSettings from '../../../../molecules/trigger-buttons/account-settings/account-settings'
+import { AccountWrapper } from './import-issue-dialog.styles'
 
 const Topbar = ({
   user,
@@ -59,10 +60,10 @@ const Topbar = ({
             <TopbarMenu />
           </OnlyMobile>
           {isLoggedIn ? (
-            <>
+            <AccountWrapper>
               <ImportIssue onImport={importIssuesProps.onImport} />
               <AccountSettings user={user} accountMenuProps={accountMenuProps} />
-            </>
+            </AccountWrapper>
           ) : (
             <>
               <SignupSignin

@@ -25,3 +25,13 @@ export const ProviderButton = styled(MuiButton)(({ theme }) => ({
     marginLeft: 10
   }
 }))
+
+export const AccountWrapper = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  alignContent: 'center',
+  flexDirection: 'row',
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column'
+  }
+}))
