@@ -52,7 +52,6 @@ const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout }
       <MenuItem
         color="primary"
         onClick={(e) => history.push(`/users/${user?.id}`)}
-        style={{ margin: 5 }}
       >
         <ListItemIcon>
           <ProfileAvatar bgColor={bgColor}>
@@ -68,7 +67,7 @@ const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout }
         />
       </MenuItem>
       <Divider />
-      <MenuItem onClick={(e) => history.push('/profile/user-account')} style={{ margin: 5 }}>
+      <MenuItem onClick={(e) => history.push('/profile/user-account')}>
         <ListItemIcon>
           <ProfileAvatar bgColor={bgColor}>
             <AccountIcon fontSize="small" />
@@ -83,7 +82,7 @@ const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout }
         />
       </MenuItem>
       {isContributor && (
-        <MenuItem onClick={(e) => history.push('/profile/payout-settings')} style={{ margin: 5 }}>
+        <MenuItem onClick={(e) => history.push('/profile/payout-settings')}>
           <ListItemIcon>
             <ProfileAvatar bgColor={bgColor}>
               <SettingsIcon fontSize="small" />
