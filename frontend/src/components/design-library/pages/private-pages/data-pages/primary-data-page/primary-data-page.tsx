@@ -8,6 +8,7 @@ import SectionTable from 'design-library/molecules/tables/section-table/section-
 import { TableTabsProps, TableTabsContentProps } from 'types/table'
 import { CardProps } from 'types/card'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
+import { CardsWrapper } from './primary-data-page.styles'
 
 type PrimaryPageProps = {
   title: string | React.ReactNode
@@ -65,18 +66,11 @@ const PrimaryDataPage = ({
       ) : table ? (
         <>
           {cards?.length > 0 && (
-            <div
-              style={{
-                display: 'flex',
-                gap: '16px',
-                marginBottom: '16px',
-                justifyContent: 'flex-end'
-              }}
-            >
+            <CardsWrapper>
               {cards.map((card, index) => (
                 <BalanceCard key={index} name={card.title} balance={card.amount} type={card.type} />
               ))}
-            </div>
+            </CardsWrapper>
           )}
           <SectionTable
             tableData={table.tableData}

@@ -72,6 +72,8 @@ export default function AccountTabs({
           onChange={handleChange}
           textColor="secondary"
           indicatorColor="secondary"
+          scrollButtons="auto"
+          variant="scrollable"
         >
           <Tab
             label={

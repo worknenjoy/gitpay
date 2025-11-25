@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Tabs, Tab, Box, CardContent } from '@mui/material'
+import { Tabs, Tab, Box, CardContent, useTheme, useMediaQuery } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 import {
   Root,
@@ -45,7 +45,7 @@ type BaseTabsProps = {
   }>
   activeTab?: string | number
   orientation?: 'horizontal' | 'vertical'
-  onChange?: (event: React.ChangeEvent<{}>, newValue: string | number) => void
+  onChange?: (event: React.SyntheticEvent, newValue: string | number) => void
   children: React.ReactNode
   withCard?: boolean
 }
@@ -58,16 +58,16 @@ const BaseTabs = ({
   withCard = true,
   children
 }: BaseTabsProps) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const history = useHistory()
   const [value, setValue] = React.useState(activeTab)
 
-  const isVertical = orientation === 'vertical'
+  const isVertical = orientation === 'vertical' && !isMobile
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: string | number) => {
     setValue(newValue)
-    if (onChange) {
-      onChange(event, newValue)
-    }
+    onChange?.(event, newValue)
   }
 
   const handleTabClick = (e, tab) => {
@@ -84,27 +84,30 @@ const BaseTabs = ({
   }, [history.location.pathname, tabs])
 
   const RootComp = isVertical ? Root : 'div'
+  const TabWrapper = isVertical ? StyledTabsVertical : StyledTabsColumn
 
   return (
     <RootComp>
-      <Tabs
-        value={value || 0}
-        onChange={handleChange}
-        textColor="secondary"
-        indicatorColor="secondary"
-        orientation={orientation}
-        component={isVertical ? StyledTabsVertical : StyledTabsColumn}
-        scrollButtons="auto"
-      >
-        {tabs.map((tab) => (
-          <Tab
-            key={tab.value}
-            label={tab.label}
-            onClick={(e) => handleTabClick(e, tab)}
-            value={tab.value}
-          />
-        ))}
-      </Tabs>
+      <TabWrapper>
+        <Tabs
+          value={value || 0}
+          onChange={handleChange}
+          textColor="secondary"
+          indicatorColor="secondary"
+          orientation={isMobile ? 'horizontal' : orientation}
+          variant={ isVertical ? 'standard' : 'scrollable' }
+          scrollButtons={ isVertical ? false : 'auto' }
+        >
+          {tabs.map((tab) => (
+            <Tab
+              key={tab.value}
+              label={tab.label}
+              onClick={(e) => handleTabClick(e, tab)}
+              value={tab.value}
+            />
+          ))}
+        </Tabs>
+      </TabWrapper>
       <TabPanel isVertical={isVertical} withCard={withCard}>
         {children}
       </TabPanel>

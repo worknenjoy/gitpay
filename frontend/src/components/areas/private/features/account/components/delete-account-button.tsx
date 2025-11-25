@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-import { Button } from '@mui/material'
+import { Button, useMediaQuery, useTheme } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import DeleteUser from '../features/account-details/deleteUser'
 
 const DeleteAccountButton = ({ deleteUser, user, history }) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
   const [deleteUserDialog, setDeleteUserDialog] = useState(false)
 
   const onDeleteUser = (user) => {
@@ -20,6 +23,7 @@ const DeleteAccountButton = ({ deleteUser, user, history }) => {
   return (
     <>
       <Button
+        {...(isMobile ? { fullWidth: true, style: { marginBottom: 10 } } : {})}
         onClick={() => setDeleteUserDialog(true)}
         variant="outlined"
         style={{ color: '#353A42' }}

@@ -19,6 +19,8 @@ const AccountTabs = ({ user, children }) => {
           onChange={handleChange}
           textColor="secondary"
           indicatorColor="secondary"
+          scrollButtons="auto"
+          variant="scrollable"
         >
           <Tab
             label={

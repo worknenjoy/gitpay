@@ -31,10 +31,6 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
     setAmount(Number(value))
   }
 
-  useEffect(() => {
-    console.log('amount', amount)
-  }, [amount])
-
   return (
     <Drawer
       completed={completed}

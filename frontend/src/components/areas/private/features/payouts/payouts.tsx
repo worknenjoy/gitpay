@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Paper } from '@mui/material'
+import { Container, Paper, useMediaQuery, useTheme } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import ProfileHeader from '../../../../design-library/molecules/headers/profile-main-header/profile-main-header'
 import PayoutsTable from './payouts-table'
@@ -8,6 +8,7 @@ import StatusCard from 'design-library/molecules/cards/status-card/status-card'
 import EmptyPayout from 'design-library/molecules/content/empty/empty-payout/empty-payout'
 import { useHistory } from 'react-router-dom'
 import PayoutRequestDrawer from 'design-library/molecules/drawers/payout-request-drawer/payout-request-drawer'
+import { is } from 'bluebird'
 
 const Payouts = ({
   payouts,
@@ -19,6 +20,8 @@ const Payouts = ({
   account,
   fetchAccount
 }) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const history = useHistory()
   const { data: userData, completed: userCompleted } = user || {}
   const { data, completed } = balance || {}
@@ -69,7 +72,9 @@ const Payouts = ({
         </Paper>
       ) : (
         <>
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+          <div 
+            style={isMobile ? { display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' } : { display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}
+          >
             <StatusCard
               name={<FormattedMessage id="payouts.schedule" defaultMessage="Payout Schedule" />}
               status={payoutSchedule || 'No Info'}

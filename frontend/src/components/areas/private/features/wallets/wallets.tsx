@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { messages } from '../../../../../messages/messages'
-import { Container, Button, Paper } from '@mui/material'
+import { Container, Button, Paper, useTheme, useMediaQuery } from '@mui/material'
 import { FormattedMessage, useIntl } from 'react-intl'
 import AddFundsFormDrawer from '../payments/add-funds-form-drawer'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
@@ -47,6 +47,9 @@ const Wallets = ({
   wallet,
   fetchWallet
 }) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   const intl = useIntl()
   const [addFundsDialog, setAddFundsDialog] = useState(false)
   const [showWalletName, setShowWalletName] = useState(false)
@@ -140,7 +143,7 @@ const Wallets = ({
         />
 
         {wallet.data.id && wallet.completed ? (
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
+          <div style={isMobile ? { display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' } : { display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }}>
             <BalanceCard
               name={wallet.data.name || `Wallet #${wallet.id}`}
               balance={wallet.data.balance}

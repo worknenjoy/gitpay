@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import Grid from '@mui/material/Grid'
-import { Button, Paper } from '@mui/material'
+import { Button, Paper, useMediaQuery, useTheme } from '@mui/material'
 
 import { Field } from 'design-library/atoms/inputs/fields/field/field'
 import ProviderLoginButtons from '../../../../../../containers/provider-login-buttons'
@@ -17,6 +17,9 @@ const AccountTabMain = ({
   history,
   deleteUser
 }) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
   const { login_strategy, provider, name, password } = user
   const [fieldName, setFieldName] = useState<string>(name)
   const [currentPassword, setCurrentPassword] = useState<string>('')
@@ -112,8 +115,9 @@ const AccountTabMain = ({
                   </FormattedMessage>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 12, md: 12 }}>
-                  <div style={{ float: 'right' }}>
+                  <div {...(isDesktop ? {float: 'right'} : { style: { textAlign: 'center' } })}>
                     <Button
+                      {...(isMobile ? { fullWidth: true, style: { marginBottom: 10 } } : {})}
                       type="submit"
                       variant="contained"
                       color="secondary"
@@ -180,8 +184,9 @@ const AccountTabMain = ({
                   </FormattedMessage>
                 </Grid>
                 <Grid size={{ xs: 12, sm: 12, md: 12 }}>
-                  <div style={{ float: 'right' }}>
+                  <div {...(isDesktop ? {float: 'right'} : { style: { textAlign: 'center' } })}>
                     <Button
+                      {...(isDesktop ? {} : { fullWidth: true, style: { textAlign: 'center' } })}
                       type="submit"
                       variant="contained"
                       color="secondary"

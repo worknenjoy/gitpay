@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@mui/material'
+import { Button, useMediaQuery, useTheme } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import Typography from '@mui/material/Typography'
 import GithubLogo from 'images/github-logo.png'
@@ -21,6 +21,10 @@ const ProviderLoginButtons = ({
     textAlign: textPosition,
     marginBottom: 10
   } as React.CSSProperties
+
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
 
   return (
     <>
@@ -68,7 +72,7 @@ const ProviderLoginButtons = ({
       <div style={{ display: 'flex', justifyContent: position }}>
         <div>
           <Button
-            style={{ marginRight: 10 }}
+            {...(isDesktop ? { style: { marginRight: 10 } } : { fullWidth: true, style: { marginBottom: 10 } })}
             {...(authorizeGithub
               ? { onClick: () => authorizeGithub() }
               : { href: `${api.API_URL}/authorize/github` })}
@@ -80,6 +84,7 @@ const ProviderLoginButtons = ({
             <span style={{ marginLeft: 10 }}>Github</span>
           </Button>
           <Button
+            {...(isDesktop ? {} : { fullWidth: true })}
             href={`${api.API_URL}/authorize/bitbucket`}
             variant="contained"
             color="secondary"

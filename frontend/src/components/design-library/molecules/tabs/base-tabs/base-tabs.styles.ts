@@ -13,13 +13,13 @@ export const StyledCard = styled(Card)(({ theme }) => ({
   padding: 10
 }))
 
-export const StyledTabsVertical = styled(Tabs)(({ theme }) => ({
+export const StyledTabsVertical = styled('div')(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.divider}`,
   width: 200,
   alignItems: 'flex-end'
 }))
 
-export const StyledTabsColumn = styled(Tabs)(() => ({
+export const StyledTabsColumn = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column'
 }))
