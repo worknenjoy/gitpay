@@ -13,7 +13,7 @@ const SideMenuCollapseButton = ({ setCollapsed, collapsed }) => {
         height: 20,
         position: 'absolute',
         right: -28,
-        top: -52,
+        top: -56,
         fontWeight: 'bold',
         fontSize: '15px',
         padding: '3px',
