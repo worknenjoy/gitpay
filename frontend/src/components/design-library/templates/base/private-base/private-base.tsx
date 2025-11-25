@@ -6,7 +6,7 @@ import Bottom from '../../../organisms/layouts/bottom-bar-layouts/bottom-bar-lay
 import { useHistory } from 'react-router-dom'
 import ProfileHeader from '../../../molecules/headers/profile-main-header/profile-main-header'
 import ActivateAccountDialog from '../../../molecules/dialogs/activate-account-dialog/activate-account-dialog'
-import { SecondaryBar, ContainerRoot, RootGrid } from './private-base.styles'
+import { SecondaryBar, ContainerRoot } from './private-base.styles'
 
 type PrivateBaseProps = {
   children: React.ReactNode

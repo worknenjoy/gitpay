@@ -60,7 +60,6 @@ const SideMenuItems = ({ menuItems, compactMode, setCompactMode }: SideMenuItems
                       title={compactMode ? item.label : ''}
                       placement="right"
                       disableHoverListener={!compactMode}
-                      sx={{ verticalAlign: 'middle' }}
                     >
                       <ListItemIconStyled sx={{ pr: compactMode ? 0 : 2 }}>
                         {item.icon}

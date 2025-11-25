@@ -13,7 +13,7 @@ const AccountButton = ({ handleMenu, user }) => {
       <StyledButton
         onClick={handleMenu}
         variant="text"
-        size="small"
+        size="medium"
         color="primary"
         id="account-menu"
       >

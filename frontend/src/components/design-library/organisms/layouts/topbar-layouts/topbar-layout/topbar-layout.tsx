@@ -60,8 +60,8 @@ const Topbar = ({
           </OnlyMobile>
           {isLoggedIn ? (
             <>
+              <ImportIssue onImport={importIssuesProps.onImport} />
               <AccountSettings user={user} accountMenuProps={accountMenuProps} />
-              <ImportIssue {...importIssuesProps} />
             </>
           ) : (
             <>

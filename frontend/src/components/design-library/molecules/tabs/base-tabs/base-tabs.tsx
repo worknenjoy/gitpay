@@ -94,6 +94,7 @@ const BaseTabs = ({
         indicatorColor="secondary"
         orientation={orientation}
         component={isVertical ? StyledTabsVertical : StyledTabsColumn}
+        scrollButtons="auto"
       >
         {tabs.map((tab) => (
           <Tab

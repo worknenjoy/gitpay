@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles'
 
 export const PageContent = styled('div')(({ theme }) => ({
   backgroundColor: '#F7F7F7',
-  padding: '0 0 0 0',
+  padding: '0 0 0 0'
 }))
 
 export const Page = styled('div')({

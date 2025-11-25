@@ -21,7 +21,7 @@ export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
 
 export const ListItemIconStyled = styled('div')(({ theme }) => ({
   color: theme.palette.primary.contrastText,
-  'svg': {
+  svg: {
     verticalAlign: 'middle'
   }
 }))

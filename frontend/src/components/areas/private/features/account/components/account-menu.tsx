@@ -85,7 +85,7 @@ export default function AccountMenu({ user, history, onLogout }) {
       >
         <MenuItem onClick={(e) => history.push(`/users/${user.id}`)} style={{ margin: 5 }}>
           <Avatar>
-            <Web width={12} />
+           <Web fontSize="small" sx={{ color: 'primary.main' }} />
           </Avatar>
           <Typography variant="body2" color="text">
             <FormattedMessage id="profile.accountMenu.profile" defaultMessage="Profile" />
@@ -93,7 +93,7 @@ export default function AccountMenu({ user, history, onLogout }) {
         </MenuItem>
         <MenuItem onClick={(e) => history.push('/profile/user-account')} style={{ margin: 5 }}>
           <Avatar>
-            <AccountIcon width={12} />
+            <AccountIcon fontSize="small" />
           </Avatar>
           <Typography variant="body2" color="text">
             <FormattedMessage id="profile.accountMenu.myAccount" defaultMessage="My account" />
@@ -101,7 +101,7 @@ export default function AccountMenu({ user, history, onLogout }) {
         </MenuItem>
         <MenuItem onClick={(e) => history.push('/profile/payout-settings')} style={{ margin: 5 }}>
           <Avatar>
-            <SettingsIcon width={12} />
+            <SettingsIcon fontSize="small" />
           </Avatar>
           <Typography variant="body2" color="text">
             <FormattedMessage
