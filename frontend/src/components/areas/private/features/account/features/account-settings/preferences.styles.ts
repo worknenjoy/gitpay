@@ -44,6 +44,6 @@ export const SectionContent = styled(Grid)(({ theme }) => ({
   marginBottom: theme.spacing(2),
   [theme.breakpoints.down('sm')]: {
     marginTop: theme.spacing(2),
-    flexDirection: 'column',
+    flexDirection: 'column'
   }
 }))

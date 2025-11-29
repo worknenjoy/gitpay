@@ -3,7 +3,15 @@ import { Grid, Typography, Checkbox } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import Skill from '../account-skills/skill'
 import MySkill from '../account-skills/my-skill'
-import { Root, Title, ChipContainer, InlineLabel, SkillsGrid, Section, SectionContent } from './preferences.styles'
+import {
+  Root,
+  Title,
+  ChipContainer,
+  InlineLabel,
+  SkillsGrid,
+  Section,
+  SectionContent
+} from './preferences.styles'
 
 const skillsList = [
   'Node.js',

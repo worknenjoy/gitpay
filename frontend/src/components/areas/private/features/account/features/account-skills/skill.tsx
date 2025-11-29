@@ -13,7 +13,13 @@ function Skill({ title, onClick, isSelected }: SkillProps) {
   const theme = useTheme()
   const isMobile = theme.breakpoints.down('sm')
   return (
-    <Grid container direction="row" alignItems="center" size={{ xs: 12, md: 6 }} spacing={isMobile ? 4 : 1}>
+    <Grid
+      container
+      direction="row"
+      alignItems="center"
+      size={{ xs: 12, md: 6 }}
+      spacing={isMobile ? 4 : 1}
+    >
       <Grid size={{ xs: 2, md: 1 }}>
         <SkillAvatar greyed={!isSelected}>
           <SkillIcon name={title} />
