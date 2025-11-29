@@ -188,6 +188,7 @@
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.details": "<strong>Type: </strong>{{type}}<br /><strong>Reason: </strong>{{reason}}<br/><strong>Customer name: </strong> {{customer_name}}<br/><strong>Customer email: </strong> {{customer_email}}<br/><strong>Status: </strong> {{status}}<br/><strong>Reason detail: </strong>{{reason_details}}<br/><strong>Opened At: </strong> {{opened_at}}<br/><strong>Closed At: </strong> {{closed_at}}",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.bottom": "You can check the transaction details on <a href=\"https://gitpay.me/#/profile/payment-requests\">Gitpay</a>.",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.product_not_received": "Product not received",
+  "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.product_unacceptable": "Product unacceptable",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.payment_request_payment_applied": "Payment request payment credit applied to balance",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.refund_payment_request": "Refund payment request made by customer",
   "mail.paymentRequest.newDisputeCreatedForPaymentRequest.subject": "A new dispute has been opened for your payment request on Gitpay",
