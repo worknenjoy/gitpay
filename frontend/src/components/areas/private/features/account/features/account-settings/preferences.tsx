@@ -10,7 +10,8 @@ import {
   InlineLabel,
   SkillsGrid,
   Section,
-  SectionContent
+  SectionContent,
+  SectionItem
 } from './preferences.styles'
 
 const skillsList = [
@@ -88,7 +89,7 @@ const Preferences = (props) => {
           </Typography>
         </Grid>
         <SectionContent size={{ xs: 12 }}>
-          <span>
+          <SectionItem>
             <Checkbox
               id="checkbox_windows"
               checked={osArray?.includes('Windows')}
@@ -100,8 +101,8 @@ const Preferences = (props) => {
                 Windows
               </InlineLabel>
             </label>
-          </span>
-          <span>
+          </SectionItem>
+          <SectionItem>
             <Checkbox
               id="checkbox_linux"
               checked={osArray?.includes('Linux')}
@@ -112,8 +113,8 @@ const Preferences = (props) => {
                 Linux
               </InlineLabel>
             </label>
-          </span>
-          <span>
+          </SectionItem>
+          <SectionItem>
             <Checkbox
               id="checkbox_mac"
               checked={osArray?.includes('Mac')}
@@ -124,7 +125,7 @@ const Preferences = (props) => {
                 Mac
               </InlineLabel>
             </label>
-          </span>
+          </SectionItem>
         </SectionContent>
         <Grid size={{ xs: 12 }}>
           <Typography color="primary" variant="h5">

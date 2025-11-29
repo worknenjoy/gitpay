@@ -47,3 +47,10 @@ export const SectionContent = styled(Grid)(({ theme }) => ({
     flexDirection: 'column'
   }
 }))
+
+export const SectionItem = styled('div')(({ theme }) => ({
+  display: 'inline',
+  [theme.breakpoints.down('sm')]: {
+    display: 'block'
+  }
+}))
