@@ -15,6 +15,10 @@ const getReason = (reason_details) => {
       return i18n.__(
         'mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.product_not_received'
       )
+    case 'product_unacceptable':
+      return i18n.__(
+        'mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.product_unacceptable'
+      )
     case 'payment_request_payment_applied':
       return i18n.__(
         'mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.payment_request_payment_applied'

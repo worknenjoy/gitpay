@@ -23,7 +23,7 @@ export const SubscribeFromWrapper = styled('div')(({ theme }) => ({
   marginTop: '1rem',
   marginBottom: '1rem',
   [theme.breakpoints.down('sm')]: {
-    'input': {
+    input: {
       display: 'block',
       margin: '0 auto 1rem auto',
       width: '100% !important',
