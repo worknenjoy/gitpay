@@ -3,7 +3,7 @@ import { Grid, Typography, Checkbox } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import Skill from '../account-skills/skill'
 import MySkill from '../account-skills/my-skill'
-import { Root, Title, ChipContainer, InlineLabel, SkillsGrid, Section } from './preferences.styles'
+import { Root, Title, ChipContainer, InlineLabel, SkillsGrid, Section, SectionContent } from './preferences.styles'
 
 const skillsList = [
   'Node.js',
@@ -74,48 +74,57 @@ const Preferences = (props) => {
             <FormattedMessage id="preferences.title.main" defaultMessage="Preferences" />
           </Title>
         </Grid>
-        <Grid size={{ xs: 7 }}>
-          <Typography color="primary" variant="h5">
+        <Grid size={{ xs: 12 }}>
+          <Typography color="primary" variant="h5" gutterBottom>
             <FormattedMessage id="preferences.os" defaultMessage="OS" />
           </Typography>
-          <Checkbox
-            id="checkbox_windows"
-            checked={osArray?.includes('Windows')}
-            onClick={() => handleOSClick('Windows')}
-          />
-          <label htmlFor="checkbox_windows">
-            <InlineLabel color="primary" variant="body2">
-              Windows
-            </InlineLabel>
-          </label>
-          <Checkbox
-            id="checkbox_linux"
-            checked={osArray?.includes('Linux')}
-            onClick={() => handleOSClick('Linux')}
-          />
-          <label htmlFor="checkbox_linux">
-            <InlineLabel color="primary" variant="body2">
-              Linux
-            </InlineLabel>
-          </label>
-          <Checkbox
-            id="checkbox_mac"
-            checked={osArray?.includes('Mac')}
-            onClick={() => handleOSClick('Mac')}
-          />
-          <label htmlFor="checkbox_mac">
-            <InlineLabel color="primary" variant="body2">
-              Mac
-            </InlineLabel>
-          </label>
         </Grid>
+        <SectionContent size={{ xs: 12 }}>
+          <span>
+            <Checkbox
+              id="checkbox_windows"
+              checked={osArray?.includes('Windows')}
+              onClick={() => handleOSClick('Windows')}
+            />
+
+            <label htmlFor="checkbox_windows">
+              <InlineLabel color="primary" variant="body2">
+                Windows
+              </InlineLabel>
+            </label>
+          </span>
+          <span>
+            <Checkbox
+              id="checkbox_linux"
+              checked={osArray?.includes('Linux')}
+              onClick={() => handleOSClick('Linux')}
+            />
+            <label htmlFor="checkbox_linux">
+              <InlineLabel color="primary" variant="body2">
+                Linux
+              </InlineLabel>
+            </label>
+          </span>
+          <span>
+            <Checkbox
+              id="checkbox_mac"
+              checked={osArray?.includes('Mac')}
+              onClick={() => handleOSClick('Mac')}
+            />
+            <label htmlFor="checkbox_mac">
+              <InlineLabel color="primary" variant="body2">
+                Mac
+              </InlineLabel>
+            </label>
+          </span>
+        </SectionContent>
         <Grid size={{ xs: 12 }}>
           <Typography color="primary" variant="h5">
             <FormattedMessage id="prefences.header.title" defaultMessage="Preferences" />
           </Typography>
         </Grid>
-        <SkillsGrid size={{ xs: 12 }}>
-          <Grid container size={{ xs: 12 }} style={{ padding: 10 }}>
+        <SkillsGrid size={{ xs: 12 }} wrap="wrap">
+          <Grid container wrap="wrap" spacing={2}>
             {listSkills}
           </Grid>
         </SkillsGrid>
