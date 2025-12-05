@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Grid, Pagination } from '@mui/material'
+import { Box, Grid, Pagination, Typography } from '@mui/material'
 import { Root, StyledOrganizationCard } from './organization-list-full.styles'
 import OrganizationListFullPlaceholder from './organization-list-full.placeholder'
+import { FormattedMessage } from 'react-intl'
 
 const paginate = (array, pageSize, pageNumber) => {
   return array && array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
@@ -29,6 +30,18 @@ const OrganizationList = ({ organizations }) => {
   }
 
   const pages = Math.ceil(total / recordsPerPage)
+
+  if (completed && total === 0) {
+    return (
+      <Root maxWidth={false}>
+        <Box mt={3} mb={3} display="flex" justifyContent="center">
+          <Typography variant="h6">
+            <FormattedMessage id="noOrganizationsFound" defaultMessage="No organizations found." />
+          </Typography>
+        </Box>
+      </Root>
+    )
+  }
 
   return completed ? (
     <Root maxWidth={false}>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Grid, Pagination } from '@mui/material'
+import { Box, Grid, Pagination, Typography } from '@mui/material'
 import { StyledContainer, StyledProjectCard } from './project-list-full.styles'
 import ProjectListFullPlaceholder from './project-list-full.placeholder'
+import { FormattedMessage } from 'react-intl'
 
 const paginate = (array, pageSize, pageNumber) => {
   // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
@@ -54,6 +55,18 @@ const ProjectListFull = ({ projects }) => {
   }
 
   const pages = Math.ceil(total / recordsPerPage)
+
+  if (completed && total === 0) {
+    return (
+      <StyledContainer maxWidth={false}>
+        <Box mt={3} mb={3} display="flex" justifyContent="center">
+          <Typography variant="h6">
+            <FormattedMessage id="noProjectsFound" defaultMessage="No projects found." />
+          </Typography>
+        </Box>
+      </StyledContainer>
+    )
+  }
 
   return completed ? (
     <StyledContainer maxWidth={false}>

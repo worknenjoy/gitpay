@@ -10,6 +10,7 @@ import { ProfileAvatar } from './profile-account-menu.styles'
 import ProfileAccountMenuItems from './profile-account-menu-items'
 
 export default function ProfileAccountMenu({ user, onLogout }) {
+  const { data } = user
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
@@ -25,19 +26,19 @@ export default function ProfileAccountMenu({ user, onLogout }) {
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title="Account settings">
           <Button onClick={handleClick} size="small" color="primary">
-            {user?.picture_url ? (
-              <ProfileAvatar alt={user.username || ''} src={user.picture_url} />
+            {data?.picture_url ? (
+              <ProfileAvatar alt={data.username || ''} src={data.picture_url} />
             ) : (
-              <ProfileAvatar alt={user?.username || ''} src="">
-                {user?.username ? nameInitials(user.username) : <Person color="primary" />}
+              <ProfileAvatar alt={data?.username || ''} src="">
+                {data?.username ? nameInitials(data.username) : <Person color="primary" />}
               </ProfileAvatar>
             )}
             <div style={{ textAlign: 'left', marginLeft: 10, color: '#1c1c1f' }}>
               <Typography variant="body1" color="text">
-                {user?.username}
+                {data?.username}
               </Typography>
               <Typography variant="body2" style={{ fontSize: 8, color: '#666' }}>
-                {user?.email}
+                {data?.email}
               </Typography>
             </div>
             <MoreVert style={{ marginLeft: 5 }} />

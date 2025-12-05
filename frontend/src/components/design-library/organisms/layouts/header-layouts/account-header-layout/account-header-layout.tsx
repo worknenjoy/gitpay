@@ -10,6 +10,7 @@ import { Container, Wrapper, Inner, ActionButton, Account } from './account-head
 // styles moved to account-header.styles.ts
 
 const AccountHeader = ({ user, onCreateTask, onLogout }) => {
+  const { data } = user
   const history = useHistory()
 
   const [openAddIssue, setOpenAddIssue] = useState(false)
@@ -28,7 +29,7 @@ const AccountHeader = ({ user, onCreateTask, onLogout }) => {
       <Grid size={{ xs: 12, md: 4 }}></Grid>
       <Grid size={{ xs: 12, md: 8 }} component={Wrapper}>
         <Inner>
-          {user?.Types?.map((t: any) => t.name).includes('contributor') && (
+          {data?.Types?.map((t: any) => t.name).includes('contributor') && (
             <Grid container direction="column" alignItems="center">
               <Grid size={{ xs: 12 }}>
                 <ActionButton
@@ -44,8 +45,8 @@ const AccountHeader = ({ user, onCreateTask, onLogout }) => {
               </Grid>
             </Grid>
           )}
-          {(user?.Types?.map((t: any) => t.name).includes('maintainer') ||
-            user?.Types?.map((t: any) => t.name).includes('funding')) && (
+          {(data?.Types?.map((t: any) => t.name).includes('maintainer') ||
+            data?.Types?.map((t: any) => t.name).includes('funding')) && (
             <>
               <ImportIssueButton onAddIssueClick={handleAddIssueClick} />
               <ImportIssueDialog

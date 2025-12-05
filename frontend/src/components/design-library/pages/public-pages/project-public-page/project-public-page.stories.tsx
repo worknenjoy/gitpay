@@ -34,6 +34,7 @@ export const Default: Story = {
       data: [
         {
           id: '1',
+          provider: 'github',
           url: 'https://github.com/example/repo/issues/1',
           title: 'Issue 1',
           status: 'open',
@@ -42,6 +43,7 @@ export const Default: Story = {
         },
         {
           id: '2',
+          provider: 'github',
           url: 'https://github.com/example/repo/issues/2',
           title: 'Issue 2',
           status: 'closed',

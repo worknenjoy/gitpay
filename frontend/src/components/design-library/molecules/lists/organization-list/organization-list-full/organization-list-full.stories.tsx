@@ -36,3 +36,11 @@ Loading.args = {
     data: []
   }
 }
+
+export const Empty = (args) => <OrganizationListFull {...args} />
+Empty.args = {
+  organizations: {
+    completed: true,
+    data: []
+  }
+}

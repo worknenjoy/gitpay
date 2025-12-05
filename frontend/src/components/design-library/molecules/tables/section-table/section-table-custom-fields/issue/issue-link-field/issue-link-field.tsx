@@ -23,7 +23,7 @@ const IssueLinkField = ({ issue }) => {
   }
 
   const getProviderLogo = (provider) => {
-    switch (provider.toLowerCase()) {
+    switch (provider?.toLowerCase()) {
       case 'github':
         return logoGithub
       case 'bitbucket':

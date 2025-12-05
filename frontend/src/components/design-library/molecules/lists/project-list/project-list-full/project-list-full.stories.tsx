@@ -32,3 +32,11 @@ LoadingState.args = {
     data: []
   }
 }
+
+export const EmptyState = (args) => <ProjectListFull {...args} />
+EmptyState.args = {
+  projects: {
+    completed: true,
+    data: []
+  }
+}
