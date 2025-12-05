@@ -1,16 +1,17 @@
 import React, { Fragment } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Link, useHistory } from 'react-router-dom'
-
 import { Typography, Button, CardContent } from '@mui/material'
-
 import { Alert, AlertTitle } from '@mui/material'
-
-import { Card, CardList, CardMedia } from '../../components/ProfileStyles'
-import { CardActionsCentered, ContentWrapper, AlertWrapper } from './profile-options.styles'
+import { 
+  CardActionsCentered,
+  ContentWrapper,
+  AlertWrapper,
+  Card,
+  CardList,
+  CardMedia 
+} from './profile-options.styles'
 import WelcomeUser from '../../components/session/welcome-user'
-
-// Use ES module imports for assets so webpack (file-loader) returns a URL string correctly
 import toolsIcon from 'images/icons/noun_project management_3063515.svg'
 import preferencesIcon from 'images/icons/noun_project management_3063532.svg'
 import generalSettingsIcon from 'images/icons/noun_project management_3063521.svg'
@@ -18,10 +19,8 @@ import taskIcon from 'images/icons/noun_project management_3063547.svg'
 import configIcon from 'images/icons/noun_project management_3063514.svg'
 import paymentsIcon from 'images/icons/noun_project management_3063535.svg'
 
-// styles moved to styled components in profile-options.styles.ts
-
 const ProfileOptions = ({ user }) => {
-  const { data = {}, completed } = user
+  const { data = {} } = user
   const { Types = [] } = data
 
   const history = useHistory()
@@ -72,9 +71,10 @@ const ProfileOptions = ({ user }) => {
         <CardList>
           {Types && Types.map((t) => t.name).includes('contributor') && (
             <Card>
-              <FormattedMessage id="account.profile.issues.caption" defaultMessage="Issues">
-                {(msg) => <CardMedia image={taskIcon} title={msg} />}
-              </FormattedMessage>
+              
+              <CardMedia image={taskIcon}>
+                <FormattedMessage id="account.profile.issues.caption" defaultMessage="Issues" />
+              </CardMedia>
               <CardContent>
                 <Typography variant="h6">
                   <FormattedMessage id="account.profile.issues.headline" defaultMessage="Issues" />
@@ -102,12 +102,12 @@ const ProfileOptions = ({ user }) => {
             (Types.map((t) => t.name).includes('funding') ||
               Types.map((t) => t.name).includes('maintainer')) && (
               <Card>
-                <FormattedMessage
-                  id="account.profile.tasks.payments.caption"
-                  defaultMessage="Payments"
-                >
-                  {(msg) => <CardMedia image={paymentsIcon} title={msg} />}
-                </FormattedMessage>
+                <CardMedia image={paymentsIcon}>
+                  <FormattedMessage
+                    id="account.profile.tasks.payments.caption"
+                    defaultMessage="Payments"
+                  />
+                </CardMedia>
                 <CardContent>
                   <Typography variant="h6">
                     <FormattedMessage
@@ -136,9 +136,9 @@ const ProfileOptions = ({ user }) => {
             )}
           {Types && Types.map((t) => t.name).includes('contributor') && (
             <Card>
-              <FormattedMessage id="account.profile.tasks.payment.caption" defaultMessage="Payment">
-                {(msg) => <CardMedia image={toolsIcon} title={msg} />}
-              </FormattedMessage>
+              <CardMedia image={toolsIcon}>
+                <FormattedMessage id="account.profile.tasks.payment.caption" defaultMessage="Payment" />
+              </CardMedia>
               <CardContent>
                 <Typography variant="h6">
                   <FormattedMessage
