@@ -3,7 +3,6 @@ import { HashRouter, Redirect, Route, Switch } from 'react-router-dom'
 import PublicBase from 'design-library/templates/base/public-base/public-base'
 import HomePage from 'design-library/pages/public-pages/home-public-page/home-public-page'
 import TaskContainer from '../../../../containers/task'
-import TaskOrdersContainer from '../../../../containers/task-orders'
 import WelcomeContainer from '../../../../containers/welcome'
 import TeamContainer from '../../../../containers/team.js'
 import ProjectPageContainer from '../../../../containers/project-page'
@@ -55,11 +54,6 @@ const PublicPage = ({
           <Route exact path="/task/:id/:slug/interested" component={TaskContainer} />
           <Route exact path="/task/:id/interested/:interested_id" component={TaskContainer} />
           <Route exact path="/task/:id/members" component={TaskContainer} />
-          <Route
-            exact
-            path="/task/:id/order/:order_id/status/:status"
-            component={TaskOrdersContainer}
-          />
           <Route
             exact
             path="/organizations/:organization_id"

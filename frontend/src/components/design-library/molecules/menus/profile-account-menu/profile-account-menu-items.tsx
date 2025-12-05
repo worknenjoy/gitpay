@@ -9,7 +9,8 @@ import useUserTypes from '../../../../../hooks/use-user-types'
 
 const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout }) => {
   const history = useHistory()
-  const { isContributor, isFunding, isMaintainer } = useUserTypes(user)
+  const { isContributor } = useUserTypes(user)
+  const { data } = user
 
   const bgColor = '#d8e2d9ff'
 
@@ -49,7 +50,7 @@ const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout }
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      <MenuItem color="primary" onClick={(e) => history.push(`/users/${user?.id}`)}>
+      <MenuItem color="primary" onClick={(e) => history.push(`/users/${data?.id}`)}>
         <ListItemIcon>
           <ProfileAvatar bgColor={bgColor}>
             <Web color="primary" fontSize="small" />
