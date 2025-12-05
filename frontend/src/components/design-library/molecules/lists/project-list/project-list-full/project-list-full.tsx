@@ -56,7 +56,7 @@ const ProjectListFull = ({ projects }) => {
 
   const pages = Math.ceil(total / recordsPerPage)
 
-  if(completed && total === 0) {
+  if (completed && total === 0) {
     return (
       <StyledContainer maxWidth={false}>
         <Box mt={3} mb={3} display="flex" justifyContent="center">
