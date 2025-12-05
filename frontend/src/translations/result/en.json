@@ -394,7 +394,7 @@
   "issue.funding.invite.info": "You will invite a sponsor to add bounties to this issue",
   "issue.offer.drawer.invite.title": "Invite sponsor",
   "issue.offer.drawer.title": "Make an offer",
-  "issue.payment.form.message.subheading": "Create a bounty for this issue and who you assign will receive the payment for this bounty",
+  "issue.payment.form.message.subheading": "Create a bounty for this issue; the author will receive it when the related solution is merged",
   "issue.payment.headline.bounty.add": "Add a bounty for this issue",
   "issue.payment.invoice.info.action": "Update billing information before continue",
   "issue.payment.invoice.info.description": "To update your billing information, please complete or update your details in the Billing Information section of your account settings. These details will be used to generate your invoice",
