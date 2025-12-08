@@ -71,7 +71,6 @@ const ProfileOptions = ({ user }) => {
         <CardList>
           {Types && Types.map((t) => t.name).includes('contributor') && (
             <Card>
-              
               <CardMedia image={taskIcon}>
                 <FormattedMessage id="account.profile.issues.caption" defaultMessage="Issues" />
               </CardMedia>

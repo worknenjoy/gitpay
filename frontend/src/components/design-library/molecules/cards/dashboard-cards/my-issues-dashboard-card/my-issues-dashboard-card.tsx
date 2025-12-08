@@ -1,0 +1,54 @@
+import React from 'react';
+import DashboardCardBase from '../dashboard-card-base/dashboard-card-base';
+import { FormattedMessage } from 'react-intl';
+import taskIcon from 'images/icons/noun_project management_3063547.svg';
+import { IssueDashboardCardChipList } from './my-issue-dashboard-card.styles';
+import { Chip } from '@mui/material';
+
+const MyIssuesDashboardCard = ({
+  issues = 0,
+  closedIssues = 0,
+}) => {
+  return (
+    <DashboardCardBase
+      image={taskIcon}
+      title={
+        <FormattedMessage id="account.profile.issues.headline" defaultMessage="Issues" />
+      }
+      subheader={
+        <FormattedMessage id="account.profile.issues.subheader" defaultMessage="Manage your issues" />
+      }
+      buttonText={
+        <FormattedMessage id="account.profile.issues.buttonText" defaultMessage="See your issues" />
+      }
+      buttonLink="/profile/tasks"
+    >
+      <IssueDashboardCardChipList>
+        <Chip 
+          size='small'
+          label={
+            <FormattedMessage 
+              id="account.profile.issues.chip.open"
+              defaultMessage="{issues} issues opened"
+              values={{ issues }}
+            />
+          } 
+          color="primary"
+        />
+        <Chip 
+          size='small'
+          label={
+            <FormattedMessage 
+              id="account.profile.issues.chip.closed"
+              defaultMessage="{closedIssues} issues closed"
+              values={{ closedIssues }}
+            />
+          } 
+          color="error"
+        />
+      </IssueDashboardCardChipList>
+    </DashboardCardBase>
+  );
+};
+
+export default MyIssuesDashboardCard;
