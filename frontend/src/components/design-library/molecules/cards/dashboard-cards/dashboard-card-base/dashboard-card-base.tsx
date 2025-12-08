@@ -29,7 +29,7 @@ const DashboardCardBase = ({
     <Card>
       <CardHeader 
         avatar={
-          <Avatar>
+          <Avatar sx={{ bgcolor: 'text.contrast', width: 48, height: 48 }}>
             {image && <img src={image} alt="Tasks Icon" width={21} height={32} style={{ marginTop: 6 }} />}
           </Avatar>
         }

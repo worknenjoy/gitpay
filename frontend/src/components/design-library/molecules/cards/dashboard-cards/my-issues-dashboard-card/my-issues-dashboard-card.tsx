@@ -7,6 +7,7 @@ import { Chip } from '@mui/material';
 
 const MyIssuesDashboardCard = ({
   issues = 0,
+  issuesOpened = 0,
   closedIssues = 0,
 }) => {
   return (
@@ -16,7 +17,11 @@ const MyIssuesDashboardCard = ({
         <FormattedMessage id="account.profile.issues.headline" defaultMessage="Issues" />
       }
       subheader={
-        <FormattedMessage id="account.profile.issues.subheader" defaultMessage="Manage your issues" />
+        <FormattedMessage
+          id="account.profile.issues.overview"
+          defaultMessage="{issues} issues imported to Gitpay"
+          values={{ issues }}
+        />
       }
       buttonText={
         <FormattedMessage id="account.profile.issues.buttonText" defaultMessage="See your issues" />
@@ -29,8 +34,8 @@ const MyIssuesDashboardCard = ({
           label={
             <FormattedMessage 
               id="account.profile.issues.chip.open"
-              defaultMessage="{issues} issues opened"
-              values={{ issues }}
+              defaultMessage="{issuesOpened} issues open"
+              values={{ issuesOpened }}
             />
           } 
           color="primary"

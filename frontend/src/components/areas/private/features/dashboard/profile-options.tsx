@@ -18,6 +18,7 @@ import generalSettingsIcon from 'images/icons/noun_project management_3063521.sv
 import taskIcon from 'images/icons/noun_project management_3063547.svg'
 import configIcon from 'images/icons/noun_project management_3063514.svg'
 import paymentsIcon from 'images/icons/noun_project management_3063535.svg'
+import DashboardCardList from 'design-library/molecules/cards/dashboard-cards/dashboard-card-list/dashboard-card-list'
 
 const ProfileOptions = ({ user }) => {
   const { data = {} } = user
@@ -67,185 +68,11 @@ const ProfileOptions = ({ user }) => {
           </Alert>
         </AlertWrapper>
       )}
-      <ContentWrapper>
-        <CardList>
-          {Types && Types.map((t) => t.name).includes('contributor') && (
-            <Card>
-              <CardMedia image={taskIcon}>
-                <FormattedMessage id="account.profile.issues.caption" defaultMessage="Issues" />
-              </CardMedia>
-              <CardContent>
-                <Typography variant="h6">
-                  <FormattedMessage id="account.profile.issues.headline" defaultMessage="Issues" />
-                </Typography>
-                <Typography variant="body2">
-                  <FormattedMessage
-                    id="account.profile.issues.description"
-                    defaultMessage="Check the issues available for you"
-                  />
-                </Typography>
-              </CardContent>
-              <CardActionsCentered>
-                <Button size="small" color="primary">
-                  <Link to={'/profile/tasks'}>
-                    <FormattedMessage
-                      id="account.profile.issues.link.tasks"
-                      defaultMessage="See issues"
-                    />
-                  </Link>
-                </Button>
-              </CardActionsCentered>
-            </Card>
-          )}
-          {Types &&
-            (Types.map((t) => t.name).includes('funding') ||
-              Types.map((t) => t.name).includes('maintainer')) && (
-              <Card>
-                <CardMedia image={paymentsIcon}>
-                  <FormattedMessage
-                    id="account.profile.tasks.payments.caption"
-                    defaultMessage="Payments"
-                  />
-                </CardMedia>
-                <CardContent>
-                  <Typography variant="h6">
-                    <FormattedMessage
-                      id="account.profile.tasks.payment.paid.headline"
-                      defaultMessage="Payments"
-                    />
-                  </Typography>
-                  <Typography variant="body2">
-                    <FormattedMessage
-                      id="account.profile.tasks.payments.desc"
-                      defaultMessage="Access all your payments to any issue on Gitpay"
-                    />
-                  </Typography>
-                </CardContent>
-                <CardActionsCentered>
-                  <Button size="small" color="primary">
-                    <Link to={'/profile/payments'}>
-                      <FormattedMessage
-                        id="account.profile.payments.setup"
-                        defaultMessage="See your payments"
-                      />
-                    </Link>
-                  </Button>
-                </CardActionsCentered>
-              </Card>
-            )}
-          {Types && Types.map((t) => t.name).includes('contributor') && (
-            <Card>
-              <CardMedia image={toolsIcon}>
-                <FormattedMessage id="account.profile.tasks.payment.caption" defaultMessage="Payment" />
-              </CardMedia>
-              <CardContent>
-                <Typography variant="h6">
-                  <FormattedMessage
-                    id="account.profile.tasks.paid.headline"
-                    defaultMessage="Bank account"
-                  />
-                </Typography>
-                <Typography variant="body2">
-                  <FormattedMessage
-                    id="account.profile.tasks.bank.desc"
-                    defaultMessage="Register your bank accounts"
-                  />
-                </Typography>
-              </CardContent>
-              <CardActionsCentered>
-                <Button size="small" color="primary">
-                  <Link to={'/profile/payout-settings'}>
-                    <FormattedMessage
-                      id="account.profile.tasks.account.setup"
-                      defaultMessage="Setup bank account"
-                    />
-                  </Link>
-                </Button>
-              </CardActionsCentered>
-            </Card>
-          )}
-          {Types && Types.map((t) => t.name).includes('contributor') && (
-            <Card>
-              <CardMedia image={preferencesIcon} title="Contemplative Reptile" />
-              <CardContent>
-                <Typography variant="h6">
-                  <FormattedMessage
-                    id="account.profile.preferences.headline"
-                    defaultMessage="Preferences"
-                  />
-                </Typography>
-                <Typography variant="body2">
-                  <FormattedMessage
-                    id="account.profile.preferences.description"
-                    defaultMessage="Setup your preferences to receive matching offers"
-                  />
-                </Typography>
-              </CardContent>
-              <CardActionsCentered>
-                <Button size="small" color="primary">
-                  <Link to="/profile/user-account/skills">
-                    <FormattedMessage
-                      id="account.profile.preferences.link"
-                      defaultMessage="Setup preferences"
-                    />
-                  </Link>
-                </Button>
-              </CardActionsCentered>
-            </Card>
-          )}
-          <Card>
-            <CardMedia image={configIcon} title="Contemplative Reptile" />
-            <CardContent>
-              <Typography variant="h6">
-                <FormattedMessage id="account.profile.roles.headline" defaultMessage="Roles" />
-              </Typography>
-              <Typography variant="body2">
-                <FormattedMessage
-                  id="account.profile.roles.description"
-                  defaultMessage="Set your roles to define your capabilities on Gitpay"
-                />
-              </Typography>
-            </CardContent>
-            <CardActionsCentered>
-              <Button size="small" color="primary">
-                <Link to="/profile/user-account/roles">
-                  <FormattedMessage
-                    id="account.profile.roles.link"
-                    defaultMessage="Setup your roles on Gitpay"
-                  />
-                </Link>
-              </Button>
-            </CardActionsCentered>
-          </Card>
-          <Card>
-            <CardMedia image={generalSettingsIcon} title="General settings" />
-            <CardContent>
-              <Typography variant="h6">
-                <FormattedMessage
-                  id="account.profile.settings.headline"
-                  defaultMessage="General settings"
-                />
-              </Typography>
-              <Typography variant="body2">
-                <FormattedMessage
-                  id="account.profile.settings.description"
-                  defaultMessage="Set your general settings on Gitpay to setups your account"
-                />
-              </Typography>
-            </CardContent>
-            <CardActionsCentered>
-              <Button size="small" color="primary">
-                <Link to="/profile/user-account/settings">
-                  <FormattedMessage
-                    id="account.profile.settings.link"
-                    defaultMessage="Your general settings"
-                  />
-                </Link>
-              </Button>
-            </CardActionsCentered>
-          </Card>
-        </CardList>
-      </ContentWrapper>
+      <DashboardCardList 
+        user={user}
+        activeIssues={0}
+        closedIssues={0}
+      />
     </Fragment>
   )
 }
