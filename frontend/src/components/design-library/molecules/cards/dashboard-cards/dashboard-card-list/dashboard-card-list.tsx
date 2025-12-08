@@ -7,23 +7,26 @@ import PaymentRequestsDashboardCard from '../payment-requests-dashboard-card/pay
 import ClaimsDashboardCard from '../claims-dashboard-card/claims-dashboard-card';
 import BankAccountDashboardCard from '../bank-account-dashboard-card/bank-account-dashboard-card';
 import PayoutsDashboardCard from '../payouts-dashboard-card/payouts-dashboard-card';
+import DashboardCardListPlaceholder from './dashboard-card-list.placeholder';
 import { CardList, ContentWrapper } from './dashboard-card-list.styles';
 
 const DashboardCardList = ({
   user,
-  activeIssues,
-  closedIssues
+  info
 }) => {
+  const { completed } = user || {};
   const { isMaintainer, isFunding, isContributor } = useUserTypes({ user });
+  const { completed: infoCompleted, data: infoData } = info || {};
 
   return (
+    (completed && infoCompleted) ?
     <ContentWrapper>
       <CardList>
         {isMaintainer && (
           <>
             <MyIssuesDashboardCard 
-              issues={activeIssues}
-              closedIssues={closedIssues}
+              issues={infoData.activeIssues}
+              closedIssues={infoData.closedIssues}
             />
             <WalletsDashboardCard />
           </>
@@ -40,7 +43,8 @@ const DashboardCardList = ({
           </>
         )}
       </CardList>
-    </ContentWrapper>
+    </ContentWrapper> :
+    <DashboardCardListPlaceholder />
   );
 };
 

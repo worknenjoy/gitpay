@@ -21,7 +21,7 @@ import paymentsIcon from 'images/icons/noun_project management_3063535.svg'
 import DashboardCardList from 'design-library/molecules/cards/dashboard-cards/dashboard-card-list/dashboard-card-list'
 
 const ProfileOptions = ({ user }) => {
-  const { data = {} } = user
+  const { data = {}, completed } = user
   const { Types = [] } = data
 
   const history = useHistory()
@@ -35,7 +35,7 @@ const ProfileOptions = ({ user }) => {
   return (
     <Fragment>
       {window.localStorage.getItem('firstLogin') === 'true' && <WelcomeUser />}
-      {visible && (
+      {visible && completed && (
         <AlertWrapper>
           <Alert
             severity="warning"
@@ -70,8 +70,13 @@ const ProfileOptions = ({ user }) => {
       )}
       <DashboardCardList 
         user={user}
-        activeIssues={0}
-        closedIssues={0}
+        info={{
+          completed: true,
+          data: {
+            activeIssues: 0,
+            closedIssues: 0,
+          }
+        }}
       />
     </Fragment>
   )

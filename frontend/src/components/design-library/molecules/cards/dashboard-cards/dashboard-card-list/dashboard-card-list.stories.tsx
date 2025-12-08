@@ -14,8 +14,13 @@ type Story = StoryObj<typeof DashboardCardList>;
 
 export const Default: Story = {
   args: {
-    activeIssues: 5,
-    closedIssues: 10,
+    info: {
+      completed: true,
+      data: {
+        activeIssues: 5,
+        closedIssues: 10,
+      },  
+    },
     user: {
       completed: true,
       data: {
@@ -27,6 +32,19 @@ export const Default: Story = {
           { id: 3, name: 'funding', label: 'Funding' }
         ]
       }
+    }
+  }
+};
+
+export const LoadingState: Story = {
+  args: {
+    info: {
+      completed: false,
+      data: {}
+    },
+    user: {
+      completed: false,
+      data: {}
     }
   }
 };
