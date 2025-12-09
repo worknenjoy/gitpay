@@ -47,7 +47,7 @@ const PayoutsDashboardCard = ({ payouts }) => {
           label={
             <FormattedMessage
               id="account.profile.payouts.chip.completed"
-              defaultMessage="{completed} completed"
+              defaultMessage="{completed} paid"
               values={{ completed }}
             />
           }

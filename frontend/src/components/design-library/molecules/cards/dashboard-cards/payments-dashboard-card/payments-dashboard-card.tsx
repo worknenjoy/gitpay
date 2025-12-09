@@ -7,7 +7,7 @@ import paymentIcon from 'images/icons/noun_project management_3063535.svg'
 import { formatCurrency } from '../../../../../../utils/format-currency'
 
 const PaymentsDashboardCard = ({ payments }) => {
-  const { total = 0, succeeded = 0, pending = 0, failed = 0, amount = 0 } = payments || {}
+  const { total = 0, succeeded = 0, pending = 0, failed = 0, refunded = 0, amount = 0 } = payments || {}
   return (
     <DashboardCardBase
       image={paymentIcon}
@@ -69,6 +69,17 @@ const PaymentsDashboardCard = ({ payments }) => {
               />
             }
             color="error"
+          />
+           <Chip
+            size="small"
+            label={
+              <FormattedMessage
+                id="account.profile.payments.chip.refunded"
+                defaultMessage="{refunded} refunded"
+                values={{ refunded: refunded }}
+              />
+            }
+            color="info"
           />
         </DashboardCardChipList>
       </div>

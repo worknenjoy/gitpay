@@ -76,7 +76,7 @@ const userInfo = async (params: any) => {
 
       acc[currency].total += 1
       acc[currency].pending += payout.status === 'pending' ? 1 : 0
-      acc[currency].completed += payout.status === 'completed' ? 1 : 0
+      acc[currency].completed += payout.status === 'paid' ? 1 : 0
       acc[currency].in_transit += payout.status === 'in_transit' ? 1 : 0
       acc[currency].amount += Number(payout.amount || 0)
 
@@ -96,6 +96,7 @@ const userInfo = async (params: any) => {
       pending: payments.rows.filter((payment: any) => payment.status === 'open').length,
       succeeded: payments.rows.filter((payment: any) => payment.status === 'succeeded').length,
       failed: payments.rows.filter((payment: any) => payment.status === 'failed').length,
+      refunded: payments.rows.filter((payment: any) => payment.status === 'refunded').length,
       amount: payments.rows
         .filter((payment: any) => payment.status === 'succeeded')
         .reduce((sum: number, payment: any) => sum + Number(payment.amount || 0), 0)
