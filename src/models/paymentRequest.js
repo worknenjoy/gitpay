@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
 
   PaymentRequest.associate = (models) => {
     PaymentRequest.belongsTo(models.User, { foreignKey: 'userId' })
+    PaymentRequest.hasMany(models.PaymentRequestPayment, { foreignKey: 'paymentRequestId' })
   }
 
   return PaymentRequest

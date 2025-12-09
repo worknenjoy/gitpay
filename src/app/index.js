@@ -24,6 +24,7 @@ const routerPaymentRequest = require('./routes/paymentRequest')
 const routerPaymentRequestTransfer = require('./routes/paymentRequestTransfer')
 import routerPaymentRequestPayments from './routes/paymentRequestPayment'
 import routerPaymentRequestBalance from './routes/paymentRequestBalance'
+import routerDashboard from './routes/dashboard'
 
 exports.init = (app) => {
   app.use('/webhooks', express.raw({ type: 'application/json' }), routerWebhook)
@@ -53,4 +54,5 @@ exports.init = (app) => {
   app.use('/payment-request-transfers', routerPaymentRequestTransfer)
   app.use('/payment-request-payments', routerPaymentRequestPayments)
   app.use('/payment-request-balances', routerPaymentRequestBalance)
+  app.use('/dashboard', routerDashboard)
 }

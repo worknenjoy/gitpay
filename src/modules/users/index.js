@@ -21,6 +21,7 @@ const userOrganizations = require('./userOrganizations')
 const userDeleteById = require('./userDeleteById')
 const userTasks = require('./userTasks')
 const userTypes = require('./userTypes')
+const userInfo = require('./userInfo')
 
 module.exports = {
   userExists: userExists,
@@ -45,5 +46,6 @@ module.exports = {
   userOrganizations: userOrganizations,
   userDeleteById: userDeleteById,
   userTasks: userTasks,
-  userTypes: userTypes
+  userTypes: userTypes,
+  userInfo: userInfo
 }

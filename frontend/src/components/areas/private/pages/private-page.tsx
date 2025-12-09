@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Route, Switch, HashRouter, useHistory } from 'react-router-dom'
 import PrivateBase from 'design-library/templates/base/private-base/private-base'
-import ProfileOptions from '../features/dashboard/profile-options'
+import DashboardContainer from '../../../../containers/dashboard/dashboard'
 import { UserAccount } from '../features/account/user-account'
 import UserTasksExploreContainer from '../../../../containers/user-tasks-explore'
 import UserTasksContainer from '../../../../containers/user-tasks'
@@ -52,11 +52,7 @@ const PrivatePage = ({
     >
       <HashRouter>
         <Switch>
-          <Route
-            exact
-            path="/profile"
-            component={(props) => <ProfileOptions {...props} user={user} />}
-          />
+          <Route exact path="/profile" component={DashboardContainer} />
           <Route
             path="/profile/user-account"
             component={(props) => (
