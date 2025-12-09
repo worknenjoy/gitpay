@@ -4,12 +4,12 @@ import { FormattedMessage } from 'react-intl';
 import { Chip } from '@mui/material';
 import { DashboardCardChipList } from './payments-dashboard-card.styles';
 import paymentIcon from 'images/icons/noun_project management_3063535.svg';
+import { formatCurrency } from '../../../../../../utils/format-currency'
 
 const PaymentsDashboardCard = ({
-  payments = 0,
-  succeeded = 0,
-  failed = 0,
+  payments
 }) => {
+  const { total = 0, succeeded = 0, pending = 0, failed = 0, amount = 0 } = payments || {};
   return (
     <DashboardCardBase
       image={paymentIcon}
@@ -17,41 +17,62 @@ const PaymentsDashboardCard = ({
         <FormattedMessage id="account.profile.payments.headline" defaultMessage="Payments" />
       }
       subheader={
-        <FormattedMessage
-          id="account.profile.payments.overview"
-          defaultMessage="{payments} payments processed"
-          values={{ payments }}
-        />
+        <>
+          <FormattedMessage
+            id="account.profile.payments.overview"
+            defaultMessage="{total} payments processed"
+            values={{ total }}
+          />
+          <br />
+          <FormattedMessage
+            id="account.profile.payments.amount"
+            defaultMessage="{amount} paid"
+            values={{ amount: formatCurrency(amount) }}
+          />
+        </>
       }
       buttonText={
         <FormattedMessage id="account.profile.payments.buttonText" defaultMessage="See your payments" />
       }
       buttonLink="/profile/payments"
     >
-      <DashboardCardChipList>
-        <Chip
-          size='small'
-          label={
-            <FormattedMessage
-              id="account.profile.payments.chip.succeeded"
-              defaultMessage="{succeeded} succeeded"
-              values={{ succeeded }}
-            />
-          }
-          color="primary"
-        />
-        <Chip
-          size='small'
-          label={
-            <FormattedMessage
-              id="account.profile.payments.chip.failed"
-              defaultMessage="{failed} failed"
-              values={{ failed }}
-            />
-          }
-          color="error"
-        />
-      </DashboardCardChipList>
+      <div>
+        <DashboardCardChipList>
+          <Chip
+            size='small'
+            label={
+              <FormattedMessage
+                id="account.profile.payments.chip.succeeded"
+                defaultMessage="{succeeded} succeeded"
+                values={{ succeeded }}
+              />
+            }
+            color="primary"
+          />
+          <Chip
+            size='small'
+            label={
+              <FormattedMessage
+                id="account.profile.payments.chip.pending"
+                defaultMessage="{pending} pending"
+                values={{ pending }}
+              />
+            }
+            color="warning"
+          />
+          <Chip
+            size='small'
+            label={
+              <FormattedMessage
+                id="account.profile.payments.chip.failed"
+                defaultMessage="{failed} failed"
+                values={{ failed }}
+              />
+            }
+            color="error"
+          />
+        </DashboardCardChipList>
+      </div>
     </DashboardCardBase>
   );
 };

@@ -7,10 +7,14 @@ const meta: Meta<typeof MyIssuesDashboardCard> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof MyIssuesDashboardCard>;
 
 export const Default: Story = {
   args: {
-    
+    issues: {
+      total: 42,
+      open: 27,
+      closed: 15
+    }
   },
 };

@@ -6,10 +6,9 @@ import { IssueDashboardCardChipList } from './my-issue-dashboard-card.styles';
 import { Chip } from '@mui/material';
 
 const MyIssuesDashboardCard = ({
-  issues = 0,
-  issuesOpened = 0,
-  closedIssues = 0,
+  issues
 }) => {
+  const { total, open, closed } = issues || {};
   return (
     <DashboardCardBase
       image={taskIcon}
@@ -20,7 +19,7 @@ const MyIssuesDashboardCard = ({
         <FormattedMessage
           id="account.profile.issues.overview"
           defaultMessage="{issues} issues imported to Gitpay"
-          values={{ issues }}
+          values={{ issues: total }}
         />
       }
       buttonText={
@@ -35,7 +34,7 @@ const MyIssuesDashboardCard = ({
             <FormattedMessage 
               id="account.profile.issues.chip.open"
               defaultMessage="{issuesOpened} issues open"
-              values={{ issuesOpened }}
+              values={{ issuesOpened: open }}
             />
           } 
           color="primary"
@@ -46,7 +45,7 @@ const MyIssuesDashboardCard = ({
             <FormattedMessage 
               id="account.profile.issues.chip.closed"
               defaultMessage="{closedIssues} issues closed"
-              values={{ closedIssues }}
+              values={{ closedIssues: closed }}
             />
           } 
           color="error"

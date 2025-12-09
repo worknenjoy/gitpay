@@ -10,9 +10,7 @@ const passportJWT = require('passport-jwt')
 const ExtractJWT = passportJWT.ExtractJwt
 const JWTStrategy = passportJWT.Strategy
 
-const userExists = require('../modules/users').userExists
-const userBuilds = require('../modules/users').userBuilds
-const userUpdate = require('../modules/users').userUpdate
+const { userExists, userBuilds, userUpdate } = require('../modules/users')
 
 const jwt = require('jsonwebtoken')
 const Mailchimp = require('mailchimp-api-v3')

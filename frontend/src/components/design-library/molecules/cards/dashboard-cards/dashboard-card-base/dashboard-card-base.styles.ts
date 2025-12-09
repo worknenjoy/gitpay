@@ -15,7 +15,7 @@ export const AlertWrapper = styled('div')({
 })
 
 export const Card = styled(BaseCard)(({ theme }) => ({
-  width: 280,
+  width: 320,
   margin: '1rem 0.5rem',
   [theme.breakpoints.down('sm')]: {
     maxWidth: '100%',

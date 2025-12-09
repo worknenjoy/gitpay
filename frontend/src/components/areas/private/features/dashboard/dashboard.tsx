@@ -1,41 +1,30 @@
 import React, { Fragment } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Link, useHistory } from 'react-router-dom'
-import { Typography, Button, CardContent } from '@mui/material'
+import { useHistory } from 'react-router-dom'
+import { Button } from '@mui/material'
 import { Alert, AlertTitle } from '@mui/material'
 import { 
-  CardActionsCentered,
-  ContentWrapper,
   AlertWrapper,
-  Card,
-  CardList,
-  CardMedia 
-} from './profile-options.styles'
+} from './dashboard.styles'
 import WelcomeUser from '../../components/session/welcome-user'
-import toolsIcon from 'images/icons/noun_project management_3063515.svg'
-import preferencesIcon from 'images/icons/noun_project management_3063532.svg'
-import generalSettingsIcon from 'images/icons/noun_project management_3063521.svg'
-import taskIcon from 'images/icons/noun_project management_3063547.svg'
-import configIcon from 'images/icons/noun_project management_3063514.svg'
-import paymentsIcon from 'images/icons/noun_project management_3063535.svg'
 import DashboardCardList from 'design-library/molecules/cards/dashboard-cards/dashboard-card-list/dashboard-card-list'
 
-const ProfileOptions = ({ user }) => {
+const Dashboard = ({ user, dashboard, fetchDashboardInfo }) => {
   const { data = {}, completed } = user
-  const { Types = [] } = data
 
   const history = useHistory()
 
   const [visible, setVisible] = React.useState(false)
 
   React.useEffect(() => {
-    Types.length === 0 && setVisible(true)
-  }, [Types])
+    completed && data?.Types?.length === 0 && setVisible(true)
+    fetchDashboardInfo()
+  }, [data, completed])
 
   return (
     <Fragment>
       {window.localStorage.getItem('firstLogin') === 'true' && <WelcomeUser />}
-      {visible && completed && (
+      {visible && (
         <AlertWrapper>
           <Alert
             severity="warning"
@@ -70,16 +59,10 @@ const ProfileOptions = ({ user }) => {
       )}
       <DashboardCardList 
         user={user}
-        info={{
-          completed: true,
-          data: {
-            activeIssues: 0,
-            closedIssues: 0,
-          }
-        }}
+        dashboard={dashboard}
       />
     </Fragment>
   )
 }
 
-export default ProfileOptions
+export default Dashboard

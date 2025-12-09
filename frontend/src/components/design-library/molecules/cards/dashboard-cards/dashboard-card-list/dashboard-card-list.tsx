@@ -12,27 +12,28 @@ import { CardList, ContentWrapper } from './dashboard-card-list.styles';
 
 const DashboardCardList = ({
   user,
-  info
+  dashboard
 }) => {
   const { completed } = user || {};
   const { isMaintainer, isFunding, isContributor } = useUserTypes({ user });
-  const { completed: infoCompleted, data: infoData } = info || {};
+  const { completed: dashboardCompleted, data: dashboardData } = dashboard || {};
 
   return (
-    (completed && infoCompleted) ?
+    (completed && dashboardCompleted) ?
     <ContentWrapper>
       <CardList>
         {isMaintainer && (
+          <MyIssuesDashboardCard 
+            issues={dashboardData.issues}
+          />
+        )}
+         {(isMaintainer || isFunding) && (
           <>
-            <MyIssuesDashboardCard 
-              issues={infoData.activeIssues}
-              closedIssues={infoData.closedIssues}
+            <PaymentsDashboardCard
+              payments={dashboardData.payments}
             />
             <WalletsDashboardCard />
           </>
-        )}
-        {(isMaintainer || isFunding) && (
-          <PaymentsDashboardCard />
         )}
         {isContributor && (
           <>
