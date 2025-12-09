@@ -32,15 +32,25 @@ const DashboardCardList = ({
             <PaymentsDashboardCard
               payments={dashboardData.payments}
             />
-            <WalletsDashboardCard />
+            <WalletsDashboardCard
+              wallets={dashboardData.wallets}
+            />
           </>
         )}
         {isContributor && (
           <>
-            <PaymentRequestsDashboardCard />
-            <ClaimsDashboardCard />
-            <BankAccountDashboardCard />
-            <PayoutsDashboardCard />
+            <PaymentRequestsDashboardCard
+              paymentRequests={dashboardData.paymentRequests}
+            />
+            <ClaimsDashboardCard
+              claims={dashboardData.claims}
+            />
+            { Object.keys(dashboardData.payouts).map((key, index) => (
+              <PayoutsDashboardCard
+                payouts={{...dashboardData.payouts[key], currency: key}}
+                key={index}
+              />
+            ))}
           </>
         )}
       </CardList>

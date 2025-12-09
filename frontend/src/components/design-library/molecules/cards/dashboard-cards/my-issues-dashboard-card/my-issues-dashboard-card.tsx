@@ -33,18 +33,18 @@ const MyIssuesDashboardCard = ({
           label={
             <FormattedMessage 
               id="account.profile.issues.chip.open"
-              defaultMessage="{issuesOpened} issues open"
+              defaultMessage="{issuesOpened} issue(s) open"
               values={{ issuesOpened: open }}
             />
           } 
-          color="primary"
+          color="success"
         />
         <Chip 
           size='small'
           label={
             <FormattedMessage 
               id="account.profile.issues.chip.closed"
-              defaultMessage="{closedIssues} issues closed"
+              defaultMessage="{closedIssues} issue(s) closed"
               values={{ closedIssues: closed }}
             />
           } 

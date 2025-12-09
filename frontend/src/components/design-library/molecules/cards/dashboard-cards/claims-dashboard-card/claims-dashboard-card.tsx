@@ -4,23 +4,22 @@ import { FormattedMessage } from 'react-intl';
 import { Chip } from '@mui/material';
 import { DashboardCardChipList } from './claims-dashboard-card.styles';
 import claimIcon from 'images/icons/noun_project management_3063514.svg';
+import { formatCurrency } from '../../../../../../utils/format-currency';
 
 const ClaimsDashboardCard = ({
-  claims = 0,
-  open = 0,
-  resolved = 0,
+  claims,
 }) => {
+  const { total = 0, amount = 0 } = claims || {};
   return (
     <DashboardCardBase
       image={claimIcon}
       title={<FormattedMessage id="account.profile.claims.headline" defaultMessage="Claims" />}
-      subheader={<FormattedMessage id="account.profile.claims.overview" defaultMessage="{claims} claims filed" values={{ claims }} />}
+      subheader={<FormattedMessage id="account.profile.claims.overview" defaultMessage="{total} claim(s)" values={{ total }} />}
       buttonText={<FormattedMessage id="account.profile.claims.buttonText" defaultMessage="View claims" />}
       buttonLink="/profile/claims"
     >
       <DashboardCardChipList>
-        <Chip size='small' label={<FormattedMessage id="account.profile.claims.chip.open" defaultMessage="{open} open" values={{ open }} />} color="warning" />
-        <Chip size='small' label={<FormattedMessage id="account.profile.claims.chip.resolved" defaultMessage="{resolved} resolved" values={{ resolved }} />} color="success" />
+        <Chip size='small' label={<FormattedMessage id="account.profile.claims.chip.amount" defaultMessage="{amount} claimed" values={{ amount: formatCurrency(amount) }} />} color="info" />
       </DashboardCardChipList>
     </DashboardCardBase>
   );

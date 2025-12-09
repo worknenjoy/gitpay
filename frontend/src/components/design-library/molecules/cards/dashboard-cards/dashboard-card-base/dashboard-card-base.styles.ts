@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles'
 import { Card as BaseCard, CardMedia as BaseCardMedia, CardActions } from '@mui/material'
 
 export const CardActionsCentered = styled(CardActions)({
+  borderTop: '1px solid #e0e0e0', 
   display: 'flex',
   justifyContent: 'center'
 })

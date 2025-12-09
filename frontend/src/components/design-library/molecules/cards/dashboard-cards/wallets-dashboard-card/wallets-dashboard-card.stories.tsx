@@ -7,8 +7,16 @@ const meta: Meta<typeof WalletsDashboardCard> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof WalletsDashboardCard>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    wallets: {
+      data: [
+        { name: 'Main Wallet' },
+        { name: 'Savings Wallet' }
+      ],
+      balance: 1500.75
+    }
+  },
 };

@@ -7,8 +7,14 @@ const meta: Meta<typeof PaymentRequestsDashboardCard> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof PaymentRequestsDashboardCard>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    paymentRequests: {
+      total: 15,
+      amount: 3000,
+      payments: 10
+    }
+  },
 };

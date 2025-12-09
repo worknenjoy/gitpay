@@ -23,10 +23,37 @@ export const Default: Story = {
           closed: 15
         },
         payments: {
+          amount: 5000,
           total: 1000,
           pending: 200,
           succeeded: 800,
           failed: 50
+        },
+        wallets: {
+          data: [
+            { name: 'Main Wallet' },
+            { name: 'Savings Wallet' }
+          ],
+          balance: 1500.75
+        },
+        paymentRequests: {
+          total: 15,
+          amount: 3000,
+          payments: 10
+        },
+        claims: {
+          total: 8,
+          amount: 1200,
+        },
+        payouts: {
+          usd: {
+            currency: 'usd',
+            amount: 4500,
+            total: 20,
+            pending: 5,
+            completed: 15,
+            in_transit: 5 
+          }
         }
       },  
     },

@@ -7,8 +7,13 @@ const meta: Meta<typeof ClaimsDashboardCard> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof ClaimsDashboardCard>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    claims: {
+      total: 8,
+      amount: 1200,
+    }
+  },
 };

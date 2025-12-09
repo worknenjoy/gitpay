@@ -47,7 +47,7 @@ const PaymentsDashboardCard = ({
                 values={{ succeeded }}
               />
             }
-            color="primary"
+            color="success"
           />
           <Chip
             size='small'
