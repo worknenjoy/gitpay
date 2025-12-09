@@ -7,8 +7,8 @@ export const Card = styled(BaseCard)(({ theme }) => ({
   textAlign: 'center',
   [theme.breakpoints.down('sm')]: {
     maxWidth: '100%',
-    margin: '1.5rem 0',
-  },
+    margin: '1.5rem 0'
+  }
 }))
 
 export const CardList = styled('div')(({ theme }) => ({
@@ -19,8 +19,8 @@ export const CardList = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   flexWrap: 'wrap',
   [theme.breakpoints.down('sm')]: {
-    display: 'block',
-  },
+    display: 'block'
+  }
 }))
 
 export const CardMedia = styled(BaseCardMedia)({
@@ -28,5 +28,5 @@ export const CardMedia = styled(BaseCardMedia)({
   height: 60,
   marginTop: 20,
   marginBottom: -10,
-  display: 'inline-block !important',
+  display: 'inline-block !important'
 })

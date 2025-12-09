@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import DashboardCardList from './dashboard-card-list';
+import type { Meta, StoryObj } from '@storybook/react'
+import DashboardCardList from './dashboard-card-list'
 
 const meta: Meta<typeof DashboardCardList> = {
   title: 'Design Library/Molecules/Cards/DashboardCards/DashboardCardList',
   component: DashboardCardList,
   parameters: {
-    layout: 'centered',
+    layout: 'centered'
   }
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof DashboardCardList>;
+export default meta
+type Story = StoryObj<typeof DashboardCardList>
 
 export const Default: Story = {
   args: {
@@ -30,10 +30,7 @@ export const Default: Story = {
           failed: 50
         },
         wallets: {
-          data: [
-            { name: 'Main Wallet' },
-            { name: 'Savings Wallet' }
-          ],
+          data: [{ name: 'Main Wallet' }, { name: 'Savings Wallet' }],
           balance: 1500.75
         },
         paymentRequests: {
@@ -43,7 +40,7 @@ export const Default: Story = {
         },
         claims: {
           total: 8,
-          amount: 1200,
+          amount: 1200
         },
         payouts: {
           usd: {
@@ -52,10 +49,10 @@ export const Default: Story = {
             total: 20,
             pending: 5,
             completed: 15,
-            in_transit: 5 
+            in_transit: 5
           }
         }
-      },  
+      }
     },
     user: {
       completed: true,
@@ -70,7 +67,7 @@ export const Default: Story = {
       }
     }
   }
-};
+}
 
 export const LoadingState: Story = {
   args: {
@@ -83,4 +80,4 @@ export const LoadingState: Story = {
       data: {}
     }
   }
-};
+}

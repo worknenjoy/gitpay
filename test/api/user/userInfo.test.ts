@@ -26,10 +26,7 @@ describe('Current User Info', () => {
     expect(res.body.payments.total).to.equal(0)
   })
   it('should return 403 if authorization header is invalid', async () => {
-    const res = await agent
-      .get(`/dashboard`)
-      .set('Authorization', 'wrong header')
-      .expect(403)
+    const res = await agent.get(`/dashboard`).set('Authorization', 'wrong header').expect(403)
     expect(res.status).to.equal(403)
     expect(res.text).to.equal('{"errors":["Failed to authenticate token"]}')
   })
@@ -57,10 +54,7 @@ describe('Current User Info', () => {
     expect(res.body.issues.open).to.equal(1)
     expect(res.body.issues.closed).to.equal(1)
     expect(res.body.payments.total).to.equal(2)
-    expect(res.body.payments.successful).to.equal(1)
+    expect(res.body.payments.succeeded).to.equal(1)
     expect(res.body.payments.failed).to.equal(1)
   })
 })
-
-
-

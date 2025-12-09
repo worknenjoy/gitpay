@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import MyIssuesDashboardCard from './my-issues-dashboard-card';
+import type { Meta, StoryObj } from '@storybook/react'
+import MyIssuesDashboardCard from './my-issues-dashboard-card'
 
 const meta: Meta<typeof MyIssuesDashboardCard> = {
   title: 'Design Library/Molecules/Cards/DashboardCards/MyIssuesDashboardCard',
   component: MyIssuesDashboardCard
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof MyIssuesDashboardCard>;
+export default meta
+type Story = StoryObj<typeof MyIssuesDashboardCard>
 
 export const Default: Story = {
   args: {
@@ -16,5 +16,5 @@ export const Default: Story = {
       open: 27,
       closed: 15
     }
-  },
-};
+  }
+}

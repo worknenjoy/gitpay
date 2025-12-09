@@ -3,9 +3,7 @@ import { FormattedMessage } from 'react-intl'
 import { useHistory } from 'react-router-dom'
 import { Button } from '@mui/material'
 import { Alert, AlertTitle } from '@mui/material'
-import { 
-  AlertWrapper,
-} from './dashboard.styles'
+import { AlertWrapper } from './dashboard.styles'
 import WelcomeUser from '../../components/session/welcome-user'
 import DashboardCardList from 'design-library/molecules/cards/dashboard-cards/dashboard-card-list/dashboard-card-list'
 
@@ -57,10 +55,7 @@ const Dashboard = ({ user, dashboard, fetchDashboardInfo }) => {
           </Alert>
         </AlertWrapper>
       )}
-      <DashboardCardList 
-        user={user}
-        dashboard={dashboard}
-      />
+      <DashboardCardList user={user} dashboard={dashboard} />
     </Fragment>
   )
 }

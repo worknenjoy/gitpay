@@ -2,13 +2,13 @@ import {
   DASHBOARD_INFO_REQUEST,
   DASHBOARD_INFO_SUCCESS,
   DASHBOARD_INFO_FAILURE
- } from '../actions/dashboardActions';
+} from '../actions/dashboardActions'
 
- export const dashboardReducer = (
+export const dashboardReducer = (
   state = {
     completed: false,
     data: {},
-    error: null,
+    error: null
   },
   action: any
 ) => {
@@ -17,21 +17,21 @@ import {
       return {
         ...state,
         completed: false,
-        error: null,
-      };
+        error: null
+      }
     case DASHBOARD_INFO_SUCCESS:
       return {
         ...state,
         completed: true,
-        data: action.payload,
-      };
+        data: action.payload
+      }
     case DASHBOARD_INFO_FAILURE:
       return {
         ...state,
         completed: false,
-        error: action.payload,
-      };
+        error: action.payload
+      }
     default:
-      return state;
+      return state
   }
-};
+}

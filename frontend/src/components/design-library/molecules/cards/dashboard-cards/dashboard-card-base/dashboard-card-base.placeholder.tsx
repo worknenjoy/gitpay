@@ -1,7 +1,7 @@
-import React from 'react';
-import { CardContent, CardHeader, Avatar, Button } from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
-import { Card, CardActionsCentered } from './dashboard-card-base.styles';
+import React from 'react'
+import { CardContent, CardHeader, Avatar, Button } from '@mui/material'
+import Skeleton from '@mui/material/Skeleton'
+import { Card, CardActionsCentered } from './dashboard-card-base.styles'
 
 const DashboardCardBasePlaceholder = () => {
   return (
@@ -24,7 +24,7 @@ const DashboardCardBasePlaceholder = () => {
         </Button>
       </CardActionsCentered>
     </Card>
-  );
-};
+  )
+}
 
-export default DashboardCardBasePlaceholder;
+export default DashboardCardBasePlaceholder

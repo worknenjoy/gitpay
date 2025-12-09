@@ -1,15 +1,13 @@
-import React from 'react';
-import DashboardCardBase from '../dashboard-card-base/dashboard-card-base';
-import { FormattedMessage } from 'react-intl';
-import { Chip } from '@mui/material';
-import { DashboardCardChipList } from './wallets-dashboard-card.styles';
+import React from 'react'
+import DashboardCardBase from '../dashboard-card-base/dashboard-card-base'
+import { FormattedMessage } from 'react-intl'
+import { Chip } from '@mui/material'
+import { DashboardCardChipList } from './wallets-dashboard-card.styles'
 import { formatCurrency } from '../../../../../../utils/format-currency'
-import walletIcon from 'images/icons/noun_project management_3063515.svg';
+import walletIcon from 'images/icons/noun_project management_3063515.svg'
 
-const WalletsDashboardCard = ({
-  wallets
-}) => {
-  const { total = 0, data = [], balance = 0 } = wallets || {};
+const WalletsDashboardCard = ({ wallets }) => {
+  const { total = 0, data = [], balance = 0 } = wallets || {}
   return (
     <DashboardCardBase
       image={walletIcon}
@@ -21,14 +19,16 @@ const WalletsDashboardCard = ({
           values={{ total: total || 0 }}
         />
       }
-      buttonText={<FormattedMessage id="account.profile.wallets.buttonText" defaultMessage="Manage wallets" />}
+      buttonText={
+        <FormattedMessage id="account.profile.wallets.buttonText" defaultMessage="Manage wallets" />
+      }
       buttonLink="/profile/wallets"
     >
       <DashboardCardChipList>
-        <Chip 
-          size='small'
+        <Chip
+          size="small"
           label={
-            <FormattedMessage 
+            <FormattedMessage
               id="account.profile.wallets.chip.balance"
               defaultMessage="{name} balance: {balance}"
               values={{ name: data[0]?.name, balance: formatCurrency(balance) }}
@@ -38,7 +38,7 @@ const WalletsDashboardCard = ({
         />
       </DashboardCardChipList>
     </DashboardCardBase>
-  );
-};
+  )
+}
 
-export default WalletsDashboardCard;
+export default WalletsDashboardCard

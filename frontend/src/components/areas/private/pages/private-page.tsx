@@ -52,11 +52,7 @@ const PrivatePage = ({
     >
       <HashRouter>
         <Switch>
-          <Route
-            exact
-            path="/profile"
-            component={DashboardContainer}
-          />
+          <Route exact path="/profile" component={DashboardContainer} />
           <Route
             path="/profile/user-account"
             component={(props) => (

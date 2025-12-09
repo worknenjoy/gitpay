@@ -71,7 +71,7 @@ const reducers = combineReducers({
   paymentRequestTransfers,
   paymentRequestPayments,
   paymentRequestBalances,
-  dashboard: dashboardReducer,
+  dashboard: dashboardReducer
 })
 
 export default reducers

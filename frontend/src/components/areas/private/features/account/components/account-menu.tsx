@@ -1,6 +1,16 @@
 import * as React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Box, Avatar, Menu, MenuItem, ListItemIcon, Divider, Typography, Tooltip, Button } from '@mui/material'
+import {
+  Box,
+  Avatar,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  Divider,
+  Typography,
+  Tooltip,
+  Button
+} from '@mui/material'
 import { MoreVert, Logout, Person } from '@mui/icons-material'
 import { Web, AccountBox as AccountIcon, Settings as SettingsIcon } from '@mui/icons-material'
 import { nameInitials } from 'name-initials'
