@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useHistory } from 'react-router-dom'
-import { Button } from '@mui/material'
+import { Button, Container, Grid } from '@mui/material'
 import { Alert, AlertTitle } from '@mui/material'
 import { AlertWrapper } from './dashboard.styles'
 import WelcomeUser from '../../components/session/welcome-user'
 import DashboardCardList from 'design-library/molecules/cards/dashboard-cards/dashboard-card-list/dashboard-card-list'
+import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 
 const Dashboard = ({ user, dashboard, fetchDashboardInfo }) => {
   const { data = {}, completed } = user
@@ -20,7 +21,12 @@ const Dashboard = ({ user, dashboard, fetchDashboardInfo }) => {
   }, [data, completed])
 
   return (
-    <Fragment>
+    <Container>
+      <Grid container justifyContent="space-between" alignItems="center">
+        <MainTitle
+          title={<FormattedMessage id="dashboard.title" defaultMessage="Dashboard" />}
+        />
+      </Grid>
       {window.localStorage.getItem('firstLogin') === 'true' && <WelcomeUser />}
       {visible && (
         <AlertWrapper>
@@ -56,7 +62,7 @@ const Dashboard = ({ user, dashboard, fetchDashboardInfo }) => {
         </AlertWrapper>
       )}
       <DashboardCardList user={user} dashboard={dashboard} />
-    </Fragment>
+    </Container>
   )
 }
 
