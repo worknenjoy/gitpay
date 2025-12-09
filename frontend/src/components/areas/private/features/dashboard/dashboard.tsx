@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useHistory } from 'react-router-dom'
 import { Button, Container, Grid } from '@mui/material'
@@ -23,9 +23,7 @@ const Dashboard = ({ user, dashboard, fetchDashboardInfo }) => {
   return (
     <Container>
       <Grid container justifyContent="space-between" alignItems="center">
-        <MainTitle
-          title={<FormattedMessage id="dashboard.title" defaultMessage="Dashboard" />}
-        />
+        <MainTitle title={<FormattedMessage id="dashboard.title" defaultMessage="Dashboard" />} />
       </Grid>
       {window.localStorage.getItem('firstLogin') === 'true' && <WelcomeUser />}
       {visible && (
