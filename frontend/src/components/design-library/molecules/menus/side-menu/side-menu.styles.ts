@@ -12,6 +12,7 @@ export const SidePaper = styled('div')(({ theme }) => ({
 export const Row = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
+  width: '100%',
   [theme.breakpoints.down('sm')]: {
     width: '100%'
   }

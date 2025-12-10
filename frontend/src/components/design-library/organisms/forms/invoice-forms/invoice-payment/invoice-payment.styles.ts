@@ -5,7 +5,12 @@ export const InfoAlertWrapper = styled('div')(({ theme }) => ({
   marginTop: 10,
   marginBottom: 10,
   '& .MuiButton-root': {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      textWrap: 'auto',
+      textAlign: 'center'
+    }
   }
 }))
 

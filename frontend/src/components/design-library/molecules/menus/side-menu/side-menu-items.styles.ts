@@ -19,6 +19,11 @@ export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
   }
 }))
 
+export const MenuItemSection = styled('div')<{ compact?: boolean }>(({ theme, compact }) => ({
+  width: '100%', 
+  ...(compact ? { textAlign: 'center' } : {})
+}))
+
 export const ListItemIconStyled = styled('div')(({ theme }) => ({
   color: theme.palette.primary.contrastText,
   svg: {
