@@ -7,7 +7,7 @@ const SidebarMenuPlaceholder: React.FC = () => {
   const sections = 3
 
   return (
-    <div style={{ position: 'relative', width: 218 }}>
+    <div style={{ position: 'relative', width: 200 }}>
       <MenuListStyled>
         <MenuItemSection>
           <MenuItemStyled>
