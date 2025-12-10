@@ -5,7 +5,8 @@ import {
   Primary,
   Category,
   ListItemIconStyled,
-  MenuListStyled
+  MenuListStyled,
+  MenuItemSection
 } from './side-menu-items.styles'
 import SideMenuCollapseButton from './side-menu-collapse-button'
 
@@ -35,10 +36,7 @@ const SideMenuItems = ({ menuItems, compactMode, setCompactMode }: SideMenuItems
       <SideMenuCollapseButton collapsed={compactMode} setCollapsed={handleCompactModeToggle} />
       <MenuListStyled compact={compactMode}>
         {menuItems.map((section, sectionIndex) => (
-          <div
-            key={`section-${sectionIndex}`}
-            style={{ width: '100%', ...(compactMode ? { textAlign: 'center' } : {}) }}
-          >
+          <MenuItemSection key={`section-${sectionIndex}`} compact={compactMode}>
             {section.category && (
               <Typography
                 variant="caption"
@@ -69,7 +67,7 @@ const SideMenuItems = ({ menuItems, compactMode, setCompactMode }: SideMenuItems
                   </MenuItemStyled>
                 )
             )}
-          </div>
+          </MenuItemSection>
         ))}
       </MenuListStyled>
     </div>

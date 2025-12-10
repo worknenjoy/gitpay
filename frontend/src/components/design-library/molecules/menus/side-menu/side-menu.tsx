@@ -78,25 +78,24 @@ export const SideMenu: React.FC<SideMenuProps> = ({ completed, menuItems }) => {
                 padding: '5px 20px'
               }}
             >
-              {completed ? (
-                <OnlyDesktop>
+              <OnlyDesktop>
+                {completed ? (
                   <SideMenuItems
                     menuItems={menuItems}
                     compactMode={compactMode}
                     setCompactMode={setCompactMode}
                   />
-                </OnlyDesktop>
-              ) : (
-                <SidebarMenuPlaceholder />
-              )}
-
-              {completed ? (
-                <OnlyMobile>
+                ) : (
+                  <SidebarMenuPlaceholder />
+                )}
+              </OnlyDesktop>
+              <OnlyMobile>
+                {completed ? (
                   <SideMenuItems menuItems={menuItemsMobile} />
-                </OnlyMobile>
-              ) : (
-                <SidebarMenuPlaceholder />
-              )}
+                ) : (
+                  <SidebarMenuPlaceholder />
+                )}
+              </OnlyMobile>
             </div>
           </Row>
         </RightSide>

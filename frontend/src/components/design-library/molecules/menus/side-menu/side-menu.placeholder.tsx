@@ -1,23 +1,47 @@
 import React from 'react'
-import { Skeleton, Stack } from '@mui/material'
+import { Skeleton, Typography } from '@mui/material'
+import { MenuItemSection, MenuItemStyled, MenuListStyled } from './side-menu-items.styles'
 
 const SidebarMenuPlaceholder: React.FC = () => {
-  // Use deterministic widths to avoid SSR hydration mismatches
-  const widths = [92, 86, 98, 90, 94, 88, 96, 84]
+  const widths = [92, 86, 78]
+  const sections = 3
 
   return (
-    <Stack spacing={1} sx={{ p: 1 }}>
-      {widths.map((w, i) => (
-        <Skeleton
-          key={i}
-          variant="text"
-          animation="wave"
-          height={24}
-          width={`${w}%`}
-          color="inherit"
-        />
-      ))}
-    </Stack>
+    <div style={{ position: 'relative', width: 200 }}>
+      <MenuListStyled>
+        <MenuItemSection>
+          <MenuItemStyled>
+            <Skeleton
+              key={'skeleton-main'}
+              variant="text"
+              animation="wave"
+              height={24}
+              width={'80%'}
+              color="inherit"
+            />
+          </MenuItemStyled>
+        </MenuItemSection>
+        {Array.from({ length: sections }).map((_, idx) => (
+          <MenuItemSection>
+            <Typography variant="caption">
+              <Skeleton variant="text" animation="wave" height={16} width={80} color="inherit" />
+            </Typography>
+            {widths.map((w, i) => (
+              <MenuItemStyled>
+                <Skeleton
+                  key={i}
+                  variant="text"
+                  animation="wave"
+                  height={24}
+                  width={`${w}%`}
+                  color="inherit"
+                />
+              </MenuItemStyled>
+            ))}
+          </MenuItemSection>
+        ))}
+      </MenuListStyled>
+    </div>
   )
 }
 

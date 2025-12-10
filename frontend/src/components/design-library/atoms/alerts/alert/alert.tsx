@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import Alert from '@mui/material/Alert'
 import CloseIcon from '@mui/icons-material/Close'
-import { Button, Skeleton, Box } from '@mui/material'
+import { Skeleton, Box } from '@mui/material'
+import Button from '../../buttons/button/button'
+import { CustomAlertStyled } from './alert.styles'
 
 export const CustomAlert = (props) => {
   const { onClose, alertKey = 'default', actions, dismissable = false, completed, ...rest } = props
@@ -33,17 +34,25 @@ export const CustomAlert = (props) => {
   }
 
   return (
-    <Alert
+    <CustomAlertStyled
       elevation={1}
       variant="standard"
       action={
         <>
           {actions}
           {dismissable && (
-            <Button aria-label="close" color="inherit" size="small" onClick={handleClose}>
-              Dismiss
-              <CloseIcon fontSize="inherit" />
-            </Button>
+            <Button
+              label={
+                <>
+                  Dismiss
+                  <CloseIcon fontSize="inherit" />
+                </>
+              }
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={handleClose}
+            />
           )}
         </>
       }

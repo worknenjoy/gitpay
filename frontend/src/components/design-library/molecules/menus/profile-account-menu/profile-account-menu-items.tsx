@@ -1,5 +1,5 @@
 import React from 'react'
-import { Web, Logout } from '@mui/icons-material'
+import { Web, Logout, Dashboard } from '@mui/icons-material'
 import { Divider, ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@mui/material'
 import { Settings as SettingsIcon, AccountBox as AccountIcon } from '@mui/icons-material'
 import { FormattedMessage } from 'react-intl'
@@ -7,7 +7,14 @@ import { ProfileAvatar } from './profile-account-menu.styles'
 import { useHistory } from 'react-router-dom'
 import useUserTypes from '../../../../../hooks/use-user-types'
 
-const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout }) => {
+const ProfileAccountMenuItems = ({
+  open,
+  anchorEl,
+  handleClose,
+  user,
+  onLogout,
+  includeDashboard = false
+}) => {
   const history = useHistory()
   const { isContributor } = useUserTypes(user)
   const { data } = user
@@ -50,6 +57,22 @@ const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout }
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
+      {includeDashboard && (
+        <MenuItem color="primary" onClick={(e) => history.push(`/`)}>
+          <ListItemIcon>
+            <ProfileAvatar bgColor={bgColor}>
+              <Dashboard color="primary" fontSize="small" />
+            </ProfileAvatar>
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography variant="body2" color="text">
+                <FormattedMessage id="profile.accountMenu.dashboard" defaultMessage="Dashboard" />
+              </Typography>
+            }
+          />
+        </MenuItem>
+      )}
       <MenuItem color="primary" onClick={(e) => history.push(`/users/${data?.id}`)}>
         <ListItemIcon>
           <ProfileAvatar bgColor={bgColor}>
