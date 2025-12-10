@@ -84,7 +84,8 @@ export const SideMenu: React.FC<SideMenuProps> = ({ completed, menuItems }) => {
                     menuItems={menuItems}
                     compactMode={compactMode}
                     setCompactMode={setCompactMode}
-                  />) : (
+                  />
+                ) : (
                   <SidebarMenuPlaceholder />
                 )}
               </OnlyDesktop>

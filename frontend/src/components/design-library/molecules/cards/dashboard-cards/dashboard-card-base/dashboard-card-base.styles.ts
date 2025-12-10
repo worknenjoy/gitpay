@@ -8,7 +8,7 @@ export const CardActionsCentered = styled(CardActions)({
 })
 
 export const Card = styled(BaseCard)(({ theme }) => ({
-  width: 348,
+  width: 328,
   margin: '1rem 0.5rem',
   [theme.breakpoints.down('sm')]: {
     maxWidth: '100%',

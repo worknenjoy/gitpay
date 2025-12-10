@@ -41,16 +41,16 @@ export const CustomAlert = (props) => {
         <>
           {actions}
           {dismissable && (
-            <Button 
+            <Button
               label={
                 <>
                   Dismiss
                   <CloseIcon fontSize="inherit" />
                 </>
               }
-              aria-label="close" 
-              color="inherit" 
-              size="small" 
+              aria-label="close"
+              color="inherit"
+              size="small"
               onClick={handleClose}
             />
           )}

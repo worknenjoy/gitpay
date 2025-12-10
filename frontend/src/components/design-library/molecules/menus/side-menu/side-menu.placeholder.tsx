@@ -3,9 +3,7 @@ import { Skeleton, Typography } from '@mui/material'
 import { MenuItemSection, MenuItemStyled, MenuListStyled } from './side-menu-items.styles'
 
 const SidebarMenuPlaceholder: React.FC = () => {
-  const widths = [
-    92, 86, 78
-  ]
+  const widths = [92, 86, 78]
   const sections = 3
 
   return (
@@ -23,11 +21,9 @@ const SidebarMenuPlaceholder: React.FC = () => {
             />
           </MenuItemStyled>
         </MenuItemSection>
-        {Array.from({ length: sections }).map((_, idx) =>
+        {Array.from({ length: sections }).map((_, idx) => (
           <MenuItemSection>
-            <Typography
-              variant="caption"
-            >
+            <Typography variant="caption">
               <Skeleton variant="text" animation="wave" height={16} width={80} color="inherit" />
             </Typography>
             {widths.map((w, i) => (
@@ -43,7 +39,7 @@ const SidebarMenuPlaceholder: React.FC = () => {
               </MenuItemStyled>
             ))}
           </MenuItemSection>
-        )}
+        ))}
       </MenuListStyled>
     </div>
   )

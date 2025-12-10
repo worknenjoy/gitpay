@@ -1,11 +1,10 @@
 import React from 'react'
 import { Button, Skeleton } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
-import { CustomAlert} from '../../../../atoms/alerts/alert/alert'
+import { CustomAlert } from '../../../../atoms/alerts/alert/alert'
 import { BillingInfoCard } from '../../../../molecules/cards/billing-info-card/billing-info-card'
 import { countryCodes } from '../../../../../areas/private/shared/country-codes'
 import { formatCurrency } from '../../../../../../utils/format-currency'
-import { Alert, AlertTitle } from '@mui/material'
 import { InfoAlertWrapper, StyledPayButton } from './invoice-payment.styles'
 
 // No component-level JSS; using styled components defined in invoice-payment.styles.ts
@@ -26,7 +25,7 @@ const InvoicePayment = ({
         <CustomAlert
           slotProps={{
             action: {
-              sx: { padding: 0 } 
+              sx: { padding: 0 }
             }
           }}
           completed={completed}
@@ -47,9 +46,9 @@ const InvoicePayment = ({
           }
         >
           <FormattedMessage
-              id="issue.payment.invoice.info.description"
-              defaultMessage="To update your billing information, please fill in or update your details in the Billing Information section of your account settings. This information will be used to generate your invoice"
-            />
+            id="issue.payment.invoice.info.description"
+            defaultMessage="To update your billing information, please fill in or update your details in the Billing Information section of your account settings. This information will be used to generate your invoice"
+          />
         </CustomAlert>
       </InfoAlertWrapper>
       {completed ? (

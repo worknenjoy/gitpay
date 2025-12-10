@@ -20,7 +20,7 @@ export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
 }))
 
 export const MenuItemSection = styled('div')<{ compact?: boolean }>(({ theme, compact }) => ({
-  width: '100%', 
+  width: '100%',
   ...(compact ? { textAlign: 'center' } : {})
 }))
 

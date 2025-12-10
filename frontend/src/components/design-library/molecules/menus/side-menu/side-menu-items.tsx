@@ -36,10 +36,7 @@ const SideMenuItems = ({ menuItems, compactMode, setCompactMode }: SideMenuItems
       <SideMenuCollapseButton collapsed={compactMode} setCollapsed={handleCompactModeToggle} />
       <MenuListStyled compact={compactMode}>
         {menuItems.map((section, sectionIndex) => (
-          <MenuItemSection
-            key={`section-${sectionIndex}`}
-            compact={compactMode}
-          >
+          <MenuItemSection key={`section-${sectionIndex}`} compact={compactMode}>
             {section.category && (
               <Typography
                 variant="caption"

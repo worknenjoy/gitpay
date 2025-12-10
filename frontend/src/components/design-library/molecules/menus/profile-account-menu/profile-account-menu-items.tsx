@@ -7,7 +7,14 @@ import { ProfileAvatar } from './profile-account-menu.styles'
 import { useHistory } from 'react-router-dom'
 import useUserTypes from '../../../../../hooks/use-user-types'
 
-const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout, includeDashboard = false }) => {
+const ProfileAccountMenuItems = ({
+  open,
+  anchorEl,
+  handleClose,
+  user,
+  onLogout,
+  includeDashboard = false
+}) => {
   const history = useHistory()
   const { isContributor } = useUserTypes(user)
   const { data } = user
@@ -50,7 +57,7 @@ const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout, 
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      { includeDashboard && (
+      {includeDashboard && (
         <MenuItem color="primary" onClick={(e) => history.push(`/`)}>
           <ListItemIcon>
             <ProfileAvatar bgColor={bgColor}>
@@ -64,7 +71,7 @@ const ProfileAccountMenuItems = ({ open, anchorEl, handleClose, user, onLogout, 
               </Typography>
             }
           />
-        </MenuItem>      
+        </MenuItem>
       )}
       <MenuItem color="primary" onClick={(e) => history.push(`/users/${data?.id}`)}>
         <ListItemIcon>
