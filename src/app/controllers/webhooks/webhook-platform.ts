@@ -14,16 +14,16 @@ const checkoutSessionCompleted = require('../../../modules/webhooks/checkoutSess
 const customerSourceCreated = require('../../../modules/webhooks/customerSourceCreated')
 const chargeUpdated = require('../../../modules/webhooks/chargeUpdated')
 const chargeFailed = require('../../../modules/webhooks/chargeFailed')
-import { handleChargeRefunded } from '../../../modules/webhooks/chargeRefunded/chargeRefunded'
+import { handleChargeRefunded } from '../../../modules/webhooks/charges/chargeRefunded/chargeRefunded'
 import { chargeDisputeCreatedWebhookHandler } from '../../../modules/webhooks/chargeDisputeCreated'
 import { chargeDisputeClosedWebhookHandler } from '../../../modules/webhooks/chargeDisputeClosed'
+import { payoutCreated } from '../../../modules/webhooks/payouts'
 const invoiceCreated = require('../../../modules/webhooks/invoiceCreated')
 const invoiceUpdated = require('../../../modules/webhooks/invoiceUpdated')
 const invoicePaid = require('../../../modules/webhooks/invoicePaid')
 const invoiceFinalized = require('../../../modules/webhooks/invoiceFinalized')
 const transferCreated = require('../../../modules/webhooks/transferCreated')
 const transferReversed = require('../../../modules/webhooks/transferReversed')
-const payoutCreated = require('../../../modules/webhooks/payoutCreated')
 const payoutFailed = require('../../../modules/webhooks/payoutFailed')
 const payoutPaid = require('../../../modules/webhooks/payoutPaid')
 const balanceAvailable = require('../../../modules/webhooks/balanceAvailable')
