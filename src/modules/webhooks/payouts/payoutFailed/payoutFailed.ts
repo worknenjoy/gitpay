@@ -21,7 +21,9 @@ export async function payoutFailed(event: any, req: Request, res: Response) {
         user.dataValues,
         i18n.__('mail.webhook.payment.transfer.intransit.fail.subject'),
         i18n.__('mail.webhook.payment.transfer.intransit.fail.message', {
-          currency: CURRENCIES[event.data.object.currency as keyof typeof CURRENCIES] || event.data.object.currency,
+          currency:
+            CURRENCIES[event.data.object.currency as keyof typeof CURRENCIES] ||
+            event.data.object.currency,
           amount: event.data.object.amount / 100
         })
       )

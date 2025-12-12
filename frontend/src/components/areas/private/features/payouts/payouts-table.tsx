@@ -13,7 +13,12 @@ const PayoutsTable = ({ payouts }) => {
     status: { sortable: true, numeric: false, dataBaseKey: 'status', label: 'Status' },
     method: { sortable: true, numeric: false, dataBaseKey: 'method', label: 'Transfer Method' },
     amount: { sortable: true, numeric: true, dataBaseKey: 'amount', label: 'Amount' },
-    arrival_date: { sortable: true, numeric: false, dataBaseKey: 'arrival_date', label: 'Arrival Date' },
+    arrival_date: {
+      sortable: true,
+      numeric: false,
+      dataBaseKey: 'arrival_date',
+      label: 'Arrival Date'
+    },
     reference_number: {
       sortable: true,
       numeric: false,

@@ -103,7 +103,7 @@ module.exports.done = {
       source_type: 'card',
       statement_descriptor: null,
       status: 'paid',
-      type: 'bank_account',
+      type: 'bank_account'
     }
   },
   livemode: true,
@@ -144,9 +144,9 @@ module.exports.updated = {
       status: 'paid',
       type: 'bank_account',
       trace_id: {
-        status: "supported",
-        value: "XXX-1234",
-      },
+        status: 'supported',
+        value: 'XXX-1234'
+      }
     }
   },
   livemode: true,

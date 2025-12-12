@@ -38,13 +38,11 @@ export async function payoutPaid(event: any, req: any, res: any) {
         user.dataValues,
         i18n.__('mail.webhook.payment.transfer.finished.subject'),
         i18n.__('mail.webhook.payment.transfer.finished.message', {
-          currency: CURRENCIES[event.data.object.currency as keyof typeof CURRENCIES] || event.data.object.currency,
-          amount: handleAmount(
-            event.data.object.amount,
-            0,
-            'centavos',
-            event.data.object.currency
-          ).decimal,
+          currency:
+            CURRENCIES[event.data.object.currency as keyof typeof CURRENCIES] ||
+            event.data.object.currency,
+          amount: handleAmount(event.data.object.amount, 0, 'centavos', event.data.object.currency)
+            .decimal,
           date
         })
       )

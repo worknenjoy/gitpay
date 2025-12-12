@@ -41,7 +41,9 @@ const stripe = Stripe()
         continue
       }
 
-      console.log(`[payout_sync] Retrieving Stripe payout: ${id} from account ${connectedAccountId}...`)
+      console.log(
+        `[payout_sync] Retrieving Stripe payout: ${id} from account ${connectedAccountId}...`
+      )
       try {
         // Retrieve payout from the connected account by setting the Stripe-Account header
         const sp = await stripe.payouts.retrieve(id, { stripeAccount: connectedAccountId })
@@ -78,16 +80,19 @@ const stripe = Stripe()
           console.log(`[payout_sync] No changes for payout id=${payout.id} (source_id=${id}).`)
         }
       } catch (err: any) {
-        console.error(`[payout_sync] ERROR retrieving Stripe payout ${id} for payout id=${payout.id} (acct=${connectedAccountId}): ${err?.message || err}`)
+        console.error(
+          `[payout_sync] ERROR retrieving Stripe payout ${id} for payout id=${payout.id} (acct=${connectedAccountId}): ${err?.message || err}`
+        )
         // Continue with next payout
       }
     }
 
-    console.log(`[payout_sync] Sync completed. Total=${total}, Updated=${updated}, Unchanged=${total - updated}.`)
+    console.log(
+      `[payout_sync] Sync completed. Total=${total}, Updated=${updated}, Unchanged=${total - updated}.`
+    )
     process.exit(0)
   } catch (err: any) {
     console.error('[payout_sync] Fatal error:', err?.message || err)
     process.exit(1)
   }
 })()
-
