@@ -3,6 +3,7 @@ import i18n from 'i18n'
 import Models from '../../../../models'
 import SendMail from '../../../mail/mail'
 import { CURRENCIES } from '../../constants'
+import PayoutMail from '../../../mail/payout'
 
 const models = Models as any
 
@@ -14,19 +15,16 @@ export async function payoutFailed(event: any, req: Request, res: Response) {
       }
     })
 
+    const payout: any = await models.Payout.findOne({
+      where: {
+        source_id: event.data.object.id
+      }
+    })
+
     if (user) {
       const language = user.language || 'en'
       i18n.setLocale(language)
-      SendMail.success(
-        user.dataValues,
-        i18n.__('mail.webhook.payment.transfer.intransit.fail.subject'),
-        i18n.__('mail.webhook.payment.transfer.intransit.fail.message', {
-          currency:
-            CURRENCIES[event.data.object.currency as keyof typeof CURRENCIES] ||
-            event.data.object.currency,
-          amount: event.data.object.amount / 100
-        })
-      )
+      PayoutMail.payoutFailed(user, payout)
     }
 
     return res.status(200).json(event)
