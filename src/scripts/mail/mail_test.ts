@@ -135,6 +135,29 @@ function buildSamples(moduleName: string, methodName: string): any[] {
     }
   }
 
+  if (moduleName === 'payout') {
+    const payout = {
+      amount: 1000,
+      currency: 'usd',
+      arrival_date: Math.floor(Date.now() / 1000) + 86400
+    }
+    if (/payoutCreated/i.test(methodName)) {
+      return [user, payout]
+    }
+
+    if (/payoutUpdated/i.test(methodName)) {
+      return [user, { ...payout, reference_number: 'tr_1234567890' }]
+    }
+
+    if (/payoutFailed/i.test(methodName)) {
+      return [user, payout]
+    }
+
+    if (/payoutPaid/i.test(methodName)) {
+      return [user, { ...payout, reference_number: 'tr_1234567890' }]
+    }
+  }
+
   // Generic 2-arg default: (user, context)
   return [user, { id: 1, title: 'Sample', description: 'Preview content' }]
 }
@@ -148,7 +171,7 @@ async function run(): Promise<PreviewResult> {
   }
 
   const moduleFile = normalizeModuleName(rawModuleToken)
-  const mailModulePath = path.join(repoRoot, 'src', 'modules', 'mail', `${moduleFile}.js`)
+  const mailModulePath = path.join(repoRoot, 'src', 'modules', 'mail', `${moduleFile}.ts`)
 
   if (!fs.existsSync(mailModulePath)) {
     throw new Error(`Mail module not found: ${mailModulePath}`)
@@ -157,7 +180,8 @@ async function run(): Promise<PreviewResult> {
   // Load mail module (CommonJS export)
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const mailModule = require(mailModulePath)
-  const fn = mailModule[rawMethod]
+  const fn = mailModule.default[rawMethod]
+
   if (typeof fn !== 'function') {
     throw new Error(`Method not found on module export: ${rawMethod}`)
   }
@@ -183,18 +207,60 @@ async function run(): Promise<PreviewResult> {
   let subject: string | undefined
   let rawContent = ''
 
-  if (Array.isArray(result) && result[0]) {
-    subject = (result[0] as any).subject
-    const valueArr = (result[0] as any).value
-    if (Array.isArray(valueArr) && valueArr[0] && valueArr[0].value) {
-      rawContent = valueArr[0].value
+  // New robust extraction covering common shapes returned by mail methods
+  const tryExtract = (res: any) => {
+    if (!res) return
+    // Direct string HTML
+    if (typeof res === 'string') {
+      rawContent = res
+      return
+    }
+    // Object with common HTML fields
+    if (typeof res === 'object') {
+      subject = subject || res.subject || res.title
+      rawContent =
+        rawContent ||
+        res.html ||
+        res.body ||
+        res.content ||
+        (Array.isArray(res.value) && res.value[0] && (res.value[0].value || res.value[0].html)) ||
+        (typeof res.value === 'string' ? res.value : '')
+    }
+    // Array from request() helper or other wrappers
+    if (Array.isArray(res)) {
+      // First element might be envelope with subject/value
+      const first = res[0]
+      if (first && typeof first === 'object') {
+        subject = subject || first.subject || first.title
+        if (Array.isArray(first.value)) {
+          const v0 = first.value[0]
+          if (v0 && typeof v0 === 'object') {
+            rawContent = rawContent || v0.value || v0.html || v0.body || v0.content || ''
+          }
+        } else if (typeof first.value === 'string') {
+          rawContent = rawContent || first.value
+        }
+      }
+      // Or any element that might contain html/body
+      for (const el of res) {
+        if (typeof el === 'string') {
+          rawContent = rawContent || el
+        } else if (el && typeof el === 'object') {
+          subject = subject || el.subject || el.title
+          rawContent =
+            rawContent ||
+            el.html ||
+            el.body ||
+            el.content ||
+            (Array.isArray(el.value) && el.value[0] && (el.value[0].value || el.value[0].html)) ||
+            (typeof el.value === 'string' ? el.value : '')
+        }
+        if (rawContent) break
+      }
     }
   }
 
-  if (!rawContent) {
-    // Fallback: allow methods that return directly the HTML content
-    if (typeof result === 'string') rawContent = result
-  }
+  tryExtract(result)
 
   if (!rawContent) {
     throw new Error(

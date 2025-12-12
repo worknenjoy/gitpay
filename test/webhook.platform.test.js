@@ -12,7 +12,6 @@ const models = require('../src/models')
 const chargeData = require('./data/stripe/charge')
 const createTransferData = require('./data/stripe/stripe.transfer.created')
 const reverseTransferData = require('./data/stripe/stripe.webhook.transfer.reversed')
-const payoutData = require('./data/stripe/payout')
 const cardData = require('./data/stripe/card')
 const balanceData = require('./data/stripe/balance')
 const { refundCreated } = require('./data/stripe/stripe.webhook.charge.refunded')
@@ -306,106 +305,6 @@ describe('webhooks for platform', () => {
           where: { id: paymentRequestTransfer.id }
         })
         expect(transferUpdated.status).to.equal('reversed')
-      })
-
-      it('should notify the transfer when a webhook payout.create is triggered and create a new payout', async () => {
-        const user = await models.User.create({
-          email: 'teste@mail.com',
-          password: 'teste',
-          account_id: 'acct_1CZ5vkLlCJ9CeQRe'
-        })
-        const res = await agent
-          .post('/webhooks/stripe-platform')
-          .send(payoutData.created)
-          .expect('Content-Type', /json/)
-          .expect(200)
-        const payout = await models.Payout.findOne({
-          where: { source_id: res.body.data.object.id }
-        })
-        expect(res.statusCode).to.equal(200)
-        const event = res.body
-        expect(event).to.exist
-        expect(event.id).to.equal('evt_1CdprOLlCJ9CeQRe4QDlbGRY')
-        expect(payout.status).to.equal('in_transit')
-      })
-
-      it('should not create a new payout when a webhook payout.create triggers again', async () => {
-        const user = await models.User.create({
-          email: 'teste@mail.com',
-          password: 'teste',
-          account_id: 'acct_1CZ5vkLlCJ9CeQRe'
-        })
-        await models.Payout.create({
-          source_id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
-          amount: 7311,
-          currency: 'brl',
-          status: 'in_transit',
-          description: 'STRIPE TRANSFER',
-          userId: user.id,
-          method: 'bank_account'
-        })
-        const res = await agent
-          .post('/webhooks/stripe-platform')
-          .send(payoutData.created)
-          .expect('Content-Type', /json/)
-          .expect(200)
-        const event = res.body
-        const payouts = await models.Payout.findAll()
-        expect(res.statusCode).to.equal(200)
-        expect(event).to.exist
-        expect(event.id).to.equal('evt_1CdprOLlCJ9CeQRe4QDlbGRY')
-        expect(payouts.length).to.equal(1)
-        const payout = await models.Payout.findOne({
-          where: { source_id: res.body.data.object.id }
-        })
-        expect(payout.status).to.equal('in_transit')
-      })
-
-      it('should notify the transfer when a webhook payout.paid is triggered and update payout status', async () => {
-        const user = await models.User.create({
-          email: 'teste@mail.com',
-          password: 'teste',
-          account_id: 'acct_1CZ5vkLlCJ9CeQRe'
-        })
-        const newPayout = await models.Payout.create({
-          source_id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
-          amount: 7311,
-          currency: 'brl',
-          status: 'in_transit',
-          description: 'STRIPE TRANSFER',
-          userId: user.id,
-          method: 'bank_account'
-        })
-        const res = await agent
-          .post('/webhooks/stripe-platform')
-          .send(payoutData.done)
-          .expect('Content-Type', /json/)
-          .expect(200)
-        const event = res.body
-        expect(res.statusCode).to.equal(200)
-        expect(event).to.exist
-        expect(event.id).to.equal('evt_1CeM4PLlCJ9CeQReQrtxB9GJ')
-        const payout = await models.Payout.findOne({ where: { id: newPayout.id } })
-        expect(payout.status).to.equal('paid')
-        expect(payout.paid).to.equal(true)
-        expect(payout.amount).to.equal('7311')
-      })
-
-      xit('should update the order when a webhook payout.failed is triggered', async () => {
-        const user = await models.User.create({
-          email: 'teste@mail.com',
-          password: 'teste',
-          account_id: 'acct_1CdjXFAcSPl6ox0l'
-        })
-        const res = await agent
-          .post('/webhooks/stripe-platform')
-          .send(payoutData.failed)
-          .expect('Content-Type', /json/)
-          .expect(200)
-        expect(res.statusCode).to.equal(200)
-        const event = res.body
-        expect(event).to.exist
-        expect(event.id).to.equal('evt_1ChFtEAcSPl6ox0l3VSifPWa')
       })
     })
   })

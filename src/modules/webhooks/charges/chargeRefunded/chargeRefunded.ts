@@ -1,8 +1,9 @@
-import Stripe from '../../shared/stripe/stripe'
+import Stripe from '../../../shared/stripe/stripe'
 import { handleChargeRefundedIssue } from './chargeRefundedIssue'
 import { handleChargeRefundedPaymentRequest } from './chargeRefundedPaymentRequest'
 
 const stripe = Stripe()
+
 export const handleChargeRefunded = async (event: any, req: any, res: any) => {
   try {
     const { data } = event || {}

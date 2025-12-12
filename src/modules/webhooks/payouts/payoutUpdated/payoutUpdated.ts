@@ -1,0 +1,45 @@
+import Models from '../../../../models'
+import PayoutMail from '../../../mail/payout'
+
+const models = Models as any
+
+export async function payoutUpdated(event: any, req: any, res: any) {
+  const { data } = event || {}
+  const { object } = data || {}
+  try {
+    const user = await models.User.findOne({
+      where: {
+        account_id: event.account
+      }
+    })
+
+    if (user) {
+      const existingPayout = await models.Payout.findOne({
+        where: {
+          source_id: object.id
+        }
+      })
+
+      if (existingPayout) {
+        const payout = await existingPayout.update({
+          status: object.status,
+          arrival_date: object.arrival_date,
+          reference_number: object.trace_id.value,
+          paid: object.status === 'paid' ? true : false
+        })
+
+        if (!payout) return res.status(400).send({ error: 'Error to update payout' })
+
+        try {
+          PayoutMail.payoutUpdated(user, payout)
+        } catch (e) {
+          console.error('Error sending payout updated mail:', e)
+        }
+        return res.status(200).json(event)
+      }
+      return res.status(200).json(event)
+    }
+  } catch (e) {
+    return res.status(400).send(e)
+  }
+}

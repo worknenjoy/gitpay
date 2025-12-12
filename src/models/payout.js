@@ -25,6 +25,14 @@ module.exports = (sequelize, DataTypes) => {
         model: 'Users',
         key: 'id'
       }
+    },
+    arrival_date: {
+      type: DataTypes.BIGINT,
+      allowNull: true
+    },
+    reference_number: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   })
 
