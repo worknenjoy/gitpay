@@ -15,7 +15,6 @@ import * as path from 'path'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const i18n = require('i18n') as any
 import { disputeCreated } from '../data/stripe.webhook.charge.dispute.created'
-import { raw } from 'body-parser'
 
 // Ensure we never actually send emails while previewing
 process.env.NODE_ENV = 'test'
@@ -149,6 +148,14 @@ function buildSamples(moduleName: string, methodName: string): any[] {
     if (/payoutUpdated/i.test(methodName)) {
       return [user, { ...payout, reference_number: 'tr_1234567890' }]
     }
+
+    if (/payoutFailed/i.test(methodName)) {
+      return [user, payout]
+    }
+
+    if (/payoutPaid/i.test(methodName)) {
+      return [user, { ...payout, reference_number: 'tr_1234567890' }]
+    }
   }
 
   // Generic 2-arg default: (user, context)
@@ -174,7 +181,7 @@ async function run(): Promise<PreviewResult> {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const mailModule = require(mailModulePath)
   const fn = mailModule.default[rawMethod]
-  
+
   if (typeof fn !== 'function') {
     throw new Error(`Method not found on module export: ${rawMethod}`)
   }

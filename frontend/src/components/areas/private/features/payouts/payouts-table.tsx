@@ -13,6 +13,13 @@ const PayoutsTable = ({ payouts }) => {
     status: { sortable: true, numeric: false, dataBaseKey: 'status', label: 'Status' },
     method: { sortable: true, numeric: false, dataBaseKey: 'method', label: 'Transfer Method' },
     amount: { sortable: true, numeric: true, dataBaseKey: 'amount', label: 'Amount' },
+    arrival_date: { sortable: true, numeric: false, dataBaseKey: 'arrival_date', label: 'Arrival Date' },
+    reference_number: {
+      sortable: true,
+      numeric: false,
+      dataBaseKey: 'reference_number',
+      label: 'Reference Number'
+    },
     createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created At' }
   }
 
@@ -25,6 +32,9 @@ const PayoutsTable = ({ payouts }) => {
         currency={currencyCodeToSymbol(item.currency)}
       />
     ),
+    arrival_date: (item: any) =>
+      item.arrival_date ? <CreatedField createdAt={item.arrival_date * 1000} /> : <span>—</span>,
+    reference_number: (item: any) => <span>{item.reference_number || '—'}</span>,
     createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />
   }
 

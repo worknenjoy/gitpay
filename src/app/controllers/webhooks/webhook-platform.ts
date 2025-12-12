@@ -17,15 +17,12 @@ const chargeFailed = require('../../../modules/webhooks/chargeFailed')
 import { handleChargeRefunded } from '../../../modules/webhooks/charges/chargeRefunded/chargeRefunded'
 import { chargeDisputeCreatedWebhookHandler } from '../../../modules/webhooks/chargeDisputeCreated'
 import { chargeDisputeClosedWebhookHandler } from '../../../modules/webhooks/chargeDisputeClosed'
-import { payoutCreated } from '../../../modules/webhooks/payouts'
 const invoiceCreated = require('../../../modules/webhooks/invoiceCreated')
 const invoiceUpdated = require('../../../modules/webhooks/invoiceUpdated')
 const invoicePaid = require('../../../modules/webhooks/invoicePaid')
 const invoiceFinalized = require('../../../modules/webhooks/invoiceFinalized')
 const transferCreated = require('../../../modules/webhooks/transferCreated')
 const transferReversed = require('../../../modules/webhooks/transferReversed')
-const payoutFailed = require('../../../modules/webhooks/payoutFailed')
-const payoutPaid = require('../../../modules/webhooks/payoutPaid')
 const balanceAvailable = require('../../../modules/webhooks/balanceAvailable')
 const invoicePaymentSucceeded = require('../../../modules/webhooks/invoicePaymentSucceeded')
 const invoicePaymentFailed = require('../../../modules/webhooks/invoicePaymentFailed')
@@ -88,12 +85,6 @@ exports.webhookPlatform = async (req: any, res: any) => {
         return await transferCreated(event, req, res)
       case 'transfer.reversed':
         return await transferReversed(event, req, res)
-      case 'payout.created':
-        return await payoutCreated(event, req, res)
-      case 'payout.failed':
-        return await payoutFailed(event, req, res)
-      case 'payout.paid':
-        return await payoutPaid(event, req, res)
       case 'balance.available':
         return balanceAvailable(event, req, res)
       case 'invoice.payment_succeeded':

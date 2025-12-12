@@ -6,9 +6,8 @@ if (process.env.NODE_ENV !== 'production') {
 import Stripe from '../../../modules/shared/stripe/stripe'
 import { payoutCreated } from '../../../modules/webhooks/payouts'
 import { payoutUpdated } from '../../../modules/webhooks/payouts'
-
-const payoutFailed = require('../../../modules/webhooks/payoutFailed')
-const payoutPaid = require('../../../modules/webhooks/payoutPaid')
+import { payoutFailed } from '../../../modules/webhooks/payouts'
+import { payoutPaid } from '../../../modules/webhooks/payouts'
 
 const stripe = Stripe()
 

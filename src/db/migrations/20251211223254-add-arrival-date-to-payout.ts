@@ -10,4 +10,3 @@ export async function up({ queryInterface }: { queryInterface: QueryInterface })
 export async function down({ queryInterface }: { queryInterface: QueryInterface }) {
   await queryInterface.removeColumn('Payouts', 'arrival_date')
 }
-
