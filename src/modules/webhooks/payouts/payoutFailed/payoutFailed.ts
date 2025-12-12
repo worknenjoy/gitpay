@@ -1,8 +1,6 @@
 import { Request, Response } from 'express'
 import i18n from 'i18n'
 import Models from '../../../../models'
-import SendMail from '../../../mail/mail'
-import { CURRENCIES } from '../../constants'
 import PayoutMail from '../../../mail/payout'
 
 const models = Models as any

@@ -1,8 +1,5 @@
 import Models from '../../../../models'
 import i18n from 'i18n'
-import SendMail from '../../../mail/mail'
-import { CURRENCIES } from '../../constants'
-import { handleAmount } from '../../../util/handle-amount/handle-amount'
 import PayoutMail from '../../../mail/payout'
 
 const models = Models as any
@@ -41,10 +38,7 @@ export async function payoutPaid(event: any, req: any, res: any) {
       const date = new Date(event.data.object.arrival_date * 1000)
       const language = user.language || 'en'
       i18n.setLocale(language)
-      PayoutMail.payoutPaid(
-        user,
-        payout
-      )
+      PayoutMail.payoutPaid(user, payout)
     }
 
     return res.status(200).json(event)

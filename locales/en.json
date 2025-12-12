@@ -119,6 +119,8 @@
   "mail.webhook.payment.approved.message": "<p>The payment of ${{amount}} for an issue was approved.</p>",
   "mail.webhook.payment.unapproved.subject": "The payment for an issue you made on Gitpay wasn't approved",
   "mail.webhook.payment.unapproved.message": "<p>The payment of ${{amount}} for an issue on Gitpay wasn't approved</p><p>Reason: {{reason}}</p>.",
+  "mail.webhook.payment.transfer.subject": "There's a transfer from a claim initiated on Gitpay",
+  "mail.webhook.payment.transfer.message": "<p>A transfer of ${{amount}} claimed on Gitpay was initiated for the issue {{url}}. Now you should see a payout in transit to your account.</p>",
   "mail.webhook.payout.subject": "There's a Gitpay payout on the way!",
   "mail.webhook.payout.message": "<p>A new payout will be soon in your account, and we will let you know when it's concluded.</p>",
   "mail.webhook.payout.intransit.subject": "There's a Gitpay payout in transit to your bank account!",
