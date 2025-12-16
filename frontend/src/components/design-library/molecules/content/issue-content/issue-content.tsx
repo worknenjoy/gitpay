@@ -11,8 +11,6 @@ import { DescriptionHeading, IssueContentText } from './issue-content.styles'
 
 const IssueContent = ({
   user,
-  project,
-  organization,
   updateTask,
   reportTask,
   onDeleteTask,
@@ -24,8 +22,6 @@ const IssueContent = ({
       <IssueHeader
         task={task}
         user={user}
-        project={project}
-        organization={organization}
         updateTask={updateTask}
         reportTask={reportTask}
         handleDeleteTask={onDeleteTask}

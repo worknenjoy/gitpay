@@ -42,11 +42,9 @@ const IssuePage = ({
         <IssueContent
           user={user}
           task={task}
-          project={project}
           updateTask={updateTask}
           reportTask={reportTask}
           messageAuthor={messageAuthor}
-          organization={organization}
           onDeleteTask={onDeleteTask}
         />
       </Grid>

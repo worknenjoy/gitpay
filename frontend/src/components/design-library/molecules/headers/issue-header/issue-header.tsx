@@ -76,8 +76,6 @@ const styles = (theme) => ({
 const IssueHeader = ({
   task,
   user,
-  project,
-  organization,
   handleDeleteTask,
   reportTask,
   updateTask
@@ -101,8 +99,11 @@ const IssueHeader = ({
     setDeleteDialog(false)
   }
 
-  const handleReportDialogClose = () => {
-    setReportDialog(false)
+  const handleDeleteAndRedirect = async () => {
+    await handleDeleteTask(task.data)
+    setDeleteDialog(false)
+    if(task.error) return 
+    history.push('/profile/tasks')
   }
 
   const pathname = history.location.pathname
@@ -223,7 +224,7 @@ const IssueHeader = ({
               <Button onClick={handleDeleteDialogClose} color="primary">
                 <FormattedMessage id="task.actions.cancel" defaultMessage="Cancel" />
               </Button>
-              <Button onClick={handleDeleteTask} variant="contained" color="secondary">
+              <Button onClick={handleDeleteAndRedirect} variant="contained" color="secondary">
                 <FormattedMessage id="task.actions.delete" defaultMessage="Delete" />
               </Button>
             </DialogActions>

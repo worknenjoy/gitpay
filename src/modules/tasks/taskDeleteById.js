@@ -4,8 +4,8 @@ const models = require('../../models')
 module.exports = Promise.method(function taskDeleteById(taskParameters) {
   return Promise.all([
     models.History.destroy({ where: { TaskId: taskParameters.id } }),
-    models.Order.destroy({ where: { TaskId: taskParameters.id } }),
-    models.Assign.destroy({ where: { TaskId: taskParameters.id } }),
+    //models.Order.destroy({ where: { TaskId: taskParameters.id } }),
+    //models.Assign.destroy({ where: { TaskId: taskParameters.id } }),
     models.Offer.destroy({ where: { taskId: taskParameters.id } }),
     models.Member.destroy({ where: { taskId: taskParameters.id } }),
     models.sequelize.query(`DELETE FROM "TaskLabels" WHERE "taskId" = ${taskParameters.id}`),
