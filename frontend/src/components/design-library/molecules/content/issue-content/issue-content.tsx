@@ -9,14 +9,7 @@ import IssueHeader from '../../headers/issue-header/issue-header'
 import IssueAuthorList from '../../lists/issue-author-list/issue-author-list'
 import { DescriptionHeading, IssueContentText } from './issue-content.styles'
 
-const IssueContent = ({
-  user,
-  updateTask,
-  reportTask,
-  onDeleteTask,
-  task,
-  messageAuthor
-}) => {
+const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messageAuthor }) => {
   return (
     <Container fixed maxWidth="md" sx={{ mt: 2 }}>
       <IssueHeader

@@ -73,13 +73,7 @@ const styles = (theme) => ({
   }
 })
 
-const IssueHeader = ({
-  task,
-  user,
-  handleDeleteTask,
-  reportTask,
-  updateTask
-}) => {
+const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) => {
   const history = useHistory()
   const issueAuthor = useIssueAuthor(task, user)
   const [anchorEl, setAnchorEl] = useState(null)
@@ -102,7 +96,7 @@ const IssueHeader = ({
   const handleDeleteAndRedirect = async () => {
     await handleDeleteTask(task.data)
     setDeleteDialog(false)
-    if(task.error) return 
+    if (task.error) return
     history.push('/profile/tasks')
   }
 
