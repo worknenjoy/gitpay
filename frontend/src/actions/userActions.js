@@ -396,14 +396,14 @@ const createCustomer = (customerData) => {
       .post(api.API_URL + '/user/customer', customerData)
       .then((customer) => {
         if (!customer.data) {
-          dispatch(addNotification('actions.customer.create.error'))
+          dispatch(addNotification('actions.customer.create.error', { severity: 'error' }))
           return dispatch(createUserCustomerError({ message: 'actions.customer.create.error' }))
         }
         dispatch(addNotification('actions.customer.create.success'))
         return dispatch(createUserCustomerSuccess(customer))
       })
       .catch((error) => {
-        dispatch(addNotification('actions.customer.create.error'))
+        dispatch(addNotification('actions.customer.create.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on create customer', error)
         return dispatch(createUserCustomerError(error))
@@ -423,7 +423,7 @@ const updateCustomer = (_, customerData) => {
       })
       .catch((error) => {
         const errorMessage = error.response.data
-        dispatch(addNotification('actions.customer.update.error'))
+        dispatch(addNotification('actions.customer.update.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on update customer', error)
         return dispatch(updateUserCustomerError('actions.customer.update.error'))
@@ -500,7 +500,7 @@ const createAccount = (country) => {
       .post(api.API_URL + '/user/account', { country })
       .then((account) => {
         if (!account.data) {
-          dispatch(addNotification('actions.user.account.create.error'))
+          dispatch(addNotification('actions.user.account.create.error', { severity: 'error' }))
           return dispatch(createUserAccountError({ message: 'actions.user.account.create.error' }))
         }
         dispatch(addNotification('actions.user.account.create.success'))
@@ -509,7 +509,7 @@ const createAccount = (country) => {
         return dispatch(createUserAccountSuccess(account))
       })
       .catch((error) => {
-        dispatch(addNotification('actions.user.account.create.error'))
+        dispatch(addNotification('actions.user.account.create.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(createUserAccountError(error))
@@ -532,7 +532,9 @@ const updateAccount = (account) => {
       })
       .catch((error) => {
         const errorData = error.response.data
-        dispatch(addNotification('actions.user.account.update.error.missing'))
+        dispatch(
+          addNotification('actions.user.account.update.error.missing', { severity: 'error' })
+        )
         // eslint-disable-next-line no-console
         console.log('error on update account', error)
 
@@ -552,7 +554,7 @@ const deleteAccount = () => {
         return dispatch(deleteUserAccountSuccess(user))
       })
       .catch((error) => {
-        dispatch(addNotification('actions.user.account.delete.error'))
+        dispatch(addNotification('actions.user.account.delete.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on delete account', error)
         return dispatch(deleteUserAccountError(error))
@@ -576,7 +578,7 @@ const updateUser = (userData) => {
         return dispatch(updateUserSuccess(user))
       })
       .catch((error) => {
-        dispatch(addNotification('notifications.account.update.error'))
+        dispatch(addNotification('notifications.account.update.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on update user', error)
         return dispatch(updateUserError(error))
@@ -595,7 +597,7 @@ const activateUser = (userId, token) => {
         return dispatch(activateUserSuccess(user))
       })
       .catch((error) => {
-        dispatch(addNotification('notifications.account.activate.error'))
+        dispatch(addNotification('notifications.account.activate.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on activate user', error)
         return dispatch(activateUserError(error))
@@ -615,7 +617,11 @@ const resendActivationEmail = () => {
         return dispatch(resendActivationEmailSuccess(user))
       })
       .catch((error) => {
-        dispatch(addNotification('notifications.account.resend_activation_email.error'))
+        dispatch(
+          addNotification('notifications.account.resend_activation_email.error', {
+            severity: 'error'
+          })
+        )
         // eslint-disable-next-line no-console
         console.log('error on resend activation email', error)
         return dispatch(resendActivationEmailError(error))
@@ -634,7 +640,11 @@ const deleteUser = (user) => {
         return result
       })
       .catch((error) => {
-        dispatch(addNotification('account.profile.settings.delete.user.notification.error'))
+        dispatch(
+          addNotification('account.profile.settings.delete.user.notification.error', {
+            severity: 'error'
+          })
+        )
         // eslint-disable-next-line no-console
         console.log('error on delete account', error)
         return error
@@ -656,7 +666,7 @@ const getBankAccount = () => {
         return dispatch(getBankAccountSuccess(bankAccount))
       })
       .catch((error) => {
-        dispatch(addNotification('notifications.bank.get.error'))
+        dispatch(addNotification('notifications.bank.get.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(getBankAccountError(error))
@@ -679,7 +689,7 @@ const createBankAccount = (bank) => {
       })
       .then((bankAccount) => {
         if (bankAccount.data.statusCode === 400) {
-          dispatch(addNotification('notifications.bank.create.other.error'))
+          dispatch(addNotification('notifications.bank.create.other.error', { severity: 'error' }))
           return dispatch(createBankAccountError(bankAccount.data, bank))
         }
         dispatch(addNotification('notifications.bank.create.success'))
@@ -687,7 +697,7 @@ const createBankAccount = (bank) => {
         return dispatch(createBankAccountSuccess(bankAccount))
       })
       .catch((error) => {
-        dispatch(addNotification('notifications.bank.create.other.error'))
+        dispatch(addNotification('notifications.bank.create.other.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(createBankAccountError(error, bank))
@@ -703,7 +713,7 @@ const updateBankAccount = (bank_account) => {
       .put(api.API_URL + '/user/bank_accounts', bank_account)
       .then((bankAccount) => {
         if (bankAccount.data.statusCode === 400) {
-          dispatch(addNotification('notifications.bank.update.error'))
+          dispatch(addNotification('notifications.bank.update.error', { severity: 'error' }))
           return dispatch(updateBankAccountError(bankAccount.data))
         }
         dispatch(addNotification('notifications.bank.update.success'))
@@ -711,7 +721,7 @@ const updateBankAccount = (bank_account) => {
         return dispatch(updateBankAccountSuccess(bankAccount))
       })
       .catch((error) => {
-        dispatch(addNotification('notifications.bank.update.other.error'))
+        dispatch(addNotification('notifications.bank.update.other.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(updateBankAccountError(error, bank_account))
@@ -742,12 +752,12 @@ const searchUser = (data) => {
         if (response?.data) {
           dispatch(searchUserSuccess(response.data[0]))
         } else {
-          dispatch(addNotification('user.search.error'))
+          dispatch(addNotification('user.search.error', { severity: 'error' }))
         }
       })
       .catch((error) => {
         console.log('error', error)
-        dispatch(addNotification('user.search.error'))
+        dispatch(addNotification('user.search.error', { severity: 'error' }))
         dispatch(searchUserError(error))
       })
   }

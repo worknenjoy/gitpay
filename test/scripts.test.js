@@ -38,7 +38,7 @@ describe('Scripts', () => {
           .reply(200, sampleTransaction)
 
         const task = await createTask(agent)
-        const taskData = task.dataValues
+        const { body: taskData } = task
         const order = await createOrder({
           userId: taskData.userId,
           TaskId: taskData.id,

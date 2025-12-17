@@ -25,7 +25,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    addNotification: (message) => dispatch(addNotification(message)),
+    addNotification: (message, options) => dispatch(addNotification(message, options)),
     filterTasks: (tasks, key, value, additional) =>
       dispatch(filterTasks(tasks, key, value, additional)),
     listTasks: ({ organizationId, projectId, userId, status }) =>

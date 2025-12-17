@@ -252,6 +252,10 @@ const messages = defineMessages({
     id: 'actions.task.delete.notification.error',
     defaultMessage: 'Error to delete task'
   },
+  notificationTaskDeleteAssociatedOrdersError: {
+    id: 'actions.task.delete.notification.error.associated.orders',
+    defaultMessage: 'You cannot delete this issue because it has payments associated'
+  },
   notificationTaskDeleteAuthError: {
     id: 'actions.task.delete.auth.error',
     defaultMessage: 'You need to login first to delete a task'

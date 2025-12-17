@@ -12,7 +12,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    addNotification: (msg) => dispatch(addNotification(msg)),
+    addNotification: (msg, options) => dispatch(addNotification(msg, options)),
     searchUser: (data) => dispatch(searchUser(data)),
     resetPassword: (data) => dispatch(resetPassword(data))
   }

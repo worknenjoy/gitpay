@@ -6,7 +6,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     message: state.notification.text,
     link: state.notification.link,
-    open: state.notification.open
+    open: state.notification.open,
+    severity: state.notification.severity
   }
 }
 

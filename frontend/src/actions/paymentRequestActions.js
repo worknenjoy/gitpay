@@ -39,11 +39,11 @@ export const createPaymentRequest = (paymentRequest) => {
           dispatch(addNotification('actions.paymentRequest.create.success'))
           return dispatch(createPaymentRequestSuccess(response.data))
         }
-        addNotification('actions.paymentRequest.create.error')
+        addNotification('actions.paymentRequest.create.error', { severity: 'error' })
         return dispatch(createPaymentRequestError('actions.paymentRequest.create.error'))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.paymentRequest.create.error'))
+        dispatch(addNotification('actions.paymentRequest.create.error', { severity: 'error' }))
         return dispatch(createPaymentRequestError(e))
       })
   }
@@ -103,11 +103,11 @@ export const updatePaymentRequest = (paymentRequest) => {
           dispatch(listPaymentRequests())
           return dispatch(updatePaymentRequestSuccess(response.data))
         }
-        dispatch(addNotification('actions.paymentRequest.update.error'))
+        dispatch(addNotification('actions.paymentRequest.update.error', { severity: 'error' }))
         return dispatch(updatePaymentRequestError('actions.paymentRequest.update.error'))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.paymentRequest.update.error'))
+        dispatch(addNotification('actions.paymentRequest.update.error', { severity: 'error' }))
         return dispatch(updatePaymentRequestError(e))
       })
   }

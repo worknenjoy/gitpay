@@ -1,11 +1,20 @@
 import React, { useCallback } from 'react'
-import PropTypes from 'prop-types'
-
-import { Snackbar, IconButton } from '@mui/material'
+import { Snackbar, IconButton, AlertPropsColorOverrides, AlertColor } from '@mui/material'
+import { OverridableStringUnion } from '@mui/types'
 
 import Close from '@mui/icons-material/Close'
+import { AlertStyled } from './notification.styles'
 
-const Notification = ({ open, onClose, message, link, linkLabel }) => {
+type NotificationProps = {
+  open: boolean
+  onClose: () => void
+  message: string
+  link?: string
+  linkLabel?: string
+  severity?: OverridableStringUnion<AlertColor, AlertPropsColorOverrides>
+}
+
+const Notification = ({ open, onClose, message, link, linkLabel, severity }: NotificationProps) => {
   const getActions = useCallback(() => {
     let actions = [
       <IconButton key="close" aria-label="Close" color="inherit" onClick={onClose}>
@@ -30,18 +39,17 @@ const Notification = ({ open, onClose, message, link, linkLabel }) => {
       open={open}
       onClose={onClose}
       autoHideDuration={8000}
-      message={<span id="message-id">{message}</span>}
-      action={getActions()}
-    />
+      color="warning"
+    >
+      <AlertStyled
+        onClose={onClose}
+        severity={severity}
+        action={<div style={{ display: 'flex', alignItems: 'center' }}>{getActions()}</div>}
+      >
+        {message}
+      </AlertStyled>
+    </Snackbar>
   )
-}
-
-Notification.propTypes = {
-  open: PropTypes.bool,
-  onClose: PropTypes.func,
-  message: PropTypes.string,
-  link: PropTypes.string,
-  linkLabel: PropTypes.string
 }
 
 export default Notification

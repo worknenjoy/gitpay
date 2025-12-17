@@ -38,11 +38,11 @@ export const createWalletOrder = (walletOrder) => {
           dispatch(addNotification('actions.walletOrder.create.success'))
           return dispatch(createWalletOrderSuccess(walletOrder.data))
         }
-        addNotification('actions.walletOrder.create.error')
+        addNotification('actions.walletOrder.create.error', { severity: 'error' })
         return dispatch(createWalletOrderError('actions.walletOrder.create.error'))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.walletOrder.create.error'))
+        dispatch(addNotification('actions.walletOrder.create.error', { severity: 'error' }))
         return dispatch(createWalletOrderError(e))
       })
   }

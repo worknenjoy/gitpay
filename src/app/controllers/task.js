@@ -113,8 +113,10 @@ exports.deleteTaskById = (req, res) => {
       res.status(200).send(`${deleted}`)
     })
     .catch((error) => {
-      console.log('error', error)
-      res.status(400).send(error)
+      if (error.message === 'CANNOT_DELETE_ISSUE_WITH_ORDERS_ASSOCIATED') {
+        return res.status(500).json({ error: error.message })
+      }
+      res.status(500)
     })
 }
 

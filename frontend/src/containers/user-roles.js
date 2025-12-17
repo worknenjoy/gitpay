@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    addNotification: (message) => dispatch(addNotification(message)),
+    addNotification: (message, options) => dispatch(addNotification(message, options)),
     closeNotification: () => dispatch(closeNotification()),
     fetchRoles: () => dispatch(fetchRoles()),
     updateUser: (id, data) => dispatch(updateUser(id, data)),

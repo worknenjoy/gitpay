@@ -58,7 +58,7 @@ describe('Task Solution', () => {
         const { body: user, headers } = loginResponse
 
         // Create the task
-        const task = await createTask(agent, {
+        const { body: task } = await createTask(agent, {
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
           status: 'closed'
@@ -142,7 +142,7 @@ describe('Task Solution', () => {
         const { body: user, headers } = loginResponse
 
         // Create the task
-        const task = await createTask(agent, {
+        const { body: task } = await createTask(agent, {
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
           status: 'closed'
@@ -215,7 +215,7 @@ describe('Task Solution', () => {
         const { body: user, headers } = loginResponse
 
         // Create the task
-        const task = await createTask(agent, {
+        const { body: task } = await createTask(agent, {
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
           status: 'closed'

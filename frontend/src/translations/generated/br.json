@@ -249,6 +249,7 @@
   "actions.task.create.validation.url": "",
   "actions.task.delete.auth.error": "",
   "actions.task.delete.notification.error": "",
+  "actions.task.delete.notification.error.associated.orders": "",
   "actions.task.delete.notification.success": "",
   "actions.task.fetch.error": "",
   "actions.task.fetch.other.error": "",

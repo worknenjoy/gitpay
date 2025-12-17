@@ -39,11 +39,11 @@ export const createWallet = (wallet) => {
           dispatch(addNotification('actions.wallet.create.success'))
           return dispatch(createWalletSuccess(wallet.data))
         }
-        addNotification('actions.wallet.create.error')
+        addNotification('actions.wallet.create.error', { severity: 'error' })
         return dispatch(createWalletError('actions.wallet.create.error'))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.wallet.create.error'))
+        dispatch(addNotification('actions.wallet.create.error', { severity: 'error' }))
         return dispatch(createWalletError(e))
       })
   }
