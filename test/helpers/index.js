@@ -52,20 +52,17 @@ const createTask = (agent, params = {}, userParams = {}) => {
 
   return registerAndLogin(agent, userParams)
     .then((res) => {
-      const user = res.body
+      const { body: user, headers } = res 
       return models.Task.create(
         {
           provider: params.provider || 'github',
           url: params.url,
           status: params.status,
           userId: user.id
-        },
-        {
-          include: [models.User]
         }
       )
         .then((task) => {
-          return task
+          return { headers, body: task }
         })
         .catch((e) => {
           console.log('error on createTask', e)

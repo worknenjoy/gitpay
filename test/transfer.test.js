@@ -43,7 +43,7 @@ describe('Transfer', () => {
     it('should not create transfer with no orders', async () => {
       try {
         const task = await createTask(agent)
-        const taskData = task.dataValues
+        const { body: taskData } = task
         const assign = await createAssign(agent, { taskId: taskData.id })
         const res = await createTransferWithTaskData(taskData, taskData.userId)
         expect(res.body).to.exist
@@ -56,7 +56,7 @@ describe('Transfer', () => {
     it('should not create a transfer with no user assigned', async () => {
       try {
         const task = await createTask(agent)
-        const taskData = task.dataValues
+        const { body: taskData } = task
         const res = await createTransferWithTaskData(taskData, taskData.userId)
         expect(res.body).to.exist
         expect(res.body.error).to.equal('No user assigned')
@@ -68,7 +68,7 @@ describe('Transfer', () => {
     it('should not create transfer with no paid order', async () => {
       try {
         const task = await createTask(agent)
-        const taskData = task.dataValues
+        const { body: taskData } = task
         const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id })
         const assign = await createAssign(agent, { taskId: taskData.id })
         const res = await createTransferWithTaskData(taskData, taskData.userId)
@@ -83,7 +83,7 @@ describe('Transfer', () => {
       try {
         nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
         const task = await createTask(agent)
-        const taskData = task.dataValues
+        const { body: taskData } = task
         const order = await createOrder({
           userId: taskData.userId,
           TaskId: taskData.id,
@@ -107,7 +107,7 @@ describe('Transfer', () => {
       try {
         nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
         const task = await createTask(agent)
-        const taskData = task.dataValues
+        const { body: taskData } = task
         const order = await createOrder({
           userId: taskData.userId,
           TaskId: taskData.id,
@@ -137,7 +137,7 @@ describe('Transfer', () => {
       try {
         nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
         const task = await createTask(agent)
-        const taskData = task.dataValues
+        const { body: taskData } = task
         const order = await createOrder({
           userId: taskData.userId,
           TaskId: taskData.id,
@@ -172,7 +172,7 @@ describe('Transfer', () => {
     it('should create transfer with three mulltiple orders paid with stripe and paypal but paypal not paid', async () => {
       nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
       const task = await createTask(agent)
-      const taskData = task.dataValues
+      const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
@@ -234,7 +234,7 @@ describe('Transfer', () => {
         )
 
       const task = await createTask(agent)
-      const taskData = task.dataValues
+      const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
@@ -277,7 +277,7 @@ describe('Transfer', () => {
       nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
       nock('https://api.stripe.com').persist().get('/v1/transfers').reply(200, transfer)
       const task = await createTask(agent)
-      const taskData = task.dataValues
+      const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
@@ -339,7 +339,7 @@ describe('Transfer', () => {
       nock('https://api.stripe.com').persist().get('/v1/transfers').reply(200, transfer)
 
       const task = await createTask(agent)
-      const taskData = task.dataValues
+      const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
@@ -360,7 +360,7 @@ describe('Transfer', () => {
         },
         {
           where: {
-            id: assign.dataValues.userId
+            id: assign.userId
           }
         }
       )
@@ -415,7 +415,7 @@ describe('Transfer', () => {
       nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
       nock('https://api.stripe.com').persist().get('/v1/transfers').reply(200, transfer)
       const task = await createTask(agent)
-      const taskData = task.dataValues
+      const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
@@ -443,13 +443,13 @@ describe('Transfer', () => {
     })
     it('should search transfers', async () => {
       const task = await createTask(agent)
-      const taskData = task.dataValues
+      const { body: taskData } = task
       const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id })
       const assign = await createAssign(agent, { taskId: taskData.id })
       const transfer = await createTransfer({
         taskId: taskData.id,
         userId: taskData.userId,
-        to: assign.dataValues.userId
+        to: assign.userId
       })
       const res = await agent.get('/transfers/search').query({ userId: taskData.userId })
       expect(res.body).to.exist
@@ -459,15 +459,15 @@ describe('Transfer', () => {
       nock('https://api.stripe.com').persist().get('/v1/transfers/1234').reply(200, transfer)
       try {
         const task = await createTask(agent)
-        const taskData = task.dataValues
+        const { body: taskData } = task
         const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id })
         const assign = await createAssign(agent, { taskId: taskData.id })
         const transfer = await createTransfer({
           taskId: taskData.id,
           userId: taskData.userId,
-          to: assign.dataValues.userId
+          to: assign.userId
         })
-        const transferId = transfer.dataValues.id
+        const transferId = transfer.id
         const res = await agent.get('/transfers/fetch/' + transferId)
         expect(res.body).to.exist
         expect(res.body.id).to.equal(transferId)
@@ -528,7 +528,7 @@ describe('Transfer', () => {
       })
 
       const task = await createTask(agent)
-      const taskData = task.dataValues
+      const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
         TaskId: taskData.id,
@@ -575,7 +575,7 @@ describe('Transfer', () => {
     it('should not create transfers with same id', async () => {
       try {
         const task = await createTask(agent)
-        const taskData = task.dataValues
+        const { body: taskData } = task
         const order = await createOrder({
           userId: taskData.userId,
           TaskId: taskData.id,
@@ -594,7 +594,7 @@ describe('Transfer', () => {
     it('should not create transfers with same taskId', async () => {
       try {
         const task = await createTask(agent)
-        const taskData = task.dataValues
+        const { body: taskData } = task
         const order = await createOrder({
           userId: taskData.userId,
           TaskId: taskData.id,

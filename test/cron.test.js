@@ -26,7 +26,7 @@ describe('Crons', () => {
   describe('Order', () => {
     it('should update order status when payment expired on Paypal', async () => {
       const task = await createTask(agent)
-      const taskData = task.dataValues
+      const { body: taskData } = task
       const order = await createOrder({
         source_id: '123',
         userId: taskData.userId,
@@ -35,7 +35,7 @@ describe('Crons', () => {
         status: 'succeeded',
         paid: true
       })
-      const orderData = order.dataValues
+      const orderData = order
       nock('https://api.sandbox.paypal.com')
         .persist()
         .post(`/v1/oauth2/token`)
@@ -48,13 +48,13 @@ describe('Crons', () => {
 
       await OrderCron.checkExpiredPaypalOrders()
       await models.Order.findOne({ where: { id: orderData.id } }).then((updatedOrder) => {
-        expect(updatedOrder.dataValues.status).to.equal('expired')
-        expect(updatedOrder.dataValues.paid).to.equal(false)
+        expect(updatedOrder.status).to.equal('expired')
+        expect(updatedOrder.paid).to.equal(false)
       })
     })
     it('should update order status when payment authorization expired after one month on Paypal', async () => {
       const task = await createTask(agent)
-      const taskData = task.dataValues
+      const { body: taskData } = task
       const order = await createOrder({
         source_id: '123',
         userId: taskData.userId,
@@ -63,7 +63,7 @@ describe('Crons', () => {
         status: 'succeeded',
         paid: true
       })
-      const orderData = order.dataValues
+      const orderData = order
       nock('https://api.sandbox.paypal.com')
         .persist()
         .post(`/v1/oauth2/token`)
@@ -76,8 +76,8 @@ describe('Crons', () => {
 
       await OrderCron.checkExpiredPaypalOrders()
       await models.Order.findOne({ where: { id: orderData.id } }).then((updatedOrder) => {
-        expect(updatedOrder.dataValues.status).to.equal('expired')
-        expect(updatedOrder.dataValues.paid).to.equal(false)
+        expect(updatedOrder.status).to.equal('expired')
+        expect(updatedOrder.paid).to.equal(false)
       })
     })
   })
@@ -116,14 +116,14 @@ describe('Crons', () => {
               value: 50
             }).save()
           ]).then((tasks) => {
-            expect(tasks[0].dataValues.url).to.equal(
+            expect(tasks[0].url).to.equal(
               'https://github.com/worknenjoy/truppie/issues/7363'
             )
-            expect(tasks[2].dataValues.value).to.equal('100')
+            expect(tasks[2].value).to.equal('100')
             TaskCron.weeklyBounties().then((r) => {
               expect(r.length).to.equal(1)
               expect(r[0]).to.exist
-              expect(r[0].dataValues.url).to.equal(
+              expect(r[0].url).to.equal(
                 'https://github.com/worknenjoy/truppie/issues/7367'
               )
               MockDate.reset()
@@ -167,18 +167,18 @@ describe('Crons', () => {
           }).save()
         ])
           .then((tasks) => {
-            expect(tasks[0].dataValues.url).to.equal(
+            expect(tasks[0].url).to.equal(
               'https://github.com/worknenjoy/truppie/issues/7363'
             )
-            expect(tasks[2].dataValues.value).to.equal('100')
+            expect(tasks[2].value).to.equal('100')
             TaskCron.latestTasks()
               .then((r) => {
                 expect(r.length).to.equal(3)
                 expect(r[0]).to.exist
-                expect(r[0].dataValues.url).to.equal(
+                expect(r[0].url).to.equal(
                   'https://github.com/worknenjoy/truppie/issues/7367'
                 )
-                expect(r[2].dataValues.url).to.equal(
+                expect(r[2].url).to.equal(
                   'https://github.com/worknenjoy/truppie/issues/7363'
                 )
                 done(err)
@@ -206,19 +206,19 @@ describe('Crons', () => {
                 amount: 60,
                 userId: res.body.id,
                 status: 'open',
-                taskId: task.dataValues.id
+                taskId: task.id
               }).save(),
               models.Order.build({
                 amount: 80,
                 userId: res.body.id,
-                taskId: task.dataValues.id,
+                taskId: task.id,
                 status: 'canceled'
               }).save(),
               models.Order.build({
                 amount: 20,
                 userId: res.body.id,
                 source_id: 'foo',
-                taskId: task.dataValues.id,
+                taskId: task.id,
                 status: 'succeeded',
                 paid: true,
                 provider: 'paypal'
@@ -226,12 +226,12 @@ describe('Crons', () => {
               models.Order.build({ amount: 20, userId: res.body.id }).save(),
               models.Order.build({ amount: 20, userId: res.body.id }).save()
             ]).then((orders) => {
-              expect(orders[0].dataValues.id).to.exist
+              expect(orders[0].id).to.exist
               OrderCron.verify()
                 .then((r) => {
                   expect(r.length).to.equal(1)
                   expect(r[0]).to.exist
-                  expect(r[0].dataValues.status).to.equal('canceled')
+                  expect(r[0].status).to.equal('canceled')
                   // expect(mailSpySuccess).to.have.been.called()
                   // mailSpyCancelError.reset()
                   done()
@@ -254,7 +254,7 @@ describe('Crons', () => {
         })
           .save()
           .then((task) => {
-            expect(task.dataValues.url).to.equal(
+            expect(task.url).to.equal(
               'https://github.com/worknenjoy/truppie/issues/7363'
             )
             done()
@@ -282,13 +282,13 @@ describe('Crons', () => {
               .then((assign) => {
                 task
                   .update({
-                    assigned: assign.dataValues.id
+                    assigned: assign.id
                   })
                   .then((taskUpdated) => {
                     TaskCron.rememberDeadline()
                       .then((r) => {
                         expect(r[0]).to.exist
-                        expect(r[0].dataValues.url).to.equal(
+                        expect(r[0].url).to.equal(
                           'https://github.com/worknenjoy/truppie/issues/7336'
                         )
                         MockDate.reset()
@@ -321,12 +321,12 @@ describe('Crons', () => {
               task.createAssign({ userId: res.body.id }).then((assign) => {
                 task
                   .update({
-                    assigned: assign.dataValues.id
+                    assigned: assign.id
                   })
                   .then((taskUpdated) => {
                     TaskCron.rememberDeadline().then((r) => {
                       expect(r[0]).to.exist
-                      expect(r[0].dataValues.url).to.equal(
+                      expect(r[0].url).to.equal(
                         'https://github.com/worknenjoy/truppie/issues/7336'
                       )
                       MockDate.reset()

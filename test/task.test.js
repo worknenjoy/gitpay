@@ -961,41 +961,6 @@ describe('tasks', () => {
         })
     })
 
-    xit('should delete a task by id', (done) => {
-      registerAndLogin(agent).then((res) => {
-        createTask(res.headers.authorization)
-          .then((task) => {
-            agent
-              .delete(`/tasks/delete/${task.id}`)
-              .set('Authorization', res.headers.authorization)
-              .expect(200)
-              .then(async () => {
-                expect(await models.Task.findByPk(task.id).catch(done)).to.be.null
-                done()
-              })
-              .catch(done)
-          })
-          .catch(done)
-      })
-    })
-
-    xit('should only delete own task', (done) => {
-      registerAndLogin(agent).then((res) => {
-        createTask(res.headers.authorization)
-          .then((task) => {
-            agent
-              .delete(`/tasks/delete/${task.id}`)
-              .set('Authorization', res.headers.authorization)
-              .expect(200)
-              .end((err, deleted) => {
-                expect(deleted.text).to.equal('1')
-                done(err)
-              })
-          })
-          .catch(done)
-      })
-    })
-
     xit('should send message to the author', async (done) => {
       chai.use(spies)
       const mailSpySuccess = chai.spy.on(TaskMail, 'messageAuthor')
