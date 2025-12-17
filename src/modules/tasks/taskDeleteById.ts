@@ -22,7 +22,10 @@ export async function taskDeleteById(taskParameters: TaskParameters) {
     models.History.destroy({ where: { TaskId: taskParameters.id } }),
     models.Offer.destroy({ where: { taskId: taskParameters.id } }),
     models.Member.destroy({ where: { taskId: taskParameters.id } }),
-    models.sequelize.query(`DELETE FROM "TaskLabels" WHERE "taskId" = ${taskParameters.id}`)
+    models.sequelize.query(
+      `DELETE FROM "TaskLabels" WHERE "taskId" = ?`,
+      { replacements: [taskParameters.id] }
+    )
   ])
 
   const tasks: Array<{ dataValues?: { Labels?: Array<{ id: number }> } }> =
