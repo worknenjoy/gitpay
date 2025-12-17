@@ -94,9 +94,9 @@ const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) =
   }
 
   const handleDeleteAndRedirect = async () => {
-    await handleDeleteTask(task.data)
+    const deleteAction = await handleDeleteTask(task.data)
     setDeleteDialog(false)
-    if (task.error) return
+    if (deleteAction.error) return
     history.push('/profile/tasks')
   }
 

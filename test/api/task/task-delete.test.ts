@@ -86,7 +86,7 @@ describe('DELETE /tasks/delete/:id', () => {
       .set('Authorization', headers.authorization)
       .expect(500)
     expect(res.body.error).to.equal(
-      'Cannot delete issue with associated orders'
+      'CANNOT_DELETE_ISSUE_WITH_ORDERS_ASSOCIATED'
     )
     expect(await models.Task.findByPk(createdTask.id)).to.not.be.null
   })

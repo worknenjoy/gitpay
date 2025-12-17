@@ -298,16 +298,16 @@ const createTask = (task, history) => {
           const firstError = response.data.errors[0].message
           if (firstError === 'url must be unique') {
             dispatch(
-              addNotification(VALIDATION_ERRORS[firstError], '', `/#/task/${response.data.id}`)
+              addNotification(VALIDATION_ERRORS[firstError], { severity: 'error' }, `/#/task/${response.data.id}`)
             )
           }
           if (firstError === 'Not Found') {
-            dispatch(addNotification(VALIDATION_ERRORS[firstError]))
+            dispatch(addNotification(VALIDATION_ERRORS[firstError], { severity: 'error' }))
           }
           return dispatch(createTaskError(response.data.errors))
         }
         if (response.data && response.data.error) {
-          dispatch(addNotification(ERROR_CODES[response.data.name]))
+          dispatch(addNotification(ERROR_CODES[response.data.name], { severity: 'error' }))
           return dispatch(createTaskError(JSON.parse(response.data.error)))
         }
         dispatch(createTaskSuccess())
@@ -317,7 +317,7 @@ const createTask = (task, history) => {
       })
       .catch((error) => {
         if (error.response && error.response.status === 401) {
-          dispatch(addNotification('actions.task.create.auth.error'))
+          dispatch(addNotification('actions.task.create.auth.error', { severity: 'error' }))
           return dispatch(createTaskError(error))
         }
         if (
@@ -325,10 +325,10 @@ const createTask = (task, history) => {
           error.response.status === 403 &&
           error.response.data.error === 'API rate limit exceeded'
         ) {
-          dispatch(addNotification('actions.task.create.validation.limit'))
+          dispatch(addNotification('actions.task.create.validation.limit', { severity: 'error' }))
           return dispatch(createTaskError(error))
         }
-        dispatch(addNotification('actions.task.create.notification.error'))
+        dispatch(addNotification('actions.task.create.notification.error', { severity: 'error' }))
         return dispatch(createTaskError(error))
       })
   }
@@ -363,15 +363,15 @@ const updateTask = (task) => {
           dispatch(syncTask(task.id))
           return dispatch(fetchTask(task.id))
         } else {
-          dispatch(addNotification('actions.task.update.notification.error'))
+          dispatch(addNotification('actions.task.update.notification.error', { severity: 'error' }))
           return dispatch(updateTaskError({ message: 'actions.task.update.unavailable' }))
         }
       })
       .catch((error) => {
         const errorResponse = error?.response?.data
-        if (errorResponse.type === 'StripeCardError') {
+        if (errorResponse?.type === 'StripeCardError') {
           dispatch(
-            addNotification('actions.task.payment.notification.error', `. ${errorResponse.message}`)
+            addNotification('actions.task.payment.notification.error', { severity: 'error' }, `. ${errorResponse.message}`)
           )
           dispatch(changeTaskTab(1))
           return dispatch(updateTaskError(errorResponse))
@@ -381,10 +381,10 @@ const updateTask = (task) => {
           error.response.status === 403 &&
           error.response.data.error === 'API rate limit exceeded'
         ) {
-          dispatch(addNotification('actions.task.create.validation.limit'))
+          dispatch(addNotification('actions.task.create.validation.limit', { severity: 'error' }))
           return dispatch(updateTaskError(error.response.data.error))
         }
-        dispatch(addNotification('actions.task.update.notification.error'))
+        dispatch(addNotification('actions.task.update.notification.error', { severity: 'error' }))
         return dispatch(fetchTask(task.id))
       })
   }
@@ -397,18 +397,22 @@ const deleteTask = (task) => {
     return axios
       .delete(api.API_URL + `/tasks/delete/${task.id}`, task)
       .then((response) => {
-        dispatch(deleteTaskSuccess())
         dispatch(addNotification('actions.task.delete.notification.success'))
+        return dispatch(deleteTaskSuccess())
       })
       .catch((error) => {
+        const errorMessage = error.response.data.error
         // eslint-disable-next-line no-console
-        console.log(error)
         if (error.response && error.response.status === 403) {
-          dispatch(addNotification('actions.task.delete.auth.error'))
+          dispatch(addNotification('actions.task.delete.auth.error', { severity: 'error' }))
           return dispatch(deleteTaskError(error))
         }
-        dispatch(addNotification('actions.task.delete.notification.error'))
-        return dispatch(deleteTaskError(error))
+        if( error.response && error.response.status === 500 && errorMessage === 'CANNOT_DELETE_ISSUE_WITH_ORDERS_ASSOCIATED') {
+          dispatch(addNotification('actions.task.delete.notification.error.associated.orders', { severity: 'error' })) 
+          return dispatch(deleteTaskError(errorMessage)) 
+        }
+        dispatch(addNotification('actions.task.delete.notification.error', { severity: 'error' }))
+        return dispatch(deleteTaskError(errorMessage))
       })
   }
 }
@@ -425,8 +429,6 @@ const listTasks = ({ organizationId, projectId, userId, status, labelIds, langua
         return dispatch(listTaskSuccess(response))
       })
       .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.log(error)
         return dispatch(listTaskError(error))
       })
   }
@@ -469,11 +471,11 @@ const fetchTask = (taskId) => {
         if (task.data) {
           return dispatch(fetchTaskSuccess(task))
         }
-        dispatch(addNotification('actions.task.fetch.error'))
+        dispatch(addNotification('actions.task.fetch.error', { severity: 'error' }))
         return dispatch(fetchTaskError({ message: 'actions.task.fetch.unavailable' }))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.task.fetch.other.error'))
+        dispatch(addNotification('actions.task.fetch.other.error', { severity: 'error' }))
         dispatch(fetchTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')
@@ -507,7 +509,7 @@ const transferTask = (taskId) => {
       .then((transfer) => {
         if (transfer.data) {
           if (transfer.data.error) {
-            return dispatch(addNotification(transfer.data.error))
+            return dispatch(addNotification(transfer.data.error, { severity: 'error' }))
           }
           dispatch(addNotification('actions.task.transfer.success'))
           dispatch(transferTaskSuccess(transfer))
@@ -516,7 +518,7 @@ const transferTask = (taskId) => {
         return dispatch(transferTaskError({ message: 'actions.task.transfer.unavailable' }))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.task.transfer.other.error'))
+        dispatch(addNotification('actions.task.transfer.other.error', { severity: 'error' }))
         dispatch(transferTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to transfer issue')
@@ -537,9 +539,9 @@ const paymentTask = (taskId, value) => {
       .then((payment) => {
         if (payment.data.error) {
           if (payment.data.error.code === 'balance_insufficient') {
-            dispatch(addNotification('actions.task.payment.balance.error'))
+            dispatch(addNotification('actions.task.payment.balance.error', { severity: 'error' }))
           } else {
-            dispatch(addNotification('actions.task.payment.balance.other.error'))
+            dispatch(addNotification('actions.task.payment.balance.other.error', { severity: 'error' }))
           }
         } else {
           dispatch(addNotification('actions.task.payment.transfer.sucess'))
@@ -548,7 +550,7 @@ const paymentTask = (taskId, value) => {
         return dispatch(fetchTask(taskId))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.task.payment.error.send'))
+        dispatch(addNotification('actions.task.payment.error.send', { severity: 'error' }))
         dispatch(paymentTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to pay task')
@@ -573,7 +575,7 @@ const inviteTask = (id, email, message, user) => {
           dispatch(addNotification('actions.task.invite.success'))
           return dispatch(inviteTaskSuccess())
         }
-        dispatch(addNotification('actions.task.invite.error'))
+        dispatch(addNotification('actions.task.invite.error', { severity: 'error' }))
         return dispatch(
           inviteTaskError({
             error: {
@@ -583,7 +585,7 @@ const inviteTask = (id, email, message, user) => {
         )
       })
       .catch((e) => {
-        dispatch(addNotification('actions.task.invite.error'))
+        dispatch(addNotification('actions.task.invite.error', { severity: 'error' }))
         dispatch(inviteTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible send invite')
@@ -606,11 +608,11 @@ const messageAuthor = (userId, taskId, message) => {
           dispatch(addNotification('actions.task.message.author.success'))
           return dispatch(messageAuthorSuccess())
         }
-        dispatch(addNotification('actions.task.message.author.error'))
+        dispatch(addNotification('actions.task.message.author.error', { severity: 'error' }))
         return dispatch(messageAuthorError({ code: task.status }))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.task.message.author.error'))
+        dispatch(addNotification('actions.task.message.author.error', { severity: 'error' }))
         dispatch(inviteTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible send invite')
@@ -637,7 +639,7 @@ const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, us
           dispatch(addNotification('actions.task.invite.success'))
           return dispatch(fundingInviteTaskSuccess())
         }
-        dispatch(addNotification('actions.task.invite.error'))
+        dispatch(addNotification('actions.task.invite.error', { severity: 'error' }))
         return dispatch(
           fundingInviteTaskError({
             error: {
@@ -647,7 +649,7 @@ const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, us
         )
       })
       .catch((e) => {
-        dispatch(addNotification('actions.task.invite.error'))
+        dispatch(addNotification('actions.task.invite.error', { severity: 'error' }))
         return dispatch(fundingInviteTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible send invite')
@@ -675,7 +677,7 @@ const syncTask = (taskId) => {
         )
       })
       .catch((e) => {
-        dispatch(addNotification('actions.task.fetch.other.error'))
+        dispatch(addNotification('actions.task.fetch.other.error', { severity: 'error' }))
         dispatch(syncTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')
@@ -699,7 +701,7 @@ const reportTask = (task, reason) => {
           dispatch(addNotification('actions.task.report.success'))
           return dispatch(reportTaskSuccess())
         }
-        dispatch(addNotification('actions.task.report.error'))
+        dispatch(addNotification('actions.task.report.error', { severity: 'error' }))
         return dispatch(
           reportTaskError({
             error: {
@@ -709,7 +711,7 @@ const reportTask = (task, reason) => {
         )
       })
       .catch((e) => {
-        dispatch(addNotification('actions.task.report.error'))
+        dispatch(addNotification('actions.task.report.error', { severity: 'error' }))
         dispatch(reportTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to send report')
@@ -758,11 +760,11 @@ const requestClaimTask = (taskId, userId, comments, isApproved, token, history) 
         }
 
         if (task.data.error === 'user_is_not_the_owner') {
-          dispatch(addNotification('actions.task.claim.error.user_is_not_the_owner'))
+          dispatch(addNotification('actions.task.claim.error.user_is_not_the_owner', { severity: 'error' }))
         } else if (task.data.error === 'invalid_provider') {
-          dispatch(addNotification('actions.task.claim.error.invalid_provider'))
+          dispatch(addNotification('actions.task.claim.error.invalid_provider', { severity: 'error' }))
         } else {
-          dispatch(addNotification('actions.task.claim.error'))
+          dispatch(addNotification('actions.task.claim.error', { severity: 'error' }))
         }
         return dispatch(
           requestClaimTaskError({
@@ -773,7 +775,7 @@ const requestClaimTask = (taskId, userId, comments, isApproved, token, history) 
         )
       })
       .catch((e) => {
-        dispatch(addNotification('actions.task.claim.error'))
+        dispatch(addNotification('actions.task.claim.error', { severity: 'error' }))
         dispatch(requestClaimTaskError(e))
         // eslint-disable-next-line no-console
         console.log('not possible request claim')

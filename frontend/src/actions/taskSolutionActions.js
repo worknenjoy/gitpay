@@ -53,12 +53,11 @@ const getTaskSolution = (taskId) => {
       })
       .catch((error) => {
         if (error) {
-          console.log('error', error)
-          dispatch(addNotification(ERRORS[error]))
+          dispatch(addNotification(ERRORS[error], { severity: 'error' }))
           return dispatch(getTaskSolutionError(error))
         }
 
-        dispatch(addNotification(ERRORS['COULD_NOT_GET_TASK_SOLUTION']))
+        dispatch(addNotification(ERRORS['COULD_NOT_GET_TASK_SOLUTION'], { severity: 'error' }))
         return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_GET_TASK_SOLUTION'])))
       })
   }
@@ -102,11 +101,11 @@ const fetchPullRequestData = (owner, repositoryName, pullRequestId, taskId) => {
       })
       .catch((error) => {
         if (error.response.data && error.response.data.error) {
-          dispatch(addNotification(ERRORS[error.response.data.error]))
+          dispatch(addNotification(ERRORS[error.response.data.error], { severity: 'error' }))
           return dispatch(fetchPullRequestDataError(error.response.data.error))
         }
 
-        dispatch(addNotification(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA']))
+        dispatch(addNotification(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA'], { severity: 'error' }))
         return dispatch(
           getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA']))
         )
@@ -138,16 +137,19 @@ const createTaskSolution = (taskSolution) => {
           dispatch(
             addNotification(
               ERRORS[error.response.data.error] || error.response.data.error,
-              '',
-              '/#/profile/payout-settings',
-              'Update your account'
+              {
+                extra: '',
+                link: '/#/profile/payout-settings',
+                text: 'Update your account',
+                severity: 'error'
+              }
             )
           )
           dispatch(fetchTask(taskSolution.taskId))
           return dispatch(createTaskSolutionError(error.response.data.error))
         }
 
-        dispatch(addNotification(ERRORS['COULD_NOT_CREATE_TASK_SOLUTION']))
+        dispatch(addNotification(ERRORS['COULD_NOT_CREATE_TASK_SOLUTION'], { severity: 'error' }))
         return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_CREATE_TASK_SOLUTION'])))
       })
   }
@@ -181,11 +183,11 @@ const updateTaskSolution = ({ taskSolutionId, pullRequestURL, taskId }) => {
       })
       .catch((error) => {
         if (error.response.data && error.response.data.error) {
-          dispatch(addNotification(ERRORS[error.response.data.error]))
+          dispatch(addNotification(ERRORS[error.response.data.error], { severity: 'error' }))
           return dispatch(updateTaskSolutionError(error.response.data.error))
         }
 
-        dispatch(addNotification(ERRORS['COULD_NOT_UPDATE_TASK_SOLUTION']))
+        dispatch(addNotification(ERRORS['COULD_NOT_UPDATE_TASK_SOLUTION'], { severity: 'error' }))
         return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_UPDATE_TASK_SOLUTION'])))
       })
   }

@@ -37,7 +37,7 @@ const assignTask = (taskId, assignId) => {
         return dispatch(fetchTask(taskId))
       })
       .catch((error) => {
-        dispatch(addNotification('actions.assign.task.error'))
+        dispatch(addNotification('actions.assign.task.error', { severity: 'error' }))
         return dispatch(assignTaskError(error))
       })
   }
@@ -62,7 +62,7 @@ const actionAssign = (taskId, assignId, action, message) => {
       .catch((error) => {
         // eslint-disable-next-line no-console
         console.log(error)
-        dispatch(addNotification('actions.assign.task.error'))
+        dispatch(addNotification('actions.assign.task.error', { severity: 'error' }))
         return dispatch(assignTaskError(error))
       })
   }
@@ -96,7 +96,7 @@ const messageTask = (taskId, assignId, message) => {
       })
       .then((response) => {
         if (!response && !response.data) {
-          dispatch(addNotification('actions.message.task.error'))
+          dispatch(addNotification('actions.message.task.error', { severity: 'error' }))
           return dispatch(messageTaskError('actions.message.task.error'))
         }
         dispatch(addNotification('actions.message.task.sucess'))
@@ -104,7 +104,7 @@ const messageTask = (taskId, assignId, message) => {
         return dispatch(fetchTask(taskId))
       })
       .catch((error) => {
-        dispatch(addNotification('actions.message.task.error'))
+        dispatch(addNotification('actions.message.task.error', { severity: 'error' }))
         return dispatch(messageTaskError(error))
       })
   }
@@ -138,7 +138,7 @@ const messageOffer = (taskId, offerId, message) => {
       })
       .then((response) => {
         if (!response && !response.data) {
-          dispatch(addNotification('actions.message.task.error'))
+          dispatch(addNotification('actions.message.task.error', { severity: 'error' }))
           return dispatch(messageOfferError('actions.message.task.error'))
         }
         dispatch(addNotification('actions.message.task.sucess'))
@@ -146,7 +146,7 @@ const messageOffer = (taskId, offerId, message) => {
         return dispatch(fetchTask(taskId))
       })
       .catch((error) => {
-        dispatch(addNotification('actions.message.task.error'))
+        dispatch(addNotification('actions.message.task.error', { severity: 'error' }))
         return dispatch(messageOfferError(error))
       })
   }
@@ -181,7 +181,7 @@ const offerUpdate = (taskId, offerId, { status }) => {
       })
       .then((response) => {
         if (!response) {
-          dispatch(addNotification('actions.offer.update.error'))
+          dispatch(addNotification('actions.offer.update.error', { severity: 'error' }))
           return dispatch(offerUpdateError('actions.offer.update.error'))
         }
         dispatch(addNotification('actions.offer.update.sucess'))
@@ -189,7 +189,7 @@ const offerUpdate = (taskId, offerId, { status }) => {
         return dispatch(fetchTask(taskId))
       })
       .catch((error) => {
-        dispatch(addNotification('actions.offer.update.error'))
+        dispatch(addNotification('actions.offer.update.error', { severity: 'error' }))
         return dispatch(offerUpdateError(error))
       })
   }
@@ -225,7 +225,7 @@ export const removeAssignment = (id, message) => (dispatch) => {
       return dispatch(fetchTask(id))
     })
     .catch((error) => {
-      dispatch(addNotification('action.task.remove.assign.error'))
+      dispatch(addNotification('action.task.remove.assign.error', { severity: 'error' }))
       return dispatch(removeAssignmentError(error))
     })
 }

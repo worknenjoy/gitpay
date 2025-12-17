@@ -40,7 +40,8 @@ describe('task solution', () => {
           open: true,
           text: 'issue.solution.dialog.create.success',
           type: 'ADD_NOTIFICATION',
-          link: undefined
+          link: undefined,
+          severity: undefined
         },
         { completed: false, type: 'FETCH_TASK_REQUESTED' },
         { completed: true, type: 'CREATE_TASK_SOLUTION_SUCCESS', taskSolution: {} }
@@ -92,7 +93,8 @@ describe('task solution', () => {
           open: true,
           text: 'issue.solution.error.insufficient_capabilities_for_transfer',
           type: 'ADD_NOTIFICATION',
-          link: '/#/profile/payout-settings'
+          link: '/#/profile/payout-settings',
+          severity: 'error'
         },
         { completed: false, type: 'FETCH_TASK_REQUESTED' },
         {

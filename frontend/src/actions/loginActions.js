@@ -110,7 +110,7 @@ export const loggedIn = () => {
           return dispatch(loggedInSuccess(response.data.user))
         })
         .catch((error) => {
-          dispatch(addNotification('user.login.error'))
+          dispatch(addNotification('user.login.error', { severity: 'error' }))
           return dispatch(loggedInError(error))
         })
     }
@@ -195,13 +195,13 @@ export const registerUser = (data) => {
           dispatch(addNotification('user.register.successfull'))
           return dispatch(registerSuccess(response.data))
         }
-        dispatch(addNotification('user.register.error'))
+        dispatch(addNotification('user.register.error', { severity: 'error' }))
         return dispatch(registerError({}))
       })
       .catch((error) => {
         const responseError = error.response.data.message
         if (responseError !== 'user.exist') {
-          dispatch(addNotification('user.login.error'))
+          dispatch(addNotification('user.login.error', { severity: 'error' }))
         } else {
           dispatch(addNotification('user.exist'))
         }
@@ -227,11 +227,11 @@ export const forgotPassword = (data) => {
         if (response) {
           return dispatch(addNotification('user.forgot.password.successfull'))
         } else {
-          return dispatch(addNotification('user.forgot.password.error'))
+          return dispatch(addNotification('user.forgot.password.error', { severity: 'error' }))
         }
       })
       .catch((error) => {
-        dispatch(addNotification('user.forgot.password.error'))
+        dispatch(addNotification('user.forgot.password.error', { severity: 'error' }))
       })
   }
 }
@@ -244,11 +244,11 @@ export const resetPassword = (data) => {
         if (response) {
           dispatch(addNotification('user.reset.password.successfull'))
         } else {
-          dispatch(addNotification('user.reset.password.error'))
+          dispatch(addNotification('user.reset.password.error', { severity: 'error' }))
         }
       })
       .catch((error) => {
-        dispatch(addNotification('user.reset.password.error'))
+        dispatch(addNotification('user.reset.password.error', { severity: 'error' }))
       })
   }
 }

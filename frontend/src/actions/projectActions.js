@@ -35,11 +35,11 @@ const fetchProject = (projectId, params) => {
         if (project.data) {
           return dispatch(fetchProjectSuccess(project))
         }
-        dispatch(addNotification('actions.task.fetch.error'))
+        dispatch(addNotification('actions.task.fetch.error', { severity: 'error' }))
         return dispatch(fetchProjectError({ message: 'actions.task.fetch.unavailable' }))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.task.fetch.other.error'))
+        dispatch(addNotification('actions.task.fetch.other.error', { severity: 'error' }))
         dispatch(fetchProjectError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')
@@ -74,11 +74,11 @@ const listProjects = () => {
         if (projects.data) {
           return dispatch(listProjectsSuccess(projects))
         }
-        dispatch(addNotification('actions.task.fetch.error'))
+        dispatch(addNotification('actions.task.fetch.error', { severity: 'error' }))
         return dispatch(listProjectsError({ message: 'actions.task.fetch.unavailable' }))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.task.fetch.other.error'))
+        dispatch(addNotification('actions.task.fetch.other.error', { severity: 'error' }))
         dispatch(listProjectsError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')

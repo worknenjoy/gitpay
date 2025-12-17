@@ -16,7 +16,7 @@ export async function taskDeleteById(taskParameters: TaskParameters) {
   })
 
   if (hasOrdersAssociated) {
-    throw new Error('Cannot delete issue with associated orders')
+    throw new Error('CANNOT_DELETE_ISSUE_WITH_ORDERS_ASSOCIATED')
   }
 
   await Promise.all([

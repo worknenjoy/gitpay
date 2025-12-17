@@ -45,11 +45,11 @@ const listOrganizations = () => {
         if (orgs.data) {
           return dispatch(listOrganizationsSuccess(orgs.data))
         }
-        dispatch(addNotification('actions.orgs.list.error'))
+        dispatch(addNotification('actions.orgs.list.error', { severity: 'error' }))
         return dispatch(listOrganizationsError({ message: 'actions.orgs.list.unavailable' }))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.orgs.list.other.error'))
+        dispatch(addNotification('actions.orgs.list.other.error', { severity: 'error' }))
         dispatch(listOrganizationsError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')
@@ -146,7 +146,7 @@ const createOrganizations = (org) => {
           return dispatch(createOrganizationsSuccess(response.data))
         })
         .catch((error) => {
-          dispatch(addNotification('actions.orgs.create.error'))
+          dispatch(addNotification('actions.orgs.create.error', { severity: 'error' }))
           // eslint-disable-next-line no-console
           console.log('error to fetch organizations', error)
           return dispatch(createOrganizationsError(error))
@@ -179,7 +179,7 @@ const updateOrganization = (organization) => {
           return dispatch(updateOrganizationsSuccess(response.data))
         })
         .catch((error) => {
-          dispatch(addNotification('actions.orgs.update.error'))
+          dispatch(addNotification('actions.orgs.update.error', { severity: 'error' }))
           // eslint-disable-next-line no-console
           console.log('error to fetch organizations', error)
           return dispatch(updateOrganizationsError(error))

@@ -16,7 +16,7 @@ type LoginFormSigninProps = {
   onSignup?: () => void
   noCancelButton?: boolean
   onForgot?: () => void
-  addNotification?: (message: string) => void
+  addNotification?: (message: string, options: any) => void
 }
 
 const LoginFormSignin = ({
@@ -138,7 +138,7 @@ const LoginFormSignin = ({
 
   useEffect(() => {
     if (status === 'invalid') {
-      addNotification && addNotification('user.invalid')
+      addNotification && addNotification('user.invalid', { severity: 'error' })
     }
   }, [status, addNotification])
 

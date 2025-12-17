@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     changePassword: (data) => dispatch(changePassword(data)),
     resendActivationEmail: () => dispatch(resendActivationEmail()),
     deleteUser: (user) => dispatch(deleteUser(user)),
-    addNotification: (message) => dispatch(addNotification(message)),
+    addNotification: (message, options) => dispatch(addNotification(message, options)),
     closeNotification: (message) => dispatch(closeNotification(message)),
     createTask: (task, history) => dispatch(createTask(task, history)),
     listTasks: (params) => dispatch(listTasks(params)),

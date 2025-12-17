@@ -83,7 +83,7 @@ const updateTransfer = (params) => (dispatch) => {
     .put(api.API_URL + '/transfers/update', params)
     .then((transfer) => {
       if (transfer.data.error) {
-        dispatch(addNotification('actions.transfer.update.error'))
+        dispatch(addNotification('actions.transfer.update.error', { severity: 'error' }))
         return dispatch(updateTransferFailed(transfer.data.error))
       }
       if (transfer.data) {
@@ -92,7 +92,7 @@ const updateTransfer = (params) => (dispatch) => {
       }
     })
     .catch((e) => {
-      dispatch(addNotification('actions.transfer.update.error'))
+      dispatch(addNotification('actions.transfer.update.error', { severity: 'error' }))
       return dispatch(updateTransferFailed(e))
     })
 }

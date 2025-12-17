@@ -83,7 +83,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     deleteTask: (task) => dispatch(deleteTask(task)),
     openDialog: (target) => dispatch(addDialog(target)),
     closeDialog: () => dispatch(closeDialog()),
-    addNotification: (message) => dispatch(addNotification(message)),
+    addNotification: (message, options) => dispatch(addNotification(message, options)),
     assignTask: (taskId, assignId) => dispatch(assignTask(taskId, assignId)),
     actionAssign: (taskId, assignId, action, message) =>
       dispatch(actionAssign(taskId, assignId, action, message)),

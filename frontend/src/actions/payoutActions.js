@@ -67,7 +67,7 @@ const requestPayout = (params) => (dispatch) => {
         return dispatch(requestPayoutSuccess(payout.data))
       }
       if (payout.error) {
-        dispatch(addNotification('actions.payoutRequest.create.error'))
+        dispatch(addNotification('actions.payoutRequest.create.error', { severity: 'error' }))
         return dispatch(requestPayoutFailed(payout.error))
       }
     })
@@ -87,12 +87,12 @@ const searchPayout = (params) => (dispatch) => {
         return dispatch(searchPayoutSuccess(payout.data))
       }
       if (payout.error) {
-        dispatch(addNotification('actions.payoutRequest.search.error'))
+        dispatch(addNotification('actions.payoutRequest.search.error', { severity: 'error' }))
         return dispatch(searchPayoutFailed(payout.error))
       }
     })
     .catch((e) => {
-      dispatch(addNotification('actions.payoutRequest.search.error'))
+      dispatch(addNotification('actions.payoutRequest.search.error', { severity: 'error' }))
       return dispatch(searchPayoutFailed(e))
     })
 }

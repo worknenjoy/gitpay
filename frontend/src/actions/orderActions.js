@@ -180,7 +180,7 @@ const listOrders = (query) => {
         if (orders.data) {
           return dispatch(listOrdersSuccess(orders.data))
         } else {
-          addNotification('actions.order.list.error')
+          addNotification('actions.order.list.error', { severity: 'error' })
         }
         return dispatch(
           listOrdersError({
@@ -191,7 +191,7 @@ const listOrders = (query) => {
         )
       })
       .catch((e) => {
-        dispatch(addNotification('actions.order.list.error'))
+        dispatch(addNotification('actions.order.list.error', { severity: 'error' }))
         return dispatch(listOrdersError(e))
       })
   }
@@ -208,7 +208,7 @@ const createOrder = (order) => {
           dispatch(addNotification('actions.order.create.success'))
           return dispatch(createOrderSuccess(order))
         }
-        addNotification('actions.order.create.error')
+        addNotification('actions.order.create.error', { severity: 'error' })
         return dispatch(
           payOrderError({
             error: {
@@ -218,7 +218,7 @@ const createOrder = (order) => {
         )
       })
       .catch((e) => {
-        dispatch(addNotification('actions.order.create.payment.error'))
+        dispatch(addNotification('actions.order.create.payment.error', { severity: 'error' }))
         return dispatch(createOrderError(e))
       })
   }
@@ -234,7 +234,7 @@ const updateOrder = (order) => {
         if (order.data) {
           return dispatch(updateOrderSuccess(order.data))
         } else {
-          addNotification('actions.order.update.error')
+          addNotification('actions.order.update.error', { severity: 'error' })
         }
         return dispatch(
           updateOrderError({
@@ -245,7 +245,7 @@ const updateOrder = (order) => {
         )
       })
       .catch((e) => {
-        dispatch(addNotification('actions.order.update.error'))
+        dispatch(addNotification('actions.order.update.error', { severity: 'error' }))
         return dispatch(updateOrderError(e))
       })
   }
@@ -264,12 +264,12 @@ const payOrder = (order) => {
           dispatch(payOrderSuccess(order.data))
           return dispatch(fetchTask(order.data.TaskId))
         } else {
-          dispatch(addNotification('actions.order.create.payment.send.error'))
+          dispatch(addNotification('actions.order.create.payment.send.error', { severity: 'error' }))
           return dispatch(payOrderError(new Error('pay_order_failed')))
         }
       })
       .catch((e) => {
-        dispatch(addNotification('actions.order.create.payment.send.error'))
+        dispatch(addNotification('actions.order.create.payment.send.error', { severity: 'error' }))
         return dispatch(payOrderError(e))
       })
   }
@@ -287,12 +287,12 @@ const transferOrder = (order, params) => {
           dispatch(transferOrderSuccess(order))
           return dispatch(fetchTask(order.data[1].TaskId))
         } else {
-          dispatch(addNotification('actions.order.transfer.error'))
+          dispatch(addNotification('actions.order.transfer.error', { severity: 'error' }))
           return dispatch(transferOrderError(new Error('transfer_order_failed')))
         }
       })
       .catch((e) => {
-        dispatch(addNotification('actions.order.transfer.error'))
+        dispatch(addNotification('actions.order.transfer.error', { severity: 'error' }))
         return dispatch(transferOrderError(e))
       })
   }
@@ -310,13 +310,13 @@ const cancelOrder = (id) => {
           dispatch(cancelOrderSuccess(order.data))
           return dispatch(listOrders())
         } else {
-          addNotification('actions.order.cancel.error')
+          addNotification('actions.order.cancel.error', { severity: 'error' })
           return dispatch(cancelOrderError(new Error('cancel_order_failed')))
         }
       })
       .catch((e) => {
         console.log('error', e)
-        dispatch(addNotification('actions.order.cancel.payment.error'))
+        dispatch(addNotification('actions.order.cancel.payment.error', { severity: 'error' }))
         return dispatch(cancelOrderError(e))
       })
   }
@@ -332,12 +332,12 @@ const detailOrder = (id) => {
         if (order.data) {
           return dispatch(detailOrderSuccess(order.data))
         } else {
-          addNotification('actions.order.cancel.error')
+          addNotification('actions.order.cancel.error', { severity: 'error' })
           return dispatch(detailOrderError(new Error('detail_order_failed')))
         }
       })
       .catch((e) => {
-        dispatch(addNotification('actions.order.details.error'))
+        dispatch(addNotification('actions.order.details.error', { severity: 'error' }))
         return dispatch(detailOrderError(e))
       })
   }
@@ -354,12 +354,12 @@ const refundOrder = (id) => {
           dispatch(addNotification('actions.order.refund.success'))
           return dispatch(refundOrderSuccess(order.data))
         } else {
-          dispatch(addNotification('actions.order.refund.error'))
+          dispatch(addNotification('actions.order.refund.error', { severity: 'error' }))
           return dispatch(refundOrderError(new Error('detail_order_failed')))
         }
       })
       .catch((e) => {
-        dispatch(addNotification('actions.order.refund.error'))
+        dispatch(addNotification('actions.order.refund.error', { severity: 'error' }))
         return dispatch(refundOrderError(e))
       })
   }

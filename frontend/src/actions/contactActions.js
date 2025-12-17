@@ -28,7 +28,7 @@ const messageRecruiters = (params) => {
         return dispatch(messageRecruitersSuccess())
       })
       .catch((error) => {
-        dispatch(addNotification('actions.message.recruiters.error'))
+        dispatch(addNotification('actions.message.recruiters.error', { severity: 'error' }))
         return dispatch(messageRecruitersError(error))
       })
   }

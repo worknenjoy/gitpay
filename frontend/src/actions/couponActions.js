@@ -39,18 +39,18 @@ const validateCoupon = (couponCode, originalOrderPrice) => {
       .post(`${api.API_URL}/coupon/validate`, payload)
       .then((response) => {
         if (Object.keys(response.data).length === 0) {
-          dispatch(addNotification(ERRORS['COUPON_DOES_NOT_EXISTS']))
+          dispatch(addNotification(ERRORS['COUPON_DOES_NOT_EXISTS'], { severity: 'error' }))
         }
 
         dispatch(validateCouponSuccess(response.data))
       })
       .catch((err) => {
         if (err.response.data && err.response.data.error) {
-          dispatch(addNotification(ERRORS[err.response.data.error]))
+          dispatch(addNotification(ERRORS[err.response.data.error], { severity: 'error' }))
           return dispatch(validateCouponError(JSON.parse(err.response.data.error)))
         }
 
-        dispatch(addNotification(ERRORS['COUPON_FAILED']))
+        dispatch(addNotification(ERRORS['COUPON_FAILED'], { severity: 'error' }))
         return dispatch(validateCouponError(JSON.parse(ERRORS['COUPON_FAILED'])))
       })
   }
