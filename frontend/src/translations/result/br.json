@@ -249,6 +249,7 @@
   "actions.task.create.validation.url": "Esta tarefa já foi importada",
   "actions.task.delete.auth.error": "Você precisa primeiro estar logado para excluir uma tarefa",
   "actions.task.delete.notification.error": "Erro ao atualizar tarefa",
+  "actions.task.delete.notification.error.associated.orders": "You cannot delete this issue because it has payments associated",
   "actions.task.delete.notification.success": "Tarefa excluída com sucesso",
   "actions.task.fetch.error": "Não foi possível abrir esta tarefa, por favor tente novamente mais tarde",
   "actions.task.fetch.other.error": "Não foi possível obter esta tarefa, por favor tente novamente mais tarde",
