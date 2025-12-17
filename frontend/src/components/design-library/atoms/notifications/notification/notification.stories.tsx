@@ -11,7 +11,7 @@ const Template = (args) => <Notification {...args} />
 export const Default = Template.bind({})
 Default.args = {
   open: true,
-  message: 'This is a notification message',
+  message: 'This is a notification message'
 }
 
 export const Success = Template.bind({})

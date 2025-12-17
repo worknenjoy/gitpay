@@ -1,14 +1,13 @@
 import { expect } from 'chai'
 import request from 'supertest'
-import Models  from '../../../src/models'
-import { createTask, login, registerAndLogin, truncateModels } from "../../helpers"
+import Models from '../../../src/models'
+import { createTask, login, registerAndLogin, truncateModels } from '../../helpers'
 import api from '../../../src/server'
 
 const agent = request.agent(api) as any
 const models = Models as any
 
 describe('DELETE /tasks/delete/:id', () => {
-
   beforeEach(async () => {
     await truncateModels(models.User)
     await truncateModels(models.Task)
@@ -18,7 +17,7 @@ describe('DELETE /tasks/delete/:id', () => {
   it('should delete a task by id', async () => {
     const task = await createTask(agent)
 
-    const { headers, body: createdTask } = task || { }
+    const { headers, body: createdTask } = task || {}
 
     const res = await agent
       .delete(`/tasks/delete/${createdTask.id}`)
@@ -28,9 +27,9 @@ describe('DELETE /tasks/delete/:id', () => {
   })
 
   it('should only delete own task', async () => {
-    const task = await createTask( agent )
+    const task = await createTask(agent)
 
-    const { headers, body: createdTask } = task || { }
+    const { headers, body: createdTask } = task || {}
 
     const deleted = await agent
       .delete(`/tasks/delete/${createdTask.id}`)
@@ -40,16 +39,16 @@ describe('DELETE /tasks/delete/:id', () => {
     expect(deleted.text).to.equal('1')
   })
   it('should not delete task of another user', async () => {
-    const task = await createTask( agent )
+    const task = await createTask(agent)
 
-    const { body: createdTask } = task || { }
+    const { body: createdTask } = task || {}
 
     const anotherUser = await registerAndLogin(agent, {
       email: 'anotheruser@example.com',
       password: 'anotherpassword'
     })
 
-    const { headers: anotherUserHeaders } = anotherUser || { }
+    const { headers: anotherUserHeaders } = anotherUser || {}
 
     const deleted = await agent
       .delete(`/tasks/delete/${createdTask.id}`)
@@ -60,18 +59,16 @@ describe('DELETE /tasks/delete/:id', () => {
     expect(await models.Task.findByPk(createdTask.id)).to.not.be.null
   })
   it('should return 403 when not authenticated', async () => {
-    const task = await createTask( agent )
+    const task = await createTask(agent)
 
-    const { body: createdTask } = task || { }
+    const { body: createdTask } = task || {}
 
-    await agent
-      .delete(`/tasks/delete/${createdTask.id}`)
-      .expect(403)
+    await agent.delete(`/tasks/delete/${createdTask.id}`).expect(403)
   })
   it('should return error when deleting task with orders', async () => {
-    const task = await createTask( agent, { status: 'paid' } )
+    const task = await createTask(agent, { status: 'paid' })
 
-    const { headers, body: createdTask } = task || { }
+    const { headers, body: createdTask } = task || {}
 
     const order = await models.Order.create({
       TaskId: createdTask.id,
@@ -85,9 +82,7 @@ describe('DELETE /tasks/delete/:id', () => {
       .delete(`/tasks/delete/${createdTask.id}`)
       .set('Authorization', headers.authorization)
       .expect(500)
-    expect(res.body.error).to.equal(
-      'CANNOT_DELETE_ISSUE_WITH_ORDERS_ASSOCIATED'
-    )
+    expect(res.body.error).to.equal('CANNOT_DELETE_ISSUE_WITH_ORDERS_ASSOCIATED')
     expect(await models.Task.findByPk(createdTask.id)).to.not.be.null
   })
 })

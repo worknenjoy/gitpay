@@ -116,16 +116,12 @@ describe('Crons', () => {
               value: 50
             }).save()
           ]).then((tasks) => {
-            expect(tasks[0].url).to.equal(
-              'https://github.com/worknenjoy/truppie/issues/7363'
-            )
+            expect(tasks[0].url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
             expect(tasks[2].value).to.equal('100')
             TaskCron.weeklyBounties().then((r) => {
               expect(r.length).to.equal(1)
               expect(r[0]).to.exist
-              expect(r[0].url).to.equal(
-                'https://github.com/worknenjoy/truppie/issues/7367'
-              )
+              expect(r[0].url).to.equal('https://github.com/worknenjoy/truppie/issues/7367')
               MockDate.reset()
               done()
             })
@@ -167,20 +163,14 @@ describe('Crons', () => {
           }).save()
         ])
           .then((tasks) => {
-            expect(tasks[0].url).to.equal(
-              'https://github.com/worknenjoy/truppie/issues/7363'
-            )
+            expect(tasks[0].url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
             expect(tasks[2].value).to.equal('100')
             TaskCron.latestTasks()
               .then((r) => {
                 expect(r.length).to.equal(3)
                 expect(r[0]).to.exist
-                expect(r[0].url).to.equal(
-                  'https://github.com/worknenjoy/truppie/issues/7367'
-                )
-                expect(r[2].url).to.equal(
-                  'https://github.com/worknenjoy/truppie/issues/7363'
-                )
+                expect(r[0].url).to.equal('https://github.com/worknenjoy/truppie/issues/7367')
+                expect(r[2].url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
                 done(err)
               })
               .catch(done)
@@ -254,9 +244,7 @@ describe('Crons', () => {
         })
           .save()
           .then((task) => {
-            expect(task.url).to.equal(
-              'https://github.com/worknenjoy/truppie/issues/7363'
-            )
+            expect(task.url).to.equal('https://github.com/worknenjoy/truppie/issues/7363')
             done()
           })
       })
@@ -326,9 +314,7 @@ describe('Crons', () => {
                   .then((taskUpdated) => {
                     TaskCron.rememberDeadline().then((r) => {
                       expect(r[0]).to.exist
-                      expect(r[0].url).to.equal(
-                        'https://github.com/worknenjoy/truppie/issues/7336'
-                      )
+                      expect(r[0].url).to.equal('https://github.com/worknenjoy/truppie/issues/7336')
                       MockDate.reset()
                       done()
                     })

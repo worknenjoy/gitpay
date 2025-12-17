@@ -298,7 +298,11 @@ const createTask = (task, history) => {
           const firstError = response.data.errors[0].message
           if (firstError === 'url must be unique') {
             dispatch(
-              addNotification(VALIDATION_ERRORS[firstError], { severity: 'error' }, `/#/task/${response.data.id}`)
+              addNotification(
+                VALIDATION_ERRORS[firstError],
+                { severity: 'error' },
+                `/#/task/${response.data.id}`
+              )
             )
           }
           if (firstError === 'Not Found') {
@@ -371,7 +375,11 @@ const updateTask = (task) => {
         const errorResponse = error?.response?.data
         if (errorResponse?.type === 'StripeCardError') {
           dispatch(
-            addNotification('actions.task.payment.notification.error', { severity: 'error' }, `. ${errorResponse.message}`)
+            addNotification(
+              'actions.task.payment.notification.error',
+              { severity: 'error' },
+              `. ${errorResponse.message}`
+            )
           )
           dispatch(changeTaskTab(1))
           return dispatch(updateTaskError(errorResponse))
@@ -407,9 +415,17 @@ const deleteTask = (task) => {
           dispatch(addNotification('actions.task.delete.auth.error', { severity: 'error' }))
           return dispatch(deleteTaskError(error))
         }
-        if( error.response && error.response.status === 500 && errorMessage === 'CANNOT_DELETE_ISSUE_WITH_ORDERS_ASSOCIATED') {
-          dispatch(addNotification('actions.task.delete.notification.error.associated.orders', { severity: 'error' })) 
-          return dispatch(deleteTaskError(errorMessage)) 
+        if (
+          error.response &&
+          error.response.status === 500 &&
+          errorMessage === 'CANNOT_DELETE_ISSUE_WITH_ORDERS_ASSOCIATED'
+        ) {
+          dispatch(
+            addNotification('actions.task.delete.notification.error.associated.orders', {
+              severity: 'error'
+            })
+          )
+          return dispatch(deleteTaskError(errorMessage))
         }
         dispatch(addNotification('actions.task.delete.notification.error', { severity: 'error' }))
         return dispatch(deleteTaskError(errorMessage))
@@ -541,7 +557,9 @@ const paymentTask = (taskId, value) => {
           if (payment.data.error.code === 'balance_insufficient') {
             dispatch(addNotification('actions.task.payment.balance.error', { severity: 'error' }))
           } else {
-            dispatch(addNotification('actions.task.payment.balance.other.error', { severity: 'error' }))
+            dispatch(
+              addNotification('actions.task.payment.balance.other.error', { severity: 'error' })
+            )
           }
         } else {
           dispatch(addNotification('actions.task.payment.transfer.sucess'))
@@ -760,9 +778,13 @@ const requestClaimTask = (taskId, userId, comments, isApproved, token, history) 
         }
 
         if (task.data.error === 'user_is_not_the_owner') {
-          dispatch(addNotification('actions.task.claim.error.user_is_not_the_owner', { severity: 'error' }))
+          dispatch(
+            addNotification('actions.task.claim.error.user_is_not_the_owner', { severity: 'error' })
+          )
         } else if (task.data.error === 'invalid_provider') {
-          dispatch(addNotification('actions.task.claim.error.invalid_provider', { severity: 'error' }))
+          dispatch(
+            addNotification('actions.task.claim.error.invalid_provider', { severity: 'error' })
+          )
         } else {
           dispatch(addNotification('actions.task.claim.error', { severity: 'error' }))
         }

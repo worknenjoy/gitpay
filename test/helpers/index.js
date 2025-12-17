@@ -52,15 +52,13 @@ const createTask = (agent, params = {}, userParams = {}) => {
 
   return registerAndLogin(agent, userParams)
     .then((res) => {
-      const { body: user, headers } = res 
-      return models.Task.create(
-        {
-          provider: params.provider || 'github',
-          url: params.url,
-          status: params.status,
-          userId: user.id
-        }
-      )
+      const { body: user, headers } = res
+      return models.Task.create({
+        provider: params.provider || 'github',
+        url: params.url,
+        status: params.status,
+        userId: user.id
+      })
         .then((task) => {
           return { headers, body: task }
         })

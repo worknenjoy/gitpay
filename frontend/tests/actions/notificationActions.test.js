@@ -24,7 +24,7 @@ describe('Notification Actions', () => {
     }
 
     const store = mockStore({ intl: { messages: { [message]: message } } })
-    store.dispatch(actions.addNotification(message, {extra, link} ))
+    store.dispatch(actions.addNotification(message, { extra, link }))
     const actionsDispatched = store.getActions()
     expect(actionsDispatched[0]).to.deep.equal(expectedAction)
   })

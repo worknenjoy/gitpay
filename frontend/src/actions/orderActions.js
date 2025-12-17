@@ -264,7 +264,9 @@ const payOrder = (order) => {
           dispatch(payOrderSuccess(order.data))
           return dispatch(fetchTask(order.data.TaskId))
         } else {
-          dispatch(addNotification('actions.order.create.payment.send.error', { severity: 'error' }))
+          dispatch(
+            addNotification('actions.order.create.payment.send.error', { severity: 'error' })
+          )
           return dispatch(payOrderError(new Error('pay_order_failed')))
         }
       })

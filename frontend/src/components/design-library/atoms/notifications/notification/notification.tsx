@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { Snackbar, IconButton, AlertPropsColorOverrides, AlertColor,  } from '@mui/material'
+import { Snackbar, IconButton, AlertPropsColorOverrides, AlertColor } from '@mui/material'
 import { OverridableStringUnion } from '@mui/types'
 
 import Close from '@mui/icons-material/Close'
@@ -39,14 +39,12 @@ const Notification = ({ open, onClose, message, link, linkLabel, severity }: Not
       open={open}
       onClose={onClose}
       autoHideDuration={8000}
-      color='warning'
+      color="warning"
     >
       <AlertStyled
         onClose={onClose}
-        severity={ severity }
-        action={
-          <div style={{ display: 'flex', alignItems: 'center' }}>{getActions()}</div>
-        }
+        severity={severity}
+        action={<div style={{ display: 'flex', alignItems: 'center' }}>{getActions()}</div>}
       >
         {message}
       </AlertStyled>

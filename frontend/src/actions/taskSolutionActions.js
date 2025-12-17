@@ -105,7 +105,9 @@ const fetchPullRequestData = (owner, repositoryName, pullRequestId, taskId) => {
           return dispatch(fetchPullRequestDataError(error.response.data.error))
         }
 
-        dispatch(addNotification(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA'], { severity: 'error' }))
+        dispatch(
+          addNotification(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA'], { severity: 'error' })
+        )
         return dispatch(
           getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA']))
         )
@@ -135,15 +137,12 @@ const createTaskSolution = (taskSolution) => {
       .catch((error) => {
         if (error.response.data && error.response.data.error) {
           dispatch(
-            addNotification(
-              ERRORS[error.response.data.error] || error.response.data.error,
-              {
-                extra: '',
-                link: '/#/profile/payout-settings',
-                text: 'Update your account',
-                severity: 'error'
-              }
-            )
+            addNotification(ERRORS[error.response.data.error] || error.response.data.error, {
+              extra: '',
+              link: '/#/profile/payout-settings',
+              text: 'Update your account',
+              severity: 'error'
+            })
           )
           dispatch(fetchTask(taskSolution.taskId))
           return dispatch(createTaskSolutionError(error.response.data.error))

@@ -16,12 +16,9 @@ type NotificationOptionsProps = {
   extra?: string
 }
 
-export const addNotification = (
-  message:string,
-  options: NotificationOptionsProps
-) => {
+export const addNotification = (message: string, options: NotificationOptionsProps) => {
   const { link, severity, extra = '' } = options || {}
-  
+
   return (dispatch, getState) => {
     const state = getState()
     const messages = state.intl.messages

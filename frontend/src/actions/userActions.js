@@ -532,7 +532,9 @@ const updateAccount = (account) => {
       })
       .catch((error) => {
         const errorData = error.response.data
-        dispatch(addNotification('actions.user.account.update.error.missing', { severity: 'error' }))
+        dispatch(
+          addNotification('actions.user.account.update.error.missing', { severity: 'error' })
+        )
         // eslint-disable-next-line no-console
         console.log('error on update account', error)
 
@@ -615,7 +617,11 @@ const resendActivationEmail = () => {
         return dispatch(resendActivationEmailSuccess(user))
       })
       .catch((error) => {
-        dispatch(addNotification('notifications.account.resend_activation_email.error', { severity: 'error' }))
+        dispatch(
+          addNotification('notifications.account.resend_activation_email.error', {
+            severity: 'error'
+          })
+        )
         // eslint-disable-next-line no-console
         console.log('error on resend activation email', error)
         return dispatch(resendActivationEmailError(error))
@@ -634,7 +640,11 @@ const deleteUser = (user) => {
         return result
       })
       .catch((error) => {
-        dispatch(addNotification('account.profile.settings.delete.user.notification.error', { severity: 'error' }))
+        dispatch(
+          addNotification('account.profile.settings.delete.user.notification.error', {
+            severity: 'error'
+          })
+        )
         // eslint-disable-next-line no-console
         console.log('error on delete account', error)
         return error

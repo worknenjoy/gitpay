@@ -54,7 +54,7 @@ describe('task actions', () => {
         { completed: false, type: 'SYNC_TASK_REQUESTED' },
         { completed: false, type: 'FETCH_TASK_REQUESTED' },
         { completed: true, type: 'SYNC_TASK_SUCCESS', values: { id: 1 } },
-        { completed: true, type: 'FETCH_TASK_SUCCESS', data: { id: 1 } },
+        { completed: true, type: 'FETCH_TASK_SUCCESS', data: { id: 1 } }
       ]
       const store = mockStore({
         intl: { messages: {} },
@@ -106,13 +106,11 @@ describe('task actions', () => {
         task: { completed: true, id: 1 },
         loggedIn: { logged: true, user: { id: 1 } }
       })
-      return store
-        .dispatch(taskActions.deleteTask({ id: 1 }))
-        .then(() => {
-          // return of async actions
-          expect(store.getActions()).toEqual(expectedActions)
-          moxios.uninstall()
-        })
+      return store.dispatch(taskActions.deleteTask({ id: 1 })).then(() => {
+        // return of async actions
+        expect(store.getActions()).toEqual(expectedActions)
+        moxios.uninstall()
+      })
     })
     it('should dispatch an action to fail to delete task when order is associated', () => {
       moxios.install()
@@ -136,7 +134,7 @@ describe('task actions', () => {
           text: 'actions.task.delete.notification.error.associated.orders',
           type: 'ADD_NOTIFICATION',
           link: undefined,
-          severity: 'error',
+          severity: 'error'
         },
         {
           completed: true,
@@ -149,13 +147,11 @@ describe('task actions', () => {
         task: { completed: true, id: 1 },
         loggedIn: { logged: true, user: { id: 1 } }
       })
-      return store
-        .dispatch(taskActions.deleteTask({ id: 1 }))
-        .then(() => {
-          // return of async actions
-          expect(store.getActions()).toEqual(expectedActions)
-          moxios.uninstall()
-        })
+      return store.dispatch(taskActions.deleteTask({ id: 1 })).then(() => {
+        // return of async actions
+        expect(store.getActions()).toEqual(expectedActions)
+        moxios.uninstall()
+      })
     })
   })
 
