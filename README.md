@@ -273,4 +273,8 @@ This project is licensed under the [Attribution-NonCommercial-NoDerivatives 4.0 
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay.svg?type=large)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fworknenjoy%2Fgitpay?ref=badge_large)
 
-💙 If Gitpay helps you or your project, consider sponsoring to support sustainable open-source funding.
+💙 If Gitpay helps you or your project, consider sponsoring to support sustainable open-source funding:
+
+- GitHub Sponsors: https://github.com/sponsors/alexanmtz
+- Open Collective: https://opencollective.com/gitpay
+
