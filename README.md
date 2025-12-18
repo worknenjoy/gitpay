@@ -277,4 +277,3 @@ This project is licensed under the [Attribution-NonCommercial-NoDerivatives 4.0 
 
 - GitHub Sponsors: https://github.com/sponsors/alexanmtz
 - Open Collective: https://opencollective.com/gitpay
-

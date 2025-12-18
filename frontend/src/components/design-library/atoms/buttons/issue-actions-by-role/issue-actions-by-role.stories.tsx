@@ -1,7 +1,6 @@
 import React from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import IssueActionsByRole from './issue-actions-by-role'
-import providerLoginButtons from 'src/containers/provider-login-buttons'
 
 // Simple mock issue data
 const mockIssue = {

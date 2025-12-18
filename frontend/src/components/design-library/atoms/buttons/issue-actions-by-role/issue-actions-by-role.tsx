@@ -103,7 +103,7 @@ const IssueActionsByRole = ({
     },
     {
       key: 'send-solution',
-      onClick: () => { },
+      onClick: () => {},
       label: 'Send solution',
       disabled: shouldDisable,
       icon: <HowToRegIcon fontSize="small" />,
