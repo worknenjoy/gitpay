@@ -49,7 +49,6 @@ const IssueActionsByRole = ({
   createTaskSolution,
   updateTaskSolution,
   fetchPullRequestData,
-  // Props for IssuePaymentDrawer
   fetchCustomer,
   customer,
   addNotification,
@@ -71,69 +70,71 @@ const IssueActionsByRole = ({
 
   const shouldDisable = data?.paid || data?.transfer_id || data?.Transfer?.id
 
-  const commonAction = {
-    key: 'add-bounty',
-    onClick: () => {
-      setOpenPaymentDrawer(true)
+  const commonActions = [
+    {
+      key: 'add-bounty',
+      onClick: () => {
+        setOpenPaymentDrawer(true)
+      },
+      label: 'Add bounty',
+      disabled: shouldDisable,
+      icon: <BountyIcon fontSize="small" />,
+      component: (
+        <IssuePaymentDrawer
+          open={openPaymentDrawer}
+          onClose={() => setOpenPaymentDrawer(false)}
+          fetchCustomer={fetchCustomer}
+          customer={customer}
+          addNotification={addNotification}
+          updateTask={updateTask}
+          user={user}
+          task={task}
+          createOrder={createOrder}
+          order={order}
+          fetchWallet={fetchWallet}
+          wallet={wallet}
+          listWallets={listWallets}
+          wallets={wallets}
+          fetchTask={fetchTask}
+          syncTask={syncTask}
+          price={data?.price || 0}
+        />
+      )
     },
-    label: 'Add bounty',
-    disabled: shouldDisable,
-    icon: <BountyIcon fontSize="small" />,
-    component: (
-      <IssuePaymentDrawer
-        open={openPaymentDrawer}
-        onClose={() => setOpenPaymentDrawer(false)}
-        fetchCustomer={fetchCustomer}
-        customer={customer}
-        addNotification={addNotification}
-        updateTask={updateTask}
-        user={user}
-        task={task}
-        createOrder={createOrder}
-        order={order}
-        fetchWallet={fetchWallet}
-        wallet={wallet}
-        listWallets={listWallets}
-        wallets={wallets}
-        fetchTask={fetchTask}
-        syncTask={syncTask}
-        price={data?.price || 0}
-      />
-    )
-  }
+    {
+      key: 'send-solution',
+      onClick: () => { },
+      label: 'Send solution',
+      disabled: shouldDisable,
+      icon: <HowToRegIcon fontSize="small" />,
+      component: (
+        <SendSolutionDrawer
+          cleanPullRequestDataState={cleanPullRequestDataState}
+          account={account}
+          fetchAccount={fetchAccount}
+          pullRequestData={pullRequestData}
+          open={open}
+          onClose={() => setOpen(false)}
+          task={issue}
+          createTaskSolution={createTaskSolution}
+          updateTaskSolution={updateTaskSolution}
+          getTaskSolution={getTaskSolution}
+          user={user}
+          taskSolution={taskSolution}
+          fetchPullRequestData={fetchPullRequestData}
+          taskSolutionCompleted={taskSolutionCompleted}
+        />
+      )
+    }
+  ]
   const roles = {
     admin: {
-      primary: [commonAction]
+      primary: [commonActions[0]],
+      secondary: [commonActions[1]]
     },
     user: {
-      primary: [
-        {
-          key: 'send-solution',
-          onClick: () => {},
-          label: 'Send solution',
-          disabled: shouldDisable,
-          icon: <HowToRegIcon fontSize="small" />,
-          component: (
-            <SendSolutionDrawer
-              cleanPullRequestDataState={cleanPullRequestDataState}
-              account={account}
-              fetchAccount={fetchAccount}
-              pullRequestData={pullRequestData}
-              open={open}
-              onClose={() => setOpen(false)}
-              task={issue}
-              createTaskSolution={createTaskSolution}
-              updateTaskSolution={updateTaskSolution}
-              getTaskSolution={getTaskSolution}
-              user={user}
-              taskSolution={taskSolution}
-              fetchPullRequestData={fetchPullRequestData}
-              taskSolutionCompleted={taskSolutionCompleted}
-            />
-          )
-        }
-      ],
-      secondary: [commonAction]
+      primary: [commonActions[0]],
+      secondary: [commonActions[1]]
     }
   }
   return <IssueActions role={currentRole} roles={roles} />
