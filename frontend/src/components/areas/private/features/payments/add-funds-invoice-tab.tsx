@@ -25,12 +25,7 @@ const AddFundsInvoiceTab: React.FC<AddFundsInvoiceTabProps> = ({
   useEffect(() => {}, [])
 
   return (
-    <InvoicePayment
-      price={priceAfterFee}
-      customer={customer}
-      onInvoicePayment={onInvoicePayment}
-      onInfoClick={() => history.push('/profile/user-account/customer')}
-    />
+    <InvoicePayment price={priceAfterFee} customer={customer} onInvoicePayment={onInvoicePayment} />
   )
 }
 

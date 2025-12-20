@@ -20,7 +20,8 @@ const AccountTabMain = ({
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
-  const { login_strategy, provider, name, password } = user
+  const { data } = user || {}
+  const { login_strategy, provider, name } = data || {}
   const [fieldName, setFieldName] = useState<string>(name)
   const [currentPassword, setCurrentPassword] = useState<string>('')
   const [newPassword, setNewPassword] = useState<string>('')
@@ -34,15 +35,21 @@ const AccountTabMain = ({
     const connectGithubAction = queryParams.get('connectGithubAction')
     if (disconnectAction === 'success') {
       addNotification &&
-        addNotification('Your account has been successfully disconnected from GitHub.', 'success')
+        addNotification('Your account has been successfully disconnected from GitHub.', {
+          severity: 'success'
+        })
     }
     if (disconnectAction === 'error') {
       addNotification &&
-        addNotification('We had an error to disconnect from your Github account', 'error')
+        addNotification('We had an error to disconnect from your Github account', {
+          severity: 'error'
+        })
     }
     if (connectGithubAction === 'success') {
       addNotification &&
-        addNotification('Your account has been successfully connected to Github', 'success')
+        addNotification('Your account has been successfully connected to Github', {
+          severity: 'success'
+        })
     }
   }, [])
 
@@ -54,16 +61,19 @@ const AccountTabMain = ({
   const onChangePassword = async (e) => {
     e.preventDefault()
     if (newPassword !== confirmNewPassword) {
-      addNotification && addNotification('Passwords do not match', 'error')
+      addNotification && addNotification('Passwords do not match', { severity: 'error' })
       return
     }
     if (currentPassword === newPassword) {
       addNotification &&
-        addNotification('New password cannot be the same as the current password', 'error')
+        addNotification('New password cannot be the same as the current password', {
+          severity: 'error'
+        })
       return
     }
     if (newPassword.length < 6) {
-      addNotification && addNotification('Password must be at least 8 characters long', 'error')
+      addNotification &&
+        addNotification('Password must be at least 8 characters long', { severity: 'error' })
       return
     }
     changePassword &&

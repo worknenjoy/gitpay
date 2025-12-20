@@ -411,7 +411,7 @@ const createCustomer = (customerData) => {
   }
 }
 
-const updateCustomer = (_, customerData) => {
+const updateCustomer = (customerData) => {
   validToken()
   return (dispatch) => {
     dispatch(updateUserCustomerRequested())

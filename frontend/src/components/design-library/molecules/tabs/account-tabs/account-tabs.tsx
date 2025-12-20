@@ -1,10 +1,10 @@
 import React from 'react'
 import { Tabs, Tab, Box } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
-import { useHistory } from 'react-router-dom'
+import useUserTypes from '../../../../../hooks/use-user-types'
 
 const AccountTabs = ({ user, children }) => {
-  const history = useHistory()
+  const { isContributor } = useUserTypes({ user })
   const [value, setValue] = React.useState('account')
 
   const handleChange = (event, newValue) => {
@@ -31,23 +31,11 @@ const AccountTabs = ({ user, children }) => {
             }
             value={'account'}
           />
-          {(user?.Types?.map((u) => u.name)?.includes('maintainer') ||
-            user?.Types?.map((u) => u.name)?.includes('sponsor')) && (
-            <Tab
-              label={
-                <FormattedMessage
-                  id="profile.account.tab.customer"
-                  defaultMessage="Billing details"
-                />
-              }
-              value={'customer'}
-            />
-          )}
           <Tab
             label={<FormattedMessage id="profile.account.tab.roles" defaultMessage="Roles" />}
             value="roles"
           />
-          {user?.Types?.map((u) => u.name)?.includes('contributor') && (
+          {isContributor && (
             <Tab
               label={<FormattedMessage id="profile.account.tab.skills" defaultMessage="Skills" />}
               value="skills"

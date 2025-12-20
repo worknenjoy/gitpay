@@ -35,8 +35,9 @@ const skillsList = [
 ]
 
 const Preferences = (props) => {
-  const { classes, preferences, updateUser, user } = props
-  const { skills, os } = preferences
+  const { classes, preferences, updateUser } = props
+  const { data } = preferences || {}
+  const { skills, os } = data || {}
 
   const skillsArray = typeof skills === 'string' && skills.trim() !== '' ? skills.split(',') : []
   const osArray = typeof os === 'string' && os.trim() !== '' ? os.split(',') : []

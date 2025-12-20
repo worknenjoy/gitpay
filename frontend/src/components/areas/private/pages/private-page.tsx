@@ -16,6 +16,7 @@ import ProjectIssuesExploreContainer from '../../../../containers/profile-explor
 import MyProjectIssuesContainer from '../../../../containers/profile-my-project-issues'
 import OrganizationIssuesExploreContainer from '../../../../containers/profile-explore-organization-issues'
 import MyOrganizationIssuesContainer from '../../../../containers/profile-my-organization-issues'
+import InvoiceSettingsContainer from '../../../../containers/account/invoice-settings/invoice-settings'
 import PayoutSettings from '../features/payout-settings/pages/payout-settings-page'
 
 const PrivatePage = ({
@@ -57,7 +58,7 @@ const PrivatePage = ({
             path="/profile/user-account"
             component={(props) => (
               <UserAccount
-                user={data}
+                user={user}
                 updateUser={updateUser}
                 changePassword={changePassword}
                 addNotification={addNotification}
@@ -138,8 +139,8 @@ const PrivatePage = ({
             ]}
             component={MyProjectIssuesContainer}
           />
-
           <Route path={'/profile/payout-settings'} component={PayoutSettings} />
+          <Route path={'/profile/invoice-settings'} component={InvoiceSettingsContainer} />
         </Switch>
       </HashRouter>
     </PrivateBase>

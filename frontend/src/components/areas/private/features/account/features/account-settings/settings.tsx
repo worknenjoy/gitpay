@@ -20,11 +20,11 @@ import logoLangBr from 'images/brazil.png'
 
 const Settings = (props) => {
   const { user } = props
+  const { data } = user || {}
   const [anchorEl, setAnchorEl] = useState(null)
   const [selectedLanguage, setSelectedLanguage] = useState(null)
-  const [receiveNotifications, setReceiveNotifications] = useState(user.receiveNotifications)
-  const [openForJobs, setOpenForJobs] = useState(user.openForJobs)
-
+  const [receiveNotifications, setReceiveNotifications] = useState(data.receiveNotifications)
+  const [openForJobs, setOpenForJobs] = useState(data.openForJobs)
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget)
   }
