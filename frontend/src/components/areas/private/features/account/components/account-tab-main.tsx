@@ -61,16 +61,19 @@ const AccountTabMain = ({
   const onChangePassword = async (e) => {
     e.preventDefault()
     if (newPassword !== confirmNewPassword) {
-      addNotification && addNotification('Passwords do not match', 'error')
+      addNotification && addNotification('Passwords do not match', { severity: 'error' })
       return
     }
     if (currentPassword === newPassword) {
       addNotification &&
-        addNotification('New password cannot be the same as the current password', 'error')
+        addNotification('New password cannot be the same as the current password', {
+          severity: 'error'
+        })
       return
     }
     if (newPassword.length < 6) {
-      addNotification && addNotification('Password must be at least 8 characters long', 'error')
+      addNotification &&
+        addNotification('Password must be at least 8 characters long', { severity: 'error' })
       return
     }
     changePassword &&
