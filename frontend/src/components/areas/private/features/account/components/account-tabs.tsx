@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { Tabs, Tab, Box } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import { HashRouter, Switch, Route } from 'react-router-dom'
-import CustomerDetails from '../../../../../../containers/customer-details'
 import UserRoles from '../../../../../../containers/user-roles'
 import SettingsComponent from '../features/account-settings/settings'
 import Preferences from '../features/account-settings/preferences'
 import AccountTabMain from './account-tab-main'
+import useUserTypes from '../../../../../../hooks/use-user-types'
 
 export default function AccountTabs({
   user,
@@ -16,6 +16,7 @@ export default function AccountTabs({
   addNotification,
   history
 }) {
+  const { isContributor } = useUserTypes({ user })
   const getCurrentTab = (location) => {
     if (location.pathname === '/profile/user-account') {
       return 'account'
@@ -84,23 +85,11 @@ export default function AccountTabs({
             }
             value={'account'}
           />
-          {(user?.Types?.map((u) => u.name)?.includes('maintainer') ||
-            user?.Types?.map((u) => u.name)?.includes('sponsor')) && (
-            <Tab
-              label={
-                <FormattedMessage
-                  id="profile.account.tab.customer"
-                  defaultMessage="Billing details"
-                />
-              }
-              value={'customer'}
-            />
-          )}
           <Tab
             label={<FormattedMessage id="profile.account.tab.roles" defaultMessage="Roles" />}
             value="roles"
           />
-          {user?.Types?.map((u) => u.name)?.includes('contributor') && (
+          {isContributor && (
             <Tab
               label={<FormattedMessage id="profile.account.tab.skills" defaultMessage="Skills" />}
               value="skills"
@@ -129,7 +118,6 @@ export default function AccountTabs({
                 />
               )}
             />
-            <Route exact path="/profile/user-account/customer" component={CustomerDetails} />
             <Route exact path="/profile/user-account/roles" component={(props) => <UserRoles />} />
             <Route
               exact

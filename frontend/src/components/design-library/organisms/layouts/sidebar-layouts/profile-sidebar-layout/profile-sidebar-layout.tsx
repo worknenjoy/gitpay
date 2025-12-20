@@ -11,15 +11,16 @@ import {
   Public as ExploreIcon,
   AccountBox as AccountIcon,
   AssignmentReturnedTwoTone as PayoutSettingsIcon,
-  AssignmentTurnedIn as ClaimIcon
+  AssignmentTurnedIn as ClaimIcon,
+  Receipt as InvoiceSettingsIcon
 } from '@mui/icons-material'
+import useUserTypes from '../../../../../../hooks/use-user-types'
 import { SideMenu } from '../../../../molecules/menus/side-menu/side-menu'
 
 const ProfileSidebar = ({ user }) => {
   const [selected, setSelected] = useState(0)
-  const { data, completed } = user
-  const userTypes = data?.Types?.map((t) => t.name)
   const history = useHistory()
+  const { isContributor, isMaintainer, isFunding, completed } = useUserTypes({ user })
 
   useEffect(() => {
     const path = history.location.pathname
@@ -45,6 +46,8 @@ const ProfileSidebar = ({ user }) => {
       setSelected(8)
     } else if (path.includes('/profile/payout-settings')) {
       setSelected(9)
+    } else if (path.includes('/profile/invoice-settings')) {
+      setSelected(10)
     } else {
       setSelected(0)
     }
@@ -77,10 +80,7 @@ const ProfileSidebar = ({ user }) => {
             ),
             items: [
               {
-                include:
-                  (userTypes &&
-                    (userTypes?.includes('contributor') || userTypes?.includes('maintainer'))) ||
-                  userTypes?.includes('funding'),
+                include: isContributor || isMaintainer || isFunding,
                 onClick: () => history.push('/profile/tasks'),
                 icon: <LibraryBooks />,
                 label: (
@@ -92,9 +92,7 @@ const ProfileSidebar = ({ user }) => {
                 selected: selected === 1
               },
               {
-                include:
-                  userTypes &&
-                  (userTypes?.includes('contributor') || userTypes?.includes('funding')),
+                include: isContributor || isFunding,
                 onClick: () => history.push('/profile/explore'),
                 icon: <ExploreIcon />,
                 label: (
@@ -116,9 +114,7 @@ const ProfileSidebar = ({ user }) => {
             ),
             items: [
               {
-                include:
-                  userTypes &&
-                  (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
+                include: isFunding || isMaintainer,
                 onClick: () => history.push('/profile/payments'),
                 icon: <PaymentIcon />,
                 label: (
@@ -127,7 +123,7 @@ const ProfileSidebar = ({ user }) => {
                 selected: selected === 3
               },
               {
-                include: userTypes && userTypes?.includes('contributor'),
+                include: isContributor,
                 onClick: () => history.push('/profile/payment-requests'),
                 icon: <PaymentRequestsIcon />,
                 label: (
@@ -139,9 +135,7 @@ const ProfileSidebar = ({ user }) => {
                 selected: selected === 4
               },
               {
-                include:
-                  userTypes &&
-                  (userTypes?.includes('funding') || userTypes?.includes('maintainer')),
+                include: isFunding || isMaintainer,
                 onClick: () => history.push('/profile/wallets'),
                 icon: <WalletIcon />,
                 label: (
@@ -150,7 +144,7 @@ const ProfileSidebar = ({ user }) => {
                 selected: selected === 5
               },
               {
-                include: userTypes && userTypes?.includes('contributor'),
+                include: isContributor,
                 onClick: () => history.push('/profile/claims'),
                 icon: <ClaimIcon />,
                 label: (
@@ -159,7 +153,7 @@ const ProfileSidebar = ({ user }) => {
                 selected: selected === 6
               },
               {
-                include: userTypes && userTypes?.includes('contributor'),
+                include: isContributor,
                 onClick: () => history.push('/profile/payouts'),
                 icon: <PayoutIcon />,
                 label: (
@@ -190,7 +184,7 @@ const ProfileSidebar = ({ user }) => {
                 selected: selected === 8
               },
               {
-                include: userTypes && userTypes?.includes('contributor'),
+                include: isContributor,
                 onClick: () => history.push('/profile/payout-settings'),
                 icon: <PayoutSettingsIcon />,
                 label: (
@@ -200,6 +194,18 @@ const ProfileSidebar = ({ user }) => {
                   />
                 ),
                 selected: selected === 9
+              },
+              {
+                include: isFunding || isMaintainer,
+                onClick: () => history.push('/profile/invoice-settings'),
+                icon: <InvoiceSettingsIcon />,
+                label: (
+                  <FormattedMessage
+                    id="account.profile.invoice.settings"
+                    defaultMessage="Invoice settings"
+                  />
+                ),
+                selected: selected === 10
               }
             ]
           }

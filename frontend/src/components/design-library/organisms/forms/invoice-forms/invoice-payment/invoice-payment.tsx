@@ -6,18 +6,16 @@ import { BillingInfoCard } from '../../../../molecules/cards/billing-info-card/b
 import { countryCodes } from '../../../../../areas/private/shared/country-codes'
 import { formatCurrency } from '../../../../../../utils/format-currency'
 import { InfoAlertWrapper, StyledPayButton } from './invoice-payment.styles'
+import { useHistory } from 'react-router-dom'
 
-// No component-level JSS; using styled components defined in invoice-payment.styles.ts
-
-const InvoicePayment = ({
-  price,
-  customer,
-  onInvoicePayment,
-  onInfoClick,
-  processingPayment = false
-}) => {
+const InvoicePayment = ({ price, customer, onInvoicePayment, processingPayment = false }) => {
+  const history = useHistory()
   const { data, completed } = customer
   const { name, address } = data
+
+  const onInfoClick = () => {
+    history.push('/profile/invoice-settings')
+  }
 
   return (
     <>
@@ -39,15 +37,15 @@ const InvoicePayment = ({
           action={
             <Button size="small" onClick={onInfoClick} variant="contained" color="secondary">
               <FormattedMessage
-                id="issue.payment.invoice.info.action"
-                defaultMessage="Update billing information"
+                id="issue.payment.invoice.info.action.update"
+                defaultMessage="Update invoice settings"
               />
             </Button>
           }
         >
           <FormattedMessage
-            id="issue.payment.invoice.info.description"
-            defaultMessage="To update your billing information, please fill in or update your details in the Billing Information section of your account settings. This information will be used to generate your invoice"
+            id="issue.payment.invoice.settings.info.description"
+            defaultMessage="To update the information to generate your invoice, please fill in or update your details in the Invoice Settings section of your account. This information will be used to generate your invoice"
           />
         </CustomAlert>
       </InfoAlertWrapper>

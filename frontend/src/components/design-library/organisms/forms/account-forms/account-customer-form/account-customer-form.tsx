@@ -1,92 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useIntl, FormattedMessage } from 'react-intl'
 import { Skeleton } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { Paper, Button, Typography, Input, Select } from '@mui/material'
-import { StyledFieldset, StyledLegend } from './account-customer.styles'
-import Field from '../../../../../../design-library/atoms/inputs/fields/field/field'
+import { StyledFieldset, StyledLegend } from './account-customer-form.styles'
+import Field from 'design-library/atoms/inputs/fields/field/field'
 
-import { countryCodesFull } from '../../../../shared/country-codes'
+import { countryCodesFull } from '../../../../../areas/private/shared/country-codes'
 
-// styles migrated to Styled components in account-customer.styles.ts
-
-type FieldProps = {
-  name: string
-  label: string | React.ReactNode
-  type?: string
-  required?: boolean
-  defaultValue?: string
-  value?: string
-  placeholder?: string
-  disabled?: boolean
-  help?: boolean
-  inputComponent?: any
-  ref?: React.Ref<HTMLElement> | null
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  completed?: boolean
-}
-
-const CustomerDetails = ({ customer, fetchCustomer, createCustomer, updateCustomer, user }) => {
+const AccountCustomerForm = ({ customer, customerData, user, handleSubmit, onChange }) => {
   const intl = useIntl()
-  const [customerData, setCustomerData] = useState({})
   const { data } = user
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!e.target) return false
-    let formData = {
-      name: e.target['name'].value,
-      email: data.email,
-      address: {
-        city: e.target['address[city]'].value,
-        country: e.target['address[country]'].value,
-        line1: e.target['address[line1]'].value,
-        line2: e.target['address[line2]'].value,
-        postal_code: e.target['address[postal_code]'].value,
-        state: e.target['address[state]'].value
-      },
-      metadata: {
-        user_id: data.id
-        //customer_type: e.target['customer_type'].value
-      }
-    }
-    setCustomerData(formData)
-    if (!data.customer_id) {
-      await createCustomer(formData)
-    } else {
-      await updateCustomer(formData)
-    }
-  }
-  const onChange = (e) => {
-    e.preventDefault()
-    if (!e.target) return false
-    setCustomerData({
-      ...customerData,
-      [e.target.name]: e.target.value || e.target.options?.[e.target.selectedIndex]?.value
-    })
-  }
-
-  useEffect(() => {
-    if (data.id) {
-      const userId = data.id
-      fetchCustomer(userId)
-    }
-  }, [data, createCustomer, updateCustomer, fetchCustomer])
-
   return (
-    <Paper elevation={1} style={{ padding: 20 }}>
-      <form
-        onSubmit={handleSubmit}
-        onChange={onChange}
-        style={{ marginTop: 20, marginBottom: 20, width: '100%' }}
-      >
+    <Paper elevation={0} sx={{ p: 2 }}>
+      <form onSubmit={handleSubmit} onChange={onChange} style={{ width: '100%' }}>
         <Grid container spacing={2}>
-          <Grid size={{ xs: 12, md: 12 }}>
-            <Typography variant="h6" gutterBottom>
-              <FormattedMessage id="account.customer.title" defaultMessage="Billing information" />
-            </Typography>
-          </Grid>
-
           <Grid size={{ xs: 12, md: 12 }}>
             <StyledFieldset>
               <StyledLegend>
@@ -210,8 +139,8 @@ const CustomerDetails = ({ customer, fetchCustomer, createCustomer, updateCustom
                 </Button>
                 <Button type="submit" variant="contained" color="secondary">
                   <FormattedMessage
-                    id="customer.actions.save"
-                    defaultMessage="Save payment information"
+                    id="account.customer.actions.save"
+                    defaultMessage="Save invoice settings"
                   />
                 </Button>
               </div>
@@ -223,4 +152,4 @@ const CustomerDetails = ({ customer, fetchCustomer, createCustomer, updateCustom
   )
 }
 
-export default CustomerDetails
+export default AccountCustomerForm

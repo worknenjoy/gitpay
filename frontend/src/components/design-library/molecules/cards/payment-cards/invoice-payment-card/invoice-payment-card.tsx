@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useLocation, useHistory } from 'react-router-dom'
 import InvoicePayment from 'design-library/organisms/forms/invoice-forms/invoice-payment/invoice-payment'
 
 interface InvoicePaymentCardProps {
@@ -23,9 +22,6 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
   createOrder,
   onPayment
 }) => {
-  const history = useHistory()
-  const location = useLocation()
-
   const [processingPayment, setProcessingPayment] = React.useState(false)
 
   const onInvoicePayment = async () => {
@@ -58,7 +54,6 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
       price={priceAfterFee}
       customer={customer}
       onInvoicePayment={onInvoicePayment}
-      onInfoClick={() => history.push('/profile/user-account/customer')}
       processingPayment={processingPayment}
     />
   )
