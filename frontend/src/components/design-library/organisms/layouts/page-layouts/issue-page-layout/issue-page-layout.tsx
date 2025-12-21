@@ -6,8 +6,6 @@ import IssueSidebar from 'design-library/molecules/sections/issue-sidebar/issue-
 const IssuePage = ({
   user,
   task,
-  project,
-  organization,
   onDeleteTask,
   account,
   updateTask,

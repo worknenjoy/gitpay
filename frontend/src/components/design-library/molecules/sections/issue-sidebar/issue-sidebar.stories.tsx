@@ -71,7 +71,7 @@ export const AsUser = Template.bind({})
 AsUser.args = {
   ...baseArgs,
   task: {
-    completed: false,
+    completed: true,
     values: { available: 250 },
     data: {
       id: 101,
@@ -106,7 +106,7 @@ export const AsOwner = Template.bind({})
 AsOwner.args = {
   ...baseArgs,
   task: {
-    completed: false,
+    completed: true,
     values: { available: 500 },
     data: {
       id: 202,
@@ -141,7 +141,7 @@ export const Overdue = Template.bind({})
 Overdue.args = {
   ...baseArgs,
   task: {
-    completed: false,
+    completed: true,
     values: { available: 0 },
     data: {
       id: 303,
@@ -160,4 +160,15 @@ Overdue.args = {
       }
     }
   }
+}
+
+export const Loading = Template.bind({})
+Loading.args = {
+  ...baseArgs,
+  task: {
+    completed: false,
+    data: {}
+  },
+  user: { completed: false, data: {} },
+  account: { completed: false, data: {} }
 }
