@@ -23,6 +23,7 @@ import { messages } from '../../../../../messages/messages'
 import IssueInviteCard from 'design-library/molecules/cards/issue-cards/issue-invite-card/issue-invite-card'
 import IssuePaymentsList from 'design-library/molecules/lists/issue-payments-list/issue-payments-list'
 import useIssueAuthor from '../../../../../hooks/use-issue-author'
+import IssueSidebarPlaceholder from './issue-sidebar.placeholder'
 
 const IssueSidebar = ({
   user,
@@ -54,6 +55,11 @@ const IssueSidebar = ({
 }) => {
   const intl = useIntl()
   const issueAuthor = useIssueAuthor(task, user)
+  const { data: taskData, completed: taskCompleted } = task || {}
+  const { completed: userCompleted } = user || {}
+  const { completed: accountCompleted } = account || {}
+
+  const isReady = taskCompleted || userCompleted || accountCompleted
 
   const [deadlineForm, setDeadlineForm] = useState(false)
   const [taskFundingDialog, setTaskFundingDialog] = useState(false)
@@ -75,16 +81,6 @@ const IssueSidebar = ({
     setInterestedSuggestedDate(null)
   }
 
-  const deliveryDate =
-    task?.data?.deadline !== null
-      ? MomentComponent(task.data.deadline).utc().format('MM-DD-YYYY')
-      : intl.formatMessage(messages.deliveryDateNotInformed)
-
-  const deadlineDiff =
-    task?.data?.deadline !== null
-      ? MomentComponent(task.data.deadline).diff(MomentComponent(), 'days')
-      : false
-
   const handleTaskFundingDialogOpen = () => {
     setInterestedSuggestedDate(null)
     setCurrentPrice(0)
@@ -94,7 +90,7 @@ const IssueSidebar = ({
   const sendFundingInvite = (e) => {
     e.preventDefault()
     fundingInviteTask(
-      task.data.id,
+      taskData.id,
       fundingInvite.email,
       fundingInvite.comment,
       currentPrice,
@@ -104,7 +100,17 @@ const IssueSidebar = ({
     handleAssignFundingDialogClose()
   }
 
-  return (
+  const deliveryDate =
+    taskData.deadline !== null
+      ? MomentComponent(taskData.deadline).utc().format('MM-DD-YYYY')
+      : intl.formatMessage(messages.deliveryDateNotInformed)
+
+  const deadlineDiff =
+    taskData.deadline !== null
+      ? MomentComponent(taskData.deadline).diff(MomentComponent(), 'days')
+      : false
+
+  return isReady ? (
     <SidebarRoot>
       {task.values && task.values.available > 0 && (
         <div style={{ textAlign: 'center', marginTop: 10 }}>
@@ -117,7 +123,7 @@ const IssueSidebar = ({
             </div>
             <Typography variant="h5" component="span">
               {task.values.available}
-              {task.data.paid && <Chip sx={{ ml: 1 }} size="small" label="paid" />}
+              {taskData.paid && <Chip sx={{ ml: 1 }} size="small" label="paid" />}
             </Typography>
           </div>
         </div>
@@ -129,20 +135,20 @@ const IssueSidebar = ({
             <FormattedMessage id="task.publicy.label" defaultMessage="Publicy" />
           </Typography>
           <div>
-            <IssuePublicStatus status={task.data.private ? 'private' : 'public'} />
+            <IssuePublicStatus status={taskData.private ? 'private' : 'public'} />
           </div>
         </SidebarItem>
 
-        {task.data.status && (
+        {taskData.status && (
           <SidebarItem>
             <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
               <FormattedMessage id="task.status.label" defaultMessage="Status" />
             </Typography>
             <div>
               <StatusChip
-                status={task.data.status}
-                label={intl.formatMessage(Constants.STATUSES[task.data.status])}
-                avatar={<StatusAvatarDot status={task.data.status}> </StatusAvatarDot>}
+                status={taskData.status}
+                label={intl.formatMessage(Constants.STATUSES[taskData.status])}
+                avatar={<StatusAvatarDot status={taskData.status}> </StatusAvatarDot>}
               />
             </div>
           </SidebarItem>
@@ -150,7 +156,7 @@ const IssueSidebar = ({
       </SidebarSection>
 
       <SidebarSection>
-        {task.data.level && !issueAuthor && (
+        {taskData.level && !issueAuthor && (
           <SidebarItem>
             <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
               <FormattedMessage id="task.level.label" defaultMessage="Level" />
@@ -160,13 +166,13 @@ const IssueSidebar = ({
                 <CoffeeIcon />
               </div>
               <Typography variant="h6" component="span" sx={{ verticalAlign: 'baseline', ml: 1 }}>
-                <TaskInfoContent>{task.data.level}</TaskInfoContent>
+                <TaskInfoContent>{taskData.level}</TaskInfoContent>
               </Typography>
             </div>
           </SidebarItem>
         )}
 
-        {task.data.deadline && !issueAuthor && (
+        {taskData.deadline && !issueAuthor && (
           <SidebarItem>
             <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
               <FormattedMessage id="task.deadline.label" defaultMessage="Deadline" />
@@ -174,7 +180,7 @@ const IssueSidebar = ({
             <div>
               <Typography variant="h6">
                 <Button onClick={() => setDeadlineForm(true)}>
-                  {task.data.deadline ? (
+                  {taskData.deadline ? (
                     <div>
                       <div>{deliveryDate}</div>
                       {deadlineDiff && deadlineDiff > 0 ? (
@@ -205,8 +211,8 @@ const IssueSidebar = ({
             <div>
               <Typography variant="h6">
                 <IssueLevelDropdown
-                  id={task.data.id}
-                  level={task.data.level}
+                  id={taskData.id}
+                  level={taskData.level}
                   updateTask={updateTask}
                 />
               </Typography>
@@ -222,7 +228,7 @@ const IssueSidebar = ({
             <div>
               <Typography variant="h6">
                 <Button onClick={() => setDeadlineForm(true)}>
-                  {task.data.deadline ? (
+                  {taskData.deadline ? (
                     <div>
                       <div>{deliveryDate}</div>
                       {deadlineDiff && deadlineDiff > 0 ? (
@@ -249,18 +255,18 @@ const IssueSidebar = ({
       <TaskDeadlineDrawer
         open={deadlineForm}
         onClose={() => setDeadlineForm(false)}
-        taskId={task.data.id}
-        task={task.data}
+        taskId={taskData.id}
+        task={taskData}
         onUpdate={(updatedTask) => {
           updateTask(updatedTask)
           setDeadlineForm(false)
         }}
       />
 
-      {task?.data && (task?.data?.orders?.length || task?.data?.Orders?.length) ? (
+      {taskData && (taskData.orders?.length || taskData.Orders?.length) ? (
         <div>
           <IssuePaymentsList
-            orders={(task?.data?.orders || task?.data?.Orders)?.filter(
+            orders={(taskData.orders || taskData.Orders)?.filter(
               (o) => o.paid && o.status === 'succeeded'
             )}
           />
@@ -300,7 +306,7 @@ const IssueSidebar = ({
         onInvite={inviteTask}
         onFunding={handleTaskFundingDialogOpen}
         user={user}
-        id={task.data.id}
+        id={taskData.id}
       />
 
       <OfferDrawer
@@ -372,6 +378,8 @@ const IssueSidebar = ({
         ]}
       />
     </SidebarRoot>
+  ) : (
+    <IssueSidebarPlaceholder />
   )
 }
 

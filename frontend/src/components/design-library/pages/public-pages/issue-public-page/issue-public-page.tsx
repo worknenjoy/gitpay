@@ -4,8 +4,6 @@ import IssuePage from 'design-library/organisms/layouts/page-layouts/issue-page-
 const IssuePublicPage = ({
   user,
   task,
-  project,
-  organization,
   onDeleteTask,
   updateTask,
   reportTask,
@@ -38,8 +36,6 @@ const IssuePublicPage = ({
     <IssuePage
       user={user}
       task={task}
-      project={project}
-      organization={organization}
       onDeleteTask={onDeleteTask}
       account={account}
       updateTask={updateTask}

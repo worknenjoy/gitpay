@@ -17,8 +17,6 @@ const IssuePrivatePage = ({
   inviteTask,
   messageAuthor,
   onDeleteTask,
-  organization,
-  project,
   reportTask,
   task,
   updateTask,
@@ -38,8 +36,6 @@ const IssuePrivatePage = ({
     <IssuePage
       user={user}
       task={task}
-      project={project}
-      organization={organization}
       onDeleteTask={onDeleteTask}
       account={account}
       updateTask={updateTask}
