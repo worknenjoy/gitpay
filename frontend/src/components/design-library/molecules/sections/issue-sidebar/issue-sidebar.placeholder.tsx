@@ -8,13 +8,14 @@ import {
   StatusChip,
   StatusAvatarDot
 } from './issue-sidebar.styles'
+import { FormattedMessage } from 'react-intl'
 
 const IssueSidebarPlaceholder = () => {
   return (
     <SidebarRoot aria-busy="true" aria-label="Issue sidebar loading">
       <div style={{ textAlign: 'center', marginTop: 10 }}>
         <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-          Value offered
+          <FormattedMessage id="task.value.label" defaultMessage="Value offered" />
         </Typography>
         <Typography variant="h5" component="div" justifyContent="center" display="flex">
           <Skeleton width={120} />
@@ -24,7 +25,7 @@ const IssueSidebarPlaceholder = () => {
       <SidebarSection>
         <SidebarItem>
           <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-            Publicy
+            <FormattedMessage id="task.publicy.label" defaultMessage="Publicy" />
           </Typography>
           <div>
             <Skeleton width={80} height={24} />
@@ -33,7 +34,7 @@ const IssueSidebarPlaceholder = () => {
 
         <SidebarItem>
           <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-            Status
+            <FormattedMessage id="task.status.label" defaultMessage="Status" />
           </Typography>
           <div>
             <StatusChip
@@ -48,7 +49,7 @@ const IssueSidebarPlaceholder = () => {
       <SidebarSection>
         <SidebarItem>
           <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-            Level
+            <FormattedMessage id="task.level.label" defaultMessage="Level" />
           </Typography>
           <div>
             <Typography variant="h6" component="span" sx={{ verticalAlign: 'baseline', ml: 1 }}>
@@ -61,7 +62,7 @@ const IssueSidebarPlaceholder = () => {
 
         <SidebarItem>
           <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-            Deadline
+            <FormattedMessage id="task.deadline.label" defaultMessage="Deadline" />
           </Typography>
           <div>
             <Typography variant="h6">
