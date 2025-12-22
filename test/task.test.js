@@ -891,7 +891,8 @@ describe('tasks', () => {
               source_id: '12345',
               currency: 'BRL',
               amount: 256.56,
-              status: 'succeeded'
+              status: 'succeeded',
+              paid: true
             })
             .then((order) => {
               agent

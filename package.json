@@ -138,6 +138,7 @@
     "@types/i18n": "^0.13.12",
     "@types/jasmine": "2.5.38",
     "@types/node": "^18.19.130",
+    "@types/request-promise": "^4.1.51",
     "@types/supertest": "^6.0.3",
     "@types/umzug": "^2.3.9",
     "chai": "^3.5.0",

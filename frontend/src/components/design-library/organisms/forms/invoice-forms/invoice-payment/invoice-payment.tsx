@@ -77,7 +77,7 @@ const InvoicePayment = ({ price, customer, onInvoicePayment, processingPayment =
             }}
           />
         }
-        completed={!processingPayment || customer.completed}
+        completed={!processingPayment && customer.completed}
       />
     </>
   )

@@ -329,7 +329,7 @@ const detailOrder = (id) => {
   return (dispatch) => {
     dispatch(detailOrderRequested())
     return axios
-      .get(api.API_URL + `/orders/${id}`)
+      .get(api.API_URL + `/orders/${id}/details`)
       .then((order) => {
         if (order.data) {
           return dispatch(detailOrderSuccess(order.data))

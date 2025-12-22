@@ -51,6 +51,7 @@ const PublicPage = ({
           <Route exact path="/task/:id/status" component={TaskContainer} />
           <Route exact path="/task/:id/status/:status" component={TaskContainer} />
           <Route exact path="/task/:id/orders/:order_id" component={TaskContainer} />
+          <Route exact path="/task/:id/order/:order_id/status/:status" component={TaskContainer} />
           <Route exact path="/task/:id/:slug/interested" component={TaskContainer} />
           <Route exact path="/task/:id/interested/:interested_id" component={TaskContainer} />
           <Route exact path="/task/:id/members" component={TaskContainer} />

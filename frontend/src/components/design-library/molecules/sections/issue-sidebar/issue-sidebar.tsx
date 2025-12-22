@@ -56,10 +56,8 @@ const IssueSidebar = ({
   const intl = useIntl()
   const issueAuthor = useIssueAuthor(task, user)
   const { data: taskData, completed: taskCompleted } = task || {}
-  const { completed: userCompleted } = user || {}
-  const { completed: accountCompleted } = account || {}
 
-  const isReady = taskCompleted || userCompleted || accountCompleted
+  const isReady = taskCompleted
 
   const [deadlineForm, setDeadlineForm] = useState(false)
   const [taskFundingDialog, setTaskFundingDialog] = useState(false)
@@ -267,7 +265,7 @@ const IssueSidebar = ({
         <div>
           <IssuePaymentsList
             orders={(taskData.orders || taskData.Orders)?.filter(
-              (o) => o.paid && o.status === 'succeeded'
+              (o) => o.paid
             )}
           />
         </div>

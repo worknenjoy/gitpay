@@ -3,12 +3,11 @@ const orderSearch = require('./orderSearch')
 const orderBuilds = require('./orderBuilds')
 const orderUpdate = require('./orderUpdate')
 const orderAuthorize = require('./orderAuthorize')
-const orderFetch = require('./orderFetch')
 const orderPayment = require('./orderPayment')
 const orderCancel = require('./orderCancel')
-const orderDetails = require('./orderDetails')
 const orderTransfer = require('./orderTransfer')
 const orderRefund = require('./orderRefund')
+const { orderDetails } = require('./orderDetails/orderDetails')
 
 module.exports = {
   orderExists,
@@ -16,7 +15,6 @@ module.exports = {
   orderBuilds,
   orderAuthorize,
   orderUpdate,
-  orderFetch,
   orderPayment,
   orderCancel,
   orderDetails,

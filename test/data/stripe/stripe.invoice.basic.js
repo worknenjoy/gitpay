@@ -44,8 +44,8 @@ module.exports.created = {
   ending_balance: null,
   footer: null,
   from_invoice: null,
-  hosted_invoice_url: null,
-  invoice_pdf: null,
+  hosted_invoice_url: 'https://stripe.com/invoice/invst_1Q2fh8BrSjgsps2DUqQsGLDj',
+  invoice_pdf: 'https://stripe.com/invoice/invst_1Q2fh8BrSjgsps2DUqQsGLDj/pdf',
   issuer: {
     type: 'self'
   },
