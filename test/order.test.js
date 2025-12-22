@@ -650,7 +650,7 @@ describe('Orders', () => {
       const order = await models.Order.build({
         source_id: '12345',
         currency: 'BRL',
-        amount: 200,
+        amount: 200
       }).save()
 
       const res = await agent
@@ -667,9 +667,9 @@ describe('Orders', () => {
     })
     it('should get order invoice', async () => {
       nock('https://api.stripe.com')
-      .get('/v1/invoices/12345')
-      .reply(200, invoiceData.created, { 'Content-Type': 'application/json' })
-      
+        .get('/v1/invoices/12345')
+        .reply(200, invoiceData.created, { 'Content-Type': 'application/json' })
+
       const user = await registerAndLogin(agent, { email: 'test_fetch_order@gitpay.me' })
       const order = await models.Order.build({
         source_id: '12345',

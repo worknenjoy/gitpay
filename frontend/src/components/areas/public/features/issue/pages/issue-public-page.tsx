@@ -4,13 +4,13 @@ import { useParams } from 'react-router-dom'
 
 const IssuePublicPage = (props) => {
   const { fetchTask, syncTask, addNotification } = props
-  const { id, status } = useParams<{ id: string, status?: string }>()
+  const { id, status } = useParams<{ id: string; status?: string }>()
 
   useEffect(() => {
     if (status === 'success') {
       addNotification('The PayPal payment was completed successfully!', { variant: 'success' })
     }
-    if(status === 'failed') {
+    if (status === 'failed') {
       addNotification('There was an error processing the PayPal payment.', { variant: 'error' })
     }
   }, [id, status])

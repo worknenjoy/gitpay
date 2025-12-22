@@ -36,10 +36,10 @@ const Payments = ({
   const history = useHistory()
   const intl = useIntl()
   const [selectedOrder, setSelectedOrder] = React.useState<any | null>(null)
-  const [ openDetailsOrder, setOpenDetailsOrder ] = React.useState<any | null>(null)
+  const [openDetailsOrder, setOpenDetailsOrder] = React.useState<any | null>(null)
   const [selectedTransferOrder, setSelectedTransferOrder] = React.useState<any | null>(null)
-  const [ downloadInvoice, setDownloadInvoice ] = React.useState<any | null>(null)
-  const [ payInvoice, setPayInvoice ] = React.useState<any | null>(null)
+  const [downloadInvoice, setDownloadInvoice] = React.useState<any | null>(null)
+  const [payInvoice, setPayInvoice] = React.useState<any | null>(null)
 
   useEffect(() => {
     listOrders({ userId: user.id })
@@ -157,7 +157,9 @@ const Payments = ({
                       setOpenDetailsOrder(item)
                     }
                   },
-                  item.provider === 'stripe' && item.source_type === 'invoice-item' && item.status === 'open'
+                  item.provider === 'stripe' &&
+                  item.source_type === 'invoice-item' &&
+                  item.status === 'open'
                     ? {
                         icon: <PayIcon />,
                         children: (
@@ -171,20 +173,22 @@ const Payments = ({
                         }
                       }
                     : null,
-                item.provider === 'stripe' && item.source_type === 'invoice-item' && item.status === 'paid'
-                  ? {
-                      icon: <DownloadIcon />,
-                      children: (
-                        <FormattedMessage
-                          id="payments.order.downloadInvoice"
-                          defaultMessage="Download Invoice"
-                        />
-                      ),
-                      onClick: () => {
-                        onDownloadInvoice(item)
+                  item.provider === 'stripe' &&
+                  item.source_type === 'invoice-item' &&
+                  item.status === 'paid'
+                    ? {
+                        icon: <DownloadIcon />,
+                        children: (
+                          <FormattedMessage
+                            id="payments.order.downloadInvoice"
+                            defaultMessage="Download Invoice"
+                          />
+                        ),
+                        onClick: () => {
+                          onDownloadInvoice(item)
+                        }
                       }
-                    }
-                  : null,
+                    : null,
                   item.provider === 'stripe' &&
                   item.status === 'succeeded' &&
                   item.Task &&

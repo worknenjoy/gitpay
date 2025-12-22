@@ -16,7 +16,7 @@ const AddFundsInvoiceTab: React.FC<AddFundsInvoiceTabProps> = ({
   customer,
   onPay
 }) => {
-  const [ processingPayment, setProcessingPayment ] = React.useState(false)
+  const [processingPayment, setProcessingPayment] = React.useState(false)
   const onInvoicePayment = async () => {
     setProcessingPayment(true)
     await onPay(priceAfterFee)
@@ -26,7 +26,12 @@ const AddFundsInvoiceTab: React.FC<AddFundsInvoiceTabProps> = ({
   useEffect(() => {}, [])
 
   return (
-    <InvoicePayment price={priceAfterFee} customer={customer} onInvoicePayment={onInvoicePayment} processingPayment={processingPayment} />
+    <InvoicePayment
+      price={priceAfterFee}
+      customer={customer}
+      onInvoicePayment={onInvoicePayment}
+      processingPayment={processingPayment}
+    />
   )
 }
 

@@ -263,11 +263,7 @@ const IssueSidebar = ({
 
       {taskData && (taskData.orders?.length || taskData.Orders?.length) ? (
         <div>
-          <IssuePaymentsList
-            orders={(taskData.orders || taskData.Orders)?.filter(
-              (o) => o.paid
-            )}
-          />
+          <IssuePaymentsList orders={(taskData.orders || taskData.Orders)?.filter((o) => o.paid)} />
         </div>
       ) : null}
 

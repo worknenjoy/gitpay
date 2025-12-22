@@ -6,7 +6,10 @@ const models = Models as any
 
 export async function orderDetails(orderParams: any) {
   try {
-    const order = await models.Order.findOne({ where: { id: orderParams.id }, include: models.User })
+    const order = await models.Order.findOne({
+      where: { id: orderParams.id },
+      include: models.User
+    })
     let orderDetails = {}
 
     switch (order.provider) {
@@ -31,7 +34,6 @@ export async function orderDetails(orderParams: any) {
           default:
             orderDetails = order
             break
-
         }
         break
       }

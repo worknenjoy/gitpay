@@ -9,9 +9,7 @@ export default async function orderFetchPaypal(sourceId: any) {
       'Accept-Language': 'en_US',
       Authorization:
         'Basic ' +
-        Buffer.from(`${process.env.PAYPAL_CLIENT}:${process.env.PAYPAL_SECRET}`).toString(
-          'base64'
-        ),
+        Buffer.from(`${process.env.PAYPAL_CLIENT}:${process.env.PAYPAL_SECRET}`).toString('base64'),
       'Content-Type': 'application/json',
       grant_type: 'client_credentials'
     },

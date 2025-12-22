@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addNotification} from '../actions/notificationActions'
+import { addNotification } from '../actions/notificationActions'
 import { createTask } from '../actions/taskActions'
 import { loggedIn, logOut, registerUser, forgotPassword } from '../actions/loginActions'
 import { fetchRoles } from '../actions/userRoleActions'
