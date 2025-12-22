@@ -19,7 +19,7 @@ module.exports = Promise.method(function taskSync(taskParameters) {
       const decimalAmount = new Decimal(item.amount)
       if (item.status === 'open') {
         finalValue.pending.plus(decimalAmount)
-      } else if (item.status === 'succeeded') {
+      } else if (item.paid) {
         finalValue.available = Decimal.add(finalValue.available, decimalAmount)
         if (item.provider === 'paypal') {
           finalValue.paypal = Decimal.add(finalValue.paypal, decimalAmount)

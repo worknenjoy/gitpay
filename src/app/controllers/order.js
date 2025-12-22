@@ -61,6 +61,7 @@ exports.listOrders = (req, res) => {
       res.send(data)
     })
     .catch((error) => {
+      console.log('error on listOrders', error)
       res.send(false)
     })
 }

@@ -1,6 +1,6 @@
 const models = require('../../models')
 const { Op } = require('sequelize')
-const OrderDetails = require('../../modules/orders/orderDetails')
+const OrderDetails = require('../../modules/orders/orderDetails/orderDetails')
 const OrderCancel = require('../../modules/orders/orderCancel')
 const requestPromise = require('request-promise')
 const orderMail = require('../../modules/mail/order')

@@ -12,20 +12,26 @@ interface AddFundsInvoiceTabProps extends RouteComponentProps {
 }
 
 const AddFundsInvoiceTab: React.FC<AddFundsInvoiceTabProps> = ({
-  price,
   priceAfterFee,
   customer,
-  history,
   onPay
 }) => {
+  const [processingPayment, setProcessingPayment] = React.useState(false)
   const onInvoicePayment = async () => {
+    setProcessingPayment(true)
     await onPay(priceAfterFee)
+    setProcessingPayment(false)
   }
 
   useEffect(() => {}, [])
 
   return (
-    <InvoicePayment price={priceAfterFee} customer={customer} onInvoicePayment={onInvoicePayment} />
+    <InvoicePayment
+      price={priceAfterFee}
+      customer={customer}
+      onInvoicePayment={onInvoicePayment}
+      processingPayment={processingPayment}
+    />
   )
 }
 

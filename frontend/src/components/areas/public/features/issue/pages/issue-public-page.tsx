@@ -3,8 +3,17 @@ import IssuePublicPageComponent from 'design-library/pages/public-pages/issue-pu
 import { useParams } from 'react-router-dom'
 
 const IssuePublicPage = (props) => {
-  const { fetchTask, syncTask } = props
-  const { id } = useParams<{ id: string }>()
+  const { fetchTask, syncTask, addNotification } = props
+  const { id, status } = useParams<{ id: string; status?: string }>()
+
+  useEffect(() => {
+    if (status === 'success') {
+      addNotification('The PayPal payment was completed successfully!', { variant: 'success' })
+    }
+    if (status === 'failed') {
+      addNotification('There was an error processing the PayPal payment.', { variant: 'error' })
+    }
+  }, [id, status])
 
   useEffect(() => {
     if (fetchTask) {
@@ -13,7 +22,7 @@ const IssuePublicPage = (props) => {
     if (syncTask) {
       syncTask(id)
     }
-  }, [id])
+  }, [id, status])
 
   return <IssuePublicPageComponent {...props} />
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { addNotification } from '../actions/notificationActions'
 import { createTask } from '../actions/taskActions'
 import { loggedIn, logOut, registerUser, forgotPassword } from '../actions/loginActions'
 import { fetchRoles } from '../actions/userRoleActions'
@@ -20,6 +21,7 @@ const CommonContainer = (WrappedComponent, customMapStateToProps = () => ({})) =
 
   const mapDispatchToProps = (dispatch, ownProps) => {
     return {
+      addNotification: (message, options) => dispatch(addNotification(message, options)),
       isLogged: () => dispatch(loggedIn()),
       signOut: () => dispatch(logOut()),
       getInfo: () => dispatch(info()),

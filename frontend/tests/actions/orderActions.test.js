@@ -130,7 +130,7 @@ describe('order actions', () => {
     })
     it('creates DETAIL_ORDER_SUCCESS when detailing order has been done', () => {
       const orderData = { id: 1 }
-      moxios.stubRequest(`${api.API_URL}/orders/1`, {
+      moxios.stubRequest(`${api.API_URL}/orders/1/details`, {
         status: 200,
         response: orderData
       })
@@ -145,7 +145,7 @@ describe('order actions', () => {
       })
     })
     xit('creates DETAIL_ORDER_ERROR when detailing order fails', () => {
-      moxios.stubRequest(`${api.API_URL}/orders/1`, {
+      moxios.stubRequest(`${api.API_URL}/orders/1/details`, {
         status: 500
       })
 

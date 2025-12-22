@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
 
 import PaymentDrawer from 'design-library/molecules/drawers/payment-drawer/payment-drawer'
 import AddFundsInvoiceTab from './add-funds-invoice-tab'
@@ -19,7 +19,8 @@ const taskPaymentFormMessages = defineMessages({
   }
 })
 
-const AddFundsFormDrawer = ({ intl, open, onClose, customer, onPay }) => {
+const AddFundsFormDrawer = ({ open, onClose, customer, onPay }) => {
+  const intl = useIntl()
   const [price, setPrice] = useState(0)
   const [priceAfterFee, setPriceAfterFee] = useState(0)
 
@@ -88,4 +89,4 @@ const AddFundsFormDrawer = ({ intl, open, onClose, customer, onPay }) => {
   )
 }
 
-export default injectIntl(AddFundsFormDrawer)
+export default AddFundsFormDrawer

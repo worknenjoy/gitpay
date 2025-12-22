@@ -35,7 +35,7 @@ module.exports = async function invoiceUpdated(event, req, res) {
   return models.Order.update(
     {
       paid: event.data.object.status === 'paid',
-      status: event.data.object.status === 'paid' ? 'succeeded' : 'failed',
+      status: event.data.object.status,
       source: event.data.object.charge
     },
     {

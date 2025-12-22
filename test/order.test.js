@@ -12,8 +12,9 @@ const PaymentMail = require('../src/modules/mail/payment')
 const plan = require('../src/models/plan')
 const stripe = require('../src/modules/shared/stripe/stripe')()
 const customerData = require('./data/stripe/stripe.customer')
+const invoiceData = require('./data/stripe/stripe.invoice.basic')
 
-describe('orders', () => {
+describe('Orders', () => {
   beforeEach(async () => {
     await truncateModels(models.Task)
     await truncateModels(models.User)
@@ -210,6 +211,7 @@ describe('orders', () => {
       expect(res.body.source_id).to.exist
       expect(res.body.currency).to.equal('BRL')
       expect(res.body.amount).to.equal('200')
+      expect(res.body.status).to.equal('open')
       expect(res.body.Plan).to.exist
       expect(res.body.Plan.plan).to.equal('open source')
       expect(res.body.Plan.fee).to.equal('16')
@@ -570,7 +572,7 @@ describe('orders', () => {
       })
 
       const orderDetails = await agent
-        .get(`/orders/${orderData.id}`)
+        .get(`/orders/${orderData.id}/details`)
         .set('Authorization', user.headers.authorization)
         .expect(200)
 
@@ -643,7 +645,7 @@ describe('orders', () => {
       expect(res.body.source_id).to.equal('order_foo')
     })
 
-    it('should fetch order', async () => {
+    it('should get order details simple', async () => {
       const user = await registerAndLogin(agent, { email: 'test_fetch_order@gitpay.me' })
       const order = await models.Order.build({
         source_id: '12345',
@@ -652,16 +654,44 @@ describe('orders', () => {
       }).save()
 
       const res = await agent
-        .get(`/orders/${order.dataValues.id}/fetch`)
+        .get(`/orders/${order.dataValues.id}/details`)
         .set('Authorization', user.headers.authorization)
-        .expect('Content-Type', /json/)
         .expect(200)
+        .expect('Content-Type', /json/)
 
       expect(res.statusCode).to.equal(200)
       expect(res.body).to.exist
       expect(res.body.source_id).to.equal('12345')
       expect(res.body.currency).to.equal('BRL')
       expect(res.body.amount).to.equal('200')
+    })
+    it('should get order invoice', async () => {
+      nock('https://api.stripe.com')
+        .get('/v1/invoices/12345')
+        .reply(200, invoiceData.created, { 'Content-Type': 'application/json' })
+
+      const user = await registerAndLogin(agent, { email: 'test_fetch_order@gitpay.me' })
+      const order = await models.Order.build({
+        source_id: '12345',
+        currency: 'BRL',
+        amount: 200,
+        provider: 'stripe',
+        source_type: 'invoice-item'
+      }).save()
+
+      const res = await agent
+        .get(`/orders/${order.dataValues.id}/details`)
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+        .expect('Content-Type', /json/)
+
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.source_id).to.equal('12345')
+      expect(res.body.currency).to.equal('BRL')
+      expect(res.body.amount).to.equal('200')
+      expect(res.body.stripe.hosted_invoice_url).to.exist
+      expect(res.body.stripe.invoice_pdf).to.exist
     })
   })
 

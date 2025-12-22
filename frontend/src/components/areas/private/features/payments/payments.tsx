@@ -2,8 +2,10 @@ import React, { useEffect } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import {
   SwapHoriz as TransferIcon,
-  Receipt as ReceiptIcon,
-  PaymentsOutlined as PaymentIcon
+  DownloadDoneRounded as DownloadIcon,
+  PaymentOutlined as PayIcon,
+  PaymentsOutlined as PaymentIcon,
+  ReceiptOutlined as ReceiptIcon
 } from '@mui/icons-material'
 import { messages } from '../../../../../messages/messages'
 import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page'
@@ -34,7 +36,10 @@ const Payments = ({
   const history = useHistory()
   const intl = useIntl()
   const [selectedOrder, setSelectedOrder] = React.useState<any | null>(null)
+  const [openDetailsOrder, setOpenDetailsOrder] = React.useState<any | null>(null)
   const [selectedTransferOrder, setSelectedTransferOrder] = React.useState<any | null>(null)
+  const [downloadInvoice, setDownloadInvoice] = React.useState<any | null>(null)
+  const [payInvoice, setPayInvoice] = React.useState<any | null>(null)
 
   useEffect(() => {
     listOrders({ userId: user.id })
@@ -45,6 +50,22 @@ const Payments = ({
       getOrderDetails(selectedOrder.id)
     }
   }, [selectedOrder])
+
+  const onPayInvoice = async (item) => {
+    const { data: orderDetails } = await getOrderDetails(item.id)
+    const invoiceUrl = orderDetails?.stripe?.hosted_invoice_url
+    if (invoiceUrl) {
+      window.open(invoiceUrl, '_blank')
+    }
+  }
+
+  const onDownloadInvoice = async (item) => {
+    const { data: orderDetails } = await getOrderDetails(item.id)
+    const invoicePdf = orderDetails?.stripe?.invoice_pdf
+    if (invoicePdf) {
+      window.open(invoicePdf, '_blank')
+    }
+  }
 
   return (
     <>
@@ -133,8 +154,41 @@ const Payments = ({
                     ),
                     onClick: () => {
                       setSelectedOrder(item)
+                      setOpenDetailsOrder(item)
                     }
                   },
+                  item.provider === 'stripe' &&
+                  item.source_type === 'invoice-item' &&
+                  item.status === 'open'
+                    ? {
+                        icon: <PayIcon />,
+                        children: (
+                          <FormattedMessage
+                            id="payments.order.payInvoice"
+                            defaultMessage="Pay Invoice"
+                          />
+                        ),
+                        onClick: () => {
+                          onPayInvoice(item)
+                        }
+                      }
+                    : null,
+                  item.provider === 'stripe' &&
+                  item.source_type === 'invoice-item' &&
+                  item.status === 'paid'
+                    ? {
+                        icon: <DownloadIcon />,
+                        children: (
+                          <FormattedMessage
+                            id="payments.order.downloadInvoice"
+                            defaultMessage="Download Invoice"
+                          />
+                        ),
+                        onClick: () => {
+                          onDownloadInvoice(item)
+                        }
+                      }
+                    : null,
                   item.provider === 'stripe' &&
                   item.status === 'succeeded' &&
                   item.Task &&
@@ -191,12 +245,12 @@ const Payments = ({
           }
         }}
       />
-      {selectedOrder && (
+      {openDetailsOrder && (
         <IssueOrderDetailsAction
-          open={!!selectedOrder}
+          open={!!openDetailsOrder}
           order={order}
-          onClose={() => setSelectedOrder(null)}
-          onCancel={() => cancelPaypalPayment(selectedOrder.id)}
+          onClose={() => setOpenDetailsOrder(null)}
+          onCancel={() => cancelPaypalPayment(order.id)}
         />
       )}
       {selectedTransferOrder && (

@@ -5,8 +5,7 @@ import {
   SidebarSection,
   SidebarItem,
   TaskInfoContent,
-  StatusChip,
-  StatusAvatarDot
+  StatusChip
 } from './issue-sidebar.styles'
 import { FormattedMessage } from 'react-intl'
 
@@ -40,7 +39,7 @@ const IssueSidebarPlaceholder = () => {
             <StatusChip
               status="open"
               label={<Skeleton width={60} />}
-              avatar={<StatusAvatarDot status="open" />}
+              avatar={<Skeleton width={12} height={12} variant="circular" />}
             />
           </div>
         </SidebarItem>
@@ -74,10 +73,8 @@ const IssueSidebarPlaceholder = () => {
 
       <SidebarSection>
         <SidebarItem>
-          <Skeleton variant="rectangular" width={220} height={38} />
-        </SidebarItem>
-        <SidebarItem>
-          <Skeleton variant="rectangular" width={220} height={38} />
+          <Skeleton variant="rectangular" width={320} height={38} style={{ marginBottom: 20 }} />
+          <Skeleton variant="rectangular" width={320} height={38} />
         </SidebarItem>
       </SidebarSection>
 
