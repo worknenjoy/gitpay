@@ -74,7 +74,7 @@ const PayoutMail: any = {
               ? i18n.__('mail.webhook.payout.updated.details.trace_available', {
                   traceId: payout.reference_number
                 })
-              : i18n.__('mail.webhook.payout.updated.details.no_trace')
+              : ''
           )
         }
       ])
