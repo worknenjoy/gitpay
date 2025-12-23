@@ -49,7 +49,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
         const inputElement = amountInputRef.current // Find the input element inside the Field component
 
         if (inputElement) {
-          inputElement.value = formattedAmount // Directly set the value
+          inputElement.valueAsNumber = Number(formattedAmount) // Directly set the value
           const event = new Event('input', { bubbles: true })
           inputElement.dispatchEvent(event)
           inputElement.focus()

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Container, Skeleton } from '@mui/material'
+import { Button, Container } from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { FormattedMessage } from 'react-intl'
 import ShowMoreText from 'react-show-more-text'

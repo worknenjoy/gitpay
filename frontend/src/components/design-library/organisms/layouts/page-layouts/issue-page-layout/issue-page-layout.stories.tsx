@@ -97,5 +97,5 @@ Loading.args = {
 export const Error = Template.bind({})
 Error.args = {
   ...Default.args,
-  task: { completed: true, error: 'Failed to load task data', data: {} },
+  task: { completed: true, error: 'Failed to load task data', data: {} }
 }
