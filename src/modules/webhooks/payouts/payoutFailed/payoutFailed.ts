@@ -24,9 +24,8 @@ export async function payoutFailed(event: any, req: Request, res: Response) {
 
     if (payout) {
       const updatedPayout = await payout.update({
-        status: object.status,
+        status: object.status
       })
-      
 
       if (!updatedPayout) return res.status(400).send({ error: 'Error to update payout' })
 

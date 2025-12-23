@@ -53,6 +53,7 @@ const PayoutMail: any = {
 
     const currency = payout.currency?.toLowerCase?.() || 'usd'
     const currencySymbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
+    const status = payout.status || 'generic'
 
     try {
       return await request(email, i18n.__('mail.webhook.payout.updated.subject'), [
@@ -65,7 +66,7 @@ const PayoutMail: any = {
               headers: ['Item', '<div style="text-align:right">Amount</div>'],
               rows: [
                 [
-                  i18n.__('mail.webhook.payout.updated.payout'),
+                  i18n.__(`mail.webhook.payout.updated.payout.${status}`),
                   `<div style="text-align:right">${currencySymbol} ${amount}</div>`
                 ]
               ]

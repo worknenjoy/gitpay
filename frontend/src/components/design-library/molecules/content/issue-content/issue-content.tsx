@@ -8,8 +8,10 @@ import parse from 'html-react-parser'
 import IssueHeader from '../../headers/issue-header/issue-header'
 import IssueAuthorList from '../../lists/issue-author-list/issue-author-list'
 import { DescriptionHeading, IssueContentText } from './issue-content.styles'
+import IssueContentPlaceholder from './issue-content-placeholder'
 
 const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messageAuthor }) => {
+  const { completed } = task
   return (
     <Container fixed maxWidth="md" sx={{ mt: 2 }}>
       <IssueHeader
@@ -22,15 +24,7 @@ const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messag
       <DescriptionHeading variant="subtitle1">
         <FormattedMessage id="task.info.description" defaultMessage="Description" />
       </DescriptionHeading>
-      {!task.completed ? (
-        <>
-          <Skeleton variant="text" animation="wave" width="100%" />
-          <Skeleton variant="text" animation="wave" width="100%" />
-          <Skeleton variant="text" animation="wave" width="100%" />
-          <Skeleton variant="text" animation="wave" width="100%" />
-          <Skeleton variant="text" animation="wave" width="100%" />
-        </>
-      ) : (
+      {completed ? (
         <IssueContentText variant="body1">
           <ShowMoreText
             lines={8}
@@ -50,6 +44,8 @@ const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messag
             {task.data.description && parse(marked(task.data.description))}
           </ShowMoreText>
         </IssueContentText>
+      ) : (
+        <IssueContentPlaceholder />
       )}
       <IssueAuthorList
         user={user}

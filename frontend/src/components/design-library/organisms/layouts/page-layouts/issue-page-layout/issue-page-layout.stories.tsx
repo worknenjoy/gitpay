@@ -81,3 +81,21 @@ Default.args = {
   fetchPullRequestData: () => console.log('Fetch pull request data'),
   pullRequestData: { completed: true, data: null }
 }
+
+export const Loading = Template.bind({})
+Loading.args = {
+  ...Default.args,
+  logged: { completed: false, data: {} },
+  task: { completed: false, data: {} },
+  account: { completed: false, data: {} },
+  customer: { completed: false, data: {} },
+  wallet: { completed: false, data: {} },
+  wallets: { completed: false, data: {} },
+  pullRequestData: { completed: false, data: {} }
+}
+
+export const Error = Template.bind({})
+Error.args = {
+  ...Default.args,
+  task: { completed: true, error: 'Failed to load task data', data: {} },
+}

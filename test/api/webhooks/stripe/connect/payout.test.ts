@@ -153,7 +153,7 @@ describe('webhooks for payout', () => {
       expect(payout.reference_number).to.equal('XXX-1234')
     })
 
-    it('should update the order when a webhook payout.failed is triggered', async () => {
+    it('should know the user when a webhook payout.failed is triggered', async () => {
       await models.User.create({
         email: 'teste@mail.com',
         password: 'teste',
@@ -169,6 +169,37 @@ describe('webhooks for payout', () => {
       expect(res.statusCode).to.equal(200)
       expect(res.body).to.exist
       expect(res.body.id).to.equal('evt_1ChFtEAcSPl6ox0l3VSifPWa')
+    })
+    it('should update order to failed payout when payout.failed is triggered', async () => {
+      const user = await models.User.create({
+        email: 'teste@mail.com',
+        password: 'teste',
+        account_id: 'acct_1CdjXFAcSPl6ox0l'
+      })
+
+      const payout = await models.Payout.create({
+        source_id: 'po_1CgNDoAcSPl6ox0ljXdVYWx3',
+        amount: 5000,
+        currency: 'usd',
+        status: 'paid',
+        method: 'bank_account',
+        userId: user.dataValues.id,
+      })
+
+      const res = await agent
+        .post('/webhooks/stripe-connect')
+        .send(payoutData.failed)
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      expect(res.statusCode).to.equal(200)
+      expect(res.body).to.exist
+      expect(res.body.id).to.equal('evt_1ChFtEAcSPl6ox0l3VSifPWa')
+
+      const updatedPayout = await models.Payout.findOne({ where: { id: payout.dataValues.id } })
+
+      expect(updatedPayout).to.exist
+      expect(updatedPayout?.dataValues.status).to.equal('failed')
     })
   })
 })

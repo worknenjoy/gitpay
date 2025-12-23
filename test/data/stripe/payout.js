@@ -190,6 +190,7 @@ module.exports.failed = {
   },
   livemode: true,
   pending_webhooks: 1,
+  status: 'failed',
   request: {
     id: null,
     idempotency_key: null
