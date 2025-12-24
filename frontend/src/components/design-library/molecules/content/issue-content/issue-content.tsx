@@ -13,8 +13,7 @@ import IssueContentPlaceholder from './issue-content-placeholder'
 const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messageAuthor }) => {
   const { data, completed } = task
 
-  return (
-    completed ?
+  return completed ? (
     <Container fixed maxWidth="md" sx={{ mt: 2 }}>
       <IssueHeader
         task={task}
@@ -57,7 +56,8 @@ const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messag
           }
         ]}
       />
-    </Container> :
+    </Container>
+  ) : (
     <IssueContentPlaceholder />
   )
 }

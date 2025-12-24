@@ -7,7 +7,7 @@ export const TaskHeaderContainer = styled('div')(({ theme }) => ({
     margin: '-1rem -1rem 1rem -1rem',
     padding: '1rem',
     '& h1': {
-      fontSize: '1.75rem',
-    },
-  },
+      fontSize: '1.75rem'
+    }
+  }
 }))

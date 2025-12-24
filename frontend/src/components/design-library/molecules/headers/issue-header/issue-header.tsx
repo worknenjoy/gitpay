@@ -85,14 +85,13 @@ const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) =
           link: '/explore/issues'
         }
 
-  return (
-    completed ?
+  return completed ? (
     <TaskHeaderContainer>
       <Grid size={{ xs: 12, sm: 12, md: 12 }}>
         <div style={{ marginTop: 30, marginBottom: 20 }}>
           <Breadcrumb task={task} root={breadcrumbRoot} />
         </div>
-        
+
         <div style={{ marginTop: 20, marginBottom: 0 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography variant="h5" gutterBottom>
@@ -103,7 +102,7 @@ const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) =
             </IconButton>
           </div>
         </div>
-       
+
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMoreButton}>
           {issueAuthor && (
             <MenuItem
@@ -242,7 +241,9 @@ const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) =
         </Typography>
         <TaskLabels labels={data?.metadata?.labels} completed={task.completed} />
       </Grid>
-    </TaskHeaderContainer> : <IssueHeaderPlaceholder />
+    </TaskHeaderContainer>
+  ) : (
+    <IssueHeaderPlaceholder />
   )
 }
 

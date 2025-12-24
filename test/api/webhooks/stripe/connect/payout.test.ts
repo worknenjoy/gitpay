@@ -183,7 +183,7 @@ describe('webhooks for payout', () => {
         currency: 'usd',
         status: 'paid',
         method: 'bank_account',
-        userId: user.dataValues.id,
+        userId: user.dataValues.id
       })
 
       const res = await agent

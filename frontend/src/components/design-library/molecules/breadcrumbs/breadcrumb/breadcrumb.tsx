@@ -30,8 +30,8 @@ export const Breadcrumb = ({ task, project, organization, root }: BreadcrumbProp
   const { completed: projectCompleted } = project || {}
   const { completed: organizationCompleted } = organization || {}
 
-  const isReady = (task && project && organization) ? 
-    projectCompleted || organizationCompleted || completed : true
+  const isReady =
+    task && project && organization ? projectCompleted || organizationCompleted || completed : true
 
   return isReady ? (
     <BreadcrumbRoot>
