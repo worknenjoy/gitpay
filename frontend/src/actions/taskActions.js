@@ -224,7 +224,7 @@ const filterTaskOrdersSuccess = (task, filter) => {
  */
 
 const fetchTaskRequested = () => {
-  return { type: FETCH_TASK_REQUESTED, completed: false }
+  return { type: FETCH_TASK_REQUESTED, completed: false, data: {} }
 }
 
 const fetchTaskSuccess = (task) => {

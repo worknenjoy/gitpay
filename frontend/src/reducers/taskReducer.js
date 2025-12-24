@@ -141,7 +141,7 @@ export const task = (
       return { ...state, completed: true, error: action.error }
 
     case FETCH_TASK_REQUESTED:
-      return { ...state, completed: false }
+      return { ...state, completed: false, data: action.data }
     case FETCH_TASK_SUCCESS:
       return { ...state, completed: true, data: action.data, filterOrdersBy: {} }
     case FETCH_TASK_ERROR:
