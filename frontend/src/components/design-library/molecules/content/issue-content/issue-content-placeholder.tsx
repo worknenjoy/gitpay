@@ -1,14 +1,16 @@
 import React from 'react'
-import { Skeleton, Stack } from '@mui/material'
+import { Container, Skeleton, Stack } from '@mui/material'
+import IssueHeaderPlaceholder from 'design-library/molecules/headers/issue-header/issue-header.placeholder'
 
 const IssueContentPlaceholder = () => {
   return (
-    <Stack spacing={2}>
+   <Container fixed maxWidth="md" sx={{ mt: 2 }}>
+      <IssueHeaderPlaceholder />
       <Skeleton variant="text" width="100%" />
       <Skeleton variant="text" width="100%" />
       <Skeleton variant="text" width="100%" />
       <Skeleton variant="text" width="100%" />
-    </Stack>
+    </Container>
   )
 }
 export default IssueContentPlaceholder

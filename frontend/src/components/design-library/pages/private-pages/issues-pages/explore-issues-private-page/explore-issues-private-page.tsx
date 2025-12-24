@@ -13,8 +13,7 @@ const ExploreIssuesPrivatePage = ({
   labels,
   listLabels,
   languages,
-  listLanguages,
-  user
+  listLanguages
 }) => {
   return (
     <ExplorePaper elevation={0}>

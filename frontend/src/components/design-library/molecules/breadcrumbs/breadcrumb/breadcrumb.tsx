@@ -1,9 +1,10 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Breadcrumbs, Typography, Skeleton } from '@mui/material'
+import { Breadcrumbs, Typography } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import { BreadcrumbRoot, BreadcrumbLink } from './breadcrumb.styles'
 import { Link, useHistory } from 'react-router-dom'
+import BreadcrumbPlaceholder from './breadcrumb.placeholder'
 
 type BreadcrumbRootItem = {
   label: any
@@ -23,13 +24,16 @@ export const Breadcrumb = ({ task, project, organization, root }: BreadcrumbProp
   const isExplore = history.location.pathname.includes('/explore')
   let breadcrumbPathPrefix = isProfile ? '/profile/' : '/'
   breadcrumbPathPrefix = isExplore ? `${breadcrumbPathPrefix}explore/` : breadcrumbPathPrefix
-  const { data = {}, completed = true } = task || {}
-  const breadcrumbProject = data?.Project || project?.data
-  const breadcrumbOrganization = breadcrumbProject?.Organization || organization?.data
+  const { data = {}, completed } = task || {}
+  const breadcrumbProject = data?.Project || project?.data || {}
+  const breadcrumbOrganization = breadcrumbProject?.Organization || organization?.data || {}
   const { completed: projectCompleted } = project || {}
   const { completed: organizationCompleted } = organization || {}
 
-  return completed || projectCompleted || organizationCompleted ? (
+  const isReady = (task && project && organization) ? 
+    projectCompleted || organizationCompleted || completed : true
+
+  return isReady ? (
     <BreadcrumbRoot>
       <Breadcrumbs aria-label="breadcrumb" separator={<NavigateNextIcon />}>
         {root ? (
@@ -75,7 +79,7 @@ export const Breadcrumb = ({ task, project, organization, root }: BreadcrumbProp
       </Breadcrumbs>
     </BreadcrumbRoot>
   ) : (
-    <Skeleton variant="text" />
+    <BreadcrumbPlaceholder />
   )
 }
 

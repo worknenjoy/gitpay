@@ -20,12 +20,8 @@ import {
   ListItemIcon,
   ListItemText
 } from '@mui/material'
-import Skeleton from '@mui/material/Skeleton'
 
 import { FormattedMessage } from 'react-intl'
-
-import styled from 'styled-components'
-import media from '../../../../../styleguide/media'
 
 import { Breadcrumb } from '../../breadcrumbs/breadcrumb/breadcrumb'
 
@@ -36,44 +32,11 @@ import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 import useIssueAuthor from '../../../../../hooks/use-issue-author'
 import { useHistory } from 'react-router-dom'
-
-const TaskHeaderContainer = styled.div`
-  box-sizing: border-box;
-  position: relative;
-
-  ${media.phone`
-    margin: -1rem -1rem 1rem -1rem;
-    padding: 1rem;
-
-    & h1 {
-      font-size: 1.75rem;
-    }
-  `}
-`
-
-const styles = (theme) => ({
-  breadcrumbRoot: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
-  },
-  breadcrumbLink: {
-    textDecoration: 'underline'
-  },
-  chipStatusPaid: {
-    marginLeft: 0,
-    verticalAlign: 'middle',
-    backgroundColor: theme.palette.primary.light
-  },
-  button: {
-    width: 100,
-    font: 10
-  },
-  gutterRight: {
-    marginRight: 10
-  }
-})
+import IssueHeaderPlaceholder from './issue-header.placeholder'
+import { TaskHeaderContainer } from './issue-header.styles'
 
 const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) => {
+  const { data, completed } = task || {}
   const history = useHistory()
   const issueAuthor = useIssueAuthor(task, user)
   const [anchorEl, setAnchorEl] = useState(null)
@@ -94,7 +57,7 @@ const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) =
   }
 
   const handleDeleteAndRedirect = async () => {
-    const deleteAction = await handleDeleteTask(task.data)
+    const deleteAction = await handleDeleteTask(data)
     setDeleteDialog(false)
     if (deleteAction.error) return
     history.push('/profile/tasks')
@@ -123,42 +86,41 @@ const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) =
         }
 
   return (
+    completed ?
     <TaskHeaderContainer>
       <Grid size={{ xs: 12, sm: 12, md: 12 }}>
         <div style={{ marginTop: 30, marginBottom: 20 }}>
           <Breadcrumb task={task} root={breadcrumbRoot} />
         </div>
-        {!task.completed ? (
-          <Skeleton variant="text" animation="wave" style={{ marginTop: 32, marginBottom: 26 }} />
-        ) : (
-          <div style={{ marginTop: 20, marginBottom: 0 }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant="h5" gutterBottom>
-                <strong>{task.data.title}</strong>
-              </Typography>
-              <IconButton onClick={handleMoreButton}>
-                <MoreIcon />
-              </IconButton>
-            </div>
+        
+        <div style={{ marginTop: 20, marginBottom: 0 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography variant="h5" gutterBottom>
+              <strong>{data.title}</strong>
+            </Typography>
+            <IconButton onClick={handleMoreButton}>
+              <MoreIcon />
+            </IconButton>
           </div>
-        )}
+        </div>
+       
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMoreButton}>
           {issueAuthor && (
             <MenuItem
               onClick={async () => {
-                await updateTask({ id: task.data.id, not_listed: !task.data.not_listed })
+                await updateTask({ id: data.id, not_listed: !data.not_listed })
                 handleCloseMoreButton()
               }}
             >
               <ListItemIcon>
-                {task.data.not_listed ? (
+                {data.not_listed ? (
                   <VisibilityIcon fontSize="small" />
                 ) : (
                   <VisibilityOffIcon fontSize="small" />
                 )}
               </ListItemIcon>
               <ListItemText
-                primary={task.data.not_listed ? 'Change to public' : 'Change to not listed'}
+                primary={data.not_listed ? 'Change to public' : 'Change to not listed'}
               />
             </MenuItem>
           )}
@@ -188,7 +150,7 @@ const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) =
           )}
         </Menu>
         <TaskReport
-          taskData={task.data}
+          taskData={data}
           reportTask={reportTask}
           user={user}
           visible={reportDialog}
@@ -224,71 +186,63 @@ const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) =
             </DialogActions>
           </div>
         </Dialog>
-        {!task.completed ? (
-          <Skeleton
-            variant="text"
-            animation="wave"
-            style={{ marginTop: 20, marginBottom: 20, width: '40%' }}
-          />
-        ) : (
-          <Typography
-            variant="caption"
-            style={{ display: 'inline-block', marginBottom: 20, marginRight: 0 }}
-          >
-            {task.data.provider && (
-              <div>
-                Created on{' '}
-                <a href={task.data.url} style={{ textDecoration: 'underline' }}>
-                  {task.data.provider}{' '}
-                  <img
-                    width="18"
-                    src={task.data.provider === 'github' ? logoGithub : logoBitbucket}
-                    style={{
-                      marginRight: 5,
-                      marginLeft: 5,
-                      borderRadius: '50%',
-                      padding: 3,
-                      backgroundColor: 'black',
-                      borderColor: 'black',
-                      borderWidth: 1,
-                      verticalAlign: 'middle'
-                    }}
-                  />
-                </a>
-                by{' '}
-                <a
-                  href={
-                    task.data.metadata && task.data.provider === 'github'
-                      ? task.data.metadata.issue.user.html_url
+        <Typography
+          variant="caption"
+          style={{ display: 'inline-block', marginBottom: 20, marginRight: 0 }}
+        >
+          {data.provider && (
+            <div>
+              Created on{' '}
+              <a href={data.url} style={{ textDecoration: 'underline' }}>
+                {data.provider}{' '}
+                <img
+                  width="18"
+                  src={data.provider === 'github' ? logoGithub : logoBitbucket}
+                  style={{
+                    marginRight: 5,
+                    marginLeft: 5,
+                    borderRadius: '50%',
+                    padding: 3,
+                    backgroundColor: 'black',
+                    borderColor: 'black',
+                    borderWidth: 1,
+                    verticalAlign: 'middle'
+                  }}
+                />
+              </a>
+              by{' '}
+              <a
+                href={
+                  data.metadata && data.provider === 'github'
+                    ? data.metadata.issue.user.html_url
+                    : ''
+                }
+              >
+                {data.metadata && data.provider === 'github'
+                  ? data.metadata.issue.user.login
+                  : data.metadata && data.metadata.user}
+                <img
+                  style={{
+                    marginRight: 5,
+                    marginLeft: 5,
+                    borderRadius: '50%',
+                    padding: 3,
+                    verticalAlign: 'middle'
+                  }}
+                  width="18"
+                  src={
+                    data.metadata && data.provider === 'github'
+                      ? data.metadata.issue.user.avatar_url
                       : ''
                   }
-                >
-                  {task.data.metadata && task.data.provider === 'github'
-                    ? task.data.metadata.issue.user.login
-                    : task.data.metadata && task.data.metadata.user}
-                  <img
-                    style={{
-                      marginRight: 5,
-                      marginLeft: 5,
-                      borderRadius: '50%',
-                      padding: 3,
-                      verticalAlign: 'middle'
-                    }}
-                    width="18"
-                    src={
-                      task.data.metadata && task.data.provider === 'github'
-                        ? task.data.metadata.issue.user.avatar_url
-                        : ''
-                    }
-                  />
-                </a>
-              </div>
-            )}
-          </Typography>
-        )}
-        <TaskLabels labels={task.data?.metadata?.labels} completed={task.completed} />
+                />
+              </a>
+            </div>
+          )}
+        </Typography>
+        <TaskLabels labels={data?.metadata?.labels} completed={task.completed} />
       </Grid>
-    </TaskHeaderContainer>
+    </TaskHeaderContainer> : <IssueHeaderPlaceholder />
   )
 }
 

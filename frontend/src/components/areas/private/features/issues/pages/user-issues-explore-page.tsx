@@ -28,7 +28,6 @@ const ExploreIssuesPage = ({
       languages={languages}
       listLabels={listLabels}
       listLanguages={listLanguages}
-      user={user}
     />
   )
 }

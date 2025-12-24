@@ -70,25 +70,7 @@ export const task = (
       message: false
     },
     tab: 0,
-    data: {
-      value: 0,
-      orders: [],
-      assigns: [],
-      assignedUser: {},
-      Transfer: {},
-      url: '',
-      provider: null,
-      metadata: {
-        company: '',
-        issue: {
-          state: 'open',
-          body: '',
-          user: {
-            avatar_url: 'https://loading.io/spinners/disqus/index.discuss-messesage-preloader.svg'
-          }
-        }
-      }
-    }
+    data: {}
   },
   action
 ) => {

@@ -7,7 +7,7 @@ export default function useIssueAuthor(task: any, user: any): boolean {
   const { data: taskData, completed: taskCompleted } = task || {}
   const { data: userData, completed: userCompleted } = user || {}
   return useMemo(() => {
-    if (!taskCompleted && !userCompleted) return false
+    if (!taskCompleted || !userCompleted) return false
 
     const creator = !!taskData.User && userData?.id != null && taskData.User?.id === userData.id
 

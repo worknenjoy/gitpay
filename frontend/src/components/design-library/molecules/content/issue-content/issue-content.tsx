@@ -11,8 +11,10 @@ import { DescriptionHeading, IssueContentText } from './issue-content.styles'
 import IssueContentPlaceholder from './issue-content-placeholder'
 
 const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messageAuthor }) => {
-  const { completed } = task
+  const { data, completed } = task
+
   return (
+    completed ?
     <Container fixed maxWidth="md" sx={{ mt: 2 }}>
       <IssueHeader
         task={task}
@@ -24,29 +26,25 @@ const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messag
       <DescriptionHeading variant="subtitle1">
         <FormattedMessage id="task.info.description" defaultMessage="Description" />
       </DescriptionHeading>
-      {completed ? (
-        <IssueContentText variant="body1">
-          <ShowMoreText
-            lines={8}
-            more={
-              <Button size="small" variant="outlined">
-                <FormattedMessage id="task.description.more" defaultMessage="Show more" />
-                <ExpandMore />
-              </Button>
-            }
-            less={
-              <Button size="small" variant="outlined">
-                <FormattedMessage id="task.description.less" defaultMessage="Show less" />
-                <ExpandLess />
-              </Button>
-            }
-          >
-            {task.data.description && parse(marked(task.data.description))}
-          </ShowMoreText>
-        </IssueContentText>
-      ) : (
-        <IssueContentPlaceholder />
-      )}
+      <IssueContentText variant="body1">
+        <ShowMoreText
+          lines={8}
+          more={
+            <Button size="small" variant="outlined">
+              <FormattedMessage id="task.description.more" defaultMessage="Show more" />
+              <ExpandMore />
+            </Button>
+          }
+          less={
+            <Button size="small" variant="outlined">
+              <FormattedMessage id="task.description.less" defaultMessage="Show less" />
+              <ExpandLess />
+            </Button>
+          }
+        >
+          {task.data.description && parse(marked(task.data.description))}
+        </ShowMoreText>
+      </IssueContentText>
       <IssueAuthorList
         user={user}
         task={task}
@@ -59,7 +57,8 @@ const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messag
           }
         ]}
       />
-    </Container>
+    </Container> :
+    <IssueContentPlaceholder />
   )
 }
 export default IssueContent
