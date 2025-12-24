@@ -188,7 +188,7 @@ const deleteTaskError = (error) => {
  */
 
 const filterTaskRequested = () => {
-  return { type: FILTER_TASK_REQUESTED, completed: false }
+  return { type: FILTER_TASK_REQUESTED, completed: false, data: {} }
 }
 
 const filterTaskSuccess = (filteredTasks, filter, value, additional) => {
@@ -260,7 +260,7 @@ const changeTaskTab = (tab) => {
  */
 
 const syncTaskRequested = () => {
-  return { type: SYNC_TASK_REQUESTED, completed: false }
+  return { type: SYNC_TASK_REQUESTED, completed: false, data: {} }
 }
 
 const syncTaskSuccess = (values) => {

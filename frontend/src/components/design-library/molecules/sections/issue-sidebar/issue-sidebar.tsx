@@ -108,6 +108,8 @@ const IssueSidebar = ({
       ? MomentComponent(taskData.deadline).diff(MomentComponent(), 'days')
       : false
 
+  const paidOrders = (taskData.orders || taskData.Orders)?.filter((o) => o.paid)
+
   return isReady ? (
     <SidebarRoot>
       {task.values && task.values.available > 0 && (
@@ -261,11 +263,9 @@ const IssueSidebar = ({
         }}
       />
 
-      {taskData && (taskData.orders?.length || taskData.Orders?.length) ? (
-        <div>
-          <IssuePaymentsList orders={(taskData.orders || taskData.Orders)?.filter((o) => o.paid)} />
-        </div>
-      ) : null}
+      {taskData && (taskData.orders?.length || taskData.Orders?.length) && (
+        <IssuePaymentsList orders={paidOrders} />
+      )}
 
       <IssueActionsByRole
         issue={task}
