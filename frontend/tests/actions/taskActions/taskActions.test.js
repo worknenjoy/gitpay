@@ -48,11 +48,12 @@ describe('task actions', () => {
           open: true,
           text: 'actions.task.update.notification.success',
           type: 'ADD_NOTIFICATION',
-          link: undefined
+          link: undefined,
+          severity: undefined
         },
         { completed: true, type: 'UPDATE_TASK_SUCCESS' },
-        { completed: false, type: 'SYNC_TASK_REQUESTED' },
-        { completed: false, type: 'FETCH_TASK_REQUESTED' },
+        { completed: false, type: 'SYNC_TASK_REQUESTED', data: {} },
+        { completed: false, type: 'FETCH_TASK_REQUESTED', data: {} },
         { completed: true, type: 'SYNC_TASK_SUCCESS', values: { id: 1 } },
         { completed: true, type: 'FETCH_TASK_SUCCESS', data: { id: 1 } }
       ]

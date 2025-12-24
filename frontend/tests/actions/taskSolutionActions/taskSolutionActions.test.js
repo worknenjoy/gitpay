@@ -43,7 +43,7 @@ describe('task solution', () => {
           link: undefined,
           severity: undefined
         },
-        { completed: false, type: 'FETCH_TASK_REQUESTED' },
+        { completed: false, type: 'FETCH_TASK_REQUESTED', data: {} },
         { completed: true, type: 'CREATE_TASK_SOLUTION_SUCCESS', taskSolution: {} }
       ]
       const store = mockStore({
@@ -96,7 +96,7 @@ describe('task solution', () => {
           link: '/#/profile/payout-settings',
           severity: 'error'
         },
-        { completed: false, type: 'FETCH_TASK_REQUESTED' },
+        { completed: false, type: 'FETCH_TASK_REQUESTED', data: {} },
         {
           completed: true,
           type: 'CREATE_TASK_SOLUTION_ERROR',
