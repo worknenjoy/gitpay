@@ -6,10 +6,12 @@ const IssueContentPlaceholder = () => {
   return (
     <Container fixed maxWidth="md" sx={{ mt: 2 }}>
       <IssueHeaderPlaceholder />
-      <Skeleton variant="text" width="100%" />
-      <Skeleton variant="text" width="100%" />
-      <Skeleton variant="text" width="100%" />
-      <Skeleton variant="text" width="100%" />
+      <div style={{ marginTop: 20 }}>
+        <Skeleton variant="text" width="100%" />
+        <Skeleton variant="text" width="100%" />
+        <Skeleton variant="text" width="100%" />
+        <Skeleton variant="text" width="100%" />
+      </div>
     </Container>
   )
 }

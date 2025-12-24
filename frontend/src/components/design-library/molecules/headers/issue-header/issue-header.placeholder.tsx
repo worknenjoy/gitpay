@@ -8,7 +8,7 @@ const IssueHeaderPlaceholder = () => {
   return (
     <TaskHeaderContainer>
       <BreadcrumbPlaceholder />
-      <Skeleton variant="text" animation="wave" sx={{ mt: 2 }} />
+      <Skeleton variant="text" animation="wave" sx={{ mt: 2, mb: 2 }} />
       <Skeleton variant="text" animation="wave" sx={{ mb: 2, width: '40%' }} />
       <IssueLabelsListPlaceholder />
     </TaskHeaderContainer>
