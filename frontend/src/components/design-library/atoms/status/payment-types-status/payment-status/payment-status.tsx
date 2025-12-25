@@ -14,6 +14,7 @@ interface PaymentStatusProps {
     | 'open'
     | 'pending'
     | 'succeeded'
+    | 'paid'
     | 'failed'
     | 'expired'
     | 'canceled'
@@ -42,6 +43,12 @@ const PaymentStatus: React.FC<PaymentStatusProps> = ({ status, completed = true 
     {
       status: 'succeeded',
       label: 'Succeeded',
+      color: 'succeeded',
+      icon: <ActiveIcon />
+    },
+    {
+      status: 'paid',
+      label: 'Paid',
       color: 'succeeded',
       icon: <ActiveIcon />
     },

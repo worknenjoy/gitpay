@@ -186,6 +186,10 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
     )
   }
 
+  const handleCustomRenderer = (fieldId, item) => {
+    return customColumnRenderer?.[fieldId] ? customColumnRenderer[fieldId](item) : item[fieldId]
+  }
+
   return (
     <TableWrapper component={Paper}>
       <StyledTable>
@@ -204,11 +208,7 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
                     {!tableData.completed ? (
                       <Skeleton variant="text" animation="wave" />
                     ) : (
-                      <div>
-                        {customColumnRenderer?.[fieldId]
-                          ? customColumnRenderer[fieldId](n)
-                          : n[fieldId]}
-                      </div>
+                      <div>{handleCustomRenderer(fieldId, n) || '--'}</div>
                     )}
                   </StyledTableCell>
                 ))}
