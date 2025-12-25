@@ -16,25 +16,30 @@ const Checkboxes = ({
   includeSelectAll = false,
   completed = true
 }: CheckboxesProps) => {
-  // Initialize once, don’t reset on every parent re-render
   const [checked, setChecked] = useState<Record<string, boolean>>(() =>
-    checkboxes.reduce((acc, checkbox) => {
-      acc[checkbox.name] = !!checkbox.defaultChecked
-      return acc
-    }, {} as Record<string, boolean>)
+    checkboxes.reduce(
+      (acc, checkbox) => {
+        acc[checkbox.name] = !!checkbox.defaultChecked
+        return acc
+      },
+      {} as Record<string, boolean>
+    )
   )
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>, onChangeCheckbox) => {
       const { name, checked: isChecked } = event.target
 
-      setChecked(prev => {
+      setChecked((prev) => {
         if (name === 'all') {
           // toggle all others
-          const next = checkboxes.reduce((acc, cb) => {
-            acc[cb.name] = isChecked
-            return acc
-          }, {} as Record<string, boolean>)
+          const next = checkboxes.reduce(
+            (acc, cb) => {
+              acc[cb.name] = isChecked
+              return acc
+            },
+            {} as Record<string, boolean>
+          )
           return next
         }
         return { ...prev, [name]: isChecked }
@@ -45,27 +50,20 @@ const Checkboxes = ({
     [checkboxes]
   )
 
-  // Derive "all" state instead of storing it
   const allOptionsChecked = useMemo(
-    () =>
-      checkboxes
-        .filter(cb => cb.name !== 'all')
-        .every(cb => checked[cb.name] || false),
+    () => checkboxes.filter((cb) => cb.name !== 'all').every((cb) => checked[cb.name] || false),
     [checkboxes, checked]
   )
 
   useEffect(() => {
     const selectedCheckboxes = Object.keys(checked)
-      .filter(key => key !== 'all')
-      .filter(key => checked[key])
-      .map(key => checkboxes.find(checkbox => checkbox.name === key)?.value)
+      .filter((key) => key !== 'all')
+      .filter((key) => checked[key])
+      .map((key) => checkboxes.find((checkbox) => checkbox.name === key)?.value)
     onChange?.(selectedCheckboxes)
   }, [checked, onChange, checkboxes])
 
-  const selectBoxesWithAll = [
-    ...checkboxes,
-    { label: 'All', name: 'all', value: 'all' }
-  ]
+  const selectBoxesWithAll = [...checkboxes, { label: 'All', name: 'all', value: 'all' }]
   const checkboxesToRender = includeSelectAll ? selectBoxesWithAll : checkboxes
 
   const items = checkboxesToRender.length > 0 ? checkboxesToRender.length : 3
@@ -79,7 +77,9 @@ const Checkboxes = ({
               <FormControlLabel
                 control={
                   <StyledCheckbox
-                    checked={checkbox.name === 'all' ? allOptionsChecked : (checked[checkbox.name] || false)}
+                    checked={
+                      checkbox.name === 'all' ? allOptionsChecked : checked[checkbox.name] || false
+                    }
                     onChange={(e) => handleChange(e, checkbox?.onChange)}
                     color="primary"
                     name={checkbox.name}

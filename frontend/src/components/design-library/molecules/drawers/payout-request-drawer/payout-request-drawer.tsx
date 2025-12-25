@@ -30,26 +30,29 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
   const onSetAmount = useCallback((value) => {
     setAmount(Number(value))
   }, [])
-  
-  const shouldDisable = useMemo(() => !confirmCheck || !amount || amount <= 0, [confirmCheck, amount])
+
+  const shouldDisable = useMemo(
+    () => !confirmCheck || !amount || amount <= 0,
+    [confirmCheck, amount]
+  )
 
   const actions = useMemo(() => {
     return [
-        {
-          label: 'Cancel',
-          onClick: onClose,
-          variant: 'text'
+      {
+        label: 'Cancel',
+        onClick: onClose,
+        variant: 'text'
+      },
+      {
+        label: 'Request payout',
+        onClick: () => {
+          formRef.current?.submit()
         },
-        {
-          label: 'Request payout',
-          onClick: () => {
-            formRef.current?.submit()
-          },
-          variant: 'contained',
-          color: 'secondary',
-          disabled: shouldDisable
-        }
-      ] 
+        variant: 'contained',
+        color: 'secondary',
+        disabled: shouldDisable
+      }
+    ]
   }, [onClose, shouldDisable])
 
   return (
