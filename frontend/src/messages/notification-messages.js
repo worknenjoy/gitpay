@@ -560,6 +560,14 @@ const messages = defineMessages({
   notificationPaymentRequestUpdateError: {
     id: 'actions.paymentRequest.update.error',
     defaultMessage: 'We could not update this payment request'
+  },
+  notificationPaymentRequestPaymentRefundSuccess: {
+    id: 'actions.paymentRequestPayment.refund.success',
+    defaultMessage: 'Payment request payment refunded successfully'
+  },
+  notificationPaymentRequestPaymentRefundError: {
+    id: 'actions.paymentRequestPayment.refund.failed',
+    defaultMessage: 'We could not refund this payment request payment'
   }
 })
 

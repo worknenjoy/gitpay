@@ -2,11 +2,9 @@ import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Edit as EditIcon, Link as LinkIcon } from '@mui/icons-material'
 
-import {
-  paymentRequestMetadata,
-  paymentRequestPaymentsMetadata,
-  paymentRequestPaymentsCustomColumnRenderer
-} from './payment-requests-table'
+import { paymentRequestMetadata } from './payment-requests-table'
+
+import { paymentRequestPaymentsMetadata } from './payment-requests-payments-table'
 
 import {
   paymentRequestBalancesMetadata,
@@ -22,6 +20,7 @@ import AmountField from 'design-library/molecules/tables/section-table/section-t
 import LinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/link-field/link-field'
 import PaymentRequestActiveField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payment-request/payment-request-active-field/payment-request-active-field'
 import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
+import { usePaymentRequestPaymentsCustomColumnRenderer } from './hooks/usePaymentRequestPaymentColumnRender'
 
 const PaymentRequests = ({
   paymentRequests,
@@ -31,16 +30,24 @@ const PaymentRequests = ({
   listPaymentRequests,
   listPaymentRequestPayments,
   listPaymentRequestBalances,
-  updatePaymentRequest
+  updatePaymentRequest,
+  refundPaymentRequestPayment
 }) => {
-  const classes = { gutterLeft: { marginLeft: 10 } } as const
-  const { completed, data } = paymentRequests
-
   const [createPaymentRequestCompleted, setCreatePaymentRequestCompleted] = React.useState(true)
   const [openNewPaymentRequestDrawer, setOpenNewPaymentRequestDrawer] = React.useState(false)
 
   const [processingUpdatePaymentRequest, setProcessingUpdatePaymentRequest] = React.useState(false)
   const [selectedPaymentRequest, setSelectedPaymentRequest] = React.useState<any | null>(null)
+
+  const [activeTab, setActiveTab] = React.useState('payment-requests')
+
+  const paymentRequestPaymentsCustomColumnRenderer = usePaymentRequestPaymentsCustomColumnRenderer({
+    onRefund: async (paymentId) => {
+      await refundPaymentRequestPayment(paymentId)
+      await listPaymentRequestPayments()
+      setActiveTab('payment-request-payments')
+    }
+  })
 
   const handlePaymentRequestCreate = async (e, data) => {
     e.preventDefault()
@@ -124,7 +131,7 @@ const PaymentRequests = ({
             defaultMessage="Here you can see all the payment requests on your account"
           />
         }
-        activeTab="payment-requests"
+        activeTab={activeTab}
         tabs={[
           {
             label: (

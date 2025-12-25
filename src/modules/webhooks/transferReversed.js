@@ -8,7 +8,6 @@ module.exports = async function transferReversed(event, req, res) {
   const transferId = event.data.object.id
   const metadata = event.data.object.metadata || {}
   const { payment_request_id: paymentRequestId, user_id: userId } = metadata
-  console.log('values', { transferId, paymentRequestId, userId })
 
   if (paymentRequestId) {
     try {
@@ -19,7 +18,7 @@ module.exports = async function transferReversed(event, req, res) {
           userId: userId
         }
       })
-      console.log('paymentRequestTransfer', paymentRequestTransfer)
+
       if (paymentRequestTransfer) {
         paymentRequestTransfer.status = 'reversed'
         await paymentRequestTransfer.save()

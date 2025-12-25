@@ -26,7 +26,7 @@ import { wallet, wallets } from './walletReducer'
 import { walletOrder, walletOrders } from './walletOrderReducer'
 import { paymentRequest, paymentRequests } from './paymentRequestReducer'
 import { paymentRequestTransfers } from './paymentRequestTransferReducer'
-import { paymentRequestPayments } from './paymentRequestPaymentReducer'
+import { paymentRequestPayments, paymentRequestPayment } from './paymentRequestPaymentReducer'
 import { paymentRequestBalances } from './paymentRequestBalanceReducer'
 import { dashboardReducer } from './dashboardReducer'
 
@@ -70,6 +70,7 @@ const reducers = combineReducers({
   paymentRequests,
   paymentRequestTransfers,
   paymentRequestPayments,
+  paymentRequestPayment,
   paymentRequestBalances,
   dashboard: dashboardReducer
 })

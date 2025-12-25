@@ -5,7 +5,10 @@ import {
   listPaymentRequests,
   updatePaymentRequest
 } from '../actions/paymentRequestActions'
-import { listPaymentRequestPayments } from '../actions/paymentRequestPaymentActions'
+import {
+  listPaymentRequestPayments,
+  refundPaymentRequestPayment
+} from '../actions/paymentRequestPaymentActions'
 import { listPaymentRequestBalances } from '../actions/paymentRequestBalanceActions'
 import { getUserData } from '../common/selectors/user/getUser'
 
@@ -35,6 +38,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     listPaymentRequestBalances: () => {
       return dispatch(listPaymentRequestBalances())
+    },
+    refundPaymentRequestPayment: (id) => {
+      return dispatch(refundPaymentRequestPayment(id))
     }
   }
 }
