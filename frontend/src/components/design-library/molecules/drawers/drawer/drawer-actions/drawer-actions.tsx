@@ -7,6 +7,7 @@ const DrawerActions = ({ actions, completed = true }) => {
     <Root>
       {actions.map((action, index) => (
         <Button
+          key={`drawer-action-button-${index}`}
           onClick={action.onClick}
           variant={action.variant}
           color={action.color}

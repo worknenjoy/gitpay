@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useMemo, useEffect, useState } from 'react'
 import { Grid, FormControlLabel } from '@mui/material'
 import { CheckboxesContainer, CheckboxItem, StyledCheckbox } from './checkboxes.styles'
 import CheckboxesPlaceholder from './checkboxes.placeholder'
@@ -16,77 +16,57 @@ const Checkboxes = ({
   includeSelectAll = false,
   completed = true
 }: CheckboxesProps) => {
-  const [checked, setChecked] = useState({})
+  // Initialize once, don’t reset on every parent re-render
+  const [checked, setChecked] = useState<Record<string, boolean>>(() =>
+    checkboxes.reduce((acc, checkbox) => {
+      acc[checkbox.name] = !!checkbox.defaultChecked
+      return acc
+    }, {} as Record<string, boolean>)
+  )
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>, onChangeCheckbox) => {
-    setChecked({
-      ...checked,
-      [event.target.name]: event.target.checked
-    })
-    onChangeCheckbox?.(event.target.checked)
-  }
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>, onChangeCheckbox) => {
+      const { name, checked: isChecked } = event.target
+
+      setChecked(prev => {
+        if (name === 'all') {
+          // toggle all others
+          const next = checkboxes.reduce((acc, cb) => {
+            acc[cb.name] = isChecked
+            return acc
+          }, {} as Record<string, boolean>)
+          return next
+        }
+        return { ...prev, [name]: isChecked }
+      })
+
+      onChangeCheckbox?.(isChecked)
+    },
+    [checkboxes]
+  )
+
+  // Derive "all" state instead of storing it
+  const allOptionsChecked = useMemo(
+    () =>
+      checkboxes
+        .filter(cb => cb.name !== 'all')
+        .every(cb => checked[cb.name] || false),
+    [checkboxes, checked]
+  )
 
   useEffect(() => {
     const selectedCheckboxes = Object.keys(checked)
-      .filter((key) => key !== 'all')
-      .filter((key) => checked[key])
-      .map((key) => checkboxes.find((checkbox) => checkbox.name === key)?.value)
+      .filter(key => key !== 'all')
+      .filter(key => checked[key])
+      .map(key => checkboxes.find(checkbox => checkbox.name === key)?.value)
     onChange?.(selectedCheckboxes)
   }, [checked, onChange, checkboxes])
 
   const selectBoxesWithAll = [
     ...checkboxes,
-    {
-      label: 'All',
-      name: 'all',
-      value: 'all',
-      onChange: (selected) => {
-        if (selected) {
-          setChecked(
-            checkboxes.reduce(
-              (acc, checkbox) => {
-                acc[checkbox.name] = true
-                return acc
-              },
-              { all: true }
-            )
-          )
-        } else {
-          setChecked(
-            checkboxes.reduce(
-              (acc, checkbox) => {
-                acc[checkbox.name] = false
-                return acc
-              },
-              { all: false }
-            )
-          )
-        }
-      }
-    }
+    { label: 'All', name: 'all', value: 'all' }
   ]
   const checkboxesToRender = includeSelectAll ? selectBoxesWithAll : checkboxes
-
-  useEffect(() => {
-    const allOptionsChecked = checkboxes
-      .filter((checkbox) => checkbox.name !== 'all')
-      .every((checkbox) => checked[checkbox.name] || false)
-
-    if (checked['all'] !== allOptionsChecked) {
-      setChecked((prevChecked) => ({
-        ...prevChecked,
-        all: allOptionsChecked
-      }))
-    }
-  }, [checked, checkboxes])
-
-  useEffect(() => {
-    const defaultCheckedState = checkboxes.reduce((acc, checkbox) => {
-      acc[checkbox.name] = checkbox.defaultChecked || false
-      return acc
-    }, {})
-    setChecked(defaultCheckedState)
-  }, [checkboxes])
 
   const items = checkboxesToRender.length > 0 ? checkboxesToRender.length : 3
 
@@ -99,12 +79,11 @@ const Checkboxes = ({
               <FormControlLabel
                 control={
                   <StyledCheckbox
-                    checked={checked[checkbox.name] || false}
+                    checked={checkbox.name === 'all' ? allOptionsChecked : (checked[checkbox.name] || false)}
                     onChange={(e) => handleChange(e, checkbox?.onChange)}
                     color="primary"
                     name={checkbox.name}
                     value={checkbox.value}
-                    defaultChecked={checkbox.defaultChecked}
                     disabled={checkbox.disabled}
                   />
                 }

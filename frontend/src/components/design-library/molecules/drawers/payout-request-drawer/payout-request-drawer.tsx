@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import Drawer from '../drawer/drawer'
 import PayoutRequestForm from '../../../organisms/forms/payout-forms/payout-request-form/payout-request-form'
 
@@ -23,22 +23,18 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
   const [confirmCheck, setConfirmCheck] = useState(false)
   const [amount, setAmount] = useState<number>(0)
 
-  const onConfirmPayoutCheck = (selected: boolean) => {
+  const onConfirmPayoutCheck = useCallback((selected: boolean) => {
     setConfirmCheck(selected)
-  }
+  }, [])
 
-  const onSetAmount = (value) => {
+  const onSetAmount = useCallback((value) => {
     setAmount(Number(value))
-  }
+  }, [])
+  
+  const shouldDisable = useMemo(() => !confirmCheck || !amount || amount <= 0, [confirmCheck, amount])
 
-  return (
-    <Drawer
-      completed={completed}
-      open={open}
-      onClose={onClose}
-      title="Request a new Payout"
-      subtitle="Please choose the amount to request a payout to your bank account"
-      actions={[
+  const actions = useMemo(() => {
+    return [
         {
           label: 'Cancel',
           onClick: onClose,
@@ -51,9 +47,19 @@ const PayoutRequestDrawer: React.FC<PayoutRequestDrawerProps> = ({
           },
           variant: 'contained',
           color: 'secondary',
-          disabled: !confirmCheck || !amount || amount <= 0
+          disabled: shouldDisable
         }
-      ]}
+      ] 
+  }, [onClose, shouldDisable])
+
+  return (
+    <Drawer
+      completed={completed}
+      open={open}
+      onClose={onClose}
+      title="Request a new Payout"
+      subtitle="Please choose the amount to request a payout to your bank account"
+      actions={actions}
     >
       <PayoutRequestForm
         ref={formRef}
