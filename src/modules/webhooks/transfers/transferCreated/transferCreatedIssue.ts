@@ -40,7 +40,7 @@ export async function transferCreatedIssue(event: any, req: any, res: any) {
           assigned.dataValues.User.dataValues,
           i18n.__('mail.webhook.payment.transfer.subject'),
           i18n.__('mail.webhook.payment.transfer.message', {
-            amount: event.data.object.amount / 100,
+            amount: `${event.data.object.amount / 100}`,
             url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
           })
         )
