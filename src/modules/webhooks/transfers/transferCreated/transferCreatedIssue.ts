@@ -65,7 +65,7 @@ export async function transferCreatedIssue(event: any, req: any, res: any) {
             (account as any).email,
             i18n.__('mail.webhook.payment.transfer.subject'),
             i18n.__('mail.webhook.payment.transfer.message', {
-              amount: event.data.object.amount / 100,
+              amount: `${event.data.object.amount / 100}`,
               url: `${event.data.object.id}`
             })
           )
