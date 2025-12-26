@@ -1,37 +1,18 @@
-const models = require('../../models')
-const i18n = require('i18n')
-const moment = require('moment')
-const SendMail = require('../mail/mail')
-const stripe = require('../shared/stripe/stripe')()
+import Models from '../../../../models'
+import i18n from 'i18n'
+import SendMail from '../../../mail/mail'
+import initStripe from '../../../shared/stripe/stripe'
 
-module.exports = async function transferCreated(event, req, res) {
-  const transferId = event.data.object.id
-  const destination = event.data.object.destination
-  const metadata = event.data.object.metadata || {}
-  const { payment_request_id: paymentRequestId, user_id: userId } = metadata
+const models = Models as any
+const stripe = initStripe()
 
-  if (paymentRequestId) {
-    try {
-      const paymentRequestTransfer = await models.PaymentRequestTransfer.create({
-        transfer_id: transferId,
-        paymentRequestId: paymentRequestId,
-        userId: userId,
-        value: event.data.object.amount / 100,
-        status: 'created',
-        transfer_method: 'stripe'
-      })
-      return res.status(200).json(event)
-    } catch (error) {
-      console.error('Error creating payment request transfer:', error)
-      return res.status(200).json(event)
-    }
-  }
+export async function transferCreatedIssue(event: any, req: any, res: any) {
+  const transferId = event?.data?.object?.id
+  const destination = event?.data?.object?.destination
 
   try {
     const existingTransfer = await models.Transfer.findOne({
-      where: {
-        transfer_id: transferId
-      }
+      where: { transfer_id: transferId }
     })
 
     if (existingTransfer) {
@@ -41,18 +22,14 @@ module.exports = async function transferCreated(event, req, res) {
     }
 
     const task = await models.Task.findOne({
-      where: {
-        transfer_id: event.data.object.id
-      },
+      where: { transfer_id: transferId },
       include: [models.User]
     })
 
     if (task) {
       try {
         const assigned = await models.Assign.findOne({
-          where: {
-            id: task.dataValues.assigned
-          },
+          where: { id: task.dataValues.assigned },
           include: [models.User]
         })
 
@@ -74,11 +51,9 @@ module.exports = async function transferCreated(event, req, res) {
     } else {
       try {
         const account = await stripe.accounts.retrieve(destination)
-        if (account || account.email) {
+        if (account || (account as any).email) {
           const user = await models.User.findOne({
-            where: {
-              email: account.email
-            }
+            where: { email: (account as any).email }
           })
 
           if (user) {
@@ -87,7 +62,7 @@ module.exports = async function transferCreated(event, req, res) {
           }
 
           SendMail.success(
-            account.email,
+            (account as any).email,
             i18n.__('mail.webhook.payment.transfer.subject'),
             i18n.__('mail.webhook.payment.transfer.message', {
               amount: event.data.object.amount / 100,
@@ -102,7 +77,7 @@ module.exports = async function transferCreated(event, req, res) {
       }
     }
   } catch (e) {
-    console.log('Error processing transfer created event:', e)
+    console.log('Error processing transfer created issue event:', e)
     return res.status(200).send(event)
   }
 }

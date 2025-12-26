@@ -1,35 +1,10 @@
-const models = require('../../models')
-const i18n = require('i18n')
-const moment = require('moment')
-const SendMail = require('../mail/mail')
-const stripe = require('../shared/stripe/stripe')()
+const models = require('../../../../models')
+import i18n from 'i18n'
+import moment from 'moment'
+import SendMail from '../../../mail/mail'
 
-module.exports = async function transferReversed(event, req, res) {
-  const transferId = event.data.object.id
-  const metadata = event.data.object.metadata || {}
-  const { payment_request_id: paymentRequestId, user_id: userId } = metadata
-
-  if (paymentRequestId) {
-    try {
-      const paymentRequestTransfer = await models.PaymentRequestTransfer.findOne({
-        where: {
-          transfer_id: transferId,
-          paymentRequestId: paymentRequestId,
-          userId: userId
-        }
-      })
-
-      if (paymentRequestTransfer) {
-        paymentRequestTransfer.status = 'reversed'
-        await paymentRequestTransfer.save()
-      }
-
-      return res.status(200).json(event)
-    } catch (error) {
-      console.error('Error updating payment request transfer to reversed:', error)
-      return res.status(200).json(event)
-    }
-  }
+export async function transferReversedIssue(event: any, req: any, res: any): Promise<boolean> {
+  const transferId = event?.data?.object?.id
 
   try {
     const existingTransfer = await models.Transfer.findOne({
@@ -46,7 +21,7 @@ module.exports = async function transferReversed(event, req, res) {
 
     const task = await models.Task.findOne({
       where: {
-        transfer_id: event.data.object.id
+        transfer_id: transferId
       },
       include: [models.User]
     })
@@ -72,16 +47,21 @@ module.exports = async function transferReversed(event, req, res) {
             url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`
           })
         )
-        return res.status(200).json(event)
+        res.status(200).json(event)
+        return true
       } catch (e) {
         console.error('Error sending transfer reversed email:', e)
-        return res.status(200).json(event)
+        res.status(200).json(event)
+        return true
       }
-    } else {
-      return res.status(200).json(event)
     }
+
+    // No task associated, still respond OK to the webhook
+    res.status(200).json(event)
+    return true
   } catch (e) {
     console.error('Error processing transfer reversed webhook:', e)
-    return res.status(400).send(e)
+    res.status(400).send(e)
+    return true
   }
 }

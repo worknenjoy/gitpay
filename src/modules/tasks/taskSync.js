@@ -7,7 +7,7 @@ module.exports = Promise.method(function taskSync(taskParameters) {
   return models.Task.findByPk(taskParameters.id, {
     include: [models.Order]
   }).then((task) => {
-    if(!task) {
+    if (!task) {
       throw new Error('Task not found')
     }
     let finalValue = {

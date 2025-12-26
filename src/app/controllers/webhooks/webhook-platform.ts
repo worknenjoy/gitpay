@@ -21,8 +21,8 @@ const invoiceCreated = require('../../../modules/webhooks/invoiceCreated')
 const invoiceUpdated = require('../../../modules/webhooks/invoiceUpdated')
 const invoicePaid = require('../../../modules/webhooks/invoicePaid')
 const invoiceFinalized = require('../../../modules/webhooks/invoiceFinalized')
-const transferCreated = require('../../../modules/webhooks/transferCreated')
-const transferReversed = require('../../../modules/webhooks/transferReversed')
+import { transferCreated } from '../../../modules/webhooks/transfers'
+import { transferReversed } from '../../../modules/webhooks/transfers'
 const balanceAvailable = require('../../../modules/webhooks/balanceAvailable')
 const invoicePaymentSucceeded = require('../../../modules/webhooks/invoicePaymentSucceeded')
 const invoicePaymentFailed = require('../../../modules/webhooks/invoicePaymentFailed')
