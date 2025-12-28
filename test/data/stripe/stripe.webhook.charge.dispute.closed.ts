@@ -1,4 +1,4 @@
-export const disputeClosed = {
+export const disputeClosedLost = {
   id: 'evt_test_dispute_closed_1',
   object: 'event',
   api_version: '2025-10-01',
@@ -100,6 +100,16 @@ export const disputeClosed = {
       },
       reason: 'product_not_received',
       status: 'lost'
+    }
+  }
+}
+
+export const disputeClosedWon = {
+  ...disputeClosedLost,
+  data: {
+    object: {
+      ...disputeClosedLost.data.object,
+      status: 'won'
     }
   }
 }

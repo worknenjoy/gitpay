@@ -2,35 +2,25 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const moment = require('moment')
-const models = require('../../../models')
-const SendMail = require('../../../modules/mail/mail')
-const WalletMail = require('../../../modules/mail/wallet')
 
 const stripe = require('../../../modules/shared/stripe/stripe')()
-
 const chargeSucceeded = require('../../../modules/webhooks/chargeSucceeded')
 const checkoutSessionCompleted = require('../../../modules/webhooks/checkoutSessionCompleted')
 const customerSourceCreated = require('../../../modules/webhooks/customerSourceCreated')
 const chargeUpdated = require('../../../modules/webhooks/chargeUpdated')
 const chargeFailed = require('../../../modules/webhooks/chargeFailed')
 import { handleChargeRefunded } from '../../../modules/webhooks/charges/chargeRefunded/chargeRefunded'
-import { chargeDisputeCreatedWebhookHandler } from '../../../modules/webhooks/chargeDisputeCreated'
-import { chargeDisputeClosedWebhookHandler } from '../../../modules/webhooks/chargeDisputeClosed'
+import { chargeDisputeCreatedWebhookHandler, chargeDisputeClosedWebhookHandler } from '../../../modules/webhooks/charges'
 const invoiceCreated = require('../../../modules/webhooks/invoiceCreated')
 const invoiceUpdated = require('../../../modules/webhooks/invoiceUpdated')
 const invoicePaid = require('../../../modules/webhooks/invoicePaid')
 const invoiceFinalized = require('../../../modules/webhooks/invoiceFinalized')
 import { transferCreated } from '../../../modules/webhooks/transfers'
 import { transferReversed } from '../../../modules/webhooks/transfers'
+import { chargeDisputeFundsWithdrawnWebhookHandler } from '../../../modules/webhooks/charges/chargeDisputeFundsWithdrawn/chargeDisputeFundsWithdrawn'
 const balanceAvailable = require('../../../modules/webhooks/balanceAvailable')
 const invoicePaymentSucceeded = require('../../../modules/webhooks/invoicePaymentSucceeded')
 const invoicePaymentFailed = require('../../../modules/webhooks/invoicePaymentFailed')
-const {
-  FAILED_REASON,
-  CURRENCIES,
-  formatStripeAmount
-} = require('../../../modules/webhooks/constants')
 
 exports.webhookPlatform = async (req: any, res: any) => {
   const sig = req.headers['stripe-signature']
@@ -71,6 +61,8 @@ exports.webhookPlatform = async (req: any, res: any) => {
         return chargeFailed(event, paid, status, req, res)
       case 'charge.dispute.created':
         return chargeDisputeCreatedWebhookHandler(event, req, res)
+      case 'charge.dispute.funds_withdrawn':
+        return chargeDisputeFundsWithdrawnWebhookHandler(event, req, res)
       case 'charge.dispute.closed':
         return chargeDisputeClosedWebhookHandler(event, req, res)
       case 'invoice.created':

@@ -354,6 +354,51 @@ const PaymentRequestMail = {
     } catch (error) {
       console.error('Error sending email:', error)
     }
+  },
+  newDisputeClosedForPaymentRequest: async (user, status, dispute, paymentRequestPayment) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+    if (!receiveNotifications) {
+      return
+    }
+    i18n.setLocale(language)
+
+    try {
+      const dp = dispute
+
+      return await request(
+        to,
+        i18n.__('mail.paymentRequest.disputeClosedForPaymentRequest.subject'),
+        [
+          {
+            type: 'text/html',
+            value: emailTemplate.baseContentEmailTemplate(`
+        <p>${i18n.__(
+          'mail.paymentRequest.disputeClosedForPaymentRequest.message',
+          {
+            reason: getReason(dp.reason),
+            status: getStatusLabel(dp.status),
+            customer_name:
+              paymentRequestPayment?.PaymentRequestCustomer?.name ||
+              dp?.evidence?.customer_name ||
+              'N/A',
+            customer_email:
+              paymentRequestPayment?.PaymentRequestCustomer?.email ||
+              dp?.evidence?.customer_email_address ||
+              'N/A'
+          }
+        )}</p>
+        <div style="text-align: right">${i18n.__(
+          'mail.paymentRequest.disputeClosedForPaymentRequest.bottom'
+        )}</div>
+      `)
+          }
+        ]
+      )
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
   }
 }
 
