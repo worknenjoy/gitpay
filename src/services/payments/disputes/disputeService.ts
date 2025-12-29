@@ -13,18 +13,14 @@ type DisputeResponse = {}
 
 export const createDisputeForPaymentRequest = async ({
   source_id,
-  reason,
-  status,
-  amount,
-  closedAt,
-  due_by
+  dispute
 }: DisputeDataCreated): Promise<DisputeResponse> => {
   const paymentRequestPayment = await findPaymentRequestPayment(source_id)
   const paymentRequestUser = paymentRequestPayment.User
 
   PaymentRequestMail.newDisputeCreatedForPaymentRequest(
     paymentRequestUser,
-    { id: source_id, reason, status, amount, closedAt, evidence_details: { due_by } },
+    dispute,
     paymentRequestPayment
   ).catch((mailError: any) => {
     console.error(`Failed to send email for Dispute ID: ${source_id}`, mailError)

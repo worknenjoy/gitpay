@@ -80,7 +80,7 @@ describe('Payment Request Balance Webhook', () => {
         expect(userArg).to.exist
         expect(userArg.id).to.equal(currentUser.id)
         expect(dataArg).to.exist
-        expect(dataArg.id).to.equal('pi_test_123')
+        expect(dataArg.id).to.equal('du_test_123')
         expect(dataArg.reason).to.equal('product_not_received')
         expect(dataArg.status).to.equal('needs_response')
       } finally {

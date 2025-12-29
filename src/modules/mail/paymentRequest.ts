@@ -322,12 +322,12 @@ const PaymentRequestMail = {
           `<div style="text-align:right">${currencySymbol} ${handleAmount(disputedAmount, '0', 'centavos').decimal}</div>`
         ])
       }
-      
+
       rows.push([
         'Dispute fee',
         `<div style="text-align:right">- ${currencySymbol} ${handleAmount(fee, '0', 'centavos').decimal}</div>`
       ])
-      
+
       rows.push([
         'Platform fee (8%)',
         `<div style="text-align:right">- ${currencySymbol} ${Math.abs(platformFee.decimalFee)}</div>`

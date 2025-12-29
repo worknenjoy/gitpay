@@ -12,18 +12,14 @@ export const chargeDisputeCreatedWebhookHandler = async (event: any, req: any, r
   // Handle the charge.dispute.created event
   const { data } = event || {}
   const { object } = data || {}
-  const { id, payment_intent, balance_transactions, reason, status, created } = object || {}
+  const { payment_intent } = object || {}
 
   console.log(`Handling charge.dispute.created for Dispute ID: ${data.object.id}`)
 
   try {
     await createDisputeForPaymentRequest({
       source_id: payment_intent,
-      amount: balance_transactions[0].net,
-      reason: reason,
-      status: status,
-      closedAt: new Date(created * 1000),
-      due_by: new Date((object.evidence_details?.due_by || 0) * 1000)
+      dispute: object
     })
 
     return res.json(req.body)

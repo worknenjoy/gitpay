@@ -1,10 +1,6 @@
 export type DisputeDataCreated = {
   source_id: string
-  amount: number
-  reason: string
-  status: string
-  closedAt: Date
-  due_by: Date
+  dispute: any
 }
 
 export type DisputeDataWithdrawn = {
