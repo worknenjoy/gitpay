@@ -314,6 +314,103 @@ describe('Payment Request Balance Webhook', () => {
       expect(updatedPaymentRequestBalance).to.exist
       expect(updatedPaymentRequestBalance.balance).to.equal('-6895')
     })
+    it('should create a Payment Request Balance when a charge.dispute.funds_withdrawn event is received twice', async () => {
+      nock('https://api.stripe.com')
+        .get('/v1/disputes/du_test_charge_dispute')
+        .reply(200, disputeFundsWithdrawn.data.object)
+        .persist()
+
+      const user = await registerAndLogin(agent)
+      const { headers, body: currentUser } = user || {}
+
+      const paymentRequest = await models.PaymentRequest.create({
+        title: 'Test Payment Request',
+        description: 'A test payment request',
+        amount: 5000,
+        currency: 'usd',
+        userId: currentUser.id
+      })
+
+      const paymentRequestCustomer = await models.PaymentRequestCustomer.create({
+        email: 'test@example.com',
+        name: 'Test User',
+        sourceId: 'src_test_123',
+        userId: currentUser.id
+      })
+
+      const paymentRequestPayment = await models.PaymentRequestPayment.create({
+        amount: 4995,
+        currency: 'usd',
+        source: 'pi_test_payment_intent',
+        status: 'paid',
+        customerId: paymentRequestCustomer.id,
+        paymentRequestId: paymentRequest.id,
+        userId: currentUser.id
+      })
+
+      const paymentRequestBalance = await models.PaymentRequestBalance.create({
+        userId: currentUser.id,
+        balance: 0
+      })
+
+      const res = await agent
+        .post('/webhooks/stripe-platform')
+        .send(disputeFundsWithdrawn)
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      const anotherPaymentRequestPayment = await models.PaymentRequestPayment.create({
+        amount: 4995,
+        currency: 'usd',
+        source: 'pi_test_payment_intent_2',
+        status: 'paid',
+        customerId: paymentRequestCustomer.id,
+        paymentRequestId: paymentRequest.id,
+        userId: currentUser.id
+      })
+
+      const res2 = await agent
+        .post('/webhooks/stripe-platform')
+        .send(disputeFundsWithdrawn)
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+
+      const event = JSON.parse(Buffer.from(res.body).toString())
+      expect(event).to.exist
+      expect(event.id).to.equal('evt_test_charge_dispute_funds_withdrawn')
+
+      const updatedPaymentRequestBalance = await models.PaymentRequestBalance.findOne({
+        where: {
+          userId: currentUser.id
+        }
+      })
+
+      const paymentRequestBalanceTransaction =
+        await models.PaymentRequestBalanceTransaction.findAll({
+          where: {
+            paymentRequestBalanceId: paymentRequestBalance.id
+          }
+        })
+
+      expect(paymentRequestBalanceTransaction).to.exist
+      expect(paymentRequestBalanceTransaction[0].amount).to.equal('-6895')
+      expect(paymentRequestBalanceTransaction[0].type).to.equal('DEBIT')
+      expect(paymentRequestBalanceTransaction[0].reason).to.equal('DISPUTE')
+      expect(paymentRequestBalanceTransaction[0].status).to.equal('needs_response')
+      expect(paymentRequestBalanceTransaction[0].openedAt).to.be.instanceOf(Date)
+      expect(paymentRequestBalanceTransaction[0].closedAt).to.be.instanceOf(Date)
+
+      expect(paymentRequestBalanceTransaction[1].amount).to.equal('-6895')
+      expect(paymentRequestBalanceTransaction[1].type).to.equal('DEBIT')
+      expect(paymentRequestBalanceTransaction[1].reason).to.equal('DISPUTE')
+      expect(paymentRequestBalanceTransaction[1].status).to.equal('needs_response')
+      expect(paymentRequestBalanceTransaction[1].openedAt).to.be.instanceOf(Date)
+      expect(paymentRequestBalanceTransaction[1].closedAt).to.be.instanceOf(Date)
+
+      expect(updatedPaymentRequestBalance).to.exist
+      expect(updatedPaymentRequestBalance.balance).to.equal('-13790')
+    })
   })
   describe('For refunds', () => {
     it('should update balance after a refund from a payment request is triggered', async () => {

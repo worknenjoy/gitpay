@@ -46,7 +46,6 @@ export const withDrawnDisputeForPaymentRequest = async ({
     console.log(
       `Found Payment Request Payment with ID: ${paymentRequestPayment.id} for source ID: ${source_id}`
     )
-    console.log('Payment Request Payment:', paymentRequestPayment)
   }
 
   const paymentRequestUser = paymentRequestPayment.User
