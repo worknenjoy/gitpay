@@ -1,15 +1,25 @@
-const request = require('./request')
-const constants = require('./constants')
-const i18n = require('i18n')
-const moment = require('moment')
-const formatDate = require('../util/formatDate').default
-const emailTemplate = require('./templates/base-content')
-const TableTemplate = require('./templates/table-content')
-const currencyInfo = require('../util/currency-info')
-const { handleAmount } = require('../util/handle-amount/handle-amount')
-const paymentRequest = require('../../models/paymentRequest')
+import request from './request'
+import i18n from 'i18n'
+import moment from 'moment'
+import formatDate from '../util/formatDate'
+import emailTemplate from './templates/base-content'
+import { tableContentEmailTemplate } from './templates/table-content'
+import currencyInfo from '../util/currency-info'
+import { handleAmount } from '../util/handle-amount/handle-amount'
 
-const getReason = (reason_details) => {
+type CurrencyKey = keyof typeof currencyInfo
+
+const resolveCurrencyKey = (code: any): CurrencyKey => {
+  if (typeof code === 'string') {
+    const lowered = code.toLowerCase()
+    if (Object.prototype.hasOwnProperty.call(currencyInfo, lowered)) {
+      return lowered as CurrencyKey
+    }
+  }
+  return 'usd'
+}
+
+const getReason = (reason_details: any) => {
   switch (reason_details) {
     case 'product_not_received':
       return i18n.__(
@@ -32,19 +42,30 @@ const getReason = (reason_details) => {
   }
 }
 
-const getStatusLabel = (status) => {
+const getStatusClosedLabel = (status: any) => {
+  switch (status) {
+    case 'won':
+      return i18n.__('mail.paymentRequest.newDisputeClosedForPaymentRequest.status.won')
+    case 'lost':
+      return i18n.__('mail.paymentRequest.newDisputeClosedForPaymentRequest.status.lost')
+    default:
+      return status ? status.charAt(0).toUpperCase() + status.slice(1) : 'N/A'
+  }
+}
+
+const getStatusLabel = (status: any) => {
   switch (status) {
     case 'needs_response':
       return i18n.__(
         'mail.paymentRequest.newDisputeCreatedForPaymentRequest.reasons.needs_response'
       )
     default:
-      return status.charAt(0).toUpperCase() + status.slice(1)
+      return status ? status.charAt(0).toUpperCase() + status.slice(1) : 'N/A'
   }
 }
 
 const PaymentRequestMail = {
-  paymentRequestInitiated: async (user, paymentRequest) => {
+  paymentRequestInitiated: async (user: any, paymentRequest: any) => {
     const { email, language, receiveNotifications } = user
     const { title, description, amount, custom_amount, currency, payment_url } = paymentRequest
     const to = email
@@ -72,11 +93,11 @@ const PaymentRequestMail = {
     }
   },
   transferInitiatedForPaymentRequest: async (
-    user,
-    paymentRequest,
-    payment_amount,
-    transfer_amount,
-    extraFee
+    user: any,
+    paymentRequest: any,
+    payment_amount: any,
+    transfer_amount: any,
+    extraFee: any
   ) => {
     const to = user.email
     const language = user.language || 'en'
@@ -86,10 +107,11 @@ const PaymentRequestMail = {
     }
     i18n.setLocale(language)
 
-    const currencySymbol = currencyInfo[paymentRequest.currency.toLowerCase()]?.symbol || ''
+    const currencyKey = resolveCurrencyKey(paymentRequest?.currency)
+    const currencySymbol = currencyInfo[currencyKey]?.symbol || ''
     const { decimalFee } = handleAmount(payment_amount, 8, 'decimal', paymentRequest.currency)
 
-    let rows = []
+    let rows: any[] = []
     if (extraFee) {
       rows = [
         [
@@ -130,7 +152,7 @@ const PaymentRequestMail = {
       return await request(to, i18n.__('mail.paymentRequest.transferInitiated.subject'), [
         {
           type: 'text/html',
-          value: TableTemplate.tableContentEmailTemplate(
+          value: tableContentEmailTemplate(
             i18n.__('mail.paymentRequest.transferInitiated.message'),
             i18n.__('mail.paymentRequest.transferInitiated.details', {
               title: paymentRequest.title,
@@ -149,7 +171,7 @@ const PaymentRequestMail = {
       console.error('Error sending email:', error)
     }
   },
-  paymentMadeForPaymentRequest: async (user, paymentRequestPayment) => {
+  paymentMadeForPaymentRequest: async (user: any, paymentRequestPayment: any) => {
     const to = user.email
     const language = user.language || 'en'
     const receiveNotifications = user?.receiveNotifications
@@ -157,7 +179,8 @@ const PaymentRequestMail = {
       return
     }
     i18n.setLocale(language)
-    const currencySymbol = currencyInfo[paymentRequestPayment.currency.toLowerCase()]?.symbol || ''
+    const currencyKey = resolveCurrencyKey(paymentRequestPayment?.currency)
+    const currencySymbol = currencyInfo[currencyKey]?.symbol || ''
     try {
       return await request(
         to,
@@ -165,7 +188,7 @@ const PaymentRequestMail = {
         [
           {
             type: 'text/html',
-            value: TableTemplate.tableContentEmailTemplate(
+            value: tableContentEmailTemplate(
               i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.message', {
                 amount: paymentRequestPayment.amount,
                 currency: paymentRequestPayment.currency
@@ -198,9 +221,9 @@ const PaymentRequestMail = {
     }
   },
   newBalanceTransactionForPaymentRequest: async (
-    user,
-    paymentRequestPayment,
-    balanceTransaction
+    user: any,
+    paymentRequestPayment: any,
+    balanceTransaction: any
   ) => {
     const to = user.email
     const language = user.language || 'en'
@@ -217,7 +240,7 @@ const PaymentRequestMail = {
         [
           {
             type: 'text/html',
-            value: TableTemplate.tableContentEmailTemplate(
+            value: tableContentEmailTemplate(
               i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.message'),
               i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.details', {
                 type: balanceTransaction.type,
@@ -255,7 +278,11 @@ const PaymentRequestMail = {
       console.error('Error sending email:', error)
     }
   },
-  newDisputeCreatedForPaymentRequest: async (user, dispute, paymentRequestPayment) => {
+  newDisputeCreatedForPaymentRequest: async (
+    user: any,
+    dispute: any,
+    paymentRequestPayment: any
+  ) => {
     const to = user.email
     const language = user.language || 'en'
     const receiveNotifications = user?.receiveNotifications
@@ -266,24 +293,17 @@ const PaymentRequestMail = {
 
     try {
       const dp = dispute?.object || dispute
-      const currency = dp.currency?.toLowerCase?.() || 'usd'
-      const currencySymbol = currencyInfo[currency]?.symbol || ''
+      const currencyKey = resolveCurrencyKey(dp?.currency)
+      const currencySymbol = currencyInfo[currencyKey]?.symbol || ''
 
-      // Monetary values (Stripe amounts are in the smallest unit)
       const disputedAmount = dp?.amount ?? null
       const feeFromTxn = dp?.balance_transactions?.[0]?.fee
       const netFromTxn = dp?.balance_transactions?.[0]?.net
       const feeFromDetails = dp?.balance_transactions?.[0]?.fee_details?.find?.(
-        (f) => f?.description === 'Dispute fee'
+        (f: any) => f?.description === 'Dispute fee'
       )?.amount
-      const fee =
-        typeof feeFromTxn === 'number'
-          ? feeFromTxn
-          : typeof feeFromDetails === 'number'
-            ? feeFromDetails
-            : null
+      const fee = feeFromTxn as number
 
-      // Dates and response window
       const dueBy = dp?.evidence_details?.due_by
       const dueMoment = dueBy ? moment.unix(dueBy) : null
       const daysToRespond = dueMoment
@@ -291,29 +311,34 @@ const PaymentRequestMail = {
         : null
       const dueFormatted = dueMoment ? dueMoment.format('LLL') : null
 
-      // Reason mapping using existing helper
       const reason = dp?.reason ? getReason(dp.reason) : 'N/A'
 
-      const rows = []
+      const platformFee = handleAmount(disputedAmount, 8, 'centavos')
+
+      const rows: any[] = []
       if (typeof disputedAmount === 'number') {
         rows.push([
           'Disputed amount',
           `<div style="text-align:right">${currencySymbol} ${handleAmount(disputedAmount, '0', 'centavos').decimal}</div>`
         ])
       }
-      if (typeof fee === 'number') {
-        rows.push([
-          'Dispute fee',
-          `<div style="text-align:right">- ${currencySymbol} ${handleAmount(fee, '0', 'centavos').decimal}</div>`
-        ])
-      }
-      if (typeof netFromTxn === 'number') {
-        const sign = netFromTxn < 0 ? '-' : ''
-        rows.push([
-          'Net impact',
-          `<div style="text-align:right">${sign} ${currencySymbol} ${handleAmount(Math.abs(netFromTxn), '0', 'centavos').decimal}</div>`
-        ])
-      }
+
+      rows.push([
+        'Dispute fee',
+        `<div style="text-align:right">- ${currencySymbol} ${handleAmount(fee, '0', 'centavos').decimal}</div>`
+      ])
+
+      rows.push([
+        'Platform fee (8%)',
+        `<div style="text-align:right">- ${currencySymbol} ${Math.abs(platformFee.decimalFee)}</div>`
+      ])
+
+      const sign = netFromTxn < 0 ? '-' : ''
+      rows.push([
+        'Net impact',
+        `<div style="text-align:right">${sign} ${currencySymbol} ${handleAmount(Math.abs(netFromTxn) + platformFee.centavosFee, '0', 'centavos').decimal}</div>`
+      ])
+
       if (daysToRespond !== null) {
         rows.push([
           'Days to respond',
@@ -327,7 +352,7 @@ const PaymentRequestMail = {
         [
           {
             type: 'text/html',
-            value: TableTemplate.tableContentEmailTemplate(
+            value: tableContentEmailTemplate(
               i18n.__('mail.paymentRequest.newDisputeCreatedForPaymentRequest.message', {
                 status: getStatusLabel(dp?.status) || 'N/A'
               }),
@@ -354,7 +379,69 @@ const PaymentRequestMail = {
     } catch (error) {
       console.error('Error sending email:', error)
     }
+  },
+  newDisputeClosedForPaymentRequest: async (
+    user: any,
+    status: any,
+    dispute: any,
+    paymentRequestPayment: any
+  ) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+    if (!receiveNotifications) {
+      return
+    }
+    i18n.setLocale(language)
+
+    try {
+      const dp = dispute
+
+      return await request(
+        to,
+        i18n.__('mail.paymentRequest.disputeClosedForPaymentRequest.subject'),
+        [
+          {
+            type: 'text/html',
+            value: emailTemplate.baseContentEmailTemplate(`
+        <p>${i18n.__('mail.paymentRequest.disputeClosedForPaymentRequest.message', {
+          status: status ? getStatusClosedLabel(status) : 'N/A'
+        })}</p>
+        <p>${i18n.__('mail.paymentRequest.disputeClosedForPaymentRequest.details', {
+          reason: getReason(dp.reason),
+          customer_name:
+            paymentRequestPayment?.PaymentRequestCustomer?.name ||
+            dp?.evidence?.customer_name ||
+            'N/A',
+          customer_email:
+            paymentRequestPayment?.PaymentRequestCustomer?.email ||
+            dp?.evidence?.customer_email_address ||
+            'N/A'
+        })}</p>
+        <p>
+          ${
+            status === 'won'
+              ? i18n.__('mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.won.details')
+              : status === 'lost'
+                ? i18n.__(
+                    'mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.lost.details'
+                  )
+                : ''
+          }
+        </p>
+        <div style="text-align: right">${i18n.__(
+          'mail.paymentRequest.disputeClosedForPaymentRequest.bottom'
+        )}</div>
+      `)
+          }
+        ]
+      )
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
   }
 }
+
+export default PaymentRequestMail
 
 module.exports = PaymentRequestMail
