@@ -24,7 +24,7 @@ export const createDisputeForPaymentRequest = async ({
 
   PaymentRequestMail.newDisputeCreatedForPaymentRequest(
     paymentRequestUser,
-    { id: source_id, reason, status, amount, closedAt, evidence_details: { dueBy: due_by } },
+    { id: source_id, reason, status, amount, closedAt, evidence_details: { due_by } },
     paymentRequestPayment
   ).catch((mailError: any) => {
     console.error(`Failed to send email for Dispute ID: ${source_id}`, mailError)

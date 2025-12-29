@@ -302,12 +302,7 @@ const PaymentRequestMail = {
       const feeFromDetails = dp?.balance_transactions?.[0]?.fee_details?.find?.(
         (f: any) => f?.description === 'Dispute fee'
       )?.amount
-      const fee =
-        typeof feeFromTxn === 'number'
-          ? feeFromTxn
-          : typeof feeFromDetails === 'number'
-            ? feeFromDetails
-            : null
+      const fee = feeFromTxn as number
 
       const dueBy = dp?.evidence_details?.due_by
       const dueMoment = dueBy ? moment.unix(dueBy) : null
@@ -327,15 +322,15 @@ const PaymentRequestMail = {
           `<div style="text-align:right">${currencySymbol} ${handleAmount(disputedAmount, '0', 'centavos').decimal}</div>`
         ])
       }
-      if (typeof fee === 'number') {
-        rows.push([
-          'Dispute fee',
-          `<div style="text-align:right">- ${currencySymbol} ${handleAmount(fee, '0', 'centavos').decimal}</div>`
-        ])
-      }
+      
+      rows.push([
+        'Dispute fee',
+        `<div style="text-align:right">- ${currencySymbol} ${handleAmount(fee, '0', 'centavos').decimal}</div>`
+      ])
+      
       rows.push([
         'Platform fee (8%)',
-        `<div style="text-align:right">- ${currencySymbol} ${platformFee.decimalFee}</div>`
+        `<div style="text-align:right">- ${currencySymbol} ${Math.abs(platformFee.decimalFee)}</div>`
       ])
 
       const sign = netFromTxn < 0 ? '-' : ''
