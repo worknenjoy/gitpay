@@ -15,6 +15,9 @@ export const createDisputeForPaymentRequest = async ({
   source_id,
   reason,
   status,
+  amount,
+  closedAt,
+  due_by
 }: DisputeDataCreated): Promise<DisputeResponse> => {
 
   const paymentRequestPayment = await findPaymentRequestPayment(source_id)
@@ -22,7 +25,7 @@ export const createDisputeForPaymentRequest = async ({
 
   PaymentRequestMail.newDisputeCreatedForPaymentRequest(
     paymentRequestUser,
-    { id: source_id, reason, status },
+    { id: source_id, reason, status, amount, closedAt, evidence_details: { dueBy: due_by } },
     paymentRequestPayment
   ).catch((mailError: any) => {
     console.error(`Failed to send email for Dispute ID: ${source_id}`, mailError)
@@ -47,6 +50,11 @@ export const withDrawnDisputeForPaymentRequest = async ({
     console.error(
       `Payment Request Payment not found for source ID: ${source_id}`
     ) 
+  } else {
+    console.log(
+      `Found Payment Request Payment with ID: ${paymentRequestPayment.id} for source ID: ${source_id}`
+    )
+    console.log('Payment Request Payment:', paymentRequestPayment)
   }
 
   const paymentRequestUser = paymentRequestPayment.User

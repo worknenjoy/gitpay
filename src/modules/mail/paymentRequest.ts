@@ -61,7 +61,7 @@ const getStatusLabel = (status: any) => {
   switch (status) {
    case 'needs_response':
       return i18n.__(
-        'mail.paymentRequest.newDisputeCreatedForPaymentRequest.status.needs_response'
+        'mail.paymentRequest.newDisputeCreatedForPaymentRequest.reasons.needs_response'
       )
     default:
       return status ? status.charAt(0).toUpperCase() + status.slice(1) : 'N/A'
@@ -341,13 +341,13 @@ const PaymentRequestMail = {
         'Platform fee (8%)',
         `<div style="text-align:right">- ${currencySymbol} ${platformFee.decimalFee}</div>`
       ])
-      if (typeof netFromTxn === 'number') {
-        const sign = netFromTxn < 0 ? '-' : ''
-        rows.push([
-          'Net impact',
-          `<div style="text-align:right">${sign} ${currencySymbol} ${handleAmount(Math.abs(netFromTxn) + platformFee.centavosFee, '0', 'centavos').decimal}</div>`
-        ])
-      }
+      
+      const sign = netFromTxn < 0 ? '-' : ''
+      rows.push([
+        'Net impact',
+        `<div style="text-align:right">${sign} ${currencySymbol} ${handleAmount(Math.abs(netFromTxn) + platformFee.centavosFee, '0', 'centavos').decimal}</div>`
+      ])
+      
       if (daysToRespond !== null) {
         rows.push([
           'Days to respond',
@@ -459,3 +459,5 @@ const PaymentRequestMail = {
 }
 
 export default PaymentRequestMail
+
+module.exports = PaymentRequestMail

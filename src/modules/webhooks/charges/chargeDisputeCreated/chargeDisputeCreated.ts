@@ -22,7 +22,8 @@ export const chargeDisputeCreatedWebhookHandler = async (event: any, req: any, r
       amount: balance_transactions[0].net,
       reason: reason,
       status: status,
-      closedAt: new Date(created * 1000)
+      closedAt: new Date(created * 1000),
+      due_by: new Date((object.evidence_details?.due_by || 0) * 1000)
     })
 
     return res.json(req.body)

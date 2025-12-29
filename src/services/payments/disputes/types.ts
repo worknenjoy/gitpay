@@ -4,6 +4,7 @@ export type DisputeDataCreated = {
   reason: string
   status: string
   closedAt: Date
+  due_by: Date
 }
 
 export type DisputeDataWithdrawn = {

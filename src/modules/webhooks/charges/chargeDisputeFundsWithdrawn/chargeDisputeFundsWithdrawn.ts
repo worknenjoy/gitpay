@@ -10,8 +10,6 @@ export const chargeDisputeFundsWithdrawnWebhookHandler = async (event: any, req:
   const { object } = data || {};
   const { id, payment_intent, amount, balance_transactions, reason, status, created } = object || {};
 
-  console.log(`Handling charge.dispute.funds_withdrawn for Dispute ID: ${id}`) 
-
   try {
     await withDrawnDisputeForPaymentRequest({
       source_id: payment_intent,
