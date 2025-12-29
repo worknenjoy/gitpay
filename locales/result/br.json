@@ -211,5 +211,13 @@
   "mail.paymentRequest.newDisputeCreatedForPaymentRequest.message": "Uma nova disputa foi criada para um pagamento recente relacionado com sua solicitação de pagamento. <br /><br /><strong>Status atual: </strong>{{status}}",
   "mail.paymentRequest.newDisputeCreatedForPaymentRequest.details": "<strong>Reason:</strong> {{reason}}<br/><strong>Cliente:</strong> {{customer_name}}<br/><strong>Cliente e-mail:</strong> {{customer_email}}",
   "mail.paymentRequest.newDisputeCreatedForPaymentRequest.bottom": "Para enviar as evidências, entre em contato com <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>. Você pode entrar em contato com seu cliente para cancelar a disputa com o banco. Se não houver nenhuma resposta, a taxa de contestação será deduzida do seu saldo em suas próximas reclamações. Você pode rever as informações da disputa sobre <a href=\"https://gitpay.me/#/profile/payment-requests\">Gitpay</a>.",
-  "mail.paymentRequest.newDisputeCreatedForPaymentRequest.reasons.needs_response": "Precisa de resposta"
+  "mail.paymentRequest.newDisputeCreatedForPaymentRequest.reasons.needs_response": "Precisa de resposta",
+  "mail.paymentRequest.disputeClosedForPaymentRequest.subject": "A dispute for your payment request was closed on Gitpay",
+  "mail.paymentRequest.disputeClosedForPaymentRequest.message": "The dispute for a recent payment related to your payment request was closed. <br /><br /><strong>Final status: </strong>{{status}}",
+  "mail.paymentRequest.disputeClosedForPaymentRequest.details": "<strong>Reason:</strong> {{reason}}<br/><strong>Customer:</strong> {{customer_name}}<br/><strong>Customer e-mail:</strong> {{customer_email}}",
+  "mail.paymentRequest.disputeClosedForPaymentRequest.bottom": "You can review the dispute details on <a href=\"https://gitpay.me/#/profile/payment-requests\">Gitpay</a>.",
+  "mail.paymentRequest.newDisputeClosedForPaymentRequest.status.won": "Won",
+  "mail.paymentRequest.newDisputeClosedForPaymentRequest.status.lost": "Lost",
+  "mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.won.details": "When you win a dispute, the disputed amount is returned to your balance.",
+  "mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.lost.details": "When you lose a dispute, the disputed amount deducted from your balance is lost."
 }
