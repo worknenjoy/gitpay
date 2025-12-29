@@ -45,13 +45,9 @@ const getReason = (reason_details: any) => {
 const getStatusClosedLabel = (status: any) => {
   switch (status) {
     case 'won':
-      return i18n.__(
-        'mail.paymentRequest.newDisputeClosedForPaymentRequest.status.won'
-      )
+      return i18n.__('mail.paymentRequest.newDisputeClosedForPaymentRequest.status.won')
     case 'lost':
-      return i18n.__(
-        'mail.paymentRequest.newDisputeClosedForPaymentRequest.status.lost'
-      )
+      return i18n.__('mail.paymentRequest.newDisputeClosedForPaymentRequest.status.lost')
     default:
       return status ? status.charAt(0).toUpperCase() + status.slice(1) : 'N/A'
   }
@@ -59,7 +55,7 @@ const getStatusClosedLabel = (status: any) => {
 
 const getStatusLabel = (status: any) => {
   switch (status) {
-   case 'needs_response':
+    case 'needs_response':
       return i18n.__(
         'mail.paymentRequest.newDisputeCreatedForPaymentRequest.reasons.needs_response'
       )
@@ -282,7 +278,11 @@ const PaymentRequestMail = {
       console.error('Error sending email:', error)
     }
   },
-  newDisputeCreatedForPaymentRequest: async (user: any, dispute: any, paymentRequestPayment: any) => {
+  newDisputeCreatedForPaymentRequest: async (
+    user: any,
+    dispute: any,
+    paymentRequestPayment: any
+  ) => {
     const to = user.email
     const language = user.language || 'en'
     const receiveNotifications = user?.receiveNotifications
@@ -318,11 +318,7 @@ const PaymentRequestMail = {
 
       const reason = dp?.reason ? getReason(dp.reason) : 'N/A'
 
-      const platformFee = handleAmount(
-          disputedAmount,
-          8,
-          'centavos'
-        )
+      const platformFee = handleAmount(disputedAmount, 8, 'centavos')
 
       const rows: any[] = []
       if (typeof disputedAmount === 'number') {
@@ -341,13 +337,13 @@ const PaymentRequestMail = {
         'Platform fee (8%)',
         `<div style="text-align:right">- ${currencySymbol} ${platformFee.decimalFee}</div>`
       ])
-      
+
       const sign = netFromTxn < 0 ? '-' : ''
       rows.push([
         'Net impact',
         `<div style="text-align:right">${sign} ${currencySymbol} ${handleAmount(Math.abs(netFromTxn) + platformFee.centavosFee, '0', 'centavos').decimal}</div>`
       ])
-      
+
       if (daysToRespond !== null) {
         rows.push([
           'Days to respond',
@@ -413,36 +409,29 @@ const PaymentRequestMail = {
           {
             type: 'text/html',
             value: emailTemplate.baseContentEmailTemplate(`
-        <p>${i18n.__(
-          'mail.paymentRequest.disputeClosedForPaymentRequest.message',
-          {
-            status: status ? getStatusClosedLabel(status) : 'N/A'
-          }
-        )}</p>
-        <p>${i18n.__(
-          'mail.paymentRequest.disputeClosedForPaymentRequest.details',
-          {
-            reason: getReason(dp.reason),
-            customer_name:
-              paymentRequestPayment?.PaymentRequestCustomer?.name ||
-              dp?.evidence?.customer_name ||
-              'N/A',
-            customer_email:
-              paymentRequestPayment?.PaymentRequestCustomer?.email ||
-              dp?.evidence?.customer_email_address ||
-              'N/A'
-          }
-        )}</p>
+        <p>${i18n.__('mail.paymentRequest.disputeClosedForPaymentRequest.message', {
+          status: status ? getStatusClosedLabel(status) : 'N/A'
+        })}</p>
+        <p>${i18n.__('mail.paymentRequest.disputeClosedForPaymentRequest.details', {
+          reason: getReason(dp.reason),
+          customer_name:
+            paymentRequestPayment?.PaymentRequestCustomer?.name ||
+            dp?.evidence?.customer_name ||
+            'N/A',
+          customer_email:
+            paymentRequestPayment?.PaymentRequestCustomer?.email ||
+            dp?.evidence?.customer_email_address ||
+            'N/A'
+        })}</p>
         <p>
-          ${ status === 'won'
-            ? i18n.__(
-                'mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.won.details'
-              )
-            : status === 'lost'
-              ? i18n.__(
-                  'mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.lost.details'
-                )
-              : ''
+          ${
+            status === 'won'
+              ? i18n.__('mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.won.details')
+              : status === 'lost'
+                ? i18n.__(
+                    'mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.lost.details'
+                  )
+                : ''
           }
         </p>
         <div style="text-align: right">${i18n.__(

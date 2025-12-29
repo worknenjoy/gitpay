@@ -19,7 +19,6 @@ export const createDisputeForPaymentRequest = async ({
   closedAt,
   due_by
 }: DisputeDataCreated): Promise<DisputeResponse> => {
-
   const paymentRequestPayment = await findPaymentRequestPayment(source_id)
   const paymentRequestUser = paymentRequestPayment.User
 
@@ -43,13 +42,10 @@ export const withDrawnDisputeForPaymentRequest = async ({
   status,
   closedAt
 }: DisputeDataWithdrawn): Promise<DisputeResponse> => {
-
   const paymentRequestPayment = await findPaymentRequestPayment(source_id)
 
-  if(!paymentRequestPayment) {
-    console.error(
-      `Payment Request Payment not found for source ID: ${source_id}`
-    ) 
+  if (!paymentRequestPayment) {
+    console.error(`Payment Request Payment not found for source ID: ${source_id}`)
   } else {
     console.log(
       `Found Payment Request Payment with ID: ${paymentRequestPayment.id} for source ID: ${source_id}`
@@ -60,15 +56,11 @@ export const withDrawnDisputeForPaymentRequest = async ({
   const paymentRequestUser = paymentRequestPayment.User
 
   if (paymentRequestUser) {
-    console.log(
-      `Dispute User ID: ${paymentRequestUser.id}`
-    )
+    console.log(`Dispute User ID: ${paymentRequestUser.id}`)
   } else {
-    console.error(
-      `Payment Request User not found for source ID: ${source_id}`
-    )
+    console.error(`Payment Request User not found for source ID: ${source_id}`)
   }
-  
+
   const paymentRequestBalance = await findOrCreatePaymentRequestBalance(paymentRequestUser.id)
 
   if (paymentRequestBalance) {
@@ -76,9 +68,7 @@ export const withDrawnDisputeForPaymentRequest = async ({
       `Found Payment Request Balance with ID: ${paymentRequestBalance.id} for User ID: ${paymentRequestUser.id}`
     )
   } else {
-    console.error(
-      `Payment Request Balance not found for User ID: ${paymentRequestUser.id}`
-    )
+    console.error(`Payment Request Balance not found for User ID: ${paymentRequestUser.id}`)
   }
 
   const dispute = await stripe.disputes.retrieve(dispute_id)
@@ -108,9 +98,7 @@ export const withDrawnDisputeForPaymentRequest = async ({
   if (paymentRequestBalanceTransactionForDisputeFee) {
     console.log(`Created PaymentRequestBalanceTransaction for Dispute ID: ${source_id}`)
   } else {
-    console.error(
-      `Failed to create PaymentRequestBalanceTransaction for Dispute ID: ${source_id}`
-    )
+    console.error(`Failed to create PaymentRequestBalanceTransaction for Dispute ID: ${source_id}`)
   }
 
   PaymentRequestMail.newBalanceTransactionForPaymentRequest(
@@ -129,14 +117,13 @@ export const closeDisputeForPaymentRequest = async ({
   status,
   dispute
 }: DisputeDataClosed): Promise<DisputeResponse> => {
-
   const paymentRequestPayment = await findPaymentRequestPayment(source_id)
   const paymentRequestUser = paymentRequestPayment.User
   const paymentRequestBalance = await findOrCreatePaymentRequestBalance(paymentRequestUser.id)
 
   const { id, amount, balance_transactions, reason, created } = dispute || {}
 
-  if(status === 'won') {
+  if (status === 'won') {
     const fee = balance_transactions[0]?.fee || 0
     const finalAmount = amount + (fee || 0)
 
@@ -169,7 +156,7 @@ export const closeDisputeForPaymentRequest = async ({
       )
     }
   }
-  
+
   PaymentRequestMail.newDisputeClosedForPaymentRequest(
     paymentRequestUser,
     status,

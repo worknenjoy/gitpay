@@ -12,7 +12,7 @@ export const findPaymentRequestPayment = async (sourceId: string) => {
         model: models.PaymentRequestCustomer
       },
       {
-        model: models.PaymentRequest,
+        model: models.PaymentRequest
       },
       {
         model: models.User

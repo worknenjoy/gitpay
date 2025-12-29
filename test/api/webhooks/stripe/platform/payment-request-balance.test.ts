@@ -9,7 +9,10 @@ import PaymentRequestMail from '../../../../../src/modules/mail/paymentRequest'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const sinon = require('sinon')
 import { disputeCreated } from '../../../../data/stripe/stripe.webhook.charge.dispute.created'
-import { disputeClosedLost, disputeClosedWon } from '../../../../data/stripe/stripe.webhook.charge.dispute.closed'
+import {
+  disputeClosedLost,
+  disputeClosedWon
+} from '../../../../data/stripe/stripe.webhook.charge.dispute.closed'
 import { disputeFundsWithdrawn } from '../../../../data/stripe/stripe.webhook.charge.dispute.funds_withdrawn'
 import { refundCreated } from '../../../../data/stripe/stripe.webhook.charge.refunded'
 import { PaymentIntentData } from '../../../../data/stripe/stripe.paymentIntent'
@@ -80,13 +83,14 @@ describe('Payment Request Balance Webhook', () => {
         expect(dataArg.id).to.equal('pi_test_123')
         expect(dataArg.reason).to.equal('product_not_received')
         expect(dataArg.status).to.equal('needs_response')
-        
       } finally {
         mailStub.restore()
       }
     })
     it('should create a Payment Request Balance for a lost dispute a user when a charge.dispute.closed event is received', async () => {
-      nock('https://api.stripe.com').get('/v1/disputes/du_test_123').reply(200, disputeClosedLost.data.object)
+      nock('https://api.stripe.com')
+        .get('/v1/disputes/du_test_123')
+        .reply(200, disputeClosedLost.data.object)
 
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
@@ -122,8 +126,8 @@ describe('Payment Request Balance Webhook', () => {
       })
 
       const mailStub = sinon
-      .stub(PaymentRequestMail as any, 'newDisputeClosedForPaymentRequest')
-      .resolves(true)
+        .stub(PaymentRequestMail as any, 'newDisputeClosedForPaymentRequest')
+        .resolves(true)
 
       try {
         const res = await agent
@@ -153,8 +157,8 @@ describe('Payment Request Balance Webhook', () => {
         expect(paymentRequestBalanceUpdated.balance).to.equal('0')
 
         expect(mailStub.calledOnce).to.equal(true)
-        const [userArg, statusArg, disputeArg, paymentRequestArg ] = mailStub.firstCall.args
-        
+        const [userArg, statusArg, disputeArg, paymentRequestArg] = mailStub.firstCall.args
+
         expect(userArg).to.exist
         expect(userArg.id).to.equal(currentUser.id)
         expect(statusArg).to.equal('lost')
@@ -167,7 +171,9 @@ describe('Payment Request Balance Webhook', () => {
       }
     })
     it('should create a Payment Request Balance for a won dispute a user when a charge.dispute.closed event is received', async () => {
-      nock('https://api.stripe.com').get('/v1/disputes/du_test_123').reply(200, disputeClosedWon.data.object)
+      nock('https://api.stripe.com')
+        .get('/v1/disputes/du_test_123')
+        .reply(200, disputeClosedWon.data.object)
 
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
@@ -237,7 +243,9 @@ describe('Payment Request Balance Webhook', () => {
       expect(paymentRequestBalanceUpdated.balance).to.equal('6495')
     })
     it('should create a Payment Request Balance when a charge.dispute.funds_withdrawn event is received', async () => {
-      nock('https://api.stripe.com').get('/v1/disputes/du_test_charge_dispute').reply(200, disputeFundsWithdrawn.data.object)
+      nock('https://api.stripe.com')
+        .get('/v1/disputes/du_test_charge_dispute')
+        .reply(200, disputeFundsWithdrawn.data.object)
 
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}

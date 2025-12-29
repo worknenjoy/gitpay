@@ -10,9 +10,9 @@ const models = Models as any
 
 export const chargeDisputeCreatedWebhookHandler = async (event: any, req: any, res: any) => {
   // Handle the charge.dispute.created event
-  const { data } = event || {};
-  const { object } = data || {};
-  const { id, payment_intent, balance_transactions, reason, status, created } = object || {};
+  const { data } = event || {}
+  const { object } = data || {}
+  const { id, payment_intent, balance_transactions, reason, status, created } = object || {}
 
   console.log(`Handling charge.dispute.created for Dispute ID: ${data.object.id}`)
 

@@ -10,9 +10,9 @@ const stripe = Stripe()
 const models = Models as any
 
 export const chargeDisputeClosedWebhookHandler = async (event: any, req: any, res: any) => {
-  const { data } = event || {};
-  const { object } = data || {};
-  const { id, payment_intent, status } = object || {};
+  const { data } = event || {}
+  const { object } = data || {}
+  const { id, payment_intent, status } = object || {}
 
   console.log(`Handling charge.dispute.closed for Dispute ID: ${id}`)
 

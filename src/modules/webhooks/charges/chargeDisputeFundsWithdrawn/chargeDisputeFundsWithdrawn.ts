@@ -6,9 +6,9 @@ if (process.env.NODE_ENV !== 'production') {
 import { withDrawnDisputeForPaymentRequest } from '../../../../services/payments/disputes/disputeService'
 
 export const chargeDisputeFundsWithdrawnWebhookHandler = async (event: any, req: any, res: any) => {
-  const { data } = event || {};
-  const { object } = data || {};
-  const { id, payment_intent, amount, balance_transactions, reason, status, created } = object || {};
+  const { data } = event || {}
+  const { object } = data || {}
+  const { id, payment_intent, amount, balance_transactions, reason, status, created } = object || {}
 
   try {
     await withDrawnDisputeForPaymentRequest({

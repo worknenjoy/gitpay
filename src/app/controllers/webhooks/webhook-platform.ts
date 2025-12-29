@@ -10,7 +10,10 @@ const customerSourceCreated = require('../../../modules/webhooks/customerSourceC
 const chargeUpdated = require('../../../modules/webhooks/chargeUpdated')
 const chargeFailed = require('../../../modules/webhooks/chargeFailed')
 import { handleChargeRefunded } from '../../../modules/webhooks/charges/chargeRefunded/chargeRefunded'
-import { chargeDisputeCreatedWebhookHandler, chargeDisputeClosedWebhookHandler } from '../../../modules/webhooks/charges'
+import {
+  chargeDisputeCreatedWebhookHandler,
+  chargeDisputeClosedWebhookHandler
+} from '../../../modules/webhooks/charges'
 const invoiceCreated = require('../../../modules/webhooks/invoiceCreated')
 const invoiceUpdated = require('../../../modules/webhooks/invoiceUpdated')
 const invoicePaid = require('../../../modules/webhooks/invoicePaid')
