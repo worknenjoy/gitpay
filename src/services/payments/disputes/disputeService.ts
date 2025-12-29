@@ -62,7 +62,6 @@ export const withDrawnDisputeForPaymentRequest = async ({
   }
   
   const paymentRequestBalance = await findOrCreatePaymentRequestBalance(paymentRequestUser.id)
-  console.log('paymentRequestBalance:', paymentRequestBalance)
 
   if (paymentRequestBalance) {
     console.log(

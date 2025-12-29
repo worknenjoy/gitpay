@@ -133,6 +133,9 @@ function buildSamples(moduleName: string, methodName: string): any[] {
     if (/newDisputeCreatedForPaymentRequest/i.test(methodName)) {
       return [user, disputeCreated, paymentRequestPayment]
     }
+    if (/newDisputeClosedForPaymentRequest/i.test(methodName)) {
+      return [user, 'lost', disputeCreated, paymentRequestPayment]
+    }
   }
 
   if (moduleName === 'payout') {
