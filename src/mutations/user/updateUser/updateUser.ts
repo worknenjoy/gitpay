@@ -1,3 +1,4 @@
+import { Transaction } from 'sequelize'
 import Models = require('../../../models')
 
 const models = Models as any
@@ -13,13 +14,14 @@ export interface UserParameters {
   [key: string]: any
 }
 
-export const updateUser = async (userParameters: UserParameters) => {
+export const updateUser = async (userParameters: UserParameters, tx:Transaction) => {
   const result = await models.User.update(
     userParameters,
     {
       where: { id: userParameters.id },
       returning: true,
-      plain: true
+      plain: true,
+      transaction: tx
     }
   )
   const currentUser = result[1]

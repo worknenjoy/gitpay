@@ -1,9 +1,10 @@
+import { Transaction } from 'sequelize'
 import Stripe from '../../../modules/shared/stripe/stripe'
 import { type UserParameters } from './updateUser'
 
 const stripe = Stripe()
 
-const updateUserAccount = async (userParameters: UserParameters, currentUser:any) => {
+const updateUserAccount = async (userParameters: UserParameters, currentUser:any, transaction?: Transaction) => {
   if(userParameters.email && userParameters.email !== currentUser.email) {
     if(currentUser.account_id) {
       return await stripe.accounts.update(

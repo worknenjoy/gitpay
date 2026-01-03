@@ -178,6 +178,9 @@ describe('UPDATE /user', () => {
         .set('Authorization', headers.authorization)
         .expect(500)
       expect(user.statusCode).to.equal(500)
+
+      const userAfterTransaction = await models.User.findOne({ where: { id: res?.body.id } })
+      expect(userAfterTransaction.email).to.equal(res?.body.email)
     })
   })
 })
