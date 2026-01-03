@@ -8,13 +8,14 @@ const router = express.Router()
 router.use('/', secure)
 
 router.get('/', controllers.userFetch)
+router.put('/', updateUser)
+
 router.post('/customer', controllers.customerCreate)
 router.get('/customer', controllers.customer)
 router.put('/customer', controllers.customerUpdate)
 
 router.get('/preferences', controllers.preferences)
 router.get('/organizations', controllers.organizations)
-router.put('/update', updateUser)
 
 router.post('/account', controllers.accountCreate)
 router.get('/account', controllers.account)

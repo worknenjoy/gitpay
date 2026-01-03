@@ -21,6 +21,6 @@ export const updateUser = (req: any, res: any) => {
     .catch((error) => {
       // eslint-disable-next-line no-console
       console.log('error to update user', error)
-      res.send(false)
+      res.status(500).send('Error updating user')
     })
 }
