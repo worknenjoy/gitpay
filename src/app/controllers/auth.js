@@ -93,19 +93,6 @@ exports.changePassword = (req, res) => {
     })
 }
 
-exports.searchAll = (req, res) => {
-  user
-    .userSearch(req.query)
-    .then((data) => {
-      res.send(data)
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error)
-      res.send(false)
-    })
-}
-
 exports.createPrivateTask = (req, res) => {
   const { userId, url, code } = req.query
   const githubClientId = secrets.github.id
@@ -355,20 +342,6 @@ exports.accountDelete = (req, res) => {
     })
 }
 
-exports.userUpdate = (req, res) => {
-  req.body.id = req.user.id
-  user
-    .userUpdate(req.body)
-    .then((data) => {
-      res.send(data)
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error)
-      res.send(false)
-    })
-}
-
 exports.userFetch = (req, res) => {
   const userId = req.user.id
   user
@@ -428,20 +401,6 @@ exports.deleteUserById = (req, res) => {
     .userDeleteById(params)
     .then((deleted) => {
       res.status(200).send(`${deleted}`)
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error)
-      res.status(400).send(error)
-    })
-}
-
-exports.getUserTypes = (req, res) => {
-  const userId = req.params.id
-  user
-    .userTypes(userId)
-    .then((data) => {
-      res.status(200).send(data)
     })
     .catch((error) => {
       // eslint-disable-next-line no-console

@@ -22,6 +22,9 @@ const routerWalletOrder = require('./routes/walletOrder')
 const routerLanguage = require('./routes/language')
 const routerPaymentRequest = require('./routes/paymentRequest')
 const routerPaymentRequestTransfer = require('./routes/paymentRequestTransfer')
+
+import routerUsers from './routes/users'
+import routerUser from './routes/user'
 import routerPaymentRequestPayments from './routes/paymentRequestPayment'
 import routerPaymentRequestBalance from './routes/paymentRequestBalance'
 import routerDashboard from './routes/dashboard'
@@ -33,6 +36,8 @@ exports.init = (app) => {
   app.use(express.urlencoded({ extended: true }))
 
   app.use('/', routerAuth)
+  app.use('/users', routerUsers)
+  app.use('/user', routerUser)
   app.use('/tasks', routerTask)
   app.use('/projects', routerProject)
   app.use('/team', routerTeam)

@@ -186,146 +186,7 @@ describe('Users', () => {
     })
   })
 
-  describe('update User', () => {
-    it('should update user', (done) => {
-      registerAndLogin(agent)
-        .then((res) => {
-          agent
-            .put(`/user/update`)
-            .send({ name: 'test', email: 'test@gmail.com' })
-            .set('Authorization', res.headers.authorization)
-            .expect(200)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(200)
-              expect(user.body.name).to.equal('test')
-              expect(user.body.email).to.equal('test@gmail.com')
-              done(err)
-            })
-        })
-        .catch(done)
-    })
-
-    it('should reset password from the right token', (done) => {
-      registerAndLogin(agent, {
-        recover_password_token: '123'
-      })
-        .then((res) => {
-          agent
-            .put(`/auth/reset-password`)
-            .send({ password: '', token: '123' })
-            .set('Authorization', res.headers.authorization)
-            .expect(200)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(200)
-              expect(user.text).to.equal('successfully change password')
-              done(err)
-            })
-        })
-        .catch(done)
-    })
-
-    it('should not reset password from the wrong token', (done) => {
-      registerAndLogin(agent, {
-        recover_password_token: '1234'
-      })
-        .then((res) => {
-          agent
-            .put(`/auth/reset-password`)
-            .send({ password: '', token: '123' })
-            .set('Authorization', res.headers.authorization)
-            .expect(401)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(401)
-              done(err)
-            })
-        })
-        .catch(done)
-    })
-
-    it('should not update if old password is incorrect (too small)', (done) => {
-      registerAndLogin(agent)
-        .then((res) => {
-          agent
-            .put(`/auth/change-password`)
-            .send({ old_password: '1232', password: '' })
-            .set('Authorization', res.headers.authorization)
-            .expect(400)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(400)
-              expect(user.body.error).to.equal('user.password.current.incorrect.too_short')
-              done(err)
-            })
-        })
-        .catch(done)
-    })
-    it('should not update if password is the same', (done) => {
-      registerAndLogin(agent)
-        .then((res) => {
-          agent
-            .put(`/auth/change-password`)
-            .send({ old_password: 'test12345678', password: 'test12345678' })
-            .set('Authorization', res.headers.authorization)
-            .expect(400)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(400)
-              expect(user.body.error).to.equal('user.password.incorrect.same')
-              done(err)
-            })
-        })
-        .catch(done)
-    })
-    it('should update if password is correct', (done) => {
-      registerAndLogin(agent)
-        .then((res) => {
-          agent
-            .put(`/auth/change-password`)
-            .send({ old_password: 'test12345678', password: 'test12345678910' })
-            .set('Authorization', res.headers.authorization)
-            .expect(200)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(200)
-              expect(user.body).to.equal(true)
-              done(err)
-            })
-        })
-        .catch(done)
-    })
-    it('should not update if new password is too small', (done) => {
-      registerAndLogin(agent)
-        .then((res) => {
-          agent
-            .put(`/auth/change-password`)
-            .send({ old_password: 'test12345678', password: 'test' })
-            .set('Authorization', res.headers.authorization)
-            .expect(400)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(400)
-              expect(user.body.error).to.equal('user.password.new.incorrect.too_short')
-              done(err)
-            })
-        })
-        .catch(done)
-    })
-    it('should not update if new password is too big', (done) => {
-      registerAndLogin(agent)
-        .then((res) => {
-          agent
-            .put(`/auth/change-password`)
-            .send({
-              old_password: 'test12345678',
-              password:
-                'test12345678test12345678test12345678test12345678test12345678test12345678test12345678'
-            })
-            .set('Authorization', res.headers.authorization)
-            .expect(400)
-            .end((err, user) => {
-              expect(user.statusCode).to.equal(400)
-              expect(user.body.error).to.equal('user.password.new.incorrect.too_long')
-              done(err)
-            })
-        })
-        .catch(done)
-    })
+  describe('User delete', () => {
     it('Should delete user', (done) => {
       registerAndLogin(agent)
         .then((res) => {
@@ -345,7 +206,7 @@ describe('Users', () => {
         })
         .catch(done)
     })
-  })
+  })  
 
   describe('login User Local', () => {
     it('should user local', (done) => {

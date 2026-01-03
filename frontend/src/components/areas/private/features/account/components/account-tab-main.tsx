@@ -21,8 +21,9 @@ const AccountTabMain = ({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
   const { data } = user || {}
-  const { login_strategy, provider, name } = data || {}
+  const { login_strategy, provider, name, email } = data || {}
   const [fieldName, setFieldName] = useState<string>(name)
+  const [fieldEmail, setFieldEmail] = useState<string>(email)
   const [currentPassword, setCurrentPassword] = useState<string>('')
   const [newPassword, setNewPassword] = useState<string>('')
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>('')
@@ -55,7 +56,14 @@ const AccountTabMain = ({
 
   const handleUpdateAccount = (e) => {
     e.preventDefault()
-    updateUser && updateUser({ name: fieldName })
+    const whatToUpdate = {}
+    if (fieldEmail !== email) {
+      whatToUpdate['email'] = fieldEmail
+    }
+    if (fieldName !== name) {
+      whatToUpdate['name'] = fieldName
+    }
+    updateUser && updateUser(whatToUpdate)
   }
 
   const onChangePassword = async (e) => {
@@ -120,6 +128,18 @@ const AccountTabMain = ({
                         name="name"
                         label={msg}
                         value={fieldName}
+                      />
+                    )}
+                  </FormattedMessage>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+                  <FormattedMessage id="account.basic.email" defaultMessage="email">
+                    {(msg) => (
+                      <Field
+                        onChange={(e) => setFieldEmail(e.target.value)}
+                        name="email"
+                        label={msg}
+                        value={fieldEmail}
                       />
                     )}
                   </FormattedMessage>
