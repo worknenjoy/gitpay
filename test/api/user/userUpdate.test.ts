@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import nock from 'nock'
 import request from 'supertest'
 import api from '../../../src/server'
-import { registerAndLogin, truncateModels } from '../../helpers'
+import { register, registerAndLogin, truncateModels } from '../../helpers'
 import Models from '../../../src/models'
 import account from '../../data/stripe/account.json'
 
@@ -23,13 +23,15 @@ describe('UPDATE /user', () => {
 
       const user = await agent
         .put('/user')
-        .send({ name: 'test' })
+        .send({ name: 'new test user' })
         .set('Authorization', headers.authorization)
         .expect(200)
 
       expect(user.statusCode).to.equal(200)
-      expect(user.body.name).to.equal('test')
+      expect(user.body.name).to.equal('new test user')
       expect(user.body.email).to.equal(currentUser.email)
+      const updatedUser = await models.User.findOne({ where: { id: currentUser.id } })
+      expect(updatedUser.name).to.equal('new test user')
     })
 
     it('should reset password from the right token', async () => {
@@ -181,6 +183,31 @@ describe('UPDATE /user', () => {
 
       const userAfterTransaction = await models.User.findOne({ where: { id: res?.body.id } })
       expect(userAfterTransaction.email).to.equal(res?.body.email)
+    })
+    it('should not update email to an existing email', async () => {
+      const firstUser = await register(agent, { email: 'existingemail@example.com', password: 'test12345678' })
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com' })
+      const { headers } = res || {}
+
+      const user = await agent
+        .put('/user')
+        .send({ email: 'existingemail@example.com' })
+        .set('Authorization', headers.authorization)
+        .expect(409)
+      expect(user.statusCode).to.equal(409)
+      expect(user.body.error).to.equal('user.email.exists')
+    })
+    xit('should check again for email change for wrong email format', async () => {
+      const res = await registerAndLogin(agent, { email: 'validmail@example.com' })
+      const { headers } = res || {}
+
+      const user = await agent
+        .put('/user')
+        .send({ email: 'invalid-email-format' })
+        .set('Authorization', headers.authorization)
+        .expect(500)
+      expect(user.statusCode).to.equal(500)
+      expect(user.body.error).to.equal('user.email.invalid_format')
     })
   })
 })

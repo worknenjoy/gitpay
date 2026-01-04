@@ -6,21 +6,12 @@ const models = Models as any
 
 export const updateUserTypes = async (userParameters: UserParameters, currentUser:any, tx?: Transaction) => {
   if (userParameters.Types && Array.isArray(userParameters.Types)) {
-    await currentUser.setTypes([])
-    const types = await Promise.all(
-      userParameters.Types.map(async (t: TypeRef) => {
-        const type = await models.Type.findByPk(t.id)
-        if (type) {
-          await currentUser.addType(type, { transaction: tx })
-        }
-        return t
-      })
-    )
-    return { ...currentUser.dataValues, Types: types }
+    await currentUser.setTypes(userParameters.Types.map(t => t.id), { transaction: tx })
   }
 
   const updatedUser = await models.User.findByPk(currentUser.id, {
-    include: [models.Type]
+    include: [models.Type],
+    transaction: tx
   })
   return updatedUser
 }

@@ -19,8 +19,8 @@ export const updateUser = (req: any, res: any) => {
       res.send(data)
     })
     .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log('error to update user', error)
-      res.status(500).send('Error updating user')
+      const message = error instanceof Error ? error.message : String(error ?? 'Error updating user')
+      const status = message === 'user.email.exists' ? 409 : 500
+      res.status(status).json({ error: message })
     })
 }

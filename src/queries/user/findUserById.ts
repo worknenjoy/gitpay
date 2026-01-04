@@ -1,10 +1,9 @@
 import Models from '../../models'
 const models = Models as any
 
-export const findUser = async (params:any) => {
+export const findUserById = async (id: number) => {
 
-  return models.User.findOne({
-    where: params,
+  return models.User.findByPk(id, {
     include: [
       {
         model: models.Type,
