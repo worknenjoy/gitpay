@@ -14,16 +14,13 @@ export interface UserParameters {
   [key: string]: any
 }
 
-export const updateUser = async (userParameters: UserParameters, tx:Transaction) => {
-  const result = await models.User.update(
-    userParameters,
-    {
-      where: { id: userParameters.id },
-      returning: true,
-      plain: true,
-      transaction: tx
-    }
-  )
+export const updateUser = async (userParameters: UserParameters, tx: Transaction) => {
+  const result = await models.User.update(userParameters, {
+    where: { id: userParameters.id },
+    returning: true,
+    plain: true,
+    transaction: tx
+  })
   const currentUser = result[1]
   return currentUser
 }

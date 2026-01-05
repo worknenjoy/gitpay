@@ -126,7 +126,7 @@ router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)
 router.post('/auth/register', controllers.register)
 router.get('/auth/activate', controllers.activate_user)
 router.get('/callback/github/private', controllers.createPrivateTask)
-  
+
 router.use('/auth/', secure)
 
 router.put('/auth/change-password', controllers.changePassword)

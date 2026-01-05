@@ -1,4 +1,4 @@
-import  express  from 'express'
+import express from 'express'
 import { getUserTypes, searchAll } from '../controllers/user/users'
 
 const router = express.Router()
