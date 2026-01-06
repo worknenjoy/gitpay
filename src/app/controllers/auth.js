@@ -195,6 +195,26 @@ exports.authorizeGithubPrivateIssue = (req, res) => {
   )
 }
 
+exports.disconnectGithub = (req, res) => {
+  user.userDisconnectGithub({ userId: req.user.id })
+    .then((data) => {
+      if(data) {
+        res.redirect(
+          `${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=success`
+        )
+      } else {
+        res.redirect(
+          `${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=error`
+        )
+      }
+    })
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=error`)
+    })
+}
+
 exports.preferences = (req, res) => {
   user
     .userPreferences({ id: req.user.id })

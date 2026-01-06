@@ -1,7 +1,6 @@
 const express = require('express')
 require('../models')
 
-const routerAuth = require('./routes/auth')
 const routerProject = require('./routes/projects')
 const routerTask = require('./routes/tasks')
 const routerTeam = require('./routes/team')
@@ -23,6 +22,7 @@ const routerLanguage = require('./routes/language')
 const routerPaymentRequest = require('./routes/paymentRequest')
 const routerPaymentRequestTransfer = require('./routes/paymentRequestTransfer')
 
+import routerAuth from './routes/auth'
 import routerUsers from './routes/users'
 import routerUser from './routes/user'
 import routerPaymentRequestPayments from './routes/paymentRequestPayment'

@@ -251,7 +251,7 @@ describe('Users', () => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(302)
           expect(res.headers.location).to.include(
-            'https://accounts.google.com/o/oauth2/v2/auth?access_type='
+            'https://accounts.google.com/o/oauth2/v2/auth?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgoogle&scope=email&client_id='
           )
           done()
         })
