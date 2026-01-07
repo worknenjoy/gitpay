@@ -123,23 +123,27 @@ describe('AUTH /user', () => {
   describe('change email', () => {
     it('should change email for authenticated user', async () => {
       
-      const res = await registerAndLogin(agent)
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test'})
       const { headers, body } = res || {}
 
-      const mailStub = sinon
-        .stub(UserMail as any, 'newDisputeCreatedForPaymentRequest')
+      const newEmailChangeRequest = sinon
+        .stub(UserMail as any, 'changeEmailNotification')
+        .resolves(true)
+
+      const oldEmailAlertStub = sinon
+        .stub(UserMail as any, 'alertOldEmailAboutChange')
         .resolves(true)
 
 
       const newEmail = 'newemail@example.com'
       const user = await agent
         .post('/auth/change-email')
-        .send({ newEmail })
+        .send({ newEmail, currentPassword: 'test', confirmCurrentPassword: 'test' })
         .set('Authorization', headers.authorization)
         .expect(200)
 
       expect(user.statusCode).to.equal(200)
-      expect(user.body.message).to.equal('Email updated successfully')
+      expect(user.body.id).to.equal(body.id)
 
       const updatedUser = await models.User.findByPk(body.id)
       expect(updatedUser.pending_email_change).to.equal(newEmail)
@@ -149,9 +153,70 @@ describe('AUTH /user', () => {
       expect(updatedUser.email_change_requested_at).to.be.instanceOf(Date)
       expect(updatedUser.email_change_attempts).to.equal(1)
 
-      const mailArgs = mailStub.firstCall.args
-      expect(mailArgs[0]).to.equal(updatedUser)
+      const mailArgsChangeRequest = newEmailChangeRequest.firstCall.args
+      const mailArgsOldEmailAlert = oldEmailAlertStub.firstCall.args
 
+      expect(mailArgsOldEmailAlert[0].dataValues).to.deep.equal(updatedUser.dataValues)
+      expect(mailArgsChangeRequest[0].dataValues).to.deep.equal(updatedUser.dataValues)
+
+    })
+    it('should not change email with incorrect current password', async () => {
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test'})
+      const { headers } = res || {}
+
+      const newEmail = 'newemail@example.com'
+      const user = await agent
+        .post('/auth/change-email')
+        .send({ newEmail, currentPassword: 'wrongpassword', confirmCurrentPassword: 'wrongpassword' })
+        .set('Authorization', headers.authorization)
+        .expect(500)
+
+      expect(user.statusCode).to.equal(500)
+      expect(user.body.error).to.equal('user.change_email.current_password_incorrect')
+    })
+
+    it('should not change email if parameters are missing', async () => {
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test'})
+      const { headers } = res || {}
+
+      const newEmail = 'newemail@example.com'
+      const user = await agent
+        .post('/auth/change-email')
+        .send({ newEmail, currentPassword: 'test' }) // missing confirmCurrentPassword
+        .set('Authorization', headers.authorization)
+        .expect(500)
+
+      expect(user.statusCode).to.equal(500)
+      expect(user.body.error).to.equal('user.change_email.missing_parameters')
+    })
+    it('should not change email if user signed up with provider', async () => {
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', provider: 'github' })
+      const { headers } = res || {}
+
+      const newEmail = 'newemail@example.com'
+      const user = await agent
+        .post('/auth/change-email')
+        .send({ newEmail, currentPassword: 'test', confirmCurrentPassword: 'test' })
+        .set('Authorization', headers.authorization)
+        .expect(500)
+
+      expect(user.statusCode).to.equal(500)
+      expect(user.body.error).to.equal('user.change_email.cannot_change_email_for_provider')
+    })
+    it('should not change email if user already exist with new email', async () => {
+      await models.User.create({ email: 'existing-email@example.com', password: 'test' })
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test'})
+      const { headers } = res || {}
+
+      const newEmail = 'existing-email@example.com'
+      const user = await agent
+        .post('/auth/change-email')
+        .send({ newEmail, currentPassword: 'test', confirmCurrentPassword: 'test' })
+        .set('Authorization', headers.authorization)
+        .expect(500)
+
+      expect(user.statusCode).to.equal(500)
+      expect(user.body.error).to.equal('user.change_email.email_already_in_use')
     })
   })
 })

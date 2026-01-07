@@ -1,6 +1,7 @@
 import { updateUser } from '../../mutations/user/updateUser/updateUser'
 import { findUser } from '../../queries/user/findUser'
 import Models from '../../models'
+import UserMail from '../../modules/mail/user'
 
 const models = Models as any
 
@@ -17,13 +18,32 @@ export const userChangeEmail = async ({
   currentPassword,
   confirmCurrentPassword
 }: UserChangeEmailParams): Promise<void> => {
+  
   if(!userId || !newEmail || (currentPassword && !confirmCurrentPassword) || (!currentPassword && confirmCurrentPassword)) {
-    throw new Error('Invalid parameters')
+    throw new Error('user.change_email.missing_parameters')
   }
 
   const userToUpdate = await findUser({ id: userId })
   if (!userToUpdate) {
-    throw new Error('User not found')
+    throw new Error('user.change_email.user_not_found')
+  }
+
+  const userExist = await findUser({ email: newEmail })
+  if (userExist) {
+    throw new Error('user.change_email.email_already_in_use')
+  }
+
+  if (currentPassword !== confirmCurrentPassword) {
+    throw new Error('user.change_email.passwords_do_not_match')
+  }
+
+  if (userToUpdate.provider) {
+    throw new Error('user.change_email.cannot_change_email_for_provider')
+  }
+  
+  const isPasswordCorrect = userToUpdate.verifyPassword(currentPassword, userToUpdate.password)
+  if (!isPasswordCorrect) {
+    throw new Error('user.change_email.current_password_incorrect')
   }
 
   // Here you would typically generate a token and set expiration, omitted for brevity
@@ -39,10 +59,11 @@ export const userChangeEmail = async ({
   })
 
   if(!userUpdated) {
-    throw new Error('Failed to update user email change request')
+    throw new Error('user.change_email.failed_to_update')
   }
 
-  
+  UserMail.changeEmailNotification(userUpdated)
+  UserMail.alertOldEmailAboutChange(userUpdated)
   
   return userUpdated
 }
