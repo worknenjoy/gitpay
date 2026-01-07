@@ -5,6 +5,7 @@ const secrets = require('../../config/secrets')
 const user = require('../../modules/users')
 const models = require('../../models')
 const task = require('../../modules/tasks')
+const Sendmail = require('../../modules/mail/mail')
 const UserMail = require('../../modules/mail/user')
 
 exports.register = (req, res) => {
@@ -172,10 +173,7 @@ exports.resend_activation_email = async (req, res) => {
         { where: { id: foundUser.dataValues.id }, returning: true, plain: true }
       ))
     if (userUpdate[1].dataValues.id) {
-      UserMail.activation(
-        userUpdate[1].dataValues,
-        token
-      )
+      UserMail.activation(userUpdate[1].dataValues, token)
     }
     res.send(userUpdate[1])
   } catch (error) {
@@ -195,16 +193,15 @@ exports.authorizeGithubPrivateIssue = (req, res) => {
 }
 
 exports.disconnectGithub = (req, res) => {
-  user.userDisconnectGithub({ userId: req.user.id })
+  user
+    .userDisconnectGithub({ userId: req.user.id })
     .then((data) => {
-      if(data) {
+      if (data) {
         res.redirect(
           `${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=success`
         )
       } else {
-        res.redirect(
-          `${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=error`
-        )
+        res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=error`)
       }
     })
     .catch((error) => {

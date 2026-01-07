@@ -8,10 +8,7 @@ const router = express.Router()
 
 router.get('/authenticated', authenticationHelpers.isAuth)
 
-router.get(
-  '/authorize/google',
-  passport.authenticate('google', { scope: ['email'] })
-)
+router.get('/authorize/google', passport.authenticate('google', { scope: ['email'] }))
 router.get(
   '/callback/google',
   passport.authenticate('google', {
@@ -20,10 +17,7 @@ router.get(
   })
 )
 
-router.get(
-  '/authorize/facebook',
-  passport.authenticate('facebook', { scope: ['email'] })
-)
+router.get('/authorize/facebook', passport.authenticate('facebook', { scope: ['email'] }))
 router.get(
   '/callback/facebook',
   passport.authenticate('facebook', {
@@ -32,10 +26,7 @@ router.get(
   })
 )
 
-router.get(
-  '/authorize/github',
-  passport.authenticate('github', { scope: ['user:email'] })
-)
+router.get('/authorize/github', passport.authenticate('github', { scope: ['user:email'] }))
 
 router.get(
   '/callback/github',
@@ -56,7 +47,7 @@ router.get(
 
 router.get('/callback/github/private', controllers.createPrivateTask)
 
-router.get('/connect/github', secure, (req: any, res:any, next: any) => {
+router.get('/connect/github', secure, (req: any, res: any, next: any) => {
   const user = req.user
   if (user) {
     passport.authenticate('github', {
@@ -71,10 +62,7 @@ router.get('/connect/github', secure, (req: any, res:any, next: any) => {
 router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)
 router.get('/authorize/github/disconnect', secure, controllers.disconnectGithub)
 
-router.get(
-  '/authorize/bitbucket',
-  passport.authenticate('bitbucket', { scope: ['email'] })
-)
+router.get('/authorize/bitbucket', passport.authenticate('bitbucket', { scope: ['email'] }))
 router.get(
   '/callback/bitbucket',
   passport.authenticate('bitbucket', { failureRedirect: '/' }),

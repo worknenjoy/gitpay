@@ -39,7 +39,7 @@ if (constants.canSendEmail) {
           value: emailTemplate.mainContentEmailTemplate(
             i18n.__('mail.user.changeEmailNotification.message', {
               username: user.username,
-              confirmChangeEmailLink: `${process.env.FRONTEND_HOST}/#/user/${user.id}/confirm-change-email/${user.email_change_token}`,
+              confirmChangeEmailLink: `${process.env.FRONTEND_HOST}/#/user/${user.id}/confirm-change-email/${user.email_change_token}`
             })
           )
         }

@@ -10,7 +10,7 @@ export interface UserParameters {
   name?: string
   email?: string
   account_id?: string
-  Types?: TypeRef[],
+  Types?: TypeRef[]
   pending_email_change?: string
   email_change_token?: string
   email_change_token_expires_at?: Date
@@ -20,7 +20,6 @@ export interface UserParameters {
 }
 
 export const updateUser = async (userParameters: UserParameters, tx?: Transaction) => {
-
   const result = await models.User.update(userParameters, {
     where: { id: userParameters.id },
     returning: true,

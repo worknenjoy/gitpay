@@ -18,8 +18,12 @@ export const userChangeEmail = async ({
   currentPassword,
   confirmCurrentPassword
 }: UserChangeEmailParams): Promise<void> => {
-  
-  if(!userId || !newEmail || (currentPassword && !confirmCurrentPassword) || (!currentPassword && confirmCurrentPassword)) {
+  if (
+    !userId ||
+    !newEmail ||
+    (currentPassword && !confirmCurrentPassword) ||
+    (!currentPassword && confirmCurrentPassword)
+  ) {
     throw new Error('user.change_email.missing_parameters')
   }
 
@@ -40,7 +44,7 @@ export const userChangeEmail = async ({
   if (userToUpdate.provider) {
     throw new Error('user.change_email.cannot_change_email_for_provider')
   }
-  
+
   const isPasswordCorrect = userToUpdate.verifyPassword(currentPassword, userToUpdate.password)
   if (!isPasswordCorrect) {
     throw new Error('user.change_email.current_password_incorrect')
@@ -58,12 +62,12 @@ export const userChangeEmail = async ({
     email_change_attempts: 1
   })
 
-  if(!userUpdated) {
+  if (!userUpdated) {
     throw new Error('user.change_email.failed_to_update')
   }
 
   UserMail.changeEmailNotification(userUpdated)
   UserMail.alertOldEmailAboutChange(userUpdated)
-  
+
   return userUpdated
 }
