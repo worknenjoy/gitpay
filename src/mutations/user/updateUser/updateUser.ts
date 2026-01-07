@@ -11,10 +11,10 @@ export interface UserParameters {
   email?: string
   account_id?: string
   Types?: TypeRef[]
-  pending_email_change?: string
-  email_change_token?: string
-  email_change_token_expires_at?: Date
-  email_change_requested_at?: Date
+  pending_email_change?: string | null
+  email_change_token?: string | null
+  email_change_token_expires_at?: Date | null
+  email_change_requested_at?: Date | null
   email_change_attempts?: number
   [key: string]: any
 }

@@ -2,6 +2,7 @@ import { updateUser } from '../../mutations/user/updateUser/updateUser'
 import { findUser } from '../../queries/user/findUser'
 import Models from '../../models'
 import UserMail from '../../modules/mail/user'
+import { isEmailValid } from '../../validators/emailValidator'
 
 const models = Models as any
 
@@ -48,6 +49,18 @@ export const userChangeEmail = async ({
   const isPasswordCorrect = userToUpdate.verifyPassword(currentPassword, userToUpdate.password)
   if (!isPasswordCorrect) {
     throw new Error('user.change_email.current_password_incorrect')
+  }
+
+  if (!isEmailValid(newEmail)) {
+    throw new Error('user.change_email.invalid_email')
+  }
+
+  if(newEmail.length > 255) {
+    throw new Error('user.change_email.email_too_long')
+  }
+
+  if(newEmail === userToUpdate.email) {
+    throw new Error('user.change_email.same_as_current_email')
   }
 
   // Here you would typically generate a token and set expiration, omitted for brevity

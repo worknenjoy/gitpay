@@ -33,8 +33,7 @@ describe('UPDATE /user', () => {
       const updatedUser = await models.User.findOne({ where: { id: currentUser.id } })
       expect(updatedUser.name).to.equal('new test user')
     })
-
-    it('should update email with no account_id activated', async () => {
+    it('should not update email', async () => {
       const res = await registerAndLogin(agent)
       const { headers } = res || {}
 
@@ -42,71 +41,12 @@ describe('UPDATE /user', () => {
         .put('/user')
         .send({ email: 'newemail@example.com' })
         .set('Authorization', headers.authorization)
-        .expect(200)
-
-      expect(user.statusCode).to.equal(200)
-      expect(user.body.email).to.equal('newemail@example.com')
-    })
-    it('should update email with account_id activated updated successfully', async () => {
-      nock('https://api.stripe.com/v1')
-        .post('/accounts/acct_1EYDS6IbQaEige6l')
-        .reply(200, account)
-
-      const res = await registerAndLogin(agent, { account_id: 'acct_1EYDS6IbQaEige6l' })
-      const { headers } = res || {}
-
-      const user = await agent
-        .put('/user')
-        .send({ email: 'newemail@example.com' })
-        .set('Authorization', headers.authorization)
-        .expect(200)
-
-      expect(user.statusCode).to.equal(200)
-      expect(user.body.email).to.equal('newemail@example.com')
-    })
-    it('should not update email with account_id activated updated with error', async () => {
-      nock('https://api.stripe.com/v1')
-        .post('/accounts/acct_123Invalid')
-        .reply(500, { error: 'Stripe error' })
-        .persist()
-
-      const res = await registerAndLogin(agent, { account_id: 'acct_123Invalid' })
-      const { headers } = res || {}
-
-      const user = await agent
-        .put('/user')
-        .send({ email: 'newemail@example.com' })
-        .set('Authorization', headers.authorization)
         .expect(500)
       expect(user.statusCode).to.equal(500)
+      expect(user.body.error).to.equal('user.update.cannot_update_email')
 
       const userAfterTransaction = await models.User.findOne({ where: { id: res?.body.id } })
       expect(userAfterTransaction.email).to.equal(res?.body.email)
-    })
-    it('should not update email to an existing email', async () => {
-      const firstUser = await register(agent, { email: 'existingemail@example.com', password: 'test12345678' })
-      const res = await registerAndLogin(agent, { email: 'oldemail@example.com' })
-      const { headers } = res || {}
-
-      const user = await agent
-        .put('/user')
-        .send({ email: 'existingemail@example.com' })
-        .set('Authorization', headers.authorization)
-        .expect(409)
-      expect(user.statusCode).to.equal(409)
-      expect(user.body.error).to.equal('user.email.exists')
-    })
-    xit('should check again for email change for wrong email format', async () => {
-      const res = await registerAndLogin(agent, { email: 'validmail@example.com' })
-      const { headers } = res || {}
-
-      const user = await agent
-        .put('/user')
-        .send({ email: 'invalid-email-format' })
-        .set('Authorization', headers.authorization)
-        .expect(500)
-      expect(user.statusCode).to.equal(500)
-      expect(user.body.error).to.equal('user.email.invalid_format')
     })
   })
 })

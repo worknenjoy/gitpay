@@ -225,5 +225,10 @@
   "mail.user.changeEmailNotification.subject": "You requested to change your e-mail on Gitpay",
   "mail.user.changeEmailNotification.message": "<p>Hi {{name}}</p><p>You requested to change your e-mail on Gitpay</p><p>To confirm, please confirm below:</p><p style=\"text-align: center\"><a href=\"{{url}}\">Confirm e-mail change</a></p><p>If you didn't make this request, please ignore this e-mail or contact us at <a href=\"mailto:contact@gitpay.me\">",
   "mail.user.alertOldEmailAboutChange.subject": "Your e-mail was changed on Gitpay",
-  "mail.user.alertOldEmailAboutChange.message": "<p>Hi {{name}}</p><p>Your e-mail on Gitpay was changed to {{newEmail}}</p><p>If you didn't make this change, please contact us immediately at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>"
+  "mail.user.alertOldEmailAboutChange.message": "<p>Hi {{name}}</p><p>Your e-mail on Gitpay was changed to {{newEmail}}</p><p>If you didn't make this change, please contact us immediately at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>",
+  "mail.user.confirmedChangeUserEmail.subject": "You successfully changed your e-mail on Gitpay",
+  "mail.user.confirmedChangeUserEmail.message": "<p>Hi {{name}}</p><p>Your e-mail on Gitpay was successfully changed to {{newEmail}}</p><p>If you didn't make this change, please contact us immediately at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>",
+  "mail.user.confirmedChangeUserEmailOldEmail.subject": "You successfully changed your e-mail on Gitpay",
+  "mail.user.confirmedChangeUserEmailOldEmail.message": "<p>Hi {{name}}</p><p>Your e-mail on Gitpay was successfully changed from this e-mail to {{newEmail}}</p><p>If you didn't make this change, please contact us immediately at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>"
+
 }

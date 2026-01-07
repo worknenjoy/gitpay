@@ -140,6 +140,7 @@
     "@types/node": "^18.19.130",
     "@types/passport": "^1.0.17",
     "@types/request-promise": "^4.1.51",
+    "@types/sinon": "^21.0.0",
     "@types/supertest": "^6.0.3",
     "@types/umzug": "^2.3.9",
     "chai": "^3.5.0",
