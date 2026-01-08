@@ -44,6 +44,24 @@ export const WithoutTitle: Story = {
   }
 }
 
+export const withConfirmationFields: Story = {
+  args: {
+    open: true,
+    message: 'Please type DELETE to confirm the action.',
+    confirmFields: [
+      {
+        name: 'confirmationInput',
+        confirmName: 'confirmInput',
+        label: 'Type DELETE to confirm:',
+        confirmLabel: 'DELETE',
+        type: 'text'
+      }
+    ],
+    confirmLabel: 'Confirm',
+    cancelLabel: 'Cancel'
+  }
+}
+
 export const Loading: Story = {
   args: {
     open: true,

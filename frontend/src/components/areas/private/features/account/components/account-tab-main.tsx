@@ -8,6 +8,8 @@ import ProviderLoginButtons from '../../../../../../containers/provider-login-bu
 import DeleteAccountButton from './delete-account-button'
 
 import { Fieldset, LegendText } from './account-tab-main.styles'
+import ConfirmButton from 'design-library/atoms/buttons/confirm-button/confirm-button'
+import { type confirmFieldValue } from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
 
 const AccountTabMain = ({
   user,
@@ -57,13 +59,15 @@ const AccountTabMain = ({
   const handleUpdateAccount = (e) => {
     e.preventDefault()
     const whatToUpdate = {}
-    if (fieldEmail !== email) {
-      whatToUpdate['email'] = fieldEmail
-    }
     if (fieldName !== name) {
       whatToUpdate['name'] = fieldName
     }
     updateUser && updateUser(whatToUpdate)
+  }
+
+  const handleUpdateEmail = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, values: confirmFieldValue[]) => {
+    e.preventDefault()
+    console.log('Updating email to:', fieldEmail, 'with values:', values)
   }
 
   const onChangePassword = async (e) => {
@@ -116,7 +120,7 @@ const AccountTabMain = ({
             <Fieldset>
               <legend>
                 <LegendText>
-                  <FormattedMessage id="account.account" defaultMessage="Account" />
+                  <FormattedMessage id="account.account.basic" defaultMessage="Basic information" />
                 </LegendText>
               </legend>
               <Grid container spacing={2}>
@@ -128,18 +132,6 @@ const AccountTabMain = ({
                         name="name"
                         label={msg}
                         value={fieldName}
-                      />
-                    )}
-                  </FormattedMessage>
-                </Grid>
-                <Grid size={{ xs: 12, sm: 12, md: 12 }}>
-                  <FormattedMessage id="account.basic.email" defaultMessage="email">
-                    {(msg) => (
-                      <Field
-                        onChange={(e) => setFieldEmail(e.target.value)}
-                        name="email"
-                        label={msg}
-                        value={fieldEmail}
                       />
                     )}
                   </FormattedMessage>
@@ -158,6 +150,80 @@ const AccountTabMain = ({
                         defaultMessage="Update Account"
                       />
                     </Button>
+                  </div>
+                </Grid>
+              </Grid>
+            </Fieldset>
+            <Fieldset>
+              <legend>
+                <LegendText>
+                  <FormattedMessage id="account.account.email" defaultMessage="Update email" />
+                </LegendText>
+              </legend>
+              <Grid container spacing={2}>
+                <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+                  <FormattedMessage id="account.basic.email" defaultMessage="email">
+                    {(msg) => (
+                      <Field
+                        onChange={(e) => setFieldEmail(e.target.value)}
+                        name="email"
+                        label={msg}
+                        value={fieldEmail}
+                        disabled={provider !== null}
+                      />
+                    )}
+                  </FormattedMessage>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+                  <div {...(isDesktop ? { float: 'right' } : { style: { textAlign: 'center' } })}>
+                    <ConfirmButton
+                      {...(isMobile ? { fullWidth: true, style: { marginBottom: 10 } } : {})}
+                      type="submit"
+                      variant="contained"
+                      color="secondary"
+                      label={
+                        <FormattedMessage
+                          id="account.user.actions.update.email"
+                          defaultMessage="Update Email"
+                        />
+                      }
+                      dialogMessage={
+                        <FormattedMessage
+                          id="account.user.actions.update.email.confirm"
+                          defaultMessage="Are you sure you want to update your email address?"
+                        />
+                      }
+                      confirmLabel={
+                        <FormattedMessage
+                          id="account.user.actions.update.email"
+                          defaultMessage="Update Email"
+                        />
+                      }
+                      cancelLabel={
+                        <FormattedMessage
+                          id="account.actions.cancel"
+                          defaultMessage="Cancel"
+                        />
+                      }
+                      onConfirm={(e, values) => handleUpdateEmail(e, values!)}
+                      confirmFields={{
+                        type: 'password',
+                        name: 'password',
+                        confirmName: 'confirmPassword',
+                        label: (
+                          <FormattedMessage
+                            id="account.basic.password.current"
+                            defaultMessage="Current password"
+                          />
+                        ),
+                        confirmLabel: (
+                          <FormattedMessage
+                            id="account.basic.password.current.confirm"
+                            defaultMessage="Confirm current password"
+                          />
+                        )
+                      }}
+                    />
                   </div>
                 </Grid>
               </Grid>

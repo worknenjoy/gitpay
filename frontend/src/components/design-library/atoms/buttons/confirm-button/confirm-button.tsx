@@ -2,6 +2,7 @@ import React from 'react'
 import { AlertColor, ListItemText, ListItemIcon } from '@mui/material'
 import Button from 'design-library/atoms/buttons/button/button'
 import ConfirmDialog from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
+import { type confirmField as ConfirmField, type confirmFieldValue } from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
 
 type ConfirmButtonProps = {
   // Button props
@@ -24,9 +25,10 @@ type ConfirmButtonProps = {
   alertSeverity?: AlertColor
 
   // Callbacks
-  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>, confirmFields?: confirmFieldValue[]) => void
   onCancel?: () => void
   onOpenChange?: (open: boolean) => void
+  confirmFields?: ConfirmField
 }
 
 const ConfirmButton: React.FC<ConfirmButtonProps> = ({
@@ -41,6 +43,7 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
   completed = true,
   dialogMessage,
   confirmLabel = 'Confirm',
+  confirmFields,
   cancelLabel = 'Cancel',
   alertMessage,
   alertSeverity = 'warning',
@@ -115,6 +118,7 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
         alertMessage={alertMessage}
         alertSeverity={alertSeverity}
         completed={completed}
+        confirmFields={confirmFields}
       />
     </>
   )
