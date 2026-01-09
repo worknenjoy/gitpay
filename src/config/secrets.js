@@ -66,7 +66,8 @@ const bitbucket = {
 
 const slack = {
   token: process.env.SLACK_TOKEN,
-  channelId: process.env.SLACK_CHANNEL_ID
+  channelId: process.env.SLACK_CHANNEL_ID,
+  webhookUrl: process.env.SLACK_WEBHOOK_URL
 }
 
 const mailchimp = {

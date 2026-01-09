@@ -7,6 +7,7 @@ const Decimal = require('decimal.js')
 const stripe = require('../shared/stripe/stripe')()
 const Sendmail = require('../mail/mail')
 const userCustomerCreate = require('../users/userCustomerCreate')
+const { notifyNewBounty } = require('../slack')
 
 module.exports = async function orderBuilds(orderParameters) {
   const { source_id, source_type, currency, provider, amount, email, userId, taskId, plan } =
@@ -62,6 +63,15 @@ module.exports = async function orderBuilds(orderParameters) {
   const orderUser = orderUserModel.dataValues
   const taskTitle = orderCreated?.Task?.dataValues?.title || ''
   const percentage = orderCreated.Plan?.feePercentage
+
+  // Notify Slack about new bounty
+  if (orderCreated.Task && orderCreated.User) {
+    notifyNewBounty(
+      orderCreated.Task.dataValues,
+      orderCreated.dataValues,
+      orderCreated.User.dataValues
+    )
+  }
 
   if (orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
     const unitAmount = (parseInt(orderParameters.amount) * 100 * (1 + percentage / 100)).toFixed(0)
