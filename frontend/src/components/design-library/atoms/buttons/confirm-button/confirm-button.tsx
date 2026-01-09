@@ -2,7 +2,7 @@ import React from 'react'
 import { AlertColor, ListItemText, ListItemIcon } from '@mui/material'
 import Button from 'design-library/atoms/buttons/button/button'
 import ConfirmDialog from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
-import { type confirmField as ConfirmField, type confirmFieldValue } from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
+import { type confirmField as ConfirmField, type ConfirmFieldValue } from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
 
 type ConfirmButtonProps = {
   // Button props
@@ -25,7 +25,7 @@ type ConfirmButtonProps = {
   alertSeverity?: AlertColor
 
   // Callbacks
-  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>, confirmFields?: confirmFieldValue[]) => void
+  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>, confirmFields?: ConfirmFieldValue) => void
   onCancel?: () => void
   onOpenChange?: (open: boolean) => void
   confirmFields?: ConfirmField
@@ -63,10 +63,6 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
   const handleClose = () => {
     setOpen(false)
     onOpenChange?.(false)
-  }
-
-  const handleConfirm = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    onConfirm?.(e)
   }
 
   const handleCancel = () => {
@@ -111,7 +107,7 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
         open={open}
         handleClose={handleClose}
         message={dialogMessage}
-        onConfirm={handleConfirm}
+        onConfirm={onConfirm}
         onCancel={handleCancel}
         confirmLabel={confirmLabel}
         cancelLabel={cancelLabel}

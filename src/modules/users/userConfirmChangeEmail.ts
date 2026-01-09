@@ -10,7 +10,7 @@ export const userConfirmChangeEmail = async ({
   token
 }: {
   token: string
-}): Promise<void> => {
+}): Promise<any> => {
   if (!token) {
     throw new Error('user.confirm_change_email.missing_parameters')
   }

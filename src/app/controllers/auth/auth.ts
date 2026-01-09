@@ -6,12 +6,13 @@ export const changeEmail = async (req: any, res: any) => {
   const { newEmail, currentPassword, confirmCurrentPassword } = req.body
 
   try {
-    const data = await userChangeEmail({
+    const changeEmailParams = {
       userId,
       newEmail,
       currentPassword,
       confirmCurrentPassword
-    })
+    }
+    const data = await userChangeEmail(changeEmailParams)
     res.status(200).send(data)
   } catch (error: any) {
     res.status(500).json({ error: error.message || 'user.change_email.failed' })
@@ -24,8 +25,12 @@ export const confirmChangeEmail = async (req: any, res: any) => {
     const data = await userConfirmChangeEmail({
       token
     })
-    res.status(200).send(data)
+    if(data) {
+      res.redirect(`${process.env.FRONTEND_HOST}/#/signin/email-change-confirmed`)
+    } else {
+      res.redirect(`${process.env.FRONTEND_HOST}/#/signin/email-change-failed`)
+    }
   } catch (error: any) {
-    res.status(500).json({ error: error.message || 'user.confirm_change_email.failed' })
+    res.redirect(`${process.env.FRONTEND_HOST}/#/signin/email-change-failed`)
   }
 }

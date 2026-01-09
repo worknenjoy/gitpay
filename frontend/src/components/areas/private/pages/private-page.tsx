@@ -26,15 +26,13 @@ const PrivatePage = ({
   updateUser,
   changePassword,
   resendActivationEmail,
+  updateUserEmail,
   addNotification,
   deleteUser,
   signOut,
   info,
   getInfo
 }) => {
-  const history = useHistory()
-
-  const { data } = user
 
   useEffect(() => {
     fetchOrganizations()
@@ -62,8 +60,8 @@ const PrivatePage = ({
                 updateUser={updateUser}
                 changePassword={changePassword}
                 addNotification={addNotification}
-                history={history}
                 deleteUser={deleteUser}
+                updateUserEmail={updateUserEmail}
               />
             )}
           />

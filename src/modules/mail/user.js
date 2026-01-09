@@ -40,9 +40,11 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
             i18n.__('mail.user.changeEmailNotification.message', {
-              username: user.username,
-              confirmChangeEmailLink: `${process.env.FRONTEND_HOST}/#/user/${user.id}/confirm-change-email/${user.email_change_token}`
-            })
+              name: user.username,
+            }),
+            '',
+            i18n.__('mail.user.changeEmailNotification.buttonText'),
+            `${process.env.API_HOST}/auth/change-email/confirm/?token=${user.email_change_token}`,
           )
         }
       ])
@@ -57,9 +59,14 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
             i18n.__('mail.user.alertOldEmailAboutChange.message', {
-              username: user.username,
+              name: user.username,
               newEmail: user.pending_email_change
-            })
+            }),
+            '',
+            i18n.__('mail.user.alertOldEmailAboutChange.buttonText'),
+            `mailto:contact@gitpay.me`,
+            '',
+            i18n.__('mail.user.alertOldEmailAboutChange.footerMessage')
           )
         }
       ])
@@ -75,7 +82,8 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
             i18n.__('mail.user.confirmedChangeUserEmail.message', {
-              username: user.username
+              name: user.username,
+              newEmail: user.pending_email_change
             })
           )
         }
@@ -91,7 +99,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
             i18n.__('mail.user.confirmedChangeUserEmailOldEmail.message', {
-              username: user.username,
+              name: user.username,
               newEmail: user.pending_email_change
             })
           )

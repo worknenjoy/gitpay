@@ -610,12 +610,12 @@ const updateUser = (userData) => {
   }
 }
 
-const updateUserEmail = ({ newEmail, password, confirmPassword}) => {
+const updateUserEmail = ({ newEmail, currentPassword, confirmCurrentPassword}) => {
   validToken()
   return (dispatch) => {
     dispatch(updateUserEmailRequested())
     return axios
-      .put(api.API_URL + '/auth/change-email', { newEmail, password, confirmPassword })
+      .post(api.API_URL + '/auth/change-email', { newEmail, currentPassword, confirmCurrentPassword })
       .then((user) => {
         dispatch(addNotification('notifications.account.update.email'))
         dispatch(fetchLoggedUser())

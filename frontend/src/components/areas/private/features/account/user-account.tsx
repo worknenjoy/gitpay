@@ -9,8 +9,8 @@ export const UserAccount = ({
   updateUser,
   changePassword,
   addNotification,
-  history,
-  deleteUser
+  deleteUser,
+  updateUserEmail,
 }) => {
   return (
     <Container>
@@ -34,8 +34,8 @@ export const UserAccount = ({
             updateUser={updateUser}
             changePassword={changePassword}
             addNotification={addNotification}
-            history={history}
             deleteUser={deleteUser}
+            updateUserEmail={updateUserEmail}
           />
         </Grid>
       </Grid>

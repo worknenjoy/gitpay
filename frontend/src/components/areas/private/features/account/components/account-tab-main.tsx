@@ -9,16 +9,18 @@ import DeleteAccountButton from './delete-account-button'
 
 import { Fieldset, LegendText } from './account-tab-main.styles'
 import ConfirmButton from 'design-library/atoms/buttons/confirm-button/confirm-button'
-import { type confirmFieldValue } from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
+import { type ConfirmFieldValue } from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
+import { useHistory, useParams } from 'react-router-dom'
 
 const AccountTabMain = ({
   user,
   updateUser,
   changePassword,
   addNotification,
-  history,
-  deleteUser
+  deleteUser,
+  updateUserEmail
 }) => {
+  const history = useHistory()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
@@ -65,9 +67,13 @@ const AccountTabMain = ({
     updateUser && updateUser(whatToUpdate)
   }
 
-  const handleUpdateEmail = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, values: confirmFieldValue[]) => {
+  const handleUpdateEmail = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, values: ConfirmFieldValue) => {
     e.preventDefault()
-    console.log('Updating email to:', fieldEmail, 'with values:', values)
+    await updateUserEmail?.({
+      newEmail: fieldEmail,
+      currentPassword: values['password'],
+      confirmCurrentPassword: values['confirmPassword']
+    })
   }
 
   const onChangePassword = async (e) => {
@@ -94,6 +100,9 @@ const AccountTabMain = ({
         password: newPassword
       }))
   }
+
+  const shouldUpdateEmail = fieldEmail !== email
+  const shouldUpdateName = fieldName !== name
 
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
@@ -140,6 +149,7 @@ const AccountTabMain = ({
                   <div {...(isDesktop ? { float: 'right' } : { style: { textAlign: 'center' } })}>
                     <Button
                       {...(isMobile ? { fullWidth: true, style: { marginBottom: 10 } } : {})}
+                      disabled={!shouldUpdateName}
                       type="submit"
                       variant="contained"
                       color="secondary"
@@ -169,7 +179,7 @@ const AccountTabMain = ({
                         name="email"
                         label={msg}
                         value={fieldEmail}
-                        disabled={provider !== null}
+                        disabled={!shouldAllowPasswordChange}
                       />
                     )}
                   </FormattedMessage>
@@ -178,6 +188,7 @@ const AccountTabMain = ({
                   <div {...(isDesktop ? { float: 'right' } : { style: { textAlign: 'center' } })}>
                     <ConfirmButton
                       {...(isMobile ? { fullWidth: true, style: { marginBottom: 10 } } : {})}
+                      disabled={!shouldUpdateEmail}
                       type="submit"
                       variant="contained"
                       color="secondary"
@@ -205,7 +216,7 @@ const AccountTabMain = ({
                           defaultMessage="Cancel"
                         />
                       }
-                      onConfirm={(e, values) => handleUpdateEmail(e, values!)}
+                      onConfirm={handleUpdateEmail}
                       confirmFields={{
                         type: 'password',
                         name: 'password',
@@ -298,7 +309,7 @@ const AccountTabMain = ({
                 </Grid>
               </Grid>
             </Fieldset>
-            <DeleteAccountButton user={user} history={history} deleteUser={deleteUser} />
+            <DeleteAccountButton user={user} deleteUser={deleteUser} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 6 }}></Grid>
         </Grid>

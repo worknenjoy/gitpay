@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React from 'react'
 import { Dialog, DialogContent, DialogActions, Typography } from '@mui/material'
 import Alert, { AlertColor } from '@mui/material/Alert'
 import Button from '../../../atoms/buttons/button/button'
@@ -12,14 +12,14 @@ export type confirmField = {
   type: string
 }
 
-export type confirmFieldValue = {
+export type ConfirmFieldValue = {
   [key: string]: string
 }
 
 type ConfirmDialogProps = {
   open: boolean
   message: React.ReactNode
-  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>, confirmFields?: confirmFieldValue[]) => void
+  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>, confirmFields?: ConfirmFieldValue) => void
   onCancel?: () => void
   handleClose?: () => void
   confirmLabel?: React.ReactNode
@@ -44,25 +44,24 @@ export default function ConfirmDialog({
   confirmFields
 }: ConfirmDialogProps) {
 
-  const [ firstFieldValue, setFirstFieldValue ] = React.useState<string>('')
-  const [ secondFieldValue, setSecondFieldValue ] = React.useState<string>('')
+  const [ confirmFieldsValue, setConfirmFieldsValue ] = React.useState<ConfirmFieldValue>({})
   const [ confirmError, setConfirmError ] = React.useState<string | null>(null)
 
-  const handleConfirmClick = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleConfirmClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     if (confirmFields) {
-      if (firstFieldValue !== secondFieldValue) {
+      if (confirmFieldsValue[confirmFields.name] !== confirmFieldsValue[confirmFields.confirmName]) {
         setConfirmError('The confirmation inputs do not match.')
         return
       } else {
         setConfirmError(null)
+        onConfirm?.(event, confirmFieldsValue)
       }
-      const confirmFieldValues = confirmFields ? [{ [confirmFields!.name]: firstFieldValue }, { [confirmFields!.confirmName]: secondFieldValue }] : undefined
-      onConfirm?.(event, confirmFieldValues)
+    } else {
+      onConfirm?.(event)
     }
-    onConfirm?.(event)
     handleClose?.()
-  }, [firstFieldValue, secondFieldValue, onConfirm, handleClose, confirmFields])
+  }
 
   const handleCancelClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -72,13 +71,15 @@ export default function ConfirmDialog({
 
   const onChangeConfirmFields = (e: React.FormEvent<HTMLFormElement>) => {
     const formData = e.currentTarget
-    
     const firstFieldValue = formData.elements[0] as HTMLInputElement
     const secondFieldValue = formData.elements[1] as HTMLInputElement
     
     if (firstFieldValue && secondFieldValue) {
-      setFirstFieldValue(firstFieldValue.value)
-      setSecondFieldValue(secondFieldValue.value)
+      setConfirmFieldsValue({
+        ...confirmFieldsValue,
+        [confirmFields.name]: firstFieldValue.value,
+        [confirmFields.confirmName]: secondFieldValue.value
+      })
     }
   }
 

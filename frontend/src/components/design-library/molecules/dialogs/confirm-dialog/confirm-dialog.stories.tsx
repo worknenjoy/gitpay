@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import ConfirmDialog from './confirm-dialog'
+import { action } from '@storybook/addon-actions'
 
 const meta = {
   title: 'Design Library/Molecules/Dialogs/ConfirmDialog',
@@ -48,17 +49,19 @@ export const withConfirmationFields: Story = {
   args: {
     open: true,
     message: 'Please type DELETE to confirm the action.',
-    confirmFields: [
-      {
-        name: 'confirmationInput',
-        confirmName: 'confirmInput',
-        label: 'Type DELETE to confirm:',
-        confirmLabel: 'DELETE',
-        type: 'text'
-      }
-    ],
+    confirmFields:  {
+      name: 'confirmationInput',
+      confirmName: 'confirmInput',
+      label: 'Type DELETE to confirm:',
+      confirmLabel: 'DELETE',
+      type: 'text'
+    },
     confirmLabel: 'Confirm',
-    cancelLabel: 'Cancel'
+    cancelLabel: 'Cancel',
+    onConfirm: (e, confirmFields) => {
+      console.log('Confirmed with fields:', confirmFields)
+      action('Confirmed')(e, confirmFields)
+    }
   }
 }
 

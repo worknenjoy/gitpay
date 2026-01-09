@@ -3,7 +3,7 @@ import PrivatePage from '../components/areas/private/pages/private-page'
 import { fetchPreferences } from '../actions/preferencesActions'
 import { logOut, changePassword } from '../actions/loginActions'
 import { listTasks, filterTasks, createTask } from '../actions/taskActions'
-import { updateUser, deleteUser, resendActivationEmail } from '../actions/userActions'
+import { updateUser, deleteUser, resendActivationEmail, updateUserEmail } from '../actions/userActions'
 import {
   fetchOrganizations,
   createOrganizations,
@@ -35,6 +35,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     changePassword: (data) => dispatch(changePassword(data)),
     resendActivationEmail: () => dispatch(resendActivationEmail()),
     deleteUser: (user) => dispatch(deleteUser(user)),
+    updateUserEmail: (updateData) => dispatch(updateUserEmail(updateData)),
     addNotification: (message, options) => dispatch(addNotification(message, options)),
     closeNotification: (message) => dispatch(closeNotification(message)),
     createTask: (task, history) => dispatch(createTask(task, history)),
