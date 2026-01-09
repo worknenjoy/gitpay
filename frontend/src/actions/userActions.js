@@ -45,6 +45,10 @@ const UPDATE_USER_REQUESTED = 'UPDATE_USER_REQUESTED'
 const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS'
 const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR'
 
+const UPDATE_USER_EMAIL_REQUESTED = 'UPDATE_USER_EMAIL_REQUESTED'
+const UPDATE_USER_EMAIL_SUCCESS = 'UPDATE_USER_EMAIL_SUCCESS'
+const UPDATE_USER_EMAIL_ERROR = 'UPDATE_USER_EMAIL_ERROR'
+
 const ACTIVATE_USER_REQUESTED = 'ACTIVATE_USER_REQUESTED'
 const ACTIVATE_USER_SUCCESS = 'ACTIVATE_USER_SUCCESS'
 const ACTIVATE_USER_ERROR = 'ACTIVATE_USER_ERROR'
@@ -267,6 +271,26 @@ const updateUserSuccess = (user) => {
 
 const updateUserError = (error) => {
   return { type: UPDATE_USER_ERROR, completed: true, error: error }
+}
+
+/*
+ * User email update
+ */
+
+const updateUserEmailRequested = () => {
+  return { type: UPDATE_USER_EMAIL_REQUESTED, completed: false }
+}
+
+const updateUserEmailSuccess = (user) => {
+  return {
+    type: UPDATE_USER_EMAIL_SUCCESS,
+    completed: true,
+    data: user.data
+  }
+}
+
+const updateUserEmailError = (error) => {
+  return { type: UPDATE_USER_EMAIL_ERROR, completed: true, error: error }
 }
 
 /*
@@ -571,7 +595,7 @@ const updateUser = (userData) => {
   return (dispatch) => {
     dispatch(updateUserRequested())
     return axios
-      .put(api.API_URL + '/user/update', userData)
+      .put(api.API_URL + '/user', userData)
       .then((user) => {
         dispatch(addNotification('notifications.account.update'))
         dispatch(fetchLoggedUser())
@@ -582,6 +606,30 @@ const updateUser = (userData) => {
         // eslint-disable-next-line no-console
         console.log('error on update user', error)
         return dispatch(updateUserError(error))
+      })
+  }
+}
+
+const updateUserEmail = ({ newEmail, currentPassword, confirmCurrentPassword }) => {
+  validToken()
+  return (dispatch) => {
+    dispatch(updateUserEmailRequested())
+    return axios
+      .post(api.API_URL + '/auth/change-email', {
+        newEmail,
+        currentPassword,
+        confirmCurrentPassword
+      })
+      .then((user) => {
+        dispatch(addNotification('notifications.account.update.email'))
+        dispatch(fetchLoggedUser())
+        return dispatch(updateUserEmailSuccess(user))
+      })
+      .catch((error) => {
+        dispatch(addNotification('notifications.account.update.email.error', { severity: 'error' }))
+        // eslint-disable-next-line no-console
+        console.log('error on update user email', error)
+        return dispatch(updateUserEmailError(error))
       })
   }
 }
@@ -794,6 +842,9 @@ export {
   UPDATE_USER_REQUESTED,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  UPDATE_USER_EMAIL_REQUESTED,
+  UPDATE_USER_EMAIL_SUCCESS,
+  UPDATE_USER_EMAIL_ERROR,
   ACTIVATE_USER_REQUESTED,
   ACTIVATE_USER_SUCCESS,
   ACTIVATE_USER_ERROR,
@@ -822,6 +873,7 @@ export {
   createCustomer,
   updateCustomer,
   updateUser,
+  updateUserEmail,
   activateUser,
   resendActivationEmail,
   createBankAccount,

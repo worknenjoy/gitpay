@@ -2,11 +2,24 @@ import React from 'react'
 import { Dialog, DialogContent, DialogActions, Typography } from '@mui/material'
 import Alert, { AlertColor } from '@mui/material/Alert'
 import Button from '../../../atoms/buttons/button/button'
+import Field from 'design-library/atoms/inputs/fields/field/field'
+
+export type confirmField = {
+  name: string
+  confirmName: string
+  label: React.ReactNode
+  confirmLabel: React.ReactNode
+  type: string
+}
+
+export type ConfirmFieldValue = {
+  [key: string]: string
+}
 
 type ConfirmDialogProps = {
   open: boolean
   message: React.ReactNode
-  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onConfirm?: (e: React.MouseEvent<HTMLButtonElement>, confirmFields?: ConfirmFieldValue) => void
   onCancel?: () => void
   handleClose?: () => void
   confirmLabel?: React.ReactNode
@@ -14,6 +27,7 @@ type ConfirmDialogProps = {
   alertMessage?: React.ReactNode
   alertSeverity?: AlertColor
   completed?: boolean
+  confirmFields?: confirmField
 }
 
 export default function ConfirmDialog({
@@ -26,18 +40,48 @@ export default function ConfirmDialog({
   cancelLabel = 'Cancel',
   alertMessage,
   alertSeverity = 'warning',
-  completed
+  completed,
+  confirmFields
 }: ConfirmDialogProps) {
+  const [confirmFieldsValue, setConfirmFieldsValue] = React.useState<ConfirmFieldValue>({})
+  const [confirmError, setConfirmError] = React.useState<string | null>(null)
+
   const handleConfirmClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-    if (onConfirm) onConfirm(event)
-    handleClose()
+    if (confirmFields) {
+      if (
+        confirmFieldsValue[confirmFields.name] !== confirmFieldsValue[confirmFields.confirmName]
+      ) {
+        setConfirmError('The confirmation inputs do not match.')
+        return
+      } else {
+        setConfirmError(null)
+        onConfirm?.(event, confirmFieldsValue)
+      }
+    } else {
+      onConfirm?.(event)
+    }
+    handleClose?.()
   }
 
   const handleCancelClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     if (onCancel) onCancel()
-    handleClose()
+    handleClose?.()
+  }
+
+  const onChangeConfirmFields = (e: React.FormEvent<HTMLFormElement>) => {
+    const formData = e.currentTarget
+    const firstFieldValue = formData.elements[0] as HTMLInputElement
+    const secondFieldValue = formData.elements[1] as HTMLInputElement
+
+    if (firstFieldValue && secondFieldValue) {
+      setConfirmFieldsValue({
+        ...confirmFieldsValue,
+        [confirmFields.name]: firstFieldValue.value,
+        [confirmFields.confirmName]: secondFieldValue.value
+      })
+    }
   }
 
   return (
@@ -49,7 +93,28 @@ export default function ConfirmDialog({
         aria-describedby="confirm-dialog-description"
       >
         <DialogContent>
-          <Typography id="confirm-dialog-description">{message}</Typography>
+          {message && <Typography id="confirm-dialog-description">{message}</Typography>}
+          {confirmFields && (
+            <form onChange={onChangeConfirmFields}>
+              <Field
+                name={confirmFields.name}
+                label={confirmFields.label}
+                type={confirmFields.type}
+                required
+              />
+              <Field
+                name={confirmFields.confirmName}
+                label={confirmFields.confirmLabel}
+                type={confirmFields.type}
+                required
+              />
+              {confirmError && (
+                <Typography color="error" variant="body2">
+                  {confirmError}
+                </Typography>
+              )}
+            </form>
+          )}
           {alertMessage && (
             <Alert severity={alertSeverity} sx={{ mt: 2 }}>
               {alertMessage}

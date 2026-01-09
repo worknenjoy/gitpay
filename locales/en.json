@@ -219,5 +219,19 @@
   "mail.paymentRequest.newDisputeClosedForPaymentRequest.status.won": "Won",
   "mail.paymentRequest.newDisputeClosedForPaymentRequest.status.lost": "Lost",
   "mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.won.details": "When you win a dispute, the disputed amount is returned to your balance.",
-  "mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.lost.details": "When you lose a dispute, the disputed amount deducted from your balance is lost."
+  "mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.lost.details": "When you lose a dispute, the disputed amount deducted from your balance is lost.",
+  "mail.user.activation.subject": "Activate your Gitpay account",
+  "mail.user.activation.message": "<p>Hi {{name}}</p><p>Welcome to Gitpay!</p><p>We need to confirm your e-mail to activate your account.</p><p style=\"text-align: center\"><a href=\"{{url}}\">Activate your account now</a></p>",
+  "mail.user.changeEmailNotification.subject": "You requested to change your e-mail on Gitpay",
+  "mail.user.changeEmailNotification.message": "<p>Hi {{name}}</p><p>You requested to change your e-mail on Gitpay</p><p>To confirm, please confirm below:</p>",
+  "mail.user.changeEmailNotification.footer": "<p>If you didn't make this request, please ignore this e-mail.</p>",
+  "mail.user.changeEmailNotification.buttonText": "Confirm e-mail change",
+  "mail.user.alertOldEmailAboutChange.subject": "Your e-mail was changed on Gitpay",
+  "mail.user.alertOldEmailAboutChange.message": "<p>Hi {{name}}</p><p>Your e-mail on Gitpay was changed to {{newEmail}}</p><p>If you didn't make this change, please contact us immediately at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>",
+  "mail.user.alertOldEmailAboutChange.buttonText": "Contact us immediately if you didn't make this change",
+  "mail.user.alertOldEmailAboutChange.footer": "<p>You received this message because you have an account on <a href=\"http://gitpay.me\" target=\"_blank\">Gitpay</a> and a request to change the e-mail was made on the platform. </p>",
+  "mail.user.confirmedChangeUserEmail.subject": "You successfully changed your e-mail on Gitpay",
+  "mail.user.confirmedChangeUserEmail.message": "<p>Hi {{name}}</p><p>Your e-mail on Gitpay was successfully changed to {{newEmail}}</p><p>If you didn't make this change, please contact us immediately at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>",
+  "mail.user.confirmedChangeUserEmailOldEmail.subject": "You successfully changed your e-mail on Gitpay",
+  "mail.user.confirmedChangeUserEmailOldEmail.message": "<p>Hi {{name}}</p><p>Your e-mail on Gitpay was successfully changed from this e-mail to {{newEmail}}</p><p>If you didn't make this change, please contact us immediately at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>"
 }

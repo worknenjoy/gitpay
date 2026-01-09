@@ -6,6 +6,7 @@ const user = require('../../modules/users')
 const models = require('../../models')
 const task = require('../../modules/tasks')
 const Sendmail = require('../../modules/mail/mail')
+const UserMail = require('../../modules/mail/user')
 
 exports.register = (req, res) => {
   const { email, name, password } = req.body
@@ -93,19 +94,6 @@ exports.changePassword = (req, res) => {
     })
 }
 
-exports.searchAll = (req, res) => {
-  user
-    .userSearch(req.query)
-    .then((data) => {
-      res.send(data)
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error)
-      res.send(false)
-    })
-}
-
 exports.createPrivateTask = (req, res) => {
   const { userId, url, code } = req.query
   const githubClientId = secrets.github.id
@@ -185,11 +173,7 @@ exports.resend_activation_email = async (req, res) => {
         { where: { id: foundUser.dataValues.id }, returning: true, plain: true }
       ))
     if (userUpdate[1].dataValues.id) {
-      Sendmail.success(
-        userUpdate[1].dataValues,
-        'Activate your account',
-        `<p>Hi ${name || 'Gitpay user'},</p><p>Click <a href="${process.env.FRONTEND_HOST}/#/activate/user/${id}/token/${token}">here</a> to activate your account.</p>`
-      )
+      UserMail.activation(userUpdate[1].dataValues, token)
     }
     res.send(userUpdate[1])
   } catch (error) {
@@ -206,6 +190,25 @@ exports.authorizeGithubPrivateIssue = (req, res) => {
   res.redirect(
     `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${uri}&scope=repo&client_id=${secrets.github.id}`
   )
+}
+
+exports.disconnectGithub = (req, res) => {
+  user
+    .userDisconnectGithub({ userId: req.user.id })
+    .then((data) => {
+      if (data) {
+        res.redirect(
+          `${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=success`
+        )
+      } else {
+        res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=error`)
+      }
+    })
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=error`)
+    })
 }
 
 exports.preferences = (req, res) => {
@@ -355,20 +358,6 @@ exports.accountDelete = (req, res) => {
     })
 }
 
-exports.userUpdate = (req, res) => {
-  req.body.id = req.user.id
-  user
-    .userUpdate(req.body)
-    .then((data) => {
-      res.send(data)
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error)
-      res.send(false)
-    })
-}
-
 exports.userFetch = (req, res) => {
   const userId = req.user.id
   user
@@ -428,20 +417,6 @@ exports.deleteUserById = (req, res) => {
     .userDeleteById(params)
     .then((deleted) => {
       res.status(200).send(`${deleted}`)
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error)
-      res.status(400).send(error)
-    })
-}
-
-exports.getUserTypes = (req, res) => {
-  const userId = req.params.id
-  user
-    .userTypes(userId)
-    .then((data) => {
-      res.status(200).send(data)
     })
     .catch((error) => {
       // eslint-disable-next-line no-console

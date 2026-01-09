@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Tabs, Tab, Box } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
-import { HashRouter, Switch, Route } from 'react-router-dom'
+import { HashRouter, Switch, Route, useHistory } from 'react-router-dom'
 import UserRoles from '../../../../../../containers/user-roles'
 import SettingsComponent from '../features/account-settings/settings'
 import Preferences from '../features/account-settings/preferences'
@@ -14,8 +14,9 @@ export default function AccountTabs({
   changePassword,
   deleteUser,
   addNotification,
-  history
+  updateUserEmail
 }) {
+  const history = useHistory()
   const { isContributor } = useUserTypes({ user })
   const getCurrentTab = (location) => {
     if (location.pathname === '/profile/user-account') {
@@ -114,7 +115,7 @@ export default function AccountTabs({
                   changePassword={changePassword}
                   addNotification={addNotification}
                   deleteUser={deleteUser}
-                  history={history}
+                  updateUserEmail={updateUserEmail}
                 />
               )}
             />
