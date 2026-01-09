@@ -230,7 +230,7 @@ passport.use(
             userExists(data)
               .then((user) => {
                 if (user) {
-                  userUpdate({...data, id: user.id })
+                  userUpdate({ ...data, id: user.id })
                     .then((user) => {
                       const token = jwt.sign(
                         { id: data.id, email: data.email },
@@ -321,7 +321,7 @@ passport.use(
             userExists(data)
               .then((user) => {
                 if (user) {
-                  userUpdate({...data, id: user.id })
+                  userUpdate({ ...data, id: user.id })
                     .then((_) => {
                       const token = jwt.sign(
                         { id: data.id, email: data.email },

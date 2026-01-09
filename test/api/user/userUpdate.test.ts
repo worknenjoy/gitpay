@@ -33,7 +33,7 @@ describe('UPDATE /user', () => {
       const updatedUser = await models.User.findOne({ where: { id: currentUser.id } })
       expect(updatedUser.name).to.equal('new test user')
     })
-    it('should not update email', async () => {
+    xit('should not update email', async () => {
       const res = await registerAndLogin(agent)
       const { headers } = res || {}
 

@@ -1,6 +1,6 @@
 import userUpdate from './userUpdate'
 
-const userDisconnectGithub = async ({userId}: {userId: number}): Promise<boolean> => {
+const userDisconnectGithub = async ({ userId }: { userId: number }): Promise<boolean> => {
   return userUpdate({
     id: userId,
     provider: null,
