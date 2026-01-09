@@ -234,5 +234,4 @@
   "mail.user.confirmedChangeUserEmail.message": "<p>Hi {{name}}</p><p>Your e-mail on Gitpay was successfully changed to {{newEmail}}</p><p>If you didn't make this change, please contact us immediately at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>",
   "mail.user.confirmedChangeUserEmailOldEmail.subject": "You successfully changed your e-mail on Gitpay",
   "mail.user.confirmedChangeUserEmailOldEmail.message": "<p>Hi {{name}}</p><p>Your e-mail on Gitpay was successfully changed from this e-mail to {{newEmail}}</p><p>If you didn't make this change, please contact us immediately at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>"
-
 }

@@ -10,7 +10,7 @@ import DeleteAccountButton from './delete-account-button'
 import { Fieldset, LegendText } from './account-tab-main.styles'
 import ConfirmButton from 'design-library/atoms/buttons/confirm-button/confirm-button'
 import { type ConfirmFieldValue } from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const AccountTabMain = ({
   user,
@@ -67,7 +67,10 @@ const AccountTabMain = ({
     updateUser && updateUser(whatToUpdate)
   }
 
-  const handleUpdateEmail = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, values: ConfirmFieldValue) => {
+  const handleUpdateEmail = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    values: ConfirmFieldValue
+  ) => {
     e.preventDefault()
     await updateUserEmail?.({
       newEmail: fieldEmail,
@@ -167,7 +170,10 @@ const AccountTabMain = ({
             <Fieldset>
               <legend>
                 <LegendText>
-                  <FormattedMessage id="account.account.email.change" defaultMessage="Change email" />
+                  <FormattedMessage
+                    id="account.account.email.change"
+                    defaultMessage="Change email"
+                  />
                 </LegendText>
               </legend>
               <Grid container spacing={2}>
@@ -211,10 +217,7 @@ const AccountTabMain = ({
                         />
                       }
                       cancelLabel={
-                        <FormattedMessage
-                          id="account.actions.cancel"
-                          defaultMessage="Cancel"
-                        />
+                        <FormattedMessage id="account.actions.cancel" defaultMessage="Cancel" />
                       }
                       onConfirm={handleUpdateEmail}
                       confirmFields={{

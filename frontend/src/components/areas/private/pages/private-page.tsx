@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Switch, HashRouter, useHistory } from 'react-router-dom'
+import { Route, Switch, HashRouter } from 'react-router-dom'
 import PrivateBase from 'design-library/templates/base/private-base/private-base'
 import DashboardContainer from '../../../../containers/dashboard/dashboard'
 import { UserAccount } from '../features/account/user-account'
@@ -33,7 +33,6 @@ const PrivatePage = ({
   info,
   getInfo
 }) => {
-
   useEffect(() => {
     fetchOrganizations()
   }, [])

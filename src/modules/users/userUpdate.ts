@@ -9,13 +9,9 @@ const userUpdate = async (userParameters: UserParameters) => {
     throw new Error('User id is required to update user')
   }
 
-  const allowedFieldsToUpdate = [
-    'name',
-    'account_id',
-    'Types'
-  ]
+  const allowedFieldsToUpdate = ['name', 'account_id', 'Types']
 
-  if(userParameters.email) {
+  if (userParameters.email) {
     throw new Error('user.update.cannot_update_email')
   }
 

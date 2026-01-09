@@ -206,7 +206,7 @@ describe('Users', () => {
         })
         .catch(done)
     })
-  })  
+  })
 
   describe('login User Local', () => {
     it('should user local', (done) => {

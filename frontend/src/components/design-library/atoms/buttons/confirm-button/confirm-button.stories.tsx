@@ -41,7 +41,7 @@ WithConfirmFields.args = {
   variant: 'contained',
   completed: true,
   dialogMessage: 'Please type DELETE to confirm the action.',
-  confirmFields:  {
+  confirmFields: {
     name: 'confirmationInput',
     confirmName: 'confirmInput',
     label: 'Type DELETE to confirm:',

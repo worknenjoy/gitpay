@@ -25,7 +25,7 @@ export const confirmChangeEmail = async (req: any, res: any) => {
     const data = await userConfirmChangeEmail({
       token
     })
-    if(data) {
+    if (data) {
       res.redirect(`${process.env.FRONTEND_HOST}/#/signin/email-change-confirmed`)
     } else {
       res.redirect(`${process.env.FRONTEND_HOST}/#/signin/email-change-failed`)

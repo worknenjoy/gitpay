@@ -49,7 +49,7 @@ export const withConfirmationFields: Story = {
   args: {
     open: true,
     message: 'Please type DELETE to confirm the action.',
-    confirmFields:  {
+    confirmFields: {
       name: 'confirmationInput',
       confirmName: 'confirmInput',
       label: 'Type DELETE to confirm:',

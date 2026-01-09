@@ -375,7 +375,6 @@ describe('Payment Request Balance Webhook', () => {
         .expect('Content-Type', /json/)
         .expect(200)
 
-
       const event = JSON.parse(Buffer.from(res.body).toString())
       expect(event).to.exist
       expect(event.id).to.equal('evt_test_charge_dispute_funds_withdrawn')

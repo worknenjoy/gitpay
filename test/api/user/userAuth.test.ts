@@ -124,8 +124,7 @@ describe('AUTH /user', () => {
   })
   describe('change email', () => {
     it('should change email for authenticated user', async () => {
-      
-      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test'})
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test' })
       const { headers, body } = res || {}
 
       const newEmailChangeRequest = sinon
@@ -135,7 +134,6 @@ describe('AUTH /user', () => {
       const oldEmailAlertStub = sinon
         .stub(UserMail as any, 'alertOldEmailAboutChange')
         .resolves(true)
-
 
       const newEmail = 'newemail@example.com'
       const user = await agent
@@ -160,16 +158,19 @@ describe('AUTH /user', () => {
 
       expect(mailArgsOldEmailAlert[0].dataValues).to.deep.equal(updatedUser.dataValues)
       expect(mailArgsChangeRequest[0].dataValues).to.deep.equal(updatedUser.dataValues)
-
     })
     it('should not change email with incorrect current password', async () => {
-      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test'})
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test' })
       const { headers } = res || {}
 
       const newEmail = 'newemail@example.com'
       const user = await agent
         .post('/auth/change-email')
-        .send({ newEmail, currentPassword: 'wrongpassword', confirmCurrentPassword: 'wrongpassword' })
+        .send({
+          newEmail,
+          currentPassword: 'wrongpassword',
+          confirmCurrentPassword: 'wrongpassword'
+        })
         .set('Authorization', headers.authorization)
         .expect(500)
 
@@ -178,7 +179,7 @@ describe('AUTH /user', () => {
     })
 
     it('should not change email if parameters are missing', async () => {
-      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test'})
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test' })
       const { headers } = res || {}
 
       const newEmail = 'newemail@example.com'
@@ -192,7 +193,10 @@ describe('AUTH /user', () => {
       expect(user.body.error).to.equal('user.change_email.missing_parameters')
     })
     it('should not change email if user signed up with provider', async () => {
-      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', provider: 'github' })
+      const res = await registerAndLogin(agent, {
+        email: 'oldemail@example.com',
+        provider: 'github'
+      })
       const { headers } = res || {}
 
       const newEmail = 'newemail@example.com'
@@ -207,7 +211,7 @@ describe('AUTH /user', () => {
     })
     it('should not change email if user already exist with new email', async () => {
       await models.User.create({ email: 'existing-email@example.com', password: 'test' })
-      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test'})
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test' })
       const { headers } = res || {}
 
       const newEmail = 'existing-email@example.com'
@@ -221,7 +225,7 @@ describe('AUTH /user', () => {
       expect(user.body.error).to.equal('user.change_email.email_already_in_use')
     })
     it('should not change email if email is invalid', async () => {
-      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test'})
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test' })
       const { headers } = res || {}
 
       const invalidEmail = 'invalid-email'
@@ -237,7 +241,7 @@ describe('AUTH /user', () => {
   })
   describe('Confirm change email', () => {
     it('should confirm email change with correct token', async () => {
-      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test'})
+      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test' })
       const { headers, body } = res || {}
 
       const newEmailChangeRequest = sinon
@@ -262,9 +266,11 @@ describe('AUTH /user', () => {
         .query({ token: updatedUser.email_change_token })
         .set('Authorization', headers.authorization)
         .expect(302)
-      
+
       expect(confirmResponse.statusCode).to.equal(302)
-      expect(confirmResponse.headers.location).to.equal(`${process.env.FRONTEND_HOST}/#/signin/email-change-confirmed`)
+      expect(confirmResponse.headers.location).to.equal(
+        `${process.env.FRONTEND_HOST}/#/signin/email-change-confirmed`
+      )
 
       const confirmedUser = await models.User.findByPk(body.id)
       expect(confirmedUser.email).to.equal(newEmail)
@@ -282,11 +288,13 @@ describe('AUTH /user', () => {
     })
 
     it('should confirm email change with a connected account', async () => {
-      nock('https://api.stripe.com/v1')
-        .post('/accounts/acct_1EYDS6IbQaEige6l')
-        .reply(200, account)
+      nock('https://api.stripe.com/v1').post('/accounts/acct_1EYDS6IbQaEige6l').reply(200, account)
 
-      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test', account_id: 'acct_1EYDS6IbQaEige6l'})
+      const res = await registerAndLogin(agent, {
+        email: 'oldemail@example.com',
+        password: 'test',
+        account_id: 'acct_1EYDS6IbQaEige6l'
+      })
       const { headers, body } = res || {}
 
       const newEmailChangeRequest = sinon
@@ -311,9 +319,11 @@ describe('AUTH /user', () => {
         .query({ token: updatedUser.email_change_token })
         .set('Authorization', headers.authorization)
         .expect(302)
-      
+
       expect(confirmResponse.statusCode).to.equal(302)
-      expect(confirmResponse.headers.location).to.equal(`${process.env.FRONTEND_HOST}/#/signin/email-change-confirmed`)
+      expect(confirmResponse.headers.location).to.equal(
+        `${process.env.FRONTEND_HOST}/#/signin/email-change-confirmed`
+      )
 
       const confirmedUser = await models.User.findByPk(body.id)
       expect(confirmedUser.email).to.equal(newEmail)
@@ -328,18 +338,21 @@ describe('AUTH /user', () => {
 
       expect(mailArgsChangeRequest[0].user.id).to.deep.equal(confirmedUser.id)
       expect(mailArgsOldEmailAlert[0].user.id).to.deep.equal(updatedUser.id)
-    
     })
     it('should not confirm email change if stripe account fails', async () => {
       nock('https://api.stripe.com/v1')
         .post('/accounts/acct_failedupdate')
         .reply(500, { error: 'user.change_email.stripe_error' })
 
-      const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test', account_id: 'acct_failedupdate'})
+      const res = await registerAndLogin(agent, {
+        email: 'oldemail@example.com',
+        password: 'test',
+        account_id: 'acct_failedupdate'
+      })
       const { headers, body } = res || {}
 
       const newEmail = 'new@example.com'
-      
+
       const user = await agent
         .post('/auth/change-email')
         .send({ newEmail, currentPassword: 'test', confirmCurrentPassword: 'test' })
@@ -351,13 +364,15 @@ describe('AUTH /user', () => {
         .query({ token: user.body.email_change_token })
         .set('Authorization', headers.authorization)
         .expect(302)
-      
+
       expect(confirmChangeUser.statusCode).to.equal(302)
-      expect(confirmChangeUser.headers.location).to.equal(`${process.env.FRONTEND_HOST}/#/signin/email-change-failed`)
+      expect(confirmChangeUser.headers.location).to.equal(
+        `${process.env.FRONTEND_HOST}/#/signin/email-change-failed`
+      )
 
       const confirmedUser = await models.User.findByPk(body.id)
       expect(confirmedUser.email).to.equal('oldemail@example.com')
-    })  
+    })
     it('it should not confirm email change if another account with the new email exist', async () => {
       const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test' })
       const { headers, body } = res || {}
@@ -372,15 +387,17 @@ describe('AUTH /user', () => {
       const updatedUser = await models.User.findByPk(body.id)
 
       await models.User.create({ email: 'new@example.com' })
-      
+
       const confirmResponse = await agent
         .get('/auth/change-email/confirm')
         .query({ token: updatedUser.email_change_token })
         .set('Authorization', headers.authorization)
         .expect(302)
-      
+
       expect(confirmResponse.statusCode).to.equal(302)
-      expect(confirmResponse.headers.location).to.equal(`${process.env.FRONTEND_HOST}/#/signin/email-change-failed`)
+      expect(confirmResponse.headers.location).to.equal(
+        `${process.env.FRONTEND_HOST}/#/signin/email-change-failed`
+      )
 
       const confirmedUser = await models.User.findByPk(body.id)
       expect(confirmedUser.email).to.equal('oldemail@example.com')

@@ -274,9 +274,9 @@ const updateUserError = (error) => {
 }
 
 /*
-  * User email update
-  */
- 
+ * User email update
+ */
+
 const updateUserEmailRequested = () => {
   return { type: UPDATE_USER_EMAIL_REQUESTED, completed: false }
 }
@@ -610,12 +610,16 @@ const updateUser = (userData) => {
   }
 }
 
-const updateUserEmail = ({ newEmail, currentPassword, confirmCurrentPassword}) => {
+const updateUserEmail = ({ newEmail, currentPassword, confirmCurrentPassword }) => {
   validToken()
   return (dispatch) => {
     dispatch(updateUserEmailRequested())
     return axios
-      .post(api.API_URL + '/auth/change-email', { newEmail, currentPassword, confirmCurrentPassword })
+      .post(api.API_URL + '/auth/change-email', {
+        newEmail,
+        currentPassword,
+        confirmCurrentPassword
+      })
       .then((user) => {
         dispatch(addNotification('notifications.account.update.email'))
         dispatch(fetchLoggedUser())

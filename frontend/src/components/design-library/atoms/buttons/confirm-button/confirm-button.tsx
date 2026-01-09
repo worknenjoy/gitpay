@@ -2,7 +2,10 @@ import React from 'react'
 import { AlertColor, ListItemText, ListItemIcon } from '@mui/material'
 import Button from 'design-library/atoms/buttons/button/button'
 import ConfirmDialog from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
-import { type confirmField as ConfirmField, type ConfirmFieldValue } from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
+import {
+  type confirmField as ConfirmField,
+  type ConfirmFieldValue
+} from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
 
 type ConfirmButtonProps = {
   // Button props

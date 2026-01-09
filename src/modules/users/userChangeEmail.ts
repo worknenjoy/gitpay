@@ -55,11 +55,11 @@ export const userChangeEmail = async ({
     throw new Error('user.change_email.invalid_email')
   }
 
-  if(newEmail.length > 255) {
+  if (newEmail.length > 255) {
     throw new Error('user.change_email.email_too_long')
   }
 
-  if(newEmail === userToUpdate.email) {
+  if (newEmail === userToUpdate.email) {
     throw new Error('user.change_email.same_as_current_email')
   }
 

@@ -354,7 +354,8 @@ const messages = defineMessages({
   },
   notificationAccountUpdateEmailSuccess: {
     id: 'notifications.account.update.email',
-    defaultMessage: 'Your request to change email was sent successfully. Please check your inbox with the instructions to activate your new email'
+    defaultMessage:
+      'Your request to change email was sent successfully. Please check your inbox with the instructions to activate your new email'
   },
   notificationAccountUpdateEmailError: {
     id: 'notifications.account.update.email.error',

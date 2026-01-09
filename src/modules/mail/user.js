@@ -40,7 +40,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
             i18n.__('mail.user.changeEmailNotification.message', {
-              name: user.username,
+              name: user.username
             }),
             '',
             i18n.__('mail.user.changeEmailNotification.buttonText'),
@@ -89,7 +89,7 @@ if (constants.canSendEmail) {
           )
         }
       ])
-  },
+  }
   UserMail.confirmedChangeUserEmailOldEmail = (user) => {
     const to = user.email
     const language = user.language || 'en'

@@ -3,7 +3,12 @@ import PrivatePage from '../components/areas/private/pages/private-page'
 import { fetchPreferences } from '../actions/preferencesActions'
 import { logOut, changePassword } from '../actions/loginActions'
 import { listTasks, filterTasks, createTask } from '../actions/taskActions'
-import { updateUser, deleteUser, resendActivationEmail, updateUserEmail } from '../actions/userActions'
+import {
+  updateUser,
+  deleteUser,
+  resendActivationEmail,
+  updateUserEmail
+} from '../actions/userActions'
 import {
   fetchOrganizations,
   createOrganizations,

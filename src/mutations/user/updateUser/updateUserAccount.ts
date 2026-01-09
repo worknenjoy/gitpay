@@ -3,9 +3,7 @@ import { type UserParameters } from './updateUser'
 
 const stripe = Stripe()
 
-const updateUserAccount = async (
-  user: UserParameters
-) => {
+const updateUserAccount = async (user: UserParameters) => {
   if (user.account_id) {
     try {
       return await stripe.accounts.update(user.account_id, { email: user.email })

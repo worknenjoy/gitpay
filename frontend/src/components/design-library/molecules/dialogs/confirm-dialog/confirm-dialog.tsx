@@ -5,10 +5,10 @@ import Button from '../../../atoms/buttons/button/button'
 import Field from 'design-library/atoms/inputs/fields/field/field'
 
 export type confirmField = {
-  name: string,
-  confirmName: string,
-  label: React.ReactNode,
-  confirmLabel: React.ReactNode,
+  name: string
+  confirmName: string
+  label: React.ReactNode
+  confirmLabel: React.ReactNode
   type: string
 }
 
@@ -43,14 +43,15 @@ export default function ConfirmDialog({
   completed,
   confirmFields
 }: ConfirmDialogProps) {
-
-  const [ confirmFieldsValue, setConfirmFieldsValue ] = React.useState<ConfirmFieldValue>({})
-  const [ confirmError, setConfirmError ] = React.useState<string | null>(null)
+  const [confirmFieldsValue, setConfirmFieldsValue] = React.useState<ConfirmFieldValue>({})
+  const [confirmError, setConfirmError] = React.useState<string | null>(null)
 
   const handleConfirmClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     if (confirmFields) {
-      if (confirmFieldsValue[confirmFields.name] !== confirmFieldsValue[confirmFields.confirmName]) {
+      if (
+        confirmFieldsValue[confirmFields.name] !== confirmFieldsValue[confirmFields.confirmName]
+      ) {
         setConfirmError('The confirmation inputs do not match.')
         return
       } else {
@@ -73,7 +74,7 @@ export default function ConfirmDialog({
     const formData = e.currentTarget
     const firstFieldValue = formData.elements[0] as HTMLInputElement
     const secondFieldValue = formData.elements[1] as HTMLInputElement
-    
+
     if (firstFieldValue && secondFieldValue) {
       setConfirmFieldsValue({
         ...confirmFieldsValue,
@@ -93,9 +94,9 @@ export default function ConfirmDialog({
       >
         <DialogContent>
           {message && <Typography id="confirm-dialog-description">{message}</Typography>}
-          { confirmFields && (
+          {confirmFields && (
             <form onChange={onChangeConfirmFields}>
-             <Field
+              <Field
                 name={confirmFields.name}
                 label={confirmFields.label}
                 type={confirmFields.type}
@@ -107,7 +108,11 @@ export default function ConfirmDialog({
                 type={confirmFields.type}
                 required
               />
-              {confirmError && (<Typography color="error" variant="body2">{confirmError}</Typography>)}
+              {confirmError && (
+                <Typography color="error" variant="body2">
+                  {confirmError}
+                </Typography>
+              )}
             </form>
           )}
           {alertMessage && (
