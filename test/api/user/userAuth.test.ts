@@ -261,10 +261,10 @@ describe('AUTH /user', () => {
         .get('/auth/change-email/confirm')
         .query({ token: updatedUser.email_change_token })
         .set('Authorization', headers.authorization)
-        .expect(200)
+        .expect(302)
       
-      expect(confirmResponse.statusCode).to.equal(200)
-      expect(confirmResponse.body.email).to.equal(newEmail)
+      expect(confirmResponse.statusCode).to.equal(302)
+      expect(confirmResponse.headers.location).to.equal(`${process.env.FRONTEND_HOST}/#/signin/email-change-confirmed`)
 
       const confirmedUser = await models.User.findByPk(body.id)
       expect(confirmedUser.email).to.equal(newEmail)
@@ -310,10 +310,10 @@ describe('AUTH /user', () => {
         .get('/auth/change-email/confirm')
         .query({ token: updatedUser.email_change_token })
         .set('Authorization', headers.authorization)
-        .expect(200)
+        .expect(302)
       
-      expect(confirmResponse.statusCode).to.equal(200)
-      expect(confirmResponse.body.email).to.equal(newEmail)
+      expect(confirmResponse.statusCode).to.equal(302)
+      expect(confirmResponse.headers.location).to.equal(`${process.env.FRONTEND_HOST}/#/signin/email-change-confirmed`)
 
       const confirmedUser = await models.User.findByPk(body.id)
       expect(confirmedUser.email).to.equal(newEmail)
@@ -350,10 +350,10 @@ describe('AUTH /user', () => {
         .get('/auth/change-email/confirm')
         .query({ token: user.body.email_change_token })
         .set('Authorization', headers.authorization)
-        .expect(500)
+        .expect(302)
       
-      expect(confirmChangeUser.statusCode).to.equal(500)
-      expect(confirmChangeUser.body.error).to.equal('user.change_email.stripe_error')
+      expect(confirmChangeUser.statusCode).to.equal(302)
+      expect(confirmChangeUser.headers.location).to.equal(`${process.env.FRONTEND_HOST}/#/signin/email-change-failed`)
 
       const confirmedUser = await models.User.findByPk(body.id)
       expect(confirmedUser.email).to.equal('oldemail@example.com')
@@ -377,10 +377,10 @@ describe('AUTH /user', () => {
         .get('/auth/change-email/confirm')
         .query({ token: updatedUser.email_change_token })
         .set('Authorization', headers.authorization)
-        .expect(500)
+        .expect(302)
       
-      expect(confirmResponse.statusCode).to.equal(500)
-      expect(confirmResponse.body.error).to.equal('user.confirm_change_email.email_already_in_use')
+      expect(confirmResponse.statusCode).to.equal(302)
+      expect(confirmResponse.headers.location).to.equal(`${process.env.FRONTEND_HOST}/#/signin/email-change-failed`)
 
       const confirmedUser = await models.User.findByPk(body.id)
       expect(confirmedUser.email).to.equal('oldemail@example.com')

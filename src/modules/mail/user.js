@@ -45,6 +45,7 @@ if (constants.canSendEmail) {
             '',
             i18n.__('mail.user.changeEmailNotification.buttonText'),
             `${process.env.API_HOST}/auth/change-email/confirm/?token=${user.email_change_token}`,
+            i18n.__('mail.user.changeEmailNotification.footer')
           )
         }
       ])
@@ -66,7 +67,7 @@ if (constants.canSendEmail) {
             i18n.__('mail.user.alertOldEmailAboutChange.buttonText'),
             `mailto:contact@gitpay.me`,
             '',
-            i18n.__('mail.user.alertOldEmailAboutChange.footerMessage')
+            i18n.__('mail.user.alertOldEmailAboutChange.footer')
           )
         }
       ])

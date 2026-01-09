@@ -156,7 +156,7 @@ const AccountTabMain = ({
                       onClick={handleUpdateAccount}
                     >
                       <FormattedMessage
-                        id="account.user.actions.update"
+                        id="account.user.actions.change.name"
                         defaultMessage="Update Account"
                       />
                     </Button>
@@ -167,7 +167,7 @@ const AccountTabMain = ({
             <Fieldset>
               <legend>
                 <LegendText>
-                  <FormattedMessage id="account.account.email" defaultMessage="Update email" />
+                  <FormattedMessage id="account.account.email.change" defaultMessage="Change email" />
                 </LegendText>
               </legend>
               <Grid container spacing={2}>
@@ -195,7 +195,7 @@ const AccountTabMain = ({
                       label={
                         <FormattedMessage
                           id="account.user.actions.update.email"
-                          defaultMessage="Update Email"
+                          defaultMessage="Change Email"
                         />
                       }
                       dialogMessage={
@@ -207,7 +207,7 @@ const AccountTabMain = ({
                       confirmLabel={
                         <FormattedMessage
                           id="account.user.actions.update.email"
-                          defaultMessage="Update Email"
+                          defaultMessage="Change Email"
                         />
                       }
                       cancelLabel={
