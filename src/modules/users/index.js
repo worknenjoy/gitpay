@@ -1,7 +1,7 @@
 const userExists = require('./userExists')
 const userSearch = require('./userSearch')
 const userBuilds = require('./userBuilds')
-const userUpdate = require('./userUpdate')
+const userUpdate = require('./userUpdate').default
 const userFetch = require('./userFetch')
 const userChangeEmail = require('./userChangeEmail')
 const userChangePassword = require('./userChangePassword')
@@ -23,7 +23,7 @@ const userDeleteById = require('./userDeleteById')
 const userTasks = require('./userTasks')
 const userTypes = require('./userTypes')
 const userInfo = require('./userInfo')
-const userDisconnectGithub = require('./userDisconectGithub')
+const userDisconnectGithub = require('./userDisconectGithub').default
 
 module.exports = {
   userExists: userExists,

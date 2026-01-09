@@ -1,7 +1,7 @@
 import userUpdate from './userUpdate'
 
-export const userDisconnectGithub = async (userId: number): Promise<void> => {
-  userUpdate({
+const userDisconnectGithub = async ({userId}: {userId: number}): Promise<boolean> => {
+  return userUpdate({
     id: userId,
     provider: null,
     provider_username: null,
@@ -16,6 +16,9 @@ export const userDisconnectGithub = async (userId: number): Promise<void> => {
       }
     })
     .catch((e) => {
+      console.log('Error disconnecting github account:', e)
       return false
     })
 }
+
+export default userDisconnectGithub

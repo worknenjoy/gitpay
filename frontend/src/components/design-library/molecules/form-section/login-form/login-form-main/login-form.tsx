@@ -29,7 +29,7 @@ const Content = styled.div`
 
 interface LoginButtonProps extends RouteComponentProps {
   referrer?: Location
-  location: any
+
   contrast?: boolean
   includeForm?: boolean
   hideExtra?: boolean
@@ -42,7 +42,7 @@ interface LoginButtonProps extends RouteComponentProps {
   onSignup?: () => void
   onSignin?: () => void
   loginFormSignupFormProps?: any
-  loginFormForgotFormProps
+  loginFormForgotFormProps?: any
 }
 
 const LoginForm: React.FC<LoginButtonProps> = ({

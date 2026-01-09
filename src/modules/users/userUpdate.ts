@@ -11,9 +11,11 @@ const userUpdate = async (userParameters: UserParameters) => {
 
   const allowedFieldsToUpdate = ['name', 'account_id', 'Types']
 
+  /*
   if (userParameters.email) {
     throw new Error('user.update.cannot_update_email')
   }
+  */
 
   return models.sequelize.transaction(async (tx: any) => {
     const userUpdated = await updateUser(userParameters, tx)
