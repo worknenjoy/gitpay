@@ -3,12 +3,19 @@ const nock = require('nock')
 const { notifyNewIssue, notifyNewBounty } = require('../src/modules/slack')
 
 describe('Slack Notifications', () => {
-  afterEach(() => nock.cleanAll())
+  beforeEach(() => {
+    process.env.SLACK_WEBHOOK_URL = 'https://hooks.slack.com/services/TEST/WEBHOOK/URL'
+  })
+
+  afterEach(() => {
+    nock.cleanAll()
+    delete process.env.SLACK_WEBHOOK_URL
+  })
 
   describe('New Issue Notifications', () => {
     it('should send Slack notification when new issue is imported', async () => {
       const slackWebhook = nock('https://hooks.slack.com')
-        .post('/services/T08RJTHD0JG/B094MSLS6HM/t6zpqBEQEk8D96YIK0gIRLU4')
+        .post('/services/TEST/WEBHOOK/URL')
         .reply(200, 'ok')
 
       await notifyNewIssue(
@@ -28,7 +35,7 @@ describe('Slack Notifications', () => {
   describe('New Bounty Notifications', () => {
     it('should send Slack notification when new bounty is added', async () => {
       const slackWebhook = nock('https://hooks.slack.com')
-        .post('/services/T08RJTHD0JG/B094MSLS6HM/t6zpqBEQEk8D96YIK0gIRLU4')
+        .post('/services/TEST/WEBHOOK/URL')
         .reply(200, 'ok')
 
       await notifyNewBounty(

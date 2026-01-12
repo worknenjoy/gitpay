@@ -4,7 +4,7 @@ const secrets = require('../../config/secrets')
 const sendSlackMessage = async (payload) => {
   const webhookUrl = process.env.SLACK_WEBHOOK_URL || secrets.slack?.webhookUrl
 
-  if (!webhookUrl) return
+  if (!webhookUrl) return false
 
   try {
     await requestPromise({
@@ -13,8 +13,10 @@ const sendSlackMessage = async (payload) => {
       body: payload,
       json: true
     })
+    return true
   } catch (error) {
     console.error('Slack notification failed:', error.message)
+    return false
   }
 }
 
@@ -29,11 +31,11 @@ const formatCurrency = (amount, currency = 'USD') => {
 }
 
 const notifyNewIssue = async (task, user) => {
-  if (!task?.id) return
+  if (!task?.id) return false
 
   const username = user?.username || user?.name || 'Unknown'
 
-  await sendSlackMessage({
+  return await sendSlackMessage({
     username: 'Gitpay',
     blocks: [
       {
@@ -78,12 +80,12 @@ const notifyNewIssue = async (task, user) => {
 }
 
 const notifyNewBounty = async (task, order, user) => {
-  if (!task?.id || !order?.amount) return
+  if (!task?.id || !order?.amount) return false
 
   const username = user?.username || user?.name || 'Unknown'
   const amount = formatCurrency(order.amount, order.currency)
 
-  await sendSlackMessage({
+  return await sendSlackMessage({
     username: 'Gitpay',
     blocks: [
       {
