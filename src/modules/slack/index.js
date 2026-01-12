@@ -21,7 +21,7 @@ const sendSlackMessage = async (payload) => {
 const formatCurrency = (amount, currency = 'USD') => {
   const numAmount = parseFloat(amount)
   if (isNaN(numAmount)) return '$0.00'
-  
+
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency
