@@ -1,5 +1,4 @@
 import path from 'path'
-import { readdirSync } from 'fs'
 import child_process from 'child_process'
 import { Umzug, SequelizeStorage } from 'umzug'
 import { Sequelize } from 'sequelize'
@@ -56,9 +55,7 @@ sequelize.query('SELECT current_database();').then(([res]: any) => {
 
 const isSeed = process.env.TYPE === 'seed'
 
-const baseDir = isSeed
-  ? path.resolve(srcDir, 'db/seeders')
-  : path.resolve(srcDir, 'db/migrations')
+const baseDir = isSeed ? path.resolve(srcDir, 'db/seeders') : path.resolve(srcDir, 'db/migrations')
 
 // Convert Windows backslashes to forward slashes for glob pattern
 const globPath = baseDir.replace(/\\/g, '/') + '/*.{ts,js}'

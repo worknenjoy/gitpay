@@ -27,7 +27,7 @@ module.exports = Promise.method(
           PaymentMail.support(user, task, order)
         }
         PaymentMail.success(user, task, order.amount)
-        
+
         // Send Slack notification for new bounty payment
         if (orderPayload.paid && orderPayload.status === 'succeeded') {
           const orderData = {
@@ -38,7 +38,7 @@ module.exports = Promise.method(
             console.log('error on send slack notification for new bounty', e)
           })
         }
-        
+
         if (task.dataValues.assigned) {
           const assignedId = task.dataValues.assigned
           return models.Assign.findByPk(assignedId, {
