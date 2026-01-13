@@ -19,3 +19,9 @@ Custom.args = {
   onActionClick: () => alert('Get Started clicked!'),
   icon: <AlarmIcon style={{ fontSize: 60, color: 'gray' }} />
 }
+
+export const Loading = Template.bind({})
+Loading.args = {
+  text: 'Loading...',
+  completed: false
+}
