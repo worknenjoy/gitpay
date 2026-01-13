@@ -12,7 +12,7 @@ export default function SlackCard(): JSX.Element {
 
   const hanldeInvite = () => {
     window.open(
-      'https://join.slack.com/t/gitpay-workspace/shared_invite/zt-1ru4j0duc-mOPFRxkhRyMgavlGdlghmw',
+      process.env.SLACK_CHANNEL_INVITE_LINK,
       '_blank'
     )
   }
