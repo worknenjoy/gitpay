@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl'
 
 const PayoutSetingsBankAccount = ({ children, user, onSaveCountry }) => {
   const { completed, data } = user
+  const [ savingCountry, setSavingCountry ] = React.useState(false)
   const [openCountryPicker, setOpenCountryPicker] = React.useState(false)
   const [country, setCountry] = React.useState({
     label: null,
@@ -37,8 +38,14 @@ const PayoutSetingsBankAccount = ({ children, user, onSaveCountry }) => {
     return countryImageSrc
   }
 
-  const saveCountryAndContinue = (country) => {
-    onSaveCountry(country)
+  const saveCountryAndContinue = async (country) => {
+    setSavingCountry(true)
+    await onSaveCountry(country)
+    setSavingCountry(false)
+  }
+
+  const onSaveCountryAndContinue = () => {
+    saveCountryAndContinue(country.code)
   }
 
   useEffect(() => {
@@ -71,9 +78,9 @@ const PayoutSetingsBankAccount = ({ children, user, onSaveCountry }) => {
                 />
               }
               text={country.label}
-              onActionClick={() => saveCountryAndContinue(country.code)}
+              onActionClick={onSaveCountryAndContinue}
               icon={<img width={48} alt={country.label} src={getCountryImage(country.image)} />}
-              completed={completed}
+              completed={completed && !savingCountry}
             />
           )}
         </>
