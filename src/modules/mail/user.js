@@ -21,10 +21,12 @@ if (constants.canSendEmail) {
         {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
-            i18n.__('mail.user.activation.message', {
-              name: user.username || 'Gitpay user',
-              url: `${process.env.FRONTEND_HOST}/#/user/${user.id}/activate/${token}`
-            })
+            i18n.__('mail.user.activation.message.intro', {
+              name: user.name || user.username || 'Gitpay user'
+            }),
+            i18n.__('mail.user.activation.message.subtitle'),
+            i18n.__('mail.user.activation.buttonText'),
+            `${process.env.FRONTEND_HOST}/#/activate/user/${user.id}/token/${token}`
           )
         }
       ])
@@ -40,7 +42,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
             i18n.__('mail.user.changeEmailNotification.message', {
-              name: user.username
+              name: user.name || user.username || 'Gitpay user'
             }),
             '',
             i18n.__('mail.user.changeEmailNotification.buttonText'),
@@ -60,7 +62,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
             i18n.__('mail.user.alertOldEmailAboutChange.message', {
-              name: user.username,
+              name: user.name || user.username || 'Gitpay user',
               newEmail: user.pending_email_change
             }),
             '',
@@ -83,7 +85,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
             i18n.__('mail.user.confirmedChangeUserEmail.message', {
-              name: user.username,
+              name: user.name || user.username || 'Gitpay user',
               newEmail: user.pending_email_change
             })
           )
@@ -100,7 +102,7 @@ if (constants.canSendEmail) {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
             i18n.__('mail.user.confirmedChangeUserEmailOldEmail.message', {
-              name: user.username,
+              name: user.name || user.username || 'Gitpay user',
               newEmail: user.pending_email_change
             })
           )
