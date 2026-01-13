@@ -11,10 +11,7 @@ export default function SlackCard(): JSX.Element {
   const theme = useTheme()
 
   const hanldeInvite = () => {
-    window.open(
-      process.env.SLACK_CHANNEL_INVITE_LINK,
-      '_blank'
-    )
+    window.open(process.env.SLACK_CHANNEL_INVITE_LINK, '_blank')
   }
 
   return (
