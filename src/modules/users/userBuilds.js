@@ -21,10 +21,7 @@ module.exports = Promise.method(async function userBuilds(userParameters) {
     if (dataValues && dataValues.id) {
       const { id, name, activation_token } = dataValues
       if (!userParameters.provider) {
-        UserMail.activation(
-          dataValues,
-          activation_token
-        )
+        UserMail.activation(dataValues, activation_token)
       }
       if (selectedTypeIds && selectedTypeIds.length > 0) {
         await user.setTypes(selectedTypeIds)
