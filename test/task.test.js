@@ -226,8 +226,8 @@ describe('tasks', () => {
       chai.use(spies)
       const slackModule = require('../src/modules/slack')
       const slackSpy = chai.spy.on(slackModule, 'notifyNewIssue')
-      const botModule = require('../src/modules/bot/issueAddedComment')
-      const botSpy = chai.spy.on(botModule)
+      const originalBotModule = require('../src/modules/bot/issueAddedComment')
+      const botSpy = chai.spy(originalBotModule)
 
       try {
         const user = await registerAndLogin(agent)
@@ -245,15 +245,14 @@ describe('tasks', () => {
         // Test the actual logic from taskBuilds.js
         const isTaskPublic = !(taskData.not_listed === true || taskData.private === true)
         if (isTaskPublic) {
-          issueAddedComment(task)
-          notifyNewIssue(taskData, userData)
+          botSpy(task)
+          slackModule.notifyNewIssue(taskData, userData)
         }
 
         expect(slackSpy).to.not.have.been.called()
         expect(botSpy).to.not.have.been.called()
       } finally {
         chai.spy.restore(slackModule, 'notifyNewIssue')
-        chai.spy.restore(botModule)
       }
     })
 
@@ -261,8 +260,8 @@ describe('tasks', () => {
       chai.use(spies)
       const slackModule = require('../src/modules/slack')
       const slackSpy = chai.spy.on(slackModule, 'notifyNewIssue')
-      const botModule = require('../src/modules/bot/issueAddedComment')
-      const botSpy = chai.spy.on(botModule)
+      const originalBotModule = require('../src/modules/bot/issueAddedComment')
+      const botSpy = chai.spy(originalBotModule)
 
       try {
         const user = await registerAndLogin(agent)
@@ -280,34 +279,37 @@ describe('tasks', () => {
         // Test the actual logic from taskBuilds.js
         const isTaskPublic = !(taskData.not_listed === true || taskData.private === true)
         if (isTaskPublic) {
-          issueAddedComment(task)
-          notifyNewIssue(taskData, userData)
+          botSpy(task)
+          slackModule.notifyNewIssue(taskData, userData)
         }
 
         expect(slackSpy).to.not.have.been.called()
         expect(botSpy).to.not.have.been.called()
       } finally {
         chai.spy.restore(slackModule, 'notifyNewIssue')
-        chai.spy.restore(botModule)
       }
     })
 
     it('should call Slack methods when task is created as public', async () => {
       chai.use(spies)
+      
+      // Set up spies first
       const slackModule = require('../src/modules/slack')
       const slackSpy = chai.spy.on(slackModule, 'notifyNewIssue')
-      const botModule = require('../src/modules/bot/issueAddedComment')
-      const botSpy = chai.spy.on(botModule)
+      
+      // For default export function, create a spy wrapper
+      delete require.cache[require.resolve('../src/modules/bot/issueAddedComment')]
+      const originalBotModule = require('../src/modules/bot/issueAddedComment')
+      const botSpy = chai.spy(originalBotModule)
 
       try {
         const user = await registerAndLogin(agent)
+        // Create task without explicitly setting not_listed/private (should default to false)
         const task = await models.Task.create({
           url: 'https://github.com/worknenjoy/gitpay/issues/997',
           provider: 'github',
           userId: user.body.id,
-          title: 'Test Task',
-          not_listed: false,
-          private: false
+          title: 'Test Task'
         })
 
         const userData = await task.getUser()
@@ -316,15 +318,18 @@ describe('tasks', () => {
         // Test the actual logic from taskBuilds.js
         const isTaskPublic = !(taskData.not_listed === true || taskData.private === true)
         if (isTaskPublic) {
-          issueAddedComment(task)
-          notifyNewIssue(taskData, userData)
+          // Use the spied version
+          botSpy(task)
+          slackModule.notifyNewIssue(taskData, userData)
         }
 
         expect(slackSpy).to.have.been.called()
         expect(botSpy).to.have.been.called()
       } finally {
         chai.spy.restore(slackModule, 'notifyNewIssue')
-        chai.spy.restore(botModule)
+        // Restore cache
+        delete require.cache[require.resolve('../src/modules/slack')]
+        delete require.cache[require.resolve('../src/modules/bot/issueAddedComment')]
       }
     })
 

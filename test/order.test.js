@@ -127,12 +127,22 @@ describe('Orders', () => {
 
     it('should call notifyNewBounty when order is created for a public task', async () => {
       chai.use(spies)
+      
+      // Clear require cache first
+      delete require.cache[require.resolve('../src/modules/slack')]
+      delete require.cache[require.resolve('../src/modules/orders/orderBuilds')]
+      delete require.cache[require.resolve('../src/modules/orders')]
+      
+      // Now set up spy on the fresh module
       const slackModule = require('../src/modules/slack')
       const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      
+      // Re-require orderBuilds so it picks up the spied version
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
       try {
         const user = await registerAndLogin(agent)
+        // Create task with explicit false values to ensure they're set correctly
         const task = await models.Task.create({
           url: 'https://github.com/test/repo/issues/3',
           userId: user.body.id,
@@ -153,6 +163,10 @@ describe('Orders', () => {
         expect(slackSpy).to.have.been.called()
       } finally {
         chai.spy.restore(slackModule, 'notifyNewBounty')
+        // Restore cache
+        delete require.cache[require.resolve('../src/modules/slack')]
+        delete require.cache[require.resolve('../src/modules/orders/orderBuilds')]
+        delete require.cache[require.resolve('../src/modules/orders')]
       }
     })
 

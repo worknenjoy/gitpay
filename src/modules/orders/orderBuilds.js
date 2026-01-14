@@ -68,7 +68,10 @@ module.exports = async function orderBuilds(orderParameters) {
   const shouldNotifySlack =
     orderCreated.Task &&
     orderCreated.User &&
-    !(orderCreated.Task.dataValues.not_listed === true || orderCreated.Task.dataValues.private === true)
+    !(
+      orderCreated.Task.dataValues.not_listed === true ||
+      orderCreated.Task.dataValues.private === true
+    )
 
   if (shouldNotifySlack) {
     notifyNewBounty(
