@@ -241,4 +241,146 @@ describe('User Actions', () => {
       expect(actions[1].text).to.equal(expectedActions[1].text)
     })
   })
+  describe('updateUserEmail', () => {
+    it('creates UPDATE_USER_EMAIL_SUCCESS when updating user email has been done', () => {
+      moxios.stubRequest(`${api.API_URL}/auth/change-email`, {
+        status: 200,
+        response: {
+          id: 1,
+          email: 'newemail@example.com'
+        }
+      })
+
+      const expectedActions = [
+        { type: types.UPDATE_USER_EMAIL_REQUESTED, completed: false },
+        {
+          type: typesNotification.ADD_NOTIFICATION,
+          text: 'notifications.account.update.email.success',
+          open: true,
+          link: undefined,
+          severity: undefined
+        },
+        { completed: false, type: "FETCH_LOGGED_IN_USER_REQUESTED" },
+        { type: types.UPDATE_USER_EMAIL_SUCCESS, completed: true, data: { id: 1, email: 'newemail@example.com' } }
+      ]
+      const store = mockStore({ intl: { messages: {} } })
+
+      return store.dispatch(actions.updateUserEmail('newemail@example.com')).then(() => {
+        const actions = store.getActions()
+        expect(actions).to.eql(expectedActions)
+      })
+    })
+
+    it('creates UPDATE_USER_EMAIL_ERROR when updating user email fails generically', () => {
+      moxios.stubRequest(`${api.API_URL}/auth/change-email`, {
+        status: 500,
+        response: {
+          error: 'user.change_email.failed'
+        }
+      })
+
+      const expectedActions = [
+        { type: types.UPDATE_USER_EMAIL_REQUESTED, completed: false },
+        {
+          type: typesNotification.ADD_NOTIFICATION,
+          text: 'notifications.account.update.email.error',
+          open: true,
+          link: undefined,
+          severity: 'error'
+        },
+        {
+          type: types.UPDATE_USER_EMAIL_ERROR,
+          completed: true,
+          error: new Error('Request failed with status code 500')
+        }
+      ]
+      const store = mockStore({ intl: { messages: {} } })
+
+      return store.dispatch(actions.updateUserEmail('newemail@example.com')).then(() => {
+        const actions = store.getActions()
+        expect(actions[0]).to.eql(expectedActions[0])
+        expect(actions[1].type).to.equal(expectedActions[1].type)
+        expect(actions[1].text).to.equal(expectedActions[1].text)
+        expect(actions[1].open).to.equal(expectedActions[1].open)
+        expect(actions[1].severity).to.equal(expectedActions[1].severity)
+        expect(actions[2].type).to.equal(expectedActions[2].type)
+        expect(actions[2].completed).to.equal(expectedActions[2].completed)
+        expect(actions[2].error.message).to.equal(expectedActions[2].error.message)
+      })
+    })
+  })
+  it('creates UPDATE_USER_EMAIL_ERROR when updating user email fails with missing parameters', () => {
+    moxios.stubRequest(`${api.API_URL}/auth/change-email`, {
+      status: 500,
+      response: {
+        error: 'user.change_email.missing_parameters'
+      }
+    })
+
+    const expectedActions = [
+      { type: types.UPDATE_USER_EMAIL_REQUESTED, completed: false },
+      {
+        type: typesNotification.ADD_NOTIFICATION,
+        text: 'notifications.account.update.email.error.missing_parameters',
+        open: true,
+        link: undefined,
+        severity: 'error'
+      },
+      {
+        type: types.UPDATE_USER_EMAIL_ERROR,
+        completed: true,
+        error: new Error('Request failed with status code 500')
+      }
+    ]
+    const store = mockStore({ intl: { messages: {} } })
+
+    return store.dispatch(actions.updateUserEmail('newemail@example.com')).then(() => {
+      const actions = store.getActions()
+      expect(actions[0]).to.eql(expectedActions[0])
+      expect(actions[1].type).to.equal(expectedActions[1].type)
+      expect(actions[1].text).to.equal(expectedActions[1].text)
+      expect(actions[1].open).to.equal(expectedActions[1].open)
+      expect(actions[1].severity).to.equal(expectedActions[1].severity)
+      expect(actions[2].type).to.equal(expectedActions[2].type)
+      expect(actions[2].completed).to.equal(expectedActions[2].completed)
+      expect(actions[2].error.message).to.equal(expectedActions[2].error.message)
+    })
+  })
+  it('creates UPDATE_USER_EMAIL_ERROR when updating user email fails with email already in use', () => {
+    moxios.stubRequest(`${api.API_URL}/auth/change-email`, {
+      status: 500,
+      response: {
+        error: 'user.change_email.email_already_in_use'
+      }
+    })
+
+    const expectedActions = [
+      { type: types.UPDATE_USER_EMAIL_REQUESTED, completed: false },
+      {
+        type: typesNotification.ADD_NOTIFICATION,
+        text: 'notifications.account.update.email.error.email_already_in_use',
+        open: true,
+        link: undefined,
+        severity: 'error'
+      },
+      {
+        type: types.UPDATE_USER_EMAIL_ERROR,
+        completed: true,
+        error: new Error('Request failed with status code 500')
+      }
+    ]
+    const store = mockStore({ intl: { messages: {} } })
+
+    return store.dispatch(actions.updateUserEmail('newemail@example.com')).then(() => {
+      const actions = store.getActions()
+      expect(actions[0]).to.eql(expectedActions[0])
+      expect(actions[1].type).to.equal(expectedActions[1].type)
+      expect(actions[1].text).to.equal(expectedActions[1].text)
+      expect(actions[1].open).to.equal(expectedActions[1].open)
+      expect(actions[1].severity).to.equal(expectedActions[1].severity)
+      expect(actions[2].type).to.equal(expectedActions[2].type)
+      expect(actions[2].completed).to.equal(expectedActions[2].completed)
+      expect(actions[2].error.message).to.equal(expectedActions[2].error.message)
+    })
+  })
 })
