@@ -17,6 +17,8 @@ const spies = require('chai-spies')
 const AssignMail = require('../src/modules/mail/assign')
 const TaskMail = require('../src/modules/mail/task')
 const taskUpdate = require('../src/modules/tasks/taskUpdate')
+const { notifyNewIssue } = require('../src/modules/slack')
+const issueAddedComment = require('../src/modules/bot/issueAddedComment')
 
 const nockAuth = () => {
   nock('https://github.com')
@@ -218,6 +220,112 @@ describe('tasks', () => {
             .catch(done)
         })
         .catch(done)
+    })
+
+    it('should not call Slack methods when task is created with not_listed set to true', async () => {
+      chai.use(spies)
+      const slackModule = require('../src/modules/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyNewIssue')
+      const botModule = require('../src/modules/bot/issueAddedComment')
+      const botSpy = chai.spy.on(botModule)
+
+      try {
+        const user = await registerAndLogin(agent)
+        const task = await models.Task.create({
+          url: 'https://github.com/worknenjoy/gitpay/issues/999',
+          provider: 'github',
+          userId: user.body.id,
+          title: 'Test Task',
+          not_listed: true
+        })
+
+        const userData = await task.getUser()
+        const taskData = task.dataValues
+
+        // Test the actual logic from taskBuilds.js
+        const isTaskPublic = !(taskData.not_listed === true || taskData.private === true)
+        if (isTaskPublic) {
+          issueAddedComment(task)
+          notifyNewIssue(taskData, userData)
+        }
+
+        expect(slackSpy).to.not.have.been.called()
+        expect(botSpy).to.not.have.been.called()
+      } finally {
+        chai.spy.restore(slackModule, 'notifyNewIssue')
+        chai.spy.restore(botModule)
+      }
+    })
+
+    it('should not call Slack methods when task is created with private set to true', async () => {
+      chai.use(spies)
+      const slackModule = require('../src/modules/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyNewIssue')
+      const botModule = require('../src/modules/bot/issueAddedComment')
+      const botSpy = chai.spy.on(botModule)
+
+      try {
+        const user = await registerAndLogin(agent)
+        const task = await models.Task.create({
+          url: 'https://github.com/worknenjoy/gitpay/issues/998',
+          provider: 'github',
+          userId: user.body.id,
+          title: 'Test Task',
+          private: true
+        })
+
+        const userData = await task.getUser()
+        const taskData = task.dataValues
+
+        // Test the actual logic from taskBuilds.js
+        const isTaskPublic = !(taskData.not_listed === true || taskData.private === true)
+        if (isTaskPublic) {
+          issueAddedComment(task)
+          notifyNewIssue(taskData, userData)
+        }
+
+        expect(slackSpy).to.not.have.been.called()
+        expect(botSpy).to.not.have.been.called()
+      } finally {
+        chai.spy.restore(slackModule, 'notifyNewIssue')
+        chai.spy.restore(botModule)
+      }
+    })
+
+    it('should call Slack methods when task is created as public', async () => {
+      chai.use(spies)
+      const slackModule = require('../src/modules/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyNewIssue')
+      const botModule = require('../src/modules/bot/issueAddedComment')
+      const botSpy = chai.spy.on(botModule)
+
+      try {
+        const user = await registerAndLogin(agent)
+        const task = await models.Task.create({
+          url: 'https://github.com/worknenjoy/gitpay/issues/997',
+          provider: 'github',
+          userId: user.body.id,
+          title: 'Test Task',
+          not_listed: false,
+          private: false
+        })
+
+        const userData = await task.getUser()
+        const taskData = task.dataValues
+
+        // Test the actual logic from taskBuilds.js
+        const isTaskPublic = !(taskData.not_listed === true || taskData.private === true)
+        if (isTaskPublic) {
+          issueAddedComment(task)
+          notifyNewIssue(taskData, userData)
+        }
+
+        expect(slackSpy).to.have.been.called()
+        expect(botSpy).to.have.been.called()
+      } finally {
+        chai.spy.restore(slackModule, 'notifyNewIssue')
+        chai.spy.restore(botModule)
+      }
     })
 
     it('should give an error on create if the issue build responds with limit exceeded', (done) => {

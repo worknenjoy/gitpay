@@ -13,6 +13,7 @@ const plan = require('../src/models/plan')
 const stripe = require('../src/modules/shared/stripe/stripe')()
 const customerData = require('./data/stripe/stripe.customer')
 const invoiceData = require('./data/stripe/stripe.invoice.basic')
+const { notifyNewBounty } = require('../src/modules/slack')
 
 describe('Orders', () => {
   beforeEach(async () => {
@@ -62,6 +63,97 @@ describe('Orders', () => {
       expect(res.body.source_id).to.equal('12345')
       expect(res.body.currency).to.equal('BRL')
       expect(res.body.amount).to.equal('200')
+    })
+
+    it('should not call notifyNewBounty when order is created for a task with not_listed set to true', async () => {
+      chai.use(spies)
+      const slackModule = require('../src/modules/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      const orderBuilds = require('../src/modules/orders').orderBuilds
+
+      try {
+        const user = await registerAndLogin(agent)
+        const task = await models.Task.create({
+          url: 'https://github.com/test/repo/issues/1',
+          userId: user.body.id,
+          title: 'Test Task',
+          not_listed: true
+        })
+
+        await orderBuilds({
+          source_id: '12345',
+          currency: 'BRL',
+          amount: 200,
+          email: 'testing@gitpay.me',
+          userId: user.body.id,
+          taskId: task.id
+        })
+
+        expect(slackSpy).to.not.have.been.called()
+      } finally {
+        chai.spy.restore(slackModule, 'notifyNewBounty')
+      }
+    })
+
+    it('should not call notifyNewBounty when order is created for a task with private set to true', async () => {
+      chai.use(spies)
+      const slackModule = require('../src/modules/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      const orderBuilds = require('../src/modules/orders').orderBuilds
+
+      try {
+        const user = await registerAndLogin(agent)
+        const task = await models.Task.create({
+          url: 'https://github.com/test/repo/issues/2',
+          userId: user.body.id,
+          title: 'Test Task',
+          private: true
+        })
+
+        await orderBuilds({
+          source_id: '12346',
+          currency: 'BRL',
+          amount: 200,
+          email: 'testing@gitpay.me',
+          userId: user.body.id,
+          taskId: task.id
+        })
+
+        expect(slackSpy).to.not.have.been.called()
+      } finally {
+        chai.spy.restore(slackModule, 'notifyNewBounty')
+      }
+    })
+
+    it('should call notifyNewBounty when order is created for a public task', async () => {
+      chai.use(spies)
+      const slackModule = require('../src/modules/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      const orderBuilds = require('../src/modules/orders').orderBuilds
+
+      try {
+        const user = await registerAndLogin(agent)
+        const task = await models.Task.create({
+          url: 'https://github.com/test/repo/issues/3',
+          userId: user.body.id,
+          title: 'Test Task',
+          not_listed: false,
+          private: false
+        })
+
+        await orderBuilds({
+          source_id: '12347',
+          currency: 'BRL',
+          amount: 200,
+          email: 'testing@gitpay.me',
+          userId: user.body.id,
+          taskId: task.id
+        })
+
+        expect(slackSpy).to.have.been.called()
+      } finally {
+        chai.spy.restore(slackModule, 'notifyNewBounty')
+      }
     })
 
     describe('Order with Plan', () => {

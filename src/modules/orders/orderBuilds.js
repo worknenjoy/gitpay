@@ -64,8 +64,13 @@ module.exports = async function orderBuilds(orderParameters) {
   const taskTitle = orderCreated?.Task?.dataValues?.title || ''
   const percentage = orderCreated.Plan?.feePercentage
 
-  // Notify Slack about new bounty
-  if (orderCreated.Task && orderCreated.User) {
+  // Skip Slack notifications for private or not_listed tasks
+  const shouldNotifySlack =
+    orderCreated.Task &&
+    orderCreated.User &&
+    !(orderCreated.Task.dataValues.not_listed === true || orderCreated.Task.dataValues.private === true)
+
+  if (shouldNotifySlack) {
     notifyNewBounty(
       orderCreated.Task.dataValues,
       orderCreated.dataValues,

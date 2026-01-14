@@ -103,8 +103,13 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
             if (userData.receiveNotifications) {
               TaskMail.new(userData, taskData)
             }
-            issueAddedComment(task)
-            notifyNewIssue(taskData, userData)
+
+            // Skip Slack notifications for private or not_listed tasks
+            const isTaskPublic = !(taskData.not_listed === true || taskData.private === true)
+            if (isTaskPublic) {
+              issueAddedComment(task)
+              notifyNewIssue(taskData, userData)
+            }
 
             return { ...taskData, ProjectId: taskData.ProjectId }
           })
