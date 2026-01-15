@@ -614,16 +614,23 @@ const updateUserEmail = ({ newEmail, currentPassword, confirmCurrentPassword }) 
   validToken()
   return (dispatch) => {
     const updateUserEmailErrorsMap = {
-      'user.change_email.missing_parameters': 'notifications.account.update.email.error.missing_parameters',
+      'user.change_email.missing_parameters':
+        'notifications.account.update.email.error.missing_parameters',
       'user.change_email.user_not_found': 'notifications.account.update.email.error.user_not_found',
-      'user.change_email.email_already_in_use': 'notifications.account.update.email.error.email_already_in_use',
-      'user.change_email.passwords_do_not_match': 'notifications.account.update.email.error.passwords_do_not_match',
-      'user.change_email.cannot_change_email_for_provider': 'notifications.account.update.email.error.cannot_change_email_for_provider',
-      'user.change_email.current_password_incorrect': 'notifications.account.update.email.error.current_password_incorrect',
+      'user.change_email.email_already_in_use':
+        'notifications.account.update.email.error.email_already_in_use',
+      'user.change_email.passwords_do_not_match':
+        'notifications.account.update.email.error.passwords_do_not_match',
+      'user.change_email.cannot_change_email_for_provider':
+        'notifications.account.update.email.error.cannot_change_email_for_provider',
+      'user.change_email.current_password_incorrect':
+        'notifications.account.update.email.error.current_password_incorrect',
       'user.change_email.invalid_email': 'notifications.account.update.email.error.invalid_email',
       'user.change_email.email_too_long': 'notifications.account.update.email.error.email_too_long',
-      'user.change_email.same_as_current_email': 'notifications.account.update.email.error.same_as_current_email',
-      'user.change_email.failed_to_update': 'notifications.account.update.email.error.failed_to_update'
+      'user.change_email.same_as_current_email':
+        'notifications.account.update.email.error.same_as_current_email',
+      'user.change_email.failed_to_update':
+        'notifications.account.update.email.error.failed_to_update'
     }
     dispatch(updateUserEmailRequested())
     return axios
@@ -639,7 +646,12 @@ const updateUserEmail = ({ newEmail, currentPassword, confirmCurrentPassword }) 
       })
       .catch((error) => {
         const errorMessage = error?.response?.data?.error || error.message
-        dispatch(addNotification(updateUserEmailErrorsMap[errorMessage] || 'notifications.account.update.email.error', { severity: 'error' }))
+        dispatch(
+          addNotification(
+            updateUserEmailErrorsMap[errorMessage] || 'notifications.account.update.email.error',
+            { severity: 'error' }
+          )
+        )
         return dispatch(updateUserEmailError(error))
       })
   }

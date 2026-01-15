@@ -24,6 +24,7 @@ module.exports.currencyMap = {
   IE: 'EUR',
   IT: 'EUR',
   JP: 'JPY',
+  JM: 'JMD', // Jamaica
   KE: 'KES', // Kenya
   LV: 'EUR', // Latvia
   LI: 'CHF', // Liechtenstein
