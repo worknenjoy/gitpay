@@ -260,8 +260,12 @@ describe('User Actions', () => {
           link: undefined,
           severity: undefined
         },
-        { completed: false, type: "FETCH_LOGGED_IN_USER_REQUESTED" },
-        { type: types.UPDATE_USER_EMAIL_SUCCESS, completed: true, data: { id: 1, email: 'newemail@example.com' } }
+        { completed: false, type: 'FETCH_LOGGED_IN_USER_REQUESTED' },
+        {
+          type: types.UPDATE_USER_EMAIL_SUCCESS,
+          completed: true,
+          data: { id: 1, email: 'newemail@example.com' }
+        }
       ]
       const store = mockStore({ intl: { messages: {} } })
 
