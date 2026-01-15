@@ -25,6 +25,7 @@ export const countryCodes = [
   //{ country: 'Indonesia', code: 'ID', image: 'indonesia'}, invite only
   { country: 'Ireland', code: 'IE', image: 'ireland' },
   { country: 'Italy', code: 'IT', image: 'italy' },
+  { country: 'Jamaica', code: 'JM', image: 'jamaica' },
   { country: 'Japan', code: 'JP', image: 'japan' },
   { country: 'Jordan', code: 'JO', image: 'jordan' },
   { country: 'Kenya', code: 'KE', image: 'kenya' },
@@ -59,8 +60,17 @@ export const countryCodes = [
 ]
 
 export const countryCurrencies = [
-  { currency: 'Australian Dollar', symbol: 'A$', code: 'AUD', countries: ['AU'] },
   { currency: 'Albanian Lek', symbol: 'Lek', code: 'ALL', countries: ['AL'] },
+  { currency: 'Australian Dollar', symbol: 'A$', code: 'AUD', countries: ['AU'] },
+  { currency: 'Bangladeshi Taka', symbol: '৳', code: 'BDT', countries: ['BD'] },
+  { currency: 'Brazilian Real', symbol: 'R$', code: 'BRL', countries: ['BR'] },
+  { currency: 'British Pound', symbol: '£', code: 'GBP', countries: ['GB'] },
+  { currency: 'Bulgarian Lev', symbol: 'лв', code: 'BGN', countries: ['BG'] },
+  { currency: 'Canadian Dollar', symbol: 'C$', code: 'CAD', countries: ['CA'] },
+  { currency: 'Colombian Peso', symbol: '$', code: 'COP', countries: ['CO'] },
+  { currency: 'Croatian Kuna', symbol: 'kn', code: 'HRK', countries: ['HR'] },
+  { currency: 'Czech Koruna', symbol: 'Kč', code: 'CZK', countries: ['CZ'] },
+  { currency: 'Danish Krone', symbol: 'kr', code: 'DKK', countries: ['DK'] },
   {
     currency: 'Euro',
     symbol: '€',
@@ -87,40 +97,32 @@ export const countryCurrencies = [
       'ES'
     ]
   },
-  { currency: 'Bangladeshi Taka', symbol: '৳', code: 'BDT', countries: ['BD'] },
-  { currency: 'Brazilian Real', symbol: 'R$', code: 'BRL', countries: ['BR'] },
-  { currency: 'Bulgarian Lev', symbol: 'лв', code: 'BGN', countries: ['BG'] },
-  { currency: 'Canadian Dollar', symbol: 'C$', code: 'CAD', countries: ['CA'] },
-  { currency: 'Colombian Peso', symbol: '$', code: 'COP', countries: ['CO'] },
-  { currency: 'Croatian Kuna', symbol: 'kn', code: 'HRK', countries: ['HR'] },
-  { currency: 'Czech Koruna', symbol: 'Kč', code: 'CZK', countries: ['CZ'] },
-  { currency: 'Danish Krone', symbol: 'kr', code: 'DKK', countries: ['DK'] },
   { currency: 'Ghanaian Cedi', symbol: '₵', code: 'GHS', countries: ['GH'] },
   { currency: 'Gibraltar Pound', symbol: '£', code: 'GIP', countries: ['GI'] },
   { currency: 'Hong Kong Dollar', symbol: 'HK$', code: 'HKD', countries: ['HK'] },
   { currency: 'Hungarian Forint', symbol: 'Ft', code: 'HUF', countries: ['HU'] },
   { currency: 'Indian Rupee', symbol: '₹', code: 'INR', countries: ['IN'] },
+  { currency: 'Jamaican Dollar', symbol: 'J$', code: 'JMD', countries: ['JM'] },
   { currency: 'Japanese Yen', symbol: '¥', code: 'JPY', countries: ['JP'] },
+  { currency: 'Jordanian Dinar', symbol: 'JD', code: 'JOD', countries: ['JO'] },
   { currency: 'Kenyan Shilling', symbol: 'KSh', code: 'KES', countries: ['KE'] },
-  { currency: 'Swiss Franc', symbol: 'CHF', code: 'CHF', countries: ['LI', 'CH'] },
   { currency: 'Malaysian Ringgit', symbol: 'RM', code: 'MYR', countries: ['MY'] },
   { currency: 'Mexican Peso', symbol: '$', code: 'MXN', countries: ['MX'] },
   { currency: 'New Zealand Dollar', symbol: 'NZ$', code: 'NZD', countries: ['NZ'] },
   { currency: 'Nigerian Naira', symbol: '₦', code: 'NGN', countries: ['NG'] },
   { currency: 'Norwegian Krone', symbol: 'kr', code: 'NOK', countries: ['NO'] },
+  { currency: 'Pakistani Rupee', symbol: '₨', code: 'PKR', countries: ['PK'] },
   { currency: 'Philippine Peso', symbol: '₱', code: 'PHP', countries: ['PH'] },
   { currency: 'Polish Zloty', symbol: 'zł', code: 'PLN', countries: ['PL'] },
   { currency: 'Romanian Leu', symbol: 'lei', code: 'RON', countries: ['RO'] },
   { currency: 'Singapore Dollar', symbol: 'S$', code: 'SGD', countries: ['SG'] },
   { currency: 'South African Rand', symbol: 'R', code: 'ZAR', countries: ['ZA'] },
   { currency: 'Swedish Krona', symbol: 'kr', code: 'SEK', countries: ['SE'] },
+  { currency: 'Swiss Franc', symbol: 'CHF', code: 'CHF', countries: ['LI', 'CH'] },
   { currency: 'Thai Baht', symbol: '฿', code: 'THB', countries: ['TH'] },
-  { currency: 'United Arab Emirates Dirham', symbol: 'د.إ', code: 'AED', countries: ['AE'] },
-  { currency: 'British Pound', symbol: '£', code: 'GBP', countries: ['GB'] },
-  { currency: 'United States Dollar', symbol: '$', code: 'USD', countries: ['US'] },
   { currency: 'Turkish Lira', symbol: '₺', code: 'TRY', countries: ['TR'] },
-  { currency: 'Pakistani Rupee', symbol: '₨', code: 'PKR', countries: ['PK'] },
-  { currency: 'Jordanian Dinar', symbol: 'JD', code: 'JOD', countries: ['JO'] }
+  { currency: 'United Arab Emirates Dirham', symbol: 'د.إ', code: 'AED', countries: ['AE'] },
+  { currency: 'United States Dollar', symbol: '$', code: 'USD', countries: ['US'] }
 ]
 
 export const countryCodesFull = [
