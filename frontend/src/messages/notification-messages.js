@@ -379,7 +379,7 @@ const messages = defineMessages({
   },
   notificationAccountUpdateEmailErrorCannotChangeEmailForProvider: {
     id: 'notifications.account.update.email.error.cannot_change_email_for_provider',
-    defaultMessage: 'You cannot change the email for accounts logged in with GitHub or Bitbucket'
+    defaultMessage: 'You cannot change the email for accounts linked with GitHub or Bitbucket'
   },
   notificationAccountUpdateEmailErrorCurrentPasswordIncorrect: {
     id: 'notifications.account.update.email.error.current_password_incorrect',

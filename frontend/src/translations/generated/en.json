@@ -457,7 +457,7 @@
   "notifications.account.resend_activation_email.success": "We sent you an email with instructions to activate your account",
   "notifications.account.update": "Your user was updated successfully",
   "notifications.account.update.email.error": "We could not update your email",
-  "notifications.account.update.email.error.cannot_change_email_for_provider": "You cannot change the email for accounts logged in with GitHub or Bitbucket",
+  "notifications.account.update.email.error.cannot_change_email_for_provider": "You cannot change the email for accounts linked with GitHub or Bitbucket",
   "notifications.account.update.email.error.current_password_incorrect": "The current password is incorrect",
   "notifications.account.update.email.error.email_already_in_use": "This email is already in use",
   "notifications.account.update.email.error.email_too_long": "Email is too long",
