@@ -34,9 +34,11 @@ module.exports = Promise.method(
             amount: order.amount || orderParameters.amount,
             currency: order.currency || orderParameters.currency || 'USD'
           }
-          notifyNewBounty(task.dataValues, orderData, user).catch((e) => {
+          try {
+            await notifyNewBounty(task.dataValues, orderData, user)
+          } catch (e) {
             console.log('error on send slack notification for new bounty', e)
-          })
+          }
         }
 
         if (task.dataValues.assigned) {
