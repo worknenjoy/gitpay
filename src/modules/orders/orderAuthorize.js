@@ -3,6 +3,7 @@ const Promise = require('bluebird')
 const requestPromise = require('request-promise')
 const models = require('../../models')
 const comment = require('../bot/comment')
+const { notifyNewBounty } = require('../slack')
 
 module.exports = Promise.method(function orderAuthorize(orderParameters) {
   return requestPromise({
@@ -63,6 +64,24 @@ module.exports = Promise.method(function orderAuthorize(orderParameters) {
           if (orderData.paid) {
             comment(orderData, task)
             PaymentMail.success(user, task, orderData.amount)
+
+            // Send Slack notification for PayPal payment completion
+            const shouldNotifySlack =
+              task &&
+              user &&
+              !(task.dataValues.not_listed === true || task.dataValues.private === true)
+
+            if (shouldNotifySlack) {
+              const orderDataForNotification = {
+                amount: orderData.amount,
+                currency: orderData.currency || 'USD'
+              }
+              notifyNewBounty(task.dataValues, orderDataForNotification, user.dataValues).catch(
+                (e) => {
+                  console.log('error on send slack notification for new bounty', e)
+                }
+              )
+            }
           } else {
             PaymentMail.error(user.dataValues, task, orderData.amount)
           }

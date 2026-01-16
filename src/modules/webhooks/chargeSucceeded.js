@@ -1,6 +1,7 @@
 const models = require('../../models')
 const i18n = require('i18n')
 const SendMail = require('../mail/mail')
+const { notifyNewBounty } = require('../slack')
 
 const sendEmailSuccess = (event, paid, status, order, req, res) => {
   return models.User.findOne({
@@ -30,7 +31,7 @@ const sendEmailSuccess = (event, paid, status, order, req, res) => {
     })
 }
 
-const updateOrder = (event, paid, status, req, res) => {
+const updateOrder = async (event, paid, status, req, res) => {
   return models.Order.update(
     {
       paid: paid,
@@ -44,8 +45,44 @@ const updateOrder = (event, paid, status, req, res) => {
       returning: true
     }
   )
-    .then((order) => {
+    .then(async (order) => {
       if (order[0]) {
+        // Send Slack notification if payment succeeded
+        if (paid && status === 'succeeded') {
+          const orderUpdated = await models.Order.findOne({
+            where: {
+              id: order[1][0].dataValues.id
+            },
+            include: [models.Task, models.User]
+          })
+
+          if (orderUpdated) {
+            const shouldNotifySlack =
+              orderUpdated.Task &&
+              orderUpdated.User &&
+              !(
+                orderUpdated.Task.dataValues.not_listed === true ||
+                orderUpdated.Task.dataValues.private === true
+              )
+
+            if (shouldNotifySlack) {
+              const orderData = {
+                amount: orderUpdated.amount,
+                currency: orderUpdated.currency || 'USD'
+              }
+              try {
+                await notifyNewBounty(
+                  orderUpdated.Task.dataValues,
+                  orderData,
+                  orderUpdated.User.dataValues
+                )
+              } catch (e) {
+                console.log('error on send slack notification for new bounty', e)
+              }
+            }
+          }
+        }
+
         return sendEmailSuccess(event, paid, status, order, req, res)
       }
     })

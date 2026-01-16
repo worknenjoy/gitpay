@@ -64,23 +64,6 @@ module.exports = async function orderBuilds(orderParameters) {
   const taskTitle = orderCreated?.Task?.dataValues?.title || ''
   const percentage = orderCreated.Plan?.feePercentage
 
-  // Skip Slack notifications for private or not_listed tasks
-  const shouldNotifySlack =
-    orderCreated.Task &&
-    orderCreated.User &&
-    !(
-      orderCreated.Task.dataValues.not_listed === true ||
-      orderCreated.Task.dataValues.private === true
-    )
-
-  if (shouldNotifySlack) {
-    notifyNewBounty(
-      orderCreated.Task.dataValues,
-      orderCreated.dataValues,
-      orderCreated.User.dataValues
-    )
-  }
-
   if (orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
     const unitAmount = (parseInt(orderParameters.amount) * 100 * (1 + percentage / 100)).toFixed(0)
     const quantity = 1
@@ -246,6 +229,27 @@ module.exports = async function orderBuilds(orderParameters) {
         }
       }
     )
+
+    // Send Slack notification for wallet payment (paid immediately)
+    const shouldNotifySlack =
+      orderCreated.Task &&
+      orderCreated.User &&
+      !(
+        orderCreated.Task.dataValues.not_listed === true ||
+        orderCreated.Task.dataValues.private === true
+      )
+
+    if (shouldNotifySlack) {
+      try {
+        const orderData = {
+          amount: orderCreated.dataValues.amount,
+          currency: orderCreated.dataValues.currency || 'USD'
+        }
+        await notifyNewBounty(orderCreated.Task.dataValues, orderData, orderCreated.User.dataValues)
+      } catch (e) {
+        console.log('error on send slack notification for new bounty', e)
+      }
+    }
 
     return orderUpdated
   }

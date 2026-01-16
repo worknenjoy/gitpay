@@ -30,14 +30,21 @@ module.exports = Promise.method(
 
         // Send Slack notification for new bounty payment
         if (orderPayload.paid && orderPayload.status === 'succeeded') {
-          const orderData = {
-            amount: order.amount || orderParameters.amount,
-            currency: order.currency || orderParameters.currency || 'USD'
-          }
-          try {
-            await notifyNewBounty(task.dataValues, orderData, user)
-          } catch (e) {
-            console.log('error on send slack notification for new bounty', e)
+          const shouldNotifySlack =
+            task &&
+            user &&
+            !(task.dataValues.not_listed === true || task.dataValues.private === true)
+
+          if (shouldNotifySlack) {
+            const orderData = {
+              amount: order.amount || orderParameters.amount,
+              currency: order.currency || orderParameters.currency || 'USD'
+            }
+            try {
+              await notifyNewBounty(task.dataValues, orderData, user)
+            } catch (e) {
+              console.log('error on send slack notification for new bounty', e)
+            }
           }
         }
 

@@ -5,6 +5,7 @@ const SendMail = require('../mail/mail')
 const WalletMail = require('../mail/wallet')
 const stripe = require('../shared/stripe/stripe')()
 const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
+const { notifyNewBounty } = require('../slack')
 
 module.exports = async function invoicePaymentSucceeded(event, req, res) {
   return models.User.findOne({
@@ -35,7 +36,39 @@ module.exports = async function invoicePaymentSucceeded(event, req, res) {
                 },
                 returning: true
               }
-            ).then((order) => {
+            ).then(async (order) => {
+              // Send Slack notification for invoice payment completion
+              if (order[0] && order[1].length) {
+                const orderUpdated = await models.Order.findOne({
+                  where: {
+                    id: order[1][0].dataValues.id
+                  },
+                  include: [models.Task, models.User]
+                })
+
+                if (orderUpdated && orderUpdated.Task && orderUpdated.User) {
+                  const shouldNotifySlack = !(
+                    orderUpdated.Task.dataValues.not_listed === true ||
+                    orderUpdated.Task.dataValues.private === true
+                  )
+
+                  if (shouldNotifySlack) {
+                    const orderData = {
+                      amount: orderUpdated.amount,
+                      currency: orderUpdated.currency || 'USD'
+                    }
+                    try {
+                      await notifyNewBounty(
+                        orderUpdated.Task.dataValues,
+                        orderData,
+                        orderUpdated.User.dataValues
+                      )
+                    } catch (e) {
+                      console.log('error on send slack notification for new bounty', e)
+                    }
+                  }
+                }
+              }
               return res.status(200).json(event)
             })
           }

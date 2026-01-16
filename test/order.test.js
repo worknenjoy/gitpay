@@ -125,24 +125,14 @@ describe('Orders', () => {
       }
     })
 
-    it('should call notifyNewBounty when order is created for a public task', async () => {
+    it('should not call notifyNewBounty when order is created (notification only on payment completion)', async () => {
       chai.use(spies)
-      
-      // Clear require cache first
-      delete require.cache[require.resolve('../src/modules/slack')]
-      delete require.cache[require.resolve('../src/modules/orders/orderBuilds')]
-      delete require.cache[require.resolve('../src/modules/orders')]
-      
-      // Now set up spy on the fresh module
       const slackModule = require('../src/modules/slack')
       const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
-      
-      // Re-require orderBuilds so it picks up the spied version
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
       try {
         const user = await registerAndLogin(agent)
-        // Create task with explicit false values to ensure they're set correctly
         const task = await models.Task.create({
           url: 'https://github.com/test/repo/issues/3',
           userId: user.body.id,
@@ -160,13 +150,90 @@ describe('Orders', () => {
           taskId: task.id
         })
 
-        expect(slackSpy).to.have.been.called()
+        // Notification should NOT be called when order is created, only when payment completes
+        expect(slackSpy).to.not.have.been.called()
       } finally {
         chai.spy.restore(slackModule, 'notifyNewBounty')
-        // Restore cache
-        delete require.cache[require.resolve('../src/modules/slack')]
-        delete require.cache[require.resolve('../src/modules/orders/orderBuilds')]
-        delete require.cache[require.resolve('../src/modules/orders')]
+      }
+    })
+
+    it('should call notifyNewBounty when wallet payment completes for a public task', async () => {
+      chai.use(spies)
+      const slackModule = require('../src/modules/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      const orderBuilds = require('../src/modules/orders').orderBuilds
+
+      try {
+        const user = await registerAndLogin(agent)
+        const wallet = await models.Wallet.create({
+          name: 'Test Wallet',
+          balance: 500,
+          userId: user.body.id
+        })
+        const task = await models.Task.create({
+          url: 'https://github.com/test/repo/issues/4',
+          userId: user.body.id,
+          title: 'Test Task',
+          not_listed: false,
+          private: false
+        })
+
+        await orderBuilds({
+          walletId: wallet.id,
+          currency: 'USD',
+          amount: 200,
+          provider: 'wallet',
+          source_type: 'wallet-funds',
+          userId: user.body.id,
+          taskId: task.id
+        })
+
+        // Notification should be called when wallet payment completes
+        expect(slackSpy).to.have.been.called()
+        expect(slackSpy).to.have.been.called.with(
+          task.dataValues,
+          { amount: 200, currency: 'USD' },
+          user.body
+        )
+      } finally {
+        chai.spy.restore(slackModule, 'notifyNewBounty')
+      }
+    })
+
+    it('should not call notifyNewBounty when wallet payment completes for a private task', async () => {
+      chai.use(spies)
+      const slackModule = require('../src/modules/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      const orderBuilds = require('../src/modules/orders').orderBuilds
+
+      try {
+        const user = await registerAndLogin(agent)
+        const wallet = await models.Wallet.create({
+          name: 'Test Wallet',
+          balance: 500,
+          userId: user.body.id
+        })
+        const task = await models.Task.create({
+          url: 'https://github.com/test/repo/issues/5',
+          userId: user.body.id,
+          title: 'Test Task',
+          private: true
+        })
+
+        await orderBuilds({
+          walletId: wallet.id,
+          currency: 'USD',
+          amount: 200,
+          provider: 'wallet',
+          source_type: 'wallet-funds',
+          userId: user.body.id,
+          taskId: task.id
+        })
+
+        // Notification should NOT be called for private tasks
+        expect(slackSpy).to.not.have.been.called()
+      } finally {
+        chai.spy.restore(slackModule, 'notifyNewBounty')
       }
     })
 
@@ -838,6 +905,125 @@ describe('Orders', () => {
     expect(transferRes.body.currency).to.equal('BRL')
     expect(transferRes.body.amount).to.equal('200')
   })
+  describe('PayPal payment notifications', () => {
+    it('should call notifyNewBounty when PayPal payment completes for a public task', async () => {
+      chai.use(spies)
+      const slackModule = require('../src/modules/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      const orderAuthorize = require('../src/modules/orders').orderAuthorize
+
+      // Mock PayPal API responses
+      nock(process.env.PAYPAL_HOST || 'https://api.sandbox.paypal.com')
+        .post('/v1/oauth2/token')
+        .reply(200, JSON.stringify({ access_token: 'test_token' }))
+
+      nock(process.env.PAYPAL_HOST || 'https://api.sandbox.paypal.com')
+        .post(/\/v2\/checkout\/orders\/.*\/authorize/)
+        .reply(200, JSON.stringify({
+          id: 'TEST_ORDER_ID',
+          purchase_units: [{
+            payments: {
+              authorizations: [{
+                id: 'TEST_AUTH_ID'
+              }]
+            }
+          }]
+        }))
+
+      try {
+        const user = await registerAndLogin(agent)
+        const task = await models.Task.create({
+          url: 'https://github.com/test/repo/issues/6',
+          userId: user.body.id,
+          title: 'Test Task',
+          not_listed: false,
+          private: false
+        })
+
+        const order = await models.Order.create({
+          source_id: 'TEST_ORDER_ID',
+          currency: 'USD',
+          amount: 200,
+          provider: 'paypal',
+          userId: user.body.id,
+          TaskId: task.id,
+          token: 'TEST_TOKEN',
+          status: 'open',
+          paid: false
+        })
+
+        await orderAuthorize({
+          token: 'TEST_TOKEN',
+          PayerID: 'TEST_PAYER_ID'
+        })
+
+        // Notification should be called when PayPal payment completes
+        expect(slackSpy).to.have.been.called()
+      } finally {
+        chai.spy.restore(slackModule, 'notifyNewBounty')
+        nock.cleanAll()
+      }
+    })
+
+    it('should not call notifyNewBounty when PayPal payment completes for a private task', async () => {
+      chai.use(spies)
+      const slackModule = require('../src/modules/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      const orderAuthorize = require('../src/modules/orders').orderAuthorize
+
+      // Mock PayPal API responses
+      nock(process.env.PAYPAL_HOST || 'https://api.sandbox.paypal.com')
+        .post('/v1/oauth2/token')
+        .reply(200, JSON.stringify({ access_token: 'test_token' }))
+
+      nock(process.env.PAYPAL_HOST || 'https://api.sandbox.paypal.com')
+        .post(/\/v2\/checkout\/orders\/.*\/authorize/)
+        .reply(200, JSON.stringify({
+          id: 'TEST_ORDER_ID',
+          purchase_units: [{
+            payments: {
+              authorizations: [{
+                id: 'TEST_AUTH_ID'
+              }]
+            }
+          }]
+        }))
+
+      try {
+        const user = await registerAndLogin(agent)
+        const task = await models.Task.create({
+          url: 'https://github.com/test/repo/issues/7',
+          userId: user.body.id,
+          title: 'Test Task',
+          private: true
+        })
+
+        const order = await models.Order.create({
+          source_id: 'TEST_ORDER_ID',
+          currency: 'USD',
+          amount: 200,
+          provider: 'paypal',
+          userId: user.body.id,
+          TaskId: task.id,
+          token: 'TEST_TOKEN_2',
+          status: 'open',
+          paid: false
+        })
+
+        await orderAuthorize({
+          token: 'TEST_TOKEN_2',
+          PayerID: 'TEST_PAYER_ID'
+        })
+
+        // Notification should NOT be called for private tasks
+        expect(slackSpy).to.not.have.been.called()
+      } finally {
+        chai.spy.restore(slackModule, 'notifyNewBounty')
+        nock.cleanAll()
+      }
+    })
+  })
+
   it('should refund order', async () => {
     const stripeRefund = {
       id: 're_1J2Yal2eZvKYlo2C0qvW9j8D',

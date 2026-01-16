@@ -1,10 +1,18 @@
-const requestPromise = require('request-promise')
-const secrets = require('../../config/secrets')
+/**
+ * Slack notification module
+ * Handles sending notifications to Slack channel for new issues and bounties
+ */
 
-const sendSlackMessage = async (payload) => {
+import * as requestPromise from 'request-promise'
+import secrets from '../../config/secrets'
+import type { Task, User, OrderData, SlackMessagePayload } from './types'
+
+const sendSlackMessage = async (payload: SlackMessagePayload): Promise<boolean> => {
   const webhookUrl = process.env.SLACK_WEBHOOK_URL || secrets.slack?.webhookUrl
 
-  if (!webhookUrl) return false
+  if (!webhookUrl) {
+    return false
+  }
 
   try {
     await requestPromise({
@@ -21,9 +29,12 @@ const sendSlackMessage = async (payload) => {
   }
 }
 
-const formatCurrency = (amount, currency = 'USD') => {
-  const numAmount = parseFloat(amount)
-  if (isNaN(numAmount)) return '$0.00'
+const formatCurrency = (amount: number | string, currency: string = 'USD'): string => {
+  const numAmount = typeof amount === 'string' ? parseFloat(amount) : amount
+
+  if (isNaN(numAmount)) {
+    return '$0.00'
+  }
 
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -31,8 +42,19 @@ const formatCurrency = (amount, currency = 'USD') => {
   }).format(numAmount)
 }
 
-const notifyNewIssue = async (task, user) => {
-  if (!task?.id) return false
+/**
+ * Sends a Slack notification when a new issue is imported
+ * @param task - The task/issue that was imported
+ * @param user - The user who imported the issue
+ * @returns Promise<boolean> - True if notification was sent successfully
+ */
+export const notifyNewIssue = async (
+  task: Task | null | undefined,
+  user: User | null | undefined
+): Promise<boolean> => {
+  if (!task?.id) {
+    return false
+  }
 
   const username = user?.username || user?.name || 'Unknown'
 
@@ -80,8 +102,21 @@ const notifyNewIssue = async (task, user) => {
   })
 }
 
-const notifyNewBounty = async (task, order, user) => {
-  if (!task?.id || !order?.amount) return false
+/**
+ * Sends a Slack notification when a new bounty payment is completed
+ * @param task - The task/bounty that received payment
+ * @param order - The order data containing amount and currency
+ * @param user - The user who made the payment
+ * @returns Promise<boolean> - True if notification was sent successfully
+ */
+export const notifyNewBounty = async (
+  task: Task | null | undefined,
+  order: OrderData | null | undefined,
+  user: User | null | undefined
+): Promise<boolean> => {
+  if (!task?.id || !order?.amount) {
+    return false
+  }
 
   const username = user?.username || user?.name || 'Unknown'
   const amount = formatCurrency(order.amount, order.currency)
@@ -128,9 +163,4 @@ const notifyNewBounty = async (task, order, user) => {
       }
     ]
   })
-}
-
-module.exports = {
-  notifyNewIssue,
-  notifyNewBounty
 }

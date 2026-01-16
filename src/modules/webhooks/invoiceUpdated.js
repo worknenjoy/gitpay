@@ -5,6 +5,7 @@ const SendMail = require('../mail/mail')
 const WalletMail = require('../mail/wallet')
 const stripe = require('../shared/stripe/stripe')()
 const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
+const { notifyNewBounty } = require('../slack')
 
 module.exports = async function invoiceUpdated(event, req, res) {
   // eslint-disable-next-line no-case-declarations
@@ -62,7 +63,7 @@ module.exports = async function invoiceUpdated(event, req, res) {
         const userAssigned = userAssign.dataValues.User.dataValues
         const userTask = orderUpdated.User.dataValues
         if (orderUpdated) {
-          if (orderUpdated.status === 'paid') {
+          if (orderUpdated.status === 'paid' && orderUpdated.paid) {
             const userAssignedlanguage = userAssigned.language || 'en'
             i18n.setLocale(userAssignedlanguage)
             SendMail.success(
@@ -81,6 +82,31 @@ module.exports = async function invoiceUpdated(event, req, res) {
                 amount: order[1][0].dataValues.amount
               })
             )
+
+            // Send Slack notification for invoice payment completion
+            const shouldNotifySlack =
+              orderUpdated.Task &&
+              orderUpdated.User &&
+              !(
+                orderUpdated.Task.dataValues.not_listed === true ||
+                orderUpdated.Task.dataValues.private === true
+              )
+
+            if (shouldNotifySlack) {
+              const orderData = {
+                amount: orderUpdated.amount,
+                currency: orderUpdated.currency || 'USD'
+              }
+              try {
+                await notifyNewBounty(
+                  orderUpdated.Task.dataValues,
+                  orderData,
+                  orderUpdated.User.dataValues
+                )
+              } catch (e) {
+                console.log('error on send slack notification for new bounty', e)
+              }
+            }
           }
         }
         return res.status(200).json(event)
