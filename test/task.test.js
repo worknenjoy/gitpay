@@ -17,8 +17,6 @@ const spies = require('chai-spies')
 const AssignMail = require('../src/modules/mail/assign')
 const TaskMail = require('../src/modules/mail/task')
 const taskUpdate = require('../src/modules/tasks/taskUpdate')
-const { notifyNewIssue } = require('../src/modules/slack')
-const issueAddedComment = require('../src/modules/bot/issueAddedComment')
 
 const nockAuth = () => {
   nock('https://github.com')
