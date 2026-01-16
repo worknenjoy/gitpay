@@ -457,7 +457,7 @@
   "notifications.account.resend_activation_email.success": "Enviamos um e-mail com instruções para redefinir sua senha",
   "notifications.account.update": "Seu usuário foi atualizado com sucesso",
   "notifications.account.update.email.error": "Não foi possível atualizar seu e-mail",
-  "notifications.account.update.email.error.cannot_change_email_for_provider": "Você não pode alterar o e-mail para contas logadas com o GitHub ou Bitbucket",
+  "notifications.account.update.email.error.cannot_change_email_for_provider": "Você não pode alterar o e-mail para contas vinculadas ao GitHub ou Bitbucket",
   "notifications.account.update.email.error.current_password_incorrect": "A senha atual está incorreta",
   "notifications.account.update.email.error.email_already_in_use": "Este e-mail já está em uso",
   "notifications.account.update.email.error.email_too_long": "O e-mail é muito longo",
