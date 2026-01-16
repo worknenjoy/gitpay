@@ -1,7 +1,7 @@
 const Promise = require('bluebird')
 const PaymentMail = require('../mail/payment')
 const models = require('../../models')
-const { notifyNewBounty } = require('../slack')
+const { notifyBountyWithErrorHandling } = require('../slack')
 
 module.exports = Promise.method(
   function orderUpdateAfterStripe(order, charge, card, orderParameters, user, task, couponFull) {
@@ -22,7 +22,7 @@ module.exports = Promise.method(
         id: order.dataValues.id
       }
     })
-      .then(async (updatedOrder) => {
+      .then(async (_updatedOrder) => {
         if (orderParameters.plan === 'full') {
           PaymentMail.support(user, task, order)
         }
@@ -30,22 +30,11 @@ module.exports = Promise.method(
 
         // Send Slack notification for new bounty payment
         if (orderPayload.paid && orderPayload.status === 'succeeded') {
-          const shouldNotifySlack =
-            task &&
-            user &&
-            !(task.dataValues.not_listed === true || task.dataValues.private === true)
-
-          if (shouldNotifySlack) {
-            const orderData = {
-              amount: order.amount || orderParameters.amount,
-              currency: order.currency || orderParameters.currency || 'USD'
-            }
-            try {
-              await notifyNewBounty(task.dataValues, orderData, user)
-            } catch (e) {
-              console.log('error on send slack notification for new bounty', e)
-            }
+          const orderData = {
+            amount: order.amount || orderParameters.amount,
+            currency: order.currency || orderParameters.currency || 'USD'
           }
+          await notifyBountyWithErrorHandling(task, orderData, user, 'Stripe payment')
         }
 
         if (task.dataValues.assigned) {

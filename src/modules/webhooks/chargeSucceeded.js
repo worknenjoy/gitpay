@@ -1,7 +1,7 @@
 const models = require('../../models')
 const i18n = require('i18n')
 const SendMail = require('../mail/mail')
-const { notifyNewBounty } = require('../slack')
+const { notifyBountyWithErrorHandling } = require('../slack')
 
 const sendEmailSuccess = (event, paid, status, order, req, res) => {
   return models.User.findOne({
@@ -57,29 +57,16 @@ const updateOrder = async (event, paid, status, req, res) => {
           })
 
           if (orderUpdated) {
-            const shouldNotifySlack =
-              orderUpdated.Task &&
-              orderUpdated.User &&
-              !(
-                orderUpdated.Task.dataValues.not_listed === true ||
-                orderUpdated.Task.dataValues.private === true
-              )
-
-            if (shouldNotifySlack) {
-              const orderData = {
-                amount: orderUpdated.amount,
-                currency: orderUpdated.currency || 'USD'
-              }
-              try {
-                await notifyNewBounty(
-                  orderUpdated.Task.dataValues,
-                  orderData,
-                  orderUpdated.User.dataValues
-                )
-              } catch (e) {
-                console.log('error on send slack notification for new bounty', e)
-              }
+            const orderData = {
+              amount: orderUpdated.amount,
+              currency: orderUpdated.currency || 'USD'
             }
+            await notifyBountyWithErrorHandling(
+              orderUpdated.Task,
+              orderData,
+              orderUpdated.User,
+              'Stripe charge succeeded'
+            )
           }
         }
 

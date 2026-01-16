@@ -130,7 +130,61 @@ const notifyNewBounty = async (task, order, user) => {
   })
 }
 
+/**
+ * Helper function to check if a task should trigger Slack notifications
+ * @param task - The task object (can be Sequelize model instance or plain object)
+ * @returns boolean - True if task is public and should notify
+ */
+const shouldNotifyForTask = (task) => {
+  if (!task) return false
+
+  // Handle both Sequelize model instances and plain objects
+  const taskData = task.dataValues || task
+  return !(taskData.not_listed === true || taskData.private === true)
+}
+
+/**
+ * Helper function to safely send bounty notification with proper error handling
+ * @param task - The task object
+ * @param orderData - Order data with amount and currency
+ * @param user - The user object
+ * @param context - Optional context string for error logging (e.g., 'wallet payment', 'PayPal payment')
+ * @returns Promise<boolean> - True if notification was sent successfully
+ */
+const notifyBountyWithErrorHandling = async (task, orderData, user, context = 'payment') => {
+  // Check if task and user exist
+  if (!task || !user) {
+    return false
+  }
+
+  // Check privacy settings
+  if (!shouldNotifyForTask(task)) {
+    return false
+  }
+
+  // Extract data values if Sequelize model instances
+  const taskData = task.dataValues || task
+  const userData = user.dataValues || user
+
+  // Prepare order data
+  const order = {
+    amount: orderData.amount,
+    currency: orderData.currency || 'USD'
+  }
+
+  try {
+    await notifyNewBounty(taskData, order, userData)
+    return true
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    console.error(`Error sending Slack notification for new bounty (${context}):`, errorMessage)
+    return false
+  }
+}
+
 module.exports = {
   notifyNewIssue,
-  notifyNewBounty
+  notifyNewBounty,
+  shouldNotifyForTask,
+  notifyBountyWithErrorHandling
 }

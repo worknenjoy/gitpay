@@ -5,7 +5,7 @@ const SendMail = require('../mail/mail')
 const WalletMail = require('../mail/wallet')
 const stripe = require('../shared/stripe/stripe')()
 const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
-const { notifyNewBounty } = require('../slack')
+const { notifyBountyWithErrorHandling } = require('../slack')
 
 module.exports = async function invoiceUpdated(event, req, res) {
   // eslint-disable-next-line no-case-declarations
@@ -84,29 +84,16 @@ module.exports = async function invoiceUpdated(event, req, res) {
             )
 
             // Send Slack notification for invoice payment completion
-            const shouldNotifySlack =
-              orderUpdated.Task &&
-              orderUpdated.User &&
-              !(
-                orderUpdated.Task.dataValues.not_listed === true ||
-                orderUpdated.Task.dataValues.private === true
-              )
-
-            if (shouldNotifySlack) {
-              const orderData = {
-                amount: orderUpdated.amount,
-                currency: orderUpdated.currency || 'USD'
-              }
-              try {
-                await notifyNewBounty(
-                  orderUpdated.Task.dataValues,
-                  orderData,
-                  orderUpdated.User.dataValues
-                )
-              } catch (e) {
-                console.log('error on send slack notification for new bounty', e)
-              }
+            const orderData = {
+              amount: orderUpdated.amount,
+              currency: orderUpdated.currency || 'USD'
             }
+            await notifyBountyWithErrorHandling(
+              orderUpdated.Task,
+              orderData,
+              orderUpdated.User,
+              'Stripe invoice payment'
+            )
           }
         }
         return res.status(200).json(event)

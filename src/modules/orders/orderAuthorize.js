@@ -3,7 +3,7 @@ const Promise = require('bluebird')
 const requestPromise = require('request-promise')
 const models = require('../../models')
 const comment = require('../bot/comment')
-const { notifyNewBounty } = require('../slack')
+const { notifyBountyWithErrorHandling } = require('../slack')
 
 module.exports = Promise.method(function orderAuthorize(orderParameters) {
   return requestPromise({
@@ -60,28 +60,22 @@ module.exports = Promise.method(function orderAuthorize(orderParameters) {
         return Promise.all([
           models.User.findByPk(orderData.userId),
           models.Task.findByPk(orderData.TaskId)
-        ]).spread((user, task) => {
+        ]).spread(async (user, task) => {
           if (orderData.paid) {
             comment(orderData, task)
             PaymentMail.success(user, task, orderData.amount)
 
             // Send Slack notification for PayPal payment completion
-            const shouldNotifySlack =
-              task &&
-              user &&
-              !(task.dataValues.not_listed === true || task.dataValues.private === true)
-
-            if (shouldNotifySlack) {
-              const orderDataForNotification = {
-                amount: orderData.amount,
-                currency: orderData.currency || 'USD'
-              }
-              notifyNewBounty(task.dataValues, orderDataForNotification, user.dataValues).catch(
-                (e) => {
-                  console.log('error on send slack notification for new bounty', e)
-                }
-              )
+            const orderDataForNotification = {
+              amount: orderData.amount,
+              currency: orderData.currency || 'USD'
             }
+            await notifyBountyWithErrorHandling(
+              task,
+              orderDataForNotification,
+              user,
+              'PayPal payment'
+            )
           } else {
             PaymentMail.error(user.dataValues, task, orderData.amount)
           }

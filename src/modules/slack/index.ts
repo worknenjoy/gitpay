@@ -3,7 +3,7 @@
  * Handles sending notifications to Slack channel for new issues and bounties
  */
 
-import * as requestPromise from 'request-promise'
+import requestPromise from 'request-promise'
 import secrets from '../../config/secrets'
 import type { Task, User, OrderData, SlackMessagePayload } from './types'
 
@@ -163,4 +163,63 @@ export const notifyNewBounty = async (
       }
     ]
   })
+}
+
+/**
+ * Helper function to check if a task should trigger Slack notifications
+ * @param task - The task object (can be Sequelize model instance or plain object)
+ * @returns boolean - True if task is public and should notify
+ */
+export const shouldNotifyForTask = (task: Task | { dataValues?: Task } | null | undefined): boolean => {
+  if (!task) {
+    return false
+  }
+
+  // Handle both Sequelize model instances and plain objects
+  const taskData = (task as { dataValues?: Task }).dataValues || (task as Task)
+  return !(taskData.not_listed === true || taskData.private === true)
+}
+
+/**
+ * Helper function to safely send bounty notification with proper error handling
+ * @param task - The task object
+ * @param orderData - Order data with amount and currency
+ * @param user - The user object
+ * @param context - Optional context string for error logging (e.g., 'wallet payment', 'PayPal payment')
+ * @returns Promise<boolean> - True if notification was sent successfully
+ */
+export const notifyBountyWithErrorHandling = async (
+  task: Task | { dataValues?: Task } | null | undefined,
+  orderData: OrderData | null | undefined,
+  user: User | { dataValues?: User } | null | undefined,
+  context: string = 'payment'
+): Promise<boolean> => {
+  // Check if task and user exist
+  if (!task || !user) {
+    return false
+  }
+
+  // Check privacy settings
+  if (!shouldNotifyForTask(task)) {
+    return false
+  }
+
+  // Extract data values if Sequelize model instances
+  const taskData = (task as { dataValues?: Task }).dataValues || (task as Task)
+  const userData = (user as { dataValues?: User }).dataValues || (user as User)
+
+  // Prepare order data
+  const order: OrderData = {
+    amount: orderData?.amount || 0,
+    currency: orderData?.currency || 'USD'
+  }
+
+  try {
+    await notifyNewBounty(taskData, order, userData)
+    return true
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
+    console.error(`Error sending Slack notification for new bounty (${context}):`, errorMessage)
+    return false
+  }
 }

@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
+import { connect } from 'react-redux'
+import { validateCoupon } from '../../../../../actions/couponActions'
 
 import PaymentDrawer from 'design-library/molecules/drawers/payment-drawer/payment-drawer'
 
@@ -45,7 +47,9 @@ function IssuePaymentDrawer({
   listWallets,
   wallets,
   fetchTask,
-  syncTask
+  syncTask,
+  validateCoupon,
+  couponStoreState
 }: any) {
   const intl = useIntl()
 
@@ -152,6 +156,8 @@ function IssuePaymentDrawer({
               task={task?.data}
               plan={plan}
               onClose={onClose}
+              validateCoupon={validateCoupon}
+              couponStoreState={couponStoreState}
             />
           )
         },

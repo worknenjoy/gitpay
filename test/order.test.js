@@ -952,10 +952,19 @@ describe('Orders', () => {
           paid: false
         })
 
-        await orderAuthorize({
+        const result = await orderAuthorize({
           token: 'TEST_TOKEN',
           PayerID: 'TEST_PAYER_ID'
         })
+
+        // Verify the order was marked as paid
+        const updatedOrder = await models.Order.findOne({
+          where: { token: 'TEST_TOKEN' }
+        })
+        expect(updatedOrder.paid).to.be.true
+
+        // Wait a bit for the async notification to complete (it uses .catch() which is fire-and-forget)
+        await new Promise((resolve) => setTimeout(resolve, 200))
 
         // Notification should be called when PayPal payment completes
         expect(slackSpy).to.have.been.called()
