@@ -170,7 +170,9 @@ export const notifyNewBounty = async (
  * @param task - The task object (can be Sequelize model instance or plain object)
  * @returns boolean - True if task is public and should notify
  */
-export const shouldNotifyForTask = (task: Task | { dataValues?: Task } | null | undefined): boolean => {
+export const shouldNotifyForTask = (
+  task: Task | { dataValues?: Task } | null | undefined
+): boolean => {
   if (!task) {
     return false
   }

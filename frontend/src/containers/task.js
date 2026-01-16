@@ -127,7 +127,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(fetchPullRequestData(owner, repositoryName, pullRequestId, taskId)),
     cleanPullRequestDataState: () => dispatch(cleanPullRequestDataState()),
     fetchAccount: () => dispatch(fetchAccount()),
-    validateCoupon: (code, originalOrderPrice) => dispatch(validateCoupon(code, originalOrderPrice)),
+    validateCoupon: (code, originalOrderPrice) =>
+      dispatch(validateCoupon(code, originalOrderPrice)),
     // For account menu and bottom bar props
     signOut: () => dispatch(logOut()),
     getInfo: () => dispatch(getInfoAction())

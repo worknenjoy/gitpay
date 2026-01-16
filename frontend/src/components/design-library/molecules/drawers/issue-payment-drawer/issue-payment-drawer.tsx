@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
-import { connect } from 'react-redux'
-import { validateCoupon } from '../../../../../actions/couponActions'
 
 import PaymentDrawer from 'design-library/molecules/drawers/payment-drawer/payment-drawer'
 

@@ -53,19 +53,19 @@ const IssueActionsByRole = ({
   fetchPullRequestData,
   fetchCustomer,
   customer,
-        addNotification,
-        updateTask,
-        task,
-        createOrder,
-        order,
-        fetchWallet,
-        wallet,
-        listWallets,
-        wallets,
-        fetchTask,
-        syncTask,
-        validateCoupon,
-        couponStoreState
+  addNotification,
+  updateTask,
+  task,
+  createOrder,
+  order,
+  fetchWallet,
+  wallet,
+  listWallets,
+  wallets,
+  fetchTask,
+  syncTask,
+  validateCoupon,
+  couponStoreState
 }: IssueActionsProps) => {
   const { data } = issue
 
