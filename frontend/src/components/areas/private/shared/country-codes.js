@@ -22,7 +22,7 @@ export const countryCodes = [
   { country: 'Hong Kong', code: 'HK', image: 'hong-kong' },
   { country: 'Hungary', code: 'HU', image: 'hungary' },
   { country: 'India', code: 'IN', image: 'india' },
-  //{ country: 'Indonesia', code: 'ID', image: 'indonesia'}, invite only
+  { country: 'Indonesia', code: 'ID', image: 'indonesia' },
   { country: 'Ireland', code: 'IE', image: 'ireland' },
   { country: 'Italy', code: 'IT', image: 'italy' },
   { country: 'Jamaica', code: 'JM', image: 'jamaica' },
@@ -102,6 +102,7 @@ export const countryCurrencies = [
   { currency: 'Hong Kong Dollar', symbol: 'HK$', code: 'HKD', countries: ['HK'] },
   { currency: 'Hungarian Forint', symbol: 'Ft', code: 'HUF', countries: ['HU'] },
   { currency: 'Indian Rupee', symbol: '₹', code: 'INR', countries: ['IN'] },
+  { currency: 'Indonesian Rupiah', symbol: 'Rp', code: 'IDR', countries: ['ID'] },
   { currency: 'Jamaican Dollar', symbol: 'J$', code: 'JMD', countries: ['JM'] },
   { currency: 'Japanese Yen', symbol: '¥', code: 'JPY', countries: ['JP'] },
   { currency: 'Jordanian Dinar', symbol: 'JD', code: 'JOD', countries: ['JO'] },
