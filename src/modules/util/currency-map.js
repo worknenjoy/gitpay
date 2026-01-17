@@ -21,6 +21,7 @@ module.exports.currencyMap = {
   HK: 'HKD',
   HU: 'HUF', // Hungary
   IN: 'INR',
+  ID: 'IDR', // Indonesia
   IE: 'EUR',
   IT: 'EUR',
   JP: 'JPY',
