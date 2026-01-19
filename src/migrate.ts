@@ -4,6 +4,10 @@ import { Umzug, SequelizeStorage } from 'umzug'
 import { Sequelize } from 'sequelize'
 import secrets from './config/secrets'
 
+// Get the src directory - works with both tsx and compiled code
+// @ts-ignore - __dirname is available at runtime
+const srcDir = typeof __dirname !== 'undefined' ? __dirname : path.resolve(process.cwd(), 'src')
+
 const env = process.env.NODE_ENV || 'development'
 
 const database_env = {
@@ -51,9 +55,10 @@ sequelize.query('SELECT current_database();').then(([res]: any) => {
 
 const isSeed = process.env.TYPE === 'seed'
 
-const baseDir = isSeed
-  ? path.join(__dirname, './db/seeders')
-  : path.join(__dirname, './db/migrations')
+const baseDir = isSeed ? path.resolve(srcDir, 'db/seeders') : path.resolve(srcDir, 'db/migrations')
+
+// Convert Windows backslashes to forward slashes for glob pattern
+const globPath = baseDir.replace(/\\/g, '/') + '/*.{ts,js}'
 
 const umzug = new Umzug({
   context: {
@@ -65,7 +70,7 @@ const umzug = new Umzug({
   storage: new SequelizeStorage({ sequelize }),
 
   migrations: {
-    glob: path.join(baseDir, '*.{ts,js}'),
+    glob: globPath,
 
     resolve: ({ name, path: filePath, context }) => {
       if (!filePath) {

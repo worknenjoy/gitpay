@@ -1,4 +1,3 @@
-const Promise = require('bluebird')
 const models = require('../../models')
 const requestPromise = require('request-promise')
 const URLSearchParams = require('url-search-params')
@@ -7,6 +6,7 @@ const Decimal = require('decimal.js')
 const stripe = require('../shared/stripe/stripe')()
 const Sendmail = require('../mail/mail')
 const userCustomerCreate = require('../users/userCustomerCreate')
+const { notifyBountyWithErrorHandling } = require('../slack')
 
 module.exports = async function orderBuilds(orderParameters) {
   const { source_id, source_type, currency, provider, amount, email, userId, taskId, plan } =
@@ -83,6 +83,8 @@ module.exports = async function orderBuilds(orderParameters) {
       }
     })
 
+    // Create invoice item (line item on the invoice)
+    // Note: We don't store the invoice item ID, only the invoice ID, as the invoice item is part of the invoice
     const invoiceItem = await stripe.invoiceItems.create({
       customer: orderParameters.customer_id,
       currency: 'usd',
@@ -96,6 +98,11 @@ module.exports = async function orderBuilds(orderParameters) {
         order_id: orderCreated.dataValues.id
       }
     })
+
+    // Verify invoice item was created successfully
+    if (!invoiceItem || !invoiceItem.id) {
+      throw new Error('Failed to create invoice item')
+    }
 
     const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id)
     Sendmail.success(
@@ -227,6 +234,19 @@ module.exports = async function orderBuilds(orderParameters) {
           id: orderCreated.dataValues.id
         }
       }
+    )
+
+    // Send Slack notification for wallet payment (paid immediately)
+    // Note: This only runs for wallet payments that complete successfully
+    const orderData = {
+      amount: orderCreated.dataValues.amount,
+      currency: orderCreated.dataValues.currency || 'USD'
+    }
+    await notifyBountyWithErrorHandling(
+      orderCreated.Task,
+      orderData,
+      orderCreated.User,
+      'wallet payment'
     )
 
     return orderUpdated

@@ -60,7 +60,11 @@ const CheckoutForm = (props) => {
     }
 
     if (!stripe || !elements) {
-      props.addNotification('payment.message.error', 'Stripe not initialized')
+      if (props.addNotification && typeof props.addNotification === 'function') {
+        props.addNotification('payment.message.error', 'Stripe not initialized')
+      } else {
+        console.error('Stripe not initialized and addNotification is not available')
+      }
       setCheckoutFormState((prev) => ({ ...prev, paymentRequested: false }))
       return
     }
@@ -95,7 +99,11 @@ const CheckoutForm = (props) => {
       }
     } catch (e) {
       console.log('Error creating token or processing payment:', e)
-      props.addNotification('payment.message.error', e.message || 'Error processing payment')
+      if (props.addNotification && typeof props.addNotification === 'function') {
+        props.addNotification('payment.message.error', e.message || 'Error processing payment')
+      } else {
+        console.error('Payment error:', e.message || 'Error processing payment')
+      }
       setCheckoutFormState((prev) => ({ ...prev, paymentRequested: false }))
     }
   }
@@ -148,7 +156,11 @@ const CheckoutForm = (props) => {
   }
 
   const applyCoupon = () => {
-    props.validateCoupon(couponState.coupon, price)
+    if (props.validateCoupon && typeof props.validateCoupon === 'function') {
+      props.validateCoupon(couponState.coupon, price)
+    } else {
+      console.error('validateCoupon is not available')
+    }
   }
 
   const logged = checkoutFormState.authenticated
