@@ -171,18 +171,29 @@ describe('Users', () => {
         })
     })
     it('register with user Types', async () => {
+      // Ensure the types exist, then use their real IDs (avoid relying on seed order/IDs)
+      const { Type } = require('../src/models')
+      const [funding] = await Type.findOrCreate({ where: { name: 'funding' }, defaults: { name: 'funding' } })
+      const [contributor] = await Type.findOrCreate({
+        where: { name: 'contributor' },
+        defaults: { name: 'contributor' }
+      })
+
       const res = await agent
         .post('/auth/register')
-        .send({ email: 'teste4343434322222@gmail.com', password: 'test', Types: ['1', '2'] })
+        .send({
+          email: 'teste4343434322222@gmail.com',
+          password: 'test',
+          Types: [String(funding.id), String(contributor.id)]
+        })
         .expect('Content-Type', /json/)
         .expect(200)
       expect(res.statusCode).to.equal(200)
       expect(res.body).to.exist
       expect(res.body.Types).to.exist
-      expect(res.body.Types[0].id).to.equal(1)
-      expect(res.body.Types[0].name).to.equal('funding')
-      expect(res.body.Types[1].id).to.equal(2)
-      expect(res.body.Types[1].name).to.equal('contributor')
+      const typeNames = (res.body.Types || []).map((t) => t.name)
+      expect(typeNames).to.include('funding')
+      expect(typeNames).to.include('contributor')
     })
   })
 

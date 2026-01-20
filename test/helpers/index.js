@@ -1,10 +1,11 @@
 const models = require('../../src/models')
-const testEmail = `teste+${Math.random() * 100}@gmail.com`
 const testPassword = 'test12345678'
 const testName = 'Test'
 
+const generateTestEmail = () => `teste+${Math.random()}@gmail.com`
+
 const register = (agent, params = {}) => {
-  params.email = params.email || testEmail
+  params.email = params.email || generateTestEmail()
   params.password = params.password || testPassword
   params.confirmPassword = params.password || testPassword
   params.name = params.name || testName
@@ -17,7 +18,7 @@ const register = (agent, params = {}) => {
 }
 
 const login = (agent, params = {}) => {
-  params.username = params.email || testEmail
+  params.username = params.email
   params.password = params.password || testPassword
   return agent.post('/authorize/local').send(params).type('form')
 }

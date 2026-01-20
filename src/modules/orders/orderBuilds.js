@@ -6,7 +6,7 @@ const Decimal = require('decimal.js')
 const stripe = require('../shared/stripe/stripe')()
 const Sendmail = require('../mail/mail')
 const userCustomerCreate = require('../users/userCustomerCreate')
-const { notifyBountyWithErrorHandling } = require('../slack')
+const slack = require('../slack')
 
 module.exports = async function orderBuilds(orderParameters) {
   const { source_id, source_type, currency, provider, amount, email, userId, taskId, plan } =
@@ -211,10 +211,15 @@ module.exports = async function orderBuilds(orderParameters) {
       }
     })
 
-    const currentBalance = wallet.balance
-    const enoughBalance = new Decimal(currentBalance).greaterThanOrEqualTo(
-      new Decimal(orderParameters.amount)
-    )
+    if (!wallet) {
+      throw new Error(`Wallet with id ${orderParameters.walletId} not found`)
+    }
+
+    // Wallet balance is calculated from WalletOrders via afterFind hook
+    // The balance field is updated by the hook after findOne
+    // Convert to Decimal for comparison (balance is a string after hook processing)
+    const currentBalance = new Decimal(wallet.balance || '0.00')
+    const enoughBalance = currentBalance.greaterThanOrEqualTo(new Decimal(orderParameters.amount))
 
     if (!enoughBalance) {
       throw new Error(
@@ -238,16 +243,26 @@ module.exports = async function orderBuilds(orderParameters) {
 
     // Send Slack notification for wallet payment (paid immediately)
     // Note: This only runs for wallet payments that complete successfully
-    const orderData = {
-      amount: orderCreated.dataValues.amount,
-      currency: orderCreated.dataValues.currency || 'USD'
+    // Reload order with associations to ensure Task and User are available
+    const orderWithAssociations = await models.Order.findByPk(orderCreated.dataValues.id, {
+      include: [models.Task, models.User]
+    })
+
+    if (orderWithAssociations && orderWithAssociations.Task && orderWithAssociations.User) {
+      const orderData = {
+        amount: orderCreated.dataValues.amount,
+        currency: orderCreated.dataValues.currency || 'USD'
+      }
+      // Avoid even invoking notification helper for private/not_listed tasks
+      if (slack.shouldNotifyForTask(orderWithAssociations.Task)) {
+        await slack.notifyBountyWithErrorHandling(
+          orderWithAssociations.Task,
+          orderData,
+          orderWithAssociations.User,
+          'wallet payment'
+        )
+      }
     }
-    await notifyBountyWithErrorHandling(
-      orderCreated.Task,
-      orderData,
-      orderCreated.User,
-      'wallet payment'
-    )
 
     return orderUpdated
   }

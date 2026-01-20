@@ -1,7 +1,7 @@
 const models = require('../../models')
 const i18n = require('i18n')
 const SendMail = require('../mail/mail')
-const { notifyBountyWithErrorHandling } = require('../slack')
+const slack = require('../slack')
 
 const sendEmailSuccess = (event, paid, status, order, req, res) => {
   return models.User.findOne({
@@ -61,7 +61,7 @@ const updateOrder = async (event, paid, status, req, res) => {
               amount: orderUpdated.amount,
               currency: orderUpdated.currency || 'USD'
             }
-            await notifyBountyWithErrorHandling(
+            await slack.notifyBountyWithErrorHandling(
               orderUpdated.Task,
               orderData,
               orderUpdated.User,

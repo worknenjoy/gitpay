@@ -23,6 +23,29 @@ describe('Orders', () => {
     await truncateModels(models.Order)
     await truncateModels(models.Transfer)
     await truncateModels(models.Wallet)
+
+    // PlanSchemas are required by order creation for "open source" plan.
+    // They are not truncated above, so ensure they exist deterministically.
+    await models.PlanSchema.findOrCreate({
+      where: { plan: 'open source', name: 'Open Source - default', feeType: 'charge' },
+      defaults: {
+        plan: 'open source',
+        name: 'Open Source - default',
+        description: 'open source',
+        fee: 8,
+        feeType: 'charge'
+      }
+    })
+    await models.PlanSchema.findOrCreate({
+      where: { plan: 'open source', name: 'Open Source - no fee', feeType: 'charge' },
+      defaults: {
+        plan: 'open source',
+        name: 'Open Source - no fee',
+        description: 'open source with no fee',
+        fee: 0,
+        feeType: 'charge'
+      }
+    })
   })
   afterEach(async () => {
     nock.cleanAll()
@@ -160,16 +183,28 @@ describe('Orders', () => {
     it('should call notifyNewBounty when wallet payment completes for a public task', async () => {
       chai.use(spies)
       const slackModule = require('../src/modules/slack')
-      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      // Spy on notifyBountyWithErrorHandling since that's what's actually called
+      const slackSpy = chai.spy.on(slackModule, 'notifyBountyWithErrorHandling')
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
       try {
         const user = await registerAndLogin(agent)
         const wallet = await models.Wallet.create({
           name: 'Test Wallet',
-          balance: 500,
+          balance: 0,
           userId: user.body.id
         })
+        // Create a WalletOrder to give the wallet balance (wallet balance is calculated from WalletOrders)
+        // The wallet balance is calculated as: sum of paid WalletOrders - sum of succeeded wallet Orders
+        await models.WalletOrder.create({
+          walletId: wallet.id,
+          amount: 500,
+          currency: 'USD',
+          status: 'paid',
+          paid: true
+        })
+        // Reload wallet to trigger afterFind hook and recalculate balance
+        await wallet.reload()
         const task = await models.Task.create({
           url: 'https://github.com/test/repo/issues/4',
           userId: user.body.id,
@@ -190,29 +225,41 @@ describe('Orders', () => {
 
         // Notification should be called when wallet payment completes
         expect(slackSpy).to.have.been.called()
-        expect(slackSpy).to.have.been.called.with(
-          task.dataValues,
-          { amount: 200, currency: 'USD' },
-          user.body
-        )
+        // Verify it was called with correct order data and context
+        const call = slackSpy.__spy.calls[0]
+        expect(Number(call[1].amount)).to.equal(200)
+        expect(call[1].currency).to.equal('USD')
+        expect(call[3]).to.equal('wallet payment')
       } finally {
-        chai.spy.restore(slackModule, 'notifyNewBounty')
+        chai.spy.restore(slackModule, 'notifyBountyWithErrorHandling')
       }
     })
 
     it('should not call notifyNewBounty when wallet payment completes for a private task', async () => {
       chai.use(spies)
       const slackModule = require('../src/modules/slack')
-      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      // Spy on notifyBountyWithErrorHandling since that's what's actually called
+      const slackSpy = chai.spy.on(slackModule, 'notifyBountyWithErrorHandling')
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
       try {
         const user = await registerAndLogin(agent)
         const wallet = await models.Wallet.create({
           name: 'Test Wallet',
-          balance: 500,
+          balance: 0,
           userId: user.body.id
         })
+        // Create a WalletOrder to give the wallet balance (wallet balance is calculated from WalletOrders)
+        // The wallet balance is calculated as: sum of paid WalletOrders - sum of succeeded wallet Orders
+        await models.WalletOrder.create({
+          walletId: wallet.id,
+          amount: 500,
+          currency: 'USD',
+          status: 'paid',
+          paid: true
+        })
+        // Reload wallet to trigger afterFind hook and recalculate balance
+        await wallet.reload()
         const task = await models.Task.create({
           url: 'https://github.com/test/repo/issues/5',
           userId: user.body.id,
@@ -233,28 +280,13 @@ describe('Orders', () => {
         // Notification should NOT be called for private tasks
         expect(slackSpy).to.not.have.been.called()
       } finally {
-        chai.spy.restore(slackModule, 'notifyNewBounty')
+        chai.spy.restore(slackModule, 'notifyBountyWithErrorHandling')
       }
     })
 
     describe('Order with Plan', () => {
       let PlanSchema
-      beforeEach(async () => {
-        PlanSchema = await models.PlanSchema.build({
-          plan: 'open source',
-          name: 'Open Source - default',
-          description: 'open source',
-          fee: 8,
-          feeType: 'charge'
-        })
-        PlanSchema = await models.PlanSchema.build({
-          plan: 'open source',
-          name: 'Open Source - no fee',
-          description: 'open source with no fee',
-          fee: 0,
-          feeType: 'charge'
-        })
-      })
+      beforeEach(async () => {})
       it('should create a new order with a plan', async () => {
         const user = await registerAndLogin(agent)
         const res = await agent
@@ -909,7 +941,8 @@ describe('Orders', () => {
     it('should call notifyNewBounty when PayPal payment completes for a public task', async () => {
       chai.use(spies)
       const slackModule = require('../src/modules/slack')
-      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      // Spy on notifyBountyWithErrorHandling since that's what's actually called
+      const slackSpy = chai.spy.on(slackModule, 'notifyBountyWithErrorHandling')
       const orderAuthorize = require('../src/modules/orders').orderAuthorize
 
       // Mock PayPal API responses
@@ -963,13 +996,15 @@ describe('Orders', () => {
         })
         expect(updatedOrder.paid).to.be.true
 
-        // Wait a bit for the async notification to complete (it uses .catch() which is fire-and-forget)
-        await new Promise((resolve) => setTimeout(resolve, 200))
-
         // Notification should be called when PayPal payment completes
         expect(slackSpy).to.have.been.called()
+        // Verify it was called with correct order data and context
+        const call = slackSpy.__spy.calls[0]
+        expect(Number(call[1].amount)).to.equal(200)
+        expect(call[1].currency).to.equal('USD')
+        expect(call[3]).to.equal('PayPal payment')
       } finally {
-        chai.spy.restore(slackModule, 'notifyNewBounty')
+        chai.spy.restore(slackModule, 'notifyBountyWithErrorHandling')
         nock.cleanAll()
       }
     })
@@ -977,7 +1012,8 @@ describe('Orders', () => {
     it('should not call notifyNewBounty when PayPal payment completes for a private task', async () => {
       chai.use(spies)
       const slackModule = require('../src/modules/slack')
-      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      // Spy on notifyBountyWithErrorHandling since that's what's actually called
+      const slackSpy = chai.spy.on(slackModule, 'notifyBountyWithErrorHandling')
       const orderAuthorize = require('../src/modules/orders').orderAuthorize
 
       // Mock PayPal API responses

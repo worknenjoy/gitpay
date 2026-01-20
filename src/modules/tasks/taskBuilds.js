@@ -10,7 +10,7 @@ const userExists = require('../users').userExists
 // const userOrganizations = require('../users/userOrganizations')
 const project = require('../projectHelpers')
 const issueAddedComment = require('../bot/issueAddedComment')
-const { notifyNewIssue } = require('../slack')
+const slack = require('../slack')
 
 module.exports = Promise.method(async function taskBuilds(taskParameters) {
   const repoUrl = taskParameters.url
@@ -108,7 +108,7 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
             const isTaskPublic = !(taskData.not_listed === true || taskData.private === true)
             if (isTaskPublic) {
               issueAddedComment(task)
-              notifyNewIssue(taskData, userData)
+              slack.notifyNewIssue(taskData, userData)
             }
 
             return { ...taskData, ProjectId: taskData.ProjectId }

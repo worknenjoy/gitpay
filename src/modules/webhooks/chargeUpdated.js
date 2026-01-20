@@ -2,7 +2,7 @@ const models = require('../../models')
 const i18n = require('i18n')
 const moment = require('moment')
 const SendMail = require('../mail/mail')
-const { notifyBountyWithErrorHandling } = require('../slack')
+const slack = require('../slack')
 
 module.exports = async function chargeUpdated(event, paid, status, req, res) {
   if (event?.data?.object?.source?.id) {
@@ -52,7 +52,7 @@ module.exports = async function chargeUpdated(event, paid, status, req, res) {
                       amount: orderUpdated.amount,
                       currency: orderUpdated.currency || 'USD'
                     }
-                    await notifyBountyWithErrorHandling(
+                    await slack.notifyBountyWithErrorHandling(
                       orderUpdated.Task,
                       orderData,
                       orderUpdated.User,

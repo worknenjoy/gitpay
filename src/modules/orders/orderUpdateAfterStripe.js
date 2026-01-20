@@ -1,7 +1,7 @@
 const Promise = require('bluebird')
 const PaymentMail = require('../mail/payment')
 const models = require('../../models')
-const { notifyBountyWithErrorHandling } = require('../slack')
+const slack = require('../slack')
 
 module.exports = Promise.method(
   function orderUpdateAfterStripe(order, charge, card, orderParameters, user, task, couponFull) {
@@ -34,7 +34,7 @@ module.exports = Promise.method(
             amount: order.amount || orderParameters.amount,
             currency: order.currency || orderParameters.currency || 'USD'
           }
-          await notifyBountyWithErrorHandling(task, orderData, user, 'Stripe payment')
+          await slack.notifyBountyWithErrorHandling(task, orderData, user, 'Stripe payment')
         }
 
         if (task.dataValues.assigned) {
