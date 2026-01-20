@@ -30,7 +30,9 @@ const IssuePublicPage = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask
+  syncTask,
+  validateCoupon,
+  couponStoreState
 }) => {
   return (
     <IssuePage
@@ -63,6 +65,8 @@ const IssuePublicPage = ({
       wallets={wallets}
       fetchTask={fetchTask}
       syncTask={syncTask}
+      validateCoupon={validateCoupon}
+      couponStoreState={couponStoreState}
     />
   )
 }

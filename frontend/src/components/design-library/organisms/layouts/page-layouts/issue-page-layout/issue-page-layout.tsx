@@ -32,7 +32,9 @@ const IssuePage = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask
+  syncTask,
+  validateCoupon,
+  couponStoreState
 }) => {
   return (
     <Grid container style={{ marginBottom: 4 }} alignItems="stretch">
@@ -74,6 +76,8 @@ const IssuePage = ({
           fetchTask={fetchTask}
           syncTask={syncTask}
           fetchCustomer={fetchCustomer}
+          validateCoupon={validateCoupon}
+          couponStoreState={couponStoreState}
         />
       </Grid>
     </Grid>

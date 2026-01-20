@@ -51,6 +51,8 @@ const IssueSidebar = ({
   wallets,
   fetchTask,
   syncTask,
+  validateCoupon,
+  couponStoreState,
   fetchCustomer
 }) => {
   const intl = useIntl()
@@ -294,6 +296,8 @@ const IssueSidebar = ({
         wallets={wallets}
         fetchTask={fetchTask}
         syncTask={syncTask}
+        validateCoupon={validateCoupon}
+        couponStoreState={couponStoreState}
       />
 
       <IssueInviteCard
