@@ -128,8 +128,10 @@ exports.createPrivateTask = (req, res) => {
           .catch((error) => {
             // eslint-disable-next-line no-console
             console.log(error)
-            // TODO: instead of a response, we need to redirect to an error page
-            return res.send(error)
+            const encodedError = encodeURIComponent(error.message || JSON.stringify(error))
+            return res.redirect(
+              `${process.env.FRONTEND_HOST}/#/?createTaskError=true&message=${encodedError}`
+            )
           })
       }
       return res.status(response.access_token ? 200 : 401).send(response)

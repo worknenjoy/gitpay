@@ -417,9 +417,9 @@ describe('tasks', () => {
             .get(
               `/callback/github/private/?userId=${userId}&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7`
             )
-            .expect(200)
+            .expect(302)
             .end((err, res) => {
-              expect(res.statusCode).to.equal(200)
+              expect(res.statusCode).to.equal(302)
               done()
             })
         })
