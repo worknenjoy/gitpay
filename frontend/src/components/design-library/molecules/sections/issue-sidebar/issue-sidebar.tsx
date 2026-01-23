@@ -263,8 +263,10 @@ const IssueSidebar = ({
         }}
       />
 
-      {taskData && (taskData.orders?.length || taskData.Orders?.length) && (
+      {taskData && (taskData.orders?.length || taskData.Orders?.length) ? (
         <IssuePaymentsList orders={paidOrders} />
+      ) : (
+        <div />
       )}
 
       <IssueActionsByRole

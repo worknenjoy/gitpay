@@ -95,7 +95,7 @@ exports.changePassword = (req, res) => {
 }
 
 exports.createPrivateTask = (req, res) => {
-  const { userId, url, code } = req.query
+  const { url, code, userId } = req.query
   const githubClientId = secrets.github.id
   const githubClientSecret = secrets.github.secret
   return requestPromise({
@@ -127,10 +127,23 @@ exports.createPrivateTask = (req, res) => {
           })
           .catch((error) => {
             // eslint-disable-next-line no-console
-            console.log(error)
-            const encodedError = encodeURIComponent(error.message || JSON.stringify(error))
+            console.log('Error on import private task', error)
+            const errorStatus =
+              error?.error?.status ??
+              error?.status ??
+              error?.statusCode ??
+              error?.response?.status ??
+              error?.response?.statusCode
+            const isRateLimit =
+              String(errorStatus) === '403' || /rate limit exceeded/i.test(errorMessage || '')
+
+            const errorMessage = error?.message || error?.error?.message
+            const finalError = isRateLimit
+              ? 'API limit reached, please try again later.'
+              : errorMessage
+            const encodedError = encodeURIComponent(finalError || 'We could not import the issue.')
             return res.redirect(
-              `${process.env.FRONTEND_HOST}/#/?createTaskError=true&message=${encodedError}`
+              `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodedError}`
             )
           })
       }
