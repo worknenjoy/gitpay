@@ -31,9 +31,7 @@ export const notifyUnclamedBounties = async () => {
           console.log(`- Author Provider ID: ${provider_id}`)
           console.log(`- Author Provider Username: ${provider_username}`)
           console.log(`- Author Email: ${author_email}`)
-          console.log(
-            `- GitPay users found linked to this author: ${amountOfUsers}`
-          )
+          console.log(`- GitPay users found linked to this author: ${amountOfUsers}`)
           if (amountOfUsers > 0) {
             usersOnGitpay.forEach((user: any) => {
               console.log(`- Details of the GitPay users linked to this author...`)
