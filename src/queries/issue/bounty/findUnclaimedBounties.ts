@@ -15,7 +15,7 @@ export const findUnclaimedBounties = async () => {
 
   const pendingTasks = tasks.filter(
     (t: Issue) =>
-      !t.paid && (t.transfer_id === null || t.TransferId === null || t?.Transfer?.id === null)
+      !t.paid || t.transfer_id === null || t.TransferId === null || t?.Transfer?.id === null
   )
   return pendingTasks
 }
