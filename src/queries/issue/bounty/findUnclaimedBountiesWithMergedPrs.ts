@@ -10,9 +10,7 @@ export const findUnclaimedBountiesWithMergedPrs = async () => {
     unclaimedBounties.map(async (issue: Issue) => {
       try {
         const linkedPrs = await findIssueLinkedPullRequest(issue.id)
-        const mergedPrs = (linkedPrs ?? []).filter(
-          (pr: any) => pr?.pull_request?.merged_at != null
-        )
+        const mergedPrs = (linkedPrs ?? []).filter((pr: any) => pr?.pull_request?.merged_at != null)
 
         const entriesForIssue = await Promise.all(
           mergedPrs.map(async (pr: any) => {
@@ -20,7 +18,7 @@ export const findUnclaimedBountiesWithMergedPrs = async () => {
               provider: 'github',
               provider_id: String(pr?.user?.id),
               provider_username: pr?.user?.login,
-              provider_email: pr?.user?.email,
+              provider_email: pr?.user?.email
             })
 
             return (usersOnGitpay ?? [])
@@ -28,7 +26,7 @@ export const findUnclaimedBountiesWithMergedPrs = async () => {
               .map((user: any) => ({
                 issue,
                 providerIssues: mergedPrs,
-                user,
+                user
               }))
           })
         )
@@ -36,9 +34,9 @@ export const findUnclaimedBountiesWithMergedPrs = async () => {
         return entriesForIssue.flat()
       } catch (err) {
         console.error('Error processing issue', issue.id, err)
-        return []
+        return false
       }
-    })
+    }).filter(Boolean)
   )
   return results.flat()
 }
