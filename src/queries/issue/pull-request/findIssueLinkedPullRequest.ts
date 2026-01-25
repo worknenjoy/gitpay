@@ -17,11 +17,10 @@ export const findIssueLinkedPullRequest = async (issueId: number) => {
       (item: any) => item.source && item.source.issue.pull_request
     )
     if (!issueLinksEvent || !onlyPR) {
-      return null
+      return []
     }
     return onlyPR.map((pr: any) => pr.source.issue)
   } catch (err) {
-    console.error('Error fetching issue timeline for issue', issueId)
-    return null
+    return []
   }
 }
