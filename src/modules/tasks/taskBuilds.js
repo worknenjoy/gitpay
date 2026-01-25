@@ -55,7 +55,6 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
             json: true
           })
         } catch (e) {
-          // segue sem languages
           programmingLanguagesResponse = {}
         }
 
