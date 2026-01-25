@@ -30,15 +30,21 @@ export const notifyUnclamedBounties = async () => {
             provider_id: provider_id.toString(),
             provider_username: provider_username
           })
-          if (userOnGitpay) {
-            console.log(`- GitPay User Found:`)
-            console.log(`- GitPay User ID: ${userOnGitpay.id}`)
-            console.log(`- GitPay User Email: ${userOnGitpay.email}`)
-            console.log(`- GitPay User Username: ${userOnGitpay.username}`)
-            console.log(`- Notify user about unclaimed bounty!`)
+          console.log(`- GitPay users found linked to this author: ${userOnGitpay.length}`)
+          userOnGitpay.forEach((user:any) => {
+            console.log(`- Searching for GitPay user linked to this author...`)
+            if (user) {
+              console.log(`------------`)
+              console.log(`- GitPay User Found:`)
+              console.log(`- GitPay User ID: ${user.id}`)
+              console.log(`- GitPay User Email: ${user.email}`)
+              console.log(`- GitPay User Username: ${user.username}`)
+              console.log(`- Notify user about unclaimed bounty!`)
+              console.log(`------------`)
           } else {
             console.log(`- No GitPay user found for this author.`)
           }
+          })
           console.log('-----------------------------------------------------------')
         })
       } else {
