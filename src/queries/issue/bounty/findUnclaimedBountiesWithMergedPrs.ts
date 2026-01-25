@@ -11,9 +11,7 @@ export const findUnclaimedBountiesWithMergedPrs = async () => {
       .map(async (issue: Issue) => {
         try {
           const linkedPrs = await findIssueLinkedPullRequest(issue.id)
-          const mergedPrs = linkedPrs.filter(
-            (pr: any) => pr?.pull_request?.merged_at != null
-          )
+          const mergedPrs = linkedPrs.filter((pr: any) => pr?.pull_request?.merged_at != null)
           if (mergedPrs.length === 0) {
             return false
           }
@@ -35,7 +33,7 @@ export const findUnclaimedBountiesWithMergedPrs = async () => {
                 }))
             })
           )
-          if( entriesForIssue.length === 0 ) {
+          if (entriesForIssue.length === 0) {
             return false
           }
 

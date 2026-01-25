@@ -3,6 +3,7 @@ import { findUnclaimedBountiesWithMergedPrs } from '../../queries/issue/bounty/f
 const reportUnclamedBountiesScript = async () => {
   const unclaimedBountiesWithMergedPrs = await findUnclaimedBountiesWithMergedPrs()
   console.log('Unclaimed Bounties with Merged PRs:', unclaimedBountiesWithMergedPrs.length)
+  console.log('Total amount of unclaimed bounties with merged PRs:', unclaimedBountiesWithMergedPrs.reduce((sum, { issue }) => sum + (Number(issue.value) || 0), 0))
   for (const { issue, providerIssues, user } of unclaimedBountiesWithMergedPrs) {
     console.log('------------------- Issue Details -------------------------')
     console.log(`Processing Issue ID: ${issue.id} with unclaimed bounty.`)
