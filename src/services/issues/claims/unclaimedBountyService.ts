@@ -9,12 +9,15 @@ export const notifyUnclamedBounties = async () => {
     const issueId = issue.id
     try {
       const issueWithLinkedPR = await findIssueLinkedPullRequest(issueId)
-      if (issueWithLinkedPR && issueWithLinkedPR.length > 0) {
+      const issueWithLinkedMergedPR = issueWithLinkedPR
+        ? issueWithLinkedPR.filter((issue: any) => issue.pull_request.merged_at !== null)
+        : null
+      if (issueWithLinkedMergedPR && issueWithLinkedMergedPR.length > 0) {
         console.log('------------------- Issue Details -------------------------')
         console.log(`Processing Issue ID: ${issue.id} with unclaimed bounty.`)
         console.log(`Issue Title: ${issue.title}`)
         console.log(`Issue URL: ${issue.url}`)
-        issueWithLinkedPR.forEach(async (pr: any) => {
+        issueWithLinkedMergedPR.forEach(async (pr: any) => {
           console.log(`- PR #${pr.number}: ${pr.html_url}`)
           const author = pr.user.login
           const provider_id = pr.user.id
@@ -51,7 +54,7 @@ export const notifyUnclamedBounties = async () => {
           console.log('-----------------------------------------------------------')
         })
       } else {
-        console.log(`Issue ID ${issueId} does not have a linked pull request.`)
+        console.log(`Issue ID ${issueId} does not have a linked merged pull request.`)
       }
     } catch (error: any) {
       console.error(
