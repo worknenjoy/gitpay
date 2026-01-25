@@ -7,35 +7,39 @@ export const notifyUnclamedBounties = async () => {
   const unclaimedBounties = await findUnclaimedBounties()
   unclaimedBounties.forEach(async (issue: Issue) => {
     const issueId = issue.id
-    const issueWithLinkedPR = await findIssueLinkedPullRequest(issueId)
-    if (issueWithLinkedPR && issueWithLinkedPR.length > 0) {
-      issueWithLinkedPR.forEach(async (pr: any) => {
-        console.log(`- PR #${pr.number}: ${pr.html_url}`)
-        const author = pr.user.login
-        const provider_id = pr.user.id
-        const provider_username = pr.user.login
-        const author_email = pr.user.email
-        console.log(`- Author: ${author}`)
-        console.log(`- Author Provider ID: ${provider_id}`)
-        console.log(`- Author Provider Username: ${provider_username}`)
-        console.log(`- Author Email: ${author_email}`)
+    try {
+      const issueWithLinkedPR = await findIssueLinkedPullRequest(issueId)
+      if (issueWithLinkedPR && issueWithLinkedPR.length > 0) {
+        issueWithLinkedPR.forEach(async (pr: any) => {
+          console.log(`- PR #${pr.number}: ${pr.html_url}`)
+          const author = pr.user.login
+          const provider_id = pr.user.id
+          const provider_username = pr.user.login
+          const author_email = pr.user.email
+          console.log(`- Author: ${author}`)
+          console.log(`- Author Provider ID: ${provider_id}`)
+          console.log(`- Author Provider Username: ${provider_username}`)
+          console.log(`- Author Email: ${author_email}`)
 
-        const userOnGitpay = await findUserByProvider({
-          provider: 'github',
-          provider_id: provider_id.toString(),
-          provider_username: provider_username
+          const userOnGitpay = await findUserByProvider({
+            provider: 'github',
+            provider_id: provider_id.toString(),
+            provider_username: provider_username
+          })
+          if (userOnGitpay) {
+            console.log(`- GitPay User ID: ${userOnGitpay.id}`)
+            console.log(`- GitPay User Email: ${userOnGitpay.email}`)
+            console.log(`- GitPay User Username: ${userOnGitpay.username}`)
+            console.log(`- Notify user about unclaimed bounty!`)
+          } else {
+            console.log(`- No GitPay user found for this author.`)
+          }
         })
-        if (userOnGitpay) {
-          console.log(`- GitPay User ID: ${userOnGitpay.id}`)
-          console.log(`- GitPay User Email: ${userOnGitpay.email}`)
-          console.log(`- GitPay User Username: ${userOnGitpay.username}`)
-          console.log(`- Notify user about unclaimed bounty!`)
-        } else {
-          console.log(`- No GitPay user found for this author.`)
-        }
-      })
-    } else {
-      console.log(`Issue ID ${issueId} does not have a linked pull request.`)
+      } else {
+        console.log(`Issue ID ${issueId} does not have a linked pull request.`)
+      }
+    } catch (error) {
+      console.error(`Error processing issue ID ${issueId}:`, error)
     }
   })
 }
