@@ -235,5 +235,12 @@
   "mail.user.confirmedChangeUserEmail.subject": "Seu e-mail no Gitpay foi alterado com sucesso",
   "mail.user.confirmedChangeUserEmail.message": "<p>Olá {{name}}</p><p>Seu e-mail no Gitpay foi alterado com sucesso para {{newEmail}}</p><p>Se você não fez essa alteração, por favor entre em contato conosco imediatamente pelo <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>",
   "mail.user.confirmedChangeUserEmailOldEmail.subject": "Seu e-mail no Gitpay foi alterado com sucesso",
-  "mail.user.confirmedChangeUserEmailOldEmail.message": "<p>Olá {{name}}</p><p>Seu e-mail no Gitpay foi alterado com sucesso deste e-mail para {{newEmail}}</p><p>Se você não fez essa alteração, por favor entre em contato conosco imediatamente pelo <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>"
+  "mail.user.confirmedChangeUserEmailOldEmail.message": "<p>Olá {{name}}</p><p>Seu e-mail no Gitpay foi alterado com sucesso deste e-mail para {{newEmail}}</p><p>Se você não fez essa alteração, por favor entre em contato conosco imediatamente pelo <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>",
+  "mail.issue.claim.subject": "Você tem uma recompensa não recebida no Gitpay",
+  "mail.issue.claim.intro": "Olá, {{name}}.",
+  "mail.issue.claim.message": "<p>Temos boas notícias!</p><p>Você resolveu um problema no <a href=\"http://gitpay.me\">Gitpay</a>: <a href=\"{{issueUrl}}\">{{title}}</a> (veja em <a href=\"{{issueOriginalUrl}}\">Github</a>) </p><p>O <a href=\"{{prURL}}\">Pull Request relacionado foi mesclado no Github</a>, e há uma recompensa esperando por você.</p>",
+  "mail.issue.claim.item": "Recompensas não reivindicadas",
+  "mail.issue.claim.cta": "Reivindique sua recompensa",
+  "mail.issue.claim.details": "<p><strong>Você está a um passo de reivindicar sua recompensa.</strong></p><p>Aqui estão os passos que você precisa completar:</p><p>1. Faça login na sua <a href=\"http://gitpay.me/#/profile\">conta do Gitpay</a>.</p><p>2. Ative sua conta bancária nas <a href=\"http://gitpay.me/#/profile/payout-settings/bank-account\">Configurações de Pagamento</a>.</p><p>3. Vá para a página do problema no Gitpay: <a href=\"{{issueUrl}}\">{{title}}</a>.</p><p>4. Clique em <strong>Enviar Solução</strong>.</p><p>5. Envie seu PR que resolve o problema: <a href=\"{{prURL}}\">{{prURL}}</a></p>",
+  "mail.issue.claim.footer": "<p>Se você tiver alguma dúvida ou problema com seu pagamento, entre em contato conosco em <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>"
 }
