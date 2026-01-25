@@ -51,7 +51,8 @@
     "sync:payouts": "tsx src/scripts/payouts/payout_sync.ts",
     "reports:revenue": "tsx src/scripts/reports/revenue-reports/revenue_report.ts",
     "reports:financial_summary": "tsx src/scripts/reports/financial-summary/financial_summary.ts",
-    "reports:balance_summary": "tsx src/scripts/reports/balance-summary/balance_summary.ts"
+    "reports:balance_summary": "tsx src/scripts/reports/balance-summary/balance_summary.ts",
+    "scripts:issue:notify_unclaimed_bounties": "tsx src/scripts/issues/notify_unclaimed_bounties.ts"
   },
   "husky": {
     "hooks": {
