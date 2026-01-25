@@ -5,7 +5,12 @@ import { findUserByProvider } from '../../../queries/user/findUserByProvider'
 
 export const notifyUnclamedBounties = async () => {
   const unclaimedBounties = await findUnclaimedBounties()
+  console.log('----------------- Unclaimed Bounties Report -----------------')
   unclaimedBounties.forEach(async (issue: Issue) => {
+    console.log('------------------- Issue Details -------------------------')
+    console.log(`Processing Issue ID: ${issue.id} with unclaimed bounty.`)
+    console.log(`Issue Title: ${issue.title}`)
+    console.log(`Issue URL: ${issue.url}`)
     const issueId = issue.id
     try {
       const issueWithLinkedPR = await findIssueLinkedPullRequest(issueId)
@@ -41,5 +46,7 @@ export const notifyUnclamedBounties = async () => {
     } catch (error) {
       console.error(`Error processing issue ID ${issueId}:`, error)
     }
+    console.log('-----------------------------------------------------------')
   })
+  console.log('----------------- End of Unclaimed Bounties Report -----------------')
 }
