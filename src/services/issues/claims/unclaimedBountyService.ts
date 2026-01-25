@@ -44,8 +44,8 @@ export const notifyUnclamedBounties = async () => {
       } else {
         console.log(`Issue ID ${issueId} does not have a linked pull request.`)
       }
-    } catch (error) {
-      console.error(`Error processing issue ID ${issueId}:`, error)
+    } catch (error:any) {
+      console.error(`Error processing issue ID ${issueId}`, error?.error?.status || 'unknown status', error?.error?.message || 'Unknown error')
     }
   })
 }
