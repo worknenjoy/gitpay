@@ -47,6 +47,5 @@ export const notifyUnclamedBounties = async () => {
     } catch (error) {
       console.error(`Error processing issue ID ${issueId}:`, error)
     }
-      
   })
 }
