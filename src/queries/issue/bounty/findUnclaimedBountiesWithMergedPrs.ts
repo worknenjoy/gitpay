@@ -43,7 +43,18 @@ export const findUnclaimedBountiesWithMergedPrs = async () => {
           return false
         }
       })
-      .filter(Boolean)
   )
-  return results.flat().filter(Boolean)
+  const resultsFlat = (results.flat().filter(Boolean) as any[])
+
+  const seenIds = new Set<string | number>()
+  const deduped = resultsFlat.filter((entry: any) => {
+    const issueId = entry?.issue?.id
+    const userId = entry?.user?.id
+    if (issueId == null || userId == null) return false
+    const key = `${issueId}:${userId}`
+    if (seenIds.has(key)) return false
+    seenIds.add(key)
+    return true
+  })
+  return deduped
 }
