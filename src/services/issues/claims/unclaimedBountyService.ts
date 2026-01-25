@@ -5,16 +5,15 @@ import { findUserByProvider } from '../../../queries/user/findUserByProvider'
 
 export const notifyUnclamedBounties = async () => {
   const unclaimedBounties = await findUnclaimedBounties()
-  console.log('----------------- Unclaimed Bounties Report -----------------')
   unclaimedBounties.forEach(async (issue: Issue) => {
-    console.log('------------------- Issue Details -------------------------')
-    console.log(`Processing Issue ID: ${issue.id} with unclaimed bounty.`)
-    console.log(`Issue Title: ${issue.title}`)
-    console.log(`Issue URL: ${issue.url}`)
     const issueId = issue.id
     try {
       const issueWithLinkedPR = await findIssueLinkedPullRequest(issueId)
       if (issueWithLinkedPR && issueWithLinkedPR.length > 0) {
+        console.log('------------------- Issue Details -------------------------')
+        console.log(`Processing Issue ID: ${issue.id} with unclaimed bounty.`)
+        console.log(`Issue Title: ${issue.title}`)
+        console.log(`Issue URL: ${issue.url}`)
         issueWithLinkedPR.forEach(async (pr: any) => {
           console.log(`- PR #${pr.number}: ${pr.html_url}`)
           const author = pr.user.login
@@ -32,6 +31,7 @@ export const notifyUnclamedBounties = async () => {
             provider_username: provider_username
           })
           if (userOnGitpay) {
+            console.log(`- GitPay User Found:`)
             console.log(`- GitPay User ID: ${userOnGitpay.id}`)
             console.log(`- GitPay User Email: ${userOnGitpay.email}`)
             console.log(`- GitPay User Username: ${userOnGitpay.username}`)
@@ -39,6 +39,7 @@ export const notifyUnclamedBounties = async () => {
           } else {
             console.log(`- No GitPay user found for this author.`)
           }
+          console.log('-----------------------------------------------------------')
         })
       } else {
         console.log(`Issue ID ${issueId} does not have a linked pull request.`)
@@ -46,7 +47,6 @@ export const notifyUnclamedBounties = async () => {
     } catch (error) {
       console.error(`Error processing issue ID ${issueId}:`, error)
     }
-    console.log('-----------------------------------------------------------')
+      
   })
-  console.log('----------------- End of Unclaimed Bounties Report -----------------')
 }
