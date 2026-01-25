@@ -7,36 +7,42 @@ export const findUnclaimedBountiesWithMergedPrs = async () => {
   const unclaimedBounties = await findUnclaimedBounties()
 
   const results = await Promise.all(
-    unclaimedBounties.map(async (issue: Issue) => {
-      try {
-        const linkedPrs = await findIssueLinkedPullRequest(issue.id)
-        const mergedPrs = (linkedPrs ?? []).filter((pr: any) => pr?.pull_request?.merged_at != null)
+    unclaimedBounties
+      .map(async (issue: Issue) => {
+        try {
+          const linkedPrs = await findIssueLinkedPullRequest(issue.id)
+          const mergedPrs = (linkedPrs ?? []).filter(
+            (pr: any) => pr?.pull_request?.merged_at != null
+          )
+          if (mergedPrs.length === 0) {
+            return false
+          }
+          const entriesForIssue = await Promise.all(
+            mergedPrs.map(async (pr: any) => {
+              const usersOnGitpay = await findUsersByProvider({
+                provider: 'github',
+                provider_id: String(pr?.user?.id),
+                provider_username: pr?.user?.login,
+                provider_email: pr?.user?.email
+              })
 
-        const entriesForIssue = await Promise.all(
-          mergedPrs.map(async (pr: any) => {
-            const usersOnGitpay = await findUsersByProvider({
-              provider: 'github',
-              provider_id: String(pr?.user?.id),
-              provider_username: pr?.user?.login,
-              provider_email: pr?.user?.email
+              return (usersOnGitpay ?? [])
+                .filter((u: any) => u?.id)
+                .map((user: any) => ({
+                  issue,
+                  providerIssues: mergedPrs,
+                  user
+                }))
             })
+          )
 
-            return (usersOnGitpay ?? [])
-              .filter((u: any) => u?.id)
-              .map((user: any) => ({
-                issue,
-                providerIssues: mergedPrs,
-                user
-              }))
-          })
-        )
-
-        return entriesForIssue.flat()
-      } catch (err) {
-        console.error('Error processing issue', issue.id, err)
-        return false
-      }
-    }).filter(Boolean)
+          return entriesForIssue.flat()
+        } catch (err) {
+          console.error('Error processing issue', issue.id, err)
+          return false
+        }
+      })
+      .filter(Boolean)
   )
   return results.flat()
 }
