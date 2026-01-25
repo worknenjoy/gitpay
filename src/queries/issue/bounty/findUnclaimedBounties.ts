@@ -10,11 +10,12 @@ export const findUnclaimedBounties = async () => {
       value: { [Op.gt]: 0 },
       status: IssueStatuses.CLOSED as IssueStatus
     },
-    include: [models.Order]
+    include: [models.Order, models.Transfer]
   })
 
   const pendingTasks = tasks.filter(
-    (t: Issue) => !t.paid && (t.transfer_id === null || t.TransferId === null || t?.Transfer?.id === null)
+    (t: Issue) =>
+      !t.paid && (t.transfer_id === null || t.TransferId === null || t?.Transfer?.id === null)
   )
   return pendingTasks
 }
