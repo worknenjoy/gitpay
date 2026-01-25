@@ -3,15 +3,22 @@ export type TableData = {
   rows?: Array<Array<string | number>>
 }
 
+export type ActionButton = {
+  link: string
+  text: string
+}
+
 /**
- * Generate a content block for emails with optional intro, content, a styled table, and footer.
+ * Generate a content block for emails with optional intro, content, a styled table, action button, and footer.
  * Mirrors the style of base-content template with an additional table section.
  */
 export const tableContentEmailTemplate = (
   intro: string = '',
   content: string = '',
   table: TableData = {},
-  footer: string = ''
+  footer: string = '',
+  action?: ActionButton,
+  footNote?: string
 ): string => {
   const hasHeaders = Array.isArray(table.headers) && table.headers.length > 0
   const hasRows = Array.isArray(table.rows) && table.rows.length > 0
@@ -67,8 +74,23 @@ export const tableContentEmailTemplate = (
 	</table>`
       : ''
 
+  const actionHtml =
+    action?.link && action?.text
+      ? `<p style="font-family: Helvetica, sans-serif; margin: 8px 0 16px; text-align: center;">
+					<a
+						href="${action.link}"
+						target="_blank"
+						style="display: inline-block; background: #2b5c45; color: #ffffff; text-decoration: none; padding: 12px 18px; border-radius: 4px; font-size: 14px; font-weight: 600;"
+					>${action.text}</a>
+				</p>`
+      : ''
+
   const footerHtml = footer
     ? `<p style="font-family: Helvetica, sans-serif; font-size: 13px; color: #777; margin: 8px 0 0;">${footer}</p>`
+    : ''
+
+  const footNoteHtml = footNote
+    ? `<p style="font-family: Helvetica, sans-serif; font-size: 12px; color: #999; margin: 8px 0 0; font-style: italic;">${footNote}</p>`
     : ''
 
   return `
@@ -79,6 +101,8 @@ export const tableContentEmailTemplate = (
 			${content ? `<p style="font-family: Helvetica, sans-serif; font-size: 16px; font-weight: normal; margin: 0 0 16px;">${content}</p>` : ''}
 			${tableHtml}
 			${footerHtml}
+			${actionHtml}
+			${footNoteHtml}
 		</td>
 	</tr>
 	<!-- END MAIN CONTENT AREA -->

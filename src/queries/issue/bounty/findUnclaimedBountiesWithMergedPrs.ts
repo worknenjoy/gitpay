@@ -7,44 +7,43 @@ export const findUnclaimedBountiesWithMergedPrs = async () => {
   const unclaimedBounties = await findUnclaimedBounties()
 
   const results = await Promise.all(
-    unclaimedBounties
-      .map(async (issue: Issue) => {
-        try {
-          const linkedPrs = await findIssueLinkedPullRequest(issue.id)
-          const mergedPrs = linkedPrs.filter((pr: any) => pr?.pull_request?.merged_at != null)
-          if (mergedPrs.length === 0) {
-            return false
-          }
-          const entriesForIssue = await Promise.all(
-            mergedPrs.map(async (pr: any) => {
-              const usersOnGitpay = await findUsersByProvider({
-                provider: 'github',
-                provider_id: String(pr?.user?.id),
-                provider_username: pr?.user?.login,
-                provider_email: pr?.user?.email
-              })
-
-              return (usersOnGitpay ?? [])
-                .filter((u: any) => u?.id)
-                .map((user: any) => ({
-                  issue,
-                  providerIssues: mergedPrs,
-                  user
-                }))
-            })
-          )
-          if (entriesForIssue.length === 0) {
-            return false
-          }
-
-          return entriesForIssue.flat()
-        } catch (err) {
-          console.error('Error processing issue', issue.id, err)
+    unclaimedBounties.map(async (issue: Issue) => {
+      try {
+        const linkedPrs = await findIssueLinkedPullRequest(issue.id)
+        const mergedPrs = linkedPrs.filter((pr: any) => pr?.pull_request?.merged_at != null)
+        if (mergedPrs.length === 0) {
           return false
         }
-      })
+        const entriesForIssue = await Promise.all(
+          mergedPrs.map(async (pr: any) => {
+            const usersOnGitpay = await findUsersByProvider({
+              provider: 'github',
+              provider_id: String(pr?.user?.id),
+              provider_username: pr?.user?.login,
+              provider_email: pr?.user?.email
+            })
+
+            return (usersOnGitpay ?? [])
+              .filter((u: any) => u?.id)
+              .map((user: any) => ({
+                issue,
+                providerIssues: mergedPrs,
+                user
+              }))
+          })
+        )
+        if (entriesForIssue.length === 0) {
+          return false
+        }
+
+        return entriesForIssue.flat()
+      } catch (err) {
+        console.error('Error processing issue', issue.id, err)
+        return false
+      }
+    })
   )
-  const resultsFlat = (results.flat().filter(Boolean) as any[])
+  const resultsFlat = results.flat().filter(Boolean) as any[]
 
   const seenIds = new Set<string | number>()
   const deduped = resultsFlat.filter((entry: any) => {

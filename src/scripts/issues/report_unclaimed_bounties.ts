@@ -1,9 +1,7 @@
-import { i18nConfigure } from '../../modules/shared/i18n/i18n'
-import { notifyUnclaimedBounties } from '../../services/issues/claims/unclaimedBountyService'
+import { findUnclaimedBountiesWithMergedPrs } from '../../queries/issue/bounty/findUnclaimedBountiesWithMergedPrs'
 
-const notifyUnclaimedBountiesScript = async () => {
-  i18nConfigure()
-  const unclaimedBountiesWithMergedPrs = await notifyUnclaimedBounties()
+const reportUnclamedBountiesScript = async () => {
+  const unclaimedBountiesWithMergedPrs = await findUnclaimedBountiesWithMergedPrs()
   console.log('Unclaimed Bounties with Merged PRs:', unclaimedBountiesWithMergedPrs.length)
   console.log(
     'Total amount of unclaimed bounties with merged PRs:',
@@ -33,4 +31,4 @@ const notifyUnclaimedBountiesScript = async () => {
   }
 }
 
-notifyUnclaimedBountiesScript()
+reportUnclamedBountiesScript()

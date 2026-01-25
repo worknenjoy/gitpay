@@ -17,7 +17,7 @@ export const findUsersByProvider = async (params: ProviderUserParams) => {
       ...(params.provider_email ? [{ provider_email: params.provider_email }] : [])
     ]
   })
-  if(!users || users.length === 0) {
+  if (!users || users.length === 0) {
     return []
   }
   return users
