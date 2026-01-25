@@ -1,7 +1,7 @@
 import { type Issue } from '../../../types/issue'
 import { findUnclaimedBounties } from '../../../queries/issue/bounty/findUnclaimedBounties'
 import { findIssueLinkedPullRequest } from '../../../queries/issue/pull-request/findIssueLinkedPullRequest'
-import { findUserByProvider } from '../../../queries/user/findUserByProvider'
+import { findUsersByProvider } from '../../../queries/user/findUsersByProvider'
 
 export const notifyUnclamedBounties = async () => {
   const unclaimedBounties = await findUnclaimedBounties()
@@ -20,21 +20,23 @@ export const notifyUnclamedBounties = async () => {
           const provider_id = pr.user.id
           const provider_username = pr.user.login
           const author_email = pr.user.email
-          console.log(`- Author: ${author}`)
-          console.log(`- Author Provider ID: ${provider_id}`)
-          console.log(`- Author Provider Username: ${provider_username}`)
-          console.log(`- Author Email: ${author_email}`)
 
-          const userOnGitpay = await findUserByProvider({
+          const usersOnGitpay = await findUsersByProvider({
             provider: 'github',
             provider_id: provider_id.toString(),
             provider_username: provider_username
           })
-          const amountOfUsers = userOnGitpay ? userOnGitpay.length : 0
-          console.log(`- GitPay users found linked to this author: ${amountOfUsers || 'no users found'}`)
-          if(amountOfUsers > 0) {
-            userOnGitpay.forEach((user: any) => {
-              console.log(`- Searching for GitPay user linked to this author...`)
+          const amountOfUsers = usersOnGitpay ? usersOnGitpay.length : 0
+          console.log(`- Author: ${author}`)
+          console.log(`- Author Provider ID: ${provider_id}`)
+          console.log(`- Author Provider Username: ${provider_username}`)
+          console.log(`- Author Email: ${author_email}`)
+          console.log(
+            `- GitPay users found linked to this author: ${amountOfUsers}`
+          )
+          if (amountOfUsers > 0) {
+            usersOnGitpay.forEach((user: any) => {
+              console.log(`- Details of the GitPay users linked to this author...`)
               if (user) {
                 console.log(`------------`)
                 console.log(`- GitPay User Found:`)
