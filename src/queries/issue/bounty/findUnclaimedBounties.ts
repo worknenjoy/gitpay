@@ -1,5 +1,5 @@
 import { Op } from 'sequelize'
-import { type Issue, type IssueStatus } from '../../../types/issue'
+import { type IssueStatus } from '../../../types/issue'
 import Models from '../../../models'
 import { IssueStatuses } from '../../../constants/issue'
 const models = Models as any
@@ -7,15 +7,16 @@ const models = Models as any
 export const findUnclaimedBounties = async () => {
   const tasks = await models.Task.findAll({
     where: {
-      value: { [Op.gt]: 0 },
-      status: IssueStatuses.CLOSED as IssueStatus
+      [Op.and]: [
+        { value: { [Op.gt]: 0 } },
+        { status: IssueStatuses.CLOSED as IssueStatus },
+        { paid: false },
+        { transfer_id: null },
+        { TransferId: null },
+        { '$Transfer.id$': null }
+      ]
     },
     include: [models.Order, models.Transfer]
   })
-
-  const pendingTasks = tasks.filter(
-    (t: Issue) =>
-      !t.paid || t.transfer_id === null || t.TransferId === null || t?.Transfer?.id === null
-  )
-  return pendingTasks
+  return tasks
 }

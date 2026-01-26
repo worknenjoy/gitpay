@@ -6,8 +6,6 @@ export const IssueFactory = async (paramsOverwrite: any = {}) => {
     title: 'Sample Issue',
     description: 'This is a sample issue description.',
     paid: false,
-    transfer_id: null,
-    TransferId: null,
     value: 100,
     userId: 1
   }
