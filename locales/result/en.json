@@ -242,5 +242,5 @@
   "mail.issue.claim.item": "Unclaimed bounty",
   "mail.issue.claim.cta": "Claim your bounty",
   "mail.issue.claim.details": "<p><strong>You are one step away from claiming your bounty.</strong></p><p>Here are the steps you need to complete:</p><p>1. Log in to your <a href=\"http://gitpay.me/#/profile\">Gitpay account</a>.</p><p>2. Activate your bank account in <a href=\"http://gitpay.me/#/profile/payout-settings/bank-account\">Payout Settings</a>.</p><p>3. Go to the issue page on Gitpay: <a href=\"{{issueUrl}}\">{{title}}</a>.</p><p>4. Click on <strong>Send Solution</strong>.</p><p>5. Send your PR which solve the issue: <a href=\"{{prURL}}\">{{prURL}}</a></p>",
-  "mail.issue.claim.footer": "<p>If you have any questions or issues with your payout, please contact us at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>"
+  "mail.issue.claim.footer": "<p>If you have any questions or issues with your payout, please get in touch with us at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>"
 }
