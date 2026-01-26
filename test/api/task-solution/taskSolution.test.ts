@@ -90,6 +90,80 @@ describe('Task Solution', () => {
         throw err
       }
     })
+    it('should create a task solution with an existing assign', async () => {
+      try {
+        const solutionParams = {
+          pullRequestId: '2',
+          repositoryName: 'test-repository',
+          owner: 'alexanmtz',
+          taskId: 1
+        }
+
+        nock('https://api.github.com')
+          .persist()
+          .get(
+            `/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`
+          )
+          .reply(200, {
+            user: {
+              login: 'alexanmtz'
+            },
+            state: 'closed',
+            merged: true,
+            title: 'test PR #1',
+            body: 'closes #1',
+            html_url: 'https://github.com/alexanmtz/test-repository/pull/2'
+          })
+
+        const loginResponse = await registerAndLogin(agent, {
+          email: 'tasksolutiontest@test.com',
+          provider: 'github',
+          provider_username: 'alexanmtz'
+        })
+        const { body: user, headers } = loginResponse as any
+
+        const { body: task } = await createTask(agent, {
+          url: 'https://github.com/alexanmtz/test-repository/issues/1',
+          userId: user.id,
+          status: 'closed'
+        })
+
+        await models.Order.create({
+          provider: 'stripe',
+          amount: 100,
+          userId: user.id,
+          TaskId: task.id,
+          source_id: '1234',
+          status: 'succeeded',
+          paid: true
+        })
+
+        await models.Assign.create({
+          userId: user.id,
+          TaskId: task.id,
+          status: 'pending'
+        })
+
+        const taskSolutionCreateRes = await agent
+          .post('/tasksolutions/create')
+          .set('Authorization', headers.authorization)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .send({
+            isConnectedToGitHub: true,
+            isAuthorOfPR: true,
+            isPRMerged: true,
+            isIssueClosed: true,
+            hasIssueReference: true,
+            pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
+            taskId: task.id
+          })
+        expect(taskSolutionCreateRes.body).to.have.property('id')
+      } catch (err) {
+        throw err
+      }
+    })
+
     it('should create a task solution with stripe response with insufficient capatibilities', async () => {
       try {
         const solutionParams = {
