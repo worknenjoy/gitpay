@@ -25,7 +25,7 @@ const ClaimMail: any = {
         {
           type: 'text/html',
           value: tableContentEmailTemplate(
-            i18n.__('mail.issue.claim.intro', { name: user.name }),
+            i18n.__('mail.issue.claim.intro', { name: user.name || user.username || 'Gitpay User' }),
             i18n.__('mail.issue.claim.message', {
               title,
               issueUrl,
