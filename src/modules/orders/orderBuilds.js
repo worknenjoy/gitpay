@@ -6,7 +6,7 @@ const Decimal = require('decimal.js')
 const stripe = require('../shared/stripe/stripe')()
 const Sendmail = require('../mail/mail')
 const userCustomerCreate = require('../users/userCustomerCreate')
-const slack = require('../slack')
+const slack = require('../shared/slack')
 
 module.exports = async function orderBuilds(orderParameters) {
   const { source_id, source_type, currency, provider, amount, email, userId, taskId, plan } =
@@ -253,15 +253,12 @@ module.exports = async function orderBuilds(orderParameters) {
         amount: orderCreated.dataValues.amount,
         currency: orderCreated.dataValues.currency || 'USD'
       }
-      // Avoid even invoking notification helper for private/not_listed tasks
-      if (slack.shouldNotifyForTask(orderWithAssociations.Task)) {
-        await slack.notifyBountyWithErrorHandling(
-          orderWithAssociations.Task,
-          orderData,
-          orderWithAssociations.User,
-          'wallet payment'
-        )
-      }
+      await slack.notifyBounty(
+        orderWithAssociations.Task,
+        orderData,
+        orderWithAssociations.User,
+        'wallet payment'
+      )
     }
 
     return orderUpdated
