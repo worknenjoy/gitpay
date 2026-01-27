@@ -70,12 +70,7 @@ module.exports = Promise.method(function orderAuthorize(orderParameters) {
               amount: orderData.amount,
               currency: orderData.currency || 'USD'
             }
-            await slack.notifyBounty(
-              task,
-              orderDataForNotification,
-              user,
-              'PayPal payment'
-            )
+            await slack.notifyBounty(task, orderDataForNotification, user, 'PayPal payment')
           } else {
             PaymentMail.error(user.dataValues, task, orderData.amount)
           }
