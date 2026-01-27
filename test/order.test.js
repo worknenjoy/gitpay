@@ -238,8 +238,8 @@ describe('Orders', () => {
     it('should not call notifyNewBounty when wallet payment completes for a private task', async () => {
       chai.use(spies)
       const slackModule = require('../src/modules/shared/slack')
-      // Spy on notifyBounty since that's what's actually called
-      const slackSpy = chai.spy.on(slackModule, 'notifyBounty')
+      // Spy on notifyBountyOnSlack - the internal function that sends to Slack
+      const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
       try {
@@ -277,10 +277,10 @@ describe('Orders', () => {
           taskId: task.id
         })
 
-        // Notification should NOT be called for private tasks
+        // Notification should NOT be sent to Slack for private tasks
         expect(slackSpy).to.not.have.been.called()
       } finally {
-        chai.spy.restore(slackModule, 'notifyBounty')
+        chai.spy.restore(slackModule, 'notifyBountyOnSlack')
       }
     })
 
@@ -1012,8 +1012,8 @@ describe('Orders', () => {
     it('should not call notifyNewBounty when PayPal payment completes for a private task', async () => {
       chai.use(spies)
       const slackModule = require('../src/modules/shared/slack')
-      // Spy on notifyBounty since that's what's actually called
-      const slackSpy = chai.spy.on(slackModule, 'notifyBounty')
+      // Spy on notifyBountyOnSlack - the internal function that sends to Slack
+      const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderAuthorize = require('../src/modules/orders').orderAuthorize
 
       // Mock PayPal API responses
@@ -1060,7 +1060,7 @@ describe('Orders', () => {
           PayerID: 'TEST_PAYER_ID'
         })
 
-        // Notification should NOT be called for private tasks
+        // Notification should NOT be sent to Slack for private tasks
         expect(slackSpy).to.not.have.been.called()
       } finally {
         chai.spy.restore(slackModule, 'notifyBountyOnSlack')
