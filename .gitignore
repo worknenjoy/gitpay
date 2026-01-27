@@ -88,3 +88,4 @@ Thumbs.db
 # Configuration of database and password/tokens/idSercure
 .env
 docker-compose.override.yml
+.claude/
