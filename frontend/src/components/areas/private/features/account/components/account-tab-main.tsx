@@ -8,21 +8,26 @@ import ProviderLoginButtons from '../../../../../../containers/provider-login-bu
 import DeleteAccountButton from './delete-account-button'
 
 import { Fieldset, LegendText } from './account-tab-main.styles'
+import ConfirmButton from 'design-library/atoms/buttons/confirm-button/confirm-button'
+import { type ConfirmFieldValue } from 'design-library/molecules/dialogs/confirm-dialog/confirm-dialog'
+import { useHistory } from 'react-router-dom'
 
 const AccountTabMain = ({
   user,
   updateUser,
   changePassword,
   addNotification,
-  history,
-  deleteUser
+  deleteUser,
+  updateUserEmail
 }) => {
+  const history = useHistory()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
   const { data } = user || {}
-  const { login_strategy, provider, name } = data || {}
+  const { login_strategy, provider, name, email } = data || {}
   const [fieldName, setFieldName] = useState<string>(name)
+  const [fieldEmail, setFieldEmail] = useState<string>(email)
   const [currentPassword, setCurrentPassword] = useState<string>('')
   const [newPassword, setNewPassword] = useState<string>('')
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>('')
@@ -55,7 +60,23 @@ const AccountTabMain = ({
 
   const handleUpdateAccount = (e) => {
     e.preventDefault()
-    updateUser && updateUser({ name: fieldName })
+    const whatToUpdate = {}
+    if (fieldName !== name) {
+      whatToUpdate['name'] = fieldName
+    }
+    updateUser && updateUser(whatToUpdate)
+  }
+
+  const handleUpdateEmail = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    values: ConfirmFieldValue
+  ) => {
+    e.preventDefault()
+    await updateUserEmail?.({
+      newEmail: fieldEmail,
+      currentPassword: values['password'],
+      confirmCurrentPassword: values['confirmPassword']
+    })
   }
 
   const onChangePassword = async (e) => {
@@ -83,6 +104,9 @@ const AccountTabMain = ({
       }))
   }
 
+  const shouldUpdateEmail = fieldEmail !== email
+  const shouldUpdateName = fieldName !== name
+
   return (
     <Paper elevation={1} style={{ padding: 20 }}>
       <form>
@@ -108,7 +132,7 @@ const AccountTabMain = ({
             <Fieldset>
               <legend>
                 <LegendText>
-                  <FormattedMessage id="account.account" defaultMessage="Account" />
+                  <FormattedMessage id="account.account.basic" defaultMessage="Basic information" />
                 </LegendText>
               </legend>
               <Grid container spacing={2}>
@@ -128,16 +152,92 @@ const AccountTabMain = ({
                   <div {...(isDesktop ? { float: 'right' } : { style: { textAlign: 'center' } })}>
                     <Button
                       {...(isMobile ? { fullWidth: true, style: { marginBottom: 10 } } : {})}
+                      disabled={!shouldUpdateName}
                       type="submit"
                       variant="contained"
                       color="secondary"
                       onClick={handleUpdateAccount}
                     >
                       <FormattedMessage
-                        id="account.user.actions.update"
+                        id="account.user.actions.change.name"
                         defaultMessage="Update Account"
                       />
                     </Button>
+                  </div>
+                </Grid>
+              </Grid>
+            </Fieldset>
+            <Fieldset>
+              <legend>
+                <LegendText>
+                  <FormattedMessage
+                    id="account.account.email.change"
+                    defaultMessage="Change email"
+                  />
+                </LegendText>
+              </legend>
+              <Grid container spacing={2}>
+                <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+                  <FormattedMessage id="account.basic.email" defaultMessage="email">
+                    {(msg) => (
+                      <Field
+                        onChange={(e) => setFieldEmail(e.target.value)}
+                        name="email"
+                        label={msg}
+                        value={fieldEmail}
+                        disabled={!shouldAllowPasswordChange}
+                      />
+                    )}
+                  </FormattedMessage>
+                </Grid>
+                <Grid size={{ xs: 12, sm: 12, md: 12 }}>
+                  <div {...(isDesktop ? { float: 'right' } : { style: { textAlign: 'center' } })}>
+                    <ConfirmButton
+                      {...(isMobile ? { fullWidth: true, style: { marginBottom: 10 } } : {})}
+                      disabled={!shouldUpdateEmail}
+                      type="submit"
+                      variant="contained"
+                      color="secondary"
+                      label={
+                        <FormattedMessage
+                          id="account.user.actions.update.email"
+                          defaultMessage="Change Email"
+                        />
+                      }
+                      dialogMessage={
+                        <FormattedMessage
+                          id="account.user.actions.update.email.confirm"
+                          defaultMessage="Are you sure you want to update your email address?"
+                        />
+                      }
+                      confirmLabel={
+                        <FormattedMessage
+                          id="account.user.actions.update.email"
+                          defaultMessage="Change Email"
+                        />
+                      }
+                      cancelLabel={
+                        <FormattedMessage id="account.actions.cancel" defaultMessage="Cancel" />
+                      }
+                      onConfirm={handleUpdateEmail}
+                      confirmFields={{
+                        type: 'password',
+                        name: 'password',
+                        confirmName: 'confirmPassword',
+                        label: (
+                          <FormattedMessage
+                            id="account.basic.password.current"
+                            defaultMessage="Current password"
+                          />
+                        ),
+                        confirmLabel: (
+                          <FormattedMessage
+                            id="account.basic.password.current.confirm"
+                            defaultMessage="Confirm current password"
+                          />
+                        )
+                      }}
+                    />
                   </div>
                 </Grid>
               </Grid>
@@ -212,7 +312,7 @@ const AccountTabMain = ({
                 </Grid>
               </Grid>
             </Fieldset>
-            <DeleteAccountButton user={user} history={history} deleteUser={deleteUser} />
+            <DeleteAccountButton user={user} deleteUser={deleteUser} />
           </Grid>
           <Grid size={{ xs: 12, sm: 6, md: 6 }}></Grid>
         </Grid>

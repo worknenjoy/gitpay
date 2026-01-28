@@ -51,7 +51,9 @@
     "sync:payouts": "tsx src/scripts/payouts/payout_sync.ts",
     "reports:revenue": "tsx src/scripts/reports/revenue-reports/revenue_report.ts",
     "reports:financial_summary": "tsx src/scripts/reports/financial-summary/financial_summary.ts",
-    "reports:balance_summary": "tsx src/scripts/reports/balance-summary/balance_summary.ts"
+    "reports:balance_summary": "tsx src/scripts/reports/balance-summary/balance_summary.ts",
+    "script:issue:report_unclaimed_bounties": "tsx src/scripts/issues/report_unclaimed_bounties.ts",
+    "scripts:issue:notify_unclaimed_bounties": "tsx src/scripts/issues/notify_unclaimed_bounties.ts"
   },
   "husky": {
     "hooks": {
@@ -138,7 +140,9 @@
     "@types/i18n": "^0.13.12",
     "@types/jasmine": "2.5.38",
     "@types/node": "^18.19.130",
+    "@types/passport": "^1.0.17",
     "@types/request-promise": "^4.1.51",
+    "@types/sinon": "^21.0.0",
     "@types/supertest": "^6.0.3",
     "@types/umzug": "^2.3.9",
     "chai": "^3.5.0",

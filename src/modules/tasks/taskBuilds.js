@@ -28,13 +28,13 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
   let uri, headers
   switch (taskParameters.provider) {
     case 'github':
-      uri = taskParameters.token
+      uri = token
         ? `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}`
         : `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
       headers = {
         'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
       }
-      if (taskParameters.token) headers.Authorization = `token ${token}`
+      if (token) headers.Authorization = `token ${token}`
       return requestPromise({
         uri,
         headers
@@ -45,15 +45,21 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
         if (!taskParameters.description) taskParameters.description = issueDataJsonGithub.body
 
         const programmingLanguagesUri = `https://api.github.com/repos/${userOrCompany}/${projectName}/languages?client_id=${githubClientId}&client_secret=${githubClientSecret}`
-        const programmingLanguagesResponse = await requestPromise({
-          uri: programmingLanguagesUri,
-          headers: {
-            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-          },
-          json: true
-        })
+        let programmingLanguagesResponse = {}
+        try {
+          programmingLanguagesResponse = await requestPromise({
+            uri: programmingLanguagesUri,
+            headers: {
+              'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
+              ...(taskParameters.token ? { Authorization: `token ${taskParameters.token}` } : {})
+            },
+            json: true
+          })
+        } catch (e) {
+          programmingLanguagesResponse = {}
+        }
 
-        const languages = Object.keys(programmingLanguagesResponse)
+        const languages = Object.keys(programmingLanguagesResponse || {})
 
         return project(userOrCompany, projectName, userId, 'github').then((p) => {
           return p.createTask(taskParameters).then(async (task) => {

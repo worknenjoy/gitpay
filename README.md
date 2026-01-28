@@ -5,7 +5,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay 'Average time to resolve an issue')
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay 'Percentage of issues still open')
 
-Gitpay is an open-source platform that facilitates collaboration and rewards contributions by enabling users to complete issues for open-source projects.
+Gitpay is an open-source platform that facilitates collaboration and rewards contributions for solving issues from open-source and private projects.
 
 ### Slack channel
 

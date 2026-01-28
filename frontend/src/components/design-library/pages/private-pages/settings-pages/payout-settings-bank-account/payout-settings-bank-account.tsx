@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl'
 
 const PayoutSetingsBankAccount = ({ children, user, onSaveCountry }) => {
   const { completed, data } = user
-  const [ savingCountry, setSavingCountry ] = React.useState(false)
+  const [savingCountry, setSavingCountry] = React.useState(false)
   const [openCountryPicker, setOpenCountryPicker] = React.useState(false)
   const [country, setCountry] = React.useState({
     label: null,

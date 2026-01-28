@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Switch, HashRouter, useHistory } from 'react-router-dom'
+import { Route, Switch, HashRouter } from 'react-router-dom'
 import PrivateBase from 'design-library/templates/base/private-base/private-base'
 import DashboardContainer from '../../../../containers/dashboard/dashboard'
 import { UserAccount } from '../features/account/user-account'
@@ -26,16 +26,13 @@ const PrivatePage = ({
   updateUser,
   changePassword,
   resendActivationEmail,
+  updateUserEmail,
   addNotification,
   deleteUser,
   signOut,
   info,
   getInfo
 }) => {
-  const history = useHistory()
-
-  const { data } = user
-
   useEffect(() => {
     fetchOrganizations()
   }, [])
@@ -62,8 +59,8 @@ const PrivatePage = ({
                 updateUser={updateUser}
                 changePassword={changePassword}
                 addNotification={addNotification}
-                history={history}
                 deleteUser={deleteUser}
+                updateUserEmail={updateUserEmail}
               />
             )}
           />

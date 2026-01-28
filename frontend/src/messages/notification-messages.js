@@ -350,11 +350,60 @@ const messages = defineMessages({
   },
   notificationAccountUpdateSuccess: {
     id: 'notifications.account.update',
-    defaultMessage: 'Your user was updated sucessfully'
+    defaultMessage: 'Your user was updated successfully'
+  },
+  notificationAccountUpdateEmailSuccess: {
+    id: 'notifications.account.update.email.success',
+    defaultMessage:
+      'Your request to change email was sent successfully. Please check your inbox with the instructions to activate your new email'
+  },
+  notificationAccountUpdateEmailError: {
+    id: 'notifications.account.update.email.error',
+    defaultMessage: 'We could not update your email'
+  },
+  notificationAccountUpdateEmailErrorMissingParameters: {
+    id: 'notifications.account.update.email.error.missing_parameters',
+    defaultMessage: 'Missing parameters to update email'
+  },
+  notificationAccountUpdateEmailErrorUserNotFound: {
+    id: 'notifications.account.update.email.error.user_not_found',
+    defaultMessage: 'User not found'
+  },
+  notificationAccountUpdateEmailErrorEmailAlreadyInUse: {
+    id: 'notifications.account.update.email.error.email_already_in_use',
+    defaultMessage: 'This email is already in use'
+  },
+  notificationAccountUpdateEmailErrorPasswordsDoNotMatch: {
+    id: 'notifications.account.update.email.error.passwords_do_not_match',
+    defaultMessage: 'Passwords do not match'
+  },
+  notificationAccountUpdateEmailErrorCannotChangeEmailForProvider: {
+    id: 'notifications.account.update.email.error.cannot_change_email_for_provider',
+    defaultMessage: 'You cannot change the email for accounts linked with GitHub or Bitbucket'
+  },
+  notificationAccountUpdateEmailErrorCurrentPasswordIncorrect: {
+    id: 'notifications.account.update.email.error.current_password_incorrect',
+    defaultMessage: 'The current password is incorrect'
+  },
+  notificationAccountUpdateEmailErrorInvalidEmail: {
+    id: 'notifications.account.update.email.error.invalid_email',
+    defaultMessage: 'Invalid email'
+  },
+  notificationAccountUpdateEmailErrorEmailTooLong: {
+    id: 'notifications.account.update.email.error.email_too_long',
+    defaultMessage: 'Email is too long'
+  },
+  notificationAccountUpdateEmailErrorSameAsCurrentEmail: {
+    id: 'notifications.account.update.email.error.same_as_current_email',
+    defaultMessage: 'Your new email is the same as the current email'
+  },
+  notificationAccountUpdateEmailErrorFailedToUpdate: {
+    id: 'notifications.account.update.email.error.failed_to_update',
+    defaultMessage: 'We had an issue to update your email, please try again later'
   },
   notificationAccountActivateSuccess: {
     id: 'notifications.account.activate',
-    defaultMessage: 'Your account was activated sucessfully'
+    defaultMessage: 'Your account was activated successfully'
   },
   notificationAccountActivateError: {
     id: 'notifications.account.activate.error',
@@ -362,7 +411,7 @@ const messages = defineMessages({
   },
   notificationAccountUpdateError: {
     id: 'notifications.account.update.error',
-    defaultMessage: 'We could not create your account'
+    defaultMessage: 'We could not update your account'
   },
   notificationAccountResendActivation: {
     id: 'notifications.account.resend_activation_email.success',
@@ -412,6 +461,14 @@ const messages = defineMessages({
     id: 'user.invalid',
     defaultMessage:
       'Invalid email or password. If you signed up with GitHub or Bitbucket, please log in through that instead'
+  },
+  notificationEmailChangeConfirmationSuccess: {
+    id: 'user.email_change.confirmation_successful',
+    defaultMessage: 'Your email change has been confirmed successfully'
+  },
+  notificationEmailChangeConfirmationError: {
+    id: 'user.email_change.confirmation_failed',
+    defaultMessage: 'We could not confirm your email change'
   },
   notificationOrderSuccess: {
     id: 'task.order.payment.success',

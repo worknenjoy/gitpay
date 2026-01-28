@@ -26,6 +26,7 @@ import {
 } from './import-issue-dialog.styles'
 
 const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
+  const { data = {}, completed } = user
   const [error, setError] = useState(false)
   const [url, setUrl] = useState('')
   const [provider, setProvider] = useState('github')
@@ -48,7 +49,7 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
   const handleCreateTask = async (e: any) => {
     if (validURL(url)) {
       if (privateRepo) {
-        window.location.href = `${api.API_URL}/authorize/github/private/?url=${encodeURIComponent(url)}&userId=${user.id}`
+        window.location.href = `${api.API_URL}/authorize/github/private/?url=${encodeURIComponent(url)}&userId=${data.id}`
         return
       }
       try {
@@ -56,8 +57,7 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
           private: !!privateRepo,
           not_listed: !!notListed,
           url: url,
-          provider: provider,
-          userId: user ? user.id : null
+          provider: provider
         })
       } catch (e) {
         console.log(e)

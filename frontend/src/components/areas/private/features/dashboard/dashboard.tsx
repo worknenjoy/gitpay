@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { Button, Container, Grid } from '@mui/material'
 import { Alert, AlertTitle } from '@mui/material'
 import { AlertWrapper } from './dashboard.styles'
@@ -8,10 +8,14 @@ import WelcomeUser from '../../components/session/welcome-user'
 import DashboardCardList from 'design-library/molecules/cards/dashboard-cards/dashboard-card-list/dashboard-card-list'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 
-const Dashboard = ({ user, dashboard, fetchDashboardInfo }) => {
+const Dashboard = ({ user, dashboard, fetchDashboardInfo, addNotification }) => {
   const { data = {}, completed } = user
 
   const history = useHistory()
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  const createTaskError = searchParams.get('createTaskError')
+  const message = searchParams.get('message')
 
   const [visible, setVisible] = React.useState(false)
 
@@ -19,6 +23,20 @@ const Dashboard = ({ user, dashboard, fetchDashboardInfo }) => {
     completed && data?.Types?.length === 0 && setVisible(true)
     fetchDashboardInfo()
   }, [data, completed])
+
+  React.useEffect(() => {
+    if (createTaskError === 'true' && message) {
+      if (message.length > 0) {
+        try {
+          const decodedMessage = decodeURIComponent(message)
+          addNotification(decodedMessage, { variant: 'error' })
+        } catch (e) {
+          console.error('Error decoding message:', e)
+          addNotification(message, { variant: 'error' })
+        }
+      }
+    }
+  }, [createTaskError, message])
 
   return (
     <Container>

@@ -21,9 +21,11 @@ module.exports.currencyMap = {
   HK: 'HKD',
   HU: 'HUF', // Hungary
   IN: 'INR',
+  ID: 'IDR', // Indonesia
   IE: 'EUR',
   IT: 'EUR',
   JP: 'JPY',
+  JM: 'JMD', // Jamaica
   KE: 'KES', // Kenya
   LV: 'EUR', // Latvia
   LI: 'CHF', // Liechtenstein

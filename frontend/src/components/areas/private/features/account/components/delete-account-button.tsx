@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { Button, useMediaQuery, useTheme } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import DeleteUser from '../features/account-details/deleteUser'
+import { useHistory } from 'react-router-dom'
 
-const DeleteAccountButton = ({ deleteUser, user, history }) => {
+const DeleteAccountButton = ({ deleteUser, user }) => {
+  const history = useHistory()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const isDesktop = useMediaQuery(theme.breakpoints.up('sm'))
   const [deleteUserDialog, setDeleteUserDialog] = useState(false)
 
   const onDeleteUser = (user) => {

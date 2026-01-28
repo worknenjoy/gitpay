@@ -34,22 +34,20 @@ module.exports = Promise.method(async function taskSolutionCreate(taskSolutionPa
         taskId: taskSolutionParams.taskId
       })
 
-      if (!existingAssignment) {
-        const assign = await task.createAssign({ userId: taskSolutionParams.userId })
-        if (!assign) {
-          throw new Error('COULD_NOT_CREATE_ASSIGN')
-        }
-        const taskUpdateAssign = await taskUpdate(
-          {
-            id: taskSolutionParams.taskId,
-            userId: task.dataValues.userId,
-            assigned: assign.dataValues.id
-          },
-          false
-        )
-        if (!taskUpdateAssign) {
-          throw new Error('COULD_NOT_UPDATE_TASK')
-        }
+      const assign = existingAssignment || await task.createAssign({ userId: taskSolutionParams.userId })
+      if (!assign) {
+        throw new Error('COULD_NOT_CREATE_ASSIGN')
+      }
+      const taskUpdateAssign = await taskUpdate(
+        {
+          id: taskSolutionParams.taskId,
+          userId: task.dataValues.userId,
+          assigned: assign.dataValues.id
+        },
+        false
+      )
+      if (!taskUpdateAssign) {
+        throw new Error('COULD_NOT_UPDATE_TASK')
       }
     }
     try {

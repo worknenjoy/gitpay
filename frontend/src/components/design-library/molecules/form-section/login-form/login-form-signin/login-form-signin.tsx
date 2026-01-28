@@ -140,6 +140,14 @@ const LoginFormSignin = ({
     if (status === 'invalid') {
       addNotification && addNotification('user.invalid', { severity: 'error' })
     }
+    if (status === 'email-change-confirmed') {
+      addNotification &&
+        addNotification('user.email_change.confirmation_successful', { severity: 'success' })
+    }
+    if (status === 'email-change-failed') {
+      addNotification &&
+        addNotification('user.email_change.confirmation_failed', { severity: 'error' })
+    }
   }, [status, addNotification])
 
   const { error } = state

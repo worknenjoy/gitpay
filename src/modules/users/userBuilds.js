@@ -1,5 +1,5 @@
 const Promise = require('bluebird')
-const Sendmail = require('../mail/mail')
+const UserMail = require('../mail/user')
 const models = require('../../models')
 
 module.exports = Promise.method(async function userBuilds(userParameters) {
@@ -21,11 +21,7 @@ module.exports = Promise.method(async function userBuilds(userParameters) {
     if (dataValues && dataValues.id) {
       const { id, name, activation_token } = dataValues
       if (!userParameters.provider) {
-        Sendmail.success(
-          dataValues,
-          'Activate your account',
-          `<p>Hi ${name || 'Gitpay user'},</p><p>Click <a href="${process.env.FRONTEND_HOST}/#/activate/user/${id}/token/${activation_token}">here</a> to activate your account.</p>`
-        )
+        UserMail.activation(dataValues, activation_token)
       }
       if (selectedTypeIds && selectedTypeIds.length > 0) {
         await user.setTypes(selectedTypeIds)

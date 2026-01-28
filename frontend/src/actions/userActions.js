@@ -45,6 +45,10 @@ const UPDATE_USER_REQUESTED = 'UPDATE_USER_REQUESTED'
 const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS'
 const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR'
 
+const UPDATE_USER_EMAIL_REQUESTED = 'UPDATE_USER_EMAIL_REQUESTED'
+const UPDATE_USER_EMAIL_SUCCESS = 'UPDATE_USER_EMAIL_SUCCESS'
+const UPDATE_USER_EMAIL_ERROR = 'UPDATE_USER_EMAIL_ERROR'
+
 const ACTIVATE_USER_REQUESTED = 'ACTIVATE_USER_REQUESTED'
 const ACTIVATE_USER_SUCCESS = 'ACTIVATE_USER_SUCCESS'
 const ACTIVATE_USER_ERROR = 'ACTIVATE_USER_ERROR'
@@ -267,6 +271,26 @@ const updateUserSuccess = (user) => {
 
 const updateUserError = (error) => {
   return { type: UPDATE_USER_ERROR, completed: true, error: error }
+}
+
+/*
+ * User email update
+ */
+
+const updateUserEmailRequested = () => {
+  return { type: UPDATE_USER_EMAIL_REQUESTED, completed: false }
+}
+
+const updateUserEmailSuccess = (user) => {
+  return {
+    type: UPDATE_USER_EMAIL_SUCCESS,
+    completed: true,
+    data: user.data
+  }
+}
+
+const updateUserEmailError = (error) => {
+  return { type: UPDATE_USER_EMAIL_ERROR, completed: true, error: error }
 }
 
 /*
@@ -571,7 +595,7 @@ const updateUser = (userData) => {
   return (dispatch) => {
     dispatch(updateUserRequested())
     return axios
-      .put(api.API_URL + '/user/update', userData)
+      .put(api.API_URL + '/user', userData)
       .then((user) => {
         dispatch(addNotification('notifications.account.update'))
         dispatch(fetchLoggedUser())
@@ -582,6 +606,53 @@ const updateUser = (userData) => {
         // eslint-disable-next-line no-console
         console.log('error on update user', error)
         return dispatch(updateUserError(error))
+      })
+  }
+}
+
+const updateUserEmail = ({ newEmail, currentPassword, confirmCurrentPassword }) => {
+  validToken()
+  return (dispatch) => {
+    const updateUserEmailErrorsMap = {
+      'user.change_email.missing_parameters':
+        'notifications.account.update.email.error.missing_parameters',
+      'user.change_email.user_not_found': 'notifications.account.update.email.error.user_not_found',
+      'user.change_email.email_already_in_use':
+        'notifications.account.update.email.error.email_already_in_use',
+      'user.change_email.passwords_do_not_match':
+        'notifications.account.update.email.error.passwords_do_not_match',
+      'user.change_email.cannot_change_email_for_provider':
+        'notifications.account.update.email.error.cannot_change_email_for_provider',
+      'user.change_email.current_password_incorrect':
+        'notifications.account.update.email.error.current_password_incorrect',
+      'user.change_email.invalid_email': 'notifications.account.update.email.error.invalid_email',
+      'user.change_email.email_too_long': 'notifications.account.update.email.error.email_too_long',
+      'user.change_email.same_as_current_email':
+        'notifications.account.update.email.error.same_as_current_email',
+      'user.change_email.failed_to_update':
+        'notifications.account.update.email.error.failed_to_update'
+    }
+    dispatch(updateUserEmailRequested())
+    return axios
+      .post(api.API_URL + '/auth/change-email', {
+        newEmail,
+        currentPassword,
+        confirmCurrentPassword
+      })
+      .then((user) => {
+        dispatch(addNotification('notifications.account.update.email.success'))
+        dispatch(fetchLoggedUser())
+        return dispatch(updateUserEmailSuccess(user))
+      })
+      .catch((error) => {
+        const errorMessage = error?.response?.data?.error || error.message
+        dispatch(
+          addNotification(
+            updateUserEmailErrorsMap[errorMessage] || 'notifications.account.update.email.error',
+            { severity: 'error' }
+          )
+        )
+        return dispatch(updateUserEmailError(error))
       })
   }
 }
@@ -794,6 +865,9 @@ export {
   UPDATE_USER_REQUESTED,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
+  UPDATE_USER_EMAIL_REQUESTED,
+  UPDATE_USER_EMAIL_SUCCESS,
+  UPDATE_USER_EMAIL_ERROR,
   ACTIVATE_USER_REQUESTED,
   ACTIVATE_USER_SUCCESS,
   ACTIVATE_USER_ERROR,
@@ -822,6 +896,7 @@ export {
   createCustomer,
   updateCustomer,
   updateUser,
+  updateUserEmail,
   activateUser,
   resendActivationEmail,
   createBankAccount,

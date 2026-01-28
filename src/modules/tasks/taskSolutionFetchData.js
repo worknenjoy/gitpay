@@ -47,6 +47,14 @@ module.exports = Promise.method(async function fetchTaskSolutionData(solutionPar
         where: { userId: solutionParams.userId, TaskId: task.dataValues.id }
       })
 
+      const taskUrl = task.url
+      const taskRepo = taskUrl.split('/')[4]
+      const taskOwner = taskUrl.split('/')[3]
+      const pullRequestUrl = pullRequestData.html_url
+      const pullRequestRepo = pullRequestUrl.split('/')[4]
+      const pullRequestOwner = pullRequestUrl.split('/')[3]
+      const isTheSameRepo = taskRepo === pullRequestRepo && taskOwner === pullRequestOwner
+
       // Verify if the current user is the owner of PR (currently used to verify if user is authenticated to GitHub too)
       if (user.dataValues.provider === 'github') {
         isConnectedToGitHub = true
@@ -57,7 +65,7 @@ module.exports = Promise.method(async function fetchTaskSolutionData(solutionPar
       }
 
       // Verify if PR is closed/merged
-      if (pullRequestData.state === 'closed' && pullRequestData.merged) {
+      if (isTheSameRepo && pullRequestData.state === 'closed' && pullRequestData.merged) {
         isPRMerged = true
       }
 
