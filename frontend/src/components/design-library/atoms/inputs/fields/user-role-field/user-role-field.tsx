@@ -5,17 +5,15 @@ import Checkboxes from '../../checkboxes/checkboxes'
 import { FormattedMessage } from 'react-intl'
 
 const UserRoleField = ({ roles, onChange }) => {
-  const { data = [], completed = false } = roles || {}
+  const { data, completed } = roles
 
   const checkBoxes = useMemo(
     () =>
-      Array.isArray(data)
-        ? data.map((role) => ({
-            label: role.label,
-            name: role.name,
-            value: role.id
-          }))
-        : [],
+      data.map((role) => ({
+        label: role.label,
+        name: role.name,
+        value: role.id
+      })),
     [data]
   )
 

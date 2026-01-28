@@ -30,9 +30,7 @@ const IssuePrivatePage = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask,
-  validateCoupon,
-  couponStoreState
+  syncTask
 }) => {
   return (
     <IssuePage
@@ -65,8 +63,6 @@ const IssuePrivatePage = ({
       wallets={wallets}
       fetchTask={fetchTask}
       syncTask={syncTask}
-      validateCoupon={validateCoupon}
-      couponStoreState={couponStoreState}
     />
   )
 }

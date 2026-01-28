@@ -33,8 +33,6 @@ interface IssueActionsProps {
   fetchTask: (taskId: number) => void
   syncTask: (taskId: number) => void
   taskSolutionCompleted: boolean
-  validateCoupon?: (code: string, originalOrderPrice: number) => void
-  couponStoreState?: any
 }
 
 const IssueActionsByRole = ({
@@ -63,9 +61,7 @@ const IssueActionsByRole = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask,
-  validateCoupon,
-  couponStoreState
+  syncTask
 }: IssueActionsProps) => {
   const { data } = issue
 
@@ -102,8 +98,6 @@ const IssueActionsByRole = ({
           fetchTask={fetchTask}
           syncTask={syncTask}
           price={data?.price || 0}
-          validateCoupon={validateCoupon}
-          couponStoreState={couponStoreState}
         />
       )
     },

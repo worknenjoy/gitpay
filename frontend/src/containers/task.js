@@ -37,7 +37,6 @@ import {
   detailOrder,
   listOrders
 } from '../actions/orderActions'
-import { validateCoupon } from '../actions/couponActions'
 import { fetchWallet, listWallets } from '../actions/walletActions'
 import {
   getTaskSolution,
@@ -70,8 +69,7 @@ const mapStateToProps = (state, ownProps) => {
     order: state.order,
     customer: state.customer,
     wallets: state.wallets,
-    wallet: state.wallet,
-    couponStoreState: { ...state.couponReducer }
+    wallet: state.wallet
   }
 }
 
@@ -127,8 +125,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(fetchPullRequestData(owner, repositoryName, pullRequestId, taskId)),
     cleanPullRequestDataState: () => dispatch(cleanPullRequestDataState()),
     fetchAccount: () => dispatch(fetchAccount()),
-    validateCoupon: (code, originalOrderPrice) =>
-      dispatch(validateCoupon(code, originalOrderPrice)),
     // For account menu and bottom bar props
     signOut: () => dispatch(logOut()),
     getInfo: () => dispatch(getInfoAction())

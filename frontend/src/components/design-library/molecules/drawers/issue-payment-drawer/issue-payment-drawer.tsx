@@ -45,9 +45,7 @@ function IssuePaymentDrawer({
   listWallets,
   wallets,
   fetchTask,
-  syncTask,
-  validateCoupon,
-  couponStoreState
+  syncTask
 }: any) {
   const intl = useIntl()
 
@@ -154,8 +152,6 @@ function IssuePaymentDrawer({
               task={task?.data}
               plan={plan}
               onClose={onClose}
-              validateCoupon={validateCoupon}
-              couponStoreState={couponStoreState}
             />
           )
         },
