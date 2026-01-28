@@ -3,6 +3,7 @@ const Promise = require('bluebird')
 const requestPromise = require('request-promise')
 const models = require('../../models')
 const comment = require('../bot/comment')
+const slack = require('../shared/slack')
 
 module.exports = Promise.method(function orderAuthorize(orderParameters) {
   return requestPromise({
@@ -59,10 +60,17 @@ module.exports = Promise.method(function orderAuthorize(orderParameters) {
         return Promise.all([
           models.User.findByPk(orderData.userId),
           models.Task.findByPk(orderData.TaskId)
-        ]).spread((user, task) => {
+        ]).then(async ([user, task]) => {
           if (orderData.paid) {
             comment(orderData, task)
             PaymentMail.success(user, task, orderData.amount)
+
+            // Send Slack notification for PayPal payment completion
+            const orderDataForNotification = {
+              amount: orderData.amount,
+              currency: orderData.currency || 'USD'
+            }
+            await slack.notifyBounty(task, orderDataForNotification, user, 'PayPal payment')
           } else {
             PaymentMail.error(user.dataValues, task, orderData.amount)
           }

@@ -34,7 +34,8 @@ module.exports = Promise.method(async function taskSolutionCreate(taskSolutionPa
         taskId: taskSolutionParams.taskId
       })
 
-      const assign = existingAssignment || await task.createAssign({ userId: taskSolutionParams.userId })
+      const assign =
+        existingAssignment || (await task.createAssign({ userId: taskSolutionParams.userId }))
       if (!assign) {
         throw new Error('COULD_NOT_CREATE_ASSIGN')
       }

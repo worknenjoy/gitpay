@@ -10,6 +10,7 @@ const userExists = require('../users').userExists
 // const userOrganizations = require('../users/userOrganizations')
 const project = require('../projectHelpers')
 const issueAddedComment = require('../bot/issueAddedComment')
+const slack = require('../shared/slack')
 
 module.exports = Promise.method(async function taskBuilds(taskParameters) {
   const repoUrl = taskParameters.url
@@ -105,14 +106,13 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
             const taskData = task.dataValues
             const userData = await task.getUser()
 
-            try {
-              if (userData.receiveNotifications) {
-                TaskMail.new(userData, taskData)
-              }
-              issueAddedComment(task)
-            } catch (e) {
-              console.log('error on send email and post', e)
+            if (userData.receiveNotifications) {
+              TaskMail.new(userData, taskData)
             }
+
+            issueAddedComment(task)
+            slack.notifyNewIssue(taskData, userData)
+
             return { ...taskData, ProjectId: taskData.ProjectId }
           })
         })

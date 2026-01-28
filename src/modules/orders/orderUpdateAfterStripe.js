@@ -1,6 +1,7 @@
 const Promise = require('bluebird')
 const PaymentMail = require('../mail/payment')
 const models = require('../../models')
+const slack = require('../shared/slack')
 
 module.exports = Promise.method(
   function orderUpdateAfterStripe(order, charge, card, orderParameters, user, task, couponFull) {
@@ -21,11 +22,21 @@ module.exports = Promise.method(
         id: order.dataValues.id
       }
     })
-      .then((updatedOrder) => {
+      .then(async (_updatedOrder) => {
         if (orderParameters.plan === 'full') {
           PaymentMail.support(user, task, order)
         }
         PaymentMail.success(user, task, order.amount)
+
+        // Send Slack notification for new bounty payment
+        if (orderPayload.paid && orderPayload.status === 'succeeded') {
+          const orderData = {
+            amount: order.amount || orderParameters.amount,
+            currency: order.currency || orderParameters.currency || 'USD'
+          }
+          await slack.notifyBounty(task, orderData, user, 'Stripe payment')
+        }
+
         if (task.dataValues.assigned) {
           const assignedId = task.dataValues.assigned
           return models.Assign.findByPk(assignedId, {
