@@ -1,7 +1,6 @@
 const models = require('../../models')
 const i18n = require('i18n')
 const SendMail = require('../mail/mail')
-const slack = require('../shared/slack')
 
 const sendEmailSuccess = (event, paid, status, order, req, res) => {
   return models.User.findOne({
@@ -31,7 +30,7 @@ const sendEmailSuccess = (event, paid, status, order, req, res) => {
     })
 }
 
-const updateOrder = async (event, paid, status, req, res) => {
+const updateOrder = (event, paid, status, req, res) => {
   return models.Order.update(
     {
       paid: paid,
@@ -45,31 +44,8 @@ const updateOrder = async (event, paid, status, req, res) => {
       returning: true
     }
   )
-    .then(async (order) => {
+    .then((order) => {
       if (order[0]) {
-        // Send Slack notification if payment succeeded
-        if (paid && status === 'succeeded') {
-          const orderUpdated = await models.Order.findOne({
-            where: {
-              id: order[1][0].dataValues.id
-            },
-            include: [models.Task, models.User]
-          })
-
-          if (orderUpdated) {
-            const orderData = {
-              amount: orderUpdated.amount,
-              currency: orderUpdated.currency || 'USD'
-            }
-            await slack.notifyBounty(
-              orderUpdated.Task,
-              orderData,
-              orderUpdated.User,
-              'Stripe charge succeeded'
-            )
-          }
-        }
-
         return sendEmailSuccess(event, paid, status, order, req, res)
       }
     })

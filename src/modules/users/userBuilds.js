@@ -26,7 +26,7 @@ module.exports = Promise.method(async function userBuilds(userParameters) {
       if (selectedTypeIds && selectedTypeIds.length > 0) {
         await user.setTypes(selectedTypeIds)
         const userWithTypes = await models.User.findByPk(id, {
-          include: { model: models.Type, as: 'Types' }
+          include: { model: models.Type }
         })
         return userWithTypes
       }

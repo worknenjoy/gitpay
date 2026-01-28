@@ -5,7 +5,6 @@ const SendMail = require('../mail/mail')
 const WalletMail = require('../mail/wallet')
 const stripe = require('../shared/stripe/stripe')()
 const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
-const slack = require('../shared/slack')
 
 module.exports = async function invoicePaymentSucceeded(event, req, res) {
   return models.User.findOne({
@@ -36,29 +35,7 @@ module.exports = async function invoicePaymentSucceeded(event, req, res) {
                 },
                 returning: true
               }
-            ).then(async (order) => {
-              // Send Slack notification for invoice payment completion
-              if (order[0] && order[1].length) {
-                const orderUpdated = await models.Order.findOne({
-                  where: {
-                    id: order[1][0].dataValues.id
-                  },
-                  include: [models.Task, models.User]
-                })
-
-                if (orderUpdated && orderUpdated.Task && orderUpdated.User) {
-                  const orderData = {
-                    amount: orderUpdated.amount,
-                    currency: orderUpdated.currency || 'USD'
-                  }
-                  await slack.notifyBounty(
-                    orderUpdated.Task,
-                    orderData,
-                    orderUpdated.User,
-                    'Stripe invoice payment succeeded'
-                  )
-                }
-              }
+            ).then((order) => {
               return res.status(200).json(event)
             })
           }

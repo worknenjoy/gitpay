@@ -5,7 +5,6 @@ const SendMail = require('../mail/mail')
 const WalletMail = require('../mail/wallet')
 const stripe = require('../shared/stripe/stripe')()
 const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
-const slack = require('../shared/slack')
 
 module.exports = async function invoiceUpdated(event, req, res) {
   // eslint-disable-next-line no-case-declarations
@@ -63,7 +62,7 @@ module.exports = async function invoiceUpdated(event, req, res) {
         const userAssigned = userAssign.dataValues.User.dataValues
         const userTask = orderUpdated.User.dataValues
         if (orderUpdated) {
-          if (orderUpdated.status === 'paid' && orderUpdated.paid) {
+          if (orderUpdated.status === 'paid') {
             const userAssignedlanguage = userAssigned.language || 'en'
             i18n.setLocale(userAssignedlanguage)
             SendMail.success(
@@ -81,18 +80,6 @@ module.exports = async function invoiceUpdated(event, req, res) {
               i18n.__('mail.webhook.payment.approved.message', {
                 amount: order[1][0].dataValues.amount
               })
-            )
-
-            // Send Slack notification for invoice payment completion
-            const orderData = {
-              amount: orderUpdated.amount,
-              currency: orderUpdated.currency || 'USD'
-            }
-            await slack.notifyBounty(
-              orderUpdated.Task,
-              orderData,
-              orderUpdated.User,
-              'Stripe invoice payment'
             )
           }
         }

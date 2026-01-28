@@ -2,7 +2,6 @@ const models = require('../../models')
 const i18n = require('i18n')
 const moment = require('moment')
 const SendMail = require('../mail/mail')
-const slack = require('../shared/slack')
 
 module.exports = async function chargeUpdated(event, paid, status, req, res) {
   if (event?.data?.object?.source?.id) {
@@ -19,14 +18,14 @@ module.exports = async function chargeUpdated(event, paid, status, req, res) {
         returning: true
       }
     )
-      .then(async (order) => {
+      .then((order) => {
         if (order[0]) {
           return models.User.findOne({
             where: {
               id: order[1][0].dataValues.userId
             }
           })
-            .then(async (user) => {
+            .then((user) => {
               if (user) {
                 if (paid && status === 'succeeded') {
                   const language = user.language || 'en'
@@ -38,27 +37,6 @@ module.exports = async function chargeUpdated(event, paid, status, req, res) {
                       amount: event.data.object.amount / 100
                     })
                   )
-
-                  // Send Slack notification for charge update payment completion
-                  const orderUpdated = await models.Order.findOne({
-                    where: {
-                      id: order[1][0].dataValues.id
-                    },
-                    include: [models.Task, models.User]
-                  })
-
-                  if (orderUpdated) {
-                    const orderData = {
-                      amount: orderUpdated.amount,
-                      currency: orderUpdated.currency || 'USD'
-                    }
-                    await slack.notifyBounty(
-                      orderUpdated.Task,
-                      orderData,
-                      orderUpdated.User,
-                      'Stripe charge updated'
-                    )
-                  }
                 }
               }
               return res.status(200).json(event)
