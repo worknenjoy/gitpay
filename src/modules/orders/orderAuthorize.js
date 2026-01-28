@@ -3,7 +3,7 @@ const Promise = require('bluebird')
 const requestPromise = require('request-promise')
 const models = require('../../models')
 const comment = require('../bot/comment')
-const slack = require('../slack')
+const slack = require('../shared/slack')
 
 module.exports = Promise.method(function orderAuthorize(orderParameters) {
   return requestPromise({
@@ -70,15 +70,7 @@ module.exports = Promise.method(function orderAuthorize(orderParameters) {
               amount: orderData.amount,
               currency: orderData.currency || 'USD'
             }
-            // Avoid even invoking notification helper for private/not_listed tasks
-            if (slack.shouldNotifyForTask(task)) {
-              await slack.notifyBountyWithErrorHandling(
-                task,
-                orderDataForNotification,
-                user,
-                'PayPal payment'
-              )
-            }
+            await slack.notifyBounty(task, orderDataForNotification, user, 'PayPal payment')
           } else {
             PaymentMail.error(user.dataValues, task, orderData.amount)
           }

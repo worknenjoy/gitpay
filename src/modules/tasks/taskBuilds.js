@@ -10,7 +10,7 @@ const userExists = require('../users').userExists
 // const userOrganizations = require('../users/userOrganizations')
 const project = require('../projectHelpers')
 const issueAddedComment = require('../bot/issueAddedComment')
-const slack = require('../slack')
+const slack = require('../shared/slack')
 
 module.exports = Promise.method(async function taskBuilds(taskParameters) {
   const repoUrl = taskParameters.url
@@ -104,12 +104,8 @@ module.exports = Promise.method(async function taskBuilds(taskParameters) {
               TaskMail.new(userData, taskData)
             }
 
-            // Skip Slack notifications for private or not_listed tasks
-            const isTaskPublic = !(taskData.not_listed === true || taskData.private === true)
-            if (isTaskPublic) {
-              issueAddedComment(task)
-              slack.notifyNewIssue(taskData, userData)
-            }
+            issueAddedComment(task)
+            slack.notifyNewIssue(taskData, userData)
 
             return { ...taskData, ProjectId: taskData.ProjectId }
           })

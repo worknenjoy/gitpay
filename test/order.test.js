@@ -13,7 +13,7 @@ const plan = require('../src/models/plan')
 const stripe = require('../src/modules/shared/stripe/stripe')()
 const customerData = require('./data/stripe/stripe.customer')
 const invoiceData = require('./data/stripe/stripe.invoice.basic')
-const { notifyNewBounty } = require('../src/modules/slack')
+const { notifyBountyOnSlack } = require('../src/modules/shared/slack')
 
 describe('Orders', () => {
   beforeEach(async () => {
@@ -90,8 +90,8 @@ describe('Orders', () => {
 
     it('should not call notifyNewBounty when order is created for a task with not_listed set to true', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/slack')
-      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      const slackModule = require('../src/modules/shared/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
       try {
@@ -114,14 +114,14 @@ describe('Orders', () => {
 
         expect(slackSpy).to.not.have.been.called()
       } finally {
-        chai.spy.restore(slackModule, 'notifyNewBounty')
+        chai.spy.restore(slackModule, 'notifyBountyOnSlack')
       }
     })
 
     it('should not call notifyNewBounty when order is created for a task with private set to true', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/slack')
-      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      const slackModule = require('../src/modules/shared/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
       try {
@@ -144,14 +144,14 @@ describe('Orders', () => {
 
         expect(slackSpy).to.not.have.been.called()
       } finally {
-        chai.spy.restore(slackModule, 'notifyNewBounty')
+        chai.spy.restore(slackModule, 'notifyBountyOnSlack')
       }
     })
 
     it('should not call notifyNewBounty when order is created (notification only on payment completion)', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/slack')
-      const slackSpy = chai.spy.on(slackModule, 'notifyNewBounty')
+      const slackModule = require('../src/modules/shared/slack')
+      const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
       try {
@@ -176,15 +176,15 @@ describe('Orders', () => {
         // Notification should NOT be called when order is created, only when payment completes
         expect(slackSpy).to.not.have.been.called()
       } finally {
-        chai.spy.restore(slackModule, 'notifyNewBounty')
+        chai.spy.restore(slackModule, 'notifyBountyOnSlack')
       }
     })
 
     it('should call notifyNewBounty when wallet payment completes for a public task', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/slack')
-      // Spy on notifyBountyWithErrorHandling since that's what's actually called
-      const slackSpy = chai.spy.on(slackModule, 'notifyBountyWithErrorHandling')
+      const slackModule = require('../src/modules/shared/slack')
+      // Spy on notifyBounty since that's what's actually called
+      const slackSpy = chai.spy.on(slackModule, 'notifyBounty')
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
       try {
@@ -231,15 +231,15 @@ describe('Orders', () => {
         expect(call[1].currency).to.equal('USD')
         expect(call[3]).to.equal('wallet payment')
       } finally {
-        chai.spy.restore(slackModule, 'notifyBountyWithErrorHandling')
+        chai.spy.restore(slackModule, 'notifyBounty')
       }
     })
 
     it('should not call notifyNewBounty when wallet payment completes for a private task', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/slack')
-      // Spy on notifyBountyWithErrorHandling since that's what's actually called
-      const slackSpy = chai.spy.on(slackModule, 'notifyBountyWithErrorHandling')
+      const slackModule = require('../src/modules/shared/slack')
+      // Spy on notifyBountyOnSlack - the internal function that sends to Slack
+      const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
       try {
@@ -277,10 +277,10 @@ describe('Orders', () => {
           taskId: task.id
         })
 
-        // Notification should NOT be called for private tasks
+        // Notification should NOT be sent to Slack for private tasks
         expect(slackSpy).to.not.have.been.called()
       } finally {
-        chai.spy.restore(slackModule, 'notifyBountyWithErrorHandling')
+        chai.spy.restore(slackModule, 'notifyBountyOnSlack')
       }
     })
 
@@ -940,9 +940,9 @@ describe('Orders', () => {
   describe('PayPal payment notifications', () => {
     it('should call notifyNewBounty when PayPal payment completes for a public task', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/slack')
-      // Spy on notifyBountyWithErrorHandling since that's what's actually called
-      const slackSpy = chai.spy.on(slackModule, 'notifyBountyWithErrorHandling')
+      const slackModule = require('../src/modules/shared/slack')
+      // Spy on notifyBounty since that's what's actually called
+      const slackSpy = chai.spy.on(slackModule, 'notifyBounty')
       const orderAuthorize = require('../src/modules/orders').orderAuthorize
 
       // Mock PayPal API responses
@@ -1004,16 +1004,16 @@ describe('Orders', () => {
         expect(call[1].currency).to.equal('USD')
         expect(call[3]).to.equal('PayPal payment')
       } finally {
-        chai.spy.restore(slackModule, 'notifyBountyWithErrorHandling')
+        chai.spy.restore(slackModule, 'notifyBounty')
         nock.cleanAll()
       }
     })
 
     it('should not call notifyNewBounty when PayPal payment completes for a private task', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/slack')
-      // Spy on notifyBountyWithErrorHandling since that's what's actually called
-      const slackSpy = chai.spy.on(slackModule, 'notifyBountyWithErrorHandling')
+      const slackModule = require('../src/modules/shared/slack')
+      // Spy on notifyBountyOnSlack - the internal function that sends to Slack
+      const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderAuthorize = require('../src/modules/orders').orderAuthorize
 
       // Mock PayPal API responses
@@ -1060,10 +1060,10 @@ describe('Orders', () => {
           PayerID: 'TEST_PAYER_ID'
         })
 
-        // Notification should NOT be called for private tasks
+        // Notification should NOT be sent to Slack for private tasks
         expect(slackSpy).to.not.have.been.called()
       } finally {
-        chai.spy.restore(slackModule, 'notifyNewBounty')
+        chai.spy.restore(slackModule, 'notifyBountyOnSlack')
         nock.cleanAll()
       }
     })

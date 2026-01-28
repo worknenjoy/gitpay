@@ -1,6 +1,6 @@
 const expect = require('chai').expect
 const nock = require('nock')
-const { notifyNewIssue, notifyNewBounty } = require('../src/modules/slack')
+const { notifyNewIssue, notifyBountyOnSlack } = require('../src/modules/shared/slack')
 
 describe('Slack Notifications', () => {
   beforeEach(() => {
@@ -38,7 +38,7 @@ describe('Slack Notifications', () => {
         .post('/services/TEST/WEBHOOK/URL')
         .reply(200, 'ok')
 
-      await notifyNewBounty(
+      await notifyBountyOnSlack(
         { id: 1, title: 'Test Task' },
         { amount: 100, currency: 'USD' },
         { username: 'testuser' }
@@ -48,8 +48,8 @@ describe('Slack Notifications', () => {
     })
 
     it('should handle missing order data gracefully', async () => {
-      await notifyNewBounty({ id: 1, title: 'Test' }, null, { username: 'test' })
-      await notifyNewBounty({ id: 1, title: 'Test' }, {}, { username: 'test' })
+      await notifyBountyOnSlack({ id: 1, title: 'Test' }, null, { username: 'test' })
+      await notifyBountyOnSlack({ id: 1, title: 'Test' }, {}, { username: 'test' })
     })
   })
 })
