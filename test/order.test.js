@@ -952,16 +952,23 @@ describe('Orders', () => {
 
       nock(process.env.PAYPAL_HOST || 'https://api.sandbox.paypal.com')
         .post(/\/v2\/checkout\/orders\/.*\/authorize/)
-        .reply(200, JSON.stringify({
-          id: 'TEST_ORDER_ID',
-          purchase_units: [{
-            payments: {
-              authorizations: [{
-                id: 'TEST_AUTH_ID'
-              }]
-            }
-          }]
-        }))
+        .reply(
+          200,
+          JSON.stringify({
+            id: 'TEST_ORDER_ID',
+            purchase_units: [
+              {
+                payments: {
+                  authorizations: [
+                    {
+                      id: 'TEST_AUTH_ID'
+                    }
+                  ]
+                }
+              }
+            ]
+          })
+        )
 
       try {
         const user = await registerAndLogin(agent)
@@ -1023,16 +1030,23 @@ describe('Orders', () => {
 
       nock(process.env.PAYPAL_HOST || 'https://api.sandbox.paypal.com')
         .post(/\/v2\/checkout\/orders\/.*\/authorize/)
-        .reply(200, JSON.stringify({
-          id: 'TEST_ORDER_ID',
-          purchase_units: [{
-            payments: {
-              authorizations: [{
-                id: 'TEST_AUTH_ID'
-              }]
-            }
-          }]
-        }))
+        .reply(
+          200,
+          JSON.stringify({
+            id: 'TEST_ORDER_ID',
+            purchase_units: [
+              {
+                payments: {
+                  authorizations: [
+                    {
+                      id: 'TEST_AUTH_ID'
+                    }
+                  ]
+                }
+              }
+            ]
+          })
+        )
 
       try {
         const user = await registerAndLogin(agent)

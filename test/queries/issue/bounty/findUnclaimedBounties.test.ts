@@ -40,9 +40,14 @@ describe('Queries - Issue - Bounty - findUnclaimedBounties', () => {
       status: 'closed',
       value: 150,
       paid: false,
-      userId: user.id,
+      userId: user.id
     })
-    await TransferFactory({ taskId: taskNoPaidButWithTransfer.id, userId: user.id, amount: 150, to: user.id })
+    await TransferFactory({
+      taskId: taskNoPaidButWithTransfer.id,
+      userId: user.id,
+      amount: 150,
+      to: user.id
+    })
     const unclaimedBounties = await findUnclaimedBounties()
     expect(unclaimedBounties).to.have.lengthOf(1)
     expect(unclaimedBounties[0].id).to.equal(taskWithBountyUnclaimed.id)

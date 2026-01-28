@@ -173,7 +173,10 @@ describe('Users', () => {
     it('register with user Types', async () => {
       // Ensure the types exist, then use their real IDs (avoid relying on seed order/IDs)
       const { Type } = require('../src/models')
-      const [funding] = await Type.findOrCreate({ where: { name: 'funding' }, defaults: { name: 'funding' } })
+      const [funding] = await Type.findOrCreate({
+        where: { name: 'funding' },
+        defaults: { name: 'funding' }
+      })
       const [contributor] = await Type.findOrCreate({
         where: { name: 'contributor' },
         defaults: { name: 'contributor' }
