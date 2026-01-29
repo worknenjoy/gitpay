@@ -1,23 +1,22 @@
-const Promise = require('bluebird')
-const requestPromise = require('request-promise')
-const stripe = require('../shared/stripe/stripe')()
-const transfer = require('../../models/transfer')
-const Transfer = require('../../models').Transfer
-const Task = require('../../models').Task
-const User = require('../../models').User
+import requestPromise from 'request-promise'
+import stripe from '../shared/stripe/stripe'
+import models from '../../models'
 
-module.exports = Promise.method(async function transferFetch(id) {
+const currentModels = models as any
+const stripeInstance = stripe()
+
+export async function transferFetch(id: number) {
   if (id) {
-    const transfer = await Transfer.findOne({
+    const transfer = await currentModels.Transfer.findOne({
       where: { id },
       include: [
-        Task,
+        currentModels.Task,
         {
-          model: User,
+          model: currentModels.User,
           as: 'User'
         },
         {
-          model: User,
+          model: currentModels.User,
           as: 'destination'
         }
       ]
@@ -61,11 +60,11 @@ module.exports = Promise.method(async function transferFetch(id) {
       }
     }
     if (transfer.transfer_id) {
-      const stripeTransfer = await stripe.transfers.retrieve(transfer.transfer_id)
+      const stripeTransfer = await stripeInstance.transfers.retrieve(transfer.transfer_id)
       if (stripeTransfer) {
         transfer.dataValues.stripeTransfer = stripeTransfer
       }
     }
     return transfer
   }
-})
+}
