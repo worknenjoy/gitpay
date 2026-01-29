@@ -8,10 +8,9 @@ import { roleExists } from '../roles'
 import { userExists } from '../users'
 import project from '../projectHelpers'
 import { issueAddedComment } from '../bot/issueAddedComment'
-import * as slackModule from '../shared/slack'
+import * as slack from '../shared/slack'
 
 const currentModels = models as any
-const { notifyNewIssue } = slackModule as any
 
 function parseAndValidateIssueUrl(
   rawUrl: string,
