@@ -27,7 +27,6 @@ export async function offerMessage(task: OfferMessageTask, params: OfferMessageP
   const taskUser = taskData.User.dataValues
   const language = taskUser.language || 'en'
   i18n.setLocale(language)
-  // @ts-ignore - AssignMail.messageInterested accepts 4 params but type definition shows 3
   AssignMail.messageInterested(
     targetInterested.User.dataValues,
     taskData.dataValues,

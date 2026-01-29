@@ -21,7 +21,7 @@ const AssignMail = {
     interested: (to, task, name, offer) => {},
     assigned: (to, task, name) => {}
   },
-  messageInterested: (user, task, message) => {},
+  messageInterested: (user, task, message, sender) => {},
   notifyInterestedUser: (user, task) => {},
   interested: (to, task, name) => {},
   assigned: (to, task) => {},
