@@ -21,8 +21,33 @@ function extractIssueNumberFromURL(url: string) {
   return match ? match[1] : null
 }
 
+function validateGitHubParams(params: any) {
+  const owner = params && params.owner
+  const repositoryName = params && params.repositoryName
+  const pullRequestId = params && params.pullRequestId
+
+  // GitHub owner/repo names: letters, numbers, '.', '-', '_' only, at least 1 char
+  const nameRegex = /^[A-Za-z0-9._-]+$/
+
+  if (typeof owner !== 'string' || !nameRegex.test(owner)) {
+    throw new Error('INVALID_GITHUB_OWNER')
+  }
+
+  if (typeof repositoryName !== 'string' || !nameRegex.test(repositoryName)) {
+    throw new Error('INVALID_GITHUB_REPOSITORY_NAME')
+  }
+
+  // pullRequestId must be a positive integer
+  const prNumber = typeof pullRequestId === 'string' ? Number(pullRequestId) : pullRequestId
+  if (!Number.isInteger(prNumber) || prNumber <= 0) {
+    throw new Error('INVALID_PULL_REQUEST_ID')
+  }
+}
+
 export async function taskSolutionFetchData(solutionParams: any) {
   try {
+    validateGitHubParams(solutionParams)
+
     const response = await requestPromise({
       uri: `https://api.github.com/repos/${solutionParams.owner}/${solutionParams.repositoryName}/pulls/${solutionParams.pullRequestId}`,
       headers: {
