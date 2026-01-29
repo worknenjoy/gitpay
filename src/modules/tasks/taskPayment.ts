@@ -36,7 +36,7 @@ export async function taskPayment(paymentParams: any) {
     }
     const centavosAmount = paymentParams.value * 100 || task.value * 100
 
-    let transferData = {
+    let transferData: any = {
       amount: centavosAmount * 0.92, // 8% base fee
       currency: 'usd',
       destination: dest,

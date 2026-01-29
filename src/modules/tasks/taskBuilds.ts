@@ -26,7 +26,8 @@ export async function taskBuilds(taskParameters: any) {
 
   if (!userId) return false
 
-  let uri, headers
+  let uri: string
+  let headers: any
   switch (taskParameters.provider) {
     case 'github':
       uri = token

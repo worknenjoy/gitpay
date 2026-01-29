@@ -59,10 +59,10 @@ const createSourceAndCharge = async (
       return orderUpdateAfterStripe(order, charge, card, orderParameters, user, task, false)
     }
     throw new Error('no charge')
-  } catch (e) {
+  } catch (e: any) {
     // eslint-disable-next-line no-console
     console.log('could not create charge', e)
-    throw new Error(e)
+    throw new Error(e.message || e)
   }
 }
 
