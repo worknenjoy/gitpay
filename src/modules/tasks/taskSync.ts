@@ -1,15 +1,19 @@
-const Promise = require('bluebird')
+import models from '../../models'
 const Decimal = require('decimal.js')
-const models = require('../../models')
 
-module.exports = Promise.method(function taskSync(taskParameters) {
-  // eslint-disable-next-line no-console
-  return models.Task.findByPk(taskParameters.id, {
-    include: [models.Order]
-  }).then((task) => {
+const currentModels = models as any
+
+export async function taskSync(taskParameters: any) {
+  try {
+    // eslint-disable-next-line no-console
+    const task = await currentModels.Task.findByPk(taskParameters.id, {
+      include: [currentModels.Order]
+    })
+
     if (!task) {
       throw new Error('Task not found')
     }
+    
     let finalValue = {
       available: new Decimal(0),
       pending: new Decimal(0),
@@ -18,7 +22,8 @@ module.exports = Promise.method(function taskSync(taskParameters) {
       paypal: new Decimal(0),
       transferred: new Decimal(0)
     }
-    task.dataValues.Orders.map((item) => {
+    
+    task.dataValues.Orders.map((item: any) => {
       const decimalAmount = new Decimal(item.amount)
       if (item.status === 'open') {
         finalValue.pending.plus(decimalAmount)
@@ -43,20 +48,21 @@ module.exports = Promise.method(function taskSync(taskParameters) {
     const paidStripe = !!task.transfer_id
     const paid = paidPaypal && paidStripe
 
-    let taskAttributes = { value: finalValue.available, paid }
+    let taskAttributes: any = { value: finalValue.available, paid }
     if (paid) {
       taskAttributes.status = 'closed'
     }
 
-    return task
+    const updatedTask = await task
       .set(taskAttributes)
       .save()
-      .then((updatedTask) => {
-        if (updatedTask) {
-          return {
-            value: finalValue
-          }
-        }
-      })
-  })
-})
+    
+    if (updatedTask) {
+      return {
+        value: finalValue
+      }
+    }
+  } catch (error) {
+    throw error
+  }
+}

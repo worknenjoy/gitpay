@@ -1,12 +1,13 @@
-const Promise = require('bluebird')
-const taskUpdate = require('./taskUpdate')
-const models = require('../../models')
+import models from '../../models'
+import { taskUpdate } from './taskUpdate'
+import { taskFetch } from './taskFetch'
 const SendMail = require('../mail/mail')
 const i18n = require('i18n')
-const taskFetch = require('./taskFetch')
 const jwt = require('jsonwebtoken')
 
-const sendConfirmationEmail = (task, user, comments) => {
+const currentModels = models as any
+
+const sendConfirmationEmail = (task: any, user: any, comments: string) => {
   const token = jwt.sign(task.id, process.env.SECRET_PHRASE)
   const formattedfComments = comments.replace(/\s/g, '-')
   const approveURL = `${process.env.FRONTEND_HOST}/#/task/${task.id}/claim?comments=${formattedfComments}&token=${token}`
@@ -26,11 +27,11 @@ const sendConfirmationEmail = (task, user, comments) => {
   )
 }
 
-const verifyIssueAndClaim = async (task, user, comments, token) => {
+const verifyIssueAndClaim = async (task: any, user: any, comments: string, token: string) => {
   const language = user.language || 'en'
   i18n.setLocale(language)
 
-  return jwt.verify(token, process.env.SECRET_PHRASE, async (err, decoded) => {
+  return jwt.verify(token, process.env.SECRET_PHRASE, async (err: any, decoded: any) => {
     // the 401 code is for unauthorized status
     if (err || parseInt(decoded) !== parseInt(task.id)) {
       throw new Error('invalid_token')
@@ -63,9 +64,9 @@ const verifyIssueAndClaim = async (task, user, comments, token) => {
   })
 }
 
-const requestClaim = Promise.method(async ({ taskId, userId, comments, isApproved, token }) => {
+export async function requestClaim({ taskId, userId, comments, isApproved, token }: any) {
   const task = await taskFetch({ id: taskId })
-  const user = await models.User.findOne({
+  const user = await currentModels.User.findOne({
     where: {
       id: userId
     }
@@ -76,8 +77,4 @@ const requestClaim = Promise.method(async ({ taskId, userId, comments, isApprove
   } else {
     return sendConfirmationEmail(task, user, comments)
   }
-})
-
-module.exports = {
-  requestClaim
 }

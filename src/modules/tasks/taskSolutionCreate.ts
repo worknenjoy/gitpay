@@ -1,12 +1,13 @@
-const Promise = require('bluebird')
-const models = require('../../models')
-const taskSolutionFetchData = require('./taskSolutionFetchData')
-const taskPayment = require('./taskPayment')
+import models from '../../models'
+import { taskSolutionFetchData } from './taskSolutionFetchData'
+import { taskPayment } from './taskPayment'
 const assignExist = require('../assigns').assignExists
 const transferBuilds = require('../transfers/transferBuilds')
-const taskUpdate = require('../tasks/taskUpdate')
+import { taskUpdate } from '../tasks/taskUpdate'
 
-module.exports = Promise.method(async function taskSolutionCreate(taskSolutionParams) {
+const currentModels = models as any
+
+export async function taskSolutionCreate(taskSolutionParams: any) {
   const pullRequestURLSplitted = taskSolutionParams.pullRequestURL.split('/')
   const params = {
     pullRequestId: pullRequestURLSplitted[6],
@@ -17,7 +18,7 @@ module.exports = Promise.method(async function taskSolutionCreate(taskSolutionPa
   }
 
   const fetchTaskSolutionData = await taskSolutionFetchData(params)
-  const task = await models.Task.findOne({
+  const task = await currentModels.Task.findOne({
     where: { id: taskSolutionParams.taskId }
   })
 
@@ -59,9 +60,9 @@ module.exports = Promise.method(async function taskSolutionCreate(taskSolutionPa
       if (transferSend.error) {
         throw new Error('transferSend.error')
       }
-      const taskSolutionCreateResponse = await models.TaskSolution.create(taskSolutionParams)
+      const taskSolutionCreateResponse = await currentModels.TaskSolution.create(taskSolutionParams)
       return taskSolutionCreateResponse
-    } catch (err) {
+    } catch (err: any) {
       // eslint-disable-next-line no-console
       console.log('error to create task solution: ', err)
       if (
@@ -75,4 +76,4 @@ module.exports = Promise.method(async function taskSolutionCreate(taskSolutionPa
   } else {
     throw new Error('COULD_NOT_CREATE TASK_SOLUTION')
   }
-})
+}

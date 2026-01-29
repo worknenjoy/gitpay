@@ -1,13 +1,14 @@
-const Promise = require('bluebird')
-const taskUpdate = require('./taskUpdate')
-const models = require('../../models')
+import models from '../../models'
+import { taskUpdate } from './taskUpdate'
 const SendMail = require('../mail/mail')
 const i18n = require('i18n')
 const Signatures = require('../mail/content')
 
-const sendConfirmationEmail = (task, assign) => {
+const currentModels = models as any
+
+const sendConfirmationEmail = async (task: any, assign: any) => {
   const user = assign.User
-  const URL = (reason) =>
+  const URL = (reason: string) =>
     `${process.env.FRONTEND_HOST}/#/task/${task.id}/interested/${assign.id}#${reason}`
   const language = user.language || 'en'
   i18n.setLocale(language)
@@ -30,7 +31,7 @@ const sendConfirmationEmail = (task, assign) => {
     })}
       `
 
-  return models.Assign.update(
+  const res = await currentModels.Assign.update(
     {
       status: 'pending-confirmation'
     },
@@ -39,22 +40,22 @@ const sendConfirmationEmail = (task, assign) => {
         id: assign.id
       }
     }
-  ).then((res) => {
-    return SendMail.success(
-      { email: user.email, language },
-      i18n.__('mail.assigned.request.subject'),
-      body
-    )
-  })
+  )
+  
+  return SendMail.success(
+    { email: user.email, language },
+    i18n.__('mail.assigned.request.subject'),
+    body
+  )
 }
 
-const invite = Promise.method(async ({ taskId, assignId }) => {
-  const task = await models.Task.findByPk(taskId)
-  const assign = await models.Assign.findOne({
+export async function invite({ taskId, assignId }: any) {
+  const task = await currentModels.Task.findByPk(taskId)
+  const assign = await currentModels.Assign.findOne({
     where: {
       id: assignId
     },
-    include: [models.User]
+    include: [currentModels.User]
   })
 
   if (task.status === 'in_progress') {
@@ -62,13 +63,13 @@ const invite = Promise.method(async ({ taskId, assignId }) => {
   }
 
   if (assign.status === 'rejected') {
-    await models.Assign.update({ status: 'pending' }, { where: { id: assignId } })
+    await currentModels.Assign.update({ status: 'pending' }, { where: { id: assignId } })
   }
 
   return sendConfirmationEmail(task, assign)
-})
+}
 
-const actionAssign = async (data) => {
+const actionAssign = async (data: any) => {
   if (
     typeof data !== 'object' ||
     !['taskId', 'assignId', 'confirm'].every((prop) => prop in data)
@@ -77,11 +78,11 @@ const actionAssign = async (data) => {
   }
 
   const { taskId, assignId, confirm, message } = data
-  const assign = await models.Assign.findOne({
+  const assign = await currentModels.Assign.findOne({
     where: {
       id: assignId
     },
-    include: [models.User]
+    include: [currentModels.User]
   })
 
   if (!assign || assign.status === 'in_progress' || assign.status === 'rejected') {
@@ -95,12 +96,12 @@ const actionAssign = async (data) => {
   }
   // Reject Task
   else {
-    await models.Assign.update({ status: 'rejected', message }, { where: { id: assignId } })
-    const task = await models.Task.findOne({
+    await currentModels.Assign.update({ status: 'rejected', message }, { where: { id: assignId } })
+    const task = await currentModels.Task.findOne({
       where: {
         id: taskId
       },
-      include: [models.User]
+      include: [currentModels.User]
     })
     const user = assign.User
     const taskOwner = task.User
@@ -126,11 +127,6 @@ const actionAssign = async (data) => {
   }
 }
 
-const confirm = Promise.method(async (body) => {
+export async function confirm(body: any) {
   return actionAssign(body)
-})
-
-module.exports = {
-  invite,
-  confirm
 }

@@ -1,8 +1,9 @@
-const Promise = require('bluebird')
-const models = require('../../models')
+import models from '../../models'
 const { Op, Sequelize } = require('sequelize')
 
-function makeLabelJsonAttr(tableAlias) {
+const currentModels = models as any
+
+function makeLabelJsonAttr(tableAlias: string) {
   return [
     Sequelize.literal(`(
       SELECT COALESCE(
@@ -18,7 +19,7 @@ function makeLabelJsonAttr(tableAlias) {
   ]
 }
 
-function makeLabelFilterLiteral(tableAlias, ids) {
+function makeLabelFilterLiteral(tableAlias: string, ids: number[]) {
   if (!ids?.length) return null
   return Sequelize.literal(`(
     SELECT COUNT(DISTINCT tl."labelId")
@@ -28,7 +29,7 @@ function makeLabelFilterLiteral(tableAlias, ids) {
   ) = ${ids.length}`)
 }
 
-function attachLabelsVirtual(instances) {
+function attachLabelsVirtual(instances: any) {
   const list = Array.isArray(instances) ? instances : [instances]
   for (const t of list) {
     const raw = t?.get ? t.get('labels') : t?.labels
@@ -59,7 +60,7 @@ function attachLabelsVirtual(instances) {
   }
 }
 
-function groupBy(arr, keyFn) {
+function groupBy(arr: any[], keyFn: (item: any) => any) {
   const map = new Map()
   for (const item of arr) {
     const k = keyFn(item)
@@ -69,8 +70,8 @@ function groupBy(arr, keyFn) {
   return map
 }
 
-module.exports = Promise.method(function taskSearch(searchParams) {
-  const whereBase = {
+export async function taskSearch(searchParams: any) {
+  const whereBase: any = {
     [Op.or]: [{ private: null }, { private: false }]
   }
 
@@ -80,11 +81,11 @@ module.exports = Promise.method(function taskSearch(searchParams) {
   if (searchParams.url) whereBase.url = searchParams.url
 
   const labelIds = Array.isArray(searchParams.labelIds)
-    ? searchParams.labelIds.map((n) => parseInt(n, 10)).filter(Number.isFinite)
+    ? searchParams.labelIds.map((n: any) => parseInt(n, 10)).filter(Number.isFinite)
     : []
 
   const ordersInclude = {
-    model: models.Order,
+    model: currentModels.Order,
     separate: true,
     attributes: [
       'id',
@@ -105,7 +106,7 @@ module.exports = Promise.method(function taskSearch(searchParams) {
   }
 
   if (searchParams.organizationId && !searchParams.projectId) {
-    const whereTasks = { ...whereBase }
+    const whereTasks: any = { ...whereBase }
 
     if (labelIds.length > 0) {
       const lblFilter = makeLabelFilterLiteral('Tasks', labelIds)
@@ -130,34 +131,34 @@ module.exports = Promise.method(function taskSearch(searchParams) {
       makeLabelJsonAttr('Tasks')
     ]
 
-    let tasks = []
-    return models.Project.findAll({
+    let tasks: any[] = []
+    const projects = await currentModels.Project.findAll({
       where: { OrganizationId: parseInt(searchParams.organizationId) },
       include: [
         {
-          model: models.Task,
+          model: currentModels.Task,
           where: whereTasks,
           attributes: taskAttrsInProject,
           include: [
             {
-              model: models.User,
+              model: currentModels.User,
               attributes: ['id', 'name', 'username', 'picture_url', 'country', 'language']
             },
             {
-              model: models.Assign,
+              model: currentModels.Assign,
               separate: true,
               attributes: ['id', 'status', 'message', 'createdAt', 'TaskId', 'userId'],
               include: [
-                { model: models.User, attributes: ['id', 'username', 'picture_url', 'name'] }
+                { model: currentModels.User, attributes: ['id', 'username', 'picture_url', 'name'] }
               ],
               order: [['createdAt', 'DESC']]
             },
             {
-              model: models.Project,
+              model: currentModels.Project,
               attributes: ['id', 'name', 'repo', 'OrganizationId'],
               include: [
                 {
-                  model: models.ProgrammingLanguage,
+                  model: currentModels.ProgrammingLanguage,
                   as: 'ProgrammingLanguages',
                   attributes: ['id', 'name'],
                   through: { attributes: [] }
@@ -174,14 +175,14 @@ module.exports = Promise.method(function taskSearch(searchParams) {
         }
       ],
       order: [['id', 'DESC']]
-    }).then(async (projects) => {
-      projects.forEach((p) => p.Tasks.forEach((t) => tasks.push(t)))
-      attachLabelsVirtual(tasks)
-      return tasks
     })
+    
+    projects.forEach((p: any) => p.Tasks.forEach((t: any) => tasks.push(t)))
+    attachLabelsVirtual(tasks)
+    return tasks
   }
 
-  const whereTasks = { ...whereBase }
+  const whereTasks: any = { ...whereBase }
   if (labelIds.length > 0) {
     const lblFilter = makeLabelFilterLiteral('Task', labelIds)
     whereTasks[Op.and] = whereTasks[Op.and] ? [...whereTasks[Op.and], lblFilter] : [lblFilter]
@@ -206,27 +207,27 @@ module.exports = Promise.method(function taskSearch(searchParams) {
     makeLabelJsonAttr('Task')
   ]
 
-  return models.Task.findAll({
+  const rows = await currentModels.Task.findAll({
     where: whereTasks,
     attributes: taskAttrs,
     include: [
       {
-        model: models.User,
+        model: currentModels.User,
         attributes: ['id', 'provider', 'name', 'username', 'picture_url', 'country', 'language']
       },
       {
-        model: models.Assign,
+        model: currentModels.Assign,
         separate: true,
         attributes: ['id', 'status', 'message', 'createdAt', 'TaskId', 'userId'],
-        include: [{ model: models.User, attributes: ['id', 'username', 'picture_url', 'name'] }],
+        include: [{ model: currentModels.User, attributes: ['id', 'username', 'picture_url', 'name'] }],
         order: [['createdAt', 'DESC']]
       },
       {
-        model: models.Project,
+        model: currentModels.Project,
         attributes: ['id', 'name', 'repo', 'OrganizationId'],
         include: [
           {
-            model: models.ProgrammingLanguage,
+            model: currentModels.ProgrammingLanguage,
             as: 'ProgrammingLanguages',
             attributes: ['id', 'name'],
             through: { attributes: [] }
@@ -240,17 +241,17 @@ module.exports = Promise.method(function taskSearch(searchParams) {
       ['status', 'DESC'],
       ['id', 'DESC']
     ]
-  }).then(async (rows) => {
-    attachLabelsVirtual(rows)
-
-    return rows.filter((task) => {
-      const project = task.Project
-      if (searchParams.languageIds && searchParams.languageIds.length > 0) {
-        return project?.ProgrammingLanguages?.some((pl) =>
-          searchParams.languageIds.includes(`${pl.id}`)
-        )
-      }
-      return true
-    })
   })
-})
+  
+  attachLabelsVirtual(rows)
+
+  return rows.filter((task: any) => {
+    const project = task.Project
+    if (searchParams.languageIds && searchParams.languageIds.length > 0) {
+      return project?.ProgrammingLanguages?.some((pl: any) =>
+        searchParams.languageIds.includes(`${pl.id}`)
+      )
+    }
+    return true
+  })
+}

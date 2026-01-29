@@ -1,15 +1,17 @@
-const Promise = require('bluebird')
-
-const models = require('../../models')
+import models from '../../models'
 const SendMail = require('../mail/mail')
 const i18n = require('i18n')
 
-module.exports = Promise.method(function (taskParameters) {
-  return models.User.findOne({
-    where: {
-      id: taskParameters.userId
-    }
-  }).then((user) => {
+const currentModels = models as any
+
+export async function taskDeleteConfirmation(taskParameters: any) {
+  try {
+    const user = await currentModels.User.findOne({
+      where: {
+        id: taskParameters.userId
+      }
+    })
+    
     const userEmail = user.dataValues.email
     const language = user.language || 'en'
     const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskParameters.id}`
@@ -24,5 +26,7 @@ module.exports = Promise.method(function (taskParameters) {
       })}
         `
     )
-  })
-})
+  } catch (error) {
+    throw error
+  }
+}
