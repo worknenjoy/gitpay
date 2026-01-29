@@ -1,9 +1,8 @@
 import models from '../../models'
 import PaymentMail from '../mail/payment'
-import * as slackModule from '../shared/slack'
+import * as slack from '../shared/slack'
 
 const currentModels = models as any
-const { notifyBounty } = slackModule as any
 
 type OrderUpdateAfterStripeParams = {
   plan?: string
@@ -42,7 +41,7 @@ export async function orderUpdateAfterStripe(order: any, charge: any, card: any,
         amount: order.amount || orderParameters.amount,
         currency: order.currency || orderParameters.currency || 'USD'
       }
-      await notifyBounty(task, orderData, user, 'Stripe payment')
+      await (slack as any).notifyBounty(task, orderData, user, 'Stripe payment')
     }
 
     if (task.dataValues.assigned) {

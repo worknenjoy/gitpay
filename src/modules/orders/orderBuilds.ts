@@ -8,10 +8,9 @@ import stripeModule from '../shared/stripe/stripe'
 const stripe = stripeModule()
 import Sendmail from '../mail/mail'
 import { userCustomerCreate } from '../users/userCustomerCreate'
-import * as slackModule from '../shared/slack'
+import * as slack from '../shared/slack'
 
 const currentModels = models as any
-const { notifyBounty } = slackModule as any
 
 type OrderBuildsParams = {
   source_id?: string
@@ -272,7 +271,7 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
         amount: orderCreated.dataValues.amount,
         currency: orderCreated.dataValues.currency || 'USD'
       }
-      await notifyBounty(
+      await (slack as any).notifyBounty(
         orderWithAssociations.Task,
         orderData,
         orderWithAssociations.User,
