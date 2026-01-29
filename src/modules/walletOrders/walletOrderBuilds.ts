@@ -1,15 +1,22 @@
-const Promise = require('bluebird')
-const Decimal = require('decimal.js')
-const stripe = require('../shared/stripe/stripe')()
-const WalletOrder = require('../../models').WalletOrder
-const Wallet = require('../../models').Wallet
-const User = require('../../models').User
-const { createOrUpdateCustomer } = require('../util/customer')
+import Decimal from 'decimal.js'
+import stripe from '../shared/stripe/stripe'
+import models from '../../models'
+import { createOrUpdateCustomer } from '../util/customer'
 
-module.exports = Promise.method(async function walletOrderBuilds(params) {
+const currentModels = models as any
+const stripeInstance = stripe()
+
+type WalletOrderBuildsParams = {
+  walletId: number
+  userId: number
+  amount: string | number
+  [key: string]: any
+}
+
+export async function walletOrderBuilds(params: WalletOrderBuildsParams) {
   const wallet =
     params.walletId &&
-    (await Wallet.findOne({
+    (await currentModels.Wallet.findOne({
       where: {
         id: params.walletId
       }
@@ -17,21 +24,21 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
 
   const user =
     params.userId &&
-    (await User.findOne({
+    (await currentModels.User.findOne({
       where: {
         id: params.userId
       }
     }))
 
   if (!user) {
-    return new Error({ error: 'No valid User' })
+    return new Error({ error: 'No valid User' } as any)
   }
 
   if (!wallet) {
-    return new Error({ error: 'No valid Wallet' })
+    return new Error({ error: 'No valid Wallet' } as any)
   }
 
-  const walletOrder = await WalletOrder.create(
+  const walletOrder = await currentModels.WalletOrder.create(
     {
       ...params,
       currency: 'usd',
@@ -49,7 +56,7 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
       const costumer = await createOrUpdateCustomer(user)
       userCustomer = costumer.id
     }
-    const invoice = await stripe.invoices.create({
+    const invoice = await stripeInstance.invoices.create({
       customer: userCustomer,
       collection_method: 'send_invoice',
       days_until_due: 30,
@@ -58,21 +65,21 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
       }
     })
 
-    const invoiceItem = await stripe.invoiceItems.create({
+    const invoiceItem = await stripeInstance.invoiceItems.create({
       customer: userCustomer,
       currency: 'usd',
       quantity: 1,
-      unit_amount: Math.round(parseFloat(params.amount) * 100),
+      unit_amount: Math.round(parseFloat(params.amount as string) * 100),
       invoice: invoice.id,
       metadata: {
         wallet_order_id: walletOrder.id
       }
     })
 
-    const finalizeInvoice = await stripe.invoices.finalizeInvoice(invoice.id)
+    const finalizeInvoice = await stripeInstance.invoices.finalizeInvoice(invoice.id)
     //console.log('finalized invoice', finalizeInvoice)
 
-    const updatedWalletOrder = await WalletOrder.update(
+    const updatedWalletOrder = await currentModels.WalletOrder.update(
       {
         source_id: invoiceItem.id,
         source_type: 'invoice-item',
@@ -91,4 +98,4 @@ module.exports = Promise.method(async function walletOrderBuilds(params) {
   } catch (e) {
     console.log('error on wallet order builds', e)
   }
-})
+}
