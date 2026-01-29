@@ -11,7 +11,19 @@ type OrderAuthorizeParams = {
   PayerID: string
 }
 
+function validateOrderToken(token: string): string {
+  // Allow only a restricted set of characters and a reasonable length.
+  // This should be compatible with PayPal order IDs while preventing
+  // path traversal or injection of unexpected URL characters.
+  const TOKEN_REGEX = /^[A-Za-z0-9\-_.]{1,64}$/
+  if (!TOKEN_REGEX.test(token)) {
+    throw new Error('Invalid order token')
+  }
+  return token
+}
+
 export async function orderAuthorize(orderParameters: OrderAuthorizeParams) {
+  const safeToken = validateOrderToken(orderParameters.token)
   const response = await requestPromise({
     method: 'POST',
     uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
@@ -31,7 +43,7 @@ export async function orderAuthorize(orderParameters: OrderAuthorizeParams) {
   
   const authorize = await requestPromise({
     method: 'POST',
-    uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders/${orderParameters.token}/authorize`,
+    uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders/${safeToken}/authorize`,
     headers: {
       Accept: '*/*',
       Prefer: 'return=representation',
