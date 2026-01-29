@@ -2,7 +2,7 @@ import models from '../../models'
 import PaymentMail from '../mail/payment'
 import requestPromise from 'request-promise'
 import { comment } from '../bot/comment'
-import * as slack from '../shared/slack'
+import slack from '../shared/slack'
 
 const currentModels = models as any
 

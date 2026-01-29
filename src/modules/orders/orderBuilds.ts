@@ -8,7 +8,7 @@ import stripeModule from '../shared/stripe/stripe'
 const stripe = stripeModule()
 import Sendmail from '../mail/mail'
 import { userCustomerCreate } from '../users/userCustomerCreate'
-import * as slack from '../shared/slack'
+import slack from '../shared/slack'
 
 const currentModels = models as any
 
