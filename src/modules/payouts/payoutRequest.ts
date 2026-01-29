@@ -1,21 +1,32 @@
-const Promise = require('bluebird')
-const stripe = require('../shared/stripe/stripe')()
-const models = require('../../models')
-const { handleAmount } = require('../util/handle-amount/handle-amount')
+import models from '../../models'
+import Stripe from '../shared/stripe/stripe'
+import { handleAmount } from '../util/handle-amount/handle-amount'
 
-module.exports = Promise.method(async function payoutRequest(params) {
+const stripe = Stripe()
+
+const currentModels = models as any
+
+type PayoutRequestParams = {
+  userId: number
+  source_id?: string
+  amount: number
+  currency?: string
+  method?: string
+}
+
+export async function payoutRequest(params: PayoutRequestParams) {
   if (!params.userId) {
     return { error: 'No userId' }
   }
 
-  const user = await models.User.findByPk(params.userId)
+  const user = await currentModels.User.findByPk(params.userId)
   if (!user) {
     return { error: 'User not found' }
   }
 
   const existingPayout =
     params.source_id &&
-    (await models.Payout.findOne({
+    (await currentModels.Payout.findOne({
       where: {
         source_id: params.source_id
       }
@@ -46,7 +57,7 @@ module.exports = Promise.method(async function payoutRequest(params) {
     return { error: 'Error creating payout with Stripe' }
   }
 
-  const payout = await models.Payout.build({
+  const payout = await currentModels.Payout.build({
     source_id: stripePayout.id,
     userId: params.userId,
     amount: finalAmount.centavos,
@@ -58,4 +69,4 @@ module.exports = Promise.method(async function payoutRequest(params) {
   const newPayout = await payout.save()
 
   return newPayout
-})
+}
