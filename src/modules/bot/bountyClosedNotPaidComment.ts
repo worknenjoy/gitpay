@@ -1,7 +1,6 @@
 const requestPromise = require('request-promise')
-const Promise = require('bluebird')
 
-module.exports = Promise.method(async function bountyClosedNotPaidComment(task, userAssigned) {
+export async function bountyClosedNotPaidComment(task: any, userAssigned: any) {
   const { provider, url, id: issueId, value: amount } = task.dataValues
   const { provider_username: githubUser } = userAssigned
   if (provider !== 'github' || process.env.NODE_ENV !== 'production') return
@@ -38,4 +37,4 @@ If you already received your bounty, please ignore this message.`
   })
 
   return req
-})
+}

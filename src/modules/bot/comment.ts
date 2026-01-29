@@ -1,7 +1,6 @@
 const requestPromise = require('request-promise')
-const Promise = require('bluebird')
 
-module.exports = Promise.method(async function comment(offer, task) {
+export async function comment(offer: any, task: any) {
   const { provider, url, id } = task.dataValues
   if (provider !== 'github' || process.env.NODE_ENV !== 'production') return
   const { currency, amount } = offer
@@ -28,4 +27,4 @@ module.exports = Promise.method(async function comment(offer, task) {
   })
 
   return req
-})
+}

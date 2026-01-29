@@ -1,7 +1,6 @@
 const requestPromise = require('request-promise')
-const Promise = require('bluebird')
 
-module.exports = Promise.method(async function issueAddedComment(task) {
+export async function issueAddedComment(task: any) {
   const { provider, url, id } = task.dataValues
   if (provider !== 'github' || process.env.NODE_ENV !== 'production') return
   const [, , , owner, repo, , issueNumber] = url.split('/')
@@ -41,4 +40,4 @@ module.exports = Promise.method(async function issueAddedComment(task) {
   } catch (e) {
     console.log('error on comment to Github', e)
   }
-})
+}
