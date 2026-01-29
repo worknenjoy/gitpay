@@ -1,4 +1,13 @@
-module.exports = {
+type CurrencyInfo = {
+  symbol: string
+  decimalPlaces: number
+}
+
+type CurrencyInfoMap = {
+  [key: string]: CurrencyInfo
+}
+
+const currencyInfo: CurrencyInfoMap = {
   usd: { symbol: '$', decimalPlaces: 2 }, // US Dollar
   eur: { symbol: '€', decimalPlaces: 2 }, // Euro
   gbp: { symbol: '£', decimalPlaces: 2 }, // British Pound
@@ -94,9 +103,10 @@ module.exports = {
   sll: { symbol: 'Le', decimalPlaces: 2 }, // Sierra Leonean Leone
   gmd: { symbol: 'D', decimalPlaces: 2 }, // Gambian Dalasi
   lrd: { symbol: 'L$', decimalPlaces: 2 }, // Liberian Dollar
-  bdt: { symbol: '৳', decimalPlaces: 2 }, // Bangladeshi Taka
   xag: { symbol: 'XAG', decimalPlaces: 2 }, // Silver (troy ounce)
   xau: { symbol: 'XAU', decimalPlaces: 2 }, // Gold (troy ounce)
   btc: { symbol: '₿', decimalPlaces: 8 }, // Bitcoin
   eth: { symbol: 'Ξ', decimalPlaces: 8 } // Ethereum
 }
+
+export default currencyInfo

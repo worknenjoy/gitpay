@@ -1,10 +1,22 @@
 const Decimal = require('decimal.js')
-const currencyMap = require('../currency-info')
+import currencyInfo from '../currency-info'
 
-function handleAmount(amount, percent, type, currency = 'usd') {
-  const decimalPlaces = currencyMap[currency.toLowerCase()]?.decimalPlaces || 2
+type HandleAmountResult = {
+  centavos: number
+  decimal: number
+  decimalFee: number
+  centavosFee: number
+}
+
+export function handleAmount(
+  amount: number,
+  percent: number,
+  type: string,
+  currency: string = 'usd'
+): HandleAmountResult {
+  const decimalPlaces = currencyInfo[currency.toLowerCase()]?.decimalPlaces || 2
   const centsFactor = Math.pow(10, decimalPlaces)
-  let decimalAmount
+  let decimalAmount: any
 
   if (type === 'centavos') {
     decimalAmount = new Decimal(amount).div(centsFactor)
@@ -28,5 +40,3 @@ function handleAmount(amount, percent, type, currency = 'usd') {
 
   return { centavos, decimal, decimalFee, centavosFee }
 }
-
-module.exports = { handleAmount }

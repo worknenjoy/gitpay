@@ -1,4 +1,8 @@
-module.exports.currencyMap = {
+type CurrencyMap = {
+  [key: string]: string
+}
+
+export const currencyMap: CurrencyMap = {
   AL: 'ALL', // Albania
   AU: 'AUD',
   AT: 'EUR',
