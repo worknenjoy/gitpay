@@ -1,11 +1,19 @@
-const Promise = require('bluebird')
-const models = require('../../models')
+import models from '../../models'
 
-module.exports = Promise.method(function userChangePassword(userParameters) {
+const currentModels = models as any
+
+type UserChangePasswordParams = {
+  id: number
+  old_password: string
+  password: string
+}
+
+export async function userChangePassword(userParameters: UserChangePasswordParams) {
   const oldPassword = userParameters.old_password
   const newPassword = userParameters.password
   const minimumPasswordLength = 8
   const maximumPasswordLength = 20
+  
   if (oldPassword.length < minimumPasswordLength) {
     throw new Error('user.password.current.incorrect.too_short')
   }
@@ -21,7 +29,10 @@ module.exports = Promise.method(function userChangePassword(userParameters) {
   if (newPassword.length > maximumPasswordLength) {
     throw new Error('user.password.new.incorrect.too_long')
   }
-  return models.User.findOne({ where: { id: userParameters.id } }).then(async (foundUser) => {
+  
+  try {
+    const foundUser = await currentModels.User.findOne({ where: { id: userParameters.id } })
+    
     if (!foundUser) {
       return false
     }
@@ -37,17 +48,21 @@ module.exports = Promise.method(function userChangePassword(userParameters) {
       throw new Error('user.password.incorrect.current')
     }
 
-    const passwordHash = models.User.generateHash(newPassword)
+    const passwordHash = currentModels.User.generateHash(newPassword)
     if (passwordHash) {
-      return models.User.update({ password: passwordHash }, { where: { id: userParameters.id } })
-        .then(() => {
-          return true
-        })
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.log(error)
-          return false
-        })
+      try {
+        await currentModels.User.update(
+          { password: passwordHash },
+          { where: { id: userParameters.id } }
+        )
+        return true
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error)
+        return false
+      }
     }
-  })
-})
+  } catch (error) {
+    throw error
+  }
+}

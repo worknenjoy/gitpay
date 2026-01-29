@@ -1,10 +1,13 @@
-const Promise = require('bluebird')
 const stripe = require('../shared/stripe/stripe')()
 
-module.exports = Promise.method(async function userAccountBalance(userParameters) {
+type UserAccountBalanceParams = {
+  account_id: string
+}
+
+export async function userAccountBalance(userParameters: UserAccountBalanceParams) {
   const { account_id } = userParameters
   const accountBalance = await stripe.balance.retrieve({
     stripeAccount: account_id
   })
   return accountBalance
-})
+}

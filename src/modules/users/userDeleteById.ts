@@ -1,11 +1,17 @@
-const models = require('../../models')
+import models from '../../models'
 const db = require('../../models/index')
 const { taskDeleteById } = require('../tasks/index')
 
-const userDeleteById = async (userParameters) => {
+const currentModels = models as any
+
+type UserDeleteByIdParams = {
+  id: number
+}
+
+export async function userDeleteById(userParameters: UserDeleteByIdParams) {
   try {
-    return await db.sequelize.transaction(async (t) => {
-      const tasks = await models.Task.findAll({
+    return await db.sequelize.transaction(async (t: any) => {
+      const tasks = await currentModels.Task.findAll({
         where: {
           userId: userParameters.id
         }
@@ -18,13 +24,13 @@ const userDeleteById = async (userParameters) => {
         })
       }
 
-      await models.Assign.destroy({ where: { userId: userParameters.id }, transaction: t })
-      await models.Offer.destroy({ where: { userId: userParameters.id }, transaction: t })
+      await currentModels.Assign.destroy({ where: { userId: userParameters.id }, transaction: t })
+      await currentModels.Offer.destroy({ where: { userId: userParameters.id }, transaction: t })
       await db.sequelize.query(`DELETE FROM "User_Types" WHERE "UserId" = ${userParameters.id}`, {
         transaction: t
       })
 
-      const user = await models.User.destroy({
+      const user = await currentModels.User.destroy({
         where: {
           id: userParameters.id
         },
@@ -42,5 +48,3 @@ const userDeleteById = async (userParameters) => {
     console.log('error to delete user', err)
   }
 }
-
-module.exports = userDeleteById
