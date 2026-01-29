@@ -1,4 +1,3 @@
-import Decimal from 'decimal.js'
 import stripe from '../shared/stripe/stripe'
 import models from '../../models'
 

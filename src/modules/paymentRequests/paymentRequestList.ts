@@ -9,7 +9,7 @@ export async function paymentRequestList(paymentRequestParams: PaymentRequestPar
   const paymentRequestList = await models.PaymentRequest.findAll({
     where: { userId: paymentRequestParams.userId },
     order: [['createdAt', 'DESC']],
-    include: [{ model: models.User }],
+    include: [{ model: models.User }]
   })
   return paymentRequestList
 }

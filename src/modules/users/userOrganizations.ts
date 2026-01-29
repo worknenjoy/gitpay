@@ -16,7 +16,7 @@ export async function userOrganizations(userAttributes: UserOrganizationsParams)
       },
       include: [currentModels.Organization]
     })
-    
+
     if (!user) return false
 
     if (
@@ -35,7 +35,7 @@ export async function userOrganizations(userAttributes: UserOrganizationsParams)
         'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
       }
     })
-    
+
     const responseFromGithub = JSON.parse(response)
 
     const currentOrgs = user.dataValues.Organizations

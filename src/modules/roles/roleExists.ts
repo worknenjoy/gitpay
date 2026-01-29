@@ -13,7 +13,7 @@ export async function roleExists(roleAttributes: RoleExistsParams) {
         name: roleAttributes.name
       }
     })
-    
+
     if (!role) return false
     return role
   } catch (error) {

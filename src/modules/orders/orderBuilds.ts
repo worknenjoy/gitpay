@@ -82,7 +82,11 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
   const percentage = orderCreated.Plan?.feePercentage
 
   if (orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
-    const unitAmount = (parseInt(String(orderParameters.amount)) * 100 * (1 + percentage / 100)).toFixed(0)
+    const unitAmount = (
+      parseInt(String(orderParameters.amount)) *
+      100 *
+      (1 + percentage / 100)
+    ).toFixed(0)
     const quantity = 1
 
     if (!orderParameters.customer_id) {
@@ -145,7 +149,10 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
   }
 
   if (orderParameters.provider === 'paypal') {
-    const totalPrice = currentModels.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan)
+    const totalPrice = currentModels.Plan.calcFinalPrice(
+      orderParameters.amount,
+      orderParameters.plan
+    )
     const response = await requestPromise({
       method: 'POST',
       uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,

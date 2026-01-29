@@ -8,7 +8,10 @@ type OrderFetchParams = {
 
 export async function orderFetch(orderParams: OrderFetchParams) {
   try {
-    const data = await currentModels.Order.findOne({ where: { id: orderParams.id }, include: currentModels.User })
+    const data = await currentModels.Order.findOne({
+      where: { id: orderParams.id },
+      include: currentModels.User
+    })
     return {
       source_id: data.source_id,
       currency: data.currency,

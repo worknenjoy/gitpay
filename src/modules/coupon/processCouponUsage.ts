@@ -14,10 +14,7 @@ export async function processCouponUsage(coupon: any) {
   }
 
   try {
-    await currentModels.Coupon.update(
-      { times: coupon.times - 1 },
-      { where: { code: coupon.code } }
-    )
+    await currentModels.Coupon.update({ times: coupon.times - 1 }, { where: { code: coupon.code } })
     return true
   } catch (err) {
     // eslint-disable-next-line no-console

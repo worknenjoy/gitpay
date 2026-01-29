@@ -41,7 +41,7 @@ const sendConfirmationEmail = async (task: any, assign: any) => {
       }
     }
   )
-  
+
   return SendMail.success(
     { email: user.email, language },
     i18n.__('mail.assigned.request.subject'),

@@ -37,7 +37,7 @@ export async function taskSolutionUpdate(taskSolution: any, taskSolutionId: numb
           returning: true,
           plain: true
         })
-        
+
         if (
           response.isAuthorOfPR &&
           response.isConnectedToGitHub &&

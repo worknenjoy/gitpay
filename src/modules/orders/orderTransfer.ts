@@ -11,13 +11,16 @@ type TransferData = {
   id: number
 }
 
-export async function orderTransfer(transferParams: OrderTransferParams, transferData: TransferData) {
+export async function orderTransfer(
+  transferParams: OrderTransferParams,
+  transferData: TransferData
+) {
   try {
     const order = await currentModels.Order.findOne({
       where: { id: transferParams.id },
       include: [currentModels.User, currentModels.Task]
     })
-    
+
     if (!order) throw new Error('no order found')
     if (transferParams.id && transferData.id) {
       const transferOrderId = transferParams.id
@@ -40,7 +43,7 @@ export async function orderTransfer(transferParams: OrderTransferParams, transfe
             plain: true
           }
         )
-        
+
         const taskTo = await currentModels.Task.findOne({ where: { id: transferTaskId } })
         if (orderUpdated) {
           TransferMail.transferBounty(order, order.Task, taskTo, order.User)

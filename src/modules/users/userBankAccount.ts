@@ -9,23 +9,18 @@ type UserBankAccountParams = {
 }
 
 export async function userBankAccount(userParameters: UserBankAccountParams) {
-  try {
-    const data = await currentModels.User.findOne({
-      where: { id: userParameters.id }
+  const data = await currentModels.User.findOne({
+    where: { id: userParameters.id }
+  })
+
+  if (data.dataValues.account_id) {
+    const bankAccounts = await stripe.accounts.listExternalAccounts(data.dataValues.account_id, {
+      object: 'bank_account'
     })
-    
-    if (data.dataValues.account_id) {
-      const bankAccounts = await stripe.accounts.listExternalAccounts(
-        data.dataValues.account_id,
-        { object: 'bank_account' }
-      )
-      
-      if (bankAccounts.data.length) {
-        return bankAccounts.data[0]
-      }
-      return false
+
+    if (bankAccounts.data.length) {
+      return bankAccounts.data[0]
     }
-  } catch (error) {
-    throw error
+    return false
   }
 }

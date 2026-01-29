@@ -13,7 +13,7 @@ export async function userCustomerCreate(id: number, customerParameters: UserCus
     const data = await currentModels.User.findOne({
       where: { id }
     })
-    
+
     if (data.dataValues.customer_id) {
       try {
         const customer = await stripe.customers.retrieve(data.dataValues.customer_id)
@@ -30,7 +30,7 @@ export async function userCustomerCreate(id: number, customerParameters: UserCus
           user_id: id
         }
       })
-      
+
       await data.update(
         {
           customer_id: customer.id
@@ -40,7 +40,7 @@ export async function userCustomerCreate(id: number, customerParameters: UserCus
           returning: true
         }
       )
-      
+
       return customer
     }
   } catch (error) {

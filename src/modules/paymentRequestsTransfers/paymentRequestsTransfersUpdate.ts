@@ -7,7 +7,9 @@ type PaymentRequestTransferUpdateParams = {
   [key: string]: any
 }
 
-export async function paymentRequestTransferUpdate(paymentRequestTransferUpdateParams: PaymentRequestTransferUpdateParams) {
+export async function paymentRequestTransferUpdate(
+  paymentRequestTransferUpdateParams: PaymentRequestTransferUpdateParams
+) {
   const { id, ...updateData } = paymentRequestTransferUpdateParams
   const transfer = await currentModels.PaymentRequestTransfer.findByPk(id)
   if (!transfer) {

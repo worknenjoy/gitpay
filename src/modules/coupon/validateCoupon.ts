@@ -10,7 +10,7 @@ type ValidateCouponPayload = {
 export async function validateCoupon(payload: ValidateCouponPayload) {
   try {
     const data = await currentModels.Coupon.findOne({ where: { code: payload.code } })
-    
+
     if (data) {
       if (data.dataValues.times === 0) {
         throw new Error('COUPON_MAX_TIMES_EXCEEDED')

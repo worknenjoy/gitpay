@@ -1,6 +1,5 @@
 import models from '../../models'
 import { taskSolutionFetchData } from './taskSolutionFetchData'
-import { taskPayment } from './taskPayment'
 import { assignExists as assignExist } from '../assigns'
 import { transferBuilds } from '../transfers/transferBuilds'
 import { taskUpdate } from '../tasks/taskUpdate'

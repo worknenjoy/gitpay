@@ -40,7 +40,7 @@ export async function orderAuthorize(orderParameters: OrderAuthorizeParams) {
       grant_type: 'client_credentials'
     }
   })
-  
+
   const authorize = await requestPromise({
     method: 'POST',
     uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders/${safeToken}/authorize`,
@@ -52,16 +52,14 @@ export async function orderAuthorize(orderParameters: OrderAuthorizeParams) {
       'Content-Type': 'application/json'
     }
   })
-  
+
   const authorization = JSON.parse(authorize)
   const order = await currentModels.Order.update(
     {
       payer_id: orderParameters.PayerID,
       paid: !!(orderParameters.token && orderParameters.PayerID && authorization.id),
       status:
-        orderParameters.token && orderParameters.PayerID && authorization.id
-          ? 'succeeded'
-          : 'fail',
+        orderParameters.token && orderParameters.PayerID && authorization.id ? 'succeeded' : 'fail',
       authorization_id:
         authorization.purchase_units &&
         authorization.purchase_units[0] &&
@@ -76,13 +74,13 @@ export async function orderAuthorize(orderParameters: OrderAuthorizeParams) {
       plain: true
     }
   )
-  
+
   const orderData = order[1].dataValues
   const [user, task] = await Promise.all([
     currentModels.User.findByPk(orderData.userId),
     currentModels.Task.findByPk(orderData.TaskId)
   ])
-  
+
   if (orderData.paid) {
     comment(orderData, task)
     PaymentMail.success(user, task, orderData.amount)
@@ -96,7 +94,7 @@ export async function orderAuthorize(orderParameters: OrderAuthorizeParams) {
   } else {
     PaymentMail.error(user.dataValues, task, orderData.amount)
   }
-  
+
   if (task.dataValues.assigned) {
     const assignedId = task.dataValues.assigned
     const assign = await currentModels.Assign.findByPk(assignedId, {

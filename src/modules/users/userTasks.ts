@@ -12,7 +12,7 @@ export async function userTasks(id: number) {
         status: 'accepted'
       }
     })
-    
+
     /*
       finds completed tasks for each assigns and returns
       an array of promises to be resolved by .all()
@@ -26,7 +26,7 @@ export async function userTasks(id: number) {
             status: 'closed'
           }
         })
-        
+
         if (res !== null) {
           return res.dataValues
         }
@@ -36,7 +36,7 @@ export async function userTasks(id: number) {
         throw error
       }
     })
-    
+
     const res = await Promise.all(taskPromises)
     const filteredRes = res.filter((r) => r !== undefined)
     let bounties = 0

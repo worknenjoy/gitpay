@@ -13,7 +13,7 @@ export async function userPreferences(userAttributes: UserPreferencesParams) {
         id: userAttributes.id
       }
     })
-    
+
     if (!user) return false
 
     if (user && !user.dataValues) return false

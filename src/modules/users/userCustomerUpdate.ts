@@ -13,10 +13,13 @@ export async function userCustomerUpdate(id: number, customerParameters: UserCus
     const data = await currentModels.User.findOne({
       where: { id }
     })
-    
+
     if (data.dataValues.customer_id) {
       try {
-        const customer = await stripe.customers.update(data.dataValues.customer_id, customerParameters)
+        const customer = await stripe.customers.update(
+          data.dataValues.customer_id,
+          customerParameters
+        )
         return customer
       } catch (e) {
         // eslint-disable-next-line no-console

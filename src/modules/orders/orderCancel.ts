@@ -15,7 +15,7 @@ export async function orderCancel(orderParameters: OrderCancelParams) {
     },
     include: [currentModels.User, currentModels.Task]
   })
-  
+
   if (order && order.dataValues && order.dataValues.provider === 'paypal') {
     try {
       const response = await requestPromise({
@@ -36,7 +36,7 @@ export async function orderCancel(orderParameters: OrderCancelParams) {
           grant_type: 'client_credentials'
         }
       })
-      
+
       const cancelUri = `${process.env.PAYPAL_HOST}/v2/payments/authorizations/${order.dataValues.authorization_id}/void`
       const payment = await requestPromise({
         method: 'POST',
@@ -48,7 +48,7 @@ export async function orderCancel(orderParameters: OrderCancelParams) {
           'Content-Type': 'application/json'
         }
       })
-      
+
       const orderUpdated = await order.update(
         {
           status: 'canceled',
@@ -60,7 +60,7 @@ export async function orderCancel(orderParameters: OrderCancelParams) {
           }
         }
       )
-      
+
       if (orderUpdated) {
         PaymentMail.cancel(order.dataValues.User, order.dataValues.Task, order)
       }
@@ -79,7 +79,7 @@ export async function orderCancel(orderParameters: OrderCancelParams) {
           }
         }
       )
-      
+
       if (orderUpdated) {
         PaymentMail.cancel(order.dataValues.User, order.dataValues.Task, order)
       }

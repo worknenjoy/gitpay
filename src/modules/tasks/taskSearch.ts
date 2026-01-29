@@ -176,7 +176,7 @@ export async function taskSearch(searchParams: any) {
       ],
       order: [['id', 'DESC']]
     })
-    
+
     projects.forEach((p: any) => p.Tasks.forEach((t: any) => tasks.push(t)))
     attachLabelsVirtual(tasks)
     return tasks
@@ -219,7 +219,9 @@ export async function taskSearch(searchParams: any) {
         model: currentModels.Assign,
         separate: true,
         attributes: ['id', 'status', 'message', 'createdAt', 'TaskId', 'userId'],
-        include: [{ model: currentModels.User, attributes: ['id', 'username', 'picture_url', 'name'] }],
+        include: [
+          { model: currentModels.User, attributes: ['id', 'username', 'picture_url', 'name'] }
+        ],
         order: [['createdAt', 'DESC']]
       },
       {
@@ -242,7 +244,7 @@ export async function taskSearch(searchParams: any) {
       ['id', 'DESC']
     ]
   })
-  
+
   attachLabelsVirtual(rows)
 
   return rows.filter((task: any) => {

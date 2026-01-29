@@ -10,12 +10,12 @@ type UserCustomerParams = {
 
 export async function userCustomer(userParameters: UserCustomerParams) {
   const { id } = userParameters
-  
+
   try {
     const data = await currentModels.User.findOne({
       where: { id }
     })
-    
+
     const { customer_id } = data.dataValues
     if (customer_id) {
       try {

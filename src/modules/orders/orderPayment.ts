@@ -10,7 +10,7 @@ type OrderPaymentParams = {
 
 export async function orderPayment(orderParameters: OrderPaymentParams) {
   const order = await currentModels.Order.findByPk(orderParameters.id)
-  
+
   if (order.provider === 'paypal') {
     const response = await requestPromise({
       method: 'POST',
@@ -30,7 +30,7 @@ export async function orderPayment(orderParameters: OrderPaymentParams) {
         grant_type: 'client_credentials'
       }
     })
-    
+
     const payment = await requestPromise({
       method: 'POST',
       uri: `${process.env.PAYPAL_HOST}/v2/payments/authorizations/${order.authorization_id}/capture`,
@@ -42,7 +42,7 @@ export async function orderPayment(orderParameters: OrderPaymentParams) {
         'Content-Type': 'application/json'
       }
     })
-    
+
     const paymentData = JSON.parse(payment)
     const updatedOrder = await order.update(
       {
@@ -57,17 +57,17 @@ export async function orderPayment(orderParameters: OrderPaymentParams) {
         plain: true
       }
     )
-    
+
     if (!updatedOrder) {
       throw new Error('update_order_error')
     }
-    
+
     const orderData = updatedOrder.dataValues || updatedOrder[0].dataValues
     const [user, task] = await Promise.all([
       currentModels.User.findByPk(orderData.userId),
       currentModels.Task.findByPk(orderData.TaskId)
     ])
-    
+
     const assign = await currentModels.Assign.findByPk(task.dataValues.assigned, {
       include: [currentModels.User]
     })

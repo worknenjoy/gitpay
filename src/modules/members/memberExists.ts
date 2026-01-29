@@ -15,7 +15,7 @@ export async function memberExists(memberAttributes: MemberExistsParams) {
         taskId: memberAttributes.taskId
       }
     })
-    
+
     if (!member) return false
     return member
   } catch (error) {

@@ -16,7 +16,9 @@ type PaymentRequestParams = {
 
 const stripe = createStripe()
 
-export async function paymentRequestBuilds(paymentRequestParams: PaymentRequestParams): Promise<any> {
+export async function paymentRequestBuilds(
+  paymentRequestParams: PaymentRequestParams
+): Promise<any> {
   const currency = paymentRequestParams.currency ?? 'usd'
   const { id, userId, title, description, amount, custom_amount } = paymentRequestParams
 

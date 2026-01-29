@@ -15,7 +15,7 @@ export async function assignExists(assignAttributes: AssignExistsParams) {
         TaskId: assignAttributes.taskId
       }
     })
-    
+
     if (!assign) return false
     return assign
   } catch (error) {

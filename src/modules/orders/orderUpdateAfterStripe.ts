@@ -10,7 +10,15 @@ type OrderUpdateAfterStripeParams = {
   currency?: string
 }
 
-export async function orderUpdateAfterStripe(order: any, charge: any, card: any, orderParameters: OrderUpdateAfterStripeParams, user: any, task: any, couponFull: boolean) {
+export async function orderUpdateAfterStripe(
+  order: any,
+  charge: any,
+  card: any,
+  orderParameters: OrderUpdateAfterStripeParams,
+  user: any,
+  task: any,
+  couponFull: boolean
+) {
   try {
     const orderPayload = couponFull
       ? {
@@ -29,7 +37,7 @@ export async function orderUpdateAfterStripe(order: any, charge: any, card: any,
         id: order.dataValues.id
       }
     })
-    
+
     if (orderParameters.plan === 'full') {
       PaymentMail.support(user, task, order)
     }

@@ -13,7 +13,7 @@ export async function userChangePassword(userParameters: UserChangePasswordParam
   const newPassword = userParameters.password
   const minimumPasswordLength = 8
   const maximumPasswordLength = 20
-  
+
   if (oldPassword.length < minimumPasswordLength) {
     throw new Error('user.password.current.incorrect.too_short')
   }
@@ -29,40 +29,36 @@ export async function userChangePassword(userParameters: UserChangePasswordParam
   if (newPassword.length > maximumPasswordLength) {
     throw new Error('user.password.new.incorrect.too_long')
   }
-  
-  try {
-    const foundUser = await currentModels.User.findOne({ where: { id: userParameters.id } })
-    
-    if (!foundUser) {
+
+  const foundUser = await currentModels.User.findOne({ where: { id: userParameters.id } })
+
+  if (!foundUser) {
+    return false
+  }
+
+  const existingPassword = foundUser.dataValues.password
+
+  if (oldPassword === newPassword) {
+    throw new Error('user.password.incorrect.same')
+  }
+
+  const passwordIsValid = foundUser.verifyPassword(oldPassword, existingPassword)
+  if (!passwordIsValid) {
+    throw new Error('user.password.incorrect.current')
+  }
+
+  const passwordHash = currentModels.User.generateHash(newPassword)
+  if (passwordHash) {
+    try {
+      await currentModels.User.update(
+        { password: passwordHash },
+        { where: { id: userParameters.id } }
+      )
+      return true
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error)
       return false
     }
-
-    const existingPassword = foundUser.dataValues.password
-
-    if (oldPassword === newPassword) {
-      throw new Error('user.password.incorrect.same')
-    }
-
-    const passwordIsValid = foundUser.verifyPassword(oldPassword, existingPassword)
-    if (!passwordIsValid) {
-      throw new Error('user.password.incorrect.current')
-    }
-
-    const passwordHash = currentModels.User.generateHash(newPassword)
-    if (passwordHash) {
-      try {
-        await currentModels.User.update(
-          { password: passwordHash },
-          { where: { id: userParameters.id } }
-        )
-        return true
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log(error)
-        return false
-      }
-    }
-  } catch (error) {
-    throw error
   }
 }

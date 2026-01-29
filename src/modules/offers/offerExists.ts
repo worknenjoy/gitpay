@@ -15,7 +15,7 @@ export async function offerExists(offerAttributes: OfferExistsParams) {
         taskId: offerAttributes.taskId
       }
     })
-    
+
     if (!offer) return false
     return offer
   } catch (error) {
