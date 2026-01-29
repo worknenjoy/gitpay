@@ -1,6 +1,6 @@
 import models from '../../models'
 import secrets from '../../config/secrets'
-import url from 'url'
+import * as url from 'url'
 import requestPromise from 'request-promise'
 import { roleExists } from '../roles'
 import { userExists } from '../users'

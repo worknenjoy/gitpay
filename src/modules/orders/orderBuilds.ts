@@ -1,7 +1,7 @@
 import models from '../../models'
 import requestPromise from 'request-promise'
-import { URLSearchParams } from 'url'
-import URL from 'url'
+import URLSearchParams from 'url-search-params'
+import * as URL from 'url'
 import Decimal from 'decimal.js'
 import stripeModule from '../shared/stripe/stripe'
 const stripe = stripeModule()

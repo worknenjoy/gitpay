@@ -2,7 +2,7 @@ import models from '../../models'
 import SendMail from '../mail/mail'
 import i18n from 'i18n'
 import jwt from 'jsonwebtoken'
-import { reportEmail } from '../mail/constants'
+import constants from '../mail/constants'
 
 const currentModels = models as any
 
@@ -31,7 +31,7 @@ export async function taskReport({ id }: any, { task, reason, baseUrl }: any) {
     i18n.setLocale('en')
     const receiveNotifications = taskData.User.receiveNotifications
     SendMail.success(
-      { email: reportEmail, language: 'en', receiveNotifications },
+      { email: constants.reportEmail, language: 'en', receiveNotifications },
       i18n.__('mail.report.send.action'),
       `${i18n.__('mail.report.send.message', {
         title: taskData.title,
