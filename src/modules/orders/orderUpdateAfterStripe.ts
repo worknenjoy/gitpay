@@ -1,8 +1,9 @@
 import models from '../../models'
 import PaymentMail from '../mail/payment'
-import { notifyBounty } from '../shared/slack'
+import * as slackModule from '../shared/slack'
 
 const currentModels = models as any
+const { notifyBounty } = slackModule as any
 
 type OrderUpdateAfterStripeParams = {
   plan?: string
