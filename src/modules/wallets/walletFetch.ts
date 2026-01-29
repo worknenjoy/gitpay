@@ -1,10 +1,16 @@
-const Promise = require('bluebird')
-const models = require('../../models')
+import models from '../../models'
 
-module.exports = Promise.method(async function walletFetch(params) {
+const currentModels = models as any
+
+type WalletFetchParams = {
+  userId: number
+  id: number
+}
+
+export async function walletFetch(params: WalletFetchParams) {
   const user =
     params.userId &&
-    (await models.User.findOne({
+    (await currentModels.User.findOne({
       where: {
         id: params.userId
       }
@@ -14,7 +20,7 @@ module.exports = Promise.method(async function walletFetch(params) {
     return { error: 'No valid user' }
   }
 
-  const wallet = await models.Wallet.findOne({
+  const wallet = await currentModels.Wallet.findOne({
     where: {
       id: params.id,
       userId: user.id
@@ -26,4 +32,4 @@ module.exports = Promise.method(async function walletFetch(params) {
   }
 
   return wallet.dataValues
-})
+}
