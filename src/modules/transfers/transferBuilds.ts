@@ -1,16 +1,19 @@
-const Transfer = require('../../models').Transfer
-const Task = require('../../models').Task
-const Order = require('../../models').Order
-const Promise = require('bluebird')
+import models from '../../models'
+
+const currentModels = models as any
 const requestPromise = require('request-promise')
 const stripe = require('../shared/stripe/stripe')()
 const TransferMail = require('../mail/transfer')
-const models = require('../../models')
 
-module.exports = Promise.method(async function transferBuilds(params) {
+type TransferBuildsParams = {
+  transfer_id?: string
+  taskId?: number
+}
+
+export async function transferBuilds(params: TransferBuildsParams) {
   const existingTransfer =
     params.transfer_id &&
-    (await Transfer.findOne({
+    (await currentModels.Transfer.findOne({
       where: {
         transfer_id: params.transfer_id
       }
@@ -22,7 +25,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
 
   const existingTask =
     params.taskId &&
-    (await Transfer.findOne({
+    (await currentModels.Transfer.findOne({
       where: {
         taskId: params.taskId
       }
@@ -34,14 +37,14 @@ module.exports = Promise.method(async function transferBuilds(params) {
 
   const task =
     params.taskId &&
-    (await Task.findOne({
+    (await currentModels.Task.findOne({
       where: {
         id: params.taskId
       },
       include: [
-        Order,
+        currentModels.Order,
         {
-          model: models.User,
+          model: currentModels.User,
           as: 'User'
         }
       ]
@@ -55,13 +58,13 @@ module.exports = Promise.method(async function transferBuilds(params) {
     return { error: 'No user assigned' }
   }
 
-  const assign = await models.Assign.findOne({
+  const assign = await currentModels.Assign.findOne({
     where: {
       id: taskData.assigned
     },
     include: [
       {
-        model: models.User,
+        model: currentModels.User,
         as: 'User'
       }
     ]
@@ -85,11 +88,11 @@ module.exports = Promise.method(async function transferBuilds(params) {
     return { error: 'No orders found' }
   } else {
     const orders = taskData.Orders
-    const ordersPaid = orders.find((order) => order.paid === true)
+    const ordersPaid = orders.find((order: any) => order.paid === true)
     if (!ordersPaid) {
       return { error: 'All orders must be paid' }
     }
-    orders.map((order) => {
+    orders.map((order: any) => {
       if ((order.provider === 'stripe' || order.provider === 'wallet') && order.paid) {
         allPaypal = false
         isStripe = true
@@ -107,7 +110,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
     }
   }
   const destination = assign.dataValues.User
-  let transfer = await Transfer.build({
+  let transfer = await currentModels.Transfer.build({
     status: 'pending',
     value: finalValue,
     transfer_id: params.transfer_id,
@@ -118,7 +121,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
     paypal_transfer_amount: paypalTotal,
     stripe_transfer_amount: stripeTotal
   }).save()
-  const taskUpdate = await Task.update(
+  const taskUpdate = await currentModels.Task.update(
     { TransferId: transfer.id },
     {
       where: {
@@ -150,7 +153,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
       const stripeTransfer = await stripe.transfers.create(transferData)
 
       if (stripeTransfer) {
-        const updateTask = await models.Task.update(
+        const updateTask = await currentModels.Task.update(
           { transfer_id: stripeTransfer.id },
           {
             where: {
@@ -158,7 +161,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
             }
           }
         )
-        const updateTransfer = await models.Transfer.update(
+        const updateTransfer = await currentModels.Transfer.update(
           {
             transfer_id: stripeTransfer.id,
             status: transfer.transfer_method === 'stripe' ? 'in_transit' : 'pending'
@@ -174,7 +177,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
           TransferMail.error(user, task, task.value)
           return { error: 'update_task_reject' }
         }
-        const taskOwner = await models.User.findByPk(taskData.userId)
+        const taskOwner = await currentModels.User.findByPk(taskData.userId)
         TransferMail.notifyOwner(taskOwner.dataValues, taskData, taskData.value)
         TransferMail.success(user, taskData, taskData.value)
         transfer = updateTransfer[1][0].dataValues
@@ -233,7 +236,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
         }
       })
       if (paypalTransfer) {
-        const paypalPayout = await models.Payout.build({
+        const paypalPayout = await currentModels.Payout.build({
           source_id: paypalTransfer.batch_header.payout_batch_id,
           method: 'paypal',
           amount: paypalTotal * 0.92,
@@ -243,7 +246,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
         if (!paypalPayout) {
           return { error: 'Payout not created' }
         }
-        const transferWithPayPalPayoutInfo = await models.Transfer.update(
+        const transferWithPayPalPayoutInfo = await currentModels.Transfer.update(
           {
             paypal_payout_id: paypalTransfer.batch_header.payout_batch_id,
             status: transfer.transfer_method === 'paypal' ? 'in_transit' : 'pending'
@@ -265,7 +268,7 @@ module.exports = Promise.method(async function transferBuilds(params) {
     transfer.transfer_method === 'multiple' &&
     transfer.transfer_id &&
     transfer.paypal_payout_id &&
-    (await models.Transfer.update(
+    (await currentModels.Transfer.update(
       { status: 'in_transit' },
       { where: { id: transfer.id }, returning: true }
     ))
@@ -273,4 +276,4 @@ module.exports = Promise.method(async function transferBuilds(params) {
     transfer = updateTransferStatus[1][0].dataValues
   }
   return transfer
-})
+}

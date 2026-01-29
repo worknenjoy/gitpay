@@ -1,23 +1,27 @@
-const Transfer = require('../../models').Transfer
-const Promise = require('bluebird')
+import models from '../../models'
+
+const currentModels = models as any
 const requestPromise = require('request-promise')
 const stripe = require('../shared/stripe/stripe')()
 const TransferMail = require('../mail/transfer')
-const models = require('../../models')
 
-module.exports = Promise.method(async function transferUpdate(params) {
+type TransferUpdateParams = {
+  id?: number
+}
+
+export async function transferUpdate(params: TransferUpdateParams) {
   let existingTransfer =
     params.id &&
-    (await Transfer.findOne({
+    (await currentModels.Transfer.findOne({
       where: {
         id: params.id
       },
       include: [
         {
-          model: models.User,
+          model: currentModels.User,
           as: 'User'
         },
-        models.Task
+        currentModels.Task
       ]
     }))
 
@@ -25,7 +29,7 @@ module.exports = Promise.method(async function transferUpdate(params) {
     return { error: 'No transfer found' }
   }
 
-  const destination = await models.User.findOne({
+  const destination = await currentModels.User.findOne({
     where: {
       id: existingTransfer.dataValues.to
     }
@@ -55,7 +59,7 @@ module.exports = Promise.method(async function transferUpdate(params) {
       (await stripe.transfers.retrieve(existingTransfer.transfer_id))
     stripeTransfer = await stripe.transfers.create(transferData)
     if (stripeTransfer) {
-      const updateTask = await models.Task.update(
+      const updateTask = await currentModels.Task.update(
         { transfer_id: stripeTransfer.id },
         {
           where: {
@@ -63,7 +67,7 @@ module.exports = Promise.method(async function transferUpdate(params) {
           }
         }
       )
-      const updateTransfer = await models.Transfer.update(
+      const updateTransfer = await currentModels.Transfer.update(
         {
           transfer_id: stripeTransfer.id,
           status: existingTransfer.transfer_method === 'stripe' ? 'in_transit' : 'pending'
@@ -80,7 +84,7 @@ module.exports = Promise.method(async function transferUpdate(params) {
         TransferMail.error(user, task, task.value)
         return { error: 'update_task_reject' }
       }
-      const taskOwner = await models.User.findByPk(task.userId)
+      const taskOwner = await currentModels.User.findByPk(task.userId)
       TransferMail.notifyOwner(taskOwner.dataValues, task, value)
       TransferMail.success(user, task, value)
       existingTransfer = updateTransfer[1][0].dataValues
@@ -161,7 +165,7 @@ module.exports = Promise.method(async function transferUpdate(params) {
     existingTransfer.transfer_method === 'multiple' &&
     existingTransfer.transfer_id &&
     existingTransfer.paypal_payout_id &&
-    (await models.Transfer.update(
+    (await currentModels.Transfer.update(
       { status: 'in_transit' },
       { where: { id: existingTransfer.id }, returning: true }
     ))
@@ -169,4 +173,4 @@ module.exports = Promise.method(async function transferUpdate(params) {
     existingTransfer = updateTransferStatus[1][0].dataValues
   }
   return existingTransfer
-})
+}
