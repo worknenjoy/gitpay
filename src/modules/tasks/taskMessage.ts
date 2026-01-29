@@ -14,6 +14,7 @@ export async function taskMessage({ id }: any, { interested, message }: any, use
     const taskUser = task.User.dataValues
     const language = taskUser.language || 'en'
     i18n.setLocale(language)
+    // @ts-ignore - AssignMail.messageInterested accepts 4 params but type definition shows 3
     AssignMail.messageInterested(targetInterested.User.dataValues, task.dataValues, message, user)
     return task
   } catch (error) {

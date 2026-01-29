@@ -4,6 +4,7 @@ import * as url from 'url'
 import requestPromise from 'request-promise'
 import { roleExists } from '../roles'
 import { userExists } from '../users'
+// @ts-ignore - ip has no type definitions
 import { not } from 'ip'
 import { memberExists } from '../members'
 
@@ -53,7 +54,11 @@ export async function taskFetch(taskParams: any) {
     const githubClientId = secrets.github.id
     const githubClientSecret = secrets.github.secret
     const issueUrl = data?.dataValues?.url
-    const splitIssueUrl = url.parse(issueUrl).path.split('/')
+    const parsedUrl = url.parse(issueUrl)
+    if (!parsedUrl.path) {
+      throw new Error('Invalid issue URL')
+    }
+    const splitIssueUrl = parsedUrl.path.split('/')
     const userOrCompany = splitIssueUrl[1]
     const projectName = splitIssueUrl[2]
     const issueId = splitIssueUrl[4]

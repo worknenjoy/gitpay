@@ -261,11 +261,11 @@ const PaymentRequestMail = {
                 rows: [
                   [
                     balanceTransaction.reason,
-                    `<div style="text-align:right">${handleAmount(balanceTransaction.amount, '0', 'centavos').decimal} ${balanceTransaction.currency}</div>`
+                    `<div style="text-align:right">${handleAmount(balanceTransaction.amount, 0, 'centavos').decimal} ${balanceTransaction.currency}</div>`
                   ],
                   [
                     'Current debt balance',
-                    `<div style="text-align:right">${handleAmount(balanceTransaction.PaymentRequestBalance.balance, '0', 'centavos').decimal} ${balanceTransaction.currency}</div>`
+                    `<div style="text-align:right">${handleAmount(balanceTransaction.PaymentRequestBalance.balance, 0, 'centavos').decimal} ${balanceTransaction.currency}</div>`
                   ]
                 ]
               },
@@ -319,13 +319,13 @@ const PaymentRequestMail = {
       if (typeof disputedAmount === 'number') {
         rows.push([
           'Disputed amount',
-          `<div style="text-align:right">${currencySymbol} ${handleAmount(disputedAmount, '0', 'centavos').decimal}</div>`
+          `<div style="text-align:right">${currencySymbol} ${handleAmount(disputedAmount, 0, 'centavos').decimal}</div>`
         ])
       }
 
       rows.push([
         'Dispute fee',
-        `<div style="text-align:right">- ${currencySymbol} ${handleAmount(fee, '0', 'centavos').decimal}</div>`
+        `<div style="text-align:right">- ${currencySymbol} ${handleAmount(fee, 0, 'centavos').decimal}</div>`
       ])
 
       rows.push([
@@ -336,7 +336,7 @@ const PaymentRequestMail = {
       const sign = netFromTxn < 0 ? '-' : ''
       rows.push([
         'Net impact',
-        `<div style="text-align:right">${sign} ${currencySymbol} ${handleAmount(Math.abs(netFromTxn) + platformFee.centavosFee, '0', 'centavos').decimal}</div>`
+        `<div style="text-align:right">${sign} ${currencySymbol} ${handleAmount(Math.abs(netFromTxn) + platformFee.centavosFee, 0, 'centavos').decimal}</div>`
       ])
 
       if (daysToRespond !== null) {

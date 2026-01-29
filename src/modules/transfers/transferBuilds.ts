@@ -9,6 +9,7 @@ import TransferMail from '../mail/transfer'
 type TransferBuildsParams = {
   transfer_id?: string
   taskId?: number
+  userId?: number
 }
 
 export async function transferBuilds(params: TransferBuildsParams) {

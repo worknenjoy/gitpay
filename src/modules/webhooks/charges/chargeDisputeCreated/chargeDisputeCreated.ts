@@ -1,10 +1,4 @@
 /* eslint-disable no-console */
-import dotenv from 'dotenv'
-
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config()
-}
-
 import Models from '../../../../models'
 import { createDisputeForPaymentRequest } from '../../../../services/payments/disputes/disputeService'
 

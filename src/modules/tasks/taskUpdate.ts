@@ -237,7 +237,8 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
 
     if (taskParameters.Members) {
       const resp = await memberExists({
-        userId: taskParameters.Members[0].userId
+        userId: taskParameters.Members[0].userId,
+        taskId: task.dataValues.id
       })
 
       if (!resp) {

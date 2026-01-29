@@ -1,6 +1,7 @@
 import models from '../../models'
 import SendMail from '../mail/mail'
 import i18n from 'i18n'
+// @ts-ignore - jsonwebtoken has no type definitions
 import jwt from 'jsonwebtoken'
 import constants from '../mail/constants'
 

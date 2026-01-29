@@ -1,9 +1,10 @@
 import models from '../../models'
 import Stripe from 'stripe'
+// @ts-ignore - ip has no type definitions
 import ip from 'ip'
 
 const currentModels = models as any
-const stripe = new Stripe(process.env.STRIPE_KEY)
+const stripe = new Stripe(process.env.STRIPE_KEY || '')
 
 type UserAccountUpdateParams = {
   userParams: {

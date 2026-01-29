@@ -1,10 +1,4 @@
 /* eslint-disable no-console */
-import dotenv from 'dotenv'
-
-if (process.env.NODE_ENV !== 'production') {
-  dotenv.config()
-}
-
 import { withDrawnDisputeForPaymentRequest } from '../../../../services/payments/disputes/disputeService'
 
 export const chargeDisputeFundsWithdrawnWebhookHandler = async (event: any, req: any, res: any) => {

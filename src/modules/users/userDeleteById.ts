@@ -3,6 +3,7 @@ import db from '../../models/index'
 import { taskDeleteById } from '../tasks/index'
 
 const currentModels = models as any
+const sequelize = (db as any).sequelize
 
 type UserDeleteByIdParams = {
   id: number
@@ -10,7 +11,7 @@ type UserDeleteByIdParams = {
 
 export async function userDeleteById(userParameters: UserDeleteByIdParams) {
   try {
-    return await db.sequelize.transaction(async (t: any) => {
+    return await sequelize.transaction(async (t: any) => {
       const tasks = await currentModels.Task.findAll({
         where: {
           userId: userParameters.id
@@ -26,7 +27,7 @@ export async function userDeleteById(userParameters: UserDeleteByIdParams) {
 
       await currentModels.Assign.destroy({ where: { userId: userParameters.id }, transaction: t })
       await currentModels.Offer.destroy({ where: { userId: userParameters.id }, transaction: t })
-      await db.sequelize.query(`DELETE FROM "User_Types" WHERE "UserId" = ${userParameters.id}`, {
+      await sequelize.query(`DELETE FROM "User_Types" WHERE "UserId" = ${userParameters.id}`, {
         transaction: t
       })
 

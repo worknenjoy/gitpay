@@ -1,5 +1,6 @@
 import models from '../../models'
 import requestPromise from 'request-promise'
+// @ts-ignore - url-search-params has no type definitions
 import URLSearchParams from 'url-search-params'
 import * as URL from 'url'
 
