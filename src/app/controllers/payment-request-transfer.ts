@@ -14,7 +14,9 @@ export const createPaymentRequestTransfer = async (req: any, res: any) => {
     })
     .catch((error: any) => {
       console.error('Error creating payment request transfer:', error)
-      res.status(error.StatusCodeError || 400).send(error)
+      res
+        .status(error.StatusCodeError || 400)
+        .json({ error: 'Error creating payment request transfer' })
     })
 }
 
@@ -27,7 +29,9 @@ export const listPaymentRequestTransfers = async (req: any, res: any) => {
     })
     .catch((error: any) => {
       console.error('Error listing payment request transfers:', error)
-      res.status(error.StatusCodeError || 400).send(error)
+      res
+        .status(error.StatusCodeError || 400)
+        .json({ error: 'Error listing payment request transfers' })
     })
 }
 
@@ -42,6 +46,8 @@ export const updatePaymentRequestTransfer = async (req: any, res: any) => {
     })
     .catch((error: any) => {
       console.error('Error updating payment request transfer:', error)
-      res.status(error.StatusCodeError || 400).send(error)
+      res
+        .status(error.StatusCodeError || 400)
+        .json({ error: 'Error updating payment request transfer' })
     })
 }
