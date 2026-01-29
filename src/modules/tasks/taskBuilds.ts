@@ -12,14 +12,59 @@ import * as slack from '../shared/slack'
 
 const currentModels = models as any
 
+function parseAndValidateIssueUrl(
+  rawUrl: string,
+  provider: string
+): { userOrCompany: string; projectName: string; issueId: string } {
+  if (!rawUrl || typeof rawUrl !== 'string') {
+    throw new Error('Invalid repository URL')
+  }
+
+  const parsed = url.parse(rawUrl)
+  const hostname = (parsed.hostname || '').toLowerCase()
+  const path = parsed.pathname || parsed.path || ''
+
+  // Only allow expected hosts for supported providers
+  const isGithubHost = hostname === 'github.com' || hostname === 'www.github.com'
+  const isBitbucketHost = hostname === 'bitbucket.org' || hostname === 'www.bitbucket.org'
+
+  if (provider === 'github' && !isGithubHost) {
+    throw new Error('URL host is not allowed for GitHub provider')
+  }
+  if (provider === 'bitbucket' && !isBitbucketHost) {
+    throw new Error('URL host is not allowed for Bitbucket provider')
+  }
+
+  // Basic path validation: /owner/repo/issues/number
+  const segments = path.split('/').filter(Boolean) // removes empty segments
+  if (segments.length < 4 || segments[2] !== 'issues') {
+    throw new Error('Repository URL does not match expected issue pattern')
+  }
+
+  const userOrCompany = segments[0]
+  const projectName = segments[1]
+  const issueId = segments[3]
+
+  // Disallow path traversal-like segments and ensure basic integrity
+  if (!userOrCompany || !projectName || !issueId) {
+    throw new Error('Repository URL is missing required components')
+  }
+  if (userOrCompany === '..' || projectName === '..' || issueId === '..') {
+    throw new Error('Repository URL contains invalid path segments')
+  }
+  if (!/^[0-9]+$/.test(issueId)) {
+    throw new Error('Issue id in URL is not a valid number')
+  }
+
+  return { userOrCompany, projectName, issueId }
+}
+
 export async function taskBuilds(taskParameters: any) {
   const repoUrl = taskParameters.url
   const githubClientId = taskParameters.clientId || secrets.github.id
   const githubClientSecret = taskParameters.secret || secrets.github.secret
-  const splitIssueUrl = url.parse(repoUrl).path.split('/')
-  const userOrCompany = splitIssueUrl[1]
-  const projectName = splitIssueUrl[2]
-  const issueId = splitIssueUrl[4]
+  const provider = taskParameters.provider
+  const { userOrCompany, projectName, issueId } = parseAndValidateIssueUrl(repoUrl, provider)
   const userId = taskParameters.userId
   const token = taskParameters.token
 
