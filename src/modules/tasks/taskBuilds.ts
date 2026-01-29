@@ -55,6 +55,16 @@ function parseAndValidateIssueUrl(
     throw new Error('Issue id in URL is not a valid number')
   }
 
+  // Additional safety: restrict owner and repository name to expected patterns
+  // GitHub owners and repo names are typically alphanumeric with dashes/underscores and dots.
+  const ownerRepoPattern = /^[A-Za-z0-9][A-Za-z0-9-_.]*$/
+  if (!ownerRepoPattern.test(userOrCompany)) {
+    throw new Error('Repository URL contains an invalid owner/organization name')
+  }
+  if (!ownerRepoPattern.test(projectName)) {
+    throw new Error('Repository URL contains an invalid project name')
+  }
+
   return { userOrCompany, projectName, issueId }
 }
 
