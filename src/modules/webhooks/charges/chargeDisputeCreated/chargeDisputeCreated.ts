@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
+import dotenv from 'dotenv'
+
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
+  dotenv.config()
 }
 
 import Models from '../../../../models'

@@ -1,4 +1,4 @@
-import Models = require('../../models')
+import Models from '../../models'
 
 const models = Models as any
 
