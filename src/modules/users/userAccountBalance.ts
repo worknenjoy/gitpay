@@ -1,4 +1,5 @@
-const stripe = require('../shared/stripe/stripe')()
+import stripeModule from '../shared/stripe/stripe'
+const stripe = stripeModule()
 
 type UserAccountBalanceParams = {
   account_id: string

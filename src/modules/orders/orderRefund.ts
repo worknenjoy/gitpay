@@ -1,8 +1,9 @@
 import models from '../../models'
-const PaymentMail = require('../mail/payment')
-const requestPromise = require('request-promise')
-const { handleAmount } = require('../util/handle-amount/handle-amount')
-const stripe = require('../shared/stripe/stripe')()
+import PaymentMail from '../mail/payment'
+import requestPromise from 'request-promise'
+import { handleAmount } from '../util/handle-amount/handle-amount'
+import stripeModule from '../shared/stripe/stripe'
+const stripe = stripeModule()
 
 const currentModels = models as any
 

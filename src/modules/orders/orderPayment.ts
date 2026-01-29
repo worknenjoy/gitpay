@@ -1,6 +1,6 @@
 import models from '../../models'
-const requestPromise = require('request-promise')
-const TransferMail = require('../mail/transfer')
+import requestPromise from 'request-promise'
+import TransferMail from '../mail/transfer'
 
 const currentModels = models as any
 

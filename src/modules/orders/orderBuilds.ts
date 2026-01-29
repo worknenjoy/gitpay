@@ -1,12 +1,13 @@
 import models from '../../models'
-const requestPromise = require('request-promise')
-const URLSearchParams = require('url-search-params')
-const URL = require('url')
-const Decimal = require('decimal.js')
-const stripe = require('../shared/stripe/stripe')()
-const Sendmail = require('../mail/mail')
-const userCustomerCreate = require('../users/userCustomerCreate')
-const slack = require('../shared/slack')
+import requestPromise from 'request-promise'
+import { URLSearchParams } from 'url'
+import URL from 'url'
+import Decimal from 'decimal.js'
+import stripeModule from '../shared/stripe/stripe'
+const stripe = stripeModule()
+import Sendmail from '../mail/mail'
+import { userCustomerCreate } from '../users/userCustomerCreate'
+import * as slack from '../shared/slack'
 
 const currentModels = models as any
 

@@ -1,15 +1,14 @@
 import models from '../../models'
-const secrets = require('../../config/secrets')
-const url = require('url')
-const requestPromise = require('request-promise')
-const constants = require('../mail/constants')
-const TaskMail = require('../mail/task')
-const roleExists = require('../roles').roleExists
-const userExists = require('../users').userExists
-// const userOrganizations = require('../users/userOrganizations')
-const project = require('../projectHelpers')
-const issueAddedComment = require('../bot/issueAddedComment')
-const slack = require('../shared/slack')
+import secrets from '../../config/secrets'
+import url from 'url'
+import requestPromise from 'request-promise'
+import constants from '../mail/constants'
+import TaskMail from '../mail/task'
+import { roleExists } from '../roles'
+import { userExists } from '../users'
+import project from '../projectHelpers'
+import { issueAddedComment } from '../bot/issueAddedComment'
+import * as slack from '../shared/slack'
 
 const currentModels = models as any
 

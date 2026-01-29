@@ -1,6 +1,6 @@
 import models from '../../models'
-const Stripe = require('stripe')
-const ip = require('ip')
+import Stripe from 'stripe'
+import ip from 'ip'
 
 const currentModels = models as any
 const stripe = new Stripe(process.env.STRIPE_KEY)

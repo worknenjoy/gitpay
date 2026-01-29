@@ -1,5 +1,5 @@
 import models from '../../models'
-const { Op, Sequelize } = require('sequelize')
+import { Op, Sequelize } from 'sequelize'
 
 const currentModels = models as any
 

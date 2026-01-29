@@ -1,8 +1,8 @@
 import models from '../../models'
 import { taskSolutionFetchData } from './taskSolutionFetchData'
 import { taskPayment } from './taskPayment'
-const assignExist = require('../assigns').assignExists
-const transferBuilds = require('../transfers/transferBuilds')
+import { assignExists as assignExist } from '../assigns'
+import { transferBuilds } from '../transfers/transferBuilds'
 import { taskUpdate } from '../tasks/taskUpdate'
 
 const currentModels = models as any

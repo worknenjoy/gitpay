@@ -1,8 +1,9 @@
 import models from '../../models'
 
 const currentModels = models as any
-const requestPromise = require('request-promise')
-const stripe = require('../shared/stripe/stripe')()
+import requestPromise from 'request-promise'
+import stripeModule from '../shared/stripe/stripe'
+const stripe = stripeModule()
 
 export async function transferFetch(id: number) {
   if (id) {

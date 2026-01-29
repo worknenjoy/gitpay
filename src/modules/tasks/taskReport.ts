@@ -1,8 +1,8 @@
 import models from '../../models'
-const SendMail = require('../mail/mail')
-const i18n = require('i18n')
-const jwt = require('jsonwebtoken')
-const { reportEmail } = require('../mail/constants')
+import SendMail from '../mail/mail'
+import i18n from 'i18n'
+import jwt from 'jsonwebtoken'
+import { reportEmail } from '../mail/constants'
 
 const currentModels = models as any
 

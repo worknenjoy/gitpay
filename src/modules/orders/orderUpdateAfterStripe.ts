@@ -1,6 +1,6 @@
 import models from '../../models'
-const PaymentMail = require('../mail/payment')
-const slack = require('../shared/slack')
+import PaymentMail from '../mail/payment'
+import * as slack from '../shared/slack'
 
 const currentModels = models as any
 

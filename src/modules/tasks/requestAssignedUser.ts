@@ -1,8 +1,8 @@
 import models from '../../models'
 import { taskUpdate } from './taskUpdate'
-const SendMail = require('../mail/mail')
-const i18n = require('i18n')
-const Signatures = require('../mail/content')
+import SendMail from '../mail/mail'
+import i18n from 'i18n'
+import Signatures from '../mail/content'
 
 const currentModels = models as any
 

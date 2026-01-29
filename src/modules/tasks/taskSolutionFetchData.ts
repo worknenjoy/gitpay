@@ -1,5 +1,5 @@
 import models from '../../models'
-const requestPromise = require('request-promise')
+import requestPromise from 'request-promise'
 
 const currentModels = models as any
 

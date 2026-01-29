@@ -1,4 +1,4 @@
-const Decimal = require('decimal.js')
+import Decimal from 'decimal.js'
 import currencyInfo from '../currency-info'
 
 type HandleAmountResult = {

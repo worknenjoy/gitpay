@@ -1,5 +1,5 @@
 import models from '../../models'
-const UserMail = require('../mail/user')
+import UserMail from '../mail/user'
 
 const currentModels = models as any
 

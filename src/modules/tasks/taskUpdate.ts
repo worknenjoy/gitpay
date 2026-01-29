@@ -1,14 +1,15 @@
 import models from '../../models'
-const AssignMail = require('../mail/assign')
-const stripe = require('../shared/stripe/stripe')()
-const DeadlineMail = require('../mail/deadline')
-const assignExist = require('../assigns').assignExists
-const offerExists = require('../offers').offerExists
-const memberExists = require('../members').memberExists
-const i18n = require('i18n')
-const validateCoupon = require('../coupon/validateCoupon')
-const processCoupon = require('../coupon/processCouponUsage')
-const orderUpdateAfterStripe = require('../orders/orderUpdateAfterStripe')
+import AssignMail from '../mail/assign'
+import stripeModule from '../shared/stripe/stripe'
+const stripe = stripeModule()
+import DeadlineMail from '../mail/deadline'
+import { assignExists as assignExist } from '../assigns'
+import { offerExists } from '../offers'
+import { memberExists } from '../members'
+import i18n from 'i18n'
+import { validateCoupon } from '../coupon/validateCoupon'
+import { processCouponUsage as processCoupon } from '../coupon/processCouponUsage'
+import { orderUpdateAfterStripe } from '../orders/orderUpdateAfterStripe'
 
 const currentModels = models as any
 

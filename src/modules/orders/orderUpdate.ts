@@ -1,9 +1,10 @@
 import models from '../../models'
-const requestPromise = require('request-promise')
-const URLSearchParams = require('url-search-params')
-const URL = require('url')
+import requestPromise from 'request-promise'
+import { URLSearchParams } from 'url'
+import URL from 'url'
 
-const stripe = require('../shared/stripe/stripe')()
+import stripeModule from '../shared/stripe/stripe'
+const stripe = stripeModule()
 
 const currentModels = models as any
 

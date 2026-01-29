@@ -1,6 +1,6 @@
 import models from '../../models'
-const requestPromise = require('request-promise')
-const secrets = require('../../config/secrets')
+import requestPromise from 'request-promise'
+import secrets from '../../config/secrets'
 
 const currentModels = models as any
 

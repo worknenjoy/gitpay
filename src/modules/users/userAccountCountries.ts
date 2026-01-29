@@ -1,5 +1,6 @@
-const stripe = require('../shared/stripe/stripe')()
-const getUserAccount = require('./userAccount')
+import stripeModule from '../shared/stripe/stripe'
+const stripe = stripeModule()
+import { userAccount as getUserAccount } from './userAccount'
 
 type UserAccountCountriesParams = {
   id: number

@@ -1,9 +1,9 @@
 import models from '../../models'
 import { taskUpdate } from './taskUpdate'
 import { taskFetch } from './taskFetch'
-const SendMail = require('../mail/mail')
-const i18n = require('i18n')
-const jwt = require('jsonwebtoken')
+import SendMail from '../mail/mail'
+import i18n from 'i18n'
+import jwt from 'jsonwebtoken'
 
 const currentModels = models as any
 

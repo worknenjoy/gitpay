@@ -1,6 +1,6 @@
 import models from '../../models'
-const db = require('../../models/index')
-const { taskDeleteById } = require('../tasks/index')
+import db from '../../models/index'
+import { taskDeleteById } from '../tasks/index'
 
 const currentModels = models as any
 

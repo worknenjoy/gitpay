@@ -1,7 +1,8 @@
 import models from '../../models'
-const TransferMail = require('../mail/transfer')
+import TransferMail from '../mail/transfer'
 
-const stripe = require('../shared/stripe/stripe')()
+import stripeModule from '../shared/stripe/stripe'
+const stripe = stripeModule()
 
 const currentModels = models as any
 

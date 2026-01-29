@@ -1,4 +1,5 @@
-const stripe = require('../shared/stripe/stripe')()
+import stripeModule from '../shared/stripe/stripe'
+const stripe = stripeModule()
 import models from '../../models'
 
 const currentModels = models as any

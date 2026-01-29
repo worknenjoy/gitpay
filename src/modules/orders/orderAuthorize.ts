@@ -1,8 +1,8 @@
 import models from '../../models'
-const PaymentMail = require('../mail/payment')
-const requestPromise = require('request-promise')
-const comment = require('../bot/comment')
-const slack = require('../shared/slack')
+import PaymentMail from '../mail/payment'
+import requestPromise from 'request-promise'
+import { comment } from '../bot/comment'
+import * as slack from '../shared/slack'
 
 const currentModels = models as any
 

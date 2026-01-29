@@ -1,11 +1,11 @@
 import models from '../../models'
-const secrets = require('../../config/secrets')
-const url = require('url')
-const requestPromise = require('request-promise')
-const roleExists = require('../roles').roleExists
-const { userExists } = require('../users')
-const { not } = require('ip')
-const memberExists = require('../members').memberExists
+import secrets from '../../config/secrets'
+import url from 'url'
+import requestPromise from 'request-promise'
+import { roleExists } from '../roles'
+import { userExists } from '../users'
+import { not } from 'ip'
+import { memberExists } from '../members'
 
 const currentModels = models as any
 

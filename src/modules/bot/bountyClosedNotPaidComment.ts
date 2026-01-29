@@ -1,4 +1,4 @@
-const requestPromise = require('request-promise')
+import requestPromise from 'request-promise'
 
 export async function bountyClosedNotPaidComment(task: any, userAssigned: any) {
   const { provider, url, id: issueId, value: amount } = task.dataValues

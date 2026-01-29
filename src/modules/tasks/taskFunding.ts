@@ -1,6 +1,6 @@
 import models from '../../models'
-const SendMail = require('../mail/mail')
-const i18n = require('i18n')
+import SendMail from '../mail/mail'
+import i18n from 'i18n'
 
 const currentModels = models as any
 

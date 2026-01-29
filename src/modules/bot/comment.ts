@@ -1,4 +1,4 @@
-const requestPromise = require('request-promise')
+import requestPromise from 'request-promise'
 
 export async function comment(offer: any, task: any) {
   const { provider, url, id } = task.dataValues

@@ -1,5 +1,5 @@
-const SendMail = require('../mail/mail')
-const { joinTeamEmail } = require('../mail/constants')
+import SendMail from '../mail/mail'
+import { joinTeamEmail } from '../mail/constants'
 
 type RequestJoinCoreTeamParams = {
   param: {

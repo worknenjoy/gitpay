@@ -1,5 +1,5 @@
 import models from '../../models'
-const Decimal = require('decimal.js')
+import Decimal from 'decimal.js'
 
 const currentModels = models as any
 

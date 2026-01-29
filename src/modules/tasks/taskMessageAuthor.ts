@@ -1,6 +1,6 @@
 import models from '../../models'
-const TaskMail = require('../mail/task')
-const i18n = require('i18n')
+import TaskMail from '../mail/task'
+import i18n from 'i18n'
 
 const currentModels = models as any
 
