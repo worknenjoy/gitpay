@@ -271,7 +271,7 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
         amount: orderCreated.dataValues.amount,
         currency: orderCreated.dataValues.currency || 'USD'
       }
-      await (slack as any).notifyBounty(
+      await slack.notifyBounty(
         orderWithAssociations.Task,
         orderData,
         orderWithAssociations.User,

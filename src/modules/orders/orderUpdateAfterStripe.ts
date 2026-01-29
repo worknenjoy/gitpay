@@ -41,7 +41,7 @@ export async function orderUpdateAfterStripe(order: any, charge: any, card: any,
         amount: order.amount || orderParameters.amount,
         currency: order.currency || orderParameters.currency || 'USD'
       }
-      await (slack as any).notifyBounty(task, orderData, user, 'Stripe payment')
+      await slack.notifyBounty(task, orderData, user, 'Stripe payment')
     }
 
     if (task.dataValues.assigned) {

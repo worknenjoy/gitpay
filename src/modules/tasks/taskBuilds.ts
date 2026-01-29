@@ -161,7 +161,7 @@ export async function taskBuilds(taskParameters: any) {
         }
 
         issueAddedComment(task)
-        ;(slack as any).notifyNewIssue(taskData, userData)
+        slack.notifyNewIssue(taskData, userData)
 
         return { ...taskData, ProjectId: taskData.ProjectId }
       } catch (error) {

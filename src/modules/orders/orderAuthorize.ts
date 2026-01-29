@@ -92,7 +92,7 @@ export async function orderAuthorize(orderParameters: OrderAuthorizeParams) {
       amount: orderData.amount,
       currency: orderData.currency || 'USD'
     }
-    await (slack as any).notifyBounty(task, orderDataForNotification, user, 'PayPal payment')
+    await slack.notifyBounty(task, orderDataForNotification, user, 'PayPal payment')
   } else {
     PaymentMail.error(user.dataValues, task, orderData.amount)
   }
