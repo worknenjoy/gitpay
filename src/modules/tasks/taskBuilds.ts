@@ -8,7 +8,7 @@ import { roleExists } from '../roles'
 import { userExists } from '../users'
 import project from '../projectHelpers'
 import { issueAddedComment } from '../bot/issueAddedComment'
-import slack from '../shared/slack'
+import { notifyNewIssue } from '../shared/slack'
 
 const currentModels = models as any
 
@@ -161,7 +161,7 @@ export async function taskBuilds(taskParameters: any) {
         }
 
         issueAddedComment(task)
-        slack.notifyNewIssue(taskData, userData)
+        notifyNewIssue(taskData, userData)
 
         return { ...taskData, ProjectId: taskData.ProjectId }
       } catch (error) {

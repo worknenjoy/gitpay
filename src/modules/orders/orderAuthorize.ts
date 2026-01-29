@@ -2,7 +2,7 @@ import models from '../../models'
 import PaymentMail from '../mail/payment'
 import requestPromise from 'request-promise'
 import { comment } from '../bot/comment'
-import slack from '../shared/slack'
+import { notifyBounty } from '../shared/slack'
 
 const currentModels = models as any
 
@@ -92,7 +92,7 @@ export async function orderAuthorize(orderParameters: OrderAuthorizeParams) {
       amount: orderData.amount,
       currency: orderData.currency || 'USD'
     }
-    await slack.notifyBounty(task, orderDataForNotification, user, 'PayPal payment')
+    await notifyBounty(task, orderDataForNotification, user, 'PayPal payment')
   } else {
     PaymentMail.error(user.dataValues, task, orderData.amount)
   }

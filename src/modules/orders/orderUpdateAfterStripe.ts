@@ -1,6 +1,6 @@
 import models from '../../models'
 import PaymentMail from '../mail/payment'
-import slack from '../shared/slack'
+import { notifyBounty } from '../shared/slack'
 
 const currentModels = models as any
 
@@ -41,7 +41,7 @@ export async function orderUpdateAfterStripe(order: any, charge: any, card: any,
         amount: order.amount || orderParameters.amount,
         currency: order.currency || orderParameters.currency || 'USD'
       }
-      await slack.notifyBounty(task, orderData, user, 'Stripe payment')
+      await notifyBounty(task, orderData, user, 'Stripe payment')
     }
 
     if (task.dataValues.assigned) {
