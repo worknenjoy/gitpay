@@ -12,7 +12,7 @@ type TransferBuildsParams = {
   [key: string]: any
 }
 
-export async function transferBuilds(params: TransferBuildsParams) {
+export async function paymentRequestTransferBuilds(params: TransferBuildsParams) {
   const paymentRequestTransfer = await currentModels.PaymentRequestTransfer.create(params)
   return paymentRequestTransfer
 }

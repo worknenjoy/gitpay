@@ -2,11 +2,11 @@ import models from '../../models'
 
 const currentModels = models as any
 
-type WalletListOrderParams = {
+type WalletOrderListParams = {
   walletId: number
 }
 
-export async function walletListOrder(params: WalletListOrderParams) {
+export async function walletOrderList(params: WalletOrderListParams) {
   const wallet =
     params.walletId &&
     (await currentModels.Wallet.findOne({

@@ -1,42 +1,42 @@
-const PaymentRequestTransfer = require('../../modules/paymentRequestsTransfers')
+import { paymentRequestTransferList, paymentRequestTransferUpdate, paymentRequestTransferBuilds } from '../../modules/paymentRequestsTransfers'
 
-exports.createPaymentRequestTransfer = (req, res) => {
-  PaymentRequestTransfer.paymentRequestsTransfersBuilds({
+export const createPaymentRequestTransfer = async (req:any , res:any) => {
+  await paymentRequestTransferBuilds({
     userId: req.user.id,
     ...req.body
   })
-    .then((data) => {
+    .then((data:any) => {
       res.send(data)
     })
-    .catch((error) => {
+    .catch((error:any) => {
       console.error('Error creating payment request transfer:', error)
       res.status(error.StatusCodeError || 400).send(error)
     })
 }
 
-exports.listPaymentRequestTransfers = (req, res) => {
-  PaymentRequestTransfer.paymentRequestsTransferList({
+export const listPaymentRequestTransfers = async (req:any, res:any) => {
+  await paymentRequestTransferList({
     userId: req.user.id
   })
-    .then((data) => {
+    .then((data:any) => {
       res.send(data)
     })
-    .catch((error) => {
+    .catch((error:any) => {
       console.error('Error listing payment request transfers:', error)
       res.status(error.StatusCodeError || 400).send(error)
     })
 }
 
-exports.updatePaymentRequestTransfer = (req, res) => {
-  PaymentRequestTransfer.paymentRequestsTransferUpdate({
+export const updatePaymentRequestTransfer = async (req:any, res:any) => {
+  await paymentRequestTransferUpdate({
     userId: req.user.id,
     id: req.params.id,
     ...req.body
   })
-    .then((data) => {
+    .then((data:any) => {
       res.send(data)
     })
-    .catch((error) => {
+    .catch((error:any) => {
       console.error('Error updating payment request transfer:', error)
       res.status(error.StatusCodeError || 400).send(error)
     })

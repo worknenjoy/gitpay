@@ -1,4 +1,4 @@
-const comment = require('../modules/bot/comment')
+const { comment } = require('../modules/bot/comment')
 
 module.exports = (sequelize, DataTypes) => {
   const Order = sequelize.define(

@@ -2,13 +2,12 @@ import models from '../../models'
 import secrets from '../../config/secrets'
 import * as url from 'url'
 import requestPromise from 'request-promise'
-import constants from '../mail/constants'
 import TaskMail from '../mail/task'
 import { roleExists } from '../roles'
 import { userExists } from '../users'
 import project from '../projectHelpers'
 import { issueAddedComment } from '../bot/issueAddedComment'
-const slack = require('../shared/slack')
+import { notifyNewIssue } from '../shared/slack'
 
 const currentModels = models as any
 
@@ -161,7 +160,7 @@ export async function taskBuilds(taskParameters: any) {
         }
 
         issueAddedComment(task)
-        slack.notifyNewIssue(taskData, userData)
+        await notifyNewIssue(taskData, userData)
 
         return { ...taskData, ProjectId: taskData.ProjectId }
       } catch (error) {

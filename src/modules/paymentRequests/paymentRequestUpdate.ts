@@ -4,7 +4,7 @@ import Models from '../../models'
 
 const models = Models as any
 
-export default async function paymentRequestUpdate(paymentRequestParams: any) {
+export async function paymentRequestUpdate(paymentRequestParams: any) {
   const paymentRequest = await models.PaymentRequest.findByPk(paymentRequestParams.id)
   if (!paymentRequest) {
     throw new Error('Payment Request not found')
