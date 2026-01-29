@@ -15,32 +15,26 @@ export async function createOrUpdateCustomer(user: User) {
   }
   
   if (user.customer_id) {
-    try {
-      const customer = await stripe.customers.retrieve(user.customer_id)
-      return customer
-    } catch (error) {
-      throw error
-    }
+    const customer = await stripe.customers.retrieve(user.customer_id)
+    return customer
   }
   
-  try {
-    const customer = await stripe.customers.create({
-      email: user.email
-    })
+  const customer = await stripe.customers.create({
+    email: user.email
+  })
+  
+  if (customer.id) {
+    const update = await currentModels.User.update(
+      { customer_id: customer.id },
+      { where: { id: user.id } }
+    )
     
-    if (customer.id) {
-      const update = await currentModels.User.update(
-        { customer_id: customer.id },
-        { where: { id: user.id } }
-      )
-      
-      if (!update) {
-        throw new Error('user not updated')
-      }
-      
-      return customer
+    if (!update) {
+      throw new Error('user not updated')
     }
-  } catch (error) {
-    throw error
+    
+    return customer
   }
+  
+  throw new Error('Failed to create customer')
 }
