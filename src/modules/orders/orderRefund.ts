@@ -1,13 +1,20 @@
-const models = require('../../models')
+import models from '../../models'
 const PaymentMail = require('../mail/payment')
 const requestPromise = require('request-promise')
 const { handleAmount } = require('../util/handle-amount/handle-amount')
 const stripe = require('../shared/stripe/stripe')()
 
-module.exports = async function orderRefund(orderParams) {
-  const order = await models.Order.findOne({
+const currentModels = models as any
+
+type OrderRefundParams = {
+  id: number
+  userId: number
+}
+
+export async function orderRefund(orderParams: OrderRefundParams) {
+  const order = await currentModels.Order.findOne({
     where: { id: orderParams.id, userId: orderParams.userId },
-    include: models.User
+    include: currentModels.User
   })
 
   switch (order.provider) {
@@ -18,7 +25,7 @@ module.exports = async function orderRefund(orderParams) {
         amount: refundAmountExcludingFees
       })
       if (refund && refund.id) {
-        const orderUpdate = await models.Order.update(
+        const orderUpdate = await currentModels.Order.update(
           {
             status: 'refunded',
             refund_id: refund.id
@@ -33,8 +40,8 @@ module.exports = async function orderRefund(orderParams) {
         const orderData =
           orderUpdate && orderUpdate[1] ? orderUpdate[1].dataValues : orderUpdate.dataValues
         const [user, task] = await Promise.all([
-          models.User.findByPk(orderData.userId),
-          models.Task.findByPk(orderData.TaskId)
+          currentModels.User.findByPk(orderData.userId),
+          currentModels.Task.findByPk(orderData.TaskId)
         ])
 
         if (orderData.amount) {
@@ -91,7 +98,7 @@ module.exports = async function orderRefund(orderParams) {
         },
         {
           where: { id: order.id },
-          include: [models.Task, models.User],
+          include: [currentModels.Task, currentModels.User],
           returning: true,
           plain: true
         }
@@ -104,8 +111,8 @@ module.exports = async function orderRefund(orderParams) {
       const orderData = updatedOrder.dataValues || (updatedOrder[0] && updatedOrder[0].dataValues)
 
       const [user, task] = await Promise.all([
-        models.User.findByPk(orderData.userId),
-        models.Task.findByPk(orderData.TaskId)
+        currentModels.User.findByPk(orderData.userId),
+        currentModels.Task.findByPk(orderData.TaskId)
       ])
 
       PaymentMail.refund(user, task.dataValues, orderData)

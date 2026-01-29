@@ -1,4 +1,4 @@
-const models = require('../../models')
+import models from '../../models'
 const requestPromise = require('request-promise')
 const URLSearchParams = require('url-search-params')
 const URL = require('url')
@@ -8,11 +8,27 @@ const Sendmail = require('../mail/mail')
 const userCustomerCreate = require('../users/userCustomerCreate')
 const slack = require('../shared/slack')
 
-module.exports = async function orderBuilds(orderParameters) {
+const currentModels = models as any
+
+type OrderBuildsParams = {
+  source_id?: string
+  source_type?: string
+  currency: string
+  provider: string
+  amount: number
+  email: string
+  userId: number
+  taskId: number
+  plan?: string
+  customer_id?: string
+  walletId?: number
+}
+
+export async function orderBuilds(orderParameters: OrderBuildsParams) {
   const { source_id, source_type, currency, provider, amount, email, userId, taskId, plan } =
     orderParameters
   const taskUrl = `${process.env.API_HOST}/#/task/${orderParameters.taskId}`
-  const order = await models.Order.build({
+  const order = await currentModels.Order.build({
     source_id: source_id || 'internal_' + Math.random(),
     source_type: source_type,
     currency: currency,
@@ -22,17 +38,17 @@ module.exports = async function orderBuilds(orderParameters) {
     userId: userId,
     TaskId: taskId,
     include: [
-      models.User,
+      currentModels.User,
       {
-        association: models.Order.Plan,
-        include: [models.Plan.plan]
+        association: currentModels.Order.Plan,
+        include: [currentModels.Plan.plan]
       }
     ]
   }).save()
 
   if (plan === 'open source') {
     const planFeeBasedOnPrice = amount >= 5000 ? 'Open Source - no fee' : 'Open Source - default'
-    const planSchema = await models.PlanSchema.findOne({
+    const planSchema = await currentModels.PlanSchema.findOne({
       where: {
         plan: plan,
         name: planFeeBasedOnPrice,
@@ -50,11 +66,11 @@ module.exports = async function orderBuilds(orderParameters) {
 
   const orderCreated = await order.reload({
     include: [
-      { model: models.Task },
-      { model: models.User },
+      { model: currentModels.Task },
+      { model: currentModels.User },
       {
-        model: models.Plan,
-        include: [{ model: models.PlanSchema }]
+        model: currentModels.Plan,
+        include: [{ model: currentModels.PlanSchema }]
       }
     ]
   })
@@ -64,7 +80,7 @@ module.exports = async function orderBuilds(orderParameters) {
   const percentage = orderCreated.Plan?.feePercentage
 
   if (orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
-    const unitAmount = (parseInt(orderParameters.amount) * 100 * (1 + percentage / 100)).toFixed(0)
+    const unitAmount = (parseInt(String(orderParameters.amount)) * 100 * (1 + percentage / 100)).toFixed(0)
     const quantity = 1
 
     if (!orderParameters.customer_id) {
@@ -119,7 +135,7 @@ module.exports = async function orderBuilds(orderParameters) {
         where: {
           id: orderCreated.dataValues.id
         },
-        include: [{ model: models.User }]
+        include: [{ model: currentModels.User }]
       }
     )
     await stripe.invoices.sendInvoice(invoice.id)
@@ -127,7 +143,7 @@ module.exports = async function orderBuilds(orderParameters) {
   }
 
   if (orderParameters.provider === 'paypal') {
-    const totalPrice = models.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan)
+    const totalPrice = currentModels.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan)
     const response = await requestPromise({
       method: 'POST',
       uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
@@ -205,7 +221,7 @@ module.exports = async function orderBuilds(orderParameters) {
   }
 
   if (orderParameters.provider === 'wallet' && orderParameters.source_type === 'wallet-funds') {
-    const wallet = await models.Wallet.findOne({
+    const wallet = await currentModels.Wallet.findOne({
       where: {
         id: orderParameters.walletId
       }
@@ -244,8 +260,8 @@ module.exports = async function orderBuilds(orderParameters) {
     // Send Slack notification for wallet payment (paid immediately)
     // Note: This only runs for wallet payments that complete successfully
     // Reload order with associations to ensure Task and User are available
-    const orderWithAssociations = await models.Order.findByPk(orderCreated.dataValues.id, {
-      include: [models.Task, models.User]
+    const orderWithAssociations = await currentModels.Order.findByPk(orderCreated.dataValues.id, {
+      include: [currentModels.Task, currentModels.User]
     })
 
     if (orderWithAssociations && orderWithAssociations.Task && orderWithAssociations.User) {
