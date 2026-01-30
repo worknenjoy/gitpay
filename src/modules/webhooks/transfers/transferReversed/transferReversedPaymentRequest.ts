@@ -1,4 +1,6 @@
-const models = require('../../../../models')
+import models from '../../../../models'
+
+const currentModels = models as any
 
 export async function transferReversedPaymentRequest(
   event: any,
@@ -14,7 +16,7 @@ export async function transferReversedPaymentRequest(
   }
 
   try {
-    const paymentRequestTransfer = await models.PaymentRequestTransfer.findOne({
+    const paymentRequestTransfer = await currentModels.PaymentRequestTransfer.findOne({
       where: {
         transfer_id: transferId,
         paymentRequestId: paymentRequestId,

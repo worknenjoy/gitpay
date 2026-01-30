@@ -141,7 +141,7 @@ async function createPaymentRequestPayment(
   })
   const amount = intent.amount_received
     ? handleAmount(intent.amount_received, 0, 'centavos')
-    : handleAmount(intent.amount, '0', 'centavos')
+    : handleAmount(intent.amount, 0, 'centavos')
 
   const amountDecimal = amount.decimal
   const createdPaymentRequestPayment = await models.PaymentRequestPayment.create({

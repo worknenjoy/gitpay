@@ -1,9 +1,10 @@
-const stripe = require('../shared/stripe/stripe')()
-const Models = require('../../models')
+import stripeModule from '../shared/stripe/stripe'
+const stripe = stripeModule()
+import Models from '../../models'
 
 const models = Models as any
 
-module.exports = async function paymentRequestUpdate(paymentRequestParams: any) {
+export async function paymentRequestUpdate(paymentRequestParams: any) {
   const paymentRequest = await models.PaymentRequest.findByPk(paymentRequestParams.id)
   if (!paymentRequest) {
     throw new Error('Payment Request not found')

@@ -1,5 +1,7 @@
-const models = require('../../../../models')
+import models from '../../../../models'
 import i18n from 'i18n'
+
+const currentModels = models as any
 import moment from 'moment'
 import SendMail from '../../../mail/mail'
 
@@ -7,7 +9,7 @@ export async function transferReversedIssue(event: any, req: any, res: any): Pro
   const transferId = event?.data?.object?.id
 
   try {
-    const existingTransfer = await models.Transfer.findOne({
+    const existingTransfer = await currentModels.Transfer.findOne({
       where: {
         transfer_id: transferId
       }
@@ -19,20 +21,20 @@ export async function transferReversedIssue(event: any, req: any, res: any): Pro
       await existingTransfer.save()
     }
 
-    const task = await models.Task.findOne({
+    const task = await currentModels.Task.findOne({
       where: {
         transfer_id: transferId
       },
-      include: [models.User]
+      include: [currentModels.User]
     })
 
     if (task) {
       try {
-        const assigned = await models.Assign.findOne({
+        const assigned = await currentModels.Assign.findOne({
           where: {
             id: task.dataValues.assigned
           },
-          include: [models.User]
+          include: [currentModels.User]
         })
 
         const language = assigned.dataValues.User.language || 'en'

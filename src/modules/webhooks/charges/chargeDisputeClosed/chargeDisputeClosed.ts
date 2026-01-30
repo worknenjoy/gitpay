@@ -1,7 +1,4 @@
 /* eslint-disable no-console */
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
 import Stripe from '../../../shared/stripe/stripe'
 import Models from '../../../../models'
 import { closeDisputeForPaymentRequest } from '../../../../services/payments/disputes/disputeService'
