@@ -1,4 +1,4 @@
-import stripeModule from '../shared/stripe/stripe'
+import stripeModule from '../../shared/stripe/stripe'
 const stripe = stripeModule()
 import Models from '../../models'
 

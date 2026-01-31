@@ -1,5 +1,5 @@
 import requestPromise from 'request-promise'
-import stripe from '../shared/stripe/stripe'
+import stripe from '../../shared/stripe/stripe'
 import models from '../../models'
 
 const currentModels = models as any

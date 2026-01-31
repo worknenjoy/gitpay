@@ -1,5 +1,5 @@
 import models from '../../models'
-import Stripe from '../shared/stripe/stripe'
+import Stripe from '../../shared/stripe/stripe'
 import { handleAmount } from '../util/handle-amount/handle-amount'
 
 const stripe = Stripe()

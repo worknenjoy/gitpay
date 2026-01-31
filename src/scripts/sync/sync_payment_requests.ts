@@ -1,4 +1,4 @@
-import Stripe from '../../modules/shared/stripe/stripe'
+import Stripe from '../../shared/stripe/stripe'
 import Models from '../../models'
 import { UUIDV4 } from 'sequelize'
 import { handleAmount } from '../../modules/util/handle-amount/handle-amount'

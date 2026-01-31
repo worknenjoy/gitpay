@@ -1,4 +1,4 @@
-import { i18nConfigure } from '../../modules/shared/i18n/i18n'
+import { i18nConfigure } from '../../shared/i18n/i18n'
 import { notifyUnclaimedBounties } from '../../services/issues/claims/unclaimedBountyService'
 
 const notifyUnclaimedBountiesScript = async () => {

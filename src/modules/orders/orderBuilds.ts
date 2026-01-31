@@ -4,7 +4,7 @@ import requestPromise from 'request-promise'
 import URLSearchParams from 'url-search-params'
 import * as URL from 'url'
 import Decimal from 'decimal.js'
-import stripeModule from '../shared/stripe/stripe'
+import stripeModule from '../../shared/stripe/stripe'
 const stripe = stripeModule()
 import Sendmail from '../mail/mail'
 import { userCustomerCreate } from '../users/userCustomerCreate'
