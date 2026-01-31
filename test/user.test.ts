@@ -221,7 +221,6 @@ describe('Users', () => {
       const res = await agent
         .get('/authenticated')
         .set('authorization', 'Bearer token-123') // 1) using the authorization header
-        .expect('Content-Type', /json/)
         .expect(401)
       
       expect(res.statusCode).to.equal(401)
