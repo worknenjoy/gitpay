@@ -134,6 +134,7 @@ describe('PaymentRequests', () => {
       userId: body.id,
       title: 'Sample Payment Request',
       custom_amount: true,
+      amount: null,
       description: 'This is a sample payment request',
       currency: 'USD',
       payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
