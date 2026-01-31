@@ -5,6 +5,7 @@ import api from '../../../../../src/server'
 import { registerAndLogin, truncateModels } from '../../../../helpers'
 import Models from '../../../../../src/models'
 import eventCheckout from '../../../../data/stripe/stripe.webhook.checkout.session.completed'
+import { PaymentRequestFactory } from '../../../../factories'
 
 const agent = request.agent(api) as any
 const models = Models as any
@@ -59,7 +60,7 @@ describe('Payment Request Payment Webhook', () => {
 
     const user = await registerAndLogin(agent)
     const { headers, body: currentUser } = user || {}
-    const paymentRequest = await models.PaymentRequest.create({
+    const paymentRequest = await PaymentRequestFactory({
       title: 'Payment for services',
       amount: 1,
       currency: 'usd',

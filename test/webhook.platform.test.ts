@@ -20,6 +20,7 @@ import invoiceUpdated from './data/stripe/stripe.invoice.update'
 import invoiceCreated from './data/stripe/stripe.invoice.create'
 import invoicePaid from './data/stripe/stripe.invoice.paid'
 import invoiceWebhookPaid from './data/stripe/stripe.webhook.invoice'
+import { TaskFactory, UserFactory, TransferFactory, OrderFactory, WalletFactory, WalletOrderFactory, PaymentRequestFactory, PaymentRequestTransferFactory } from './factories'
 
 const agent = request.agent(api)
 
@@ -51,8 +52,8 @@ describe('webhooks for platform', () => {
     })
 
     xit('should update the order when a webhook charge.update is triggered', async () => {
-      const user = await models.User.create({ email: 'teste@mail.com', password: 'teste' })
-      const task = await models.Task.create({
+      const user = await UserFactory({ email: 'teste@mail.com', password: 'teste' })
+      const task = await TaskFactory({
         url: 'https://github.com/worknenjoy/truppie/issues/99',
         provider: 'github',
         userId: user.id
@@ -79,8 +80,8 @@ describe('webhooks for platform', () => {
     })
 
     it('should update balance after a refund is triggered', async () => {
-      const user = await models.User.create({ email: 'testrefund@mail.com', password: 'teste' })
-      const task = await models.Task.create({
+      const user = await UserFactory({ email: 'testrefund@mail.com', password: 'teste' })
+      const task = await TaskFactory({
         url: 'https://github.com/worknenjoy/truppie/issues/199',
         provider: 'github',
         userId: user.id
@@ -111,8 +112,8 @@ describe('webhooks for platform', () => {
     })
 
     it('should update the order when a webhook charge.succeeded is triggered', async () => {
-      const user = await models.User.create({ email: 'teste@mail.com', password: 'teste' })
-      const task = await models.Task.create({
+      const user = await UserFactory({ email: 'teste@mail.com', password: 'teste' })
+      const task = await TaskFactory({
         url: 'https://github.com/worknenjoy/truppie/issues/99',
         provider: 'github',
         userId: user.id
@@ -141,8 +142,8 @@ describe('webhooks for platform', () => {
     })
 
     it('should create the order when a webhook charge.succeeded is triggered and the order does not exist', async () => {
-      const user = await models.User.create({ email: 'teste@mail.com', password: 'teste' })
-      await models.Task.create({
+      const user = await UserFactory({ email: 'teste@mail.com', password: 'teste' })
+      await TaskFactory({
         id: 25,
         url: 'https://github.com/worknenjoy/truppie/issues/99',
         provider: 'github',
@@ -164,8 +165,8 @@ describe('webhooks for platform', () => {
     })
 
     it('should update the order when a webhook charge.failed is triggered', async () => {
-      const user = await models.User.create({ email: 'teste@mail.com', password: 'teste' })
-      const task = await models.Task.create({
+      const user = await UserFactory({ email: 'teste@mail.com', password: 'teste' })
+      const task = await TaskFactory({
         url: 'https://github.com/worknenjoy/truppie/issues/99',
         provider: 'github',
         userId: user.id
@@ -194,8 +195,8 @@ describe('webhooks for platform', () => {
     })
 
     xit('should update the order when a webhook invoice.payment_failed is triggered', async () => {
-      const user = await models.User.create({ email: 'teste@mail.com', password: 'teste' })
-      const task = await models.Task.create({
+      const user = await UserFactory({ email: 'teste@mail.com', password: 'teste' })
+      const task = await TaskFactory({
         url: 'https://github.com/worknenjoy/truppie/issues/99',
         provider: 'github',
         userId: user.id
@@ -224,7 +225,7 @@ describe('webhooks for platform', () => {
 
     describe('webhooks for transfer', () => {
       it('should notify the transfer when a webhook customer.source.created is triggered', async () => {
-        const user = await models.User.create({
+        const user = await UserFactory({
           email: 'teste@gmail.com',
           password: 'teste',
           customer_id: cardData.sourceCreated.data.object.customer
@@ -241,8 +242,8 @@ describe('webhooks for platform', () => {
       })
 
       it('should notify about the transfer and update status when a webhook transfer.created is triggered', async () => {
-        const user = await models.User.create({ email: 'teste@mail.com', password: 'teste' })
-        const task = await models.Task.create({
+        const user = await UserFactory({ email: 'teste@mail.com', password: 'teste' })
+        const task = await TaskFactory({
           url: 'https://github.com/worknenjoy/truppie/issues/99',
           provider: 'github',
           transfer_id: 'tr_test_123',
@@ -272,12 +273,12 @@ describe('webhooks for platform', () => {
       })
 
       it('should update a transfer from a Payment Request when webhook transfer.reversed is triggered', async () => {
-        const user = await models.User.create({
+        const user = await UserFactory({
           email: 'teste@mail.com',
           password: 'teste'
         })
 
-        const paymentRequest = await models.PaymentRequest.create({
+        const paymentRequest = await PaymentRequestFactory({
           userId: user.id,
           title: 'Test Payment Request',
           description: 'This is a test payment request',
@@ -286,7 +287,7 @@ describe('webhooks for platform', () => {
           payment_link_id: 'prl_123'
         })
 
-        const paymentRequestTransfer = await models.PaymentRequestTransfer.create({
+        const paymentRequestTransfer = await PaymentRequestTransferFactory({
           transfer_id: 'tr_test_00000000000000',
           paymentRequestId: paymentRequest.id,
           userId: user.id,
@@ -335,7 +336,7 @@ describe('webhooks for platform', () => {
         .expect(200)
       const userId = user.body.id
       const github_url = 'https://github.com/worknenjoy/truppie/issues/76'
-      const task = await models.Task.create({ url: github_url, provider: 'github', userId: userId })
+      const task = await TaskFactory({ url: github_url, provider: 'github', userId: userId })
       const assign = await task.createAssign({ userId: userId })
       await task.update({ assigned: assign.id })
       const order = await task.createOrder({
@@ -372,7 +373,7 @@ describe('webhooks for platform', () => {
         .expect(200)
       const userId = user.body.id
       const github_url = 'https://github.com/worknenjoy/truppie/issues/76'
-      const task = await models.Task.create({ url: github_url, provider: 'github', userId: userId })
+      const task = await TaskFactory({ url: github_url, provider: 'github', userId: userId })
       const assign = await task.createAssign({ userId: userId })
       await task.update({ assigned: assign.id })
       const order = await task.createOrder({
@@ -410,7 +411,7 @@ describe('webhooks for platform', () => {
         .expect(200)
       const userId = user.body.id
       const github_url = 'https://github.com/worknenjoy/truppie/issues/76'
-      const task = await models.Task.create({ url: github_url, provider: 'github', userId: userId })
+      const task = await TaskFactory({ url: github_url, provider: 'github', userId: userId })
       const assign = await task.createAssign({ userId: userId })
       await task.update({ assigned: assign.id })
       const order = await task.createOrder({
@@ -453,12 +454,12 @@ describe('webhooks for platform', () => {
   describe('webhooks for Wallet order', () => {
     it('should update a new wallet order when a webhook invoice.paid is triggered', async () => {
       const user = await registerAndLogin(agent)
-      const wallet = await models.Wallet.create({
+      const wallet = await WalletFactory({
         name: 'Test Wallet',
         userId: user.body.id,
         balance: 0
       })
-      await models.WalletOrder.create({
+      await WalletOrderFactory({
         amount: 100,
         status: 'open',
         source_id: 'ii_1Q2fh8BrSjgsps2DQqY9k2h3',
@@ -484,7 +485,7 @@ describe('webhooks for platform', () => {
     })
     it('should create a new wallet order when a webhook invoice.create is triggered', async () => {
       const user = await registerAndLogin(agent)
-      const wallet = await models.Wallet.create({
+      const wallet = await WalletFactory({
         name: 'Test Wallet',
         userId: user.body.id,
         balance: 0
@@ -510,7 +511,7 @@ describe('webhooks for platform', () => {
     })
     it('should create a new wallet order when a webhook invoice.updated is triggered', async () => {
       const user = await registerAndLogin(agent)
-      const wallet = await models.Wallet.create({
+      const wallet = await WalletFactory({
         name: 'Test Wallet',
         userId: user.body.id,
         balance: 0
@@ -536,7 +537,7 @@ describe('webhooks for platform', () => {
     })
     it('should create a new wallet order when a webhook invoice.payment_failed is triggered', async () => {
       const user = await registerAndLogin(agent)
-      const wallet = await models.Wallet.create({
+      const wallet = await WalletFactory({
         name: 'Test Wallet',
         userId: user.body.id,
         balance: 0

@@ -4,6 +4,7 @@ import api from '../../../src/server'
 import nock from 'nock'
 import Models from '../../../src/models'
 import { registerAndLogin, createTask, truncateModels } from '../../helpers'
+import { TaskFactory, OrderFactory, AssignFactory } from '../../factories'
 
 const agent = request.agent(api)
 const models = Models as any
@@ -61,7 +62,7 @@ describe('Task Solution', () => {
           status: 'closed'
         })
 
-        await models.Order.create({
+        await OrderFactory({
           provider: 'stripe',
           amount: 100,
           userId: user.id,
@@ -128,7 +129,7 @@ describe('Task Solution', () => {
           status: 'closed'
         })
 
-        await models.Order.create({
+        await OrderFactory({
           provider: 'stripe',
           amount: 100,
           userId: user.id,
@@ -138,7 +139,7 @@ describe('Task Solution', () => {
           paid: true
         })
 
-        await models.Assign.create({
+        await AssignFactory({
           userId: user.id,
           TaskId: task.id,
           status: 'pending'
@@ -215,7 +216,7 @@ describe('Task Solution', () => {
           status: 'closed'
         })
 
-        await models.Order.create({
+        await OrderFactory({
           provider: 'stripe',
           amount: 100,
           userId: user.id,
@@ -284,7 +285,7 @@ describe('Task Solution', () => {
           status: 'closed'
         })
 
-        await models.Order.create({
+        await OrderFactory({
           amount: 100,
           userId: user.id,
           TaskId: task.id,
@@ -360,12 +361,12 @@ describe('Task Solution', () => {
         })
         const { body: user, headers } = loginResponse as any
 
-        const task = await models.Task.create({
+        const task = await TaskFactory({
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
           status: 'closed'
         })
-        await models.Assign.create({
+        await AssignFactory({
           userId: user.id,
           TaskId: task.id
         })
@@ -431,12 +432,12 @@ describe('Task Solution', () => {
         })
         const { body: user, headers } = loginResponse as any
 
-        const task = await models.Task.create({
+        const task = await TaskFactory({
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
           status: 'closed'
         })
-        await models.Assign.create({
+        await AssignFactory({
           userId: user.id,
           TaskId: task.id
         })
@@ -480,12 +481,12 @@ describe('Task Solution', () => {
         })
         const { body: user, headers } = loginResponse as any
 
-        const task = await models.Task.create({
+        const task = await TaskFactory({
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
           status: 'closed'
         })
-        await models.Assign.create({
+        await AssignFactory({
           userId: user.id,
           TaskId: task.id
         })
@@ -551,12 +552,12 @@ describe('Task Solution', () => {
         })
         const { body: user, headers } = loginResponse as any
 
-        const task = await models.Task.create({
+        const task = await TaskFactory({
           url: 'https://github.com/alexanmtz/test-repository/issues/1',
           userId: user.id,
           status: 'closed'
         })
-        await models.Assign.create({
+        await AssignFactory({
           userId: user.id,
           TaskId: task.id
         })

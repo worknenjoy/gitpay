@@ -3,6 +3,7 @@ import request from 'supertest'
 import api from '../src/server'
 import Models from '../src/models'
 import { registerAndLogin, truncateModels } from './helpers'
+import { TransferFactory, PaymentRequestFactory, PaymentRequestTransferFactory } from './factories'
 
 const agent = request.agent(api)
 const models = Models as any
@@ -17,7 +18,7 @@ describe('Payment Request Transfer', () => {
     it('should create a basic payment request transfer', async () => {
       const user = await registerAndLogin(agent)
       const { headers, body } = user
-      const paymentRequest = await models.PaymentRequest.create({
+      const paymentRequest = await PaymentRequestFactory({
         userId: body.id,
         title: 'Test Payment Request',
         description: 'This is a test payment request',
@@ -64,7 +65,7 @@ describe('Payment Request Transfer', () => {
     it('should update a payment request transfer', async () => {
       const user = await registerAndLogin(agent)
       const { headers, body } = user
-      const paymentRequest = await models.PaymentRequest.create({
+      const paymentRequest = await PaymentRequestFactory({
         userId: body.id,
         title: 'Test Payment Request',
         description: 'This is a test payment request',
@@ -80,7 +81,7 @@ describe('Payment Request Transfer', () => {
         transfer_id: 'tr_123',
         transfer_method: 'stripe'
       }
-      const transfer = await models.PaymentRequestTransfer.create(transferData)
+      const transfer = await PaymentRequestTransferFactory(transferData)
       const updatedTransferData = {
         status: 'completed'
       }

@@ -4,6 +4,7 @@ import chai from 'chai'
 import api from '../src/server'
 import Models from '../src/models'
 import { registerAndLogin, register, login, truncateModels } from './helpers'
+import { TaskFactory } from './factories'
 import nock from 'nock'
 import secrets from '../src/config/secrets'
 import spies from 'chai-spies'
@@ -74,7 +75,7 @@ describe('tasks', () => {
 
   const buildTask = (params: any) => {
     const github_url = 'https://github.com/worknenjoy/truppie/issues/76'
-    return models.Task.create({
+    return TaskFactory({
       userId: params.userId,
       url: github_url,
       provider: 'github',

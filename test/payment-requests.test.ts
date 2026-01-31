@@ -4,6 +4,7 @@ import api from '../src/server'
 import nock from 'nock'
 import { registerAndLogin, truncateModels } from './helpers'
 import Models from '../src/models'
+import { PaymentRequestFactory } from './factories'
 
 const agent = request.agent(api)
 const models = Models as any
@@ -129,7 +130,7 @@ describe('PaymentRequests', () => {
     const register = await registerAndLogin(agent)
     const { body, headers } = register
 
-    await models.PaymentRequest.create({
+    await PaymentRequestFactory({
       userId: body.id,
       title: 'Sample Payment Request',
       custom_amount: true,
@@ -195,7 +196,7 @@ describe('PaymentRequests', () => {
     const register = await registerAndLogin(agent)
     const { body, headers } = register
 
-    const paymentRequest = await models.PaymentRequest.create({
+    const paymentRequest = await PaymentRequestFactory({
       userId: body.id,
       title: 'Old Title',
       description: 'Old Description',

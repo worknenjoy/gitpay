@@ -4,6 +4,7 @@ import nock from 'nock'
 import api from '../src/server'
 import Models from '../src/models'
 import { truncateModels, registerAndLogin } from './helpers'
+import { WalletFactory, WalletOrderFactory } from './factories'
 import invoiceBasic from './data/stripe/stripe.invoice.basic'
 import invoiceItem from './data/stripe/stripe.invoiceitem'
 import customer from './data/stripe/stripe.customer'
@@ -37,7 +38,7 @@ describe('WalletOrder', () => {
         'Content-Type': 'application/json'
       })
       const user = await registerAndLogin(agent)
-      const wallet = await models.Wallet.create({
+      const wallet = await WalletFactory({
         userId: user.body.id,
         name: 'Test Wallet',
         balance: 0
@@ -89,12 +90,12 @@ describe('WalletOrder', () => {
     })
     it('should update an initial wallet Order with balance updated when order is paid', async () => {
       const user = await registerAndLogin(agent)
-      const wallet = await models.Wallet.create({
+      const wallet = await WalletFactory({
         userId: user.body.id,
         name: 'Test Wallet',
         balance: 0
       })
-      const walletOrder = await models.WalletOrder.create({
+      const walletOrder = await WalletOrderFactory({
         walletId: wallet.id,
         amount: 100
       })
@@ -124,13 +125,13 @@ describe('WalletOrder', () => {
     })
     it('should create many wallet Orders with balance updated when order is succeeded', async () => {
       const user = await registerAndLogin(agent)
-      const wallet = await models.Wallet.create({
+      const wallet = await WalletFactory({
         userId: user.body.id,
         name: 'Test Wallet',
         balance: 0
       })
 
-      const walletOrder = await models.WalletOrder.create({
+      const walletOrder = await WalletOrderFactory({
         walletId: wallet.id,
         amount: 100
       })
@@ -144,7 +145,7 @@ describe('WalletOrder', () => {
           status: 'paid'
         })
 
-      const walletOrder2 = await models.WalletOrder.create({
+      const walletOrder2 = await WalletOrderFactory({
         walletId: wallet.id,
         amount: 100
       })
@@ -158,7 +159,7 @@ describe('WalletOrder', () => {
           status: 'paid'
         })
 
-      const walletOrder3 = await models.WalletOrder.create({
+      const walletOrder3 = await WalletOrderFactory({
         walletId: wallet.id,
         amount: 108
       })
@@ -182,12 +183,12 @@ describe('WalletOrder', () => {
     })
     it('should update wallet order', async () => {
       const user = await registerAndLogin(agent)
-      const wallet = await models.Wallet.create({
+      const wallet = await WalletFactory({
         userId: user.body.id,
         name: 'Test Wallet',
         balance: 0
       })
-      const walletOrder = await models.WalletOrder.create({
+      const walletOrder = await WalletOrderFactory({
         walletId: wallet.id,
         amount: 100,
         status: 'pending'
@@ -217,12 +218,12 @@ describe('WalletOrder', () => {
   describe('list wallet orders', () => {
     it('should list wallet orders', async () => {
       const user = await registerAndLogin(agent)
-      const wallet = await models.Wallet.create({
+      const wallet = await WalletFactory({
         userId: user.body.id,
         name: 'Test Wallet',
         balance: 0
       })
-      const walletOrder = await models.WalletOrder.create({
+      const walletOrder = await WalletOrderFactory({
         walletId: wallet.id,
         amount: 100,
         status: 'pending'
@@ -251,12 +252,12 @@ describe('WalletOrder', () => {
     })
     it('should fetch wallet order', async () => {
       const user = await registerAndLogin(agent)
-      const wallet = await models.Wallet.create({
+      const wallet = await WalletFactory({
         userId: user.body.id,
         name: 'Test Wallet',
         balance: 0
       })
-      const walletOrder = await models.WalletOrder.create({
+      const walletOrder = await WalletOrderFactory({
         walletId: wallet.id,
         amount: 100,
         status: 'paid',

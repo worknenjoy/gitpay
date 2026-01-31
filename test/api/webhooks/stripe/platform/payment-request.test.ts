@@ -5,6 +5,7 @@ import { registerAndLogin, truncateModels } from '../../../../helpers'
 import Models from '../../../../../src/models'
 import { completed } from '../../../../data/stripe/stripe.webhook.checkout.session.completed'
 import nock from 'nock'
+import { PaymentRequestFactory, PaymentRequestCustomerFactory, PaymentRequestPaymentFactory, PaymentRequestBalanceFactory } from '../../../../factories'
 
 const agent = request.agent(api) as any
 const models = Models as any
@@ -60,7 +61,7 @@ describe('webhooks for payment requests', () => {
         })
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
-      await models.PaymentRequest.create({
+      await PaymentRequestFactory({
         title: 'Payment for services',
         amount: 1000,
         currency: 'usd',
@@ -112,7 +113,7 @@ describe('webhooks for payment requests', () => {
         })
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
-      const paymentRequest = await models.PaymentRequest.create({
+      const paymentRequest = await PaymentRequestFactory({
         title: 'Payment for services',
         amount: 1,
         currency: 'usd',
@@ -121,13 +122,13 @@ describe('webhooks for payment requests', () => {
         deactivate_after_payment: true,
         userId: currentUser.id
       })
-      const customer = await models.PaymentRequestCustomer.create({
+      const customer = await PaymentRequestCustomerFactory({
         name: 'Customer Name',
         email: 'customer@example.com',
         userId: currentUser.id,
         sourceId: 'src_12345'
       })
-      await models.PaymentRequestPayment.create({
+      await PaymentRequestPaymentFactory({
         amount: 1,
         currency: 'usd',
         source: 'pi_3RcoMHBrSjgsps2D1aOZ9Yl6',
@@ -136,7 +137,7 @@ describe('webhooks for payment requests', () => {
         customerId: customer.id,
         userId: currentUser.id
       })
-      await models.PaymentRequestBalance.create({
+      await PaymentRequestBalanceFactory({
         userId: currentUser.id
       })
       await models.PaymentRequestBalanceTransaction.create({
@@ -193,7 +194,7 @@ describe('webhooks for payment requests', () => {
         })
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
-      const paymentRequest = await models.PaymentRequest.create({
+      const paymentRequest = await PaymentRequestFactory({
         title: 'Payment for services',
         amount: 1,
         currency: 'usd',
@@ -202,13 +203,13 @@ describe('webhooks for payment requests', () => {
         deactivate_after_payment: true,
         userId: currentUser.id
       })
-      const customer = await models.PaymentRequestCustomer.create({
+      const customer = await PaymentRequestCustomerFactory({
         name: 'Customer Name',
         email: 'customer@example.com',
         userId: currentUser.id,
         sourceId: 'src_12345'
       })
-      await models.PaymentRequestPayment.create({
+      await PaymentRequestPaymentFactory({
         amount: 1,
         currency: 'usd',
         source: 'pi_3RcoMHBrSjgsps2D1aOZ9Yl6',
@@ -217,7 +218,7 @@ describe('webhooks for payment requests', () => {
         customerId: customer.id,
         userId: currentUser.id
       })
-      const paymentRequestBalance = await models.PaymentRequestBalance.create({
+      const paymentRequestBalance = await PaymentRequestBalanceFactory({
         userId: currentUser.id
       })
       await models.PaymentRequestBalanceTransaction.create({
@@ -297,7 +298,7 @@ describe('webhooks for payment requests', () => {
         })
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
-      const paymentRequest = await models.PaymentRequest.create({
+      const paymentRequest = await PaymentRequestFactory({
         title: 'Payment for services',
         amount: 1,
         currency: 'usd',
@@ -306,13 +307,13 @@ describe('webhooks for payment requests', () => {
         deactivate_after_payment: true,
         userId: currentUser.id
       })
-      const customer = await models.PaymentRequestCustomer.create({
+      const customer = await PaymentRequestCustomerFactory({
         name: 'Customer Name',
         email: 'customer@example.com',
         userId: currentUser.id,
         sourceId: 'src_12345'
       })
-      await models.PaymentRequestPayment.create({
+      await PaymentRequestPaymentFactory({
         amount: 1,
         currency: 'usd',
         source: 'pi_3RcoMHBrSjgsps2D1aOZ9Yl6',
@@ -321,7 +322,7 @@ describe('webhooks for payment requests', () => {
         customerId: customer.id,
         userId: currentUser.id
       })
-      const paymentRequestBalance = await models.PaymentRequestBalance.create({
+      const paymentRequestBalance = await PaymentRequestBalanceFactory({
         userId: currentUser.id
       })
 

@@ -7,6 +7,7 @@ import Models from '../../../src/models'
 import UserMail from '../../../src/modules/mail/user'
 import account from '../../data/stripe/account.json'
 import sinon from 'sinon'
+import { UserFactory } from '../../factories'
 
 const agent = request.agent(api)
 const models = Models as any
@@ -210,7 +211,7 @@ describe('AUTH /user', () => {
       expect(user.body.error).to.equal('user.change_email.cannot_change_email_for_provider')
     })
     it('should not change email if user already exist with new email', async () => {
-      await models.User.create({ email: 'existing-email@example.com', password: 'test' })
+      await UserFactory({ email: 'existing-email@example.com', password: 'test' })
       const res = await registerAndLogin(agent, { email: 'oldemail@example.com', password: 'test' })
       const { headers } = res || {}
 
@@ -386,7 +387,7 @@ describe('AUTH /user', () => {
 
       const updatedUser = await models.User.findByPk(body.id)
 
-      await models.User.create({ email: 'new@example.com' })
+      await UserFactory({ email: 'new@example.com' })
 
       const confirmResponse = await agent
         .get('/auth/change-email/confirm')
