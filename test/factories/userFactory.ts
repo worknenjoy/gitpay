@@ -1,10 +1,12 @@
 import Models from '../../src/models'
+import * as crypto from 'crypto'
 const models = Models as any
 
 export const UserFactory = async (paramsOverwrite: any = {}) => {
+  const randomSuffix = crypto.randomBytes(8).toString('hex')
   const defaultParams = {
-    username: `testuser_${Math.random().toString(36).substring(7)}`,
-    email: `testuser_${Math.random().toString(36).substring(7)}@example.com`,
+    username: `testuser_${randomSuffix}`,
+    email: `testuser_${randomSuffix}@example.com`,
     password: 'password123'
   }
   const user = await models.User.create({ ...defaultParams, ...paramsOverwrite })
