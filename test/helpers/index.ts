@@ -135,6 +135,9 @@ const createAssign = async (agent: SuperAgentTest, params: AssignParams = {}, us
         {
           TaskId: params.taskId,
           userId: user.id
+        },
+        {
+          include: [models.User]
         }
       )
       const assignedData = assigned.dataValues
