@@ -1,18 +1,32 @@
 'use strict'
-const assert = require('assert')
-const request = require('supertest')
-const expect = require('chai').expect
-const chai = require('chai')
-const spies = require('chai-spies')
-const api = require('../src/server').default
+import assert from 'assert'
+import request from 'supertest'
+import { expect } from 'chai'
+import chai from 'chai'
+import spies from 'chai-spies'
+import api from '../src/server'
+import nock from 'nock'
+import { registerAndLogin, truncateModels } from './helpers'
+import Models from '../src/models'
+
+const models = Models as any
 const agent = request.agent(api)
-const nock = require('nock')
-const { registerAndLogin, truncateModels } = require('./helpers')
-const models = require('../src/models')
-const { register } = require('module')
+
+interface PayoutResponse {
+  id?: number
+  source_id?: string
+  userId?: number
+  amount?: string
+  currency?: string
+  method?: string
+  status?: string
+  body?: any
+  error?: string
+  errors?: string[]
+}
 
 // Common function to create payout
-const createPayoutData = async (source_id, noLogin = false) => {
+const createPayoutData = async (source_id: string, noLogin: boolean = false): Promise<any> => {
   const user = await registerAndLogin(agent)
   const res = await agent
     .post('/payouts/create')

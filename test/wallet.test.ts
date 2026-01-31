@@ -1,10 +1,11 @@
-const expect = require('chai').expect
-const request = require('supertest')
-const api = require('../src/server').default
+import { expect } from 'chai'
+import request from 'supertest'
+import api from '../src/server'
+import Models from '../src/models'
+import { truncateModels, registerAndLogin } from './helpers'
+
 const agent = request.agent(api)
-const models = require('../src/models')
-const { truncateModels, registerAndLogin } = require('./helpers')
-const { head } = require('request')
+const models = Models as any
 
 describe('Wallet', () => {
   beforeEach(async () => {

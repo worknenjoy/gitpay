@@ -1,25 +1,27 @@
-'use strict'
-const assert = require('assert')
-const request = require('supertest')
-const expect = require('chai').expect
-const chai = require('chai')
-const spies = require('chai-spies')
-const api = require('../src/server').default
-const agent = request.agent(api)
-const nock = require('nock')
-const {
+import assert from 'assert'
+import request from 'supertest'
+import { expect } from 'chai'
+import chai from 'chai'
+import spies from 'chai-spies'
+import api from '../src/server'
+import nock from 'nock'
+import {
   createTask,
   createOrder,
   createAssign,
   createTransfer,
   truncateModels
-} = require('./helpers')
-const models = require('../src/models')
-const transfer = require('./data/stripe/stripe.transfer.updated').updated.data.object
-const paypalGetPayoutSample = require('./data/paypal/paypal.payout').get
+} from './helpers'
+import Models from '../src/models'
+const models = Models as any
+import { updated } from './data/stripe/stripe.transfer.updated'
+const transfer = updated.data.object
+import { get as paypalGetPayoutSample } from './data/paypal/paypal.payout'
+
+const agent = request.agent(api)
 
 // Common function to create transfer
-const createTransferWithTaskData = async (taskData, userId, transferId) => {
+const createTransferWithTaskData = async (taskData: any, userId?: number, transferId?: string): Promise<any> => {
   const res = await agent.post('/transfers/create').send({
     taskId: taskData.id,
     userId: userId,
@@ -133,7 +135,7 @@ describe('Transfer', () => {
         throw e
       }
     })
-    it('should create transfer with three mulltiple orders paid with stripe', async () => {
+    it('should create transfer with three multiple orders paid with stripe', async () => {
       try {
         nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
         const task = await createTask(agent)
@@ -169,7 +171,7 @@ describe('Transfer', () => {
         throw e
       }
     })
-    it('should create transfer with three mulltiple orders paid with stripe and paypal but paypal not paid', async () => {
+    it('should create transfer with three multiple orders paid with stripe and paypal but paypal not paid', async () => {
       nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
       const task = await createTask(agent)
       const { body: taskData } = task

@@ -1,13 +1,13 @@
-'use strict'
-const assert = require('assert')
-const request = require('supertest')
-const expect = require('chai').expect
-const chai = require('chai')
-const api = require('../src/server').default
+import { expect } from 'chai'
+import request from 'supertest'
+import api from '../src/server'
+import nock from 'nock'
+import { registerAndLogin, truncateModels } from './helpers'
+import Models from '../src/models'
+
 const agent = request.agent(api)
-const nock = require('nock')
-const { registerAndLogin, truncateModels } = require('./helpers')
-const models = require('../src/models')
+const models = Models as any
+
 const sampleProduct = require('./data/stripe/stripe.product.create')
 const samplePrice = require('./data/stripe/stripe.price.create')
 const samplePaymentLink = require('./data/stripe/stripe.paymentLinks.create')

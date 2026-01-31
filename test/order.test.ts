@@ -1,19 +1,18 @@
-const request = require('supertest')
-const Promise = require('bluebird')
-const expect = require('chai').expect
-const chai = require('chai')
-const spies = require('chai-spies')
-const api = require('../src/server').default
+import request from 'supertest'
+import { expect } from 'chai'
+import chai from 'chai'
+import spies from 'chai-spies'
+import api from '../src/server'
+import nock from 'nock'
+import Models from '../src/models'
+import { registerAndLogin, register, login, truncateModels } from './helpers'
+import PaymentMail from '../src/modules/mail/payment'
+import stripe from '../src/shared/stripe/stripe'
+import customerData from './data/stripe/stripe.customer'
+import invoiceData from './data/stripe/stripe.invoice.basic'
+
 const agent = request.agent(api)
-const nock = require('nock')
-const models = require('../src/models')
-const { registerAndLogin, register, login, truncateModels } = require('./helpers')
-const PaymentMail = require('../src/modules/mail/payment')
-const plan = require('../src/models/plan')
-const stripe = require('../src/shared/stripe/stripe')()
-const customerData = require('./data/stripe/stripe.customer')
-const invoiceData = require('./data/stripe/stripe.invoice.basic')
-const { notifyBountyOnSlack } = require('../src/shared/slack')
+const models = Models as any
 
 describe('Orders', () => {
   beforeEach(async () => {
@@ -285,7 +284,6 @@ describe('Orders', () => {
     })
 
     describe('Order with Plan', () => {
-      let PlanSchema
       beforeEach(async () => {})
       it('should create a new order with a plan', async () => {
         const user = await registerAndLogin(agent)
@@ -472,7 +470,8 @@ describe('Orders', () => {
 
     xit('should create a order type invoice-item above 5000', async () => {
       chai.use(spies)
-      const invoiceItem = chai.spy.on(stripe.invoiceItems, 'create')
+      const stripeInstance = stripe()
+      const invoiceItem = chai.spy.on(stripeInstance.invoiceItems, 'create')
 
       nock('https://api.stripe.com')
         .post('/v1/invoices')
@@ -519,7 +518,7 @@ describe('Orders', () => {
         expect(res.body.Plan.feePercentage).to.equal(0)
         expect(invoiceItem).to.have.been.called()
       } finally {
-        chai.spy.restore(stripe.invoiceItems, 'create')
+        chai.spy.restore(stripeInstance.invoiceItems, 'create')
       }
     })
 
@@ -1115,7 +1114,7 @@ describe('Orders', () => {
 
       const refundRes = await agent
         .post(`/orders/${order.dataValues.id}/refund`)
-        .set('Authorization', res.headers.authorization)
+        .set('Authorization', user.headers.authorization)
         .expect('Content-Type', /json/)
         .expect(200)
 

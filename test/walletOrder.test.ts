@@ -1,13 +1,15 @@
-const expect = require('chai').expect
-const request = require('supertest')
-const nock = require('nock')
-const api = require('../src/server').default
+import { expect } from 'chai'
+import request from 'supertest'
+import nock from 'nock'
+import api from '../src/server'
+import Models from '../src/models'
+import { truncateModels, registerAndLogin } from './helpers'
+import invoiceBasic from './data/stripe/stripe.invoice.basic'
+import invoiceItem from './data/stripe/stripe.invoiceitem'
+import customer from './data/stripe/stripe.customer'
+
 const agent = request.agent(api)
-const models = require('../src/models')
-const { truncateModels, registerAndLogin } = require('./helpers')
-const invoiceBasic = require('./data/stripe/stripe.invoice.basic')
-const invoiceItem = require('./data/stripe/stripe.invoiceitem')
-const customer = require('./data/stripe/stripe.customer')
+const models = Models as any
 
 describe('WalletOrder', () => {
   beforeEach(async () => {

@@ -1,24 +1,27 @@
-// webhook.platform.test.js
+// webhook.platform.test.ts
 
-const assert = require('assert')
-const request = require('supertest')
-const expect = require('chai').expect
-const api = require('../src/server').default
+import assert from 'assert'
+import request from 'supertest'
+import { expect } from 'chai'
+import api from '../src/server'
+import nock from 'nock'
+import { truncateModels, registerAndLogin, createTransfer } from './helpers'
+import Models from '../src/models'
+
+const models = Models as any
+
+import chargeData from './data/stripe/charge'
+import createTransferData from './data/stripe/stripe.transfer.created'
+import reverseTransferData from './data/stripe/stripe.webhook.transfer.reversed'
+import cardData from './data/stripe/card'
+import balanceData from './data/stripe/balance'
+import { refundCreated } from './data/stripe/stripe.webhook.charge.refunded'
+import invoiceUpdated from './data/stripe/stripe.invoice.update'
+import invoiceCreated from './data/stripe/stripe.invoice.create'
+import invoicePaid from './data/stripe/stripe.invoice.paid'
+import invoiceWebhookPaid from './data/stripe/stripe.webhook.invoice'
+
 const agent = request.agent(api)
-const nock = require('nock')
-const { truncateModels, registerAndLogin, createTransfer } = require('./helpers')
-const models = require('../src/models')
-
-const chargeData = require('./data/stripe/charge')
-const createTransferData = require('./data/stripe/stripe.transfer.created')
-const reverseTransferData = require('./data/stripe/stripe.webhook.transfer.reversed')
-const cardData = require('./data/stripe/card')
-const balanceData = require('./data/stripe/balance')
-const { refundCreated } = require('./data/stripe/stripe.webhook.charge.refunded')
-const invoiceUpdated = require('./data/stripe/stripe.invoice.update')
-const invoiceCreated = require('./data/stripe/stripe.invoice.create')
-const invoicePaid = require('./data/stripe/stripe.invoice.paid')
-const invoiceWebhookPaid = require('./data/stripe/stripe.webhook.invoice')
 
 describe('webhooks for platform', () => {
   beforeEach(async () => {
@@ -447,7 +450,7 @@ describe('webhooks for platform', () => {
     })
   })
 
-  describe('wehooks for Wallet order', () => {
+  describe('webhooks for Wallet order', () => {
     it('should update a new wallet order when a webhook invoice.paid is triggered', async () => {
       const user = await registerAndLogin(agent)
       const wallet = await models.Wallet.create({

@@ -1,15 +1,17 @@
-const request = require('supertest')
-const expect = require('chai').expect
-const chai = require('chai')
-const api = require('../src/server').default
+import request from 'supertest'
+import { expect } from 'chai'
+import chai from 'chai'
+import api from '../src/server'
+import Models from '../src/models'
+import { register, createTask, truncateModels } from './helpers'
+import PaymentRequestMail from '../src/modules/mail/paymentRequest'
+import sinon from 'sinon'
+import constants from '../src/modules/mail/constants'
+import { sendgrid } from '../src/config/secrets'
+import nock from 'nock'
+
 const agent = request.agent(api)
-const models = require('../src/models')
-const { register, createTask, truncateModels } = require('./helpers')
-const PaymentRequestMail = require('../src/modules/mail/paymentRequest')
-const sinon = require('sinon')
-const constants = require('../src/modules/mail/constants')
-const { sendgrid } = require('../src/config/secrets')
-const nock = require('nock')
+const models = Models as any
 
 describe('Mail', () => {
   before(() => {

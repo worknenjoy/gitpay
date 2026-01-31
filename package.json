@@ -36,7 +36,7 @@
     "build": "tsc -p tsconfig.json",
     "start:dev": "nodemon --watch src --ext ts,js --exec \"tsx src/index.ts\"",
     "start": "node ./dist/index.js",
-    "test": "cross-env NODE_ENV=test mocha --require ./test/bootstrap.cjs --extension ts,js --timeout 30000 --exit \"test/**/*.test.{js,ts}\"",
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--import tsx\" mocha --extension ts,js --timeout 30000 --exit \"test/**/*.test.{js,ts}\"",
     "test:e2e": "playwright test",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
