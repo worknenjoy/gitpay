@@ -159,7 +159,7 @@ describe('tasks', () => {
   })
 
   describe('Task crud', () => {
-    it('should create a new task wiht projects ands organizations', async () => {
+    it('should create a new task with projects and organizations', async () => {
       nockAuth()
       const res = await registerAndLogin(agent)
       const task = await createTask(res.headers.authorization, {

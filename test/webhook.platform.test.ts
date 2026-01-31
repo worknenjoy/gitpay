@@ -450,7 +450,7 @@ describe('webhooks for platform', () => {
     })
   })
 
-  describe('wehooks for Wallet order', () => {
+  describe('webhooks for Wallet order', () => {
     it('should update a new wallet order when a webhook invoice.paid is triggered', async () => {
       const user = await registerAndLogin(agent)
       const wallet = await models.Wallet.create({

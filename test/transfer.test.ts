@@ -135,7 +135,7 @@ describe('Transfer', () => {
         throw e
       }
     })
-    it('should create transfer with three mulltiple orders paid with stripe', async () => {
+    it('should create transfer with three multiple orders paid with stripe', async () => {
       try {
         nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
         const task = await createTask(agent)
@@ -171,7 +171,7 @@ describe('Transfer', () => {
         throw e
       }
     })
-    it('should create transfer with three mulltiple orders paid with stripe and paypal but paypal not paid', async () => {
+    it('should create transfer with three multiple orders paid with stripe and paypal but paypal not paid', async () => {
       nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
       const task = await createTask(agent)
       const { body: taskData } = task
