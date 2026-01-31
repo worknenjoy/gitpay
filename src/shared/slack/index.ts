@@ -1,5 +1,5 @@
 import requestPromise from 'request-promise'
-import secrets from '../../../config/secrets'
+import secrets from '../../config/secrets'
 import type { Task, User, OrderData, SlackMessagePayload } from './types'
 
 const sendSlackMessage = async (payload: SlackMessagePayload): Promise<boolean> => {
