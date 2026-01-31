@@ -2,6 +2,7 @@ import { expect } from 'chai'
 import request from 'supertest'
 import Models from '../../../src/models'
 import { createTask, login, registerAndLogin, truncateModels } from '../../helpers'
+import { OrderFactory } from '../../factories'
 import api from '../../../src/server'
 
 const agent = request.agent(api) as any
@@ -70,7 +71,7 @@ describe('DELETE /tasks/delete/:id', () => {
 
     const { headers, body: createdTask } = task || {}
 
-    const order = await models.Order.create({
+    const order = await OrderFactory({
       TaskId: createdTask.id,
       amount: 100,
       currency: 'USD',

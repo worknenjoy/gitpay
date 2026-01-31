@@ -5,7 +5,7 @@ import { registerAndLogin, truncateModels } from '../../../../helpers'
 import Models from '../../../../../src/models'
 import { completed } from '../../../../data/stripe/stripe.webhook.checkout.session.completed'
 import nock from 'nock'
-import { PaymentRequestFactory, PaymentRequestCustomerFactory, PaymentRequestPaymentFactory, PaymentRequestBalanceFactory } from '../../../../factories'
+import { PaymentRequestFactory, PaymentRequestCustomerFactory, PaymentRequestPaymentFactory, PaymentRequestBalanceFactory, PaymentRequestBalanceTransactionFactory } from '../../../../factories'
 
 const agent = request.agent(api) as any
 const models = Models as any
@@ -140,7 +140,7 @@ describe('webhooks for payment requests', () => {
       await PaymentRequestBalanceFactory({
         userId: currentUser.id
       })
-      await models.PaymentRequestBalanceTransaction.create({
+      await PaymentRequestBalanceTransactionFactory({
         paymentRequestBalanceId: 1,
         amount: -92,
         type: 'DEBIT',
@@ -221,7 +221,7 @@ describe('webhooks for payment requests', () => {
       const paymentRequestBalance = await PaymentRequestBalanceFactory({
         userId: currentUser.id
       })
-      await models.PaymentRequestBalanceTransaction.create({
+      await PaymentRequestBalanceTransactionFactory({
         paymentRequestBalanceId: paymentRequestBalance.id,
         amount: -100,
         type: 'DEBIT',
@@ -326,7 +326,7 @@ describe('webhooks for payment requests', () => {
         userId: currentUser.id
       })
 
-      await models.PaymentRequestBalanceTransaction.create({
+      await PaymentRequestBalanceTransactionFactory({
         paymentRequestBalanceId: paymentRequestBalance.id,
         amount: -90,
         type: 'DEBIT',
