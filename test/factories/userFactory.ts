@@ -1,7 +1,7 @@
 import Models from '../../src/models'
 const models = Models as any
 
-export const userFactory = async (paramsOverwrite: any = {}) => {
+export const UserFactory = async (paramsOverwrite: any = {}) => {
   const defaultParams = {
     username: 'testuser',
     email: 'testuser@example.com',
