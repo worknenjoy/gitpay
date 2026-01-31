@@ -2,9 +2,7 @@ import { expect } from 'chai'
 import { truncateModels, createTask, registerAndLogin } from '../../../helpers'
 import { findUnclaimedBounties } from '../../../../src/queries/issue/bounty/findUnclaimedBounties'
 import Models from '../../../../src/models'
-import { userFactory } from '../../../factories/userFactory'
-import { IssueFactory } from '../../../factories/issueFactory'
-import { TransferFactory } from '../../../factories/transferFacctory'
+import { UserFactory, IssueFactory, TransferFactory } from '../../../factories'
 
 const models = Models as any
 
@@ -15,7 +13,7 @@ describe('Queries - Issue - Bounty - findUnclaimedBounties', () => {
     await truncateModels(models.User)
   })
   it('should return unclaimed bounties', async () => {
-    const user = await userFactory()
+    const user = await UserFactory()
     const taskWithBountyUnclaimed = await IssueFactory({
       status: 'closed',
       value: 100,
