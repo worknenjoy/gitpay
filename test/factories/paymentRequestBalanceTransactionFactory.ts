@@ -3,10 +3,11 @@ import Models from '../../src/models'
 const models = Models as any
 
 export const PaymentRequestBalanceTransactionFactory = async (paramsOverwrite: any = {}) => {
+  const randomId = Math.random().toString(36).substring(7)
   const defaultParams = {
     amount: '100',
     currency: 'usd',
-    sourceId: 'txn_test123',
+    sourceId: `txn_test_${randomId}`,
     type: 'CREDIT',
     reason: 'ADJUSTMENT',
     reason_details: 'Test transaction',
