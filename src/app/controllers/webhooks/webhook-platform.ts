@@ -3,7 +3,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const stripe = require('../../../modules/shared/stripe/stripe')()
+const stripe = require('../../../shared/stripe/stripe')()
 const chargeSucceeded = require('../../../modules/webhooks/chargeSucceeded')
 const checkoutSessionCompleted = require('../../../modules/webhooks/checkoutSessionCompleted')
 const customerSourceCreated = require('../../../modules/webhooks/customerSourceCreated')

@@ -1,4 +1,4 @@
-import Stripe from '../../../modules/shared/stripe/stripe'
+import Stripe from '../../../shared/stripe/stripe'
 import Models from '../../../models'
 import { DisputeDataCreated, DisputeDataWithdrawn, DisputeDataClosed } from './types'
 import PaymentRequestMail from '../../../modules/mail/paymentRequest'

@@ -1,4 +1,4 @@
-import Stripe from '../../../modules/shared/stripe/stripe'
+import Stripe from '../../../shared/stripe/stripe'
 import { type UserParameters } from './updateUser'
 
 const stripe = Stripe()

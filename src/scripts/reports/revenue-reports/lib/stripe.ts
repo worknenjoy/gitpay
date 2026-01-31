@@ -1,4 +1,4 @@
-import StripeFactory from '../../../../modules/shared/stripe/stripe'
+import StripeFactory from '../../../../shared/stripe/stripe'
 import { Charge, Transfer } from './types'
 
 export const stripe: any = StripeFactory()

@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 import Models from '../../models'
-import Stripe from '../../modules/shared/stripe/stripe'
+import Stripe from '../../shared/stripe/stripe'
 
 const models = Models as any
 const stripe = Stripe()

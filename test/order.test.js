@@ -10,10 +10,10 @@ const models = require('../src/models')
 const { registerAndLogin, register, login, truncateModels } = require('./helpers')
 const PaymentMail = require('../src/modules/mail/payment')
 const plan = require('../src/models/plan')
-const stripe = require('../src/modules/shared/stripe/stripe')()
+const stripe = require('../src/shared/stripe/stripe')()
 const customerData = require('./data/stripe/stripe.customer')
 const invoiceData = require('./data/stripe/stripe.invoice.basic')
-const { notifyBountyOnSlack } = require('../src/modules/shared/slack')
+const { notifyBountyOnSlack } = require('../src/shared/slack')
 
 describe('Orders', () => {
   beforeEach(async () => {
@@ -90,7 +90,7 @@ describe('Orders', () => {
 
     it('should not call notifyNewBounty when order is created for a task with not_listed set to true', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/shared/slack')
+      const slackModule = require('../src/shared/slack')
       const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
@@ -120,7 +120,7 @@ describe('Orders', () => {
 
     it('should not call notifyNewBounty when order is created for a task with private set to true', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/shared/slack')
+      const slackModule = require('../src/shared/slack')
       const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
@@ -150,7 +150,7 @@ describe('Orders', () => {
 
     it('should not call notifyNewBounty when order is created (notification only on payment completion)', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/shared/slack')
+      const slackModule = require('../src/shared/slack')
       const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderBuilds = require('../src/modules/orders').orderBuilds
 
@@ -182,7 +182,7 @@ describe('Orders', () => {
 
     it('should call notifyNewBounty when wallet payment completes for a public task', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/shared/slack')
+      const slackModule = require('../src/shared/slack')
       // Spy on notifyBounty since that's what's actually called
       const slackSpy = chai.spy.on(slackModule, 'notifyBounty')
       const orderBuilds = require('../src/modules/orders').orderBuilds
@@ -237,7 +237,7 @@ describe('Orders', () => {
 
     it('should not call notifyNewBounty when wallet payment completes for a private task', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/shared/slack')
+      const slackModule = require('../src/shared/slack')
       // Spy on notifyBountyOnSlack - the internal function that sends to Slack
       const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderBuilds = require('../src/modules/orders').orderBuilds
@@ -940,7 +940,7 @@ describe('Orders', () => {
   describe('PayPal payment notifications', () => {
     it('should call notifyNewBounty when PayPal payment completes for a public task', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/shared/slack')
+      const slackModule = require('../src/shared/slack')
       // Spy on notifyBounty since that's what's actually called
       const slackSpy = chai.spy.on(slackModule, 'notifyBounty')
       const orderAuthorize = require('../src/modules/orders').orderAuthorize
@@ -1018,7 +1018,7 @@ describe('Orders', () => {
 
     it('should not call notifyNewBounty when PayPal payment completes for a private task', async () => {
       chai.use(spies)
-      const slackModule = require('../src/modules/shared/slack')
+      const slackModule = require('../src/shared/slack')
       // Spy on notifyBountyOnSlack - the internal function that sends to Slack
       const slackSpy = chai.spy.on(slackModule, 'notifyBountyOnSlack')
       const orderAuthorize = require('../src/modules/orders').orderAuthorize

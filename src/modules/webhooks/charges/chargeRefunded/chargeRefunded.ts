@@ -1,4 +1,4 @@
-import Stripe from '../../../shared/stripe/stripe'
+import Stripe from '../../../../shared/stripe/stripe'
 import { handleChargeRefundedIssue } from './chargeRefundedIssue'
 import { handleChargeRefundedPaymentRequest } from './chargeRefundedPaymentRequest'
 

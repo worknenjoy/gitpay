@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import Stripe from '../../../shared/stripe/stripe'
+import Stripe from '../../../../shared/stripe/stripe'
 import Models from '../../../../models'
 import { closeDisputeForPaymentRequest } from '../../../../services/payments/disputes/disputeService'
 

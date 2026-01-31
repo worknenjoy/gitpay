@@ -7,7 +7,7 @@ import { roleExists } from '../roles'
 import { userExists } from '../users'
 import project from '../projectHelpers'
 import { issueAddedComment } from '../bot/issueAddedComment'
-import { notifyNewIssue } from '../shared/slack'
+import { notifyNewIssue } from '../../shared/slack'
 
 const currentModels = models as any
 

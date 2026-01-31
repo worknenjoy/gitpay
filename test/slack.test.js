@@ -1,6 +1,6 @@
 const expect = require('chai').expect
 const nock = require('nock')
-const { notifyNewIssue, notifyBountyOnSlack } = require('../src/modules/shared/slack')
+const { notifyNewIssue, notifyBountyOnSlack } = require('../src/shared/slack')
 
 describe('Slack Notifications', () => {
   beforeEach(() => {
