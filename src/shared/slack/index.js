@@ -1,5 +1,5 @@
 const requestPromise = require('request-promise')
-const secrets = require('../../../config/secrets')
+const secrets = require('../../config/secrets')
 
 const sendSlackMessage = async (payload) => {
   const webhookUrl = process.env.SLACK_WEBHOOK_URL || secrets.slack?.webhookUrl
