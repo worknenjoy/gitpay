@@ -36,7 +36,7 @@ export default async function chargeUpdated(event: any, paid: any, status: any, 
                     user.dataValues,
                     i18n.__('mail.webhook.payment.update.subject'),
                     i18n.__('mail.webhook.payment.update.message', {
-                      amount: event.data.object.amount / 100
+                      amount: String(event.data.object.amount / 100)
                     })
                   )
                 }

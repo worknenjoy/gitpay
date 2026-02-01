@@ -19,7 +19,7 @@ const sendEmailSuccess = (event: any, paid: any, status: any, order: any, req: a
             user.dataValues,
             i18n.__('mail.webhook.payment.update.subject'),
             i18n.__('mail.webhook.payment.approved.message', {
-              amount: event.data.object.amount / 100
+              amount: String(event.data.object.amount / 100)
             })
           )
         }

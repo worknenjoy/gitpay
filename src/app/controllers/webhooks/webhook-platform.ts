@@ -3,27 +3,29 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const stripe = require('../../../client/payment/stripe').default()
-const chargeSucceeded = require('../../../modules/webhooks/chargeSucceeded')
-const checkoutSessionCompleted = require('../../../modules/webhooks/checkoutSessionCompleted')
-const customerSourceCreated = require('../../../modules/webhooks/customerSourceCreated')
-const chargeUpdated = require('../../../modules/webhooks/chargeUpdated')
-const chargeFailed = require('../../../modules/webhooks/chargeFailed')
+import Stripe from '../../../client/payment/stripe'
+import chargeSucceeded from '../../../modules/webhooks/chargeSucceeded'
+import checkoutSessionCompleted from '../../../modules/webhooks/checkoutSessionCompleted'
+import customerSourceCreated from '../../../modules/webhooks/customerSourceCreated'
+import chargeUpdated from '../../../modules/webhooks/chargeUpdated'
+import chargeFailed from '../../../modules/webhooks/chargeFailed'
 import { handleChargeRefunded } from '../../../modules/webhooks/charges/chargeRefunded/chargeRefunded'
 import {
   chargeDisputeCreatedWebhookHandler,
   chargeDisputeClosedWebhookHandler
 } from '../../../modules/webhooks/charges'
-const invoiceCreated = require('../../../modules/webhooks/invoiceCreated')
-const invoiceUpdated = require('../../../modules/webhooks/invoiceUpdated')
-const invoicePaid = require('../../../modules/webhooks/invoicePaid')
-const invoiceFinalized = require('../../../modules/webhooks/invoiceFinalized')
+import invoiceCreated from '../../../modules/webhooks/invoiceCreated'
+import invoiceUpdated from '../../../modules/webhooks/invoiceUpdated'
+import invoicePaid from '../../../modules/webhooks/invoicePaid'
+import invoiceFinalized from '../../../modules/webhooks/invoiceFinalized'
 import { transferCreated } from '../../../modules/webhooks/transfers'
 import { transferReversed } from '../../../modules/webhooks/transfers'
 import { chargeDisputeFundsWithdrawnWebhookHandler } from '../../../modules/webhooks/charges/chargeDisputeFundsWithdrawn/chargeDisputeFundsWithdrawn'
-const balanceAvailable = require('../../../modules/webhooks/balanceAvailable')
-const invoicePaymentSucceeded = require('../../../modules/webhooks/invoicePaymentSucceeded')
-const invoicePaymentFailed = require('../../../modules/webhooks/invoicePaymentFailed')
+import balanceAvailable from '../../../modules/webhooks/balanceAvailable'
+import invoicePaymentSucceeded from '../../../modules/webhooks/invoicePaymentSucceeded'
+import invoicePaymentFailed from '../../../modules/webhooks/invoicePaymentFailed'
+
+const stripe = Stripe()
 
 exports.webhookPlatform = async (req: any, res: any) => {
   const sig = req.headers['stripe-signature']

@@ -213,7 +213,7 @@ export default async function checkoutSessionCompleted(event: any, req: any, res
       }
     }
     return res.json(req.body)
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error processing checkout session completed:', error)
     return res.status(500).json({ error: error.message })
   }
