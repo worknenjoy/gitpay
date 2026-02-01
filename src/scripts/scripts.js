@@ -4,7 +4,7 @@ const Promise = require('bluebird')
 const url = require('url')
 const requestPromise = require('request-promise')
 const i18n = require('i18n')
-const stripe = require('../shared/stripe/stripe')()
+const stripe = require('../client/payment/stripe')()
 const SendMail = require('../modules/mail/mail')
 
 i18n.configure({

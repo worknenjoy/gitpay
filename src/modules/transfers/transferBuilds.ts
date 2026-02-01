@@ -2,7 +2,7 @@ import models from '../../models'
 
 const currentModels = models as any
 import requestPromise from 'request-promise'
-import stripeModule from '../../shared/stripe/stripe'
+import stripeModule from '../../client/payment/stripe'
 const stripe = stripeModule()
 import TransferMail from '../mail/transfer'
 

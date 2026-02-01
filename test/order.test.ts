@@ -8,7 +8,7 @@ import Models from '../src/models'
 import { registerAndLogin, register, login, truncateModels } from './helpers'
 import { TaskFactory, OrderFactory, WalletFactory, WalletOrderFactory } from './factories'
 import PaymentMail from '../src/modules/mail/payment'
-import stripe from '../src/shared/stripe/stripe'
+import stripe from '../src/client/payment/stripe'
 import customerData from './data/stripe/stripe.customer'
 import invoiceData from './data/stripe/stripe.invoice.basic'
 

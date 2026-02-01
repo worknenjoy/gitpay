@@ -1,5 +1,5 @@
 import Models from '../../models'
-import createStripe from '../../shared/stripe/stripe'
+import createStripe from '../../client/payment/stripe'
 import PaymentRequestMail from '../mail/paymentRequest'
 
 const db = Models as any
