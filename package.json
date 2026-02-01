@@ -139,6 +139,7 @@
     "@types/express": "^5.0.4",
     "@types/i18n": "^0.13.12",
     "@types/jasmine": "2.5.38",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^18.19.130",
     "@types/passport": "^1.0.17",
     "@types/request-promise": "^4.1.51",

@@ -1,12 +1,13 @@
-const express = require('express')
+import express from 'express'
+import secure from './secure'
+import '../../modules/authenticationHelpers'
+import * as controllers from '../controllers/payout'
+
 const router = express.Router()
-const secure = require('./secure')
-require('../../modules/authenticationHelpers')
-const controllers = require('../controllers/payout')
 
 router.use(secure)
 router.post('/create', controllers.createPayout)
 router.post('/request', controllers.requestPayout)
 router.get('/search', controllers.searchPayout)
 
-module.exports = router
+export default router

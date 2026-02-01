@@ -3,17 +3,18 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const i18n = require('i18n')
+import i18n from 'i18n'
 const dateFormat = require('dateformat')
-const moment = require('moment')
+import moment from 'moment'
 const models = require('../../../models')
 const constants = require('../../../modules/mail/constants')
 const TaskMail = require('../../../modules/mail/task')
 const SendMail = require('../../../modules/mail/mail')
 const IssueClosedMail = require('../../../modules/mail/issueClosed')
+import type { Request, Response } from 'express'
 
-exports.github = async (req, res) => {
-  const response = req.body || res.body
+export const github = async (req: Request, res: Response) => {
+  const response = req.body || (res as any).body
   const labels = response && response.issue && response.issue.labels
   if (req.headers.authorization === `Bearer ${process.env.GITHUB_WEBHOOK_APP_TOKEN}`) {
     // below would update issue status if someone updates it on Github
@@ -55,9 +56,9 @@ exports.github = async (req, res) => {
     }
     if (response.action === 'labeled') {
       try {
-        const totalLabelResponse = []
+        const totalLabelResponse: any[] = []
         await Promise.all(
-          labels.map(async (label) => {
+          labels.map(async (label: any) => {
             let persistedLabel = await models.Label.findOne({
               where: {
                 name: label.name
@@ -70,7 +71,7 @@ exports.github = async (req, res) => {
             }
             const labelId = persistedLabel.dataValues.id
             if (label.name === 'notify') {
-              let finalResponse = {}
+              let finalResponse: any = {}
               try {
                 console.log('it is labeled notify')
                 const user = await models.User.findOne({
@@ -155,7 +156,7 @@ exports.github = async (req, res) => {
             if (label.name === 'gitpay') {
               // eslint-disable-next-line no-console
               console.log('it is labeled Gitpay')
-              let finalResponse = {}
+              let finalResponse: any = {}
               try {
                 const user = await models.User.findOne({
                   where: {

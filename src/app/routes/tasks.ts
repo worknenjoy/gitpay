@@ -1,8 +1,9 @@
-const express = require('express')
+import express from 'express'
+import '../../modules/authenticationHelpers'
+import * as controllers from '../controllers/task'
+import secure from './secure'
+
 const router = express.Router()
-require('../../modules/authenticationHelpers')
-const controllers = require('../controllers/task')
-const secure = require('./secure')
 
 router.get('/fetch/:id', controllers.fetchTask)
 router.get('/:id/sync/:field', controllers.syncTask)
@@ -26,4 +27,4 @@ router.put('/:id/assignment/remove', controllers.removeAssignedUser)
 router.put('/assignment/request', controllers.assignedUser)
 router.post('/assignment/request', controllers.requestAssignedUser)
 
-module.exports = router
+export default router

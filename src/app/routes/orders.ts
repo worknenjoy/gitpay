@@ -1,10 +1,11 @@
-const express = require('express')
+import express from 'express'
+import 'passport'
+import secure from './secure'
+import '../../modules/authenticationHelpers'
+import '../../models'
+import * as controllers from '../controllers/order'
+
 const router = express.Router()
-require('passport')
-const secure = require('./secure')
-require('../../modules/authenticationHelpers')
-require('../../models')
-const controllers = require('../controllers/order')
 
 router.get('/authorize', controllers.authorizeOrder)
 
@@ -20,4 +21,4 @@ router.post('/:id/cancel', controllers.cancelOrder)
 router.post('/:id/payments', controllers.paymentOrder)
 router.put('/:id', controllers.updateOrder)
 
-module.exports = router
+export default router

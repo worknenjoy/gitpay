@@ -1,8 +1,9 @@
-const express = require('express')
+import express from 'express'
+import secure from './secure'
+import '../../modules/authenticationHelpers'
+import * as controllers from '../controllers/payment-request-transfer'
+
 const router = express.Router()
-const secure = require('./secure')
-require('../../modules/authenticationHelpers')
-const controllers = require('../controllers/payment-request-transfer')
 
 router.use(secure)
 router.post('/', controllers.createPaymentRequestTransfer)
@@ -11,4 +12,4 @@ router.put('/:id', controllers.updatePaymentRequestTransfer)
 //router.get('/search', controllers.searchPaymentRequestTransfer)
 //router.get('/:id', controllers.fetchPaymentRequestTransfer)
 
-module.exports = router
+export default router

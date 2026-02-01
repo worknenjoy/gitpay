@@ -1,16 +1,17 @@
-const express = require('express')
+import express from 'express'
+import 'passport'
+import '../../modules/authenticationHelpers'
+import '../../models'
+import * as controllers from '../controllers/organization'
+import secure from './secure'
+
 const router = express.Router()
-require('passport')
-require('../../modules/authenticationHelpers')
-require('../../models')
-const controllers = require('../controllers/organization')
 
 router.get('/list', controllers.listOrganizations)
 router.get('/fetch/:id', controllers.fetchOrganization)
-const secure = require('./secure')
 
 router.use(secure)
 router.post('/create', controllers.createOrganization)
 router.put('/update', controllers.updateOrganization)
 
-module.exports = router
+export default router
