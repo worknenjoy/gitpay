@@ -3,7 +3,7 @@ const i18n = require('i18n')
 const moment = require('moment')
 const SendMail = require('../mail/mail')
 const WalletMail = require('../mail/wallet')
-const stripe = require('../../client/payment/stripe')()
+const stripe = require('../../client/payment/stripe').default()
 const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
 
 module.exports = async function invoicePaymentFailed(event, req, res) {
