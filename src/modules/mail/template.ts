@@ -1,5 +1,6 @@
 import { sendgrid } from '../../config/secrets'
 import * as constants from './constants'
+// @ts-ignore - @sendgrid/mail types may not be properly exported
 import sgMail from '@sendgrid/mail'
 
 const template = (
@@ -8,7 +9,9 @@ const template = (
   data: any,
   name: string = 'onetask'
 ) => {
-  sgMail.setApiKey(sendgrid.apiKey)
+  if (sendgrid.apiKey) {
+    sgMail.setApiKey(sendgrid.apiKey)
+  }
   let baseMsg = {
     from: constants.fromEmail,
     templateId: (constants.templates as any)[name],

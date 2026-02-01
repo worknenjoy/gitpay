@@ -1,6 +1,7 @@
 import Signatures from './content'
 import request from './request'
 import * as constants from './constants'
+// @ts-ignore - moment locale imports
 import moment from 'moment'
 import i18n from 'i18n'
 

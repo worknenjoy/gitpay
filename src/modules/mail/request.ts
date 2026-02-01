@@ -1,3 +1,4 @@
+// @ts-ignore - @sendgrid/mail types may not be properly exported
 import sgMail from '@sendgrid/mail'
 import { sendgrid } from '../../config/secrets'
 import handleResponse from './handleResponse'
@@ -20,12 +21,7 @@ const request = async (to: string, subject: string, content: any[], replyEmail?:
         from: notificationEmail,
         replyTo: replyEmail || fromEmail,
         subject,
-        content: [
-          {
-            type: content[0].type || 'text/html',
-            value: emailTemplate.defaultEmailTemplate(content[0].value)
-          }
-        ]
+        html: emailTemplate.defaultEmailTemplate(content[0].value)
       }
 
       const response = await sgMail.send(msg)

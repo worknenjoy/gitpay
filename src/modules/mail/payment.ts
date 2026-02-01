@@ -20,7 +20,7 @@ const PaymentMail = {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-          <p>${i18n.__('mail.payment.success.content.main', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`)
+          <p>${i18n.__('mail.payment.success.content.main', { value: String(value), title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`)
         }
       ])
     } catch (error) {
@@ -65,7 +65,7 @@ const PaymentMail = {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(
             `
-          <p>${i18n.__('mail.payment.assigned.content.main', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`,
+          <p>${i18n.__('mail.payment.assigned.content.main', { value: String(value), title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`,
             `<p>${i18n.__('mail.payment.assigned.content.secondary')}</p>`
           )
         }
@@ -91,7 +91,7 @@ const PaymentMail = {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-            <p>${i18n.__('mail.payment.content.error', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`)
+            <p>${i18n.__('mail.payment.content.error', { value: String(value), title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`)
         }
       ])
     } catch (error) {

@@ -1,9 +1,13 @@
 import Signatures from './content'
 import request from './request'
 import * as constants from './constants'
+// @ts-ignore - dateformat has no proper type definitions
 import dateFormat from 'dateformat'
+// @ts-ignore - moment locale imports
 import moment from 'moment'
+// @ts-ignore - moment locale imports
 import ptLocale from 'moment/locale/pt-br'
+// @ts-ignore - moment locale imports
 import enLocale from 'moment/locale/en-gb'
 import i18n from 'i18n'
 import emailTemplate from './templates/base-content'

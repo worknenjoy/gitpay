@@ -1,7 +1,9 @@
 import Signatures from './content'
 import request from './request'
 import * as constants from './constants'
+// @ts-ignore - moment locale imports
 import moment from 'moment'
+// @ts-ignore - moment locale imports
 import ptLocale from 'moment/locale/pt-br'
 import i18n from 'i18n'
 import emailTemplate from './templates/base-content'

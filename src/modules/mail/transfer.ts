@@ -20,7 +20,7 @@ const TransferMail = {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-            <p>${i18n.__('mail.transfer.new.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
+            <p>${i18n.__('mail.transfer.new.message.success', { value: String(value), title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
         }
       ])
     } catch (error) {
@@ -44,7 +44,7 @@ const TransferMail = {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(
-            `<p>${i18n.__('mail.transfer.notify.message.success', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`
+            `<p>${i18n.__('mail.transfer.notify.message.success', { value: String(value), title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`
           )
         }
       ])
@@ -69,7 +69,7 @@ const TransferMail = {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
-          <p>${i18n.__('mail.transfer.error.message', { value: value, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
+          <p>${i18n.__('mail.transfer.error.message', { value: String(value), title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
         }
       ])
     } catch (error) {

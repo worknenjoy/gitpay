@@ -1,6 +1,9 @@
 import request from './request'
+// @ts-ignore - moment locale imports
 import moment from 'moment'
+// @ts-ignore - moment locale imports
 import ptLocale from 'moment/locale/pt-br'
+// @ts-ignore - moment locale imports
 import enLocale from 'moment/locale/en-gb'
 import i18n from 'i18n'
 import * as constants from './constants'
@@ -8,6 +11,8 @@ import withTemplate from './template'
 import models from '../../models'
 import emailTemplate from './templates/main-content'
 import basicEmailTemplate from './templates/base-content'
+
+const currentModels = models as any
 
 function capitalizeFirstLetter(string: string) {
   return string[0].toUpperCase() + string.slice(1)
@@ -88,7 +93,7 @@ const TaskMail = {
 
   notify: async (user: any, data: any) => {
     try {
-      const allUsers = await models.User.findAll()
+      const allUsers = await currentModels.User.findAll()
       const targetUsers = allUsers.filter((item: any) => item.email !== user.email)
       let mailList: string[] = []
       let subjectData: string[] = []
@@ -119,7 +124,7 @@ const TaskMail = {
 
   weeklyBounties: async (data: any) => {
     try {
-      const allUsers = await models.User.findAll()
+      const allUsers = await currentModels.User.findAll()
       let mailList: string[] = []
       let subjectData: string[] = []
       let templateData: any[] = []
@@ -158,7 +163,7 @@ const TaskMail = {
 
   weeklyLatest: async (data: any) => {
     try {
-      const allUsers = await models.User.findAll()
+      const allUsers = await currentModels.User.findAll()
       let mailList: string[] = []
       let subjectData: string[] = []
       let templateData: any[] = []
@@ -197,7 +202,7 @@ const TaskMail = {
 
   notifyPayment: async (user: any, data: any) => {
     try {
-      const allUsers = await models.User.findAll()
+      const allUsers = await currentModels.User.findAll()
       const targetUsers = allUsers.filter((item: any) => item.email !== user.email)
       let mailList: string[] = []
       let subjectData: string[] = []
