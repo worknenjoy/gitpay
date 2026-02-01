@@ -4,7 +4,7 @@ import Models from '../../models'
 
 const models = Models as any
 
-const userUpdate = async (userParameters: UserParameters) => {
+export const userUpdate = async (userParameters: UserParameters) => {
   if (!userParameters.id) {
     throw new Error('User id is required to update user')
   }
