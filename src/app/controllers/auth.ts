@@ -1,12 +1,11 @@
-import * as crypto from 'crypto'
-
-import * as requestPromise from 'request-promise'
-import * as secrets from '../../config/secrets'
-import * as user from '../../modules/users'
-import * as models from '../../models'
-import * as task from '../../modules/tasks'
-import * as Sendmail from '../../modules/mail/mail'
-import * as UserMail from '../../modules/mail/user'
+const crypto = require('crypto')
+const requestPromise = require('request-promise')
+const secrets = require('../../config/secrets')
+const user = require('../../modules/users')
+const models = require('../../models')
+const task = require('../../modules/tasks')
+const Sendmail = require('../../modules/mail/mail')
+const UserMail = require('../../modules/mail/user')
 
 export const register = async (req: any, res: any) => {
   const { email, name, password } = req.body
@@ -133,10 +132,9 @@ export const createPrivateTask = async (req: any, res: any) => {
           error?.statusCode ??
           error?.response?.status ??
           error?.response?.statusCode
+        const errorMessage = error?.message || error?.error?.message
         const isRateLimit =
           String(errorStatus) === '403' || /rate limit exceeded/i.test(errorMessage || '')
-
-        const errorMessage = error?.message || error?.error?.message
         const finalError = isRateLimit
           ? 'API limit reached, please try again later.'
           : errorMessage

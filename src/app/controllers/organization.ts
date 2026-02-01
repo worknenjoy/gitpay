@@ -1,4 +1,6 @@
-import * as Organizations from '../../modules/organizations'
+import { organizationBuilds, organizationUpdate } from '../../modules/organizations'
+
+const Organizations = require('../../modules/organizations')
 
 export const listOrganizations = async (req: any, res: any) => {
   try {
@@ -25,7 +27,7 @@ export const fetchOrganization = async (req: any, res: any) => {
 export const createOrganization = async (req: any, res: any) => {
   try {
     req.body.userId = req.user.id
-    const data = await Organizations.organizationBuilds(req.body)
+    const data = await organizationBuilds(req.body)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -37,7 +39,7 @@ export const createOrganization = async (req: any, res: any) => {
 export const updateOrganization = async (req: any, res: any) => {
   try {
     req.body.userId = req.user.id
-    const data = await Organizations.organizationUpdate(req.body)
+    const data = await organizationUpdate(req.body)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console

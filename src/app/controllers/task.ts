@@ -1,5 +1,5 @@
-import * as Tasks from '../../modules/tasks'
-import * as Offers from '../../modules/offers'
+const Tasks = require('../../modules/tasks')
+const Offers = require('../../modules/offers')
 
 export const createTask = async (req: any, res: any) => {
   try {

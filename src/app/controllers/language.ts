@@ -1,9 +1,9 @@
-import * as languageSearch from '../../modules/language'
+import { languageSearch, projectProgrammingLanguage } from '../../modules/language'
 
 export const languageSearchController = async (req: any, res: any) => {
   try {
     // Use query parameters for GET requests
-    const data = await languageSearch.languageSearch(req.query)
+    const data = await languageSearch(req.query)
     res.status(200).send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -15,7 +15,7 @@ export const languageSearchController = async (req: any, res: any) => {
 export const projectLanguageSearchController = async (req: any, res: any) => {
   try {
     // Use query parameters for GET requests
-    const data = await languageSearch.projectlanguageSearch(req.query)
+    const data = await projectProgrammingLanguage()
     res.status(200).send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
