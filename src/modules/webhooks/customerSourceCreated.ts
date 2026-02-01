@@ -1,18 +1,21 @@
-const models = require('../../models')
-const i18n = require('i18n')
-const moment = require('moment')
-const SendMail = require('../mail/mail')
-const WalletMail = require('../mail/wallet')
-const stripe = require('../../client/payment/stripe').default()
-const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
+import Models from '../../models'
+import i18n from 'i18n'
+import moment from 'moment'
+import SendMail from '../mail/mail'
+import WalletMail from '../mail/wallet'
+import Stripe from '../../client/payment/stripe'
+import { FAILED_REASON, CURRENCIES, formatStripeAmount } from './constants'
 
-module.exports = async function customerSourceCreated(event, req, res) {
+const models = Models as any
+const stripe = Stripe()
+
+export default async function customerSourceCreated(event: any, req: any, res: any) {
   return models.User.findOne({
     where: {
       customer_id: event.data.object.customer
     }
   })
-    .then((user) => {
+    .then((user: any) => {
       if (!user) {
         return res.status(400).send({ errors: ['User not found'] })
       }
@@ -30,5 +33,5 @@ module.exports = async function customerSourceCreated(event, req, res) {
       }
       return res.status(200).json(event)
     })
-    .catch((error) => res.status(400).send(error))
+    .catch((error: any) => res.status(400).send(error))
 }

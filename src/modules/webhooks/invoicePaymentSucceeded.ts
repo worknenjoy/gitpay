@@ -1,16 +1,19 @@
-const models = require('../../models')
-const i18n = require('i18n')
-const moment = require('moment')
-const SendMail = require('../mail/mail')
-const WalletMail = require('../mail/wallet')
-const stripe = require('../../client/payment/stripe').default()
-const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
+import Models from '../../models'
+import i18n from 'i18n'
+import moment from 'moment'
+import SendMail from '../mail/mail'
+import WalletMail from '../mail/wallet'
+import Stripe from '../../client/payment/stripe'
+import { FAILED_REASON, CURRENCIES, formatStripeAmount } from './constants'
 
-module.exports = async function invoicePaymentSucceeded(event, req, res) {
+const models = Models as any
+const stripe = Stripe()
+
+export default async function invoicePaymentSucceeded(event: any, req: any, res: any) {
   return models.User.findOne({
     where: { email: event.data.object.customer_email }
   })
-    .then((userFound) => {
+    .then((userFound: any) => {
       if (!userFound) {
         return models.User.create({
           email: event.data.object.customer_email,
@@ -18,7 +21,7 @@ module.exports = async function invoicePaymentSucceeded(event, req, res) {
           country: event.data.object.account_country,
           customer_id: event.data.object.customer[0],
           active: false
-        }).then(async (user) => {
+        }).then(async (user: any) => {
           await user.addType(await models.Type.find({ name: 'funding' }))
           const source_id = event.data.object.id[0]
           if (source_id) {
@@ -35,7 +38,7 @@ module.exports = async function invoicePaymentSucceeded(event, req, res) {
                 },
                 returning: true
               }
-            ).then((order) => {
+            ).then((order: any) => {
               return res.status(200).json(event)
             })
           }
@@ -43,7 +46,7 @@ module.exports = async function invoicePaymentSucceeded(event, req, res) {
         })
       }
     })
-    .catch((e) => {
+    .catch((e: any) => {
       return res.status(400).send(e)
     })
 }

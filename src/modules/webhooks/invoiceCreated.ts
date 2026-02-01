@@ -1,12 +1,15 @@
-const models = require('../../models')
-const i18n = require('i18n')
-const moment = require('moment')
-const SendMail = require('../mail/mail')
-const WalletMail = require('../mail/wallet')
-const stripe = require('../../client/payment/stripe').default()
-const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
+import Models from '../../models'
+import i18n from 'i18n'
+import moment from 'moment'
+import SendMail from '../mail/mail'
+import WalletMail from '../mail/wallet'
+import Stripe from '../../client/payment/stripe'
+import { FAILED_REASON, CURRENCIES, formatStripeAmount } from './constants'
 
-module.exports = async function invoiceCreated(event, req, res) {
+const models = Models as any
+const stripe = Stripe()
+
+export default async function invoiceCreated(event: any, req: any, res: any) {
   // eslint-disable-next-line no-case-declarations
   const shouldCreateWalletOrder = event.data.object.metadata['create_wallet_order']
   if (shouldCreateWalletOrder === 'true' || shouldCreateWalletOrder === true) {
@@ -43,7 +46,7 @@ module.exports = async function invoiceCreated(event, req, res) {
       returning: true
     }
   )
-    .then(async (order) => {
+    .then(async (order: any) => {
       if (order[0] && order[1].length) {
         const orderUpdated = await models.Order.findOne({
           where: {
@@ -83,7 +86,7 @@ module.exports = async function invoiceCreated(event, req, res) {
       }
       return res.status(200).json(event)
     })
-    .catch((e) => {
+    .catch((e: any) => {
       // eslint-disable-next-line no-console
       console.log('error on invoice create webhook', e)
       return res.status(400).send(e)

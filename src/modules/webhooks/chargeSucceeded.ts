@@ -1,14 +1,16 @@
-const models = require('../../models')
-const i18n = require('i18n')
-const SendMail = require('../mail/mail')
+import Models from '../../models'
+import i18n from 'i18n'
+import SendMail from '../mail/mail'
 
-const sendEmailSuccess = (event, paid, status, order, req, res) => {
+const models = Models as any
+
+const sendEmailSuccess = (event: any, paid: any, status: any, order: any, req: any, res: any) => {
   return models.User.findOne({
     where: {
       id: order[1][0].dataValues.userId
     }
   })
-    .then((user) => {
+    .then((user: any) => {
       if (user) {
         if (paid && status === 'succeeded') {
           const language = user.language || 'en'
@@ -25,12 +27,12 @@ const sendEmailSuccess = (event, paid, status, order, req, res) => {
 
       return res.json(req.body)
     })
-    .catch((e) => {
+    .catch((e: any) => {
       return res.status(400).send(e)
     })
 }
 
-const updateOrder = (event, paid, status, req, res) => {
+const updateOrder = (event: any, paid: any, status: any, req: any, res: any) => {
   return models.Order.update(
     {
       paid: paid,
@@ -44,22 +46,22 @@ const updateOrder = (event, paid, status, req, res) => {
       returning: true
     }
   )
-    .then((order) => {
+    .then((order: any) => {
       if (order[0]) {
         return sendEmailSuccess(event, paid, status, order, req, res)
       }
     })
-    .catch((e) => {
+    .catch((e: any) => {
       return res.status(400).send(e)
     })
 }
 
-const createOrder = (event) => {
+const createOrder = (event: any) => {
   const taskId = event.data.object?.transfer_group?.split('_')[1]
   if (!taskId) return Promise.resolve()
   return models.Task.findOne({
     where: { id: taskId }
-  }).then((task) => {
+  }).then((task: any) => {
     return task.createOrder({
       id: event.data.object.metadata.order_id,
       source_id: event.data.object.source.id,
@@ -71,7 +73,7 @@ const createOrder = (event) => {
   })
 }
 
-module.exports = (event, paid, status, req, res) => {
+export default (event: any, paid: any, status: any, req: any, res: any) => {
   const source_id = event?.data?.object?.source?.id
   if (source_id) {
     return models.Order.findOne({
@@ -79,11 +81,11 @@ module.exports = (event, paid, status, req, res) => {
         source_id: event?.data?.object?.source?.id,
         source: event?.data?.object?.id
       }
-    }).then((order) => {
+    }).then((order: any) => {
       if (order) {
         return updateOrder(event, paid, status, req, res)
       } else {
-        return createOrder(event).then((orderCreated) => {
+        return createOrder(event).then((orderCreated: any) => {
           if (orderCreated) {
             return updateOrder(event, paid, status, req, res)
           }
