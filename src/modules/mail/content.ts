@@ -1,10 +1,9 @@
-const i18n = require('i18n')
+import i18n from 'i18n'
 
-const Signatures = {}
-
-Signatures.sign = (language) => {
-  i18n.setLocale(language || 'en')
-  return `
+const Signatures = {
+  sign: (language?: string) => {
+    i18n.setLocale(language || 'en')
+    return `
 
 <p>
 ${i18n.__('mail.sign.thanks')}, <br />
@@ -21,19 +20,19 @@ PMB 72684
 Beaverton, Oregon 97008-7105 US (Mail) <br />
 </p>
 `
-}
+  },
 
-Signatures.buttons = (language, buttons) => {
-  i18n.setLocale(language || 'en')
-  let secondary = ''
-  if (buttons.secondary) {
-    secondary = `<td style="border-radius: 2px;" bgcolor="#009688">
+  buttons: (language: string, buttons: any) => {
+    i18n.setLocale(language || 'en')
+    let secondary = ''
+    if (buttons.secondary) {
+      secondary = `<td style="border-radius: 2px;" bgcolor="#009688">
       <a href="${buttons.secondary.url}" target="_blank" style="padding: 8px 12px;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:bold;display: inline-block;">
           ${i18n.__(buttons.secondary.label)}             
       </a>
   </td>`
-  }
-  return `
+    }
+    return `
 
 <table style="margin-top: 20px" width="100%" cellspacing="0" cellpadding="0">
   <tr>
@@ -52,10 +51,10 @@ Signatures.buttons = (language, buttons) => {
   </tr>
 </table>
 `
-}
+  },
 
-Signatures.header = () => {
-  return `
+  header: () => {
+    return `
     <table width="100%" align="center" height="215" style="background: url('https://alexandremagno.net/wp-content/uploads/2019/05/bg-mail-top.png') no-repeat center; background-size: contain;">
     <tr>
         <td align="center">
@@ -71,6 +70,9 @@ Signatures.header = () => {
         </td>
     </tr>
   </table>`
+  }
 }
+
+export default Signatures
 
 module.exports = Signatures

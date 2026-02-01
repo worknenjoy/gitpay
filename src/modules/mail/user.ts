@@ -1,23 +1,21 @@
-const request = require('./request')
-const constants = require('./constants')
-const i18n = require('i18n')
-const emailTemplate = require('./templates/main-content')
+import request from './request'
+import i18n from 'i18n'
+import emailTemplate from './templates/main-content'
 
 const UserMail = {
-  activation: (user, token) => {},
-  changeEmailNotification: (user) => {},
-  alertOldEmailAboutChange: (user) => {},
-  confirmedChangeUserEmail: (user) => {},
-  confirmedChangeUserEmailOldEmail: (user) => {}
-}
-
-if (constants.canSendEmail) {
-  UserMail.activation = (user, token) => {
+  activation: async (user: any, token: string) => {
     const to = user.email
     const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
     i18n.setLocale(language)
-    user?.receiveNotifications &&
-      request(to, i18n.__('mail.user.activation.subject'), [
+
+    try {
+      return await request(to, i18n.__('mail.user.activation.subject'), [
         {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
@@ -30,14 +28,24 @@ if (constants.canSendEmail) {
           )
         }
       ])
-  }
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
 
-  UserMail.changeEmailNotification = (user) => {
+  changeEmailNotification: async (user: any) => {
     const to = user.pending_email_change
     const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
     i18n.setLocale(language)
-    user?.receiveNotifications &&
-      request(to, i18n.__('mail.user.changeEmailNotification.subject'), [
+
+    try {
+      return await request(to, i18n.__('mail.user.changeEmailNotification.subject'), [
         {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
@@ -51,13 +59,24 @@ if (constants.canSendEmail) {
           )
         }
       ])
-  }
-  UserMail.alertOldEmailAboutChange = (user) => {
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+
+  alertOldEmailAboutChange: async (user: any) => {
     const to = user.email
     const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
     i18n.setLocale(language)
-    user?.receiveNotifications &&
-      request(to, i18n.__('mail.user.alertOldEmailAboutChange.subject'), [
+
+    try {
+      return await request(to, i18n.__('mail.user.alertOldEmailAboutChange.subject'), [
         {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
@@ -73,14 +92,24 @@ if (constants.canSendEmail) {
           )
         }
       ])
-  }
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
 
-  UserMail.confirmedChangeUserEmail = (user) => {
+  confirmedChangeUserEmail: async (user: any) => {
     const to = user.pending_email_change
     const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
     i18n.setLocale(language)
-    user?.receiveNotifications &&
-      request(to, i18n.__('mail.user.confirmedChangeUserEmail.subject'), [
+
+    try {
+      return await request(to, i18n.__('mail.user.confirmedChangeUserEmail.subject'), [
         {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
@@ -91,13 +120,24 @@ if (constants.canSendEmail) {
           )
         }
       ])
-  }
-  UserMail.confirmedChangeUserEmailOldEmail = (user) => {
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+
+  confirmedChangeUserEmailOldEmail: async (user: any) => {
     const to = user.email
     const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
     i18n.setLocale(language)
-    user?.receiveNotifications &&
-      request(to, i18n.__('mail.user.confirmedChangeUserEmailOldEmail.subject'), [
+
+    try {
+      return await request(to, i18n.__('mail.user.confirmedChangeUserEmailOldEmail.subject'), [
         {
           type: 'text/html',
           value: emailTemplate.mainContentEmailTemplate(
@@ -108,7 +148,12 @@ if (constants.canSendEmail) {
           )
         }
       ])
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
   }
 }
+
+export default UserMail
 
 module.exports = UserMail

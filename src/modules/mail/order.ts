@@ -1,34 +1,40 @@
-const request = require('./request')
-const Signatures = require('./content')
-const constants = require('./constants')
-const i18n = require('i18n')
-const emailTemplate = require('./templates/base-content')
+import request from './request'
+import i18n from 'i18n'
+import emailTemplate from './templates/base-content'
 
 const OrderMail = {
-  expiredOrders: (order) => {}
-}
-
-if (constants.canSendEmail) {
-  OrderMail.expiredOrders = (order) => {
+  expiredOrders: async (order: any) => {
     const { User: user } = order
     const to = user.email
     const language = user.language || 'en'
     const task = order.Task
+    const receiveNotifications = user?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
     i18n.setLocale(language)
     const mailData = {
       title: task.title,
       url: `${process.env.FRONTEND_HOST}/#/task/${task.id}`,
       value: order.amount
     }
-    user?.receiveNotifications &&
-      request(to, i18n.__('mail.order.expiredOrders.subject'), [
+
+    try {
+      return await request(to, i18n.__('mail.order.expiredOrders.subject'), [
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(`
           <p>${i18n.__('mail.order.expiredOrders.content.main', mailData)}</p>`)
         }
       ])
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
   }
 }
+
+export default OrderMail
 
 module.exports = OrderMail

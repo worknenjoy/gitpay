@@ -1,16 +1,17 @@
-const sgMail = require('@sendgrid/mail')
-const { sendgrid } = require('../../config/secrets')
-const handleResponse = require('./handleResponse')
-const handleError = require('./handleError')
-const { copyEmail, notificationEmail, fromEmail, canSendEmail } = require('./constants')
-const emailTemplate = require('./templates/default')
+// @ts-ignore - @sendgrid/mail types may not be properly exported
+import sgMail from '@sendgrid/mail'
+import { sendgrid } from '../../config/secrets'
+import handleResponse from './handleResponse'
+import handleError from './handleError'
+import { copyEmail, notificationEmail, fromEmail } from './constants'
+import emailTemplate from './templates/default'
 
-module.exports = async (to, subject, content, replyEmail) => {
+const request = async (to: string, subject: string, content: any[], replyEmail?: string) => {
   if (!sendgrid.apiKey) {
     console.warn('SendGrid API key is missing')
   }
 
-  if (canSendEmail && sendgrid.apiKey) {
+  if (sendgrid.apiKey) {
     sgMail.setApiKey(sendgrid.apiKey)
 
     try {
@@ -20,12 +21,7 @@ module.exports = async (to, subject, content, replyEmail) => {
         from: notificationEmail,
         replyTo: replyEmail || fromEmail,
         subject,
-        content: [
-          {
-            type: content[0].type || 'text/html',
-            value: emailTemplate.defaultEmailTemplate(content[0].value)
-          }
-        ]
+        html: emailTemplate.defaultEmailTemplate(content[0].value)
       }
 
       const response = await sgMail.send(msg)
@@ -65,3 +61,7 @@ module.exports = async (to, subject, content, replyEmail) => {
     ]
   }
 }
+
+export default request
+
+module.exports = request

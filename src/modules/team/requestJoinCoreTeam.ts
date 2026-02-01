@@ -1,5 +1,5 @@
 import SendMail from '../mail/mail'
-import constants from '../mail/constants'
+import * as constants from '../mail/constants'
 
 type RequestJoinCoreTeamParams = {
   param: {
