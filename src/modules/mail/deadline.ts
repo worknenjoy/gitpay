@@ -133,15 +133,15 @@ ${i18n.__('mail.assigned.update.message', { deadlineFromNow: task.deadline ? mom
 ${i18n.__('mail.deadline.end.intro', { url, title: task.title })}
 ${i18n.__('mail.deadline.end.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n.__('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
 ${Signatures.buttons(language, {
-              primary: {
-                label: 'mail.deadline.end.button.primary',
-                url: urlInterested
-              },
-              secondary: {
-                label: 'mail.deadline.end.button.secondary',
-                url: task.url
-              }
-            })}
+  primary: {
+    label: 'mail.deadline.end.button.primary',
+    url: urlInterested
+  },
+  secondary: {
+    label: 'mail.deadline.end.button.secondary',
+    url: task.url
+  }
+})}
           <p>${Signatures.sign(language)}</p>`
           }
         ]
@@ -177,15 +177,15 @@ ${Signatures.buttons(language, {
 ${i18n.__('mail.deadline.end.owner.intro', { url, title: task.title })}
 ${i18n.__('mail.deadline.end.owner.message', { deadlineFromNow: task.deadline ? moment(task.deadline).fromNow() : i18n.__('mail.assigned.anytime'), deadline: task.deadline ? dateFormat(task.deadline, constants.dateFormat) : i18n.__('mail.assigned.nodate'), url: `${process.env.FRONTEND_HOST}/#/task/${task.id}}` })}
 ${Signatures.buttons(language, {
-              primary: {
-                label: 'mail.deadline.end.owner.button.primary',
-                url: urlInterested
-              },
-              secondary: {
-                label: 'mail.deadline.end.owner.button.secondary',
-                url: task.url
-              }
-            })}
+  primary: {
+    label: 'mail.deadline.end.owner.button.primary',
+    url: urlInterested
+  },
+  secondary: {
+    label: 'mail.deadline.end.owner.button.secondary',
+    url: task.url
+  }
+})}
           <p>${Signatures.sign(language)}</p>`
           }
         ]

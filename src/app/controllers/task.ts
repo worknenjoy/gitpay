@@ -130,7 +130,7 @@ export const deleteTaskFromReport = async (req: any, res: any) => {
             'There was an error in deleting the task from the database, or the task was already deleted'
           )
       : res.status(200).send(`${deleted} rows were deleted from the database`)
-    
+
     try {
       await Tasks.taskDeleteConfirmation(params)
       res.send('Confirmation email sent to user')

@@ -44,12 +44,12 @@ const AssignMail = {
           <p>${i18n.__('mail.assign.owner.suggest', { value: offer.value, suggestedDate: offer.suggestedDate ? offer.suggestedDate : i18n.__('mail.assigned.nodate'), learn: offer.learn ? i18n.__('mail.statement.yes') : i18n.__('mail.statement.no'), comment: offer.comment ? offer.comment : i18n.__('mail.offer.nocomment') })}</p>
           <p>${i18n.__('mail.assign.owner.sec')}</p>
 ${Signatures.buttons(language, {
-                primary: {
-                  label: 'mail.assign.owner.button.offer',
-                  title: task.title,
-                  url: `${process.env.FRONTEND_HOST}/#/profile/task/${task.id}/offers`
-                }
-              })}`
+  primary: {
+    label: 'mail.assign.owner.button.offer',
+    title: task.title,
+    url: `${process.env.FRONTEND_HOST}/#/profile/task/${task.id}/offers`
+  }
+})}`
             )
           }
         ])

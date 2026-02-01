@@ -82,9 +82,7 @@ export const authorizeOrder = async (req: any, res: any) => {
       )
       return
     }
-    res.redirect(
-      `${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`
-    )
+    res.redirect(`${process.env.FRONTEND_HOST}/#/task/${data.TaskId}/order/${data.id}/status/error`)
   } catch (error: any) {
     res.redirect(process.env.FRONTEND_HOST)
   }

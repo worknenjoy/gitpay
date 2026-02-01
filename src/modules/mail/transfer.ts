@@ -1,5 +1,4 @@
 import request from './request'
-import * as constants from './constants'
 import i18n from 'i18n'
 import emailTemplate from './templates/base-content'
 

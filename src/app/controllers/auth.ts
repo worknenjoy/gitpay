@@ -135,9 +135,7 @@ export const createPrivateTask = async (req: any, res: any) => {
         const errorMessage = error?.message || error?.error?.message
         const isRateLimit =
           String(errorStatus) === '403' || /rate limit exceeded/i.test(errorMessage || '')
-        const finalError = isRateLimit
-          ? 'API limit reached, please try again later.'
-          : errorMessage
+        const finalError = isRateLimit ? 'API limit reached, please try again later.' : errorMessage
         const encodedError = encodeURIComponent(finalError || 'We could not import the issue.')
         return res.redirect(
           `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodedError}`
@@ -207,9 +205,7 @@ export const disconnectGithub = async (req: any, res: any) => {
   try {
     const data = await user.userDisconnectGithub({ userId: req.user.id })
     if (data) {
-      res.redirect(
-        `${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=success`
-      )
+      res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=success`)
     } else {
       res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=error`)
     }
@@ -359,7 +355,10 @@ export const userFetch = async (req: any, res: any) => {
 
 export const createBankAccount = async (req: any, res: any) => {
   try {
-    const data = await user.userBankAccountCreate({ userParams: req.user, bankAccountParams: req.body })
+    const data = await user.userBankAccountCreate({
+      userParams: req.user,
+      bankAccountParams: req.body
+    })
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
