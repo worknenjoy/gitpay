@@ -66,8 +66,8 @@ export default async function invoiceCreated(event: any, req: any, res: any) {
       const userTask = orderUpdated.User.dataValues
 
       if (orderUpdated) {
-        const userAssignedlanguage = userAssigned.language || 'en'
-        i18n.setLocale(userAssignedlanguage)
+        const userAssignedLanguage = userAssigned.language || 'en'
+        i18n.setLocale(userAssignedLanguage)
         SendMail.success(
           userAssigned,
           i18n.__('mail.webhook.invoice.create.subject'),

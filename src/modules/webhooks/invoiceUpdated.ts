@@ -69,8 +69,8 @@ export default async function invoiceUpdated(event: any, req: any, res: any) {
 
       if (orderUpdated) {
         if (orderUpdated.status === 'paid') {
-          const userAssignedlanguage = userAssigned.language || 'en'
-          i18n.setLocale(userAssignedlanguage)
+          const userAssignedLanguage = userAssigned.language || 'en'
+          i18n.setLocale(userAssignedLanguage)
           SendMail.success(
             userAssigned,
             i18n.__('mail.webhook.invoice.update.subject'),
