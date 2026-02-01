@@ -3,6 +3,7 @@ import request from 'supertest'
 import api from '../src/server'
 import Models from '../src/models'
 import { truncateModels, registerAndLogin } from './helpers'
+import { WalletFactory } from './factories'
 
 const agent = request.agent(api)
 const models = Models as any
@@ -31,7 +32,7 @@ describe('Wallet', () => {
   })
   it('should update wallet balance', async () => {
     const user = await registerAndLogin(agent)
-    const wallet = await models.Wallet.create({
+    const wallet = await WalletFactory({
       userId: user.body.id,
       name: 'Test Wallet',
       balance: 0
@@ -52,7 +53,7 @@ describe('Wallet', () => {
   })
   it('should list wallets', async () => {
     const user = await registerAndLogin(agent)
-    const wallet = await models.Wallet.create({
+    const wallet = await WalletFactory({
       userId: user.body.id,
       name: 'Test Wallet',
       balance: 0
@@ -70,7 +71,7 @@ describe('Wallet', () => {
   })
   it('should fetch wallet', async () => {
     const user = await registerAndLogin(agent)
-    const wallet = await models.Wallet.create({
+    const wallet = await WalletFactory({
       userId: user.body.id,
       name: 'Test Wallet',
       balance: 0

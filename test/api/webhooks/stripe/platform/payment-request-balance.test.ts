@@ -16,6 +16,7 @@ import {
 import { disputeFundsWithdrawn } from '../../../../data/stripe/stripe.webhook.charge.dispute.funds_withdrawn'
 import { refundCreated } from '../../../../data/stripe/stripe.webhook.charge.refunded'
 import { PaymentIntentData } from '../../../../data/stripe/stripe.paymentIntent'
+import { PaymentRequestFactory, PaymentRequestCustomerFactory, PaymentRequestPaymentFactory, PaymentRequestBalanceFactory } from '../../../../factories'
 
 const agent = request.agent(api) as any
 const models = Models as any
@@ -32,7 +33,7 @@ describe('Payment Request Balance Webhook', () => {
       const { body: currentUser } = user || {}
 
       // Create records so the webhook handler can resolve the user from the payment intent
-      const paymentRequest = await models.PaymentRequest.create({
+      const paymentRequest = await PaymentRequestFactory({
         title: 'PR for dispute created',
         description: 'Testing dispute created',
         amount: 4995,
@@ -40,14 +41,14 @@ describe('Payment Request Balance Webhook', () => {
         userId: currentUser.id
       })
 
-      const paymentRequestCustomer = await models.PaymentRequestCustomer.create({
+      const paymentRequestCustomer = await PaymentRequestCustomerFactory({
         email: 'customer@example.com',
         name: 'Test Customer',
         sourceId: 'src_test_123',
         userId: currentUser.id
       })
 
-      await models.PaymentRequestPayment.create({
+      await PaymentRequestPaymentFactory({
         amount: 4995,
         currency: 'usd',
         source: 'pi_test_123', // must match disputeCreated.object.payment_intent
@@ -57,7 +58,7 @@ describe('Payment Request Balance Webhook', () => {
         userId: currentUser.id
       })
 
-      await models.PaymentRequestBalance.create({
+      await PaymentRequestBalanceFactory({
         userId: currentUser.id,
         balance: 0
       })
@@ -95,7 +96,7 @@ describe('Payment Request Balance Webhook', () => {
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
 
-      const paymentRequest = await models.PaymentRequest.create({
+      const paymentRequest = await PaymentRequestFactory({
         title: 'Test Payment Request',
         description: 'A test payment request',
         amount: 5000,
@@ -103,14 +104,14 @@ describe('Payment Request Balance Webhook', () => {
         userId: currentUser.id
       })
 
-      const paymentRequestCustomer = await models.PaymentRequestCustomer.create({
+      const paymentRequestCustomer = await PaymentRequestCustomerFactory({
         email: 'test@example.com',
         name: 'Test User',
         sourceId: 'src_test_123',
         userId: currentUser.id
       })
 
-      const paymentRequestPayment = await models.PaymentRequestPayment.create({
+      const paymentRequestPayment = await PaymentRequestPaymentFactory({
         amount: 5000,
         currency: 'usd',
         source: 'pi_test_123',
@@ -120,7 +121,7 @@ describe('Payment Request Balance Webhook', () => {
         userId: currentUser.id
       })
 
-      const paymentRequestBalance = await models.PaymentRequestBalance.create({
+      const paymentRequestBalance = await PaymentRequestBalanceFactory({
         userId: currentUser.id,
         balance: 0
       })
@@ -178,7 +179,7 @@ describe('Payment Request Balance Webhook', () => {
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
 
-      const paymentRequest = await models.PaymentRequest.create({
+      const paymentRequest = await PaymentRequestFactory({
         title: 'Test Payment Request',
         description: 'A test payment request',
         amount: 5000,
@@ -186,14 +187,14 @@ describe('Payment Request Balance Webhook', () => {
         userId: currentUser.id
       })
 
-      const paymentRequestCustomer = await models.PaymentRequestCustomer.create({
+      const paymentRequestCustomer = await PaymentRequestCustomerFactory({
         email: 'test@example.com',
         name: 'Test User',
         sourceId: 'src_test_123',
         userId: currentUser.id
       })
 
-      const paymentRequestPayment = await models.PaymentRequestPayment.create({
+      const paymentRequestPayment = await PaymentRequestPaymentFactory({
         amount: 5000,
         currency: 'usd',
         source: 'pi_test_123',
@@ -203,7 +204,7 @@ describe('Payment Request Balance Webhook', () => {
         userId: currentUser.id
       })
 
-      const paymentRequestBalance = await models.PaymentRequestBalance.create({
+      const paymentRequestBalance = await PaymentRequestBalanceFactory({
         userId: currentUser.id,
         balance: 0
       })
@@ -250,7 +251,7 @@ describe('Payment Request Balance Webhook', () => {
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
 
-      const paymentRequest = await models.PaymentRequest.create({
+      const paymentRequest = await PaymentRequestFactory({
         title: 'Test Payment Request',
         description: 'A test payment request',
         amount: 5000,
@@ -258,14 +259,14 @@ describe('Payment Request Balance Webhook', () => {
         userId: currentUser.id
       })
 
-      const paymentRequestCustomer = await models.PaymentRequestCustomer.create({
+      const paymentRequestCustomer = await PaymentRequestCustomerFactory({
         email: 'test@example.com',
         name: 'Test User',
         sourceId: 'src_test_123',
         userId: currentUser.id
       })
 
-      const paymentRequestPayment = await models.PaymentRequestPayment.create({
+      const paymentRequestPayment = await PaymentRequestPaymentFactory({
         amount: 4995,
         currency: 'usd',
         source: 'pi_test_payment_intent',
@@ -275,7 +276,7 @@ describe('Payment Request Balance Webhook', () => {
         userId: currentUser.id
       })
 
-      const paymentRequestBalance = await models.PaymentRequestBalance.create({
+      const paymentRequestBalance = await PaymentRequestBalanceFactory({
         userId: currentUser.id,
         balance: 0
       })
@@ -323,7 +324,7 @@ describe('Payment Request Balance Webhook', () => {
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
 
-      const paymentRequest = await models.PaymentRequest.create({
+      const paymentRequest = await PaymentRequestFactory({
         title: 'Test Payment Request',
         description: 'A test payment request',
         amount: 5000,
@@ -331,14 +332,14 @@ describe('Payment Request Balance Webhook', () => {
         userId: currentUser.id
       })
 
-      const paymentRequestCustomer = await models.PaymentRequestCustomer.create({
+      const paymentRequestCustomer = await PaymentRequestCustomerFactory({
         email: 'test@example.com',
         name: 'Test User',
         sourceId: 'src_test_123',
         userId: currentUser.id
       })
 
-      const paymentRequestPayment = await models.PaymentRequestPayment.create({
+      const paymentRequestPayment = await PaymentRequestPaymentFactory({
         amount: 4995,
         currency: 'usd',
         source: 'pi_test_payment_intent',
@@ -348,7 +349,7 @@ describe('Payment Request Balance Webhook', () => {
         userId: currentUser.id
       })
 
-      const paymentRequestBalance = await models.PaymentRequestBalance.create({
+      const paymentRequestBalance = await PaymentRequestBalanceFactory({
         userId: currentUser.id,
         balance: 0
       })
@@ -359,7 +360,7 @@ describe('Payment Request Balance Webhook', () => {
         .expect('Content-Type', /json/)
         .expect(200)
 
-      const anotherPaymentRequestPayment = await models.PaymentRequestPayment.create({
+      const anotherPaymentRequestPayment = await PaymentRequestPaymentFactory({
         amount: 4995,
         currency: 'usd',
         source: 'pi_test_payment_intent_2',
@@ -420,7 +421,7 @@ describe('Payment Request Balance Webhook', () => {
       const user = await registerAndLogin(agent)
       const { body: currentUser } = user || {}
 
-      const paymentRequest = await models.PaymentRequest.create({
+      const paymentRequest = await PaymentRequestFactory({
         title: 'Test Payment Request for Refund',
         description: 'A test payment request to verify refund balance update',
         amount: 10000,
@@ -428,14 +429,14 @@ describe('Payment Request Balance Webhook', () => {
         userId: currentUser.id
       })
 
-      const paymentRequestCustomer = await models.PaymentRequestCustomer.create({
+      const paymentRequestCustomer = await PaymentRequestCustomerFactory({
         email: 'test@example.com',
         name: 'Test User',
         sourceId: 'src_test_456',
         userId: currentUser.id
       })
 
-      const paymentRequestPayment = await models.PaymentRequestPayment.create({
+      const paymentRequestPayment = await PaymentRequestPaymentFactory({
         amount: 10000,
         currency: 'usd',
         source: 'pi_test_456',
@@ -446,7 +447,7 @@ describe('Payment Request Balance Webhook', () => {
       })
 
       // Simulate initial balance creation after payment
-      await models.PaymentRequestBalance.create({
+      await PaymentRequestBalanceFactory({
         userId: currentUser.id,
         balance: 0
       })

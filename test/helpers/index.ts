@@ -1,5 +1,6 @@
 import Models from '../../src/models'
 import { SuperAgentTest } from 'supertest'
+import { TaskFactory, OrderFactory, AssignFactory, TransferFactory, PayoutFactory } from '../factories'
 
 const models = Models as any
 const testPassword = 'test12345678'
@@ -85,6 +86,9 @@ const registerAndLogin = async (agent: SuperAgentTest, params: RegisterParams = 
   }
 }
 
+/**
+ * @deprecated Use TaskFactory from test/factories instead
+ */
 const createTask = async (agent: SuperAgentTest, params: TaskParams = {}, userParams: RegisterParams = {}) => {
   params.provider = params.provider || 'github'
   params.url = params.url || 'https://github.com/worknenjoy/gitpay/issues/221'
@@ -97,7 +101,7 @@ const createTask = async (agent: SuperAgentTest, params: TaskParams = {}, userPa
     }
     const { body: user, headers } = res
     try {
-      const task = await models.Task.create({
+      const task = await TaskFactory({
         provider: params.provider || 'github',
         url: params.url,
         status: params.status,
@@ -112,6 +116,9 @@ const createTask = async (agent: SuperAgentTest, params: TaskParams = {}, userPa
   }
 }
 
+/**
+ * @deprecated Use AssignFactory from test/factories instead
+ */
 const createAssign = async (agent: SuperAgentTest, params: AssignParams = {}, userParams: RegisterParams = {}) => {
   try {
     const res = await register(agent, {
@@ -124,7 +131,7 @@ const createAssign = async (agent: SuperAgentTest, params: AssignParams = {}, us
     })
     const user = res.body
     try {
-      const assigned = await models.Assign.create(
+      const assigned = await AssignFactory(
         {
           TaskId: params.taskId,
           userId: user.id
@@ -151,34 +158,43 @@ const createAssign = async (agent: SuperAgentTest, params: AssignParams = {}, us
   }
 }
 
+/**
+ * @deprecated Use OrderFactory from test/factories instead
+ */
 const createOrder = async (params: OrderParams = {}) => {
   params.source_id = params.source_id || '1234'
   params.status = params.status || 'open'
   params.amount = params.amount || 200
 
   try {
-    const order = await models.Order.create(params)
+    const order = await OrderFactory(params)
     return order
   } catch (e) {
     console.log('error on create order', e)
   }
 }
 
+/**
+ * @deprecated Use TransferFactory from test/factories instead
+ */
 const createTransfer = async (params: TransferParams = {}) => {
   params.transfer_id = params.transfer_id || '1234'
   params.transfer_method = params.transfer_method || 'stripe'
 
   try {
-    const transfer = await models.Transfer.create(params)
+    const transfer = await TransferFactory(params)
     return transfer
   } catch (e) {
     console.log('error on createTransfer', e)
   }
 }
 
+/**
+ * @deprecated Use PayoutFactory from test/factories instead
+ */
 const createPayout = async (params: any = {}) => {
   try {
-    const payout = await models.Payout.create(params)
+    const payout = await PayoutFactory(params)
     return payout
   } catch (e) {
     console.log('error on createTransfer', e)

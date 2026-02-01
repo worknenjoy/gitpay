@@ -9,6 +9,7 @@ import Models from '../../../../../src/models'
 const sinon = require('sinon')
 
 import payoutData from '../../../../data/stripe/payout'
+import { UserFactory, PayoutFactory } from '../../../../factories'
 
 const agent = request.agent(api) as any
 const models = Models as any
@@ -28,7 +29,7 @@ describe('webhooks for payout', () => {
 
   describe('webhooks for payouts', () => {
     it('should notify the transfer when a webhook payout.create is triggered and create a new payout', async () => {
-      await models.User.create({
+      await UserFactory({
         email: 'teste@mail.com',
         password: 'teste',
         account_id: 'acct_1CZ5vkLlCJ9CeQRe'
@@ -51,13 +52,13 @@ describe('webhooks for payout', () => {
     })
 
     it('should not create a new payout when a webhook payout.create triggers again', async () => {
-      const user = await models.User.create({
+      const user = await UserFactory({
         email: 'teste@mail.com',
         password: 'teste',
         account_id: 'acct_1CZ5vkLlCJ9CeQRe'
       })
 
-      await models.Payout.create({
+      await PayoutFactory({
         source_id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
         amount: 7311,
         currency: 'brl',
@@ -85,13 +86,13 @@ describe('webhooks for payout', () => {
     })
 
     it('should notify the transfer when a webhook payout.paid is triggered and update payout status', async () => {
-      const user = await models.User.create({
+      const user = await UserFactory({
         email: 'teste@mail.com',
         password: 'teste',
         account_id: 'acct_1CZ5vkLlCJ9CeQRe'
       })
 
-      const newPayout = await models.Payout.create({
+      const newPayout = await PayoutFactory({
         source_id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
         amount: 7311,
         currency: 'brl',
@@ -119,13 +120,13 @@ describe('webhooks for payout', () => {
     })
 
     it('should update the payout when a webhook payout.updated is triggered', async () => {
-      const user = await models.User.create({
+      const user = await UserFactory({
         email: 'teste@mail.com',
         password: 'teste',
         account_id: 'acct_1CZ5vkLlCJ9CeQRe'
       })
 
-      const newPayout = await models.Payout.create({
+      const newPayout = await PayoutFactory({
         source_id: 'po_1CdprNLlCJ9CeQRefEuMMLo6',
         amount: 7311,
         currency: 'brl',
@@ -154,7 +155,7 @@ describe('webhooks for payout', () => {
     })
 
     it('should know the user when a webhook payout.failed is triggered', async () => {
-      await models.User.create({
+      await UserFactory({
         email: 'teste@mail.com',
         password: 'teste',
         account_id: 'acct_1CdjXFAcSPl6ox0l'
@@ -171,13 +172,13 @@ describe('webhooks for payout', () => {
       expect(res.body.id).to.equal('evt_1ChFtEAcSPl6ox0l3VSifPWa')
     })
     it('should update order to failed payout when payout.failed is triggered', async () => {
-      const user = await models.User.create({
+      const user = await UserFactory({
         email: 'teste@mail.com',
         password: 'teste',
         account_id: 'acct_1CdjXFAcSPl6ox0l'
       })
 
-      const payout = await models.Payout.create({
+      const payout = await PayoutFactory({
         source_id: 'po_1CgNDoAcSPl6ox0ljXdVYWx3',
         amount: 5000,
         currency: 'usd',

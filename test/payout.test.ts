@@ -7,6 +7,7 @@ import spies from 'chai-spies'
 import api from '../src/server'
 import nock from 'nock'
 import { registerAndLogin, truncateModels } from './helpers'
+import { PayoutFactory } from './factories'
 import Models from '../src/models'
 
 const models = Models as any
@@ -63,7 +64,7 @@ describe('Payouts', () => {
         password: 'teste',
         account_id: 'acct_1CZ5vkLlCJ9CeQRe'
       }).save()
-      const payout = await models.Payout.create({
+      const payout = await PayoutFactory({
         source_id: '123',
         userId: user.dataValues.id,
         amount: 200,

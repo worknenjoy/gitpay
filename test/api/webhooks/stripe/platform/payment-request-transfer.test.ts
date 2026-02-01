@@ -4,6 +4,7 @@ import api from '../../../../../src/server'
 import { registerAndLogin, truncateModels } from '../../../../helpers'
 import Models from '../../../../../src/models'
 import { createdFromPaymentRequest } from '../../../../data/stripe/stripe.transfer.created'
+import { PaymentRequestFactory } from '../../../../factories'
 
 const agent = request.agent(api) as any
 const models = Models as any
@@ -17,7 +18,7 @@ describe('webhooks for payment request transfers', () => {
   it('should create the payment request transfer when a event transfer.created is received', async () => {
     const user = await registerAndLogin(agent)
     const { headers, body: currentUser } = user || {}
-    const paymentRequest = await models.PaymentRequest.create({
+    const paymentRequest = await PaymentRequestFactory({
       title: 'Payment for services',
       amount: 1000,
       currency: 'usd',

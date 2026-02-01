@@ -6,6 +6,7 @@ import api from '../src/server'
 import nock from 'nock'
 import Models from '../src/models'
 import { registerAndLogin, register, login, truncateModels } from './helpers'
+import { TaskFactory, OrderFactory, WalletFactory, WalletOrderFactory } from './factories'
 import PaymentMail from '../src/modules/mail/payment'
 import stripe from '../src/shared/stripe/stripe'
 import customerData from './data/stripe/stripe.customer'
@@ -95,7 +96,7 @@ describe('Orders', () => {
 
       try {
         const user = await registerAndLogin(agent)
-        const task = await models.Task.create({
+        const task = await TaskFactory({
           url: 'https://github.com/test/repo/issues/1',
           userId: user.body.id,
           title: 'Test Task',
@@ -125,7 +126,7 @@ describe('Orders', () => {
 
       try {
         const user = await registerAndLogin(agent)
-        const task = await models.Task.create({
+        const task = await TaskFactory({
           url: 'https://github.com/test/repo/issues/2',
           userId: user.body.id,
           title: 'Test Task',
@@ -155,7 +156,7 @@ describe('Orders', () => {
 
       try {
         const user = await registerAndLogin(agent)
-        const task = await models.Task.create({
+        const task = await TaskFactory({
           url: 'https://github.com/test/repo/issues/3',
           userId: user.body.id,
           title: 'Test Task',
@@ -188,14 +189,14 @@ describe('Orders', () => {
 
       try {
         const user = await registerAndLogin(agent)
-        const wallet = await models.Wallet.create({
+        const wallet = await WalletFactory({
           name: 'Test Wallet',
           balance: 0,
           userId: user.body.id
         })
         // Create a WalletOrder to give the wallet balance (wallet balance is calculated from WalletOrders)
         // The wallet balance is calculated as: sum of paid WalletOrders - sum of succeeded wallet Orders
-        await models.WalletOrder.create({
+        await WalletOrderFactory({
           walletId: wallet.id,
           amount: 500,
           currency: 'USD',
@@ -204,7 +205,7 @@ describe('Orders', () => {
         })
         // Reload wallet to trigger afterFind hook and recalculate balance
         await wallet.reload()
-        const task = await models.Task.create({
+        const task = await TaskFactory({
           url: 'https://github.com/test/repo/issues/4',
           userId: user.body.id,
           title: 'Test Task',
@@ -243,14 +244,14 @@ describe('Orders', () => {
 
       try {
         const user = await registerAndLogin(agent)
-        const wallet = await models.Wallet.create({
+        const wallet = await WalletFactory({
           name: 'Test Wallet',
           balance: 0,
           userId: user.body.id
         })
         // Create a WalletOrder to give the wallet balance (wallet balance is calculated from WalletOrders)
         // The wallet balance is calculated as: sum of paid WalletOrders - sum of succeeded wallet Orders
-        await models.WalletOrder.create({
+        await WalletOrderFactory({
           walletId: wallet.id,
           amount: 500,
           currency: 'USD',
@@ -259,7 +260,7 @@ describe('Orders', () => {
         })
         // Reload wallet to trigger afterFind hook and recalculate balance
         await wallet.reload()
-        const task = await models.Task.create({
+        const task = await TaskFactory({
           url: 'https://github.com/test/repo/issues/5',
           userId: user.body.id,
           title: 'Test Task',
@@ -524,17 +525,17 @@ describe('Orders', () => {
 
     it('should create a order type wallet funds', async () => {
       const user = await registerAndLogin(agent)
-      const newWallet = await models.Wallet.create({
+      const newWallet = await WalletFactory({
         name: 'Test Wallet',
         balance: 0,
         userId: user.body.id
       })
-      const WalletOrder = await models.WalletOrder.create({
+      const WalletOrder = await WalletOrderFactory({
         walletId: newWallet.id,
         amount: 400,
         status: 'paid'
       })
-      const task = await models.Task.create({
+      const task = await TaskFactory({
         url: 'https://foo',
         userId: user.body.id
       })
@@ -567,17 +568,17 @@ describe('Orders', () => {
 
     it('should create a order type wallet funds with enough balance', async () => {
       const user = await registerAndLogin(agent)
-      const newWallet = await models.Wallet.create({
+      const newWallet = await WalletFactory({
         name: 'Test Wallet',
         balance: 0,
         userId: user.body.id
       })
-      const WalletOrder = await models.WalletOrder.create({
+      const WalletOrder = await WalletOrderFactory({
         walletId: newWallet.id,
         amount: 1929,
         status: 'paid'
       })
-      const task = await models.Task.create({
+      const task = await TaskFactory({
         url: 'https://foo',
         userId: user.body.id
       })
@@ -971,7 +972,7 @@ describe('Orders', () => {
 
       try {
         const user = await registerAndLogin(agent)
-        const task = await models.Task.create({
+        const task = await TaskFactory({
           url: 'https://github.com/test/repo/issues/6',
           userId: user.body.id,
           title: 'Test Task',
@@ -979,7 +980,7 @@ describe('Orders', () => {
           private: false
         })
 
-        const order = await models.Order.create({
+        const order = await OrderFactory({
           source_id: 'TEST_ORDER_ID',
           currency: 'USD',
           amount: 200,
@@ -1049,14 +1050,14 @@ describe('Orders', () => {
 
       try {
         const user = await registerAndLogin(agent)
-        const task = await models.Task.create({
+        const task = await TaskFactory({
           url: 'https://github.com/test/repo/issues/7',
           userId: user.body.id,
           title: 'Test Task',
           private: true
         })
 
-        const order = await models.Order.create({
+        const order = await OrderFactory({
           source_id: 'TEST_ORDER_ID',
           currency: 'USD',
           amount: 200,
