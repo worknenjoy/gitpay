@@ -11,7 +11,7 @@ const fetchChannelUserCount = async () => {
     json: true
   })
   if (data.ok) {
-    const channel = data.channels.find((channel) => channel.id === slack.channelId)
+    const channel = data.channels.find((channel: any) => channel.id === slack.channelId)
     if (!channel) {
       // eslint-disable-next-line no-console
       console.error('Invalid channel id ' + slack.channelId)
@@ -24,7 +24,7 @@ const fetchChannelUserCount = async () => {
   }
 }
 
-exports.info = async (req, res) => {
+export const info = async (req: any, res: any) => {
   try {
     const countTasks = await models.Task.count()
     const tasks = await models.Task.findAll({
@@ -33,8 +33,8 @@ exports.info = async (req, res) => {
     const countUsers = await models.User.count()
     if (tasks) {
       const bounties = tasks
-        .filter((t) => t.value)
-        .reduce((accumulator, task) => accumulator + parseInt(task.value), 0)
+        .filter((t: any) => t.value)
+        .reduce((accumulator: number, task: any) => accumulator + parseInt(task.value), 0)
       const channelUserCount = await fetchChannelUserCount()
       res.send({
         tasks: countTasks,
