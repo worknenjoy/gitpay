@@ -2,7 +2,7 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const stripe = require('../../shared/stripe/stripe')()
+const stripe = require('../../client/payment/stripe').default()
 const models = require('../../models')
 const { handleAmount } = require('../util/handle-amount/handle-amount')
 const PaymentRequestMail = require('../mail/paymentRequest')

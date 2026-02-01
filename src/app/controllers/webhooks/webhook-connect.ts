@@ -3,7 +3,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-import Stripe from '../../../shared/stripe/stripe'
+import Stripe from '../../../client/payment/stripe'
 import { payoutCreated } from '../../../modules/webhooks/payouts'
 import { payoutUpdated } from '../../../modules/webhooks/payouts'
 import { payoutFailed } from '../../../modules/webhooks/payouts'

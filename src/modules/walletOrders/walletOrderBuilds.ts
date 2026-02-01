@@ -1,4 +1,4 @@
-import stripe from '../../shared/stripe/stripe'
+import stripe from '../../client/payment/stripe'
 import models from '../../models'
 import { createOrUpdateCustomer } from '../util/customer'
 

@@ -1,4 +1,4 @@
-import createStripe from '../../../../shared/stripe/stripe'
+import createStripe from '../../../../client/payment/stripe'
 import { transferReversedPaymentRequest } from './transferReversedPaymentRequest'
 import { transferReversedIssue } from './transferReversedIssue'
 

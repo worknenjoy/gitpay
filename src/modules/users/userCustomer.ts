@@ -1,5 +1,5 @@
 import models from '../../models'
-import stripeModule from '../../shared/stripe/stripe'
+import stripeModule from '../../client/payment/stripe'
 const stripe = stripeModule()
 
 const currentModels = models as any

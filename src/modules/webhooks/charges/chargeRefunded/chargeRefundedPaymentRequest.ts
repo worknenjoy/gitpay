@@ -1,6 +1,6 @@
 import Models from '../../../../models'
 import PaymentRequestMail from '../../../mail/paymentRequest'
-import Stripe from '../../../../shared/stripe/stripe'
+import Stripe from '../../../../client/payment/stripe'
 import { handleAmount } from '../../../util/handle-amount/handle-amount'
 
 const stripe = Stripe()

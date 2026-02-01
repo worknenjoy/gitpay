@@ -1,6 +1,6 @@
 import models from '../../models'
 import AssignMail from '../mail/assign'
-import stripeModule from '../../shared/stripe/stripe'
+import stripeModule from '../../client/payment/stripe'
 const stripe = stripeModule()
 import DeadlineMail from '../mail/deadline'
 import { assignExists as assignExist } from '../assigns'

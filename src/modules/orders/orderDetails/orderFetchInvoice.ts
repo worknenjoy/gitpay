@@ -1,4 +1,4 @@
-import Stripe from '../../../shared/stripe/stripe'
+import Stripe from '../../../client/payment/stripe'
 const stripe = Stripe()
 
 export default async function orderFetchInvoice(sourceId: any) {
