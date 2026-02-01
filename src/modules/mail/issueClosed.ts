@@ -10,6 +10,11 @@ const IssueClosedMail = {
   success: async (user: any, data: any) => {
     const to = user.email
     const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
 
     i18n.setLocale(language)
 
@@ -29,6 +34,8 @@ const IssueClosedMail = {
   },
 
   error: async (msg: string) => {
+    // This sends to notificationEmail for administrative purposes,
+    // not to end users, so no user preference check is needed
     i18n.setLocale('en')
     try {
       return await request(constants.notificationEmail, i18n.__('mail.status.error'), [

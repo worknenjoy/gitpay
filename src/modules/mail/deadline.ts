@@ -192,6 +192,8 @@ ${Signatures.buttons(language, {
   },
 
   error: async (msg: string) => {
+    // This sends to notificationEmail for administrative purposes,
+    // not to end users, so no user preference check is needed
     i18n.setLocale('en')
     try {
       return await request(constants.notificationEmail, i18n.__('mail.deadline.update.error'), [
