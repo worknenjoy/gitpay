@@ -1,10 +1,6 @@
 import Models from '../../models'
-import i18n from 'i18n'
-import moment from 'moment'
-import SendMail from '../mail/mail'
 import WalletMail from '../mail/wallet'
 import Stripe from '../../client/payment/stripe'
-import { FAILED_REASON, CURRENCIES, formatStripeAmount } from './constants'
 
 const models = Models as any
 const stripe = Stripe()

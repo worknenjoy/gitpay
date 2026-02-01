@@ -1,11 +1,16 @@
 import Models from '../../models'
 import i18n from 'i18n'
-import moment from 'moment'
 import SendMail from '../mail/mail'
 
 const models = Models as any
 
-export default async function chargeUpdated(event: any, paid: any, status: any, req: any, res: any) {
+export default async function chargeUpdated(
+  event: any,
+  paid: any,
+  status: any,
+  req: any,
+  res: any
+) {
   if (event?.data?.object?.source?.id) {
     try {
       const order = await models.Order.update(
@@ -21,14 +26,14 @@ export default async function chargeUpdated(event: any, paid: any, status: any, 
           returning: true
         }
       )
-      
+
       if (order[0]) {
         const user = await models.User.findOne({
           where: {
             id: order[1][0].dataValues.userId
           }
         })
-        
+
         if (user) {
           if (paid && status === 'succeeded') {
             const language = user.language || 'en'

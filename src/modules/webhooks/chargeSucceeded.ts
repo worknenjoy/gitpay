@@ -4,14 +4,21 @@ import SendMail from '../mail/mail'
 
 const models = Models as any
 
-const sendEmailSuccess = async (event: any, paid: any, status: any, order: any, req: any, res: any) => {
+const sendEmailSuccess = async (
+  event: any,
+  paid: any,
+  status: any,
+  order: any,
+  req: any,
+  res: any
+) => {
   try {
     const user = await models.User.findOne({
       where: {
         id: order[1][0].dataValues.userId
       }
     })
-    
+
     if (user) {
       if (paid && status === 'succeeded') {
         const language = user.language || 'en'
@@ -47,7 +54,7 @@ const updateOrder = async (event: any, paid: any, status: any, req: any, res: an
         returning: true
       }
     )
-    
+
     if (order[0]) {
       return sendEmailSuccess(event, paid, status, order, req, res)
     }
@@ -59,11 +66,11 @@ const updateOrder = async (event: any, paid: any, status: any, req: any, res: an
 const createOrder = async (event: any) => {
   const taskId = event.data.object?.transfer_group?.split('_')[1]
   if (!taskId) return Promise.resolve()
-  
+
   const task = await models.Task.findOne({
     where: { id: taskId }
   })
-  
+
   return task.createOrder({
     id: event.data.object.metadata.order_id,
     source_id: event.data.object.source.id,
@@ -83,7 +90,7 @@ export default async (event: any, paid: any, status: any, req: any, res: any) =>
         source: event?.data?.object?.id
       }
     })
-    
+
     if (order) {
       return updateOrder(event, paid, status, req, res)
     } else {

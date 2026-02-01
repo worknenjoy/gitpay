@@ -1,10 +1,7 @@
 import Models from '../../models'
 import i18n from 'i18n'
-import moment from 'moment'
 import SendMail from '../mail/mail'
-import WalletMail from '../mail/wallet'
 import Stripe from '../../client/payment/stripe'
-import { FAILED_REASON, CURRENCIES, formatStripeAmount } from './constants'
 
 const models = Models as any
 const stripe = Stripe()
@@ -16,14 +13,14 @@ export default async function customerSourceCreated(event: any, req: any, res: a
         customer_id: event.data.object.customer
       }
     })
-    
+
     if (!user) {
       return res.status(400).send({ errors: ['User not found'] })
     }
-    
+
     const language = user.language || 'en'
     i18n.setLocale(language)
-    
+
     if (event.data.object.name && event.data.object.last4) {
       SendMail.success(
         user.dataValues,
@@ -34,7 +31,7 @@ export default async function customerSourceCreated(event: any, req: any, res: a
         })
       )
     }
-    
+
     return res.status(200).json(event)
   } catch (error: any) {
     return res.status(400).send(error)

@@ -1,10 +1,8 @@
 import Models from '../../models'
 import i18n from 'i18n'
-import moment from 'moment'
 import SendMail from '../mail/mail'
-import WalletMail from '../mail/wallet'
 import Stripe from '../../client/payment/stripe'
-import { FAILED_REASON, CURRENCIES, formatStripeAmount } from './constants'
+import { formatStripeAmount } from './constants'
 
 const models = Models as any
 const stripe = Stripe()
@@ -34,7 +32,7 @@ export default async function invoiceCreated(event: any, req: any, res: any) {
       })
     }
   }
-  
+
   try {
     const order = await models.Order.update(
       {
@@ -48,7 +46,7 @@ export default async function invoiceCreated(event: any, req: any, res: any) {
         returning: true
       }
     )
-    
+
     if (order[0] && order[1].length) {
       const orderUpdated = await models.Order.findOne({
         where: {
@@ -56,17 +54,17 @@ export default async function invoiceCreated(event: any, req: any, res: any) {
         },
         include: [models.Task, models.User]
       })
-      
+
       const userAssign = await models.Assign.findOne({
         where: {
           id: orderUpdated.Task.dataValues.assigned
         },
         include: [models.Task, models.User]
       })
-      
+
       const userAssigned = userAssign.dataValues.User.dataValues
       const userTask = orderUpdated.User.dataValues
-      
+
       if (orderUpdated) {
         const userAssignedlanguage = userAssigned.language || 'en'
         i18n.setLocale(userAssignedlanguage)
@@ -77,7 +75,7 @@ export default async function invoiceCreated(event: any, req: any, res: any) {
             amount: order[1][0].dataValues.amount
           })
         )
-        
+
         const userTaskLanguage = userTask.language || 'en'
         i18n.setLocale(userTaskLanguage)
         SendMail.success(

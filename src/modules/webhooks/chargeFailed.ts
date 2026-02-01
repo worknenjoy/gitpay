@@ -1,10 +1,8 @@
 import Models from '../../models'
 import i18n from 'i18n'
-import moment from 'moment'
 import SendMail from '../mail/mail'
-import WalletMail from '../mail/wallet'
 import Stripe from '../../client/payment/stripe'
-import { FAILED_REASON, CURRENCIES, formatStripeAmount } from './constants'
+import { FAILED_REASON } from './constants'
 
 const models = Models as any
 const stripe = Stripe()
@@ -24,14 +22,14 @@ export default async function chargeFailed(event: any, paid: any, status: any, r
         returning: true
       }
     )
-    
+
     if (order[0]) {
       const user = await models.User.findOne({
         where: {
           id: order[1][0].dataValues.userId
         }
       })
-      
+
       if (user) {
         if (status === 'failed') {
           const language = user.language || 'en'

@@ -1,10 +1,5 @@
 import Models from '../../models'
-import i18n from 'i18n'
-import moment from 'moment'
-import SendMail from '../mail/mail'
-import WalletMail from '../mail/wallet'
 import Stripe from '../../client/payment/stripe'
-import { FAILED_REASON, CURRENCIES, formatStripeAmount } from './constants'
 
 const models = Models as any
 const stripe = Stripe()
@@ -14,7 +9,7 @@ export default async function invoicePaymentSucceeded(event: any, req: any, res:
     let userFound = await models.User.findOne({
       where: { email: event.data.object.customer_email }
     })
-    
+
     if (!userFound) {
       const user = await models.User.create({
         email: event.data.object.customer_email,
@@ -23,9 +18,9 @@ export default async function invoicePaymentSucceeded(event: any, req: any, res:
         customer_id: event.data.object.customer[0],
         active: false
       })
-      
+
       await user.addType(await models.Type.find({ name: 'funding' }))
-      
+
       const source_id = event.data.object.id[0]
       if (source_id) {
         await models.Order.update(
