@@ -1,7 +1,7 @@
 import i18n from 'i18n'
 
 const Signatures = {
-  sign: (language: string) => {
+  sign: (language?: string) => {
     i18n.setLocale(language || 'en')
     return `
 
