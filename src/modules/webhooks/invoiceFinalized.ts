@@ -1,12 +1,15 @@
-const models = require('../../models')
-const i18n = require('i18n')
-const moment = require('moment')
-const SendMail = require('../mail/mail')
-const WalletMail = require('../mail/wallet')
-const stripe = require('../../client/payment/stripe').default()
-const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
+import Models from '../../models'
+import i18n from 'i18n'
+import moment from 'moment'
+import SendMail from '../mail/mail'
+import WalletMail from '../mail/wallet'
+import Stripe from '../../client/payment/stripe'
+import { FAILED_REASON, CURRENCIES, formatStripeAmount } from './constants'
 
-module.exports = async function invoiceFinalized(event, req, res) {
+const models = Models as any
+const stripe = Stripe()
+
+export default async function invoiceFinalized(event: any, req: any, res: any) {
   try {
     const invoice = event.data.object
     const invoiceId = invoice.id

@@ -1,12 +1,15 @@
-const models = require('../../models')
-const i18n = require('i18n')
-const moment = require('moment')
-const SendMail = require('../mail/mail')
-const WalletMail = require('../mail/wallet')
-const stripe = require('../../client/payment/stripe').default()
-const { FAILED_REASON, CURRENCIES, formatStripeAmount } = require('./constants')
+import Models from '../../models'
+import i18n from 'i18n'
+import moment from 'moment'
+import SendMail from '../mail/mail'
+import WalletMail from '../mail/wallet'
+import Stripe from '../../client/payment/stripe'
+import { FAILED_REASON, CURRENCIES, formatStripeAmount } from './constants'
 
-module.exports = async function chargeFailed(event, paid, status, req, res) {
+const models = Models as any
+const stripe = Stripe()
+
+export default async function chargeFailed(event: any, paid: any, status: any, req: any, res: any) {
   return models.Order.update(
     {
       paid: paid,
@@ -20,13 +23,13 @@ module.exports = async function chargeFailed(event, paid, status, req, res) {
       returning: true
     }
   )
-    .then((order) => {
+    .then((order: any) => {
       if (order[0]) {
         models.User.findOne({
           where: {
             id: order[1][0].dataValues.userId
           }
-        }).then((user) => {
+        }).then((user: any) => {
           if (user) {
             if (status === 'failed') {
               const language = user.language || 'en'
@@ -44,7 +47,7 @@ module.exports = async function chargeFailed(event, paid, status, req, res) {
         })
       }
     })
-    .catch((e) => {
+    .catch((e: any) => {
       return res.status(400).send(e)
     })
 }

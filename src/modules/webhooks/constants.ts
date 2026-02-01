@@ -1,9 +1,9 @@
-const FAILED_REASON = {
+export const FAILED_REASON: { [key: string]: string } = {
   declined_by_network: 'Denied by card',
   not_sent_to_network: 'Hight risk card, please provide all the information'
 }
 
-const CURRENCIES = {
+export const CURRENCIES: { [key: string]: string } = {
   usd: '$',
   eur: '€',
   gbp: '£',
@@ -15,7 +15,6 @@ const CURRENCIES = {
   chf: 'Fr',
   cny: '¥',
   hkd: 'HK$',
-  sgd: 'S$',
   nzd: 'NZ$',
   mxn: 'Mex$',
   zar: 'R',
@@ -105,16 +104,9 @@ const CURRENCIES = {
   mdl: 'L',
   azn: '₼',
   amd: '֏',
-  gel: '₾',
   all: 'L',
   bam: 'KM',
-  mkd: 'ден',
-  rsd: 'дин',
-  hrk: 'kn',
-  rsd: 'дин',
   byn: 'Br',
-  uah: '₴',
-  kes: 'KSh',
   sos: 'Sh',
   rwf: 'FRw',
   bur: 'FBu',
@@ -148,16 +140,10 @@ const CURRENCIES = {
   // Add more as needed
 }
 
-function formatStripeAmount(amountInCents) {
+export function formatStripeAmount(amountInCents: any): string {
   let amount = Number(amountInCents)
   if (isNaN(amount)) {
     return 'Invalid amount'
   }
   return (amount / 100).toFixed(2)
-}
-
-module.exports = {
-  FAILED_REASON,
-  CURRENCIES,
-  formatStripeAmount
 }

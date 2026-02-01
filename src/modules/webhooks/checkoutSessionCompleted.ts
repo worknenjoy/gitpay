@@ -2,12 +2,15 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const stripe = require('../../client/payment/stripe').default()
-const models = require('../../models')
-const { handleAmount } = require('../util/handle-amount/handle-amount')
-const PaymentRequestMail = require('../mail/paymentRequest')
+import Stripe from '../../client/payment/stripe'
+import Models from '../../models'
+import { handleAmount } from '../util/handle-amount/handle-amount'
+import PaymentRequestMail from '../mail/paymentRequest'
 
-module.exports = async function checkoutSessionCompleted(event, req, res) {
+const stripe = Stripe()
+const models = Models as any
+
+export default async function checkoutSessionCompleted(event: any, req: any, res: any) {
   try {
     const session = event.data.object
     const { payment_link, payment_status, amount_total, payment_intent, customer_details } = session
@@ -210,7 +213,7 @@ module.exports = async function checkoutSessionCompleted(event, req, res) {
       }
     }
     return res.json(req.body)
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error processing checkout session completed:', error)
     return res.status(500).json({ error: error.message })
   }

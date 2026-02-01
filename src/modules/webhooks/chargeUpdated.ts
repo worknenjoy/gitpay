@@ -1,9 +1,11 @@
-const models = require('../../models')
-const i18n = require('i18n')
-const moment = require('moment')
-const SendMail = require('../mail/mail')
+import Models from '../../models'
+import i18n from 'i18n'
+import moment from 'moment'
+import SendMail from '../mail/mail'
 
-module.exports = async function chargeUpdated(event, paid, status, req, res) {
+const models = Models as any
+
+export default async function chargeUpdated(event: any, paid: any, status: any, req: any, res: any) {
   if (event?.data?.object?.source?.id) {
     return models.Order.update(
       {
@@ -18,14 +20,14 @@ module.exports = async function chargeUpdated(event, paid, status, req, res) {
         returning: true
       }
     )
-      .then((order) => {
+      .then((order: any) => {
         if (order[0]) {
           return models.User.findOne({
             where: {
               id: order[1][0].dataValues.userId
             }
           })
-            .then((user) => {
+            .then((user: any) => {
               if (user) {
                 if (paid && status === 'succeeded') {
                   const language = user.language || 'en'
@@ -34,19 +36,19 @@ module.exports = async function chargeUpdated(event, paid, status, req, res) {
                     user.dataValues,
                     i18n.__('mail.webhook.payment.update.subject'),
                     i18n.__('mail.webhook.payment.update.message', {
-                      amount: event.data.object.amount / 100
+                      amount: String(event.data.object.amount / 100)
                     })
                   )
                 }
               }
               return res.status(200).json(event)
             })
-            .catch((e) => {
+            .catch((e: any) => {
               return res.status(400).send(e)
             })
         }
       })
-      .catch((e) => {
+      .catch((e: any) => {
         return res.status(400).send(e)
       })
   }
