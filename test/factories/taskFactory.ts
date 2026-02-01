@@ -9,10 +9,16 @@ export const TaskFactory = async (paramsOverwrite: any = {}) => {
     value: 100,
     userId: 1,
     provider: 'github',
-    url: 'https://github.com/worknenjoy/gitpay/issues/1'
+    url: `https://github.com/worknenjoy/gitpay/issues/${Math.floor(Math.random() * 10000)}`,
+    status: 'open'
   }
-  const task = await models.Task.create({ ...defaultParams, ...paramsOverwrite })
-  return task
+  try {
+    const task = await models.Task.create({ ...defaultParams, ...paramsOverwrite })
+    return task
+  } catch (error) {
+    console.error('Error creating Task:', error)
+    throw error
+  }
 }
 
 // Deprecated: Use TaskFactory instead

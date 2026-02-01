@@ -9,13 +9,7 @@ export const TransferFactory = async (paramsOverwrite: any = {}) => {
     transfer_id: `tr_${randomId}`,
     transfer_method: 'stripe'
   }
-  
-  // Map 'amount' to 'value' if provided (for backward compatibility)
-  if (paramsOverwrite.amount !== undefined && paramsOverwrite.value === undefined) {
-    paramsOverwrite.value = paramsOverwrite.amount
-    delete paramsOverwrite.amount
-  }
-  
+
   const transfer = await models.Transfer.create({ ...defaultParams, ...paramsOverwrite })
   return transfer
 }
