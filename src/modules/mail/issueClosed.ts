@@ -12,6 +12,7 @@ const IssueClosedMail = {
     const language = user.language || 'en'
     const receiveNotifications = user?.receiveNotifications
 
+    // Check user notification preferences before sending
     if (!receiveNotifications) {
       return
     }

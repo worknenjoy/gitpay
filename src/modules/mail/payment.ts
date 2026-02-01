@@ -29,12 +29,8 @@ const PaymentMail = {
   },
 
   support: async (user: any, task: any, order: any) => {
-    const receiveNotifications = user?.receiveNotifications
-
-    if (!receiveNotifications) {
-      return
-    }
-
+    // This sends to notificationEmail for administrative purposes,
+    // not to end users, so no user preference check is needed
     i18n.setLocale('en')
 
     try {
