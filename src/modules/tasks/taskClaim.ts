@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken'
 const currentModels = models as any
 
 const sendConfirmationEmail = (task: any, user: any, comments: string) => {
-  const token = jwt.sign(task.id, process.env.SECRET_PHRASE)
+  const token = jwt.sign(task.id, process.env.SECRET_PHRASE as string)
   const formattedfComments = comments.replace(/\s/g, '-')
   const approveURL = `${process.env.FRONTEND_HOST}/#/task/${task.id}/claim?comments=${formattedfComments}&token=${token}`
   const language = user.language || 'en'
@@ -32,7 +32,7 @@ const verifyIssueAndClaim = async (task: any, user: any, comments: string, token
   const language = user.language || 'en'
   i18n.setLocale(language)
 
-  return jwt.verify(token, process.env.SECRET_PHRASE, async (err: any, decoded: any) => {
+  return jwt.verify(token, process.env.SECRET_PHRASE as string, async (err: any, decoded: any) => {
     // the 401 code is for unauthorized status
     if (err || parseInt(decoded) !== parseInt(task.id)) {
       throw new Error('invalid_token')
