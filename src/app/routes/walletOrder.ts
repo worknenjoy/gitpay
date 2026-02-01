@@ -1,8 +1,9 @@
-const express = require('express')
+import express from 'express'
+import '../../modules/authenticationHelpers'
+import * as controllers from '../controllers/walletOrder'
+import secure from './secure'
+
 const router = express.Router()
-require('../../modules/authenticationHelpers')
-const controllers = require('../controllers/walletOrder')
-const secure = require('./secure')
 
 router.use(secure)
 
@@ -11,4 +12,4 @@ router.put('/:id', controllers.updateWalletOrder)
 router.get('/', controllers.walletOrderList)
 router.get('/:id', controllers.walletOrderFetch)
 
-module.exports = router
+export default router

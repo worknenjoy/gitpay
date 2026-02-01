@@ -8,7 +8,7 @@ import * as constants from '../mail/constants'
 const currentModels = models as any
 
 export async function taskReport({ id }: any, { task, reason, baseUrl }: any) {
-  const token = jwt.sign(id, process.env.SECRET_PHRASE)
+  const token = jwt.sign(id, process.env.SECRET_PHRASE as string)
   const title = task.title.replace(/\s/g, '-')
   const formattedReason = reason.replace(/\s/g, '-')
   const userId = task.User ? task.User.id : ''

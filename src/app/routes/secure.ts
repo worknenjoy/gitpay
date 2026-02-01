@@ -1,7 +1,8 @@
-const jwt = require('jsonwebtoken')
-const { userExists } = require('../../modules/users')
+import jwt from 'jsonwebtoken'
+import { userExists } from '../../modules/users'
+import type { Request, Response, NextFunction } from 'express'
 
-module.exports = (req, res, next) => {
+export default (req: Request, res: Response, next: NextFunction) => {
   // CORS preflight request
   if (req.method === 'OPTIONS') {
     next()
@@ -14,16 +15,16 @@ module.exports = (req, res, next) => {
 
     if (!token) return res.status(403).send({ errors: ['No token provided'] })
 
-    jwt.verify(token, process.env.SECRET_PHRASE, async (err, decoded) => {
+    jwt.verify(token, process.env.SECRET_PHRASE as string, async (err: any, decoded: any) => {
       if (err) return res.status(403).send({ errors: ['Failed to authenticate token'] })
-      req.decoded = decoded
+      ;(req as any).decoded = decoded
 
       try {
         const user = await userExists(decoded)
         if (!user) {
           return res.status(403).send({ errors: ['User not found'] })
         }
-        req.user = user
+        ;(req as any).user = user
         next()
       } catch (e) {
         return next(e)

@@ -1,35 +1,35 @@
-const express = require('express')
-require('../models')
+import express from 'express'
+import '../models'
 
-const routerProject = require('./routes/projects')
-const routerTask = require('./routes/tasks')
-const routerTeam = require('./routes/team')
-const routerOrder = require('./routes/orders')
-const routerWebhook = require('./routes/webhooks')
-const routerInfo = require('./routes/info')
-const routerOrganization = require('./routes/organization')
-const routerContact = require('./routes/contact')
-const routerTypes = require('./routes/types')
-const routerTaskSolution = require('./routes/taskSolutions')
-const routerCoupon = require('./routes/coupon')
-const routerLabel = require('./routes/label')
-const routerOffer = require('./routes/offer')
-const routerTransfer = require('./routes/transfer')
-const routerPayout = require('./routes/payout')
-const routerWallet = require('./routes/wallet')
-const routerWalletOrder = require('./routes/walletOrder')
-const routerLanguage = require('./routes/language')
-const routerPaymentRequest = require('./routes/paymentRequest')
-const routerPaymentRequestTransfer = require('./routes/paymentRequestTransfer')
-
+import routerProject from './routes/projects'
+import routerTask from './routes/tasks'
+import routerTeam from './routes/team'
+import routerOrder from './routes/orders'
+import routerWebhook from './routes/webhooks'
+import routerInfo from './routes/info'
+import routerOrganization from './routes/organization'
+import routerContact from './routes/contact'
+import routerTypes from './routes/types'
+import routerTaskSolution from './routes/taskSolutions'
+import routerCoupon from './routes/coupon'
+import routerLabel from './routes/label'
+import routerOffer from './routes/offer'
+import routerTransfer from './routes/transfer'
+import routerPayout from './routes/payout'
+import routerWallet from './routes/wallet'
+import routerWalletOrder from './routes/walletOrder'
+import routerLanguage from './routes/language'
+import routerPaymentRequest from './routes/paymentRequest'
+import routerPaymentRequestTransfer from './routes/paymentRequestTransfer'
 import routerAuth from './routes/auth'
 import routerUsers from './routes/users'
 import routerUser from './routes/user'
 import routerPaymentRequestPayments from './routes/paymentRequestPayment'
 import routerPaymentRequestBalance from './routes/paymentRequestBalance'
 import routerDashboard from './routes/dashboard'
+import type { Express } from 'express'
 
-exports.init = (app) => {
+export const init = (app: Express) => {
   app.use('/webhooks', express.raw({ type: 'application/json' }), routerWebhook)
 
   app.use(express.json())
