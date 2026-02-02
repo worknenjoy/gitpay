@@ -179,8 +179,13 @@ export default class Order
         hooks: {
           afterUpdate: async (instance: Order, options: any) => {
             if (instance.paid) {
-              const task = await sequelize.models.Task.findByPk(instance.TaskId || instance.taskId)
-              task?.id && (await comment(instance, task))
+              const taskId = instance.TaskId || instance.taskId
+              if (taskId) {
+                const task = await sequelize.models.Task.findByPk(taskId)
+                if (task) {
+                  await comment(instance, task)
+                }
+              }
             }
           }
         }

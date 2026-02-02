@@ -132,6 +132,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.53.0",
+    "@types/bcrypt": "^6.0.0",
     "@types/bluebird": "^3.5.42",
     "@types/body-parser": "^1.19.6",
     "@types/chai": "^5.2.3",
