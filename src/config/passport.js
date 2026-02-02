@@ -1,5 +1,6 @@
 const { google, facebook, github, oauthCallbacks, bitbucket, mailchimp } = require('./secrets')
 const passport = require('passport')
+const jwt = require('jsonwebtoken')
 const googleStrategy = require('passport-google-oauth20').Strategy
 const gitHubStrategy = require('passport-github2').Strategy
 const bitbucketStrategy = require('passport-bitbucket-oauth20').Strategy
@@ -9,36 +10,8 @@ const requestPromise = require('request-promise')
 const passportJWT = require('passport-jwt')
 const ExtractJWT = passportJWT.ExtractJwt
 const JWTStrategy = passportJWT.Strategy
-
+const { mailChimpConnect } = require('../client/mail/mailchimp')
 const { userExists, userBuilds, userUpdate } = require('../modules/users')
-
-const jwt = require('jsonwebtoken')
-const Mailchimp = require('mailchimp-api-v3')
-const user = require('../models/user')
-
-const mailChimpConnect = (mail) => {
-  if (!mailchimp.apiKey) {
-    return
-  }
-
-  const mc = new Mailchimp(mailchimp.apiKey)
-  mc.post(`/lists/${mailchimp.listId}/members`, {
-    email_address: mail,
-    status: 'subscribed'
-  })
-    .then((results) => {
-      // eslint-disable-next-line no-console
-      console.log('mailchimp')
-      // eslint-disable-next-line no-console
-      console.log(results)
-    })
-    .catch((err) => {
-      // eslint-disable-next-line no-console
-      console.log('mailchimp error')
-      // eslint-disable-next-line no-console
-      console.log(err)
-    })
-}
 
 passport.serializeUser((user, done) => {
   done(null, user)
