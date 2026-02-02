@@ -50,13 +50,14 @@ passport.deserializeUser(async (user: any, done) => {
 })
 
 /* eslint-disable new-cap */
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: google.id || '',
-      clientSecret: google.secret || '',
-      callbackURL: oauthCallbacks.googleCallbackUrl
-    },
+if (google.id && google.secret) {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: google.id,
+        clientSecret: google.secret,
+        callbackURL: oauthCallbacks.googleCallbackUrl
+      },
     async (accessToken, refreshToken, profile, done) => {
       try {
         const attributes = {
@@ -90,14 +91,16 @@ passport.use(
     }
   )
 )
+}
 
-passport.use(
-  new FacebookStrategy(
-    {
-      clientID: facebook.id || '',
-      clientSecret: facebook.secret || '',
-      callbackURL: oauthCallbacks.facebookCallbackUrl
-    },
+if (facebook.id && facebook.secret) {
+  passport.use(
+    new FacebookStrategy(
+      {
+        clientID: facebook.id,
+        clientSecret: facebook.secret,
+        callbackURL: oauthCallbacks.facebookCallbackUrl
+      },
     async (accessToken, accessTokenSecret, profile, done) => {
       try {
         const attributes = {
@@ -131,16 +134,18 @@ passport.use(
     }
   )
 )
+}
 
-passport.use(
-  new GitHubStrategy(
-    {
-      clientID: github.id || '',
-      clientSecret: github.secret || '',
-      callbackURL: oauthCallbacks.githubCallbackUrl,
-      passReqToCallback: true,
-      scope: ['user:email', 'read:org']
-    },
+if (github.id && github.secret) {
+  passport.use(
+    new GitHubStrategy(
+      {
+        clientID: github.id,
+        clientSecret: github.secret,
+        callbackURL: oauthCallbacks.githubCallbackUrl,
+        passReqToCallback: true,
+        scope: ['user:email', 'read:org']
+      },
     async (req: any, accessToken: string, accessTokenSecret: string, profile: any, done: any) => {
       try {
         const githubEmail = profile.emails ? profile.emails[0].value : profile._json.email
@@ -218,14 +223,16 @@ passport.use(
     }
   )
 )
+}
 
-passport.use(
-  new BitbucketStrategy(
-    {
-      clientID: bitbucket.id || '',
-      clientSecret: bitbucket.secret || '',
-      callbackURL: oauthCallbacks.bitbucketCallbackUrl
-    },
+if (bitbucket.id && bitbucket.secret) {
+  passport.use(
+    new BitbucketStrategy(
+      {
+        clientID: bitbucket.id,
+        clientSecret: bitbucket.secret,
+        callbackURL: oauthCallbacks.bitbucketCallbackUrl
+      },
     async (accessToken: string, accessTokenSecret: string, profile: any, done: any) => {
       try {
         const data: UserData = {
@@ -280,6 +287,7 @@ passport.use(
     }
   )
 )
+}
 
 passport.use(
   new LocalStrategy(async function verify(username, password, done) {
@@ -306,12 +314,13 @@ passport.use(
   })
 )
 
-passport.use(
-  new JWTStrategy(
-    {
-      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.SECRET_PHRASE || ''
-    },
+if (process.env.SECRET_PHRASE) {
+  passport.use(
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        secretOrKey: process.env.SECRET_PHRASE
+      },
     async (jwtPayload: any, done: any) => {
       try {
         const userAttributes = {
@@ -326,5 +335,6 @@ passport.use(
     }
   )
 )
+}
 
 export default passport
