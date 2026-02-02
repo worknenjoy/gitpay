@@ -41,14 +41,6 @@ export default class Member
           },
           allowNull: true
         },
-        userId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        taskId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,

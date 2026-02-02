@@ -72,14 +72,6 @@ export default class TaskSolution
           defaultValue: false,
           type: DataTypes.BOOLEAN
         },
-        taskId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        userId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,

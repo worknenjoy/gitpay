@@ -101,10 +101,6 @@ export default class Organization
           type: DataTypes.STRING,
           allowNull: true
         },
-        UserId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,

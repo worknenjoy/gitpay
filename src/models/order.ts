@@ -145,22 +145,6 @@ export default class Order
           type: DataTypes.BOOLEAN,
           defaultValue: false
         },
-        userId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        TaskId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        taskId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        couponId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,

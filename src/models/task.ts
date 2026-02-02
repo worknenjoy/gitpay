@@ -143,10 +143,6 @@ export default class Task
           },
           allowNull: true
         },
-        userId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,

@@ -43,14 +43,6 @@ export default class Assign
           type: DataTypes.STRING,
           allowNull: true
         },
-        userId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        TaskId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,

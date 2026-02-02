@@ -51,14 +51,6 @@ export default class Plan
           type: DataTypes.INTEGER,
           allowNull: true
         },
-        OrderId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        PlanSchemaId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
         createdAt: {
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW

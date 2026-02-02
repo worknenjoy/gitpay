@@ -61,14 +61,6 @@ export default class Offer
           type: DataTypes.STRING,
           defaultValue: 'pending'
         },
-        userId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
-        taskId: {
-          type: DataTypes.INTEGER,
-          allowNull: true
-        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
