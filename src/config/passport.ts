@@ -208,7 +208,7 @@ if (github.id && github.secret) {
           }
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.log('error')
+          console.log('Error fetching GitHub repositories')
           // eslint-disable-next-line no-console
           console.log(e)
           return done(null)
@@ -272,7 +272,7 @@ if (bitbucket.id && bitbucket.secret) {
           }
         } catch (e) {
           // eslint-disable-next-line no-console
-          console.log('error')
+          console.log('Error fetching Bitbucket repositories')
           // eslint-disable-next-line no-console
           console.log(e)
           return done(null)
