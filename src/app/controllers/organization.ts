@@ -1,4 +1,9 @@
-import { organizationBuilds, organizationUpdate, organizationFetch, organizationList } from '../../modules/organizations'
+import {
+  organizationBuilds,
+  organizationUpdate,
+  organizationFetch,
+  organizationList
+} from '../../modules/organizations'
 
 export const listOrganizations = async (req: any, res: any) => {
   try {
