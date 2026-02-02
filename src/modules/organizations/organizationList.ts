@@ -2,7 +2,7 @@ import models from '../../models'
 
 const currentModels = models as any
 
-export async function listOrganizations() {
+export async function organizationList(params?: any) {
   try {
     const data = await currentModels.Organization.findAll({
       include: [

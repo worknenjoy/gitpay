@@ -1,11 +1,16 @@
 import Models from '../../models'
 import i18n from 'i18n'
-import moment from 'moment'
 import SendMail from '../mail/mail'
 
 const models = Models as any
 
-export default async function chargeUpdated(event: any, paid: any, status: any, req: any, res: any) {
+export default async function chargeUpdated(
+  event: any,
+  paid: any,
+  status: any,
+  req: any,
+  res: any
+) {
   if (event?.data?.object?.source?.id) {
     return models.Order.update(
       {

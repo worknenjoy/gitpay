@@ -1,8 +1,8 @@
-import { projectList } from '../../modules/projects'
+import { projectList, projectFetch } from '../../modules/projects'
 
 export const fetchProject = async (req: any, res: any) => {
   try {
-    const data = await projectList()
+    const data = await projectFetch(req.params || req.query)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -13,7 +13,7 @@ export const fetchProject = async (req: any, res: any) => {
 
 export const listProjects = async (req: any, res: any) => {
   try {
-    const data = await projectList()
+    const data = await projectList(req.params || req.query)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console

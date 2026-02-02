@@ -1,10 +1,8 @@
-import { organizationBuilds, organizationUpdate } from '../../modules/organizations'
-
-const Organizations = require('../../modules/organizations')
+import { organizationBuilds, organizationUpdate, organizationFetch, organizationList } from '../../modules/organizations'
 
 export const listOrganizations = async (req: any, res: any) => {
   try {
-    const data = await Organizations.organizationList(req.params)
+    const data = await organizationList(req.params)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -15,7 +13,7 @@ export const listOrganizations = async (req: any, res: any) => {
 
 export const fetchOrganization = async (req: any, res: any) => {
   try {
-    const data = await Organizations.organizationFetch(req.params || req.query)
+    const data = await organizationFetch(req.params || req.query)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console

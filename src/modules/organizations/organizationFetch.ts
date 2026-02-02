@@ -6,7 +6,7 @@ type FetchOrganizationParams = {
   id: number
 }
 
-export async function fetchOrganization(orgParams: FetchOrganizationParams) {
+export async function organizationFetch(orgParams: FetchOrganizationParams) {
   try {
     const data = await currentModels.Organization.findOne({
       where: {
