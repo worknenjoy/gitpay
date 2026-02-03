@@ -404,7 +404,7 @@ export const deleteUserById = async (req: any, res: any) => {
 
 export const callbackGithub = (req: any, res: any) => {
   const user = req.user
-  if (user.token) {
+  if (user && user.token) {
     if (user.login_strategy === 'local' || user.login_strategy === null) {
       res.redirect(
         `${process.env.FRONTEND_HOST}/#/profile/user-account/?connectGithubAction=success`
@@ -428,10 +428,14 @@ export const connectGithub = (req: any, res: any, next: any) => {
 }
 
 export const callbackBitbucket = (req: any, res: any) => {
-  res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token)
+  if (req.user && req.user.token) {
+    res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token)
+  }
 }
 
 export const authorizeLocal = (req: any, res: any, next: any) => {
-  res.set('Authorization', 'Bearer ' + req.user.token)
-  res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
+  if (req.user && req.user.token) {
+    res.set('Authorization', 'Bearer ' + req.user.token)
+    res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
+  }
 }
