@@ -32,61 +32,66 @@ export default async function invoiceCreated(event: any, req: any, res: any) {
       })
     }
   }
-  return models.Order.update(
-    {
-      status: event.data.object.status,
-      source: event.data.object.charge
-    },
-    {
-      where: {
-        source_id: event.data.object.id
+
+  try {
+    const order = await models.Order.update(
+      {
+        status: event.data.object.status,
+        source: event.data.object.charge
       },
-      returning: true
-    }
-  )
-    .then(async (order: any) => {
-      if (order[0] && order[1].length) {
-        const orderUpdated = await models.Order.findOne({
-          where: {
-            id: order[1][0].dataValues.id
-          },
-          include: [models.Task, models.User]
-        })
-        const userAssign = await models.Assign.findOne({
-          where: {
-            id: orderUpdated.Task.dataValues.assigned
-          },
-          include: [models.Task, models.User]
-        })
-        const userAssigned = userAssign.dataValues.User.dataValues
-        const userTask = orderUpdated.User.dataValues
-        if (orderUpdated) {
-          const userAssignedlanguage = userAssigned.language || 'en'
-          i18n.setLocale(userAssignedlanguage)
-          SendMail.success(
-            userAssigned,
-            i18n.__('mail.webhook.invoice.create.subject'),
-            i18n.__('mail.webhook.invoice.create.message', {
-              amount: order[1][0].dataValues.amount
-            })
-          )
-          const userTaskLanguage = userTask.language || 'en'
-          i18n.setLocale(userTaskLanguage)
-          SendMail.success(
-            userTask,
-            i18n.__('mail.webhook.payment.update.subject'),
-            i18n.__('mail.webhook.payment.approved.message', {
-              amount: order[1][0].dataValues.amount
-            })
-          )
-        }
-        return res.status(200).json(event)
+      {
+        where: {
+          source_id: event.data.object.id
+        },
+        returning: true
+      }
+    )
+
+    if (order[0] && order[1].length) {
+      const orderUpdated = await models.Order.findOne({
+        where: {
+          id: order[1][0].dataValues.id
+        },
+        include: [models.Task, models.User]
+      })
+
+      const userAssign = await models.Assign.findOne({
+        where: {
+          id: orderUpdated.Task.dataValues.assigned
+        },
+        include: [models.Task, models.User]
+      })
+
+      const userAssigned = userAssign.dataValues.User.dataValues
+      const userTask = orderUpdated.User.dataValues
+
+      if (orderUpdated) {
+        const userAssignedLanguage = userAssigned.language || 'en'
+        i18n.setLocale(userAssignedLanguage)
+        SendMail.success(
+          userAssigned,
+          i18n.__('mail.webhook.invoice.create.subject'),
+          i18n.__('mail.webhook.invoice.create.message', {
+            amount: order[1][0].dataValues.amount
+          })
+        )
+
+        const userTaskLanguage = userTask.language || 'en'
+        i18n.setLocale(userTaskLanguage)
+        SendMail.success(
+          userTask,
+          i18n.__('mail.webhook.payment.update.subject'),
+          i18n.__('mail.webhook.payment.approved.message', {
+            amount: order[1][0].dataValues.amount
+          })
+        )
       }
       return res.status(200).json(event)
-    })
-    .catch((e: any) => {
-      // eslint-disable-next-line no-console
-      console.log('error on invoice create webhook', e)
-      return res.status(400).send(e)
-    })
+    }
+    return res.status(200).json(event)
+  } catch (e: any) {
+    // eslint-disable-next-line no-console
+    console.log('error on invoice create webhook', e)
+    return res.status(400).send(e)
+  }
 }

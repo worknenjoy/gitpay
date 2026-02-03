@@ -12,50 +12,46 @@ export default async function chargeUpdated(
   res: any
 ) {
   if (event?.data?.object?.source?.id) {
-    return models.Order.update(
-      {
-        paid: paid,
-        status: status
-      },
-      {
-        where: {
-          source_id: event.data.object.source.id,
-          source: event.data.object.id
+    try {
+      const order = await models.Order.update(
+        {
+          paid: paid,
+          status: status
         },
-        returning: true
-      }
-    )
-      .then((order: any) => {
-        if (order[0]) {
-          return models.User.findOne({
-            where: {
-              id: order[1][0].dataValues.userId
-            }
-          })
-            .then((user: any) => {
-              if (user) {
-                if (paid && status === 'succeeded') {
-                  const language = user.language || 'en'
-                  i18n.setLocale(language)
-                  SendMail.success(
-                    user.dataValues,
-                    i18n.__('mail.webhook.payment.update.subject'),
-                    i18n.__('mail.webhook.payment.update.message', {
-                      amount: String(event.data.object.amount / 100)
-                    })
-                  )
-                }
-              }
-              return res.status(200).json(event)
-            })
-            .catch((e: any) => {
-              return res.status(400).send(e)
-            })
+        {
+          where: {
+            source_id: event.data.object.source.id,
+            source: event.data.object.id
+          },
+          returning: true
         }
-      })
-      .catch((e: any) => {
-        return res.status(400).send(e)
-      })
+      )
+
+      if (order[0]) {
+        const user = await models.User.findOne({
+          where: {
+            id: order[1][0].dataValues.userId
+          }
+        })
+
+        if (user) {
+          if (paid && status === 'succeeded') {
+            const language = user.language || 'en'
+            i18n.setLocale(language)
+            SendMail.success(
+              user.dataValues,
+              i18n.__('mail.webhook.payment.update.subject'),
+              i18n.__('mail.webhook.payment.update.message', {
+                amount: String(event.data.object.amount / 100)
+              })
+            )
+          }
+        }
+        return res.status(200).json(event)
+      }
+    } catch (e: any) {
+      return res.status(400).send(e)
+    }
   }
   return res.status(200).json(event)
 }
