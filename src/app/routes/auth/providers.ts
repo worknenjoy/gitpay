@@ -31,33 +31,12 @@ router.get('/authorize/github', passport.authenticate('github', { scope: ['user:
 router.get(
   '/callback/github',
   passport.authenticate('github', { failureRedirect: `/` }),
-  (req: any, res: any) => {
-    const user = req.user
-    if (user.token) {
-      if (user.login_strategy === 'local' || user.login_strategy === null) {
-        res.redirect(
-          `${process.env.FRONTEND_HOST}/#/profile/user-account/?connectGithubAction=success`
-        )
-      } else {
-        res.redirect(`${process.env.FRONTEND_HOST}/#/token/${user.token}`)
-      }
-    }
-  }
+  controllers.callbackGithub
 )
 
 router.get('/callback/github/private', controllers.createPrivateTask)
 
-router.get('/connect/github', secure, (req: any, res: any, next: any) => {
-  const user = req.user
-  if (user) {
-    passport.authenticate('github', {
-      scope: ['user:email'],
-      state: req.user.email
-    })(req, res, next)
-  } else {
-    res.redirect(`${process.env.FRONTEND_HOST}/#/signin/invalid`)
-  }
-})
+router.get('/connect/github', secure, controllers.connectGithub)
 
 router.get('/authorize/github/private', controllers.authorizeGithubPrivateIssue)
 router.get('/authorize/github/disconnect', secure, controllers.disconnectGithub)
@@ -66,9 +45,7 @@ router.get('/authorize/bitbucket', passport.authenticate('bitbucket', { scope: [
 router.get(
   '/callback/bitbucket',
   passport.authenticate('bitbucket', { failureRedirect: '/' }),
-  (req: any, res: any) => {
-    res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token)
-  }
+  controllers.callbackBitbucket
 )
 
 router.post(
@@ -79,10 +56,7 @@ router.post(
     failureRedirect: `${process.env.FRONTEND_HOST}/#/signin/invalid`
     // successRedirect: `${process.env.FRONTEND_HOST}/#/token/${req?.user?.token}`
   }),
-  (req: any, res: any, next: any) => {
-    res.set('Authorization', 'Bearer ' + req.user.token)
-    res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
-  }
+  controllers.authorizeLocal
 )
 
 export default router
