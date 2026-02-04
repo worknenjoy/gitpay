@@ -35,6 +35,7 @@ export const currencyMap: CurrencyMap = {
   LI: 'CHF', // Liechtenstein
   LT: 'EUR', // Lithuania
   LU: 'EUR',
+  MA: 'MAD', // Morocco
   MY: 'MYR', // Malaysia
   MT: 'EUR', // Malta
   MX: 'MXN',
