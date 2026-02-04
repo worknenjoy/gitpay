@@ -1,5 +1,6 @@
 import { userChangeEmail } from '../../../modules/users/userChangeEmail'
 import { userConfirmChangeEmail } from '../../../modules/users/userConfirmChangeEmail'
+import userDisconnectGithub from '../../../modules/users/userDisconectGithub'
 import secrets from '../../../config/secrets'
 import * as user from '../../../modules/users'
 import passport from 'passport'
@@ -52,7 +53,7 @@ export const authorizeGithubPrivateIssue = (req: any, res: any) => {
 
 export const disconnectGithub = async (req: any, res: any) => {
   try {
-    const data = await user.userDisconnectGithub({ userId: req.user.id })
+    const data = await userDisconnectGithub({ userId: req.user.id })
     if (data) {
       res.redirect(`${process.env.FRONTEND_HOST}/#/profile/user-account/?disconnectAction=success`)
     } else {

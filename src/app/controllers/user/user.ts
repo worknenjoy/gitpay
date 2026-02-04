@@ -4,10 +4,12 @@ import crypto from 'crypto'
 import requestPromise from 'request-promise'
 import secrets from '../../../config/secrets'
 import * as user from '../../../modules/users'
-import models from '../../../models'
+import Models from '../../../models'
 import * as task from '../../../modules/tasks'
 import Sendmail from '../../../modules/mail/mail'
 import UserMail from '../../../modules/mail/user'
+
+const models = Models as any
 
 export const getUserInfo = async (req: any, res: any) => {
   const userId = req.user.id
