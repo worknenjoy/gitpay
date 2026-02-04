@@ -1,8 +1,19 @@
 import express from 'express'
 import { userFetch, preferences, organizations, deleteUserById } from '../controllers/user/user'
 import { customer, customerCreate, customerUpdate } from '../controllers/user/customers'
-import { account, accountCreate, accountCountries, accountBalance, accountUpdate, accountDelete } from '../controllers/user/account'
-import { createBankAccount, updateBankAccount, userBankAccount } from '../controllers/user/bank-account'
+import {
+  account,
+  accountCreate,
+  accountCountries,
+  accountBalance,
+  accountUpdate,
+  accountDelete
+} from '../controllers/user/account'
+import {
+  createBankAccount,
+  updateBankAccount,
+  userBankAccount
+} from '../controllers/user/bank-account'
 import secure from './secure'
 import { updateUser } from '../controllers/user/user'
 
