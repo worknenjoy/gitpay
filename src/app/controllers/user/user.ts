@@ -1,13 +1,13 @@
 import userInfo from '../../../modules/users/userInfo'
 import userUpdate from '../../../modules/users/userUpdate'
-const crypto = require('crypto')
-const requestPromise = require('request-promise')
-const secrets = require('../../../config/secrets')
-const user = require('../../../modules/users')
-const models = require('../../../models')
-const task = require('../../../modules/tasks')
-const Sendmail = require('../../../modules/mail/mail')
-const UserMail = require('../../../modules/mail/user')
+import crypto from 'crypto'
+import requestPromise from 'request-promise'
+import secrets from '../../../config/secrets'
+import * as user from '../../../modules/users'
+import models from '../../../models'
+import * as task from '../../../modules/tasks'
+import Sendmail from '../../../modules/mail/mail'
+import UserMail from '../../../modules/mail/user'
 
 export const getUserInfo = async (req: any, res: any) => {
   const userId = req.user.id

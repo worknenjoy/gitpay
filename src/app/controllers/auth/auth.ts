@@ -1,8 +1,8 @@
 import { userChangeEmail } from '../../../modules/users/userChangeEmail'
 import { userConfirmChangeEmail } from '../../../modules/users/userConfirmChangeEmail'
-const secrets = require('../../../config/secrets')
-const user = require('../../../modules/users')
-const passport = require('passport')
+import secrets from '../../../config/secrets'
+import * as user from '../../../modules/users'
+import passport from 'passport'
 
 export const changeEmail = async (req: any, res: any) => {
   const userId = req.user.id

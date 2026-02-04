@@ -1,4 +1,4 @@
-const user = require('../../../modules/users')
+import * as user from '../../../modules/users'
 
 export const createBankAccount = async (req: any, res: any) => {
   try {

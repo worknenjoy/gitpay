@@ -1,4 +1,4 @@
-const user = require('../../../modules/users')
+import * as user from '../../../modules/users'
 
 export const customer = async (req: any, res: any) => {
   if (!req.user) {
