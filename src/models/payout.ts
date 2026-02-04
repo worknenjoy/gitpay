@@ -18,7 +18,18 @@ export interface PayoutAttributes {
 
 export type PayoutCreationAttributes = Optional<
   PayoutAttributes,
-  'id' | 'source_id' | 'method' | 'amount' | 'currency' | 'description' | 'status' | 'paid' | 'arrival_date' | 'reference_number' | 'createdAt' | 'updatedAt'
+  | 'id'
+  | 'source_id'
+  | 'method'
+  | 'amount'
+  | 'currency'
+  | 'description'
+  | 'status'
+  | 'paid'
+  | 'arrival_date'
+  | 'reference_number'
+  | 'createdAt'
+  | 'updatedAt'
 >
 
 export default class Payout

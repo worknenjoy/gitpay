@@ -1,6 +1,14 @@
 import { Model, DataTypes, Optional, Sequelize } from 'sequelize'
 
-export type WalletOrderStatus = 'pending' | 'draft' | 'open' | 'paid' | 'failed' | 'uncollectible' | 'void' | 'refunded'
+export type WalletOrderStatus =
+  | 'pending'
+  | 'draft'
+  | 'open'
+  | 'paid'
+  | 'failed'
+  | 'uncollectible'
+  | 'void'
+  | 'refunded'
 
 export interface WalletOrderAttributes {
   id: number
@@ -22,7 +30,19 @@ export interface WalletOrderAttributes {
 
 export type WalletOrderCreationAttributes = Optional<
   WalletOrderAttributes,
-  'id' | 'source_id' | 'currency' | 'description' | 'source_type' | 'source' | 'capture' | 'ordered_in' | 'destination' | 'paid' | 'status' | 'createdAt' | 'updatedAt'
+  | 'id'
+  | 'source_id'
+  | 'currency'
+  | 'description'
+  | 'source_type'
+  | 'source'
+  | 'capture'
+  | 'ordered_in'
+  | 'destination'
+  | 'paid'
+  | 'status'
+  | 'createdAt'
+  | 'updatedAt'
 >
 
 export default class WalletOrder
@@ -99,7 +119,16 @@ export default class WalletOrder
           allowNull: true
         },
         status: {
-          type: DataTypes.ENUM('pending', 'draft', 'open', 'paid', 'failed', 'uncollectible', 'void', 'refunded'),
+          type: DataTypes.ENUM(
+            'pending',
+            'draft',
+            'open',
+            'paid',
+            'failed',
+            'uncollectible',
+            'void',
+            'refunded'
+          ),
           defaultValue: 'pending'
         },
         createdAt: {

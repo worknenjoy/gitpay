@@ -16,7 +16,16 @@ export interface TaskSolutionAttributes {
 
 export type TaskSolutionCreationAttributes = Optional<
   TaskSolutionAttributes,
-  'id' | 'isAuthorOfPR' | 'isConnectedToGitHub' | 'isPRMerged' | 'isIssueClosed' | 'hasIssueReference' | 'taskId' | 'userId' | 'createdAt' | 'updatedAt'
+  | 'id'
+  | 'isAuthorOfPR'
+  | 'isConnectedToGitHub'
+  | 'isPRMerged'
+  | 'isIssueClosed'
+  | 'hasIssueReference'
+  | 'taskId'
+  | 'userId'
+  | 'createdAt'
+  | 'updatedAt'
 >
 
 export default class TaskSolution

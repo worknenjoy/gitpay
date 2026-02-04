@@ -26,7 +26,27 @@ export interface TaskAttributes {
 
 export type TaskCreationAttributes = Optional<
   TaskAttributes,
-  'id' | 'private' | 'not_listed' | 'provider' | 'description' | 'type' | 'level' | 'status' | 'deadline' | 'url' | 'title' | 'value' | 'paid' | 'notified' | 'transfer_id' | 'assigned' | 'TransferId' | 'ProjectId' | 'userId' | 'createdAt' | 'updatedAt'
+  | 'id'
+  | 'private'
+  | 'not_listed'
+  | 'provider'
+  | 'description'
+  | 'type'
+  | 'level'
+  | 'status'
+  | 'deadline'
+  | 'url'
+  | 'title'
+  | 'value'
+  | 'paid'
+  | 'notified'
+  | 'transfer_id'
+  | 'assigned'
+  | 'TransferId'
+  | 'ProjectId'
+  | 'userId'
+  | 'createdAt'
+  | 'updatedAt'
 >
 
 export default class Task
@@ -167,7 +187,9 @@ export default class Task
                 type: 'create',
                 fields: changed,
                 oldValues: Object.values(instance.previous()),
-                newValues: changed ? (changed as string[]).map((v: string) => (instance as any).dataValues[v]) : []
+                newValues: changed
+                  ? (changed as string[]).map((v: string) => (instance as any).dataValues[v])
+                  : []
               })
             } catch (e) {
               // eslint-disable-next-line no-console
@@ -178,7 +200,9 @@ export default class Task
             try {
               const changed = instance.changed()
               const previous = Object.values(instance.previous())
-              const newValues = changed ? (changed as string[]).map((v: string) => `${(instance as any).dataValues[v]}`) : []
+              const newValues = changed
+                ? (changed as string[]).map((v: string) => `${(instance as any).dataValues[v]}`)
+                : []
               if (
                 JSON.stringify(previous) !== JSON.stringify(newValues) &&
                 JSON.stringify(changed) !== JSON.stringify(['id', 'updatedAt']) &&

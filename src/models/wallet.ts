@@ -103,7 +103,7 @@ export default class Wallet
   async addBalance(): Promise<Decimal> {
     const sequelize = this.sequelize
     if (!sequelize) throw new Error('Sequelize instance not found')
-    
+
     const orders = await sequelize.models.WalletOrder.findAll({
       where: {
         walletId: this.id,
@@ -119,7 +119,7 @@ export default class Wallet
   async spendBalance(): Promise<Decimal> {
     const sequelize = this.sequelize
     if (!sequelize) throw new Error('Sequelize instance not found')
-    
+
     const orders = await sequelize.models.Order.findAll({
       where: {
         provider: 'wallet',

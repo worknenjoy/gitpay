@@ -30,7 +30,31 @@ export interface OrderAttributes {
 
 export type OrderCreationAttributes = Optional<
   OrderAttributes,
-  'id' | 'source_id' | 'provider' | 'currency' | 'amount' | 'description' | 'source_type' | 'source' | 'payment_url' | 'payer_id' | 'token' | 'authorization_id' | 'transfer_id' | 'transfer_group' | 'status' | 'capture' | 'ordered_in' | 'destination' | 'paid' | 'userId' | 'TaskId' | 'taskId' | 'couponId' | 'createdAt' | 'updatedAt'
+  | 'id'
+  | 'source_id'
+  | 'provider'
+  | 'currency'
+  | 'amount'
+  | 'description'
+  | 'source_type'
+  | 'source'
+  | 'payment_url'
+  | 'payer_id'
+  | 'token'
+  | 'authorization_id'
+  | 'transfer_id'
+  | 'transfer_group'
+  | 'status'
+  | 'capture'
+  | 'ordered_in'
+  | 'destination'
+  | 'paid'
+  | 'userId'
+  | 'TaskId'
+  | 'taskId'
+  | 'couponId'
+  | 'createdAt'
+  | 'updatedAt'
 >
 
 export default class Order
@@ -65,7 +89,7 @@ export default class Order
 
   static initModel(sequelize: Sequelize): typeof Order {
     const { comment } = require('../modules/bot/comment')
-    
+
     Order.init(
       {
         id: {

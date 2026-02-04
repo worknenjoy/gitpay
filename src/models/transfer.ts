@@ -18,7 +18,16 @@ export interface TransferAttributes {
 
 export type TransferCreationAttributes = Optional<
   TransferAttributes,
-  'id' | 'status' | 'value' | 'transfer_id' | 'transfer_method' | 'paypal_payout_id' | 'paypal_transfer_amount' | 'stripe_transfer_amount' | 'createdAt' | 'updatedAt'
+  | 'id'
+  | 'status'
+  | 'value'
+  | 'transfer_id'
+  | 'transfer_method'
+  | 'paypal_payout_id'
+  | 'paypal_transfer_amount'
+  | 'stripe_transfer_amount'
+  | 'createdAt'
+  | 'updatedAt'
 >
 
 export default class Transfer
@@ -127,9 +136,9 @@ export default class Transfer
       foreignKey: 'userId',
       as: 'User'
     })
-    models.Transfer.belongsTo(models.User, { 
-      foreignKey: 'to', 
-      as: 'destination' 
+    models.Transfer.belongsTo(models.User, {
+      foreignKey: 'to',
+      as: 'destination'
     })
   }
 }
