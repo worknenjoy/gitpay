@@ -1,7 +1,12 @@
 import express from 'express'
 import passport from 'passport'
 import * as authenticationHelpers from '../../../modules/authenticationHelpers'
-import { authorizeGithubPrivateIssue, disconnectGithub, connectGithub, authorizeLocal } from '../../controllers/auth/auth'
+import {
+  authorizeGithubPrivateIssue,
+  disconnectGithub,
+  connectGithub,
+  authorizeLocal
+} from '../../controllers/auth/auth'
 import { callbackGithub, callbackBitbucket } from '../../controllers/auth/callbacks'
 import { createPrivateTask } from '../../controllers/user/user'
 import secure from '../secure'

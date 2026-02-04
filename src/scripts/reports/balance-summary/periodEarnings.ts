@@ -12,8 +12,7 @@ export type PeriodEarningsRow = {
   payoutsCount: number
 }
 
-const toCents = (n: string | number | null | undefined) =>
-  Math.round((Number(n) || 0) * 100)
+const toCents = (n: string | number | null | undefined) => Math.round((Number(n) || 0) * 100)
 
 type Period = { label: string; start: Date; end: Date }
 

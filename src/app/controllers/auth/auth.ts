@@ -2,7 +2,6 @@ import { userChangeEmail } from '../../../modules/users/userChangeEmail'
 import { userConfirmChangeEmail } from '../../../modules/users/userConfirmChangeEmail'
 import userDisconnectGithub from '../../../modules/users/userDisconectGithub'
 import secrets from '../../../config/secrets'
-import * as user from '../../../modules/users'
 import passport from 'passport'
 
 export const changeEmail = async (req: any, res: any) => {

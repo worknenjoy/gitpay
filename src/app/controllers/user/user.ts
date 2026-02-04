@@ -1,6 +1,5 @@
 import userInfo from '../../../modules/users/userInfo'
 import userUpdate from '../../../modules/users/userUpdate'
-import crypto from 'crypto'
 import requestPromise from 'request-promise'
 import secrets from '../../../config/secrets'
 import * as user from '../../../modules/users'

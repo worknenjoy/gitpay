@@ -10,8 +10,7 @@ type MoneyRow = {
   payoutsCount: number
 }
 
-const toCents = (n: string | number | null | undefined) =>
-  Math.round((Number(n) || 0) * 100)
+const toCents = (n: string | number | null | undefined) => Math.round((Number(n) || 0) * 100)
 
 function ensureRow(map: Map<string, MoneyRow>, date: Date): MoneyRow {
   const monthKey = moment.utc(date).format('YYYY-MM')

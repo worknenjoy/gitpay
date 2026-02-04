@@ -1,6 +1,13 @@
 import express from 'express'
 import * as authenticationHelpers from '../../../modules/authenticationHelpers'
-import { register, forgotPasswordNotification, resetPassword, changePassword, activateUser, resendActivationEmail } from '../../controllers/user/user'
+import {
+  register,
+  forgotPasswordNotification,
+  resetPassword,
+  changePassword,
+  activateUser,
+  resendActivationEmail
+} from '../../controllers/user/user'
 import { changeEmail } from '../../controllers/auth/auth'
 import { confirmChangeEmail } from '../../controllers/auth/auth'
 import secure from '../secure'
