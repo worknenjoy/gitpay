@@ -6,6 +6,7 @@ const models = require('../../models')
 const task = require('../../modules/tasks')
 const Sendmail = require('../../modules/mail/mail')
 const UserMail = require('../../modules/mail/user')
+const passport = require('passport')
 
 export const register = async (req: any, res: any) => {
   const { email, name, password } = req.body
@@ -398,5 +399,43 @@ export const deleteUserById = async (req: any, res: any) => {
     // eslint-disable-next-line no-console
     console.log(error)
     res.status(400).send(error)
+  }
+}
+
+export const callbackGithub = (req: any, res: any) => {
+  const user = req.user
+  if (user && user.token) {
+    if (user.login_strategy === 'local' || user.login_strategy === null) {
+      res.redirect(
+        `${process.env.FRONTEND_HOST}/#/profile/user-account/?connectGithubAction=success`
+      )
+    } else {
+      res.redirect(`${process.env.FRONTEND_HOST}/#/token/${user.token}`)
+    }
+  }
+}
+
+export const connectGithub = (req: any, res: any, next: any) => {
+  const user = req.user
+  if (user) {
+    passport.authenticate('github', {
+      scope: ['user:email'],
+      state: req.user.email
+    })(req, res, next)
+  } else {
+    res.redirect(`${process.env.FRONTEND_HOST}/#/signin/invalid`)
+  }
+}
+
+export const callbackBitbucket = (req: any, res: any) => {
+  if (req.user && req.user.token) {
+    res.redirect(`${process.env.FRONTEND_HOST}/#/token/` + req.user.token)
+  }
+}
+
+export const authorizeLocal = (req: any, res: any, next: any) => {
+  if (req.user && req.user.token) {
+    res.set('Authorization', 'Bearer ' + req.user.token)
+    res.redirect(`${process.env.FRONTEND_HOST}/#/token/${req.user.token}`)
   }
 }
