@@ -101,18 +101,9 @@ function printTable<Row extends Record<string, any>>(
     colWidths[widestIdx] -= 1
   }
 
-  const top =
-    '┌' +
-    colWidths.map((w) => '─'.repeat(w + 2)).join('┬') +
-    '┐'
-  const mid =
-    '├' +
-    colWidths.map((w) => '─'.repeat(w + 2)).join('┼') +
-    '┤'
-  const bottom =
-    '└' +
-    colWidths.map((w) => '─'.repeat(w + 2)).join('┴') +
-    '┘'
+  const top = '┌' + colWidths.map((w) => '─'.repeat(w + 2)).join('┬') + '┐'
+  const mid = '├' + colWidths.map((w) => '─'.repeat(w + 2)).join('┼') + '┤'
+  const bottom = '└' + colWidths.map((w) => '─'.repeat(w + 2)).join('┴') + '┘'
 
   console.log(`${C.bold}${title}${C.reset}`)
   console.log(`${C.gray}${top}${C.reset}`)
@@ -131,7 +122,10 @@ function printTable<Row extends Record<string, any>>(
   if (rows.length === 0) {
     const empty =
       '│' +
-      padTo(`${C.dim}(no rows)${C.reset}`, colWidths.reduce((a, b) => a + b, 0) + 3 * columns.length - 1) +
+      padTo(
+        `${C.dim}(no rows)${C.reset}`,
+        colWidths.reduce((a, b) => a + b, 0) + 3 * columns.length - 1
+      ) +
       '│'
     console.log(empty)
   } else {
@@ -268,7 +262,8 @@ async function getTotalAmountForPendingTasks() {
 
   const pendingTaskRows = pendingTasks.map((t: any) => {
     const sources =
-      t.Orders?.map((o: any) => `${o.provider} ${formatUSD(toCents(o.amount))}`).join(' · ') || 'N/A'
+      t.Orders?.map((o: any) => `${o.provider} ${formatUSD(toCents(o.amount))}`).join(' · ') ||
+      'N/A'
     return {
       id: String(t.id),
       value: formatUSD(toCents(t.value)),
@@ -296,7 +291,13 @@ async function getTotalAmountForPendingTasks() {
   )
 
   let totalPendingPaypalOrdersAmount = 0
-  const pendingPaypalRows: Array<{ task: string; order: string; amount: string; created: string; age: string }> = []
+  const pendingPaypalRows: Array<{
+    task: string
+    order: string
+    amount: string
+    created: string
+    age: string
+  }> = []
   for (const t of pendingTasks) {
     if (t.Orders?.length > 0) {
       for (const order of t.Orders) {
