@@ -5,8 +5,13 @@ import { Op } from 'sequelize'
 import Models from '../../../models'
 import moment from 'moment'
 
+import { getMonthlyBalanceAllYears } from './monthlyBalance'
+import { printMonthlyBalanceAllYears } from './printMonthlyBalance'
+import { getEarningsForAllPeriods } from './periodEarnings'
+import { printPeriodEarnings } from './printPeriodEarnings'
+
 const models = Models as any
-const { Wallet, Order, Task } = models
+const { Wallet, Order, Task, Payout } = models
 
 // === Console helpers & formatters ===
 const C = {
@@ -257,6 +262,12 @@ async function getSummary() {
       `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE FOR STRIPE: ${finalUSDOnlyStripe}  ${C.reset}`
     )
     console.log(hr())
+
+    const periodRows = await getEarningsForAllPeriods({ Order, Payout })
+    printPeriodEarnings(periodRows, { C, hr, formatUSD })
+
+    const monthlyRows = await getMonthlyBalanceAllYears({ Order, Payout })
+    printMonthlyBalanceAllYears(monthlyRows, { C, hr, formatUSD })
 
     // Keep original JSON dump for debugging if desired (commented to reduce noise)
     // console.log(JSON.stringify(summary, null, 2));
