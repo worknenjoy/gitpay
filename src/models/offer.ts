@@ -15,7 +15,16 @@ export interface OfferAttributes {
 
 export type OfferCreationAttributes = Optional<
   OfferAttributes,
-  'id' | 'value' | 'suggestedDate' | 'comment' | 'learn' | 'status' | 'userId' | 'taskId' | 'createdAt' | 'updatedAt'
+  | 'id'
+  | 'value'
+  | 'suggestedDate'
+  | 'comment'
+  | 'learn'
+  | 'status'
+  | 'userId'
+  | 'taskId'
+  | 'createdAt'
+  | 'updatedAt'
 >
 
 export default class Offer

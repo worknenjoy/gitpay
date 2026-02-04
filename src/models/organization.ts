@@ -21,7 +21,22 @@ export interface OrganizationAttributes {
 
 export type OrganizationCreationAttributes = Optional<
   OrganizationAttributes,
-  'id' | 'provider' | 'email' | 'private' | 'name' | 'description' | 'website' | 'repo' | 'country' | 'image' | 'customer_id' | 'account_id' | 'paypal_id' | 'UserId' | 'createdAt' | 'updatedAt'
+  | 'id'
+  | 'provider'
+  | 'email'
+  | 'private'
+  | 'name'
+  | 'description'
+  | 'website'
+  | 'repo'
+  | 'country'
+  | 'image'
+  | 'customer_id'
+  | 'account_id'
+  | 'paypal_id'
+  | 'UserId'
+  | 'createdAt'
+  | 'updatedAt'
 >
 
 export default class Organization

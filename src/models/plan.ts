@@ -67,7 +67,11 @@ export default class Plan
         hooks: {
           beforeCreate: async (instance: Plan, options: any) => {
             try {
-              const percentages: Record<PlanType, number> = { 'open source': 8, private: 18, 'with support': 30 }
+              const percentages: Record<PlanType, number> = {
+                'open source': 8,
+                private: 18,
+                'with support': 30
+              }
               if (instance.plan) {
                 instance.feePercentage = percentages[instance.plan]
                 // Note: original code referenced instance.amount which doesn't exist in schema

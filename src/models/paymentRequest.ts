@@ -21,7 +21,22 @@ export interface PaymentRequestAttributes {
 
 export type PaymentRequestCreationAttributes = Optional<
   PaymentRequestAttributes,
-  'id' | 'active' | 'deactivate_after_payment' | 'currency' | 'amount' | 'custom_amount' | 'title' | 'description' | 'payment_link_id' | 'payment_url' | 'status' | 'transfer_status' | 'transfer_id' | 'userId' | 'createdAt' | 'updatedAt'
+  | 'id'
+  | 'active'
+  | 'deactivate_after_payment'
+  | 'currency'
+  | 'amount'
+  | 'custom_amount'
+  | 'title'
+  | 'description'
+  | 'payment_link_id'
+  | 'payment_url'
+  | 'status'
+  | 'transfer_status'
+  | 'transfer_id'
+  | 'userId'
+  | 'createdAt'
+  | 'updatedAt'
 >
 
 export default class PaymentRequest
