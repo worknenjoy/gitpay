@@ -29,7 +29,153 @@ const C = {
   bgGreen: '\x1b[42m',
   bgYellow: '\x1b[43m'
 }
-const hr = (w = 70) => `${C.gray}${'─'.repeat(w)}${C.reset}`
+
+// --- layout helpers ---
+const stripAnsi = (s: string) => s.replace(/\x1b\[[0-9;]*m/g, '')
+const visibleLen = (s: string) => stripAnsi(s).length
+const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n))
+const termWidth = () => clamp(process.stdout.columns ?? 100, 60, 160)
+const hr = (w = termWidth()) => `${C.gray}${'─'.repeat(w)}${C.reset}`
+
+type Align = 'left' | 'right' | 'center'
+const padTo = (s: string, w: number, align: Align = 'left') => {
+  const len = visibleLen(s)
+  if (len >= w) return s
+  const pad = w - len
+  if (align === 'right') return `${' '.repeat(pad)}${s}`
+  if (align === 'center') {
+    const left = Math.floor(pad / 2)
+    const right = pad - left
+    return `${' '.repeat(left)}${s}${' '.repeat(right)}`
+  }
+  return `${s}${' '.repeat(pad)}`
+}
+const truncate = (s: string, w: number) => {
+  if (w <= 0) return ''
+  if (visibleLen(s) <= w) return s
+  if (w <= 1) return stripAnsi(s).slice(0, 1)
+  const raw = stripAnsi(s)
+  return `${raw.slice(0, Math.max(0, w - 1))}…`
+}
+
+type TableColumn<Row extends Record<string, any>> = {
+  key: keyof Row
+  header: string
+  align?: Align
+  minWidth?: number
+  maxWidth?: number
+}
+
+function printTable<Row extends Record<string, any>>(
+  title: string,
+  columns: Array<TableColumn<Row>>,
+  rows: Row[],
+  opts?: { maxWidth?: number }
+) {
+  const maxWidth = opts?.maxWidth ?? termWidth()
+  const colWidths = columns.map((c) => {
+    const headerLen = visibleLen(c.header)
+    const cellMax = rows.reduce((m, r) => {
+      const v = r[c.key]
+      const s = v === null || v === undefined ? '' : String(v)
+      return Math.max(m, visibleLen(s))
+    }, 0)
+    const base = Math.max(headerLen, cellMax, c.minWidth ?? 0)
+    return clamp(base, c.minWidth ?? 0, c.maxWidth ?? 999)
+  })
+
+  // If table is too wide, shrink widest shrinkable columns first.
+  const tableOverhead = 1 + columns.length * 3 // borders + per-column padding
+  const totalWidth = () => tableOverhead + colWidths.reduce((a, b) => a + b, 0)
+  while (totalWidth() > maxWidth) {
+    let widestIdx = -1
+    let widest = 0
+    for (let i = 0; i < colWidths.length; i++) {
+      const min = columns[i].minWidth ?? 0
+      if (colWidths[i] > min && colWidths[i] > widest) {
+        widest = colWidths[i]
+        widestIdx = i
+      }
+    }
+    if (widestIdx === -1) break
+    colWidths[widestIdx] -= 1
+  }
+
+  const top =
+    '┌' +
+    colWidths.map((w) => '─'.repeat(w + 2)).join('┬') +
+    '┐'
+  const mid =
+    '├' +
+    colWidths.map((w) => '─'.repeat(w + 2)).join('┼') +
+    '┤'
+  const bottom =
+    '└' +
+    colWidths.map((w) => '─'.repeat(w + 2)).join('┴') +
+    '┘'
+
+  console.log(`${C.bold}${title}${C.reset}`)
+  console.log(`${C.gray}${top}${C.reset}`)
+  const headerRow =
+    '│' +
+    columns
+      .map((c, i) => {
+        const cell = padTo(truncate(c.header, colWidths[i]), colWidths[i], 'center')
+        return ` ${cell} `
+      })
+      .join('│') +
+    '│'
+  console.log(`${C.gray}${headerRow}${C.reset}`)
+  console.log(`${C.gray}${mid}${C.reset}`)
+
+  if (rows.length === 0) {
+    const empty =
+      '│' +
+      padTo(`${C.dim}(no rows)${C.reset}`, colWidths.reduce((a, b) => a + b, 0) + 3 * columns.length - 1) +
+      '│'
+    console.log(empty)
+  } else {
+    for (const r of rows) {
+      const line =
+        '│' +
+        columns
+          .map((c, i) => {
+            const raw = r[c.key]
+            const cellStr = raw === null || raw === undefined ? '' : String(raw)
+            const cell = padTo(truncate(cellStr, colWidths[i]), colWidths[i], c.align ?? 'left')
+            return ` ${cell} `
+          })
+          .join('│') +
+        '│'
+      console.log(line)
+    }
+  }
+  console.log(`${C.gray}${bottom}${C.reset}`)
+}
+
+function printCard(title: string, entries: Array<[string, string]>, opts?: { width?: number }) {
+  const width = clamp(opts?.width ?? Math.min(termWidth(), 120), 60, 140)
+  const labelWidth = clamp(
+    Math.max(...entries.map(([k]) => visibleLen(k)), visibleLen(title)),
+    10,
+    28
+  )
+
+  const innerWidth = width - 4 // borders + spaces
+  const top = `┌${'─'.repeat(width - 2)}┐`
+  const bottom = `└${'─'.repeat(width - 2)}┘`
+  const titleLine = `│ ${padTo(`${C.bold}${title}${C.reset}`, width - 4, 'center')} │`
+  console.log(`${C.gray}${top}${C.reset}`)
+  console.log(titleLine)
+  console.log(`${C.gray}├${'─'.repeat(width - 2)}┤${C.reset}`)
+  for (const [k, v] of entries) {
+    const left = padTo(k, labelWidth, 'left')
+    const right = truncate(v, innerWidth - (labelWidth + 2))
+    const line = `│ ${left}: ${padTo(right, innerWidth - (labelWidth + 2), 'left')} │`
+    console.log(line)
+  }
+  console.log(`${C.gray}${bottom}${C.reset}`)
+}
 const toCents = (n: number) => Math.round((Number(n) || 0) * 100)
 const formatUSD = (cents: number) =>
   (cents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })
@@ -116,41 +262,76 @@ async function getTotalAmountForPendingTasks() {
   )
 
   let totalPendingTasksAmount = 0
-  console.log('---- List of pending tasks ----')
   for (const t of pendingTasks) {
-    console.log(
-      `- Task ID: ${t.id}, Paid: ${t.paid ? 'Yes' : 'No'}, Value: ${formatUSD(toCents(t.value))}`,
-      `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`,
-      `Source: ${t.Orders.map((o: any) => `${o.provider} - ${formatUSD(toCents(o.amount))}`).join(', ') || 'N/A'}`,
-      `Transfer ID: ${t.TransferId}`,
-      `transfer_id: ${t.transfer_id}`
-    )
     totalPendingTasksAmount += Number(t.value) * 0.92 || 0 // 8% platform fee; DB values in decimal (USD)
   }
-  console.log('------------------------------')
+
+  const pendingTaskRows = pendingTasks.map((t: any) => {
+    const sources =
+      t.Orders?.map((o: any) => `${o.provider} ${formatUSD(toCents(o.amount))}`).join(' · ') || 'N/A'
+    return {
+      id: String(t.id),
+      value: formatUSD(toCents(t.value)),
+      created: moment(t.createdAt).format('YYYY-MM-DD HH:mm'),
+      age: moment(t.createdAt).fromNow(),
+      source: sources,
+      TransferId: t.TransferId ?? '',
+      transfer_id: t.transfer_id ?? ''
+    }
+  })
+
+  printTable(
+    `Pending Tasks (${pendingTasks.length})`,
+    [
+      { key: 'id', header: 'Task', align: 'right', minWidth: 4, maxWidth: 8 },
+      { key: 'value', header: 'Value', align: 'right', minWidth: 10, maxWidth: 14 },
+      { key: 'created', header: 'Created', minWidth: 16, maxWidth: 16 },
+      { key: 'age', header: 'Age', minWidth: 10, maxWidth: 14 },
+      { key: 'source', header: 'Source', minWidth: 18, maxWidth: 60 },
+      { key: 'TransferId', header: 'TransferId', minWidth: 8, maxWidth: 12 },
+      { key: 'transfer_id', header: 'transfer_id', minWidth: 8, maxWidth: 12 }
+    ],
+    pendingTaskRows,
+    { maxWidth: termWidth() }
+  )
 
   let totalPendingPaypalOrdersAmount = 0
-  console.log('---- List of pending tasks with PayPal orders ----')
+  const pendingPaypalRows: Array<{ task: string; order: string; amount: string; created: string; age: string }> = []
   for (const t of pendingTasks) {
-    if (t.Orders.length > 0) {
-      t.Orders.forEach((order: any) => {
+    if (t.Orders?.length > 0) {
+      for (const order of t.Orders) {
         if (order.provider === 'paypal' && order.status === 'succeeded') {
-          console.log(
-            `- Task ID: ${t.id}, Paid: ${t.paid ? 'Yes' : 'No'}, Value: ${formatUSD(toCents(t.value))}`,
-            `Created ${moment(t.createdAt).format('MMMM Do YYYY, h:mm:ss a')} (${moment(t.createdAt).fromNow()})`,
-            `Order ID: ${order.id}, Provider: ${order.provider}, Amount: ${formatUSD(toCents(order.amount))}`
-          )
+          pendingPaypalRows.push({
+            task: String(t.id),
+            order: String(order.id),
+            amount: formatUSD(toCents(order.amount)),
+            created: moment(t.createdAt).format('YYYY-MM-DD HH:mm'),
+            age: moment(t.createdAt).fromNow()
+          })
           totalPendingPaypalOrdersAmount += Number(order.amount) * 0.92 || 0 // 8% platform fee; DB values in decimal (USD)
         }
-      })
+      }
     }
   }
 
-  console.log('-----------------------------------------------')
-  console.log(
-    `${C.yellow}⚠️  Note: The total amount for pending Tasks includes $${totalPendingPaypalOrdersAmount.toFixed(2)} ` +
-      `from Tasks associated with PayPal Orders.${C.reset}`
+  printTable(
+    `Pending Tasks with PayPal Orders (${pendingPaypalRows.length})`,
+    [
+      { key: 'task', header: 'Task', align: 'right', minWidth: 4, maxWidth: 8 },
+      { key: 'order', header: 'Order', align: 'right', minWidth: 5, maxWidth: 10 },
+      { key: 'amount', header: 'Amount', align: 'right', minWidth: 10, maxWidth: 14 },
+      { key: 'created', header: 'Created', minWidth: 16, maxWidth: 16 },
+      { key: 'age', header: 'Age', minWidth: 10, maxWidth: 14 }
+    ],
+    pendingPaypalRows,
+    { maxWidth: termWidth() }
   )
+
+  if (totalPendingPaypalOrdersAmount > 0) {
+    console.log(
+      `${C.yellow}⚠️  Note: Pending Tasks total includes ${formatUSD(toCents(totalPendingPaypalOrdersAmount))} from PayPal-related orders.${C.reset}`
+    )
+  }
 
   console.log(
     `${C.blue}ℹ️  [Database] Total amount of Tasks (DB decimal USD): ${pendingTasks.length} ` +
@@ -213,33 +394,23 @@ async function getSummary() {
     const finalUSD = formatUSD(totalAvailableCents)
     const finalUSDOnlyStripe = formatUSD(totalAvailableCentsOnlyStripe)
 
-    // Fancy output
-    console.log(hr())
-    console.log(`${C.bold}📊 Financial Summary${C.reset}`)
-    console.log(
-      `${C.gray}• Stripe Available (cents)${C.reset}: ${stripeAvailableCents} ${C.gray}=>${C.reset} ${stripeAvailableUSD}`
-    )
-    console.log(
-      `${C.gray}• Total Remaining Balance (DB decimal → cents)${C.reset}: ${walletBalanceCents} ${C.gray}=>${C.reset} ${walletBalanceUSD}`
-    )
-    console.log(
-      `${C.gray}• Total Amount for Pending Tasks Total (DB decimal → cents)${C.reset}: ${pendingTasksCents} ${C.gray}=>${C.reset} ${pendingTasksUSD}`
-    )
-    console.log(
-      `${C.gray}• Total Amount for Pending Tasks only Stripe (DB decimal → cents)${C.reset}: ${pendingTasksCentsOnlyStripe} ${C.gray}=>${C.reset} ${pendingTasksUSDOnlyStripeUSD}`
-    )
-    console.log(hr())
+    // Nicer summary view
+    printCard('📊 Financial Summary', [
+      ['Stripe (available)', stripeAvailableUSD],
+      ['PayPal (placeholder)', paypalBalanceUSD],
+      ['Wallet balance (DB)', walletBalanceUSD],
+      ['Pending tasks (total)', pendingTasksUSD],
+      ['Pending tasks (Stripe only)', pendingTasksUSDOnlyStripeUSD],
+      ['PayPal-related pending', pendingPaypalOrdersUSD]
+    ])
 
-    console.log(
-      `${C.cyan}${C.bold}🧠 Total Available Balance Calculation (Paypal + Stripe) ${C.reset}`
-    )
-    console.log(
-      `${C.gray}Formula:${C.reset} Available = (Stripe Available + Paypal Balance) - Wallet Balance - Pending Tasks`
-    )
-    console.log(
-      `= (${stripeAvailableUSD} ${C.gray} + ${C.reset}${paypalBalanceUSD}) ${C.gray}- ${C.reset}${walletBalanceUSD} ${C.gray}- ${C.reset}${pendingTasksUSD}`
-    )
-    console.log(hr())
+    printCard('🧠 Calculation (Paypal + Stripe)', [
+      ['Formula', 'Available = (Stripe + PayPal) - Wallet - Pending'],
+      ['Stripe + PayPal', `${stripeAvailableUSD} + ${paypalBalanceUSD}`],
+      ['Minus wallet', `- ${walletBalanceUSD}`],
+      ['Minus pending', `- ${pendingTasksUSD}`],
+      ['Result', finalUSD]
+    ])
 
     const bannerColor =
       totalAvailableCents > 0 ? C.bgGreen : totalAvailableCents < 0 ? C.bgRed : C.bgYellow
@@ -250,14 +421,13 @@ async function getSummary() {
     )
     console.log(hr())
 
-    console.log(`${C.cyan}${C.bold}🧠 Total Available Balance Calculation (Stripe only)${C.reset}`)
-    console.log(
-      `${C.gray}Formula:${C.reset} Available = Stripe Available - Wallet Balance - (Pending Tasks - PayPal related Tasks orders)`
-    )
-    console.log(
-      `= ${stripeAvailableUSD} ${C.gray}- ${C.reset}${walletBalanceUSD} ${C.gray}- (${C.reset}${pendingTasksUSD} ${C.gray} - ${C.reset}${pendingPaypalOrdersUSD})`
-    )
-    console.log(hr())
+    printCard('🧠 Calculation (Stripe only)', [
+      ['Formula', 'Available = Stripe - Wallet - (Pending - PayPal-related)'],
+      ['Stripe', stripeAvailableUSD],
+      ['Minus wallet', `- ${walletBalanceUSD}`],
+      ['Minus pending adj.', `- (${pendingTasksUSD} - ${pendingPaypalOrdersUSD})`],
+      ['Result', finalUSDOnlyStripe]
+    ])
     console.log(
       `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE FOR STRIPE: ${finalUSDOnlyStripe}  ${C.reset}`
     )
