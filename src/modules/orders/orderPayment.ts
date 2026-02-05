@@ -1,6 +1,6 @@
 import models from '../../models'
 import requestPromise from 'request-promise'
-import TransferMail from '../mail/transfer'
+import TransferMail from '../../mail/transfer'
 
 const currentModels = models as any
 

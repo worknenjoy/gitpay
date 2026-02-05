@@ -6,7 +6,7 @@ import * as URL from 'url'
 import Decimal from 'decimal.js'
 import stripeModule from '../../client/payment/stripe'
 const stripe = stripeModule()
-import Sendmail from '../mail/mail'
+import Sendmail from '../../mail/mail'
 import { userCustomerCreate } from '../users/userCustomerCreate'
 const slack = require('../../shared/slack')
 

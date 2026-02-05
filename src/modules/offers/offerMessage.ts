@@ -1,5 +1,5 @@
 import models from '../../models'
-import AssignMail from '../mail/assign'
+import AssignMail from '../../mail/assign'
 import i18n from 'i18n'
 
 const currentModels = models as any

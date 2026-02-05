@@ -1,7 +1,7 @@
 import { findUser } from '../../queries/user/findUser'
 import { updateUser } from '../../mutations/user/updateUser/updateUser'
 import Models from '../../models'
-import UserMail from '../mail/user'
+import UserMail from '../../mail/user'
 import updateUserAccount from '../../mutations/user/updateUser/updateUserAccount'
 
 const models = Models as any

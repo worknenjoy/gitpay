@@ -1,5 +1,5 @@
 import models from '../../models'
-import TransferMail from '../mail/transfer'
+import TransferMail from '../../mail/transfer'
 
 const currentModels = models as any
 

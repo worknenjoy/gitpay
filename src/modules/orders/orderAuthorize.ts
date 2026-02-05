@@ -1,5 +1,5 @@
 import models from '../../models'
-import PaymentMail from '../mail/payment'
+import PaymentMail from '../../mail/payment'
 import requestPromise from 'request-promise'
 import { comment } from '../bot/comment'
 const slack = require('../../shared/slack')
