@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import i18n from 'i18n'
 import Models from '../../../../models'
-import PayoutMail from '../../../mail/payout'
+import PayoutMail from '../../../../mail/payout'
 
 const models = Models as any
 

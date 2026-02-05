@@ -1,5 +1,5 @@
 import Models from '../../../../models'
-import PaymentRequestMail from '../../../mail/paymentRequest'
+import PaymentRequestMail from '../../../../mail/paymentRequest'
 import Stripe from '../../../../client/payment/stripe'
 import { handleAmount } from '../../../util/handle-amount/handle-amount'
 

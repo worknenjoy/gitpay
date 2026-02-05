@@ -1,6 +1,6 @@
 import Models from '../../../../models'
 import i18n from 'i18n'
-import SendMail from '../../../mail/mail'
+import SendMail from '../../../../mail/mail'
 import initStripe from '../../../../client/payment/stripe'
 
 const models = Models as any

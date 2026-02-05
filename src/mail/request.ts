@@ -1,6 +1,6 @@
 // @ts-ignore - @sendgrid/mail types may not be properly exported
 import sgMail from '@sendgrid/mail'
-import { sendgrid } from '../../config/secrets'
+import { sendgrid } from '../config/secrets'
 import handleResponse from './handleResponse'
 import handleError from './handleError'
 import { copyEmail, notificationEmail, fromEmail } from './constants'
