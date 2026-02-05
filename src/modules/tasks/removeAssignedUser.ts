@@ -1,5 +1,5 @@
 import models from '../../models'
-import SendMail from '../mail/mail'
+import SendMail from '../../mail/mail'
 import i18n from 'i18n'
 
 const currentModels = models as any

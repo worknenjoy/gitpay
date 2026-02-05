@@ -1,4 +1,4 @@
-import { sendgrid } from '../../config/secrets'
+import { sendgrid } from '../config/secrets'
 import * as constants from './constants'
 // @ts-ignore - @sendgrid/mail types may not be properly exported
 import sgMail from '@sendgrid/mail'

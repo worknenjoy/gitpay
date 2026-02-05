@@ -8,7 +8,7 @@ import enLocale from 'moment/locale/en-gb'
 import i18n from 'i18n'
 import * as constants from './constants'
 import withTemplate from './template'
-import models from '../../models'
+import models from '../models'
 import emailTemplate from './templates/main-content'
 import basicEmailTemplate from './templates/base-content'
 

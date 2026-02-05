@@ -4,7 +4,7 @@ import request from 'supertest'
 import api from '../../../../../src/server'
 import { registerAndLogin, truncateModels } from '../../../../helpers'
 import Models from '../../../../../src/models'
-import PaymentRequestMail from '../../../../../src/modules/mail/paymentRequest'
+import PaymentRequestMail from '../../../../../src/mail/paymentRequest'
 // Use require to avoid TS type dependency on @types/sinon
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const sinon = require('sinon')

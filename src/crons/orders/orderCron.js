@@ -3,7 +3,7 @@ const { Op } = require('sequelize')
 const OrderDetails = require('../../modules/orders/orderDetails/orderDetails')
 const OrderCancel = require('../../modules/orders/orderCancel')
 const requestPromise = require('request-promise')
-const orderMail = require('../../modules/mail/order')
+const orderMail = require('../../mail/order')
 
 const OrderCron = {
   verify: async () => {

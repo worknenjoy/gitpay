@@ -4,7 +4,7 @@ const currentModels = models as any
 import requestPromise from 'request-promise'
 import stripeModule from '../../client/payment/stripe'
 const stripe = stripeModule()
-import TransferMail from '../mail/transfer'
+import TransferMail from '../../mail/transfer'
 
 type TransferUpdateParams = {
   id?: number

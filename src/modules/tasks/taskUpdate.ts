@@ -1,8 +1,8 @@
 import models from '../../models'
-import AssignMail from '../mail/assign'
+import AssignMail from '../../mail/assign'
 import stripeModule from '../../client/payment/stripe'
 const stripe = stripeModule()
-import DeadlineMail from '../mail/deadline'
+import DeadlineMail from '../../mail/deadline'
 import { assignExists as assignExist } from '../assigns'
 import { offerExists } from '../offers'
 import { memberExists } from '../members'

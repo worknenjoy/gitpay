@@ -1,6 +1,6 @@
 import Models from '../../../../models'
 import i18n from 'i18n'
-import PayoutMail from '../../../mail/payout'
+import PayoutMail from '../../../../mail/payout'
 
 const models = Models as any
 

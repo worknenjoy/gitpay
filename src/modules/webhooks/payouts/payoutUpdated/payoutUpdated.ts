@@ -1,5 +1,5 @@
 import Models from '../../../../models'
-import PayoutMail from '../../../mail/payout'
+import PayoutMail from '../../../../mail/payout'
 
 const models = Models as any
 

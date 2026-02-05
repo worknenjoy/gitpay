@@ -1,5 +1,5 @@
 import models from '../../models'
-import UserMail from '../mail/user'
+import UserMail from '../../mail/user'
 
 const currentModels = models as any
 

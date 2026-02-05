@@ -3,8 +3,8 @@ const CronJob = require('cron').CronJob
 const models = require('../models')
 const moment = require('moment')
 const i18n = require('i18n')
-const DeadlineMail = require('../modules/mail/deadline')
-const TaskMail = require('../modules/mail/task')
+const DeadlineMail = require('../mail/deadline')
+const TaskMail = require('../mail/task')
 const OrderCron = require('./orders/orderCron')
 const bountyClosedNotPaidComment = require('../modules/bot/bountyClosedNotPaidComment')
 

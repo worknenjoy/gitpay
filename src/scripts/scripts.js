@@ -5,7 +5,7 @@ const url = require('url')
 const requestPromise = require('request-promise')
 const i18n = require('i18n')
 const stripe = require('../client/payment/stripe').default()
-const SendMail = require('../modules/mail/mail')
+const SendMail = require('../mail/mail')
 
 i18n.configure({
   directory:

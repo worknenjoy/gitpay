@@ -1,5 +1,5 @@
 import Models from '../../models'
-import SendMail from '../mail/mail'
+import SendMail from '../../mail/mail'
 import Stripe from '../../client/payment/stripe'
 
 const models = Models as any

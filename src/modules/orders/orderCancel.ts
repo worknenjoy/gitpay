@@ -1,6 +1,6 @@
 import models from '../../models'
 import requestPromise from 'request-promise'
-import PaymentMail from '../mail/payment'
+import PaymentMail from '../../mail/payment'
 
 const currentModels = models as any
 

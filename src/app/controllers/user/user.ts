@@ -5,8 +5,8 @@ import secrets from '../../../config/secrets'
 import * as user from '../../../modules/users'
 import Models from '../../../models'
 import * as task from '../../../modules/tasks'
-import Sendmail from '../../../modules/mail/mail'
-import UserMail from '../../../modules/mail/user'
+import Sendmail from '../../../mail/mail'
+import UserMail from '../../../mail/user'
 
 const models = Models as any
 

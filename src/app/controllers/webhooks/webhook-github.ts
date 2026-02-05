@@ -7,10 +7,10 @@ import i18n from 'i18n'
 const dateFormat = require('dateformat')
 import moment from 'moment'
 const models = require('../../../models')
-const constants = require('../../../modules/mail/constants')
-const TaskMail = require('../../../modules/mail/task')
-const SendMail = require('../../../modules/mail/mail')
-const IssueClosedMail = require('../../../modules/mail/issueClosed')
+const constants = require('../../../mail/constants')
+const TaskMail = require('../../../mail/task')
+const SendMail = require('../../../mail/mail')
+const IssueClosedMail = require('../../../mail/issueClosed')
 import type { Request, Response } from 'express'
 
 export const github = async (req: Request, res: Response) => {

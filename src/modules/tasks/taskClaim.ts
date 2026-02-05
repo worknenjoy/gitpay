@@ -1,7 +1,7 @@
 import models from '../../models'
 import { taskUpdate } from './taskUpdate'
 import { taskFetch } from './taskFetch'
-import SendMail from '../mail/mail'
+import SendMail from '../../mail/mail'
 import i18n from 'i18n'
 // @ts-ignore - jsonwebtoken has no type definitions
 import jwt from 'jsonwebtoken'

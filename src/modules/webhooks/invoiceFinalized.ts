@@ -1,5 +1,5 @@
 import Models from '../../models'
-import WalletMail from '../mail/wallet'
+import WalletMail from '../../mail/wallet'
 import Stripe from '../../client/payment/stripe'
 
 const models = Models as any

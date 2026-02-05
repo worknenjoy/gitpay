@@ -8,8 +8,8 @@ import { TaskFactory } from '../../factories'
 import nock from 'nock'
 import secrets from '../../../src/config/secrets'
 import spies from 'chai-spies'
-import AssignMail from '../../../src/modules/mail/assign'
-import TaskMail from '../../../src/modules/mail/task'
+import AssignMail from '../../../src/mail/assign'
+import TaskMail from '../../../src/mail/task'
 import { taskUpdate } from '../../../src/modules/tasks/taskUpdate'
 
 const sampleIssue = require('../../data/github/github.issue.create')

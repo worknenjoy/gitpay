@@ -1,5 +1,5 @@
 import { findUnclaimedBountiesWithMergedPrs } from '../../../queries/issue/bounty/findUnclaimedBountiesWithMergedPrs'
-import ClaimMail from '../../../modules/mail/templates/issue/claim'
+import ClaimMail from '../../../mail/templates/issue/claim'
 
 export const notifyUnclaimedBounties = async () => {
   const unclaimedBountiesWithMergedPrs = await findUnclaimedBountiesWithMergedPrs()

@@ -3,7 +3,7 @@ import i18n from 'i18n'
 
 const currentModels = models as any
 import moment from 'moment'
-import SendMail from '../../../mail/mail'
+import SendMail from '../../../../mail/mail'
 
 export async function transferReversedIssue(event: any, req: any, res: any): Promise<boolean> {
   const transferId = event?.data?.object?.id

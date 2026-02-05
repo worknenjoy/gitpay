@@ -1,7 +1,7 @@
 import Stripe from '../../../client/payment/stripe'
 import Models from '../../../models'
 import { DisputeDataCreated, DisputeDataWithdrawn, DisputeDataClosed } from './types'
-import PaymentRequestMail from '../../../modules/mail/paymentRequest'
+import PaymentRequestMail from '../../../mail/paymentRequest'
 import { findOrCreatePaymentRequestBalance } from '../../../queries/payment-request/payment-request-balance'
 import { findPaymentRequestPayment } from '../../../queries/payment-request/payment-request-payment'
 import { handleAmount } from '../../../modules/util/handle-amount/handle-amount'
