@@ -1,6 +1,6 @@
 import models from '../../models'
 import Stripe from '../../client/payment/stripe'
-import { handleAmount } from '../util/handle-amount/handle-amount'
+import { handleAmount } from '../../utils/handle-amount/handle-amount'
 
 const stripe = Stripe()
 

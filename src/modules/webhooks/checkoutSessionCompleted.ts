@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 import Stripe from '../../client/payment/stripe'
 import Models from '../../models'
-import { handleAmount } from '../util/handle-amount/handle-amount'
+import { handleAmount } from '../../utils/handle-amount/handle-amount'
 import PaymentRequestMail from '../../mail/paymentRequest'
 
 const stripe = Stripe()

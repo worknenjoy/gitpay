@@ -1,6 +1,6 @@
 import stripe from '../../client/payment/stripe'
 import models from '../../models'
-import { createOrUpdateCustomer } from '../util/customer'
+import { createOrUpdateCustomer } from '../../utils/customer'
 
 const currentModels = models as any
 const stripeInstance = stripe()
