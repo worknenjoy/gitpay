@@ -49,9 +49,9 @@ function isAuth(req: Request, res: Response, next: NextFunction): void {
           res.status(401).end()
         })
     })
-    return
+  } else {
+    next()
   }
-  next()
 }
 
 function isNotAuth(req: Request, res: Response, next: NextFunction): void {
