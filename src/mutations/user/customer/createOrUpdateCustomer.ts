@@ -1,6 +1,7 @@
 import stripeModule from '../../../client/payment/stripe'
-const stripe = stripeModule()
 import models from '../../../models'
+
+const stripe = stripeModule()
 
 const currentModels = models as any
 
