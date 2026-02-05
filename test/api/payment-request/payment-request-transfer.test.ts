@@ -1,14 +1,14 @@
 import { expect } from 'chai'
 import request from 'supertest'
-import api from '../src/server'
-import Models from '../src/models'
-import { registerAndLogin, truncateModels } from './helpers'
-import { TransferFactory, PaymentRequestFactory, PaymentRequestTransferFactory } from './factories'
+import api from '../../../src/server'
+import Models from '../../../src/models'
+import { registerAndLogin, truncateModels } from '../../helpers'
+import { TransferFactory, PaymentRequestFactory, PaymentRequestTransferFactory } from '../../factories'
 
 const agent = request.agent(api)
 const models = Models as any
 
-describe('Payment Request Transfer', () => {
+describe('POST /payment-request-transfer', () => {
   beforeEach(async () => {
     await truncateModels(models.User)
     await truncateModels(models.PaymentRequest)

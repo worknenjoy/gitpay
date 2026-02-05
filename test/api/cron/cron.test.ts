@@ -1,17 +1,17 @@
 import { expect } from 'chai'
-import api from '../src/server'
-import Models from '../src/models'
-import { truncateModels, createTask, createOrder } from './helpers'
+import api from '../../../src/server'
+import Models from '../../../src/models'
+import { truncateModels, createTask, createOrder } from '../../helpers'
 import nock from 'nock'
 import request from 'supertest'
-import { TaskCron, OrderCron } from '../src/crons/cron'
+import { TaskCron, OrderCron } from '../../../src/crons/cron'
 import MockDate from 'mockdate'
-import paypalOrder from './data/paypal/paypal.order'
+import paypalOrder from '../../data/paypal/paypal.order'
 
 const agent = request.agent(api)
 const models = Models as any
 
-describe('Crons', () => {
+describe('Cron Jobs', () => {
   beforeEach(async () => {
     await truncateModels(models.Task)
     await truncateModels(models.User)

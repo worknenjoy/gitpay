@@ -3,28 +3,28 @@
 import assert from 'assert'
 import request from 'supertest'
 import { expect } from 'chai'
-import api from '../src/server'
+import api from '../../../src/server'
 import nock from 'nock'
-import { truncateModels, registerAndLogin, createTransfer } from './helpers'
-import Models from '../src/models'
+import { truncateModels, registerAndLogin, createTransfer } from '../../helpers'
+import Models from '../../../src/models'
 
 const models = Models as any
 
-import chargeData from './data/stripe/charge'
-import createTransferData from './data/stripe/stripe.transfer.created'
-import reverseTransferData from './data/stripe/stripe.webhook.transfer.reversed'
-import cardData from './data/stripe/card'
-import balanceData from './data/stripe/balance'
-import { refundCreated } from './data/stripe/stripe.webhook.charge.refunded'
-import invoiceUpdated from './data/stripe/stripe.invoice.update'
-import invoiceCreated from './data/stripe/stripe.invoice.create'
-import invoicePaid from './data/stripe/stripe.invoice.paid'
-import invoiceWebhookPaid from './data/stripe/stripe.webhook.invoice'
-import { TaskFactory, UserFactory, TransferFactory, OrderFactory, WalletFactory, WalletOrderFactory, PaymentRequestFactory, PaymentRequestTransferFactory } from './factories'
+import chargeData from '../../data/stripe/charge'
+import createTransferData from '../../data/stripe/stripe.transfer.created'
+import reverseTransferData from '../../data/stripe/stripe.webhook.transfer.reversed'
+import cardData from '../../data/stripe/card'
+import balanceData from '../../data/stripe/balance'
+import { refundCreated } from '../../data/stripe/stripe.webhook.charge.refunded'
+import invoiceUpdated from '../../data/stripe/stripe.invoice.update'
+import invoiceCreated from '../../data/stripe/stripe.invoice.create'
+import invoicePaid from '../../data/stripe/stripe.invoice.paid'
+import invoiceWebhookPaid from '../../data/stripe/stripe.webhook.invoice'
+import { TaskFactory, UserFactory, TransferFactory, OrderFactory, WalletFactory, WalletOrderFactory, PaymentRequestFactory, PaymentRequestTransferFactory } from '../../factories'
 
 const agent = request.agent(api)
 
-describe('webhooks for platform', () => {
+describe('POST /webhooks', () => {
   beforeEach(async () => {
     await truncateModels(models.Task)
     await truncateModels(models.User)

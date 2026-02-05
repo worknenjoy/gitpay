@@ -1,19 +1,19 @@
 import { expect } from 'chai'
 import request from 'supertest'
-import api from '../src/server'
+import api from '../../../src/server'
 import nock from 'nock'
-import { registerAndLogin, truncateModels } from './helpers'
-import Models from '../src/models'
-import { PaymentRequestFactory } from './factories'
+import { registerAndLogin, truncateModels } from '../../helpers'
+import Models from '../../../src/models'
+import { PaymentRequestFactory } from '../../factories'
 
 const agent = request.agent(api)
 const models = Models as any
 
-const sampleProduct = require('./data/stripe/stripe.product.create')
-const samplePrice = require('./data/stripe/stripe.price.create')
-const samplePaymentLink = require('./data/stripe/stripe.paymentLinks.create')
+const sampleProduct = require('../../data/stripe/stripe.product.create')
+const samplePrice = require('../../data/stripe/stripe.price.create')
+const samplePaymentLink = require('../../data/stripe/stripe.paymentLinks.create')
 
-describe('PaymentRequests', () => {
+describe('POST /payment-request', () => {
   beforeEach(async () => {
     await truncateModels(models.User)
     await truncateModels(models.PaymentRequest)

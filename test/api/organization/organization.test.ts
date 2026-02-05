@@ -1,13 +1,13 @@
 import { expect } from 'chai'
 import request from 'supertest'
-import api from '../src/server'
-import Models from '../src/models'
-import { register, login } from './helpers'
+import api from '../../../src/server'
+import Models from '../../../src/models'
+import { register, login } from '../../helpers'
 
 const models = Models as any
 const agent = request.agent(api)
 
-xdescribe('Organizations', () => {
+xdescribe('GET /organization', () => {
   beforeEach(async () => {
     await models.User.destroy({ where: {}, truncate: true, cascade: true })
 

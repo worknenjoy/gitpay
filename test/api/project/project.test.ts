@@ -1,13 +1,13 @@
-import Models from '../src/models'
+import Models from '../../../src/models'
 import { expect } from 'chai'
 import request from 'supertest'
-import api from '../src/server'
-import { UserFactory } from './factories'
+import api from '../../../src/server'
+import { UserFactory } from '../../factories'
 
 const models = Models as any
 const agent = request.agent(api)
 
-xdescribe('Projects', () => {
+xdescribe('GET /project', () => {
   describe('Models', () => {
     it('create', async () => {
       const p = await models.Project.create({ name: 'Foo Project' })
