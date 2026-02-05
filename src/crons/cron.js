@@ -6,7 +6,7 @@ const i18n = require('i18n')
 const DeadlineMail = require('../mail/deadline')
 const TaskMail = require('../mail/task')
 const OrderCron = require('./orders/orderCron')
-const bountyClosedNotPaidComment = require('../modules/bot/bountyClosedNotPaidComment')
+const bountyClosedNotPaidComment = require('../bot/bountyClosedNotPaidComment')
 
 i18n.configure({
   directory:

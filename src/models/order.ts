@@ -88,7 +88,7 @@ export default class Order
   public updatedAt!: Date
 
   static initModel(sequelize: Sequelize): typeof Order {
-    const { comment } = require('../modules/bot/comment')
+    const { comment } = require('../bot/comment')
 
     Order.init(
       {
