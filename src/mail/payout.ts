@@ -1,9 +1,9 @@
 import i18n from 'i18n'
 import request from './request'
-import { handleAmount } from '../modules/util/handle-amount/handle-amount'
+import { handleAmount } from '../utils/handle-amount/handle-amount'
 import moment from 'moment'
 import { tableContentEmailTemplate } from './templates/table-content'
-import currencyInfo from '../modules/util/currency-info'
+import currencyInfo from '../utils/currency-info'
 
 const PayoutMail: any = {
   payoutCreated: async function (user: any, payout: any) {

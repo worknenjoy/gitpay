@@ -1,7 +1,7 @@
 import models from '../../models'
 import PaymentMail from '../../mail/payment'
 import requestPromise from 'request-promise'
-import { handleAmount } from '../util/handle-amount/handle-amount'
+import { handleAmount } from '../../utils/handle-amount/handle-amount'
 import stripeModule from '../../client/payment/stripe'
 const stripe = stripeModule()
 

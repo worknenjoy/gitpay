@@ -1,7 +1,7 @@
 import models from '../../models'
 import stripeModule from '../../client/payment/stripe'
 const stripe = stripeModule()
-import { currencyMap } from '../util/currency-map'
+import { currencyMap } from '../../utils/currency-map'
 
 const currentModels = models as any
 

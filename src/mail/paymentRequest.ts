@@ -1,11 +1,11 @@
 import request from './request'
 import i18n from 'i18n'
 import moment from 'moment'
-import formatDate from '../modules/util/formatDate'
+import formatDate from '../utils/formatDate'
 import emailTemplate from './templates/base-content'
 import { tableContentEmailTemplate } from './templates/table-content'
-import currencyInfo from '../modules/util/currency-info'
-import { handleAmount } from '../modules/util/handle-amount/handle-amount'
+import currencyInfo from '../utils/currency-info'
+import { handleAmount } from '../utils/handle-amount/handle-amount'
 
 type CurrencyKey = keyof typeof currencyInfo
 
