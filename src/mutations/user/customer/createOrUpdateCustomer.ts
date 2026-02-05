@@ -1,6 +1,6 @@
-import stripeModule from '../client/payment/stripe'
+import stripeModule from '../../../client/payment/stripe'
 const stripe = stripeModule()
-import models from '../models'
+import models from '../../../models'
 
 const currentModels = models as any
 
