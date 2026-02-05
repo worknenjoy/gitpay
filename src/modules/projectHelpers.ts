@@ -1,15 +1,22 @@
-const models = require('../models')
+import models from '../models'
 
-const project = async (userOrCompany, projectName, userId, provider) => {
+const currentModels = models as any
+
+const project = async (
+  userOrCompany: string,
+  projectName: string,
+  userId: number,
+  provider: string
+): Promise<any> => {
   try {
-    const organizationExist = await models.Organization.findOne({
+    const organizationExist = await currentModels.Organization.findOne({
       where: {
         name: userOrCompany
       },
-      include: [models.Project]
+      include: [currentModels.Project]
     })
     if (organizationExist) {
-      const projectFromOrg = await models.Project.findOne({
+      const projectFromOrg = await currentModels.Project.findOne({
         where: {
           name: projectName,
           OrganizationId: organizationExist.id
@@ -22,7 +29,7 @@ const project = async (userOrCompany, projectName, userId, provider) => {
         return newProject
       }
     } else {
-      const organization = await models.Organization.create({
+      const organization = await currentModels.Organization.create({
         name: userOrCompany,
         UserId: userId,
         provider: provider
@@ -33,8 +40,8 @@ const project = async (userOrCompany, projectName, userId, provider) => {
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log('error', e)
-    throw new Error(e)
+    throw new Error(String(e))
   }
 }
 
-module.exports = project
+export default project
