@@ -1,7 +1,7 @@
 import Stripe from '../../client/payment/stripe'
 import Models from '../../models'
 import { UUIDV4 } from 'sequelize'
-import { handleAmount } from '../../modules/util/handle-amount/handle-amount'
+import { handleAmount } from '../../utils/handle-amount/handle-amount'
 
 const models = Models as any
 

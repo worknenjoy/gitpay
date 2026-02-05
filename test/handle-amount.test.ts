@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { handleAmount } from '../src/modules/util/handle-amount/handle-amount'
+import { handleAmount } from '../src/utils/handle-amount/handle-amount'
 
 describe('Amount Conversion', () => {
   it('should convert cents to decimal', () => {

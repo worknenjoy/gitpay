@@ -4,7 +4,7 @@ import { DisputeDataCreated, DisputeDataWithdrawn, DisputeDataClosed } from './t
 import PaymentRequestMail from '../../../mail/paymentRequest'
 import { findOrCreatePaymentRequestBalance } from '../../../queries/payment-request/payment-request-balance'
 import { findPaymentRequestPayment } from '../../../queries/payment-request/payment-request-payment'
-import { handleAmount } from '../../../modules/util/handle-amount/handle-amount'
+import { handleAmount } from '../../../utils/handle-amount/handle-amount'
 
 const stripe = Stripe()
 const models = Models as any
