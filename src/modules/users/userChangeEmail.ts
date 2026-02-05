@@ -1,7 +1,7 @@
 import { updateUser } from '../../mutations/user/updateUser/updateUser'
 import { findUser } from '../../queries/user/findUser'
 import Models from '../../models'
-import UserMail from '../../modules/mail/user'
+import UserMail from '../../mail/user'
 import { isEmailValid } from '../../validators/emailValidator'
 
 const models = Models as any

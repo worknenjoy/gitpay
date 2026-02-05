@@ -3,7 +3,7 @@ import { Op } from 'sequelize'
 const models = require('../../models')
 const moment = require('moment')
 const i18n = require('i18n')
-const DeadlineMail = require('../../modules/mail/deadline')
+const DeadlineMail = require('../../mail/deadline')
 
 i18n.configure({
   directory:

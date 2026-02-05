@@ -3,7 +3,7 @@ import chai from 'chai'
 import spies from 'chai-spies'
 import request from 'supertest'
 import api from '../../../src/server'
-import ContactMail from '../../../src/modules/mail/contact'
+import ContactMail from '../../../src/mail/contact'
 
 const agent = request.agent(api)
 

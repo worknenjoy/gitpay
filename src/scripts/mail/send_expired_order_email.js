@@ -1,7 +1,7 @@
 const path = require('path')
 const i18n = require('i18n')
 const models = require('../../models')
-const orderMail = require('../../modules/mail/order')
+const orderMail = require('../../mail/order')
 
 i18n.configure({
   directory:
