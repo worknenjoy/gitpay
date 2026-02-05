@@ -34,8 +34,8 @@ const project = async (
         UserId: userId,
         provider: provider
       })
-      const project = await organization.createProject({ name: projectName })
-      return project
+      const newProject = await organization.createProject({ name: projectName })
+      return newProject
     }
   } catch (e) {
     // eslint-disable-next-line no-console
