@@ -1,20 +1,20 @@
 import { expect } from 'chai'
 import chai from 'chai'
 import spies from 'chai-spies'
-import api from '../src/server'
-import Models from '../src/models'
+import api from '../../../src/server'
+import Models from '../../../src/models'
 import nock from 'nock'
 import request from 'supertest'
-import { createTask, createOrder, createPayout, truncateModels } from './helpers'
-import SendMail from '../src/modules/mail/mail'
-import { scripts } from '../src/scripts/scripts'
-import { get as sampleCharge } from './data/stripe/stripe.charge'
-import { get as sampleTransaction } from './data/stripe/stripe.charge.balance_transaction'
+import { createTask, createOrder, createPayout, truncateModels } from '../../helpers'
+import SendMail from '../../../src/modules/mail/mail'
+import { scripts } from '../../../src/scripts/scripts'
+import { get as sampleCharge } from '../../data/stripe/stripe.charge'
+import { get as sampleTransaction } from '../../data/stripe/stripe.charge.balance_transaction'
 
 const agent = request.agent(api)
 const models = Models as any
 
-describe('Scripts', () => {
+describe('Script Execution', () => {
   beforeEach(async () => {
     await truncateModels(models.Task)
     await truncateModels(models.User)

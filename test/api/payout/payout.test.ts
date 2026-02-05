@@ -4,11 +4,11 @@ import request from 'supertest'
 import { expect } from 'chai'
 import chai from 'chai'
 import spies from 'chai-spies'
-import api from '../src/server'
+import api from '../../../src/server'
 import nock from 'nock'
-import { registerAndLogin, truncateModels } from './helpers'
-import { PayoutFactory } from './factories'
-import Models from '../src/models'
+import { registerAndLogin, truncateModels } from '../../helpers'
+import { PayoutFactory } from '../../factories'
+import Models from '../../../src/models'
 
 const models = Models as any
 const agent = request.agent(api)
@@ -41,7 +41,7 @@ const createPayoutData = async (source_id: string, noLogin: boolean = false): Pr
   return res
 }
 
-describe('Payouts', () => {
+describe('POST /payout', () => {
   describe('Initial payout with one credit card and account activated', () => {
     beforeEach(async () => {
       await truncateModels(models.Task)

@@ -2,12 +2,12 @@ import { expect } from 'chai'
 import chai from 'chai'
 import spies from 'chai-spies'
 import request from 'supertest'
-import api from '../src/server'
-import ContactMail from '../src/modules/mail/contact'
+import api from '../../../src/server'
+import ContactMail from '../../../src/modules/mail/contact'
 
 const agent = request.agent(api)
 
-describe('Contact', () => {
+describe('POST /contact', () => {
   describe('Contact recruiters', () => {
     xit('should contact recruiters', async () => {
       chai.use(spies)

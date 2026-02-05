@@ -1,19 +1,19 @@
 import request from 'supertest'
 import { expect } from 'chai'
 import chai from 'chai'
-import api from '../src/server'
-import Models from '../src/models'
-import { register, createTask, truncateModels } from './helpers'
-import PaymentRequestMail from '../src/modules/mail/paymentRequest'
+import api from '../../../src/server'
+import Models from '../../../src/models'
+import { register, createTask, truncateModels } from '../../helpers'
+import PaymentRequestMail from '../../../src/modules/mail/paymentRequest'
 import sinon from 'sinon'
-import * as constants from '../src/modules/mail/constants'
-import { sendgrid } from '../src/config/secrets'
+import * as constants from '../../../src/modules/mail/constants'
+import { sendgrid } from '../../../src/config/secrets'
 import nock from 'nock'
 
 const agent = request.agent(api)
 const models = Models as any
 
-describe('Mail', () => {
+describe('POST /mail', () => {
   before(() => {
     sinon.stub(sendgrid, 'apiKey').get(() => 'SG.TEST_API_KEY')
   })

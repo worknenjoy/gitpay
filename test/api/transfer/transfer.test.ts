@@ -3,7 +3,7 @@ import request from 'supertest'
 import { expect } from 'chai'
 import chai from 'chai'
 import spies from 'chai-spies'
-import api from '../src/server'
+import api from '../../../src/server'
 import nock from 'nock'
 import {
   createTask,
@@ -11,12 +11,12 @@ import {
   createAssign,
   createTransfer,
   truncateModels
-} from './helpers'
-import Models from '../src/models'
+} from '../../helpers'
+import Models from '../../../src/models'
 const models = Models as any
-import { updated } from './data/stripe/stripe.transfer.updated'
+import { updated } from '../../data/stripe/stripe.transfer.updated'
 const transfer = updated.data.object
-import { get as paypalGetPayoutSample } from './data/paypal/paypal.payout'
+import { get as paypalGetPayoutSample } from '../../data/paypal/paypal.payout'
 
 const agent = request.agent(api)
 
@@ -30,7 +30,7 @@ const createTransferWithTaskData = async (taskData: any, userId?: number, transf
   return res
 }
 
-describe('Transfer', () => {
+describe('POST /transfer', () => {
   describe('Initial transfer with one credit card and account activated', () => {
     beforeEach(async () => {
       await truncateModels(models.Task)

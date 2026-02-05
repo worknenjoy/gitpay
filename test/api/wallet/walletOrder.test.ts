@@ -1,18 +1,18 @@
 import { expect } from 'chai'
 import request from 'supertest'
 import nock from 'nock'
-import api from '../src/server'
-import Models from '../src/models'
-import { truncateModels, registerAndLogin } from './helpers'
-import { WalletFactory, WalletOrderFactory } from './factories'
-import invoiceBasic from './data/stripe/stripe.invoice.basic'
-import invoiceItem from './data/stripe/stripe.invoiceitem'
-import customer from './data/stripe/stripe.customer'
+import api from '../../../src/server'
+import Models from '../../../src/models'
+import { truncateModels, registerAndLogin } from '../../helpers'
+import { WalletFactory, WalletOrderFactory } from '../../factories'
+import invoiceBasic from '../../data/stripe/stripe.invoice.basic'
+import invoiceItem from '../../data/stripe/stripe.invoiceitem'
+import customer from '../../data/stripe/stripe.customer'
 
 const agent = request.agent(api)
 const models = Models as any
 
-describe('WalletOrder', () => {
+describe('POST /wallet-order', () => {
   beforeEach(async () => {
     await truncateModels(models.User)
     await truncateModels(models.Wallet)
