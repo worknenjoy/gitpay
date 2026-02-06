@@ -1,5 +1,4 @@
 import models from '../../models'
-import secrets from '../../config/secrets'
 import * as url from 'url'
 import requestPromise from 'request-promise'
 import TaskMail from '../../mail/task'
@@ -8,6 +7,7 @@ import { userExists } from '../users'
 import project from '../projectHelpers'
 import { issueAddedComment } from '../../bot/issueAddedComment'
 import { notifyNewIssue } from '../../shared/slack'
+import { GithubConnect } from '../../client/provider/github'
 
 const currentModels = models as any
 
@@ -70,8 +70,6 @@ function parseAndValidateIssueUrl(
 
 export async function taskBuilds(taskParameters: any) {
   const repoUrl = taskParameters.url
-  const githubClientId = taskParameters.clientId || secrets.github.id
-  const githubClientSecret = taskParameters.secret || secrets.github.secret
   const provider = taskParameters.provider
   const { userOrCompany, projectName, issueId } = parseAndValidateIssueUrl(repoUrl, provider)
   const userId = taskParameters.userId
@@ -79,38 +77,25 @@ export async function taskBuilds(taskParameters: any) {
 
   if (!userId) return false
 
-  let uri: string
-  let headers: any
   switch (taskParameters.provider) {
     case 'github': {
-      uri = token
-        ? `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}`
-        : `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
-      headers = {
-        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-      }
-      if (token) headers.Authorization = `token ${token}`
+      const uri = `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}`
 
-      const response = await requestPromise({
+      const issueDataJsonGithub = await GithubConnect({
         uri,
-        headers
+        token
       })
 
-      if (!response && !response.title) return false
-      const issueDataJsonGithub = JSON.parse(response)
+      if (!issueDataJsonGithub || !issueDataJsonGithub.title) return false
       if (!taskParameters.title) taskParameters.title = issueDataJsonGithub.title
       if (!taskParameters.description) taskParameters.description = issueDataJsonGithub.body
 
-      const programmingLanguagesUri = `https://api.github.com/repos/${userOrCompany}/${projectName}/languages?client_id=${githubClientId}&client_secret=${githubClientSecret}`
+      const programmingLanguagesUri = `https://api.github.com/repos/${userOrCompany}/${projectName}/languages`
       let programmingLanguagesResponse = {}
       try {
-        programmingLanguagesResponse = await requestPromise({
+        programmingLanguagesResponse = await GithubConnect({
           uri: programmingLanguagesUri,
-          headers: {
-            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
-            ...(taskParameters.token ? { Authorization: `token ${taskParameters.token}` } : {})
-          },
-          json: true
+          token: taskParameters.token
         })
       } catch (e) {
         programmingLanguagesResponse = {}
@@ -143,14 +128,10 @@ export async function taskBuilds(taskParameters: any) {
 
       const role = await roleExists({ name: 'company_owner' })
       if (role.dataValues && role.dataValues.id) {
-        const userInfo = await requestPromise({
-          uri: `https://api.github.com/users/${userOrCompany}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
-          headers: {
-            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-          }
+        const userInfo = await GithubConnect({
+          uri: `https://api.github.com/users/${userOrCompany}`
         })
-        const userInfoJSON = JSON.parse(userInfo)
-        const userExist = userExists && (await userExists({ email: userInfoJSON.email }))
+        const userExist = userExists && (await userExists({ email: userInfo.email }))
         if (userExist && userExist.dataValues && userExist.dataValues.id) {
           await task.createMember({
             userId: userExist.dataValues.id,
@@ -175,7 +156,7 @@ export async function taskBuilds(taskParameters: any) {
     }
 
     case 'bitbucket': {
-      const response = await requestPromise({
+      await requestPromise({
         uri: `https://api.bitbucket.org/2.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
       })
 
