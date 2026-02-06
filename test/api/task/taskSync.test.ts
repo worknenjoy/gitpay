@@ -28,12 +28,12 @@ xdescribe('GET /task/sync', () => {
       currency: 'BRL',
       amount: 200
     })
-    
+
     const res = await agent
       .get(`/tasks/${task.dataValues.id}/sync/value`)
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.statusCode).to.equal(200)
     expect(res.body).to.exist
     expect(res.body.value.available).to.equal(0)
@@ -48,12 +48,12 @@ xdescribe('GET /task/sync', () => {
       amount: 200,
       status: 'succeeded'
     })
-    
+
     const res = await agent
       .get(`/tasks/${task.dataValues.id}/sync/value`)
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.statusCode).to.equal(200)
     expect(res.body).to.exist
     expect(res.body.value.available).to.equal(200)

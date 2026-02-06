@@ -14,6 +14,9 @@ export const PaymentRequestBalanceTransactionFactory = async (paramsOverwrite: a
     status: 'completed',
     paymentRequestBalanceId: 1
   }
-  const paymentRequestBalanceTransaction = await models.PaymentRequestBalanceTransaction.create({ ...defaultParams, ...paramsOverwrite })
+  const paymentRequestBalanceTransaction = await models.PaymentRequestBalanceTransaction.create({
+    ...defaultParams,
+    ...paramsOverwrite
+  })
   return paymentRequestBalanceTransaction
 }

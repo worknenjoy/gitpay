@@ -1,7 +1,9 @@
 import express from 'express'
 import '../../models'
-import '../../modules/authenticationHelpers'
+import * as authenticationHelpers from '../../utils/auth/authenticationHelpers'
 import * as controllers from '../controllers/info'
+
+void authenticationHelpers
 
 const router = express.Router()
 

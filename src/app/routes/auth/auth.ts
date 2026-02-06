@@ -1,5 +1,5 @@
 import express from 'express'
-import * as authenticationHelpers from '../../../modules/authenticationHelpers'
+import * as authenticationHelpers from '../../../utils/auth/authenticationHelpers'
 import {
   register,
   forgotPasswordNotification,

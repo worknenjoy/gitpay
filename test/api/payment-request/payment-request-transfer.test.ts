@@ -3,7 +3,11 @@ import request from 'supertest'
 import api from '../../../src/server'
 import Models from '../../../src/models'
 import { registerAndLogin, truncateModels } from '../../helpers'
-import { TransferFactory, PaymentRequestFactory, PaymentRequestTransferFactory } from '../../factories'
+import {
+  TransferFactory,
+  PaymentRequestFactory,
+  PaymentRequestTransferFactory
+} from '../../factories'
 
 const agent = request.agent(api)
 const models = Models as any

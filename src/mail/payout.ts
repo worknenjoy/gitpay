@@ -1,9 +1,9 @@
 import i18n from 'i18n'
 import request from './request'
-import { handleAmount } from '../utils/handle-amount/handle-amount'
+import { calculateAmountWithPercent } from '../utils'
 import moment from 'moment'
 import { tableContentEmailTemplate } from './templates/table-content'
-import currencyInfo from '../utils/currency-info'
+import currencyInfo from '../utils/currency/currency-info'
 
 const PayoutMail: any = {
   payoutCreated: async function (user: any, payout: any) {
@@ -12,7 +12,7 @@ const PayoutMail: any = {
 
     i18n.setLocale(language || 'en')
 
-    const amount = handleAmount(payout.amount, 0, 'centavos', payout.currency).decimal
+    const amount = calculateAmountWithPercent(payout.amount, 0, 'centavos', payout.currency).decimal
 
     const currency = payout.currency?.toLowerCase?.() || 'usd'
     const currencySymbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
@@ -49,7 +49,7 @@ const PayoutMail: any = {
 
     i18n.setLocale(language || 'en')
 
-    const amount = handleAmount(payout.amount, 0, 'centavos', payout.currency).decimal
+    const amount = calculateAmountWithPercent(payout.amount, 0, 'centavos', payout.currency).decimal
 
     const currency = payout.currency?.toLowerCase?.() || 'usd'
     const currencySymbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
@@ -89,7 +89,7 @@ const PayoutMail: any = {
 
     i18n.setLocale(language || 'en')
 
-    const amount = handleAmount(payout.amount, 0, 'centavos', payout.currency).decimal
+    const amount = calculateAmountWithPercent(payout.amount, 0, 'centavos', payout.currency).decimal
 
     const currency = payout.currency?.toLowerCase?.() || 'usd'
     const currencySymbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
@@ -124,7 +124,7 @@ const PayoutMail: any = {
 
     i18n.setLocale(language || 'en')
 
-    const amount = handleAmount(payout.amount, 0, 'centavos', payout.currency).decimal
+    const amount = calculateAmountWithPercent(payout.amount, 0, 'centavos', payout.currency).decimal
 
     const currency = payout.currency?.toLowerCase?.() || 'usd'
     const currencySymbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''

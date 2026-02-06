@@ -22,7 +22,7 @@ describe('DELETE /tasks/delete/:id', () => {
 
     const res = await agent
       .delete(`/tasks/delete/${createdTask.id}`)
-      .set('Authorization', headers.authorization)
+      .set('Authorization', headers?.authorization)
       .expect(200)
     expect(await models.Task.findByPk(createdTask.id)).to.be.null
   })
@@ -34,7 +34,7 @@ describe('DELETE /tasks/delete/:id', () => {
 
     const deleted = await agent
       .delete(`/tasks/delete/${createdTask.id}`)
-      .set('Authorization', headers.authorization)
+      .set('Authorization', headers?.authorization)
       .expect(200)
 
     expect(deleted.text).to.equal('1')
@@ -42,7 +42,7 @@ describe('DELETE /tasks/delete/:id', () => {
   it('should not delete task of another user', async () => {
     const task = await createTask(agent)
 
-    const { body: createdTask } = task || {}
+    const { headers, body: createdTask } = task || {}
 
     const anotherUser = await registerAndLogin(agent, {
       email: 'anotheruser@example.com',
@@ -53,7 +53,7 @@ describe('DELETE /tasks/delete/:id', () => {
 
     const deleted = await agent
       .delete(`/tasks/delete/${createdTask.id}`)
-      .set('Authorization', anotherUserHeaders.authorization)
+      .set('Authorization', anotherUserHeaders?.authorization)
       .expect(200)
 
     expect(deleted.text).to.equal('0')
@@ -81,7 +81,7 @@ describe('DELETE /tasks/delete/:id', () => {
 
     const res = await agent
       .delete(`/tasks/delete/${createdTask.id}`)
-      .set('Authorization', headers.authorization)
+      .set('Authorization', headers?.authorization)
       .expect(500)
     expect(res.body.error).to.equal('CANNOT_DELETE_ISSUE_WITH_ORDERS_ASSOCIATED')
     expect(await models.Task.findByPk(createdTask.id)).to.not.be.null

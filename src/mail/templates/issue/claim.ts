@@ -1,7 +1,7 @@
 import i18n from 'i18n'
 import request from '../../request'
 import { tableContentEmailTemplate, type ActionButton } from '../table-content'
-import currencyInfo from '../../../utils/currency-info'
+import currencyInfo from '../../../utils/currency/currency-info'
 
 const ClaimMail: any = {
   notifyUnclaimedBounties: async function (user: any, issue: any, pullRequest: any) {

@@ -1,6 +1,6 @@
 import express from 'express'
 import passport from 'passport'
-import * as authenticationHelpers from '../../../modules/authenticationHelpers'
+import * as authenticationHelpers from '../../../utils/auth/authenticationHelpers'
 import {
   authorizeGithubPrivateIssue,
   disconnectGithub,

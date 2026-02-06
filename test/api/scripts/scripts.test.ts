@@ -7,7 +7,7 @@ import nock from 'nock'
 import request from 'supertest'
 import { createTask, createOrder, createPayout, truncateModels } from '../../helpers'
 import SendMail from '../../../src/mail/mail'
-import { scripts } from '../../../src/scripts/scripts'
+const { scripts } = require('../../../src/scripts/scripts') as { scripts: any }
 import { get as sampleCharge } from '../../data/stripe/stripe.charge'
 import { get as sampleTransaction } from '../../data/stripe/stripe.charge.balance_transaction'
 

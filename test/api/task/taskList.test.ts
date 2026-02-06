@@ -22,11 +22,8 @@ xdescribe('GET /task', () => {
   })
 
   it('should list tasks', async () => {
-    const res = await agent
-      .get('/tasks/list')
-      .expect('Content-Type', /json/)
-      .expect(200)
-    
+    const res = await agent.get('/tasks/list').expect('Content-Type', /json/).expect(200)
+
     expect(res.statusCode).to.equal(200)
     expect(res.body).to.exist
   })

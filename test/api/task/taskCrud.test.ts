@@ -10,12 +10,11 @@ import secrets from '../../../src/config/secrets'
 import spies from 'chai-spies'
 import AssignMail from '../../../src/mail/assign'
 import TaskMail from '../../../src/mail/task'
-import { taskUpdate } from '../../../src/modules/tasks/taskUpdate'
 
-const sampleIssue = require('../../data/github/github.issue.create')
-const getSingleIssue = require('../../data/github/github.issue.get')
-const getIssueError = require('../../data/github/github.issue.error')
-const getSingleRepo = require('../../data/github/github.repository.get')
+import sampleIssue from '../../data/github/github.issue.create'
+import getSingleIssue from '../../data/github/github.issue.get'
+import getIssueError from '../../data/github/github.issue.error'
+import getSingleRepo from '../../data/github/github.repository.get'
 
 const models = Models as any
 const agent = request.agent(api)
@@ -70,7 +69,7 @@ describe('Task CRUD', () => {
       .post('/tasks/create/')
       .send(params ? params : { url: 'https://github.com/worknenjoy/truppie/issues/99' })
       .set('Authorization', authorizationHeader)
-    return res.body
+    return res
   }
 
   const buildTask = (params: any) => {
@@ -98,11 +97,13 @@ describe('Task CRUD', () => {
   it('should create a new task with projects and organizations', async () => {
     nockAuth()
     const res = await registerAndLogin(agent)
-    const task = await createTask(res.headers.authorization, {
+    const response = await createTask(res.headers.authorization, {
       url: 'https://github.com/worknenjoy/gitpay/issues/1080'
     })
-    
-    expect(task.url).to.equal('https://github.com/worknenjoy/gitpay/issues/1080')
+
+    const { body } = response
+
+    expect(body.url).to.equal('https://github.com/worknenjoy/gitpay/issues/1080')
   })
 
   it('should give error on update if the task already exists', async () => {
@@ -112,39 +113,45 @@ describe('Task CRUD', () => {
       url: 'https://github.com/worknenjoy/gitpay/issues/1080',
       provider: 'github'
     })
-    
-    const task = await createTask(res.headers.authorization, {
+
+    const response = await createTask(res.headers.authorization, {
       url: 'https://github.com/worknenjoy/gitpay/issues/1080',
       provider: 'github'
     })
-    
-    expect(task.errors).to.exist
-    expect(task.errors[0].message).to.equal('url must be unique')
+
+    const { body } = response
+
+    expect(body.errors).to.exist
+    expect(body.errors[0].message).to.equal('url must be unique')
   })
 
   it('should give an error on create if the issue build responds with limit exceeded', async () => {
     nockAuthLimitExceeded()
     const res = await registerAndLogin(agent)
-    const task = await createTask(res.headers.authorization, {
+    const response = await createTask(res.headers.authorization, {
       url: 'https://github.com/worknenjoy/gitpay/issues/1080',
       provider: 'github'
     })
-    
-    expect(task.error).exist
-    expect(task.error).to.contain('API rate limit exceeded')
+
+    const { body } = response
+
+    expect(body.error).to.exist
+    expect(body.error).to.contain('API rate limit exceeded')
   })
 
   it('should not raise an error on fetch if the issue build responds with limit exceeded', async () => {
     const res = await registerAndLogin(agent)
-    const task = await createTask(res.headers.authorization, {
+    const response = await createTask(res.headers.authorization, {
       url: 'https://github.com/worknenjoy/gitpay/issues/1080',
       provider: 'github'
     })
-    
+
+    const { body } = response
+
     nockAuthLimitExceeded()
-    const fetchRes = await agent.get(`/tasks/fetch/${task.id}`)
-    expect(fetchRes.body).exist
-    expect(fetchRes.body.id).to.equal(task.id)
+    const fetchResponse = await agent.get(`/tasks/fetch/${body.id}`)
+    expect(fetchResponse.body).exist
+    expect(fetchResponse.body.id).to.equal(body.id)
   })
 
   xit('should try to create an invalid task', async () => {
@@ -155,7 +162,7 @@ describe('Task CRUD', () => {
       .set('Authorization', res.headers.authorization)
       .expect('Content-Type', /json/)
       .expect(400)
-    
+
     expect(taskRes.statusCode).to.equal(400)
   })
 
@@ -172,7 +179,7 @@ describe('Task CRUD', () => {
       .set('Authorization', res.headers.authorization)
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(taskRes.statusCode).to.equal(200)
     expect(taskRes.body).to.exist
     expect(taskRes.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/99')
@@ -180,15 +187,16 @@ describe('Task CRUD', () => {
 
   xit('should invite for a task', async () => {
     const res = await registerAndLogin(agent)
-    const task = await createTask(res.headers.authorization)
+    const response = await createTask(res.headers.authorization)
+    const { body } = response
     const inviteRes = await agent
-      .post(`/tasks/${task.id}/invite/`)
+      .post(`/tasks/${body.id}/invite/`)
       .send({
         email: 'https://github.com/worknenjoy/truppie/issues/99',
         message: 'a test invite'
       })
       .expect(200)
-    
+
     expect(inviteRes.statusCode).to.equal(200)
     expect(inviteRes.body).to.exist
   })
@@ -200,18 +208,18 @@ describe('Task CRUD', () => {
       .send({ email: 'teste_order_declined@gmail.com', password: 'teste' })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const userId = user.body.id
     const res = await login(agent, { email: 'firstUser email', password: 'teste' })
     const task = await buildTask({
       userId: userId,
       Assigns: [{ userId }]
     })
-    
+
     const assign = await task.createAssign({ userId: userId })
     chai.use(spies)
     const mailSpySuccess = chai.spy.on(AssignMail, 'messageInterested')
-    
+
     const messageRes = await agent
       .post(`/tasks/${task.id}/message/`)
       .send({
@@ -221,12 +229,10 @@ describe('Task CRUD', () => {
       .set('Authorization', res.headers.authorization)
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(messageRes.statusCode).to.equal(200)
     expect(messageRes.body).to.exist
-    expect(messageRes.body.url).to.equal(
-      'https://github.com/worknenjoy/truppie/issues/76'
-    )
+    expect(messageRes.body.url).to.equal('https://github.com/worknenjoy/truppie/issues/76')
     expect(mailSpySuccess).to.have.been.called()
   })
 
@@ -236,7 +242,7 @@ describe('Task CRUD', () => {
         '/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7'
       )
       .expect(401)
-    
+
     expect(res.statusCode).to.equal(401)
     expect(res.body.error).to.equal('bad_verification_code')
     expect(res.body).to.exist
@@ -253,23 +259,23 @@ describe('Task CRUD', () => {
       .get('/users/alexanmtz')
       .query({ client_id: secrets.github.id, client_secret: secrets.github.secret })
       .reply(200, { email: 'test@gmail.com' })
-    
+
     const registerRes = await agent
       .post('/auth/register')
       .send({ email: 'teste@gmail.com', password: 'teste' })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(registerRes.statusCode).to.equal(200)
     expect(registerRes.body).to.exist
     const userId = registerRes.body.id
-    
+
     const callbackRes = await agent
       .get(
         `/callback/github/private/?userId=${userId}&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7`
       )
       .expect(302)
-    
+
     expect(callbackRes.statusCode).to.equal(302)
   })
 
@@ -300,12 +306,16 @@ describe('Task CRUD', () => {
         .query({ client_id: secrets.github.id, client_secret: secrets.github.secret })
         .reply(200, getSingleRepo.repo)
 
-      const task = await models.Task.build({ url: github_url, provider: 'github', title: 'foo' }).save()
+      const task = await models.Task.build({
+        url: github_url,
+        provider: 'github',
+        title: 'foo'
+      }).save()
       const res = await agent
         .get(`/tasks/fetch/${task.dataValues.id}`)
         .expect('Content-Type', /json/)
         .expect(200)
-      
+
       expect(res.statusCode).to.equal(200)
       expect(res.body).to.exist
       expect(res.body.metadata.id).to.equal('1080')
@@ -339,14 +349,18 @@ describe('Task CRUD', () => {
         .query({ client_id: secrets.github.id, client_secret: secrets.github.secret })
         .reply(200, getSingleRepo.repo)
 
-      const task = await models.Task.build({ url: github_url, provider: 'github', title: 'foo' }).save()
+      const task = await models.Task.build({
+        url: github_url,
+        provider: 'github',
+        title: 'foo'
+      }).save()
       await models.Task.update({ status: 'in_progress' }, { where: { id: task.dataValues.id } })
-      
+
       const res = await agent
         .get(`/tasks/fetch/${task.dataValues.id}`)
         .expect('Content-Type', /json/)
         .expect(200)
-      
+
       expect(res.statusCode).to.equal(200)
       expect(res.body).to.exist
       expect(res.body.metadata.id).to.equal('1080')
@@ -374,14 +388,18 @@ describe('Task CRUD', () => {
         .query({ client_id: secrets.github.id, client_secret: secrets.github.secret })
         .reply(200, getSingleRepo.repo)
 
-      const task = await models.Task.build({ url: github_url, provider: 'github', title: 'foo' }).save()
+      const task = await models.Task.build({
+        url: github_url,
+        provider: 'github',
+        title: 'foo'
+      }).save()
       await models.Task.update({ status: 'in_progress' }, { where: { id: task.dataValues.id } })
-      
+
       const res = await agent
         .get(`/tasks/fetch/${task.dataValues.id}`)
         .expect('Content-Type', /json/)
         .expect(200)
-      
+
       expect(res.statusCode).to.equal(200)
       expect(res.body).to.exist
       expect(res.body.metadata.id).to.equal('1080')
@@ -407,7 +425,7 @@ describe('Task CRUD', () => {
       .send({ id: task.dataValues.id, value: 200 })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.body).to.exist
     expect(res.body.value).to.equal('200')
   })
@@ -430,7 +448,7 @@ describe('Task CRUD', () => {
       .send({ id: task.dataValues.id, status: 'in_progress' })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.body).to.exist
     expect(res.body.status).to.equal('in_progress')
   })
@@ -450,7 +468,7 @@ describe('Task CRUD', () => {
       .send({ id: task.dataValues.id, value: 200, Orders: [order] })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.body).to.exist
     expect(res.body.value).to.equal('200')
   })
@@ -461,7 +479,7 @@ describe('Task CRUD', () => {
       .send({ email: 'teste_order_declined@gmail.com', password: 'teste' })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const userId = registerRes.body.id
     const github_url = 'https://github.com/worknenjoy/truppie/issues/76'
     const order = {
@@ -478,7 +496,7 @@ describe('Task CRUD', () => {
       .send({ id: task.dataValues.id, value: 200, Orders: [order] })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.body.code).to.equal('card_declined')
   })
 
@@ -488,11 +506,15 @@ describe('Task CRUD', () => {
       .send({ email: 'teste_task_user_assigned@gmail.com', password: 'teste' })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const userId = registerRes.body.id
     const github_url = 'https://github.com/worknenjoy/truppie/issues/76'
 
-    const task = await models.Task.build({ url: github_url, provider: 'github', userId: userId }).save()
+    const task = await models.Task.build({
+      url: github_url,
+      provider: 'github',
+      userId: userId
+    }).save()
     const res = await agent
       .put('/tasks/update')
       .send({
@@ -503,7 +525,7 @@ describe('Task CRUD', () => {
       })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.body.value).to.equal('200')
   })
 
@@ -513,11 +535,15 @@ describe('Task CRUD', () => {
       .send({ email: 'teste_user_assigned_and_offer@gmail.com', password: 'teste' })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const userId = registerRes.body.id
     const github_url = 'https://github.com/worknenjoy/truppie/issues/76'
 
-    const task = await models.Task.build({ url: github_url, provider: 'github', userId: userId }).save()
+    const task = await models.Task.build({
+      url: github_url,
+      provider: 'github',
+      userId: userId
+    }).save()
     const res = await agent
       .put('/tasks/update')
       .send({
@@ -528,7 +554,7 @@ describe('Task CRUD', () => {
       })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.body.value).to.equal('200')
   })
 
@@ -538,7 +564,7 @@ describe('Task CRUD', () => {
       .send({ email: 'teste_user_accept_work@gmail.com', password: 'teste' })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const userId = registerRes.body.id
     const github_url = 'https://github.com/worknenjoy/truppie/issues/77777'
 
@@ -553,14 +579,14 @@ describe('Task CRUD', () => {
       })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(updateRes.body.value).to.equal('200')
-    
+
     const acceptRes = await agent
       .get(`/tasks/${task.dataValues.id}/accept/${1}`)
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(acceptRes.body.value).to.equal('200')
   })
 
@@ -570,13 +596,17 @@ describe('Task CRUD', () => {
       .send({ email: 'test23232fafa32@gmail.com', password: 'teste' })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const userId = registerRes.body.id
     const github_url = 'https://github.com/worknenjoy/truppie/issues/76'
 
-    const task = await models.Task.build({ url: github_url, provider: 'github', userId: userId }).save()
+    const task = await models.Task.build({
+      url: github_url,
+      provider: 'github',
+      userId: userId
+    }).save()
     const role = await models.Role.build({ name: 'admin', label: 'admin' }).save()
-    
+
     const res = await agent
       .put('/tasks/update')
       .send({
@@ -586,7 +616,7 @@ describe('Task CRUD', () => {
       })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.body.value).to.equal('200')
   })
 
@@ -596,19 +626,23 @@ describe('Task CRUD', () => {
       .send({ email: 'testetaskuserassigned@gmail.com', password: 'teste' })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const userId = registerRes.body.id
     const github_url = 'https://github.com/worknenjoy/truppie/issues/76'
-    
-    const task = await models.Task.build({ url: github_url, provider: 'github', userId: userId }).save()
+
+    const task = await models.Task.build({
+      url: github_url,
+      provider: 'github',
+      userId: userId
+    }).save()
     const assign = await task.createAssign({ userId: userId })
-    
+
     const res = await agent
       .put('/tasks/update')
       .send({ id: task.dataValues.id, value: 200, assigned: assign.dataValues.id })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.body.value).to.equal('200')
     expect(res.body.assigned).to.exist
   })
@@ -619,26 +653,33 @@ describe('Task CRUD', () => {
       .send({ email: 'testetaskuserassigned@gmail.com', password: 'teste' })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const userId = registerRes.body.id
     const github_url = 'https://github.com/worknenjoy/truppie/issues/76'
-    
-    const task = await models.Task.build({ url: github_url, provider: 'github', userId: userId }).save()
+
+    const task = await models.Task.build({
+      url: github_url,
+      provider: 'github',
+      userId: userId
+    }).save()
     const assign = await task.createAssign({ userId: userId })
-    
+
     const res = await agent
       .put('/tasks/update')
       .send({ id: task.dataValues.id, value: 200, assigned: assign.dataValues.id })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.body.value).to.equal('200')
     expect(res.body.assigned).to.exist
     expect(res.body.status).to.equal('in_progress')
   })
 
   it('should update status to closed when is paid', async () => {
-    const task = await models.Task.build({ url: 'http://github.com/check/issue/1', transfer_id: 'foo' }).save()
+    const task = await models.Task.build({
+      url: 'http://github.com/check/issue/1',
+      transfer_id: 'foo'
+    }).save()
     const order = await task.createOrder({
       source_id: '12345',
       currency: 'BRL',
@@ -646,12 +687,12 @@ describe('Task CRUD', () => {
       status: 'succeeded',
       paid: true
     })
-    
+
     await agent
       .get(`/tasks/${task.dataValues.id}/sync/value`)
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const t = await models.Task.findOne({ where: { id: task.dataValues.id } })
     expect(t.dataValues.status).to.equal('closed')
     expect(t.dataValues.value).to.equal('256.56')
@@ -663,31 +704,38 @@ describe('Task CRUD', () => {
       .send({ email: 'testetaskuserassigned@gmail.com', password: 'teste' })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const userId = user.body.id
     const github_url = 'https://github.com/worknenjoy/truppie/issues/76'
-    
-    const task = await models.Task.build({ url: github_url, provider: 'github', userId: userId }).save()
+
+    const task = await models.Task.build({
+      url: github_url,
+      provider: 'github',
+      userId: userId
+    }).save()
     const assign = await task.createAssign({ userId: userId })
-    
+
     const res = await agent
       .put('/tasks/update')
       .send({ id: task.dataValues.id, value: 200, assigned: assign.dataValues.id })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(res.body.value).to.equal('200')
     expect(res.body.assigned).to.exist
     expect(res.body.status).to.equal('in_progress')
-    
-    const logged = await login(agent, { email: 'testetaskuserassigned@gmail.com', password: 'teste' })
+
+    const logged = await login(agent, {
+      email: 'testetaskuserassigned@gmail.com',
+      password: 'teste'
+    })
     const unassign = await agent
       .put(`/tasks/${task.dataValues.id}/assignment/remove`)
       .set('Authorization', logged.headers.authorization)
       .send({ id: task.dataValues.id, userId })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     expect(unassign.body.value).to.equal('200')
     expect(unassign.body.assigned).to.not.exist
     expect(unassign.body.status).to.equal('open')

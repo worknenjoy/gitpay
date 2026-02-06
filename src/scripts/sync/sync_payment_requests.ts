@@ -1,7 +1,7 @@
 import Stripe from '../../client/payment/stripe'
 import Models from '../../models'
 import { UUIDV4 } from 'sequelize'
-import { handleAmount } from '../../utils/handle-amount/handle-amount'
+import { calculateAmountWithPercent } from '../../utils'
 
 const models = Models as any
 
@@ -140,8 +140,8 @@ async function createPaymentRequestPayment(
     }
   })
   const amount = intent.amount_received
-    ? handleAmount(intent.amount_received, 0, 'centavos')
-    : handleAmount(intent.amount, 0, 'centavos')
+    ? calculateAmountWithPercent(intent.amount_received, 0, 'centavos')
+    : calculateAmountWithPercent(intent.amount, 0, 'centavos')
 
   const amountDecimal = amount.decimal
   const createdPaymentRequestPayment = await models.PaymentRequestPayment.create({

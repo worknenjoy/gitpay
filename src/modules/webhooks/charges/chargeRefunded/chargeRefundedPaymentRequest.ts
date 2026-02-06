@@ -1,7 +1,7 @@
 import Models from '../../../../models'
 import PaymentRequestMail from '../../../../mail/paymentRequest'
 import Stripe from '../../../../client/payment/stripe'
-import { handleAmount } from '../../../../utils/handle-amount/handle-amount'
+import { calculateAmountWithPercent } from '../../../../utils'
 
 const stripe = Stripe()
 const models = Models as any
@@ -62,7 +62,7 @@ export const handleChargeRefundedPaymentRequest = async (payment_intent: any) =>
       })
 
       const amountReceived = payment_intent.amount
-      const feeToDeduct = handleAmount(amountReceived, 8, 'centavos')
+      const feeToDeduct = calculateAmountWithPercent(amountReceived, 8, 'centavos')
 
       const paymentRequestBalanceTransactionForRefund =
         await models.PaymentRequestBalanceTransaction.create({

@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 import Stripe from '../../client/payment/stripe'
 import Models from '../../models'
-import { handleAmount } from '../../utils/handle-amount/handle-amount'
+import { calculateAmountWithPercent } from '../../utils'
 import PaymentRequestMail from '../../mail/paymentRequest'
 
 const stripe = Stripe()
@@ -57,10 +57,10 @@ export default async function checkoutSessionCompleted(event: any, req: any, res
           return res.status(500).json({ error: 'Failed to update payment link' })
         }
       }
-      const originalAmount = handleAmount(amount_total, 0, 'centavos', currency)
+      const originalAmount = calculateAmountWithPercent(amount_total, 0, 'centavos', currency)
       const amountAfterFee = custom_amount
-        ? handleAmount(amount_total, 8, 'centavos', currency)
-        : handleAmount(amount, 8, 'decimal', currency)
+        ? calculateAmountWithPercent(amount_total, 8, 'centavos', currency)
+        : calculateAmountWithPercent(amount, 8, 'decimal', currency)
       const transfer_amount = amountAfterFee.decimal
       const transfer_amount_cents = amountAfterFee.centavos
 
@@ -181,13 +181,14 @@ export default async function checkoutSessionCompleted(event: any, req: any, res
             transfer_amount,
             paymentRequestBalanceTransaction
               ? {
-                  extraFee: handleAmount(
+                  extraFee: calculateAmountWithPercent(
                     paymentRequestBalanceTransaction.amount,
                     0,
                     'centavos',
                     currency
                   ).decimal,
-                  total: handleAmount(resultingBalance, 0, 'centavos', currency).decimal
+                  total: calculateAmountWithPercent(resultingBalance, 0, 'centavos', currency)
+                    .decimal
                 }
               : null
           )

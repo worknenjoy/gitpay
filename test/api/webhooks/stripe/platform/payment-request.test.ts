@@ -5,7 +5,13 @@ import { registerAndLogin, truncateModels } from '../../../../helpers'
 import Models from '../../../../../src/models'
 import { completed } from '../../../../data/stripe/stripe.webhook.checkout.session.completed'
 import nock from 'nock'
-import { PaymentRequestFactory, PaymentRequestCustomerFactory, PaymentRequestPaymentFactory, PaymentRequestBalanceFactory, PaymentRequestBalanceTransactionFactory } from '../../../../factories'
+import {
+  PaymentRequestFactory,
+  PaymentRequestCustomerFactory,
+  PaymentRequestPaymentFactory,
+  PaymentRequestBalanceFactory,
+  PaymentRequestBalanceTransactionFactory
+} from '../../../../factories'
 
 const agent = request.agent(api) as any
 const models = Models as any

@@ -10,7 +10,7 @@ type UpdateOfferData = {
   status: string
 }
 
-export async function updateOffer(params: UpdateOfferParams, data: UpdateOfferData) {
+export async function offerUpdate(params: UpdateOfferParams, data: UpdateOfferData) {
   const result = await currentModels.Offer.update(
     { status: data.status },
     { where: { id: params.id } }

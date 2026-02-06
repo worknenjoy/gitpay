@@ -1,9 +1,11 @@
 import express from 'express'
 import 'passport'
 import secure from './secure'
-import '../../modules/authenticationHelpers'
+import * as authenticationHelpers from '../../utils/auth/authenticationHelpers'
 import '../../models'
 import * as controllers from '../controllers/order'
+
+void authenticationHelpers
 
 const router = express.Router()
 

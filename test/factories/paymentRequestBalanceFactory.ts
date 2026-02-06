@@ -7,6 +7,9 @@ export const PaymentRequestBalanceFactory = async (paramsOverwrite: any = {}) =>
     balance: 0,
     paymentRequestCustomerId: 1
   }
-  const paymentRequestBalance = await models.PaymentRequestBalance.create({ ...defaultParams, ...paramsOverwrite })
+  const paymentRequestBalance = await models.PaymentRequestBalance.create({
+    ...defaultParams,
+    ...paramsOverwrite
+  })
   return paymentRequestBalance
 }

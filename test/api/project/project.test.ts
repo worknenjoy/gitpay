@@ -18,7 +18,7 @@ xdescribe('GET /project', () => {
       const o = await models.Organization.create({ name: 'Foo Organization', UserId: u.id })
       const p = await o.createProject({ name: 'Foo Project' })
       const pt = await p.createTask({ url: 'https://task.com', UserId: u.id })
-      
+
       expect(p.name).to.equal('Foo Project')
       expect(pt.url).to.equal('https://task.com')
       expect(pt.ProjectId).to.exist

@@ -1,4 +1,4 @@
-import models from '../models'
+import models from '../../models'
 
 const currentModels = models as any
 

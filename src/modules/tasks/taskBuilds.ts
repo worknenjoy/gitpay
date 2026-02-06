@@ -1,117 +1,41 @@
-import models from '../../models'
-import secrets from '../../config/secrets'
-import * as url from 'url'
 import requestPromise from 'request-promise'
+import models from '../../models'
+import { GithubConnect } from '../../client/provider/github'
 import TaskMail from '../../mail/task'
 import { roleExists } from '../roles'
 import { userExists } from '../users'
-import project from '../projectHelpers'
+import project from '../../utils/project/projectHelpers'
 import { issueAddedComment } from '../../bot/issueAddedComment'
 import { notifyNewIssue } from '../../shared/slack'
+import { parseAndValidateIssueUrl } from '../../utils/issue/parse-and-validate-issue-url'
 
 const currentModels = models as any
 
-function parseAndValidateIssueUrl(
-  rawUrl: string,
-  provider: string
-): { userOrCompany: string; projectName: string; issueId: string } {
-  if (!rawUrl || typeof rawUrl !== 'string') {
-    throw new Error('Invalid repository URL')
-  }
-
-  const parsed = url.parse(rawUrl)
-  const hostname = (parsed.hostname || '').toLowerCase()
-  const path = parsed.pathname || parsed.path || ''
-
-  // Only allow expected hosts for supported providers
-  const isGithubHost = hostname === 'github.com' || hostname === 'www.github.com'
-  const isBitbucketHost = hostname === 'bitbucket.org' || hostname === 'www.bitbucket.org'
-
-  if (provider === 'github' && !isGithubHost) {
-    throw new Error('URL host is not allowed for GitHub provider')
-  }
-  if (provider === 'bitbucket' && !isBitbucketHost) {
-    throw new Error('URL host is not allowed for Bitbucket provider')
-  }
-
-  // Basic path validation: /owner/repo/issues/number
-  const segments = path.split('/').filter(Boolean) // removes empty segments
-  if (segments.length < 4 || segments[2] !== 'issues') {
-    throw new Error('Repository URL does not match expected issue pattern')
-  }
-
-  const userOrCompany = segments[0]
-  const projectName = segments[1]
-  const issueId = segments[3]
-
-  // Disallow path traversal-like segments and ensure basic integrity
-  if (!userOrCompany || !projectName || !issueId) {
-    throw new Error('Repository URL is missing required components')
-  }
-  if (userOrCompany === '..' || projectName === '..' || issueId === '..') {
-    throw new Error('Repository URL contains invalid path segments')
-  }
-  if (!/^[0-9]+$/.test(issueId)) {
-    throw new Error('Issue id in URL is not a valid number')
-  }
-
-  // Additional safety: restrict owner and repository name to expected patterns
-  // GitHub owners and repo names are typically alphanumeric with dashes/underscores and dots.
-  const ownerRepoPattern = /^[A-Za-z0-9][A-Za-z0-9-_.]*$/
-  if (!ownerRepoPattern.test(userOrCompany)) {
-    throw new Error('Repository URL contains an invalid owner/organization name')
-  }
-  if (!ownerRepoPattern.test(projectName)) {
-    throw new Error('Repository URL contains an invalid project name')
-  }
-
-  return { userOrCompany, projectName, issueId }
-}
-
 export async function taskBuilds(taskParameters: any) {
   const repoUrl = taskParameters.url
-  const githubClientId = taskParameters.clientId || secrets.github.id
-  const githubClientSecret = taskParameters.secret || secrets.github.secret
   const provider = taskParameters.provider
   const { userOrCompany, projectName, issueId } = parseAndValidateIssueUrl(repoUrl, provider)
   const userId = taskParameters.userId
-  const token = taskParameters.token
 
   if (!userId) return false
 
   let uri: string
-  let headers: any
+
   switch (taskParameters.provider) {
     case 'github': {
-      uri = token
-        ? `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}`
-        : `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
-      headers = {
-        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-      }
-      if (token) headers.Authorization = `token ${token}`
+      uri = `https://api.github.com/repos/${userOrCompany}/${projectName}/issues/${issueId}`
 
-      const response = await requestPromise({
-        uri,
-        headers
-      })
+      const response = await GithubConnect({ uri })
 
       if (!response && !response.title) return false
-      const issueDataJsonGithub = JSON.parse(response)
+      const issueDataJsonGithub = response as any
       if (!taskParameters.title) taskParameters.title = issueDataJsonGithub.title
       if (!taskParameters.description) taskParameters.description = issueDataJsonGithub.body
 
-      const programmingLanguagesUri = `https://api.github.com/repos/${userOrCompany}/${projectName}/languages?client_id=${githubClientId}&client_secret=${githubClientSecret}`
+      const programmingLanguagesUri = `https://api.github.com/repos/${userOrCompany}/${projectName}/languages`
       let programmingLanguagesResponse = {}
       try {
-        programmingLanguagesResponse = await requestPromise({
-          uri: programmingLanguagesUri,
-          headers: {
-            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
-            ...(taskParameters.token ? { Authorization: `token ${taskParameters.token}` } : {})
-          },
-          json: true
-        })
+        programmingLanguagesResponse = await GithubConnect({ uri: programmingLanguagesUri })
       } catch (e) {
         programmingLanguagesResponse = {}
       }
@@ -143,13 +67,9 @@ export async function taskBuilds(taskParameters: any) {
 
       const role = await roleExists({ name: 'company_owner' })
       if (role.dataValues && role.dataValues.id) {
-        const userInfo = await requestPromise({
-          uri: `https://api.github.com/users/${userOrCompany}?client_id=${githubClientId}&client_secret=${githubClientSecret}`,
-          headers: {
-            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
-          }
-        })
-        const userInfoJSON = JSON.parse(userInfo)
+        const userURI = `https://api.github.com/users/${userOrCompany}`
+        const userInfo = await GithubConnect({ uri: userURI })
+        const userInfoJSON = userInfo as any
         const userExist = userExists && (await userExists({ email: userInfoJSON.email }))
         if (userExist && userExist.dataValues && userExist.dataValues.id) {
           await task.createMember({

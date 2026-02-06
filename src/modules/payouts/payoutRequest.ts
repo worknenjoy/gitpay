@@ -1,6 +1,6 @@
 import models from '../../models'
 import Stripe from '../../client/payment/stripe'
-import { handleAmount } from '../../utils/handle-amount/handle-amount'
+import { calculateAmountWithPercent } from '../../utils'
 
 const stripe = Stripe()
 
@@ -38,7 +38,12 @@ export async function payoutRequest(params: PayoutRequestParams) {
 
   if (!user.account_id) return { error: 'User account not activated' }
 
-  const finalAmount = handleAmount(params.amount, 0, 'decimal', params.currency || 'usd')
+  const finalAmount = calculateAmountWithPercent(
+    params.amount,
+    0,
+    'decimal',
+    params.currency || 'usd'
+  )
 
   const stripePayout = await stripe.payouts.create(
     {

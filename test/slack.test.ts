@@ -49,7 +49,7 @@ describe('Slack Notifications', () => {
 
     it('should handle missing order data gracefully', async () => {
       await notifyBountyOnSlack({ id: 1, title: 'Test' }, null, { username: 'test' })
-      await notifyBountyOnSlack({ id: 1, title: 'Test' }, {}, { username: 'test' })
+      await notifyBountyOnSlack({ id: 1, title: 'Test' }, {} as any, { username: 'test' })
     })
   })
 })

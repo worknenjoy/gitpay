@@ -1,6 +1,13 @@
 import Models from '../../src/models'
-import { SuperAgentTest } from 'supertest'
-import { TaskFactory, OrderFactory, AssignFactory, TransferFactory, PayoutFactory } from '../factories'
+import type { Test } from 'supertest'
+import type TestAgent from 'supertest/lib/agent'
+import {
+  TaskFactory,
+  OrderFactory,
+  AssignFactory,
+  TransferFactory,
+  PayoutFactory
+} from '../factories'
 
 const models = Models as any
 const testPassword = 'test12345678'
@@ -8,16 +15,22 @@ const testName = 'Test'
 
 const generateTestEmail = (): string => `teste+${Math.random()}@gmail.com`
 
+type Agent = TestAgent<Test>
+
 interface RegisterParams {
   email?: string
+  username?: string
   password?: string
   confirmPassword?: string
   name?: string
+  country?: string
   customer_id?: string
   recover_password_token?: string
   account_id?: string
+  paypal_id?: string
   provider_username?: string
   provider?: string
+  [key: string]: any
 }
 
 interface LoginParams {
@@ -30,6 +43,8 @@ interface TaskParams {
   provider?: string
   url?: string
   status?: string
+  userId?: number
+  [key: string]: any
 }
 
 interface AssignParams {
@@ -49,7 +64,7 @@ interface TransferParams {
   [key: string]: any
 }
 
-const register = (agent: SuperAgentTest, params: RegisterParams = {}) => {
+const register = (agent: Agent, params: RegisterParams = {}) => {
   params.email = params.email || generateTestEmail()
   params.password = params.password || testPassword
   params.confirmPassword = params.password || testPassword
@@ -57,17 +72,17 @@ const register = (agent: SuperAgentTest, params: RegisterParams = {}) => {
   return agent.post('/auth/register').send(params)
 }
 
-const login = (agent: SuperAgentTest, params: LoginParams = {}) => {
+const login = (agent: Agent, params: LoginParams = {}) => {
   params.username = params.email
   params.password = params.password || testPassword
   return agent.post('/authorize/local').send(params).type('form')
 }
 
-const activate = (agent: SuperAgentTest, res: any) => {
+const activate = (agent: Agent, res: any) => {
   return agent.get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
 }
 
-const registerAndLogin = async (agent: SuperAgentTest, params: RegisterParams = {}) => {
+const registerAndLogin = async (agent: Agent, params: RegisterParams = {}) => {
   try {
     const a = await register(agent, params)
     try {
@@ -89,7 +104,11 @@ const registerAndLogin = async (agent: SuperAgentTest, params: RegisterParams = 
 /**
  * @deprecated Use TaskFactory from test/factories instead
  */
-const createTask = async (agent: SuperAgentTest, params: TaskParams = {}, userParams: RegisterParams = {}) => {
+const createTask = async (
+  agent: Agent,
+  params: TaskParams = {},
+  userParams: RegisterParams = {}
+) => {
   params.provider = params.provider || 'github'
   params.url = params.url || 'https://github.com/worknenjoy/gitpay/issues/221'
   params.status = params.status || 'open'
@@ -119,7 +138,11 @@ const createTask = async (agent: SuperAgentTest, params: TaskParams = {}, userPa
 /**
  * @deprecated Use AssignFactory from test/factories instead
  */
-const createAssign = async (agent: SuperAgentTest, params: AssignParams = {}, userParams: RegisterParams = {}) => {
+const createAssign = async (
+  agent: Agent,
+  params: AssignParams = {},
+  userParams: RegisterParams = {}
+) => {
   try {
     const res = await register(agent, {
       ...userParams,
