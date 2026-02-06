@@ -1,6 +1,6 @@
 import models from '../../models'
 import * as url from 'url'
-import requestPromise from 'request-promise'
+import requestPromise from 'request-promise' // Used for Bitbucket API calls
 import TaskMail from '../../mail/task'
 import { roleExists } from '../roles'
 import { userExists } from '../users'
@@ -95,7 +95,7 @@ export async function taskBuilds(taskParameters: any) {
       try {
         programmingLanguagesResponse = await GithubConnect({
           uri: programmingLanguagesUri,
-          token: taskParameters.token
+          token
         })
       } catch (e) {
         programmingLanguagesResponse = {}
@@ -156,6 +156,7 @@ export async function taskBuilds(taskParameters: any) {
     }
 
     case 'bitbucket': {
+      // Verify the issue exists by making an API call (response is intentionally unused)
       await requestPromise({
         uri: `https://api.bitbucket.org/2.0/repositories/${userOrCompany}/${projectName}/issues/${issueId}`
       })
