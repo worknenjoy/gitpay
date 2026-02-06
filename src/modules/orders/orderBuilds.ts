@@ -127,6 +127,9 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
     }
 
     const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id)
+    if(!finalizedInvoice || !finalizedInvoice.id) {
+      throw new Error('Failed to finalize invoice')
+    }
     Sendmail.success(
       { ...orderUser, email: orderParameters.email },
       'Invoice created',

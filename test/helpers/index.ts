@@ -69,6 +69,7 @@ const register = (agent: Agent, params: RegisterParams = {}) => {
   params.password = params.password || testPassword
   params.confirmPassword = params.password || testPassword
   params.name = params.name || testName
+  params.receiveNotifications = params.receiveNotifications || true
   return agent.post('/auth/register').send(params)
 }
 
