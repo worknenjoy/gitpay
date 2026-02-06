@@ -31,7 +31,7 @@ const request = async (to: string, subject: string, content: any[], replyEmail?:
       return handleError(err)
     }
   } else {
-    if(env.NODE_ENV !== 'test') {
+    if (env.NODE_ENV !== 'test') {
       // eslint-disable-next-line no-console
       console.log(' ----- email / subject ---- ')
       // eslint-disable-next-line no-console
