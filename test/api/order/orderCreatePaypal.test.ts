@@ -55,9 +55,7 @@ describe('POST /order PayPal', () => {
     const url = 'https://api.sandbox.paypal.com'
     const path = '/v1/oauth2/token'
     const anotherPath = '/v2/checkout/orders'
-    nock(url)
-      .post(path)
-      .reply(200, { access_token: 'foo' }, { 'Content-Type': 'application/json' })
+    nock(url).post(path).reply(200, { access_token: 'foo' }, { 'Content-Type': 'application/json' })
     nock(url)
       .post(anotherPath)
       .reply(

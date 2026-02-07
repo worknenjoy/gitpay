@@ -10,6 +10,9 @@ export const PaymentRequestCustomerFactory = async (paramsOverwrite: any = {}) =
     sourceId: `src_test_${randomId}`,
     userId: 1
   }
-  const paymentRequestCustomer = await models.PaymentRequestCustomer.create({ ...defaultParams, ...paramsOverwrite })
+  const paymentRequestCustomer = await models.PaymentRequestCustomer.create({
+    ...defaultParams,
+    ...paramsOverwrite
+  })
   return paymentRequestCustomer
 }

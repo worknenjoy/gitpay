@@ -16,7 +16,12 @@ import {
 import { disputeFundsWithdrawn } from '../../../../data/stripe/stripe.webhook.charge.dispute.funds_withdrawn'
 import { refundCreated } from '../../../../data/stripe/stripe.webhook.charge.refunded'
 import { PaymentIntentData } from '../../../../data/stripe/stripe.paymentIntent'
-import { PaymentRequestFactory, PaymentRequestCustomerFactory, PaymentRequestPaymentFactory, PaymentRequestBalanceFactory } from '../../../../factories'
+import {
+  PaymentRequestFactory,
+  PaymentRequestCustomerFactory,
+  PaymentRequestPaymentFactory,
+  PaymentRequestBalanceFactory
+} from '../../../../factories'
 
 const agent = request.agent(api) as any
 const models = Models as any

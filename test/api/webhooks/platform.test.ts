@@ -20,7 +20,16 @@ import invoiceUpdated from '../../data/stripe/stripe.invoice.update'
 import invoiceCreated from '../../data/stripe/stripe.invoice.create'
 import invoicePaid from '../../data/stripe/stripe.invoice.paid'
 import invoiceWebhookPaid from '../../data/stripe/stripe.webhook.invoice'
-import { TaskFactory, UserFactory, TransferFactory, OrderFactory, WalletFactory, WalletOrderFactory, PaymentRequestFactory, PaymentRequestTransferFactory } from '../../factories'
+import {
+  TaskFactory,
+  UserFactory,
+  TransferFactory,
+  OrderFactory,
+  WalletFactory,
+  WalletOrderFactory,
+  PaymentRequestFactory,
+  PaymentRequestTransferFactory
+} from '../../factories'
 
 const agent = request.agent(api)
 

@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js'
-import currencyInfo from '../currency-info'
+import currencyInfo from '../currency/currency-info'
 
 type HandleAmountResult = {
   centavos: number
@@ -8,7 +8,7 @@ type HandleAmountResult = {
   centavosFee: number
 }
 
-export function handleAmount(
+export function calculateAmountWithPercent(
   amount: number,
   percent: number,
   type: string,

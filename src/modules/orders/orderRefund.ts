@@ -1,7 +1,7 @@
 import models from '../../models'
 import PaymentMail from '../../mail/payment'
 import requestPromise from 'request-promise'
-import { handleAmount } from '../../utils/handle-amount/handle-amount'
+import { calculateAmountWithPercent } from '../../utils'
 import stripeModule from '../../client/payment/stripe'
 const stripe = stripeModule()
 
@@ -20,7 +20,11 @@ export async function orderRefund(orderParams: OrderRefundParams) {
 
   switch (order.provider) {
     case 'stripe': {
-      const refundAmountExcludingFees = handleAmount(order.amount, 8, 'decimal').centavos
+      const refundAmountExcludingFees = calculateAmountWithPercent(
+        order.amount,
+        8,
+        'decimal'
+      ).centavos
       const refund = await stripe.refunds.create({
         charge: order.source,
         amount: refundAmountExcludingFees

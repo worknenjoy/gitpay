@@ -17,12 +17,14 @@ This project uses the **Factory Pattern** for creating test data. Factories prov
 All factories are exported from `test/factories/index.ts`:
 
 ### Core Models
+
 - `TaskFactory` - Creates Task instances
 - `UserFactory` - Creates User instances
 - `OrderFactory` - Creates Order instances
 - `AssignFactory` - Creates Assign instances
 
 ### Payment Models
+
 - `PayoutFactory` - Creates Payout instances
 - `TransferFactory` - Creates Transfer instances
 - `PaymentRequestFactory` - Creates PaymentRequest instances
@@ -33,6 +35,7 @@ All factories are exported from `test/factories/index.ts`:
 - `PaymentRequestBalanceTransactionFactory` - Creates PaymentRequestBalanceTransaction instances
 
 ### Wallet Models
+
 - `WalletFactory` - Creates Wallet instances
 - `WalletOrderFactory` - Creates WalletOrder instances
 
@@ -63,11 +66,11 @@ import { TaskFactory, OrderFactory } from './factories'
 describe('Task Tests', () => {
   it('should create a task with an order', async () => {
     const task = await TaskFactory({ value: 100 })
-    const order = await OrderFactory({ 
+    const order = await OrderFactory({
       TaskId: task.id,
-      amount: 100 
+      amount: 100
     })
-    
+
     expect(task.value).to.equal(100)
     expect(order.TaskId).to.equal(task.id)
   })
@@ -83,10 +86,7 @@ import Models from '../src/models'
 const models = Models as any
 
 // Create with Sequelize options (like include)
-const assign = await AssignFactory(
-  { TaskId: 1, userId: 2 },
-  { include: [models.User] }
-)
+const assign = await AssignFactory({ TaskId: 1, userId: 2 }, { include: [models.User] })
 ```
 
 ## Default Values
@@ -136,9 +136,9 @@ export const MyModelFactory = async (paramsOverwrite: any = {}) => {
     name: 'Default Name',
     status: 'active'
   }
-  const myModel = await models.MyModel.create({ 
-    ...defaultParams, 
-    ...paramsOverwrite 
+  const myModel = await models.MyModel.create({
+    ...defaultParams,
+    ...paramsOverwrite
   })
   return myModel
 }
@@ -175,8 +175,8 @@ const task = await models.Task.create({
 // After
 import { TaskFactory } from './factories'
 
-const task = await TaskFactory({ 
-  title: 'Test Task' 
+const task = await TaskFactory({
+  title: 'Test Task'
 })
 // value, userId, provider, url use defaults
 ```
@@ -198,6 +198,7 @@ A: They're deprecated but kept for backward compatibility. New code should use f
 ## Support
 
 For questions or issues with factories:
+
 1. Check this guide
 2. Look at existing factory implementations in `test/factories/`
 3. Check how other tests use factories

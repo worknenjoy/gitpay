@@ -1,11 +1,11 @@
 import request from './request'
 import i18n from 'i18n'
 import moment from 'moment'
-import formatDate from '../utils/formatDate'
+import formatDate from '../utils/date/formatDate'
 import emailTemplate from './templates/base-content'
 import { tableContentEmailTemplate } from './templates/table-content'
-import currencyInfo from '../utils/currency-info'
-import { handleAmount } from '../utils/handle-amount/handle-amount'
+import currencyInfo from '../utils/currency/currency-info'
+import { calculateAmountWithPercent } from '../utils'
 
 type CurrencyKey = keyof typeof currencyInfo
 
@@ -109,7 +109,12 @@ const PaymentRequestMail = {
 
     const currencyKey = resolveCurrencyKey(paymentRequest?.currency)
     const currencySymbol = currencyInfo[currencyKey]?.symbol || ''
-    const { decimalFee } = handleAmount(payment_amount, 8, 'decimal', paymentRequest.currency)
+    const { decimalFee } = calculateAmountWithPercent(
+      payment_amount,
+      8,
+      'decimal',
+      paymentRequest.currency
+    )
 
     let rows: any[] = []
     if (extraFee) {
@@ -261,11 +266,11 @@ const PaymentRequestMail = {
                 rows: [
                   [
                     balanceTransaction.reason,
-                    `<div style="text-align:right">${handleAmount(balanceTransaction.amount, 0, 'centavos').decimal} ${balanceTransaction.currency}</div>`
+                    `<div style="text-align:right">${calculateAmountWithPercent(balanceTransaction.amount, 0, 'centavos').decimal} ${balanceTransaction.currency}</div>`
                   ],
                   [
                     'Current debt balance',
-                    `<div style="text-align:right">${handleAmount(balanceTransaction.PaymentRequestBalance.balance, 0, 'centavos').decimal} ${balanceTransaction.currency}</div>`
+                    `<div style="text-align:right">${calculateAmountWithPercent(balanceTransaction.PaymentRequestBalance.balance, 0, 'centavos').decimal} ${balanceTransaction.currency}</div>`
                   ]
                 ]
               },
@@ -313,19 +318,19 @@ const PaymentRequestMail = {
 
       const reason = dp?.reason ? getReason(dp.reason) : 'N/A'
 
-      const platformFee = handleAmount(disputedAmount, 8, 'centavos')
+      const platformFee = calculateAmountWithPercent(disputedAmount, 8, 'centavos')
 
       const rows: any[] = []
       if (typeof disputedAmount === 'number') {
         rows.push([
           'Disputed amount',
-          `<div style="text-align:right">${currencySymbol} ${handleAmount(disputedAmount, 0, 'centavos').decimal}</div>`
+          `<div style="text-align:right">${currencySymbol} ${calculateAmountWithPercent(disputedAmount, 0, 'centavos').decimal}</div>`
         ])
       }
 
       rows.push([
         'Dispute fee',
-        `<div style="text-align:right">- ${currencySymbol} ${handleAmount(fee, 0, 'centavos').decimal}</div>`
+        `<div style="text-align:right">- ${currencySymbol} ${calculateAmountWithPercent(fee, 0, 'centavos').decimal}</div>`
       ])
 
       rows.push([
@@ -336,7 +341,7 @@ const PaymentRequestMail = {
       const sign = netFromTxn < 0 ? '-' : ''
       rows.push([
         'Net impact',
-        `<div style="text-align:right">${sign} ${currencySymbol} ${handleAmount(Math.abs(netFromTxn) + platformFee.centavosFee, 0, 'centavos').decimal}</div>`
+        `<div style="text-align:right">${sign} ${currencySymbol} ${calculateAmountWithPercent(Math.abs(netFromTxn) + platformFee.centavosFee, 0, 'centavos').decimal}</div>`
       ])
 
       if (daysToRespond !== null) {

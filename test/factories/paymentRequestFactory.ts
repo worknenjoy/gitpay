@@ -15,6 +15,9 @@ export const PaymentRequestFactory = async (paramsOverwrite: any = {}) => {
     transfer_status: 'pending_payment',
     userId: 1
   }
-  const paymentRequest = await models.PaymentRequest.create({ ...defaultParams, ...paramsOverwrite })
+  const paymentRequest = await models.PaymentRequest.create({
+    ...defaultParams,
+    ...paramsOverwrite
+  })
   return paymentRequest
 }

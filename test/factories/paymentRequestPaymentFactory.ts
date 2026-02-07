@@ -10,6 +10,9 @@ export const PaymentRequestPaymentFactory = async (paramsOverwrite: any = {}) =>
     paymentRequestId: 1,
     paymentRequestCustomerId: 1
   }
-  const paymentRequestPayment = await models.PaymentRequestPayment.create({ ...defaultParams, ...paramsOverwrite })
+  const paymentRequestPayment = await models.PaymentRequestPayment.create({
+    ...defaultParams,
+    ...paramsOverwrite
+  })
   return paymentRequestPayment
 }

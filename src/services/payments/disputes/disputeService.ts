@@ -4,7 +4,7 @@ import { DisputeDataCreated, DisputeDataWithdrawn, DisputeDataClosed } from './t
 import PaymentRequestMail from '../../../mail/paymentRequest'
 import { findOrCreatePaymentRequestBalance } from '../../../queries/payment-request/payment-request-balance'
 import { findPaymentRequestPayment } from '../../../queries/payment-request/payment-request-payment'
-import { handleAmount } from '../../../utils/handle-amount/handle-amount'
+import { calculateAmountWithPercent } from '../../../utils'
 
 const stripe = Stripe()
 const models = Models as any
@@ -67,7 +67,8 @@ export const withDrawnDisputeForPaymentRequest = async ({
   }
 
   const dispute = await stripe.disputes.retrieve(dispute_id)
-  const finalAmount = amount + handleAmount(amount, 8, 'centavos', 'usd').centavosFee + (fee || 0)
+  const finalAmount =
+    amount + calculateAmountWithPercent(amount, 8, 'centavos', 'usd').centavosFee + (fee || 0)
 
   const paymentRequestBalanceTransactionForDisputeFee =
     await models.PaymentRequestBalanceTransaction.create({

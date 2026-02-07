@@ -243,9 +243,7 @@ describe('Cron Jobs', () => {
     })
     const r = await TaskCron.rememberDeadline()
     expect(r[0]).to.exist
-    expect(r[0].url).to.equal(
-      'https://github.com/worknenjoy/truppie/issues/7336'
-    )
+    expect(r[0].url).to.equal('https://github.com/worknenjoy/truppie/issues/7336')
     MockDate.reset()
 
     xit('remember deadline 2 days past', async () => {

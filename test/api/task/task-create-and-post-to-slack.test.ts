@@ -70,7 +70,7 @@ describe('Task Creation and Slack Notifications', () => {
         provider: 'github',
         not_listed: true
       })
-      .set('Authorization', headers.authorization)
+      .set('Authorization', headers?.authorization)
       .expect('Content-Type', /json/)
       .expect(200)
 
@@ -98,7 +98,7 @@ describe('Task Creation and Slack Notifications', () => {
         provider: 'github',
         private: true
       })
-      .set('Authorization', headers.authorization)
+      .set('Authorization', headers?.authorization)
       .expect('Content-Type', /json/)
       .expect(200)
 
@@ -125,7 +125,7 @@ describe('Task Creation and Slack Notifications', () => {
         url: 'https://github.com/worknenjoy/gitpay/issues/997',
         provider: 'github'
       })
-      .set('Authorization', headers.authorization)
+      .set('Authorization', headers?.authorization)
       .expect('Content-Type', /json/)
       .expect(200)
 

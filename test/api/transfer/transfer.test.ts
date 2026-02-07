@@ -21,7 +21,11 @@ import { get as paypalGetPayoutSample } from '../../data/paypal/paypal.payout'
 const agent = request.agent(api)
 
 // Common function to create transfer
-const createTransferWithTaskData = async (taskData: any, userId?: number, transferId?: string): Promise<any> => {
+const createTransferWithTaskData = async (
+  taskData: any,
+  userId?: number,
+  transferId?: string
+): Promise<any> => {
   const res = await agent.post('/transfers/create').send({
     taskId: taskData.id,
     userId: userId,

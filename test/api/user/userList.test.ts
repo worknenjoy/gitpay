@@ -22,11 +22,8 @@ describe('GET /user', () => {
 
   describe('findAll User', () => {
     it('should find user', async () => {
-      const res = await agent
-        .get('/users')
-        .expect('Content-Type', /json/)
-        .expect(200)
-      
+      const res = await agent.get('/users').expect('Content-Type', /json/).expect(200)
+
       expect(res.statusCode).to.equal(200)
       expect(res.body).to.exist
     })

@@ -10,10 +10,8 @@ app.get('/ping', (req, res) => {
 
 describe('Ping Test', () => {
   it('should respond to /ping', async () => {
-    const res = await supertest(app)
-      .get('/ping')
-      .expect(200)
-    
+    const res = await supertest(app).get('/ping').expect(200)
+
     console.log(res.body) // deve ser { pong: true }
   })
 })

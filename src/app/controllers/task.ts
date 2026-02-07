@@ -1,19 +1,37 @@
-const Tasks = require('../../modules/tasks')
-const Offers = require('../../modules/offers')
+import {
+  taskBuilds,
+  taskSearch,
+  taskFetch,
+  taskUpdate,
+  taskPayment,
+  taskSync,
+  taskDeleteById,
+  taskInvite,
+  taskFunding,
+  taskDeleteConfirmation,
+  taskMessage,
+  taskMessageAuthor,
+  taskReport,
+  requestClaim,
+  removeAssignedUser as taskRemoveAssignedUser,
+  invite as taskRequestAssignedUserInvite,
+  confirm as taskRequestAssignedUserConfirm
+} from '../../modules/tasks'
+import { offerMessage, offerUpdate } from '../../modules/offers'
 
 export const createTask = async (req: any, res: any) => {
   try {
     req.body.userId = req.user.id
-    const data = await Tasks.taskBuilds(req.body)
+    const data = await taskBuilds(req.body)
     res.send(data)
   } catch (error: any) {
-    if (error.statusCode === 403 && error.error.indexOf('rate limit exceeded') > -1) {
+    if (error && error.statusCode === 403 && error.message.indexOf('rate limit exceeded') > -1) {
       res.status(403).send({ error: 'API rate limit exceeded' })
       return
     }
     if (error.StatusCodeError) res.status(error.StatusCodeError).send(error)
     if (error.name === 'SequelizeUniqueConstraintError') {
-      const task = await Tasks.taskSearch({ url: req.body.url })
+      const task = await taskSearch({ url: req.body.url })
       res.send({ ...error, ...{ id: task[0].id } })
     } else {
       res.send(error)
@@ -39,7 +57,7 @@ export const listTasks = async (req: any, res: any) => {
       delete query['labelIds[]']
     }
 
-    const data = await Tasks.taskSearch(query)
+    const data = await taskSearch(query)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -50,7 +68,7 @@ export const listTasks = async (req: any, res: any) => {
 
 export const fetchTask = async (req: any, res: any) => {
   try {
-    const data = await Tasks.taskFetch(req.params)
+    const data = await taskFetch(req.params)
     res.send(data)
   } catch (error: any) {
     if (error.statusCode === 403 && error.error.indexOf('rate limit exceeded') > -1) {
@@ -64,7 +82,7 @@ export const fetchTask = async (req: any, res: any) => {
 export const updateTask = async (req: any, res: any) => {
   try {
     req.body.userId = req.user.id
-    const data = await Tasks.taskUpdate(req.body)
+    const data = await taskUpdate(req.body)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -75,7 +93,7 @@ export const updateTask = async (req: any, res: any) => {
 
 export const paymentTask = async (req: any, res: any) => {
   try {
-    const data = await Tasks.taskPayment(req.body)
+    const data = await taskPayment(req.body)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -89,7 +107,7 @@ export const paymentTask = async (req: any, res: any) => {
 export const syncTask = async (req: any, res: any) => {
   try {
     /* eslint-disable no-sync */
-    const data = await Tasks.taskSync(req.params)
+    const data = await taskSync(req.params)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -103,7 +121,7 @@ export const syncTask = async (req: any, res: any) => {
 export const deleteTaskById = async (req: any, res: any) => {
   try {
     const params = { id: req.params.id, userId: req.user.id }
-    const deleted = await Tasks.taskDeleteById(params)
+    const deleted = await taskDeleteById(params)
     res.status(200).send(`${deleted}`)
   } catch (error: any) {
     if (error.message === 'CANNOT_DELETE_ISSUE_WITH_ORDERS_ASSOCIATED') {
@@ -122,7 +140,7 @@ export const deleteTaskFromReport = async (req: any, res: any) => {
       title: req.query.title,
       reason: req.query.reason
     }
-    const deleted = await Tasks.taskDeleteById(params)
+    const deleted = await taskDeleteById(params)
     deleted === 0
       ? res
           .status(200)
@@ -132,7 +150,7 @@ export const deleteTaskFromReport = async (req: any, res: any) => {
       : res.status(200).send(`${deleted} rows were deleted from the database`)
 
     try {
-      await Tasks.taskDeleteConfirmation(params)
+      await taskDeleteConfirmation(params)
       res.send('Confirmation email sent to user')
     } catch (error: any) {
       res.send({ error: error.message })
@@ -147,7 +165,7 @@ export const deleteTaskFromReport = async (req: any, res: any) => {
 // invite functions
 export const inviteUserToTask = async ({ params, body }: any, res: any) => {
   try {
-    const data = await Tasks.taskInvite(params, body)
+    const data = await taskInvite(params, body)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -158,7 +176,7 @@ export const inviteUserToTask = async ({ params, body }: any, res: any) => {
 
 export const inviteToFundingTask = async ({ params, body }: any, res: any) => {
   try {
-    const data = await Tasks.taskFunding(params, body)
+    const data = await taskFunding(params, body)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -170,7 +188,7 @@ export const inviteToFundingTask = async ({ params, body }: any, res: any) => {
 // message to interest users
 export const messageInterestedToTask = async ({ params, body, user }: any, res: any) => {
   try {
-    const data = await Tasks.taskMessage(params, body, user)
+    const data = await taskMessage(params, body, user)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -182,7 +200,7 @@ export const messageInterestedToTask = async ({ params, body, user }: any, res: 
 // message to authors
 export const messageAuthor = async ({ params, body, user }: any, res: any) => {
   try {
-    const data = await Tasks.taskMessageAuthor(params, body, user)
+    const data = await taskMessageAuthor(params, body, user)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -194,7 +212,7 @@ export const messageAuthor = async ({ params, body, user }: any, res: any) => {
 // message to offers
 export const messageOffer = async ({ params, body, user }: any, res: any) => {
   try {
-    const data = await Offers.offerMessage(params, body, user)
+    const data = await offerMessage(params, body, user)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -206,7 +224,7 @@ export const messageOffer = async ({ params, body, user }: any, res: any) => {
 // update offer
 export const updateOffer = async ({ params, body }: any, res: any) => {
   try {
-    const data = await Offers.updateOffer(params, body)
+    const data = await offerUpdate(params, body)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -219,7 +237,7 @@ export const updateOffer = async ({ params, body }: any, res: any) => {
 export const removeAssignedUser = async (req: any, res: any) => {
   try {
     const params = { id: req.params.id, userId: req.user.id }
-    const data = await Tasks.removeAssignedUser(params, req.body)
+    const data = await taskRemoveAssignedUser(params, req.body)
     res.send(data)
   } catch (error: any) {
     res.send({ error: error.message })
@@ -228,7 +246,7 @@ export const removeAssignedUser = async (req: any, res: any) => {
 
 export const requestAssignedUser = async (req: any, res: any) => {
   try {
-    const data = await Tasks.requestAssignedUser.invite(req.body)
+    const data = await taskRequestAssignedUserInvite(req.body)
     res.send(data)
   } catch (error: any) {
     res.send({ error: error.message })
@@ -237,7 +255,7 @@ export const requestAssignedUser = async (req: any, res: any) => {
 
 export const assignedUser = async (req: any, res: any) => {
   try {
-    const data = await Tasks.requestAssignedUser.confirm(req.body)
+    const data = await taskRequestAssignedUserConfirm(req.body)
     res.send(data)
   } catch (error: any) {
     res.status(400).send({ error: error.message })
@@ -247,7 +265,7 @@ export const assignedUser = async (req: any, res: any) => {
 // Report Task
 export const reportTask = async ({ params, body }: any, res: any) => {
   try {
-    const data = await Tasks.taskReport(params, body)
+    const data = await taskReport(params, body)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -259,7 +277,7 @@ export const reportTask = async ({ params, body }: any, res: any) => {
 // Request Claim Task
 export const requestClaimTask = async (req: any, res: any) => {
   try {
-    const data = await Tasks.taskClaim.requestClaim(req.body)
+    const data = await requestClaim(req.body)
     res.send(data)
   } catch (error: any) {
     res.send({ error: error.message })

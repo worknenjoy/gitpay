@@ -14,28 +14,19 @@ xdescribe('GET /info', () => {
 
   describe('with no models in database', () => {
     it('should return zero tasks', async () => {
-      const res = await agent
-        .get('/info/all')
-        .expect('Content-Type', /json/)
-        .expect(200)
+      const res = await agent.get('/info/all').expect('Content-Type', /json/).expect(200)
 
       expect(res.body.tasks).to.equal(0)
     })
 
     it('should return zero bounties', async () => {
-      const res = await agent
-        .get('/info/all')
-        .expect('Content-Type', /json/)
-        .expect(200)
+      const res = await agent.get('/info/all').expect('Content-Type', /json/).expect(200)
 
       expect(res.body.bounties).to.equal(0)
     })
 
     it('should return zero users', async () => {
-      const res = await agent
-        .get('/info/all')
-        .expect('Content-Type', /json/)
-        .expect(200)
+      const res = await agent.get('/info/all').expect('Content-Type', /json/).expect(200)
 
       expect(res.body.users).to.equal(0)
     })
@@ -45,11 +36,8 @@ xdescribe('GET /info', () => {
     describe('that is not paid', () => {
       it('should return no bounty', async () => {
         await models.Task.build({ value: 10, paid: false }).save()
-        
-        const res = await agent
-          .get('/info/all')
-          .expect('Content-Type', /json/)
-          .expect(200)
+
+        const res = await agent.get('/info/all').expect('Content-Type', /json/).expect(200)
 
         expect(res.body.bounties).to.equal(10)
       })
@@ -62,10 +50,7 @@ xdescribe('GET /info', () => {
           { value: 10, paid: true }
         ])
 
-        const res = await agent
-          .get('/info/all')
-          .expect('Content-Type', /json/)
-          .expect(200)
+        const res = await agent.get('/info/all').expect('Content-Type', /json/).expect(200)
 
         expect(res.body.bounties).to.equal(20)
       })
@@ -79,10 +64,7 @@ xdescribe('GET /info', () => {
         { value: 10, paid: true }
       ])
 
-      const res = await agent
-        .get('/info/all')
-        .expect('Content-Type', /json/)
-        .expect(200)
+      const res = await agent.get('/info/all').expect('Content-Type', /json/).expect(200)
 
       expect(res.body.bounties).to.equal(10)
     })
@@ -94,10 +76,7 @@ xdescribe('GET /info', () => {
         { value: 10, paid: false }
       ])
 
-      const res = await agent
-        .get('/info/all')
-        .expect('Content-Type', /json/)
-        .expect(200)
+      const res = await agent.get('/info/all').expect('Content-Type', /json/).expect(200)
 
       expect(res.body.bounties).to.equal(20)
     })

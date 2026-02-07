@@ -5,7 +5,7 @@ import { expect } from 'chai'
 import api from '../../../src/server'
 import Models from '../../../src/models'
 import { registerAndLogin, register, login, truncateModels } from '../../helpers'
-import githubOrg from '../../data/github/github.org'
+import githubOrg from '../../data/github/github.org.json'
 import secrets from '../../../src/config/secrets'
 
 const models = Models as any
@@ -26,14 +26,16 @@ describe('DELETE /user', () => {
   describe('User delete', () => {
     it('Should delete user', async () => {
       const res = await registerAndLogin(agent)
-      console.log(res.statusCode, res.headers)
+      if (!res) {
+        throw new Error('registerAndLogin failed')
+      }
       const userId = res.body.id
-      
+
       const user = await agent
         .delete(`/user/delete/`)
         .set('Authorization', res.headers.authorization)
         .expect(200)
-      
+
       expect(user.statusCode).to.equal(200)
       expect(user.text).to.equal('1')
       const users = models.User.findAll({ where: { id: userId } })

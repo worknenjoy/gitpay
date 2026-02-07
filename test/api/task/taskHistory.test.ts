@@ -29,7 +29,7 @@ xdescribe('GET /task/history', () => {
       .set('Authorization', res.headers.authorization)
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const history = await models.History.findOne({ where: { TaskId: taskRes.body.id } })
     expect(history).to.exist
     expect(history.TaskId).to.equal(taskRes.body.id)
@@ -50,17 +50,17 @@ xdescribe('GET /task/history', () => {
       amount: 256,
       status: 'succeeded'
     })
-    
+
     await agent
       .get(`/tasks/${task.dataValues.id}/sync/value`)
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const histories = await models.History.findAll({
       where: { TaskId: task.dataValues.id },
       order: [['id', 'DESC']]
     })
-    
+
     expect(histories.length).to.equal(2)
     const history = histories[0]
     expect(history).to.exist

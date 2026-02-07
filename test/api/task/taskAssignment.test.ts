@@ -34,7 +34,11 @@ xdescribe('Task Assignment', () => {
   })
 
   xit('should send email for a user interested to and user accept', async () => {
-    const firstUser = await register(agent, { name: 'Task Owner', email: 'owner@example.com', password: '1234' })
+    const firstUser = await register(agent, {
+      name: 'Task Owner',
+      email: 'owner@example.com',
+      password: '1234'
+    })
     const ownerId = firstUser.body.id
     const task = await buildTask({ userId: ownerId, title: 'Test Title!' })
     const taskId = task.id
@@ -47,12 +51,12 @@ xdescribe('Task Assignment', () => {
     const userToBeAssignedId = userToBeAssigned.body.id
 
     const logged = await login(agent, { email: 'owner@example.com', password: '1234' })
-    
+
     const updateRes = await taskUpdate({
       id: taskId,
       Offer: { userId: userToBeAssignedId, taskId, value: 101 }
     })
-    
+
     const assigns = await models.Assign.findAll({ where: { TaskId: updateRes.id } })
     const assignId = assigns[0].dataValues.id
 
@@ -65,7 +69,7 @@ xdescribe('Task Assignment', () => {
       })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const confirmRes = await agent
       .put(`/tasks/assignment/request/`)
       .set('Authorization', logged.headers.authorization)
@@ -75,13 +79,13 @@ xdescribe('Task Assignment', () => {
         confirm: true
       })
       .expect(200)
-    
+
     expect(confirmRes.statusCode).to.equal(200)
 
     const tasks = await models.Task.findAll({
       include: { all: true }
     })
-    
+
     const assign = tasks[0].Assigns[0]
     const offer = tasks[0].Offers[0]
     const taskResult = tasks[0]
@@ -94,7 +98,11 @@ xdescribe('Task Assignment', () => {
   })
 
   xit('should send email for a user interested to and user rejected ', async () => {
-    const firstUser = await register(agent, { name: 'Task Owner', email: 'owner@example.com', password: '1234' })
+    const firstUser = await register(agent, {
+      name: 'Task Owner',
+      email: 'owner@example.com',
+      password: '1234'
+    })
     const ownerId = firstUser.body.id
     const task = await buildTask({ userId: ownerId, title: 'Test Title!' })
     const taskId = task.id
@@ -107,12 +115,12 @@ xdescribe('Task Assignment', () => {
     const userToBeAssignedId = userToBeAssigned.body.id
 
     const logged = await login(agent, { email: 'owner@example.com', password: '1234' })
-    
+
     const updateRes = await taskUpdate({
       id: taskId,
       Offer: { userId: userToBeAssignedId, taskId, value: 101 }
     })
-    
+
     const assigns = await models.Assign.findAll({ where: { TaskId: updateRes.id } })
     const assignId = assigns[0].dataValues.id
 
@@ -125,7 +133,7 @@ xdescribe('Task Assignment', () => {
       })
       .expect('Content-Type', /json/)
       .expect(200)
-    
+
     const confirmRes = await agent
       .put(`/tasks/assignment/request/`)
       .set('Authorization', logged.headers.authorization)
@@ -136,13 +144,13 @@ xdescribe('Task Assignment', () => {
         message: 'reject message'
       })
       .expect(200)
-    
+
     expect(confirmRes.statusCode).to.equal(200)
 
     const tasks = await models.Task.findAll({
       include: { all: true }
     })
-    
+
     const assign = tasks[0].Assigns[0]
     const taskResult = tasks[0]
     expect(assign.status).to.be.equal('rejected')
