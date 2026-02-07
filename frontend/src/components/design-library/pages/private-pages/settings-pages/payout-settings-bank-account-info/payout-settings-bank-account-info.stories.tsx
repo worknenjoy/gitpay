@@ -29,17 +29,22 @@ Default.args = {
     },
     country: 'us'
   },
-  bank_account: {
+  bankAccount: {
     completed: true,
-    data: {
-      routing_number: '123456',
-      account_number: '123456789',
-      account_type: 'individual',
-      bank_id: '123456',
-      currency: 'usd',
-      account_holder_name: 'John Doe',
-      account_holder_type: 'individual'
-    }
+    data: [
+      {
+        id: 'ba_1',
+        bank_name: 'Bank of America',
+        routing_number: '123456',
+        account_number: '123456789',
+        currency: 'usd',
+        country: 'US',
+        status: 'verified',
+        last4: '6789',
+        account_holder_name: 'John Doe',
+        account_holder_type: 'individual'
+      }
+    ]
   },
   countries: {
     completed: true,
@@ -55,7 +60,9 @@ Default.args = {
     }
   },
   onChangeBankCode: () => {},
-  onSubmit: () => {}
+  onCreateSubmit: () => {},
+  onEditSubmit: () => {},
+  onDelete: () => {}
 }
 
 export const Loading = Template.bind({})

@@ -1,20 +1,32 @@
 import React from 'react'
-import BankAccountForm from '../../../../organisms/forms/bank-account-forms/bank-account-form/bank-account-form'
+import BankAccountsManager from '../../../../organisms/forms/bank-account-forms/bank-accounts-manager/bank-accounts-manager'
+
+const normalizeAccounts = (bankAccount: any) => {
+  const data = bankAccount?.data
+  if (Array.isArray(data)) return data
+  if (data && typeof data === 'object' && Object.keys(data).length > 0) return [data]
+  return []
+}
 
 const PayoutSetingsBankAccountHolder = ({
   user,
   bankAccount,
   countries,
-  onSubmit,
-  onChangeBankCode
+  onChangeBankCode,
+  onCreateSubmit,
+  onEditSubmit,
+  onDelete
 }) => {
   return (
-    <BankAccountForm
-      bankAccount={bankAccount}
+    <BankAccountsManager
+      completed={bankAccount?.completed}
+      accounts={normalizeAccounts(bankAccount)}
       user={user}
       countries={countries}
-      onSubmit={onSubmit}
       onChangeBankCode={onChangeBankCode}
+      onCreateSubmit={onCreateSubmit}
+      onEditSubmit={onEditSubmit}
+      onDelete={onDelete}
     />
   )
 }

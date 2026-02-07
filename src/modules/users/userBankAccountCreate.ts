@@ -37,14 +37,6 @@ export async function userBankAccountCreate({
   })
 
   if (data.dataValues.account_id) {
-    const bankAccounts = await stripe.accounts.listExternalAccounts(data.dataValues.account_id, {
-      object: 'bank_account'
-    })
-
-    if (bankAccounts.data.length) {
-      return bankAccounts.data[0]
-    }
-
     const account = await stripe.accounts.createExternalAccount(data.dataValues.account_id, {
       external_account: {
         object: 'bank_account',

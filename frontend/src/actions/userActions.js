@@ -765,7 +765,9 @@ const createBankAccount = (bank) => {
         }
         dispatch(addNotification('notifications.bank.create.success'))
 
-        return dispatch(createBankAccountSuccess(bankAccount))
+        dispatch(createBankAccountSuccess(bankAccount))
+        dispatch(getBankAccount())
+        return bankAccount
       })
       .catch((error) => {
         dispatch(addNotification('notifications.bank.create.other.error', { severity: 'error' }))
@@ -789,13 +791,35 @@ const updateBankAccount = (bank_account) => {
         }
         dispatch(addNotification('notifications.bank.update.success'))
 
-        return dispatch(updateBankAccountSuccess(bankAccount))
+        dispatch(updateBankAccountSuccess(bankAccount))
+        dispatch(getBankAccount())
+        return bankAccount
       })
       .catch((error) => {
         dispatch(addNotification('notifications.bank.update.other.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(updateBankAccountError(error, bank_account))
+      })
+  }
+}
+
+const deleteBankAccount = (bankAccountId) => {
+  validToken()
+  return (dispatch) => {
+    dispatch(updateBankAccountRequested())
+    return axios
+      .delete(api.API_URL + `/user/bank_accounts/${bankAccountId}`)
+      .then((result) => {
+        dispatch(addNotification('notifications.bank.delete.success'))
+        dispatch(getBankAccount())
+        return result
+      })
+      .catch((error) => {
+        dispatch(addNotification('notifications.bank.delete.error', { severity: 'error' }))
+        // eslint-disable-next-line no-console
+        console.log('error on delete bank account', error)
+        return dispatch(updateBankAccountError(error))
       })
   }
 }
@@ -902,6 +926,7 @@ export {
   createBankAccount,
   updateBankAccount,
   getBankAccount,
+  deleteBankAccount,
   deleteUser,
   searchUser
 }

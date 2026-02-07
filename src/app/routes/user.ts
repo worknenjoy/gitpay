@@ -11,6 +11,7 @@ import {
 } from '../controllers/user/account'
 import {
   createBankAccount,
+  deleteBankAccount,
   updateBankAccount,
   userBankAccount
 } from '../controllers/user/bank-account'
@@ -42,6 +43,7 @@ router.get('/account/countries', accountCountries)
 router.post('/bank_accounts', createBankAccount)
 router.get('/bank_accounts', userBankAccount)
 router.put('/bank_accounts', updateBankAccount)
+router.delete('/bank_accounts/:id', deleteBankAccount)
 
 router.delete('/delete', deleteUserById)
 

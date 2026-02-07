@@ -17,7 +17,8 @@ const PayoutSettingsBankAccountPage = ({
   fetchAccountCountries,
   getBankAccount,
   createBankAccount,
-  updateBankAccount
+  updateBankAccount,
+  deleteBankAccount
 }) => {
   return (
     useEffect(() => {
@@ -61,6 +62,8 @@ const PayoutSettingsBankAccountPage = ({
                   bankAccount={bankAccount}
                   createBankAccount={createBankAccount}
                   updateBankAccount={updateBankAccount}
+                  deleteBankAccount={deleteBankAccount}
+                  getBankAccount={getBankAccount}
                   countries={countries}
                 />
               )}

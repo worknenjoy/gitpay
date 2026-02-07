@@ -24,7 +24,14 @@ const errorMapping = {
   'external_account[account_type]': 'Invalid bank account type'
 }
 
-const BankAccountForm = ({ user, bankAccount, countries, onChangeBankCode, onSubmit }) => {
+const BankAccountForm = ({
+  user,
+  bankAccount,
+  countries,
+  onChangeBankCode,
+  onSubmit,
+  submitLabel
+}) => {
   const { data, completed, error = {} } = bankAccount || {}
   const {
     id,
@@ -124,7 +131,9 @@ const BankAccountForm = ({ user, bankAccount, countries, onChangeBankCode, onSub
           variant="contained"
           color="secondary"
           label={
-            <FormattedMessage id="account.actions.update" defaultMessage="Update Bank Account" />
+            submitLabel ?? (
+              <FormattedMessage id="account.actions.update" defaultMessage="Update Bank Account" />
+            )
           }
           disabled={false}
           completed={completed}

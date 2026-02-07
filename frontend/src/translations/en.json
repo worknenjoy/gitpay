@@ -488,6 +488,8 @@
   "notifications.bank.create.error": "We could not create your account",
   "notifications.bank.create.success": "Your bank account was registered successfully",
   "notifications.bank.create.other.error": "We could not update your account",
+  "notifications.bank.delete.success": "Your bank account was deleted successfully",
+  "notifications.bank.delete.error": "We could not delete your bank account",
   "actions.task.create.validation.url": "This issue already exist",
   "actions.task.create.validation.invalid": "This issue was not found",
   "actions.task.issues.error.notfound": "Github API rate limit exceeded, please try again later",

@@ -18,9 +18,8 @@ export async function userBankAccount(userParameters: UserBankAccountParams) {
       object: 'bank_account'
     })
 
-    if (bankAccounts.data.length) {
-      return bankAccounts.data[0]
-    }
-    return false
+    return bankAccounts.data ?? []
   }
+
+  return []
 }

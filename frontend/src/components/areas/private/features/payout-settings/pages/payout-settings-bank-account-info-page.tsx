@@ -6,6 +6,8 @@ const PayoutSettingsBankAccountInfoPage = ({
   bankAccount,
   updateBankAccount,
   createBankAccount,
+  deleteBankAccount,
+  getBankAccount,
   countries
 }) => {
   const [bankCode, setBankCode] = React.useState(null)
@@ -14,13 +16,13 @@ const PayoutSettingsBankAccountInfoPage = ({
     setBankCode(code)
   }
 
-  const onUpdateBankAccount = async (e) => {
+  const toFormData = (e) => {
     const routingNumberField = e.target['routing_number']
     const routingNumberValue = bankCode
       ? `${bankCode}-${routingNumberField?.value}`
       : routingNumberField?.value
     e.preventDefault()
-    let formData = {
+    return {
       ...(routingNumberValue ? { routing_number: routingNumberValue } : undefined),
       account_number: e.target['account_number'].value,
       country: e.target['bank_account_country'].value,
@@ -29,12 +31,21 @@ const PayoutSettingsBankAccountInfoPage = ({
       currency: e.target['bank_account_currency'].value
       //'external_account[bank_name]': e.target['bankCode'].value
     }
+  }
 
-    if (bankAccount?.data?.id) {
-      await updateBankAccount(formData)
-    } else {
-      await createBankAccount(formData)
-    }
+  const onCreateSubmit = async (e) => {
+    await createBankAccount(toFormData(e))
+    await getBankAccount?.()
+  }
+
+  const onEditSubmit = async (account, e) => {
+    await updateBankAccount({ id: account.id, ...toFormData(e) })
+    await getBankAccount?.()
+  }
+
+  const onDelete = async (account) => {
+    await deleteBankAccount?.(account.id)
+    await getBankAccount?.()
   }
 
   return (
@@ -42,7 +53,9 @@ const PayoutSettingsBankAccountInfoPage = ({
       <PayoutSettingsBankAccountInfo
         user={user}
         bankAccount={bankAccount}
-        onSubmit={onUpdateBankAccount}
+        onCreateSubmit={onCreateSubmit}
+        onEditSubmit={onEditSubmit}
+        onDelete={onDelete}
         countries={countries}
         onChangeBankCode={handleBankCodeChange}
       />
