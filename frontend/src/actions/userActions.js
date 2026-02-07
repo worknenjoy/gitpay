@@ -365,8 +365,8 @@ const createBankAccountSuccess = (account) => {
   }
 }
 
-const createBankAccountError = (error, data) => {
-  return { type: CREATE_BANKACCOUNT_ERROR, completed: true, error, data }
+const createBankAccountError = (error) => {
+  return { type: CREATE_BANKACCOUNT_ERROR, completed: true, error }
 }
 
 /*
@@ -385,8 +385,8 @@ const updateBankAccountSuccess = (account) => {
   }
 }
 
-const updateBankAccountError = (error, data) => {
-  return { type: UPDATE_BANKACCOUNT_ERROR, completed: true, error, data }
+const updateBankAccountError = (error) => {
+  return { type: UPDATE_BANKACCOUNT_ERROR, completed: true, error }
 }
 
 const fetchCustomer = () => {
@@ -756,24 +756,32 @@ const createBankAccount = (bank) => {
         country: bank.country,
         account_holder_type: bank.account_holder_type,
         account_holder_name: bank.account_holder_name,
-        currency: bank.currency
+        currency: bank.currency,
+        default_for_currency: bank.default_for_currency
       })
       .then((bankAccount) => {
-        if (bankAccount.data.statusCode === 400) {
+        const { data } = bankAccount
+        if (!data) {
           dispatch(addNotification('notifications.bank.create.other.error', { severity: 'error' }))
-          return dispatch(createBankAccountError(bankAccount.data, bank))
+          return dispatch(createBankAccountError({ message: 'notifications.bank.create.other.error' }))
+        }
+        if(data.type === 'StripeInvalidRequestError') {
+          dispatch(addNotification('notifications.bank.create.other.error', { severity: 'error' }))
+          return dispatch(createBankAccountError(data))
+        }
+        if (data.statusCode === 400) {
+          dispatch(addNotification('notifications.bank.create.other.error', { severity: 'error' }))
+          return dispatch(createBankAccountError(data))
         }
         dispatch(addNotification('notifications.bank.create.success'))
-
-        dispatch(createBankAccountSuccess(bankAccount))
-        dispatch(getBankAccount())
-        return bankAccount
+        dispatch(createBankAccountSuccess(data))
+        return dispatch(getBankAccount())
       })
       .catch((error) => {
         dispatch(addNotification('notifications.bank.create.other.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
-        return dispatch(createBankAccountError(error, bank))
+        return dispatch(createBankAccountError(error))
       })
   }
 }
@@ -785,13 +793,21 @@ const updateBankAccount = (bank_account) => {
     return axios
       .put(api.API_URL + '/user/bank_accounts', bank_account)
       .then((bankAccount) => {
+        if (!bankAccount.data) {
+          dispatch(addNotification('notifications.bank.update.other.error', { severity: 'error' }))
+          return dispatch(updateBankAccountError({ message: 'notifications.bank.update.other.error' }))
+        }
+        if(bankAccount.data.type === 'StripeInvalidRequestError') {
+          dispatch(addNotification(bankAccount.data.raw.message, { severity: 'error' }))
+          return dispatch(updateBankAccountError(bankAccount.data))
+        }
         if (bankAccount.data.statusCode === 400) {
           dispatch(addNotification('notifications.bank.update.error', { severity: 'error' }))
           return dispatch(updateBankAccountError(bankAccount.data))
         }
         dispatch(addNotification('notifications.bank.update.success'))
 
-        dispatch(updateBankAccountSuccess(bankAccount))
+        dispatch(updateBankAccountSuccess(bankAccount.data))
         dispatch(getBankAccount())
         return bankAccount
       })
@@ -799,7 +815,7 @@ const updateBankAccount = (bank_account) => {
         dispatch(addNotification('notifications.bank.update.other.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
-        return dispatch(updateBankAccountError(error, bank_account))
+        return dispatch(updateBankAccountError(error))
       })
   }
 }
@@ -810,10 +826,14 @@ const deleteBankAccount = (bankAccountId) => {
     dispatch(updateBankAccountRequested())
     return axios
       .delete(api.API_URL + `/user/bank_accounts/${bankAccountId}`)
-      .then((result) => {
+      .then((response) => {
+        const { data } = response
+         if(data.type === 'StripeInvalidRequestError') {
+          dispatch(addNotification(data.raw.message, { severity: 'error' }))
+          return dispatch(updateBankAccountError(data))
+        }
         dispatch(addNotification('notifications.bank.delete.success'))
-        dispatch(getBankAccount())
-        return result
+        return dispatch(getBankAccount())
       })
       .catch((error) => {
         dispatch(addNotification('notifications.bank.delete.error', { severity: 'error' }))

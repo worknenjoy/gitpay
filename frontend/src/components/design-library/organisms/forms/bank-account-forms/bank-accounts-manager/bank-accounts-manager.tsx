@@ -14,7 +14,11 @@ import BankAccountFormDialog from 'design-library/molecules/dialogs/bank-account
 
 type BankAccountsManagerProps = {
   completed?: boolean
-  accounts: BankAccountListItem[]
+  accounts: {
+    data: BankAccountListItem[]
+    completed?: boolean
+    error?: any
+  }
 
   // Used by BankAccountForm
   user: any
@@ -30,7 +34,6 @@ type BankAccountsManagerProps = {
 }
 
 export default function BankAccountsManager({
-  completed = true,
   accounts,
   user,
   countries,
@@ -39,6 +42,7 @@ export default function BankAccountsManager({
   onEditSubmit,
   onDelete
 }: BankAccountsManagerProps) {
+  const { data, completed, error } = accounts || {}
   const [dialogOpen, setDialogOpen] = React.useState(false)
   const [mode, setMode] = React.useState<'create' | 'edit'>('create')
   const [selected, setSelected] = React.useState<BankAccountListItem | null>(null)
@@ -61,12 +65,14 @@ export default function BankAccountsManager({
 
   const bankAccountForForm = React.useMemo(() => {
     if (mode === 'edit' && selected) {
-      return { completed: true, data: selected }
+      return { completed: true, data: selected, error: {} }
     }
-    return { completed: true, data: {} }
-  }, [mode, selected])
+    return { completed: true, data: {}, error: {} }
+  }, [mode, selected, accounts])
 
   const onSubmit = async (e: any) => {
+    e.preventDefault()
+    e.stopPropagation()
     if (mode === 'edit' && selected) {
       await onEditSubmit(selected, e)
     } else {
@@ -74,7 +80,7 @@ export default function BankAccountsManager({
     }
   }
 
-  if (accounts.length === 0) {
+  if (!data || data.length === 0) {
     return (
       <Stack spacing={2}>
         <EmptyBankAccount onActionClick={openCreate} />
@@ -115,6 +121,7 @@ export default function BankAccountsManager({
             completed={completed}
             onClick={(e) => {
               e.preventDefault()
+              e.stopPropagation()
               openCreate()
             }}
           />
@@ -122,7 +129,6 @@ export default function BankAccountsManager({
       />
 
       <BankAccountsList
-        completed={completed}
         accounts={accounts}
         onEdit={openEdit}
         onDelete={onDelete}

@@ -27,6 +27,7 @@ export default function BankAccountFormDialog({
   onChangeBankCode,
   onSubmit
 }: BankAccountFormDialogProps) {
+
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle>

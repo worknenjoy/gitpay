@@ -1,5 +1,5 @@
-import React from 'react'
-import { Grid, Typography } from '@mui/material'
+import React, { useEffect } from 'react'
+import { Grid, Typography, Checkbox } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import AccountTypeField from '../../../../atoms/inputs/fields/account-type-field/account-type-field'
 import CountrySelectField from '../../../../atoms/inputs/fields/country-select-field/country-select-field'
@@ -38,11 +38,10 @@ const BankAccountForm = ({
     status,
     account_holder_name,
     account_holder_type,
-    account_number,
     routing_number,
-    last4,
     country,
-    currency
+    currency,
+    default_for_currency
   } = data || {}
   const [ibanMode, setIbanMode] = React.useState(false)
   const [currentCountry, setCurrentCountry] = React.useState(country)
@@ -86,6 +85,18 @@ const BankAccountForm = ({
       )}
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 12 }}>
+          <Checkbox
+            name="default_for_currency"
+            defaultChecked={default_for_currency}
+          />
+          <Typography variant="body2" display="inline">
+            <FormattedMessage
+              id="bankAccounts.defaultForCurrency"
+              defaultMessage="Set as default for this currency"
+            />
+          </Typography>
+        </Grid>
+        <Grid size={{ xs: 12, md: 12 }}>
           <AccountTypeField type={account_holder_type} />
         </Grid>
         <Grid container spacing={2}>
@@ -109,19 +120,17 @@ const BankAccountForm = ({
         />
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 12 }}>
-            <div style={{ marginTop: 16 }}>
-              <Field
-                completed={completed}
-                label="Account Holder Name"
-                name="account_holder_name"
-                type="text"
-                placeholder="Account holder name / business name"
-                defaultValue={account_holder_name}
-              />
-            </div>
+            <Field
+              completed={completed}
+              label="Account Holder Name"
+              name="account_holder_name"
+              type="text"
+              placeholder="Account holder name / business name"
+              defaultValue={account_holder_name}
+            />
           </Grid>
         </Grid>
-        <div style={{ marginTop: 16 }}>
+        <div style={{ marginTop: 8 }}>
           <BankAccountNumberForm bankAccount={bankAccount} defaultIbanMode={ibanMode} />
         </div>
       </Grid>

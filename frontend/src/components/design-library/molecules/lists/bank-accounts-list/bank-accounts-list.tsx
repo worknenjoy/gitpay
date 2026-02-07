@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Card,
   CardContent,
+  Chip,
   Divider,
   List,
   ListItem,
@@ -25,11 +26,15 @@ export type BankAccountListItem = {
   status?: string
   routing_number?: string
   account_holder_name?: string
+  default_for_currency?: boolean
 }
 
 type BankAccountsListProps = {
-  completed?: boolean
-  accounts: BankAccountListItem[]
+  accounts: {
+    data: BankAccountListItem[]
+    completed?: boolean
+    error?: any
+  }
   onEdit?: (account: BankAccountListItem) => void
   onDelete?: (account: BankAccountListItem) => void | Promise<void>
 }
@@ -43,11 +48,11 @@ const formatAccountMeta = (account: BankAccountListItem) => {
 }
 
 export default function BankAccountsList({
-  completed = true,
   accounts,
   onEdit,
   onDelete
 }: BankAccountsListProps) {
+  const { data = [], completed, error } = accounts || {}
   return (
     <Card elevation={0} sx={{ width: '100%' }}>
       <CardContent>
@@ -62,7 +67,7 @@ export default function BankAccountsList({
             <FormattedMessage
               id="bankAccounts.list.count"
               defaultMessage="{count} total"
-              values={{ count: accounts.length }}
+              values={{ count: data.length }}
             />
           </Typography>
         </Stack>
@@ -70,7 +75,7 @@ export default function BankAccountsList({
         <Divider sx={{ mb: 1 }} />
 
         <List disablePadding>
-          {accounts.map((account, index) => {
+          {data?.map((account, index) => {
             const title = account.bank_name || (
               <FormattedMessage id="bankAccounts.list.item" defaultMessage="Bank account" />
             )
@@ -134,7 +139,7 @@ export default function BankAccountsList({
                           status={account.status || 'unknown'}
                           completed={completed}
                         />
-                        {account.default_for_currency ? (
+                        {account?.default_for_currency ? (
                           <Chip
                             label={
                               <FormattedMessage
@@ -142,7 +147,7 @@ export default function BankAccountsList({
                                 defaultMessage="Default for this currency"
                               />
                             }
-                            size="extraSmall"
+                            size="small"
                             variant="outlined"
 
                           />
@@ -169,7 +174,7 @@ export default function BankAccountsList({
                     }
                   />
                 </ListItem>
-                {index < accounts.length - 1 ? <Divider /> : null}
+                {index < data.length - 1 ? <Divider /> : null}
               </React.Fragment>
             )
           })}
