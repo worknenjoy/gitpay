@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import BankAccountsManager from './bank-accounts-manager'
 import type { BankAccountListItem } from 'design-library/molecules/lists/bank-accounts-list/bank-accounts-list'
+import { action } from '@storybook/addon-actions'
 
 const meta: Meta<typeof BankAccountsManager> = {
   title: 'Design Library/Organisms/Forms/BankAccountForms/BankAccountsManager',
@@ -34,39 +35,14 @@ const baseCountries = {
 }
 
 function StatefulTemplate({ initialAccounts = [] as BankAccountListItem[], ...args }: any) {
-  const [accounts, setAccounts] = useState<BankAccountListItem[]>(initialAccounts)
-
-  const nextId = useMemo(() => `ba_${accounts.length + 1}`, [accounts.length])
-
-  const onCreateSubmit = async (e: any) => {
-    e.preventDefault()
-
-    // Story-only: create a mock account
-    setAccounts((prev) => [
-      ...prev,
-      {
-        id: nextId,
-        bank_name: 'New Bank',
-        last4: String(1000 + prev.length).slice(-4),
-        country: 'US',
-        currency: 'usd',
-        status: 'new',
-        account_holder_name: 'Story User'
-      }
-    ])
-  }
-
-  const onEditSubmit = async (account: BankAccountListItem, e: any) => {
-    e.preventDefault()
-
-    // Story-only: mutate name to show change
-    setAccounts((prev) =>
-      prev.map((a) => (a.id === account.id ? { ...a, bank_name: `${a.bank_name} (edited)` } : a))
-    )
-  }
-
-  const onDelete = async (account: BankAccountListItem) => {
-    setAccounts((prev) => prev.filter((a) => a.id !== account.id))
+  const accounts = {
+    id: 'accounts_1',
+    bank_name: 'New Bank',
+    last4: '123455883723763'.slice(-4),
+    country: 'US',
+    currency: 'usd',
+    status: 'new',
+    account_holder_name: 'Story User'
   }
 
   return (
@@ -76,9 +52,9 @@ function StatefulTemplate({ initialAccounts = [] as BankAccountListItem[], ...ar
       user={baseUser}
       countries={baseCountries}
       onChangeBankCode={() => {}}
-      onCreateSubmit={onCreateSubmit}
-      onEditSubmit={onEditSubmit}
-      onDelete={onDelete}
+      onCreateSubmit={(e) => action('Create submit')(e)}
+      onEditSubmit={(e) => action('Edit submit')(e)}
+      onDelete={(e) => action('Delete')(e)}
     />
   )
 }

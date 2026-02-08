@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Stack } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import { Add as AddIcon } from '@mui/icons-material'
@@ -67,7 +67,7 @@ export default function BankAccountsManager({
     if (mode === 'edit' && selected) {
       return { completed: true, data: selected, error: {} }
     }
-    return { completed: true, data: {}, error: {} }
+    return { completed: true, data: {}, error: accounts.error }
   }, [mode, selected, accounts])
 
   const onSubmit = async (e: any) => {
@@ -79,6 +79,12 @@ export default function BankAccountsManager({
       await onCreateSubmit(e)
     }
   }
+
+  useEffect(() => {
+    if (error) {
+      setDialogOpen(true)
+    }
+  }, [error])
 
   if (!data || data.length === 0) {
     return (

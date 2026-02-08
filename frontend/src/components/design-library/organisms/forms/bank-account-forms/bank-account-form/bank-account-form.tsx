@@ -120,17 +120,19 @@ const BankAccountForm = ({
         />
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 12 }}>
-            <Field
-              completed={completed}
-              label="Account Holder Name"
-              name="account_holder_name"
-              type="text"
-              placeholder="Account holder name / business name"
-              defaultValue={account_holder_name}
-            />
+            <div style={{ marginTop: 17 }}>
+              <Field
+                completed={completed}
+                label="Account Holder Name"
+                name="account_holder_name"
+                type="text"
+                placeholder="Account holder name / business name"
+                defaultValue={account_holder_name}
+              />
+            </div>
           </Grid>
         </Grid>
-        <div style={{ marginTop: 8 }}>
+        <div style={{ marginTop: 12 }}>
           <BankAccountNumberForm bankAccount={bankAccount} defaultIbanMode={ibanMode} />
         </div>
       </Grid>
