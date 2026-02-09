@@ -1,8 +1,20 @@
 import React from 'react'
 import { CreditCard as BountyIcon, HowToReg as HowToRegIcon } from '@mui/icons-material'
+import { useIntl, defineMessages } from 'react-intl'
 import IssueActions from 'design-library/atoms/buttons/issue-actions/issue-actions'
 import IssuePaymentDrawer from 'design-library/molecules/drawers/issue-payment-drawer/issue-payment-drawer'
 import SendSolutionDrawer from 'design-library/molecules/drawers/send-solution-drawer/send-solution-drawer'
+
+const messages = defineMessages({
+  addBounty: {
+    id: 'issue.actions.addBounty',
+    defaultMessage: 'Add bounty'
+  },
+  sendSolution: {
+    id: 'issue.actions.sendSolution',
+    defaultMessage: 'Send solution'
+  }
+})
 
 interface IssueActionsProps {
   issue: any
@@ -64,6 +76,7 @@ const IssueActionsByRole = ({
   syncTask
 }: IssueActionsProps) => {
   const { data } = issue
+  const intl = useIntl()
 
   const [open, setOpen] = React.useState(false)
   const [openPaymentDrawer, setOpenPaymentDrawer] = React.useState(false)
@@ -76,7 +89,7 @@ const IssueActionsByRole = ({
       onClick: () => {
         setOpenPaymentDrawer(true)
       },
-      label: 'Add bounty',
+      label: intl.formatMessage(messages.addBounty),
       disabled: shouldDisable,
       icon: <BountyIcon fontSize="small" />,
       component: (
@@ -104,7 +117,7 @@ const IssueActionsByRole = ({
     {
       key: 'send-solution',
       onClick: () => {},
-      label: 'Send solution',
+      label: intl.formatMessage(messages.sendSolution),
       disabled: shouldDisable,
       icon: <HowToRegIcon fontSize="small" />,
       component: (

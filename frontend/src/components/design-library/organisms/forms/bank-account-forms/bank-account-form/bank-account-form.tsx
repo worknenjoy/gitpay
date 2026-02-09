@@ -123,7 +123,7 @@ const BankAccountForm = ({
             <div style={{ marginTop: 17 }}>
               <Field
                 completed={completed}
-                label="Account Holder Name"
+                label={<FormattedMessage id="bankAccount.accountHolderName" defaultMessage="Account Holder Name" />}
                 name="account_holder_name"
                 type="text"
                 placeholder="Account holder name / business name"

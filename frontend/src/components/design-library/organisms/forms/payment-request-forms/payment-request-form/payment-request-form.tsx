@@ -142,7 +142,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 12 }}>
             <Field
-              label="Title"
+              label={<FormattedMessage id="form.label.title" defaultMessage="Title" />}
               name="title"
               type="text"
               placeholder="Title of your service"
@@ -157,7 +157,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
               <TextField
                 fullWidth
                 variant="outlined"
-                label="Description"
+                label={<FormattedMessage id="form.label.description" defaultMessage="Description" />}
                 name="description"
                 placeholder="Describe your service"
                 multiline
@@ -168,7 +168,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           </Grid>
           <Grid size={{ xs: 12, md: 12 }}>
             <Field
-              label="Amount"
+              label={<FormattedMessage id="form.label.amount" defaultMessage="Amount" />}
               name="amount"
               type="number"
               placeholder="Enter the amount"

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import { FormattedMessage } from 'react-intl'
 import Drawer from '../drawer/drawer'
 import PaymentRequestForm from '../../../organisms/forms/payment-request-forms/payment-request-form/payment-request-form'
 
@@ -41,16 +42,16 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
       completed={completed}
       open={open}
       onClose={onClose}
-      title={isEditMode ? 'Edit Payment Request' : 'New Payment Request'}
-      subtitle="Please fill out the form to request payment"
+      title={isEditMode ? <FormattedMessage id="paymentRequest.title.edit" defaultMessage="Edit Payment Request" /> : <FormattedMessage id="paymentRequest.title.new" defaultMessage="New Payment Request" />}
+      subtitle={<FormattedMessage id="paymentRequest.subtitle" defaultMessage="Please fill out the form to request payment" />}
       actions={[
         {
-          label: 'Cancel',
+          label: <FormattedMessage id="actions.cancel" defaultMessage="Cancel" />,
           onClick: onClose,
           variant: 'text'
         },
         {
-          label: isEditMode ? 'Edit Payment Request' : 'Create Payment Request',
+          label: isEditMode ? <FormattedMessage id="paymentRequest.action.edit" defaultMessage="Edit Payment Request" /> : <FormattedMessage id="paymentRequest.action.create" defaultMessage="Create Payment Request" />,
           onClick: () => {
             formRef.current?.submit()
           },
