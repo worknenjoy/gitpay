@@ -15,27 +15,30 @@ type Story = StoryObj<typeof BankAccountsList>
 
 export const Default: Story = {
   args: {
-    completed: true,
-    accounts: [
-      {
-        id: 'ba_1',
-        bank_name: 'Nubank',
-        last4: '1234',
-        country: 'BR',
-        currency: 'brl',
-        status: 'verified',
-        account_holder_name: 'Alex Magno'
-      },
-      {
-        id: 'ba_2',
-        bank_name: 'Bank of America',
-        last4: '9876',
-        country: 'US',
-        currency: 'usd',
-        status: 'new',
-        account_holder_name: 'Alex Magno'
-      }
-    ],
+    accounts: {
+      completed: true,
+      data: [
+        {
+          id: 'ba_1',
+          bank_name: 'Nubank',
+          last4: '1234',
+          country: 'BR',
+          currency: 'brl',
+          status: 'verified',
+          account_holder_name: 'Alex Magno',
+          default_for_currency: true
+        },
+        {
+          id: 'ba_2',
+          bank_name: 'Bank of America',
+          last4: '9876',
+          country: 'US',
+          currency: 'usd',
+          status: 'new',
+          account_holder_name: 'Alex Magno'
+        }
+      ]
+    },
     onEdit: () => {},
     onDelete: async () => {}
   }
@@ -43,8 +46,10 @@ export const Default: Story = {
 
 export const Empty: Story = {
   args: {
-    completed: true,
-    accounts: [],
+    accounts: {
+      completed: true,
+      data: []
+    },
     onEdit: () => {},
     onDelete: async () => {}
   }
@@ -52,17 +57,22 @@ export const Empty: Story = {
 
 export const Loading: Story = {
   args: {
-    completed: false,
-    accounts: [
-      {
-        id: 'ba_1',
-        bank_name: 'Nubank',
-        last4: '1234',
-        country: 'BR',
-        currency: 'brl',
-        status: 'verified'
-      }
-    ],
+    accounts: {
+      completed: false,
+      data: []
+    },
+    onEdit: () => {},
+    onDelete: async () => {}
+  }
+}
+
+export const ErrorState: Story = {
+  args: {
+    accounts: {
+      completed: true,
+      data: [],
+      error: 'Failed to load'
+    },
     onEdit: () => {},
     onDelete: async () => {}
   }

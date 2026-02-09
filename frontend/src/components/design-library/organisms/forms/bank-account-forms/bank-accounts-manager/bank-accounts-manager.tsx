@@ -26,8 +26,8 @@ type BankAccountsManagerProps = {
   onChangeBankCode?: (bankCode: string) => void
 
   // Form submit handlers (keep business logic outside design-library)
-  onCreateSubmit: (e: any) => void | Promise<void>
-  onEditSubmit: (account: BankAccountListItem, e: any) => void | Promise<void>
+  onCreateSubmit: (e: any) => any | Promise<any>
+  onEditSubmit: (account: BankAccountListItem, e: any) => any | Promise<any>
 
   // Delete handler
   onDelete?: (account: BankAccountListItem) => void | Promise<void>
@@ -65,28 +65,28 @@ export default function BankAccountsManager({
 
   const bankAccountForForm = React.useMemo(() => {
     if (mode === 'edit' && selected) {
-      return { completed: true, data: selected, error: {} }
+      return { completed: accounts.completed, data: selected, error }
     }
-    return { completed: true, data: {}, error: accounts.error }
+    return { completed: accounts.completed, data: {}, error }
   }, [mode, selected, accounts])
 
   const onSubmit = async (e: any) => {
     e.preventDefault()
     e.stopPropagation()
     if (mode === 'edit' && selected) {
-      await onEditSubmit(selected, e)
+      const edit = await onEditSubmit(selected, e)
+      if(!edit?.error?.raw) {
+        setDialogOpen(false)
+      }
     } else {
-      await onCreateSubmit(e)
+      const create = await onCreateSubmit(e)
+      if(!create?.error?.raw) {
+        setDialogOpen(false)
+      }
     }
   }
 
-  useEffect(() => {
-    if (error) {
-      setDialogOpen(true)
-    }
-  }, [error])
-
-  if (!data || data.length === 0) {
+  if ((!data || data.length === 0) && completed) {
     return (
       <Stack spacing={2}>
         <EmptyBankAccount onActionClick={openCreate} />

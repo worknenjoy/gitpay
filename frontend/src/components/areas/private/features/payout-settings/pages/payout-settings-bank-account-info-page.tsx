@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PayoutSettingsBankAccountInfo from 'design-library/pages/private-pages/settings-pages/payout-settings-bank-account-info/payout-settings-bank-account-info'
 
 const PayoutSettingsBankAccountInfoPage = ({
   user,
   bankAccount,
+  getBankAccount,
   updateBankAccount,
   createBankAccount,
   deleteBankAccount,
@@ -35,18 +36,22 @@ const PayoutSettingsBankAccountInfoPage = ({
   const onCreateSubmit = async (e) => {
     e.preventDefault()
     e.stopPropagation()
-    await createBankAccount(toFormData(e))
+    return await createBankAccount(toFormData(e))
   }
 
   const onEditSubmit = async (account, e) => {
     e.preventDefault()
     e.stopPropagation()
-    await updateBankAccount({ id: account.id, ...toFormData(e) })
+    return await updateBankAccount({ id: account.id, ...toFormData(e) })
   }
 
   const onDelete = async (account) => {
     await deleteBankAccount?.(account.id)
   }
+
+  useEffect(() => {
+    getBankAccount()
+  }, [getBankAccount])
 
   return (
     <div>

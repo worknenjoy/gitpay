@@ -132,7 +132,7 @@ const BankAccountForm = ({
             </div>
           </Grid>
         </Grid>
-        <div style={{ marginTop: 12 }}>
+        <div style={{ marginTop: 17 }}>
           <BankAccountNumberForm bankAccount={bankAccount} defaultIbanMode={ibanMode} />
         </div>
       </Grid>

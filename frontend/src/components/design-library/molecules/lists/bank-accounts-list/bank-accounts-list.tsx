@@ -16,6 +16,7 @@ import { Edit as EditIcon, Delete as DeleteIcon } from '@mui/icons-material'
 import Button from 'design-library/atoms/buttons/button/button'
 import ConfirmButton from 'design-library/atoms/buttons/confirm-button/confirm-button'
 import BankAccountStatus from 'design-library/atoms/status/account-status/bank-account-status/bank-account-status'
+import BankAccountListPlaceholder from './bank-account-list.placeholder'
 
 export type BankAccountListItem = {
   id: string
@@ -52,7 +53,63 @@ export default function BankAccountsList({
   onEdit,
   onDelete
 }: BankAccountsListProps) {
-  const { data = [], completed, error } = accounts || {}
+  const { data = [], completed = false, error } = accounts || {}
+
+  if (!completed) {
+    return <BankAccountListPlaceholder />
+  }
+
+  if (error.length) {
+    return (
+      <Card elevation={0} sx={{ width: '100%' }}>
+        <CardContent>
+          <Typography variant="subtitle1" fontWeight={700}>
+            <FormattedMessage id="bankAccounts.list.title" defaultMessage="Linked bank accounts" />
+          </Typography>
+          <Divider sx={{ my: 1 }} />
+          <Typography variant="body2" color="error">
+            <FormattedMessage
+              id="bankAccounts.list.error"
+              defaultMessage="Failed to load bank accounts."
+            />
+          </Typography>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (data.length === 0) {
+    return (
+      <Card elevation={0} sx={{ width: '100%' }}>
+        <CardContent>
+          <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
+            <Typography variant="subtitle1" fontWeight={700}>
+              <FormattedMessage
+                id="bankAccounts.list.title"
+                defaultMessage="Linked bank accounts"
+              />
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              <FormattedMessage
+                id="bankAccounts.list.count"
+                defaultMessage="{count} total"
+                values={{ count: 0 }}
+              />
+            </Typography>
+          </Stack>
+
+          <Divider sx={{ mb: 1 }} />
+
+          <Typography variant="body2" color="text.secondary">
+            <FormattedMessage
+              id="bankAccounts.list.empty"
+              defaultMessage="No bank accounts linked yet."
+            />
+          </Typography>
+        </CardContent>
+      </Card>
+    )
+  }
   return (
     <Card elevation={0} sx={{ width: '100%' }}>
       <CardContent>
