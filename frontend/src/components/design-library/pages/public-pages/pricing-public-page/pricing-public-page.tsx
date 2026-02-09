@@ -154,7 +154,7 @@ function PricingPublicPage() {
           {tiersContributors.map((tier) => (
             <Grid
               key={tier.titleId}
-              size={{ xs: 12, sm: intl.formatMessage({ id: tier.titleId }) === 'Enterprise' ? 12 : 6, md: 12 }}
+              size={{ xs: 12, sm: 6, md: 12 }}
             >
               <Card>
                 <CardHeader
