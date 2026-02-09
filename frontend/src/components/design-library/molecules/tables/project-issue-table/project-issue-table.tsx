@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
+import { defineMessages, useIntl } from 'react-intl'
 import SectionTable from '../section-table/section-table'
 import IssueLinkField from '../section-table/section-table-custom-fields/issue/issue-link-field/issue-link-field'
 import IssueStatusField from '../section-table/section-table-custom-fields/issue/issue-status-field/issue-status-field'
@@ -9,19 +9,32 @@ import IssueLanguageField from '../section-table/section-table-custom-fields/iss
 import IssueCreatedField from '../section-table/section-table-custom-fields/issue/issue-created-field/issue-created-field'
 import IssueFilterBar from '../../sections/issue-filter-bar/issue-filter-bar'
 
-export const issueMetadata = {
-  issue: { sortable: true, numeric: false, dataBaseKey: 'title', label: <FormattedMessage id="table.header.issue" defaultMessage="issue" /> },
-  status: { sortable: true, numeric: false, dataBaseKey: 'description', label: <FormattedMessage id="table.header.status" defaultMessage="Status" /> },
-  value: { sortable: true, numeric: true, dataBaseKey: 'value', label: <FormattedMessage id="table.header.amount" defaultMessage="Amount" /> },
-  labels: { sortable: true, numeric: false, dataBaseKey: 'Labels', label: <FormattedMessage id="table.header.labels" defaultMessage="Labels" /> },
-  languages: {
-    sortable: true,
-    numeric: false,
-    dataBaseKey: 'ProgrammingLanguage',
-    label: <FormattedMessage id="table.header.languages" defaultMessage="Languages" />
+const messages = defineMessages({
+  issue: {
+    id: 'table.header.issue',
+    defaultMessage: 'issue'
   },
-  createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: <FormattedMessage id="table.header.createdAt" defaultMessage="Created at" /> }
-}
+  status: {
+    id: 'table.header.status',
+    defaultMessage: 'Status'
+  },
+  amount: {
+    id: 'table.header.amount',
+    defaultMessage: 'Amount'
+  },
+  labels: {
+    id: 'table.header.labels',
+    defaultMessage: 'Labels'
+  },
+  languages: {
+    id: 'table.header.languages',
+    defaultMessage: 'Languages'
+  },
+  createdAt: {
+    id: 'table.header.createdAt',
+    defaultMessage: 'Created at'
+  }
+})
 
 export const customColumnRenderer = {
   issue: (item: any) => <IssueLinkField issue={item} />,
@@ -41,6 +54,22 @@ export const ProjectIssuesTable = ({
   listLanguages,
   listTasks
 }) => {
+  const intl = useIntl()
+  
+  const issueMetadata = {
+    issue: { sortable: true, numeric: false, dataBaseKey: 'title', label: intl.formatMessage(messages.issue) },
+    status: { sortable: true, numeric: false, dataBaseKey: 'description', label: intl.formatMessage(messages.status) },
+    value: { sortable: true, numeric: true, dataBaseKey: 'value', label: intl.formatMessage(messages.amount) },
+    labels: { sortable: true, numeric: false, dataBaseKey: 'Labels', label: intl.formatMessage(messages.labels) },
+    languages: {
+      sortable: true,
+      numeric: false,
+      dataBaseKey: 'ProgrammingLanguage',
+      label: intl.formatMessage(messages.languages)
+    },
+    createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: intl.formatMessage(messages.createdAt) }
+  }
+  
   return (
     <>
       <IssueFilterBar
