@@ -2,68 +2,70 @@ import React from 'react'
 
 import { Button, Card, CardActions, CardContent, CardHeader, Grid, Typography } from '@mui/material'
 
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { Layout, HeroContent, CardPricing } from './pricing-public-page.styles'
 import HeroTitle from 'design-library/atoms/typography/hero-title/hero-title'
 
 interface Tier {
-  title: string
-  subheader: string
+  titleId: string
+  subheaderId: string
   price: string
-  description: string[]
+  descriptionIds: string[]
   link?: string
-  buttonText: string
+  buttonTextId: string
   buttonVariant?: 'text' | 'outlined' | 'contained'
 }
 
 const tiersMaintainers: Tier[] = [
   {
-    title: 'Open source',
-    subheader: 'For open source projects',
+    titleId: 'welcome.pricing.opensource.title',
+    subheaderId: 'welcome.pricing.opensource.subheader',
     price: '8%',
-    description: [
-      'Public projects from Github or Bitbucket',
-      'We will match your issues with our contributor skills to find the right candidate',
-      '8% fee for payment with Credit Card or Paypal',
-      'No fee for payments above $5000'
+    descriptionIds: [
+      'welcome.pricing.opensource.description1',
+      'welcome.pricing.opensource.description2',
+      'welcome.pricing.opensource.description3',
+      'welcome.pricing.opensource.description4'
     ],
     link: 'https://gitpay.me/#/signin',
-    buttonText: 'Get started',
+    buttonTextId: 'welcome.pricing.opensource.button',
     buttonVariant: 'text'
   },
   {
-    title: 'Private',
-    subheader: 'For private projects',
+    titleId: 'welcome.pricing.private.title',
+    subheaderId: 'welcome.pricing.private.subheader',
     price: '18%',
-    description: [
-      'Private projects on Github or Bitbucket',
-      'We will match your issues with our contributor skills to find the right candidate',
-      '18% fee for payment in Credit Card or Paypal'
+    descriptionIds: [
+      'welcome.pricing.private.description1',
+      'welcome.pricing.private.description2',
+      'welcome.pricing.private.description3'
     ],
     link: 'https://gitpay.me/#/signin',
-    buttonText: 'Get started',
+    buttonTextId: 'welcome.pricing.private.button',
     buttonVariant: 'text'
   }
 ]
 
 const tiersContributors: Tier[] = [
   {
-    title: 'Fee for contributors',
-    subheader: 'For contributors who solve issues, you will have a fee to receive the transfer',
+    titleId: 'welcome.pricing.contributors.title',
+    subheaderId: 'welcome.pricing.contributors.subheader',
     price: '8%',
-    description: [
-      'We support direct transfer for your bank account registered on Gitpay for credit card payments or invoice',
-      'We support Paypal to receive payments when the bounty is paid using Paypal',
-      '8% fee to withdraw your bounty after the Pull request is merged',
-      '⚠️ Note: You will receive the payouts according to the payment method used by the maintainer, if the maintainer paid with credit card, you will receive the payout in your bank account, if the maintainer paid with Paypal, you will receive the payout in your Paypal account'
+    descriptionIds: [
+      'welcome.pricing.contributors.description1',
+      'welcome.pricing.contributors.description2',
+      'welcome.pricing.contributors.description3',
+      'welcome.pricing.contributors.description4'
     ],
     link: 'https://gitpay.me/#/signin',
-    buttonText: 'Get started',
+    buttonTextId: 'welcome.pricing.contributors.button',
     buttonVariant: 'text'
   }
 ]
 
 function PricingPublicPage() {
+  const intl = useIntl()
+  
   return (
     <Layout>
       <React.Fragment>
@@ -99,11 +101,11 @@ function PricingPublicPage() {
               <CardContent>
                 <Grid container spacing={2} justifyContent="center">
                   {tiersMaintainers.map((tier) => (
-                    <Grid key={tier.title} size={{ xs: 12, sm: 6, md: 6 }}>
+                    <Grid key={tier.titleId} size={{ xs: 12, sm: 6, md: 6 }}>
                       <Card style={{ marginBottom: 20 }}>
                         <CardHeader
-                          title={tier.title}
-                          subheader={tier.subheader}
+                          title={intl.formatMessage({ id: tier.titleId })}
+                          subheader={intl.formatMessage({ id: tier.subheaderId })}
                           sx={{
                             backgroundColor: (theme) => theme.palette.primary.light,
                             textAlign: 'center'
@@ -112,7 +114,7 @@ function PricingPublicPage() {
                         <CardContent>
                           <CardPricing>
                             <Typography variant="h5" color="textPrimary">
-                              <small>Fee</small> {tier.price}
+                              <small><FormattedMessage id="welcome.pricing.opensource.fee" defaultMessage="Fee" /></small> {tier.price}
                             </Typography>
                             <Typography variant="body1" color="textSecondary">
                               <FormattedMessage
@@ -121,9 +123,9 @@ function PricingPublicPage() {
                               />
                             </Typography>
                           </CardPricing>
-                          {tier.description.map((line, i) => (
-                            <Typography variant="body1" align="center" key={line}>
-                              {line}
+                          {tier.descriptionIds.map((descId, i) => (
+                            <Typography variant="body1" align="center" key={descId}>
+                              {intl.formatMessage({ id: descId })}
                             </Typography>
                           ))}
                         </CardContent>
@@ -136,7 +138,7 @@ function PricingPublicPage() {
                               variant={tier.buttonVariant}
                               color="primary"
                             >
-                              {tier.buttonText}
+                              {intl.formatMessage({ id: tier.buttonTextId })}
                             </Button>
                           </CardActions>
                         )}
@@ -151,13 +153,13 @@ function PricingPublicPage() {
         <Grid container spacing={2} justifyContent="center">
           {tiersContributors.map((tier) => (
             <Grid
-              key={tier.title}
-              size={{ xs: 12, sm: tier.title === 'Enterprise' ? 12 : 6, md: 12 }}
+              key={tier.titleId}
+              size={{ xs: 12, sm: intl.formatMessage({ id: tier.titleId }) === 'Enterprise' ? 12 : 6, md: 12 }}
             >
               <Card>
                 <CardHeader
-                  title={tier.title}
-                  subheader={tier.subheader}
+                  title={intl.formatMessage({ id: tier.titleId })}
+                  subheader={intl.formatMessage({ id: tier.subheaderId })}
                   sx={{
                     backgroundColor: (theme) => theme.palette.primary.light,
                     textAlign: 'center'
@@ -166,20 +168,20 @@ function PricingPublicPage() {
                 <CardContent>
                   <CardPricing>
                     <Typography variant="h5" color="textPrimary">
-                      <small>Fee</small> {tier.price}
+                      <small><FormattedMessage id="welcome.pricing.opensource.fee" defaultMessage="Fee" /></small> {tier.price}
                     </Typography>
                     <Typography variant="body1" color="textSecondary">
                       <FormattedMessage id="welcome.pricing.month" defaultMessage=" / issue" />
                     </Typography>
                   </CardPricing>
-                  {tier.description.map((line, i) => (
+                  {tier.descriptionIds.map((descId, i) => (
                     <Typography
                       gutterBottom
-                      variant={tier.description.length - 1 === i ? 'caption' : 'body1'}
+                      variant={tier.descriptionIds.length - 1 === i ? 'caption' : 'body1'}
                       align="center"
-                      key={line}
+                      key={descId}
                     >
-                      {line}
+                      {intl.formatMessage({ id: descId })}
                     </Typography>
                   ))}
                 </CardContent>
@@ -192,7 +194,7 @@ function PricingPublicPage() {
                       variant={tier.buttonVariant}
                       color="primary"
                     >
-                      {tier.buttonText}
+                      {intl.formatMessage({ id: tier.buttonTextId })}
                     </Button>
                   </CardActions>
                 )}
