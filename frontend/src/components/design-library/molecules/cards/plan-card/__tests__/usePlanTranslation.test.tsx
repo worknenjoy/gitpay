@@ -6,7 +6,7 @@ import { renderHook } from '@testing-library/react'
 import { IntlProvider } from 'react-intl'
 import { usePlanTranslation } from '../usePlanTranslation'
 
-const Wrapper = ({ children }) => (
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <IntlProvider
     locale="en"
     messages={{
