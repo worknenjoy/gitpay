@@ -1,8 +1,13 @@
-import * as user from '../../../modules/users'
+import {
+  userBankAccountCreate,
+  userBankAccountDelete,
+  userBankAccountUpdate,
+  userBankAccount as userBankAccountList
+} from '../../../modules/users'
 
 export const createBankAccount = async (req: any, res: any) => {
   try {
-    const data = await user.userBankAccountCreate({
+    const data = await userBankAccountCreate({
       userParams: req.user,
       bankAccountParams: req.body
     })
@@ -16,7 +21,7 @@ export const createBankAccount = async (req: any, res: any) => {
 
 export const updateBankAccount = async (req: any, res: any) => {
   try {
-    const data = await user.userBankAccountUpdate({ userParams: req.user, bank_account: req.body })
+    const data = await userBankAccountUpdate({ userParams: req.user, bank_account: req.body })
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -27,7 +32,21 @@ export const updateBankAccount = async (req: any, res: any) => {
 
 export const userBankAccount = async (req: any, res: any) => {
   try {
-    const data = await user.userBankAccount({ id: req.user.id })
+    const data = await userBankAccountList({ id: req.user.id })
+    res.send(data)
+  } catch (error: any) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+    res.send(error)
+  }
+}
+
+export const deleteBankAccount = async (req: any, res: any) => {
+  try {
+    const data = await userBankAccountDelete({
+      userParams: req.user,
+      bankAccountId: req.params.id
+    })
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console

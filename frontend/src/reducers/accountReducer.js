@@ -85,7 +85,7 @@ export const balance = (state = { data: {}, completed: true, error: {} }, action
   }
 }
 
-export const bankAccount = (state = { data: {}, completed: true, error: {} }, action) => {
+export const bankAccount = (state = { data: [], completed: true, error: {} }, action) => {
   switch (action.type) {
     case GET_BANKACCOUNT_REQUESTED:
       return { ...state, completed: false }
@@ -98,13 +98,13 @@ export const bankAccount = (state = { data: {}, completed: true, error: {} }, ac
     case CREATE_BANKACCOUNT_SUCCESS:
       return { ...state, completed: true, data: action.data, error: {} }
     case CREATE_BANKACCOUNT_ERROR:
-      return { ...state, completed: true, data: action.data, error: action.error }
+      return { ...state, completed: true, error: action.error }
     case UPDATE_BANKACCOUNT_REQUESTED:
       return { ...state, completed: false }
     case UPDATE_BANKACCOUNT_SUCCESS:
       return { ...state, completed: true, data: action.data, error: {} }
     case UPDATE_BANKACCOUNT_ERROR:
-      return { ...state, completed: true, error: action.error, data: action.data }
+      return { ...state, completed: true, error: action.error }
     default:
       return state
   }

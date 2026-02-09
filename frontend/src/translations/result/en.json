@@ -476,6 +476,8 @@
   "notifications.bank.get.success": "We could not obtain your bank account data",
   "notifications.bank.update.error": "We could not update your account",
   "notifications.bank.update.success": "Your bank account was updated successfully",
+  "notifications.bank.delete.success": "Your bank account was deleted successfully",
+  "notifications.bank.delete.error": "We could not delete your bank account",
   "order.finalValue.label": "Total with Fees",
   "order.invoice.actions.cancel": "Cancel",
   "order.invoice.confirm": "We will apply the fee of 8% for Open Source Projects",
