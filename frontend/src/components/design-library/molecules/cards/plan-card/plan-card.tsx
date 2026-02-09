@@ -16,9 +16,9 @@ import {
 
 type PlanDetails = {
   fee?: number
-  category?: string
-  title?: string
-  items?: string[]
+  category?: React.ReactNode
+  title?: React.ReactNode
+  items?: React.ReactNode[]
 }
 
 type PlanProps = {
@@ -53,7 +53,7 @@ const PlanCard = ({ plan }: PlanProps) => {
             {items.map(
               (item, index) =>
                 item && (
-                  <Typography>
+                  <Typography key={index}>
                     <CheckIcon fontSize="small" color="primary" />
                     {item}
                   </Typography>
