@@ -647,7 +647,7 @@
   "solution.requirements.prMerged": "The Pull Request / Merge Request was merged",
   "table.header.amount": "Amount",
   "table.header.createdAt": "Created at",
-  "table.header.issue": "issue",
+  "table.header.issue": "task",
   "table.header.labels": "Labels",
   "table.header.languages": "Languages",
   "table.header.project": "Project",
