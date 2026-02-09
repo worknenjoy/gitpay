@@ -476,6 +476,8 @@
   "notifications.bank.get.success": "Não foi possível obter sua conta bancária",
   "notifications.bank.update.error": "Não foi possível atualizar a sua conta",
   "notifications.bank.update.success": "Sua conta bancária foi atualizada com sucesso",
+  "notifications.bank.delete.success": "Conta bancária removida com sucesso",
+  "notifications.bank.delete.error": "Não foi possível remover sua conta bancária",
   "order.finalValue.label": "Total com Taxas",
   "order.invoice.actions.cancel": "Cancelar",
   "order.invoice.confirm": "Aplicaremos a taxa de 8% para Projetos de Software Livre",

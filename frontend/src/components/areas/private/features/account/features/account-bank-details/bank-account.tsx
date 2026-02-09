@@ -47,6 +47,10 @@ const BankAccount = ({
 }) => {
   const intl = useIntl()
 
+  const bankAccountData = Array.isArray(bankAccount?.data)
+    ? bankAccount.data[0] || {}
+    : bankAccount?.data || {}
+
   const [ibanMode, setIbanMode] = React.useState(false)
   const [userId, setUserId] = React.useState('')
   const [bankAccountType, setBankAccountType] = React.useState('individual')
@@ -183,20 +187,20 @@ const BankAccount = ({
   }, [user])
 
   useEffect(() => {
-    if (bankAccount.data.account_holder_type) {
-      setBankAccountType(bankAccount.data.account_holder_type)
+    if (bankAccountData.account_holder_type) {
+      setBankAccountType(bankAccountData.account_holder_type)
     }
-    if (bankAccount.data.account_holder_name) {
-      setBankAccountHolderName(bankAccount.data.account_holder_name)
+    if (bankAccountData.account_holder_name) {
+      setBankAccountHolderName(bankAccountData.account_holder_name)
     }
     if (currentCountry === '') {
-      setCurrentCountry(bankAccount.data.country || account.data.country)
+      setCurrentCountry(bankAccountData.country || account.data.country)
     }
 
     if (currentCurrency === '') {
-      setCurrentCurrency(bankAccount.data.currency || account.data.currency)
+      setCurrentCurrency(bankAccountData.currency || account.data.currency)
     }
-  }, [bankAccount])
+  }, [bankAccountData, account, currentCountry, currentCurrency])
 
   return (
     <Grid container spacing={2}>
@@ -237,7 +241,7 @@ const BankAccount = ({
                       </Typography>
                       <Grid container spacing={3}>
                         <Grid size={{ xs: 12 }}>
-                          {bankAccount.data.routing_number ? (
+                          {bankAccountData.routing_number ? (
                             <div style={{ marginBottom: 8, marginTop: 8 }}>
                               <Alert
                                 severity="success"
@@ -336,7 +340,7 @@ const BankAccount = ({
                               fullWidth
                               style={{ marginTop: 12, marginBottom: 12 }}
                               onChange={onChangeCountry}
-                              disabled={!!bankAccount.data.routing_number}
+                              disabled={!!bankAccountData.routing_number}
                             >
                               <option value="">Select bank country</option>
                               {countryCodes.map((c, index) => (
@@ -369,7 +373,7 @@ const BankAccount = ({
                               fullWidth
                               style={{ marginTop: 12, marginBottom: 12 }}
                               onChange={onChangeCurrency}
-                              disabled={!!bankAccount.data.routing_number}
+                              disabled={!!bankAccountData.routing_number}
                             >
                               <option value="">Select currency</option>
                               {countryCurrencies.map((c, index) => (
@@ -408,7 +412,7 @@ const BankAccount = ({
                                     defaultMessage="Individual"
                                   />
                                 }
-                                disabled={!!bankAccount.data.routing_number && !editBankAccount}
+                                disabled={!!bankAccountData.routing_number && !editBankAccount}
                               />
                               <FormControlLabel
                                 value="company"
@@ -419,7 +423,7 @@ const BankAccount = ({
                                     defaultMessage="Company"
                                   />
                                 }
-                                disabled={!!bankAccount.data.routing_number && !editBankAccount}
+                                disabled={!!bankAccountData.routing_number && !editBankAccount}
                               />
                             </RadioGroup>
                           </FormControl>
@@ -433,7 +437,7 @@ const BankAccount = ({
                             <Input
                               name="account_holder_name"
                               id="account_holder_name"
-                              disabled={!!bankAccount.data.routing_number && !editBankAccount}
+                              disabled={!!bankAccountData.routing_number && !editBankAccount}
                               value={bankAccountHolderName}
                               onChange={onChangeHolderName}
                             />
@@ -454,9 +458,11 @@ const BankAccount = ({
                                   id: 'account.details.iban',
                                   defaultMessage: 'IBAN'
                                 })}
-                                disabled={!!bankAccount.data.routing_number}
+                                disabled={!!bankAccountData.routing_number}
                                 defaultValue={
-                                  bankAccount.data.last4 ? `*****${bankAccount.data.last4}` : ''
+                                  bankAccountData.last4
+                                    ? `*****${bankAccountData.last4}`
+                                    : ''
                                 }
                               />
                               {AccountNumberError && (
@@ -493,8 +499,8 @@ const BankAccount = ({
                                       defaultMessage: 'Routing number'
                                     })}
                                     style={{ marginRight: 20 }}
-                                    disabled={!!bankAccount.data.routing_number}
-                                    defaultValue={bankAccount.data.routing_number}
+                                    disabled={!!bankAccountData.routing_number}
+                                    defaultValue={bankAccountData.routing_number}
                                   />
                                 </FormControl>
                               </>
@@ -513,9 +519,11 @@ const BankAccount = ({
                                   id: 'account.details.accountNumber',
                                   defaultMessage: 'Account number'
                                 })}
-                                disabled={!!bankAccount.data.routing_number}
+                                disabled={!!bankAccountData.routing_number}
                                 defaultValue={
-                                  bankAccount.data.last4 ? `*****${bankAccount.data.last4}` : ''
+                                  bankAccountData.last4
+                                    ? `*****${bankAccountData.last4}`
+                                    : ''
                                 }
                               />
 
@@ -532,7 +540,7 @@ const BankAccount = ({
                           </Grid>
                         )}
                         <Grid size={{ xs: 12 }}>
-                          {user.country !== 'BR' && !bankAccount.data.routing_number && (
+                          {user.country !== 'BR' && !bankAccountData.routing_number && (
                             <FormControl>
                               <FormattedMessage
                                 id="account.details.bank.mode.iban"
@@ -565,7 +573,7 @@ const BankAccount = ({
                         variant="contained"
                         color="secondary"
                         type="submit"
-                        disabled={!editBankAccount && bankAccount.data.routing_number}
+                        disabled={!editBankAccount && bankAccountData.routing_number}
                       >
                         {editBankAccount ? (
                           <FormattedMessage

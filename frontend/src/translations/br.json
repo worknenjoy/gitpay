@@ -429,6 +429,8 @@
   "notifications.bank.create.error": "Não foi possível criar sua conta",
   "notifications.bank.create.success": "Conta bancária cadastrada com sucesso",
   "notifications.bank.create.other.error": "Não foi possível atualizar a sua conta",
+  "notifications.bank.delete.success": "Conta bancária removida com sucesso",
+  "notifications.bank.delete.error": "Não foi possível remover sua conta bancária",
   "actions.task.create.validation.url": "Essa URL já foi cadastrada",
   "actions.task.create.validation.invalid": "Essa tarefa não foi encontrada no Github",
   "actions.task.issues.error.notfound": "Tarefa não encontrada",

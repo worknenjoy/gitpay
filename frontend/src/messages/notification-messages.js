@@ -453,6 +453,14 @@ const messages = defineMessages({
     id: 'notifications.bank.update.success',
     defaultMessage: 'Your bank account was updated successfully'
   },
+  notificationBankDeleteSuccess: {
+    id: 'notifications.bank.delete.success',
+    defaultMessage: 'Your bank account was deleted successfully'
+  },
+  notificationBankDeleteError: {
+    id: 'notifications.bank.delete.error',
+    defaultMessage: 'We could not delete your bank account'
+  },
   notificationPaymentMessageError: {
     id: 'payment.message.error',
     defaultMessage: "We couldn't process your payment"

@@ -31,6 +31,9 @@ frontend/public/
 !/frontend/public/lottie/
 frontend/build
 
+# Storybook build output
+frontend/storybook-static/
+
 # Dependency directories
 node_modules
 jspm_packages

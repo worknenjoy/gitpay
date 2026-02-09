@@ -1,5 +1,5 @@
-import React from 'react'
-import { Grid, Typography } from '@mui/material'
+import React, { useEffect } from 'react'
+import { Grid, Typography, Checkbox } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import AccountTypeField from '../../../../atoms/inputs/fields/account-type-field/account-type-field'
 import CountrySelectField from '../../../../atoms/inputs/fields/country-select-field/country-select-field'
@@ -24,18 +24,24 @@ const errorMapping = {
   'external_account[account_type]': 'Invalid bank account type'
 }
 
-const BankAccountForm = ({ user, bankAccount, countries, onChangeBankCode, onSubmit }) => {
+const BankAccountForm = ({
+  user,
+  bankAccount,
+  countries,
+  onChangeBankCode,
+  onSubmit,
+  submitLabel
+}) => {
   const { data, completed, error = {} } = bankAccount || {}
   const {
     id,
     status,
     account_holder_name,
     account_holder_type,
-    account_number,
     routing_number,
-    last4,
     country,
-    currency
+    currency,
+    default_for_currency
   } = data || {}
   const [ibanMode, setIbanMode] = React.useState(false)
   const [currentCountry, setCurrentCountry] = React.useState(country)
@@ -79,6 +85,18 @@ const BankAccountForm = ({ user, bankAccount, countries, onChangeBankCode, onSub
       )}
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 12 }}>
+          <Checkbox
+            name="default_for_currency"
+            defaultChecked={default_for_currency}
+          />
+          <Typography variant="body2" display="inline">
+            <FormattedMessage
+              id="bankAccounts.defaultForCurrency"
+              defaultMessage="Set as default for this currency"
+            />
+          </Typography>
+        </Grid>
+        <Grid size={{ xs: 12, md: 12 }}>
           <AccountTypeField type={account_holder_type} />
         </Grid>
         <Grid container spacing={2}>
@@ -102,7 +120,7 @@ const BankAccountForm = ({ user, bankAccount, countries, onChangeBankCode, onSub
         />
         <Grid container spacing={2}>
           <Grid size={{ xs: 12, md: 12 }}>
-            <div style={{ marginTop: 16 }}>
+            <div style={{ marginTop: 17 }}>
               <Field
                 completed={completed}
                 label="Account Holder Name"
@@ -114,7 +132,7 @@ const BankAccountForm = ({ user, bankAccount, countries, onChangeBankCode, onSub
             </div>
           </Grid>
         </Grid>
-        <div style={{ marginTop: 16 }}>
+        <div style={{ marginTop: 17 }}>
           <BankAccountNumberForm bankAccount={bankAccount} defaultIbanMode={ibanMode} />
         </div>
       </Grid>
@@ -124,7 +142,9 @@ const BankAccountForm = ({ user, bankAccount, countries, onChangeBankCode, onSub
           variant="contained"
           color="secondary"
           label={
-            <FormattedMessage id="account.actions.update" defaultMessage="Update Bank Account" />
+            submitLabel ?? (
+              <FormattedMessage id="account.actions.update" defaultMessage="Update Bank Account" />
+            )
           }
           disabled={false}
           completed={completed}
