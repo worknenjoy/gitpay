@@ -1,4 +1,5 @@
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 import {
   convertStripeAmountByCurrency,
   currencyCodeToSymbol
@@ -10,22 +11,22 @@ import CreatedField from 'design-library/molecules/tables/section-table/section-
 
 const PayoutsTable = ({ payouts }) => {
   const tableHeaderMetadata = {
-    status: { sortable: true, numeric: false, dataBaseKey: 'status', label: 'Status' },
-    method: { sortable: true, numeric: false, dataBaseKey: 'method', label: 'Transfer Method' },
-    amount: { sortable: true, numeric: true, dataBaseKey: 'amount', label: 'Amount' },
+    status: { sortable: true, numeric: false, dataBaseKey: 'status', label: <FormattedMessage id="payouts.table.status" defaultMessage="Status" /> },
+    method: { sortable: true, numeric: false, dataBaseKey: 'method', label: <FormattedMessage id="payouts.table.transferMethod" defaultMessage="Transfer Method" /> },
+    amount: { sortable: true, numeric: true, dataBaseKey: 'amount', label: <FormattedMessage id="payouts.table.amount" defaultMessage="Amount" /> },
     arrival_date: {
       sortable: true,
       numeric: false,
       dataBaseKey: 'arrival_date',
-      label: 'Arrival Date'
+      label: <FormattedMessage id="payouts.table.arrivalDate" defaultMessage="Arrival Date" />
     },
     reference_number: {
       sortable: true,
       numeric: false,
       dataBaseKey: 'reference_number',
-      label: 'Reference Number'
+      label: <FormattedMessage id="payouts.table.referenceNumber" defaultMessage="Reference Number" />
     },
-    createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: 'Created At' }
+    createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: <FormattedMessage id="payouts.table.createdAt" defaultMessage="Created at" /> }
   }
 
   const customColumnRenderer = {

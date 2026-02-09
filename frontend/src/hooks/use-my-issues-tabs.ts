@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory, useParams } from 'react-router'
+import { FormattedMessage } from 'react-intl'
 import useUserTypes from './use-user-types'
 
 const useMyIssuesTabs = ({ user, baseLink, issueTableData }) => {
@@ -9,28 +10,28 @@ const useMyIssuesTabs = ({ user, baseLink, issueTableData }) => {
   const [activeTab, setActiveTab] = React.useState('')
 
   const myIssuesTab = {
-    label: 'My imported issues',
+    label: <FormattedMessage id="myIssues.tabs.imported" defaultMessage="My imported issues" />,
     value: 'createdbyme',
     link: `${baseLink}/createdbyme`,
     table: issueTableData
   }
 
   const workingTabs = {
-    label: "Issues I'm working on",
+    label: <FormattedMessage id="myIssues.tabs.working" defaultMessage="Issues I'm working on" />,
     value: 'assigned',
     link: `${baseLink}/assigned`,
     table: issueTableData
   }
 
   const followingTabs = {
-    label: 'Following',
+    label: <FormattedMessage id="myIssues.tabs.following" defaultMessage="Following" />,
     value: 'interested',
     link: `${baseLink}/interested`,
     table: issueTableData
   }
 
   const sponsoringTabs = {
-    label: 'Sponsoring',
+    label: <FormattedMessage id="myIssues.tabs.sponsoring" defaultMessage="Sponsoring" />,
     value: 'supported',
     link: `${baseLink}/supported`,
     table: issueTableData

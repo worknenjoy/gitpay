@@ -1,5 +1,6 @@
 import React from 'react'
 import { CreditCard as BountyIcon, HowToReg as HowToRegIcon } from '@mui/icons-material'
+import { FormattedMessage } from 'react-intl'
 import IssueActions from 'design-library/atoms/buttons/issue-actions/issue-actions'
 import IssuePaymentDrawer from 'design-library/molecules/drawers/issue-payment-drawer/issue-payment-drawer'
 import SendSolutionDrawer from 'design-library/molecules/drawers/send-solution-drawer/send-solution-drawer'
@@ -76,7 +77,7 @@ const IssueActionsByRole = ({
       onClick: () => {
         setOpenPaymentDrawer(true)
       },
-      label: 'Add bounty',
+      label: <FormattedMessage id="issue.actions.addBounty" defaultMessage="Add bounty" />,
       disabled: shouldDisable,
       icon: <BountyIcon fontSize="small" />,
       component: (
@@ -104,7 +105,7 @@ const IssueActionsByRole = ({
     {
       key: 'send-solution',
       onClick: () => {},
-      label: 'Send solution',
+      label: <FormattedMessage id="issue.actions.sendSolution" defaultMessage="Send solution" />,
       disabled: shouldDisable,
       icon: <HowToRegIcon fontSize="small" />,
       component: (
