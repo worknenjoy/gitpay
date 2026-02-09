@@ -2,7 +2,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useParams } from 'react-router-dom'
 import {
-  issueMetadata,
+  useIssueMetadata,
   customColumnRenderer
 } from 'design-library/molecules/tables/issue-table/issue-table'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
@@ -16,6 +16,7 @@ import useMyIssueTabs from '../../../../../../hooks/use-my-issues-tabs'
 
 const MyOrganizationIssuesPrivatePage = ({ organization, user, issues }) => {
   const { organization_id } = useParams<{ organization_id: string }>()
+  const issueMetadata = useIssueMetadata({ includeProject: true })
 
   const { data, completed } = organization
   const projectList = { data: data?.Projects || [], completed }

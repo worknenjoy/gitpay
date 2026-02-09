@@ -6,7 +6,7 @@ import { Root } from './user-profile-public-page.styles'
 import { Page } from '../../../../../styleguide/components/Page'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
 import {
-  issueMetadata,
+  useIssueMetadata,
   customColumnRenderer
 } from 'design-library/molecules/tables/issue-table/issue-table'
 import { FormattedMessage } from 'react-intl'
@@ -15,6 +15,7 @@ import { useParams } from 'react-router-dom'
 const UserProfilePublicPage = ({ user, searchUser, tasks, listTasks, filterTasks }) => {
   const { userId } = useParams<{ userId: string }>()
   const { data: profile } = user || {}
+  const issueMetadata = useIssueMetadata({ includeProject: true })
 
   const listTasksByUserId = async () => {
     await listTasks({ userId: userId })

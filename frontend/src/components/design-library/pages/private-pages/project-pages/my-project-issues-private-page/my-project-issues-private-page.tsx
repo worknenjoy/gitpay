@@ -2,7 +2,7 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useParams } from 'react-router-dom'
 import {
-  issueMetadata,
+  useIssueMetadata,
   customColumnRenderer
 } from 'design-library/molecules/tables/project-issue-table/project-issue-table'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
@@ -18,6 +18,8 @@ const MyProjectIssuesPrivatePage = ({ project, user, issues }) => {
     project_id: string
     organization_id: string
   }>()
+
+  const issueMetadata = useIssueMetadata({ includeProject: false })
 
   const issueTableData = {
     tableData: issues,

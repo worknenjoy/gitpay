@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  issueMetadata,
+  useIssueMetadata,
   customColumnRenderer
 } from 'design-library/molecules/tables/issue-table/issue-table'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
@@ -15,6 +15,8 @@ import useMyIssueTabs from '../../../../../../hooks/use-my-issues-tabs'
 import { FormattedMessage } from 'react-intl'
 
 const MyIssuesPrivatePage = ({ user, issues }) => {
+  const issueMetadata = useIssueMetadata({ includeProject: true })
+
   const issueTableData = {
     tableData: issues,
     tableHeaderMetadata: issueMetadata,
