@@ -37,9 +37,9 @@ export function printMonthlyBalanceAllYears(rows: MonthlyBalanceRow[], deps: Pri
   }
 
   console.log(hr())
-  console.log(`${C.bold}📅 Monthly Balance (Stripe-based)${C.reset}`)
+  console.log(`${C.bold}📅 Monthly Earnings & Balance${C.reset}`)
   console.log(
-    `${C.gray}${pad('Month', 9)} | ${pad('Stripe balance', 14)} | ${pad('Pending (Stripe)', 15)} | ${pad('Final', 12)} | ${pad('Stripe Δ', 12)} | #T${C.reset}`
+    `${C.gray}${pad('Month', 9)} | ${pad('Earned', 12)} | ${pad('Real bal.', 12)} | ${pad('Stripe bal.', 12)} | ${pad('Wallet', 10)} | ${pad('Pending end', 12)} | ${pad('Pending new', 12)} | ${pad('Stripe Δ', 12)}${C.reset}`
   )
   console.log(hr())
 
@@ -51,17 +51,21 @@ export function printMonthlyBalanceAllYears(rows: MonthlyBalanceRow[], deps: Pri
     }
 
     const monthLabel = moment.utc(r.monthKey + '-01').format('YYYY-MM')
-    const stripeBalance = formatUSD(r.stripeBalanceCents)
-    const pendingStripe = formatUSD(r.pendingStripeOnlyCents)
-    const final = formatUSD(r.finalStripeOnlyCents)
-    const stripeDelta = formatUSD(r.stripeNetCents)
+    const earned = formatUSD(r.earnedCents)
+    const realBal = formatUSD(r.realBalanceEndCents)
+    const stripeBal = formatUSD(r.stripeBalanceEndCents)
+    const walletBal = formatUSD(r.walletBalanceEndCents)
+    const pendingEnd = formatUSD(r.pendingEndStripeOnlyCents)
+    const pendingNew = formatUSD(r.pendingCreatedStripeOnlyCents)
+    const stripeDelta = formatUSD(r.stripeDeltaCents)
 
-    const finalColor =
-      r.finalStripeOnlyCents > 0 ? C.green : r.finalStripeOnlyCents < 0 ? C.red : C.yellow
-    const deltaColor = r.stripeNetCents > 0 ? C.green : r.stripeNetCents < 0 ? C.red : C.yellow
+    const earnedColor = r.earnedCents > 0 ? C.green : r.earnedCents < 0 ? C.red : C.yellow
+    const realColor =
+      r.realBalanceEndCents > 0 ? C.green : r.realBalanceEndCents < 0 ? C.red : C.yellow
+    const deltaColor = r.stripeDeltaCents > 0 ? C.green : r.stripeDeltaCents < 0 ? C.red : C.yellow
 
     console.log(
-      `${pad(monthLabel, 9)} | ${pad(stripeBalance, 14)} | ${pad(pendingStripe, 15)} | ${finalColor}${pad(final, 12)}${C.reset} | ${deltaColor}${pad(stripeDelta, 12)}${C.reset} | ${String(r.pendingTasksCount).padStart(2)}`
+      `${pad(monthLabel, 9)} | ${earnedColor}${pad(earned, 12)}${C.reset} | ${realColor}${pad(realBal, 12)}${C.reset} | ${pad(stripeBal, 12)} | ${pad(walletBal, 10)} | ${pad(pendingEnd, 12)} | ${pad(pendingNew, 12)} | ${deltaColor}${pad(stripeDelta, 12)}${C.reset}`
     )
   }
 

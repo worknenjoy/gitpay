@@ -11,7 +11,7 @@ import { getEarningsForAllPeriods } from './periodEarnings'
 import { printPeriodEarnings } from './printPeriodEarnings'
 
 const models = Models as any
-const { Wallet, Order, Task, Payout, History } = models
+const { Wallet, Order, Task, Payout, History, WalletOrder } = models
 
 // === Console helpers & formatters ===
 const C = {
@@ -439,7 +439,8 @@ async function getSummary() {
       stripeBalanceNowCents: stripeAvailableCents,
       Task,
       History,
-      Order
+      Order,
+      WalletOrder
     })
     printPeriodEarnings(periodRows, { C, hr, formatUSD })
 
@@ -452,7 +453,8 @@ async function getSummary() {
       stripeBalanceNowCents: stripeAvailableCents,
       Task,
       History,
-      Order
+      Order,
+      WalletOrder
       },
       fromDate ? { from: fromDate } : undefined
     )

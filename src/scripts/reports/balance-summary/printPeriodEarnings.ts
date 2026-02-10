@@ -28,24 +28,28 @@ export function printPeriodEarnings(rows: PeriodEarningsRow[], deps: PrintDeps) 
   const { C, hr, formatUSD } = deps
 
   console.log(hr())
-  console.log(`${C.bold}💰 Period Balance (Stripe-based)${C.reset}`)
+  console.log(`${C.bold}💰 Period Earnings & Balance${C.reset}`)
   console.log(
-    `${C.gray}${pad('Period', 12)} | ${pad('Stripe bal.', 12)} | ${pad('Pending', 12)} | ${pad('Final', 12)} | ${pad('Stripe Δ', 12)} | #T${C.reset}`
+    `${C.gray}${pad('Period', 12)} | ${pad('Earned', 12)} | ${pad('Real bal.', 12)} | ${pad('Stripe bal.', 12)} | ${pad('Wallet', 10)} | ${pad('Pending end', 12)} | ${pad('Pending new', 12)} | ${pad('Stripe Δ', 12)}${C.reset}`
   )
   console.log(hr())
 
   for (const r of rows) {
+    const earned = formatUSD(r.earnedCents)
+    const realBal = formatUSD(r.realBalanceEndCents)
     const stripeBal = formatUSD(r.stripeBalanceEndCents)
-    const pending = formatUSD(r.pendingStripeOnlyCents)
-    const final = formatUSD(r.finalStripeOnlyCents)
+    const walletBal = formatUSD(r.walletBalanceEndCents)
+    const pendingEnd = formatUSD(r.pendingEndStripeOnlyCents)
+    const pendingNew = formatUSD(r.pendingCreatedStripeOnlyCents)
     const delta = formatUSD(r.stripeDeltaCents)
 
-    const finalColor =
-      r.finalStripeOnlyCents > 0 ? C.green : r.finalStripeOnlyCents < 0 ? C.red : C.yellow
+    const earnedColor = r.earnedCents > 0 ? C.green : r.earnedCents < 0 ? C.red : C.yellow
+    const realColor =
+      r.realBalanceEndCents > 0 ? C.green : r.realBalanceEndCents < 0 ? C.red : C.yellow
     const deltaColor = r.stripeDeltaCents > 0 ? C.green : r.stripeDeltaCents < 0 ? C.red : C.yellow
 
     console.log(
-      `${pad(r.label, 12)} | ${pad(stripeBal, 12)} | ${pad(pending, 12)} | ${finalColor}${pad(final, 12)}${C.reset} | ${deltaColor}${pad(delta, 12)}${C.reset} | ${String(r.pendingTasksCount).padStart(2)}`
+      `${pad(r.label, 12)} | ${earnedColor}${pad(earned, 12)}${C.reset} | ${realColor}${pad(realBal, 12)}${C.reset} | ${pad(stripeBal, 12)} | ${pad(walletBal, 10)} | ${pad(pendingEnd, 12)} | ${pad(pendingNew, 12)} | ${deltaColor}${pad(delta, 12)}${C.reset}`
     )
   }
 

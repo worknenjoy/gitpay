@@ -9,30 +9,31 @@ export type MonthlyBalanceRow = {
   year: number
   month: number // 1-12
 
-  // Stripe "total" balance (available + pending) at the end of this month, in cents.
-  stripeBalanceCents: number
+  // Stripe "total" balance (available + pending) as-of month end, in cents.
+  stripeBalanceEndCents: number
+  // Net change in Stripe balance within the month (sum of Stripe balance transaction `net`), in cents.
+  stripeDeltaCents: number
 
-  // Stripe net change during the month (sum of Stripe balance transaction `net`), in cents.
-  stripeNetCents: number
+  // Wallet balance as-of month end (adds - spends), in cents.
+  walletBalanceEndCents: number
 
-  // Pending tasks as-of month end (same definition used in the summary script), in cents.
-  pendingTasksCents: number
-  pendingPaypalOrdersCents: number
-  pendingStripeOnlyCents: number
+  // Pending liabilities as-of month end, in cents.
+  pendingEndStripeOnlyCents: number
+  pendingEndCount: number
 
-  // Final = Stripe balance - pendingStripeOnly
-  finalStripeOnlyCents: number
+  // Pending created in this month (tasks created in the month and still pending at month end), in cents.
+  pendingCreatedStripeOnlyCents: number
+  pendingCreatedCount: number
 
-  pendingTasksCount: number
+  // Real balance = Stripe balance - Wallet balance - Pending
+  realBalanceEndCents: number
+
+  // Earned during the month = RealBalance(end) - RealBalance(start)
+  earnedCents: number
 }
 
-const toCents = (n: string | number | null | undefined) => Math.round((Number(n) || 0) * 100)
 const toCentsFeeAdjusted = (usd: string | number | null | undefined) =>
   Math.round((Number(usd) || 0) * 0.92 * 100)
-
-function monthKeyFromDate(date: Date): MonthKey {
-  return moment.utc(date).format('YYYY-MM')
-}
 
 function monthKeyFromUnix(unixSeconds: number): MonthKey {
   return moment.unix(unixSeconds).utc().format('YYYY-MM')
@@ -94,6 +95,98 @@ type PendingTaskInfo = {
   paypalOrderAmountUsd: number
 }
 
+type WalletEvent = {
+  createdAt: Date
+  deltaCents: number
+}
+
+function feeMultiplierForWalletSpend(amountUsd: number): number {
+  // Matches logic in Wallet.spendBalance()
+  return amountUsd >= 5000 ? 1 : 1.08
+}
+
+function buildWalletBalanceAtBoundaries(events: WalletEvent[], boundaries: Date[]): number[] {
+  const sortedEvents = [...events].sort(
+    (a, b) => a.createdAt.getTime() - b.createdAt.getTime()
+  )
+  const sortedBoundaries = boundaries.map((d, i) => ({ d, i })).sort((a, b) => a.d.getTime() - b.d.getTime())
+  const out = new Array<number>(boundaries.length).fill(0)
+
+  let idx = 0
+  let balance = 0
+  for (const b of sortedBoundaries) {
+    while (idx < sortedEvents.length && sortedEvents[idx].createdAt < b.d) {
+      balance += sortedEvents[idx].deltaCents
+      idx += 1
+    }
+    out[b.i] = balance
+  }
+  return out
+}
+
+function pendingStripeOnlyAsOf(tasks: PendingTaskInfo[], asOf: Date): {
+  cents: number
+  count: number
+} {
+  let cents = 0
+  let count = 0
+  for (const t of tasks) {
+    if (t.createdAt >= asOf) continue
+    if (t.endPendingAt && t.endPendingAt < asOf) continue
+    count += 1
+    cents += toCentsFeeAdjusted(t.valueUsd)
+    if (t.paypalOrderAmountUsd > 0) {
+      cents -= toCentsFeeAdjusted(t.paypalOrderAmountUsd)
+    }
+  }
+  return { cents, count }
+}
+
+function pendingCreatedStripeOnlyInPeriod(tasks: PendingTaskInfo[], start: Date, end: Date): {
+  cents: number
+  count: number
+} {
+  let cents = 0
+  let count = 0
+  for (const t of tasks) {
+    if (t.createdAt < start || t.createdAt >= end) continue
+    // Count it as "created pending" only if it is still pending at period end.
+    if (t.endPendingAt && t.endPendingAt < end) continue
+    count += 1
+    cents += toCentsFeeAdjusted(t.valueUsd)
+    if (t.paypalOrderAmountUsd > 0) {
+      cents -= toCentsFeeAdjusted(t.paypalOrderAmountUsd)
+    }
+  }
+  return { cents, count }
+}
+
+function stripeBalanceAtBoundaries(
+  stripeBalanceNowCents: number,
+  usdTxns: Stripe.BalanceTransaction[],
+  boundariesUnix: number[]
+): number[] {
+  const txns = [...usdTxns].sort((a, b) => a.created - b.created)
+  const totalNet = txns.reduce((sum, t) => sum + (t.net || 0), 0)
+
+  const sortedBounds = boundariesUnix
+    .map((u, i) => ({ u, i }))
+    .sort((a, b) => a.u - b.u)
+  const out = new Array<number>(boundariesUnix.length).fill(stripeBalanceNowCents)
+
+  let idx = 0
+  let netBefore = 0
+  for (const b of sortedBounds) {
+    while (idx < txns.length && txns[idx].created < b.u) {
+      netBefore += txns[idx].net || 0
+      idx += 1
+    }
+    const netAfter = totalNet - netBefore
+    out[b.i] = stripeBalanceNowCents - netAfter
+  }
+  return out
+}
+
 export async function getMonthlyBalanceAllYears(
   deps: {
     stripe: Stripe
@@ -101,14 +194,16 @@ export async function getMonthlyBalanceAllYears(
     Task: any
     History: any
     Order: any
+    WalletOrder: any
   },
   opts: { from?: Date } = {}
 ): Promise<MonthlyBalanceRow[]> {
-  const { stripe, stripeBalanceNowCents, Task, History, Order } = deps
+  const { stripe, stripeBalanceNowCents, Task, History, Order, WalletOrder } = deps
   if (!stripe) throw new Error('stripe not provided')
   if (!Task) throw new Error('models.Task not found')
   if (!History) throw new Error('models.History not found')
   if (!Order) throw new Error('models.Order not found')
+  if (!WalletOrder) throw new Error('models.WalletOrder not found')
 
   // 1) Load tasks and infer when each task stopped being "pending".
   const tasks: Array<any> = await Task.findAll({
@@ -228,58 +323,107 @@ export async function getMonthlyBalanceAllYears(
     gte: stripeFrom.unix()
   })
 
-  const stripeNetByMonth = new Map<MonthKey, number>()
-  for (const bt of stripeTxns) {
-    if ((bt.currency || '').toLowerCase() !== 'usd') continue
+  const usdTxns = stripeTxns.filter((bt) => (bt.currency || '').toLowerCase() === 'usd')
+
+  const stripeDeltaByMonth = new Map<MonthKey, number>()
+  for (const bt of usdTxns) {
     const key = monthKeyFromUnix(bt.created)
-    stripeNetByMonth.set(key, (stripeNetByMonth.get(key) || 0) + (bt.net || 0))
+    stripeDeltaByMonth.set(key, (stripeDeltaByMonth.get(key) || 0) + (bt.net || 0))
   }
 
-  // 3) Build month-end Stripe balances anchored to "now":
-  // Balance(endOfMonth) = Balance(now) - sum(net of transactions AFTER that month).
+  // 3) Wallet events for as-of month boundaries.
+  const [walletAdds, walletSpends] = await Promise.all([
+    WalletOrder.findAll({
+      where: { status: 'paid' },
+      attributes: ['amount', 'createdAt'],
+      order: [['createdAt', 'ASC']]
+    }),
+    Order.findAll({
+      where: {
+        provider: 'wallet',
+        source_type: 'wallet-funds',
+        status: 'succeeded'
+      },
+      attributes: ['amount', 'createdAt'],
+      order: [['createdAt', 'ASC']]
+    })
+  ])
+
+  const walletEvents: WalletEvent[] = []
+  for (const a of walletAdds) {
+    if (!a?.createdAt) continue
+    walletEvents.push({
+      createdAt: a.createdAt,
+      deltaCents: Math.round((Number(a.amount) || 0) * 100)
+    })
+  }
+  for (const s of walletSpends) {
+    if (!s?.createdAt) continue
+    const amountUsd = Number(s.amount) || 0
+    const mult = feeMultiplierForWalletSpend(amountUsd)
+    walletEvents.push({
+      createdAt: s.createdAt,
+      deltaCents: -Math.round(amountUsd * mult * 100)
+    })
+  }
+
+  // 4) Compute boundaries and balances.
+  type MonthPeriod = { key: MonthKey; start: Date; end: Date }
+  const periods: MonthPeriod[] = monthKeys.map((key) => {
+    const start = moment.utc(key + '-01').startOf('month')
+    const end = start.clone().add(1, 'month')
+    return { key, start: start.toDate(), end: end.toDate() }
+  })
+
+  // Boundaries needed: month start and month end for each month.
+  const boundaries: Date[] = []
+  const boundaryUnix: number[] = []
+  for (const p of periods) {
+    boundaries.push(p.start)
+    boundaries.push(p.end)
+    boundaryUnix.push(moment.utc(p.start).unix())
+    boundaryUnix.push(moment.utc(p.end).unix())
+  }
+
+  const stripeAt = stripeBalanceAtBoundaries(stripeBalanceNowCents, usdTxns, boundaryUnix)
+  const walletAt = buildWalletBalanceAtBoundaries(walletEvents, boundaries)
+
   const rows: MonthlyBalanceRow[] = []
-  let suffixNetCents = 0
-  for (let i = monthKeys.length - 1; i >= 0; i--) {
-    const key = monthKeys[i]
-    const monthStart = moment.utc(key + '-01').startOf('month')
-    const monthEnd = monthStart.clone().add(1, 'month') // exclusive
-    const asOf = monthEnd.toDate()
+  for (let i = 0; i < periods.length; i++) {
+    const p = periods[i]
+    const monthStart = moment.utc(p.start)
+    const year = Number(monthStart.format('YYYY'))
+    const month = Number(monthStart.format('M'))
 
-    const stripeNetCents = stripeNetByMonth.get(key) || 0
-    const stripeBalanceCents = stripeBalanceNowCents - suffixNetCents
+    const stripeStartCents = stripeAt[i * 2]
+    const stripeEndCents = stripeAt[i * 2 + 1]
 
-    let pendingTasksCents = 0
-    let pendingPaypalOrdersCents = 0
-    let pendingTasksCount = 0
+    const walletStartCents = walletAt[i * 2]
+    const walletEndCents = walletAt[i * 2 + 1]
 
-    for (const t of pendingTasks) {
-      if (t.createdAt >= asOf) continue
-      if (t.endPendingAt && t.endPendingAt < asOf) continue
-      pendingTasksCount += 1
-      pendingTasksCents += toCentsFeeAdjusted(t.valueUsd)
-      if (t.paypalOrderAmountUsd > 0) {
-        pendingPaypalOrdersCents += toCentsFeeAdjusted(t.paypalOrderAmountUsd)
-      }
-    }
+    const pendingStart = pendingStripeOnlyAsOf(pendingTasks, p.start)
+    const pendingEnd = pendingStripeOnlyAsOf(pendingTasks, p.end)
+    const pendingCreated = pendingCreatedStripeOnlyInPeriod(pendingTasks, p.start, p.end)
 
-    const pendingStripeOnlyCents = pendingTasksCents - pendingPaypalOrdersCents
-    const finalStripeOnlyCents = stripeBalanceCents - pendingStripeOnlyCents
+    const realStartCents = stripeStartCents - walletStartCents - pendingStart.cents
+    const realEndCents = stripeEndCents - walletEndCents - pendingEnd.cents
+    const earnedCents = realEndCents - realStartCents
 
     rows.push({
-      monthKey: key,
-      year: Number(monthStart.format('YYYY')),
-      month: Number(monthStart.format('M')),
-      stripeBalanceCents,
-      stripeNetCents,
-      pendingTasksCents,
-      pendingPaypalOrdersCents,
-      pendingStripeOnlyCents,
-      finalStripeOnlyCents,
-      pendingTasksCount
+      monthKey: p.key,
+      year,
+      month,
+      stripeBalanceEndCents: stripeEndCents,
+      stripeDeltaCents: stripeDeltaByMonth.get(p.key) || 0,
+      walletBalanceEndCents: walletEndCents,
+      pendingEndStripeOnlyCents: pendingEnd.cents,
+      pendingEndCount: pendingEnd.count,
+      pendingCreatedStripeOnlyCents: pendingCreated.cents,
+      pendingCreatedCount: pendingCreated.count,
+      realBalanceEndCents: realEndCents,
+      earnedCents
     })
-
-    suffixNetCents += stripeNetCents
   }
 
-  return rows.reverse()
+  return rows
 }

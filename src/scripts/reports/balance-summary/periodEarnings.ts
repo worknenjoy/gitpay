@@ -10,10 +10,16 @@ export type PeriodEarningsRow = {
   stripeBalanceEndCents: number
   stripeDeltaCents: number
 
-  pendingStripeOnlyCents: number
-  finalStripeOnlyCents: number
+  walletBalanceEndCents: number
 
-  pendingTasksCount: number
+  pendingEndStripeOnlyCents: number
+  pendingCreatedStripeOnlyCents: number
+
+  realBalanceEndCents: number
+  earnedCents: number
+
+  pendingEndCount: number
+  pendingCreatedCount: number
 }
 
 const toCentsFeeAdjusted = (usd: string | number | null | undefined) =>
@@ -87,14 +93,16 @@ export async function getEarningsForAllPeriods(
     Task: any
     History: any
     Order: any
+    WalletOrder: any
   },
   opts: { now?: Date } = {}
 ): Promise<PeriodEarningsRow[]> {
-  const { stripe, stripeBalanceNowCents, Task, History, Order } = deps
+  const { stripe, stripeBalanceNowCents, Task, History, Order, WalletOrder } = deps
   if (!stripe) throw new Error('stripe not provided')
   if (!Task) throw new Error('models.Task not found')
   if (!History) throw new Error('models.History not found')
   if (!Order) throw new Error('models.Order not found')
+  if (!WalletOrder) throw new Error('models.WalletOrder not found')
 
   const now = opts.now ?? new Date()
   const periods = getPeriods(now)
@@ -200,44 +208,119 @@ export async function getEarningsForAllPeriods(
     })
     .filter((t) => Number.isFinite(t.id) && t.createdAt)
 
-  // Stripe balance transactions for computing balance as-of each period end.
+  // Stripe balance transactions for computing balance as-of each period boundary.
   const stripeTxns = await listAllBalanceTransactions(stripe, {
     gte: moment.utc(minStart).unix()
   })
 
   const usdTxns = stripeTxns.filter((bt) => (bt.currency || '').toLowerCase() === 'usd')
-  const sumNetAfter = (cutoffUnix: number) =>
-    usdTxns.reduce((sum, bt) => (bt.created >= cutoffUnix ? sum + (bt.net || 0) : sum), 0)
   const sumNetInRange = (startUnix: number, endUnix: number) =>
     usdTxns.reduce(
       (sum, bt) => (bt.created >= startUnix && bt.created < endUnix ? sum + (bt.net || 0) : sum),
       0
     )
 
+  const txnsSorted = [...usdTxns].sort((a, b) => a.created - b.created)
+  const totalNet = txnsSorted.reduce((sum, t) => sum + (t.net || 0), 0)
+  const stripeBalanceAtUnix = (boundaryUnix: number) => {
+    let netBefore = 0
+    for (const t of txnsSorted) {
+      if (t.created >= boundaryUnix) break
+      netBefore += t.net || 0
+    }
+    const netAfter = totalNet - netBefore
+    return stripeBalanceNowCents - netAfter
+  }
+
+  // Wallet events across all time (for accurate as-of balances).
+  const [walletAdds, walletSpends] = await Promise.all([
+    WalletOrder.findAll({
+      where: { status: 'paid' },
+      attributes: ['amount', 'createdAt'],
+      order: [['createdAt', 'ASC']]
+    }),
+    Order.findAll({
+      where: {
+        provider: 'wallet',
+        source_type: 'wallet-funds',
+        status: 'succeeded'
+      },
+      attributes: ['amount', 'createdAt'],
+      order: [['createdAt', 'ASC']]
+    })
+  ])
+
+  const walletEvents: Array<{ createdAt: Date; deltaCents: number }> = []
+  for (const a of walletAdds) {
+    if (!a?.createdAt) continue
+    walletEvents.push({ createdAt: a.createdAt, deltaCents: Math.round((Number(a.amount) || 0) * 100) })
+  }
+  for (const s of walletSpends) {
+    if (!s?.createdAt) continue
+    const amountUsd = Number(s.amount) || 0
+    const mult = amountUsd >= 5000 ? 1 : 1.08
+    walletEvents.push({ createdAt: s.createdAt, deltaCents: -Math.round(amountUsd * mult * 100) })
+  }
+  walletEvents.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+
+  const walletBalanceAsOf = (asOf: Date) => {
+    let bal = 0
+    for (const e of walletEvents) {
+      if (e.createdAt >= asOf) break
+      bal += e.deltaCents
+    }
+    return bal
+  }
+
+  const pendingStripeOnlyAsOf = (asOf: Date) => {
+    let cents = 0
+    let count = 0
+    for (const t of taskInfo) {
+      if (t.createdAt >= asOf) continue
+      if (t.endPendingAt && t.endPendingAt < asOf) continue
+      count += 1
+      cents += toCentsFeeAdjusted(t.valueUsd)
+      if (t.paypalOrderAmountUsd > 0) {
+        cents -= toCentsFeeAdjusted(t.paypalOrderAmountUsd)
+      }
+    }
+    return { cents, count }
+  }
+
+  const pendingCreatedStripeOnlyInPeriod = (start: Date, end: Date) => {
+    let cents = 0
+    let count = 0
+    for (const t of taskInfo) {
+      if (t.createdAt < start || t.createdAt >= end) continue
+      if (t.endPendingAt && t.endPendingAt < end) continue
+      count += 1
+      cents += toCentsFeeAdjusted(t.valueUsd)
+      if (t.paypalOrderAmountUsd > 0) {
+        cents -= toCentsFeeAdjusted(t.paypalOrderAmountUsd)
+      }
+    }
+    return { cents, count }
+  }
+
   const out: PeriodEarningsRow[] = []
   for (const p of periods) {
     const startUnix = moment.utc(p.start).unix()
     const endUnix = moment.utc(p.end).unix()
 
-    const stripeBalanceEndCents = stripeBalanceNowCents - sumNetAfter(endUnix)
+    const stripeBalanceStartCents = stripeBalanceAtUnix(startUnix)
+    const stripeBalanceEndCents = stripeBalanceAtUnix(endUnix)
     const stripeDeltaCents = sumNetInRange(startUnix, endUnix)
 
-    let pendingTasksCents = 0
-    let pendingPaypalOrdersCents = 0
-    let pendingTasksCount = 0
+    const walletBalanceStartCents = walletBalanceAsOf(p.start)
+    const walletBalanceEndCents = walletBalanceAsOf(p.end)
 
-    for (const t of taskInfo) {
-      if (t.createdAt >= p.end) continue
-      if (t.endPendingAt && t.endPendingAt < p.end) continue
-      pendingTasksCount += 1
-      pendingTasksCents += toCentsFeeAdjusted(t.valueUsd)
-      if (t.paypalOrderAmountUsd > 0) {
-        pendingPaypalOrdersCents += toCentsFeeAdjusted(t.paypalOrderAmountUsd)
-      }
-    }
+    const pendingStart = pendingStripeOnlyAsOf(p.start)
+    const pendingEnd = pendingStripeOnlyAsOf(p.end)
+    const pendingCreated = pendingCreatedStripeOnlyInPeriod(p.start, p.end)
 
-    const pendingStripeOnlyCents = pendingTasksCents - pendingPaypalOrdersCents
-    const finalStripeOnlyCents = stripeBalanceEndCents - pendingStripeOnlyCents
+    const realStartCents = stripeBalanceStartCents - walletBalanceStartCents - pendingStart.cents
+    const realEndCents = stripeBalanceEndCents - walletBalanceEndCents - pendingEnd.cents
+    const earnedCents = realEndCents - realStartCents
 
     out.push({
       label: p.label,
@@ -245,9 +328,13 @@ export async function getEarningsForAllPeriods(
       endISO: moment.utc(p.end).toISOString(),
       stripeBalanceEndCents,
       stripeDeltaCents,
-      pendingStripeOnlyCents,
-      finalStripeOnlyCents,
-      pendingTasksCount
+      walletBalanceEndCents,
+      pendingEndStripeOnlyCents: pendingEnd.cents,
+      pendingCreatedStripeOnlyCents: pendingCreated.cents,
+      realBalanceEndCents: realEndCents,
+      earnedCents,
+      pendingEndCount: pendingEnd.count,
+      pendingCreatedCount: pendingCreated.count
     })
   }
 
