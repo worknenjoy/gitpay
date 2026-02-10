@@ -98,6 +98,100 @@ describe('Balance Summary Reports', () => {
       }
     })
 
+    it('month-to-month: earned equals delta of real balance', async () => {
+      const clock = sinon.useFakeTimers({
+        now: new Date('2025-03-15T12:00:00.000Z'),
+        shouldAdvanceTime: false
+      })
+
+      try {
+        const stripeTxns: StripeBalanceTxn[] = [
+          {
+            id: 'bt_charge_feb',
+            created: Math.floor(Date.parse('2025-02-10T00:00:00.000Z') / 1000),
+            currency: 'usd',
+            net: 10000
+          },
+          {
+            id: 'bt_charge_mar',
+            created: Math.floor(Date.parse('2025-03-10T00:00:00.000Z') / 1000),
+            currency: 'usd',
+            net: 2000
+          }
+        ]
+
+        const stripe = {
+          balanceTransactions: {
+            list: sinon.stub().resolves({ data: stripeTxns as any, has_more: false })
+          }
+        } as any
+
+        const Task = {
+          findAll: sinon.stub().resolves([
+            {
+              id: 1,
+              value: '100',
+              paid: false,
+              transfer_id: null,
+              TransferId: null,
+              createdAt: new Date('2025-02-10T00:00:00.000Z'),
+              updatedAt: new Date('2025-02-10T00:00:00.000Z')
+            }
+          ])
+        }
+
+        const History = {
+          findAll: sinon.stub().resolves([])
+        }
+
+        const Order = {
+          findAll: sinon.stub().callsFake(async ({ where }: any) => {
+            if (where?.provider === 'paypal') return []
+            if (where?.provider === 'wallet') return []
+            return []
+          })
+        }
+
+        const WalletOrder = {
+          findAll: sinon.stub().resolves([])
+        }
+
+        // Stripe balance now is $120 (Feb +$100, Mar +$20).
+        const rows = await getMonthlyBalanceAllYears(
+          {
+            stripe,
+            stripeBalanceNowCents: 12000,
+            Task,
+            History,
+            Order,
+            WalletOrder
+          },
+          { from: new Date('2025-02-01T00:00:00.000Z') }
+        )
+
+        const feb = rows.find((r) => r.monthKey === '2025-02')
+        const mar = rows.find((r) => r.monthKey === '2025-03')
+        expect(feb).to.exist
+        expect(mar).to.exist
+
+        // Feb end: Stripe $100, pending $92 => real $8.
+        expect(feb!.stripeBalanceEndCents).to.equal(10000)
+        expect(feb!.pendingEndStripeOnlyCents).to.equal(9200)
+        expect(feb!.realBalanceEndCents).to.equal(800)
+        expect(feb!.earnedCents).to.equal(800)
+
+        // Mar end: Stripe $120, pending still $92 => real $28, earned in Mar = $20.
+        expect(mar!.stripeBalanceEndCents).to.equal(12000)
+        expect(mar!.pendingEndStripeOnlyCents).to.equal(9200)
+        expect(mar!.realBalanceEndCents).to.equal(2800)
+        expect(mar!.earnedCents).to.equal(2000)
+        expect(mar!.pendingCreatedStripeOnlyCents).to.equal(0)
+        expect(mar!.pendingCreatedCount).to.equal(0)
+      } finally {
+        clock.restore()
+      }
+    })
+
     it('task paid within month: no pending at month end', async () => {
       const clock = sinon.useFakeTimers({
         now: new Date('2025-03-15T12:00:00.000Z'),
