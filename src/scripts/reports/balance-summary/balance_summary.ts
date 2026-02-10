@@ -11,7 +11,7 @@ import { getEarningsForAllPeriods } from './periodEarnings'
 import { printPeriodEarnings } from './printPeriodEarnings'
 
 const models = Models as any
-const { Wallet, Order, Task, Payout } = models
+const { Wallet, Order, Task, Payout, History } = models
 
 // === Console helpers & formatters ===
 const C = {
@@ -437,7 +437,19 @@ async function getSummary() {
     const periodRows = await getEarningsForAllPeriods({ Order, Payout })
     printPeriodEarnings(periodRows, { C, hr, formatUSD })
 
-    const monthlyRows = await getMonthlyBalanceAllYears({ Order, Payout })
+    const fromEnv = process.env.BALANCE_SUMMARY_FROM
+    const fromDate = fromEnv ? moment.utc(fromEnv).toDate() : undefined
+
+    const monthlyRows = await getMonthlyBalanceAllYears(
+      {
+      stripe,
+      stripeBalanceNowCents: stripeAvailableCents,
+      Task,
+      History,
+      Order
+      },
+      fromDate ? { from: fromDate } : undefined
+    )
     printMonthlyBalanceAllYears(monthlyRows, { C, hr, formatUSD })
 
     // Keep original JSON dump for debugging if desired (commented to reduce noise)

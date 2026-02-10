@@ -30,16 +30,16 @@ export function printMonthlyBalanceAllYears(rows: MonthlyBalanceRow[], deps: Pri
 
   if (!rows.length) {
     console.log(hr())
-    console.log(`${C.bold}📅 Monthly Balance (All Years)${C.reset}`)
-    console.log(`${C.yellow}⚠️  No orders/payouts found.${C.reset}`)
+    console.log(`${C.bold}📅 Monthly Balance (Stripe-based)${C.reset}`)
+    console.log(`${C.yellow}⚠️  No data found.${C.reset}`)
     console.log(hr())
     return
   }
 
   console.log(hr())
-  console.log(`${C.bold}📅 Monthly Balance (All Years)${C.reset}`)
+  console.log(`${C.bold}📅 Monthly Balance (Stripe-based)${C.reset}`)
   console.log(
-    `${C.gray}${pad('Month', 9)} | ${pad('Orders (succeeded)', 18)} | ${pad('Payouts (paid)', 14)} | ${pad('Net', 12)} | #O | #P${C.reset}`
+    `${C.gray}${pad('Month', 9)} | ${pad('Stripe balance', 14)} | ${pad('Pending (Stripe)', 15)} | ${pad('Final', 12)} | ${pad('Stripe Δ', 12)} | #T${C.reset}`
   )
   console.log(hr())
 
@@ -51,14 +51,17 @@ export function printMonthlyBalanceAllYears(rows: MonthlyBalanceRow[], deps: Pri
     }
 
     const monthLabel = moment.utc(r.monthKey + '-01').format('YYYY-MM')
-    const orders = formatUSD(r.ordersSucceededCents)
-    const payouts = formatUSD(r.payoutsPaidCents)
-    const net = formatUSD(r.netCents)
+    const stripeBalance = formatUSD(r.stripeBalanceCents)
+    const pendingStripe = formatUSD(r.pendingStripeOnlyCents)
+    const final = formatUSD(r.finalStripeOnlyCents)
+    const stripeDelta = formatUSD(r.stripeNetCents)
 
-    const netColor = r.netCents > 0 ? C.green : r.netCents < 0 ? C.red : C.yellow
+    const finalColor =
+      r.finalStripeOnlyCents > 0 ? C.green : r.finalStripeOnlyCents < 0 ? C.red : C.yellow
+    const deltaColor = r.stripeNetCents > 0 ? C.green : r.stripeNetCents < 0 ? C.red : C.yellow
 
     console.log(
-      `${pad(monthLabel, 9)} | ${pad(orders, 18)} | ${pad(payouts, 14)} | ${netColor}${pad(net, 12)}${C.reset} | ${String(r.ordersCount).padStart(2)} | ${String(r.payoutsCount).padStart(2)}`
+      `${pad(monthLabel, 9)} | ${pad(stripeBalance, 14)} | ${pad(pendingStripe, 15)} | ${finalColor}${pad(final, 12)}${C.reset} | ${deltaColor}${pad(stripeDelta, 12)}${C.reset} | ${String(r.pendingTasksCount).padStart(2)}`
     )
   }
 
