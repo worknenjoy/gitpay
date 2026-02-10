@@ -28,20 +28,24 @@ export function printPeriodEarnings(rows: PeriodEarningsRow[], deps: PrintDeps) 
   const { C, hr, formatUSD } = deps
 
   console.log(hr())
-  console.log(`${C.bold}💰 Earnings (USD)${C.reset}`)
+  console.log(`${C.bold}💰 Period Balance (Stripe-based)${C.reset}`)
   console.log(
-    `${C.gray}${pad('Period', 12)} | ${pad('Orders', 12)} | ${pad('Payouts', 12)} | ${pad('Net', 12)} | #O | #P${C.reset}`
+    `${C.gray}${pad('Period', 12)} | ${pad('Stripe bal.', 12)} | ${pad('Pending', 12)} | ${pad('Final', 12)} | ${pad('Stripe Δ', 12)} | #T${C.reset}`
   )
   console.log(hr())
 
   for (const r of rows) {
-    const orders = formatUSD(r.ordersSucceededCents)
-    const payouts = formatUSD(r.payoutsPaidCents)
-    const net = formatUSD(r.netCents)
-    const netColor = r.netCents > 0 ? C.green : r.netCents < 0 ? C.red : C.yellow
+    const stripeBal = formatUSD(r.stripeBalanceEndCents)
+    const pending = formatUSD(r.pendingStripeOnlyCents)
+    const final = formatUSD(r.finalStripeOnlyCents)
+    const delta = formatUSD(r.stripeDeltaCents)
+
+    const finalColor =
+      r.finalStripeOnlyCents > 0 ? C.green : r.finalStripeOnlyCents < 0 ? C.red : C.yellow
+    const deltaColor = r.stripeDeltaCents > 0 ? C.green : r.stripeDeltaCents < 0 ? C.red : C.yellow
 
     console.log(
-      `${pad(r.label, 12)} | ${pad(orders, 12)} | ${pad(payouts, 12)} | ${netColor}${pad(net, 12)}${C.reset} | ${String(r.ordersCount).padStart(2)} | ${String(r.payoutsCount).padStart(2)}`
+      `${pad(r.label, 12)} | ${pad(stripeBal, 12)} | ${pad(pending, 12)} | ${finalColor}${pad(final, 12)}${C.reset} | ${deltaColor}${pad(delta, 12)}${C.reset} | ${String(r.pendingTasksCount).padStart(2)}`
     )
   }
 

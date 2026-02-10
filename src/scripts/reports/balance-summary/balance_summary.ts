@@ -397,7 +397,7 @@ async function getSummary() {
 
     // Nicer summary view
     printCard('📊 Financial Summary', [
-      ['Stripe (available)', stripeAvailableUSD],
+      ['Stripe (avail + pending)', stripeAvailableUSD],
       ['PayPal (placeholder)', paypalBalanceUSD],
       ['Wallet balance (DB)', walletBalanceUSD],
       ['Pending tasks (total)', pendingTasksUSD],
@@ -434,7 +434,13 @@ async function getSummary() {
     )
     console.log(hr())
 
-    const periodRows = await getEarningsForAllPeriods({ Order, Payout })
+    const periodRows = await getEarningsForAllPeriods({
+      stripe,
+      stripeBalanceNowCents: stripeAvailableCents,
+      Task,
+      History,
+      Order
+    })
     printPeriodEarnings(periodRows, { C, hr, formatUSD })
 
     const fromEnv = process.env.BALANCE_SUMMARY_FROM
