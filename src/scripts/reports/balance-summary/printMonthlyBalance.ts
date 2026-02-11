@@ -44,9 +44,46 @@ export function printMonthlyBalanceAllYears(rows: MonthlyBalanceRow[], deps: Pri
   console.log(hr())
 
   let currentYear: number | null = null
+  let yearEarnedCents = 0
+  let yearPendingNewCents = 0
+  let yearStripeDeltaCents = 0
+  let yearEndRow: MonthlyBalanceRow | null = null
+
+  const flushYearTotal = () => {
+    if (currentYear === null || !yearEndRow) return
+
+    const monthLabel = `${currentYear} TOTAL`
+    const earned = formatUSD(yearEarnedCents)
+    const realBal = formatUSD(yearEndRow.realBalanceEndCents)
+    const stripeBal = formatUSD(yearEndRow.stripeBalanceEndCents)
+    const walletBal = formatUSD(yearEndRow.walletBalanceEndCents)
+    const pendingEnd = formatUSD(yearEndRow.pendingEndStripeOnlyCents)
+    const pendingNew = formatUSD(yearPendingNewCents)
+    const stripeDelta = formatUSD(yearStripeDeltaCents)
+
+    const earnedColor = yearEarnedCents > 0 ? C.green : yearEarnedCents < 0 ? C.red : C.yellow
+    const realColor =
+      yearEndRow.realBalanceEndCents > 0
+        ? C.green
+        : yearEndRow.realBalanceEndCents < 0
+          ? C.red
+          : C.yellow
+    const deltaColor =
+      yearStripeDeltaCents > 0 ? C.green : yearStripeDeltaCents < 0 ? C.red : C.yellow
+
+    console.log(
+      `${C.cyan}${C.bold}${pad(monthLabel, 9)}${C.reset} | ${earnedColor}${pad(earned, 12)}${C.reset} | ${realColor}${pad(realBal, 12)}${C.reset} | ${pad(stripeBal, 12)} | ${pad(walletBal, 10)} | ${pad(pendingEnd, 12)} | ${pad(pendingNew, 12)} | ${deltaColor}${pad(stripeDelta, 12)}${C.reset}`
+    )
+  }
+
   for (const r of rows) {
     if (currentYear !== r.year) {
+      flushYearTotal()
       currentYear = r.year
+      yearEarnedCents = 0
+      yearPendingNewCents = 0
+      yearStripeDeltaCents = 0
+      yearEndRow = null
       console.log(`${C.magenta}${C.bold}${currentYear}${C.reset}`)
     }
 
@@ -64,10 +101,17 @@ export function printMonthlyBalanceAllYears(rows: MonthlyBalanceRow[], deps: Pri
       r.realBalanceEndCents > 0 ? C.green : r.realBalanceEndCents < 0 ? C.red : C.yellow
     const deltaColor = r.stripeDeltaCents > 0 ? C.green : r.stripeDeltaCents < 0 ? C.red : C.yellow
 
+    yearEarnedCents += r.earnedCents
+    yearPendingNewCents += r.pendingCreatedStripeOnlyCents
+    yearStripeDeltaCents += r.stripeDeltaCents
+    yearEndRow = r
+
     console.log(
       `${pad(monthLabel, 9)} | ${earnedColor}${pad(earned, 12)}${C.reset} | ${realColor}${pad(realBal, 12)}${C.reset} | ${pad(stripeBal, 12)} | ${pad(walletBal, 10)} | ${pad(pendingEnd, 12)} | ${pad(pendingNew, 12)} | ${deltaColor}${pad(stripeDelta, 12)}${C.reset}`
     )
   }
+
+  flushYearTotal()
 
   console.log(
     `${C.dim}${C.gray}Net pos. (end) = Stripe cash (end) − Wallet (end) − Task liab. (end). Net change = Δ Net pos. across the month.${C.reset}`
