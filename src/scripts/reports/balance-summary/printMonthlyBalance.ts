@@ -37,9 +37,9 @@ export function printMonthlyBalanceAllYears(rows: MonthlyBalanceRow[], deps: Pri
   }
 
   console.log(hr())
-  console.log(`${C.bold}📅 Monthly Earnings & Balance${C.reset}`)
+  console.log(`${C.bold}📅 Monthly Earnings (Net) & Balances${C.reset}`)
   console.log(
-    `${C.gray}${pad('Month', 9)} | ${pad('Earned', 12)} | ${pad('Real bal.', 12)} | ${pad('Stripe bal.', 12)} | ${pad('Wallet', 10)} | ${pad('Pending end', 12)} | ${pad('Pending new', 12)} | ${pad('Stripe Δ', 12)}${C.reset}`
+    `${C.gray}${pad('Month', 9)} | ${pad('Net change', 12)} | ${pad('Net pos.', 12)} | ${pad('Stripe cash', 12)} | ${pad('Wallet', 10)} | ${pad('Task liab.', 12)} | ${pad('New liab.', 12)} | ${pad('Stripe Δ', 12)}${C.reset}`
   )
   console.log(hr())
 
@@ -69,5 +69,11 @@ export function printMonthlyBalanceAllYears(rows: MonthlyBalanceRow[], deps: Pri
     )
   }
 
+  console.log(
+    `${C.dim}${C.gray}Net pos. (end) = Stripe cash (end) − Wallet (end) − Task liab. (end). Net change = Δ Net pos. across the month.${C.reset}`
+  )
+  console.log(
+    `${C.dim}${C.gray}Task liab. = unpaid task obligations (Stripe-only). Stripe cash Δ = sum of Stripe balance transaction net within the month.${C.reset}`
+  )
   console.log(hr())
 }

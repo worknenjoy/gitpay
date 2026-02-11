@@ -28,9 +28,9 @@ export function printPeriodEarnings(rows: PeriodEarningsRow[], deps: PrintDeps) 
   const { C, hr, formatUSD } = deps
 
   console.log(hr())
-  console.log(`${C.bold}💰 Period Earnings & Balance${C.reset}`)
+  console.log(`${C.bold}💰 Period Earnings (Net) & Balances${C.reset}`)
   console.log(
-    `${C.gray}${pad('Period', 12)} | ${pad('Earned', 12)} | ${pad('Real bal.', 12)} | ${pad('Stripe bal.', 12)} | ${pad('Wallet', 10)} | ${pad('Pending end', 12)} | ${pad('Pending new', 12)} | ${pad('Stripe Δ', 12)}${C.reset}`
+    `${C.gray}${pad('Period', 12)} | ${pad('Net change', 12)} | ${pad('Net pos.', 12)} | ${pad('Stripe cash', 12)} | ${pad('Wallet', 10)} | ${pad('Task liab.', 12)} | ${pad('New liab.', 12)} | ${pad('Stripe Δ', 12)}${C.reset}`
   )
   console.log(hr())
 
@@ -53,6 +53,12 @@ export function printPeriodEarnings(rows: PeriodEarningsRow[], deps: PrintDeps) 
     )
   }
 
+  console.log(
+    `${C.dim}${C.gray}Net pos. (end) = Stripe cash (end) − Wallet (end) − Task liab. (end). Net change = Δ Net pos. during the period.${C.reset}`
+  )
+  console.log(
+    `${C.dim}${C.gray}Task liab. = unpaid task obligations (Stripe-only). Stripe cash Δ = sum of Stripe balance transaction net within the period.${C.reset}`
+  )
   console.log(`${C.dim}${C.gray}Ranges use UTC day boundaries (end = start of today).${C.reset}`)
   console.log(hr())
 }
