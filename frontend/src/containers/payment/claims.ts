@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import { searchTransfer, updateTransfer, fetchTransfer } from '../actions/transferActions'
-import { listPaymentRequests } from '../actions/paymentRequestActions'
-import { fetchAccount } from '../actions/userActions'
-import Claims from '../components/areas/private/features/claims/claims'
-import { getUserData } from '../common/selectors/user/getUser'
-import { listPaymentRequestTransfers } from '../actions/paymentRequestTransferActions'
+import { searchTransfer, updateTransfer, fetchTransfer } from '../../actions/transferActions'
+import { listPaymentRequests } from '../../actions/paymentRequestActions'
+import { fetchAccount } from '../../actions/userActions'
+import Claims from '../../components/areas/private/features/claims/claims'
+import { getUserData } from '../../common/selectors/user/getUser'
+import { listPaymentRequestTransfers } from '../../actions/paymentRequestTransferActions'
 
 const mapStateToProps = (state: any) => {
   return {

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
-import { fetchAccountBalance, fetchAccount } from '../actions/userActions'
-import { searchPayout, requestPayout } from '../actions/payoutActions'
-import Payouts from '../components/areas/private/features/payouts/payouts'
-import { getCurrentUser } from '../common/selectors/user/getUser'
+import { fetchAccountBalance, fetchAccount } from '../../actions/userActions'
+import { searchPayout, requestPayout } from '../../actions/payoutActions'
+import Payouts from '../../components/areas/private/features/payouts/payouts'
+import { getCurrentUser } from '../../common/selectors/user/getUser'
 
 const mapStateToProps = (state: any) => {
   return {

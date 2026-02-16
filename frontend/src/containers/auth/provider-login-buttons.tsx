@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import { authorizeGithub, disconnectGithub } from '../actions/loginActions'
-import ProviderLoginButtons from '../components/areas/private/components/session/provider-login-buttons'
+import { authorizeGithub, disconnectGithub } from '../../actions/loginActions'
+import ProviderLoginButtons from '../../components/areas/private/components/session/provider-login-buttons'
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {

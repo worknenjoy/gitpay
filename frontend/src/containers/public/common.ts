@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { registerUser, forgotPassword } from '../actions/loginActions'
-import { loggedIn, logOut } from '../actions/loginActions'
-import { createTask } from '../actions/taskActions'
-import { fetchRoles } from '../actions/userRoleActions'
-import { info } from '../actions/infoActions'
+import { registerUser, forgotPassword } from '../../actions/loginActions'
+import { loggedIn, logOut } from '../../actions/loginActions'
+import { createTask } from '../../actions/taskActions'
+import { fetchRoles } from '../../actions/userRoleActions'
+import { info } from '../../actions/infoActions'
 
 const mapStateToProps = (state: any) => {
   return {

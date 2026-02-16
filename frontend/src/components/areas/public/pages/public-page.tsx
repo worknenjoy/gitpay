@@ -4,7 +4,7 @@ import PublicBase from 'design-library/templates/base/public-base/public-base'
 import HomePage from 'design-library/pages/public-pages/home-public-page/home-public-page'
 import TaskContainer from '../../../../containers/tasks/task'
 import WelcomeContainer from '../../../../containers/public/welcome'
-import TeamContainer from '../../../../containers/team.js'
+// TeamContainer removed - unused legacy container
 import ProjectPageContainer from '../../../../containers/pages/project-page'
 import OrganizationPageContainer from '../../../../containers/pages/organization-page'
 import TaskListUser from '../../../../containers/tasks/task-list-user'
@@ -44,7 +44,7 @@ const PublicPage = ({
           <Route exact path="/" component={HomePage} />
           <Route exact path="/welcome" component={WelcomeContainer} />
           <Route path="/pricing" component={PricingPage} />
-          <Route exact path="/team" component={TeamContainer} />
+          {/* Team page removed - unused legacy route */}
           <Route exact path="/task/:id" component={TaskContainer} />
           <Route exact path="/task/:id/:slug" component={TaskContainer} />
           <Route exact path="/task/:id/orders" component={TaskContainer} />

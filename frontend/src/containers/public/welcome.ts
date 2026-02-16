@@ -1,6 +1,6 @@
 import Welcome from '../../components/areas/public/features/welcome/pages/welcome-page'
 
-import CommonContainer from '../common'
+import CommonContainer from './common'
 
 const WelcomeContainer = CommonContainer(Welcome)
 
