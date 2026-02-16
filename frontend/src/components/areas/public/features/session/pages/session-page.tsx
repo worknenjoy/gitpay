@@ -2,11 +2,11 @@ import React from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import SignupSigninPage from 'design-library/templates/base/signup-signin-base/signup-signin-base'
 import Session from '../components/session'
-import AccountActivation from '../../../../../../containers/account-activation'
-import LoginPageContainer from '../../../../../../containers/login-page'
-import RegisterPageContainer from '../../../../../../containers/register-page'
-import ForgotPasswordPageContainer from '../../../../../../containers/forgot-password-page'
-import ResetPasswordPageContainer from '../../../../../../containers/reset-password-page'
+import AccountActivation from '../../../../../../containers/auth/account-activation'
+import LoginPageContainer from '../../../../../../containers/auth/login-page'
+import RegisterPageContainer from '../../../../../../containers/auth/register-page'
+import ForgotPasswordPageContainer from '../../../../../../containers/auth/forgot-password-page'
+import ResetPasswordPageContainer from '../../../../../../containers/auth/reset-password-page'
 
 const SessionPage = () => {
   return (

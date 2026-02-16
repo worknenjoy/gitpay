@@ -14,7 +14,7 @@ import './app.css'
 import ReactGA from 'react-ga'
 
 import Routes from './routes'
-import NotificationContainer from '../containers/notification'
+import NotificationContainer from '../containers/shared/notification'
 
 import reducers from '../reducers/reducers'
 

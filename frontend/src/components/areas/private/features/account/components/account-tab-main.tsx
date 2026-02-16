@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid'
 import { Button, Paper, useMediaQuery, useTheme } from '@mui/material'
 
 import { Field } from 'design-library/atoms/inputs/fields/field/field'
-import ProviderLoginButtons from '../../../../../../containers/provider-login-buttons'
+import ProviderLoginButtons from '../../../../../../containers/auth/provider-login-buttons'
 import DeleteAccountButton from './delete-account-button'
 
 import { Fieldset, LegendText } from './account-tab-main.styles'
