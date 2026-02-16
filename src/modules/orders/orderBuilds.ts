@@ -130,11 +130,14 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
     if (!finalizedInvoice || !finalizedInvoice.id) {
       throw new Error('Failed to finalize invoice')
     }
-    Sendmail.success(
-      { ...orderUser, email: orderParameters.email },
-      'Invoice created',
-      `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`
-    )
+    // TODO: check why they send the email on test environment, it should not send the email when testing
+    if(process.env.NODE_ENV !== 'test') {
+      Sendmail.success(
+        { ...orderUser, email: orderParameters.email },
+        'Invoice created',
+        `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`
+      )
+    }
 
     const orderUpdated = await orderCreated.update(
       {
