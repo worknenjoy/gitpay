@@ -1,0 +1,28 @@
+import { connect } from 'react-redux'
+import ExploreIssuesPage from '../../components/areas/private/features/issues/pages/user-issues-explore-page'
+import { listTasks, filterTasks } from '../../actions/taskActions'
+import { listLabels } from '../../actions/labelActions'
+import { listLanguage } from '../../actions/languageActions'
+import { getFilteredTasks } from '../../selectors/tasks'
+import { getCurrentUser } from '../../common/selectors/user/getUser'
+
+const mapStateToProps = (state: any, ownProps?: any) => {
+  return {
+    user: getCurrentUser(state),
+    issues: getFilteredTasks(state),
+    labels: state.labels,
+    languages: state.languages
+  }
+}
+
+const mapDispatchToProps = (dispatch: any, ownProps?: any) => {
+  return {
+    listTasks: (params: any) => dispatch(listTasks(params)),
+    filterTasks: (key: any, value: any, additional: any) =>
+      dispatch(filterTasks(key, value, additional)),
+    listLabels: () => dispatch(listLabels()),
+    listLanguages: () => dispatch(listLanguage())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExploreIssuesPage)

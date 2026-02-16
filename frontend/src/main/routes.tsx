@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, HashRouter, Switch, Redirect } from 'react-router-dom'
 import PrivateRoute from '../components/areas/private/components/session/private-route'
-import PublicPageContainer from '../containers/public-container'
+import PublicPageContainer from '../containers/public/public-container'
 import ProfileContainer from '../containers/profile'
 import SessionPage from '../components/areas/public/features/session/pages/session-page'
 import FourOFour from '../components/design-library/pages/public-pages/four-o-four-public-page/four-o-four-public-page'
