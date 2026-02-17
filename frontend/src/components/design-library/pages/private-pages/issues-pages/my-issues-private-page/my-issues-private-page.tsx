@@ -42,7 +42,12 @@ const MyIssuesPrivatePage = ({ user, issues }) => {
         <TopSection>
           <MainTitle
             title={<FormattedMessage id="myIssues.title" defaultMessage="My Issues" />}
-            subtitle={<FormattedMessage id="myIssues.subtitle" defaultMessage="Here you can see issues imported or that you're working on" />}
+            subtitle={
+              <FormattedMessage
+                id="myIssues.subtitle"
+                defaultMessage="Here you can see issues imported or that you're working on"
+              />
+            }
           />
         </TopSection>
         <TopSection>

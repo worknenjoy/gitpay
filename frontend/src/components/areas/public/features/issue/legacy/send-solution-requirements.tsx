@@ -39,7 +39,7 @@ const SendSolutionRequirements = ({
   bountyAvailable
 }) => {
   const intl = useIntl()
-  
+
   const requirements = [
     { done: bountyAvailable, label: intl.formatMessage(messages.bountyAvailable) },
     { done: isConnectedToGitHub, label: intl.formatMessage(messages.connectedToGitHub) },

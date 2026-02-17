@@ -5,6 +5,7 @@ import {
   listPaymentRequests,
   updatePaymentRequest
 } from '../../actions/paymentRequestActions'
+import { fetchAccount } from '../../actions/userActions'
 import {
   listPaymentRequestPayments,
   refundPaymentRequestPayment
@@ -15,6 +16,7 @@ import { getUserData } from '../../common/selectors/user/getUser'
 const mapStateToProps = (state: any, ownProps?: any) => {
   return {
     user: getUserData(state),
+    account: state.account,
     paymentRequests: state.paymentRequests,
     paymentRequest: state.paymentRequest,
     paymentRequestPayments: state.paymentRequestPayments,
@@ -26,6 +28,9 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => {
   return {
     createPaymentRequest: (data: any) => {
       return dispatch(createPaymentRequest(data))
+    },
+    fetchAccount: () => {
+      return dispatch(fetchAccount())
     },
     listPaymentRequests: () => {
       return dispatch(listPaymentRequests())

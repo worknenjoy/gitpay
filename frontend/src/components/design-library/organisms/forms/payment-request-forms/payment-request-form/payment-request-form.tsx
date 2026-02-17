@@ -4,13 +4,15 @@ import React, {
   forwardRef,
   useImperativeHandle,
   useCallback,
-  useMemo
+  useMemo,
+  useEffect
 } from 'react'
-import { Grid, Typography, TextField, Skeleton } from '@mui/material'
+import { Grid, Typography, TextField, Skeleton, Link } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import Field from '../../../../atoms/inputs/fields/field/field'
 import Alert from '../../../../atoms/alerts/alert/alert'
 import Checkboxes from 'design-library/atoms/inputs/checkboxes/checkboxes'
+import ConfirmTextDialog from 'design-library/molecules/dialogs/confirm-text-dialog/confirm-text-dialog'
 import { AlertWrapper, EndAdornment } from './payment-request-form.styles'
 
 type PaymentRquestFormData = {
@@ -22,6 +24,8 @@ type PaymentRquestFormData = {
   currency?: string
   title?: string
   description?: string
+  send_instructions_email?: boolean
+  instructions_content?: string
 }
 
 type PaymentRequestFormProps = {
@@ -43,7 +47,17 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     const [error, setError] = useState<string | false>(false)
     const internalFormRef = useRef<HTMLFormElement>(null)
     const [customAmount, setCustomAmount] = useState(false)
+    const [sendInstructionsEmailChecked, setSendInstructionsEmailChecked] = useState(false)
+    const [instructionsContent, setInstructionsContent] = useState('')
+    const [instructionsDialogOpen, setInstructionsDialogOpen] = useState(false)
+    const [pendingEnableSendInstructionsEmail, setPendingEnableSendInstructionsEmail] =
+      useState(false)
     const editMode = !!data?.id
+
+    useEffect(() => {
+      setSendInstructionsEmailChecked(!!data?.send_instructions_email)
+      setInstructionsContent(data?.instructions_content || '')
+    }, [data?.send_instructions_email, data?.instructions_content])
 
     // Expose `submit` method to parent
     useImperativeHandle(ref, () => ({
@@ -67,7 +81,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
       if (editMode) {
         onSubmit?.(event, {
           ...data,
-          active: formData.get('active') || false
+          active: formData.get('active') || false,
+          send_instructions_email: formData.get('send_instructions_email') || false
         })
         return
       }
@@ -77,6 +92,24 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     const handleCustomAmountChange = useCallback((selected: boolean) => {
       setCustomAmount(selected)
     }, [])
+
+    const handleSendEmailChange = useCallback(
+      (selected: boolean) => {
+        if (selected) {
+          const isFirstEnable = !sendInstructionsEmailChecked
+          setSendInstructionsEmailChecked(true)
+          setPendingEnableSendInstructionsEmail(isFirstEnable)
+          setInstructionsDialogOpen(true)
+          return
+        }
+        setSendInstructionsEmailChecked(false)
+        setInstructionsContent('')
+        setPendingEnableSendInstructionsEmail(false)
+      },
+      [sendInstructionsEmailChecked]
+    )
+
+    const hasInstructions = instructionsContent.trim().length > 0
 
     const checkboxes = useMemo(() => {
       const items = [
@@ -91,6 +124,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           value: true,
           defaultChecked: data?.custom_amount,
           disabled: editMode,
+          alignment: 'flex-start',
           onChange: handleCustomAmountChange
         },
         {
@@ -100,9 +134,49 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
               defaultMessage="Deactivate after payment"
             />
           ),
+          alignment: 'flex-start',
           name: 'deactivate_after_payment',
           value: true,
           defaultChecked: data?.deactivate_after_payment
+        },
+        {
+          label: (
+            <>
+              <FormattedMessage
+                id="paymentRequest.form.sendEmail"
+                defaultMessage="Send e-mail notification with instructions on payment"
+              />
+              {sendInstructionsEmailChecked && hasInstructions && (
+                <>
+                  {' '}
+                  <Link
+                    component="button"
+                    type="button"
+                    style={{ margin: '4px 0' }}
+                    variant="caption"
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      setPendingEnableSendInstructionsEmail(false)
+                      setInstructionsDialogOpen(true)
+                    }}
+                  >
+                    <FormattedMessage
+                      id="paymentRequest.form.instructions.change"
+                      defaultMessage="Change instructions"
+                    />
+                  </Link>
+                </>
+              )}
+            </>
+          ),
+          name: 'send_instructions_email',
+          value: true,
+          defaultChecked: data?.send_instructions_email,
+          alignment: 'flex-start',
+          checked: sendInstructionsEmailChecked,
+          onChange: handleSendEmailChange
         }
       ]
 
@@ -121,11 +195,65 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
       data?.custom_amount,
       data?.deactivate_after_payment,
       data?.active,
-      handleCustomAmountChange
+      data?.send_instructions_email,
+      handleCustomAmountChange,
+      sendInstructionsEmailChecked,
+      handleSendEmailChange,
+      hasInstructions
     ])
 
     return (
       <form onSubmit={handleSubmit} ref={internalFormRef}>
+        <input type="hidden" name="instructions_content" value={instructionsContent} />
+        <ConfirmTextDialog
+          open={instructionsDialogOpen}
+          handleClose={() => {
+            setInstructionsDialogOpen(false)
+            setPendingEnableSendInstructionsEmail(false)
+          }}
+          title={
+            <FormattedMessage
+              id="paymentRequest.form.instructions.title"
+              defaultMessage="Instructions"
+            />
+          }
+          subtitle={
+            <FormattedMessage
+              id="paymentRequest.form.instructions.subtitle"
+              defaultMessage="Add instructions to be included in the payment notification e-mail."
+            />
+          }
+          textAreaName="instructions_content"
+          textAreaLabel={
+            <FormattedMessage
+              id="paymentRequest.form.instructions.label"
+              defaultMessage="Instructions"
+            />
+          }
+          actionLabel={
+            hasInstructions ? (
+              <FormattedMessage
+                id="paymentRequest.form.instructions.update"
+                defaultMessage="Update"
+              />
+            ) : (
+              <FormattedMessage id="paymentRequest.form.instructions.save" defaultMessage="Save" />
+            )
+          }
+          cancelLabel={<FormattedMessage id="common.cancel" defaultMessage="Cancel" />}
+          initialValue={instructionsContent}
+          onConfirm={(value) => {
+            setInstructionsContent(value)
+            setPendingEnableSendInstructionsEmail(false)
+          }}
+          onCancel={() => {
+            if (pendingEnableSendInstructionsEmail) {
+              setSendInstructionsEmailChecked(false)
+              setInstructionsContent('')
+            }
+            setPendingEnableSendInstructionsEmail(false)
+          }}
+        />
         {error && (
           <Alert severity="error" completed={completed}>
             <AlertWrapper>
@@ -157,7 +285,9 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
               <TextField
                 fullWidth
                 variant="outlined"
-                label={<FormattedMessage id="form.label.description" defaultMessage="Description" />}
+                label={
+                  <FormattedMessage id="form.label.description" defaultMessage="Description" />
+                }
                 name="description"
                 placeholder="Describe your service"
                 multiline

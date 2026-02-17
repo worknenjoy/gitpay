@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import sinon from 'sinon'
 import nock from 'nock'
 import request from 'supertest'
 import api from '../../../../../src/server'
@@ -6,6 +7,7 @@ import { registerAndLogin, truncateModels } from '../../../../helpers'
 import Models from '../../../../../src/models'
 import eventCheckout from '../../../../data/stripe/stripe.webhook.checkout.session.completed'
 import { PaymentRequestFactory } from '../../../../factories'
+import PaymentRequestMail from '../../../../../src/mail/paymentRequest'
 
 const agent = request.agent(api) as any
 const models = Models as any
@@ -18,6 +20,11 @@ describe('Payment Request Payment Webhook', () => {
     await truncateModels(models.PaymentRequestTransfer)
     await truncateModels(models.PaymentRequestPayment)
   })
+
+  afterEach(() => {
+    sinon.restore()
+  })
+
   it('should create a Payment Request Payment when a checkout.session.completed event is received', async () => {
     nock('https://api.stripe.com')
       .post('/v1/transfers')
@@ -91,5 +98,46 @@ describe('Payment Request Payment Webhook', () => {
     expect(paymentRequestPayments.userId).to.equal(currentUser.id)
     expect(paymentRequestPayments.paymentRequestId).to.equal(paymentRequest.id)
     expect(paymentRequestPayments.customerId).to.exist
+  })
+
+  it('should send confirmation email with instructions to the customer when enabled', async () => {
+    const sendConfirmationStub = sinon
+      .stub(PaymentRequestMail as any, 'sendConfirmationWithInstructions')
+      .resolves()
+
+    nock('https://api.stripe.com')
+      .post('/v1/transfers')
+      .reply(200, { id: 'tr_1KkomkBrSjgsps2DGGBtipW4' }, { 'Content-Type': 'application/json' })
+
+    nock('https://api.stripe.com')
+      .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
+      .reply(200, { active: false })
+
+    nock('https://api.stripe.com')
+      .post('/v1/payment_intents/pi_3RcoMHBrSjgsps2D1aOZ9Yl6')
+      .reply(200, { id: 'pi_3RcoMHBrSjgsps2D1aOZ9Yl6', object: 'payment_intent', metadata: {} })
+
+    const user = await registerAndLogin(agent)
+    const { body: currentUser } = user || {}
+
+    await PaymentRequestFactory({
+      title: 'Payment for services',
+      amount: 1,
+      currency: 'usd',
+      description: 'Payment for services',
+      payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
+      deactivate_after_payment: true,
+      send_instructions_email: true,
+      instructions_content: 'Thanks for your payment.\n\nHere are the instructions.',
+      userId: currentUser.id
+    })
+
+    await agent
+      .post('/webhooks/stripe-platform')
+      .send(eventCheckout.completed.success)
+      .expect('Content-Type', /json/)
+      .expect(200)
+
+    expect(sendConfirmationStub.calledOnce).to.equal(true)
   })
 })

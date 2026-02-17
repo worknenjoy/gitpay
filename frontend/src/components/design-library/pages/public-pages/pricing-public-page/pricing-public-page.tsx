@@ -14,7 +14,10 @@ function PricingPublicPage() {
       <React.Fragment>
         <HeroContent>
           <HeroTitle>
-            <FormattedMessage id="welcome.pricing.maintainers.title" defaultMessage="Our pricing model" />
+            <FormattedMessage
+              id="welcome.pricing.maintainers.title"
+              defaultMessage="Our pricing model"
+            />
           </HeroTitle>
         </HeroContent>
 
@@ -22,8 +25,18 @@ function PricingPublicPage() {
           <Grid size={{ xs: 12, sm: 12 }}>
             <Card style={{ marginBottom: 20 }}>
               <CardHeader
-                title={<FormattedMessage id="welcome.pricing.maintainers.title" defaultMessage="Our pricing model" />}
-                subheader={<FormattedMessage id="welcome.pricing.maintainers.subtitle" defaultMessage="For project maintainers" />}
+                title={
+                  <FormattedMessage
+                    id="welcome.pricing.maintainers.title"
+                    defaultMessage="Our pricing model"
+                  />
+                }
+                subheader={
+                  <FormattedMessage
+                    id="welcome.pricing.maintainers.subtitle"
+                    defaultMessage="For project maintainers"
+                  />
+                }
                 sx={{
                   backgroundColor: (theme) => theme.palette.primary.light,
                   textAlign: 'center'
@@ -46,12 +59,18 @@ function PricingPublicPage() {
                           <CardPricing>
                             <Typography variant="h5" color="textPrimary">
                               <small>
-                                <FormattedMessage id="welcome.pricing.opensource.fee" defaultMessage="Fee" />
+                                <FormattedMessage
+                                  id="welcome.pricing.opensource.fee"
+                                  defaultMessage="Fee"
+                                />
                               </small>{' '}
                               {tier.price}
                             </Typography>
                             <Typography variant="body1" color="textSecondary">
-                              <FormattedMessage id="welcome.pricing.month" defaultMessage=" / issue" />
+                              <FormattedMessage
+                                id="welcome.pricing.month"
+                                defaultMessage=" / issue"
+                              />
                             </Typography>
                           </CardPricing>
 
@@ -100,7 +119,10 @@ function PricingPublicPage() {
                   <CardPricing>
                     <Typography variant="h5" color="textPrimary">
                       <small>
-                        <FormattedMessage id="welcome.pricing.opensource.fee" defaultMessage="Fee" />
+                        <FormattedMessage
+                          id="welcome.pricing.opensource.fee"
+                          defaultMessage="Fee"
+                        />
                       </small>{' '}
                       {tier.price}
                     </Typography>

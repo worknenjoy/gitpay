@@ -6,6 +6,7 @@ import emailTemplate from './templates/base-content'
 import { tableContentEmailTemplate } from './templates/table-content'
 import currencyInfo from '../utils/currency/currency-info'
 import { calculateAmountWithPercent } from '../utils'
+import { sanitizePaymentRequestInstructionsContent } from '../utils/sanitize/paymentRequestInstructions'
 
 type CurrencyKey = keyof typeof currencyInfo
 
@@ -217,6 +218,76 @@ const PaymentRequestMail = {
                 ]
               },
               `<div style="text-align: right">${i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.bottom')}</div>`
+            )
+          }
+        ]
+      )
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+
+  sendConfirmationWithInstructions: async (paymentRequestPayment: any) => {
+    const paymentRequest = paymentRequestPayment?.PaymentRequest
+    const customer = paymentRequestPayment?.PaymentRequestCustomer
+    const to = customer?.email
+
+    if (!to) {
+      return
+    }
+
+    if (!paymentRequest?.send_instructions_email) {
+      return
+    }
+
+    const instructionsRaw = paymentRequest?.instructions_content
+    if (!instructionsRaw) {
+      return
+    }
+
+    // We don't have a customer language here; default to English for now.
+    i18n.setLocale('en')
+
+    const currencyKey = resolveCurrencyKey(paymentRequestPayment?.currency)
+    const currencySymbol = currencyInfo[currencyKey]?.symbol || ''
+
+    const instructionsHtml = sanitizePaymentRequestInstructionsContent(instructionsRaw, {
+      lengthMode: 'truncate'
+    })
+
+    if (!instructionsHtml) {
+      return
+    }
+
+    try {
+      return await request(
+        to,
+        i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.subject'),
+        [
+          {
+            type: 'text/html',
+            value: tableContentEmailTemplate(
+              i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.message', {
+                amount: paymentRequestPayment.amount,
+                currency: paymentRequestPayment.currency
+              }),
+              i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.details', {
+                title: paymentRequest?.title,
+                description: paymentRequest?.description,
+                customer_name: customer?.name || 'N/A',
+                customer_email: customer?.email || 'N/A'
+              }),
+              {
+                headers: ['Item', 'status', '<div style="text-align:right">Amount</div>'],
+                rows: [
+                  [
+                    'Payment for Payment Request',
+                    paymentRequestPayment.status,
+                    `<div style="text-align:right">${currencySymbol} ${paymentRequestPayment.amount}</div>`
+                  ]
+                ]
+              },
+              `${i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.instructions_title')}<br/>${instructionsHtml}`
             )
           }
         ]

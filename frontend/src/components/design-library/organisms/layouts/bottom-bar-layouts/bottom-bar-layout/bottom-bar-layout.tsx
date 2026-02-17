@@ -35,11 +35,26 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
   }
 
   const mainMenuItems = [
-    { label: <FormattedMessage id="bottom.menu.about-us" defaultMessage="About us" />, onClick: () => navigateTo('/welcome') },
-    { label: <FormattedMessage id="bottom.menu.pricing" defaultMessage="Pricing" />, onClick: () => navigateTo('/pricing') },
-    { label: <FormattedMessage id="bottom.menu.team" defaultMessage="Team" />, onClick: () => navigateTo('/team') },
-    { label: <FormattedMessage id="bottom.menu.documentation" defaultMessage="Documentation" />, onClick: () => window.open('https://docs.gitpay.me/en') },
-    { label: <FormattedMessage id="bottom.menu.explore" defaultMessage="Explore" />, onClick: () => navigateTo('/explore/issues') }
+    {
+      label: <FormattedMessage id="bottom.menu.about-us" defaultMessage="About us" />,
+      onClick: () => navigateTo('/welcome')
+    },
+    {
+      label: <FormattedMessage id="bottom.menu.pricing" defaultMessage="Pricing" />,
+      onClick: () => navigateTo('/pricing')
+    },
+    {
+      label: <FormattedMessage id="bottom.menu.team" defaultMessage="Team" />,
+      onClick: () => navigateTo('/team')
+    },
+    {
+      label: <FormattedMessage id="bottom.menu.documentation" defaultMessage="Documentation" />,
+      onClick: () => window.open('https://docs.gitpay.me/en')
+    },
+    {
+      label: <FormattedMessage id="bottom.menu.explore" defaultMessage="Explore" />,
+      onClick: () => navigateTo('/explore/issues')
+    }
   ]
 
   const legalMenuItems = [

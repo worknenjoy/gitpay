@@ -1,4 +1,5 @@
 import path from 'path'
+
 const models = require('../models')
 const Promise = require('bluebird')
 const url = require('url')
@@ -19,7 +20,7 @@ i18n.configure({
 
 i18n.init()
 
-const newOrExistingProject = async (userOrCompany, projectName, userId) => {
+const newOrExistingProject = async (userOrCompany: any, projectName: any, userId: any) => {
   try {
     const organizationExist = await models.Organization.find({
       where: {
@@ -46,7 +47,7 @@ const newOrExistingProject = async (userOrCompany, projectName, userId) => {
       const project = await organization.createProject({ name: projectName })
       return project
     }
-  } catch (e) {
+  } catch (e: any) {
     // eslint-disable-next-line no-console
     console.log('error', e)
     throw new Error(e)
@@ -63,7 +64,7 @@ const calculateTotal = async () => {
         }
       }
     )) || []
-  const total = orders.reduce(async (accPromise, order) => {
+  const total = orders.reduce(async (accPromise: any, order: any) => {
     const acc = await accPromise
     if (order.provider === 'stripe') {
       if (!order.source) return acc
@@ -78,7 +79,7 @@ const calculateTotal = async () => {
         }
 
         return acc
-      } catch (e) {
+      } catch (e: any) {
         console.log('error on balance script for stripe', e)
         return acc
       }
@@ -90,7 +91,7 @@ const calculateTotal = async () => {
 
 const calculateTotalTransfers = async () => {
   const transfers = await models.Payout.findAll()
-  return transfers.reduce((acc, payout) => {
+  return transfers.reduce((acc: any, payout: any) => {
     return acc + (parseFloat(payout.amount) - parseFloat(payout.amount) * 0.92)
   }, 0)
 }
@@ -106,26 +107,26 @@ const scripts = {
         payments_fee: totalFromOrders.toFixed(2),
         payouts: totalFromTransfers.toFixed(2)
       }
-    } catch (e) {
+    } catch (e: any) {
       console.log('error on balance script', e)
       return 0
     }
   },
   accountInfo: () => {
     return models.User.findAll({})
-      .then((users) => {
+      .then((users: any) => {
         if (!users) return false
 
         if (users.length <= 0) return false
 
-        const accountInfo = users.map((u) => {
+        const accountInfo = users.map((u: any) => {
           if (!u.account_id) {
             return {
               user: u.email,
               active_account: false
             }
           }
-          const accountDetails = stripe.accounts.retrieve(u.account_id).then((account) => {
+          const accountDetails = stripe.accounts.retrieve(u.account_id).then((account: any) => {
             return {
               user: u.email,
               active_account: true,
@@ -138,7 +139,7 @@ const scripts = {
         console.log('users', accountInfo)
         return accountInfo
       })
-      .catch((error) => {
+      .catch((error: any) => {
         // eslint-disable-next-line no-console
         console.log('error when search user: ', error)
         return false
@@ -151,8 +152,8 @@ const scripts = {
       },
       include: [models.User]
     })
-      .then((tasks) => {
-        const tasksPromises = tasks.map((t) => {
+      .then((tasks: any) => {
+        const tasksPromises = tasks.map((t: any) => {
           const uri = t.url
           const splitIssueUrl = url.parse(uri).path.split('/')
           const userOrCompany = splitIssueUrl[1]
@@ -163,36 +164,36 @@ const scripts = {
             uri,
             resolveWithFullResponse: true
           })
-            .then((response) => {
+            .then((response: any) => {
               // eslint-disable-next-line no-console
               // console.log('response status code for issue', response.statusCode, t.url)
               // eslint-disable-next-line no-console
               // console.log('task successfull from Github', t.url)
               return false
             })
-            .catch((e) => {
+            .catch((e: any) => {
               // eslint-disable-next-line no-console
               // console.log('task with error from Github', t.url)
               return t
             })
         })
-        return Promise.all(tasksPromises).then((results) => {
+        return Promise.all(tasksPromises).then((results: any) => {
           // eslint-disable-next-line no-console
           // console.log('results from tasksPromises', results)
-          const invalidTasksToDelete = results.filter((t) => t.id)
-          const invalidTasksDeleted = invalidTasksToDelete.map((invalidTask) => {
+          const invalidTasksToDelete = results.filter((t: any) => t.id)
+          const invalidTasksDeleted = invalidTasksToDelete.map((invalidTask: any) => {
             return Promise.all([
               models.History.destroy({ where: { TaskId: invalidTask.id } }),
               models.Order.destroy({ where: { TaskId: invalidTask.id } }),
               models.Assign.destroy({ where: { TaskId: invalidTask.id } }),
-              models.Offer.destroy({ where: { taskId: invalidTask.id } }),
-              models.Member.destroy({ where: { taskId: invalidTask.id } })
-            ]).then((result) => {
+              models.Offer.destroy({ where: { TaskId: invalidTask.id } }),
+              models.Member.destroy({ where: { TaskId: invalidTask.id } })
+            ]).then((result: any) => {
               return models.Task.destroy({
                 where: {
                   id: invalidTask.id
                 }
-              }).then((task) => {
+              }).then((task: any) => {
                 if (task) {
                   const user = invalidTask.User
                   const language = user.language || 'en'
@@ -209,10 +210,10 @@ const scripts = {
               })
             })
           })
-          return Promise.all(invalidTasksDeleted).then((result) => result)
+          return Promise.all(invalidTasksDeleted).then((result: any) => result)
         })
       })
-      .catch((error) => {
+      .catch((error: any) => {
         // eslint-disable-next-line no-console
         console.log('error when search task: ', error)
         return false
@@ -225,28 +226,30 @@ const scripts = {
       },
       include: [models.User, models.Project]
     })
-      .then((tasks) => {
-        const tasksPromises = tasks.filter((t) => {
+      .then((tasks: any) => {
+        const tasksPromises = tasks.filter((t: any) => {
           if (t.ProjectId) return false
           return true
         })
-        return Promise.all(tasksPromises).then((results) => {
+        return Promise.all(tasksPromises).then((results: any) => {
           // eslint-disable-next-line no-console
           console.log('results from tasksPromises', results)
-          return results.map((task) => {
+          return results.map((task: any) => {
             const uri = task.url
             const splitIssueUrl = url.parse(uri).path.split('/')
             const userOrCompany = splitIssueUrl[1]
             const projectName = splitIssueUrl[2]
             const issueId = splitIssueUrl[4]
             if (!userOrCompany || !projectName || !issueId || isNaN(issueId)) return task
-            return newOrExistingProject(userOrCompany, projectName, task.userId).then((project) => {
-              return task.update({ ProjectId: project.id }).then((u) => u)
-            })
+            return newOrExistingProject(userOrCompany, projectName, task.userId).then(
+              (project: any) => {
+                return task.update({ ProjectId: project.id }).then((u: any) => u)
+              }
+            )
           })
         })
       })
-      .catch((error) => {
+      .catch((error: any) => {
         // eslint-disable-next-line no-console
         console.log('error when search task: ', error)
         return false
@@ -260,8 +263,8 @@ const scripts = {
           status: null
         }
       })
-        .then((assigns) => {
-          return assigns.map((a) => {
+        .then((assigns: any) => {
+          return assigns.map((a: any) => {
             return (
               models.Task.findOne({
                 attributes: ['status'],
@@ -269,7 +272,7 @@ const scripts = {
                   id: a.dataValues.TaskId
                 }
               })
-                .then((task) => {
+                .then((task: any) => {
                   if (
                     task.dataValues.status === 'closed' ||
                     task.dataValues.status === 'in_progress'
@@ -286,13 +289,13 @@ const scripts = {
                   }
                 })
                 // eslint-disable-next-line no-console
-                .catch((err) => console.log(`error occurred in assigns.map: ${err}`))
+                .catch((err: any) => console.log(`error occurred in assigns.map: ${err}`))
             )
           })
         })
         .all()
-        .then((updateFields) => {
-          return updateFields.forEach((uf) => {
+        .then((updateFields: any) => {
+          return updateFields.forEach((uf: any) => {
             return models.Assign.update(
               {
                 status: uf.status
@@ -308,7 +311,7 @@ const scripts = {
         })
         .then(console.log('Assigns successfully updated.'))
         // eslint-disable-next-line no-console
-        .catch((err) => console.log(`error while updating assigns status: ${err}`))
+        .catch((err: any) => console.log(`error while updating assigns status: ${err}`))
     )
   }
 }

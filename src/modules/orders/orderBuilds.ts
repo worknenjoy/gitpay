@@ -131,7 +131,7 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
       throw new Error('Failed to finalize invoice')
     }
     // TODO: check why they send the email on test environment, it should not send the email when testing
-    if(process.env.NODE_ENV !== 'test') {
+    if (process.env.NODE_ENV !== 'test') {
       Sendmail.success(
         { ...orderUser, email: orderParameters.email },
         'Invoice created',

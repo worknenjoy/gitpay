@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  Card,
-  CardContent,
-  Divider,
-  List,
-  ListItem,
-  Skeleton,
-  Stack
-} from '@mui/material'
+import { Card, CardContent, Divider, List, ListItem, Skeleton, Stack } from '@mui/material'
 
 type Props = {
   items?: number

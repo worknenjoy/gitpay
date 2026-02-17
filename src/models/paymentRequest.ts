@@ -9,6 +9,8 @@ export interface PaymentRequestAttributes {
   custom_amount: boolean
   title?: string | null
   description?: string | null
+  send_instructions_email: boolean
+  instructions_content?: string | null
   payment_link_id?: string | null
   payment_url?: string | null
   status: string
@@ -29,6 +31,8 @@ export type PaymentRequestCreationAttributes = Optional<
   | 'custom_amount'
   | 'title'
   | 'description'
+  | 'send_instructions_email'
+  | 'instructions_content'
   | 'payment_link_id'
   | 'payment_url'
   | 'status'
@@ -51,6 +55,8 @@ export default class PaymentRequest
   public custom_amount!: boolean
   public title!: string | null
   public description!: string | null
+  public send_instructions_email!: boolean
+  public instructions_content!: string | null
   public payment_link_id!: string | null
   public payment_url!: string | null
   public status!: string
@@ -94,6 +100,15 @@ export default class PaymentRequest
         },
         description: {
           type: DataTypes.STRING,
+          allowNull: true
+        },
+        send_instructions_email: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: false,
+          allowNull: false
+        },
+        instructions_content: {
+          type: DataTypes.TEXT,
           allowNull: true
         },
         payment_link_id: {

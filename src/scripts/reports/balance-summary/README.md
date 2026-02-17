@@ -30,11 +30,9 @@ Net position
 − Wallet
 − Task liabilities
 
-
 Month over month:
 
 Net change = Δ Net position
-
 
 If this identity breaks, there is an accounting error.
 
@@ -43,14 +41,17 @@ If this identity breaks, there is an accounting error.
 ## 📅 Column definitions
 
 ### Month
+
 Accounting period for the row.
 
 ---
 
 ### Net change
+
 **True net profit or loss for the month.**
 
 This reflects the actual economic result after:
+
 - platform revenue
 - Stripe fees
 - contributor payouts
@@ -65,19 +66,21 @@ This is the number that corresponds to **net income**.
 ---
 
 ### Net pos.
+
 **Cumulative financial position** over time.
 
 It is the running total of `Net change`.
 
 It can also always be recomputed as:
 
-
 ---
 
 ### Stripe cash
+
 **Actual cash held in Stripe at month end.**
 
 Includes:
+
 - customer payments
 - refunds
 - payouts
@@ -89,6 +92,7 @@ Includes:
 ---
 
 ### Wallet
+
 **Funds reserved internally for users (custodial balances).**
 
 - Still physically in Stripe
@@ -102,14 +106,17 @@ Introduced starting **2024-10**.
 ---
 
 ### Task liab.
+
 **Outstanding obligations for completed or accepted work.**
 
 Represents:
+
 - unpaid bounties
 - unpaid tasks
 - unpaid payment requests
 
 These are:
+
 - already earned by contributors
 - not yet paid out
 
@@ -118,9 +125,11 @@ Accounting-wise, this is a **liability**.
 ---
 
 ### New liab.
+
 **New obligations created during the month.**
 
 Examples:
+
 - new bounties created
 - new tasks accepted
 - new payment requests approved
@@ -130,9 +139,11 @@ This increases `Task liab.` but does not necessarily move cash yet.
 ---
 
 ### Stripe Δ
+
 **Net Stripe balance movement during the month.**
 
-Includes *all* Stripe activity:
+Includes _all_ Stripe activity:
+
 - revenue
 - refunds
 - payouts
@@ -152,12 +163,14 @@ and should never be interpreted as profit.
 Stripe only tracks **cash**.
 
 This report adds:
+
 - liabilities (Task liab.)
 - internal allocations (Wallet)
 
 to recover the **true economic position**.
 
 Large Stripe inflows can occur with **negative Net change** if:
+
 - wallet balances increase
 - new obligations are created
 - cash is internally reallocated
@@ -172,6 +185,7 @@ Large Stripe inflows can occur with **negative Net change** if:
 - **Wallet + Task liab.** = money Gitpay does not own
 
 This separation ensures:
+
 - accurate reporting
 - Stripe reconciliation
 - investor-ready financials

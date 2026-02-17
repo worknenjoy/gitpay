@@ -1,6 +1,11 @@
 import React, { useCallback, useMemo, useEffect, useState } from 'react'
-import { Grid, FormControlLabel } from '@mui/material'
-import { CheckboxesContainer, CheckboxItem, StyledCheckbox } from './checkboxes.styles'
+import { Grid } from '@mui/material'
+import {
+  CheckboxesContainer,
+  CheckboxItem,
+  StyledCheckbox,
+  StyledFormControlLabel
+} from './checkboxes.styles'
 import CheckboxesPlaceholder from './checkboxes.placeholder'
 
 type CheckboxesProps = {
@@ -50,21 +55,39 @@ const Checkboxes = ({
     [checkboxes]
   )
 
+  const effectiveChecked = useMemo(() => {
+    const merged = { ...checked }
+    checkboxes.forEach((cb) => {
+      if (typeof cb?.checked === 'boolean') merged[cb.name] = cb.checked
+    })
+    return merged
+  }, [checked, checkboxes])
+
   const allOptionsChecked = useMemo(
-    () => checkboxes.filter((cb) => cb.name !== 'all').every((cb) => checked[cb.name] || false),
-    [checkboxes, checked]
+    () =>
+      checkboxes
+        .filter((cb) => cb.name !== 'all')
+        .every((cb) => effectiveChecked[cb.name] || false),
+    [checkboxes, effectiveChecked]
   )
 
   useEffect(() => {
-    const selectedCheckboxes = Object.keys(checked)
+    const selectedCheckboxes = Object.keys(effectiveChecked)
       .filter((key) => key !== 'all')
-      .filter((key) => checked[key])
+      .filter((key) => effectiveChecked[key])
       .map((key) => checkboxes.find((checkbox) => checkbox.name === key)?.value)
     onChange?.(selectedCheckboxes)
-  }, [checked, onChange, checkboxes])
+  }, [effectiveChecked, onChange, checkboxes])
 
   const selectBoxesWithAll = [...checkboxes, { label: 'All', name: 'all', value: 'all' }]
   const checkboxesToRender = includeSelectAll ? selectBoxesWithAll : checkboxes
+
+  const columnCount = useMemo(() => {
+    const count = checkboxesToRender.length || 1
+    return count > 4 ? 4 : count
+  }, [checkboxesToRender.length])
+
+  const mdSize = (12 / columnCount) as 3 | 4 | 6 | 12
 
   const items = checkboxesToRender.length > 0 ? checkboxesToRender.length : 3
 
@@ -72,13 +95,16 @@ const Checkboxes = ({
     <CheckboxesContainer>
       <Grid container spacing={3}>
         {checkboxesToRender.map((checkbox, index) => (
-          <Grid key={checkbox?.name || index} size={{ xs: 12, sm: 12 / checkboxesToRender.length }}>
+          <Grid key={checkbox?.name || index} size={{ xs: 12, sm: 6, md: mdSize }}>
             <CheckboxItem>
-              <FormControlLabel
+              <StyledFormControlLabel
+                alignment={checkbox?.alignment}
                 control={
                   <StyledCheckbox
                     checked={
-                      checkbox.name === 'all' ? allOptionsChecked : checked[checkbox.name] || false
+                      checkbox.name === 'all'
+                        ? allOptionsChecked
+                        : effectiveChecked[checkbox.name] || false
                     }
                     onChange={(e) => handleChange(e, checkbox?.onChange)}
                     color="primary"

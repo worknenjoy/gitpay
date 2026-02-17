@@ -1,11 +1,14 @@
 public
 build
+dist
 node_modules
 temp
+tmp
 coverage
 test
 migrate.js
 migration
 frontend/stripe-v3.js
 frontend/sitemap-builder.js
+frontend/storybook-static
 

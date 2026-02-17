@@ -1,7 +1,7 @@
 import path from 'path'
 import child_process from 'child_process'
 import { Umzug, SequelizeStorage } from 'umzug'
-import { Sequelize } from 'sequelize'
+import { type Options, Sequelize } from 'sequelize'
 import secrets from './config/secrets'
 
 const env = process.env.NODE_ENV || 'development'
@@ -16,7 +16,16 @@ const database_env = {
 type EnvName = keyof typeof database_env
 type SecretKey = (typeof database_env)[EnvName]
 
-const config = (secrets as Record<SecretKey, any>)[database_env[env as EnvName]]
+type DatabaseConnectionConfig = {
+  username: string
+  password: string | null
+  database: string
+} & Options
+
+const envName: EnvName =
+  env === 'production' || env === 'staging' || env === 'test' ? (env as EnvName) : 'development'
+
+const config = secrets[database_env[envName] as SecretKey]
 
 let sequelize: Sequelize
 
@@ -42,7 +51,9 @@ if (env === 'production' || env === 'staging') {
 
   console.log('running production-like migration')
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config)
+  const dbConfig = config as unknown as DatabaseConnectionConfig
+  const { database, username, password, ...options } = dbConfig
+  sequelize = new Sequelize(database, username, password ?? undefined, options)
 }
 
 sequelize.query('SELECT current_database();').then(([res]: any) => {

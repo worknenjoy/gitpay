@@ -763,9 +763,11 @@ const createBankAccount = (bank) => {
         const { data } = bankAccount
         if (!data) {
           dispatch(addNotification('notifications.bank.create.other.error', { severity: 'error' }))
-          return dispatch(createBankAccountError({ message: 'notifications.bank.create.other.error' }))
+          return dispatch(
+            createBankAccountError({ message: 'notifications.bank.create.other.error' })
+          )
         }
-        if(data.type === 'StripeInvalidRequestError') {
+        if (data.type === 'StripeInvalidRequestError') {
           dispatch(addNotification('notifications.bank.create.other.error', { severity: 'error' }))
           return dispatch(createBankAccountError(data))
         }
@@ -795,9 +797,11 @@ const updateBankAccount = (bank_account) => {
       .then((bankAccount) => {
         if (!bankAccount.data) {
           dispatch(addNotification('notifications.bank.update.other.error', { severity: 'error' }))
-          return dispatch(updateBankAccountError({ message: 'notifications.bank.update.other.error' }))
+          return dispatch(
+            updateBankAccountError({ message: 'notifications.bank.update.other.error' })
+          )
         }
-        if(bankAccount.data.type === 'StripeInvalidRequestError') {
+        if (bankAccount.data.type === 'StripeInvalidRequestError') {
           dispatch(addNotification(bankAccount.data.raw.message, { severity: 'error' }))
           return dispatch(updateBankAccountError(bankAccount.data))
         }
@@ -828,7 +832,7 @@ const deleteBankAccount = (bankAccountId) => {
       .delete(api.API_URL + `/user/bank_accounts/${bankAccountId}`)
       .then((response) => {
         const { data } = response
-         if(data.type === 'StripeInvalidRequestError') {
+        if (data.type === 'StripeInvalidRequestError') {
           dispatch(addNotification(data.raw.message, { severity: 'error' }))
           return dispatch(updateBankAccountError(data))
         }

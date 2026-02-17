@@ -1,5 +1,5 @@
 import { Transaction } from 'sequelize'
-import Models = require('../../../models')
+import Models from '../../../models'
 import { type UserParameters } from '../../user/updateUser/updateUser'
 
 const models = Models as any

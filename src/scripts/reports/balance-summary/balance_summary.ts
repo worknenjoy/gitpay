@@ -449,12 +449,12 @@ async function getSummary() {
 
     const monthlyRows = await getMonthlyBalanceAllYears(
       {
-      stripe,
-      stripeBalanceNowCents: stripeAvailableCents,
-      Task,
-      History,
-      Order,
-      WalletOrder
+        stripe,
+        stripeBalanceNowCents: stripeAvailableCents,
+        Task,
+        History,
+        Order,
+        WalletOrder
       },
       fromDate ? { from: fromDate } : undefined
     )

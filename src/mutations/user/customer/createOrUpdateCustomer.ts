@@ -1,7 +1,7 @@
-import stripeModule from '../../../client/payment/stripe'
 import models from '../../../models'
 
-const stripe = stripeModule()
+import { createCustomer, deleteCustomer } from '../../provider/stripe/user'
+import { retrieveCustomer } from '../../../queries/provider/stripe/customer'
 
 const currentModels = models as any
 
@@ -17,26 +17,38 @@ export async function createOrUpdateCustomer(user: User) {
   }
 
   if (user.customer_id) {
-    const customer = await stripe.customers.retrieve(user.customer_id)
-    return customer
+    return retrieveCustomer(user.customer_id)
   }
 
-  const customer = await stripe.customers.create({
-    email: user.email
-  })
+  let createdCustomerId: string | null = null
 
-  if (customer.id) {
-    const update = await currentModels.User.update(
-      { customer_id: customer.id },
-      { where: { id: user.id } }
-    )
+  try {
+    return await currentModels.sequelize.transaction(async (t: any) => {
+      const customer = await createCustomer({
+        email: user.email
+      })
 
-    if (!update) {
-      throw new Error('user not updated')
+      createdCustomerId = customer.id
+
+      if (!customer.id) {
+        throw new Error('Failed to create customer')
+      }
+
+      const [updatedCount] = await currentModels.User.update(
+        { customer_id: customer.id },
+        { where: { id: user.id }, transaction: t }
+      )
+
+      if (!updatedCount) {
+        throw new Error('user not updated')
+      }
+
+      return customer
+    })
+  } catch (error) {
+    if (createdCustomerId) {
+      await deleteCustomer(createdCustomerId).catch(() => null)
     }
-
-    return customer
+    throw error
   }
-
-  throw new Error('Failed to create customer')
 }

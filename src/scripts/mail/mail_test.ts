@@ -2,8 +2,8 @@
 	Mail preview script
 
 	Usage examples:
-		- tsx src/scripts/mail/mail_test.ts paymentRequest.paymentRequestInitiated
-		- tsx src/scripts/mail/mail_test.ts PaymentRequestMail.transferInitiatedForPaymentRequest --out tmp/mail-previews
+    - tsx src/scripts/mail/mail_test.ts paymentRequest.paymentRequestInitiated
+    - tsx src/scripts/mail/mail_test.ts paymentRequest.sendConfirmationWithInstructions --out tmp/mail-previews
 
 	It will render the selected mail method with sample data and save an HTML file
 	you can open in a browser.
@@ -92,6 +92,8 @@ function buildSamples(moduleName: string, methodName: string): any[] {
     const paymentRequest = {
       title: 'Sample payment request',
       description: 'This is a preview of the payment request email.',
+      send_instructions_email: true,
+      instructions_content: 'Follow these instructions:\n\n1) Step one\n2) Step two\n\nThanks!',
       amount: 123.45,
       custom_amount: false,
       currency: 'USD',
@@ -126,6 +128,10 @@ function buildSamples(moduleName: string, methodName: string): any[] {
     }
     if (/paymentMadeForPaymentRequest/i.test(methodName)) {
       return [user, paymentRequestPayment]
+    }
+
+    if (/sendConfirmationWithInstructions/i.test(methodName)) {
+      return [paymentRequestPayment]
     }
     if (/newBalanceTransactionForPaymentRequest/i.test(methodName)) {
       return [user, paymentRequestPayment, paymentRequestTransaction]
@@ -174,7 +180,7 @@ async function run(): Promise<PreviewResult> {
   }
 
   const moduleFile = normalizeModuleName(rawModuleToken)
-  const mailModulePath = path.join(repoRoot, 'src', 'modules', 'mail', `${moduleFile}.ts`)
+  const mailModulePath = path.join(repoRoot, 'src', 'mail', `${moduleFile}.ts`)
 
   if (!fs.existsSync(mailModulePath)) {
     throw new Error(`Mail module not found: ${mailModulePath}`)
@@ -183,7 +189,8 @@ async function run(): Promise<PreviewResult> {
   // Load mail module (CommonJS export)
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const mailModule = require(mailModulePath)
-  const fn = mailModule.default[rawMethod]
+  const mailExports = mailModule?.default || mailModule
+  const fn = mailExports?.[rawMethod]
 
   if (typeof fn !== 'function') {
     throw new Error(`Method not found on module export: ${rawMethod}`)
@@ -195,14 +202,7 @@ async function run(): Promise<PreviewResult> {
 
   // The request fallback returns an array with content passed to it
   // We also want to wrap with the default template to produce full HTML
-  const defaultTemplatePath = path.join(
-    repoRoot,
-    'src',
-    'modules',
-    'mail',
-    'templates',
-    'default.js'
-  )
+  const defaultTemplatePath = path.join(repoRoot, 'src', 'mail', 'templates', 'default.js')
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const defaultTemplate = require(defaultTemplatePath)
 

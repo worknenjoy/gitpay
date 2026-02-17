@@ -460,9 +460,7 @@ const BankAccount = ({
                                 })}
                                 disabled={!!bankAccountData.routing_number}
                                 defaultValue={
-                                  bankAccountData.last4
-                                    ? `*****${bankAccountData.last4}`
-                                    : ''
+                                  bankAccountData.last4 ? `*****${bankAccountData.last4}` : ''
                                 }
                               />
                               {AccountNumberError && (
@@ -521,9 +519,7 @@ const BankAccount = ({
                                 })}
                                 disabled={!!bankAccountData.routing_number}
                                 defaultValue={
-                                  bankAccountData.last4
-                                    ? `*****${bankAccountData.last4}`
-                                    : ''
+                                  bankAccountData.last4 ? `*****${bankAccountData.last4}` : ''
                                 }
                               />
 
