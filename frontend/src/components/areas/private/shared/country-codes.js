@@ -13,6 +13,7 @@ export const countryCodes = [
   { country: 'Czech Republic', code: 'CZ', image: 'czech-republic' },
   { country: 'Denmark', code: 'DK', image: 'denmark' },
   { country: 'Estonia', code: 'EE', image: 'estonia' },
+  { country: 'Ethiopia', code: 'ET', image: 'ethiopia' },
   { country: 'Finland', code: 'FI', image: 'finland' },
   { country: 'France', code: 'FR', image: 'france' },
   { country: 'Germany', code: 'DE', image: 'germany' },
@@ -72,6 +73,7 @@ export const countryCurrencies = [
   { currency: 'Croatian Kuna', symbol: 'kn', code: 'HRK', countries: ['HR'] },
   { currency: 'Czech Koruna', symbol: 'Kč', code: 'CZK', countries: ['CZ'] },
   { currency: 'Danish Krone', symbol: 'kr', code: 'DKK', countries: ['DK'] },
+  { currency: 'Ethiopian Birr', symbol: 'Br', code: 'ETB', countries: ['ET'] },
   {
     currency: 'Euro',
     symbol: '€',
