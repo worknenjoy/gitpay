@@ -5,6 +5,8 @@ import {
 
 export type { PaymentRequestCreateParams }
 
-export async function paymentRequestCreate(paymentRequestParams: PaymentRequestCreateParams): Promise<any> {
+export async function paymentRequestCreate(
+  paymentRequestParams: PaymentRequestCreateParams
+): Promise<any> {
   return createPaymentRequest(paymentRequestParams)
 }

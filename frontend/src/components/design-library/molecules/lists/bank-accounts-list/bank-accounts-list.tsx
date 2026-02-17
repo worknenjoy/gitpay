@@ -48,11 +48,7 @@ const formatAccountMeta = (account: BankAccountListItem) => {
   return pieces.join(' • ')
 }
 
-export default function BankAccountsList({
-  accounts,
-  onEdit,
-  onDelete
-}: BankAccountsListProps) {
+export default function BankAccountsList({ accounts, onEdit, onDelete }: BankAccountsListProps) {
   const { data = [], completed = false, error } = accounts || {}
 
   if (!completed) {
@@ -115,10 +111,7 @@ export default function BankAccountsList({
       <CardContent>
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
           <Typography variant="subtitle1" fontWeight={700}>
-            <FormattedMessage
-              id="bankAccounts.list.title"
-              defaultMessage="Linked bank accounts"
-            />
+            <FormattedMessage id="bankAccounts.list.title" defaultMessage="Linked bank accounts" />
           </Typography>
           <Typography variant="caption" color="text.secondary">
             <FormattedMessage
@@ -176,8 +169,12 @@ export default function BankAccountsList({
                             defaultMessage="This action cannot be undone."
                           />
                         }
-                        confirmLabel={<FormattedMessage id="common.delete" defaultMessage="Delete" />}
-                        cancelLabel={<FormattedMessage id="common.cancel" defaultMessage="Cancel" />}
+                        confirmLabel={
+                          <FormattedMessage id="common.delete" defaultMessage="Delete" />
+                        }
+                        cancelLabel={
+                          <FormattedMessage id="common.cancel" defaultMessage="Cancel" />
+                        }
                         onConfirm={async (e) => {
                           e.preventDefault()
                           await onDelete?.(account)
@@ -206,7 +203,6 @@ export default function BankAccountsList({
                             }
                             size="small"
                             variant="outlined"
-
                           />
                         ) : null}
                       </Stack>

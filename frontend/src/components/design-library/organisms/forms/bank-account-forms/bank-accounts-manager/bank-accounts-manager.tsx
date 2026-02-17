@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Stack } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import { Add as AddIcon } from '@mui/icons-material'
@@ -75,12 +75,12 @@ export default function BankAccountsManager({
     e.stopPropagation()
     if (mode === 'edit' && selected) {
       const edit = await onEditSubmit(selected, e)
-      if(!edit?.error?.raw) {
+      if (!edit?.error?.raw) {
         setDialogOpen(false)
       }
     } else {
       const create = await onCreateSubmit(e)
-      if(!create?.error?.raw) {
+      if (!create?.error?.raw) {
         setDialogOpen(false)
       }
     }
@@ -107,9 +107,7 @@ export default function BankAccountsManager({
   return (
     <Stack spacing={2}>
       <ProfileSecondaryHeader
-        title={
-          <FormattedMessage id="bankAccounts.manager.title" defaultMessage="Bank accounts" />
-        }
+        title={<FormattedMessage id="bankAccounts.manager.title" defaultMessage="Bank accounts" />}
         subtitle={
           <FormattedMessage
             id="bankAccounts.manager.subtitle"
@@ -134,11 +132,7 @@ export default function BankAccountsManager({
         }
       />
 
-      <BankAccountsList
-        accounts={accounts}
-        onEdit={openEdit}
-        onDelete={onDelete}
-      />
+      <BankAccountsList accounts={accounts} onEdit={openEdit} onDelete={onDelete} />
 
       <BankAccountFormDialog
         open={dialogOpen}

@@ -265,27 +265,32 @@ const scripts = {
       })
         .then((assigns: any) => {
           return assigns.map((a: any) => {
-            return models.Task.findOne({
-              attributes: ['status'],
-              where: {
-                id: a.dataValues.TaskId
-              }
-            })
-              .then((task: any) => {
-                if (task.dataValues.status === 'closed' || task.dataValues.status === 'in_progress') {
-                  return {
-                    id: a.dataValues.id,
-                    status: 'accepted'
-                  }
-                } else if (task.dataValues.status === 'open') {
-                  return {
-                    id: a.dataValues.id,
-                    status: 'pending'
-                  }
+            return (
+              models.Task.findOne({
+                attributes: ['status'],
+                where: {
+                  id: a.dataValues.TaskId
                 }
               })
-              // eslint-disable-next-line no-console
-              .catch((err: any) => console.log(`error occurred in assigns.map: ${err}`))
+                .then((task: any) => {
+                  if (
+                    task.dataValues.status === 'closed' ||
+                    task.dataValues.status === 'in_progress'
+                  ) {
+                    return {
+                      id: a.dataValues.id,
+                      status: 'accepted'
+                    }
+                  } else if (task.dataValues.status === 'open') {
+                    return {
+                      id: a.dataValues.id,
+                      status: 'pending'
+                    }
+                  }
+                })
+                // eslint-disable-next-line no-console
+                .catch((err: any) => console.log(`error occurred in assigns.map: ${err}`))
+            )
           })
         })
         .all()

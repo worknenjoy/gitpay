@@ -3,6 +3,8 @@ type UserCustomerCreateParams = {
 }
 
 export async function userCustomerCreate(id: number, customerParameters: UserCustomerCreateParams) {
-  const { createCustomerForUser } = await import('../../mutations/user/customer/createCustomerForUser')
+  const { createCustomerForUser } = await import(
+    '../../mutations/user/customer/createCustomerForUser'
+  )
   return createCustomerForUser(id, customerParameters)
 }

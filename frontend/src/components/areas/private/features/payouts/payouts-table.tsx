@@ -38,11 +38,26 @@ const messages = defineMessages({
 
 const PayoutsTable = ({ payouts }) => {
   const intl = useIntl()
-  
+
   const tableHeaderMetadata = {
-    status: { sortable: true, numeric: false, dataBaseKey: 'status', label: intl.formatMessage(messages.status) },
-    method: { sortable: true, numeric: false, dataBaseKey: 'method', label: intl.formatMessage(messages.transferMethod) },
-    amount: { sortable: true, numeric: true, dataBaseKey: 'amount', label: intl.formatMessage(messages.amount) },
+    status: {
+      sortable: true,
+      numeric: false,
+      dataBaseKey: 'status',
+      label: intl.formatMessage(messages.status)
+    },
+    method: {
+      sortable: true,
+      numeric: false,
+      dataBaseKey: 'method',
+      label: intl.formatMessage(messages.transferMethod)
+    },
+    amount: {
+      sortable: true,
+      numeric: true,
+      dataBaseKey: 'amount',
+      label: intl.formatMessage(messages.amount)
+    },
     arrival_date: {
       sortable: true,
       numeric: false,
@@ -55,7 +70,12 @@ const PayoutsTable = ({ payouts }) => {
       dataBaseKey: 'reference_number',
       label: intl.formatMessage(messages.referenceNumber)
     },
-    createdAt: { sortable: true, numeric: false, dataBaseKey: 'createdAt', label: intl.formatMessage(messages.createdAt) }
+    createdAt: {
+      sortable: true,
+      numeric: false,
+      dataBaseKey: 'createdAt',
+      label: intl.formatMessage(messages.createdAt)
+    }
   }
 
   const customColumnRenderer = {

@@ -27,7 +27,6 @@ export default function BankAccountFormDialog({
   onChangeBankCode,
   onSubmit
 }: BankAccountFormDialogProps) {
-
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle>
@@ -46,10 +45,7 @@ export default function BankAccountFormDialog({
           onSubmit={onSubmit}
           submitLabel={
             mode === 'edit' ? (
-              <FormattedMessage
-                id="bankAccounts.edit.save"
-                defaultMessage="Save changes"
-              />
+              <FormattedMessage id="bankAccounts.edit.save" defaultMessage="Save changes" />
             ) : (
               <FormattedMessage id="bankAccounts.create.save" defaultMessage="Add bank account" />
             )

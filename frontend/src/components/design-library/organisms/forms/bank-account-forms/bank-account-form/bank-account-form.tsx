@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Grid, Typography, Checkbox } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import AccountTypeField from '../../../../atoms/inputs/fields/account-type-field/account-type-field'
@@ -85,10 +85,7 @@ const BankAccountForm = ({
       )}
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 12 }}>
-          <Checkbox
-            name="default_for_currency"
-            defaultChecked={default_for_currency}
-          />
+          <Checkbox name="default_for_currency" defaultChecked={default_for_currency} />
           <Typography variant="body2" display="inline">
             <FormattedMessage
               id="bankAccounts.defaultForCurrency"
@@ -123,7 +120,12 @@ const BankAccountForm = ({
             <div style={{ marginTop: 17 }}>
               <Field
                 completed={completed}
-                label={<FormattedMessage id="bankAccount.accountHolderName" defaultMessage="Account Holder Name" />}
+                label={
+                  <FormattedMessage
+                    id="bankAccount.accountHolderName"
+                    defaultMessage="Account Holder Name"
+                  />
+                }
                 name="account_holder_name"
                 type="text"
                 placeholder="Account holder name / business name"

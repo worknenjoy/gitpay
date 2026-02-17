@@ -1,6 +1,11 @@
 import React, { useCallback, useMemo, useEffect, useState } from 'react'
 import { Grid, FormControlLabel } from '@mui/material'
-import { CheckboxesContainer, CheckboxItem, StyledCheckbox } from './checkboxes.styles'
+import {
+  CheckboxesContainer,
+  CheckboxItem,
+  StyledCheckbox,
+  StyledFormControlLabel
+} from './checkboxes.styles'
 import CheckboxesPlaceholder from './checkboxes.placeholder'
 
 type CheckboxesProps = {
@@ -59,7 +64,10 @@ const Checkboxes = ({
   }, [checked, checkboxes])
 
   const allOptionsChecked = useMemo(
-    () => checkboxes.filter((cb) => cb.name !== 'all').every((cb) => effectiveChecked[cb.name] || false),
+    () =>
+      checkboxes
+        .filter((cb) => cb.name !== 'all')
+        .every((cb) => effectiveChecked[cb.name] || false),
     [checkboxes, effectiveChecked]
   )
 
@@ -74,15 +82,26 @@ const Checkboxes = ({
   const selectBoxesWithAll = [...checkboxes, { label: 'All', name: 'all', value: 'all' }]
   const checkboxesToRender = includeSelectAll ? selectBoxesWithAll : checkboxes
 
+  const columnCount = useMemo(() => {
+    const count = checkboxesToRender.length || 1
+    return count > 4 ? 4 : count
+  }, [checkboxesToRender.length])
+
+  const mdSize = (12 / columnCount) as 3 | 4 | 6 | 12
+
   const items = checkboxesToRender.length > 0 ? checkboxesToRender.length : 3
 
   return completed ? (
     <CheckboxesContainer>
       <Grid container spacing={3}>
         {checkboxesToRender.map((checkbox, index) => (
-          <Grid key={checkbox?.name || index} size={{ xs: 12, sm: 12 / checkboxesToRender.length }}>
+          <Grid
+            key={checkbox?.name || index}
+            size={{ xs: 12, sm: 6, md: mdSize }}
+          >
             <CheckboxItem>
-              <FormControlLabel
+              <StyledFormControlLabel
+                alignment={checkbox?.alignment}
                 control={
                   <StyledCheckbox
                     checked={

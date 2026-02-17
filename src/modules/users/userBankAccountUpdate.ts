@@ -14,6 +14,8 @@ export async function userBankAccountUpdate({
   userParams,
   bank_account
 }: UserBankAccountUpdateParams) {
-  const { updateUserBankAccount } = await import('../../mutations/user/bank-account/updateUserBankAccount')
+  const { updateUserBankAccount } = await import(
+    '../../mutations/user/bank-account/updateUserBankAccount'
+  )
   return updateUserBankAccount({ userParams, bank_account })
 }

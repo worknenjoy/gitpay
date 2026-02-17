@@ -6,9 +6,7 @@ import { calculateAmountWithPercent } from '../../../utils'
 import { findPaymentRequestByPaymentLinkId } from '../../../queries/payment-request/payment-request'
 import { findOrCreatePaymentRequestBalance } from '../../../queries/payment-request/payment-request-balance'
 
-import {
-  updatePaymentRequestPaymentLinkActive
-} from '../../../provider/stripe/payment-request'
+import { updatePaymentRequestPaymentLinkActive } from '../../../provider/stripe/payment-request'
 import { updatePaymentIntentMetadata } from '../../../provider/stripe/payment-intent'
 import { createTransfer, createTransferReversal } from '../../../provider/stripe/transfer'
 
@@ -57,7 +55,12 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
 
   const customerDetails = session.customer_details || {}
 
-  const originalAmount = calculateAmountWithPercent(session.amount_total ?? 0, 0, 'centavos', currency)
+  const originalAmount = calculateAmountWithPercent(
+    session.amount_total ?? 0,
+    0,
+    'centavos',
+    currency
+  )
   const amountAfterFee = custom_amount
     ? calculateAmountWithPercent(session.amount_total ?? 0, 8, 'centavos', currency)
     : calculateAmountWithPercent(amount, 8, 'decimal', currency)

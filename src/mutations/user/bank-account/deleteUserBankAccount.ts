@@ -8,7 +8,10 @@ type UserBankAccountDeleteParams = {
   bankAccountId: string
 }
 
-export async function deleteUserBankAccount({ userParams, bankAccountId }: UserBankAccountDeleteParams) {
+export async function deleteUserBankAccount({
+  userParams,
+  bankAccountId
+}: UserBankAccountDeleteParams) {
   const user = await findUserByIdSimple(userParams.id)
   const accountId = user?.dataValues?.account_id
 

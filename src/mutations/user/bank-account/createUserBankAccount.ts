@@ -1,6 +1,7 @@
 import { currencyMap } from '../../../utils/currency/currency-map'
 import { findUserByIdSimple } from '../../../queries/user/findUserByIdSimple'
 import { createExternalAccount } from '../../../provider/stripe/user'
+import { Stripe } from 'stripe'
 
 const getCurrency = (country: string) => {
   return currencyMap[country]
@@ -22,7 +23,10 @@ type UserBankAccountCreateParams = {
   }
 }
 
-export async function createUserBankAccount({ userParams, bankAccountParams }: UserBankAccountCreateParams) {
+export async function createUserBankAccount({
+  userParams,
+  bankAccountParams
+}: UserBankAccountCreateParams) {
   const userCountry = userParams.country
   const userCurrency = userParams.currency || getCurrency(userCountry)
 
@@ -31,12 +35,18 @@ export async function createUserBankAccount({ userParams, bankAccountParams }: U
 
   if (!accountId) return null
 
+  const accountHolderType: Stripe.AccountCreateExternalAccountParams.BankAccount.AccountHolderType | undefined =
+    bankAccountParams.account_holder_type === 'company' ||
+    bankAccountParams.account_holder_type === 'individual'
+      ? bankAccountParams.account_holder_type
+      : undefined
+
   return createExternalAccount(accountId, {
     external_account: {
       object: 'bank_account',
       country: bankAccountParams.country || userCountry,
       currency: bankAccountParams.currency || userCurrency,
-      account_holder_type: bankAccountParams.account_holder_type,
+      account_holder_type: accountHolderType,
       account_holder_name: bankAccountParams.account_holder_name,
       routing_number: bankAccountParams.routing_number,
       account_number: bankAccountParams.account_number

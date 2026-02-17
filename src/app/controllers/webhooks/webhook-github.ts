@@ -34,19 +34,24 @@ export const github = async (req: Request, res: Response) => {
           returning: true
         }
       )
-      const updatedTask = updated[1][0].dataValues
+      const updatedTaskRecord = updated?.[1]?.[0]
+      if (!updatedTaskRecord) return res.status(404).json({})
+
+      const updatedTask = updatedTaskRecord.dataValues
       const user = await models.User.findOne({
         where: {
           id: updatedTask.userId
         }
       })
-      if (updated) {
+      if (updatedTask) {
         if (updatedTask.status === 'closed') {
-          IssueClosedMail.success(user.dataValues, {
-            name: user.dataValues.name,
-            url: updatedTask.url,
-            title: updatedTask.title
-          })
+          if (user) {
+            IssueClosedMail.success(user.dataValues, {
+              name: user.dataValues.name,
+              url: updatedTask.url,
+              title: updatedTask.title
+            })
+          }
         }
         return res.json({
           ...response,
@@ -79,17 +84,21 @@ export const github = async (req: Request, res: Response) => {
                     username: response.issue.user.login
                   }
                 })
-                const userData = user && user.dataValues
+                const userData = user?.dataValues
                 const task = await models.Task.findOne({
                   where: {
                     url: response.issue.html_url
                   }
                 })
-                const taskData = task.dataValues
+                const taskData = task?.dataValues
+                if (!taskData) {
+                  finalResponse = { task: { status: 404 } }
+                  return
+                }
                 const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
 
                 if (userData && !taskData.notified) {
-                  const language = user.language || 'en'
+                  const language = userData.language || 'en'
                   i18n.setLocale(language)
                   SendMail.success(
                     userData,
@@ -102,19 +111,21 @@ export const github = async (req: Request, res: Response) => {
                       repo: response.repository.html_url
                     })
                   )
-                  await task.addLabels(labelId)
+                  await (task as any).addLabels(labelId)
                 }
-                TaskMail.notify(userData, {
-                  task: {
-                    title: taskData.title,
-                    issue_url: taskData.url,
-                    url: constants.taskUrl(taskData.id),
-                    value: taskData.value > 0 ? taskData.value : null,
-                    deadline: taskData.deadline
-                      ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})`
-                      : null
-                  }
-                })
+                if (userData) {
+                  TaskMail.notify(userData, {
+                    task: {
+                      title: taskData.title,
+                      issue_url: taskData.url,
+                      url: constants.taskUrl(taskData.id),
+                      value: taskData.value > 0 ? taskData.value : null,
+                      deadline: taskData.deadline
+                        ? `${dateFormat(taskData.deadline, constants.dateFormat)} (${moment(taskData.deadline).fromNow()})`
+                        : null
+                    }
+                  })
+                }
 
                 const taskUpdate = await models.Task.update(
                   {
@@ -163,7 +174,7 @@ export const github = async (req: Request, res: Response) => {
                     username: response.issue.user.login
                   }
                 })
-                const userData = user && user.dataValues
+                const userData = user?.dataValues
                 const taskExist = await models.Task.findOne({
                   where: {
                     url: response.issue.html_url
@@ -177,11 +188,11 @@ export const github = async (req: Request, res: Response) => {
                     url: response.issue.html_url,
                     userId: userData ? userData.id : null
                   }).save())
-                await task.addLabels(labelId)
+                await (task as any).addLabels(labelId)
                 const taskData = task.dataValues
                 const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
                 if (userData) {
-                  const language = user.language || 'en'
+                  const language = userData.language || 'en'
                   i18n.setLocale(language)
                   SendMail.success(
                     userData,

@@ -202,13 +202,7 @@ async function run(): Promise<PreviewResult> {
 
   // The request fallback returns an array with content passed to it
   // We also want to wrap with the default template to produce full HTML
-  const defaultTemplatePath = path.join(
-    repoRoot,
-    'src',
-    'mail',
-    'templates',
-    'default.js'
-  )
+  const defaultTemplatePath = path.join(repoRoot, 'src', 'mail', 'templates', 'default.js')
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const defaultTemplate = require(defaultTemplatePath)
 

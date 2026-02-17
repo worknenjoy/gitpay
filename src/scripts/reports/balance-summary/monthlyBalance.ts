@@ -106,10 +106,10 @@ function feeMultiplierForWalletSpend(amountUsd: number): number {
 }
 
 function buildWalletBalanceAtBoundaries(events: WalletEvent[], boundaries: Date[]): number[] {
-  const sortedEvents = [...events].sort(
-    (a, b) => a.createdAt.getTime() - b.createdAt.getTime()
-  )
-  const sortedBoundaries = boundaries.map((d, i) => ({ d, i })).sort((a, b) => a.d.getTime() - b.d.getTime())
+  const sortedEvents = [...events].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+  const sortedBoundaries = boundaries
+    .map((d, i) => ({ d, i }))
+    .sort((a, b) => a.d.getTime() - b.d.getTime())
   const out = new Array<number>(boundaries.length).fill(0)
 
   let idx = 0
@@ -124,7 +124,10 @@ function buildWalletBalanceAtBoundaries(events: WalletEvent[], boundaries: Date[
   return out
 }
 
-function pendingStripeOnlyAsOf(tasks: PendingTaskInfo[], asOf: Date): {
+function pendingStripeOnlyAsOf(
+  tasks: PendingTaskInfo[],
+  asOf: Date
+): {
   cents: number
   count: number
 } {
@@ -142,7 +145,11 @@ function pendingStripeOnlyAsOf(tasks: PendingTaskInfo[], asOf: Date): {
   return { cents, count }
 }
 
-function pendingCreatedStripeOnlyInPeriod(tasks: PendingTaskInfo[], start: Date, end: Date): {
+function pendingCreatedStripeOnlyInPeriod(
+  tasks: PendingTaskInfo[],
+  start: Date,
+  end: Date
+): {
   cents: number
   count: number
 } {
@@ -169,9 +176,7 @@ function stripeBalanceAtBoundaries(
   const txns = [...usdTxns].sort((a, b) => a.created - b.created)
   const totalNet = txns.reduce((sum, t) => sum + (t.net || 0), 0)
 
-  const sortedBounds = boundariesUnix
-    .map((u, i) => ({ u, i }))
-    .sort((a, b) => a.u - b.u)
+  const sortedBounds = boundariesUnix.map((u, i) => ({ u, i })).sort((a, b) => a.u - b.u)
   const out = new Array<number>(boundariesUnix.length).fill(stripeBalanceNowCents)
 
   let idx = 0
@@ -297,14 +302,15 @@ export async function getMonthlyBalanceAllYears(
 
       const paidAt = paidAtByTask.get(id) || null
       const transferAt = transferredAtByTask.get(id) || null
-      const endPendingAt = paidAt && transferAt ? (paidAt < transferAt ? paidAt : transferAt) : paidAt || transferAt
+      const endPendingAt =
+        paidAt && transferAt ? (paidAt < transferAt ? paidAt : transferAt) : paidAt || transferAt
 
       // If current state indicates it was paid/transferred but no history exists,
       // approximate with updatedAt (keeps older data usable).
       const paidNow = Boolean(t?.paid)
       const transferredNow = Boolean(t?.transfer_id) || Boolean(t?.TransferId)
       const endPendingAtWithFallback =
-        endPendingAt || (paidNow || transferredNow ? (updatedAt || null) : null)
+        endPendingAt || (paidNow || transferredNow ? updatedAt || null : null)
 
       return {
         id,

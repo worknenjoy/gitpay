@@ -3,7 +3,10 @@ import requestPromise from 'request-promise'
 
 import TransferMail from '../../mail/transfer'
 
-import { createTransfer as createStripeTransfer, createTransferReversal } from '../../provider/stripe/transfer'
+import {
+  createTransfer as createStripeTransfer,
+  createTransferReversal
+} from '../../provider/stripe/transfer'
 import { findTransferByStripeTransferId } from '../../queries/transfer/findTransferByStripeTransferId'
 import { findTransferByTaskId } from '../../queries/transfer/findTransferByTaskId'
 import { findTaskByIdWithOrdersAndUser } from '../../queries/task/findTaskByIdWithOrdersAndUser'
@@ -89,7 +92,8 @@ export async function transferBuilds(params: TransferBuildsParams) {
         status: 'pending',
         value: finalValue,
         transfer_id: params.transfer_id,
-        transfer_method: (isMultiple && 'multiple') || (isStripe && 'stripe') || (isPaypal && 'paypal'),
+        transfer_method:
+          (isMultiple && 'multiple') || (isStripe && 'stripe') || (isPaypal && 'paypal'),
         taskId: params.taskId,
         userId: taskData.User.dataValues.id,
         to: destination.id,

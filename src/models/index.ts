@@ -48,7 +48,9 @@ const databaseEnv: Record<DatabaseEnvKey, string> = {
 }
 
 const envKey: DatabaseEnvKey =
-  env === 'production' || env === 'staging' || env === 'test' ? (env as DatabaseEnvKey) : 'development'
+  env === 'production' || env === 'staging' || env === 'test'
+    ? (env as DatabaseEnvKey)
+    : 'development'
 
 const secretsKey = databaseEnv[envKey]
 const config = secrets[secretsKey as keyof typeof secrets]

@@ -50,7 +50,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
     const [sendInstructionsEmailChecked, setSendInstructionsEmailChecked] = useState(false)
     const [instructionsContent, setInstructionsContent] = useState('')
     const [instructionsDialogOpen, setInstructionsDialogOpen] = useState(false)
-    const [pendingEnableSendInstructionsEmail, setPendingEnableSendInstructionsEmail] = useState(false)
+    const [pendingEnableSendInstructionsEmail, setPendingEnableSendInstructionsEmail] =
+      useState(false)
     const editMode = !!data?.id
 
     useEffect(() => {
@@ -123,6 +124,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           value: true,
           defaultChecked: data?.custom_amount,
           disabled: editMode,
+          alignment: 'flex-start',
           onChange: handleCustomAmountChange
         },
         {
@@ -132,6 +134,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
               defaultMessage="Deactivate after payment"
             />
           ),
+          alignment: 'flex-start',
           name: 'deactivate_after_payment',
           value: true,
           defaultChecked: data?.deactivate_after_payment
@@ -149,6 +152,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                   <Link
                     component="button"
                     type="button"
+                    style={{ margin: '4px 0' }}
+                    variant="caption"
                     onMouseDown={(e) => e.stopPropagation()}
                     onClick={(e) => {
                       e.preventDefault()
@@ -169,6 +174,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           name: 'send_instructions_email',
           value: true,
           defaultChecked: data?.send_instructions_email,
+          alignment: 'flex-start',
           checked: sendInstructionsEmailChecked,
           onChange: handleSendEmailChange
         }
@@ -231,10 +237,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                 defaultMessage="Update"
               />
             ) : (
-              <FormattedMessage
-                id="paymentRequest.form.instructions.save"
-                defaultMessage="Save"
-              />
+              <FormattedMessage id="paymentRequest.form.instructions.save" defaultMessage="Save" />
             )
           }
           cancelLabel={<FormattedMessage id="common.cancel" defaultMessage="Cancel" />}
@@ -282,7 +285,9 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
               <TextField
                 fullWidth
                 variant="outlined"
-                label={<FormattedMessage id="form.label.description" defaultMessage="Description" />}
+                label={
+                  <FormattedMessage id="form.label.description" defaultMessage="Description" />
+                }
                 name="description"
                 placeholder="Describe your service"
                 multiline

@@ -23,8 +23,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: any) => {
     listTasks: (params: any) => dispatch(listTasks(params)),
     filterTasks: (key: any, value: any, additional: any) =>
       dispatch(filterTasks(key, value, additional)),
-    fetchOrganization: (organizationId: any) =>
-      dispatch(fetchOrganization(organizationId)),
+    fetchOrganization: (organizationId: any) => dispatch(fetchOrganization(organizationId)),
     listLabels: () => dispatch(listLabels()),
     listLanguages: () => dispatch(listLanguage())
   }

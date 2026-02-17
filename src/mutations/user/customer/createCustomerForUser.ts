@@ -10,7 +10,10 @@ type UserCustomerCreateParams = {
   [key: string]: any
 }
 
-export async function createCustomerForUser(id: number, customerParameters: UserCustomerCreateParams) {
+export async function createCustomerForUser(
+  id: number,
+  customerParameters: UserCustomerCreateParams
+) {
   let createdCustomerId: string | null = null
 
   try {

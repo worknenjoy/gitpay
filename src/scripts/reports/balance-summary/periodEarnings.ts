@@ -196,7 +196,7 @@ export async function getEarningsForAllPeriods(
       const paidNow = Boolean(t?.paid)
       const transferredNow = Boolean(t?.transfer_id) || Boolean(t?.TransferId)
       const endPendingAtWithFallback =
-        endPendingAt || (paidNow || transferredNow ? (updatedAt || null) : null)
+        endPendingAt || (paidNow || transferredNow ? updatedAt || null : null)
 
       return {
         id,
@@ -253,7 +253,10 @@ export async function getEarningsForAllPeriods(
   const walletEvents: Array<{ createdAt: Date; deltaCents: number }> = []
   for (const a of walletAdds) {
     if (!a?.createdAt) continue
-    walletEvents.push({ createdAt: a.createdAt, deltaCents: Math.round((Number(a.amount) || 0) * 100) })
+    walletEvents.push({
+      createdAt: a.createdAt,
+      deltaCents: Math.round((Number(a.amount) || 0) * 100)
+    })
   }
   for (const s of walletSpends) {
     if (!s?.createdAt) continue

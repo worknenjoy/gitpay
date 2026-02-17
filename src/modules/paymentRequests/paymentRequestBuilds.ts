@@ -1,4 +1,7 @@
-import { createPaymentRequest, type PaymentRequestCreateParams } from '../../mutations/payment-request/payment-request'
+import {
+  createPaymentRequest,
+  type PaymentRequestCreateParams
+} from '../../mutations/payment-request/payment-request'
 import { findPaymentRequest } from '../../queries/payment-request/payment-request'
 import PaymentRequestMail from '../../mail/paymentRequest'
 

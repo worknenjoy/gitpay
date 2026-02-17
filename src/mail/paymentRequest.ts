@@ -6,6 +6,7 @@ import emailTemplate from './templates/base-content'
 import { tableContentEmailTemplate } from './templates/table-content'
 import currencyInfo from '../utils/currency/currency-info'
 import { calculateAmountWithPercent } from '../utils'
+import { sanitizePaymentRequestInstructionsContent } from '../utils/sanitize/paymentRequestInstructions'
 
 type CurrencyKey = keyof typeof currencyInfo
 
@@ -250,37 +251,47 @@ const PaymentRequestMail = {
     const currencyKey = resolveCurrencyKey(paymentRequestPayment?.currency)
     const currencySymbol = currencyInfo[currencyKey]?.symbol || ''
 
-    const instructionsHtml = String(instructionsRaw).replace(/\n/g, '<br/>')
+    const instructionsHtml = sanitizePaymentRequestInstructionsContent(instructionsRaw, {
+      lengthMode: 'truncate'
+    })
+
+    if (!instructionsHtml) {
+      return
+    }
 
     try {
-      return await request(to, i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.subject'), [
-        {
-          type: 'text/html',
-          value: tableContentEmailTemplate(
-            i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.message', {
-              amount: paymentRequestPayment.amount,
-              currency: paymentRequestPayment.currency
-            }),
-            i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.details', {
-              title: paymentRequest?.title,
-              description: paymentRequest?.description,
-              customer_name: customer?.name || 'N/A',
-              customer_email: customer?.email || 'N/A'
-            }),
-            {
-              headers: ['Item', 'status', '<div style="text-align:right">Amount</div>'],
-              rows: [
-                [
-                  'Payment for Payment Request',
-                  paymentRequestPayment.status,
-                  `<div style="text-align:right">${currencySymbol} ${paymentRequestPayment.amount}</div>`
+      return await request(
+        to,
+        i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.subject'),
+        [
+          {
+            type: 'text/html',
+            value: tableContentEmailTemplate(
+              i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.message', {
+                amount: paymentRequestPayment.amount,
+                currency: paymentRequestPayment.currency
+              }),
+              i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.details', {
+                title: paymentRequest?.title,
+                description: paymentRequest?.description,
+                customer_name: customer?.name || 'N/A',
+                customer_email: customer?.email || 'N/A'
+              }),
+              {
+                headers: ['Item', 'status', '<div style="text-align:right">Amount</div>'],
+                rows: [
+                  [
+                    'Payment for Payment Request',
+                    paymentRequestPayment.status,
+                    `<div style="text-align:right">${currencySymbol} ${paymentRequestPayment.amount}</div>`
+                  ]
                 ]
-              ]
-            },
-            `${i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.instructions_title')}<br/>${instructionsHtml}`
-          )
-        }
-      ])
+              },
+              `${i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.instructions_title')}<br/>${instructionsHtml}`
+            )
+          }
+        ]
+      )
     } catch (error) {
       console.error('Error sending email:', error)
     }

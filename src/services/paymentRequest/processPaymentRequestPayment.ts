@@ -14,9 +14,7 @@ type CheckoutSession = {
  */
 export async function processPaymentRequestPaymentFromCheckoutSession(session: any): Promise<void> {
   const paymentStatus = (session as CheckoutSession | null)?.payment_status
-
-  // Keep legacy behavior: only act on successful payments.
-  if (paymentStatus !== 'paid') {
+  if (paymentStatus !== 'paid' && paymentStatus !== 'no_payment_required') {
     return
   }
 

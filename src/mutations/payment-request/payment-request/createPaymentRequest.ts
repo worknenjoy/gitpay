@@ -5,6 +5,7 @@ import {
   deactivatePaymentRequestStripeResources,
   updatePaymentRequestPaymentLinkMetadata
 } from '../../../provider/stripe/payment-request'
+import { sanitizePaymentRequestInstructionsContent } from '../../../utils/sanitize/paymentRequestInstructions'
 
 const models = Models as any
 
@@ -24,46 +25,64 @@ export async function createPaymentRequest(
   paymentRequestParams: PaymentRequestCreateParams,
   tx?: Transaction
 ): Promise<any> {
-  const currency = paymentRequestParams.currency ?? 'usd'
+  const {
+    id,
+    userId,
+    title,
+    description,
+    amount,
+    currency: currencyParam,
+    custom_amount,
+    send_instructions_email,
+    instructions_content
+  } = paymentRequestParams
+
+  const currency = currencyParam ?? 'usd'
+
+  const sanitizedInstructionsContent = sanitizePaymentRequestInstructionsContent(instructions_content, {
+    lengthMode: 'throw'
+  })
 
   const run = async (transaction: Transaction) => {
     const resources: any = {}
 
     try {
       const createdResources = await createPaymentRequestStripeResources({
-        title: paymentRequestParams.title,
-        description: paymentRequestParams.description,
+        title,
+        description,
         currency,
-        amount: paymentRequestParams.amount,
-        custom_amount: paymentRequestParams.custom_amount,
+        amount,
+        custom_amount,
         metadata: {
-          payment_request_id: paymentRequestParams.id ?? null,
-          user_id: paymentRequestParams.userId ?? null
+          payment_request_id: id ?? null,
+          user_id: userId ?? null
         }
       })
 
-      resources.productId = createdResources.productId
-      resources.priceId = createdResources.priceId
-      resources.paymentLinkId = createdResources.paymentLinkId
-      resources.paymentUrl = createdResources.paymentUrl
+      const { productId, priceId, paymentLinkId, paymentUrl } = createdResources
+
+      resources.productId = productId
+      resources.priceId = priceId
+      resources.paymentLinkId = paymentLinkId
+      resources.paymentUrl = paymentUrl
 
       const createPaymentRequest = await models.PaymentRequest.create(
         {
           ...paymentRequestParams,
-          payment_link_id: createdResources.paymentLinkId,
-          payment_url: createdResources.paymentUrl,
+          payment_link_id: paymentLinkId,
+          payment_url: paymentUrl,
           currency,
-          amount: paymentRequestParams.amount,
-          custom_amount: paymentRequestParams.custom_amount ?? false,
-          send_instructions_email: paymentRequestParams.send_instructions_email ?? false,
-          instructions_content: paymentRequestParams.instructions_content ?? null,
-          title: paymentRequestParams.title,
-          description: paymentRequestParams.description
+          amount,
+          custom_amount: custom_amount ?? false,
+          send_instructions_email: send_instructions_email ?? false,
+          instructions_content: sanitizedInstructionsContent,
+          title,
+          description
         },
         { transaction }
       )
 
-      await updatePaymentRequestPaymentLinkMetadata(createdResources.paymentLinkId, {
+      await updatePaymentRequestPaymentLinkMetadata(paymentLinkId, {
         payment_request_id: createPaymentRequest.id,
         user_id: createPaymentRequest.userId
       })

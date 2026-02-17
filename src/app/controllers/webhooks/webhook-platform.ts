@@ -90,6 +90,8 @@ exports.webhookPlatform = async (req: any, res: any) => {
         return await invoicePaymentFailed(event, req, res)
       case 'checkout.session.completed':
         return await checkoutSessionCompleted(event, req, res)
+      case 'checkout.session.async_payment_succeeded':
+        return await checkoutSessionCompleted(event, req, res)
       default:
         return res.status(200).json(event) // Respond with 200 OK for unhandled events
     }

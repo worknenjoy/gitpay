@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { Box } from '@mui/material'
 import { Edit as EditIcon, Link as LinkIcon } from '@mui/icons-material'
+import { useHistory } from 'react-router-dom'
 
 import { paymentRequestMetadata } from './payment-requests-table'
 
@@ -14,6 +16,7 @@ import {
 import EmptyPaymentRequest from 'design-library/molecules/content/empty/empty-payment-request/empty-payment-request'
 import PaymentRequestDrawer from 'design-library/molecules/drawers/payment-request-drawer/payment-request-drawer'
 import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page'
+import AccountRequirements from 'design-library/atoms/alerts/account-requirements/account-requirements'
 import TextField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field'
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field'
@@ -21,18 +24,24 @@ import LinkField from 'design-library/molecules/tables/section-table/section-tab
 import PaymentRequestActiveField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payment-request/payment-request-active-field/payment-request-active-field'
 import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
 import { usePaymentRequestPaymentsCustomColumnRenderer } from './hooks/usePaymentRequestPaymentColumnRender'
+import { validAccount } from '../../../../../utils/valid-account'
 
 const PaymentRequests = ({
+  user,
+  account,
   paymentRequests,
   paymentRequestPayments,
   paymentRequestBalances,
   createPaymentRequest,
+  fetchAccount,
   listPaymentRequests,
   listPaymentRequestPayments,
   listPaymentRequestBalances,
   updatePaymentRequest,
   refundPaymentRequestPayment
 }) => {
+  const history = useHistory()
+
   const [createPaymentRequestCompleted, setCreatePaymentRequestCompleted] = React.useState(true)
   const [openNewPaymentRequestDrawer, setOpenNewPaymentRequestDrawer] = React.useState(false)
 
@@ -40,6 +49,18 @@ const PaymentRequests = ({
   const [selectedPaymentRequest, setSelectedPaymentRequest] = React.useState<any | null>(null)
 
   const [activeTab, setActiveTab] = React.useState('payment-requests')
+
+  const isAccountValid = validAccount(user, account)
+
+  const handleGoToPayoutSettings = () => history.push('/profile/payout-settings')
+
+  const handleOpenCreatePaymentRequestDrawer = () => {
+    if (!isAccountValid) {
+      handleGoToPayoutSettings()
+      return
+    }
+    setOpenNewPaymentRequestDrawer(true)
+  }
 
   const paymentRequestPaymentsCustomColumnRenderer = usePaymentRequestPaymentsCustomColumnRenderer({
     onRefund: async (paymentId) => {
@@ -111,6 +132,7 @@ const PaymentRequests = ({
   }
 
   useEffect(() => {
+    fetchAccount?.()
     listPaymentRequests()
     listPaymentRequestPayments()
     listPaymentRequestBalances()
@@ -123,6 +145,9 @@ const PaymentRequests = ({
 
   return (
     <>
+      <Box sx={{ mb: 2 }}>
+        <AccountRequirements user={user} account={account} onClick={handleGoToPayoutSettings} />
+      </Box>
       <PrimaryDataPage
         title={<FormattedMessage id="payment.requests.title" defaultMessage="Payment requests" />}
         description={
@@ -188,11 +213,11 @@ const PaymentRequests = ({
             }
           }
         ]}
-        displayAction={true}
+        displayAction={isAccountValid}
         emptyComponent={
-          <EmptyPaymentRequest onActionClick={() => setOpenNewPaymentRequestDrawer(true)} />
+          <EmptyPaymentRequest onActionClick={handleOpenCreatePaymentRequestDrawer} />
         }
-        onActionClick={() => setOpenNewPaymentRequestDrawer(true)}
+        onActionClick={handleOpenCreatePaymentRequestDrawer}
         onActionText={
           <FormattedMessage
             id="payment.requests.create"

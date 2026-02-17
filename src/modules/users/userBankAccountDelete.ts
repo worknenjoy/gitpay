@@ -5,7 +5,12 @@ type UserBankAccountDeleteParams = {
   bankAccountId: string
 }
 
-export async function userBankAccountDelete({ userParams, bankAccountId }: UserBankAccountDeleteParams) {
-  const { deleteUserBankAccount } = await import('../../mutations/user/bank-account/deleteUserBankAccount')
+export async function userBankAccountDelete({
+  userParams,
+  bankAccountId
+}: UserBankAccountDeleteParams) {
+  const { deleteUserBankAccount } = await import(
+    '../../mutations/user/bank-account/deleteUserBankAccount'
+  )
   return deleteUserBankAccount({ userParams, bankAccountId })
 }

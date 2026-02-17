@@ -14,40 +14,61 @@ export interface PricingTier {
 
 const messages = defineMessages({
   openSourceTitle: { id: 'welcome.pricing.opensource.title', defaultMessage: 'Open source' },
-  openSourceSubheader: { id: 'welcome.pricing.opensource.subheader', defaultMessage: 'For open source projects' },
+  openSourceSubheader: {
+    id: 'welcome.pricing.opensource.subheader',
+    defaultMessage: 'For open source projects'
+  },
   openSourceDescription1: {
     id: 'welcome.pricing.opensource.description1',
     defaultMessage: 'Public projects from Github or Bitbucket'
   },
   openSourceDescription2: {
     id: 'welcome.pricing.opensource.description2',
-    defaultMessage: 'We will match your issues with our contributor skills to find the right candidate'
+    defaultMessage:
+      'We will match your issues with our contributor skills to find the right candidate'
   },
   openSourceDescription3: {
     id: 'welcome.pricing.opensource.description3',
     defaultMessage: '8% fee for payment with Credit Card or Paypal'
   },
-  openSourceDescription4: { id: 'welcome.pricing.opensource.description4', defaultMessage: 'No fee for payments above $5000' },
+  openSourceDescription4: {
+    id: 'welcome.pricing.opensource.description4',
+    defaultMessage: 'No fee for payments above $5000'
+  },
   openSourceButton: { id: 'welcome.pricing.opensource.button', defaultMessage: 'Get started' },
 
   privateTitle: { id: 'welcome.pricing.private.title', defaultMessage: 'Private' },
-  privateSubheader: { id: 'welcome.pricing.private.subheader', defaultMessage: 'For private projects' },
-  privateDescription1: { id: 'welcome.pricing.private.description1', defaultMessage: 'Private projects on Github or Bitbucket' },
+  privateSubheader: {
+    id: 'welcome.pricing.private.subheader',
+    defaultMessage: 'For private projects'
+  },
+  privateDescription1: {
+    id: 'welcome.pricing.private.description1',
+    defaultMessage: 'Private projects on Github or Bitbucket'
+  },
   privateDescription2: {
     id: 'welcome.pricing.private.description2',
-    defaultMessage: 'We will match your issues with our contributor skills to find the right candidate'
+    defaultMessage:
+      'We will match your issues with our contributor skills to find the right candidate'
   },
-  privateDescription3: { id: 'welcome.pricing.private.description3', defaultMessage: '18% fee for payment in Credit Card or Paypal' },
+  privateDescription3: {
+    id: 'welcome.pricing.private.description3',
+    defaultMessage: '18% fee for payment in Credit Card or Paypal'
+  },
   privateButton: { id: 'welcome.pricing.private.button', defaultMessage: 'Get started' },
 
-  contributorsTitle: { id: 'welcome.pricing.contributors.title', defaultMessage: 'Fee for contributors' },
+  contributorsTitle: {
+    id: 'welcome.pricing.contributors.title',
+    defaultMessage: 'Fee for contributors'
+  },
   contributorsSubheader: {
     id: 'welcome.pricing.contributors.subheader',
     defaultMessage: 'For contributors who solve issues, you will have a fee to receive the transfer'
   },
   contributorsDescription1: {
     id: 'welcome.pricing.contributors.description1',
-    defaultMessage: 'We support direct transfer for your bank account registered on Gitpay for credit card payments or invoice'
+    defaultMessage:
+      'We support direct transfer for your bank account registered on Gitpay for credit card payments or invoice'
   },
   contributorsDescription2: {
     id: 'welcome.pricing.contributors.description2',

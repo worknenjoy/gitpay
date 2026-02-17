@@ -14,7 +14,7 @@ import {
 } from '../../../actions/userActions'
 import { changePassword } from '../../../actions/loginActions'
 import { addNotification } from '../../../actions/notificationActions'
-import PayoutSettingsBankAccountInfoPage  from '../../../components/areas/private/features/payout-settings/pages/payout-settings-bank-account-info-page'
+import PayoutSettingsBankAccountInfoPage from '../../../components/areas/private/features/payout-settings/pages/payout-settings-bank-account-info-page'
 import { getCurrentUser } from '../../../common/selectors/user/getUser'
 
 const mapStateToProps = (state: any) => {

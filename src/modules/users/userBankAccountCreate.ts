@@ -18,6 +18,8 @@ export async function userBankAccountCreate({
   userParams,
   bankAccountParams
 }: UserBankAccountCreateParams) {
-  const { createUserBankAccount } = await import('../../mutations/user/bank-account/createUserBankAccount')
+  const { createUserBankAccount } = await import(
+    '../../mutations/user/bank-account/createUserBankAccount'
+  )
   return createUserBankAccount({ userParams, bankAccountParams })
 }

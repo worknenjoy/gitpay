@@ -80,15 +80,25 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => {
     assignTask: (taskId: any, assignId: any) => dispatch(assignTask(taskId, assignId)),
     actionAssign: (taskId: any, assignId: any, action: any, message: any) =>
       dispatch(actionAssign(taskId, assignId, action, message)),
-    messageTask: (taskId: any, assignId: any, message: any) => dispatch(messageTask(taskId, assignId, message)),
-    messageOffer: (taskId: any, offerId: any, message: any) => dispatch(messageOffer(taskId, offerId, message)),
+    messageTask: (taskId: any, assignId: any, message: any) =>
+      dispatch(messageTask(taskId, assignId, message)),
+    messageOffer: (taskId: any, offerId: any, message: any) =>
+      dispatch(messageOffer(taskId, offerId, message)),
     offerUpdate: (taskId: any, offerId: any, { status }: any) =>
       dispatch(offerUpdate(taskId, offerId, { status })),
     removeAssignment: (id: any, message: any) => dispatch(removeAssignment(id, message)),
-    inviteTask: (id: any, email: any, message: any, user: any) => dispatch(inviteTask(id, email, message, user)),
-    messageAuthor: (userId: any, taskId: any, message: any) => dispatch(messageAuthor(userId, taskId, message)),
-    fundingInviteTask: (id: any, email: any, message: any, suggestedPrice: any, suggestedDate: any, user: any) =>
-      dispatch(fundingInviteTask(id, email, message, suggestedPrice, suggestedDate, user)),
+    inviteTask: (id: any, email: any, message: any, user: any) =>
+      dispatch(inviteTask(id, email, message, user)),
+    messageAuthor: (userId: any, taskId: any, message: any) =>
+      dispatch(messageAuthor(userId, taskId, message)),
+    fundingInviteTask: (
+      id: any,
+      email: any,
+      message: any,
+      suggestedPrice: any,
+      suggestedDate: any,
+      user: any
+    ) => dispatch(fundingInviteTask(id, email, message, suggestedPrice, suggestedDate, user)),
     fetchTask: (taskId: any) => dispatch(fetchTask(taskId)),
     syncTask: (taskId: any) => dispatch(syncTask(taskId)),
     paymentTask: (taskId: any, value: any) => dispatch(paymentTask(taskId, value)),
@@ -103,8 +113,14 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => {
     cancelPaypalPayment: (id: any) => dispatch(cancelOrder(id)),
     getOrderDetails: (id: any) => dispatch(detailOrder(id)),
     reportTask: (task: any, reason: any) => dispatch(reportTask(task, reason)),
-    requestClaimTask: (taskId: any, userId: any, comments: any, isApproved: any, token: any, history: any) =>
-      dispatch(requestClaimTask(taskId, userId, comments, isApproved, token, history)),
+    requestClaimTask: (
+      taskId: any,
+      userId: any,
+      comments: any,
+      isApproved: any,
+      token: any,
+      history: any
+    ) => dispatch(requestClaimTask(taskId, userId, comments, isApproved, token, history)),
     fetchCustomer: () => dispatch(fetchCustomer()),
     fetchWallet: (id: any) => dispatch(fetchWallet(id)),
     listWallets: () => dispatch(listWallets()),
