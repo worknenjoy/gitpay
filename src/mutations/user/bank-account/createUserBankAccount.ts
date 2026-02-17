@@ -35,7 +35,9 @@ export async function createUserBankAccount({
 
   if (!accountId) return null
 
-  const accountHolderType: Stripe.AccountCreateExternalAccountParams.BankAccount.AccountHolderType | undefined =
+  const accountHolderType:
+    | Stripe.AccountCreateExternalAccountParams.BankAccount.AccountHolderType
+    | undefined =
     bankAccountParams.account_holder_type === 'company' ||
     bankAccountParams.account_holder_type === 'individual'
       ? bankAccountParams.account_holder_type

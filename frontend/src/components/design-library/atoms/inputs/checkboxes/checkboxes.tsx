@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useEffect, useState } from 'react'
-import { Grid, FormControlLabel } from '@mui/material'
+import { Grid } from '@mui/material'
 import {
   CheckboxesContainer,
   CheckboxItem,
@@ -95,10 +95,7 @@ const Checkboxes = ({
     <CheckboxesContainer>
       <Grid container spacing={3}>
         {checkboxesToRender.map((checkbox, index) => (
-          <Grid
-            key={checkbox?.name || index}
-            size={{ xs: 12, sm: 6, md: mdSize }}
-          >
+          <Grid key={checkbox?.name || index} size={{ xs: 12, sm: 6, md: mdSize }}>
             <CheckboxItem>
               <StyledFormControlLabel
                 alignment={checkbox?.alignment}

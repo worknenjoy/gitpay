@@ -143,7 +143,9 @@ describe('POST /payment-request', () => {
     expect(res.body.amount).to.equal('100')
     expect(res.body.currency).to.equal('USD')
     expect(res.body.send_instructions_email).to.equal(true)
-    expect(res.body.instructions_content).to.equal('Please follow the instructions to complete the payment.')
+    expect(res.body.instructions_content).to.equal(
+      'Please follow the instructions to complete the payment.'
+    )
     expect(res.body.status).to.equal('open')
     expect(res.body.transfer_status).to.equal('pending_payment')
     expect(res.body.transfer_id).to.be.null
@@ -362,6 +364,8 @@ describe('POST /payment-request', () => {
     expect(res.body.title).to.equal('New Title')
     expect(res.body.description).to.equal('New Description')
     expect(res.body.send_instructions_email).to.equal(true)
-    expect(res.body.instructions_content).to.equal('Please follow the instructions to complete the payment.')
+    expect(res.body.instructions_content).to.equal(
+      'Please follow the instructions to complete the payment.'
+    )
   })
 })

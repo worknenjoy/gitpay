@@ -39,9 +39,12 @@ export async function createPaymentRequest(
 
   const currency = currencyParam ?? 'usd'
 
-  const sanitizedInstructionsContent = sanitizePaymentRequestInstructionsContent(instructions_content, {
-    lengthMode: 'throw'
-  })
+  const sanitizedInstructionsContent = sanitizePaymentRequestInstructionsContent(
+    instructions_content,
+    {
+      lengthMode: 'throw'
+    }
+  )
 
   const run = async (transaction: Transaction) => {
     const resources: any = {}
