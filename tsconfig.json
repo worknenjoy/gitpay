@@ -17,5 +17,12 @@
     "strict": true,
     "noEmitOnError": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": [
+    "src/models/index.js",
+    "src/config/secrets.js",
+    "src/crons/cron.js",
+    "src/crons/orders/orderCron.js",
+    "src/scripts/scripts.js"
+  ]
 }

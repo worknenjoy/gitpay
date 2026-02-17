@@ -1,17 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  Typography,
-  TextField
-} from '@mui/material'
+import ConfirmTextDialog from '../confirm-text-dialog/confirm-text-dialog'
 
 const Container = styled.div`
   display: inline-block;
@@ -19,56 +10,39 @@ const Container = styled.div`
 `
 
 const IssueMessageAuthor = ({ open = false, userId, taskId, name, onClose, onSend }) => {
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = React.useState('')
 
-  const onChangeMessage = (event) => {
-    setMessage(event.target.value)
-  }
-
-  const sendMessage = (e) => {
-    e.preventDefault()
-    onSend(userId, taskId, message)
-    onClose()
+  const sendMessage = (value: string) => {
+    onSend(userId, taskId, value)
   }
 
   return (
     <Container>
-      <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">
+      <ConfirmTextDialog
+        open={open}
+        handleClose={onClose}
+        title={
           <FormattedMessage id="task.message.title" defaultMessage="Send a message to the author" />
-        </DialogTitle>
-        <DialogContent>
-          <form onChange={onChangeMessage} method="POST">
-            <FormControl fullWidth>
-              <Typography variant="subtitle2" gutterBottom>
-                <FormattedMessage
-                  id="task.message.author.label"
-                  defaultMessage="Write a message to the author of this issue"
-                />
-              </Typography>
-              {name && (
-                <Typography variant="subtitle2" gutterBottom>
-                  {name}
-                </Typography>
-              )}
-              <TextField autoFocus name="message" multiline rows="5" fullWidth />
-            </FormControl>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={onClose} color="primary">
-            <FormattedMessage id="task.message.form.cancel" defaultMessage="Cancel" />
-          </Button>
-          <Button
-            disabled={message.length === 0}
-            onClick={sendMessage}
-            variant="contained"
-            color="secondary"
-          >
-            <FormattedMessage id="task.message.form.send" defaultMessage="Send" />
-          </Button>
-        </DialogActions>
-      </Dialog>
+        }
+        subtitle={
+          <>
+            <FormattedMessage
+              id="task.message.author.label"
+              defaultMessage="Write a message to the author of this issue"
+            />
+            {name ? `: ${name}` : ''}
+          </>
+        }
+        textAreaName="message"
+        actionLabel={<FormattedMessage id="task.message.form.send" defaultMessage="Send" />}
+        cancelLabel={<FormattedMessage id="task.message.form.cancel" defaultMessage="Cancel" />}
+        initialValue={message}
+        onValueChange={setMessage}
+        onConfirm={(value) => sendMessage(value)}
+        onCancel={() => {
+          // keep message draft for next open
+        }}
+      />
     </Container>
   )
 }

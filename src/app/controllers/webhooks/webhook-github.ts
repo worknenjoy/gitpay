@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
 import i18n from 'i18n'
 const dateFormat = require('dateformat')
 import moment from 'moment'
-const models = require('../../../models')
+import models from '../../../models'
 const constants = require('../../../mail/constants')
 const TaskMail = require('../../../mail/task')
 const SendMail = require('../../../mail/mail')

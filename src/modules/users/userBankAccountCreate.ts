@@ -1,14 +1,3 @@
-import models from '../../models'
-import stripeModule from '../../client/payment/stripe'
-const stripe = stripeModule()
-import { currencyMap } from '../../utils/currency/currency-map'
-
-const currentModels = models as any
-
-const getCurrency = (country: string) => {
-  return currencyMap[country]
-}
-
 type UserBankAccountCreateParams = {
   userParams: {
     id: number
@@ -29,26 +18,6 @@ export async function userBankAccountCreate({
   userParams,
   bankAccountParams
 }: UserBankAccountCreateParams) {
-  const userCountry = userParams.country
-  const userCurrency = userParams.currency || getCurrency(userCountry)
-
-  const data = await currentModels.User.findOne({
-    where: { id: userParams.id }
-  })
-
-  if (data.dataValues.account_id) {
-    const account = await stripe.accounts.createExternalAccount(data.dataValues.account_id, {
-      external_account: {
-        object: 'bank_account',
-        country: bankAccountParams.country || userCountry,
-        currency: bankAccountParams.currency || userCurrency,
-        account_holder_type: bankAccountParams.account_holder_type,
-        account_holder_name: bankAccountParams.account_holder_name,
-        routing_number: bankAccountParams.routing_number,
-        account_number: bankAccountParams.account_number
-      }
-    })
-
-    return account
-  }
+  const { createUserBankAccount } = await import('../../mutations/user/bank-account/createUserBankAccount')
+  return createUserBankAccount({ userParams, bankAccountParams })
 }

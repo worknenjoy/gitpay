@@ -1,14 +1,8 @@
-import stripeModule from '../../client/payment/stripe'
-const stripe = stripeModule()
-
 type UserAccountBalanceParams = {
   account_id: string
 }
 
 export async function userAccountBalance(userParameters: UserAccountBalanceParams) {
-  const { account_id } = userParameters
-  const accountBalance = await stripe.balance.retrieve({
-    stripeAccount: account_id
-  })
-  return accountBalance
+  const { getUserStripeBalance } = await import('../../queries/user/stripe/getUserStripeBalance')
+  return getUserStripeBalance(userParameters.account_id)
 }

@@ -599,6 +599,7 @@ describe('POST /transfer', () => {
     })
     it('should not create transfers with same taskId', async () => {
       try {
+        nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
         const task = await createTask(agent)
         const { body: taskData } = task
         const order = await createOrder({

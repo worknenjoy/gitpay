@@ -138,6 +138,7 @@
     "@types/chai": "^5.2.3",
     "@types/chai-spies": "^1.0.6",
     "@types/cors": "^2.8.19",
+    "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.4",
     "@types/i18n": "^0.13.12",
     "@types/jasmine": "2.5.38",

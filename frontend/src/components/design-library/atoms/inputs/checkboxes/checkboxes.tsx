@@ -50,18 +50,26 @@ const Checkboxes = ({
     [checkboxes]
   )
 
+  const effectiveChecked = useMemo(() => {
+    const merged = { ...checked }
+    checkboxes.forEach((cb) => {
+      if (typeof cb?.checked === 'boolean') merged[cb.name] = cb.checked
+    })
+    return merged
+  }, [checked, checkboxes])
+
   const allOptionsChecked = useMemo(
-    () => checkboxes.filter((cb) => cb.name !== 'all').every((cb) => checked[cb.name] || false),
-    [checkboxes, checked]
+    () => checkboxes.filter((cb) => cb.name !== 'all').every((cb) => effectiveChecked[cb.name] || false),
+    [checkboxes, effectiveChecked]
   )
 
   useEffect(() => {
-    const selectedCheckboxes = Object.keys(checked)
+    const selectedCheckboxes = Object.keys(effectiveChecked)
       .filter((key) => key !== 'all')
-      .filter((key) => checked[key])
+      .filter((key) => effectiveChecked[key])
       .map((key) => checkboxes.find((checkbox) => checkbox.name === key)?.value)
     onChange?.(selectedCheckboxes)
-  }, [checked, onChange, checkboxes])
+  }, [effectiveChecked, onChange, checkboxes])
 
   const selectBoxesWithAll = [...checkboxes, { label: 'All', name: 'all', value: 'all' }]
   const checkboxesToRender = includeSelectAll ? selectBoxesWithAll : checkboxes
@@ -78,7 +86,9 @@ const Checkboxes = ({
                 control={
                   <StyledCheckbox
                     checked={
-                      checkbox.name === 'all' ? allOptionsChecked : checked[checkbox.name] || false
+                      checkbox.name === 'all'
+                        ? allOptionsChecked
+                        : effectiveChecked[checkbox.name] || false
                     }
                     onChange={(e) => handleChange(e, checkbox?.onChange)}
                     color="primary"

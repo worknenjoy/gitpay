@@ -4,6 +4,7 @@ export type FeeType = 'charge' | 'refund'
 
 export interface PlanSchemaAttributes {
   id: number
+  plan: string
   name?: string | null
   description?: string | null
   fee?: string | null
@@ -22,6 +23,7 @@ export default class PlanSchema
   implements PlanSchemaAttributes
 {
   public id!: number
+  public plan!: string
   public name!: string | null
   public description!: string | null
   public fee!: string | null
@@ -37,9 +39,14 @@ export default class PlanSchema
           primaryKey: true,
           autoIncrement: true
         },
+        plan: {
+          type: DataTypes.STRING,
+          allowNull: false
+        },
         name: {
           type: DataTypes.STRING,
-          allowNull: true
+          allowNull: false,
+          unique: true
         },
         description: {
           type: DataTypes.STRING,
@@ -47,7 +54,7 @@ export default class PlanSchema
         },
         fee: {
           type: DataTypes.DECIMAL,
-          allowNull: true
+          allowNull: false
         },
         feeType: {
           type: DataTypes.ENUM('charge', 'refund'),

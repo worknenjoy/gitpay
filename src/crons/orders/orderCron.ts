@@ -18,9 +18,9 @@ const OrderCron = {
     })
     console.log(`📦 [OrderCron][verify] Found ${orders.length} orders to verify.`)
     if (orders.length) {
-      let invalids = []
+      const invalids: any[] = []
       await Promise.all(
-        orders.map(async (order) => {
+        orders.map(async (order: any) => {
           const orderValues = order.dataValues
           if (orderValues.source_id) {
             console.log(
@@ -89,7 +89,7 @@ const OrderCron = {
           }
         })
         await Promise.all(
-          orders.map(async (o) => {
+          orders.map(async (o: any) => {
             const { dataValues: order } = o
             if (order && order.status === 'succeeded' && order.paid && order.source_id) {
               console.log(
@@ -103,10 +103,10 @@ const OrderCron = {
                     Authorization: 'Bearer ' + JSON.parse(authorize)['access_token']
                   }
                 })
-                  .then((result) => {
+                  .then((result: any) => {
                     return JSON.parse(result)
                   })
-                  .catch((e) => {
+                  .catch((e: any) => {
                     console.log(
                       `⚠️ [OrderCron][checkExpiredPaypalOrders] Error fetching order details for order ID: ${order.id}:`,
                       e.error
@@ -152,7 +152,7 @@ const OrderCron = {
                 await models.Order.update(
                   { status: 'expired', paid: false },
                   { where: { id: o.dataValues.id } }
-                ).then((orderUpdated) => {
+                ).then((orderUpdated: any) => {
                   if (orderUpdated[0] === 1) {
                     console.log(
                       `✅ [OrderCron][checkExpiredPaypalOrders] Order ID: ${order.id} marked as expired. Sending notification email...`
@@ -172,7 +172,7 @@ const OrderCron = {
             }
           })
         )
-      } catch (e) {
+      } catch (e: any) {
         console.log(
           '❗ [OrderCron][checkExpiredPaypalOrders] Error during PayPal expired order check:',
           e

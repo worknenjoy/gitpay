@@ -1,4 +1,5 @@
-const path = require('path')
+import path from 'path'
+
 const CronJob = require('cron').CronJob
 const models = require('../models')
 const moment = require('moment')
@@ -72,7 +73,7 @@ const TaskCron = {
       include: [models.User]
     })
     if (tasks[0]) {
-      tasks.map(async (t) => {
+      tasks.map(async (t: any) => {
         if (t.assigned) {
           if (t.dataValues && t.assigned) {
             const userAssigned = await models.Assign.findAll({
@@ -113,8 +114,8 @@ const TaskCron = {
       include: [models.User]
     })
     if (tasks[0]) {
-      tasks.map(async (t) => {
-        let userInformation = {}
+      tasks.map(async (t: any) => {
+        let userInformation: any = {}
         if (t.assigned) {
           if (t.dataValues && t.assigned) {
             const userAssigned = await models.Assign.findAll({

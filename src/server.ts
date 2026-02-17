@@ -1,11 +1,12 @@
 import path from 'path'
 
+import './models'
+
 const express = require('express')
 const sslRedirect = require('heroku-ssl-redirect')
 const app = express()
 const session = require('express-session')
 const compression = require('compression')
-require('./models')
 const passport = require('passport')
 require('./client/auth/passport')
 const load = require('./app')
