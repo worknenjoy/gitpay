@@ -31,8 +31,7 @@ export async function userExists(userAttributes: UserExistsParams) {
             }
           ]
         }
-      ],
-      attributes: { exclude: ['password'] }
+      ]
     })
     if (!user) return false
 
