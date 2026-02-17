@@ -136,7 +136,13 @@ const Bottom = ({ info, getInfo }) => {
           </Grid>
         </Grid>
         <SpacedDivider />
-        <StatsBar getInfo={getInfo} completed={completed} tasks={tasks} bounties={bounties} users={users} />
+        <StatsBar
+          getInfo={getInfo}
+          completed={completed}
+          tasks={tasks}
+          bounties={bounties}
+          users={users}
+        />
       </Container>
     </SecBlock>
   )

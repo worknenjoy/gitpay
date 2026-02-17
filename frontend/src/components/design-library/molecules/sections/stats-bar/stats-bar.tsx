@@ -34,28 +34,41 @@ const StatsBar = ({ getInfo, tasks, bounties, users, completed }) => {
               <Chip
                 size="small"
                 label={
-                  completed ?
-                  <FormattedMessage
-                    id="info.status.tasks"
-                    defaultMessage="{tasks} tasks"
-                    values={{
-                      tasks: stats.tasks.value
-                    }} /> : <Skeleton width={50} height={20} />
+                  completed ? (
+                    <FormattedMessage
+                      id="info.status.tasks"
+                      defaultMessage="{tasks} tasks"
+                      values={{
+                        tasks: stats.tasks.value
+                      }}
+                    />
+                  ) : (
+                    <Skeleton width={50} height={20} />
+                  )
                 }
               />
             ),
-            bounties: <Chip size="small" label={ completed ? stats.bounties.value : <Skeleton width={50} height={20} /> } />,
+            bounties: (
+              <Chip
+                size="small"
+                label={completed ? stats.bounties.value : <Skeleton width={50} height={20} />}
+              />
+            ),
             users: (
               <Chip
                 size="small"
                 label={
-                  completed ?
-                  <FormattedMessage
-                    id="info.status.users"
-                    defaultMessage="{users} users"
-                    values={{
-                      users: stats.users.value
-                    }} /> : <Skeleton width={50} height={20} />
+                  completed ? (
+                    <FormattedMessage
+                      id="info.status.users"
+                      defaultMessage="{users} users"
+                      values={{
+                        users: stats.users.value
+                      }}
+                    />
+                  ) : (
+                    <Skeleton width={50} height={20} />
+                  )
                 }
               />
             )
