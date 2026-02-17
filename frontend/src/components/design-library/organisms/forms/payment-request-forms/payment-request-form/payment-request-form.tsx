@@ -124,7 +124,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           value: true,
           defaultChecked: data?.custom_amount,
           disabled: editMode,
-          alignment: 'flex-start',
+          alignment: editMode ? 'flex-start' : 'center',
           onChange: handleCustomAmountChange
         },
         {
