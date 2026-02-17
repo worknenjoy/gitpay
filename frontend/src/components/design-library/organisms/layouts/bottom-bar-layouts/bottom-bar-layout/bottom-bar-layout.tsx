@@ -25,9 +25,10 @@ import CookiePolicy from '../../../../molecules/content/terms/cookie-policy/cook
 import logoCompleteGray from 'images/logo-complete-gray.png'
 import logoWorknEnjoy from 'images/worknenjoy-logo.png'
 
-const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
+const Bottom = ({ info, getInfo }) => {
   const history = useHistory()
-  const { tasks, bounties, users } = info
+  const { data, completed } = info
+  const { tasks, bounties, users } = data || {}
 
   const navigateTo = (path: string) => {
     history.push(path)
@@ -135,7 +136,7 @@ const Bottom = ({ info = { bounties: 0, tasks: 0, users: 0 }, getInfo }) => {
           </Grid>
         </Grid>
         <SpacedDivider />
-        <StatsBar info={getInfo} tasks={tasks} bounties={bounties} users={users} />
+        <StatsBar getInfo={getInfo} completed={completed} tasks={tasks} bounties={bounties} users={users} />
       </Container>
     </SecBlock>
   )

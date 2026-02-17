@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 
-import { Chip, Typography } from '@mui/material'
+import { Chip, Skeleton, Typography } from '@mui/material'
 
 const Content = styled.span`
   margin-top: 5px;
@@ -12,9 +12,9 @@ const Content = styled.span`
   display: inline-block;
 `
 
-const StatsBar = ({ info, tasks, bounties, users }) => {
+const StatsBar = ({ getInfo, tasks, bounties, users, completed }) => {
   useEffect(() => {
-    info?.()
+    getInfo?.()
   }, [])
 
   const stats = {
@@ -34,28 +34,28 @@ const StatsBar = ({ info, tasks, bounties, users }) => {
               <Chip
                 size="small"
                 label={
+                  completed ?
                   <FormattedMessage
                     id="info.status.tasks"
                     defaultMessage="{tasks} tasks"
                     values={{
                       tasks: stats.tasks.value
-                    }}
-                  />
+                    }} /> : <Skeleton width={50} height={20} />
                 }
               />
             ),
-            bounties: <Chip size="small" label={stats.bounties.value} />,
+            bounties: <Chip size="small" label={ completed ? stats.bounties.value : <Skeleton width={50} height={20} /> } />,
             users: (
               <Chip
                 size="small"
                 label={
+                  completed ?
                   <FormattedMessage
                     id="info.status.users"
                     defaultMessage="{users} users"
                     values={{
                       users: stats.users.value
-                    }}
-                  />
+                    }} /> : <Skeleton width={50} height={20} />
                 }
               />
             )

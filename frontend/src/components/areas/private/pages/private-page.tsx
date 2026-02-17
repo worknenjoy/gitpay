@@ -44,7 +44,7 @@ const PrivatePage = ({
       onResendActivationEmail={resendActivationEmail}
       user={user}
       bottomProps={{
-        info: info.data,
+        info: info,
         getInfo
       }}
     >
