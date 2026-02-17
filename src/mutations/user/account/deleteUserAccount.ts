@@ -2,7 +2,7 @@ import models from '../../../models'
 
 import { findUserByIdSimple } from '../../../queries/user/findUserByIdSimple'
 import { findUserByIdWithOrganizations } from '../../../queries/user/findUserByIdWithOrganizations'
-import { deleteAccount } from '../../../provider/stripe/user'
+import { deleteAccount } from '../../provider/stripe/user'
 
 const currentModels = models as any
 

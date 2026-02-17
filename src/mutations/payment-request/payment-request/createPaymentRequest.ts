@@ -4,7 +4,7 @@ import {
   createPaymentRequestStripeResources,
   deactivatePaymentRequestStripeResources,
   updatePaymentRequestPaymentLinkMetadata
-} from '../../../provider/stripe/payment-request'
+} from '../../provider/stripe/payment-request'
 import { sanitizePaymentRequestInstructionsContent } from '../../../utils/sanitize/paymentRequestInstructions'
 
 const models = Models as any

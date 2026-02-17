@@ -1,5 +1,5 @@
 import { findUserByIdSimple } from '../../../queries/user/findUserByIdSimple'
-import { updateCustomer } from '../../../provider/stripe/user'
+import { updateCustomer } from '../../provider/stripe/user'
 
 type UserCustomerUpdateParams = {
   [key: string]: any

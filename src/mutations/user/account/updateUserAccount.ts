@@ -1,7 +1,7 @@
 import ip from 'ip'
 
 import { findUserByIdSimple } from '../../../queries/user/findUserByIdSimple'
-import { updateAccount } from '../../../provider/stripe/user'
+import { updateAccount } from '../../provider/stripe/user'
 
 type UserAccountUpdateParams = {
   userParams: {

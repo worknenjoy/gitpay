@@ -1,6 +1,6 @@
 import { type UserParameters } from './updateUser'
 
-import { updateAccount } from '../../../provider/stripe/user'
+import { updateAccount } from '../../provider/stripe/user'
 
 const updateUserAccount = async (user: UserParameters) => {
   if (user.account_id) {

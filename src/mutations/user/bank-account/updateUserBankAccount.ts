@@ -1,6 +1,6 @@
 import { findUserByIdSimple } from '../../../queries/user/findUserByIdSimple'
 import { listExternalAccounts } from '../../../queries/provider/stripe/account'
-import { updateExternalAccount } from '../../../provider/stripe/user'
+import { updateExternalAccount } from '../../provider/stripe/user'
 import { Stripe } from 'stripe'
 
 type UserBankAccountUpdateParams = {

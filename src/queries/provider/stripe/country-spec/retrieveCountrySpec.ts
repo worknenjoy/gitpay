@@ -1,5 +1,6 @@
-import { retrieveCountrySpec as providerRetrieveCountrySpec } from '../../../../provider/stripe/user'
+import { getStripeClient } from '../../../../provider/stripe/client'
 
 export const retrieveCountrySpec = async (countryCode: string) => {
-  return providerRetrieveCountrySpec(countryCode)
+  const stripe = getStripeClient()
+  return stripe.countrySpecs.retrieve(countryCode)
 }

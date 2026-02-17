@@ -1,5 +1,6 @@
-import { retrieveProduct as retrieveProductProvider } from '../../../../provider/stripe/payment-request'
+import { getStripeClient } from '../../../../provider/stripe/client'
 
 export async function retrieveProduct(productId: string) {
-  return retrieveProductProvider(productId)
+  const stripe = getStripeClient()
+  return stripe.products.retrieve(productId)
 }

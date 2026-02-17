@@ -1,4 +1,4 @@
-import { getStripeClient } from '../client'
+import { getStripeClient } from '../../../../provider/stripe/client'
 
 export async function updatePaymentRequestProductDetails(
   productId: string,

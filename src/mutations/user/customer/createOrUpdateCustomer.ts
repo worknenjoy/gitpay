@@ -1,6 +1,6 @@
 import models from '../../../models'
 
-import { createCustomer, deleteCustomer } from '../../../provider/stripe/user'
+import { createCustomer, deleteCustomer } from '../../provider/stripe/user'
 import { retrieveCustomer } from '../../../queries/provider/stripe/customer'
 
 const currentModels = models as any

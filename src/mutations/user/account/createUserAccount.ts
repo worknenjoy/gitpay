@@ -1,7 +1,7 @@
 import models from '../../../models'
 
 import { findUserByIdSimple } from '../../../queries/user/findUserByIdSimple'
-import { createAccount, deleteAccount } from '../../../provider/stripe/user'
+import { createAccount, deleteAccount } from '../../provider/stripe/user'
 
 const currentModels = models as any
 

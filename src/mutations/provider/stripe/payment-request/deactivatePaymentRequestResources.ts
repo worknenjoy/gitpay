@@ -1,4 +1,4 @@
-import { getStripeClient } from '../client'
+import { getStripeClient } from '../../../../provider/stripe/client'
 import type { PaymentRequestStripeResources } from './createPaymentRequestResources'
 
 // Stripe resources generally cannot be hard-deleted safely.

@@ -5,7 +5,7 @@ import { listPaymentLinkLineItems } from '../../../queries/provider/stripe/payme
 import {
   updatePaymentRequestPaymentLinkActive,
   updatePaymentRequestProductDetails
-} from '../../../provider/stripe/payment-request'
+} from '../../provider/stripe/payment-request'
 
 const models = Models as any
 

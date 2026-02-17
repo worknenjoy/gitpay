@@ -1,5 +1,11 @@
-import { retrieveBalance as providerRetrieveBalance } from '../../../../provider/stripe/user'
+import { getStripeClient } from '../../../../provider/stripe/client'
 
 export const retrieveBalance = async (accountId?: string) => {
-  return providerRetrieveBalance(accountId)
+  const stripe = getStripeClient()
+
+  if (accountId) {
+    return stripe.balance.retrieve({}, { stripeAccount: accountId })
+  }
+
+  return stripe.balance.retrieve()
 }

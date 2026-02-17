@@ -1,4 +1,4 @@
-import { getStripeClient } from '../client'
+import { getStripeClient } from '../../../../provider/stripe/client'
 
 export const deleteExternalAccount = async (accountId: string, externalAccountId: string) => {
   const stripe = getStripeClient()

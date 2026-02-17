@@ -5,9 +5,9 @@ import TransferMail from '../../mail/transfer'
 
 import {
   createTransfer as createStripeTransfer,
-  createTransferReversal,
-  retrieveTransfer
-} from '../../provider/stripe/transfer'
+  createTransferReversal
+} from '../provider/stripe/transfer'
+import { retrieveTransfer } from '../../queries/provider/stripe/transfer'
 import { findTransferByIdForUpdate } from '../../queries/transfer/findTransferByIdForUpdate'
 import { findUserByIdSimple } from '../../queries/user/findUserByIdSimple'
 

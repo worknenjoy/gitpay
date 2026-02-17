@@ -1,6 +1,6 @@
 import { Stripe } from 'stripe'
 
-import { getStripeClient } from '../client'
+import { getStripeClient } from '../../../../provider/stripe/client'
 
 export const updateAccount = async (accountId: string, params: Stripe.AccountUpdateParams) => {
   const stripe = getStripeClient()

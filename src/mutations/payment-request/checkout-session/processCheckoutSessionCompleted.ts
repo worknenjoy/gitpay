@@ -6,9 +6,9 @@ import { calculateAmountWithPercent } from '../../../utils'
 import { findPaymentRequestByPaymentLinkId } from '../../../queries/payment-request/payment-request'
 import { findOrCreatePaymentRequestBalance } from '../../../queries/payment-request/payment-request-balance'
 
-import { updatePaymentRequestPaymentLinkActive } from '../../../provider/stripe/payment-request'
-import { updatePaymentIntentMetadata } from '../../../provider/stripe/payment-intent'
-import { createTransfer, createTransferReversal } from '../../../provider/stripe/transfer'
+import { updatePaymentRequestPaymentLinkActive } from '../../provider/stripe/payment-request'
+import { updatePaymentIntentMetadata } from '../../provider/stripe/payment-intent'
+import { createTransfer, createTransferReversal } from '../../provider/stripe/transfer'
 
 const models = Models as any
 

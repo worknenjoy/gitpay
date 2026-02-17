@@ -1,5 +1,6 @@
-import { retrieveAccount as providerRetrieveAccount } from '../../../../provider/stripe/user'
+import { getStripeClient } from '../../../../provider/stripe/client'
 
 export const retrieveAccount = async (accountId: string) => {
-  return providerRetrieveAccount(accountId)
+  const stripe = getStripeClient()
+  return stripe.accounts.retrieve(accountId)
 }

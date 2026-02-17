@@ -6,7 +6,7 @@ import TransferMail from '../../mail/transfer'
 import {
   createTransfer as createStripeTransfer,
   createTransferReversal
-} from '../../provider/stripe/transfer'
+} from '../provider/stripe/transfer'
 import { findTransferByStripeTransferId } from '../../queries/transfer/findTransferByStripeTransferId'
 import { findTransferByTaskId } from '../../queries/transfer/findTransferByTaskId'
 import { findTaskByIdWithOrdersAndUser } from '../../queries/task/findTaskByIdWithOrdersAndUser'

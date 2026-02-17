@@ -1,6 +1,6 @@
 import { Stripe } from 'stripe'
 
-import { getStripeClient } from '../client'
+import { getStripeClient } from '../../../../provider/stripe/client'
 
 export const createExternalAccount = async (
   accountId: string,

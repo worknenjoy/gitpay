@@ -1,5 +1,6 @@
-import { retrievePaymentLink as retrievePaymentLinkProvider } from '../../../../provider/stripe/payment-request'
+import { getStripeClient } from '../../../../provider/stripe/client'
 
 export async function retrievePaymentLink(paymentLinkId: string) {
-  return retrievePaymentLinkProvider(paymentLinkId)
+  const stripe = getStripeClient()
+  return stripe.paymentLinks.retrieve(paymentLinkId)
 }

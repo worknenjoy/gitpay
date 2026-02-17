@@ -1,10 +1,11 @@
 import { Stripe } from 'stripe'
 
-import { listExternalAccounts as providerListExternalAccounts } from '../../../../provider/stripe/user'
+import { getStripeClient } from '../../../../provider/stripe/client'
 
 export const listExternalAccounts = async (
   accountId: string,
   params: Stripe.AccountListExternalAccountsParams
 ) => {
-  return providerListExternalAccounts(accountId, params)
+  const stripe = getStripeClient()
+  return stripe.accounts.listExternalAccounts(accountId, params)
 }

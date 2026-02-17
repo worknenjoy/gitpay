@@ -1,5 +1,5 @@
 import { findUserByIdSimple } from '../../../queries/user/findUserByIdSimple'
-import { deleteExternalAccount } from '../../../provider/stripe/user'
+import { deleteExternalAccount } from '../../provider/stripe/user'
 
 type UserBankAccountDeleteParams = {
   userParams: {

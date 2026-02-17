@@ -1,4 +1,4 @@
-import { getStripeClient } from '../client'
+import { getStripeClient } from '../../../../provider/stripe/client'
 import type { StripePaymentRequestMetadata } from './createPaymentRequestResources'
 
 export async function updatePaymentRequestPaymentLinkMetadata(

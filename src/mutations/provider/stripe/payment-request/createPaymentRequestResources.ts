@@ -1,4 +1,4 @@
-import { getStripeClient } from '../client'
+import { getStripeClient } from '../../../../provider/stripe/client'
 
 export type StripePaymentRequestMetadata = {
   payment_request_id?: number | string | null

@@ -1,6 +1,6 @@
 import { currencyMap } from '../../../utils/currency/currency-map'
 import { findUserByIdSimple } from '../../../queries/user/findUserByIdSimple'
-import { createExternalAccount } from '../../../provider/stripe/user'
+import { createExternalAccount } from '../../provider/stripe/user'
 import { Stripe } from 'stripe'
 
 const getCurrency = (country: string) => {
