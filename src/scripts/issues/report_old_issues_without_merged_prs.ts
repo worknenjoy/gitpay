@@ -5,7 +5,10 @@ const reportOldIssuesWithoutMergedPrsScript = async () => {
 
   console.log('Old issues (> 1 year) with no merged PRs:', results.length)
 
-  const providerTotals: Record<string, { count: number; paidCount: number; totalAmount: number; paidAmount: number }> = {}
+  const providerTotals: Record<
+    string,
+    { count: number; paidCount: number; totalAmount: number; paidAmount: number }
+  > = {}
   for (const entry of results as any[]) {
     const statsByProvider = entry?.orderStatsByProvider ?? {}
     for (const provider of Object.keys(statsByProvider)) {

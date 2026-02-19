@@ -110,7 +110,9 @@ describe('Queries - Issue - Pull Request - findOldIssuesWithoutMergedPrsReport',
     expect(entry.ordersByProviderAndType.paypal.capture).to.have.lengthOf(1)
 
     expect(entry.pullRequests.draft).to.have.lengthOf(1)
-    expect(entry.pullRequests.draft[0].html_url).to.equal('https://github.com/worknenjoy/gitpay/pull/123')
+    expect(entry.pullRequests.draft[0].html_url).to.equal(
+      'https://github.com/worknenjoy/gitpay/pull/123'
+    )
 
     expect(nock.isDone()).to.equal(true)
   })

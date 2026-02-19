@@ -39,14 +39,18 @@ const toNumber = (value: unknown) => {
 }
 
 const normalizeProvider = (provider: unknown) => {
-  const p = String(provider ?? '').toLowerCase().trim()
+  const p = String(provider ?? '')
+    .toLowerCase()
+    .trim()
   if (p === 'paypal') return 'paypal'
   if (p === 'stripe') return 'stripe'
   return p || 'unknown'
 }
 
 const normalizeType = (sourceType: unknown) => {
-  const t = String(sourceType ?? '').toLowerCase().trim()
+  const t = String(sourceType ?? '')
+    .toLowerCase()
+    .trim()
   return t || 'unknown'
 }
 
@@ -82,7 +86,7 @@ export const findOldIssuesWithoutMergedPrsReport = async (
         const mergedPrs = linkedPrs.filter(isMergedPr)
         if (mergedPrs.length > 0) return false
 
-        const orders = ((issue?.Orders ?? issue?.orders) ?? []) as OrderLike[]
+        const orders = (issue?.Orders ?? issue?.orders ?? []) as OrderLike[]
 
         const ordersByProvider: Record<string, OrderLike[]> = {}
         const ordersByProviderAndType: Record<string, Record<string, OrderLike[]>> = {}
@@ -133,7 +137,9 @@ export const findOldIssuesWithoutMergedPrsReport = async (
         const linkedPrsUnmerged = linkedPrs.filter((pr) => !isMergedPr(pr))
 
         const createdAt = issue?.createdAt ? new Date(issue.createdAt) : null
-        const ageDays = createdAt ? Math.floor((now.getTime() - createdAt.getTime()) / 86400000) : null
+        const ageDays = createdAt
+          ? Math.floor((now.getTime() - createdAt.getTime()) / 86400000)
+          : null
 
         const orderDates = orders
           .map((o) => o.ordered_in ?? o.createdAt)

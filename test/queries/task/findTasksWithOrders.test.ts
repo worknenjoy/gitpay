@@ -13,7 +13,7 @@ describe('Queries - Task - findTasksWithOrders', () => {
     await truncateModels(models.User)
   })
 
-  it("returns only tasks with succeeded+paid orders", async () => {
+  it('returns only tasks with succeeded+paid orders', async () => {
     const user = await UserFactory()
 
     const taskWithPaidSucceededOrder = await TaskFactory({ userId: user.id })
