@@ -2,8 +2,8 @@ const models = require('../../models')
 const { Op } = require('sequelize')
 const OrderDetails = require('../../modules/orders/orderDetails/orderDetails')
 const OrderCancel = require('../../modules/orders/orderCancel')
-const requestPromise = require('request-promise')
 const orderMail = require('../../mail/order')
+const { PaypalConnect } = require('../../client/provider/paypal')
 
 const OrderCron = {
   verify: async () => {
@@ -69,25 +69,6 @@ const OrderCron = {
     )
     if (orders[0]) {
       try {
-        console.log('🔑 [OrderCron][checkExpiredPaypalOrders] Requesting PayPal OAuth token...')
-        const authorize = await requestPromise({
-          method: 'POST',
-          uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
-          headers: {
-            Accept: 'application/json',
-            'Accept-Language': 'en_US',
-            Authorization:
-              'Basic ' +
-              Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-                'base64'
-              ),
-            'Content-Type': 'application/json',
-            grant_type: 'client_credentials'
-          },
-          form: {
-            grant_type: 'client_credentials'
-          }
-        })
         await Promise.all(
           orders.map(async (o: any) => {
             const { dataValues: order } = o
@@ -95,25 +76,16 @@ const OrderCron = {
               console.log(
                 `🔍 [OrderCron][checkExpiredPaypalOrders] Checking PayPal order status for order ID: ${order.id}, source_id: ${order.source_id}`
               )
-              const orderDetails = () =>
-                requestPromise({
-                  method: 'GET',
-                  uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders/${o.source_id}`,
-                  headers: {
-                    Authorization: 'Bearer ' + JSON.parse(authorize)['access_token']
-                  }
-                })
-                  .then((result: any) => {
-                    return JSON.parse(result)
-                  })
-                  .catch((e: any) => {
-                    console.log(
-                      `⚠️ [OrderCron][checkExpiredPaypalOrders] Error fetching order details for order ID: ${order.id}:`,
-                      e.error
-                    )
-                    return JSON.parse(e.error)
-                  })
-              const orderDetailsResult = await orderDetails()
+              const orderDetailsResult = await PaypalConnect({
+                method: 'GET',
+                uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders/${o.source_id}`
+              }).catch((e: any) => {
+                console.log(
+                  `⚠️ [OrderCron][checkExpiredPaypalOrders] Error fetching order details for order ID: ${order.id}:`,
+                  e?.error
+                )
+                return e?.error || e
+              })
               const purchaseUnits = orderDetailsResult['purchase_units'] || []
               const authorizationDetails = purchaseUnits.length > 0 ? purchaseUnits[0] : null
               const paymentAuthorization =

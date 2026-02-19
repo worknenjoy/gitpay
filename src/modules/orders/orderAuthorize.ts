@@ -1,7 +1,7 @@
 import models from '../../models'
 import PaymentMail from '../../mail/payment'
-import requestPromise from 'request-promise'
 import { comment } from '../../bot/comment'
+import { PaypalConnect } from '../../client/provider/paypal'
 const slack = require('../../shared/slack')
 
 const currentModels = models as any
@@ -24,36 +24,10 @@ function validateOrderToken(token: string): string {
 
 export async function orderAuthorize(orderParameters: OrderAuthorizeParams) {
   const safeToken = validateOrderToken(orderParameters.token)
-  const response = await requestPromise({
-    method: 'POST',
-    uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
-    headers: {
-      Accept: 'application/json',
-      'Accept-Language': 'en_US',
-      Authorization:
-        'Basic ' +
-        Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString('base64'),
-      'Content-Type': 'application/json',
-      grant_type: 'client_credentials'
-    },
-    form: {
-      grant_type: 'client_credentials'
-    }
-  })
-
-  const authorize = await requestPromise({
-    method: 'POST',
+  const authorization = await PaypalConnect({
     uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders/${safeToken}/authorize`,
-    headers: {
-      Accept: '*/*',
-      Prefer: 'return=representation',
-      'Accept-Language': 'en_US',
-      Authorization: 'Bearer ' + JSON.parse(response)['access_token'],
-      'Content-Type': 'application/json'
-    }
+    method: 'POST'
   })
-
-  const authorization = JSON.parse(authorize)
   const order = await currentModels.Order.update(
     {
       payer_id: orderParameters.PayerID,
@@ -68,7 +42,7 @@ export async function orderAuthorize(orderParameters: OrderAuthorizeParams) {
     },
     {
       where: {
-        token: orderParameters.token
+        token: safeToken
       },
       returning: true,
       plain: true

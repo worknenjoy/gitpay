@@ -1,6 +1,6 @@
-import requestPromise from 'request-promise'
 import stripe from '../../client/payment/stripe'
 import models from '../../models'
+import { PaypalConnect } from '../../client/provider/paypal'
 
 const currentModels = models as any
 const stripeInstance = stripe()
@@ -22,37 +22,10 @@ export async function transferFetch(id: number) {
       ]
     })
     if (transfer.paypal_payout_id) {
-      const paypalCredentials = await requestPromise({
-        method: 'POST',
-        uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
-        headers: {
-          Accept: 'application/json',
-          'Accept-Language': 'en_US',
-          Authorization:
-            'Basic ' +
-            Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-              'base64'
-            ),
-          'Content-Type': 'application/json',
-          grant_type: 'client_credentials'
-        },
-        form: {
-          grant_type: 'client_credentials'
-        }
-      })
-      const paypalToken = JSON.parse(paypalCredentials)['access_token']
       try {
-        const paypalTransfer = await requestPromise({
+        const paypalTransfer = await PaypalConnect({
           method: 'GET',
-          uri: `${process.env.PAYPAL_HOST}/v1/payments/payouts/${transfer.paypal_payout_id}`,
-          headers: {
-            Accept: '*/*',
-            'Accept-Language': 'en_US',
-            Prefer: 'return=representation',
-            Authorization: 'Bearer ' + paypalToken,
-            'Content-Type': 'application/json'
-          },
-          json: true
+          uri: `${process.env.PAYPAL_HOST}/v1/payments/payouts/${transfer.paypal_payout_id}`
         })
         transfer.dataValues.paypalTransfer = paypalTransfer
       } catch (error) {

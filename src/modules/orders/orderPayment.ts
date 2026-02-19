@@ -1,6 +1,6 @@
 import models from '../../models'
-import requestPromise from 'request-promise'
 import TransferMail from '../../mail/transfer'
+import { PaypalConnect } from '../../client/provider/paypal'
 
 const currentModels = models as any
 
@@ -12,38 +12,10 @@ export async function orderPayment(orderParameters: OrderPaymentParams) {
   const order = await currentModels.Order.findByPk(orderParameters.id)
 
   if (order.provider === 'paypal') {
-    const response = await requestPromise({
+    const paymentData = await PaypalConnect({
       method: 'POST',
-      uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
-      headers: {
-        Accept: 'application/json',
-        'Accept-Language': 'en_US',
-        Authorization:
-          'Basic ' +
-          Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-            'base64'
-          ),
-        'Content-Type': 'application/json',
-        grant_type: 'client_credentials'
-      },
-      form: {
-        grant_type: 'client_credentials'
-      }
+      uri: `${process.env.PAYPAL_HOST}/v2/payments/authorizations/${order.authorization_id}/capture`
     })
-
-    const payment = await requestPromise({
-      method: 'POST',
-      uri: `${process.env.PAYPAL_HOST}/v2/payments/authorizations/${order.authorization_id}/capture`,
-      headers: {
-        Accept: '*/*',
-        'Accept-Language': 'en_US',
-        Prefer: 'return=representation',
-        Authorization: 'Bearer ' + JSON.parse(response)['access_token'],
-        'Content-Type': 'application/json'
-      }
-    })
-
-    const paymentData = JSON.parse(payment)
     const updatedOrder = await order.update(
       {
         transfer_id: paymentData.id
