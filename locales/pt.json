@@ -2,5 +2,10 @@
   "mail.paymentRequest.sendConfirmationWithInstructions.subject": "Payment confirmed on Gitpay",
   "mail.paymentRequest.sendConfirmationWithInstructions.message": "We confirmed your payment of {{amount}} {{currency}}.",
   "mail.paymentRequest.sendConfirmationWithInstructions.details": "<strong>Title: </strong> {{title}}<br/><strong>Description: </strong> {{description}}<br/><br /></br /><strong>Payer details:</strong><br/>Name: {{customer_name}}<br/>Email: {{customer_email}}",
-  "mail.paymentRequest.sendConfirmationWithInstructions.instructions_title": "<strong>Instructions</strong>"
+  "mail.paymentRequest.sendConfirmationWithInstructions.instructions_title": "<strong>Instructions</strong>",
+  "mail.payment.oldBountyRefunded.subject": "O seu pagamento via PayPal foi reembolsado por uma recompensa antiga no Gitpay",
+  "mail.payment.oldBountyRefunded.intro": "Olá {{name}},",
+  "mail.payment.oldBountyRefunded.content": "Um pagamento via PayPal que você fez há {{age}} para a issue <a href=\"{{url}}\">{{title}}</a> foi reembolsado automaticamente. Isso acontece quando uma recompensa fica aberta por mais de {{threshold}} sem nenhum Pull Request mesclado e com longo período de inatividade.<br/><br/>Nenhuma ação é necessária. Se o desenvolvimento for retomado, você pode financiar a recompensa novamente pela página da issue.",
+  "mail.payment.oldBountyRefunded.footer": "Se acredita que isto foi um erro, responda a este e-mail ou contacte-nos em contact@gitpay.me.",
+  "mail.payment.oldBountyRefunded.cta": "Ver recompensa no Gitpay"
 }

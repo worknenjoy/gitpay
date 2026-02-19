@@ -2,6 +2,8 @@ import request from './request'
 import * as constants from './constants'
 import i18n from 'i18n'
 import emailTemplate from './templates/base-content'
+import { tableContentEmailTemplate, type ActionButton } from './templates/table-content'
+import currencyInfo from '../utils/currency/currency-info'
 
 const PaymentMail = {
   success: async (user: any, task: any, value: number) => {
@@ -140,6 +142,86 @@ const PaymentMail = {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(
             `<p>${i18n.__('mail.payment.content.refund', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`
+          )
+        }
+      ])
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+
+  oldBountyPaypalRefunded: async (
+    user: any,
+    task: any,
+    order: any,
+    meta: { ageDays: number | null; olderThanDays: number }
+  ) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
+    i18n.setLocale(language)
+
+    const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
+    const paymentsUrl = `${process.env.FRONTEND_HOST}/#/profile/payments`
+    const currency = String(order.currency || 'usd').toLowerCase()
+    const symbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
+    const value = order.amount
+
+    const ageDaysText = typeof meta?.ageDays === 'number' ? `${meta.ageDays} days` : '-'
+
+    const humanizeAge = (days: number | null): string | null => {
+      if (typeof days !== 'number' || !Number.isFinite(days) || days < 0) return null
+      if (days >= 365) {
+        const years = Math.floor(days / 365)
+        return years === 1 ? '1 year' : `${years} years`
+      }
+      if (days >= 30) {
+        const months = Math.floor(days / 30)
+        return months === 1 ? '1 month' : `${months} months`
+      }
+      return days === 1 ? '1 day' : `${days} days`
+    }
+
+    const ageText = humanizeAge(meta?.ageDays ?? null)
+    const thresholdText =
+      meta?.olderThanDays === 365 ? '1 year' : `${meta?.olderThanDays ?? 365} days`
+
+    try {
+      return await request(to, i18n.__('mail.payment.oldBountyRefunded.subject'), [
+        {
+          type: 'text/html',
+          value: tableContentEmailTemplate(
+            i18n.__('mail.payment.oldBountyRefunded.intro', {
+              name: user.name || user.username || 'Gitpay User'
+            }),
+            i18n.__('mail.payment.oldBountyRefunded.content', {
+              age: ageText ?? thresholdText,
+              title: task.title,
+              url: taskUrl,
+              threshold: thresholdText
+            }),
+            {
+              headers: ['Field', 'Value'],
+              rows: [
+                ['Provider', 'PayPal'],
+                ['Amount', `${symbol} ${value}`],
+                ['Currency', String(order.currency || '').toUpperCase()],
+                ['Order ID', String(order.id)],
+                ['Authorization ID', String(order.authorization_id || '-')],
+                ['Capture ID', String(order.transfer_id || '-')],
+                ['Bounty age', ageDaysText]
+              ]
+            },
+            i18n.__('mail.payment.oldBountyRefunded.footer'),
+            {
+              link: paymentsUrl,
+              text: i18n.__('mail.payment.oldBountyRefunded.cta')
+            } as ActionButton
           )
         }
       ])

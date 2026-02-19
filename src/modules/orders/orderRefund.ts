@@ -2,7 +2,7 @@ import models from '../../models'
 import PaymentMail from '../../mail/payment'
 import { calculateAmountWithPercent } from '../../utils'
 import stripeModule from '../../client/payment/stripe'
-import { PaypalConnect } from '../../client/provider/paypal'
+import { refundPaypalPayment } from '../../services/payments/refunds/refundPaypalPayment'
 const stripe = stripeModule()
 
 const currentModels = models as any
@@ -61,37 +61,7 @@ export async function orderRefund(orderParams: OrderRefundParams) {
     }
 
     case 'paypal': {
-      const paymentData = await PaypalConnect({
-        method: 'POST',
-        uri: `${process.env.PAYPAL_HOST}/v2/payments/authorizations/${order.authorization_id}/void`
-      })
-
-      const updatedOrder = await order.update(
-        {
-          status: 'refunded',
-          refund_id: paymentData.id
-        },
-        {
-          where: { id: order.id },
-          include: [currentModels.Task, currentModels.User],
-          returning: true,
-          plain: true
-        }
-      )
-
-      if (!updatedOrder) {
-        throw new Error('update_order_error')
-      }
-
-      const orderData = updatedOrder.dataValues || (updatedOrder[0] && updatedOrder[0].dataValues)
-
-      const [user, task] = await Promise.all([
-        currentModels.User.findByPk(orderData.userId),
-        currentModels.Task.findByPk(orderData.TaskId)
-      ])
-
-      PaymentMail.refund(user, task.dataValues, orderData)
-      return orderData
+      return refundPaypalPayment({ orderId: order.id })
     }
 
     default:
