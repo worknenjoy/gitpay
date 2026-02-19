@@ -102,7 +102,7 @@
     "@stripe/react-stripe-js": "^3.7.0",
     "@stripe/stripe-js": "^7.4.0",
     "@types/react-router-dom": "^5.3.3",
-    "axios": "^0.21.4",
+    "axios": "^1.13.5",
     "babel-loader": "^9.1.2",
     "babel-plugin-add-react-displayname": "0.0.5",
     "babel-plugin-react-html-attrs": "^2.0.0",
