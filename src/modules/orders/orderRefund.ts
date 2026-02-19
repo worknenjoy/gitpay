@@ -1,8 +1,8 @@
 import models from '../../models'
 import PaymentMail from '../../mail/payment'
-import requestPromise from 'request-promise'
 import { calculateAmountWithPercent } from '../../utils'
 import stripeModule from '../../client/payment/stripe'
+import { PaypalConnect } from '../../client/provider/paypal'
 const stripe = stripeModule()
 
 const currentModels = models as any
@@ -61,40 +61,10 @@ export async function orderRefund(orderParams: OrderRefundParams) {
     }
 
     case 'paypal': {
-      const tokenResponse = await requestPromise({
+      const paymentData = await PaypalConnect({
         method: 'POST',
-        uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
-        headers: {
-          Accept: 'application/json',
-          'Accept-Language': 'en_US',
-          Authorization:
-            'Basic ' +
-            Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-              'base64'
-            ),
-          'Content-Type': 'application/json',
-          grant_type: 'client_credentials'
-        },
-        form: {
-          grant_type: 'client_credentials'
-        }
+        uri: `${process.env.PAYPAL_HOST}/v2/payments/authorizations/${order.authorization_id}/void`
       })
-
-      const accessToken = JSON.parse(tokenResponse)['access_token']
-
-      const payment = await requestPromise({
-        method: 'POST',
-        uri: `${process.env.PAYPAL_HOST}/v2/payments/authorizations/${order.authorization_id}/void`,
-        headers: {
-          Accept: '*/*',
-          'Accept-Language': 'en_US',
-          Prefer: 'return=representation',
-          Authorization: 'Bearer ' + accessToken,
-          'Content-Type': 'application/json'
-        }
-      })
-
-      const paymentData = JSON.parse(payment)
 
       const updatedOrder = await order.update(
         {

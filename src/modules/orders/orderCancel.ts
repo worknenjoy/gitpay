@@ -1,6 +1,6 @@
 import models from '../../models'
-import requestPromise from 'request-promise'
 import PaymentMail from '../../mail/payment'
+import { PaypalConnect } from '../../client/provider/paypal'
 
 const currentModels = models as any
 
@@ -18,36 +18,8 @@ export async function orderCancel(orderParameters: OrderCancelParams) {
 
   if (order && order.dataValues && order.dataValues.provider === 'paypal') {
     try {
-      const response = await requestPromise({
-        method: 'POST',
-        uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
-        headers: {
-          Accept: 'application/json',
-          'Accept-Language': 'en_US',
-          Authorization:
-            'Basic ' +
-            Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-              'base64'
-            ),
-          'Content-Type': 'application/json',
-          grant_type: 'client_credentials'
-        },
-        form: {
-          grant_type: 'client_credentials'
-        }
-      })
-
       const cancelUri = `${process.env.PAYPAL_HOST}/v2/payments/authorizations/${order.dataValues.authorization_id}/void`
-      const payment = await requestPromise({
-        method: 'POST',
-        uri: cancelUri,
-        headers: {
-          Accept: '*/*',
-          'Accept-Language': 'en_US',
-          Authorization: 'Bearer ' + JSON.parse(response)['access_token'],
-          'Content-Type': 'application/json'
-        }
-      })
+      await PaypalConnect({ method: 'POST', uri: cancelUri })
 
       const orderUpdated = await order.update(
         {

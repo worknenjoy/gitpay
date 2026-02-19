@@ -1,5 +1,5 @@
 import models from '../../models'
-import requestPromise from 'request-promise'
+import { PaypalConnect } from '../../client/provider/paypal'
 
 import TransferMail from '../../mail/transfer'
 
@@ -188,37 +188,10 @@ export async function transferBuilds(params: TransferBuildsParams) {
 
       // PayPal flow intentionally preserves legacy behavior (best-effort, non-transactional)
       if (paypalTotal > 0 && destination?.paypal_id) {
-        const paypalCredentials = await requestPromise({
-          method: 'POST',
-          uri: `${process.env.PAYPAL_HOST}/v1/oauth2/token`,
-          headers: {
-            Accept: 'application/json',
-            'Accept-Language': 'en_US',
-            Authorization:
-              'Basic ' +
-              Buffer.from(process.env.PAYPAL_CLIENT + ':' + process.env.PAYPAL_SECRET).toString(
-                'base64'
-              ),
-            'Content-Type': 'application/json',
-            grant_type: 'client_credentials'
-          },
-          form: {
-            grant_type: 'client_credentials'
-          }
-        })
-        const paypalToken = JSON.parse(paypalCredentials)['access_token']
         try {
-          const paypalTransfer = await requestPromise({
+          const paypalTransfer = await PaypalConnect({
             method: 'POST',
             uri: `${process.env.PAYPAL_HOST}/v1/payments/payouts`,
-            headers: {
-              Accept: '*/*',
-              'Accept-Language': 'en_US',
-              Prefer: 'return=representation',
-              Authorization: 'Bearer ' + paypalToken,
-              'Content-Type': 'application/json'
-            },
-            json: true,
             body: {
               sender_batch_header: {
                 sender_batch_id: `task_${taskData.id}`,
