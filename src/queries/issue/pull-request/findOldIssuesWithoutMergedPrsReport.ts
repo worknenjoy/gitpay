@@ -1,4 +1,7 @@
+import { Op } from 'sequelize'
+import { IssueStatuses } from '../../../constants/issue'
 import Models from '../../../models'
+import { IssueStatus } from '../../../types/issue'
 import { findIssuesCreatedBefore } from '../findIssuesCreatedBefore'
 import { findIssueLinkedPullRequest } from './findIssueLinkedPullRequest'
 
@@ -74,9 +77,22 @@ export const findOldIssuesWithoutMergedPrsReport = async (
           paid: true
         },
         required: false
-      }
+      },
+      models.Transfer
     ],
-    ...options.findOptions
+    ...{
+      ...options.findOptions,
+      where: {
+        [Op.and]: [
+          { value: { [Op.gt]: 0 } },
+          { status: IssueStatuses.OPEN as IssueStatus },
+          { paid: false },
+          { transfer_id: null },
+          { TransferId: null },
+          { '$Transfer.id$': null }
+        ]
+      }
+    }
   })
 
   const entries = await Promise.all(
