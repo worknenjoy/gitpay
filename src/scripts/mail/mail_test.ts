@@ -5,6 +5,10 @@
     - tsx src/scripts/mail/mail_test.ts paymentRequest.paymentRequestInitiated
     - tsx src/scripts/mail/mail_test.ts paymentRequest.sendConfirmationWithInstructions --out tmp/mail-previews
 
+  Send mode examples:
+    - tsx src/scripts/mail/mail_test.ts payment.oldBountyPaypalRefunded --send --to you@example.com
+    - tsx src/scripts/mail/mail_test.ts payout.payoutPaid --send --to you@example.com
+
 	It will render the selected mail method with sample data and save an HTML file
 	you can open in a browser.
 */
@@ -16,8 +20,8 @@ import * as path from 'path'
 const i18n = require('i18n') as any
 import { disputeCreated } from '../data/stripe.webhook.charge.dispute.created'
 
-// Ensure we never actually send emails while previewing
-process.env.NODE_ENV = 'test'
+// Some templates rely on this to build absolute URLs
+process.env.FRONTEND_HOST = process.env.FRONTEND_HOST || 'https://example.com'
 
 // Resolve repo root from this file location: src/scripts/mail -> repo root
 const repoRoot = path.resolve(__dirname, '../../..')
@@ -38,6 +42,8 @@ type PreviewResult = {
   subject?: string
 }
 
+type RunMode = 'preview' | 'send'
+
 function parseArgs(argv: string[]) {
   const args = argv.slice(2)
   if (args.length === 0 || args[0].startsWith('-')) {
@@ -45,18 +51,36 @@ function parseArgs(argv: string[]) {
     process.exit(1)
   }
   const methodPath = args[0]
+  const mode: RunMode = args.includes('--send') ? 'send' : 'preview'
+  const toArg = args.find((a) => a === '--to' || a.startsWith('--to='))
+  const to =
+    toArg === '--to'
+      ? args[args.indexOf('--to') + 1]
+      : toArg && toArg.startsWith('--to=')
+        ? toArg.split('=')[1]
+        : undefined
   const outDirArg = args.find((a) => a.startsWith('--out='))
   const outDir = outDirArg ? outDirArg.split('=')[1] : path.join(repoRoot, 'tmp', 'mail-previews')
-  return { methodPath, outDir }
+  return { methodPath, outDir, mode, to }
 }
 
 function printHelp() {
   console.log('Usage: tsx src/scripts/mail/mail_test.ts <ModuleOrFile>.<method> [--out=dir]')
   console.log('Examples:')
   console.log('  tsx src/scripts/mail/mail_test.ts paymentRequest.paymentRequestInitiated')
+  console.log('  tsx src/scripts/mail/mail_test.ts payment.oldBountyPaypalRefunded')
+  console.log('  tsx src/scripts/mail/mail_test.ts payment.oldBountyPaypalRefunded --send --to you@example.com')
   console.log(
     '  tsx src/scripts/mail/mail_test.ts PaymentRequestMail.transferInitiatedForPaymentRequest --out tmp/mail-previews'
   )
+  console.log('')
+  console.log('Modes:')
+  console.log('  (default) preview: sets NODE_ENV=test and saves HTML to disk')
+  console.log('  --send: does not write files; attempts to deliver via configured email provider')
+  console.log('Flags:')
+  console.log('  --out=dir         Output directory for preview HTML files')
+  console.log('  --send            Deliver the email instead of saving HTML')
+  console.log('  --to you@domain   Recipient to use for sample-based mails (best-effort)')
 }
 
 function normalizeModuleName(raw: string): string {
@@ -85,7 +109,30 @@ function buildSamples(moduleName: string, methodName: string): any[] {
   const user = {
     email: 'preview@example.com',
     language: 'en',
-    receiveNotifications: true
+    receiveNotifications: true,
+    name: 'Preview User'
+  }
+
+  if (moduleName === 'payment') {
+    const task = {
+      id: 123,
+      title: 'Sample task title'
+    }
+    const order = {
+      id: 'order_123',
+      amount: 49.99,
+      currency: 'usd',
+      authorization_id: 'auth_123',
+      transfer_id: 'cap_123'
+    }
+
+    if (/oldBountyPaypalRefunded/i.test(methodName)) {
+      const meta = {
+        ageDays: 400,
+        olderThanDays: 365
+      }
+      return [user, task, order, meta]
+    }
   }
 
   if (moduleName === 'paymentRequest') {
@@ -172,7 +219,19 @@ function buildSamples(moduleName: string, methodName: string): any[] {
 }
 
 async function run(): Promise<PreviewResult> {
-  const { methodPath, outDir } = parseArgs(process.argv)
+  const { methodPath, outDir, mode, to } = parseArgs(process.argv)
+
+  if (mode === 'send' && !to) {
+    console.error('Send mode requires an explicit recipient. Use: --send --to you@example.com')
+    process.exit(1)
+  }
+
+  // Ensure we never actually send emails while previewing.
+  // In send mode, we intentionally avoid forcing NODE_ENV to 'test'.
+  if (mode === 'preview') {
+    process.env.NODE_ENV = 'test'
+  }
+
   const [rawModuleToken, rawMethod] = methodPath.split('.')
   if (!rawModuleToken || !rawMethod) {
     printHelp()
@@ -198,7 +257,29 @@ async function run(): Promise<PreviewResult> {
 
   // Build inputs and execute the mail method (NODE_ENV=test prevents actual send)
   const args = buildSamples(moduleFile, rawMethod)
+
+  // Best-effort override for recipient in sample objects
+  if (to) {
+    for (const arg of args) {
+      if (arg && typeof arg === 'object') {
+        if (typeof (arg as any).email === 'string') {
+          ;(arg as any).email = to
+        }
+        if ((arg as any).PaymentRequestCustomer && typeof (arg as any).PaymentRequestCustomer.email === 'string') {
+          ;(arg as any).PaymentRequestCustomer.email = to
+        }
+      }
+    }
+  }
+
   const result = await fn(...args)
+
+  if (mode === 'send') {
+    console.log('Mail send mode completed.')
+    if (to) console.log(`Recipient override: ${to}`)
+    // Nothing to save to disk in send mode
+    return { htmlPath: '', subject: undefined }
+  }
 
   // The request fallback returns an array with content passed to it
   // We also want to wrap with the default template to produce full HTML
