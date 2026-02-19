@@ -205,10 +205,15 @@ export async function refundPaypalPayment({
   const task = order.Task || (await models.Task.findByPk(orderData.TaskId))
 
   if (reason === 'old_open_bounty') {
-    await PaymentMail.oldBountyPaypalRefunded(user, task, { ...orderData, transfer_id: captureId }, {
-      ageDays: ageDays ?? null,
-      olderThanDays: olderThanDays ?? 365
-    })
+    await PaymentMail.oldBountyPaypalRefunded(
+      user,
+      task,
+      { ...orderData, transfer_id: captureId },
+      {
+        ageDays: ageDays ?? null,
+        olderThanDays: olderThanDays ?? 365
+      }
+    )
   } else {
     await PaymentMail.refund(user, task, { ...orderData, transfer_id: captureId })
   }

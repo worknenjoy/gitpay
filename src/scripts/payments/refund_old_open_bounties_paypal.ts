@@ -9,7 +9,9 @@ function hasFlag(...names: string[]) {
 function printHelp() {
   console.log('Refund PayPal payments for old open bounties (> 1 year)')
   console.log('')
-  console.log('This script uses the existing 365-day old-bounties report and only processes PayPal orders.')
+  console.log(
+    'This script uses the existing 365-day old-bounties report and only processes PayPal orders.'
+  )
   console.log('')
   console.log('Usage:')
   console.log('  npm run paypal:refund-old-open-bounties -- --execute')
@@ -55,12 +57,16 @@ async function main() {
     }
   }
 
-  console.log(`Found ${paypalOrders.length} PayPal order(s) on old open bounties (> ${olderThanDays} days).`)
+  console.log(
+    `Found ${paypalOrders.length} PayPal order(s) on old open bounties (> ${olderThanDays} days).`
+  )
 
   if (!execute) {
     printHelp()
     console.log('')
-    console.log('Dry run only (no changes made). Pass --execute to actually refund and send emails.')
+    console.log(
+      'Dry run only (no changes made). Pass --execute to actually refund and send emails.'
+    )
     return
   }
 

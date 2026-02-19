@@ -189,9 +189,7 @@ const PaymentMail = {
 
     const ageText = humanizeAge(meta?.ageDays ?? null)
     const thresholdText =
-      meta?.olderThanDays === 365
-        ? '1 year'
-        : `${meta?.olderThanDays ?? 365} days`
+      meta?.olderThanDays === 365 ? '1 year' : `${meta?.olderThanDays ?? 365} days`
 
     try {
       return await request(to, i18n.__('mail.payment.oldBountyRefunded.subject'), [

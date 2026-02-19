@@ -30,8 +30,7 @@ export async function authorizePaypalOrder({ orderId }: AuthorizePaypalOrderPara
     uri: `${process.env.PAYPAL_HOST}/v2/checkout/orders/${safeOrderId}/authorize`
   })) as PaypalOrderAuthorizeResult
 
-  const authorizationId =
-    result?.purchase_units?.[0]?.payments?.authorizations?.[0]?.id ?? null
+  const authorizationId = result?.purchase_units?.[0]?.payments?.authorizations?.[0]?.id ?? null
 
   return { result, authorizationId }
 }
