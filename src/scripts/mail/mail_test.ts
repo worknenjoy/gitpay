@@ -69,7 +69,9 @@ function printHelp() {
   console.log('Examples:')
   console.log('  tsx src/scripts/mail/mail_test.ts paymentRequest.paymentRequestInitiated')
   console.log('  tsx src/scripts/mail/mail_test.ts payment.oldBountyPaypalRefunded')
-  console.log('  tsx src/scripts/mail/mail_test.ts payment.oldBountyPaypalRefunded --send --to you@example.com')
+  console.log(
+    '  tsx src/scripts/mail/mail_test.ts payment.oldBountyPaypalRefunded --send --to you@example.com'
+  )
   console.log(
     '  tsx src/scripts/mail/mail_test.ts PaymentRequestMail.transferInitiatedForPaymentRequest --out tmp/mail-previews'
   )
@@ -265,7 +267,10 @@ async function run(): Promise<PreviewResult> {
         if (typeof (arg as any).email === 'string') {
           ;(arg as any).email = to
         }
-        if ((arg as any).PaymentRequestCustomer && typeof (arg as any).PaymentRequestCustomer.email === 'string') {
+        if (
+          (arg as any).PaymentRequestCustomer &&
+          typeof (arg as any).PaymentRequestCustomer.email === 'string'
+        ) {
           ;(arg as any).PaymentRequestCustomer.email = to
         }
       }

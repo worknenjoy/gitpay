@@ -11,6 +11,7 @@ type RefundPaypalPaymentParams = {
   reason?: RefundPaypalPaymentReason
   ageDays?: number | null
   olderThanDays?: number
+  fallbackToPayoutOnTimeLimit?: boolean
 }
 
 function validatePayPalId(id: string, label: string): string {
@@ -55,6 +56,52 @@ function extractCaptureIdFromCheckoutOrderDetails(details: any): string | null {
   return null
 }
 
+function buildSafePayoutBatchId(orderId: number): string {
+  // PayPal has length limits; keep it short and deterministic-ish.
+  // Includes timestamp to reduce collision risk across environments.
+  const stamp = Date.now().toString(36)
+  return `gitpay-${orderId}-${stamp}`.slice(0, 30)
+}
+
+async function createPaypalPayout(params: {
+  payerId: string
+  amountValue: string
+  currencyCode: string
+  note: string
+  senderItemId: string
+}): Promise<{ payoutBatchId: string; raw: any }> {
+  const response = await PaypalConnect({
+    method: 'POST',
+    uri: `${process.env.PAYPAL_HOST}/v1/payments/payouts`,
+    body: {
+      sender_batch_header: {
+        sender_batch_id: buildSafePayoutBatchId(Number(params.senderItemId) || 0),
+        email_subject: 'Gitpay payout'
+      },
+      items: [
+        {
+          recipient_type: 'PAYPAL_ID',
+          amount: {
+            value: params.amountValue,
+            currency: params.currencyCode
+          },
+          receiver: params.payerId,
+          note: params.note,
+          sender_item_id: params.senderItemId
+        }
+      ]
+    }
+  })
+
+  const payoutBatchId = response?.batch_header?.payout_batch_id
+  if (!payoutBatchId) {
+    const e: any = new Error('paypal_payout_missing_batch_id')
+    e.meta = { response }
+    throw e
+  }
+  return { payoutBatchId: String(payoutBatchId), raw: response }
+}
+
 async function resolveCaptureIdFromAuthorization(authorizationId: string): Promise<string | null> {
   const details = await PaypalConnect({
     method: 'GET',
@@ -84,7 +131,8 @@ export async function refundPaypalPayment({
   orderId,
   reason,
   ageDays,
-  olderThanDays
+  olderThanDays,
+  fallbackToPayoutOnTimeLimit
 }: RefundPaypalPaymentParams) {
   const order = await models.Order.findByPk(orderId, {
     include: [models.User, models.Task]
@@ -178,7 +226,37 @@ export async function refundPaypalPayment({
     if (issue === 'ALREADY_REFUNDED') {
       return order.dataValues ?? order
     }
-    throw err
+
+    // Refund window exceeded: optionally fallback to a PayPal Payout (new payment back to payer).
+    if (issue === 'REFUND_TIME_LIMIT_EXCEEDED' && fallbackToPayoutOnTimeLimit) {
+      const payerIdRaw = order.payer_id ? String(order.payer_id) : ''
+      if (!payerIdRaw) {
+        const e: any = new Error('paypal_payer_missing')
+        e.meta = { orderId: order.id }
+        throw e
+      }
+
+      const payerId = validatePayPalId(payerIdRaw, 'payer id')
+      const note =
+        reason === 'old_open_bounty'
+          ? 'Refund for old open bounty (time limit exceeded).'
+          : 'Refund (time limit exceeded).'
+
+      const payout = await createPaypalPayout({
+        payerId,
+        amountValue,
+        currencyCode,
+        note,
+        senderItemId: String(order.id)
+      })
+
+      refundData = {
+        id: `payout:${payout.payoutBatchId}`,
+        payout
+      }
+    } else {
+      throw err
+    }
   }
 
   const updatedOrder = await order.update(

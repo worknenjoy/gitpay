@@ -15,9 +15,15 @@ function printHelp() {
   console.log('')
   console.log('Usage:')
   console.log('  npm run paypal:refund-old-open-bounties -- --execute')
+  console.log('  npm run paypal:refund-old-open-bounties -- --execute --payout-on-time-limit')
   console.log('')
   console.log('Env:')
   console.log('  PAYPAL_HOST, PAYPAL_CLIENT, PAYPAL_SECRET')
+  console.log('')
+  console.log('Notes:')
+  console.log(
+    '  If PayPal returns REFUND_TIME_LIMIT_EXCEEDED, you can opt-in to sending a PayPal Payout back to the original payer (requires Payouts enabled on your PayPal app).'
+  )
 }
 
 async function main() {
@@ -25,6 +31,7 @@ async function main() {
 
   const olderThanDays = 365
   const execute = hasFlag('--execute')
+  const payoutOnTimeLimit = hasFlag('--payout-on-time-limit')
 
   const results = (await findOldIssuesWithoutMergedPrsReport({ olderThanDays })) as any[]
 
@@ -83,7 +90,8 @@ async function main() {
         orderId: item.orderId,
         reason: 'old_open_bounty',
         ageDays: item.ageDays,
-        olderThanDays
+        olderThanDays,
+        fallbackToPayoutOnTimeLimit: payoutOnTimeLimit
       })
       ok += 1
     } catch (err) {
@@ -91,6 +99,11 @@ async function main() {
       if (message === 'paypal_capture_missing') {
         skipped += 1
         console.log(`Skipping orderId=${item.orderId}: paypal_capture_missing`)
+        continue
+      }
+      if (message === 'paypal_payer_missing') {
+        skipped += 1
+        console.log(`Skipping orderId=${item.orderId}: paypal_payer_missing`)
         continue
       }
       failed += 1
