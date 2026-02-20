@@ -3,7 +3,9 @@ import { findOldIssuesWithoutMergedPrsReport } from '../../queries/issue/pull-re
 import { refundPaypalPayment } from '../../services/payments/refunds/refundPaypalPayment'
 
 function hasFlag(...names: string[]) {
-  return process.argv.some((a) => names.includes(a))
+  return process.argv.some((arg) =>
+    names.some((name) => arg === name || arg.startsWith(`${name}=`))
+  )
 }
 
 function printHelp() {
@@ -93,6 +95,19 @@ async function main() {
         olderThanDays,
         fallbackToPayoutOnTimeLimit: payoutOnTimeLimit
       })
+
+      // Helpful signal in logs to confirm the fallback path executed.
+      // When payout fallback is used, refund_id is stored as payout:<payoutBatchId>.
+      try {
+        const orderAfter = await (require('../../models') as any).Order.findByPk(item.orderId)
+        const refundId = orderAfter?.refund_id ? String(orderAfter.refund_id) : ''
+        if (refundId.startsWith('payout:')) {
+          console.log(`OrderId=${item.orderId}: returned via PayPal payout (${refundId})`)
+        }
+      } catch {
+        // ignore
+      }
+
       ok += 1
     } catch (err) {
       const message = (err as any)?.message

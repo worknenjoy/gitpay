@@ -184,6 +184,32 @@ Large Stripe inflows can occur with **negative Net change** if:
 - **Stripe cash** = liquidity, not earnings
 - **Wallet + Task liab.** = money Gitpay does not own
 
+---
+
+## 🧾 Yearly 1099-K style summary
+
+Generates a yearly summary in this format:
+
+- 1099-K Gross Revenue
+- Less: Refunds
+- Less: Disputes
+- Net Processed Volume
+- Less: Contributor Transfers (COGS)
+- Add: Transfer Reversals
+- Net Contributor Payouts
+- Platform Gross Profit
+
+Run:
+
+```bash
+npm run reports:1099k -- 2025
+```
+
+Notes:
+
+- Uses **Stripe balance transactions** filtered to USD and the given UTC year range.
+- Uses `reporting_category` (when available) to classify: `charge`, `refund`, `dispute`, `transfer`, `transfer_reversal`.
+
 This separation ensures:
 
 - accurate reporting

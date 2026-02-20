@@ -52,6 +52,7 @@
     "reports:revenue": "tsx src/scripts/reports/revenue-reports/revenue_report.ts",
     "reports:financial_summary": "tsx src/scripts/reports/financial-summary/financial_summary.ts",
     "reports:balance_summary": "tsx src/scripts/reports/balance-summary/balance_summary.ts",
+    "reports:1099k": "tsx src/scripts/reports/balance-summary/yearly1099k.ts",
     "paypal:authorize": "tsx src/scripts/payments/authorize_paypal_payment.ts",
     "paypal:refund-old-open-bounties": "tsx src/scripts/payments/refund_old_open_bounties_paypal.ts",
     "script:issue:report_unclaimed_bounties": "tsx src/scripts/issues/report_unclaimed_bounties.ts",
