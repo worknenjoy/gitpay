@@ -6,6 +6,8 @@ const models = Models as any
 
 export type RefundPaypalPaymentReason = 'old_open_bounty'
 
+export type PaypalReturnMethod = 'refund' | 'payout'
+
 type RefundPaypalPaymentParams = {
   orderId: number
   reason?: RefundPaypalPaymentReason
@@ -208,6 +210,7 @@ export async function refundPaypalPayment({
   }
 
   let refundData: any
+  let returnMethod: PaypalReturnMethod = 'refund'
   try {
     refundData = await PaypalConnect({
       method: 'POST',
@@ -250,6 +253,8 @@ export async function refundPaypalPayment({
         senderItemId: String(order.id)
       })
 
+      returnMethod = 'payout'
+
       refundData = {
         id: `payout:${payout.payoutBatchId}`,
         payout
@@ -289,7 +294,8 @@ export async function refundPaypalPayment({
       { ...orderData, transfer_id: captureId },
       {
         ageDays: ageDays ?? null,
-        olderThanDays: olderThanDays ?? 365
+        olderThanDays: olderThanDays ?? 365,
+        returnMethod
       }
     )
   } else {

@@ -154,7 +154,7 @@ const PaymentMail = {
     user: any,
     task: any,
     order: any,
-    meta: { ageDays: number | null; olderThanDays: number }
+    meta: { ageDays: number | null; olderThanDays: number; returnMethod?: 'refund' | 'payout' }
   ) => {
     const to = user.email
     const language = user.language || 'en'
@@ -191,24 +191,36 @@ const PaymentMail = {
     const thresholdText =
       meta?.olderThanDays === 365 ? '1 year' : `${meta?.olderThanDays ?? 365} days`
 
+    const returnMethod = meta?.returnMethod === 'payout' ? 'payout' : 'refund'
+    const payoutNotice =
+      returnMethod === 'payout'
+        ? `<p>${i18n.__('mail.payment.oldBountyRefunded.payoutNotice')}</p>`
+        : ''
+
+    const subjectKey =
+      returnMethod === 'payout'
+        ? 'mail.payment.oldBountyRefunded.subjectPayout'
+        : 'mail.payment.oldBountyRefunded.subject'
+
     try {
-      return await request(to, i18n.__('mail.payment.oldBountyRefunded.subject'), [
+      return await request(to, i18n.__(subjectKey), [
         {
           type: 'text/html',
           value: tableContentEmailTemplate(
             i18n.__('mail.payment.oldBountyRefunded.intro', {
               name: user.name || user.username || 'Gitpay User'
             }),
-            i18n.__('mail.payment.oldBountyRefunded.content', {
+            `${i18n.__('mail.payment.oldBountyRefunded.content', {
               age: ageText ?? thresholdText,
               title: task.title,
               url: taskUrl,
               threshold: thresholdText
-            }),
+            })}${payoutNotice}`,
             {
               headers: ['Field', 'Value'],
               rows: [
                 ['Provider', 'PayPal'],
+                ...(returnMethod === 'payout' ? [['Return method', 'Payout']] : []),
                 ['Amount', `${symbol} ${value}`],
                 ['Currency', String(order.currency || '').toUpperCase()],
                 ['Order ID', String(order.id)],
