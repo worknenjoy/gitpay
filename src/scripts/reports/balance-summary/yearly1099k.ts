@@ -17,7 +17,9 @@ const SEPARATOR = '-'.repeat(47)
 type CogsSource = 'stripe' | 'db'
 
 function parseCogsSourceFromEnv(): CogsSource {
-  const raw = String(process.env.COGS_SOURCE || 'stripe').trim().toLowerCase()
+  const raw = String(process.env.COGS_SOURCE || 'stripe')
+    .trim()
+    .toLowerCase()
   if (raw === 'stripe' || raw === 'db') return raw
   throw new Error(`Invalid COGS_SOURCE: ${raw} (expected 'stripe' or 'db')`)
 }
@@ -35,9 +37,10 @@ function parseYearFromArgs(): number {
   return year
 }
 
-async function listAllBalanceTransactions(
-  created: { gte: number; lt: number }
-): Promise<Stripe.BalanceTransaction[]> {
+async function listAllBalanceTransactions(created: {
+  gte: number
+  lt: number
+}): Promise<Stripe.BalanceTransaction[]> {
   const out: Stripe.BalanceTransaction[] = []
   let starting_after: string | undefined
   for (;;) {
@@ -190,8 +193,10 @@ function classifyAndSum(usdTxns: Stripe.BalanceTransaction[]): MoneyParts {
   const isCharge = (t: Stripe.BalanceTransaction) => {
     const c = cat(t)
     const ty = typ(t)
-    return (c === 'charge' || c === 'payment' || ty === 'charge' || ty === 'payment') &&
+    return (
+      (c === 'charge' || c === 'payment' || ty === 'charge' || ty === 'payment') &&
       (Number(t.amount) || 0) > 0
+    )
   }
 
   const isRefund = (t: Stripe.BalanceTransaction) => {
@@ -280,11 +285,9 @@ function classifyAndSum(usdTxns: Stripe.BalanceTransaction[]): MoneyParts {
     dbCloser = dbRes.close
   }
 
-  const netProcessedVolumeCents =
-    sums.grossRevenueCents - sums.refundsCents - sums.disputesCents
+  const netProcessedVolumeCents = sums.grossRevenueCents - sums.refundsCents - sums.disputesCents
 
-  const netContributorPayoutsCents =
-    sums.contributorTransfersCents - sums.transferReversalsCents
+  const netContributorPayoutsCents = sums.contributorTransfersCents - sums.transferReversalsCents
 
   const platformGrossProfitCents = netProcessedVolumeCents - netContributorPayoutsCents
 
