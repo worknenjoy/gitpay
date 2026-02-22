@@ -1,7 +1,11 @@
 import React from 'react'
 import { Web, Logout, Dashboard } from '@mui/icons-material'
 import { Divider, ListItemIcon, ListItemText, Menu, MenuItem, Typography } from '@mui/material'
-import { Settings as SettingsIcon, AccountBox as AccountIcon } from '@mui/icons-material'
+import {
+  AssignmentReturnedTwoTone as PayoutSettingsIcon,
+  Receipt as InvoiceSettingsIcon,
+  AccountBox as AccountIcon
+} from '@mui/icons-material'
 import { FormattedMessage } from 'react-intl'
 import { ProfileAvatar } from './profile-account-menu.styles'
 import { useHistory } from 'react-router-dom'
@@ -16,7 +20,7 @@ const ProfileAccountMenuItems = ({
   includeDashboard = false
 }) => {
   const history = useHistory()
-  const { isContributor } = useUserTypes(user)
+  const { isContributor, isMaintainer, isFunding } = useUserTypes({ user })
   const { data } = user
 
   const bgColor = '#d8e2d9ff'
@@ -106,7 +110,7 @@ const ProfileAccountMenuItems = ({
         <MenuItem onClick={(e) => history.push('/profile/payout-settings')}>
           <ListItemIcon>
             <ProfileAvatar bgColor={bgColor}>
-              <SettingsIcon fontSize="small" />
+              <PayoutSettingsIcon fontSize="small" />
             </ProfileAvatar>
           </ListItemIcon>
           <ListItemText
@@ -115,6 +119,25 @@ const ProfileAccountMenuItems = ({
                 <FormattedMessage
                   id="profile.accountMenu.payoutSettings"
                   defaultMessage="Payout Settings"
+                />
+              </Typography>
+            }
+          />
+        </MenuItem>
+      )}
+      {(isMaintainer || isFunding) && (
+        <MenuItem onClick={(e) => history.push('/profile/invoice-settings')}>
+          <ListItemIcon>
+            <ProfileAvatar bgColor={bgColor}>
+              <InvoiceSettingsIcon fontSize="small" />
+            </ProfileAvatar>
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography variant="body2" color="text">
+                <FormattedMessage
+                  id="profile.accountMenu.invoiceSettings"
+                  defaultMessage="Invoice Settings"
                 />
               </Typography>
             }
