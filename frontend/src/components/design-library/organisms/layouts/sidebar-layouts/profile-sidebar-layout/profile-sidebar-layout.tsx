@@ -9,10 +9,7 @@ import {
   CardMembership as PaymentRequestsIcon,
   SwapHoriz as PayoutIcon,
   Public as ExploreIcon,
-  AccountBox as AccountIcon,
-  AssignmentReturnedTwoTone as PayoutSettingsIcon,
-  AssignmentTurnedIn as ClaimIcon,
-  Receipt as InvoiceSettingsIcon
+  AssignmentTurnedIn as ClaimIcon
 } from '@mui/icons-material'
 import useUserTypes from '../../../../../../hooks/use-user-types'
 import { SideMenu } from '../../../../molecules/menus/side-menu/side-menu'
@@ -42,14 +39,8 @@ const ProfileSidebar = ({ user }) => {
       setSelected(6)
     } else if (path.includes('/profile/payouts')) {
       setSelected(7)
-    } else if (path.includes('/profile/user-account')) {
-      setSelected(8)
-    } else if (path.includes('/profile/payout-settings')) {
-      setSelected(9)
-    } else if (path.includes('/profile/invoice-settings')) {
-      setSelected(10)
     } else {
-      setSelected(0)
+      setSelected(null)
     }
   }, [history.location.pathname])
 
@@ -160,52 +151,6 @@ const ProfileSidebar = ({ user }) => {
                   <FormattedMessage id="account.profile.payout.list" defaultMessage="Payouts" />
                 ),
                 selected: selected === 7
-              }
-            ]
-          },
-          {
-            category: (
-              <FormattedMessage
-                id="account.profile.sidemenu.section.account"
-                defaultMessage="Account"
-              />
-            ),
-            items: [
-              {
-                include: true,
-                onClick: () => history.push('/profile/user-account'),
-                icon: <AccountIcon />,
-                label: (
-                  <FormattedMessage
-                    id="account.profile.account.settings"
-                    defaultMessage="Account settings"
-                  />
-                ),
-                selected: selected === 8
-              },
-              {
-                include: isContributor,
-                onClick: () => history.push('/profile/payout-settings'),
-                icon: <PayoutSettingsIcon />,
-                label: (
-                  <FormattedMessage
-                    id="account.profile.payout.settings"
-                    defaultMessage="Payout settings"
-                  />
-                ),
-                selected: selected === 9
-              },
-              {
-                include: isFunding || isMaintainer,
-                onClick: () => history.push('/profile/invoice-settings'),
-                icon: <InvoiceSettingsIcon />,
-                label: (
-                  <FormattedMessage
-                    id="account.profile.invoice.settings"
-                    defaultMessage="Invoice settings"
-                  />
-                ),
-                selected: selected === 10
               }
             ]
           }

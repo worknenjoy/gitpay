@@ -61,7 +61,7 @@ const Palette = {
     secondary: {
       light: '#d0722a',
       main: '#d0722a',
-      // dark: will be calculated from palette.secondary.main,
+      dark: '#b35a1f',
       contrastText: '#fff'
     },
     // MUI v5+ expects success/error at the top-level palette as well
@@ -138,10 +138,17 @@ const Palette = {
         }
       }
     },
+    MuiListItemText: {
+      styleOverrides: {
+        primary: {
+          fontSize: 11
+        }
+      }
+    },
     MuiListItemIcon: {
       styleOverrides: {
         root: {
-          minWidth: 32
+          minWidth: 18
         }
       }
     },

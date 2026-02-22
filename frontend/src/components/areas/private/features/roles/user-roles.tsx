@@ -5,21 +5,8 @@ import funder from 'images/bounty.png'
 import contributor from 'images/sharing.png'
 import maintainer from 'images/notifications.png'
 
-import { Paper, Typography, Checkbox, CardMedia, Skeleton } from '@mui/material'
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
-import CheckBoxIcon from '@mui/icons-material/CheckBox'
-import {
-  RolesContainer,
-  BigRow,
-  RowGrid,
-  RowListItem,
-  RowCard,
-  RootLabel,
-  ActionBar,
-  ButtonsRow,
-  CancelButton,
-  SaveButton
-} from './user-roles.styles'
+import SelectChoices from 'design-library/molecules/select-choices/select-choices'
+import { ButtonsRow, CancelButton, SaveButton } from './user-roles.styles'
 
 const messages = defineMessages({
   saveSuccess: {
@@ -51,7 +38,7 @@ const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }
     setSelectedRoles(user.Types || [])
   }, [user.Types])
 
-  const handleRoleClick = useCallback((event, item) => {
+  const handleRoleToggle = useCallback((item) => {
     setSelectedRoles((prev) => {
       const exists = prev.find((i) => i.id === item.id)
       if (exists) {
@@ -85,105 +72,41 @@ const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }
     }
   }
 
-  const placeholders = Array(3).fill(null)
-
-  const CardListPlaceholder = (
-    <>
-      {placeholders.map((_, index: number) => (
-        <RowListItem key={index} size={{ xs: 12, md: 3 }} spacing={2}>
-          <Paper>
-            <RowCard variant="outlined">
-              <CardMedia>
-                <Skeleton variant="rectangular" height={270} />
-              </CardMedia>
-              <RootLabel>
-                <Typography variant="h5">
-                  <Skeleton variant="text" />
-                </Typography>
-              </RootLabel>
-              <ActionBar>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  <Skeleton variant="text" />
-                </Typography>
-              </ActionBar>
-            </RowCard>
-          </Paper>
-        </RowListItem>
-      ))}
-    </>
-  )
-
   return (
-    <RolesContainer elevation={2}>
-      <BigRow>
-        <Typography variant="h4" noWrap>
-          <FormattedMessage id="user.type.title" defaultMessage="What type of user are you?" />
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p" noWrap>
-          <FormattedMessage
-            id="user.type.description"
-            defaultMessage="Define how you will use Gitpay. You can choose multiple types of user roles you want."
-          />
-        </Typography>
-      </BigRow>
-      <RowGrid container direction="row" alignItems="stretch">
-        {!completed ? (
-          CardListPlaceholder
-        ) : (
-          <>
-            {data.map((r) => (
-              <RowListItem key={r.id} size={{ xs: 12, md: 3 }} spacing={2}>
-                <Paper>
-                  <RowCard variant="outlined">
-                    <CardMedia>
-                      <img src={imageMap[r.name]} alt={r.name} width={250} height={270} />
-                    </CardMedia>
-                    <RootLabel>
-                      <Typography variant="h5">{r.label}</Typography>
-                    </RootLabel>
-                    <ActionBar>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        {r.description}
-                      </Typography>
-                      <Checkbox
-                        icon={
-                          <CheckBoxOutlineBlankIcon
-                            fontSize="large"
-                            style={{ color: 'transparent' }}
-                          />
-                        }
-                        checkedIcon={<CheckBoxIcon fontSize="large" />}
-                        color="primary"
-                        inputProps={{ 'aria-label': r.name }}
-                        checked={shouldBeChecked(r)}
-                        onChange={(e) => handleRoleClick(e, r)}
-                      />
-                    </ActionBar>
-                  </RowCard>
-                </Paper>
-              </RowListItem>
-            ))}
-          </>
-        )}
-      </RowGrid>
+    <SelectChoices
+      title={<FormattedMessage id="user.type.title" defaultMessage="What type of user are you?" />}
+      description={
+        <FormattedMessage
+          id="user.type.description"
+          defaultMessage="Define how you will use Gitpay. You can choose multiple types of user roles you want."
+        />
+      }
+      items={data}
+      loading={!completed}
+      getImageSrc={(r) => imageMap[r.name]}
+      getImageAlt={(r) => r.name}
+      getTitle={(r) => r.label}
+      getDescription={(r) => r.description}
+      isSelected={shouldBeChecked}
+      onToggle={handleRoleToggle}
+    >
       <ButtonsRow>
         <CancelButton onClick={handleCancelClick}>CANCEL</CancelButton>
-        <SaveButton onClick={handleSaveClick}>SAVE</SaveButton>
+        <SaveButton color="secondary" onClick={handleSaveClick}>
+          SAVE
+        </SaveButton>
       </ButtonsRow>
-    </RolesContainer>
+    </SelectChoices>
   )
 }
 
 Roles.propTypes = {
   updateUser: PropTypes.func,
-  createRoles: PropTypes.func,
-  deleteRoles: PropTypes.func,
   fetchRoles: PropTypes.func,
   roles: PropTypes.object,
   user: PropTypes.object,
   onClose: PropTypes.func,
-  addNotification: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired
+  addNotification: PropTypes.func.isRequired
 }
 
 export default Roles

@@ -27,7 +27,9 @@ export const MenuItemSection = styled('div')<{ compact?: boolean }>(({ theme, co
 export const ListItemIconStyled = styled('div')(({ theme }) => ({
   color: theme.palette.primary.contrastText,
   svg: {
-    verticalAlign: 'middle'
+    verticalAlign: 'middle',
+    width: 21,
+    height: 21
   }
 }))
 
@@ -44,7 +46,6 @@ export const Icon = styled('span')(({ theme }) => ({
 
 export const Category = styled('span')(({ theme }) => ({
   color: 'rgba(255, 255, 255, 0.5)',
-  fontSize: '0.58rem',
   textTransform: 'uppercase',
   fontWeight: 600,
   marginBottom: 16,
