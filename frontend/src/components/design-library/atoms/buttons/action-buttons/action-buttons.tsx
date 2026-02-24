@@ -27,11 +27,11 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
     <div>
       {primary?.map((action, index) => (
         <React.Fragment key={`primary-${action.key ?? index}`}>
-          {action.helperText &&
+          {action.helperText && (
             <Typography variant="subtitle2" color="textSecondary" gutterBottom>
               <FormattedMessage id={action.helperText} />
             </Typography>
-            }
+          )}
           <PrimaryWrapper>
             <Button
               onClick={() => actionClick(action.key, action.onClick)}
@@ -58,11 +58,11 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
       <SecondaryContainer>
         {secondary?.map((action, index) => (
           <React.Fragment key={`secondary-${action.key ?? index}`}>
-            {action.helperText &&
+            {action.helperText && (
               <Typography variant="subtitle2" color="textSecondary" gutterBottom>
                 <FormattedMessage id={action.helperText} />
               </Typography>
-            }
+            )}
             <SecondaryButton
               onClick={() => actionClick(action.key, action.onClick)}
               size="small"

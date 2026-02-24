@@ -237,10 +237,11 @@ const Settings = (props) => {
                 />
               }
               action={
-                <Checkbox
+                <Switch
                   id="check_open_for_jobs"
                   checked={draftOpenForJobs}
                   onChange={handleDraftOpenForJobsChange}
+                  color="primary"
                   inputProps={{ 'aria-label': 'open for jobs' }}
                 />
               }

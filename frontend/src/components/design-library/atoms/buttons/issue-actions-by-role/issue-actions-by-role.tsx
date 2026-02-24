@@ -16,11 +16,13 @@ const messages = defineMessages({
   },
   sendSolutionHelperText: {
     id: 'issue.actions.sendSolution.helperText',
-    defaultMessage: 'For contributors: Do you have a solution for this issue? Send your PR and claim your bounty!'
+    defaultMessage:
+      'For contributors: Do you have a solution for this issue? Send your PR and claim your bounty!'
   },
   addBountyHelperText: {
     id: 'issue.actions.addBounty.helperText',
-    defaultMessage: 'For maintainers and sponsors: Add a bounty to this issue and attract contributors to solve it!'
+    defaultMessage:
+      'For maintainers and sponsors: Add a bounty to this issue and attract contributors to solve it!'
   }
 })
 
