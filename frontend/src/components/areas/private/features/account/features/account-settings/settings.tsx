@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Box, Button, Checkbox, Paper, Switch, Typography } from '@mui/material'
+import { Box, Button, Paper, Switch, Typography } from '@mui/material'
 import { updateIntl } from 'react-intl-redux'
 import { FormattedMessage } from 'react-intl'
 import { store } from '../../../../../../../main/app'
