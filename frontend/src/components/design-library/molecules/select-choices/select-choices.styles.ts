@@ -3,8 +3,8 @@ import { Paper, Grid, Card, CardContent, CardActions } from '@mui/material'
 
 export const SelectChoicesContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
-  marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(3)
+  borderRadius: theme.spacing(2),
+  backgroundColor: theme.palette.background.default
 }))
 
 export const SelectChoicesHeader = styled('div')(({ theme }) => ({
