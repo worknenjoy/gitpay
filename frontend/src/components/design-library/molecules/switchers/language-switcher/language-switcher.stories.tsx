@@ -14,5 +14,19 @@ Default.args = {
   completed: true,
   onSwitchLang: () => {},
   userCurrentLanguage: 'en',
-  user: {}
+  user: {},
+  variant: 'text',
+  showLabel: false,
+  showTooltip: true
+}
+
+export const OutlinedWithLabel = Template.bind({})
+OutlinedWithLabel.args = {
+  completed: true,
+  onSwitchLang: () => {},
+  userCurrentLanguage: 'en',
+  user: {},
+  variant: 'outlined',
+  showLabel: true,
+  showTooltip: false
 }

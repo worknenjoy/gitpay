@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
+import { Box, Button } from '@mui/material'
 import funder from 'images/bounty.png'
 import contributor from 'images/sharing.png'
 import maintainer from 'images/notifications.png'
 
 import SelectChoices from 'design-library/molecules/select-choices/select-choices'
-import { ButtonsRow, CancelButton, SaveButton } from './user-roles.styles'
+import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 
 const messages = defineMessages({
   saveSuccess: {
@@ -28,17 +29,36 @@ const imageMap = {
 const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }) => {
   const { data, completed } = roles
   const intl = useIntl()
-  const [selectedRoles, setSelectedRoles] = useState([])
+  const hasUserEditedRef = useRef(false)
+  const [saving, setSaving] = useState(false)
+
+  const normalizeIdsKey = (items) => {
+    if (!Array.isArray(items)) return ''
+    return items
+      .map((i) => i?.id)
+      .filter((id) => id !== null && id !== undefined)
+      .sort((a, b) => Number(a) - Number(b))
+      .join(',')
+  }
+
+  const serverRoles = user?.Types || []
+  const serverRolesKey = useMemo(() => normalizeIdsKey(serverRoles), [serverRoles])
+
+  const [savedSnapshotKey, setSavedSnapshotKey] = useState(serverRolesKey)
+  const [selectedRoles, setSelectedRoles] = useState(serverRoles)
 
   useEffect(() => {
     fetchRoles().catch(console.log)
   }, [])
 
   useEffect(() => {
-    setSelectedRoles(user.Types || [])
-  }, [user.Types])
+    if (hasUserEditedRef.current) return
+    setSelectedRoles(serverRoles)
+    setSavedSnapshotKey(serverRolesKey)
+  }, [serverRolesKey])
 
   const handleRoleToggle = useCallback((item) => {
+    hasUserEditedRef.current = true
     setSelectedRoles((prev) => {
       const exists = prev.find((i) => i.id === item.id)
       if (exists) {
@@ -51,34 +71,47 @@ const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }
 
   const shouldBeChecked = useCallback(
     (item) => {
-      return selectedRoles.some((s) => s.name === item.name)
+      return selectedRoles.some((s) => s.id === item.id)
     },
     [selectedRoles]
   )
 
-  const handleCancelClick = useCallback(() => {
-    onClose && onClose()
-  }, [onClose])
+  const isDirty = useMemo(() => {
+    return normalizeIdsKey(selectedRoles) !== savedSnapshotKey
+  }, [savedSnapshotKey, selectedRoles])
 
   const handleSaveClick = async (e) => {
     e.preventDefault()
+    if (!isDirty || saving) return
+
+    setSaving(true)
     try {
       await updateUser({ Types: selectedRoles })
       addNotification(intl.formatMessage(messages.saveSuccess))
+      setSavedSnapshotKey(normalizeIdsKey(selectedRoles))
+      hasUserEditedRef.current = false
       onClose && onClose()
     } catch (e) {
       console.log(e)
       addNotification(intl.formatMessage(messages.saveError))
+    } finally {
+      setSaving(false)
     }
   }
 
   return (
     <SelectChoices
-      title={<FormattedMessage id="user.type.title" defaultMessage="What type of user are you?" />}
-      description={
-        <FormattedMessage
-          id="user.type.description"
-          defaultMessage="Define how you will use Gitpay. You can choose multiple types of user roles you want."
+      title={
+        <MainTitle
+          title={
+            <FormattedMessage id="user.type.title" defaultMessage="What type of user are you?" />
+          }
+          subtitle={
+            <FormattedMessage
+              id="user.type.description"
+              defaultMessage="Define how you will use Gitpay. You can choose multiple types of user roles you want."
+            />
+          }
         />
       }
       items={data}
@@ -90,12 +123,20 @@ const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }
       isSelected={shouldBeChecked}
       onToggle={handleRoleToggle}
     >
-      <ButtonsRow>
-        <CancelButton onClick={handleCancelClick}>CANCEL</CancelButton>
-        <SaveButton color="secondary" onClick={handleSaveClick}>
-          SAVE
-        </SaveButton>
-      </ButtonsRow>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSaveClick}
+          disabled={!isDirty || saving}
+        >
+          {saving ? (
+            'Saving…'
+          ) : (
+            <FormattedMessage id="user.roles.actions.save" defaultMessage="Save" />
+          )}
+        </Button>
+      </Box>
     </SelectChoices>
   )
 }

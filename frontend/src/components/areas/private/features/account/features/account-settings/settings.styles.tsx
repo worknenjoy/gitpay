@@ -1,12 +1,7 @@
 import { css, styled } from '@mui/material/styles'
-import { Avatar, Typography } from '@mui/material'
+import { Avatar } from '@mui/material'
 
 import media from '../../../../../../../styleguide/media'
-
-export const Title = styled(Typography)(({ theme }) => ({
-  marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2)
-}))
 
 export const LabelButton = styled('span', {
   shouldForwardProp: (prop) => prop !== 'right'

@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import { Typography, Paper, Grid, Menu, MenuItem, Button, Switch, Checkbox } from '@mui/material'
-import LanguageIcon from '@mui/icons-material/Language'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { Box, Button, Checkbox, Paper, Switch, Typography } from '@mui/material'
 import { updateIntl } from 'react-intl-redux'
 import { FormattedMessage } from 'react-intl'
 import { store } from '../../../../../../../main/app'
@@ -8,172 +7,264 @@ import messagesBr from '../../../../../../../translations/result/br.json'
 import messagesEn from '../../../../../../../translations/result/en.json'
 import messagesBrLocal from '../../../../../../../translations/generated/br.json'
 import messagesEnLocal from '../../../../../../../translations/generated/en.json'
-import { Title, LabelButton, StyledAvatarIconOnly } from './settings.styles'
+import MainTitle from 'design-library/atoms/typography/main-title/main-title'
+import PreferenceRow from 'design-library/molecules/lists/preference-row/preference-row'
+import LanguageSwitcher from 'design-library/molecules/switchers/language-switcher/language-switcher'
 
 const messages = {
   br: process.env.NODE_ENV === 'production' ? messagesBr : messagesBrLocal,
   en: process.env.NODE_ENV === 'production' ? messagesEn : messagesEnLocal
 }
 
-import logoLangEn from 'images/united-states-of-america.png'
-import logoLangBr from 'images/brazil.png'
+const applyLanguage = (lang: 'en' | 'br') => {
+  localStorage.setItem('userLanguage', lang)
+  store.dispatch(
+    updateIntl({
+      locale: lang,
+      messages: messages[lang]
+    })
+  )
+}
 
 const Settings = (props) => {
   const { user } = props
   const { data } = user || {}
-  const [anchorEl, setAnchorEl] = useState(null)
-  const [selectedLanguage, setSelectedLanguage] = useState(null)
-  const [receiveNotifications, setReceiveNotifications] = useState(data.receiveNotifications)
-  const [openForJobs, setOpenForJobs] = useState(data.openForJobs)
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
+  const hasUserEditedRef = useRef(false)
+  const [saving, setSaving] = useState(false)
 
-  const handleLanguageClick = async (lang) => {
-    setSelectedLanguage(lang)
-    setAnchorEl(null)
+  const serverLanguage =
+    (user?.language as 'en' | 'br') || (localStorage.getItem('userLanguage') as 'en' | 'br') || 'en'
+  const serverReceiveNotifications = Boolean(user?.data?.receiveNotifications)
+  const serverOpenForJobs = Boolean(user?.data?.openForJobs)
+
+  const [savedSnapshot, setSavedSnapshot] = useState({
+    language: serverLanguage,
+    receiveNotifications: Boolean(data?.receiveNotifications),
+    openForJobs: Boolean(data?.openForJobs)
+  })
+
+  const [draftLanguage, setDraftLanguage] = useState<'en' | 'br'>(serverLanguage)
+  const [draftReceiveNotifications, setDraftReceiveNotifications] = useState(
+    Boolean(data?.receiveNotifications)
+  )
+  const [draftOpenForJobs, setDraftOpenForJobs] = useState(Boolean(data?.openForJobs))
+
+  useEffect(() => {
+    if (hasUserEditedRef.current) return
+
+    setSavedSnapshot({
+      language: serverLanguage,
+      receiveNotifications: serverReceiveNotifications,
+      openForJobs: serverOpenForJobs
+    })
+    setDraftLanguage(serverLanguage)
+    setDraftReceiveNotifications(serverReceiveNotifications)
+    setDraftOpenForJobs(serverOpenForJobs)
+  }, [serverLanguage, serverReceiveNotifications, serverOpenForJobs])
+
+  const isDirty = useMemo(() => {
+    return (
+      draftLanguage !== savedSnapshot.language ||
+      draftReceiveNotifications !== savedSnapshot.receiveNotifications ||
+      draftOpenForJobs !== savedSnapshot.openForJobs
+    )
+  }, [
+    draftLanguage,
+    draftOpenForJobs,
+    draftReceiveNotifications,
+    savedSnapshot.language,
+    savedSnapshot.openForJobs,
+    savedSnapshot.receiveNotifications
+  ])
+
+  const handleDraftLanguageChange = async (lang: 'en' | 'br') => {
+    hasUserEditedRef.current = true
+    setDraftLanguage(lang)
+
     try {
       await props.updateUser({ language: lang })
-      localStorage.setItem('userLanguage', lang)
-      store.dispatch(
-        updateIntl({
-          locale: lang,
-          messages: messages[lang]
-        })
-      )
+      applyLanguage(lang)
+      setSavedSnapshot((prev) => ({ ...prev, language: lang }))
+      hasUserEditedRef.current = false
     } catch (e) {
       console.log('error', e)
     }
   }
 
-  const handleHiddenChange = async (event) => {
-    setReceiveNotifications(event.currentTarget.checked)
+  const handleDraftReceiveNotificationsChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => {
+    hasUserEditedRef.current = true
+    setDraftReceiveNotifications(checked)
+  }
+
+  const handleDraftOpenForJobsChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => {
+    hasUserEditedRef.current = true
+    setDraftOpenForJobs(checked)
+  }
+
+  const handleSaveSettings = async () => {
+    if (!isDirty || saving) return
+
+    const payload: Record<string, unknown> = {}
+    if (draftLanguage !== savedSnapshot.language) payload.language = draftLanguage
+    if (draftReceiveNotifications !== savedSnapshot.receiveNotifications)
+      payload.receiveNotifications = draftReceiveNotifications
+    if (draftOpenForJobs !== savedSnapshot.openForJobs) payload.openForJobs = draftOpenForJobs
+
+    setSaving(true)
     try {
-      await props.updateUser({ receiveNotifications: event.currentTarget.checked })
+      await props.updateUser(payload)
+
+      if (payload.language) {
+        applyLanguage(draftLanguage)
+      }
+
+      setSavedSnapshot({
+        language: draftLanguage,
+        receiveNotifications: draftReceiveNotifications,
+        openForJobs: draftOpenForJobs
+      })
+
+      hasUserEditedRef.current = false
     } catch (e) {
       console.log('error', e)
+    } finally {
+      setSaving(false)
     }
   }
-
-  const handleJobsCheck = async () => {
-    setOpenForJobs(!openForJobs)
-    try {
-      await props.updateUser({ openForJobs: !openForJobs })
-    } catch (e) {
-      console.log('error', e)
-    }
-  }
-
-  const language = selectedLanguage || user.language
 
   return (
-    <Paper elevation={1} style={{ padding: 20 }}>
-      <Grid container alignItems="center" spacing={1}>
-        <Grid size={{ xs: 12 }}>
-          <Title variant="h5" gutterBottom>
-            <FormattedMessage id="preferences.title" defaultMessage="Settings" />
-          </Title>
-        </Grid>
-        <Grid size={{ xs: 12, sm: 5 }} style={{ marginBottom: 20, marginTop: 40 }}>
-          <Typography color="primary" variant="h5" gutterBottom>
-            <FormattedMessage id="preferences.actions.language.title" defaultMessage="Language" />
-          </Typography>
-          <Button
-            id="chooseLanguageButton"
-            onClick={handleMenu}
-            variant="contained"
-            size="medium"
-            color="primary"
-          >
-            {language ? (
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <StyledAvatarIconOnly
-                  alt={`${language}`}
-                  src={language === 'en' ? logoLangEn : logoLangBr}
-                  style={{ marginLeft: 0 }}
-                />
-                <strong style={{ marginLeft: 10 }}>
-                  {language === 'en' ? 'English' : 'Português'}
-                </strong>
-              </div>
-            ) : (
-              <div>
-                <LanguageIcon />
-                <LabelButton>
-                  <FormattedMessage
-                    id="preferences.actions.choose.language"
-                    defaultMessage="Choose language"
-                  />
-                </LabelButton>
-              </div>
-            )}
-          </Button>
+    <Paper
+      elevation={1}
+      sx={{
+        p: 3,
+        borderRadius: 2,
+        bgcolor: 'background.default'
+      }}
+    >
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        <MainTitle
+          title={<FormattedMessage id="preferences.title" defaultMessage="Settings" />}
+          subtitle={
+            <FormattedMessage
+              id="preferences.subtitle"
+              defaultMessage="Manage your preferences and notifications"
+            />
+          }
+        />
 
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={Boolean(anchorEl)}
-            onClose={() => setAnchorEl(null)}
-          >
-            <MenuItem onClick={() => handleLanguageClick('en')}>
-              <StyledAvatarIconOnly alt="English" src={logoLangEn} />
-              <strong style={{ display: 'inline-block', margin: 10 }}>English</strong>
-            </MenuItem>
-            <MenuItem onClick={() => handleLanguageClick('br')}>
-              <StyledAvatarIconOnly alt="Português" src={logoLangBr} />
-              <strong style={{ display: 'inline-block', margin: 10 }}>Português</strong>
-            </MenuItem>
-          </Menu>
-        </Grid>
-        <Grid size={{ xs: 12 }} style={{ marginTop: 20, marginBottom: 20 }}>
-          <Typography color="primary" variant="h5">
-            <FormattedMessage id="prefences.my.notifications" defaultMessage="Notifications" />
+        <Box>
+          <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 600 }}>
+            <FormattedMessage id="preferences.section.appearance" defaultMessage="Appearance" />
           </Typography>
-          <Switch
-            id="switch_receive_notifications"
-            checked={receiveNotifications}
-            onChange={handleHiddenChange}
-            value="hidden"
-            color="primary"
-          />
-          &nbsp;
-          <label htmlFor="switch_receive_notifications">
-            <Typography
-              component="span"
-              style={{ display: 'inline-block' }}
-              color="primary"
-              variant="body2"
-            >
-              <FormattedMessage
-                id="preferences.notifications.receiveNotifications"
-                defaultMessage="I want to receive relevant notifications from Gitpay"
-              />
-            </Typography>
-          </label>
-        </Grid>
-        <Grid size={{ xs: 12 }} style={{ marginTop: 20, marginBottom: 20 }}>
-          <Typography color="primary" variant="h5">
-            <FormattedMessage id="prefences.my.openforjobs" defaultMessage="Open For Jobs" />
+
+          <Paper variant="outlined" sx={{ borderRadius: 2, bgcolor: 'background.paper' }}>
+            <PreferenceRow
+              title={
+                <FormattedMessage
+                  id="preferences.actions.language.title"
+                  defaultMessage="Language"
+                />
+              }
+              description={
+                <FormattedMessage
+                  id="preferences.actions.language.subtitle"
+                  defaultMessage="Choose your preferred language"
+                />
+              }
+              action={
+                <LanguageSwitcher
+                  completed={Boolean(user)}
+                  onSwitchLang={handleDraftLanguageChange}
+                  userCurrentLanguage={draftLanguage}
+                  user={user}
+                  variant="outlined"
+                  size="medium"
+                  showLabel
+                  showTooltip={false}
+                  buttonId="chooseLanguageButton"
+                  menuId="menu-appbar"
+                />
+              }
+            />
+          </Paper>
+        </Box>
+
+        <Box>
+          <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 600 }}>
+            <FormattedMessage id="preferences.section.preferences" defaultMessage="Preferences" />
           </Typography>
-          <Checkbox onClick={handleJobsCheck} checked={openForJobs} />
-          &nbsp;
-          <label htmlFor="check_open_for_jobs">
-            <Typography
-              component="span"
-              style={{ display: 'inline-block' }}
+
+          <Paper variant="outlined" sx={{ borderRadius: 2, bgcolor: 'background.paper' }}>
+            <PreferenceRow
+              title={
+                <FormattedMessage
+                  id="preferences.notifications.title"
+                  defaultMessage="Receive notifications"
+                />
+              }
+              description={
+                <FormattedMessage
+                  id="preferences.notifications.receiveNotifications"
+                  defaultMessage="I want to receive relevant notifications from Gitpay"
+                />
+              }
+              action={
+                <Switch
+                  id="switch_receive_notifications"
+                  checked={draftReceiveNotifications}
+                  onChange={handleDraftReceiveNotificationsChange}
+                  color="primary"
+                  inputProps={{ 'aria-label': 'receive notifications' }}
+                />
+              }
+              divider
+            />
+
+            <PreferenceRow
+              title={
+                <FormattedMessage id="preferences.jobs.title" defaultMessage="Open for jobs" />
+              }
+              description={
+                <FormattedMessage
+                  id="preferences.jobs.checkbox"
+                  defaultMessage="Are you open for job opportunities?"
+                />
+              }
+              action={
+                <Checkbox
+                  id="check_open_for_jobs"
+                  checked={draftOpenForJobs}
+                  onChange={handleDraftOpenForJobsChange}
+                  inputProps={{ 'aria-label': 'open for jobs' }}
+                />
+              }
+            />
+          </Paper>
+        </Box>
+
+        <Box>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button
+              variant="contained"
               color="primary"
-              variant="body2"
+              onClick={handleSaveSettings}
+              disabled={!isDirty || saving}
             >
-              <FormattedMessage
-                id="preferences.jobs.checkbox"
-                defaultMessage="Are you open for job opportunities?"
-              />
-            </Typography>
-          </label>
-        </Grid>
-      </Grid>
+              {saving ? (
+                'Saving…'
+              ) : (
+                <FormattedMessage id="preferences.actions.save" defaultMessage="Save settings" />
+              )}
+            </Button>
+          </Box>
+        </Box>
+      </Box>
     </Paper>
   )
 }

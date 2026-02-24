@@ -52,16 +52,26 @@ const SelectChoices = <TItem,>({
 }: SelectChoicesProps<TItem>) => {
   const placeholders = Array(placeholderCount).fill(null)
 
+  const shouldRenderHeader = Boolean(title) || Boolean(description)
+  const renderTitle =
+    typeof title === 'string' || typeof title === 'number' ? (
+      <Typography variant="h5">{title}</Typography>
+    ) : (
+      title
+    )
+
   return (
-    <SelectChoicesContainer elevation={2}>
-      <SelectChoicesHeader>
-        <Typography variant="h5">{title}</Typography>
-        {description && (
-          <Typography variant="body2" color="textSecondary" component="p">
-            {description}
-          </Typography>
-        )}
-      </SelectChoicesHeader>
+    <SelectChoicesContainer elevation={1}>
+      {shouldRenderHeader ? (
+        <SelectChoicesHeader>
+          {renderTitle}
+          {description && (
+            <Typography variant="body2" color="textSecondary" component="p">
+              {description}
+            </Typography>
+          )}
+        </SelectChoicesHeader>
+      ) : null}
 
       <SelectChoicesGrid container spacing={2} alignItems="stretch">
         {loading ? (
