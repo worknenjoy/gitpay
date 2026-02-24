@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Button } from '@mui/material'
+import { Button, Divider, Typography } from '@mui/material'
 import {
   PrimaryWrapper,
   PrimaryLabel,
@@ -27,6 +27,11 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
     <div>
       {primary?.map((action, index) => (
         <React.Fragment key={`primary-${action.key ?? index}`}>
+          {action.helperText &&
+            <Typography variant="subtitle2" color="textSecondary" gutterBottom>
+              <FormattedMessage id={action.helperText} />
+            </Typography>
+            }
           <PrimaryWrapper>
             <Button
               onClick={() => actionClick(action.key, action.onClick)}
@@ -49,9 +54,15 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
             })}
         </React.Fragment>
       ))}
+      <Divider />
       <SecondaryContainer>
         {secondary?.map((action, index) => (
           <React.Fragment key={`secondary-${action.key ?? index}`}>
+            {action.helperText &&
+              <Typography variant="subtitle2" color="textSecondary" gutterBottom>
+                <FormattedMessage id={action.helperText} />
+              </Typography>
+            }
             <SecondaryButton
               onClick={() => actionClick(action.key, action.onClick)}
               size="small"
@@ -63,6 +74,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
             >
               <SecondaryLabel>{action.label}</SecondaryLabel>
             </SecondaryButton>
+
             {action.component &&
               React.cloneElement(action.component, {
                 open: action.key === currentKey,

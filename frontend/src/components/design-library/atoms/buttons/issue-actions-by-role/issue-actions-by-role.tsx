@@ -13,6 +13,14 @@ const messages = defineMessages({
   sendSolution: {
     id: 'issue.actions.sendSolution',
     defaultMessage: 'Send solution'
+  },
+  sendSolutionHelperText: {
+    id: 'issue.actions.sendSolution.helperText',
+    defaultMessage: 'For contributors: Do you have a solution for this issue? Send your PR and claim your bounty!'
+  },
+  addBountyHelperText: {
+    id: 'issue.actions.addBounty.helperText',
+    defaultMessage: 'For maintainers and sponsors: Add a bounty to this issue and attract contributors to solve it!'
   }
 })
 
@@ -90,6 +98,7 @@ const IssueActionsByRole = ({
         setOpenPaymentDrawer(true)
       },
       label: intl.formatMessage(messages.addBounty),
+      helperText: intl.formatMessage(messages.addBountyHelperText),
       disabled: shouldDisable,
       icon: <BountyIcon fontSize="small" />,
       component: (
@@ -118,6 +127,7 @@ const IssueActionsByRole = ({
       key: 'send-solution',
       onClick: () => {},
       label: intl.formatMessage(messages.sendSolution),
+      helperText: intl.formatMessage(messages.sendSolutionHelperText),
       disabled: shouldDisable,
       icon: <HowToRegIcon fontSize="small" />,
       component: (

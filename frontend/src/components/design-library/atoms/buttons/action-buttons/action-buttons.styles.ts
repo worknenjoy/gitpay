@@ -3,8 +3,7 @@ import { Button } from '@mui/material'
 
 // Wrapper for each primary action block
 export const PrimaryWrapper = styled.div`
-  margin-top: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `
 
 // Span for the primary button label
@@ -16,7 +15,9 @@ export const PrimaryLabel = styled.span`
 // Container for secondary actions row
 export const SecondaryContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
+  margin-top: 20px;
 `
 
 // Styled MUI Button for secondary actions spacing
