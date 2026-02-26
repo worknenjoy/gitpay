@@ -138,13 +138,6 @@ const Palette = {
         }
       }
     },
-    MuiListItemText: {
-      styleOverrides: {
-        primary: {
-          fontSize: 11
-        }
-      }
-    },
     MuiListItemIcon: {
       styleOverrides: {
         root: {

@@ -1,11 +1,14 @@
 import { ListItemText, MenuItem } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-export const MenuListStyled = styled('div')<{ compact?: boolean }>(({ theme, compact }) => ({
+export const MenuListStyled = styled(ListItemText)<{ compact?: boolean }>(({ theme, compact }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: compact ? 'center' : 'flex-start',
-  flexGrow: 1
+  flexGrow: 1,
+  '& .MuiListItemText-primary': {
+    fontSize: 11
+  }
 }))
 
 export const MenuItemStyled = styled(MenuItem)(({ theme }) => ({
