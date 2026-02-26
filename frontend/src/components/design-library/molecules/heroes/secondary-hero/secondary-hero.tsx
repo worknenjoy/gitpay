@@ -39,7 +39,7 @@ const SecondaryHero = ({ image, animation, title, items }: SecondaryHeroProps) =
               {items.map((item, index) => (
                 <>
                   <ListItemTop>
-                    <ListItemIcon style={{marginRight: 10}}>{item.icon}</ListItemIcon>
+                    <ListItemIcon style={{ marginRight: 10 }}>{item.icon}</ListItemIcon>
                     <ListItemText primary={item.primaryText} secondary={item.secondaryText} />
                   </ListItemTop>
                   {index < items.length - 1 && <Divider />}

@@ -20,7 +20,9 @@ const useProfileSidebarMenu = ({ user }) => {
 
   useEffect(() => {
     const path = history.location.pathname
-    if (path.includes('/profile/explore')) {
+    if (path === '/profile' || path === '/profile/') {
+      setSelected(0)
+    } else if (path.includes('/profile/explore')) {
       setSelected(2)
     } else if (
       path.includes('/profile/task') ||
@@ -61,9 +63,7 @@ const useProfileSidebarMenu = ({ user }) => {
       ]
     },
     {
-      category: (
-        <FormattedMessage id="account.profile.sidemenu.issues" defaultMessage="Issues" />
-      ),
+      category: <FormattedMessage id="account.profile.sidemenu.issues" defaultMessage="Issues" />,
       items: [
         {
           include: isContributor || isMaintainer || isFunding,
@@ -92,10 +92,10 @@ const useProfileSidebarMenu = ({ user }) => {
       ]
     },
     {
-      category: (
+      category: (isFunding || isMaintainer) && (
         <FormattedMessage
-          id="account.profile.sidemenu.section.bounties"
-          defaultMessage="Bounties"
+          id="account.profile.sidemenu.section.payments"
+          defaultMessage="Payments"
         />
       ),
       items: [
@@ -107,36 +107,66 @@ const useProfileSidebarMenu = ({ user }) => {
           selected: selected === 3
         },
         {
-          include: isContributor,
-          onClick: () => history.push('/profile/payment-requests'),
-          icon: <PaymentRequestsIcon />,
-          label: (
-            <FormattedMessage
-              id="account.profile.paymentRequests.list"
-              defaultMessage="Payment Requests"
-            />
-          ),
-          selected: selected === 4
-        },
-        {
           include: isFunding || isMaintainer,
           onClick: () => history.push('/profile/wallets'),
           icon: <WalletIcon />,
           label: <FormattedMessage id="account.profile.wallet.list" defaultMessage="Wallets" />,
           selected: selected === 5
-        },
+        }
+      ]
+    },
+    {
+      category: isContributor && (
+        <FormattedMessage
+          id="account.profile.sidemenu.section.paymentrequests"
+          defaultMessage="Payment Requests"
+        />
+      ),
+      items: [
+        {
+          include: isContributor,
+          onClick: () => history.push('/profile/payment-requests'),
+          icon: <PaymentRequestsIcon />,
+          label: (
+            <FormattedMessage
+              id="account.profile.sidemenu.paymentrequests.paymentrequests"
+              defaultMessage="Payment Requests"
+            />
+          ),
+          selected: selected === 4
+        }
+      ]
+    },
+    {
+      category: isContributor && (
+        <FormattedMessage
+          id="account.profile.sidemenu.section.receivepayments"
+          defaultMessage="Receive Payments"
+        />
+      ),
+      items: [
         {
           include: isContributor,
           onClick: () => history.push('/profile/claims'),
           icon: <ClaimIcon />,
-          label: <FormattedMessage id="account.profile.claims.list" defaultMessage="Claims" />,
+          label: (
+            <FormattedMessage
+              id="account.profile.sidemenu.contributor.claims"
+              defaultMessage="My Claims"
+            />
+          ),
           selected: selected === 6
         },
         {
           include: isContributor,
           onClick: () => history.push('/profile/payouts'),
           icon: <PayoutIcon />,
-          label: <FormattedMessage id="account.profile.payout.list" defaultMessage="Payouts" />,
+          label: (
+            <FormattedMessage
+              id="account.profile.sidemenu.contributor.payouts"
+              defaultMessage="My Payouts"
+            />
+          ),
           selected: selected === 7
         }
       ]
