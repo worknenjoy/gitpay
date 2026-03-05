@@ -38,7 +38,7 @@ export const SelectChoicesCard = styled(Card)(() => ({
 export const SelectChoicesMedia = styled('div')(({ theme }) => ({
   height: 96,
   width: '100%',
-  backgroundColor: theme.palette.action.hover,
+  backgroundColor: '#090607',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

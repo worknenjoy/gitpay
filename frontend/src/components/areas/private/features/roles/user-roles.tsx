@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
 import { Box, Button } from '@mui/material'
-import funder from 'images/bounty.png'
-import contributor from 'images/sharing.png'
-import maintainer from 'images/notifications.png'
+import funder from 'images/roles/bounty.png'
+import contributor from 'images/roles/sharing.png'
+import maintainer from 'images/roles/notifications.png'
+import serviceProvider from 'images/roles/payment-cycle.png'
 
 import SelectChoices from 'design-library/molecules/select-choices/select-choices'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
@@ -23,7 +24,8 @@ const messages = defineMessages({
 const imageMap = {
   funding: funder,
   contributor: contributor,
-  maintainer: maintainer
+  maintainer: maintainer,
+  provider: serviceProvider
 }
 
 const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }) => {
