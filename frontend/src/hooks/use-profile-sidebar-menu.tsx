@@ -126,7 +126,7 @@ const useProfileSidebarMenu = ({ user }) => {
       ),
       items: [
         {
-          include: (isContributor || isProvider),
+          include: isContributor || isProvider,
           onClick: () => history.push('/profile/payment-requests'),
           icon: <PaymentRequestsIcon />,
           label: (
@@ -148,7 +148,7 @@ const useProfileSidebarMenu = ({ user }) => {
       ),
       items: [
         {
-          include: (isContributor || isProvider),
+          include: isContributor || isProvider,
           onClick: () => history.push('/profile/claims'),
           icon: <ClaimIcon />,
           label: (
@@ -160,7 +160,7 @@ const useProfileSidebarMenu = ({ user }) => {
           selected: selected === 6
         },
         {
-          include: (isContributor || isProvider),
+          include: isContributor || isProvider,
           onClick: () => history.push('/profile/payouts'),
           icon: <PayoutIcon />,
           label: (
