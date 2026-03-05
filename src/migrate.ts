@@ -129,7 +129,7 @@ async function cmdStatus() {
     }))
 
   const status = {
-    current: executed.length > 0 ? executed[0].name : '<NO_MIGRATIONS>',
+    current: executed.length > 0 ? executed[executed.length - 1].name : '<NO_MIGRATIONS>',
     executed: executed.map((m) => m.name),
     pending: pending.map((m) => m.name)
   }
@@ -172,6 +172,16 @@ async function cmdResetPrev() {
   return umzug.down({ to: prev })
 }
 
+async function cmdRevertSelected(names: string[]) {
+  const cleanNames = names.map((n) => n.trim()).filter(Boolean)
+  if (cleanNames.length === 0) {
+    throw new Error('Missing migration/seeder name(s). Usage: revert <name1> [name2 ...]')
+  }
+
+  // Revert only the specified migrations/seeders (does not cascade to earlier ones).
+  return umzug.down({ migrations: cleanNames })
+}
+
 function cmdHardReset() {
   return new Promise<void>((resolve, reject) => {
     setImmediate(() => {
@@ -202,6 +212,8 @@ async function run() {
       await cmdReset()
     } else if (cmd === 'prev' || cmd === 'reset-prev') {
       await cmdResetPrev()
+    } else if (cmd === 'revert') {
+      await cmdRevertSelected(process.argv.slice(3))
     } else if (cmd === 'reset-hard') {
       await cmdHardReset()
     } else if (cmd === 'update') {
