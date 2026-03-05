@@ -48,7 +48,7 @@ const SelectChoices = <TItem,>({
   getDescription,
   isSelected,
   onToggle,
-  itemSize = { xs: 12, sm: 6, md: 4 }
+  itemSize = { xs: 12, sm: 6, md: 3 }
 }: SelectChoicesProps<TItem>) => {
   const placeholders = Array(placeholderCount).fill(null)
 
@@ -73,7 +73,7 @@ const SelectChoices = <TItem,>({
         </SelectChoicesHeader>
       ) : null}
 
-      <SelectChoicesGrid container spacing={2} alignItems="stretch">
+      <SelectChoicesGrid container spacing={2} alignItems="stretch" justifyContent="space-around">
         {loading ? (
           <>
             {placeholders.map((_, index) => (

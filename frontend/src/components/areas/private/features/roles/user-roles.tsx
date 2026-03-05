@@ -25,7 +25,7 @@ const imageMap = {
   funding: funder,
   contributor: contributor,
   maintainer: maintainer,
-  'service_provider': serviceProvider
+  provider: serviceProvider
 }
 
 const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }) => {

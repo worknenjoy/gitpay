@@ -16,7 +16,7 @@ import useUserTypes from './use-user-types'
 const useProfileSidebarMenu = ({ user }) => {
   const [selected, setSelected] = useState(0)
   const history = useHistory()
-  const { isContributor, isMaintainer, isFunding, completed } = useUserTypes({ user })
+  const { isContributor, isMaintainer, isFunding, isProvider, completed } = useUserTypes({ user })
 
   useEffect(() => {
     const path = history.location.pathname
@@ -63,7 +63,9 @@ const useProfileSidebarMenu = ({ user }) => {
       ]
     },
     {
-      category: <FormattedMessage id="account.profile.sidemenu.issues" defaultMessage="Issues" />,
+      category: (isFunding || isMaintainer || isContributor) && (
+        <FormattedMessage id="account.profile.sidemenu.issues" defaultMessage="Issues" />
+      ),
       items: [
         {
           include: isContributor || isMaintainer || isFunding,
@@ -116,7 +118,7 @@ const useProfileSidebarMenu = ({ user }) => {
       ]
     },
     {
-      category: isContributor && (
+      category: (isContributor || isProvider) && (
         <FormattedMessage
           id="account.profile.sidemenu.section.paymentrequests"
           defaultMessage="Payment Requests"
@@ -124,7 +126,7 @@ const useProfileSidebarMenu = ({ user }) => {
       ),
       items: [
         {
-          include: isContributor,
+          include: (isContributor || isProvider),
           onClick: () => history.push('/profile/payment-requests'),
           icon: <PaymentRequestsIcon />,
           label: (
@@ -138,7 +140,7 @@ const useProfileSidebarMenu = ({ user }) => {
       ]
     },
     {
-      category: isContributor && (
+      category: (isContributor || isProvider) && (
         <FormattedMessage
           id="account.profile.sidemenu.section.receivepayments"
           defaultMessage="Receive Payments"
@@ -146,7 +148,7 @@ const useProfileSidebarMenu = ({ user }) => {
       ),
       items: [
         {
-          include: isContributor,
+          include: (isContributor || isProvider),
           onClick: () => history.push('/profile/claims'),
           icon: <ClaimIcon />,
           label: (
@@ -158,7 +160,7 @@ const useProfileSidebarMenu = ({ user }) => {
           selected: selected === 6
         },
         {
-          include: isContributor,
+          include: (isContributor || isProvider),
           onClick: () => history.push('/profile/payouts'),
           icon: <PayoutIcon />,
           label: (

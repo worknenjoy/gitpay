@@ -11,7 +11,7 @@ import { CardList, ContentWrapper } from './dashboard-card-list.styles'
 
 const DashboardCardList = ({ user, dashboard }) => {
   const { completed } = user || {}
-  const { isMaintainer, isFunding, isContributor } = useUserTypes({ user })
+  const { isMaintainer, isFunding, isContributor, isProvider } = useUserTypes({ user })
   const { completed: dashboardCompleted, data: dashboardData } = dashboard || {}
 
   return completed && dashboardCompleted ? (
@@ -24,7 +24,7 @@ const DashboardCardList = ({ user, dashboard }) => {
             <WalletsDashboardCard wallets={dashboardData.wallets} />
           </>
         )}
-        {isContributor && (
+        {(isContributor || isProvider) && (
           <>
             <PaymentRequestsDashboardCard paymentRequests={dashboardData.paymentRequests} />
             <ClaimsDashboardCard claims={dashboardData.claims} />
