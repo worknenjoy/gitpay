@@ -84,7 +84,7 @@ const Checkboxes = ({
 
   const columnCount = useMemo(() => {
     const count = checkboxesToRender.length || 1
-    return count > 4 ? 4 : count
+    return count > 5 ? 5 : count
   }, [checkboxesToRender.length])
 
   const mdSize = (12 / columnCount) as 3 | 4 | 6 | 12

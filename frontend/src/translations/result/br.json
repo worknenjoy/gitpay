@@ -641,6 +641,7 @@
   "session.passwordReset.description": "Olá <strong>{username}</strong> (<strong>{email}</strong>), {br} digite sua nova senha abaixo e confirme para redefinir sua senha.",
   "signin.description": "Entre na sua conta",
   "signin.welcomeBack": "Bem-vindo de volta!",
+  "signup.asType": "Cadastrar-se como {type}",
   "signup.description": "Criar sua conta",
   "signup.welcome": "Bem-vindo!",
   "skip": "Pular",

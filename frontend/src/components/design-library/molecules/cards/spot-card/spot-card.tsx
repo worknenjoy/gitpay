@@ -9,7 +9,7 @@ import { StyledCard, StyledCardContent, Content } from './spot-card.styles'
 
 import logo from 'images/logo-complete.png'
 
-const SpotCard = ({ title, description, children }) => {
+const SpotCard = ({ title, description, children, themeVariant = 'default' }) => {
   const [openDialog, setOpenDialog] = useState(false)
   const [dialogType, setDialogType] = useState(null)
 
@@ -38,7 +38,7 @@ const SpotCard = ({ title, description, children }) => {
 
   return (
     <>
-      <StyledCard>
+      <StyledCard $themeVariant={themeVariant}>
         <StyledCardContent>
           <Link to="/">
             <img src={logo} width={140} alt="Logo" />

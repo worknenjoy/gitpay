@@ -641,6 +641,7 @@
   "session.passwordReset.description": "Hello <strong>{username}</strong> (<strong>{email}</strong>), {br} please enter your new password below and confirm to reset your password.",
   "signin.description": "Sign in to your account",
   "signin.welcomeBack": "Welcome back!",
+  "signup.asType": "Signup as a {type}",
   "signup.description": "Create your account",
   "signup.welcome": "Welcome!",
   "skip": "Skip",

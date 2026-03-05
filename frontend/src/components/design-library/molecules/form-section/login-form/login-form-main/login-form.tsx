@@ -59,7 +59,7 @@ const LoginForm: React.FC<LoginButtonProps> = ({
   return (
     <Wrapper contrast={contrast}>
       <Content>
-        <div>
+        <div style={{ textAlign: 'center' }}>
           {mode !== 'reset' ? (
             <>
               <Typography

@@ -18,15 +18,16 @@ const UserRoleField = ({ roles, onChange }) => {
   )
 
   return (
-    <Grid container spacing={2} alignContent="center" alignItems="center">
-      <Grid size={{ xs: 12, md: 2 }}>
+    <Grid container spacing={2} alignContent="center" alignItems="center" style={{ marginTop: 20 }}>
+      <Grid size={{ xs: 12, md: 12 }}>
         <Typography
           variant="caption"
           color="textSecondary"
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         >
           <FormattedMessage id="user.types.roles.select.label" defaultMessage="Signup as: " />
           <Tooltip
+            style={{ marginLeft: 5 }}
             placement="right"
             title={
               <FormattedMessage
@@ -39,7 +40,7 @@ const UserRoleField = ({ roles, onChange }) => {
           </Tooltip>
         </Typography>
       </Grid>
-      <Grid size={{ xs: 12, md: 10 }}>
+      <Grid size={{ xs: 12, md: 12 }}>
         <Checkboxes
           checkboxes={checkBoxes}
           includeSelectAll={true}

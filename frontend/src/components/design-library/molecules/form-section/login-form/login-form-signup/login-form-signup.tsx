@@ -27,6 +27,8 @@ type LoginFormSignupProps = {
   onSignin?: () => void
   roles?: any
   fetchRoles?: () => void
+  hideRoleSelection?: boolean
+  presetRoleId?: string | number
 }
 
 const LoginFormSignup = ({
@@ -37,7 +39,9 @@ const LoginFormSignup = ({
   agreeTermsCheckError,
   onSignin,
   roles,
-  fetchRoles
+  fetchRoles,
+  hideRoleSelection,
+  presetRoleId
 }: LoginFormSignupProps) => {
   const [openTermsDialog, setOpenTermsDialog] = useState(false)
   const [openPrivacyDialog, setOpenPrivacyDialog] = useState(false)
@@ -227,6 +231,7 @@ const LoginFormSignup = ({
     e.preventDefault()
     const { captchaChecked, agreeTermsCheck, name, username, password, confirmPassword, Types } =
       state
+    const selectedTypes = hideRoleSelection && presetRoleId ? [presetRoleId] : Types
     const termsAgreed = termsChecked(agreeTermsCheck)
     const validName = validateName(name)
     const validEmail = validateEmail(username)
@@ -245,7 +250,7 @@ const LoginFormSignup = ({
           name: name,
           email: username,
           password: password,
-          Types: Types
+          Types: selectedTypes
         })
         const errorType = response?.error && response?.error?.response?.data.message
         if (errorType === 'user.exist') {
@@ -279,10 +284,19 @@ const LoginFormSignup = ({
   }
 
   useEffect(() => {
-    process.env.NODE_ENV === 'development' && setState({ ...state, captchaChecked: true })
-    process.env.NODE_ENV === 'test' && setState({ ...state, captchaChecked: true })
-    fetchRoles()
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+      setState((prev) => ({ ...prev, captchaChecked: true }))
+    }
+
+    fetchRoles?.()
   }, [])
+
+  useEffect(() => {
+    if (!hideRoleSelection) return
+    if (presetRoleId === undefined || presetRoleId === null) return
+
+    setState((prev) => ({ ...prev, Types: [presetRoleId] }))
+  }, [hideRoleSelection, presetRoleId])
 
   const { error, password, confirmPassword } = state
 
@@ -359,9 +373,11 @@ const LoginFormSignup = ({
             defaultValue={state.confirmPassword}
           />
         </Margins>
-        <Margins>
-          <UserRoleField roles={roles} onChange={handleTypesChange} />
-        </Margins>
+        {!hideRoleSelection && (
+          <Margins>
+            <UserRoleField roles={roles} onChange={handleTypesChange} />
+          </Margins>
+        )}
         <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {state.agreeTermsCheck ? (

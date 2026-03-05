@@ -19,7 +19,7 @@ const SessionPage = () => {
           <Route exact path="/reset-password/:token" component={ResetPasswordPageContainer} />
           <Route exact path="/token/:token" component={Session} />
           <Route exact path="/activate/user/:userId/token/:token" component={AccountActivation} />
-          <Route exact path="/signup/:status" component={RegisterPageContainer} />
+          <Route exact path="/signup/:type" component={RegisterPageContainer} />
           <Route exact path="/forgot" component={ForgotPasswordPageContainer} />
         </Switch>
       </HashRouter>

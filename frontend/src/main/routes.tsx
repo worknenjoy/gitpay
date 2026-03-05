@@ -24,6 +24,7 @@ export default (props) => (
         path={[
           '/reset-password',
           '/signup',
+          '/signup/:type',
           '/signin',
           '/forgot',
           '/activate/user/:userId/token/:token',
