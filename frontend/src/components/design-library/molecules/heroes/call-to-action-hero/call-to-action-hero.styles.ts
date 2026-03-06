@@ -5,6 +5,7 @@ import ListItem from '@mui/material/ListItem'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 
 export const CallToActionHeroStyled = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.primary.contrastText,
   position: 'relative',
   width: '100%',
   height: 500,

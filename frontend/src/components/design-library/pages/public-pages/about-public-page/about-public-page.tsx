@@ -21,7 +21,7 @@ const About = () => {
         content={
           <FormattedMessage
             id="aboutSectionHeroContent"
-            defaultMessage="At Gitpay, our mission is to empower open-source developers and maintainers by providing a platform that connects them with sponsors and contributors. We believe in the power of collaboration and the importance of rewarding those who contribute to the open-source ecosystem."
+            defaultMessage="Gitpay connects payments to real deliverables. Issues can be funded with bounties, pull requests can unlock rewards, and service providers can request payments for work delivered through repositories and tracked files. The result is a more transparent and reliable way to fund and pay for digital work."
           />
         }
       />
@@ -32,7 +32,7 @@ const About = () => {
         content={
           <FormattedMessage
             id="aboutSectionHeroContent2"
-            defaultMessage="Building a sustainable open-source economy where collaboration and contribution are fairly rewarded."
+            defaultMessage="Building a collaborative digital economy where delivered work is verifiable and payments are connected to real outcomes."
           />
         }
         items={[
@@ -41,13 +41,13 @@ const About = () => {
             primaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem4Primary"
-                defaultMessage="Open-source work is valued and financially supported."
+                defaultMessage="Work is funded with clear expectations."
               />
             ),
             secondaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem4Secondary"
-                defaultMessage="We aim to make open source sustainable by ensuring developers are compensated for their time and expertise."
+                defaultMessage="Define scope, attach funding, and connect payouts to what needs to be delivered."
               />
             )
           },
@@ -56,13 +56,13 @@ const About = () => {
             primaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem5Primary"
-                defaultMessage="Maintainers can grow their projects with community help."
+                defaultMessage="Teams can organize delivery through repositories."
               />
             ),
             secondaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem5Secondary"
-                defaultMessage="Gitpay allows maintainers to import issues and bring in contributors, accelerating development and reducing maintenance overhead."
+                defaultMessage="Import and track issues, coordinate contributors and service providers, and keep execution tied to versioned work."
               />
             )
           },
@@ -71,13 +71,13 @@ const About = () => {
             primaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem6Primary"
-                defaultMessage="Developers are recognized and rewarded for solving real problems."
+                defaultMessage="Contributors and specialists are rewarded for delivered results."
               />
             ),
             secondaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem6Secondary"
-                defaultMessage="Every contribution counts — from bug fixes to new features — and each completed task earns transparent rewards."
+                defaultMessage="From pull requests to scoped services, completed work can be verified and paid with transparent rules."
               />
             )
           },
@@ -86,13 +86,13 @@ const About = () => {
             primaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem3Primary"
-                defaultMessage="Sponsors see measurable impact from every contribution they fund."
+                defaultMessage="Funders and clients see measurable delivery from every payment."
               />
             ),
             secondaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem3Secondary"
-                defaultMessage="Companies and individuals can fund issues that directly improve the tools and frameworks they rely on."
+                defaultMessage="Every funded task is linked to tracked work, helping teams verify progress before payout."
               />
             )
           }
@@ -104,7 +104,7 @@ const About = () => {
         content={
           <FormattedMessage
             id="aboutSectionHeroContent3"
-            defaultMessage="The principles that guide how we build, collaborate, and support the open-source community."
+            defaultMessage="The principles that guide how we build, collaborate, and move money through work-centered flows."
           />
         }
         items={[
@@ -116,7 +116,7 @@ const About = () => {
             secondaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem7Secondary"
-                defaultMessage="We believe in open collaboration and clear communication. Every transaction, bounty, and decision is visible to all participants."
+                defaultMessage="We believe in clear collaboration and communication. Tasks, funding, and payouts stay visible to participants with the right context."
               />
             )
           },
@@ -128,19 +128,19 @@ const About = () => {
             secondaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem8Secondary"
-                defaultMessage="Everyone involved — maintainers, contributors, and sponsors — deserves equal respect and clear terms for participation and reward."
+                defaultMessage="Everyone involved — teams, contributors, service providers, and funders — gets clear terms for participation, delivery, and payment."
               />
             )
           },
           {
             icon: <Work />,
             primaryText: (
-              <FormattedMessage id="aboutSectionHeroItem9Primary" defaultMessage="Community" />
+              <FormattedMessage id="aboutSectionHeroItem9Primary" defaultMessage="Collaboration" />
             ),
             secondaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem9Secondary"
-                defaultMessage="Gitpay thrives on collaboration. We encourage diverse voices, shared learning, and collective ownership of better software."
+                defaultMessage="Gitpay is built for collaborative execution across repositories, teams, and independent professionals working toward shared outcomes."
               />
             )
           },
@@ -152,7 +152,7 @@ const About = () => {
             secondaryText: (
               <FormattedMessage
                 id="aboutSectionHeroItem10Secondary"
-                defaultMessage="Every issue solved, every bounty completed, and every sponsorship funded brings open source one step closer to sustainability."
+                defaultMessage="Every task completed and every payout processed helps teams deliver faster with accountability and trust."
               />
             )
           },

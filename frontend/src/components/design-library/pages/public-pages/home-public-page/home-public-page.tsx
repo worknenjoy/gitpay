@@ -1,13 +1,18 @@
 import React from 'react'
 
-import { Work, CardMembership, Assignment, AttachMoney, TaskAlt } from '@mui/icons-material'
+import { Work, CardMembership, AttachMoney, TaskAlt } from '@mui/icons-material'
 
 import { useIntl, FormattedMessage } from 'react-intl'
 import { useHistory } from 'react-router-dom'
 
 import MainHero from 'design-library/molecules/heroes/main-hero/main-hero'
+import RolesHero from 'design-library/molecules/heroes/roles-hero/roles-hero'
 import SecondaryHero from 'design-library/molecules/heroes/secondary-hero/secondary-hero'
 import CallToActionHero from 'design-library/molecules/heroes/call-to-action-hero/call-to-action-hero'
+import bountyImage from 'images/roles/bounty.png'
+import notificationsImage from 'images/roles/notifications.png'
+import paymentCycleImage from 'images/roles/payment-cycle.png'
+import sharingImage from 'images/roles/sharing.png'
 
 const Home = () => {
   const history = useHistory()
@@ -20,13 +25,13 @@ const Home = () => {
         mainTitle={
           <FormattedMessage
             id="welcome.hero.main.title"
-            defaultMessage="Collaborate. Contribute. Get rewarded."
+            defaultMessage="The payment platform for work delivered"
           />
         }
         description={
           <FormattedMessage
             id="welcome.hero.main.description"
-            defaultMessage="Gitpay connects developers, maintainers, and sponsors to fund and solve open-source issues together. Maintainers can import issues and grow their projects, contributors earn bounties for solving them, and sponsors fund the work that moves open source forward."
+            defaultMessage="Built around Git as the infrastructure for collaboration, Gitpay connects payments directly to the work being done. Fund issues, reward approved pull requests, or request payment for services delivered through repositories and tracked files. Gitpay provides a transparent way to fund work, verify delivery, and distribute payments."
           />
         }
         animation={'/lottie/developer-main.lottie'}
@@ -45,6 +50,111 @@ const Home = () => {
           }
         ]}
       />
+      <RolesHero
+        title={
+          <FormattedMessage
+            id="welcome.roles.hero.title"
+            defaultMessage="Choose your role and get started"
+          />
+        }
+        description={
+          <FormattedMessage
+            id="welcome.roles.hero.description"
+            defaultMessage="Each role has a different journey. Pick the one that fits you best."
+          />
+        }
+        cards={[
+          {
+            type: 'maintainer',
+            title: (
+              <FormattedMessage
+                id="welcome.roles.hero.maintainer.title"
+                defaultMessage="Maintainer"
+              />
+            ),
+            description: (
+              <FormattedMessage
+                id="welcome.roles.hero.maintainer.description"
+                defaultMessage="Import issues from your repository, organize work, and pay bounties when tasks are completed."
+              />
+            ),
+            image: notificationsImage,
+            actionLabel: (
+              <FormattedMessage
+                id="welcome.roles.hero.maintainer.action"
+                defaultMessage="Signup as maintainer"
+              />
+            ),
+            onAction: () => history.push('/signup/maintainer')
+          },
+          {
+            type: 'contributor',
+            title: (
+              <FormattedMessage
+                id="welcome.roles.hero.contributor.title"
+                defaultMessage="Contributor"
+              />
+            ),
+            description: (
+              <FormattedMessage
+                id="welcome.roles.hero.contributor.description"
+                defaultMessage="Find tasks, submit pull requests, and get rewarded for solving issues."
+              />
+            ),
+            image: bountyImage,
+            actionLabel: (
+              <FormattedMessage
+                id="welcome.roles.hero.contributor.action"
+                defaultMessage="Signup as contributor"
+              />
+            ),
+            onAction: () => history.push('/signup/contributor')
+          },
+          {
+            type: 'sponsor',
+            title: (
+              <FormattedMessage id="welcome.roles.hero.sponsor.title" defaultMessage="Sponsor" />
+            ),
+            description: (
+              <FormattedMessage
+                id="welcome.roles.hero.sponsor.description"
+                defaultMessage="Fund bounties for open-source issues and support the work you want to see shipped."
+              />
+            ),
+            image: sharingImage,
+            actionLabel: (
+              <FormattedMessage
+                id="welcome.roles.hero.sponsor.action"
+                defaultMessage="Signup as sponsor"
+              />
+            ),
+            onAction: () => history.push('/signup/sponsor')
+          },
+          {
+            type: 'service-provider',
+            title: (
+              <FormattedMessage
+                id="welcome.roles.hero.serviceProvider.title"
+                defaultMessage="Service Provider"
+              />
+            ),
+            description: (
+              <FormattedMessage
+                id="welcome.roles.hero.serviceProvider.description"
+                defaultMessage="Deliver specialized services and use payment requests to receive funds through Gitpay."
+              />
+            ),
+            image: paymentCycleImage,
+            actionLabel: (
+              <FormattedMessage
+                id="welcome.roles.hero.serviceProvider.action"
+                defaultMessage="Signup as service provider"
+              />
+            ),
+            onAction: () => history.push('/signup/service-provider')
+          }
+        ]}
+      />
       <SecondaryHero
         animation="/lottie/how-it-works.lottie"
         title={intl.formatMessage({
@@ -53,32 +163,17 @@ const Home = () => {
         })}
         items={[
           {
-            icon: <Assignment color="primary" />,
+            icon: <AttachMoney color="primary" />,
             primaryText: (
               <FormattedMessage
                 id="welcome.secondary.hero.item0.primary"
-                defaultMessage="Import an issue to Gitpay"
+                defaultMessage="Fund work through issues"
               />
             ),
             secondaryText: (
               <FormattedMessage
                 id="welcome.secondary.hero.item0.secondary"
-                defaultMessage="Import an issue from a Git repository. Contributors pick issues they want to solve."
-              />
-            )
-          },
-          {
-            icon: <AttachMoney color="primary" />,
-            primaryText: (
-              <FormattedMessage
-                id="welcome.secondary.hero.item1.primary"
-                defaultMessage="Maintainers or Sponsors fund the bounty"
-              />
-            ),
-            secondaryText: (
-              <FormattedMessage
-                id="welcome.secondary.hero.item1.secondary"
-                defaultMessage="Sponsors and maintainers fund the work. Bounties are held securely until completion."
+                defaultMessage="Import an issue from a Git repository and attach a bounty. Maintainers or sponsors can fund the work, creating a clear reward for contributors who solve it."
               />
             )
           },
@@ -86,14 +181,14 @@ const Home = () => {
             icon: <TaskAlt color="primary" />,
             primaryText: (
               <FormattedMessage
-                id="welcome.secondary.hero.item2.primary"
-                defaultMessage="Contributors submit a solution with PR"
+                id="welcome.secondary.hero.item1.primary"
+                defaultMessage="Contributors deliver the work"
               />
             ),
             secondaryText: (
               <FormattedMessage
-                id="welcome.secondary.hero.item2.secondary"
-                defaultMessage="When your PR is merged, you can submit your solution on Gitpay."
+                id="welcome.secondary.hero.item1.secondary"
+                defaultMessage="Developers pick issues they want to solve and submit their solution through a pull request. Once the PR is reviewed and merged, the work is considered delivered."
               />
             )
           },
@@ -101,14 +196,14 @@ const Home = () => {
             icon: <CardMembership color="primary" />,
             primaryText: (
               <FormattedMessage
-                id="welcome.secondary.hero.item3.primary"
-                defaultMessage="A payout is sent to the contributor bank account"
+                id="welcome.secondary.hero.item2.primary"
+                defaultMessage="Payment is released"
               />
             ),
             secondaryText: (
               <FormattedMessage
-                id="welcome.secondary.hero.item3.secondary"
-                defaultMessage="Once the solution is verified, the payout is automatically sent to the contributor's bank account."
+                id="welcome.secondary.hero.item2.secondary"
+                defaultMessage="When the solution is verified, Gitpay releases the payout to the contributor's account."
               />
             )
           },
@@ -116,14 +211,14 @@ const Home = () => {
             icon: <Work color="primary" />,
             primaryText: (
               <FormattedMessage
-                id="welcome.secondary.hero.item4.primary"
-                defaultMessage="The reverse flow is also possible"
+                id="welcome.secondary.hero.item3.primary"
+                defaultMessage="Or request payment for delivered work"
               />
             ),
             secondaryText: (
               <FormattedMessage
-                id="welcome.secondary.hero.item4.secondary"
-                defaultMessage="With our Payment Request system, contributors can request payment for work done directly through the platform."
+                id="welcome.secondary.hero.item3.secondary"
+                defaultMessage="Gitpay also supports direct payment requests. Service providers or contributors can request payment for work delivered through repositories, files, or Git-based collaboration."
               />
             )
           }
@@ -133,7 +228,7 @@ const Home = () => {
         title={
           <FormattedMessage
             id="welcome.cta.hero.title"
-            defaultMessage="Join thousands of developers solving issues and getting paid while contributing to amazing projects."
+            defaultMessage="Join developers and service providers delivering work and getting paid through Git."
           />
         }
         actions={[

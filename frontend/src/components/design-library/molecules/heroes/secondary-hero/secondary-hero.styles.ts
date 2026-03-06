@@ -25,7 +25,7 @@ export const BaseSection = styled('div', {
 
 // Section with alternate background
 export const AltSection = styled(BaseSection)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.contrastText
+
 }))
 
 // Image helpers
