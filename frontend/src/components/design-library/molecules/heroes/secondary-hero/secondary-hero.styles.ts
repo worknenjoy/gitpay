@@ -23,9 +23,15 @@ export const BaseSection = styled('div', {
   ...(alternative && { backgroundColor: '#f1f0ea' })
 }))
 
-// Section with alternate background
-export const AltSection = styled(BaseSection)(({ theme }) => ({
+type AltSectionProps = {
+  $withContrast?: boolean
+}
 
+// Section with alternate background
+export const AltSection = styled(BaseSection, {
+  shouldForwardProp: (prop) => prop !== '$withContrast'
+})<AltSectionProps>(({ theme, $withContrast }) => ({
+  backgroundColor: $withContrast ? theme.palette.primary.contrastText : 'transparent'
 }))
 
 // Image helpers

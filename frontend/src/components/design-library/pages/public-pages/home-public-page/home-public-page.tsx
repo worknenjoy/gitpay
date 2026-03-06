@@ -6,7 +6,7 @@ import { useIntl, FormattedMessage } from 'react-intl'
 import { useHistory } from 'react-router-dom'
 
 import MainHero from 'design-library/molecules/heroes/main-hero/main-hero'
-import RolesHero from 'design-library/molecules/heroes/roles-hero/roles-hero'
+import CardsHero from 'design-library/molecules/heroes/cards-hero/cards-hero'
 import SecondaryHero from 'design-library/molecules/heroes/secondary-hero/secondary-hero'
 import CallToActionHero from 'design-library/molecules/heroes/call-to-action-hero/call-to-action-hero'
 import bountyImage from 'images/roles/bounty.png'
@@ -25,7 +25,7 @@ const Home = () => {
         mainTitle={
           <FormattedMessage
             id="welcome.hero.main.title"
-            defaultMessage="The payment platform for work delivered"
+            defaultMessage="The payment platform for work delivered. Powered by Git"
           />
         }
         description={
@@ -50,7 +50,8 @@ const Home = () => {
           }
         ]}
       />
-      <RolesHero
+      <CardsHero
+        withContrast
         title={
           <FormattedMessage
             id="welcome.roles.hero.title"
@@ -128,7 +129,7 @@ const Home = () => {
                 defaultMessage="Signup as sponsor"
               />
             ),
-            onAction: () => history.push('/signup/sponsor')
+            onAction: () => history.push('/signup/funding')
           },
           {
             type: 'service-provider',
@@ -155,7 +156,78 @@ const Home = () => {
           }
         ]}
       />
+      <CardsHero
+        withContrast={false}
+        title="What is Gitpay for"
+        cards={[
+          {
+            type: 'open-source',
+            title: '🧩 Open Source',
+            description: (
+              <>
+                Fund and solve issues in public repositories.
+                <br />
+                Sponsors fund issues
+                <br />
+                Contributors pick issues to solve
+                <br />
+                Work is delivered through pull requests
+                <br />
+                Gitpay handles payouts once the PR is merged
+              </>
+            ),
+            image: notificationsImage,
+            actionLabel: 'Explore open source',
+            onAction: () => history.push('/use-cases/open-source')
+          },
+          {
+            type: 'private-projects',
+            title: '🔒 Private Projects',
+            description: (
+              <>
+                Fund work inside private repositories or internal projects.
+                <br />
+                Companies fund tasks or features
+                <br />
+                Developers submit work through pull requests
+                <br />
+                Maintainers verify delivery by merging the PR
+                <br />
+                Gitpay releases the payment automatically
+                <br />
+                This works well for contract work, agencies, and on-demand development services.
+              </>
+            ),
+            image: sharingImage,
+            actionLabel: 'Explore private projects',
+            onAction: () => history.push('/use-cases/private-projects')
+          },
+          {
+            type: 'service-payments',
+            title: '💼 Service Payments',
+            description: (
+              <>
+                Receive payments for delivered work.
+                <br />
+                Create a payment request
+                <br />
+                Share a payment link with your client
+                <br />
+                Deliver the work
+                <br />
+                Receive payouts directly to your bank account
+                <br />
+                This works for developers, consultants, freelancers, and service providers who want a simple way to request payment.
+              </>
+            ),
+            image: paymentCycleImage,
+            actionLabel: 'Explore service payments',
+            onAction: () => history.push('/use-cases/service-payments')
+          }
+        ]}
+      />
       <SecondaryHero
+        withContrast
         animation="/lottie/how-it-works.lottie"
         title={intl.formatMessage({
           id: 'welcome.secondary.hero.title',
@@ -225,6 +297,7 @@ const Home = () => {
         ]}
       />
       <CallToActionHero
+        withContrast={false}
         title={
           <FormattedMessage
             id="welcome.cta.hero.title"

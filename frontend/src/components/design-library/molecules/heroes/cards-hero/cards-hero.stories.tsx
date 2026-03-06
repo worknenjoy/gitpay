@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import RolesHero from './roles-hero'
+import CardsHero from './cards-hero'
 import bountyImage from 'images/roles/bounty.png'
 import notificationsImage from 'images/roles/notifications.png'
 import paymentCycleImage from 'images/roles/payment-cycle.png'
 import sharingImage from 'images/roles/sharing.png'
 
-const meta: Meta<typeof RolesHero> = {
-  title: 'Design Library/Molecules/Heroes/RolesHero',
-  component: RolesHero,
+const meta: Meta<typeof CardsHero> = {
+  title: 'Design Library/Molecules/Heroes/CardsHero',
+  component: CardsHero,
   argTypes: {
     title: { control: 'text' },
     description: { control: 'text' },
@@ -17,7 +17,7 @@ const meta: Meta<typeof RolesHero> = {
 }
 
 export default meta
-type Story = StoryObj<typeof RolesHero>
+type Story = StoryObj<typeof CardsHero>
 
 export const Default: Story = {
   args: {

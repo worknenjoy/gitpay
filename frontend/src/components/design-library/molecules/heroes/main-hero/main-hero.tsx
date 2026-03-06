@@ -35,7 +35,7 @@ const MainHero = ({ mainTitle, description, actions, image, animation }: MainHer
           </Grid>
           <Grid size={{ xs: 12, sm: 7 }}>
             <HeroTitle>
-              <Typography variant="h3" gutterBottom align="left">
+              <Typography variant="h4" gutterBottom align="left">
                 {mainTitle}
               </Typography>
             </HeroTitle>

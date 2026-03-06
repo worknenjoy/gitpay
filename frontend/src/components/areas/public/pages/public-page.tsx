@@ -11,6 +11,9 @@ import TaskListUser from '../../../../containers/tasks/task-list-user'
 import useCommonActions from '../../../../hooks/use-common-actions'
 import ExplorePage from '../features/explore/pages/explore-page'
 import PricingPage from '../features/pricing/pages/pricing-page'
+import OpenSourcePage from '../features/welcome/pages/open-source-page'
+import PrivateProjectsPage from '../features/welcome/pages/private-projects-page'
+import ServicePaymentsPage from '../features/welcome/pages/service-payments-page'
 
 const PublicPage = ({
   user,
@@ -43,6 +46,9 @@ const PublicPage = ({
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/welcome" component={WelcomeContainer} />
+          <Route exact path="/use-cases/open-source" component={OpenSourcePage} />
+          <Route exact path="/use-cases/private-projects" component={PrivateProjectsPage} />
+          <Route exact path="/use-cases/service-payments" component={ServicePaymentsPage} />
           <Route path="/pricing" component={PricingPage} />
           {/* Team page removed - unused legacy route */}
           <Route exact path="/task/:id" component={TaskContainer} />

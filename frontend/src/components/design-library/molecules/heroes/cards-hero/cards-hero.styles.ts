@@ -1,11 +1,17 @@
 import { Button, Card, CardContent } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-export const Section = styled('section')(({ theme }) => ({
+type SectionProps = {
+  $withContrast?: boolean
+}
+
+export const Section = styled('section', {
+  shouldForwardProp: (prop) => prop !== '$withContrast'
+})<SectionProps>(({ theme, $withContrast }) => ({
   padding: '1rem',
   marginTop: 20,
   marginBottom: 20,
-  backgroundColor: theme.palette.primary.contrastText
+  backgroundColor: $withContrast ? theme.palette.primary.contrastText : 'transparent'
 }))
 
 export const Header = styled('div')({

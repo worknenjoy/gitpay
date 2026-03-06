@@ -1,7 +1,7 @@
 import React from 'react'
 import { Typography } from '@mui/material'
 import { Grid } from '@mui/system'
-import { Section, Header, RoleCard, RoleCardContent, RoleImage, ActionButton } from './roles-hero.styles'
+import { Section, Header, RoleCard, RoleCardContent, RoleImage, ActionButton } from './cards-hero.styles'
 
 type RoleCardItem = {
   type: string
@@ -12,15 +12,16 @@ type RoleCardItem = {
   onAction?: () => void
 }
 
-type RolesHeroProps = {
+type CardsHeroProps = {
   title: React.ReactNode
   description?: React.ReactNode
   cards: RoleCardItem[]
+  withContrast?: boolean
 }
 
-const RolesHero = ({ title, description, cards }: RolesHeroProps) => {
+const CardsHero = ({ title, description, cards, withContrast = false }: CardsHeroProps) => {
   return (
-    <Section>
+    <Section $withContrast={withContrast}>
       <Header>
         <Typography variant="h4" gutterBottom>
           {title}
@@ -31,7 +32,7 @@ const RolesHero = ({ title, description, cards }: RolesHeroProps) => {
           </Typography>
         )}
       </Header>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} justifyContent="center">
         {cards.map((card) => (
           <Grid key={card.type} size={{ xs: 12, sm: 6, md: 3 }}>
             <RoleCard>
@@ -55,4 +56,4 @@ const RolesHero = ({ title, description, cards }: RolesHeroProps) => {
   )
 }
 
-export default RolesHero
+export default CardsHero
