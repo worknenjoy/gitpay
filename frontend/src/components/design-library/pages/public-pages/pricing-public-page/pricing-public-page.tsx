@@ -122,7 +122,10 @@ function PricingPublicPage() {
                       {tier.price}
                     </Typography>
                     <Typography variant="body1" color="textSecondary">
-                      <FormattedMessage id="welcome.pricing.contributor" defaultMessage=" / payout" />
+                      <FormattedMessage
+                        id="welcome.pricing.contributor"
+                        defaultMessage=" / payout"
+                      />
                     </Typography>
                   </CardPricing>
 
