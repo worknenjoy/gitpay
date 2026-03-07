@@ -4,6 +4,7 @@ import { loggedIn, logOut } from '../../actions/loginActions'
 import { createTask } from '../../actions/taskActions'
 import { fetchRoles } from '../../actions/userRoleActions'
 import { info } from '../../actions/infoActions'
+import { joinTeam } from '../../actions/teamActions'
 
 const mapStateToProps = (state: any) => {
   return {
@@ -21,7 +22,8 @@ const mapDispatchToProps = (dispatch: any) => {
     forgotPassword: (email: any) => dispatch(forgotPassword(email)),
     createTask: (task: any, history: any) => dispatch(createTask(task, history)),
     fetchRoles: () => dispatch(fetchRoles()),
-    getInfo: () => dispatch(info())
+    getInfo: () => dispatch(info()),
+    joinTeam: (email: string) => dispatch(joinTeam(email))
   }
 }
 

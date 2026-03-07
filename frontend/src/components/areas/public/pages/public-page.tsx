@@ -4,13 +4,13 @@ import PublicBase from 'design-library/templates/base/public-base/public-base'
 import HomePage from 'design-library/pages/public-pages/home-public-page/home-public-page'
 import TaskContainer from '../../../../containers/tasks/task'
 import WelcomeContainer from '../../../../containers/public/welcome'
-// TeamContainer removed - unused legacy container
 import ProjectPageContainer from '../../../../containers/pages/project-page'
 import OrganizationPageContainer from '../../../../containers/pages/organization-page'
 import TaskListUser from '../../../../containers/tasks/task-list-user'
 import useCommonActions from '../../../../hooks/use-common-actions'
 import ExplorePage from '../features/explore/pages/explore-page'
 import PricingPage from '../features/pricing/pages/pricing-page'
+import TeamPage from '../features/team/pages/team'
 import OpenSourcePage from '../features/welcome/pages/open-source-page'
 import PrivateProjectsPage from '../features/welcome/pages/private-projects-page'
 import ServicePaymentsPage from '../features/welcome/pages/service-payments-page'
@@ -23,6 +23,7 @@ const PublicPage = ({
   getInfo,
   info,
   isLogged,
+  joinTeam,
   registerUser,
   roles,
   signOut
@@ -49,8 +50,8 @@ const PublicPage = ({
           <Route exact path="/use-cases/open-source" component={OpenSourcePage} />
           <Route exact path="/use-cases/private-projects" component={PrivateProjectsPage} />
           <Route exact path="/use-cases/service-payments" component={ServicePaymentsPage} />
+          <Route exact path="/team" render={() => <TeamPage joinTeamAPICall={joinTeam} />} />
           <Route path="/pricing" component={PricingPage} />
-          {/* Team page removed - unused legacy route */}
           <Route exact path="/task/:id" component={TaskContainer} />
           <Route exact path="/task/:id/:slug" component={TaskContainer} />
           <Route exact path="/task/:id/orders" component={TaskContainer} />

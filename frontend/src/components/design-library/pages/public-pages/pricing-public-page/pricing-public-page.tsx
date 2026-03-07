@@ -70,7 +70,7 @@ function PricingPublicPage() {
                             </Typography>
                             <Typography variant="body1" color="textSecondary">
                               <FormattedMessage
-                                id="welcome.pricing.month"
+                                id="welcome.pricing.issue"
                                 defaultMessage=" / issue"
                               />
                             </Typography>
@@ -122,7 +122,7 @@ function PricingPublicPage() {
                       {tier.price}
                     </Typography>
                     <Typography variant="body1" color="textSecondary">
-                      <FormattedMessage id="welcome.pricing.month" defaultMessage=" / issue" />
+                      <FormattedMessage id="welcome.pricing.contributor" defaultMessage=" / payout" />
                     </Typography>
                   </CardPricing>
 
@@ -173,7 +173,7 @@ function PricingPublicPage() {
                       {tier.price}
                     </Typography>
                     <Typography variant="body1" color="textSecondary">
-                      <FormattedMessage id="welcome.pricing.month" defaultMessage=" / issue" />
+                      <FormattedMessage id="welcome.pricing.service" defaultMessage=" / payout" />
                     </Typography>
                   </CardPricing>
 
