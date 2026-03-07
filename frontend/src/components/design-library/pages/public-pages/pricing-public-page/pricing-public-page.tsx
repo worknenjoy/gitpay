@@ -109,11 +109,7 @@ function PricingPublicPage() {
           {tiersContributors.map((tier) => (
             <Grid key={tier.id} size={{ xs: 12, sm: 6, md: 12 }}>
               <Card>
-                <CardHeader
-                  title={tier.title}
-                  subheader={tier.subheader}
-                  sx={cardHeaderSx}
-                />
+                <CardHeader title={tier.title} subheader={tier.subheader} sx={cardHeaderSx} />
                 <CardContent>
                   <CardPricing>
                     <Typography variant="h5" color="textPrimary">
@@ -164,11 +160,7 @@ function PricingPublicPage() {
           {tiersServiceProviders.map((tier) => (
             <Grid key={tier.id} size={{ xs: 12, sm: 6, md: 12 }}>
               <Card>
-                <CardHeader
-                  title={tier.title}
-                  subheader={tier.subheader}
-                  sx={cardHeaderSx}
-                />
+                <CardHeader title={tier.title} subheader={tier.subheader} sx={cardHeaderSx} />
                 <CardContent>
                   <CardPricing>
                     <Typography variant="h5" color="textPrimary">

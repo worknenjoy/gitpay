@@ -94,17 +94,16 @@ const messages = defineMessages({
   },
   serviceProvidersDescription1: {
     id: 'welcome.pricing.serviceproviders.description1',
-    defaultMessage: '8% to receive payouts automatically when your customer pay the payment request for your service'
+    defaultMessage:
+      '8% to receive payouts automatically when your customer pay the payment request for your service'
   },
   serviceProvidersDescription2: {
     id: 'welcome.pricing.serviceproviders.description2',
-    defaultMessage:
-      'Receive payouts directly in your bank account'
+    defaultMessage: 'Receive payouts directly in your bank account'
   },
   serviceProvidersDescription3: {
     id: 'welcome.pricing.serviceproviders.description3',
-    defaultMessage:
-      'Charge customer with payment request links created on the platform'
+    defaultMessage: 'Charge customer with payment request links created on the platform'
   },
   serviceProvidersButton: {
     id: 'welcome.pricing.serviceproviders.button',

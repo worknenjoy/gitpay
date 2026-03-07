@@ -65,7 +65,9 @@ const CardsHero = ({ title, description, cards, withContrast = false }: CardsHer
                     {card.descriptionList.map((item) => (
                       <DescriptionListItem key={item.id}>
                         {(item.icon || card.descriptionListIcon) && (
-                          <DescriptionListIcon>{item.icon || card.descriptionListIcon}</DescriptionListIcon>
+                          <DescriptionListIcon>
+                            {item.icon || card.descriptionListIcon}
+                          </DescriptionListIcon>
                         )}
                         <Typography variant="body2" color="textSecondary">
                           <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />
@@ -78,7 +80,12 @@ const CardsHero = ({ title, description, cards, withContrast = false }: CardsHer
                     {card.description}
                   </Typography>
                 )}
-                <ActionButton size="small" variant="outlined" color="primary" onClick={card.onAction}>
+                <ActionButton
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                  onClick={card.onAction}
+                >
                   {card.actionLabel}
                 </ActionButton>
               </RoleCardContent>

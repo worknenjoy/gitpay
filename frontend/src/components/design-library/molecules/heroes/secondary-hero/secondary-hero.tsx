@@ -23,7 +23,13 @@ type SecondaryHeroProps = {
   }[]
 }
 
-const SecondaryHero = ({ image, animation, title, items, withContrast = false }: SecondaryHeroProps) => {
+const SecondaryHero = ({
+  image,
+  animation,
+  title,
+  items,
+  withContrast = false
+}: SecondaryHeroProps) => {
   return (
     <AltSection $withContrast={withContrast}>
       <HeroTitle level="h5">{title}</HeroTitle>
