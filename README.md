@@ -157,16 +157,6 @@ Activate your account
       '<p>\n' +
       'Thanks, <br />\n' +
       'Gitpay Team\n' +
-      '</p>\n' +
-      '----------------------\n' +
-      '\n' +
-      '<p>\n' +
-      'https://gitpay.me (Web) <br />\n' +
-      'tarefas@gitpay.me (Email) <br />\n' +
-      'Worknenjoy Inc.,\n' +
-      '9450 SW Gemini Dr\n' +
-      'PMB 72684\n' +
-      'Beaverton, Oregon 97008-7105 US (Mail) <br />\n' +
       '</p>\n'
   }
 ]
