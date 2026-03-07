@@ -36,12 +36,12 @@ const SectionHero = ({
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, sm: 6 }}>
             <MainTitle left>
-              <Typography variant="h5" gutterBottom>
+              <Typography variant="h6" gutterBottom>
                 {title}
               </Typography>
             </MainTitle>
             {content && (
-              <HeroContent variant="h6" gutterBottom>
+              <HeroContent variant="body1" gutterBottom>
                 {content}
               </HeroContent>
             )}

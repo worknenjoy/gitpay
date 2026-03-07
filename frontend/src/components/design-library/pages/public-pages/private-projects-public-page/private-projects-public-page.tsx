@@ -11,7 +11,7 @@ const PrivateProjectsPublicPage = () => {
       <SectionHero
         title="Private Projects on Gitpay"
         animation="/lottie/startup-life.lottie"
-        content="Fund work inside private repositories or internal projects while keeping delivery and payment connected."
+        content="Gitpay's Private Projects workflow is designed for teams and companies that want to fund work on private repositories. This workflow provides a secure and efficient way to manage payments for work that requires confidentiality, such as contract development, agency work, or on-demand services."
       />
       <SectionHero
         contrast
@@ -47,7 +47,32 @@ const PrivateProjectsPublicPage = () => {
       <SectionHero
         title="Best fit"
         animation="/lottie/coworking.lottie"
-        content="This workflow is ideal for contract work, agencies, and on-demand development services that need clear proof of delivery."
+        items={[
+          {
+            icon: <Engineering />,
+            primaryText: 'Engineering teams shipping confidential work',
+            secondaryText:
+              'Best for private repositories where security and controlled access are mandatory.'
+          },
+          {
+            icon: <Paid />,
+            primaryText: 'Companies managing milestone-based budgets',
+            secondaryText:
+              'Useful when each feature or task needs explicit funding and payout visibility.'
+          },
+          {
+            icon: <FactCheck />,
+            primaryText: 'Organizations that require approval gates',
+            secondaryText:
+              'A strong match for workflows where review and merge act as formal acceptance criteria.'
+          },
+          {
+            icon: <TaskAlt />,
+            primaryText: 'Agencies and contractors with recurring delivery',
+            secondaryText:
+              'Helps standardize proof-of-delivery and reduce manual payment coordination across projects.'
+          }
+        ]}
       />
       <CallToActionHero
         withContrast={false}

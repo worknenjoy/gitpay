@@ -7,7 +7,15 @@ import HeroTitle from 'design-library/atoms/typography/hero-title/hero-title'
 import usePricingTiers from '../../../../../hooks/use-pricing-tiers'
 
 function PricingPublicPage() {
-  const { tiersMaintainers, tiersContributors } = usePricingTiers()
+  const { tiersMaintainers, tiersContributors, tiersServiceProviders } = usePricingTiers()
+  const cardHeaderSx = {
+    backgroundColor: (theme) => theme.palette.grey[100],
+    textAlign: 'center',
+    color: (theme) => theme.palette.text.primary,
+    '& .MuiCardHeader-subheader': {
+      color: (theme) => theme.palette.text.secondary
+    }
+  }
 
   return (
     <Layout>
@@ -27,20 +35,17 @@ function PricingPublicPage() {
               <CardHeader
                 title={
                   <FormattedMessage
-                    id="welcome.pricing.maintainers.title"
-                    defaultMessage="Our pricing model"
+                    id="welcome.pricing.maintainers.general.title"
+                    defaultMessage="For project maintainers"
                   />
                 }
                 subheader={
                   <FormattedMessage
-                    id="welcome.pricing.maintainers.subtitle"
-                    defaultMessage="For project maintainers"
+                    id="welcome.pricing.maintainers.general.subtitle"
+                    defaultMessage="The platform fee when you pay for a bounty on Gitpay"
                   />
                 }
-                sx={{
-                  backgroundColor: (theme) => theme.palette.primary.light,
-                  textAlign: 'center'
-                }}
+                sx={cardHeaderSx}
               />
               <CardContent>
                 <Grid container spacing={2} justifyContent="center">
@@ -50,10 +55,7 @@ function PricingPublicPage() {
                         <CardHeader
                           title={tier.title}
                           subheader={tier.subheader}
-                          sx={{
-                            backgroundColor: (theme) => theme.palette.primary.light,
-                            textAlign: 'center'
-                          }}
+                          sx={cardHeaderSx}
                         />
                         <CardContent>
                           <CardPricing>
@@ -110,10 +112,62 @@ function PricingPublicPage() {
                 <CardHeader
                   title={tier.title}
                   subheader={tier.subheader}
-                  sx={{
-                    backgroundColor: (theme) => theme.palette.primary.light,
-                    textAlign: 'center'
-                  }}
+                  sx={cardHeaderSx}
+                />
+                <CardContent>
+                  <CardPricing>
+                    <Typography variant="h5" color="textPrimary">
+                      <small>
+                        <FormattedMessage
+                          id="welcome.pricing.opensource.fee"
+                          defaultMessage="Fee"
+                        />
+                      </small>{' '}
+                      {tier.price}
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                      <FormattedMessage id="welcome.pricing.month" defaultMessage=" / issue" />
+                    </Typography>
+                  </CardPricing>
+
+                  {tier.description.map((desc, i) => (
+                    <Typography
+                      gutterBottom
+                      variant={tier.description.length - 1 === i ? 'caption' : 'body1'}
+                      align="center"
+                      key={i}
+                    >
+                      {desc}
+                    </Typography>
+                  ))}
+                </CardContent>
+
+                {tier.link && (
+                  <CardActions sx={{ pb: { sm: 2 } }}>
+                    <Button
+                      component="a"
+                      href={tier.link}
+                      fullWidth
+                      variant={tier.buttonVariant}
+                      color="primary"
+                    >
+                      {tier.buttonText}
+                    </Button>
+                  </CardActions>
+                )}
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+
+        <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
+          {tiersServiceProviders.map((tier) => (
+            <Grid key={tier.id} size={{ xs: 12, sm: 6, md: 12 }}>
+              <Card>
+                <CardHeader
+                  title={tier.title}
+                  subheader={tier.subheader}
+                  sx={cardHeaderSx}
                 />
                 <CardContent>
                   <CardPricing>

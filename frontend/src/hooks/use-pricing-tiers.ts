@@ -83,7 +83,33 @@ const messages = defineMessages({
     defaultMessage:
       '⚠️ Note: You will receive the payouts according to the payment method used by the maintainer, if the maintainer paid with credit card, you will receive the payout in your bank account, if the maintainer paid with Paypal, you will receive the payout in your Paypal account'
   },
-  contributorsButton: { id: 'welcome.pricing.contributors.button', defaultMessage: 'Get started' }
+  contributorsButton: { id: 'welcome.pricing.contributors.button', defaultMessage: 'Get started' },
+  serviceProvidersTitle: {
+    id: 'welcome.pricing.serviceproviders.title',
+    defaultMessage: 'Fee for service providers'
+  },
+  serviceProvidersSubheader: {
+    id: 'welcome.pricing.serviceproviders.subheader',
+    defaultMessage: 'For service providers who deliver services through Gitpay'
+  },
+  serviceProvidersDescription1: {
+    id: 'welcome.pricing.serviceproviders.description1',
+    defaultMessage: '8% to receive payouts automatically when your customer pay the payment request for your service'
+  },
+  serviceProvidersDescription2: {
+    id: 'welcome.pricing.serviceproviders.description2',
+    defaultMessage:
+      'Receive payouts directly in your bank account'
+  },
+  serviceProvidersDescription3: {
+    id: 'welcome.pricing.serviceproviders.description3',
+    defaultMessage:
+      'Charge customer with payment request links created on the platform'
+  },
+  serviceProvidersButton: {
+    id: 'welcome.pricing.serviceproviders.button',
+    defaultMessage: 'Get started'
+  }
 })
 
 const usePricingTiers = () => {
@@ -142,7 +168,25 @@ const usePricingTiers = () => {
       }
     ]
 
-    return { tiersMaintainers, tiersContributors }
+    const tiersServiceProviders: PricingTier[] = [
+      {
+        id: 'welcome.pricing.serviceproviders.title',
+        title: intl.formatMessage(messages.serviceProvidersTitle),
+        subheader: intl.formatMessage(messages.serviceProvidersSubheader),
+        price: '8%',
+        description: [
+          intl.formatMessage(messages.serviceProvidersDescription1),
+          intl.formatMessage(messages.serviceProvidersDescription2),
+          intl.formatMessage(messages.serviceProvidersDescription3),
+          ''
+        ],
+        link: signinLink,
+        buttonText: intl.formatMessage(messages.serviceProvidersButton),
+        buttonVariant: 'text'
+      }
+    ]
+
+    return { tiersMaintainers, tiersContributors, tiersServiceProviders }
   }, [intl])
 }
 

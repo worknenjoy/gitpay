@@ -10,48 +10,73 @@ const ServicePaymentsPublicPage = () => {
     <>
       <SectionHero
         title="Service Payments on Gitpay"
-        animation="/lottie/payment-transfer.lottie"
-        content="Receive payments for delivered work with a simple request flow built for service providers."
+        animation="/lottie/developer-team.lottie"
+        content="Service Payments helps you request and receive funds for delivered work with a clear, auditable flow. Create a request, share it with your client, and keep delivery evidence connected to your repositories, files, and milestones so approval and payout are straightforward for both sides."
       />
       <SectionHero
         contrast
         title="How it works"
-        animation="/lottie/bank-transfer.lottie"
+        animation="/lottie/how-it-works.lottie"
         items={[
           {
             icon: <ReceiptLong />,
             primaryText: 'Create a payment request',
             secondaryText:
-              'Define the value and context of delivered work in a structured request flow.'
+              'Set the amount, delivery scope, and payment context so expectations are clear from the start.'
           },
           {
             icon: <Link />,
             primaryText: 'Share a payment link with your client',
             secondaryText:
-              'Send a single payment link to speed up approvals and reduce back-and-forth.'
+              'Send one link for review and payment to reduce manual invoicing steps and back-and-forth.'
           },
           {
             icon: <Construction />,
             primaryText: 'Deliver the work',
             secondaryText:
-              'Execution can remain tied to repositories, files, and milestones agreed with the client.'
+              'Deliver using your normal workflow while keeping proof of completion tied to commits, PRs, files, or milestones.'
           },
           {
             icon: <AccountBalanceWallet />,
             primaryText: 'Receive payouts directly to your bank account',
             secondaryText:
-              'After confirmation, Gitpay routes the payout through the configured transfer flow.'
+              'After client confirmation, Gitpay processes payout through the configured transfer route.'
           }
         ]}
       />
       <SectionHero
         title="Best fit"
-        animation="/lottie/freelancer-working.lottie"
-        content="Great for developers, consultants, freelancers, and service providers who want a straightforward way to request payment."
+        animation="/lottie/coworking.lottie"
+        items={[
+          {
+            icon: <ReceiptLong />,
+            primaryText: 'Freelancers and consultants sending formal requests',
+            secondaryText:
+              'Great when you need a simple request flow with clear scope and payment terms per delivery.'
+          },
+          {
+            icon: <Link />,
+            primaryText: 'Client work that depends on fast approvals',
+            secondaryText:
+              'A good fit when sharing one payment link reduces friction and shortens payment cycles.'
+          },
+          {
+            icon: <Construction />,
+            primaryText: 'Project-based services with delivery checkpoints',
+            secondaryText:
+              'Ideal when completion evidence should stay connected to PRs, files, or agreed milestones.'
+          },
+          {
+            icon: <AccountBalanceWallet />,
+            primaryText: 'Providers prioritizing predictable payout flow',
+            secondaryText:
+              'Works well when timely transfers and traceable payment status are essential to operations.'
+          }
+        ]}
       />
       <CallToActionHero
         withContrast={false}
-        title="Get started with Service Payments on Gitpay"
+        title="Start receiving payments for delivered services on Gitpay"
         actions={[
           {
             label: 'Signup as service provider',

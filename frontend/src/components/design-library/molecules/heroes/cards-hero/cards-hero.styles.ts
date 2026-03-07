@@ -45,3 +45,27 @@ export const RoleImage = styled('img')(({ theme }) => ({
 export const ActionButton = styled(Button)({
   marginTop: 'auto'
 })
+
+export const DescriptionList = styled('ul')(({ theme }) => ({
+  listStyle: 'none',
+  margin: '20px 0 32px',
+  padding: 0,
+  width: '100%',
+  textAlign: 'left',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: theme.spacing(1)
+}))
+
+export const DescriptionListItem = styled('li')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+  gap: theme.spacing(1)
+}))
+
+export const DescriptionListIcon = styled('span')(({ theme }) => ({
+  color: theme.palette.primary.main,
+  display: 'inline-flex',
+  lineHeight: 1,
+  marginTop: 2
+}))

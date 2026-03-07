@@ -31,7 +31,7 @@ const Home = () => {
         description={
           <FormattedMessage
             id="welcome.hero.main.description"
-            defaultMessage="Built around Git as the infrastructure for collaboration, Gitpay connects payments directly to the work being done. Fund issues, reward approved pull requests, or request payment for services delivered through repositories and tracked files. Gitpay provides a transparent way to fund work, verify delivery, and distribute payments."
+            defaultMessage="Gitpay connects payments directly to the work being done. Fund issues, reward approved pull requests, or request payment for services delivered through repositories and tracked files. Gitpay provides a transparent way to fund work, verify delivery, and distribute payments."
           />
         }
         animation={'/lottie/developer-main.lottie'}
@@ -73,12 +73,14 @@ const Home = () => {
                 defaultMessage="Maintainer"
               />
             ),
-            description: (
-              <FormattedMessage
-                id="welcome.roles.hero.maintainer.description"
-                defaultMessage="Import issues from your repository, organize work, and pay bounties when tasks are completed."
-              />
-            ),
+            descriptionList: [
+              {
+                id: 'welcome.roles.hero.maintainer.description',
+                defaultMessage:
+                  'Import issues from your repository, organize work, and pay bounties when tasks are completed.',
+                icon: <TaskAlt fontSize="small" />
+              }
+            ],
             image: notificationsImage,
             actionLabel: (
               <FormattedMessage
@@ -96,13 +98,15 @@ const Home = () => {
                 defaultMessage="Contributor"
               />
             ),
-            description: (
-              <FormattedMessage
-                id="welcome.roles.hero.contributor.description"
-                defaultMessage="Find tasks, submit pull requests, and get rewarded for solving issues."
-              />
-            ),
-            image: bountyImage,
+            descriptionList: [
+              {
+                id: 'welcome.roles.hero.contributor.description',
+                defaultMessage:
+                  'Find tasks, submit pull requests, and get rewarded for solving issues.',
+                icon: <Work fontSize="small" />
+              }
+            ],
+            image: sharingImage,
             actionLabel: (
               <FormattedMessage
                 id="welcome.roles.hero.contributor.action"
@@ -112,21 +116,23 @@ const Home = () => {
             onAction: () => history.push('/signup/contributor')
           },
           {
-            type: 'sponsor',
+            type: 'funding',
             title: (
-              <FormattedMessage id="welcome.roles.hero.sponsor.title" defaultMessage="Sponsor" />
+              <FormattedMessage id="welcome.roles.hero.sponsor.title" defaultMessage="Funding" />
             ),
-            description: (
-              <FormattedMessage
-                id="welcome.roles.hero.sponsor.description"
-                defaultMessage="Fund bounties for open-source issues and support the work you want to see shipped."
-              />
-            ),
-            image: sharingImage,
+            descriptionList: [
+              {
+                id: 'welcome.roles.hero.sponsor.description',
+                defaultMessage:
+                  'Fund bounties for open-source issues and support the work you want to see shipped.',
+                icon: <AttachMoney fontSize="small" />
+              }
+            ],
+            image: bountyImage,
             actionLabel: (
               <FormattedMessage
                 id="welcome.roles.hero.sponsor.action"
-                defaultMessage="Signup as sponsor"
+                defaultMessage="Signup as funding"
               />
             ),
             onAction: () => history.push('/signup/funding')
@@ -139,12 +145,14 @@ const Home = () => {
                 defaultMessage="Service Provider"
               />
             ),
-            description: (
-              <FormattedMessage
-                id="welcome.roles.hero.serviceProvider.description"
-                defaultMessage="Deliver specialized services and use payment requests to receive funds through Gitpay."
-              />
-            ),
+            descriptionList: [
+              {
+                id: 'welcome.roles.hero.serviceProvider.description',
+                defaultMessage:
+                  'Deliver specialized services and use payment requests to receive funds through Gitpay.',
+                icon: <CardMembership fontSize="small" />
+              }
+            ],
             image: paymentCycleImage,
             actionLabel: (
               <FormattedMessage
@@ -163,19 +171,29 @@ const Home = () => {
           {
             type: 'open-source',
             title: '🧩 Open Source',
-            description: (
-              <>
-                Fund and solve issues in public repositories.
-                <br />
-                Sponsors fund issues
-                <br />
-                Contributors pick issues to solve
-                <br />
-                Work is delivered through pull requests
-                <br />
-                Gitpay handles payouts once the PR is merged
-              </>
-            ),
+            descriptionListIcon: <TaskAlt fontSize="small" />,
+            descriptionList: [
+              {
+                id: 'welcome.usecases.opensource.item1',
+                defaultMessage: 'Fund and solve issues in public repositories.'
+              },
+              {
+                id: 'welcome.usecases.opensource.item2',
+                defaultMessage: 'Sponsors fund issues'
+              },
+              {
+                id: 'welcome.usecases.opensource.item3',
+                defaultMessage: 'Contributors pick issues to solve'
+              },
+              {
+                id: 'welcome.usecases.opensource.item4',
+                defaultMessage: 'Work is delivered through pull requests'
+              },
+              {
+                id: 'welcome.usecases.opensource.item5',
+                defaultMessage: 'Gitpay handles payouts once the PR is merged'
+              }
+            ],
             image: notificationsImage,
             actionLabel: 'Explore open source',
             onAction: () => history.push('/use-cases/open-source')
@@ -183,21 +201,34 @@ const Home = () => {
           {
             type: 'private-projects',
             title: '🔒 Private Projects',
-            description: (
-              <>
-                Fund work inside private repositories or internal projects.
-                <br />
-                Companies fund tasks or features
-                <br />
-                Developers submit work through pull requests
-                <br />
-                Maintainers verify delivery by merging the PR
-                <br />
-                Gitpay releases the payment automatically
-                <br />
-                This works well for contract work, agencies, and on-demand development services.
-              </>
-            ),
+            descriptionListIcon: <TaskAlt fontSize="small" />,
+            descriptionList: [
+              {
+                id: 'welcome.usecases.private.item1',
+                defaultMessage: 'Fund work inside private repositories or internal projects.'
+              },
+              {
+                id: 'welcome.usecases.private.item2',
+                defaultMessage: 'Companies fund tasks or features'
+              },
+              {
+                id: 'welcome.usecases.private.item3',
+                defaultMessage: 'Developers submit work through pull requests'
+              },
+              {
+                id: 'welcome.usecases.private.item4',
+                defaultMessage: 'Maintainers verify delivery by merging the PR'
+              },
+              {
+                id: 'welcome.usecases.private.item5',
+                defaultMessage: 'Gitpay releases the payment automatically'
+              },
+              {
+                id: 'welcome.usecases.private.item6',
+                defaultMessage:
+                  'This works well for contract work, agencies, and on-demand development services.'
+              }
+            ],
             image: sharingImage,
             actionLabel: 'Explore private projects',
             onAction: () => history.push('/use-cases/private-projects')
@@ -205,21 +236,34 @@ const Home = () => {
           {
             type: 'service-payments',
             title: '💼 Service Payments',
-            description: (
-              <>
-                Receive payments for delivered work.
-                <br />
-                Create a payment request
-                <br />
-                Share a payment link with your client
-                <br />
-                Deliver the work
-                <br />
-                Receive payouts directly to your bank account
-                <br />
-                This works for developers, consultants, freelancers, and service providers who want a simple way to request payment.
-              </>
-            ),
+            descriptionListIcon: <TaskAlt fontSize="small" />,
+            descriptionList: [
+              {
+                id: 'welcome.usecases.service.item1',
+                defaultMessage: 'Receive payments for delivered work.'
+              },
+              {
+                id: 'welcome.usecases.service.item2',
+                defaultMessage: 'Create a payment request'
+              },
+              {
+                id: 'welcome.usecases.service.item3',
+                defaultMessage: 'Share a payment link with your client'
+              },
+              {
+                id: 'welcome.usecases.service.item4',
+                defaultMessage: 'Deliver the work'
+              },
+              {
+                id: 'welcome.usecases.service.item5',
+                defaultMessage: 'Receive payouts directly to your bank account'
+              },
+              {
+                id: 'welcome.usecases.service.item6',
+                defaultMessage:
+                  'This works for developers, consultants, freelancers, and service providers who want a simple way to request payment.'
+              }
+            ],
             image: paymentCycleImage,
             actionLabel: 'Explore service payments',
             onAction: () => history.push('/use-cases/service-payments')
@@ -239,13 +283,13 @@ const Home = () => {
             primaryText: (
               <FormattedMessage
                 id="welcome.secondary.hero.item0.primary"
-                defaultMessage="Fund work through issues"
+                defaultMessage="Create and fund work agreements"
               />
             ),
             secondaryText: (
               <FormattedMessage
                 id="welcome.secondary.hero.item0.secondary"
-                defaultMessage="Import an issue from a Git repository and attach a bounty. Maintainers or sponsors can fund the work, creating a clear reward for contributors who solve it."
+                defaultMessage="Start by creating a work agreement in Gitpay. This can be a funded issue, a feature request, or a service payment request linked to repositories, files, and deliverables."
               />
             )
           },
@@ -254,13 +298,13 @@ const Home = () => {
             primaryText: (
               <FormattedMessage
                 id="welcome.secondary.hero.item1.primary"
-                defaultMessage="Contributors deliver the work"
+                defaultMessage="Work is delivered through Git"
               />
             ),
             secondaryText: (
               <FormattedMessage
                 id="welcome.secondary.hero.item1.secondary"
-                defaultMessage="Developers pick issues they want to solve and submit their solution through a pull request. Once the PR is reviewed and merged, the work is considered delivered."
+                defaultMessage="Contributors or service providers deliver the requested work through pull requests, commits, or shared files. Gitpay keeps delivery tied to the actual work history."
               />
             )
           },
@@ -269,13 +313,13 @@ const Home = () => {
             primaryText: (
               <FormattedMessage
                 id="welcome.secondary.hero.item2.primary"
-                defaultMessage="Payment is released"
+                defaultMessage="Review, approve, and pay"
               />
             ),
             secondaryText: (
               <FormattedMessage
                 id="welcome.secondary.hero.item2.secondary"
-                defaultMessage="When the solution is verified, Gitpay releases the payout to the contributor's account."
+                defaultMessage="Once delivery is verified, Gitpay helps release payouts to contributors or service providers, so payment follows approved work with clear accountability."
               />
             )
           },
@@ -284,13 +328,13 @@ const Home = () => {
             primaryText: (
               <FormattedMessage
                 id="welcome.secondary.hero.item3.primary"
-                defaultMessage="Or request payment for delivered work"
+                defaultMessage="Manage ongoing collaboration"
               />
             ),
             secondaryText: (
               <FormattedMessage
                 id="welcome.secondary.hero.item3.secondary"
-                defaultMessage="Gitpay also supports direct payment requests. Service providers or contributors can request payment for work delivered through repositories, files, or Git-based collaboration."
+                defaultMessage="From open source tasks to private contracts, Gitpay gives maintainers, contributors, sponsors, and service providers a transparent flow to track work and payments end to end."
               />
             )
           }

@@ -1,12 +1,31 @@
 import React from 'react'
 import { Typography } from '@mui/material'
 import { Grid } from '@mui/system'
-import { Section, Header, RoleCard, RoleCardContent, RoleImage, ActionButton } from './cards-hero.styles'
+import { FormattedMessage } from 'react-intl'
+import {
+  Section,
+  Header,
+  RoleCard,
+  RoleCardContent,
+  RoleImage,
+  ActionButton,
+  DescriptionList,
+  DescriptionListItem,
+  DescriptionListIcon
+} from './cards-hero.styles'
+
+type CardDescriptionItem = {
+  id: string
+  defaultMessage: string
+  icon?: React.ReactNode
+}
 
 type RoleCardItem = {
   type: string
   title: React.ReactNode
-  description: React.ReactNode
+  description?: React.ReactNode
+  descriptionList?: CardDescriptionItem[]
+  descriptionListIcon?: React.ReactNode
   image: string
   actionLabel: React.ReactNode
   onAction?: () => void
@@ -41,9 +60,24 @@ const CardsHero = ({ title, description, cards, withContrast = false }: CardsHer
                 <Typography variant="h6" gutterBottom>
                   {card.title}
                 </Typography>
-                <Typography variant="body2" color="textSecondary" paragraph>
-                  {card.description}
-                </Typography>
+                {card.descriptionList?.length ? (
+                  <DescriptionList>
+                    {card.descriptionList.map((item) => (
+                      <DescriptionListItem key={item.id}>
+                        {(item.icon || card.descriptionListIcon) && (
+                          <DescriptionListIcon>{item.icon || card.descriptionListIcon}</DescriptionListIcon>
+                        )}
+                        <Typography variant="body2" color="textSecondary">
+                          <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />
+                        </Typography>
+                      </DescriptionListItem>
+                    ))}
+                  </DescriptionList>
+                ) : (
+                  <Typography variant="body2" color="textSecondary" paragraph>
+                    {card.description}
+                  </Typography>
+                )}
                 <ActionButton size="small" variant="outlined" color="primary" onClick={card.onAction}>
                   {card.actionLabel}
                 </ActionButton>

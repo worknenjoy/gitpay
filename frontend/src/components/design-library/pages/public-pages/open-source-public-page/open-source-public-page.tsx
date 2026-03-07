@@ -11,7 +11,7 @@ const OpenSourcePublicPage = () => {
       <SectionHero
         title="Open Source on Gitpay"
         animation="/lottie/developer-main.lottie"
-        content="Fund and solve issues in public repositories with a clear path from contribution to payout."
+        content="We always loved open source, and we are open source since the beginning. We are building Gitpay to be the best way to fund open source work, and we are excited to share it with the world. Whether you are a maintainer looking for funding, a sponsor looking to support projects, or a contributor looking for paid opportunities, Gitpay is here to help you succeed."
       />
       <SectionHero
         contrast
@@ -41,6 +41,36 @@ const OpenSourcePublicPage = () => {
             primaryText: 'Gitpay handles payouts once PRs are merged',
             secondaryText:
               'After validation through the merge flow, funds are released according to the task terms.'
+          }
+        ]}
+      />
+      <SectionHero
+        title="Best fit"
+        animation="/lottie/coworking.lottie"
+        items={[
+          {
+            icon: <Code />,
+            primaryText: 'Maintainers with active issue backlogs',
+            secondaryText:
+              'Ideal when you need contributors to pick up scoped issues with clear funding attached.'
+          },
+          {
+            icon: <Paid />,
+            primaryText: 'Sponsors funding outcomes, not just repos',
+            secondaryText:
+              'Great for individuals or organizations that want to support specific deliverables and track impact.'
+          },
+          {
+            icon: <MergeType />,
+            primaryText: 'Contributor communities working through pull requests',
+            secondaryText:
+              'Works best when delivery, review, and acceptance already happen through Git workflows.'
+          },
+          {
+            icon: <Verified />,
+            primaryText: 'Teams that require transparent payout conditions',
+            secondaryText:
+              'A strong fit when payment should follow verified merges and documented completion criteria.'
           }
         ]}
       />
