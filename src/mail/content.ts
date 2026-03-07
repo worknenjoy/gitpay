@@ -14,10 +14,7 @@ ${i18n.__('mail.sign.team')}
 <p>
 https://gitpay.me (Web) <br />
 contact@gitpay.me (Email) <br />
-Worknenjoy Inc.,
-9450 SW Gemini Dr
-PMB 72684
-Beaverton, Oregon 97008-7105 US (Mail) <br />
+Worknenjoy Inc. (Company) <br />
 </p>
 `
   },
@@ -28,7 +25,7 @@ Beaverton, Oregon 97008-7105 US (Mail) <br />
     if (buttons.secondary) {
       secondary = `<td style="border-radius: 2px;" bgcolor="#009688">
       <a href="${buttons.secondary.url}" target="_blank" style="padding: 8px 12px;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:bold;display: inline-block;">
-          ${i18n.__(buttons.secondary.label)}             
+          ${i18n.__(buttons.secondary.label)}
       </a>
   </td>`
     }
@@ -41,7 +38,7 @@ Beaverton, Oregon 97008-7105 US (Mail) <br />
               <tr>
                   <td style="border-radius: 2px;" bgcolor="#009688">
                       <a href="${buttons.primary.url}" target="_blank" style="padding: 8px 12px; border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:bold;display: inline-block;">
-                          ${i18n.__(buttons.primary.label)}             
+                          ${i18n.__(buttons.primary.label)}
                       </a>
                   </td>
                   ${secondary}

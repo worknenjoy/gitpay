@@ -91,7 +91,7 @@ module.exports.defaultEmailTemplate = (content) => `
   <body style="font-family: Helvetica, sans-serif; -webkit-font-smoothing: antialiased; font-size: 16px; line-height: 1.3; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #f4f5f6; margin: 0; padding: 0;">
   <div style="width: 100%; text-align: center; margin: 0; padding: 20px 0 0;">
     <img width="200" src="https://docs.gitpay.me/assets/img/logo-complete.png" alt="Gitpay" />
-  </div>  
+  </div>
   <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f4f5f6; width: 100%;" width="100%" bgcolor="#f4f5f6">
       <tr>
         <td style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top;" valign="top">&nbsp;</td>
@@ -112,11 +112,7 @@ module.exports.defaultEmailTemplate = (content) => `
                     <span class="apple-link" style="color: #9a9ea6; font-size: 16px; text-align: center;">
                       https://gitpay.me (Web) <br />
                       contact@gitpay.me (Email) <br />
-                      Worknenjoy Inc.,<br />
-                      9450 SW Gemini Dr<br />
-                      PMB 72684<br />
-                      Beaverton,<br />
-                      Oregon 97008-7105 US (Mail) <br />
+                      Worknenjoy Inc. (Company) <br />
                     </span>
                     <br> Don't like these emails? <a href="https://gitpay.me/#/profile/user-account/settings" style="text-decoration: underline; color: #9a9ea6; font-size: 16px; text-align: center;">Change your e-mail notification settings in your account</a>.
                   </td>
@@ -130,7 +126,7 @@ module.exports.defaultEmailTemplate = (content) => `
             </div>
 
             <!-- END FOOTER -->
-            
+
 <!-- END CENTERED WHITE CONTAINER --></div>
         </td>
         <td style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top;" valign="top">&nbsp;</td>

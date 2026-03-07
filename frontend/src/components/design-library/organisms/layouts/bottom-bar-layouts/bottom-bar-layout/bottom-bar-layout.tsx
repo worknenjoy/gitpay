@@ -128,8 +128,6 @@ const Bottom = ({ info, getInfo }) => {
               <div style={{ textAlign: 'right' }}>
                 <Typography variant={'caption'} component="span">
                   <a href="http://worknenjoy.com">worknenjoy, Inc.</a> <br />
-                  <abbr>MA: </abbr>
-                  9450 SW Gemini Dr PMB 72684 Beaverton, Oregon 97008-7105 US
                 </Typography>
               </div>
             </div>
