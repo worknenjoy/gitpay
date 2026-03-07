@@ -1006,5 +1006,22 @@
   "welcome.secondary.hero.item2.primary": "Review, approve, and pay",
   "welcome.secondary.hero.item2.secondary": "Once delivery is verified, Gitpay helps release payouts to contributors or service providers, so payment follows approved work with clear accountability.",
   "welcome.secondary.hero.item3.primary": "Manage ongoing collaboration",
-  "welcome.secondary.hero.item3.secondary": "From open source tasks to private contracts, Gitpay gives maintainers, contributors, sponsors, and service providers a transparent flow to track work and payments end to end."
+  "welcome.secondary.hero.item3.secondary": "From open source tasks to private contracts, Gitpay gives maintainers, contributors, sponsors, and service providers a transparent flow to track work and payments end to end.",
+  "welcome.usecases.opensource.item1": "Fund and solve issues in public repositories.",
+  "welcome.usecases.opensource.item2": "Sponsors fund issues",
+  "welcome.usecases.opensource.item3": "Contributors pick issues to solve",
+  "welcome.usecases.opensource.item4": "Work is delivered through pull requests",
+  "welcome.usecases.opensource.item5": "Gitpay handles payouts once the PR is merged",
+  "welcome.usecases.private.item1": "Fund work inside private repositories or internal projects.",
+  "welcome.usecases.private.item2": "Companies fund tasks or features",
+  "welcome.usecases.private.item3": "Developers submit work through pull requests",
+  "welcome.usecases.private.item4": "Maintainers verify delivery by merging the PR",
+  "welcome.usecases.private.item5": "Gitpay releases the payment automatically",
+  "welcome.usecases.private.item6": "This works well for contract work, agencies, and on-demand development services.",
+  "welcome.usecases.service.item1": "Receive payments for delivered work.",
+  "welcome.usecases.service.item2": "Create a payment request",
+  "welcome.usecases.service.item3": "Share a payment link with your client",
+  "welcome.usecases.service.item4": "Deliver the work",
+  "welcome.usecases.service.item5": "Receive payouts directly to your bank account",
+  "welcome.usecases.service.item6": "This works for developers, consultants, freelancers, and service providers who want a simple way to request payment."
 }

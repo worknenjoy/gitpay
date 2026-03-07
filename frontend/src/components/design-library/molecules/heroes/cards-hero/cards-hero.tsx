@@ -1,7 +1,6 @@
 import React from 'react'
 import { Typography } from '@mui/material'
 import { Grid } from '@mui/system'
-import { FormattedMessage } from 'react-intl'
 import {
   Section,
   Header,
@@ -15,8 +14,7 @@ import {
 } from './cards-hero.styles'
 
 type CardDescriptionItem = {
-  id: string
-  defaultMessage: string
+  text: React.ReactNode
   icon?: React.ReactNode
 }
 
@@ -62,15 +60,15 @@ const CardsHero = ({ title, description, cards, withContrast = false }: CardsHer
                 </Typography>
                 {card.descriptionList?.length ? (
                   <DescriptionList>
-                    {card.descriptionList.map((item) => (
-                      <DescriptionListItem key={item.id}>
+                    {card.descriptionList.map((item, index) => (
+                      <DescriptionListItem key={index}>
                         {(item.icon || card.descriptionListIcon) && (
                           <DescriptionListIcon>
                             {item.icon || card.descriptionListIcon}
                           </DescriptionListIcon>
                         )}
                         <Typography variant="body2" color="textSecondary">
-                          <FormattedMessage id={item.id} defaultMessage={item.defaultMessage} />
+                          {item.text}
                         </Typography>
                       </DescriptionListItem>
                     ))}

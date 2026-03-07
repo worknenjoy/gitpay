@@ -16,7 +16,7 @@ const PrivateProjectsPublicPage = () => {
       <SectionHero
         contrast
         title="How it works"
-        animation="/lottie/project-development.lottie"
+        animation="/lottie/how-it-works.lottie"
         items={[
           {
             icon: <Paid />,

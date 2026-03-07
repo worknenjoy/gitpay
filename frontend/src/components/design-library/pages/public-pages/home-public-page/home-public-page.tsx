@@ -75,9 +75,12 @@ const Home = () => {
             ),
             descriptionList: [
               {
-                id: 'welcome.roles.hero.maintainer.description',
-                defaultMessage:
-                  'Import issues from your repository, organize work, and pay bounties when tasks are completed.',
+                text: (
+                  <FormattedMessage
+                    id="welcome.roles.hero.maintainer.description"
+                    defaultMessage="Import issues from your repository, organize work, and pay bounties when tasks are completed."
+                  />
+                ),
                 icon: <TaskAlt fontSize="small" />
               }
             ],
@@ -100,9 +103,12 @@ const Home = () => {
             ),
             descriptionList: [
               {
-                id: 'welcome.roles.hero.contributor.description',
-                defaultMessage:
-                  'Find tasks, submit pull requests, and get rewarded for solving issues.',
+                text: (
+                  <FormattedMessage
+                    id="welcome.roles.hero.contributor.description"
+                    defaultMessage="Find tasks, submit pull requests, and get rewarded for solving issues."
+                  />
+                ),
                 icon: <Work fontSize="small" />
               }
             ],
@@ -122,9 +128,12 @@ const Home = () => {
             ),
             descriptionList: [
               {
-                id: 'welcome.roles.hero.sponsor.description',
-                defaultMessage:
-                  'Fund bounties for open-source issues and support the work you want to see shipped.',
+                text: (
+                  <FormattedMessage
+                    id="welcome.roles.hero.sponsor.description"
+                    defaultMessage="Fund bounties for open-source issues and support the work you want to see shipped."
+                  />
+                ),
                 icon: <AttachMoney fontSize="small" />
               }
             ],
@@ -147,9 +156,12 @@ const Home = () => {
             ),
             descriptionList: [
               {
-                id: 'welcome.roles.hero.serviceProvider.description',
-                defaultMessage:
-                  'Deliver specialized services and use payment requests to receive funds through Gitpay.',
+                text: (
+                  <FormattedMessage
+                    id="welcome.roles.hero.serviceProvider.description"
+                    defaultMessage="Deliver specialized services and use payment requests to receive funds through Gitpay."
+                  />
+                ),
                 icon: <CardMembership fontSize="small" />
               }
             ],
@@ -174,24 +186,44 @@ const Home = () => {
             descriptionListIcon: <TaskAlt fontSize="small" />,
             descriptionList: [
               {
-                id: 'welcome.usecases.opensource.item1',
-                defaultMessage: 'Fund and solve issues in public repositories.'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.opensource.item1"
+                    defaultMessage="Fund and solve issues in public repositories."
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.opensource.item2',
-                defaultMessage: 'Sponsors fund issues'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.opensource.item2"
+                    defaultMessage="Sponsors fund issues"
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.opensource.item3',
-                defaultMessage: 'Contributors pick issues to solve'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.opensource.item3"
+                    defaultMessage="Contributors pick issues to solve"
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.opensource.item4',
-                defaultMessage: 'Work is delivered through pull requests'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.opensource.item4"
+                    defaultMessage="Work is delivered through pull requests"
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.opensource.item5',
-                defaultMessage: 'Gitpay handles payouts once the PR is merged'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.opensource.item5"
+                    defaultMessage="Gitpay handles payouts once the PR is merged"
+                  />
+                )
               }
             ],
             image: notificationsImage,
@@ -204,29 +236,52 @@ const Home = () => {
             descriptionListIcon: <TaskAlt fontSize="small" />,
             descriptionList: [
               {
-                id: 'welcome.usecases.private.item1',
-                defaultMessage: 'Fund work inside private repositories or internal projects.'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.private.item1"
+                    defaultMessage="Fund work inside private repositories or internal projects."
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.private.item2',
-                defaultMessage: 'Companies fund tasks or features'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.private.item2"
+                    defaultMessage="Companies fund tasks or features"
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.private.item3',
-                defaultMessage: 'Developers submit work through pull requests'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.private.item3"
+                    defaultMessage="Developers submit work through pull requests"
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.private.item4',
-                defaultMessage: 'Maintainers verify delivery by merging the PR'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.private.item4"
+                    defaultMessage="Maintainers verify delivery by merging the PR"
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.private.item5',
-                defaultMessage: 'Gitpay releases the payment automatically'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.private.item5"
+                    defaultMessage="Gitpay releases the payment automatically"
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.private.item6',
-                defaultMessage:
-                  'This works well for contract work, agencies, and on-demand development services.'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.private.item6"
+                    defaultMessage="This works well for contract work, agencies, and on-demand development services."
+                  />
+                )
               }
             ],
             image: sharingImage,
@@ -239,29 +294,52 @@ const Home = () => {
             descriptionListIcon: <TaskAlt fontSize="small" />,
             descriptionList: [
               {
-                id: 'welcome.usecases.service.item1',
-                defaultMessage: 'Receive payments for delivered work.'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.service.item1"
+                    defaultMessage="Receive payments for delivered work."
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.service.item2',
-                defaultMessage: 'Create a payment request'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.service.item2"
+                    defaultMessage="Create a payment request"
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.service.item3',
-                defaultMessage: 'Share a payment link with your client'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.service.item3"
+                    defaultMessage="Share a payment link with your client"
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.service.item4',
-                defaultMessage: 'Deliver the work'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.service.item4"
+                    defaultMessage="Deliver the work"
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.service.item5',
-                defaultMessage: 'Receive payouts directly to your bank account'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.service.item5"
+                    defaultMessage="Receive payouts directly to your bank account"
+                  />
+                )
               },
               {
-                id: 'welcome.usecases.service.item6',
-                defaultMessage:
-                  'This works for developers, consultants, freelancers, and service providers who want a simple way to request payment.'
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.service.item6"
+                    defaultMessage="This works for developers, consultants, freelancers, and service providers who want a simple way to request payment."
+                  />
+                )
               }
             ],
             image: paymentCycleImage,

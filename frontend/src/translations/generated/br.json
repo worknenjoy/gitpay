@@ -1006,5 +1006,22 @@
   "welcome.secondary.hero.item2.primary": "",
   "welcome.secondary.hero.item2.secondary": "",
   "welcome.secondary.hero.item3.primary": "",
-  "welcome.secondary.hero.item3.secondary": ""
+  "welcome.secondary.hero.item3.secondary": "",
+  "welcome.usecases.opensource.item1": "",
+  "welcome.usecases.opensource.item2": "",
+  "welcome.usecases.opensource.item3": "",
+  "welcome.usecases.opensource.item4": "",
+  "welcome.usecases.opensource.item5": "",
+  "welcome.usecases.private.item1": "",
+  "welcome.usecases.private.item2": "",
+  "welcome.usecases.private.item3": "",
+  "welcome.usecases.private.item4": "",
+  "welcome.usecases.private.item5": "",
+  "welcome.usecases.private.item6": "",
+  "welcome.usecases.service.item1": "",
+  "welcome.usecases.service.item2": "",
+  "welcome.usecases.service.item3": "",
+  "welcome.usecases.service.item4": "",
+  "welcome.usecases.service.item5": "",
+  "welcome.usecases.service.item6": ""
 }
