@@ -262,7 +262,9 @@ const PaymentRequestMail = {
     try {
       return await request(
         to,
-        i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.subject'),
+        i18n.__('mail.paymentRequest.sendConfirmationWithInstructions.subject', {
+          title: paymentRequest?.title || 'a service'
+        }),
         [
           {
             type: 'text/html',
