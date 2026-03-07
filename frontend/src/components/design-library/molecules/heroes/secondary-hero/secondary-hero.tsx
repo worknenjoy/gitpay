@@ -15,6 +15,7 @@ type SecondaryHeroProps = {
   image?: string
   animation?: string
   title: React.ReactNode
+  withContrast?: boolean
   items: {
     icon: React.ReactNode
     primaryText: React.ReactNode
@@ -22,9 +23,15 @@ type SecondaryHeroProps = {
   }[]
 }
 
-const SecondaryHero = ({ image, animation, title, items }: SecondaryHeroProps) => {
+const SecondaryHero = ({
+  image,
+  animation,
+  title,
+  items,
+  withContrast = false
+}: SecondaryHeroProps) => {
   return (
-    <AltSection>
+    <AltSection $withContrast={withContrast}>
       <HeroTitle level="h5">{title}</HeroTitle>
       <Grid container spacing={1}>
         <Grid size={{ xs: 12, sm: 5 }}>

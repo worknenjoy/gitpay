@@ -4,7 +4,14 @@ import Button, { ButtonProps } from '@mui/material/Button'
 import ListItem from '@mui/material/ListItem'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
 
-export const CallToActionHeroStyled = styled('div')(({ theme }) => ({
+type CallToActionHeroStyledProps = {
+  $withContrast?: boolean
+}
+
+export const CallToActionHeroStyled = styled('div', {
+  shouldForwardProp: (prop) => prop !== '$withContrast'
+})<CallToActionHeroStyledProps>(({ theme, $withContrast }) => ({
+  backgroundColor: $withContrast ? theme.palette.primary.contrastText : 'transparent',
   position: 'relative',
   width: '100%',
   height: 500,

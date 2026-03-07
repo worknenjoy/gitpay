@@ -7,9 +7,21 @@ import {
   GutterTopButton
 } from './call-to-action-hero.styles'
 
-const CallToActionHero = ({ title, actions }) => {
+type CallToActionHeroProps = {
+  title: React.ReactNode
+  actions: {
+    label: React.ReactNode
+    link: string
+    variant?: 'text' | 'outlined' | 'contained'
+    color?: 'primary' | 'secondary' | 'inherit' | 'success' | 'error' | 'info' | 'warning'
+    size?: 'small' | 'medium' | 'large'
+  }[]
+  withContrast?: boolean
+}
+
+const CallToActionHero = ({ title, actions, withContrast = true }: CallToActionHeroProps) => {
   return (
-    <CallToActionHeroStyled>
+    <CallToActionHeroStyled $withContrast={withContrast}>
       <DotLottieReactStyled src={'/lottie/developer-team.lottie'} loop autoplay />
       <BottomCTASection>
         <BottomCopy variant="h6" gutterBottom>
