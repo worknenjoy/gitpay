@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Divider, Typography } from '@mui/material'
 
-type PreferenceRowProps = {
+export type PreferenceRowProps = {
   title: React.ReactNode
   description?: React.ReactNode
   action?: React.ReactNode
