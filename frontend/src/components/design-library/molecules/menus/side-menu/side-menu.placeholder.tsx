@@ -3,11 +3,11 @@ import { Skeleton, Typography } from '@mui/material'
 import { MenuItemSection, MenuItemStyled, MenuListStyled } from './side-menu-items.styles'
 
 const SidebarMenuPlaceholder: React.FC = () => {
-  const widths = [92, 86, 78]
+  const widths = [60, 45, 70]
   const sections = 3
 
   return (
-    <div style={{ position: 'relative', width: 200 }}>
+    <div style={{ position: 'relative', width: 160 }}>
       <MenuListStyled>
         <MenuItemSection>
           <MenuItemStyled>
@@ -24,7 +24,7 @@ const SidebarMenuPlaceholder: React.FC = () => {
         {Array.from({ length: sections }).map((_, idx) => (
           <MenuItemSection>
             <Typography variant="caption">
-              <Skeleton variant="text" animation="wave" height={16} width={80} color="inherit" />
+              <Skeleton variant="text" animation="wave" height={16} width={120} color="inherit" />
             </Typography>
             {widths.map((w, i) => (
               <MenuItemStyled>

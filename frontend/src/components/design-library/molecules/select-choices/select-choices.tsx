@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Typography, Checkbox, Skeleton } from '@mui/material'
+import { Typography, Checkbox } from '@mui/material'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
+
+import SelectChoicesPlaceholder from './select-choices.placeholder'
 
 import {
   SelectChoicesContainer,
@@ -50,8 +52,6 @@ const SelectChoices = <TItem,>({
   onToggle,
   itemSize = { xs: 12, sm: 6, md: 3 }
 }: SelectChoicesProps<TItem>) => {
-  const placeholders = Array(placeholderCount).fill(null)
-
   const shouldRenderHeader = Boolean(title) || Boolean(description)
   const renderTitle =
     typeof title === 'string' || typeof title === 'number' ? (
@@ -75,28 +75,7 @@ const SelectChoices = <TItem,>({
 
       <SelectChoicesGrid container spacing={2} alignItems="stretch" justifyContent="space-around">
         {loading ? (
-          <>
-            {placeholders.map((_, index) => (
-              <SelectChoicesItem key={index} size={itemSize}>
-                <SelectChoicesCard variant="outlined">
-                  <SelectChoicesMedia>
-                    <Skeleton variant="rectangular" width="100%" height="100%" />
-                  </SelectChoicesMedia>
-                  <SelectChoicesLabel>
-                    <Typography variant="subtitle1">
-                      <Skeleton variant="text" />
-                    </Typography>
-                  </SelectChoicesLabel>
-                  <SelectChoicesActionBar>
-                    <Typography variant="body2" component="p">
-                      <Skeleton variant="text" />
-                    </Typography>
-                    <Skeleton variant="circular" width={28} height={28} />
-                  </SelectChoicesActionBar>
-                </SelectChoicesCard>
-              </SelectChoicesItem>
-            ))}
-          </>
+          <SelectChoicesPlaceholder count={placeholderCount} itemSize={itemSize} />
         ) : (
           <>
             {items.map((item, index) => {
