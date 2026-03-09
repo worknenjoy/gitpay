@@ -133,7 +133,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           value: true,
           defaultChecked: data?.custom_amount,
           disabled: editMode,
-          alignment: editMode ? 'flex-start' : 'center',
+          alignment: 'center',
           onChange: handleCustomAmountChange
         }
       ],
@@ -227,10 +227,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         },
         {
           label: (
-            <FormattedMessage
-              id="paymentRequest.form.section.settings"
-              defaultMessage="Settings"
-            />
+            <FormattedMessage id="paymentRequest.form.section.settings" defaultMessage="Settings" />
           ),
           value: 'settings'
         },
@@ -334,12 +331,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
               </Grid>
               <Grid size={{ xs: 12, md: 12 }}>
                 {!completed ? (
-                  <Skeleton
-                    variant="rectangular"
-                    animation="wave"
-                    width="100%"
-                    height={120}
-                  />
+                  <Skeleton variant="rectangular" animation="wave" width="100%" height={120} />
                 ) : (
                   <TextField
                     fullWidth
@@ -409,9 +401,13 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                             action={
                               <Switch
                                 name={item.name}
-                                value={"true"}
-                                defaultChecked={isSendInstructions ? undefined : item.defaultChecked}
-                                checked={isSendInstructions ? sendInstructionsEmailChecked : undefined}
+                                value={'true'}
+                                defaultChecked={
+                                  isSendInstructions ? undefined : item.defaultChecked
+                                }
+                                checked={
+                                  isSendInstructions ? sendInstructionsEmailChecked : undefined
+                                }
                                 onChange={
                                   isSendInstructions
                                     ? (e) => handleSendEmailChange(e.target.checked)

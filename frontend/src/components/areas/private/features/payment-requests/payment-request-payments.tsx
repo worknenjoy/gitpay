@@ -8,6 +8,8 @@ import AccountRequirements from 'design-library/atoms/alerts/account-requirement
 
 import { paymentRequestPaymentsMetadata } from './payment-requests-payments-table'
 import { usePaymentRequestPaymentsCustomColumnRenderer } from './hooks/usePaymentRequestPaymentColumnRender'
+import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
+import { Payment } from '@mui/icons-material'
 
 const PaymentRequestPayments = ({
   user,
@@ -56,6 +58,17 @@ const PaymentRequestPayments = ({
           tableHeaderMetadata: paymentRequestPaymentsMetadata,
           customColumnRenderer: paymentRequestPaymentsCustomColumnRenderer
         }}
+        emptyComponent={
+          <EmptyBase
+            icon={<Payment fontSize="large" />}
+            text={
+              <FormattedMessage
+                id="account.profile.paymentRequests.payments.empty.title"
+                defaultMessage="No payments received yet"
+              />
+            }
+          />
+        }
       />
     </>
   )

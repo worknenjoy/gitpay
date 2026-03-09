@@ -83,9 +83,7 @@ const PaymentDrawer = ({
           textColor="secondary"
         >
           {tabs.map((tab) => {
-            const tabElement = (
-              <Tab label={tab.label} value={tab.value} disabled={tab.disabled} />
-            )
+            const tabElement = <Tab label={tab.label} value={tab.value} disabled={tab.disabled} />
 
             if (!tab.tooltip) return tabElement
 

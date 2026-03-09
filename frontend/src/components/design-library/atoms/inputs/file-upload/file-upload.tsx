@@ -49,13 +49,19 @@ const getFileIcon = (file: File) => {
   const ext = name.includes('.') ? name.split('.').pop() || '' : ''
 
   const isPdf = type === 'application/pdf' || ext === 'pdf'
-  const isImage = type.startsWith('image/') || ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'].includes(ext)
+  const isImage =
+    type.startsWith('image/') || ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'].includes(ext)
   const isText =
     type.startsWith('text/') ||
     ['txt', 'md', 'csv', 'log', 'json', 'xml', 'yaml', 'yml'].includes(ext)
   const isArchive =
     ['zip', 'rar', '7z', 'tar', 'gz', 'tgz'].includes(ext) ||
-    ['application/zip', 'application/x-zip-compressed', 'application/x-rar-compressed', 'application/gzip'].includes(type)
+    [
+      'application/zip',
+      'application/x-zip-compressed',
+      'application/x-rar-compressed',
+      'application/gzip'
+    ].includes(type)
 
   if (isPdf) return <PictureAsPdfOutlined fontSize="small" color="action" />
   if (isImage) return <ImageOutlined fontSize="small" color="action" />
@@ -84,7 +90,11 @@ const formatUploadedAt = (value?: string | Date) => {
   if (!value) return null
   const date = value instanceof Date ? value : new Date(value)
   if (Number.isNaN(date.getTime())) return null
-  return new Intl.DateTimeFormat(undefined, { year: 'numeric', month: 'short', day: '2-digit' }).format(date)
+  return new Intl.DateTimeFormat(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit'
+  }).format(date)
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({
@@ -122,9 +132,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
   const buttonLabel = useMemo(() => {
     if (multiple) {
-      return (
-        <FormattedMessage id="fileUpload.chooseFiles" defaultMessage="Choose files" />
-      )
+      return <FormattedMessage id="fileUpload.chooseFiles" defaultMessage="Choose files" />
     }
     return <FormattedMessage id="fileUpload.chooseFile" defaultMessage="Choose file" />
   }, [multiple])
@@ -302,10 +310,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       <Box sx={{ mt: 2 }}>
         {existingFiles.length === 0 && displayFiles.length === 0 ? (
           <Typography variant="body2" color="text.secondary">
-            <FormattedMessage
-              id="fileUpload.empty"
-              defaultMessage="No files attached yet."
-            />
+            <FormattedMessage id="fileUpload.empty" defaultMessage="No files attached yet." />
           </Typography>
         ) : (
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
@@ -346,10 +351,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
             {existingFiles.length > 0 && displayFiles.length > 0 && (
               <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
-                <FormattedMessage
-                  id="fileUpload.new"
-                  defaultMessage="New files"
-                />
+                <FormattedMessage id="fileUpload.new" defaultMessage="New files" />
               </Typography>
             )}
 

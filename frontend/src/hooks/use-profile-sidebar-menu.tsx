@@ -148,10 +148,7 @@ const useProfileSidebarMenu = ({ user }) => {
           onClick: () => history.push('/profile/payment-requests/payments'),
           icon: <PaymentRequestPaymentsIcon />,
           label: (
-            <FormattedMessage
-              id="payment.request.payments.tab.label"
-              defaultMessage="Payments"
-            />
+            <FormattedMessage id="payment.request.payments.tab.label" defaultMessage="Payments" />
           ),
           selected: selected === 8
         },

@@ -99,7 +99,12 @@ const PaymentRequests = ({
       <ActionField
         actions={[
           {
-            children: <FormattedMessage id="payment.requests.update" defaultMessage="Update Payment Request" />,
+            children: (
+              <FormattedMessage
+                id="payment.requests.update"
+                defaultMessage="Update Payment Request"
+              />
+            ),
             icon: <EditIcon />,
             onClick: () => openEditPaymentRequest(item)
           }

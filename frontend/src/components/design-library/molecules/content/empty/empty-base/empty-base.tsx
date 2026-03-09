@@ -32,7 +32,7 @@ const EmptyBase = ({
           {secondaryText}
         </MessageSecondary>
       )}
-      { onActionClick && (
+      {onActionClick && (
         <Button
           sx={{ mt: 2 }}
           variant="contained"
