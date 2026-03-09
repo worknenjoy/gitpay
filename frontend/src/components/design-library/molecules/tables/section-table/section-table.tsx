@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Skeleton } from '@mui/material'
-import {  DescriptionOutlined as NoDataIcon } from '@mui/icons-material'
+import { DescriptionOutlined as NoDataIcon } from '@mui/icons-material'
 
 import {
   Paper,
@@ -177,7 +177,12 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
     return (
       <RootPaper sx={{ p: 2 }}>
         <EmptyBase
-          text={<FormattedMessage id="sectionTable.empty" defaultMessage="No records for this table yet" />}
+          text={
+            <FormattedMessage
+              id="sectionTable.empty"
+              defaultMessage="No records for this table yet"
+            />
+          }
           icon={<NoDataIcon fontSize="large" color="disabled" />}
         />
       </RootPaper>
