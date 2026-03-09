@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Skeleton } from '@mui/material'
+import {  DescriptionOutlined as NoDataIcon } from '@mui/icons-material'
 
 import {
   Paper,
@@ -10,13 +11,13 @@ import {
   TableFooter,
   TablePagination,
   TableRow,
-  TableSortLabel,
-  Typography
+  TableSortLabel
 } from '@mui/material'
 import { RootPaper, TableWrapper, StyledTable, StyledTableCell } from './section-table.styles'
 
 import TablePaginationActions from './section-table-pagination-actions/section-table-pagination-actions'
 import TablePlaceholder from './section-table.placeholder'
+import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
 
 type MetaDataProps = {
   numeric: boolean
@@ -174,14 +175,11 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
 
   if (tableData.completed && tableData.data.length === 0) {
     return (
-      <RootPaper>
-        <div
-          style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 200 }}
-        >
-          <Typography variant="caption">
-            <FormattedMessage id="task.table.body.noData" defaultMessage="No data" />
-          </Typography>
-        </div>
+      <RootPaper sx={{ p: 2 }}>
+        <EmptyBase
+          text={<FormattedMessage id="sectionTable.empty" defaultMessage="No records for this table yet" />}
+          icon={<NoDataIcon fontSize="large" color="disabled" />}
+        />
       </RootPaper>
     )
   }

@@ -8,6 +8,8 @@ import StatusCard from 'design-library/molecules/cards/status-card/status-card'
 import EmptyPayout from 'design-library/molecules/content/empty/empty-payout/empty-payout'
 import { useHistory } from 'react-router-dom'
 import PayoutRequestDrawer from 'design-library/molecules/drawers/payout-request-drawer/payout-request-drawer'
+import Button from 'design-library/atoms/buttons/button/button'
+import { SettingsOutlined as SettingsIcon } from '@mui/icons-material'
 
 const Payouts = ({
   payouts,
@@ -49,22 +51,33 @@ const Payouts = ({
 
   return (
     <Container>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between'
-        }}
-      >
-        <ProfileHeader
-          title={<FormattedMessage id="payouts.title" defaultMessage="Payouts" />}
-          subtitle={
-            <FormattedMessage
-              id="payouts.subtitle"
-              defaultMessage="Manage your payouts on the way to your bank account"
-            />
-          }
-        />
-      </div>
+      <ProfileHeader
+        title={<FormattedMessage id="payouts.title" defaultMessage="Payouts" />}
+        subtitle={
+          <FormattedMessage
+            id="payouts.subtitle"
+            defaultMessage="Manage your payouts on the way to your bank account"
+          />
+        }
+        aside={
+          <Button
+            variant="outlined"
+            color="secondary"
+            size="small"
+            endIcon={<SettingsIcon fontSize="small" />}
+            onClick={() => history.push('/profile/payout-settings')}
+            sx={{
+              marginTop: { xs: 2, sm: 0 },
+              height: 28,
+              minHeight: 28,
+              py: 0,
+              px: 1
+            }}
+          >
+            Payout settings
+          </Button>
+        }
+      />
       {!userData?.account_id && userCompleted ? (
         <Paper elevation={0} style={{ padding: 20, marginTop: 10 }}>
           <EmptyPayout onActionClick={() => history.push('/profile/payout-settings')} />

@@ -54,13 +54,13 @@ const PrimaryDataPage = ({
               color="secondary"
               size="small"
               onClick={onActionClick}
-              startIcon={<AddIcon fontSize="small" />}
+              endIcon={<AddIcon fontSize="small" />}
               sx={{
                 marginTop: { xs: 2, sm: 0 },
-                height: 28,
+                height: 32,
                 minHeight: 28,
-                py: 0,
-                px: 1
+                py: 2,
+                px: 2
               }}
             >
               {onActionText}
