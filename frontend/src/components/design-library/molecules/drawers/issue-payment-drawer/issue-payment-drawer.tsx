@@ -174,6 +174,13 @@ function IssuePaymentDrawer({
         {
           label: intl.formatMessage(taskPaymentFormMessages.tabPaymentMethodPaypal),
           value: 'paypal',
+          disabled: true,
+          tooltip: (
+            <FormattedMessage
+              id="general.temporarilyUnavailable"
+              defaultMessage="Temporarily unavailable"
+            />
+          ),
           component: (
             <PaypalPaymentCard
               onClose={onClose}

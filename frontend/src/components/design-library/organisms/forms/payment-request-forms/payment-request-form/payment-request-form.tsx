@@ -241,7 +241,9 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
               defaultMessage="Attach files"
             />
           ),
-          value: 'attachments'
+          value: 'attachments',
+          disabled: true,
+          tooltip: <FormattedMessage id="general.comingSoon" defaultMessage="Coming soon" />
         }
       ],
       []

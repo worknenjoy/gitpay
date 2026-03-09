@@ -14,7 +14,7 @@ type EmptyBaseProps = {
 }
 
 const EmptyBase = ({
-  onActionClick = () => {},
+  onActionClick,
   icon = <EmptyIcon />,
   text = 'No Data',
   secondaryText,
@@ -32,14 +32,16 @@ const EmptyBase = ({
           {secondaryText}
         </MessageSecondary>
       )}
-      <Button
-        sx={{ mt: 2 }}
-        variant="contained"
-        color="secondary"
-        onClick={onActionClick}
-        completed={completed}
-        label={actionText}
-      />
+      { onActionClick && (
+        <Button
+          sx={{ mt: 2 }}
+          variant="contained"
+          color="secondary"
+          onClick={onActionClick}
+          completed={completed}
+          label={actionText}
+        />
+      )}
     </Box>
   )
 }

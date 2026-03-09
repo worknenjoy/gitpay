@@ -8,6 +8,8 @@ import UserTasksContainer from '../../../../containers/user/user-tasks'
 import ClaimsContainer from '../../../../containers/payment/claims'
 import PaymentsContainer from '../../../../containers/payment/payments'
 import PaymentRequestContainer from '../../../../containers/payment/payment-requests'
+import PaymentRequestPaymentsContainer from '../../../../containers/payment/payment-request-payments'
+import PaymentRequestBalancesContainer from '../../../../containers/payment/payment-request-balances'
 import WalletsContainer from '../../../../containers/payment/wallets'
 import PayoutsContainer from '../../../../containers/payment/payouts'
 import TaskContainer from '../../../../containers/tasks/task'
@@ -71,6 +73,18 @@ const PrivatePage = ({
           <Route exact path="/profile/payments" component={PaymentsContainer} />
 
           <Route exact path="/profile/payment-requests" component={PaymentRequestContainer} />
+
+          <Route
+            exact
+            path="/profile/payment-requests/payments"
+            component={PaymentRequestPaymentsContainer}
+          />
+
+          <Route
+            exact
+            path="/profile/payment-requests/disputes-refunds"
+            component={PaymentRequestBalancesContainer}
+          />
 
           <Route exact path="/profile/wallets" component={WalletsContainer} />
 

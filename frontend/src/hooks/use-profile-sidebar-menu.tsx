@@ -6,7 +6,9 @@ import {
   AccountBalanceWallet as WalletIcon,
   LibraryBooks,
   Payment as PaymentIcon,
-  CardMembership as PaymentRequestsIcon,
+  Link as PaymentRequestLinksIcon,
+  CardMembership as PaymentRequestPaymentsIcon,
+  Shield as PaymentRequestDisputesIcon,
   SwapHoriz as PayoutIcon,
   Public as ExploreIcon,
   AssignmentTurnedIn as ClaimIcon
@@ -32,6 +34,10 @@ const useProfileSidebarMenu = ({ user }) => {
       setSelected(1)
     } else if (path.includes('/profile/payments')) {
       setSelected(3)
+    } else if (path.includes('/profile/payment-requests/payments')) {
+      setSelected(8)
+    } else if (path.includes('/profile/payment-requests/disputes-refunds')) {
+      setSelected(9)
     } else if (path.includes('/profile/payment-requests')) {
       setSelected(4)
     } else if (path.includes('/profile/wallets')) {
@@ -128,14 +134,38 @@ const useProfileSidebarMenu = ({ user }) => {
         {
           include: isContributor || isProvider,
           onClick: () => history.push('/profile/payment-requests'),
-          icon: <PaymentRequestsIcon />,
+          icon: <PaymentRequestLinksIcon />,
           label: (
             <FormattedMessage
-              id="account.profile.sidemenu.paymentrequests.paymentrequests"
-              defaultMessage="Payment Requests"
+              id="account.profile.sidemenu.paymentrequests.links"
+              defaultMessage="Payment links"
             />
           ),
           selected: selected === 4
+        },
+        {
+          include: isContributor || isProvider,
+          onClick: () => history.push('/profile/payment-requests/payments'),
+          icon: <PaymentRequestPaymentsIcon />,
+          label: (
+            <FormattedMessage
+              id="payment.request.payments.tab.label"
+              defaultMessage="Payments"
+            />
+          ),
+          selected: selected === 8
+        },
+        {
+          include: isContributor || isProvider,
+          onClick: () => history.push('/profile/payment-requests/disputes-refunds'),
+          icon: <PaymentRequestDisputesIcon />,
+          label: (
+            <FormattedMessage
+              id="payment.request.balances.transactions.tab.label"
+              defaultMessage="Disputes / refunds"
+            />
+          ),
+          selected: selected === 9
         }
       ]
     },

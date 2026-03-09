@@ -6,13 +6,6 @@ import { useHistory } from 'react-router-dom'
 
 import { paymentRequestMetadata } from './payment-requests-table'
 
-import { paymentRequestPaymentsMetadata } from './payment-requests-payments-table'
-
-import {
-  paymentRequestBalancesMetadata,
-  paymentRequestBalancesCustomColumnRenderer
-} from './payment-requests-balance-table'
-
 import EmptyPaymentRequest from 'design-library/molecules/content/empty/empty-payment-request/empty-payment-request'
 import PaymentRequestDrawer from 'design-library/molecules/drawers/payment-request-drawer/payment-request-drawer'
 import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page'
@@ -23,22 +16,16 @@ import AmountField from 'design-library/molecules/tables/section-table/section-t
 import LinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/link-field/link-field'
 import PaymentRequestActiveField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payment-request/payment-request-active-field/payment-request-active-field'
 import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
-import { usePaymentRequestPaymentsCustomColumnRenderer } from './hooks/usePaymentRequestPaymentColumnRender'
 import { validAccount } from '../../../../../utils/valid-account'
 
 const PaymentRequests = ({
   user,
   account,
   paymentRequests,
-  paymentRequestPayments,
-  paymentRequestBalances,
   createPaymentRequest,
   fetchAccount,
   listPaymentRequests,
-  listPaymentRequestPayments,
-  listPaymentRequestBalances,
-  updatePaymentRequest,
-  refundPaymentRequestPayment
+  updatePaymentRequest
 }) => {
   const history = useHistory()
 
@@ -47,8 +34,6 @@ const PaymentRequests = ({
 
   const [processingUpdatePaymentRequest, setProcessingUpdatePaymentRequest] = React.useState(false)
   const [selectedPaymentRequest, setSelectedPaymentRequest] = React.useState<any | null>(null)
-
-  const [activeTab, setActiveTab] = React.useState('payment-requests')
 
   const isAccountValid = validAccount(user, account)
 
@@ -61,14 +46,6 @@ const PaymentRequests = ({
     }
     setOpenNewPaymentRequestDrawer(true)
   }
-
-  const paymentRequestPaymentsCustomColumnRenderer = usePaymentRequestPaymentsCustomColumnRenderer({
-    onRefund: async (paymentId) => {
-      await refundPaymentRequestPayment(paymentId)
-      await listPaymentRequestPayments()
-      setActiveTab('payment-request-payments')
-    }
-  })
 
   const handlePaymentRequestCreate = async (e, data) => {
     e.preventDefault()
@@ -122,7 +99,7 @@ const PaymentRequests = ({
       <ActionField
         actions={[
           {
-            children: 'Edit Payment Request',
+            children: <FormattedMessage id="payment.requests.update" defaultMessage="Update Payment Request" />,
             icon: <EditIcon />,
             onClick: () => openEditPaymentRequest(item)
           }
@@ -134,14 +111,7 @@ const PaymentRequests = ({
   useEffect(() => {
     fetchAccount?.()
     listPaymentRequests()
-    listPaymentRequestPayments()
-    listPaymentRequestBalances()
   }, [])
-
-  const transactions = {
-    completed: paymentRequestBalances?.completed,
-    data: paymentRequestBalances?.data?.[0]?.PaymentRequestBalanceTransactions || []
-  }
 
   return (
     <>
@@ -149,70 +119,23 @@ const PaymentRequests = ({
         <AccountRequirements user={user} account={account} onClick={handleGoToPayoutSettings} />
       </Box>
       <PrimaryDataPage
-        title={<FormattedMessage id="payment.requests.title" defaultMessage="Payment requests" />}
-        description={
+        title={
           <FormattedMessage
-            id="payment.requests.description"
-            defaultMessage="Here you can see all the payment requests on your account"
+            id="account.profile.paymentRequests.links.title"
+            defaultMessage="Payment Requests links"
           />
         }
-        activeTab={activeTab}
-        tabs={[
-          {
-            label: (
-              <FormattedMessage
-                id="payment.requests.tab.label"
-                defaultMessage="Payment requests links"
-              />
-            ),
-            value: 'payment-requests',
-            table: {
-              tableData: paymentRequests,
-              tableHeaderMetadata: paymentRequestMetadata,
-              customColumnRenderer: customColumnRenderer
-            }
-          },
-          {
-            label: (
-              <FormattedMessage
-                id="payment.request.payments.tab.label"
-                defaultMessage="Payments for payment requests"
-              />
-            ),
-            value: 'payment-request-payments',
-            table: {
-              tableData: paymentRequestPayments,
-              tableHeaderMetadata: paymentRequestPaymentsMetadata,
-              customColumnRenderer: paymentRequestPaymentsCustomColumnRenderer
-            }
-          },
-          {
-            label: (
-              <FormattedMessage
-                id="payment.request.balances.transactions.tab.label"
-                defaultMessage="Disputes and refunds fees"
-              />
-            ),
-            cards: [
-              {
-                title: (
-                  <FormattedMessage
-                    id="payment.request.balances.card.title"
-                    defaultMessage="Disputes and refunds due"
-                  />
-                ),
-                amount: parseInt(paymentRequestBalances?.data?.[0]?.balance) * -1 || 0,
-                type: 'centavos'
-              }
-            ],
-            value: 'payment-request-balances',
-            table: {
-              tableData: transactions,
-              tableHeaderMetadata: paymentRequestBalancesMetadata,
-              customColumnRenderer: paymentRequestBalancesCustomColumnRenderer
-            }
-          }
-        ]}
+        description={
+          <FormattedMessage
+            id="account.profile.paymentRequests.links.description"
+            defaultMessage="Here you can see all the payment request links on your account"
+          />
+        }
+        table={{
+          tableData: paymentRequests,
+          tableHeaderMetadata: paymentRequestMetadata,
+          customColumnRenderer: customColumnRenderer
+        }}
         displayAction={isAccountValid}
         emptyComponent={
           <EmptyPaymentRequest onActionClick={handleOpenCreatePaymentRequestDrawer} />
