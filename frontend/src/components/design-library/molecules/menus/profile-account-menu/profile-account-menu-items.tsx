@@ -20,7 +20,7 @@ const ProfileAccountMenuItems = ({
   includeDashboard = false
 }) => {
   const history = useHistory()
-  const { isContributor, isMaintainer, isFunding } = useUserTypes({ user })
+  const { isContributor, isMaintainer, isFunding, isProvider } = useUserTypes({ user })
   const { data } = user
 
   const bgColor = '#d8e2d9ff'
@@ -106,7 +106,7 @@ const ProfileAccountMenuItems = ({
           }
         />
       </MenuItem>
-      {isContributor && (
+      {(isContributor || isProvider) && (
         <MenuItem onClick={(e) => history.push('/profile/payout-settings')}>
           <ListItemIcon>
             <ProfileAvatar bgColor={bgColor}>

@@ -11,9 +11,15 @@ import {
   ActionButton,
   Account
 } from 'design-library/organisms/layouts/header-layouts/account-header-layout/account-header-layout.styles'
+import useUserTypes from '../../../../../../hooks/use-user-types'
 
 const AccountHeader = ({ user, history, onCreateTask, onLogout }) => {
   const [openAddIssue, setOpenAddIssue] = useState(false)
+
+  const normalizedUser = user?.data ? user : { data: user }
+  const { isContributor, isMaintainer, isFunding, isProvider } = useUserTypes({
+    user: normalizedUser
+  })
 
   const handleAddIssueClick = () => {
     setOpenAddIssue(true)
@@ -29,9 +35,9 @@ const AccountHeader = ({ user, history, onCreateTask, onLogout }) => {
       <Grid size={{ xs: 12, md: 4 }}></Grid>
       <Grid size={{ xs: 12, md: 8 }} component={Wrapper}>
         <Inner>
-          {user?.Types?.map((t) => t.name).includes('contributor') && (
-            <Grid container direction="column" alignItems="center">
-              <Grid size={{ xs: 12 }}>
+          {(isContributor || isProvider) && (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {isContributor && (
                 <ActionButton
                   onClick={() => history.push('/profile/explore')}
                   color="primary"
@@ -42,12 +48,21 @@ const AccountHeader = ({ user, history, onCreateTask, onLogout }) => {
                     defaultMessage="Work on an issue"
                   />
                 </ActionButton>
-              </Grid>
-            </Grid>
+              )}
+              <ActionButton
+                onClick={() => history.push('/profile/payment-requests')}
+                color="primary"
+                variant="outlined"
+              >
+                <FormattedMessage
+                  id="profile.header.action.requestPayment"
+                  defaultMessage="Request Payment"
+                />
+              </ActionButton>
+            </div>
           )}
-          {(user?.Types?.map((t) => t.name).includes('maintainer') ||
-            user?.Types?.map((t) => t.name).includes('funding')) && (
-            <>
+          {(isMaintainer || isFunding) && (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
               <ImportIssueButton onAddIssueClick={handleAddIssueClick} />
               <ImportIssueDialog
                 open={openAddIssue}
@@ -55,7 +70,7 @@ const AccountHeader = ({ user, history, onCreateTask, onLogout }) => {
                 onCreate={(props) => onHandleCreateTask(props, history)}
                 user={user}
               />
-            </>
+            </div>
           )}
         </Inner>
         <Account>

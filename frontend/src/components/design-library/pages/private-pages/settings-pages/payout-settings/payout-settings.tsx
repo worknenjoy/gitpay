@@ -1,8 +1,8 @@
 import React from 'react'
-import PayoutSetingsTabs from '../../../../molecules/tabs/payout-settings-tabs/payout-settings-tabs'
+import PayoutSettingsTabs from '../../../../molecules/tabs/payout-settings-tabs/payout-settings-tabs'
 
-const PayoutSetings = ({ children }) => {
-  return <PayoutSetingsTabs>{children}</PayoutSetingsTabs>
+const PayoutSettings = ({ children }) => {
+  return <PayoutSettingsTabs>{children}</PayoutSettingsTabs>
 }
 
-export default PayoutSetings
+export default PayoutSettings

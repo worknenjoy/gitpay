@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Tabs, Tab, Box, CardContent, useTheme, useMediaQuery } from '@mui/material'
+import { Tabs, Tab, Box, CardContent, Tooltip, useTheme, useMediaQuery } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 import {
   Root,
@@ -42,6 +42,9 @@ type BaseTabsProps = {
     label: string | React.ReactNode
     value: string | number
     link?: string
+    disabled?: boolean
+    tooltip?: string | React.ReactNode
+    onChange?: (event: React.SyntheticEvent, value: string | number) => void
   }>
   activeTab?: string | number
   orientation?: 'horizontal' | 'vertical'
@@ -70,7 +73,9 @@ const BaseTabs = ({
     onChange?.(event, newValue)
   }
 
-  const handleTabClick = (e, tab) => {
+  const handleTabClick = (e: React.SyntheticEvent, tab: (typeof tabs)[number]) => {
+    if (tab.disabled) return
+
     tab.link && history.push(tab.link)
     tab.onChange && tab.onChange(e, tab.value)
   }
@@ -98,14 +103,28 @@ const BaseTabs = ({
           variant={isVertical ? 'standard' : 'scrollable'}
           scrollButtons={isVertical ? false : 'auto'}
         >
-          {tabs.map((tab) => (
-            <Tab
-              key={tab.value}
-              label={tab.label}
-              onClick={(e) => handleTabClick(e, tab)}
-              value={tab.value}
-            />
-          ))}
+          {tabs.map((tab) => {
+            const tabElement = (
+              <Tab
+                key={tab.value}
+                label={tab.label}
+                onClick={(e) => handleTabClick(e, tab)}
+                value={tab.value}
+                disabled={tab.disabled}
+              />
+            )
+
+            if (!tab.tooltip) {
+              return tabElement
+            }
+
+            // Tooltip doesn't fire on disabled elements, so wrap in a span.
+            return (
+              <Tooltip key={tab.value} title={tab.tooltip} placement="top">
+                <span>{tabElement}</span>
+              </Tooltip>
+            )
+          })}
         </Tabs>
       </TabWrapper>
       <TabPanel isVertical={isVertical} withCard={withCard}>

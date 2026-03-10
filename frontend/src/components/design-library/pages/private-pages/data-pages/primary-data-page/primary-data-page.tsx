@@ -1,10 +1,11 @@
 import React from 'react'
-import { Button, Container, Paper } from '@mui/material'
-import { AddRounded as AddIcon } from '@mui/icons-material'
+import { Container, Paper } from '@mui/material'
+import { AddOutlined as AddIcon } from '@mui/icons-material'
 import ProfileHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
 import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
 import SectionTable from 'design-library/molecules/tables/section-table/section-table'
+import Button from 'design-library/atoms/buttons/button/button'
 import { TableTabsProps, TableTabsContentProps } from 'types/table'
 import { CardProps } from 'types/card'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
@@ -53,8 +54,14 @@ const PrimaryDataPage = ({
               color="secondary"
               size="small"
               onClick={onActionClick}
-              endIcon={<AddIcon />}
-              sx={{ marginTop: { xs: 2, sm: 0 }, width: { xs: '100%', sm: 'auto' } }}
+              endIcon={<AddIcon fontSize="small" />}
+              sx={{
+                marginTop: { xs: 2, sm: 0 },
+                height: 32,
+                minHeight: 28,
+                py: 2,
+                px: 2
+              }}
             >
               {onActionText}
             </Button>

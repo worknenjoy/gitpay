@@ -44,7 +44,10 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
       onClose={onClose}
       title={
         isEditMode ? (
-          <FormattedMessage id="paymentRequest.title.edit" defaultMessage="Edit Payment Request" />
+          <FormattedMessage
+            id="paymentRequest.title.edit"
+            defaultMessage="Update Payment Request"
+          />
         ) : (
           <FormattedMessage id="paymentRequest.title.new" defaultMessage="New Payment Request" />
         )
@@ -64,8 +67,8 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
         {
           label: isEditMode ? (
             <FormattedMessage
-              id="paymentRequest.action.edit"
-              defaultMessage="Edit Payment Request"
+              id="paymentRequest.action.update"
+              defaultMessage="Update Payment Request"
             />
           ) : (
             <FormattedMessage

@@ -37,15 +37,26 @@ const SideMenuItems = ({ menuItems, compactMode, setCompactMode }: SideMenuItems
       <MenuListStyled compact={compactMode}>
         {menuItems.map((section, sectionIndex) => (
           <MenuItemSection key={`section-${sectionIndex}`} compact={compactMode}>
-            {section.category && (
-              <Typography
-                variant="caption"
-                component={Category as any}
-                style={{ marginTop: sectionIndex === 0 ? 0 : 16 }}
-              >
-                {section.category}
-              </Typography>
-            )}
+            {section.category &&
+              (compactMode ? (
+                <Tooltip title={section.category} placement="right">
+                  <Typography
+                    variant="caption"
+                    component={Category as any}
+                    style={{ marginTop: sectionIndex === 0 ? 0 : 16 }}
+                  >
+                    ...
+                  </Typography>
+                </Tooltip>
+              ) : (
+                <Typography
+                  variant="caption"
+                  component={Category as any}
+                  style={{ marginTop: sectionIndex === 0 ? 0 : 16 }}
+                >
+                  {section.category}
+                </Typography>
+              ))}
             {section.items.map(
               (item, index) =>
                 item.include && (
