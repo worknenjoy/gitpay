@@ -5,7 +5,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay 'Average time to resolve an issue')
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay 'Percentage of issues still open')
 
-Gitpay is an open-source platform that integrates payment workflows using Git. It supports multiple workflows — including **bounties** (where funders attach rewards to issues and contributors earn them by submitting accepted pull requests) and **payment requests** (where contributors, maintainers, and service providers can request payment for work completed inside or outside of issues).
+Gitpay is an open-source platform that integrates payment workflows using Git. It supports multiple workflows — including **bounties** (where funders attach rewards to issues and contributors earn them by submitting accepted pull requests) and **payment requests** - where contributors, maintainers, and service providers can request payment for work completed inside or outside of issues, or to have access to versioned files in a Git repository.
 
 ### Slack channel
 
