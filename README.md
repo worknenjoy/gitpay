@@ -5,7 +5,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay 'Average time to resolve an issue')
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay 'Percentage of issues still open')
 
-Gitpay is an open-source platform that integrates payment workflow using Git. 
+Gitpay is an open-source platform that integrates payment workflows using Git. It supports multiple workflows — including **bounties** (where funders attach rewards to issues and contributors earn them by submitting accepted pull requests) and **payment requests** (where contributors, maintainers, and service providers can request payment for work completed inside or outside of issues).
 
 ### Slack channel
 
@@ -15,11 +15,22 @@ We have a Slack channel where you can collaborate with other people who are usin
 
 ## History
 
-From Bounties to payment request
+Gitpay started as a bounty platform — a way for open-source maintainers to attach monetary rewards to GitHub issues and attract contributors to solve them. Over time the platform evolved to support **payment requests**, giving contributors, maintainers, and service providers a way to request payment for work that may not fit the classic bounty model. Today bounties are one of several payment workflows available on Gitpay.
 
 ## Why Gitpay?
 
-Gitpay is an open-source platform that empowers collaboration and rewards contributions to open-source projects. With Gitpay, you can complete tasks from anywhere in the world with open collaboration and receive bounties for completing them. Likewise, companies can receive reports, fixes, and enhancements from developers and offer bounties for completing requirements.
+Gitpay is an open-source platform that empowers collaboration and fairly rewards every kind of contribution to open-source projects. Whether you are solving issues for bounties, requesting payment for work you delivered, funding the features you need, or providing services to projects, Gitpay gives you the tools to collaborate and get paid — from anywhere in the world.
+
+## Roles
+
+Gitpay is built around four distinct roles. Each role has its own journey on the platform:
+
+| Role | Description |
+|------|-------------|
+| **Contributor** | Find tasks, submit pull requests, and get rewarded for solving issues. Contributors can pick up bounties or submit payment requests for the work they deliver. |
+| **Maintainer** | Import issues from your repository, organize work, and pay contributors when tasks are completed. Maintainers control which bounties are accepted and coordinate the project workflow. |
+| **Funding** | Fund bounties for open-source issues and support the work you want to see shipped. Funders back issues they care about and the bounty is released automatically when the linked pull request is merged. |
+| **Service Provider** | Offer services (design, consulting, DevOps, etc.) to projects and request payment through the platform. Service providers are not necessarily tied to a GitHub issue. |
 
 ## Who is contributing?
 
