@@ -5,7 +5,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay 'Average time to resolve an issue')
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/worknenjoy/gitpay.svg)](http://isitmaintained.com/project/worknenjoy/gitpay 'Percentage of issues still open')
 
-Gitpay is an open-source platform that facilitates collaboration and rewards contributions for solving issues from open-source and private projects.
+Gitpay is an open-source platform that integrates payment workflow using Git. 
 
 ### Slack channel
 
@@ -13,7 +13,11 @@ We have a Slack channel where you can collaborate with other people who are usin
 
 [Join us on Slack](https://join.slack.com/t/gitpay-workspace/shared_invite/zt-1ru4j0duc-mOPFRxkhRyMgavlGdlghmw)
 
-## What is Gitpay?
+## History
+
+From Bounties to payment request
+
+## Why Gitpay?
 
 Gitpay is an open-source platform that empowers collaboration and rewards contributions to open-source projects. With Gitpay, you can complete tasks from anywhere in the world with open collaboration and receive bounties for completing them. Likewise, companies can receive reports, fixes, and enhancements from developers and offer bounties for completing requirements.
 
