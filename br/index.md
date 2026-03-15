@@ -7,7 +7,7 @@ hero:
     image: main-icon.png
     search: true
 categories:
-    columns: 3
+    columns: 4
     title: Como começar?
     subtitle: Para entender o processo do Gitpay, temos os seguintes tópicos
 #featured:

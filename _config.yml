@@ -27,12 +27,6 @@ author:
     name:       Alexandre Magno
     github:     alexanmtz    # Github username for avatar
 
-# Author settings, displayed on post and doc pages if front matter references author name e.g. author: peter
-authors:
-    peter:
-        name:       Wharley
-        github:     wharley    # Github username for avatar
-
 # Social icons displayed in footer
 social:
     email:          tarefas@gitpay.me

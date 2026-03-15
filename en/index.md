@@ -7,7 +7,7 @@ hero:
     image: main-icon.png
     search: true
 categories:
-    columns: 3
+    columns: 4
     title: How to get started?
     subtitle: "Let's into the Gitpay"
 #featured:

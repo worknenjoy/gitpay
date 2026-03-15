@@ -1,28 +1,37 @@
 # Categories home page navigation
 
 - en:
-    title: Getting started
+    title: Getting started as contributor
     desc: How to solve your first issue on Gitpay
   br:
-    title: Iniciando
-    desc: Comece a trabalhar para o Gitpay
-  doc: getting-started
-  icon: settings
+    title: Começando como contribuidor
+    desc: Como resolver sua primeira tarefa no Gitpay
+  doc: contributor
+  icon: git-fork
 
 - en:
-    title: Payment
-    desc: How we send payments for the issues solved
+    title: Getting started as maintainer
+    desc: How to validate work and release bounties safely
   br:
-    title: Pagamento
-    desc: Saiba como os pagamentos pelas tarefas são realizados
-  icon: credit-card
-  doc: payments
+    title: Começando como mantenedor
+    desc: Como validar entregas e liberar recompensas com segurança
+  doc: maintainer
+  icon: check
 
 - en:
-    title: FAQ
-    desc: Frequently asked questions about Gitpay
+    title: Getting started as sponsor
+    desc: How to fund issues so contributors can deliver and get paid
   br:
-    title: FAQ
-    desc: Perguntas e Respostas frequentes para questões dos projetos
-  icon: cog
-  doc: faq
+    title: Começando como patrocinador
+    desc: Como investir em tarefas para que contribuidores entreguem e recebam
+  doc: sponsor
+  icon: heart
+
+- en:
+    title: Getting started as service provider
+    desc: How to deliver client work with clear acceptance and predictable payments
+  br:
+    title: Começando como prestador de serviço
+    desc: Como entregar projetos com critérios claros e recebimento previsível
+  doc: service-provider
+  icon: file-edit
