@@ -1,6 +1,7 @@
 ---
 layout: doc
 lang: en
+role: sponsor
 title: Sponsor
 subtitle: Fund work on issues and help projects ship faster
 tags:
@@ -26,5 +27,5 @@ This guide is for individuals or organizations who want to sponsor tasks so cont
 4. Once accepted, payment is released.
 
 ## Next steps
-- Read [Getting started](/docs/en/getting-started)
+- Read [Getting started](/docs/en/getting-started-sponsor)
 - Understand [How to receive payments](/docs/en/payments)

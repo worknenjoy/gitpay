@@ -1,6 +1,7 @@
 ---
 layout: doc
 lang: br
+role: sponsor
 title: Patrocinador
 subtitle: Financie tarefas e ajude projetos a entregar mais rápido
 tags:
@@ -26,5 +27,5 @@ Este guia é para pessoas ou organizações que querem patrocinar tarefas para q
 4. Após aceitação, a recompensa é liberada.
 
 ## Próximos passos
-- Leia [Por onde começar?](/docs/br/getting-started)
+- Leia [Por onde começar?](/docs/br/getting-started-sponsor)
 - Entenda [Como receber pagamentos](/docs/br/payments)

@@ -1,6 +1,7 @@
 ---
 layout: doc
 lang: en
+role: contributor
 title: Working with Git Workflow
 subtitle: How to deliver a task on Gitpay using Git Workflow
 author: Alexandre Magno

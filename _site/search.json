@@ -33,6 +33,14 @@
     } ,
   
     {
+      "title"    : "Entregando projetos",
+      "category" : "",
+      "tags"     : "service-provider,, entrega",
+      "url"      : "/docs/br/delivering-work/",
+      "date"     : ""
+    } ,
+  
+    {
       "title"    : "Cancelling a website subscription",
       "category" : "",
       "tags"     : "",
@@ -41,10 +49,66 @@
     } ,
   
     {
+      "title"    : "Perguntas gerais",
+      "category" : "",
+      "tags"     : "contribuidor,, faq",
+      "url"      : "/docs/br/faq-contributor/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Perguntas gerais",
+      "category" : "",
+      "tags"     : "maintainer,, faq",
+      "url"      : "/docs/br/faq-maintainer/",
+      "date"     : ""
+    } ,
+  
+    {
       "title"    : "Plataforma",
       "category" : "",
       "tags"     : "othertag",
       "url"      : "/docs/br/faq/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Financiando tarefas",
+      "category" : "",
+      "tags"     : "sponsor,, financiamento",
+      "url"      : "/docs/br/funding-issues/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Começando",
+      "category" : "",
+      "tags"     : "contribuidor,, comecando",
+      "url"      : "/docs/br/getting-started-contributor/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Começando",
+      "category" : "",
+      "tags"     : "maintainer,, comecando",
+      "url"      : "/docs/br/getting-started-maintainer/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Começando",
+      "category" : "",
+      "tags"     : "service-provider,, comecando",
+      "url"      : "/docs/br/getting-started-service-provider/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Começando",
+      "category" : "",
+      "tags"     : "sponsor,, comecando",
+      "url"      : "/docs/br/getting-started-sponsor/",
       "date"     : ""
     } ,
   
@@ -113,6 +177,14 @@
     } ,
   
     {
+      "title"    : "Liberando recompensas",
+      "category" : "",
+      "tags"     : "maintainer,, pagamentos",
+      "url"      : "/docs/br/releasing-bounties/",
+      "date"     : ""
+    } ,
+  
+    {
       "title"    : "Prestador de serviço",
       "category" : "",
       "tags"     : "",
@@ -141,6 +213,14 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/usage/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Validando entregas",
+      "category" : "",
+      "tags"     : "maintainer,, validacao",
+      "url"      : "/docs/br/validating-work/",
       "date"     : ""
     } ,
   
@@ -177,6 +257,14 @@
     } ,
   
     {
+      "title"    : "Delivering work",
+      "category" : "",
+      "tags"     : "service-provider,, delivery",
+      "url"      : "/docs/en/delivering-work/",
+      "date"     : ""
+    } ,
+  
+    {
       "title"    : "Cancelling a website subscription",
       "category" : "",
       "tags"     : "",
@@ -185,10 +273,66 @@
     } ,
   
     {
+      "title"    : "General questions",
+      "category" : "",
+      "tags"     : "contributor,, faq",
+      "url"      : "/docs/en/faq-contributor/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "General questions",
+      "category" : "",
+      "tags"     : "maintainer,, faq",
+      "url"      : "/docs/en/faq-maintainer/",
+      "date"     : ""
+    } ,
+  
+    {
       "title"    : "FAQ",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/faq/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Funding issues",
+      "category" : "",
+      "tags"     : "sponsor,, funding",
+      "url"      : "/docs/en/funding-issues/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Getting started",
+      "category" : "",
+      "tags"     : "contributor,, getting-started",
+      "url"      : "/docs/en/getting-started-contributor/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Getting started",
+      "category" : "",
+      "tags"     : "maintainer,, getting-started",
+      "url"      : "/docs/en/getting-started-maintainer/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Getting started",
+      "category" : "",
+      "tags"     : "service-provider,, getting-started",
+      "url"      : "/docs/en/getting-started-service-provider/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Getting started",
+      "category" : "",
+      "tags"     : "sponsor,, getting-started",
+      "url"      : "/docs/en/getting-started-sponsor/",
       "date"     : ""
     } ,
   
@@ -257,6 +401,14 @@
     } ,
   
     {
+      "title"    : "Releasing bounties",
+      "category" : "",
+      "tags"     : "maintainer,, payments",
+      "url"      : "/docs/en/releasing-bounties/",
+      "date"     : ""
+    } ,
+  
+    {
       "title"    : "Service Provider",
       "category" : "",
       "tags"     : "",
@@ -285,6 +437,14 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/usage/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Validating work",
+      "category" : "",
+      "tags"     : "maintainer,, validation,, review",
+      "url"      : "/docs/en/validating-work/",
       "date"     : ""
     } 
   

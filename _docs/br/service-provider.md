@@ -1,6 +1,7 @@
 ---
 layout: doc
 lang: br
+role: service-provider
 title: Prestador de serviço
 subtitle: Entregue trabalhos para clientes com critérios claros e recebimento previsível
 tags:
@@ -26,6 +27,6 @@ Este guia é para freelancers, consultores e agências que entregam trabalho em 
 4. Use a aceitação/merge como sinal de validação para liberar o pagamento.
 
 ## Próximos passos
-- Leia [Por onde começar?](/docs/br/getting-started)
+- Leia [Começando](/docs/br/getting-started-service-provider)
 - Revise [Requisições de mudança](/docs/br/pull-requests)
 - Entenda [Como receber pagamentos](/docs/br/payments)

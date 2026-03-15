@@ -1,6 +1,7 @@
 ---
 layout: doc
 lang: en
+role: service-provider
 title: Service Provider
 subtitle: Deliver work for clients and get paid with clear, verifiable deliverables
 tags:
@@ -26,6 +27,6 @@ This guide is for freelancers, consultants, and agencies who deliver work in Git
 4. Use the accepted/merged work as the validation signal for payment.
 
 ## Next steps
-- Read [Getting started](/docs/en/getting-started)
+- Read [Getting started](/docs/en/getting-started-service-provider)
 - Review [Pull Requests](/docs/en/pull-requests)
 - Understand [How to receive payments](/docs/en/payments)

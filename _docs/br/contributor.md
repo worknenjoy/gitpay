@@ -1,6 +1,7 @@
 ---
 layout: doc
 lang: br
+role: contributor
 title: Contribuidor
 subtitle: Receba recompensas resolvendo issues e enviando Pull Requests
 tags:
@@ -26,7 +27,7 @@ Este guia é para quem quer trabalhar em tarefas publicadas no Gitpay (issues) e
 No Gitpay, a conclusão está ligada ao fluxo do Git: a tarefa é validada pelo processo do repositório (review, CI, merge) e então o pagamento é liberado.
 
 ## Próximos passos
-- Leia [Por onde começar?](/docs/br/getting-started)
+- Leia [Por onde começar?](/docs/br/getting-started-contributor)
 - Entenda [Como receber pagamentos](/docs/br/payments)
 - Aprenda o [Fluxo de trabalho do git](/docs/br/git-workflow)
 - Revise [Requisições de mudança](/docs/br/pull-requests)

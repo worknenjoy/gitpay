@@ -1,6 +1,7 @@
 ---
 layout: doc
 lang: en
+role: contributor
 title: Contributor
 subtitle: Earn bounties by solving issues and submitting pull requests
 tags:
@@ -26,7 +27,7 @@ This guide is for people who want to work on tasks posted on Gitpay (issues) and
 In Gitpay, completion is tied to the Git workflow: the task is validated through the repository process (review, CI, merge) and then payment is released.
 
 ## Next steps
-- Read [Getting started](/docs/en/getting-started)
+- Read [Getting started](/docs/en/getting-started-contributor)
 - Understand [How to receive payments](/docs/en/payments)
 - Learn the [Git Workflow](/docs/en/git-workflow)
 - Review [Pull Requests](/docs/en/pull-requests)

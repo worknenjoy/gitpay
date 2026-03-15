@@ -1,6 +1,7 @@
 ---
 layout: doc
 lang: br
+role: maintainer
 title: Mantenedor
 subtitle: Gerencie tarefas, revise contribuições e libere pagamentos com segurança
 tags:
@@ -29,7 +30,7 @@ O Gitpay usa o workflow do repositório como fonte de verdade. Quando a tarefa �
 - Use CI para reduzir esforço de revisão.
 
 ## Próximos passos
-- Leia [Por onde começar?](/docs/br/getting-started)
+- Leia [Começando](/docs/br/getting-started-maintainer)
 - Revise [Requisições de mudança](/docs/br/pull-requests)
 - Aprenda o [Fluxo de trabalho do git](/docs/br/git-workflow)
 - Entenda [Como receber pagamentos](/docs/br/payments)

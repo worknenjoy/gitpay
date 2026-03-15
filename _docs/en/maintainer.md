@@ -1,6 +1,7 @@
 ---
 layout: doc
 lang: en
+role: maintainer
 title: Maintainer
 subtitle: Manage tasks, review contributions, and release payments safely
 tags:
@@ -29,7 +30,7 @@ Gitpay uses the repository workflow as the source of truth. When a task is compl
 - Use CI to reduce review load.
 
 ## Next steps
-- Read [Getting started](/docs/en/getting-started)
+- Read [Getting started](/docs/en/getting-started-maintainer)
 - Review [Pull Requests](/docs/en/pull-requests)
 - Learn the [Git Workflow](/docs/en/git-workflow)
 - Understand [How to receive payments](/docs/en/payments)

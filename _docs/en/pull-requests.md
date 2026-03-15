@@ -1,6 +1,7 @@
 ---
 layout: doc
 lang: en
+role: contributor
 title: The power of Pull Requests
 subtitle: How the Pull Requests are the key to send your solution
 author:

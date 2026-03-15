@@ -1,41 +1,105 @@
-- en:
-    title: Basic concepts
-  br:
-    title: Conceitos básicos
-  docs:
-    en:
-      - Getting started
-      - Git Workflow
-      - Pull Requests
+contributor:
+  - en:
+      title: Basic concepts
     br:
-      - Getting started
-      - Fluxo de trabalho do git
-      - Requisições de mudança
-    pages:
-      - getting-started
-      - git-workflow
-      - pull-requests
+      title: Conceitos básicos
+    docs:
+      en:
+        - Getting started
+        - Git Workflow
+        - Pull Requests
+      br:
+        - Getting started
+        - Fluxo de trabalho do git
+        - Requisições de mudança
+      pages:
+        - getting-started-contributor
+        - git-workflow
+        - pull-requests
 
-- en:
-    title: Payments and bank account
-  br:
-    title: Conta e pagamento
-  docs:
-    en:
-      - How to receive payments
+  - en:
+      title: Payments and bank account
     br:
-      - Como receber pagamentos
-    pages:
-      - payments
+      title: Conta e pagamento
+    docs:
+      en:
+        - How to receive payments
+      br:
+        - Como receber pagamentos
+      pages:
+        - payments
 
-- en:
-    title: Frequently asked questions
-  br:
-    title: Perguntas frequentes
-  docs:
-    en:
-      - General questions
+  - en:
+      title: Frequently asked questions
     br:
-      - Perguntas gerais
-    pages:
-        - faq
+      title: Perguntas frequentes
+    docs:
+      en:
+        - General questions
+      br:
+        - Perguntas gerais
+      pages:
+          - faq-contributor
+
+maintainer:
+  - en:
+      title: Basic concepts
+    br:
+      title: Conceitos básicos
+    docs:
+      en:
+        - Getting started
+        - Validating work
+        - Releasing bounties
+      br:
+        - Começando
+        - Validando entregas
+        - Liberando recompensas
+      pages:
+        - getting-started-maintainer
+        - validating-work
+        - releasing-bounties
+
+  - en:
+      title: Frequently asked questions
+    br:
+      title: Perguntas frequentes
+    docs:
+      en:
+        - General questions
+      br:
+        - Perguntas gerais
+      pages:
+          - faq-maintainer
+
+sponsor:
+  - en:
+      title: Basic concepts
+    br:
+      title: Conceitos básicos
+    docs:
+      en:
+        - Getting started
+        - Funding issues
+      br:
+        - Começando
+        - Financiando tarefas
+      pages:
+        - getting-started-sponsor
+        - funding-issues
+
+service-provider:
+  - en:
+      title: Basic concepts
+    br:
+      title: Conceitos básicos
+    docs:
+      en:
+        - Getting started
+        - Delivering work
+      br:
+        - Começando
+        - Entregando projetos
+      pages:
+        - getting-started-service-provider
+        - delivering-work

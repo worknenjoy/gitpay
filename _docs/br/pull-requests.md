@@ -1,5 +1,7 @@
 ---
 layout: doc
+lang: br
+role: contributor
 title: O poder e a importância dos Pull Requests
 subtitle: Como o Pull Request é importante e peça chave para integração de sua tarefa
 author:

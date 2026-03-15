@@ -1,5 +1,7 @@
 ---
 layout: doc
+lang: br
+role: contributor
 title: Entendendo como funciona os pagamentos
 subtitle: Como os pagamentos pelas recompensas são realizados pelo Gitpay
 tags:

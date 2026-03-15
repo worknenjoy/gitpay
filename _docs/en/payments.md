@@ -1,6 +1,7 @@
 ---
 layout: doc
 lang: en
+role: contributor
 title: How our payment works
 subtitle: How we pay for bounties completed when you're assigned on tasks on Gitpay
 tags: payments, work, bounty, get paid, reward, open-source payments

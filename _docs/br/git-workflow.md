@@ -1,5 +1,7 @@
 ---
 layout: doc
+lang: br
+role: contributor
 title: Trabalhando com o Git Workflow
 subtitle: O processo de entrega integrado de uma tarefa no Gitpay
 author: Alexandre Magno
