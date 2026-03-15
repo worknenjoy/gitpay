@@ -1,411 +1,401 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="https://docs.gitpay.me/feed.xml" rel="self" type="application/atom+xml" /><link href="https://docs.gitpay.me/" rel="alternate" type="text/html" /><updated>2020-09-22T00:32:27+02:00</updated><id>https://docs.gitpay.me/</id><title type="html">Gitpay Documentation</title><subtitle>The guide for Gitpay.</subtitle><author><name>Alexandre Magno</name></author><entry xml:lang="en"><title type="html">Getting a JavaScript console error</title><link href="https://docs.gitpay.me/post7/" rel="alternate" type="text/html" title="Getting a JavaScript console error" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.gitpay.me/post7</id><content type="html" xml:base="https://docs.gitpay.me/post7/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
-
-&lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
-
-&lt;h2 id=&quot;image-lightbox-example&quot;&gt;Image Lightbox Example&lt;/h2&gt;
-&lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
-
-&lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
-        &lt;div class=&quot;uk-position-center&quot;&gt;
-            &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/a&gt;
-    &lt;figcaption data-uk-grid=&quot;&quot; class=&quot;uk-flex-right&quot;&gt;&lt;span class=&quot;uk-width-auto&quot;&gt;Image in lightbox&lt;/span&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.&lt;/p&gt;
-
-&lt;h2 id=&quot;example-of-code-block&quot;&gt;Example Of Code Block&lt;/h2&gt;
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-UA-Compatible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IE=edge&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/css/main.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;shortcut icon&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/img/favicon.png&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/js/main.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-03-15T22:22:44+01:00</updated><id>http://localhost:4000/</id><title type="html">Gitpay Documentation</title><subtitle>The guide for Gitpay.</subtitle><author><name>Alexandre Magno</name></author><entry xml:lang="en"><title type="html">Payment Link for Video Editors: Send a Link, Get Paid</title><link href="http://localhost:4000/payment-link-for-video-editors/" rel="alternate" type="text/html" title="Payment Link for Video Editors: Send a Link, Get Paid" /><published>2026-03-29T00:00:00+01:00</published><updated>2026-03-29T00:00:00+01:00</updated><id>http://localhost:4000/payment-link-for-video-editors</id><content type="html" xml:base="http://localhost:4000/payment-link-for-video-editors/">&lt;h2 id=&quot;payment-link-for-video-editors-send-a-link-get-paid&quot;&gt;Payment link for Video Editors: send a link, get paid&lt;/h2&gt;
 
-&lt;h2 id=&quot;text-and-quote&quot;&gt;Text and Quote&lt;/h2&gt;
-&lt;p&gt;Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><category term="featured" /><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry xml:lang="en"><title type="html">Selecting the right fonts and colors</title><link href="https://docs.gitpay.me/post63/" rel="alternate" type="text/html" title="Selecting the right fonts and colors" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.gitpay.me/post63</id><content type="html" xml:base="https://docs.gitpay.me/post63/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
-
-&lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
-
-&lt;h2 id=&quot;image-lightbox-example&quot;&gt;Image Lightbox Example&lt;/h2&gt;
-&lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
-
-&lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
-        &lt;div class=&quot;uk-position-center&quot;&gt;
-            &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/a&gt;
-    &lt;figcaption data-uk-grid=&quot;&quot; class=&quot;uk-flex-right&quot;&gt;&lt;span class=&quot;uk-width-auto&quot;&gt;Image in lightbox&lt;/span&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.&lt;/p&gt;
-
-&lt;h2 id=&quot;example-of-code-block&quot;&gt;Example Of Code Block&lt;/h2&gt;
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-UA-Compatible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IE=edge&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/css/main.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;shortcut icon&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/img/favicon.png&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/js/main.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If you deliver digital work, a payment link is often faster than an invoice. It turns payment into a single click instead of a process.&lt;/p&gt;
 
-&lt;h2 id=&quot;text-and-quote&quot;&gt;Text and Quote&lt;/h2&gt;
-&lt;p&gt;Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry xml:lang="en"><title type="html">Design tips for choosing great images</title><link href="https://docs.gitpay.me/post62/" rel="alternate" type="text/html" title="Design tips for choosing great images" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.gitpay.me/post62</id><content type="html" xml:base="https://docs.gitpay.me/post62/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
-
-&lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
-
-&lt;h2 id=&quot;image-lightbox-example&quot;&gt;Image Lightbox Example&lt;/h2&gt;
-&lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
-
-&lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
-        &lt;div class=&quot;uk-position-center&quot;&gt;
-            &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/a&gt;
-    &lt;figcaption data-uk-grid=&quot;&quot; class=&quot;uk-flex-right&quot;&gt;&lt;span class=&quot;uk-width-auto&quot;&gt;Image in lightbox&lt;/span&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.&lt;/p&gt;
-
-&lt;h2 id=&quot;example-of-code-block&quot;&gt;Example Of Code Block&lt;/h2&gt;
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-UA-Compatible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IE=edge&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/css/main.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;shortcut icon&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/img/favicon.png&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/js/main.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;when-a-payment-link-makes-sense&quot;&gt;When a payment link makes sense&lt;/h2&gt;
 
-&lt;h2 id=&quot;text-and-quote&quot;&gt;Text and Quote&lt;/h2&gt;
-&lt;p&gt;Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;After a deliverable handoff&lt;/li&gt;
+  &lt;li&gt;At a project milestone&lt;/li&gt;
+  &lt;li&gt;At the end of a weekly/monthly cycle&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry xml:lang="en"><title type="html">Upgrading to paid service</title><link href="https://docs.gitpay.me/post61/" rel="alternate" type="text/html" title="Upgrading to paid service" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.gitpay.me/post61</id><content type="html" xml:base="https://docs.gitpay.me/post61/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
+&lt;h2 id=&quot;example-use-cases-for-video-editors&quot;&gt;Example use cases for Video Editors&lt;/h2&gt;
 
-&lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
-
-&lt;h2 id=&quot;image-lightbox-example&quot;&gt;Image Lightbox Example&lt;/h2&gt;
-&lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
-
-&lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
-        &lt;div class=&quot;uk-position-center&quot;&gt;
-            &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/a&gt;
-    &lt;figcaption data-uk-grid=&quot;&quot; class=&quot;uk-flex-right&quot;&gt;&lt;span class=&quot;uk-width-auto&quot;&gt;Image in lightbox&lt;/span&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.&lt;/p&gt;
-
-&lt;h2 id=&quot;example-of-code-block&quot;&gt;Example Of Code Block&lt;/h2&gt;
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-UA-Compatible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IE=edge&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/css/main.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;shortcut icon&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/img/favicon.png&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/js/main.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;YouTube edit (1–4 videos)&lt;/li&gt;
+  &lt;li&gt;Revisions / versioning&lt;/li&gt;
+  &lt;li&gt;Podcast clips package&lt;/li&gt;
+  &lt;li&gt;Deliverables handoff (exports + thumbnails)&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;h2 id=&quot;text-and-quote&quot;&gt;Text and Quote&lt;/h2&gt;
-&lt;p&gt;Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry xml:lang="en"><title type="html">Purchasing domain name and DNS setup</title><link href="https://docs.gitpay.me/post60/" rel="alternate" type="text/html" title="Purchasing domain name and DNS setup" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.gitpay.me/post60</id><content type="html" xml:base="https://docs.gitpay.me/post60/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
-
-&lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
-
-&lt;h2 id=&quot;image-lightbox-example&quot;&gt;Image Lightbox Example&lt;/h2&gt;
-&lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
-
-&lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
-        &lt;div class=&quot;uk-position-center&quot;&gt;
-            &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/a&gt;
-    &lt;figcaption data-uk-grid=&quot;&quot; class=&quot;uk-flex-right&quot;&gt;&lt;span class=&quot;uk-width-auto&quot;&gt;Image in lightbox&lt;/span&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.&lt;/p&gt;
-
-&lt;h2 id=&quot;example-of-code-block&quot;&gt;Example Of Code Block&lt;/h2&gt;
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-UA-Compatible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IE=edge&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/css/main.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;shortcut icon&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/img/favicon.png&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/js/main.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;how-to-use-a-payment-link-workflow&quot;&gt;How to use a payment link workflow&lt;/h2&gt;
 
-&lt;h2 id=&quot;text-and-quote&quot;&gt;Text and Quote&lt;/h2&gt;
-&lt;p&gt;Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry xml:lang="en"><title type="html">Using Private Browsing or Incognito mode</title><link href="https://docs.gitpay.me/post6/" rel="alternate" type="text/html" title="Using Private Browsing or Incognito mode" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.gitpay.me/post6</id><content type="html" xml:base="https://docs.gitpay.me/post6/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
-
-&lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
-
-&lt;h2 id=&quot;image-lightbox-example&quot;&gt;Image Lightbox Example&lt;/h2&gt;
-&lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
-
-&lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
-        &lt;div class=&quot;uk-position-center&quot;&gt;
-            &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/a&gt;
-    &lt;figcaption data-uk-grid=&quot;&quot; class=&quot;uk-flex-right&quot;&gt;&lt;span class=&quot;uk-width-auto&quot;&gt;Image in lightbox&lt;/span&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.&lt;/p&gt;
-
-&lt;h2 id=&quot;example-of-code-block&quot;&gt;Example Of Code Block&lt;/h2&gt;
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-UA-Compatible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IE=edge&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/css/main.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;shortcut icon&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/img/favicon.png&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/js/main.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ol&gt;
+  &lt;li&gt;Finish the work&lt;/li&gt;
+  &lt;li&gt;Create a payment request&lt;/li&gt;
+  &lt;li&gt;Send the payment link&lt;/li&gt;
+  &lt;li&gt;Get paid&lt;/li&gt;
+&lt;/ol&gt;
 
-&lt;h2 id=&quot;text-and-quote&quot;&gt;Text and Quote&lt;/h2&gt;
-&lt;p&gt;Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry xml:lang="en"><title type="html">Accepted currencies for product billing</title><link href="https://docs.gitpay.me/post5/" rel="alternate" type="text/html" title="Accepted currencies for product billing" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.gitpay.me/post5</id><content type="html" xml:base="https://docs.gitpay.me/post5/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
-
-&lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
-
-&lt;h2 id=&quot;image-lightbox-example&quot;&gt;Image Lightbox Example&lt;/h2&gt;
-&lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
-
-&lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
-        &lt;div class=&quot;uk-position-center&quot;&gt;
-            &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/a&gt;
-    &lt;figcaption data-uk-grid=&quot;&quot; class=&quot;uk-flex-right&quot;&gt;&lt;span class=&quot;uk-width-auto&quot;&gt;Image in lightbox&lt;/span&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.&lt;/p&gt;
-
-&lt;h2 id=&quot;example-of-code-block&quot;&gt;Example Of Code Block&lt;/h2&gt;
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-UA-Compatible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IE=edge&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/css/main.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;shortcut icon&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/img/favicon.png&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/js/main.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;text-and-quote&quot;&gt;Text and Quote&lt;/h2&gt;
-&lt;p&gt;Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><category term="featured" /><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry xml:lang="en"><title type="html">Cancelling a website subscription</title><link href="https://docs.gitpay.me/post4/" rel="alternate" type="text/html" title="Cancelling a website subscription" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.gitpay.me/post4</id><content type="html" xml:base="https://docs.gitpay.me/post4/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
-
-&lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
-
-&lt;h2 id=&quot;image-lightbox-example&quot;&gt;Image Lightbox Example&lt;/h2&gt;
-&lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
-
-&lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
-        &lt;div class=&quot;uk-position-center&quot;&gt;
-            &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/a&gt;
-    &lt;figcaption data-uk-grid=&quot;&quot; class=&quot;uk-flex-right&quot;&gt;&lt;span class=&quot;uk-width-auto&quot;&gt;Image in lightbox&lt;/span&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.&lt;/p&gt;
-
-&lt;h2 id=&quot;example-of-code-block&quot;&gt;Example Of Code Block&lt;/h2&gt;
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-UA-Compatible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IE=edge&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/css/main.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;shortcut icon&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/img/favicon.png&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/js/main.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;text-and-quote&quot;&gt;Text and Quote&lt;/h2&gt;
-&lt;p&gt;Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><category term="featured" /><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry xml:lang="en"><title type="html">Updating your billing credit card</title><link href="https://docs.gitpay.me/post3/" rel="alternate" type="text/html" title="Updating your billing credit card" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.gitpay.me/post3</id><content type="html" xml:base="https://docs.gitpay.me/post3/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
-
-&lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
-
-&lt;h2 id=&quot;image-lightbox-example&quot;&gt;Image Lightbox Example&lt;/h2&gt;
-&lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
-
-&lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
-        &lt;div class=&quot;uk-position-center&quot;&gt;
-            &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/a&gt;
-    &lt;figcaption data-uk-grid=&quot;&quot; class=&quot;uk-flex-right&quot;&gt;&lt;span class=&quot;uk-width-auto&quot;&gt;Image in lightbox&lt;/span&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.&lt;/p&gt;
-
-&lt;h2 id=&quot;example-of-code-block&quot;&gt;Example Of Code Block&lt;/h2&gt;
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-UA-Compatible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IE=edge&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/css/main.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;shortcut icon&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/img/favicon.png&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/js/main.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;text-and-quote&quot;&gt;Text and Quote&lt;/h2&gt;
-&lt;p&gt;Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry><entry xml:lang="en"><title type="html">Understanding company billing and accounts</title><link href="https://docs.gitpay.me/post2/" rel="alternate" type="text/html" title="Understanding company billing and accounts" /><published>2017-05-25T00:00:00+02:00</published><updated>2017-05-25T00:00:00+02:00</updated><id>https://docs.gitpay.me/post2</id><content type="html" xml:base="https://docs.gitpay.me/post2/">&lt;p&gt;Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.&lt;/p&gt;
-
-&lt;p&gt;Nulla non sollicitudin. Morbi sit amet laoreet ipsum, vel pretium mi. Morbi varius, tellus in accumsan blandit, elit ligula eleifend velit, luctus mattis ante nulla condimentum nulla. Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit.&lt;/p&gt;
-
-&lt;h2 id=&quot;image-lightbox-example&quot;&gt;Image Lightbox Example&lt;/h2&gt;
-&lt;p&gt;Nunc porta malesuada porta. Etiam tristique vestibulum dolor at ultricies. Proin hendrerit sapien sed erat fermentum, at commodo velit consectetur.&lt;/p&gt;
-
-&lt;figure data-uk-lightbox=&quot;animation: slide&quot;&gt;
-    &lt;a class=&quot;uk-inline&quot; href=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; caption=&quot;Image in lightbox&quot;&gt;
-        &lt;img src=&quot;https://docs.gitpay.me/assets/posts/image1.png&quot; alt=&quot;Alt for image&quot; /&gt;
-        &lt;div class=&quot;uk-position-center&quot;&gt;
-            &lt;span data-uk-overlay-icon=&quot;&quot;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-    &lt;/a&gt;
-    &lt;figcaption data-uk-grid=&quot;&quot; class=&quot;uk-flex-right&quot;&gt;&lt;span class=&quot;uk-width-auto&quot;&gt;Image in lightbox&lt;/span&gt;&lt;/figcaption&gt;
-&lt;/figure&gt;
-
-&lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna, et dapibus turpis.&lt;/p&gt;
-
-&lt;h2 id=&quot;example-of-code-block&quot;&gt;Example Of Code Block&lt;/h2&gt;
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;head&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;charset=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;utf-8&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;http-equiv=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;X-UA-Compatible&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IE=edge&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;meta&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viewport&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;content=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;width=device-width, initial-scale=1&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/css/main.css&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;link&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;rel=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;shortcut icon&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image/png&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;href=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/img/favicon.png&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/assets/js/main.js&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/head&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;text-and-quote&quot;&gt;Text and Quote&lt;/h2&gt;
-&lt;p&gt;Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet, tempus metus quis, pharetra turpis. Phasellus at massa sit amet ante semper fermentum sed eget lectus. Quisque id dictum magna turpis.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Etiam vestibulum risus vel arcu elementum eleifend. Cras at dolor eget urna varius faucibus tempus in elit. Cras a dui imperdiet&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;In accumsan lacus ac neque maximus dictum. Phasellus eleifend leo id mattis bibendum. Curabitur et purus turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;&lt;/p&gt;
-
-&lt;p&gt;Etiam in fermentum mi. Sed et tempor felis, eu aliquet nisi. Nam eget ullamcorper arcu. Nunc porttitor nisl a dolor blandit, eget consequat sem maximus. Phasellus lacinia quam porta orci malesuada, vel tincidunt.&lt;/p&gt;</content><author><name>John Black</name></author><summary type="html">Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</summary></entry></feed>
+&lt;h2 id=&quot;using-gitpay&quot;&gt;Using Gitpay&lt;/h2&gt;
+
+&lt;p&gt;Gitpay helps you create payment requests and share payment links:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://gitpay.me&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cta&quot;&gt;CTA&lt;/h2&gt;
+
+&lt;p&gt;Send a payment link and get paid faster: https://gitpay.me&lt;/p&gt;</content><author><name>Alexandre Magno</name></author><summary type="html">Payment link for Video Editors: send a link, get paid</summary></entry><entry xml:lang="en"><title type="html">Payment Link for UI Designers: Send a Link, Get Paid</title><link href="http://localhost:4000/payment-link-for-ui-designers/" rel="alternate" type="text/html" title="Payment Link for UI Designers: Send a Link, Get Paid" /><published>2026-03-29T00:00:00+01:00</published><updated>2026-03-29T00:00:00+01:00</updated><id>http://localhost:4000/payment-link-for-ui-designers</id><content type="html" xml:base="http://localhost:4000/payment-link-for-ui-designers/">&lt;h2 id=&quot;payment-link-for-ui-designers-send-a-link-get-paid&quot;&gt;Payment link for UI Designers: send a link, get paid&lt;/h2&gt;
+
+&lt;p&gt;If you deliver digital work, a payment link is often faster than an invoice. It turns payment into a single click instead of a process.&lt;/p&gt;
+
+&lt;h2 id=&quot;when-a-payment-link-makes-sense&quot;&gt;When a payment link makes sense&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After a deliverable handoff&lt;/li&gt;
+  &lt;li&gt;At a project milestone&lt;/li&gt;
+  &lt;li&gt;At the end of a weekly/monthly cycle&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;example-use-cases-for-ui-designers&quot;&gt;Example use cases for UI Designers&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;UI screens for a feature release&lt;/li&gt;
+  &lt;li&gt;Design system components&lt;/li&gt;
+  &lt;li&gt;Responsive layout updates&lt;/li&gt;
+  &lt;li&gt;Figma handoff + specs&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-use-a-payment-link-workflow&quot;&gt;How to use a payment link workflow&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Finish the work&lt;/li&gt;
+  &lt;li&gt;Create a payment request&lt;/li&gt;
+  &lt;li&gt;Send the payment link&lt;/li&gt;
+  &lt;li&gt;Get paid&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;using-gitpay&quot;&gt;Using Gitpay&lt;/h2&gt;
+
+&lt;p&gt;Gitpay helps you create payment requests and share payment links:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://gitpay.me&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cta&quot;&gt;CTA&lt;/h2&gt;
+
+&lt;p&gt;Send a payment link and get paid faster: https://gitpay.me&lt;/p&gt;</content><author><name>Alexandre Magno</name></author><summary type="html">Payment link for UI Designers: send a link, get paid</summary></entry><entry xml:lang="en"><title type="html">Payment Link for Solopreneurs: Send a Link, Get Paid</title><link href="http://localhost:4000/payment-link-for-solopreneurs/" rel="alternate" type="text/html" title="Payment Link for Solopreneurs: Send a Link, Get Paid" /><published>2026-03-29T00:00:00+01:00</published><updated>2026-03-29T00:00:00+01:00</updated><id>http://localhost:4000/payment-link-for-solopreneurs</id><content type="html" xml:base="http://localhost:4000/payment-link-for-solopreneurs/">&lt;h2 id=&quot;payment-link-for-solopreneurs-send-a-link-get-paid&quot;&gt;Payment link for Solopreneurs: send a link, get paid&lt;/h2&gt;
+
+&lt;p&gt;If you deliver digital work, a payment link is often faster than an invoice. It turns payment into a single click instead of a process.&lt;/p&gt;
+
+&lt;h2 id=&quot;when-a-payment-link-makes-sense&quot;&gt;When a payment link makes sense&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After a deliverable handoff&lt;/li&gt;
+  &lt;li&gt;At a project milestone&lt;/li&gt;
+  &lt;li&gt;At the end of a weekly/monthly cycle&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;example-use-cases-for-solopreneurs&quot;&gt;Example use cases for Solopreneurs&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Client project milestone&lt;/li&gt;
+  &lt;li&gt;Consulting call + deliverables&lt;/li&gt;
+  &lt;li&gt;Digital deliverable handoff&lt;/li&gt;
+  &lt;li&gt;Monthly service subscription&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-use-a-payment-link-workflow&quot;&gt;How to use a payment link workflow&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Finish the work&lt;/li&gt;
+  &lt;li&gt;Create a payment request&lt;/li&gt;
+  &lt;li&gt;Send the payment link&lt;/li&gt;
+  &lt;li&gt;Get paid&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;using-gitpay&quot;&gt;Using Gitpay&lt;/h2&gt;
+
+&lt;p&gt;Gitpay helps you create payment requests and share payment links:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://gitpay.me&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cta&quot;&gt;CTA&lt;/h2&gt;
+
+&lt;p&gt;Send a payment link and get paid faster: https://gitpay.me&lt;/p&gt;</content><author><name>Alexandre Magno</name></author><summary type="html">Payment link for Solopreneurs: send a link, get paid</summary></entry><entry xml:lang="en"><title type="html">Payment Link for SEO Consultants: Send a Link, Get Paid</title><link href="http://localhost:4000/payment-link-for-seo-consultants/" rel="alternate" type="text/html" title="Payment Link for SEO Consultants: Send a Link, Get Paid" /><published>2026-03-29T00:00:00+01:00</published><updated>2026-03-29T00:00:00+01:00</updated><id>http://localhost:4000/payment-link-for-seo-consultants</id><content type="html" xml:base="http://localhost:4000/payment-link-for-seo-consultants/">&lt;h2 id=&quot;payment-link-for-seo-consultants-send-a-link-get-paid&quot;&gt;Payment link for SEO Consultants: send a link, get paid&lt;/h2&gt;
+
+&lt;p&gt;If you deliver digital work, a payment link is often faster than an invoice. It turns payment into a single click instead of a process.&lt;/p&gt;
+
+&lt;h2 id=&quot;when-a-payment-link-makes-sense&quot;&gt;When a payment link makes sense&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After a deliverable handoff&lt;/li&gt;
+  &lt;li&gt;At a project milestone&lt;/li&gt;
+  &lt;li&gt;At the end of a weekly/monthly cycle&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;example-use-cases-for-seo-consultants&quot;&gt;Example use cases for SEO Consultants&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;SEO audit + action plan&lt;/li&gt;
+  &lt;li&gt;On-page optimization sprint&lt;/li&gt;
+  &lt;li&gt;Monthly reporting + iteration&lt;/li&gt;
+  &lt;li&gt;Content brief package&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-use-a-payment-link-workflow&quot;&gt;How to use a payment link workflow&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Finish the work&lt;/li&gt;
+  &lt;li&gt;Create a payment request&lt;/li&gt;
+  &lt;li&gt;Send the payment link&lt;/li&gt;
+  &lt;li&gt;Get paid&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;using-gitpay&quot;&gt;Using Gitpay&lt;/h2&gt;
+
+&lt;p&gt;Gitpay helps you create payment requests and share payment links:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://gitpay.me&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cta&quot;&gt;CTA&lt;/h2&gt;
+
+&lt;p&gt;Send a payment link and get paid faster: https://gitpay.me&lt;/p&gt;</content><author><name>Alexandre Magno</name></author><summary type="html">Payment link for SEO Consultants: send a link, get paid</summary></entry><entry xml:lang="en"><title type="html">Payment Link for Product Designers: Send a Link, Get Paid</title><link href="http://localhost:4000/payment-link-for-product-designers/" rel="alternate" type="text/html" title="Payment Link for Product Designers: Send a Link, Get Paid" /><published>2026-03-29T00:00:00+01:00</published><updated>2026-03-29T00:00:00+01:00</updated><id>http://localhost:4000/payment-link-for-product-designers</id><content type="html" xml:base="http://localhost:4000/payment-link-for-product-designers/">&lt;h2 id=&quot;payment-link-for-product-designers-send-a-link-get-paid&quot;&gt;Payment link for Product Designers: send a link, get paid&lt;/h2&gt;
+
+&lt;p&gt;If you deliver digital work, a payment link is often faster than an invoice. It turns payment into a single click instead of a process.&lt;/p&gt;
+
+&lt;h2 id=&quot;when-a-payment-link-makes-sense&quot;&gt;When a payment link makes sense&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After a deliverable handoff&lt;/li&gt;
+  &lt;li&gt;At a project milestone&lt;/li&gt;
+  &lt;li&gt;At the end of a weekly/monthly cycle&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;example-use-cases-for-product-designers&quot;&gt;Example use cases for Product Designers&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Discovery + user flows&lt;/li&gt;
+  &lt;li&gt;Prototype + usability iterations&lt;/li&gt;
+  &lt;li&gt;Design handoff milestone&lt;/li&gt;
+  &lt;li&gt;Design QA + release support&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-use-a-payment-link-workflow&quot;&gt;How to use a payment link workflow&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Finish the work&lt;/li&gt;
+  &lt;li&gt;Create a payment request&lt;/li&gt;
+  &lt;li&gt;Send the payment link&lt;/li&gt;
+  &lt;li&gt;Get paid&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;using-gitpay&quot;&gt;Using Gitpay&lt;/h2&gt;
+
+&lt;p&gt;Gitpay helps you create payment requests and share payment links:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://gitpay.me&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cta&quot;&gt;CTA&lt;/h2&gt;
+
+&lt;p&gt;Send a payment link and get paid faster: https://gitpay.me&lt;/p&gt;</content><author><name>Alexandre Magno</name></author><summary type="html">Payment link for Product Designers: send a link, get paid</summary></entry><entry xml:lang="en"><title type="html">Payment Link for Photographers: Send a Link, Get Paid</title><link href="http://localhost:4000/payment-link-for-photographers/" rel="alternate" type="text/html" title="Payment Link for Photographers: Send a Link, Get Paid" /><published>2026-03-29T00:00:00+01:00</published><updated>2026-03-29T00:00:00+01:00</updated><id>http://localhost:4000/payment-link-for-photographers</id><content type="html" xml:base="http://localhost:4000/payment-link-for-photographers/">&lt;h2 id=&quot;payment-link-for-photographers-send-a-link-get-paid&quot;&gt;Payment link for Photographers: send a link, get paid&lt;/h2&gt;
+
+&lt;p&gt;If you deliver digital work, a payment link is often faster than an invoice. It turns payment into a single click instead of a process.&lt;/p&gt;
+
+&lt;h2 id=&quot;when-a-payment-link-makes-sense&quot;&gt;When a payment link makes sense&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After a deliverable handoff&lt;/li&gt;
+  &lt;li&gt;At a project milestone&lt;/li&gt;
+  &lt;li&gt;At the end of a weekly/monthly cycle&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;example-use-cases-for-photographers&quot;&gt;Example use cases for Photographers&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Photo shoot deposit / booking&lt;/li&gt;
+  &lt;li&gt;Retouching milestone&lt;/li&gt;
+  &lt;li&gt;Licensing fee&lt;/li&gt;
+  &lt;li&gt;Final gallery delivery&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-use-a-payment-link-workflow&quot;&gt;How to use a payment link workflow&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Finish the work&lt;/li&gt;
+  &lt;li&gt;Create a payment request&lt;/li&gt;
+  &lt;li&gt;Send the payment link&lt;/li&gt;
+  &lt;li&gt;Get paid&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;using-gitpay&quot;&gt;Using Gitpay&lt;/h2&gt;
+
+&lt;p&gt;Gitpay helps you create payment requests and share payment links:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://gitpay.me&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cta&quot;&gt;CTA&lt;/h2&gt;
+
+&lt;p&gt;Send a payment link and get paid faster: https://gitpay.me&lt;/p&gt;</content><author><name>Alexandre Magno</name></author><summary type="html">Payment link for Photographers: send a link, get paid</summary></entry><entry xml:lang="en"><title type="html">Payment Link for Open Source Maintainers: Send a Link, Get Paid</title><link href="http://localhost:4000/payment-link-for-open-source-maintainers/" rel="alternate" type="text/html" title="Payment Link for Open Source Maintainers: Send a Link, Get Paid" /><published>2026-03-29T00:00:00+01:00</published><updated>2026-03-29T00:00:00+01:00</updated><id>http://localhost:4000/payment-link-for-open-source-maintainers</id><content type="html" xml:base="http://localhost:4000/payment-link-for-open-source-maintainers/">&lt;h2 id=&quot;payment-link-for-open-source-maintainers-send-a-link-get-paid&quot;&gt;Payment link for Open Source Maintainers: send a link, get paid&lt;/h2&gt;
+
+&lt;p&gt;If you deliver digital work, a payment link is often faster than an invoice. It turns payment into a single click instead of a process.&lt;/p&gt;
+
+&lt;h2 id=&quot;when-a-payment-link-makes-sense&quot;&gt;When a payment link makes sense&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After a deliverable handoff&lt;/li&gt;
+  &lt;li&gt;At a project milestone&lt;/li&gt;
+  &lt;li&gt;At the end of a weekly/monthly cycle&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;example-use-cases-for-open-source-maintainers&quot;&gt;Example use cases for Open Source Maintainers&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Sponsorship / recurring support&lt;/li&gt;
+  &lt;li&gt;Paid support contract&lt;/li&gt;
+  &lt;li&gt;Security fix / patch bounty&lt;/li&gt;
+  &lt;li&gt;Priority issue resolution&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-use-a-payment-link-workflow&quot;&gt;How to use a payment link workflow&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Finish the work&lt;/li&gt;
+  &lt;li&gt;Create a payment request&lt;/li&gt;
+  &lt;li&gt;Send the payment link&lt;/li&gt;
+  &lt;li&gt;Get paid&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;using-gitpay&quot;&gt;Using Gitpay&lt;/h2&gt;
+
+&lt;p&gt;Gitpay helps you create payment requests and share payment links:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://gitpay.me&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cta&quot;&gt;CTA&lt;/h2&gt;
+
+&lt;p&gt;Send a payment link and get paid faster: https://gitpay.me&lt;/p&gt;</content><author><name>Alexandre Magno</name></author><summary type="html">Payment link for Open Source Maintainers: send a link, get paid</summary></entry><entry xml:lang="en"><title type="html">Payment Link for Motion Designers: Send a Link, Get Paid</title><link href="http://localhost:4000/payment-link-for-motion-designers/" rel="alternate" type="text/html" title="Payment Link for Motion Designers: Send a Link, Get Paid" /><published>2026-03-29T00:00:00+01:00</published><updated>2026-03-29T00:00:00+01:00</updated><id>http://localhost:4000/payment-link-for-motion-designers</id><content type="html" xml:base="http://localhost:4000/payment-link-for-motion-designers/">&lt;h2 id=&quot;payment-link-for-motion-designers-send-a-link-get-paid&quot;&gt;Payment link for Motion Designers: send a link, get paid&lt;/h2&gt;
+
+&lt;p&gt;If you deliver digital work, a payment link is often faster than an invoice. It turns payment into a single click instead of a process.&lt;/p&gt;
+
+&lt;h2 id=&quot;when-a-payment-link-makes-sense&quot;&gt;When a payment link makes sense&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After a deliverable handoff&lt;/li&gt;
+  &lt;li&gt;At a project milestone&lt;/li&gt;
+  &lt;li&gt;At the end of a weekly/monthly cycle&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;example-use-cases-for-motion-designers&quot;&gt;Example use cases for Motion Designers&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Product intro animation&lt;/li&gt;
+  &lt;li&gt;Explainer video scenes&lt;/li&gt;
+  &lt;li&gt;Logo sting / bumper&lt;/li&gt;
+  &lt;li&gt;Social motion templates&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-use-a-payment-link-workflow&quot;&gt;How to use a payment link workflow&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Finish the work&lt;/li&gt;
+  &lt;li&gt;Create a payment request&lt;/li&gt;
+  &lt;li&gt;Send the payment link&lt;/li&gt;
+  &lt;li&gt;Get paid&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;using-gitpay&quot;&gt;Using Gitpay&lt;/h2&gt;
+
+&lt;p&gt;Gitpay helps you create payment requests and share payment links:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://gitpay.me&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cta&quot;&gt;CTA&lt;/h2&gt;
+
+&lt;p&gt;Send a payment link and get paid faster: https://gitpay.me&lt;/p&gt;</content><author><name>Alexandre Magno</name></author><summary type="html">Payment link for Motion Designers: send a link, get paid</summary></entry><entry xml:lang="en"><title type="html">Payment Link for Mentors: Send a Link, Get Paid</title><link href="http://localhost:4000/payment-link-for-mentors/" rel="alternate" type="text/html" title="Payment Link for Mentors: Send a Link, Get Paid" /><published>2026-03-29T00:00:00+01:00</published><updated>2026-03-29T00:00:00+01:00</updated><id>http://localhost:4000/payment-link-for-mentors</id><content type="html" xml:base="http://localhost:4000/payment-link-for-mentors/">&lt;h2 id=&quot;payment-link-for-mentors-send-a-link-get-paid&quot;&gt;Payment link for Mentors: send a link, get paid&lt;/h2&gt;
+
+&lt;p&gt;If you deliver digital work, a payment link is often faster than an invoice. It turns payment into a single click instead of a process.&lt;/p&gt;
+
+&lt;h2 id=&quot;when-a-payment-link-makes-sense&quot;&gt;When a payment link makes sense&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After a deliverable handoff&lt;/li&gt;
+  &lt;li&gt;At a project milestone&lt;/li&gt;
+  &lt;li&gt;At the end of a weekly/monthly cycle&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;example-use-cases-for-mentors&quot;&gt;Example use cases for Mentors&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Mentorship hour block&lt;/li&gt;
+  &lt;li&gt;Career review session&lt;/li&gt;
+  &lt;li&gt;Code / portfolio review&lt;/li&gt;
+  &lt;li&gt;Ongoing monthly mentorship&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-use-a-payment-link-workflow&quot;&gt;How to use a payment link workflow&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Finish the work&lt;/li&gt;
+  &lt;li&gt;Create a payment request&lt;/li&gt;
+  &lt;li&gt;Send the payment link&lt;/li&gt;
+  &lt;li&gt;Get paid&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;using-gitpay&quot;&gt;Using Gitpay&lt;/h2&gt;
+
+&lt;p&gt;Gitpay helps you create payment requests and share payment links:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://gitpay.me&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cta&quot;&gt;CTA&lt;/h2&gt;
+
+&lt;p&gt;Send a payment link and get paid faster: https://gitpay.me&lt;/p&gt;</content><author><name>Alexandre Magno</name></author><summary type="html">Payment link for Mentors: send a link, get paid</summary></entry><entry xml:lang="en"><title type="html">Payment Link for Indie Hackers: Send a Link, Get Paid</title><link href="http://localhost:4000/payment-link-for-indie-hackers/" rel="alternate" type="text/html" title="Payment Link for Indie Hackers: Send a Link, Get Paid" /><published>2026-03-29T00:00:00+01:00</published><updated>2026-03-29T00:00:00+01:00</updated><id>http://localhost:4000/payment-link-for-indie-hackers</id><content type="html" xml:base="http://localhost:4000/payment-link-for-indie-hackers/">&lt;h2 id=&quot;payment-link-for-indie-hackers-send-a-link-get-paid&quot;&gt;Payment link for Indie Hackers: send a link, get paid&lt;/h2&gt;
+
+&lt;p&gt;If you deliver digital work, a payment link is often faster than an invoice. It turns payment into a single click instead of a process.&lt;/p&gt;
+
+&lt;h2 id=&quot;when-a-payment-link-makes-sense&quot;&gt;When a payment link makes sense&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;After a deliverable handoff&lt;/li&gt;
+  &lt;li&gt;At a project milestone&lt;/li&gt;
+  &lt;li&gt;At the end of a weekly/monthly cycle&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;example-use-cases-for-indie-hackers&quot;&gt;Example use cases for Indie Hackers&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;MVP build for a client&lt;/li&gt;
+  &lt;li&gt;Setup fee for onboarding&lt;/li&gt;
+  &lt;li&gt;One-off feature build&lt;/li&gt;
+  &lt;li&gt;Support + maintenance add-on&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-use-a-payment-link-workflow&quot;&gt;How to use a payment link workflow&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Finish the work&lt;/li&gt;
+  &lt;li&gt;Create a payment request&lt;/li&gt;
+  &lt;li&gt;Send the payment link&lt;/li&gt;
+  &lt;li&gt;Get paid&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;using-gitpay&quot;&gt;Using Gitpay&lt;/h2&gt;
+
+&lt;p&gt;Gitpay helps you create payment requests and share payment links:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://gitpay.me&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cta&quot;&gt;CTA&lt;/h2&gt;
+
+&lt;p&gt;Send a payment link and get paid faster: https://gitpay.me&lt;/p&gt;</content><author><name>Alexandre Magno</name></author><summary type="html">Payment link for Indie Hackers: send a link, get paid</summary></entry></feed>

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Payment Link for Motion Designers: Send a Link, Get Paid
+title: "Payment Link for Motion Designers: Send a Link, Get Paid"
 description: "A payment link workflow for motion designers: create a payment request, send a link, and get paid online with less friction than invoicing."
 meta_description: "A payment link workflow for motion designers: create a payment request, send a link, and get paid online with less friction than invoicing."
 lang: en

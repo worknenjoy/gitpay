@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
+  <!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>How Course Creators Can Request Payment for Digital Deliverables (Without Complicated Tools) | Gitpay Documentation</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="How Course Creators Can Request Payment for Digital Deliverables (Without Complicated Tools)" />
+<meta name="author" content="Alexandre Magno" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="A practical payment workflow for course creators: sell access, audits, or 1:1 deliverables using a simple payment request link instead of invoice-heavy processes." />
+<meta property="og:description" content="A practical payment workflow for course creators: sell access, audits, or 1:1 deliverables using a simple payment request link instead of invoice-heavy processes." />
+<link rel="canonical" href="http://localhost:4000/how-course-creators-request-payment-for-digital-deliverables/" />
+<meta property="og:url" content="http://localhost:4000/how-course-creators-request-payment-for-digital-deliverables/" />
+<meta property="og:site_name" content="Gitpay Documentation" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-20T00:00:00+01:00" />
+<script type="application/ld+json">
+{"headline":"How Course Creators Can Request Payment for Digital Deliverables (Without Complicated Tools)","dateModified":"2026-03-20T00:00:00+01:00","datePublished":"2026-03-20T00:00:00+01:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/how-course-creators-request-payment-for-digital-deliverables/"},"description":"A practical payment workflow for course creators: sell access, audits, or 1:1 deliverables using a simple payment request link instead of invoice-heavy processes.","url":"http://localhost:4000/how-course-creators-request-payment-for-digital-deliverables/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
+  <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
+  <script src="/assets/js/main.js"></script>
+  
+</head>
+
+
+    <body>
+
+    <header class="uk-background-secondary">
+    <div data-uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky" class="uk-sticky uk-sticky-fixed" style="position: fixed; top: 0px; width: 1904px;">
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+    <div data-uk-navbar>
+        <div class="uk-navbar-left">
+            <a class="uk-navbar-item uk-logo" href="/en"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
+            <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title="Contribute with this documentation">Contribute with this documentation</a>
+        </div>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav uk-visible@m">
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="https://gitpay.me" >
+                                Join now!
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/docs/en/getting-started" >
+                                Documentation
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/changelog" >
+                                Roadmap
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/en/news/" >
+                                Blog
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                        <li>
+                            <a href="https://github.com/worknenjoy/gitpay" target="_blank" >
+                                Github
+                            </a>
+                        </li>
+                    
+                    
+                
+            </ul>
+
+            
+            <div>
+                <a class="uk-navbar-toggle" uk-search-icon href="#"></a>
+                <div class="uk-drop uk-background-default uk-border-rounded" uk-drop="mode: click; pos: left-center; offset: 0">
+                    <form class="uk-search uk-search-navbar uk-width-1-1" onsubmit="return false;">
+                        <input id="navbar-search" class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                    </form>
+                    <ul id="navbar-search-results" class="uk-position-absolute uk-width-1-1 uk-list"></ul>
+                </div>
+            </div>
+            <script>
+            SimpleJekyllSearch({
+                searchInput: document.getElementById('navbar-search'),
+                resultsContainer: document.getElementById('navbar-search-results'),
+                noResultsText: '<li>No results found</li>',
+                searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+                json: '/search.json'
+            });
+            </script>
+            
+
+            <a class="uk-navbar-toggle uk-hidden@m" href="#offcanvas" data-uk-navbar-toggle-icon data-uk-toggle></a>
+
+        </div>
+    </div>
+</div>
+
+        </nav>
+    </div>
+</header>
+
+
+    
+
+    <div class="uk-section">
+    <div class="uk-container uk-container-xsmall">
+        <article class="uk-article">
+
+            <h1 class="uk-article-title">How Course Creators Can Request Payment for Digital Deliverables (Without Complicated Tools)</h1>
+
+            <div class="uk-article-meta uk-margin-top uk-margin-medium-bottom">
+                
+
+
+    <img class="avatar avatar-small" src="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32" alt="alexanmtz" srcset="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32 1x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=64 2x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=96 3x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=128 4x" width="32" height="32" data-proofer-ignore="true" />
+
+
+
+    Written by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alexandre Magno</span></span><br>
+
+
+<time datetime="2026-03-20T00:00:00+01:00" itemprop="datePublished">
+    
+    Mar 20, 2026
+</time>
+
+<a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_posts/2026-03-20-how-course-creators-request-payment-for-digital-deliverables.md">Editar esta página</a>
+
+            </div>
+
+            <div class="uk-article-content">
+                <h2 id="introduction">Introduction</h2>
+
+<p>Course creation is a mix of product and service.</p>
+
+<p>You might sell a self-serve course, but you also end up doing “service-like” deliverables: onboarding calls, portfolio reviews, community access, 1:1 audits, template packs, and custom feedback.</p>
+
+<p>That hybrid model is where payment gets messy. Some buyers want checkout-style payment. Others ask for invoices. If you’re not careful, you end up maintaining three payment workflows for the same business.</p>
+
+<p>A <strong>payment request</strong> keeps things simple: you deliver the digital work or service, send a link, and the buyer pays.</p>
+
+<h2 id="the-typical-workflow-problem">The Typical Workflow Problem</h2>
+
+<p>Common course creator payment patterns look like:</p>
+
+<ul>
+  <li>Sell access via a platform</li>
+  <li>Handle custom requests manually</li>
+  <li>Send an invoice for anything outside the platform</li>
+  <li>Wait</li>
+  <li>Follow up</li>
+</ul>
+
+<p>Where friction happens:</p>
+
+<ul>
+  <li><strong>Buyers want “a link”</strong> and you send a PDF.</li>
+  <li><strong>International buyers</strong> struggle with bank transfers and fees.</li>
+  <li><strong>Custom add-ons</strong> fall into a slow invoice workflow.</li>
+  <li><strong>You lose focus</strong> because you’re doing billing admin.</li>
+</ul>
+
+<p>It’s why course creators search “<strong>get paid online freelance</strong>” even though they’re not “freelancers” in the traditional sense.</p>
+
+<h3 id="the-platform-vs-custom-work-split">The “platform vs custom work” split</h3>
+
+<p>Platforms are great for self-serve access, but they often don’t cover:</p>
+
+<ul>
+  <li>Customized feedback</li>
+  <li>Private calls</li>
+  <li>Corporate team purchases</li>
+  <li>One-off add-ons</li>
+</ul>
+
+<p>When those requests come in, you need a payment flow that’s as simple as your course checkout—without rebuilding your entire stack.</p>
+
+<h2 id="payment-requests-instead-of-invoices">Payment Requests (Instead of Invoices)</h2>
+
+<p>Payment requests are useful whenever the work is digital and the buyer wants speed.</p>
+
+<p>Instead of invoices, you:</p>
+
+<ul>
+  <li>Create a payment request for the deliverable</li>
+  <li>Send a link</li>
+  <li>Buyer pays</li>
+  <li>You grant access / deliver the output</li>
+</ul>
+
+<p>That link is a <strong>freelancer payment link</strong> in spirit: one clear action that closes the loop.</p>
+
+<h3 id="good-moments-to-use-a-payment-request">Good moments to use a payment request</h3>
+
+<p>Payment requests work well for:</p>
+
+<ul>
+  <li>Portfolio reviews</li>
+  <li>Resume/CV reviews</li>
+  <li>1:1 coaching sessions</li>
+  <li>Custom template packs</li>
+  <li>Private community access</li>
+  <li>“Done-with-you” onboarding</li>
+</ul>
+
+<p>Each of these can be described in a few words, which makes it easy to <strong>request payment from client</strong> (or buyer) without complex tooling.</p>
+
+<h3 id="how-to-position-it-so-it-doesnt-feel-awkward">How to position it so it doesn’t feel awkward</h3>
+
+<p>Treat the payment request like a normal checkout step, not a negotiation:</p>
+
+<blockquote>
+  <p>If you’d like the portfolio review, here’s the payment link. Once it’s paid, send me your portfolio link and we’ll schedule.</p>
+</blockquote>
+
+<p>Clear, direct, and respectful.</p>
+
+<h3 id="scheduling-and-rescheduling-a-common-payment-leak">Scheduling and rescheduling (a common payment leak)</h3>
+
+<p>For calls and reviews, payment gets delayed when scheduling drags.</p>
+
+<p>Two simple rules:</p>
+
+<ul>
+  <li>If it’s a one-off session, ask for payment before you book the time.</li>
+  <li>If it’s a deliverable after the session (notes, review), send the payment request link with the final notes.</li>
+</ul>
+
+<p>This keeps the payment step tied to a clear moment: booking or delivery.</p>
+
+<h2 id="gitpay-payment-requests-natural-fit">Gitpay Payment Requests (Natural Fit)</h2>
+
+<p>Gitpay helps creators generate payment requests they can share as a simple link.</p>
+
+<ul>
+  <li>Gitpay homepage: https://gitpay.me</li>
+  <li>Gitpay payment requests (service payments): https://gitpay.me/#/use-cases/service-payments</li>
+</ul>
+
+<p>Use it as your “manual checkout” when you don’t want to force everything through a single platform.</p>
+
+<h2 id="example-use-cases">Example Use Cases</h2>
+
+<h3 id="1-paid-portfolio-review">1) Paid portfolio review</h3>
+
+<p>Deliverable: “30-minute review + written notes + next steps.”</p>
+
+<p>Workflow:</p>
+
+<ul>
+  <li>Ask for the portfolio link</li>
+  <li>Schedule the call</li>
+  <li>After delivery, send notes + payment request link</li>
+</ul>
+
+<h3 id="2-course-onboarding-package">2) Course onboarding package</h3>
+
+<p>Deliverable: “Onboarding call + personalized study plan.”</p>
+
+<p>This is a clean way to <strong>charge clients online</strong> for higher-touch upgrades.</p>
+
+<h3 id="3-selling-a-digital-template-pack">3) Selling a digital template pack</h3>
+
+<p>If you sell a pack directly, a payment request can be used to close the sale in DMs.</p>
+
+<h3 id="4-community-access-sponsorship">4) Community access sponsorship</h3>
+
+<p>If a company wants to sponsor seats for their team, payment requests can be easier than setting up an invoicing system for one-off purchases.</p>
+
+<h3 id="5-corporate-buyers-who-need-internal-approval">5) Corporate buyers who need internal approval</h3>
+
+<p>If the buyer needs a manager to approve it, make your payment request easy to forward:</p>
+
+<ul>
+  <li>Label it with the deliverable</li>
+  <li>Include dates (“April cohort onboarding”) if relevant</li>
+  <li>Keep the description short</li>
+</ul>
+
+<h2 id="why-this-workflow-is-simpler">Why This Workflow Is Simpler</h2>
+
+<p>Payment requests reduce tool sprawl for course creators:</p>
+
+<ul>
+  <li><strong>No complex invoicing software</strong> for each custom request</li>
+  <li><strong>Faster payments</strong> because buyers can pay instantly</li>
+  <li><strong>Good for international buyers</strong> who need a simple online flow</li>
+  <li><strong>Works for digital deliverables</strong> like feedback, templates, and access</li>
+  <li><strong>Keeps your business focused</strong> on teaching, not billing admin</li>
+</ul>
+
+<h3 id="one-minute-checklist-for-higher-touch-upgrades">One-minute checklist for higher-touch upgrades</h3>
+
+<p>Before you send a payment request for coaching/reviews, include:</p>
+
+<ul>
+  <li>What the buyer gets (deliverable)</li>
+  <li>Delivery timing (“within 72 hours”)</li>
+  <li>What you need from them (portfolio link, questions, etc.)</li>
+  <li>The payment request link</li>
+</ul>
+
+<p>This keeps expectations clear and avoids “paid but unclear” situations.</p>
+
+<h3 id="a-practical-message-template">A practical message template</h3>
+
+<p>Send something like:</p>
+
+<blockquote>
+  <p>Your review notes are ready. If you want to close out the portfolio review, here’s the payment link: (payment request link).</p>
+</blockquote>
+
+<p>Simple, direct, professional.</p>
+
+<h3 id="if-someone-insists-on-an-invoice">If someone insists on an invoice</h3>
+
+<p>Sometimes a company buyer can only pay against an invoice. Even then, payment requests can still help as the “pay now” step once finance is ready.</p>
+
+<p>The key is not to let payment become a separate multi-week process for a one-hour deliverable.</p>
+
+<h2 id="cta">CTA</h2>
+
+<p>If you want a simpler way to sell digital deliverables and get paid quickly, try creating a payment request on Gitpay:</p>
+
+<ul>
+  <li>https://gitpay.me</li>
+  <li>https://gitpay.me/#/use-cases/service-payments</li>
+</ul>
+
+                <div class="share uk-text-center">
+    <a href="https://twitter.com/intent/tweet?text=How Course Creators Can Request Payment for Digital Deliverables (Without Complicated Tools)&url=http://localhost:4000/how-course-creators-request-payment-for-digital-deliverables/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fhow-course-creators-request-payment-for-digital-deliverables%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+</div>
+
+            </div>
+
+            <hr class="uk-margin-medium">
+
+            <div class="uk-margin-large-top paginate-post">
+    <div class="uk-child-width-expand@s uk-grid-large uk-pagi" data-uk-grid>
+        <div>
+            
+                <h4>How Content Creators Can Get Paid for Digital Work with Payment Requests</h4>
+                <div class="uk-visible@s uk-text-muted uk-text-small"><h2 id="introduction">Introduction</h2>
+
+</div>
+                <div><a class="remove-underline link-dark hvr-back" href="/how-content-creators-can-get-paid-for-digital-work-with-payment-requests/">&larr; Previous</a></div>
+            
+        </div>
+        <div>
+            
+                <h4>How Indie Makers Can Charge Clients for Digital Deliverables (Using Simple Payment Requests)</h4>
+                <div class="uk-visible@s uk-text-muted uk-text-small"><h2 id="introduction">Introduction</h2>
+
+</div>
+                <div class="uk-text-right"><a class="remove-underline link-dark hvr-forward" href="/how-indie-makers-charge-clients-for-digital-deliverables/">Next &rarr;</a></div>
+            
+        </div>
+    </div>
+</div>
+
+
+            
+        </article>
+
+        <script>
+            // Table of contents scroll to
+            UIkit.scroll('#markdown-toc a', {
+                duration: 400,
+                offset: 120
+            });
+        </script>
+
+    </div>
+</div>
+
+
+    <div id="offcanvas" data-uk-offcanvas="flip: true; overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <button class="uk-offcanvas-close" type="button" data-uk-close></button>
+
+        <ul class="uk-nav uk-nav-default">
+            <li><a class="uk-logo uk-margin-small-bottom" href="/en"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://gitpay.me" target="_blank" >Join now!</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/docs/en/getting-started" >Documentation</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/changelog" >Roadmap</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/en/news/" >Blog</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
+            
+        </ul>
+
+        <div class="uk-margin-small-top uk-text-center uk-text-muted uk-link-muted">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    
+        <footer class="uk-section uk-text-center uk-text-muted uk-link-muted">
+    <div class="uk-container uk-container-small">
+
+        <div>
+            <ul class="uk-subnav uk-flex-center">
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                        <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                    
+                
+            </ul>
+        </div>
+        <div class="uk-margin-medium">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+        <div class="uk-margin-medium uk-text-small copyright">Developed with collaboration using Gitpay</div>
+        <div class="uk-margin-medium uk-text-small">
+            <em>Read this page in a different language:</em>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/en">🇺🇸 English</a>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/br">🇧🇷 Português</a>
+            
+        </div>
+    </div>
+</footer>
+
+    
+
+    </body>
+
+
+</html>

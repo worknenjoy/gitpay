@@ -21,5 +21,12 @@
     title: Roadmap
     url: /changelog
 
+- en:
+    title: Blog
+    url: /en/news/
+  br:
+    title: Blog
+    url: /br/news/
+
 - title: Github
   url: https://github.com/worknenjoy/gitpay

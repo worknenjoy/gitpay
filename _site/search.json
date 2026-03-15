@@ -5,7 +5,7 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/assets/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -13,7 +13,7 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/collections/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -21,7 +21,15 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/configuration/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Contribuidor",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/br/contributor/",
+      "date"     : ""
     } ,
   
     {
@@ -29,7 +37,7 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/drafts/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -37,7 +45,7 @@
       "category" : "",
       "tags"     : "othertag",
       "url"      : "/docs/br/faq/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -45,7 +53,7 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/getting-started/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -53,7 +61,7 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/git-workflow/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -61,7 +69,15 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/installation/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Mantenedor",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/br/maintainer/",
+      "date"     : ""
     } ,
   
     {
@@ -69,7 +85,7 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/pages/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -77,7 +93,7 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/payments/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -85,7 +101,7 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/posts/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -93,7 +109,23 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/pull-requests/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Prestador de serviço",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/br/service-provider/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Patrocinador",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/br/sponsor/",
+      "date"     : ""
     } ,
   
     {
@@ -101,7 +133,7 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/structure/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -109,15 +141,15 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/usage/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
-      "title"    : "Como configurar um repositório",
+      "title"    : "How to set up a repository",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/assets/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -125,15 +157,23 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/collections/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
-      "title"    : "Como rodar o projeto do Gitpay",
+      "title"    : "Running the Gitpay project",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/configuration/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Contributor",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/contributor/",
+      "date"     : ""
     } ,
   
     {
@@ -141,7 +181,7 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/drafts/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -149,15 +189,15 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/faq/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
-      "title"    : "How to getting started?",
+      "title"    : "Getting Started",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/getting-started/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -165,7 +205,7 @@
       "category" : "",
       "tags"     : "workflow,, git,, work,, task,, delivery,, issue,, solve",
       "url"      : "/docs/en/git-workflow/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -173,7 +213,15 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/installation/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Maintainer",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/maintainer/",
+      "date"     : ""
     } ,
   
     {
@@ -181,7 +229,7 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/pages/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -189,15 +237,15 @@
       "category" : "",
       "tags"     : "payments,, work,, bounty,, get, paid,, reward,, open-source, payments",
       "url"      : "/docs/en/payments/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
-      "title"    : "Recebendo pagamentos como recompensa",
+      "title"    : "Receiving payments as a reward",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/posts/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
@@ -205,23 +253,39 @@
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/pull-requests/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
-      "title"    : "Como o Git pode ajudar nas organizações",
+      "title"    : "Service Provider",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/service-provider/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "Sponsor",
+      "category" : "",
+      "tags"     : "",
+      "url"      : "/docs/en/sponsor/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "How Git can help organizations",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/structure/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } ,
   
     {
-      "title"    : "Como são definidas as tarefas?",
+      "title"    : "How tasks are defined",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/usage/",
-      "date"     : "2020-09-22 00:32:27 +0200"
+      "date"     : ""
     } 
   
 ]

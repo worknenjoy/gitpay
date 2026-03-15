@@ -69,6 +69,9 @@ google_maps_api_key:
 # Number of posts displayed on blog page
 paginate: 10
 
+# Render posts dated in the future (many SEO posts are pre-dated)
+future: true
+
 # Blog path
 paginate_path:      "/blog/:num/"
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How Photographers Get Paid: A Simple Payment Workflow
+title: "How Photographers Get Paid: A Simple Payment Workflow"
 description: "How photographers can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 meta_description: "How photographers can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 lang: en

@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
+  <!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>How Digital Product Creators Can Request Payment for Deliverables (Without Invoices) | Gitpay Documentation</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="How Digital Product Creators Can Request Payment for Deliverables (Without Invoices)" />
+<meta name="author" content="Alexandre Magno" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="A practical payment workflow for digital product creators: use a payment request link to sell deliverables, add-ons, and custom work without a complicated invoicing stack." />
+<meta property="og:description" content="A practical payment workflow for digital product creators: use a payment request link to sell deliverables, add-ons, and custom work without a complicated invoicing stack." />
+<link rel="canonical" href="http://localhost:4000/how-digital-product-creators-request-payment-for-deliverables/" />
+<meta property="og:url" content="http://localhost:4000/how-digital-product-creators-request-payment-for-deliverables/" />
+<meta property="og:site_name" content="Gitpay Documentation" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-23T00:00:00+01:00" />
+<script type="application/ld+json">
+{"headline":"How Digital Product Creators Can Request Payment for Deliverables (Without Invoices)","dateModified":"2026-03-23T00:00:00+01:00","datePublished":"2026-03-23T00:00:00+01:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/how-digital-product-creators-request-payment-for-deliverables/"},"description":"A practical payment workflow for digital product creators: use a payment request link to sell deliverables, add-ons, and custom work without a complicated invoicing stack.","url":"http://localhost:4000/how-digital-product-creators-request-payment-for-deliverables/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
+  <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
+  <script src="/assets/js/main.js"></script>
+  
+</head>
+
+
+    <body>
+
+    <header class="uk-background-secondary">
+    <div data-uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky" class="uk-sticky uk-sticky-fixed" style="position: fixed; top: 0px; width: 1904px;">
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+    <div data-uk-navbar>
+        <div class="uk-navbar-left">
+            <a class="uk-navbar-item uk-logo" href="/en"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
+            <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title="Contribute with this documentation">Contribute with this documentation</a>
+        </div>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav uk-visible@m">
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="https://gitpay.me" >
+                                Join now!
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/docs/en/getting-started" >
+                                Documentation
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/changelog" >
+                                Roadmap
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/en/news/" >
+                                Blog
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                        <li>
+                            <a href="https://github.com/worknenjoy/gitpay" target="_blank" >
+                                Github
+                            </a>
+                        </li>
+                    
+                    
+                
+            </ul>
+
+            
+            <div>
+                <a class="uk-navbar-toggle" uk-search-icon href="#"></a>
+                <div class="uk-drop uk-background-default uk-border-rounded" uk-drop="mode: click; pos: left-center; offset: 0">
+                    <form class="uk-search uk-search-navbar uk-width-1-1" onsubmit="return false;">
+                        <input id="navbar-search" class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                    </form>
+                    <ul id="navbar-search-results" class="uk-position-absolute uk-width-1-1 uk-list"></ul>
+                </div>
+            </div>
+            <script>
+            SimpleJekyllSearch({
+                searchInput: document.getElementById('navbar-search'),
+                resultsContainer: document.getElementById('navbar-search-results'),
+                noResultsText: '<li>No results found</li>',
+                searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+                json: '/search.json'
+            });
+            </script>
+            
+
+            <a class="uk-navbar-toggle uk-hidden@m" href="#offcanvas" data-uk-navbar-toggle-icon data-uk-toggle></a>
+
+        </div>
+    </div>
+</div>
+
+        </nav>
+    </div>
+</header>
+
+
+    
+
+    <div class="uk-section">
+    <div class="uk-container uk-container-xsmall">
+        <article class="uk-article">
+
+            <h1 class="uk-article-title">How Digital Product Creators Can Request Payment for Deliverables (Without Invoices)</h1>
+
+            <div class="uk-article-meta uk-margin-top uk-margin-medium-bottom">
+                
+
+
+    <img class="avatar avatar-small" src="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32" alt="alexanmtz" srcset="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32 1x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=64 2x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=96 3x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=128 4x" width="32" height="32" data-proofer-ignore="true" />
+
+
+
+    Written by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alexandre Magno</span></span><br>
+
+
+<time datetime="2026-03-23T00:00:00+01:00" itemprop="datePublished">
+    
+    Mar 23, 2026
+</time>
+
+<a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_posts/2026-03-23-how-digital-product-creators-send-payment-requests-for-deliverables.md">Editar esta página</a>
+
+            </div>
+
+            <div class="uk-article-content">
+                <h2 id="introduction">Introduction</h2>
+
+<p>Digital product creators often start with a simple goal: build something once, sell it many times. But reality quickly adds “service edges”: custom onboarding, setup help, migrations, template customization, audits, and private support.</p>
+
+<p>Those service edges are profitable—until payment becomes messy.</p>
+
+<p>If you’re handling custom deliverables and relying on invoices, you’ll eventually hit the classic problem: you deliver the work, you invoice, and then you wait. Payment requests are a cleaner default for digital deliverables because they act like a lightweight checkout link.</p>
+
+<h2 id="the-typical-workflow-problem">The Typical Workflow Problem</h2>
+
+<p>The common workflow looks like:</p>
+
+<ul>
+  <li>Customer asks for an add-on or customization</li>
+  <li>You agree on scope and price</li>
+  <li>You deliver the files / access / setup</li>
+  <li>You send an invoice</li>
+  <li>You wait</li>
+</ul>
+
+<p>Friction shows up as:</p>
+
+<ul>
+  <li><strong>Clients want a link</strong> (“can you just send a payment link?”)</li>
+  <li><strong>Invoices create delay</strong> (forwarded to finance, queued for end-of-month)</li>
+  <li><strong>International buyers</strong> struggle with transfer friction</li>
+  <li><strong>You end up in admin mode</strong> instead of building</li>
+</ul>
+
+<p>This is why creators search “<strong>get paid online freelance</strong>” even if they’re selling a product. The payment bottleneck still looks like freelancing.</p>
+
+<h3 id="the-custom-work-gap">The “custom work” gap</h3>
+
+<p>Your product checkout is optimized for repeatable purchases. Custom work is not repeatable:</p>
+
+<ul>
+  <li>It varies per customer</li>
+  <li>It needs a manual scope agreement</li>
+  <li>It often has a delivery milestone</li>
+</ul>
+
+<p>Payment requests are a clean tool specifically for that gap.</p>
+
+<h2 id="payment-requests-instead-of-invoices">Payment Requests (Instead of Invoices)</h2>
+
+<p>Payment requests work well whenever there’s a clearly defined deliverable:</p>
+
+<ul>
+  <li>Create a payment request for the add-on</li>
+  <li>Send the link</li>
+  <li>The client pays</li>
+  <li>You deliver (or confirm delivery)</li>
+</ul>
+
+<p>It’s the same idea as a <strong>freelancer payment link</strong>: one action that closes the loop.</p>
+
+<h3 id="payment-requests-for-productized-services">Payment requests for productized services</h3>
+
+<p>If you sell productized services alongside your product, payment requests are a practical way to:</p>
+
+<ul>
+  <li>Make pricing clear</li>
+  <li>Reduce back-and-forth</li>
+  <li>Keep the transaction lightweight</li>
+</ul>
+
+<p>And yes, it’s a straightforward way to <strong>charge clients online</strong> without forcing them into a procurement workflow for a small purchase.</p>
+
+<h3 id="what-to-include-so-customers-feel-safe-paying">What to include so customers feel safe paying</h3>
+
+<p>For custom product work, buyers usually want clarity more than formalities. Include:</p>
+
+<ul>
+  <li>What’s included (1–3 bullets)</li>
+  <li>What’s not included (1 bullet)</li>
+  <li>Delivery window (“within 5 business days”)</li>
+  <li>How you’ll deliver (email, folder, access)</li>
+</ul>
+
+<p>That reduces hesitation and prevents scope creep.</p>
+
+<h3 id="handling-change-requests-after-you-start">Handling change requests after you start</h3>
+
+<p>Custom work almost always changes once the buyer sees a first version. To keep it clean:</p>
+
+<ul>
+  <li>Keep the original deliverable definition intact</li>
+  <li>Treat changes as add-ons with their own price</li>
+  <li>Use a new payment request for the add-on</li>
+</ul>
+
+<p>This keeps the relationship friendly and makes payment predictable.</p>
+
+<h2 id="gitpay-payment-requests-natural-fit">Gitpay Payment Requests (Natural Fit)</h2>
+
+<p>Gitpay allows service providers and creators to create payment requests and share a simple payment link.</p>
+
+<ul>
+  <li>Gitpay homepage: https://gitpay.me</li>
+  <li>Gitpay payment requests (service payments): https://gitpay.me/#/use-cases/service-payments</li>
+</ul>
+
+<p>Use it as the “manual checkout” step for custom work.</p>
+
+<h3 id="if-you-also-sell-self-serve-products">If you also sell self-serve products</h3>
+
+<p>Keep it simple:</p>
+
+<ul>
+  <li>Use your normal checkout for the standard product</li>
+  <li>Use payment requests for add-ons, customizations, or service deliverables</li>
+</ul>
+
+<p>This avoids turning every purchase into a manual sales process.</p>
+
+<h2 id="example-use-cases">Example Use Cases</h2>
+
+<h3 id="1-template-customization">1) Template customization</h3>
+
+<p>Deliverable: “Customize dashboard template for your metrics + add 3 sections.”</p>
+
+<p>Send the deliverable and the payment link together.</p>
+
+<p>Example message you can copy:</p>
+
+<blockquote>
+  <p>Custom template update is ready (included: metrics section + 3 new blocks). Here’s the deliverable link. To close this add-on, you can pay using this payment link: (payment request link).</p>
+</blockquote>
+
+<h3 id="2-setup--onboarding-help">2) Setup / onboarding help</h3>
+
+<p>Deliverable: “60-minute onboarding call + setup checklist.”</p>
+
+<p>This is an easy way to <strong>request payment from client</strong> without an invoice workflow.</p>
+
+<h3 id="3-migration-service">3) Migration service</h3>
+
+<p>Deliverable: “Migrate content from tool A → tool B + QA.”</p>
+
+<p>Tie the payment request to a clear milestone.</p>
+
+<h3 id="4-paid-support">4) Paid support</h3>
+
+<p>Deliverable: “Priority support for 2 weeks” or “Support session + notes.”</p>
+
+<h3 id="5-custom-onboarding-for-a-team">5) Custom onboarding for a team</h3>
+
+<p>Deliverable: “Team onboarding call + setup checklist + Q&amp;A notes.”</p>
+
+<p>This is the same pattern as a services engagement, and payment requests work well.</p>
+
+<h2 id="why-this-workflow-is-simpler">Why This Workflow Is Simpler</h2>
+
+<p>Payment requests are simpler for digital product creators because they match how online purchases already happen:</p>
+
+<ul>
+  <li><strong>No complex invoicing software</strong> for one-off add-ons</li>
+  <li><strong>Faster payments</strong> because clients can pay immediately</li>
+  <li><strong>Easy internal forwarding</strong> when approval is needed</li>
+  <li><strong>Good for international clients</strong></li>
+  <li><strong>Works for digital deliverables</strong> (files, access, setup, audits)</li>
+</ul>
+
+<h3 id="one-minute-checklist-for-custom-add-ons">One-minute checklist for custom add-ons</h3>
+
+<p>Before you send a payment request for custom work, make sure the buyer can see:</p>
+
+<ul>
+  <li>What they’re buying (scope)</li>
+  <li>When they’ll get it (timing)</li>
+  <li>How it will be delivered</li>
+  <li>The payment link</li>
+</ul>
+
+<p>When those are clear, buyers pay faster and you avoid “surprise expectations.”</p>
+
+<h3 id="a-simple-rule-for-custom-work">A simple rule for custom work</h3>
+
+<p>When you deliver custom work, include the payment request link in the same message as the deliverable.</p>
+
+<h3 id="a-simple-pay-then-deliver-option">A simple “pay then deliver” option</h3>
+
+<p>For higher-risk custom work, you can also invert the flow:</p>
+
+<ul>
+  <li>Send payment request link</li>
+  <li>Start work once it’s paid</li>
+  <li>Deliver within the agreed window</li>
+</ul>
+
+<p>That’s still a simple workflow—and it protects your time.</p>
+
+<h2 id="cta">CTA</h2>
+
+<p>If you want to simplify how you get paid for digital deliverables and product add-ons, try creating a payment request on Gitpay:</p>
+
+<ul>
+  <li>https://gitpay.me</li>
+  <li>https://gitpay.me/#/use-cases/service-payments</li>
+</ul>
+
+                <div class="share uk-text-center">
+    <a href="https://twitter.com/intent/tweet?text=How Digital Product Creators Can Request Payment for Deliverables (Without Invoices)&url=http://localhost:4000/how-digital-product-creators-request-payment-for-deliverables/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fhow-digital-product-creators-request-payment-for-deliverables%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+</div>
+
+            </div>
+
+            <hr class="uk-margin-medium">
+
+            <div class="uk-margin-large-top paginate-post">
+    <div class="uk-child-width-expand@s uk-grid-large uk-pagi" data-uk-grid>
+        <div>
+            
+                <h4>How Open Source Maintainers Can Request Payment for Work (Sponsors, Support, and Deliverables)</h4>
+                <div class="uk-visible@s uk-text-muted uk-text-small"><h2 id="introduction">Introduction</h2>
+
+</div>
+                <div><a class="remove-underline link-dark hvr-back" href="/how-open-source-maintainers-request-payment-for-work/">&larr; Previous</a></div>
+            
+        </div>
+        <div>
+            
+                <h4>How Freelance Writers Can Request Payment from Clients Online (Without Invoices)</h4>
+                <div class="uk-visible@s uk-text-muted uk-text-small"><h2 id="introduction">Introduction</h2>
+
+</div>
+                <div class="uk-text-right"><a class="remove-underline link-dark hvr-forward" href="/how-freelance-writers-request-payment-from-clients-online/">Next &rarr;</a></div>
+            
+        </div>
+    </div>
+</div>
+
+
+            
+        </article>
+
+        <script>
+            // Table of contents scroll to
+            UIkit.scroll('#markdown-toc a', {
+                duration: 400,
+                offset: 120
+            });
+        </script>
+
+    </div>
+</div>
+
+
+    <div id="offcanvas" data-uk-offcanvas="flip: true; overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <button class="uk-offcanvas-close" type="button" data-uk-close></button>
+
+        <ul class="uk-nav uk-nav-default">
+            <li><a class="uk-logo uk-margin-small-bottom" href="/en"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://gitpay.me" target="_blank" >Join now!</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/docs/en/getting-started" >Documentation</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/changelog" >Roadmap</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/en/news/" >Blog</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
+            
+        </ul>
+
+        <div class="uk-margin-small-top uk-text-center uk-text-muted uk-link-muted">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    
+        <footer class="uk-section uk-text-center uk-text-muted uk-link-muted">
+    <div class="uk-container uk-container-small">
+
+        <div>
+            <ul class="uk-subnav uk-flex-center">
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                        <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                    
+                
+            </ul>
+        </div>
+        <div class="uk-margin-medium">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+        <div class="uk-margin-medium uk-text-small copyright">Developed with collaboration using Gitpay</div>
+        <div class="uk-margin-medium uk-text-small">
+            <em>Read this page in a different language:</em>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/en">🇺🇸 English</a>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/br">🇧🇷 Português</a>
+            
+        </div>
+    </div>
+</footer>
+
+    
+
+    </body>
+
+
+</html>

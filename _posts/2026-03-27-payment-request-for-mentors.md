@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Payment Request for Mentors: Get Paid With a Simple Link
+title: "Payment Request for Mentors: Get Paid With a Simple Link"
 description: "A practical payment request workflow for mentors: send a simple link after delivery so clients can pay faster without invoicing complexity."
 meta_description: "A practical payment request workflow for mentors: send a simple link after delivery so clients can pay faster without invoicing complexity."
 lang: en

@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
+  <!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>How Open Source Maintainers Can Request Payment for Work (Sponsors, Support, and Deliverables) | Gitpay Documentation</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="How Open Source Maintainers Can Request Payment for Work (Sponsors, Support, and Deliverables)" />
+<meta name="author" content="Alexandre Magno" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="A practical payment workflow for open source maintainers: use payment requests for support, priority fixes, audits, and sponsorship-style work without complex invoicing." />
+<meta property="og:description" content="A practical payment workflow for open source maintainers: use payment requests for support, priority fixes, audits, and sponsorship-style work without complex invoicing." />
+<link rel="canonical" href="http://localhost:4000/how-open-source-maintainers-request-payment-for-work/" />
+<meta property="og:url" content="http://localhost:4000/how-open-source-maintainers-request-payment-for-work/" />
+<meta property="og:site_name" content="Gitpay Documentation" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-22T00:00:00+01:00" />
+<script type="application/ld+json">
+{"headline":"How Open Source Maintainers Can Request Payment for Work (Sponsors, Support, and Deliverables)","dateModified":"2026-03-22T00:00:00+01:00","datePublished":"2026-03-22T00:00:00+01:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/how-open-source-maintainers-request-payment-for-work/"},"description":"A practical payment workflow for open source maintainers: use payment requests for support, priority fixes, audits, and sponsorship-style work without complex invoicing.","url":"http://localhost:4000/how-open-source-maintainers-request-payment-for-work/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
+  <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
+  <script src="/assets/js/main.js"></script>
+  
+</head>
+
+
+    <body>
+
+    <header class="uk-background-secondary">
+    <div data-uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky" class="uk-sticky uk-sticky-fixed" style="position: fixed; top: 0px; width: 1904px;">
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+    <div data-uk-navbar>
+        <div class="uk-navbar-left">
+            <a class="uk-navbar-item uk-logo" href="/en"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
+            <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title="Contribute with this documentation">Contribute with this documentation</a>
+        </div>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav uk-visible@m">
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="https://gitpay.me" >
+                                Join now!
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/docs/en/getting-started" >
+                                Documentation
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/changelog" >
+                                Roadmap
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/en/news/" >
+                                Blog
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                        <li>
+                            <a href="https://github.com/worknenjoy/gitpay" target="_blank" >
+                                Github
+                            </a>
+                        </li>
+                    
+                    
+                
+            </ul>
+
+            
+            <div>
+                <a class="uk-navbar-toggle" uk-search-icon href="#"></a>
+                <div class="uk-drop uk-background-default uk-border-rounded" uk-drop="mode: click; pos: left-center; offset: 0">
+                    <form class="uk-search uk-search-navbar uk-width-1-1" onsubmit="return false;">
+                        <input id="navbar-search" class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                    </form>
+                    <ul id="navbar-search-results" class="uk-position-absolute uk-width-1-1 uk-list"></ul>
+                </div>
+            </div>
+            <script>
+            SimpleJekyllSearch({
+                searchInput: document.getElementById('navbar-search'),
+                resultsContainer: document.getElementById('navbar-search-results'),
+                noResultsText: '<li>No results found</li>',
+                searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+                json: '/search.json'
+            });
+            </script>
+            
+
+            <a class="uk-navbar-toggle uk-hidden@m" href="#offcanvas" data-uk-navbar-toggle-icon data-uk-toggle></a>
+
+        </div>
+    </div>
+</div>
+
+        </nav>
+    </div>
+</header>
+
+
+    
+
+    <div class="uk-section">
+    <div class="uk-container uk-container-xsmall">
+        <article class="uk-article">
+
+            <h1 class="uk-article-title">How Open Source Maintainers Can Request Payment for Work (Sponsors, Support, and Deliverables)</h1>
+
+            <div class="uk-article-meta uk-margin-top uk-margin-medium-bottom">
+                
+
+
+    <img class="avatar avatar-small" src="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32" alt="alexanmtz" srcset="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32 1x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=64 2x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=96 3x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=128 4x" width="32" height="32" data-proofer-ignore="true" />
+
+
+
+    Written by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alexandre Magno</span></span><br>
+
+
+<time datetime="2026-03-22T00:00:00+01:00" itemprop="datePublished">
+    
+    Mar 22, 2026
+</time>
+
+<a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_posts/2026-03-22-how-open-source-maintainers-request-sponsorship-and-service-payments.md">Editar esta página</a>
+
+            </div>
+
+            <div class="uk-article-content">
+                <h2 id="introduction">Introduction</h2>
+
+<p>Open source maintainers often sit in a strange spot: you create real infrastructure that companies depend on, but the payment workflow is unclear.</p>
+
+<p>Some maintainers rely on donations or sponsorships. Others do paid support, priority fixes, audits, or integration help. In all cases, the challenge is the same: you need a simple way to request payment that doesn’t require you to run a full invoicing operation.</p>
+
+<p>Payment requests are a practical tool here. They let you attach a clear “pay this” action to a specific piece of work.</p>
+
+<h2 id="the-typical-workflow-problem">The Typical Workflow Problem</h2>
+
+<p>The default maintainer workflow often looks like:</p>
+
+<ul>
+  <li>A company asks for help (bugfix, feature, audit, support)</li>
+  <li>You agree on scope</li>
+  <li>You do the work</li>
+  <li>You send an invoice (or ask “how do you pay contractors?”)</li>
+  <li>The process slows down</li>
+</ul>
+
+<p>Friction points:</p>
+
+<ul>
+  <li><strong>You’re not in their vendor system</strong></li>
+  <li><strong>They need procurement approval</strong></li>
+  <li><strong>International payments</strong> create friction</li>
+  <li><strong>The request isn’t owned</strong> (engineer asks, finance pays)</li>
+</ul>
+
+<p>If you’ve ever tried to <strong>request payment from client</strong> (a company) as a maintainer, you know the real issue is workflow ownership.</p>
+
+<h3 id="maintainership-is-services-even-when-it-doesnt-feel-like-it">Maintainership is “services” even when it doesn’t feel like it</h3>
+
+<p>Companies often treat maintainer work like a service purchase:</p>
+
+<ul>
+  <li>“Can you prioritize this fix?”</li>
+  <li>“Can you review our integration?”</li>
+  <li>“Can you help us understand the roadmap?”</li>
+</ul>
+
+<p>If you frame your work as a deliverable with an outcome, payment becomes easier to approve.</p>
+
+<h2 id="payment-requests-instead-of-invoices">Payment Requests (Instead of Invoices)</h2>
+
+<p>Payment requests simplify the “last mile.”</p>
+
+<p>Instead of a PDF invoice that needs processing, you provide a link that can be forwarded internally with minimal explanation.</p>
+
+<p>It’s effectively a <strong>freelancer payment link</strong> attached to maintainer work.</p>
+
+<h3 id="what-to-use-payment-requests-for">What to use payment requests for</h3>
+
+<p>Common maintainer-paid work:</p>
+
+<ul>
+  <li>Priority bugfixes</li>
+  <li>Security reviews or audits</li>
+  <li>Integration support (“help us adopt this library”)</li>
+  <li>Paid office hours</li>
+  <li>Long-term support contracts (broken into monthly cycles)</li>
+</ul>
+
+<p>This is also a clean way to <strong>charge clients online</strong> for support without building a sales/billing stack.</p>
+
+<h3 id="how-to-scope-maintainers-paid-work-so-payment-doesnt-slip">How to scope maintainers’ paid work (so payment doesn’t slip)</h3>
+
+<p>Keep scope tight and outcome-based:</p>
+
+<ul>
+  <li>One issue</li>
+  <li>One release</li>
+  <li>One audit report</li>
+  <li>One support session</li>
+</ul>
+
+<p>Then attach the payment request to that outcome. The more specific the deliverable, the easier it is for the company to approve and for you to avoid endless “can you also…” requests.</p>
+
+<h3 id="optional-define-a-simple-support-tier">Optional: define a simple support tier</h3>
+
+<p>If you do recurring paid support, define a lightweight tier so companies can justify the spend:</p>
+
+<ul>
+  <li>Response time (e.g., 2 business days)</li>
+  <li>Scope (e.g., integration questions + troubleshooting)</li>
+  <li>Duration (e.g., monthly)</li>
+</ul>
+
+<p>Then send a payment request per cycle. This is a practical way to make maintainer work “purchasable” without building a full sales process.</p>
+
+<h2 id="gitpay-payment-requests-natural-fit">Gitpay Payment Requests (Natural Fit)</h2>
+
+<p>Gitpay allows service providers to create payment requests and share a payment link with clients.</p>
+
+<ul>
+  <li>Gitpay homepage: https://gitpay.me</li>
+  <li>Gitpay payment requests (service payments): https://gitpay.me/#/use-cases/service-payments</li>
+</ul>
+
+<p>You can keep the workflow straightforward:</p>
+
+<ul>
+  <li>Define the work</li>
+  <li>Deliver the work</li>
+  <li>Share the payment request link</li>
+</ul>
+
+<h3 id="if-procurement-is-strict">If procurement is strict</h3>
+
+<p>Some companies require vendor onboarding. In those cases, payment requests still help because they create a single “pay this” step once onboarding is complete. You can also ask the company what they need up front:</p>
+
+<ul>
+  <li>Who pays contractors?</li>
+  <li>Do you require an invoice or PO?</li>
+  <li>What’s your typical payment cycle?</li>
+</ul>
+
+<p>This reduces surprises.</p>
+
+<h2 id="example-use-cases">Example Use Cases</h2>
+
+<h3 id="1-priority-fix-for-a-company">1) Priority fix for a company</h3>
+
+<p>Deliverable: “Fix for issue #123 + release v1.2.3.”</p>
+
+<p>Send:</p>
+
+<ul>
+  <li>Link to the release notes</li>
+  <li>Any migration steps</li>
+  <li>Payment request link</li>
+</ul>
+
+<h3 id="2-security-audit">2) Security audit</h3>
+
+<p>Deliverable: “Audit notes + recommended patches.”</p>
+
+<p>Tie the payment request to a concrete report.</p>
+
+<h3 id="3-paid-support-session">3) Paid support session</h3>
+
+<p>Deliverable: “60-minute support call + notes.”</p>
+
+<p>This is the maintainer version of “<strong>get paid online freelance</strong>”: knowledge work with a simple payment step.</p>
+
+<h3 id="4-sponsorship-style-payments">4) Sponsorship-style payments</h3>
+
+<p>If a company wants to support the project, a payment request can function as an easy-to-action sponsorship payment.</p>
+
+<h3 id="5-priority-roadmap-session">5) Priority roadmap session</h3>
+
+<p>Deliverable: “60-minute roadmap alignment + written summary.”</p>
+
+<p>This gives teams a clear way to get maintainer time and gives you a clean way to close the loop on payment.</p>
+
+<h2 id="why-this-workflow-is-simpler">Why This Workflow Is Simpler</h2>
+
+<p>Payment requests help maintainers because they reduce admin work and make payments easy for companies:</p>
+
+<ul>
+  <li><strong>No complex invoicing software</strong> required to get paid for support</li>
+  <li><strong>Easy forwarding</strong> inside a company</li>
+  <li><strong>Clear scope</strong> attached to each request</li>
+  <li><strong>Good for international payments</strong></li>
+  <li><strong>Works for digital deliverables</strong> like releases, audits, and support</li>
+</ul>
+
+<h3 id="one-minute-checklist-for-company-payments">One-minute checklist for company payments</h3>
+
+<p>To make it easy for your contact to get approval, include:</p>
+
+<ul>
+  <li>The deliverable outcome (“release v1.2.3 with fix X”)</li>
+  <li>A link to the work (issue/PR/release notes)</li>
+  <li>The amount</li>
+  <li>The payment request link</li>
+</ul>
+
+<p>It’s the difference between “please pay a maintainer” and “please pay for this concrete outcome.”</p>
+
+<h3 id="a-maintainer-friendly-habit">A maintainer-friendly habit</h3>
+
+<p>When you deliver a fix or report, include the payment link in the same message. Treat payment as part of delivery, not a separate task.</p>
+
+<h3 id="a-simple-note-for-companies">A simple note for companies</h3>
+
+<p>If you want to make it easy for your contact, include a one-liner they can paste in Slack:</p>
+
+<blockquote>
+  <p>Maintainer delivered (fix/audit/support). Please pay using this link: (payment request link).</p>
+</blockquote>
+
+<h2 id="cta">CTA</h2>
+
+<p>If you want a simpler way to get paid for open source support or deliverables, you can try creating a payment request on Gitpay:</p>
+
+<ul>
+  <li>https://gitpay.me</li>
+  <li>https://gitpay.me/#/use-cases/service-payments</li>
+</ul>
+
+                <div class="share uk-text-center">
+    <a href="https://twitter.com/intent/tweet?text=How Open Source Maintainers Can Request Payment for Work (Sponsors, Support, and Deliverables)&url=http://localhost:4000/how-open-source-maintainers-request-payment-for-work/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fhow-open-source-maintainers-request-payment-for-work%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+</div>
+
+            </div>
+
+            <hr class="uk-margin-medium">
+
+            <div class="uk-margin-large-top paginate-post">
+    <div class="uk-child-width-expand@s uk-grid-large uk-pagi" data-uk-grid>
+        <div>
+            
+                <h4>How Indie Makers Can Charge Clients for Digital Deliverables (Using Simple Payment Requests)</h4>
+                <div class="uk-visible@s uk-text-muted uk-text-small"><h2 id="introduction">Introduction</h2>
+
+</div>
+                <div><a class="remove-underline link-dark hvr-back" href="/how-indie-makers-charge-clients-for-digital-deliverables/">&larr; Previous</a></div>
+            
+        </div>
+        <div>
+            
+                <h4>How Digital Product Creators Can Request Payment for Deliverables (Without Invoices)</h4>
+                <div class="uk-visible@s uk-text-muted uk-text-small"><h2 id="introduction">Introduction</h2>
+
+</div>
+                <div class="uk-text-right"><a class="remove-underline link-dark hvr-forward" href="/how-digital-product-creators-request-payment-for-deliverables/">Next &rarr;</a></div>
+            
+        </div>
+    </div>
+</div>
+
+
+            
+        </article>
+
+        <script>
+            // Table of contents scroll to
+            UIkit.scroll('#markdown-toc a', {
+                duration: 400,
+                offset: 120
+            });
+        </script>
+
+    </div>
+</div>
+
+
+    <div id="offcanvas" data-uk-offcanvas="flip: true; overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <button class="uk-offcanvas-close" type="button" data-uk-close></button>
+
+        <ul class="uk-nav uk-nav-default">
+            <li><a class="uk-logo uk-margin-small-bottom" href="/en"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://gitpay.me" target="_blank" >Join now!</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/docs/en/getting-started" >Documentation</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/changelog" >Roadmap</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/en/news/" >Blog</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
+            
+        </ul>
+
+        <div class="uk-margin-small-top uk-text-center uk-text-muted uk-link-muted">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    
+        <footer class="uk-section uk-text-center uk-text-muted uk-link-muted">
+    <div class="uk-container uk-container-small">
+
+        <div>
+            <ul class="uk-subnav uk-flex-center">
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                        <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                    
+                
+            </ul>
+        </div>
+        <div class="uk-margin-medium">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+        <div class="uk-margin-medium uk-text-small copyright">Developed with collaboration using Gitpay</div>
+        <div class="uk-margin-medium uk-text-small">
+            <em>Read this page in a different language:</em>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/en">🇺🇸 English</a>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/br">🇧🇷 Português</a>
+            
+        </div>
+    </div>
+</footer>
+
+    
+
+    </body>
+
+
+</html>

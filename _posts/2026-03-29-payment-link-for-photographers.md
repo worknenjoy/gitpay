@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Payment Link for Photographers: Send a Link, Get Paid
+title: "Payment Link for Photographers: Send a Link, Get Paid"
 description: "A payment link workflow for photographers: create a payment request, send a link, and get paid online with less friction than invoicing."
 meta_description: "A payment link workflow for photographers: create a payment request, send a link, and get paid online with less friction than invoicing."
 lang: en

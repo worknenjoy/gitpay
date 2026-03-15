@@ -7,23 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
   <!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>Como configurar um repositório | Gitpay Documentation</title>
+<title>How to set up a repository | Gitpay Documentation</title>
 <meta name="generator" content="Jekyll v3.7.3" />
-<meta property="og:title" content="Como configurar um repositório" />
+<meta property="og:title" content="How to set up a repository" />
 <meta name="author" content="John Black" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="O que você vai ver aqui" />
-<meta property="og:description" content="O que você vai ver aqui" />
-<link rel="canonical" href="https://docs.gitpay.me/docs/en/assets/" />
-<meta property="og:url" content="https://docs.gitpay.me/docs/en/assets/" />
+<meta name="description" content="What you will learn here" />
+<meta property="og:description" content="What you will learn here" />
+<link rel="canonical" href="http://localhost:4000/docs/en/assets/" />
+<meta property="og:url" content="http://localhost:4000/docs/en/assets/" />
 <meta property="og:site_name" content="Gitpay Documentation" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-09-22T00:32:27+02:00" />
 <script type="application/ld+json">
-{"headline":"Como configurar um repositório","dateModified":"2020-09-22T00:32:27+02:00","datePublished":"2020-09-22T00:32:27+02:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://docs.gitpay.me/docs/en/assets/"},"description":"O que você vai ver aqui","url":"https://docs.gitpay.me/docs/en/assets/","author":{"@type":"Person","name":"John Black"},"@context":"http://schema.org"}</script>
+{"headline":"How to set up a repository","@type":"WebPage","description":"What you will learn here","url":"http://localhost:4000/docs/en/assets/","author":{"@type":"Person","name":"John Black"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-  <meta property="og:image" content="https://docs.gitpay.me/assets/posts/logo.png"/>
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
   <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
@@ -40,11 +38,16 @@
             <div class="uk-container">
     <div data-uk-navbar>
         <div class="uk-navbar-left">
-            <a class="uk-navbar-item uk-logo" href="/"><img width="32" height="32" src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a>
+            <a class="uk-navbar-item uk-logo" href="/"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
             <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title=""></a>
         </div>
         <div class="uk-navbar-right">
             <ul class="uk-navbar-nav uk-visible@m">
+                
+                    
+                    
+                    
+                    
                 
                     
                     
@@ -140,7 +143,7 @@
 
                 <article class="uk-article">
 
-                    <h1 class="uk-article-title">Como configurar um repositório</h1>
+                    <h1 class="uk-article-title">How to set up a repository</h1>
 
                     
 
@@ -151,9 +154,9 @@
 
 
 
-<time datetime="2020-09-22T00:32:27+02:00" itemprop="datePublished">
+<time datetime="" itemprop="datePublished">
     
-    Sep 22, 2020
+    
 </time>
 
 <a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_docs/en/assets.md">Editar esta página</a>
@@ -161,87 +164,86 @@
                     </div>
 
                     <div class="article-content">
-                        <h4 class="no_toc" id="o-que-você-vai-ver-aqui">O que você vai ver aqui</h4>
+                        <h4 class="no_toc" id="what-you-will-learn-here">What you will learn here</h4>
 <ul id="markdown-toc">
-  <li><a href="#como-trabalhar-em-um-repositório-de-um-projeto" id="markdown-toc-como-trabalhar-em-um-repositório-de-um-projeto">Como trabalhar em um repositório de um projeto</a></li>
-  <li><a href="#versões-do-projeto" id="markdown-toc-versões-do-projeto">Versões do projeto</a></li>
-  <li><a href="#realizando-modificações" id="markdown-toc-realizando-modificações">Realizando modificações</a></li>
-  <li><a href="#sincronizar-branchs-com-o-repositório-principal" id="markdown-toc-sincronizar-branchs-com-o-repositório-principal">Sincronizar branchs com o repositório principal</a></li>
-  <li><a href="#enviando-modificações" id="markdown-toc-enviando-modificações">Enviando modificações</a></li>
+  <li><a href="#working-on-a-project-repository" id="markdown-toc-working-on-a-project-repository">Working on a project repository</a></li>
+  <li><a href="#project-versions" id="markdown-toc-project-versions">Project versions</a></li>
+  <li><a href="#making-changes" id="markdown-toc-making-changes">Making changes</a></li>
+  <li><a href="#keeping-branches-in-sync" id="markdown-toc-keeping-branches-in-sync">Keeping branches in sync</a></li>
+  <li><a href="#sending-your-changes" id="markdown-toc-sending-your-changes">Sending your changes</a></li>
 </ul>
 
-<h2 id="como-trabalhar-em-um-repositório-de-um-projeto">Como trabalhar em um repositório de um projeto</h2>
+<h2 id="working-on-a-project-repository">Working on a project repository</h2>
 
-<p>Quando um repositório já está definido, geralmente já criado pelo cliente, você precisa fazer um <em>clone do projeto</em>.</p>
+<p>When a repository already exists, usually created by the client, you need to clone the project.</p>
 
-<p>Para isto, execute: <code class="highlighter-rouge">git clone &lt;url do repositorio&gt;</code></p>
+<p>To do that, run: <code class="highlighter-rouge">git clone &lt;repository url&gt;</code></p>
 
-<p>Para saber qual o repositório do projeto, basta ir no Github na opção <em>Clone or download</em></p>
+<p>To find the repository address go to the GitHub page and choose <em>Clone or download</em>.</p>
 
-<p>Quando você realiza um clone, você tem a cópia do projeto criada em um diretório.</p>
+<p>After cloning you will have a copy of the project in a directory.</p>
 
-<p>Quando um clone é executado, a última versão do repositório é criada.</p>
+<p>Every clone grabs the latest version of the repository.</p>
 
-<p>Para obter as mudanças do repositório e ficar com a última versão, você deve executar <code class="highlighter-rouge">git pull origin master</code></p>
+<p>To pull new changes from the repository and keep it up to date, run <code class="highlighter-rouge">git pull origin master</code>.</p>
 
-<h2 id="versões-do-projeto">Versões do projeto</h2>
+<h2 id="project-versions">Project versions</h2>
 
-<p>Quando você realiza um fork (basta ver a opção Fork no Github, dizendo quantos forks daquele projeto já foram feitos), você obtem uma nova versão sua.</p>
+<p>When you fork a project (check the Fork option on GitHub to see how many forks it has) you create your own copy.</p>
 
-<p>Para clonar o seu projeto criado, você deve executar o seguinte comando: <code class="highlighter-rouge">git clone &lt;url do repositorio&gt;</code></p>
-
-<blockquote>
-  <p>Quando você realiza esta etapa, você tem uma versão (geralmente o origin) e o projeto original seguiu o seu ciclo de vida em outro caminho</p>
-</blockquote>
-
-<p>A partir dali, o seu projeto que veio a partir do projeto principal tem um novo endereço e você pode cloná-lo também. Isto é o recomendável.</p>
-
-<p>No entanto, quando isto acontece, você perdeu as mudanças do projeto original, e quando você envia as mudanças, você na verdade está enviando para o seu repositório.</p>
+<p>To clone your fork run: <code class="highlighter-rouge">git clone &lt;repository url&gt;</code></p>
 
 <blockquote>
-  <p>Uma das principais vantagens do Git é poder ter vários repositórios a partir de outros</p>
+  <p>After this step you have your own version (usually named origin) while the original project continues evolving separately.</p>
 </blockquote>
 
-<p>Para ter ainda as atualizações do projeto principal, você irá precisar adicionar um <em>upstream</em>. Este termo define o projeto principal</p>
+<p>From that point your fork has its own address and you can also clone it again if needed. This is recommended.</p>
 
-<p>Sendo, assim, você precisará adicionar um novo remote com a referência para o upstream com este comando: <code class="highlighter-rouge">git remote add upstream &lt;url do repositorio&gt;</code></p>
+<p>However you will not automatically get changes from the original repository and pushing will send changes only to your fork.</p>
 
-<p>Com isto, quando você executa um <code class="highlighter-rouge">git pull origin master</code> você estará obtendo o seu projeto e executando um <code class="highlighter-rouge">git pull upstream master</code> você está obtendo as mudanças do projeto principal.</p>
+<blockquote>
+  <p>One of the main advantages of Git is having multiple repositories derived from others.</p>
+</blockquote>
 
-<h2 id="realizando-modificações">Realizando modificações</h2>
+<p>To keep receiving updates from the main project you need to add an <em>upstream</em> remote, which points to the original repository.</p>
 
-<p>O Git Workflow no modelo Fork diz que você trabalha na sua versão independente e envia as mudanças para o repositório principal através de Pull Requests.</p>
+<p>Add it with: <code class="highlighter-rouge">git remote add upstream &lt;repository url&gt;</code></p>
 
-<p>Para se organizar melhor, é sempre bom no seu próprio repositório você usar um modelo de desenvolvimento baseado em branch. Então, para iniciar qualquer tarefa você execute:</p>
+<p>Now running <code class="highlighter-rouge">git pull origin master</code> fetches your fork and <code class="highlighter-rouge">git pull upstream master</code> fetches changes from the main repository.</p>
 
-<p><code class="highlighter-rouge">git branch nome-da-branch</code></p>
+<h2 id="making-changes">Making changes</h2>
 
-<p>Depois para entrar nesta branch você roda: <code class="highlighter-rouge">git checkout nome-da-branch</code></p>
+<p>The Forking Workflow says you work on your own version and submit changes to the main repository through Pull Requests.</p>
 
-<p>A partir daí você realiza modificações necessárias, faz um commit e então você pode enviar como uma branch para seu repositório</p>
+<p>To stay organized it’s best to use branches in your fork. To start any task run:</p>
 
-<h2 id="sincronizar-branchs-com-o-repositório-principal">Sincronizar branchs com o repositório principal</h2>
+<p><code class="highlighter-rouge">git branch branch-name</code></p>
 
-<p>Quando você está no seu master, você pode usá-lo como uma branch principal, onde você não realiza nenhuam alteração, e sim o usa como um espelho do repositório principal.</p>
+<p>Then switch to it with: <code class="highlighter-rouge">git checkout branch-name</code></p>
 
-<p>Assim, você pode executar sempre do seu master: <code class="highlighter-rouge">git pull upstream master</code></p>
+<p>Make the necessary modifications, commit and push the branch to your fork.</p>
 
-<p>Então, a partir da sua branch você pode executar <code class="highlighter-rouge">git rebase master</code></p>
+<h2 id="keeping-branches-in-sync">Keeping branches in sync</h2>
 
-<h2 id="enviando-modificações">Enviando modificações</h2>
+<p>Use your local master branch as a mirror of the main repository where you don’t make changes directly.</p>
 
-<p>Uma vez, estando sem conflitos e com sua versão no master, você pode enviar como uma branch do seu repositório com o comando: <code class="highlighter-rouge">git push origin sua-branch</code></p>
+<p>From master run <code class="highlighter-rouge">git pull upstream master</code> regularly.</p>
 
-<p>Quando você entrar no Github, na página do fork, você verá uma opção para criar um pull request a partir desta branch remota, e assim você cria um pull request que serve como uma solicitação para que seu código seja integrado ao seu projeto</p>
+<p>Then update your feature branch with <code class="highlighter-rouge">git rebase master</code>.</p>
 
-<p>Uma vez que o código seja aprovado, quando você obter novamente as mudanças do upstream, ele estará com o seu código e aquela branch poderá ser apagada e o seu projeto está em dia com o projeto principal novamente!</p>
+<h2 id="sending-your-changes">Sending your changes</h2>
 
-<p>Saiba mais em <a href="https://git-scm.com/book/pt-br/v1/Ramifica%C3%A7%C3%A3o-Branching-no-Git-Fluxos-de-Trabalho-com-Branches">https://git-scm.com/book/pt-br/v1/Ramifica%C3%A7%C3%A3o-Branching-no-Git-Fluxos-de-Trabalho-com-Branches</a></p>
+<p>Once your branch has no conflicts and is updated with master you can push it using: <code class="highlighter-rouge">git push origin branch-name</code></p>
 
+<p>On GitHub you’ll see an option to open a pull request from that remote branch. Create the pull request so your code can be merged into the project.</p>
+
+<p>When the code is approved and you pull updates from upstream again your changes will be included. You can delete the branch and your fork will be in sync with the main project.</p>
+
+<p>Learn more at <a href="https://git-scm.com/book/pt-br/v1/Ramifica%C3%A7%C3%A3o-Branching-no-Git-Fluxos-de-Trabalho-com-Branches">https://git-scm.com/book/pt-br/v1/Ramifica%C3%A7%C3%A3o-Branching-no-Git-Fluxos-de-Trabalho-com-Branches</a></p>
 
                         <div class="share uk-text-center">
-    <a href="https://twitter.com/intent/tweet?text=Como configurar um repositório&url=https://docs.gitpay.me/docs/en/assets/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
-    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdocs.gitpay.me%2Fdocs%2Fen%2Fassets%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+    <a href="https://twitter.com/intent/tweet?text=How to set up a repository&url=http://localhost:4000/docs/en/assets/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdocs%2Fen%2Fassets%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
 </div>
 
                     </div>
@@ -557,6 +559,78 @@
     
 
     
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
     </ul>
 </div>
 
@@ -584,19 +658,45 @@
         <button class="uk-offcanvas-close" type="button" data-uk-close></button>
 
         <ul class="uk-nav uk-nav-default">
-            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a></li>
+            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
             
                 
-            <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
+
+                
+
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
             
         </ul>
 

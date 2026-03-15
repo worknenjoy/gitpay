@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How Consultants Get Paid: A Simple Payment Workflow
+title: "How Consultants Get Paid: A Simple Payment Workflow"
 description: "How consultants can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 meta_description: "How consultants can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 lang: en

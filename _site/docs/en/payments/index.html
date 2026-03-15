@@ -14,16 +14,14 @@
 <meta property="og:locale" content="en" />
 <meta name="description" content="Table of contents" />
 <meta property="og:description" content="Table of contents" />
-<link rel="canonical" href="https://docs.gitpay.me/docs/en/payments/" />
-<meta property="og:url" content="https://docs.gitpay.me/docs/en/payments/" />
+<link rel="canonical" href="http://localhost:4000/docs/en/payments/" />
+<meta property="og:url" content="http://localhost:4000/docs/en/payments/" />
 <meta property="og:site_name" content="Gitpay Documentation" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-09-22T00:32:27+02:00" />
 <script type="application/ld+json">
-{"headline":"How our payment works","dateModified":"2020-09-22T00:32:27+02:00","datePublished":"2020-09-22T00:32:27+02:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://docs.gitpay.me/docs/en/payments/"},"description":"Table of contents","url":"https://docs.gitpay.me/docs/en/payments/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+{"headline":"How our payment works","@type":"WebPage","description":"Table of contents","url":"http://localhost:4000/docs/en/payments/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-  <meta property="og:image" content="https://docs.gitpay.me/assets/posts/logo.png"/>
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
   <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
@@ -40,7 +38,7 @@
             <div class="uk-container">
     <div data-uk-navbar>
         <div class="uk-navbar-left">
-            <a class="uk-navbar-item uk-logo" href="/en"><img width="32" height="32" src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a>
+            <a class="uk-navbar-item uk-logo" href="/en"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
             <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title="Contribute with this documentation">Contribute with this documentation</a>
         </div>
         <div class="uk-navbar-right">
@@ -75,6 +73,17 @@
                         <li>
                             <a href="/changelog" >
                                 Roadmap
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/en/news/" >
+                                Blog
                             </a>
                         </li>
                     
@@ -199,9 +208,9 @@
     Written by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alexandre Magno</span></span><br>
 
 
-<time datetime="2020-09-22T00:32:27+02:00" itemprop="datePublished">
+<time datetime="" itemprop="datePublished">
     
-    Sep 22, 2020
+    
 </time>
 
 <a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_docs/en/payments.md">Editar esta página</a>
@@ -212,46 +221,46 @@
                         <h4 class="no_toc" id="table-of-contents">Table of contents</h4>
 <ul id="markdown-toc">
   <li><a href="#investing-in-an-issue-as-a-bounty" id="markdown-toc-investing-in-an-issue-as-a-bounty">Investing in an issue as a bounty</a></li>
-  <li><a href="#payments-with-credit-card-receive-direct-in-your-bank-account" id="markdown-toc-payments-with-credit-card-receive-direct-in-your-bank-account">Payments with credit-card: receive direct in your bank account</a></li>
+  <li><a href="#payments-with-credit-card-receive-directly-in-your-bank-account" id="markdown-toc-payments-with-credit-card-receive-directly-in-your-bank-account">Payments with credit card: receive directly in your bank account</a></li>
   <li><a href="#payments-with-paypal-receive-payments-to-your-paypal-account" id="markdown-toc-payments-with-paypal-receive-payments-to-your-paypal-account">Payments with Paypal: receive payments to your Paypal account</a></li>
   <li><a href="#payments-done-with-credit-card-and-paypal" id="markdown-toc-payments-done-with-credit-card-and-paypal">Payments done with Credit Card and Paypal</a></li>
 </ul>
 
-<p>When a task is concluded, and the related issue is closed, and the Pull Request was closed in a continuous integration system and the code send to production, you receive a reward as payment.</p>
+<p>When a task is completed and the related issue and pull request are closed, the code is deployed to production and you receive the bounty payment.</p>
 
-<p>I will explain better how this works in the following stages:</p>
+<p>Below we explain how this works:</p>
 
 <h2 id="investing-in-an-issue-as-a-bounty">Investing in an issue as a bounty</h2>
 <p>An issue imported to Gitpay available in our platform can have a bounty added as a payment for the ones interested in their resolution. Maybe it is a client, or who keeps the project or a set of sponsors that together will support to solve something for a third party, in a model known as <em>crowdfunding</em></p>
 
-<p>When we have some fund added to our platform, that value was paid in case of credit card, and pre-paid as a Paypal payment. You can apply to solve that work. In order to receive that payment, you need to activate your account, checking our bank details to receive directly as bank transfer.</p>
+<p>When someone funds a task the money is held on our platform. You can apply to solve that task. To receive the payment you must activate your account and provide your bank details for a transfer.</p>
 
 <blockquote>
-  <p>When we have a bounty added for a task, someone paid to evaluate that solution and approve your changes to send the bounty.</p>
+  <p>A bounty means someone paid to evaluate your solution and approve the reward.</p>
 </blockquote>
 
-<h2 id="payments-with-credit-card-receive-direct-in-your-bank-account">Payments with credit-card: receive direct in your bank account</h2>
-<p>When we send a payment for an issue solved, a new order is created. If it was paid by credit card, the payment is send when the code is merged.</p>
+<h2 id="payments-with-credit-card-receive-directly-in-your-bank-account">Payments with credit card: receive directly in your bank account</h2>
+<p>When a task paid by credit card is solved, a new order is created and the payment is sent once the code is merged.</p>
 
-<p>For this kind of payment, you need to have an active bank account, and this can be done in the platform to receive the payments. When activated, the payment is send and it takes approximately <em>2 days to be send</em></p>
+<p>For this kind of payment you must have an active bank account configured on the platform. Once activated the transfer takes approximately <em>2 days</em>.</p>
 
 <blockquote>
-  <p>To receive the transfer there’s a fee of 8% for the transaction, in USD, and the currency is defined by Stripe terms.</p>
+  <p>Transfers incur an 8% fee in USD, according to Stripe terms.</p>
 </blockquote>
 
 <h2 id="payments-with-paypal-receive-payments-to-your-paypal-account">Payments with Paypal: receive payments to your Paypal account</h2>
-<p>The payments done with Paypal, you will need to activate your Paypal account to receive the payment. The paymnent will be adjusted with the Paypal taxes.</p>
+<p>For payments via PayPal you must activate your PayPal account. The amount will be adjusted according to PayPal fees.</p>
 
 <blockquote>
-  <p>If you use Paypal and you want to receive a payment with paypal, please verify that the payment was done using Paypal</p>
+  <p>If you prefer PayPal, make sure the task was funded using PayPal.</p>
 </blockquote>
 
 <h2 id="payments-done-with-credit-card-and-paypal">Payments done with Credit Card and Paypal</h2>
-<p>If there’s many orders for that task and if there’s different payment methods. To receive the full amount, you will need your bank account and a Paypal account active.</p>
+<p>If a task has multiple orders with different payment methods you will need both a bank account and a PayPal account active to receive the full amount.</p>
 
                         <div class="share uk-text-center">
-    <a href="https://twitter.com/intent/tweet?text=How our payment works&url=https://docs.gitpay.me/docs/en/payments/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
-    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdocs.gitpay.me%2Fdocs%2Fen%2Fpayments%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+    <a href="https://twitter.com/intent/tweet?text=How our payment works&url=http://localhost:4000/docs/en/payments/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdocs%2Fen%2Fpayments%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
 </div>
 
                     </div>
@@ -314,6 +323,51 @@
     
     
     <ul class="uk-list">
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
     
 
     
@@ -571,6 +625,33 @@
     
 
     
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
     </ul>
 </div>
 
@@ -598,19 +679,57 @@
         <button class="uk-offcanvas-close" type="button" data-uk-close></button>
 
         <ul class="uk-nav uk-nav-default">
-            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a></li>
+            <li><a class="uk-logo uk-margin-small-bottom" href="/en"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
+                    
+                    <li><a href="https://gitpay.me" target="_blank" >Join now!</a></li>
+                
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
+                    
+                    <li><a href="/docs/en/getting-started" >Documentation</a></li>
+                
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
+                    
+                    <li><a href="/changelog" >Roadmap</a></li>
+                
             
                 
-            <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
+
+                
+
+                
+                    
+                    <li><a href="/en/news/" >Blog</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
             
         </ul>
 

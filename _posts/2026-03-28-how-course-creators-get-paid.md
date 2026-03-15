@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How Course Creators Get Paid: A Simple Payment Workflow
+title: "How Course Creators Get Paid: A Simple Payment Workflow"
 description: "How course creators can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 meta_description: "How course creators can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 lang: en

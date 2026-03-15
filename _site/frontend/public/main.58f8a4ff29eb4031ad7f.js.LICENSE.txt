@@ -1,0 +1,361 @@
+/*!
+ * JavaScript Cookie v2.2.1
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+
+/*! ./../../../../node_modules/webpack/buildin/global.js */
+
+/*! ./../../../node_modules/webpack/buildin/global.js */
+
+/*! ./Capture */
+
+/*! ./LogRocket */
+
+/*! ./arrayLikeToArray.js */
+
+/*! ./arrayWithoutHoles.js */
+
+/*! ./createEnhancer */
+
+/*! ./createMiddleware */
+
+/*! ./fetchIntercept */
+
+/*! ./iterableToArray.js */
+
+/*! ./makeLogRocket */
+
+/*! ./nonIterableSpread.js */
+
+/*! ./objectWithoutPropertiesLoose.js */
+
+/*! ./raven/raven */
+
+/*! ./registerConsole */
+
+/*! ./registerExceptions */
+
+/*! ./registerFetch */
+
+/*! ./registerNetworkInformation */
+
+/*! ./registerXHR */
+
+/*! ./setup */
+
+/*! ./stackTraceFromError */
+
+/*! ./unsupportedIterableToArray.js */
+
+/*! /root/project/packages/logrocket/src/module-npm.js */
+
+/*! @apphub/logrocket-console */
+
+/*! @apphub/logrocket-exceptions */
+
+/*! @apphub/logrocket-network */
+
+/*! @apphub/logrocket-redux */
+
+/*! @apphub/logrocket-utils/src/TraceKit */
+
+/*! @apphub/logrocket-utils/src/constants/nps */
+
+/*! @apphub/logrocket-utils/src/enhanceFunc */
+
+/*! @apphub/logrocket-utils/src/mapValues */
+
+/*! @apphub/logrocket-utils/src/startsWith */
+
+/*! @apphub/now */
+
+/*! @babel/runtime/helpers/classCallCheck */
+
+/*! @babel/runtime/helpers/createClass */
+
+/*! @babel/runtime/helpers/defineProperty */
+
+/*! @babel/runtime/helpers/interopRequireDefault */
+
+/*! @babel/runtime/helpers/interopRequireWildcard */
+
+/*! @babel/runtime/helpers/objectWithoutProperties */
+
+/*! @babel/runtime/helpers/toConsumableArray */
+
+/*! @babel/runtime/helpers/typeof */
+
+/*! decimal.js-light v2.5.1 https://github.com/MikeMcl/decimal.js-light/LICENCE */
+
+/*! no static exports found */
+
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */
+
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+
+/*!*****************************************!*\
+  !*** ./packages/logrocket/src/setup.js ***!
+  \*****************************************/
+
+/*!*******************************************!*\
+  !*** ./packages/@apphub:now/src/index.js ***!
+  \*******************************************/
+
+/*!*********************************************!*\
+  !*** ./packages/logrocket/src/LogRocket.js ***!
+  \*********************************************/
+
+/*!**********************************************!*\
+  !*** ./packages/logrocket/src/module-npm.js ***!
+  \**********************************************/
+
+/*!*************************************************!*\
+  !*** ./packages/logrocket/src/makeLogRocket.js ***!
+  \*************************************************/
+
+/*!****************************************************!*\
+  !*** multi ./packages/logrocket/src/module-npm.js ***!
+  \****************************************************/
+
+/*!*******************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
+  \*******************************************************/
+
+/*!*******************************************************!*\
+  !*** ./packages/@apphub:logrocket-redux/src/index.js ***!
+  \*******************************************************/
+
+/*!*********************************************************!*\
+  !*** ./packages/@apphub:logrocket-console/src/index.js ***!
+  \*********************************************************/
+
+/*!*********************************************************!*\
+  !*** ./packages/@apphub:logrocket-network/src/index.js ***!
+  \*********************************************************/
+
+/*!**********************************************************!*\
+  !*** ./packages/@apphub:logrocket-utils/src/TraceKit.js ***!
+  \**********************************************************/
+
+/*!***********************************************************!*\
+  !*** ./packages/@apphub:logrocket-utils/src/mapValues.js ***!
+  \***********************************************************/
+
+/*!************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/createClass.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./packages/@apphub:logrocket-exceptions/src/index.js ***!
+  \************************************************************/
+
+/*!************************************************************!*\
+  !*** ./packages/@apphub:logrocket-utils/src/startsWith.js ***!
+  \************************************************************/
+
+/*!*************************************************************!*\
+  !*** ./packages/@apphub:logrocket-utils/src/enhanceFunc.js ***!
+  \*************************************************************/
+
+/*!**************************************************************!*\
+  !*** ./packages/@apphub:logrocket-exceptions/src/Capture.js ***!
+  \**************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/classCallCheck.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./packages/@apphub:logrocket-network/src/registerXHR.js ***!
+  \***************************************************************/
+
+/*!***************************************************************!*\
+  !*** ./packages/@apphub:logrocket-utils/src/constants/nps.js ***!
+  \***************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/iterableToArray.js ***!
+  \****************************************************************/
+
+/*!****************************************************************!*\
+  !*** ./packages/@apphub:logrocket-redux/src/createEnhancer.js ***!
+  \****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/arrayLikeToArray.js ***!
+  \*****************************************************************/
+
+/*!*****************************************************************!*\
+  !*** ./packages/@apphub:logrocket-network/src/registerFetch.js ***!
+  \*****************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/nonIterableSpread.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/toConsumableArray.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./packages/@apphub:logrocket-exceptions/src/raven/raven.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./packages/@apphub:logrocket-network/src/fetchIntercept.js ***!
+  \******************************************************************/
+
+/*!******************************************************************!*\
+  !*** ./packages/@apphub:logrocket-redux/src/createMiddleware.js ***!
+  \******************************************************************/
+
+/*!*******************************************************************!*\
+  !*** ./packages/@apphub:logrocket-console/src/registerConsole.js ***!
+  \*******************************************************************/
+
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/interopRequireDefault.js ***!
+  \**********************************************************************/
+
+/*!***********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/interopRequireWildcard.js ***!
+  \***********************************************************************/
+
+/*!************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/objectWithoutProperties.js ***!
+  \************************************************************************/
+
+/*!*************************************************************************!*\
+  !*** ./packages/@apphub:logrocket-exceptions/src/registerExceptions.js ***!
+  \*************************************************************************/
+
+/*!**************************************************************************!*\
+  !*** ./packages/@apphub:logrocket-exceptions/src/stackTraceFromError.js ***!
+  \**************************************************************************/
+
+/*!***************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js ***!
+  \***************************************************************************/
+
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/objectWithoutPropertiesLoose.js ***!
+  \*****************************************************************************/
+
+/*!******************************************************************************!*\
+  !*** ./packages/@apphub:logrocket-network/src/registerNetworkInformation.js ***!
+  \******************************************************************************/
+
+/**
+ * @license
+ * Lodash <https://lodash.com/>
+ * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/**
+ * @license React
+ * react-dom.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react-is.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react-jsx-runtime.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * react.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * scheduler.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * use-sync-external-store-shim.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * @license React
+ * use-sync-external-store-shim/with-selector.production.js
+ *
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/** @license React v16.13.1
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+//! moment.js
+
+//! moment.js locale configuration

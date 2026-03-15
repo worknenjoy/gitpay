@@ -7,23 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
   <!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>Como são definidas as tarefas? | Gitpay Documentation</title>
+<title>How tasks are defined | Gitpay Documentation</title>
 <meta name="generator" content="Jekyll v3.7.3" />
-<meta property="og:title" content="Como são definidas as tarefas?" />
+<meta property="og:title" content="How tasks are defined" />
 <meta name="author" content="Alexandre Magno" />
 <meta property="og:locale" content="en" />
-<meta name="description" content="O que você vai ver aqui" />
-<meta property="og:description" content="O que você vai ver aqui" />
-<link rel="canonical" href="https://docs.gitpay.me/docs/en/usage/" />
-<meta property="og:url" content="https://docs.gitpay.me/docs/en/usage/" />
+<meta name="description" content="What you will learn here" />
+<meta property="og:description" content="What you will learn here" />
+<link rel="canonical" href="http://localhost:4000/docs/en/usage/" />
+<meta property="og:url" content="http://localhost:4000/docs/en/usage/" />
 <meta property="og:site_name" content="Gitpay Documentation" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-09-22T00:32:27+02:00" />
 <script type="application/ld+json">
-{"headline":"Como são definidas as tarefas?","dateModified":"2020-09-22T00:32:27+02:00","datePublished":"2020-09-22T00:32:27+02:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://docs.gitpay.me/docs/en/usage/"},"description":"O que você vai ver aqui","url":"https://docs.gitpay.me/docs/en/usage/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+{"headline":"How tasks are defined","@type":"WebPage","description":"What you will learn here","url":"http://localhost:4000/docs/en/usage/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-  <meta property="og:image" content="https://docs.gitpay.me/assets/posts/logo.png"/>
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
   <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
@@ -40,7 +38,7 @@
             <div class="uk-container">
     <div data-uk-navbar>
         <div class="uk-navbar-left">
-            <a class="uk-navbar-item uk-logo" href="/en"><img width="32" height="32" src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a>
+            <a class="uk-navbar-item uk-logo" href="/en"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
             <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title="Contribute with this documentation">Contribute with this documentation</a>
         </div>
         <div class="uk-navbar-right">
@@ -75,6 +73,17 @@
                         <li>
                             <a href="/changelog" >
                                 Roadmap
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/en/news/" >
+                                Blog
                             </a>
                         </li>
                     
@@ -184,9 +193,9 @@
 
                 <article class="uk-article">
 
-                    <h1 class="uk-article-title">Como são definidas as tarefas?</h1>
+                    <h1 class="uk-article-title">How tasks are defined</h1>
 
-                    <p class="subtitle uk-text-lead uk-text-muted">Como definimos a tarefa a ser desenvolvida de modo que fique claro e facilite a solução</p>
+                    <p class="subtitle uk-text-lead uk-text-muted">Defining tasks clearly so the solution becomes easier</p>
 
                     <div class="uk-article-meta uk-margin-top uk-margin-medium-bottom">
                         
@@ -199,9 +208,9 @@
     Written by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alexandre Magno</span></span><br>
 
 
-<time datetime="2020-09-22T00:32:27+02:00" itemprop="datePublished">
+<time datetime="" itemprop="datePublished">
     
-    Sep 22, 2020
+    
 </time>
 
 <a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_docs/en/usage.md">Editar esta página</a>
@@ -209,49 +218,49 @@
                     </div>
 
                     <div class="article-content">
-                        <h4 class="no_toc" id="o-que-você-vai-ver-aqui">O que você vai ver aqui</h4>
+                        <h4 class="no_toc" id="what-you-will-learn-here">What you will learn here</h4>
 <ul id="markdown-toc">
-  <li><a href="#o-porquê-da-tarefa" id="markdown-toc-o-porquê-da-tarefa">O porquê da tarefa</a></li>
-  <li><a href="#nível" id="markdown-toc-nível">Nível</a></li>
-  <li><a href="#comportamento-atual" id="markdown-toc-comportamento-atual">Comportamento atual</a></li>
-  <li><a href="#comportamento-esperado" id="markdown-toc-comportamento-esperado">Comportamento esperado</a></li>
-  <li><a href="#links-úteis" id="markdown-toc-links-úteis">Links úteis</a></li>
-  <li><a href="#como-reproduzir-o-cenário" id="markdown-toc-como-reproduzir-o-cenário">Como reproduzir o cenário</a></li>
+  <li><a href="#why-this-task" id="markdown-toc-why-this-task">Why this task</a></li>
+  <li><a href="#level" id="markdown-toc-level">Level</a></li>
+  <li><a href="#current-behaviour" id="markdown-toc-current-behaviour">Current behaviour</a></li>
+  <li><a href="#expected-behaviour" id="markdown-toc-expected-behaviour">Expected behaviour</a></li>
+  <li><a href="#useful-links" id="markdown-toc-useful-links">Useful links</a></li>
+  <li><a href="#how-to-reproduce" id="markdown-toc-how-to-reproduce">How to reproduce</a></li>
 </ul>
 
-<p>Uma das maiores vantagens do Git Workflow é ter tarefas definidas de acordo com um modelo. Este modelo pode variar e com o tempo descobrimos o que funcionava melhor para a gente.</p>
+<p>One of the biggest advantages of Git Workflow is having tasks defined following a template. The template may vary and over time we discover what works best for us.</p>
 
-<p>Para criar uma tarefa no Gitpay, basta colar o link de uma tarefa já criada no Github, onde é possível definir templates e modelos de contribuição entre times.</p>
+<p>To create a task on Gitpay simply paste the link to an issue already created on GitHub, where you can define templates and contribution guidelines for teams.</p>
 
-<p>Para toda tarefa, geralmente devemos abordar os seguintes pontos:</p>
+<p>For every task we usually address the following points:</p>
 
-<h2 id="o-porquê-da-tarefa">O porquê da tarefa</h2>
+<h2 id="why-this-task">Why this task</h2>
 
-<p>Qual a motivação para levantar esta tarefa, qual o motivo ou propósito dela?</p>
+<p>What is the motivation for opening this task? What’s the purpose?</p>
 
-<h2 id="nível">Nível</h2>
+<h2 id="level">Level</h2>
 
-<p>Bom saber o nível necessário para conclui-la, ela seria para um iniciante, intermediário ou avançado?</p>
+<p>It’s good to know the required level to finish it: beginner, intermediate or advanced.</p>
 
-<h2 id="comportamento-atual">Comportamento atual</h2>
+<h2 id="current-behaviour">Current behaviour</h2>
 
-<p>Para sabermos de forma clara o que está acontecendo atualmente para que seja possível reproduzir e saber melhor o que temos agora</p>
+<p>Describe clearly what’s happening now so we can reproduce and understand the present state.</p>
 
-<h2 id="comportamento-esperado">Comportamento esperado</h2>
+<h2 id="expected-behaviour">Expected behaviour</h2>
 
-<p>Como deveria ficar seguindo o caminho do comportamento atual para que possa ficar claro como era antes e como deve ficar depois</p>
+<p>How things should be after the changes. Describe the ideal scenario so it’s clear how it differs from the current behaviour.</p>
 
-<h2 id="links-úteis">Links úteis</h2>
+<h2 id="useful-links">Useful links</h2>
 
-<p>Referências úteis que podem servir de inspiração para ajudar em algum ponto da tarefa</p>
+<p>References that can serve as inspiration or help with some aspect of the task.</p>
 
-<h2 id="como-reproduzir-o-cenário">Como reproduzir o cenário</h2>
+<h2 id="how-to-reproduce">How to reproduce</h2>
 
-<p>Como alguém que irá trabalhar na tarefa irá chegará naquele comportamento atual que precisa ser modificado?</p>
+<p>Explain how someone working on the task can reach the current behaviour that needs to be changed.</p>
 
                         <div class="share uk-text-center">
-    <a href="https://twitter.com/intent/tweet?text=Como são definidas as tarefas?&url=https://docs.gitpay.me/docs/en/usage/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
-    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdocs.gitpay.me%2Fdocs%2Fen%2Fusage%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+    <a href="https://twitter.com/intent/tweet?text=How tasks are defined&url=http://localhost:4000/docs/en/usage/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdocs%2Fen%2Fusage%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
 </div>
 
                     </div>
@@ -567,6 +576,78 @@
     
 
     
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
     </ul>
 </div>
 
@@ -594,19 +675,57 @@
         <button class="uk-offcanvas-close" type="button" data-uk-close></button>
 
         <ul class="uk-nav uk-nav-default">
-            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a></li>
+            <li><a class="uk-logo uk-margin-small-bottom" href="/en"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
+                    
+                    <li><a href="https://gitpay.me" target="_blank" >Join now!</a></li>
+                
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
+                    
+                    <li><a href="/docs/en/getting-started" >Documentation</a></li>
+                
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
+                    
+                    <li><a href="/changelog" >Roadmap</a></li>
+                
             
                 
-            <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
+
+                
+
+                
+                    
+                    <li><a href="/en/news/" >Blog</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
             
         </ul>
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How Freelance Developers Get Paid: A Simple Payment Workflow
+title: "How Freelance Developers Get Paid: A Simple Payment Workflow"
 description: "How freelance developers can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 meta_description: "How freelance developers can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 lang: en

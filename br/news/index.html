@@ -1,0 +1,20 @@
+---
+layout: default
+title: Novidades
+lang: br
+---
+
+<div class="uk-section">
+    <div class="uk-container uk-container-xsmall">
+
+        <h1 class="uk-article-title">{{ page.title | escape }}</h1>
+
+        {% assign posts_for_lang = site.posts | where: "lang", page.lang %}
+        {% if posts_for_lang == empty %}
+            {% assign posts_for_lang = site.posts %}
+        {% endif %}
+
+        {% include news-grid.html posts=posts_for_lang lang=page.lang %}
+
+    </div>
+</div>

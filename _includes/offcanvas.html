@@ -4,14 +4,27 @@
         <button class="uk-offcanvas-close" type="button" data-uk-close></button>
 
         <ul class="uk-nav uk-nav-default">
-            <li><a class="uk-logo uk-margin-small-bottom" href="{{ "/" | relative_url }}">{% if site.brand.image %}<img src="{{ site.post_assets | absolute_url }}{{ site.brand.image }}" alt="{{ site.brand.text }}">{% else %}{{ site.brand.text }}{% endif %}</a></li>
+            <li><a class="uk-logo uk-margin-small-bottom" href="{{ "/" | relative_url | append: page.lang }}">{% if site.brand.image %}<img src="{{ site.post_assets | absolute_url }}{{ site.brand.image }}" alt="{{ site.brand.text }}">{% else %}{{ site.brand.text }}{% endif %}</a></li>
             {% for link in site.data.navigation_header %}
-                {% if link.url contains 'http' %}
-                    {% assign domain = '' %}
-                {% else %}
-                    {% assign domain = site.url %}
+                {% assign url = nil %}
+                {% assign title = nil %}
+
+                {% if link[page.lang] %}
+                    {% assign url = link[page.lang].url %}
+                    {% assign title = link[page.lang].title %}
+                {% elsif link.title %}
+                    {% assign url = link.url %}
+                    {% assign title = link.title %}
                 {% endif %}
-            <li><a href="{{ domain }}{{ link.url }}" {% if link.url contains 'http' %}target="_blank" {% endif %}>{{ link.title }}</a></li>
+
+                {% if url %}
+                    {% if url contains 'http' %}
+                        {% assign domain = '' %}
+                    {% else %}
+                        {% assign domain = relative_url %}
+                    {% endif %}
+                    <li><a href="{{ domain }}{{ url }}" {% if url contains 'http' %}target="_blank" {% endif %}>{{ title }}</a></li>
+                {% endif %}
             {% endfor %}
         </ul>
 

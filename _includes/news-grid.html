@@ -1,0 +1,170 @@
+{% assign posts = include.posts | default: site.posts %}
+{% assign lang = include.lang | default: page.lang | default: 'en' %}
+
+{% if lang == 'br' %}
+    {% assign label_payment_requests = 'Pedidos de pagamento' %}
+    {% assign label_payment_links = 'Links de pagamento' %}
+    {% assign label_guides = 'Guias' %}
+    {% assign label_other = 'Outros' %}
+    {% assign cta_read_more = 'Leia mais' %}
+{% else %}
+    {% assign label_payment_requests = 'Payment Requests' %}
+    {% assign label_payment_links = 'Payment Links' %}
+    {% assign label_guides = 'Guides' %}
+    {% assign label_other = 'Other' %}
+    {% assign cta_read_more = 'Read more' %}
+{% endif %}
+
+{% assign payment_request_posts = posts | where_exp: "post", "post.url contains '/payment-request'" %}
+{% assign payment_link_posts = posts | where_exp: "post", "post.url contains '/payment-link'" %}
+{% assign guide_posts = posts | where_exp: "post", "post.url contains '/how-'" %}
+
+{% if payment_request_posts != empty %}
+    <h2 class="uk-margin-large-top">{{ label_payment_requests }}</h2>
+    <div class="uk-grid-match uk-child-width-1-1" uk-grid>
+        {% for post in payment_request_posts limit: 12 %}
+            <div>
+                <div class="uk-card card-post uk-inline uk-border-rounded uk-height-1-1">
+                    <a class="uk-position-cover" href="{{ post.url | relative_url }}"></a>
+                    <div class="uk-card-header">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+                                <div class="uk-flex uk-flex-middle uk-flex-between">
+                                    <h3 class="uk-card-title uk-margin-remove-bottom">{{ post.title }}</h3>
+                                    <span class="uk-label">{{ label_payment_requests }}</span>
+                                </div>
+                                <p class="uk-text-meta uk-margin-remove-top"><time datetime="{{ post.date | date_to_xmlschema }}">
+                                    {% assign date_format = site.date_format | default: "%b %-d, %Y" %}
+                                    {{ post.date | date: date_format }}
+                                </time></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body">
+                        {{ post.excerpt }}
+                    </div>
+                    <div class="uk-card-footer">
+                        <span class="uk-button uk-button-text">{{ cta_read_more }} &rarr;</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if payment_link_posts != empty %}
+    <h2 class="uk-margin-large-top">{{ label_payment_links }}</h2>
+    <div class="uk-grid-match uk-child-width-1-1" uk-grid>
+        {% for post in payment_link_posts limit: 12 %}
+            <div>
+                <div class="uk-card card-post uk-inline uk-border-rounded uk-height-1-1">
+                    <a class="uk-position-cover" href="{{ post.url | relative_url }}"></a>
+                    <div class="uk-card-header">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+                                <div class="uk-flex uk-flex-middle uk-flex-between">
+                                    <h3 class="uk-card-title uk-margin-remove-bottom">{{ post.title }}</h3>
+                                    <span class="uk-label">{{ label_payment_links }}</span>
+                                </div>
+                                <p class="uk-text-meta uk-margin-remove-top"><time datetime="{{ post.date | date_to_xmlschema }}">
+                                    {% assign date_format = site.date_format | default: "%b %-d, %Y" %}
+                                    {{ post.date | date: date_format }}
+                                </time></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body">
+                        {{ post.excerpt }}
+                    </div>
+                    <div class="uk-card-footer">
+                        <span class="uk-button uk-button-text">{{ cta_read_more }} &rarr;</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if guide_posts != empty %}
+    <h2 class="uk-margin-large-top">{{ label_guides }}</h2>
+    <div class="uk-grid-match uk-child-width-1-1" uk-grid>
+        {% for post in guide_posts limit: 12 %}
+            <div>
+                <div class="uk-card card-post uk-inline uk-border-rounded uk-height-1-1">
+                    <a class="uk-position-cover" href="{{ post.url | relative_url }}"></a>
+                    <div class="uk-card-header">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+                                <div class="uk-flex uk-flex-middle uk-flex-between">
+                                    <h3 class="uk-card-title uk-margin-remove-bottom">{{ post.title }}</h3>
+                                    <span class="uk-label">{{ label_guides }}</span>
+                                </div>
+                                <p class="uk-text-meta uk-margin-remove-top"><time datetime="{{ post.date | date_to_xmlschema }}">
+                                    {% assign date_format = site.date_format | default: "%b %-d, %Y" %}
+                                    {{ post.date | date: date_format }}
+                                </time></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body">
+                        {{ post.excerpt }}
+                    </div>
+                    <div class="uk-card-footer">
+                        <span class="uk-button uk-button-text">{{ cta_read_more }} &rarr;</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<h2 class="uk-margin-large-top">{{ label_other }}</h2>
+<div class="uk-grid-match uk-child-width-1-1" uk-grid>
+    {% assign rendered_any_other = false %}
+    {% for post in posts limit: 48 %}
+        {% assign is_payment_request = post.url contains '/payment-request' %}
+        {% assign is_payment_link = post.url contains '/payment-link' %}
+        {% assign is_guide = post.url contains '/how-' %}
+
+        {% unless is_payment_request or is_payment_link or is_guide %}
+            {% assign rendered_any_other = true %}
+            <div>
+                <div class="uk-card card-post uk-inline uk-border-rounded uk-height-1-1">
+                    <a class="uk-position-cover" href="{{ post.url | relative_url }}"></a>
+                    <div class="uk-card-header">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-expand">
+                                <div class="uk-flex uk-flex-middle uk-flex-between">
+                                    <h3 class="uk-card-title uk-margin-remove-bottom">{{ post.title }}</h3>
+                                    <span class="uk-label">{{ label_other }}</span>
+                                </div>
+                                <p class="uk-text-meta uk-margin-remove-top"><time datetime="{{ post.date | date_to_xmlschema }}">
+                                    {% assign date_format = site.date_format | default: "%b %-d, %Y" %}
+                                    {{ post.date | date: date_format }}
+                                </time></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body">
+                        {{ post.excerpt }}
+                    </div>
+                    <div class="uk-card-footer">
+                        <span class="uk-button uk-button-text">{{ cta_read_more }} &rarr;</span>
+                    </div>
+                </div>
+            </div>
+        {% endunless %}
+    {% endfor %}
+
+    {% unless rendered_any_other %}
+        <div>
+            <div class="uk-card uk-card-default uk-card-body uk-border-rounded">
+                {% if lang == 'br' %}
+                    Ainda não há posts nesta categoria.
+                {% else %}
+                    No posts in this category yet.
+                {% endif %}
+            </div>
+        </div>
+    {% endunless %}
+</div>

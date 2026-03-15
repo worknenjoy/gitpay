@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How Content Creators Get Paid: A Simple Payment Workflow
+title: "How Content Creators Get Paid: A Simple Payment Workflow"
 description: "How content creators can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 meta_description: "How content creators can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 lang: en

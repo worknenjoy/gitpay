@@ -1,0 +1,40 @@
+Status,TransactionType,TransferId,ChargeId,ServiceType,Transfer Amount,Original Charge Amount,Stripe Fee,Transfer Date,Charge Date,Revenue
+completed,transfer,tr_1QbhIxBrSjgsps2DiODAXU1W,,Consulting,138.00,,,2024-12-30 11:38:39 UTC,,-138.00
+completed,transfer,tr_1Qab5IBrSjgsps2DdHt1CBcl,,Consulting,138.00,,,2024-12-27 10:48:00 UTC,,-138.00
+completed,transfer,tr_1QZFf7BrSjgsps2DdduaEfjs,,Consulting,460.00,,,2024-12-23 17:43:25 UTC,,-460.00
+completed,transfer,tr_1QXmWuBrSjgsps2DJxnSce4F,,Consulting,460.00,,,2024-12-19 16:24:52 UTC,,-460.00
+completed,transfer,tr_1QU9UyBrSjgsps2D9kYDN9pk,,Consulting,92.00,,,2024-12-09 16:07:52 UTC,,-92.00
+completed,transfer,tr_1QTMH3BrSjgsps2DWu5cjxba,ch_3QTCLtBrSjgsps2D2wtIED5W,Bounty,27.60,32.00,1.23,2024-12-07 11:34:13 UTC,2024-12-07 00:58:33 UTC,3.17
+completed,transfer,tr_1QTLrLBrSjgsps2DohP0B53s,ch_3QSiSqBrSjgsps2D3SoUhQtq,Bounty,184.00,54.00,1.87,2024-12-07 11:07:39 UTC,2024-12-05 17:03:44 UTC,-131.87
+completed,transfer,tr_1QT7T1BrSjgsps2D2XTyF8iH,,Consulting,92.00,,,2024-12-06 19:45:35 UTC,,-92.00
+completed,transfer,tr_1QT6fLBrSjgsps2D1SvJxdeh,,Consulting,138.00,,,2024-12-06 18:54:15 UTC,,-138.00
+completed,transfer,tr_1QT5NZBrSjgsps2D17O5V4gi,,Consulting,23.00,,,2024-12-06 17:31:49 UTC,,-23.00
+completed,transfer,tr_1QT1xBBrSjgsps2DsmiquRql,,Consulting,138.00,,,2024-12-06 13:52:21 UTC,,-138.00
+completed,transfer,tr_1QSiuIBrSjgsps2D3dbwnTid,,Consulting,46.00,,,2024-12-05 17:32:06 UTC,,-46.00
+completed,transfer,tr_1QRbf1BrSjgsps2D3Fb9UjpR,,Consulting,138.00,,,2024-12-02 15:35:43 UTC,,-138.00
+completed,transfer,tr_1QQo5sBrSjgsps2DlDMpjLjS,,Consulting,230.00,,,2024-11-30 10:40:08 UTC,,-230.00
+completed,transfer,tr_1QP3XOBrSjgsps2DS5upKuBB,,Consulting,230.00,,,2024-11-25 14:45:18 UTC,,-230.00
+completed,transfer,tr_1QKi88BrSjgsps2DwbdyssOG,,Consulting,92.00,,,2024-11-13 15:05:16 UTC,,-92.00
+completed,transfer,tr_1QKi7TBrSjgsps2DQXqAlhX5,,Consulting,92.00,,,2024-11-13 15:04:35 UTC,,-92.00
+completed,transfer,tr_1QKi6aBrSjgsps2Df52GIs7Q,,Consulting,138.00,,,2024-11-13 15:03:40 UTC,,-138.00
+completed,transfer,tr_1QIYj6BrSjgsps2DuXKOBKkf,,Consulting,92.00,,,2024-11-07 16:38:32 UTC,,-92.00
+completed,transfer,tr_1QHjn0BrSjgsps2DER8aAPHj,,Consulting,92.00,,,2024-11-05 10:15:10 UTC,,-92.00
+completed,transfer,tr_1QFiX6BrSjgsps2D2f00ESpC,,Consulting,92.00,,,2024-10-30 20:30:24 UTC,,-92.00
+completed,transfer,tr_1Q3l6gBrSjgsps2DLSKA9ed5,ch_3PU4neBrSjgsps2D2kJakeuD,Bounty,18.40,22.00,1.27,2024-09-27 20:49:42 UTC,2024-06-21 10:34:34 UTC,2.33
+completed,transfer,tr_1Q1tmoBrSjgsps2DpAUCPxW5,ch_3PlFpYBrSjgsps2D0496LOHD,Bounty,92.92,1.00,0.34,2024-09-22 17:41:30 UTC,2024-08-07 19:47:32 UTC,-92.26
+completed,transfer,tr_1Q0sIEBrSjgsps2DxljjiVSb,ch_3PgTNZBrSjgsps2D27Wf22cg,Bounty,46.00,54.00,2.68,2024-09-19 21:53:42 UTC,2024-07-25 15:14:53 UTC,5.32
+completed,transfer,tr_1PeM0ABrSjgsps2DSkUaTAkR,ch_3PQ323BrSjgsps2D3b0hZm1b,Bounty,18.40,22.00,1.27,2024-07-19 18:57:58 UTC,2024-06-10 07:52:47 UTC,2.33
+completed,transfer,tr_1PSanWBrSjgsps2DOObHdnKh,ch_3P1STGBrSjgsps2D26DQ4rth,Bounty,46.00,54.00,2.68,2024-06-17 08:20:18 UTC,2024-04-03 11:59:14 UTC,5.32
+completed,transfer,tr_1PSaawBrSjgsps2D4RcQAJmF,ch_3P1SGMBrSjgsps2D2lXok5zk,Bounty,46.00,54.00,2.68,2024-06-17 08:07:18 UTC,2024-04-03 11:45:54 UTC,5.32
+completed,transfer,tr_1P2Iu4BrSjgsps2DWXbdglxO,ch_3P2IjcBrSjgsps2D3BpHvavH,Bounty,27.60,32.00,1.71,2024-04-05 19:58:24 UTC,2024-04-05 19:47:36 UTC,2.69
+completed,transfer,tr_1OorugBrSjgsps2Dzcry2tvv,ch_3OgrxrBrSjgsps2D3jw1bku0,Bounty,46.00,54.00,2.68,2024-02-28 18:31:30 UTC,2024-02-06 16:57:43 UTC,5.32
+completed,transfer,tr_1Om0idBrSjgsps2DlhPxSZ4Y,,Consulting,202.40,,,2024-02-20 21:19:15 UTC,,-202.40
+completed,transfer,tr_1OiefZBrSjgsps2DaqFUlb9y,,Consulting,478.40,,,2024-02-11 15:10:13 UTC,,-478.40
+completed,invoice,,ch_3Qa4oRBrSjgsps2D1jlyvfei,Wallet,,100.00,4.70,,2024-12-26 00:23:44 UTC,95.30
+completed,invoice,,ch_3QVUgABrSjgsps2D3nUNkJzn,Wallet,,5000.00,145.30,,2024-12-13 19:58:44 UTC,4854.70
+completed,invoice,,ch_3Q6cSTBrSjgsps2D1LpQiFCE,Consulting,,5000.00,145.30,,2024-10-22 14:27:21 UTC,4854.70
+completed,invoice,,ch_3Q94YaBrSjgsps2D2ZkanL0p,Wallet,,50.00,2.50,,2024-10-12 12:37:32 UTC,47.50
+completed,invoice,,ch_3Q0ktWBrSjgsps2D3niRB8Cy,Consulting,,21.60,1.25,,2024-09-19 14:12:00 UTC,20.35
+completed,invoice,,ch_3PpYAeBrSjgsps2D12JH8Uiw,Consulting,,1.08,0.35,,2024-08-19 16:13:20 UTC,0.73
+completed,invoice,,ch_3PoUGtBrSjgsps2D1j0wesOr,Consulting,,86.40,4.10,,2024-08-16 17:50:53 UTC,82.30
+Total,,,,,4154.72,10638.08,321.91,,,6161.45

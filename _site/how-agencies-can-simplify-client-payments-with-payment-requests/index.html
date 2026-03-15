@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
+  <!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>How Agencies Can Simplify Client Payments with Payment Requests | Gitpay Documentation</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="How Agencies Can Simplify Client Payments with Payment Requests" />
+<meta name="author" content="Alexandre Magno" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="A practical agency payment workflow: deliver milestones, send a payment request link, and reduce delays caused by invoice-heavy approval chains." />
+<meta property="og:description" content="A practical agency payment workflow: deliver milestones, send a payment request link, and reduce delays caused by invoice-heavy approval chains." />
+<link rel="canonical" href="http://localhost:4000/how-agencies-can-simplify-client-payments-with-payment-requests/" />
+<meta property="og:url" content="http://localhost:4000/how-agencies-can-simplify-client-payments-with-payment-requests/" />
+<meta property="og:site_name" content="Gitpay Documentation" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-18T00:00:00+01:00" />
+<script type="application/ld+json">
+{"headline":"How Agencies Can Simplify Client Payments with Payment Requests","dateModified":"2026-03-18T00:00:00+01:00","datePublished":"2026-03-18T00:00:00+01:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/how-agencies-can-simplify-client-payments-with-payment-requests/"},"description":"A practical agency payment workflow: deliver milestones, send a payment request link, and reduce delays caused by invoice-heavy approval chains.","url":"http://localhost:4000/how-agencies-can-simplify-client-payments-with-payment-requests/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
+  <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
+  <script src="/assets/js/main.js"></script>
+  
+</head>
+
+
+    <body>
+
+    <header class="uk-background-secondary">
+    <div data-uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky" class="uk-sticky uk-sticky-fixed" style="position: fixed; top: 0px; width: 1904px;">
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+    <div data-uk-navbar>
+        <div class="uk-navbar-left">
+            <a class="uk-navbar-item uk-logo" href="/en"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
+            <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title="Contribute with this documentation">Contribute with this documentation</a>
+        </div>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav uk-visible@m">
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="https://gitpay.me" >
+                                Join now!
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/docs/en/getting-started" >
+                                Documentation
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/changelog" >
+                                Roadmap
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/en/news/" >
+                                Blog
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                        <li>
+                            <a href="https://github.com/worknenjoy/gitpay" target="_blank" >
+                                Github
+                            </a>
+                        </li>
+                    
+                    
+                
+            </ul>
+
+            
+            <div>
+                <a class="uk-navbar-toggle" uk-search-icon href="#"></a>
+                <div class="uk-drop uk-background-default uk-border-rounded" uk-drop="mode: click; pos: left-center; offset: 0">
+                    <form class="uk-search uk-search-navbar uk-width-1-1" onsubmit="return false;">
+                        <input id="navbar-search" class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                    </form>
+                    <ul id="navbar-search-results" class="uk-position-absolute uk-width-1-1 uk-list"></ul>
+                </div>
+            </div>
+            <script>
+            SimpleJekyllSearch({
+                searchInput: document.getElementById('navbar-search'),
+                resultsContainer: document.getElementById('navbar-search-results'),
+                noResultsText: '<li>No results found</li>',
+                searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+                json: '/search.json'
+            });
+            </script>
+            
+
+            <a class="uk-navbar-toggle uk-hidden@m" href="#offcanvas" data-uk-navbar-toggle-icon data-uk-toggle></a>
+
+        </div>
+    </div>
+</div>
+
+        </nav>
+    </div>
+</header>
+
+
+    
+
+    <div class="uk-section">
+    <div class="uk-container uk-container-xsmall">
+        <article class="uk-article">
+
+            <h1 class="uk-article-title">How Agencies Can Simplify Client Payments with Payment Requests</h1>
+
+            <div class="uk-article-meta uk-margin-top uk-margin-medium-bottom">
+                
+
+
+    <img class="avatar avatar-small" src="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32" alt="alexanmtz" srcset="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32 1x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=64 2x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=96 3x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=128 4x" width="32" height="32" data-proofer-ignore="true" />
+
+
+
+    Written by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alexandre Magno</span></span><br>
+
+
+<time datetime="2026-03-18T00:00:00+01:00" itemprop="datePublished">
+    
+    Mar 18, 2026
+</time>
+
+<a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_posts/2026-03-18-how-agencies-can-simplify-client-payments-with-payment-requests.md">Editar esta página</a>
+
+            </div>
+
+            <div class="uk-article-content">
+                <h2 id="introduction">Introduction</h2>
+
+<p>Agencies often do great work—and still get paid slowly.</p>
+
+<p>That’s not because clients are malicious. It’s because agencies typically sell projects through multiple stakeholders: the person you work with day-to-day isn’t always the person who pays. Invoices bounce between procurement, finance, and approvals.</p>
+
+<p>If you’re trying to tighten cash flow without becoming an accounting firm, payment requests are a practical shortcut: a clear link attached to a concrete milestone.</p>
+
+<h2 id="the-typical-workflow-problem">The Typical Workflow Problem</h2>
+
+<p>An agency milestone often goes like this:</p>
+
+<ul>
+  <li>Deliver a phase (discovery, design, implementation)</li>
+  <li>Send an invoice</li>
+  <li>Wait for internal approval</li>
+  <li>Follow up</li>
+  <li>Wait again</li>
+</ul>
+
+<p>Common friction:</p>
+
+<ul>
+  <li><strong>Approval chains</strong>: PM → manager → finance</li>
+  <li><strong>Vendor onboarding</strong>: forms, portals, “add us as a supplier”</li>
+  <li><strong>Invoicing portals</strong>: clients require you to upload PDFs into a system</li>
+  <li><strong>International payments</strong>: delays and fees when crossing borders</li>
+</ul>
+
+<h3 id="why-agency-invoices-stall-even-with-great-clients">Why agency invoices stall even with “great clients”</h3>
+
+<p>Even good clients can be slow payers when the process is unclear. Agencies typically deal with:</p>
+
+<ul>
+  <li>A day-to-day contact who approves quality</li>
+  <li>A manager who approves spend</li>
+  <li>A finance team that actually executes payment</li>
+</ul>
+
+<p>When you send a PDF invoice without a clear “action step,” your contact has to translate it into internal process. A payment request link is easier to forward because it already contains the action.</p>
+
+<p>Agency teams can be doing “<strong>request payment from client</strong>” follow-ups while also trying to deliver the next milestone. That’s a bad use of senior time.</p>
+
+<h2 id="payment-requests-instead-of-invoices">Payment Requests (Instead of Invoices)</h2>
+
+<p>Payment requests don’t eliminate formal invoicing if your client needs it—but they can make paying easier when the client is open to a simpler flow.</p>
+
+<p>The concept:</p>
+
+<ul>
+  <li>Create a payment request for a specific milestone</li>
+  <li>Send a link that the client can forward internally</li>
+  <li>Client pays</li>
+</ul>
+
+<p>In practice it’s like a <strong>freelancer payment link</strong>, but used for agency milestones.</p>
+
+<h3 id="where-payment-requests-fit-best">Where payment requests fit best</h3>
+
+<p>They work especially well for:</p>
+
+<ul>
+  <li>Smaller clients without strict procurement</li>
+  <li>Fixed-scope milestones</li>
+  <li>Retainer renewals</li>
+  <li>Add-on work (a “small” extra that still deserves fast payment)</li>
+</ul>
+
+<p>They’re also useful as a “fast lane” when procurement is heavy but the client is willing to handle payment quickly for smaller add-ons.</p>
+
+<p>If you’ve searched “<strong>get paid online freelance</strong>” as an agency founder, you’re really searching for a workflow that keeps cash flow predictable.</p>
+
+<h3 id="keep-milestones-payable-not-vague">Keep milestones “payable” (not vague)</h3>
+
+<p>Payment requests work best when your milestone can be understood in one sentence. Avoid labels like:</p>
+
+<ul>
+  <li>“Phase 2”</li>
+  <li>“Project progress”</li>
+</ul>
+
+<p>Prefer:</p>
+
+<ul>
+  <li>“Discovery workshop + requirements doc”</li>
+  <li>“Design system v1 + handoff”</li>
+  <li>“Implementation: checkout + webhooks”</li>
+</ul>
+
+<p>The easier it is to understand, the easier it is for your contact to get approval.</p>
+
+<h2 id="gitpay-payment-requests-natural-fit">Gitpay Payment Requests (Natural Fit)</h2>
+
+<p>Gitpay lets service providers create payment requests and share a payment link with clients.</p>
+
+<ul>
+  <li>Gitpay homepage: https://gitpay.me</li>
+  <li>Gitpay payment requests (service payments): https://gitpay.me/#/use-cases/service-payments</li>
+</ul>
+
+<p>Use it as a clean “pay this milestone” step when sending your delivery note.</p>
+
+<h2 id="example-use-cases">Example Use Cases</h2>
+
+<h3 id="1-agency-delivering-a-project-milestone">1) Agency delivering a project milestone</h3>
+
+<p>Example milestone: “Design system v1 + component library docs.”</p>
+
+<p>Delivery message structure:</p>
+
+<ul>
+  <li>What was delivered</li>
+  <li>Where to review</li>
+  <li>What’s next</li>
+  <li>Payment request link for the milestone</li>
+</ul>
+
+<h3 id="2-retainer-renewal">2) Retainer renewal</h3>
+
+<p>Instead of a long invoice thread, send a payment request link at the start of the new period. It’s a simple way to <strong>charge clients online</strong>.</p>
+
+<h3 id="3-add-on-scope-after-launch">3) Add-on scope after launch</h3>
+
+<p>Add-ons are where invoices get ignored (“we’ll handle it later”). A payment request attached to the deliverable keeps momentum.</p>
+
+<h3 id="4-international-client-payments">4) International client payments</h3>
+
+<p>When clients are international, the payment link removes a lot of confusion about “how do we pay you from our country?”</p>
+
+<h3 id="5-change-requests-outside-the-sow">5) Change requests outside the SOW</h3>
+
+<p>Agencies regularly get “small” change requests that still take real time.</p>
+
+<p>When you agree to do the add-on, create a payment request labeled with the add-on scope. It keeps the relationship healthy because payment stays aligned with work delivered.</p>
+
+<h2 id="why-this-workflow-is-simpler">Why This Workflow Is Simpler</h2>
+
+<p>Payment requests simplify agency cash flow because:</p>
+
+<ul>
+  <li><strong>They reduce billing friction</strong> for clients who just want to pay</li>
+  <li><strong>They’re easy to forward</strong> inside a company</li>
+  <li><strong>They tie payment to milestones</strong>, not paperwork</li>
+  <li><strong>They can speed up approvals</strong> by making the next step obvious</li>
+  <li><strong>They work for digital deliverables</strong> (design, dev, marketing, strategy)</li>
+</ul>
+
+<h3 id="one-minute-checklist-before-you-send-a-payment-request">One-minute checklist before you send a payment request</h3>
+
+<p>Before you hit send, make sure your delivery note includes:</p>
+
+<ul>
+  <li>The milestone name in plain language</li>
+  <li>A 2–4 bullet summary of what shipped</li>
+  <li>Where to review (link) and what “done” means</li>
+  <li>The amount and the payment request link</li>
+  <li>Who to contact if finance needs details</li>
+</ul>
+
+<p>This turns your message into something your contact can forward internally without rewriting it.</p>
+
+<h3 id="a-practical-agency-rule">A practical agency rule</h3>
+
+<p>For every milestone delivery:</p>
+
+<ul>
+  <li>Include the payment request link in the same message as the deliverable</li>
+  <li>Keep scope and amount explicit</li>
+  <li>Make it forwardable</li>
+</ul>
+
+<p>This is how you keep operations simple while still being professional.</p>
+
+<h3 id="a-simple-forwardable-payment-email-template">A simple “forwardable” payment email template</h3>
+
+<p>Here’s a short format that works well when your contact needs to forward payment to finance:</p>
+
+<ul>
+  <li>Milestone delivered: (1 line)</li>
+  <li>Amount: (1 line)</li>
+  <li>Payment link: (link)</li>
+</ul>
+
+<p>No long story, no attachments, no confusion.</p>
+
+<h2 id="cta">CTA</h2>
+
+<p>If you want to simplify how your agency gets paid for digital work, try creating a payment request on Gitpay and using it for your next milestone:</p>
+
+<ul>
+  <li>https://gitpay.me</li>
+  <li>https://gitpay.me/#/use-cases/service-payments</li>
+</ul>
+
+                <div class="share uk-text-center">
+    <a href="https://twitter.com/intent/tweet?text=How Agencies Can Simplify Client Payments with Payment Requests&url=http://localhost:4000/how-agencies-can-simplify-client-payments-with-payment-requests/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fhow-agencies-can-simplify-client-payments-with-payment-requests%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+</div>
+
+            </div>
+
+            <hr class="uk-margin-medium">
+
+            <div class="uk-margin-large-top paginate-post">
+    <div class="uk-child-width-expand@s uk-grid-large uk-pagi" data-uk-grid>
+        <div>
+            
+                <h4>How Consultants Can Send Simple Payment Requests to Clients (Without Complicated Invoicing)</h4>
+                <div class="uk-visible@s uk-text-muted uk-text-small"><h2 id="introduction">Introduction</h2>
+
+</div>
+                <div><a class="remove-underline link-dark hvr-back" href="/how-consultants-send-simple-payment-requests-to-clients/">&larr; Previous</a></div>
+            
+        </div>
+        <div>
+            
+                <h4>How Content Creators Can Get Paid for Digital Work with Payment Requests</h4>
+                <div class="uk-visible@s uk-text-muted uk-text-small"><h2 id="introduction">Introduction</h2>
+
+</div>
+                <div class="uk-text-right"><a class="remove-underline link-dark hvr-forward" href="/how-content-creators-can-get-paid-for-digital-work-with-payment-requests/">Next &rarr;</a></div>
+            
+        </div>
+    </div>
+</div>
+
+
+            
+        </article>
+
+        <script>
+            // Table of contents scroll to
+            UIkit.scroll('#markdown-toc a', {
+                duration: 400,
+                offset: 120
+            });
+        </script>
+
+    </div>
+</div>
+
+
+    <div id="offcanvas" data-uk-offcanvas="flip: true; overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <button class="uk-offcanvas-close" type="button" data-uk-close></button>
+
+        <ul class="uk-nav uk-nav-default">
+            <li><a class="uk-logo uk-margin-small-bottom" href="/en"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://gitpay.me" target="_blank" >Join now!</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/docs/en/getting-started" >Documentation</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/changelog" >Roadmap</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/en/news/" >Blog</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
+            
+        </ul>
+
+        <div class="uk-margin-small-top uk-text-center uk-text-muted uk-link-muted">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    
+        <footer class="uk-section uk-text-center uk-text-muted uk-link-muted">
+    <div class="uk-container uk-container-small">
+
+        <div>
+            <ul class="uk-subnav uk-flex-center">
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                        <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                    
+                
+            </ul>
+        </div>
+        <div class="uk-margin-medium">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+        <div class="uk-margin-medium uk-text-small copyright">Developed with collaboration using Gitpay</div>
+        <div class="uk-margin-medium uk-text-small">
+            <em>Read this page in a different language:</em>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/en">🇺🇸 English</a>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/br">🇧🇷 Português</a>
+            
+        </div>
+    </div>
+</footer>
+
+    
+
+    </body>
+
+
+</html>

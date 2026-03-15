@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How Open Source Maintainers Get Paid: A Simple Payment Workflow
+title: "How Open Source Maintainers Get Paid: A Simple Payment Workflow"
 description: "How open source maintainers can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 meta_description: "How open source maintainers can get paid online with a simple payment request workflow: deliver the work, send a payment link, and reduce payment delays."
 lang: en

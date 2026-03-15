@@ -7,23 +7,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
   <!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>Como rodar o projeto do Gitpay | Gitpay Documentation</title>
+<title>Running the Gitpay project | Gitpay Documentation</title>
 <meta name="generator" content="Jekyll v3.7.3" />
-<meta property="og:title" content="Como rodar o projeto do Gitpay" />
+<meta property="og:title" content="Running the Gitpay project" />
 <meta name="author" content="Alexandre Magno" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="O que você vai ver aqui" />
-<meta property="og:description" content="O que você vai ver aqui" />
-<link rel="canonical" href="https://docs.gitpay.me/docs/en/configuration/" />
-<meta property="og:url" content="https://docs.gitpay.me/docs/en/configuration/" />
+<meta name="description" content="What you will learn here" />
+<meta property="og:description" content="What you will learn here" />
+<link rel="canonical" href="http://localhost:4000/docs/en/configuration/" />
+<meta property="og:url" content="http://localhost:4000/docs/en/configuration/" />
 <meta property="og:site_name" content="Gitpay Documentation" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-09-22T00:32:27+02:00" />
 <script type="application/ld+json">
-{"headline":"Como rodar o projeto do Gitpay","dateModified":"2020-09-22T00:32:27+02:00","datePublished":"2020-09-22T00:32:27+02:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://docs.gitpay.me/docs/en/configuration/"},"description":"O que você vai ver aqui","url":"https://docs.gitpay.me/docs/en/configuration/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+{"headline":"Running the Gitpay project","@type":"WebPage","description":"What you will learn here","url":"http://localhost:4000/docs/en/configuration/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-  <meta property="og:image" content="https://docs.gitpay.me/assets/posts/logo.png"/>
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
   <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
@@ -40,11 +38,16 @@
             <div class="uk-container">
     <div data-uk-navbar>
         <div class="uk-navbar-left">
-            <a class="uk-navbar-item uk-logo" href="/"><img width="32" height="32" src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a>
+            <a class="uk-navbar-item uk-logo" href="/"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
             <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title=""></a>
         </div>
         <div class="uk-navbar-right">
             <ul class="uk-navbar-nav uk-visible@m">
+                
+                    
+                    
+                    
+                    
                 
                     
                     
@@ -140,9 +143,9 @@
 
                 <article class="uk-article">
 
-                    <h1 class="uk-article-title">Como rodar o projeto do Gitpay</h1>
+                    <h1 class="uk-article-title">Running the Gitpay project</h1>
 
-                    <p class="subtitle uk-text-lead uk-text-muted">Veja como contribuir com o core do Gitpay para melhorar e evoluir na plataforma</p>
+                    <p class="subtitle uk-text-lead uk-text-muted">Learn how to contribute to the Gitpay core and evolve the platform</p>
 
                     <div class="uk-article-meta uk-margin-top uk-margin-medium-bottom">
                         
@@ -151,9 +154,9 @@
 
 
 
-<time datetime="2020-09-22T00:32:27+02:00" itemprop="datePublished">
+<time datetime="" itemprop="datePublished">
     
-    Sep 22, 2020
+    
 </time>
 
 <a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_docs/en/configuration.md">Editar esta página</a>
@@ -161,25 +164,27 @@
                     </div>
 
                     <div class="article-content">
-                        <h4 class="no_toc" id="o-que-você-vai-ver-aqui">O que você vai ver aqui</h4>
+                        <h4 class="no_toc" id="what-you-will-learn-here">What you will learn here</h4>
 <ul id="markdown-toc">
-  <li><a href="#como-rodar-o-projeto" id="markdown-toc-como-rodar-o-projeto">Como rodar o projeto</a>    <ul>
+  <li><a href="#running-the-project" id="markdown-toc-running-the-project">Running the project</a>    <ul>
       <li><a href="#frontend-server" id="markdown-toc-frontend-server">Frontend server</a></li>
       <li><a href="#backend-nodejs" id="markdown-toc-backend-nodejs">Backend (node.js)</a></li>
-      <li><a href="#usando-docker" id="markdown-toc-usando-docker">Usando Docker</a></li>
-      <li><a href="#requisitos" id="markdown-toc-requisitos">Requisitos</a></li>
+      <li><a href="#using-docker" id="markdown-toc-using-docker">Using Docker</a></li>
+      <li><a href="#requirements" id="markdown-toc-requirements">Requirements</a></li>
       <li><a href="#ubuntu" id="markdown-toc-ubuntu">Ubuntu</a>        <ul>
-          <li><a href="#instalando" id="markdown-toc-instalando">Instalando</a></li>
-          <li><a href="#executando-o-projeto-das-imagens-do-docker" id="markdown-toc-executando-o-projeto-das-imagens-do-docker">Executando o projeto das imagens do docker</a></li>
-          <li><a href="#development-environment" id="markdown-toc-development-environment">Development environment</a></li>
-          <li><a href="#para-testar" id="markdown-toc-para-testar">Para testar</a></li>
+          <li><a href="#installing" id="markdown-toc-installing">Installing</a></li>
+          <li><a href="#running-the-project-from-docker-images" id="markdown-toc-running-the-project-from-docker-images">Running the project from Docker images</a>            <ul>
+              <li><a href="#development-environment" id="markdown-toc-development-environment">Development environment</a></li>
+              <li><a href="#running-tests" id="markdown-toc-running-tests">Running tests</a></li>
+            </ul>
+          </li>
         </ul>
       </li>
     </ul>
   </li>
 </ul>
 
-<h2 id="como-rodar-o-projeto">Como rodar o projeto</h2>
+<h2 id="running-the-project">Running the project</h2>
 
 <h3 id="frontend-server">Frontend server</h3>
 <p><code class="highlighter-rouge">npm run dev</code></p>
@@ -187,13 +192,13 @@
 <h3 id="backend-nodejs">Backend (node.js)</h3>
 <p><code class="highlighter-rouge">npm run start:dev</code></p>
 
-<p>Você então pode acessar o projeto em http://localhost:8082</p>
+<p>After starting both services you can access the application at http://localhost:8082</p>
 
-<h3 id="usando-docker">Usando Docker</h3>
+<h3 id="using-docker">Using Docker</h3>
 
-<p>Tivemos uma ótima contribuição da comunidade para suportarmos o docker e facilitar o desenvolvimento e execução do ambiente local para desenvolvimento.</p>
+<p>We received a great community contribution to support Docker and make it easier to run a local environment for development.</p>
 
-<h3 id="requisitos">Requisitos</h3>
+<h3 id="requirements">Requirements</h3>
 
 <ul>
   <li>Docker Engine</li>
@@ -202,28 +207,28 @@
 
 <h3 id="ubuntu">Ubuntu</h3>
 
-<h4 id="instalando">Instalando</h4>
+<h4 id="installing">Installing</h4>
 
 <ul>
   <li>Docker Engine: https://docs.docker.com/install/linux/docker-ce/ubuntu/</li>
   <li>Docker Compose: https://docs.docker.com/compose/install/</li>
 </ul>
 
-<h4 id="executando-o-projeto-das-imagens-do-docker">Executando o projeto das imagens do docker</h4>
+<h4 id="running-the-project-from-docker-images">Running the project from Docker images</h4>
 
-<h4 id="development-environment">Development environment</h4>
+<h5 id="development-environment">Development environment</h5>
 
-<p><code class="highlighter-rouge">Run docker-compose up</code></p>
+<p>Run <code class="highlighter-rouge">docker-compose up</code></p>
 
-<p>Abra então o projeto em http://localhost:8082</p>
+<p>Then open the application at http://localhost:8082</p>
 
-<h4 id="para-testar">Para testar</h4>
+<h5 id="running-tests">Running tests</h5>
 
-<p><code class="highlighter-rouge">Run docker-compose -f docker-compose.test.yml up</code></p>
+<p>Run <code class="highlighter-rouge">docker-compose -f docker-compose.test.yml up</code></p>
 
                         <div class="share uk-text-center">
-    <a href="https://twitter.com/intent/tweet?text=Como rodar o projeto do Gitpay&url=https://docs.gitpay.me/docs/en/configuration/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
-    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdocs.gitpay.me%2Fdocs%2Fen%2Fconfiguration%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+    <a href="https://twitter.com/intent/tweet?text=Running the Gitpay project&url=http://localhost:4000/docs/en/configuration/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdocs%2Fen%2Fconfiguration%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
 </div>
 
                     </div>
@@ -539,6 +544,78 @@
     
 
     
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
     </ul>
 </div>
 
@@ -566,19 +643,45 @@
         <button class="uk-offcanvas-close" type="button" data-uk-close></button>
 
         <ul class="uk-nav uk-nav-default">
-            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a></li>
+            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
             
                 
-            <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
+
+                
+
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
             
         </ul>
 

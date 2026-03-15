@@ -14,16 +14,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="O que você vai aprender aqui" />
 <meta property="og:description" content="O que você vai aprender aqui" />
-<link rel="canonical" href="https://docs.gitpay.me/docs/br/git-workflow/" />
-<meta property="og:url" content="https://docs.gitpay.me/docs/br/git-workflow/" />
+<link rel="canonical" href="http://localhost:4000/docs/br/git-workflow/" />
+<meta property="og:url" content="http://localhost:4000/docs/br/git-workflow/" />
 <meta property="og:site_name" content="Gitpay Documentation" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-09-22T00:32:27+02:00" />
 <script type="application/ld+json">
-{"headline":"Trabalhando com o Git Workflow","dateModified":"2020-09-22T00:32:27+02:00","datePublished":"2020-09-22T00:32:27+02:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://docs.gitpay.me/docs/br/git-workflow/"},"description":"O que você vai aprender aqui","url":"https://docs.gitpay.me/docs/br/git-workflow/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+{"headline":"Trabalhando com o Git Workflow","@type":"WebPage","description":"O que você vai aprender aqui","url":"http://localhost:4000/docs/br/git-workflow/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-  <meta property="og:image" content="https://docs.gitpay.me/assets/posts/logo.png"/>
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
   <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
@@ -40,11 +38,16 @@
             <div class="uk-container">
     <div data-uk-navbar>
         <div class="uk-navbar-left">
-            <a class="uk-navbar-item uk-logo" href="/"><img width="32" height="32" src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a>
+            <a class="uk-navbar-item uk-logo" href="/"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
             <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title=""></a>
         </div>
         <div class="uk-navbar-right">
             <ul class="uk-navbar-nav uk-visible@m">
+                
+                    
+                    
+                    
+                    
                 
                     
                     
@@ -142,7 +145,7 @@
 
                     <h1 class="uk-article-title">Trabalhando com o Git Workflow</h1>
 
-                    <p class="subtitle uk-text-lead uk-text-muted">O processo de entrega intregado de uma tarefa no Gitpay</p>
+                    <p class="subtitle uk-text-lead uk-text-muted">O processo de entrega integrado de uma tarefa no Gitpay</p>
 
                     <div class="uk-article-meta uk-margin-top uk-margin-medium-bottom">
                         
@@ -151,9 +154,9 @@
 
 
 
-<time datetime="2020-09-22T00:32:27+02:00" itemprop="datePublished">
+<time datetime="" itemprop="datePublished">
     
-    Sep 22, 2020
+    
 </time>
 
 <a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_docs/br/git-workflow.md">Editar esta página</a>
@@ -171,21 +174,21 @@
   <li><a href="#avaliando-as-mudanças" id="markdown-toc-avaliando-as-mudanças">Avaliando as mudanças</a></li>
 </ul>
 
-<p>O Git Workflow é um processo já existente no desenvolvimento de software que usamos como base para validar uma tarefa de um projeto Open Source, ou até mesmo de forma interna em projetos privados.</p>
+<p>O Git Workflow é um processo usado no desenvolvimento de software para validar tarefas em projetos open source ou privados.</p>
 
-<p>Ele consiste em disseminar diretrizes e processos de trabalho com o Git para times distribuidos.</p>
+<p>Ele define diretrizes e processos de trabalho com Git para times distribuídos.</p>
 
 <h2 id="o-nosso-workflow">O nosso Workflow</h2>
 
-<p>Usamos os processo de contribuição de um repositório git para validar o trabalho. O Git é o nosso contrato inteligente. A partir de uma integração de mudança que passa por testes automatizados e validações em vários ambientes, é possível realizar processos de trabalhos independnetes de forma integrada.</p>
+<p>Utilizamos o processo de contribuição em um repositório Git para validar o trabalho. O Git funciona como nosso contrato. Mudanças passam por testes automatizados e validações em vários ambientes antes de serem integradas.</p>
 
 <h2 id="git-workflow">Git Workflow</h2>
 
-<p>O Git Workflow é um processo e recomendação de como devemos usar o Git para finalizar tarefas de uma maneira consistente e produtiva.</p>
+<p>O Git Workflow recomenda como usar o Git para finalizar tarefas de maneira consistente e produtiva.</p>
 
-<p>Trabalhando em projeto, quando usamos o Git para o controle de versão, temos um fluxo de trabalho tendo ele como base. Para garantir que times e projetos em grande escala estejam na mesma página, acordamos de ter o Git Workflow para considerar a tarefa como finalizada.</p>
+<p>Quando usamos Git para controle de versão seguimos um fluxo de trabalho comum. Ele garante que times em grande escala estejam na mesma página e define quando a tarefa é considerada finalizada.</p>
 
-<p>Há diversos tipos de Workflow para times, e aqui vamos falar do que usamos no Gitpay e que muitas empresas também usam</p>
+<p>Existem diversos tipos de workflow para equipes. Aqui apresentamos o que usamos no Gitpay e que também é adotado por muitas empresas.</p>
 
 <blockquote>
   <p>Workflows são formas de apresentar um processo de trabalho no desenvolvimento de software ágil. Ele se baseia em regras claras e concretas de como trabalhamos em projetos usando o Git como controle de versão.</p>
@@ -195,23 +198,23 @@
 
 <p><img src="/uploads/img-multidev-forking-800-2.png" alt="" /></p>
 
-<p>Este é o processo que usamos para integração das tarefas. No Forking Workflow, repositórios são criados a partir do principal onde contém a sua mudança. Você deve ser capaz de reproduzir um ambiente com o que você precisa para concluir aquela tarefa.</p>
+<p>Este é o processo que usamos para integrar tarefas. No Forking Workflow você cria um repositório a partir do principal, faz suas alterações e depois abre um Pull Request.</p>
 
-<p>Toda mudança passa por um processo de aprovação. Este processo é concreto e segue as linhas das práticas de desenvolvimento.</p>
+<p>Toda mudança passa por um processo de aprovação que segue as melhores práticas de desenvolvimento.</p>
 
 <h2 id="avaliando-as-mudanças">Avaliando as mudanças</h2>
 
 <p>Avaliamos as mudanças seguindo as seguintes premissas:</p>
 
 <ol>
-  <li>Não vamos nos atentar a detalhes, e sim no valor daquela entrega</li>
-  <li>Seremos sempre flexíveis e abertos a discutir melhores soluções, no entanto, uma tarefa bem descrita evita que o escopo aumente descontrolodamente</li>
-  <li>Adotamos o desenvolvimento ágil, então estimulamos o desenvolvimento juntamente com testes automatizados, principalmente na correção de bugs</li>
+  <li>Focamos no valor da entrega, não em cada detalhe.</li>
+  <li>Somos flexíveis para discutir melhores soluções, mas uma tarefa bem descrita evita aumento de escopo.</li>
+  <li>Adotamos desenvolvimento ágil e incentivamos testes automatizados, principalmente em correções de bugs.</li>
 </ol>
 
                         <div class="share uk-text-center">
-    <a href="https://twitter.com/intent/tweet?text=Trabalhando com o Git Workflow&url=https://docs.gitpay.me/docs/br/git-workflow/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
-    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdocs.gitpay.me%2Fdocs%2Fbr%2Fgit-workflow%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+    <a href="https://twitter.com/intent/tweet?text=Trabalhando com o Git Workflow&url=http://localhost:4000/docs/br/git-workflow/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdocs%2Fbr%2Fgit-workflow%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
 </div>
 
                     </div>
@@ -527,6 +530,78 @@
     
 
     
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
     </ul>
 </div>
 
@@ -554,19 +629,45 @@
         <button class="uk-offcanvas-close" type="button" data-uk-close></button>
 
         <ul class="uk-nav uk-nav-default">
-            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a></li>
+            <li><a class="uk-logo uk-margin-small-bottom" href="/"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
             
                 
-            <li><a href="https://docs.gitpay.me" ></a></li>
+                
+
+                
+
+                
             
                 
-            <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
+
+                
+
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
             
         </ul>
 

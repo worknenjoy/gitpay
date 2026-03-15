@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Payment Request for Solopreneurs: Get Paid With a Simple Link
+title: "Payment Request for Solopreneurs: Get Paid With a Simple Link"
 description: "A practical payment request workflow for solopreneurs: send a simple link after delivery so clients can pay faster without invoicing complexity."
 meta_description: "A practical payment request workflow for solopreneurs: send a simple link after delivery so clients can pay faster without invoicing complexity."
 lang: en

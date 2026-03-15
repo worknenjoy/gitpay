@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
+  <!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>How Freelance Developers Can Request Payment After Delivering Code | Gitpay Documentation</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="How Freelance Developers Can Request Payment After Delivering Code" />
+<meta name="author" content="Alexandre Magno" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="A practical payment workflow for freelance developers: stop chasing invoices and use a simple payment request link to get paid faster for code deliverables." />
+<meta property="og:description" content="A practical payment workflow for freelance developers: stop chasing invoices and use a simple payment request link to get paid faster for code deliverables." />
+<link rel="canonical" href="http://localhost:4000/how-freelance-developers-request-payment-after-delivering-code/" />
+<meta property="og:url" content="http://localhost:4000/how-freelance-developers-request-payment-after-delivering-code/" />
+<meta property="og:site_name" content="Gitpay Documentation" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2026-03-15T00:00:00+01:00" />
+<script type="application/ld+json">
+{"headline":"How Freelance Developers Can Request Payment After Delivering Code","dateModified":"2026-03-15T00:00:00+01:00","datePublished":"2026-03-15T00:00:00+01:00","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/how-freelance-developers-request-payment-after-delivering-code/"},"description":"A practical payment workflow for freelance developers: stop chasing invoices and use a simple payment request link to get paid faster for code deliverables.","url":"http://localhost:4000/how-freelance-developers-request-payment-after-delivering-code/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
+  <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
+  <script src="/assets/js/main.js"></script>
+  
+</head>
+
+
+    <body>
+
+    <header class="uk-background-secondary">
+    <div data-uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky" class="uk-sticky uk-sticky-fixed" style="position: fixed; top: 0px; width: 1904px;">
+        <nav class="uk-navbar-container">
+            <div class="uk-container">
+    <div data-uk-navbar>
+        <div class="uk-navbar-left">
+            <a class="uk-navbar-item uk-logo" href="/en"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
+            <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title="Contribute with this documentation">Contribute with this documentation</a>
+        </div>
+        <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav uk-visible@m">
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="https://gitpay.me" >
+                                Join now!
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/docs/en/getting-started" >
+                                Documentation
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/changelog" >
+                                Roadmap
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                    
+                        <li>
+                            <a href="/en/news/" >
+                                Blog
+                            </a>
+                        </li>
+                    
+                
+                    
+                    
+                    
+                        <li>
+                            <a href="https://github.com/worknenjoy/gitpay" target="_blank" >
+                                Github
+                            </a>
+                        </li>
+                    
+                    
+                
+            </ul>
+
+            
+            <div>
+                <a class="uk-navbar-toggle" uk-search-icon href="#"></a>
+                <div class="uk-drop uk-background-default uk-border-rounded" uk-drop="mode: click; pos: left-center; offset: 0">
+                    <form class="uk-search uk-search-navbar uk-width-1-1" onsubmit="return false;">
+                        <input id="navbar-search" class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                    </form>
+                    <ul id="navbar-search-results" class="uk-position-absolute uk-width-1-1 uk-list"></ul>
+                </div>
+            </div>
+            <script>
+            SimpleJekyllSearch({
+                searchInput: document.getElementById('navbar-search'),
+                resultsContainer: document.getElementById('navbar-search-results'),
+                noResultsText: '<li>No results found</li>',
+                searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+                json: '/search.json'
+            });
+            </script>
+            
+
+            <a class="uk-navbar-toggle uk-hidden@m" href="#offcanvas" data-uk-navbar-toggle-icon data-uk-toggle></a>
+
+        </div>
+    </div>
+</div>
+
+        </nav>
+    </div>
+</header>
+
+
+    
+
+    <div class="uk-section">
+    <div class="uk-container uk-container-xsmall">
+        <article class="uk-article">
+
+            <h1 class="uk-article-title">How Freelance Developers Can Request Payment After Delivering Code</h1>
+
+            <div class="uk-article-meta uk-margin-top uk-margin-medium-bottom">
+                
+
+
+    <img class="avatar avatar-small" src="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32" alt="alexanmtz" srcset="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32 1x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=64 2x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=96 3x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=128 4x" width="32" height="32" data-proofer-ignore="true" />
+
+
+
+    Written by <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Alexandre Magno</span></span><br>
+
+
+<time datetime="2026-03-15T00:00:00+01:00" itemprop="datePublished">
+    
+    Mar 15, 2026
+</time>
+
+<a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_posts/2026-03-15-how-freelance-developers-request-payment-after-delivering-code.md">Editar esta página</a>
+
+            </div>
+
+            <div class="uk-article-content">
+                <h2 id="introduction">Introduction</h2>
+
+<p>If you’re a freelance developer, you’ve probably felt the awkward part of shipping a feature and then switching into “accounts receivable mode.” You deliver code, open the PR, merge, deploy… and then you wait. Sometimes you wait because the client wants “an invoice.” Sometimes you wait because the invoice lands in a finance inbox that isn’t checked daily. Sometimes you wait because the workflow is unclear, and nobody owns the last step.</p>
+
+<p>This is exactly where a <strong>payment request</strong> helps: instead of sending a heavy invoice workflow, you send a simple, clear link that makes paying the next obvious action.</p>
+
+<p>In this article, I’ll walk through a simple <strong>freelance developer payment workflow</strong> that reduces delay, minimizes back-and-forth, and makes it easier to get paid for code deliverables.</p>
+
+<h2 id="the-typical-workflow-problem">The Typical Workflow Problem</h2>
+
+<p>Here’s the “normal” sequence many freelancers fall into:</p>
+
+<ul>
+  <li>Finish the work (feature, bugfixes, refactor, integration)</li>
+  <li>Send an invoice (PDF, accounting tool, email attachment)</li>
+  <li>Wait for payment</li>
+  <li>Follow up</li>
+  <li>Deal with delays (or “can you resend the invoice?”)</li>
+</ul>
+
+<p>The friction is rarely about the amount. It’s about the process:</p>
+
+<ul>
+  <li><strong>Invoices get ignored</strong> because they look like paperwork, not an action.</li>
+  <li><strong>Tools are overkill</strong> for a single deliverable (“please create a vendor profile, add bank info, fill tax forms”).</li>
+  <li><strong>International clients</strong> add extra steps (currencies, bank transfer delays, high fees).</li>
+  <li><strong>Payment ownership is unclear</strong> (your PM approves, finance pays, nobody pushes it through).</li>
+</ul>
+
+<p>When a client asks for “the easiest way to pay,” what they’re really asking for is a workflow that doesn’t require them to learn your invoicing stack.</p>
+
+<h3 id="why-developers-get-stuck-in-acceptance-limbo">Why developers get stuck in “acceptance limbo”</h3>
+
+<p>Dev work often has fuzzy acceptance criteria. Even when you shipped exactly what you agreed, payment gets delayed because someone says:</p>
+
+<ul>
+  <li>“We need to QA it first.”</li>
+  <li>“Can you deploy to production?”</li>
+  <li>“Can you add one more small change?”</li>
+</ul>
+
+<p>If you don’t have a clear delivery moment, the invoice becomes negotiable. A payment request works best when you tie it to a milestone you can point to: merged PR, deployed feature, completed audit, or agreed weekly hours.</p>
+
+<h2 id="payment-requests-instead-of-invoices">Payment Requests (Instead of Invoices)</h2>
+
+<p>A payment request is simple:</p>
+
+<ul>
+  <li>You create a payment request</li>
+  <li>You send a link to the client</li>
+  <li>The client pays</li>
+  <li>You move on</li>
+</ul>
+
+<p>Think of it as a <strong>freelance developer payment link</strong> that matches how clients already behave online.</p>
+
+<h3 id="why-payment-requests-work">Why payment requests work</h3>
+
+<p>Payment requests reduce the “activation energy” required to pay you:</p>
+
+<ul>
+  <li><strong>Fewer steps:</strong> no attachments, no vendor onboarding for small jobs</li>
+  <li><strong>Clear next action:</strong> the link is the action</li>
+  <li><strong>Faster approvals:</strong> easier to forward internally (“please pay this”)</li>
+  <li><strong>Less ambiguity:</strong> no one wonders where to click</li>
+</ul>
+
+<p>If you’ve ever searched for “<strong>get paid online freelance</strong>” and ended up drowning in invoicing software comparisons, payment requests are the simpler mental model: pay for the deliverable, now.</p>
+
+<h3 id="when-to-send-the-link-the-developer-version">When to send the link (the developer version)</h3>
+
+<p>Two timing patterns work well:</p>
+
+<ul>
+  <li><strong>Milestone-based:</strong> send the payment request right after shipping the milestone (merge + deploy).</li>
+  <li><strong>Time-based:</strong> send it at the end of a weekly cycle (“Week of Mar 15–22”).</li>
+</ul>
+
+<p>Avoid sending it before you can confidently say “done,” but don’t wait until the client has already moved on to the next priority.</p>
+
+<h2 id="gitpay-payment-requests-natural-fit">Gitpay Payment Requests (Natural Fit)</h2>
+
+<p>Gitpay lets service providers generate a simple payment request link they can send to clients after completing work.</p>
+
+<ul>
+  <li>Gitpay homepage: https://gitpay.me</li>
+  <li>Gitpay payment requests (service payments): https://gitpay.me/#/use-cases/service-payments</li>
+</ul>
+
+<p>Keep it lightweight: you’re not “implementing accounting,” you’re just creating a clear way to <strong>request payment from client</strong> without turning your freelance practice into an admin department.</p>
+
+<h3 id="if-your-client-still-needs-an-invoice">If your client still needs an invoice</h3>
+
+<p>Some clients must have a formal invoice for accounting. You can still use a payment request as the “pay now” action and follow up with whatever documentation their finance team requires. The point is to keep the workflow moving without turning payment into a separate project.</p>
+
+<h2 id="example-use-cases">Example Use Cases</h2>
+
+<p>Below are a few practical scenarios where a payment request fits cleanly into how developers already ship.</p>
+
+<h3 id="1-freelance-developer-delivering-a-feature">1) Freelance developer delivering a feature</h3>
+
+<p>Deliverable: “Stripe checkout + webhook handling + receipt emails.”</p>
+
+<p>Workflow:</p>
+
+<ul>
+  <li>Merge the PR and deploy to production</li>
+  <li>Send a short handoff message</li>
+  <li>Include a payment request link for the agreed milestone</li>
+</ul>
+
+<p>Example message you can copy:</p>
+
+<blockquote>
+  <p>Deployed the checkout flow + webhooks to production. Here’s the handoff notes and test checklist. When you’re ready, you can pay this milestone using this freelancer payment link: (payment request link).</p>
+</blockquote>
+
+<h3 id="2-bugfix-sprint--maintenance-retainer">2) Bugfix sprint / maintenance retainer</h3>
+
+<p>If you do weekly maintenance, payment requests can be used per cycle:</p>
+
+<ul>
+  <li>“Week of Mar 15–22: 9 hours, incident fixes + monitoring improvements”</li>
+  <li>One link, one payment, done</li>
+</ul>
+
+<p>This is also where “<strong>charge clients online</strong>” stops being a scary phrase and becomes an operational default.</p>
+
+<h3 id="3-integration-work-with-external-services">3) Integration work with external services</h3>
+
+<p>Clients often don’t understand why an integration takes time until it’s done. A payment request makes the end-state obvious: integration delivered → pay.</p>
+
+<h3 id="4-a-small-deliverable-for-a-new-client">4) A small deliverable for a new client</h3>
+
+<p>For first-time clients, avoid heavy invoicing until you trust the relationship.</p>
+
+<ul>
+  <li>Small scoped deliverable</li>
+  <li>Fixed price</li>
+  <li>Payment request link</li>
+</ul>
+
+<p>You still can provide a formal invoice later if they need it, but you don’t have to start there.</p>
+
+<h2 id="why-this-workflow-is-simpler">Why This Workflow Is Simpler</h2>
+
+<p>Compared to traditional invoicing, payment requests are simpler because they match the way modern teams already pay for tools and services.</p>
+
+<p>Key benefits:</p>
+
+<ul>
+  <li><strong>No complex invoicing software</strong> required to get paid for a finished feature</li>
+  <li><strong>Faster payments</strong> because the link is easy to approve and forward</li>
+  <li><strong>A simple link</strong> is easier than a PDF plus instructions</li>
+  <li><strong>Better for international clients</strong> where bank transfer friction slows everything down</li>
+  <li><strong>Works for digital deliverables</strong> like code, audits, fixes, and consultation</li>
+</ul>
+
+<h3 id="a-practical-payment-request-checklist">A practical payment-request checklist</h3>
+
+<p>Before you send the link, include 4 things in the same message:</p>
+
+<ul>
+  <li>What was delivered (1–3 bullets)</li>
+  <li>Where it’s deployed (staging/prod) and how to verify</li>
+  <li>Any next steps for the client</li>
+  <li>The payment request link</li>
+</ul>
+
+<p>This keeps the payment conversation tied to the value delivered.</p>
+
+<h3 id="common-objections-and-simple-replies">Common objections (and simple replies)</h3>
+
+<ul>
+  <li><strong>“Can you send an invoice?”</strong> → “Sure—do you need it for approval or just for records? Either way, here’s the payment link so you can pay immediately.”</li>
+  <li><strong>“We pay at month end.”</strong> → “No problem. Here’s the payment request link you can forward to finance when you’re ready.”</li>
+  <li><strong>“Who should I send this to?”</strong> → “Whoever processes contractor payments. The link includes the deliverable name and amount.”</li>
+</ul>
+
+<h2 id="cta">CTA</h2>
+
+<p>If you want a simpler way to get paid for digital work, try creating a payment request on Gitpay and sending the link right after you deliver:</p>
+
+<ul>
+  <li>https://gitpay.me</li>
+  <li>https://gitpay.me/#/use-cases/service-payments</li>
+</ul>
+
+                <div class="share uk-text-center">
+    <a href="https://twitter.com/intent/tweet?text=How Freelance Developers Can Request Payment After Delivering Code&url=http://localhost:4000/how-freelance-developers-request-payment-after-delivering-code/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fhow-freelance-developers-request-payment-after-delivering-code%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+</div>
+
+            </div>
+
+            <hr class="uk-margin-medium">
+
+            <div class="uk-margin-large-top paginate-post">
+    <div class="uk-child-width-expand@s uk-grid-large uk-pagi" data-uk-grid>
+        <div>
+            
+                <h4>Getting a JavaScript console error</h4>
+                <div class="uk-visible@s uk-text-muted uk-text-small"><p>Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam, ac posuere leo dapibus id. Cras fringilla convallis elit, at eleifend mi interam.</p>
+
+</div>
+                <div><a class="remove-underline link-dark hvr-back" href="/post7/">&larr; Previous</a></div>
+            
+        </div>
+        <div>
+            
+                <h4>How Designers Can Request Payment for Deliverables (Without Chasing Invoices)</h4>
+                <div class="uk-visible@s uk-text-muted uk-text-small"><h2 id="introduction">Introduction</h2>
+
+</div>
+                <div class="uk-text-right"><a class="remove-underline link-dark hvr-forward" href="/how-designers-can-request-payment-for-deliverables/">Next &rarr;</a></div>
+            
+        </div>
+    </div>
+</div>
+
+
+            
+        </article>
+
+        <script>
+            // Table of contents scroll to
+            UIkit.scroll('#markdown-toc a', {
+                duration: 400,
+                offset: 120
+            });
+        </script>
+
+    </div>
+</div>
+
+
+    <div id="offcanvas" data-uk-offcanvas="flip: true; overlay: true">
+    <div class="uk-offcanvas-bar">
+
+        <button class="uk-offcanvas-close" type="button" data-uk-close></button>
+
+        <ul class="uk-nav uk-nav-default">
+            <li><a class="uk-logo uk-margin-small-bottom" href="/en"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://gitpay.me" target="_blank" >Join now!</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/docs/en/getting-started" >Documentation</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/changelog" >Roadmap</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="/en/news/" >Blog</a></li>
+                
+            
+                
+                
+
+                
+
+                
+                    
+                    <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                
+            
+        </ul>
+
+        <div class="uk-margin-small-top uk-text-center uk-text-muted uk-link-muted">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+    
+        <footer class="uk-section uk-text-center uk-text-muted uk-link-muted">
+    <div class="uk-container uk-container-small">
+
+        <div>
+            <ul class="uk-subnav uk-flex-center">
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                
+                    
+                    
+                    
+                        <li><a href="https://github.com/worknenjoy/gitpay" target="_blank" >Github</a></li>
+                    
+                
+            </ul>
+        </div>
+        <div class="uk-margin-medium">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex-center uk-grid">
+                
+
+
+
+
+<div>
+    <a href="https://www.instagram.com/worknenjoy" data-uk-icon="icon: instagram" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+
+
+
+
+
+<div>
+    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+<div>
+    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+</div>
+
+
+            </div>
+        </div>
+        <div class="uk-margin-medium uk-text-small copyright">Developed with collaboration using Gitpay</div>
+        <div class="uk-margin-medium uk-text-small">
+            <em>Read this page in a different language:</em>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/en">🇺🇸 English</a>
+            
+            
+            <a style="display: inline-block; margin-left: 10px; margin-right: 10px;" href="/br">🇧🇷 Português</a>
+            
+        </div>
+    </div>
+</footer>
+
+    
+
+    </body>
+
+
+</html>
