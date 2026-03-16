@@ -11,16 +11,17 @@
   - If you need external data (bank balances, expenses), edit `externalData` below.
 */
 
-import fs from 'fs'
-import path from 'path'
 import moment from 'moment'
 import type Stripe from 'stripe'
 
 import StripeFactory from '../../../client/payment/stripe'
 import ModelsImport from '../../../models'
 
-import { ensureDir, csvEscape } from '../revenue-reports/lib/format'
-import { getMonthlyBalanceAllYears, type MonthlyBalanceRow } from '../balance-summary/monthlyBalance'
+import { csvEscape } from '../revenue-reports/lib/format'
+import {
+  getMonthlyBalanceAllYears,
+  type MonthlyBalanceRow
+} from '../balance-summary/monthlyBalance'
 
 type ExternalExpense = {
   date: string // YYYY-MM-DD
@@ -225,7 +226,7 @@ function addLine(
   })
 }
 
-function writeCsv(filePath: string, rows: GLRow[]) {
+function buildCsv(rows: GLRow[]): string {
   const headers = ['Date', 'JournalId', 'Account', 'Debit', 'Credit', 'Memo']
   const lines = [headers.join(',')]
   for (const r of rows) {
@@ -240,7 +241,7 @@ function writeCsv(filePath: string, rows: GLRow[]) {
       ].join(',')
     )
   }
-  fs.writeFileSync(filePath, lines.join('\n'), 'utf8')
+  return lines.join('\n')
 }
 
 function sumExternalForYear<T extends { date: string; amountCents: number }>(
@@ -328,8 +329,10 @@ async function main() {
     year,
     currency: 'USD',
     method: {
-      netIncomeInternal: 'Change in (Stripe cash − Wallet liability − Pending liability), summed monthly',
-      stripeCashBreakdown: 'Stripe Balance Transactions (cash basis; includes wallet topups, payouts, etc)'
+      netIncomeInternal:
+        'Change in (Stripe cash − Wallet liability − Pending liability), summed monthly',
+      stripeCashBreakdown:
+        'Stripe Balance Transactions (cash basis; includes wallet topups, payouts, etc)'
     },
     stripeCashBasis: {
       grossReceipts: stripeCash.grossReceiptsCents,
@@ -401,7 +404,7 @@ async function main() {
     const cur = pair.cur
     const prev = pair.prev
 
-    const endDateISO = moment.utc(cur.monthKey + '-01').endOf('month').toISOString()
+    const endDateISO = moment.utc(cur.monthKey + '-01').endOf('month').format('YYYY-MM-DD')
     const journalId = `MB-${cur.monthKey}`
 
     const deltaStripe = cur.stripeDeltaCents
@@ -422,11 +425,13 @@ async function main() {
 
     // Wallet liability — increase is credit.
     if (deltaWallet > 0) addLine(glRows, base, 'Liabilities:WalletCustody', 0, deltaWallet)
-    if (deltaWallet < 0) addLine(glRows, base, 'Liabilities:WalletCustody', Math.abs(deltaWallet), 0)
+    if (deltaWallet < 0)
+      addLine(glRows, base, 'Liabilities:WalletCustody', Math.abs(deltaWallet), 0)
 
     // Pending tasks liability — increase is credit.
     if (deltaPending > 0) addLine(glRows, base, 'Liabilities:PendingTasks', 0, deltaPending)
-    if (deltaPending < 0) addLine(glRows, base, 'Liabilities:PendingTasks', Math.abs(deltaPending), 0)
+    if (deltaPending < 0)
+      addLine(glRows, base, 'Liabilities:PendingTasks', Math.abs(deltaPending), 0)
 
     // Net income (plug) — positive income is credit.
     if (netIncome > 0) addLine(glRows, base, 'Income:NetIncome', 0, netIncome)
@@ -439,7 +444,7 @@ async function main() {
     if (!d.isValid() || d.year() !== year) continue
 
     const base = {
-      dateISO: d.toISOString(),
+      dateISO: d.format('YYYY-MM-DD'),
       journalId: `EXT-EXP-${d.format('YYYYMMDD')}`,
       memo: e.memo
     }
@@ -457,7 +462,7 @@ async function main() {
     if (!d.isValid() || d.year() !== year) continue
 
     const base = {
-      dateISO: d.toISOString(),
+      dateISO: d.format('YYYY-MM-DD'),
       journalId: `EXT-INC-${d.format('YYYYMMDD')}`,
       memo: inc.memo
     }
@@ -470,17 +475,7 @@ async function main() {
     addLine(glRows, base, incomeAcct, 0, amt)
   }
 
-  // ===== Write outputs =====
-  const outDir = path.resolve(process.cwd(), 'tmp', 'reports')
-  ensureDir(outDir)
-
-  const pnlPath = path.join(outDir, `accounting_${year}_pnl.json`)
-  const bsPath = path.join(outDir, `accounting_${year}_balance_sheet.json`)
-  const glPath = path.join(outDir, `accounting_${year}_general_ledger.csv`)
-
-  fs.writeFileSync(pnlPath, JSON.stringify(pnl, null, 2), 'utf8')
-  fs.writeFileSync(bsPath, JSON.stringify(balanceSheet, null, 2), 'utf8')
-  writeCsv(glPath, glRows)
+  const glCsv = buildCsv(glRows)
 
   // ===== Console summary =====
   console.log('')
@@ -513,9 +508,9 @@ async function main() {
   console.log(`Stripe net Δ:           ${formatUSD(stripeCash.stripeNetDeltaCents)}`)
 
   console.log('')
-  console.log(`Wrote: ${pnlPath}`)
-  console.log(`Wrote: ${bsPath}`)
-  console.log(`Wrote: ${glPath}`)
+  console.log('--- BEGIN GENERAL LEDGER CSV (copy/paste) ---')
+  console.log(glCsv)
+  console.log('--- END GENERAL LEDGER CSV ---')
 
   if (models?.sequelize?.close) {
     await models.sequelize.close()

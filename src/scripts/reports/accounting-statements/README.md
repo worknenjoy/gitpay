@@ -24,11 +24,10 @@ YEAR=2025 npm run reports:accounting_statements
 
 ## Output
 
-Writes files to `tmp/reports/`:
+Prints to stdout:
 
-- `accounting_<year>_pnl.json`
-- `accounting_<year>_balance_sheet.json`
-- `accounting_<year>_general_ledger.csv`
+- A readable summary (P&L + Balance Sheet highlights)
+- A clearly delimited **General Ledger CSV** block (copy/paste from Heroku output)
 
 ## External data (bank, expenses)
 
