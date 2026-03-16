@@ -2,7 +2,7 @@
 layout: doc
 lang: en
 title: Getting Started
-subtitle: Understand how to receive bounties for contributions on Gitpay
+subtitle: Understand how Gitpay works and fundamentals
 tags:
 ---
 
@@ -11,7 +11,8 @@ tags:
 * TOC
 {:toc}
 
-Gitpay is a platform designed to help you solve issues on projects that use Git.
+## What is Gitpay?
+Gitpay is a platform that connects contributors with maintainers and sponsors to fund and deliver software development tasks. It uses Git as the underlying workflow for managing and validating work, allowing contributors to earn bounties for their contributions.
 
 Once registered you can work on available tasks from many projects, including Gitpay itself. We develop new features using contributions from our community.
 
