@@ -186,7 +186,7 @@ export default class Order
         timestamps: true,
         hooks: {
           afterUpdate: async (instance: Order, options: any) => {
-            if (instance.paid) {
+            if (instance.changed('paid') && instance.paid) {
               const taskId = instance.TaskId || instance.taskId
               if (taskId) {
                 const task = await sequelize.models.Task.findByPk(taskId)
