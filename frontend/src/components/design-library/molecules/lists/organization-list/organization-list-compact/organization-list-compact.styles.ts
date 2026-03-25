@@ -9,13 +9,15 @@ export const Root = styled('div')(({ theme }) => ({
   justifyContent: 'flex-start'
 }))
 
-export const RootCard = styled(Card)(({ theme }) => ({
+export const RootCard = styled(Card)({
   maxWidth: 500,
   marginRight: 20
-}))
+})
 
 export const Item = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(3),
   marginBottom: theme.spacing(3),
-  marginRight: theme.spacing(3)
+  marginRight: theme.spacing(3),
+  width: 280,
+  flexShrink: 0
 }))

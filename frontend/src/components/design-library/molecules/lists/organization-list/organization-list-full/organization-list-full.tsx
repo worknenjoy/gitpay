@@ -1,8 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Grid, Pagination, Typography } from '@mui/material'
+import { Box, Chip, Divider, Grid, Pagination, Typography } from '@mui/material'
+import CorporateFareOutlinedIcon from '@mui/icons-material/CorporateFareOutlined'
+import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined'
+import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined'
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import { Root, StyledOrganizationCard } from './organization-list-full.styles'
 import OrganizationListFullPlaceholder from './organization-list-full.placeholder'
 import { FormattedMessage } from 'react-intl'
+
+const countOpenIssues = (organizations) =>
+  organizations.reduce((sum, org) =>
+    sum + (org.Projects || []).reduce((s, p) =>
+      s + (p.Tasks || []).filter((t) => t.status === 'open').length, 0), 0)
+
+const countBounties = (organizations) =>
+  organizations.reduce((sum, org) =>
+    sum + (org.Projects || []).reduce((s, p) =>
+      s + (p.Tasks || []).reduce((b, t) => b + (t.value ? parseInt(t.value) : 0), 0), 0), 0)
+
+const countProjects = (organizations) =>
+  organizations.reduce((sum, org) => sum + (org.Projects?.length ?? 0), 0)
 
 const paginate = (array, pageSize, pageNumber) => {
   return array && array.slice((pageNumber - 1) * pageSize, pageNumber * pageSize)
@@ -43,8 +60,45 @@ const OrganizationList = ({ organizations }) => {
     )
   }
 
+  const totalProjects = countProjects(data)
+  const totalOpen = countOpenIssues(data)
+  const totalBounties = countBounties(data)
+
   return completed ? (
     <Root maxWidth={false}>
+      <Box mt={3} mb={2} display="flex" alignItems="center" gap={1} flexWrap="wrap">
+        <Chip
+          icon={<CorporateFareOutlinedIcon />}
+          label={`${total} organization${total !== 1 ? 's' : ''}`}
+          size="small"
+          variant="outlined"
+        />
+        {totalProjects > 0 && (
+          <Chip
+            icon={<FolderOutlinedIcon />}
+            label={`${totalProjects} project${totalProjects !== 1 ? 's' : ''}`}
+            size="small"
+            variant="outlined"
+          />
+        )}
+        <Chip
+          icon={<BugReportOutlinedIcon />}
+          label={totalOpen > 0 ? `${totalOpen} open issue${totalOpen !== 1 ? 's' : ''}` : 'no open issues'}
+          size="small"
+          variant="outlined"
+          color={totalOpen > 0 ? 'warning' : 'default'}
+        />
+        {totalBounties > 0 && (
+          <Chip
+            icon={<AttachMoneyIcon />}
+            label={`$${totalBounties} in bounties`}
+            size="small"
+            variant="outlined"
+            color="success"
+          />
+        )}
+      </Box>
+      <Divider sx={{ mb: 1 }} />
       <Box mt={3} mb={3}>
         <Grid container spacing={3}>
           {currentOrganizations &&

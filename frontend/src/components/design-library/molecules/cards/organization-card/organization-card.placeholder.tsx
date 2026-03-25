@@ -1,55 +1,37 @@
 import React from 'react'
-import { Box, CardContent, Divider, Grid, Skeleton } from '@mui/material'
-import { RootCard, StatsItem } from './organization-card.styles'
+import { Box, CardContent, Divider, Skeleton } from '@mui/material'
+import { RootCard } from './organization-card.styles'
 
 const OrganizationCardPlaceholder: React.FC = () => {
   return (
     <RootCard>
-      <CardContent>
-        <Box display="flex" justifyContent="center" mb={3}>
-          <Skeleton variant="circular" width={40} height={40} />
-        </Box>
+      <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4, pb: 2 }}>
+        <Skeleton variant="circular" width={80} height={80} sx={{ mb: 2 }} />
 
-        {/* Title */}
-        <Box mb={0.5}>
-          <Skeleton variant="text" width="60%" style={{ margin: '0 auto' }} />
-        </Box>
+        <Skeleton variant="text" width="55%" height={28} sx={{ mb: 0.5 }} />
+        <Skeleton variant="text" width="40%" height={20} sx={{ mb: 1 }} />
 
-        {/* Subtitle "by ..." */}
-        <Box mb={1}>
-          <Skeleton variant="text" width="40%" style={{ margin: '0 auto' }} />
-        </Box>
+        <Skeleton variant="text" width="90%" />
+        <Skeleton variant="text" width="80%" />
+        <Skeleton variant="text" width="70%" sx={{ mb: 2 }} />
 
-        {/* Description */}
-        <Box>
-          <Skeleton variant="text" width="80%" style={{ margin: '0 auto' }} />
-          <Skeleton variant="text" width="70%" style={{ margin: '0 auto' }} />
+        <Box display="flex" gap={1.5} mt={1}>
+          <Skeleton variant="circular" width={26} height={26} />
+          <Skeleton variant="circular" width={26} height={26} />
         </Box>
       </CardContent>
 
       <Box flexGrow={1} />
+
+      <Box px={2} pb={2} display="flex" flexWrap="wrap" gap={0.75} justifyContent="center">
+        <Skeleton variant="rounded" width={90} height={24} sx={{ borderRadius: 4 }} />
+        <Skeleton variant="rounded" width={110} height={24} sx={{ borderRadius: 4 }} />
+      </Box>
+
       <Divider />
 
-      {/* Projects */}
       <Box p={2}>
-        <Grid container justifyContent="space-between" spacing={2}>
-          <StatsItem>
-            <Skeleton variant="text" width={80} style={{ marginLeft: 16, marginBottom: 10 }} />
-          </StatsItem>
-          <StatsItem style={{ flexWrap: 'wrap' }}>
-            <Box display="flex" flexWrap="wrap">
-              {[110, 130, 95].map((w, i) => (
-                <Skeleton
-                  key={i}
-                  variant="rounded"
-                  width={w}
-                  height={32}
-                  style={{ borderRadius: 16, marginLeft: 10, marginBottom: 10 }}
-                />
-              ))}
-            </Box>
-          </StatsItem>
-        </Grid>
+        <Skeleton variant="rounded" width="100%" height={36} sx={{ borderRadius: 6 }} />
       </Box>
     </RootCard>
   )

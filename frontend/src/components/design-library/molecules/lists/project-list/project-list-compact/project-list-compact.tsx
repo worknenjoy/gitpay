@@ -1,45 +1,60 @@
 import React from 'react'
-
-import { Item, Root } from './project-list-compact.styles'
-import ProjectCard from 'design-library/molecules/cards/project-card/project-card'
+import { Box, Chip, Divider, Typography } from '@mui/material'
+import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined'
+import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined'
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
+import ProjectCardCompact from 'design-library/molecules/cards/project-card/project-card-compact'
 import ProjectListCompactPlaceholder from './project-list-compact.placeholder'
+
+const projectBounties = (tasks) =>
+  tasks.map((t) => (t.value ? t.value : 0)).reduce((a, b) => parseInt(a) + parseInt(b), 0)
+
+const sortProjects = (data) =>
+  data
+    .filter((p) => p.Tasks.some((t) => t.status === 'open'))
+    .sort((a, b) => projectBounties(b.Tasks) - projectBounties(a.Tasks))
 
 export default function ProjectListCompact({ projects }) {
   const { data, completed } = projects
 
-  const hasOpenIssues = (project) => {
-    const hasOpenTasks = project.Tasks.filter((t) => t.status === 'open')
-    return hasOpenTasks.length > 0
-  }
+  if (!completed) return <ProjectListCompactPlaceholder />
 
-  const projectsSort = (data) => {
-    const projectWithOpenIssues = data.filter((p) => hasOpenIssues(p))
-    return projectWithOpenIssues.sort((a, b) => parseInt(b.Tasks.length) - parseInt(a.Tasks.length))
-  }
-
-  const projectSortMoreBounties = (data) => {
-    return data.sort((a, b) => projectBounties(b.Tasks) - projectBounties(a.Tasks))
-  }
-
-  const projectBounties = (data) => {
-    return data
-      .map((task) => (task.value ? task.value : 0))
-      .reduce((prev, next) => parseInt(prev) + parseInt(next))
-  }
+  const sorted = sortProjects(data)
+  const totalOpen = data.reduce((sum, p) => sum + p.Tasks.filter((t) => t.status === 'open').length, 0)
+  const totalBounties = data.reduce((sum, p) => sum + projectBounties(p.Tasks), 0)
 
   return (
-    <Root>
-      {completed ? (
-        projectSortMoreBounties(projectsSort(data)).map((project) => {
-          return (
-            <Item key={project.id}>
-              <ProjectCard project={project} completed={completed} />
-            </Item>
-          )
-        })
-      ) : (
-        <ProjectListCompactPlaceholder />
-      )}
-    </Root>
+    <Box mt={3}>
+      <Box display="flex" alignItems="center" gap={1} flexWrap="wrap" mb={2}>
+        <Chip
+          icon={<FolderOutlinedIcon />}
+          label={`${data.length} project${data.length !== 1 ? 's' : ''}`}
+          size="small"
+          variant="outlined"
+        />
+        <Chip
+          icon={<BugReportOutlinedIcon />}
+          label={totalOpen > 0 ? `${totalOpen} open issue${totalOpen !== 1 ? 's' : ''}` : 'no open issues'}
+          size="small"
+          variant="outlined"
+          color={totalOpen > 0 ? 'warning' : 'default'}
+        />
+        {totalBounties > 0 && (
+          <Chip
+            icon={<AttachMoneyIcon />}
+            label={`$${totalBounties} in bounties`}
+            size="small"
+            variant="outlined"
+            color="success"
+          />
+        )}
+      </Box>
+      <Divider sx={{ mb: 2 }} />
+      <Box display="flex" flexWrap="wrap" gap={1}>
+        {sorted.map((project) => (
+          <ProjectCardCompact key={project.id} project={project} size="large" />
+        ))}
+      </Box>
+    </Box>
   )
 }

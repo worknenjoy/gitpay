@@ -1,31 +1,23 @@
 import React from 'react'
-import { CardContent, Divider, Grid, Skeleton, Box, IconButton } from '@mui/material'
-import { RootCard, StatsItem } from './project-card.styles'
+import { CardContent, Divider, Skeleton, Box } from '@mui/material'
+import { RootCard } from './project-card.styles'
 
 export default function ProjectCardPlaceholder() {
   return (
     <RootCard>
-      <CardContent style={{ position: 'relative' }}>
-        <IconButton aria-label="provider" style={{ position: 'absolute', right: 10, top: 10 }}>
-          <Skeleton variant="circular" width={28} height={28} />
-        </IconButton>
+      <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4, pb: 2 }}>
+        <Skeleton variant="circular" width={80} height={80} sx={{ mb: 2 }} />
 
-        <Box display="flex" justifyContent="center" mb={3} mt={3}>
-          <Skeleton variant="circular" width={40} height={40} />
-        </Box>
+        <Skeleton variant="text" width="55%" height={28} sx={{ mb: 0.5 }} />
+        <Skeleton variant="text" width="40%" height={20} sx={{ mb: 1 }} />
 
-        <Box display="flex" justifyContent="center" mb={1}>
-          <Skeleton variant="text" width="60%" />
-        </Box>
+        <Skeleton variant="text" width="90%" />
+        <Skeleton variant="text" width="80%" />
+        <Skeleton variant="text" width="70%" sx={{ mb: 2 }} />
 
-        <Box display="flex" justifyContent="center" mb={2}>
-          <Skeleton variant="text" width="40%" />
-        </Box>
-
-        <Box px={2}>
-          <Skeleton variant="text" width="100%" />
-          <Skeleton variant="text" width="90%" />
-          <Skeleton variant="text" width="80%" />
+        <Box display="flex" gap={1.5} mt={1}>
+          <Skeleton variant="circular" width={26} height={26} />
+          <Skeleton variant="circular" width={26} height={26} />
         </Box>
       </CardContent>
 
@@ -33,19 +25,7 @@ export default function ProjectCardPlaceholder() {
       <Divider />
 
       <Box p={2}>
-        <Grid container justifyContent="space-between" spacing={2}>
-          <StatsItem>
-            <Skeleton variant="text" width={140} />
-          </StatsItem>
-          <StatsItem>
-            <Box display="flex" alignItems="center">
-              <Skeleton variant="circular" width={24} height={24} />
-              <Box ml={1}>
-                <Skeleton variant="text" width={90} />
-              </Box>
-            </Box>
-          </StatsItem>
-        </Grid>
+        <Skeleton variant="rounded" width="100%" height={36} sx={{ borderRadius: 6 }} />
       </Box>
     </RootCard>
   )
