@@ -12,19 +12,25 @@ export async function comment(offer: any, task: any) {
 
   const gitPayURL = `${process.env.FRONTEND_HOST}/#/task/${id}`
 
-  const req = await requestPromise({
-    method: 'POST',
-    uri: `${commentIssueEndpoint}`,
-    headers: {
-      'User-Agent': 'Gitpay',
-      'Content-Type': 'application/json',
-      Authorization: 'token ' + process.env.GITHUB_BOT_ACCESS_TOKEN
-    },
-    json: true,
-    body: {
-      body: `A bounty of *${amount} ${currency}* was added to this issue. See task on [GitPay](${gitPayURL})`
-    }
-  })
-
-  return req
+  try {
+    const req = await requestPromise({
+      method: 'POST',
+      uri: `${commentIssueEndpoint}`,
+      headers: {
+        'User-Agent': 'gitpaybot',
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+        Authorization: 'token ' + process.env.GITHUB_BOT_ACCESS_TOKEN,
+        'X-GitHub-Api-Version': '2022-11-28'
+      },
+      json: true,
+      body: {
+        body: `A bounty of *${amount} ${currency}* was added to this issue. See task on [GitPay](${gitPayURL})`
+      }
+    })
+    console.log('bounty comment posted to GitHub issue', req)
+    return req
+  } catch (e) {
+    console.log('error posting bounty comment to GitHub', e)
+  }
 }

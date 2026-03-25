@@ -56,7 +56,7 @@ export async function orderAuthorize(orderParameters: OrderAuthorizeParams) {
   ])
 
   if (orderData.paid) {
-    comment(orderData, task)
+    await comment(orderData, task)
     PaymentMail.success(user, task, orderData.amount)
 
     // Send Slack notification for PayPal payment completion

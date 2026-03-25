@@ -404,7 +404,10 @@ async function main() {
     const cur = pair.cur
     const prev = pair.prev
 
-    const endDateISO = moment.utc(cur.monthKey + '-01').endOf('month').format('YYYY-MM-DD')
+    const endDateISO = moment
+      .utc(cur.monthKey + '-01')
+      .endOf('month')
+      .format('YYYY-MM-DD')
     const journalId = `MB-${cur.monthKey}`
 
     const deltaStripe = cur.stripeDeltaCents
