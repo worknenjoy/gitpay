@@ -23,7 +23,10 @@ const projects = [
     name: 'Project 3',
     description: 'Description 3',
     Organization: { id: 3, name: 'Org 3', provider: 'github' },
-    Tasks: [{ status: 'open', value: 20 }, { status: 'open', value: 80 }]
+    Tasks: [
+      { status: 'open', value: 20 },
+      { status: 'open', value: 80 }
+    ]
   }
 ]
 
@@ -47,14 +50,18 @@ LoadingState.args = {
 
 export const ChipSmall = () => (
   <Box display="flex" flexWrap="wrap" gap={1}>
-    {projects.map((p) => <ProjectCardCompact key={p.id} project={p} size="small" />)}
+    {projects.map((p) => (
+      <ProjectCardCompact key={p.id} project={p} size="small" />
+    ))}
   </Box>
 )
 ChipSmall.storyName = 'Chip — small'
 
 export const ChipLarge = () => (
   <Box display="flex" flexWrap="wrap" gap={1}>
-    {projects.map((p) => <ProjectCardCompact key={p.id} project={p} size="large" />)}
+    {projects.map((p) => (
+      <ProjectCardCompact key={p.id} project={p} size="large" />
+    ))}
   </Box>
 )
 ChipLarge.storyName = 'Chip — large'

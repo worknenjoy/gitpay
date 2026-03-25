@@ -5,7 +5,9 @@ import { RootCard } from './organization-card.styles'
 const OrganizationCardPlaceholder: React.FC = () => {
   return (
     <RootCard>
-      <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4, pb: 2 }}>
+      <CardContent
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4, pb: 2 }}
+      >
         <Skeleton variant="circular" width={80} height={80} sx={{ mb: 2 }} />
 
         <Skeleton variant="text" width="55%" height={28} sx={{ mb: 0.5 }} />

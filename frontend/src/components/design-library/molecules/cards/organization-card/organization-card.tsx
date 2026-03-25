@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-  Avatar,
-  Box,
-  Button,
-  CardContent,
-  Chip,
-  Divider,
-  Typography,
-  Tooltip
-} from '@mui/material'
+import { Avatar, Box, Button, CardContent, Chip, Divider, Typography, Tooltip } from '@mui/material'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined'
 import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined'
@@ -28,21 +19,28 @@ const OrganizationCard = ({ organization, completed }) => {
 
   const projects = organization.Projects || []
   const projectCount = projects.length
-  const openIssues = projects.reduce((sum, p) =>
-    sum + (p.Tasks || []).filter((t) => t.status === 'open').length, 0)
-  const bounties = projects.reduce((sum, p) =>
-    sum + (p.Tasks || []).reduce((b, t) => b + (t.value ? parseInt(t.value) : 0), 0), 0)
+  const openIssues = projects.reduce(
+    (sum, p) => sum + (p.Tasks || []).filter((t) => t.status === 'open').length,
+    0
+  )
+  const bounties = projects.reduce(
+    (sum, p) => sum + (p.Tasks || []).reduce((b, t) => b + (t.value ? parseInt(t.value) : 0), 0),
+    0
+  )
   const hasTasks = projects.some((p) => p.Tasks)
 
-  const githubUrl = organization.provider === 'bitbucket'
-    ? `https://bitbucket.com/${organization.name}`
-    : `https://github.com/${organization.name}`
+  const githubUrl =
+    organization.provider === 'bitbucket'
+      ? `https://bitbucket.com/${organization.name}`
+      : `https://github.com/${organization.name}`
 
   const organizationPath = `/organizations/${organization.id}/${slugify(organization.name)}`
 
   return (
     <RootCard>
-      <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4, pb: 2 }}>
+      <CardContent
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4, pb: 2 }}
+      >
         <Avatar
           aria-label={organization.name}
           sx={{ width: 80, height: 80, fontSize: 32, mb: 2, bgcolor: 'primary.main' }}
@@ -51,10 +49,7 @@ const OrganizationCard = ({ organization, completed }) => {
         </Avatar>
 
         <Typography align="center" variant="h6" fontWeight={600} gutterBottom>
-          <Link
-            to={organizationPath}
-            style={{ textDecoration: 'none', color: 'inherit' }}
-          >
+          <Link to={organizationPath} style={{ textDecoration: 'none', color: 'inherit' }}>
             {organization.name}
           </Link>
         </Typography>
@@ -96,14 +91,24 @@ const OrganizationCard = ({ organization, completed }) => {
                 <img
                   width="22"
                   src={logoGithub}
-                  style={{ borderRadius: '50%', padding: 2, backgroundColor: 'black', display: 'block' }}
+                  style={{
+                    borderRadius: '50%',
+                    padding: 2,
+                    backgroundColor: 'black',
+                    display: 'block'
+                  }}
                 />
               </a>
             </Tooltip>
           )}
           {organization.websiteUrl && (
             <Tooltip title={organization.websiteUrl}>
-              <a href={organization.websiteUrl} target="_blank" rel="noreferrer" style={{ color: 'inherit', display: 'flex', alignItems: 'center' }}>
+              <a
+                href={organization.websiteUrl}
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: 'inherit', display: 'flex', alignItems: 'center' }}
+              >
                 <LinkIcon sx={{ fontSize: 20, color: 'text.secondary' }} />
               </a>
             </Tooltip>
@@ -124,7 +129,11 @@ const OrganizationCard = ({ organization, completed }) => {
           {hasTasks && (
             <Chip
               icon={<BugReportOutlinedIcon />}
-              label={openIssues > 0 ? `${openIssues} open issue${openIssues !== 1 ? 's' : ''}` : 'no open issues'}
+              label={
+                openIssues > 0
+                  ? `${openIssues} open issue${openIssues !== 1 ? 's' : ''}`
+                  : 'no open issues'
+              }
               size="small"
               variant="outlined"
               color={openIssues > 0 ? 'warning' : 'default'}

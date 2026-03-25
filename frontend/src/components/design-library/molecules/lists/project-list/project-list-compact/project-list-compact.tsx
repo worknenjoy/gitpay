@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Chip, Divider, Typography } from '@mui/material'
+import { Box, Chip, Divider } from '@mui/material'
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined'
 import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
@@ -20,7 +20,10 @@ export default function ProjectListCompact({ projects }) {
   if (!completed) return <ProjectListCompactPlaceholder />
 
   const sorted = sortProjects(data)
-  const totalOpen = data.reduce((sum, p) => sum + p.Tasks.filter((t) => t.status === 'open').length, 0)
+  const totalOpen = data.reduce(
+    (sum, p) => sum + p.Tasks.filter((t) => t.status === 'open').length,
+    0
+  )
   const totalBounties = data.reduce((sum, p) => sum + projectBounties(p.Tasks), 0)
 
   return (
@@ -34,7 +37,11 @@ export default function ProjectListCompact({ projects }) {
         />
         <Chip
           icon={<BugReportOutlinedIcon />}
-          label={totalOpen > 0 ? `${totalOpen} open issue${totalOpen !== 1 ? 's' : ''}` : 'no open issues'}
+          label={
+            totalOpen > 0
+              ? `${totalOpen} open issue${totalOpen !== 1 ? 's' : ''}`
+              : 'no open issues'
+          }
           size="small"
           variant="outlined"
           color={totalOpen > 0 ? 'warning' : 'default'}

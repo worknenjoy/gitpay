@@ -16,7 +16,13 @@ const sizeStyles = {
   }
 }
 
-const OrganizationCardCompact = ({ organization, size = 'small' }: { organization: any; size?: CompactSize }) => {
+const OrganizationCardCompact = ({
+  organization,
+  size = 'small'
+}: {
+  organization: any
+  size?: CompactSize
+}) => {
   const history = useHistory()
   const orgPath = `/organizations/${organization.id}/${slugify(organization.name)}`
   const projectCount = organization.Projects?.length ?? 0
@@ -26,7 +32,9 @@ const OrganizationCardCompact = ({ organization, size = 'small' }: { organizatio
     organization.name,
     creator,
     projectCount > 0 ? `${projectCount} project${projectCount !== 1 ? 's' : ''}` : null
-  ].filter(Boolean).join(' · ')
+  ]
+    .filter(Boolean)
+    .join(' · ')
 
   return (
     <Tooltip title={tooltip}>

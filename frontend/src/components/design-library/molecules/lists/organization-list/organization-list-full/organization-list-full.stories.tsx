@@ -10,7 +10,7 @@ const randomTasks = (seed: number) =>
   Array.from({ length: (seed % 6) + 1 }, (_, i) => ({
     id: seed * 10 + i,
     status: i % 3 === 0 ? 'closed' : 'open',
-    value: i % 2 === 0 ? (seed % 4 + 1) * 25 : 0
+    value: i % 2 === 0 ? ((seed % 4) + 1) * 25 : 0
   }))
 
 const hundredOrganizations = Array.from({ length: 102 }, (_, i) => ({

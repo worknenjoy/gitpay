@@ -9,14 +9,26 @@ import OrganizationListFullPlaceholder from './organization-list-full.placeholde
 import { FormattedMessage } from 'react-intl'
 
 const countOpenIssues = (organizations) =>
-  organizations.reduce((sum, org) =>
-    sum + (org.Projects || []).reduce((s, p) =>
-      s + (p.Tasks || []).filter((t) => t.status === 'open').length, 0), 0)
+  organizations.reduce(
+    (sum, org) =>
+      sum +
+      (org.Projects || []).reduce(
+        (s, p) => s + (p.Tasks || []).filter((t) => t.status === 'open').length,
+        0
+      ),
+    0
+  )
 
 const countBounties = (organizations) =>
-  organizations.reduce((sum, org) =>
-    sum + (org.Projects || []).reduce((s, p) =>
-      s + (p.Tasks || []).reduce((b, t) => b + (t.value ? parseInt(t.value) : 0), 0), 0), 0)
+  organizations.reduce(
+    (sum, org) =>
+      sum +
+      (org.Projects || []).reduce(
+        (s, p) => s + (p.Tasks || []).reduce((b, t) => b + (t.value ? parseInt(t.value) : 0), 0),
+        0
+      ),
+    0
+  )
 
 const countProjects = (organizations) =>
   organizations.reduce((sum, org) => sum + (org.Projects?.length ?? 0), 0)
@@ -83,7 +95,11 @@ const OrganizationList = ({ organizations }) => {
         )}
         <Chip
           icon={<BugReportOutlinedIcon />}
-          label={totalOpen > 0 ? `${totalOpen} open issue${totalOpen !== 1 ? 's' : ''}` : 'no open issues'}
+          label={
+            totalOpen > 0
+              ? `${totalOpen} open issue${totalOpen !== 1 ? 's' : ''}`
+              : 'no open issues'
+          }
           size="small"
           variant="outlined"
           color={totalOpen > 0 ? 'warning' : 'default'}

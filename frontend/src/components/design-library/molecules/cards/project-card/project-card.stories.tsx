@@ -14,7 +14,8 @@ DefaultProjectCard.args = {
   project: {
     id: 1,
     name: 'Project 1',
-    description: 'An open-source project to help developers manage bounties and get paid for their contributions.',
+    description:
+      'An open-source project to help developers manage bounties and get paid for their contributions.',
     status: 'Open',
     Organization: {
       id: 1,
@@ -32,7 +33,8 @@ WithWebsite.args = {
   project: {
     id: 1,
     name: 'Project 1',
-    description: 'An open-source project to help developers manage bounties and get paid for their contributions.',
+    description:
+      'An open-source project to help developers manage bounties and get paid for their contributions.',
     websiteUrl: 'https://gitpay.me',
     status: 'Open',
     Organization: {

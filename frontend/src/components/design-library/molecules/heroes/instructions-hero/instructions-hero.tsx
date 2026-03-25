@@ -28,7 +28,12 @@ type InstructionsHeroProps = {
   contrast?: boolean
 }
 
-const InstructionsHero = ({ title, description, steps, contrast = false }: InstructionsHeroProps) => {
+const InstructionsHero = ({
+  title,
+  description,
+  steps,
+  contrast = false
+}: InstructionsHeroProps) => {
   return (
     <Section alternative={contrast}>
       <Container>
@@ -55,7 +60,11 @@ const InstructionsHero = ({ title, description, steps, contrast = false }: Instr
 
                 {step.screenshotSrc && (
                   <StepMedia>
-                    <ScreenshotImage width={100} src={step.screenshotSrc} alt={step.screenshotAlt || ''} />
+                    <ScreenshotImage
+                      width={100}
+                      src={step.screenshotSrc}
+                      alt={step.screenshotAlt || ''}
+                    />
                   </StepMedia>
                 )}
               </StepRow>

@@ -1,4 +1,3 @@
-import React from 'react'
 import type { Meta, StoryObj } from '@storybook/react'
 
 import InstructionsHero from './instructions-hero'
@@ -44,7 +43,8 @@ export const PaymentRequestFlow: Story = {
       },
       {
         title: 'Receive payment',
-        description: 'Get paid by your client through the payment link, with secure transactions and real-time updates.',
+        description:
+          'Get paid by your client through the payment link, with secure transactions and real-time updates.',
         screenshotSrc: paymentIcon,
         screenshotAlt: 'Receiving payment'
       }

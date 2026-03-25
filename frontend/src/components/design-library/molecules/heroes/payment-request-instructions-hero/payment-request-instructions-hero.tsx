@@ -10,7 +10,9 @@ type PaymentRequestInstructionsHeroProps = {
   contrast?: boolean
 }
 
-const PaymentRequestInstructionsHero = ({ contrast = false }: PaymentRequestInstructionsHeroProps) => {
+const PaymentRequestInstructionsHero = ({
+  contrast = false
+}: PaymentRequestInstructionsHeroProps) => {
   return (
     <InstructionsHero
       contrast={contrast}

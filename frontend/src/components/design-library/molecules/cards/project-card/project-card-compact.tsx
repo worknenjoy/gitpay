@@ -26,7 +26,9 @@ const ProjectCardCompact = ({ project, size = 'small' }: { project: any; size?: 
     project.name,
     project.Organization?.name,
     openIssues > 0 ? `${openIssues} open` : null
-  ].filter(Boolean).join(' · ')
+  ]
+    .filter(Boolean)
+    .join(' · ')
 
   return (
     <Tooltip title={tooltip}>

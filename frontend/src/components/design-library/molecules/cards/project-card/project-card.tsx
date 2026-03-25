@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  Avatar,
-  Box,
-  Button,
-  CardContent,
-  Divider,
-  Typography,
-  Tooltip
-} from '@mui/material'
+import { Avatar, Box, Button, CardContent, Divider, Typography, Tooltip } from '@mui/material'
 import CorporateFareOutlinedIcon from '@mui/icons-material/CorporateFareOutlined'
 import LinkIcon from '@mui/icons-material/Link'
 import slugify from '@sindresorhus/slugify'
@@ -38,14 +30,17 @@ const ProjectCard = ({ project, completed }) => {
 
   if (!completed) return <ProjectCardPlaceholder />
 
-  const githubUrl = project.Organization &&
+  const githubUrl =
+    project.Organization &&
     (project.Organization.provider === 'bitbucket'
       ? `https://bitbucket.com/${project.Organization.name}/${project.name}`
       : `https://github.com/${project.Organization.name}/${project.name}`)
 
   return (
     <RootCard>
-      <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4, pb: 2 }}>
+      <CardContent
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4, pb: 2 }}
+      >
         <Avatar
           aria-label={project.name}
           sx={{ width: 80, height: 80, fontSize: 32, mb: 2, bgcolor: 'primary.main' }}
@@ -62,10 +57,7 @@ const ProjectCard = ({ project, completed }) => {
         {project.Organization && (
           <Typography align="center" variant="body2" color="text.secondary" gutterBottom>
             <CorporateFareOutlinedIcon sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }} />
-            <Link
-              to={baseOrganizationPath}
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
+            <Link to={baseOrganizationPath} style={{ textDecoration: 'none', color: 'inherit' }}>
               {project.Organization.name}
             </Link>
           </Typography>
@@ -96,14 +88,24 @@ const ProjectCard = ({ project, completed }) => {
                 <img
                   width="22"
                   src={logoGithub}
-                  style={{ borderRadius: '50%', padding: 2, backgroundColor: 'black', display: 'block' }}
+                  style={{
+                    borderRadius: '50%',
+                    padding: 2,
+                    backgroundColor: 'black',
+                    display: 'block'
+                  }}
                 />
               </a>
             </Tooltip>
           )}
           {project.websiteUrl && (
             <Tooltip title={project.websiteUrl}>
-              <a href={project.websiteUrl} target="_blank" rel="noreferrer" style={{ color: 'inherit', display: 'flex', alignItems: 'center' }}>
+              <a
+                href={project.websiteUrl}
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: 'inherit', display: 'flex', alignItems: 'center' }}
+              >
                 <LinkIcon sx={{ fontSize: 20, color: 'text.secondary' }} />
               </a>
             </Tooltip>

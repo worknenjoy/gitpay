@@ -10,7 +10,10 @@ const organizations = [
     description: 'Description 1',
     provider: 'github',
     User: { id: 1, name: 'User 1' },
-    Projects: [{ id: 1, name: 'Project 1' }, { id: 2, name: 'Project 2' }]
+    Projects: [
+      { id: 1, name: 'Project 1' },
+      { id: 2, name: 'Project 2' }
+    ]
   },
   {
     id: 2,
@@ -50,14 +53,18 @@ Loading.args = {
 
 export const ChipSmall = () => (
   <Box display="flex" flexWrap="wrap" gap={1}>
-    {organizations.map((o) => <OrganizationCardCompact key={o.id} organization={o} size="small" />)}
+    {organizations.map((o) => (
+      <OrganizationCardCompact key={o.id} organization={o} size="small" />
+    ))}
   </Box>
 )
 ChipSmall.storyName = 'Chip — small'
 
 export const ChipLarge = () => (
   <Box display="flex" flexWrap="wrap" gap={1}>
-    {organizations.map((o) => <OrganizationCardCompact key={o.id} organization={o} size="large" />)}
+    {organizations.map((o) => (
+      <OrganizationCardCompact key={o.id} organization={o} size="large" />
+    ))}
   </Box>
 )
 ChipLarge.storyName = 'Chip — large'

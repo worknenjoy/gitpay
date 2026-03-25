@@ -14,11 +14,16 @@ Default.args = {
   organization: {
     id: 1,
     name: 'Organization 1',
-    description: 'An open-source organization building tools for developers to manage bounties and get paid for their contributions.',
+    description:
+      'An open-source organization building tools for developers to manage bounties and get paid for their contributions.',
     provider: 'github',
     User: { id: 1, name: 'User 1', username: 'user1' },
     Projects: [
-      { id: 1, name: 'Project 1', Tasks: [{ status: 'open', value: 50 }, { status: 'open' }, { status: 'closed' }] },
+      {
+        id: 1,
+        name: 'Project 1',
+        Tasks: [{ status: 'open', value: 50 }, { status: 'open' }, { status: 'closed' }]
+      },
       { id: 2, name: 'Project 2', Tasks: [{ status: 'open', value: 100 }, { status: 'closed' }] },
       { id: 3, name: 'Project 3', Tasks: [{ status: 'closed' }, { status: 'closed' }] }
     ]
@@ -47,7 +52,8 @@ WithWebsite.args = {
   organization: {
     id: 3,
     name: 'Organization 3',
-    description: 'An open-source organization building tools for developers to manage bounties and get paid for their contributions.',
+    description:
+      'An open-source organization building tools for developers to manage bounties and get paid for their contributions.',
     provider: 'github',
     websiteUrl: 'https://gitpay.me',
     User: { id: 3, name: 'User 3', username: 'user3' },
