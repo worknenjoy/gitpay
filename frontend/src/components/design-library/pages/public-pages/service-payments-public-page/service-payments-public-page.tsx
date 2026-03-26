@@ -1,10 +1,6 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import {
-  ReceiptLong,
-  Link,
-  Construction,
-  AccountBalanceWallet,
   Payments,
   Shield,
   Checklist,
@@ -12,7 +8,31 @@ import {
 } from '@mui/icons-material'
 
 import SectionHero from 'design-library/molecules/heroes/section-hero/section-hero'
+import StepsHero from 'design-library/molecules/heroes/steps-hero/steps-hero'
 import CallToActionHero from 'design-library/molecules/heroes/call-to-action-hero/call-to-action-hero'
+
+import CollectionFlatBuild from 'images/collections/collection-flat-build.svg'
+
+const servicePaymentSteps = [
+  {
+    number: '1',
+    title: 'Create a payment request',
+    description: 'Describe your service, set the amount, and generate a secure payment link in seconds',
+    numberColor: '#bdd5cb'
+  },
+  {
+    number: '2',
+    title: 'Share with your customer',
+    description: 'Send the link — your client pays via secure Stripe checkout, no account needed',
+    numberColor: '#73b89a'
+  },
+  {
+    number: '3',
+    title: 'Deliver and get paid',
+    description: 'Confirm delivery and receive your payout directly to your bank account',
+    numberColor: '#008d5d'
+  }
+]
 
 const ServicePaymentsPublicPage = () => {
   return (
@@ -24,7 +44,7 @@ const ServicePaymentsPublicPage = () => {
             defaultMessage="Service Payments on Gitpay"
           />
         }
-        animation="/lottie/developer-team.lottie"
+        image={CollectionFlatBuild}
         content={
           <FormattedMessage
             id="servicePaymentsPublicPage.content"
@@ -32,83 +52,10 @@ const ServicePaymentsPublicPage = () => {
           />
         }
       />
-      <SectionHero
+      <StepsHero
+        title="How does it work?"
+        steps={servicePaymentSteps}
         contrast
-        title={
-          <FormattedMessage
-            id="servicePaymentsPublicPage.howItWorks.title"
-            defaultMessage="How it works"
-          />
-        }
-        content={
-          <FormattedMessage
-            id="servicePaymentsPublicPage.howItWorks.content"
-            defaultMessage="Service providers often face challenges in managing payment requests, tracking delivery, and ensuring timely payouts. Gitpay's Service Payments address these issues by providing a seamless platform that integrates with your existing workflow."
-          />
-        }
-        animation="/lottie/how-it-works.lottie"
-        items={[
-          {
-            icon: <ReceiptLong />,
-            primaryText: (
-              <FormattedMessage
-                id="servicePaymentsPublicPage.howItWorks.item.primary.createRequest"
-                defaultMessage="Create a payment request"
-              />
-            ),
-            secondaryText: (
-              <FormattedMessage
-                id="servicePaymentsPublicPage.howItWorks.item.secondary.createRequest"
-                defaultMessage="Describe your service, define the amount, and create a payment request."
-              />
-            )
-          },
-          {
-            icon: <Link />,
-            primaryText: (
-              <FormattedMessage
-                id="servicePaymentsPublicPage.howItWorks.item.primary.shareLink"
-                defaultMessage="Share a payment link with your customer"
-              />
-            ),
-            secondaryText: (
-              <FormattedMessage
-                id="servicePaymentsPublicPage.howItWorks.item.secondary.shareLink"
-                defaultMessage="The client pays using a secure checkout powered by Stripe."
-              />
-            )
-          },
-          {
-            icon: <Construction />,
-            primaryText: (
-              <FormattedMessage
-                id="servicePaymentsPublicPage.howItWorks.item.primary.deliverWork"
-                defaultMessage="Deliver the work"
-              />
-            ),
-            secondaryText: (
-              <FormattedMessage
-                id="servicePaymentsPublicPage.howItWorks.item.secondary.deliverWork"
-                defaultMessage="Once payment is confirmed, Gitpay can automatically send instructions to the client on how to access the deliverable."
-              />
-            )
-          },
-          {
-            icon: <AccountBalanceWallet />,
-            primaryText: (
-              <FormattedMessage
-                id="servicePaymentsPublicPage.howItWorks.item.primary.receivePayouts"
-                defaultMessage="Receive payouts directly to your bank account"
-              />
-            ),
-            secondaryText: (
-              <FormattedMessage
-                id="servicePaymentsPublicPage.howItWorks.item.secondary.receivePayouts"
-                defaultMessage="After client confirmation, Gitpay processes payout through the configured transfer route."
-              />
-            )
-          }
-        ]}
       />
       <SectionHero
         title={
@@ -188,7 +135,7 @@ const ServicePaymentsPublicPage = () => {
         ]}
       />
       <CallToActionHero
-        withContrast={false}
+        withContrast={true}
         title={
           <FormattedMessage
             id="servicePaymentsPublicPage.callToAction.title"

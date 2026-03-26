@@ -4,6 +4,8 @@ import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined'
 import AutoGraphOutlinedIcon from '@mui/icons-material/AutoGraphOutlined'
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined'
 
+import { Section } from '../../../pages/public-pages/home-public-page/CommonStyles'
+
 export type Step = {
   number: string
   title: string
@@ -90,6 +92,7 @@ function StepBlock({ number, title, description, numberColor }: Step) {
       sx={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: { xs: 'center', md: 'flex-start' },
         gap: { xs: 2, md: 3 },
         position: 'relative',
         zIndex: 1
@@ -114,7 +117,7 @@ function StepBlock({ number, title, description, numberColor }: Step) {
           sx={{
             fontWeight: 800,
             color: '#1f1f23',
-            fontSize: { xs: '1.8rem', md: '2.1rem' },
+            fontSize: { xs: '1.8rem', md: '1.4rem' },
             lineHeight: 1.15,
             mb: 2
           }}
@@ -139,38 +142,51 @@ function StepBlock({ number, title, description, numberColor }: Step) {
 type Props = {
   title: string
   steps: Step[]
+  contrast?: boolean
 }
 
-export default function StepsHero({ title, steps }: Props) {
+export default function StepsHero({ title, steps, contrast = false }: Props) {
   const theme = useTheme()
   const mdUp = useMediaQuery(theme.breakpoints.up('md'))
 
   return (
-    <Box
-      sx={{
-        bgcolor: '#f3f3f1',
-        py: { xs: 6, md: 9 }
-      }}
-    >
-      <Container maxWidth="xl">
-        <Box sx={{ position: 'relative' }}>
+    <Section alternative={contrast}>
+      <Box sx={{ position: 'relative' }}>
+        <Box
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%'
+          }}
+        >
+          <DashedPath />
+        </Box>
+
+        <Container>
+          <Box
+            sx={{
+              position: 'relative',
+              py: { xs: 4, md: 2 }
+            }}
+          >
           <Typography
             variant="h2"
             sx={{
               fontWeight: 900,
-              color: '#1f1f23',
-              fontSize: { xs: '2.4rem', md: '4rem' },
+              fontSize: { xs: '2.4rem', md: '2rem' },
               lineHeight: 1.05,
               mb: { xs: 5, md: 8 },
-              letterSpacing: '-0.03em'
             }}
           >
             {title}
           </Typography>
 
-          <DashedPath />
-
-          <Grid container spacing={{ xs: 5, md: 4 }} alignItems="center">
+          <Grid
+            container
+            spacing={{ xs: 5, md: 4 }}
+            alignItems="center"
+            justifyContent="center"
+          >
             {steps.map((step) => (
               <Grid key={step.number} size={{ xs: 12, md: 4 }}>
                 <StepBlock {...step} />
@@ -190,8 +206,9 @@ export default function StepsHero({ title, steps }: Props) {
               <PaidOutlinedIcon sx={{ fontSize: 34 }} />
             </Box>
           )}
-        </Box>
-      </Container>
-    </Box>
+          </Box>
+        </Container>
+      </Box>
+    </Section>
   )
 }

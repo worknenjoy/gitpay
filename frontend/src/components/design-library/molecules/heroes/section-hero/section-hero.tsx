@@ -41,7 +41,7 @@ const SectionHero = ({
               </Typography>
             </MainTitle>
             {content && (
-              <HeroContent variant="body1" gutterBottom>
+              <HeroContent variant="h6" gutterBottom>
                 {content}
               </HeroContent>
             )}
