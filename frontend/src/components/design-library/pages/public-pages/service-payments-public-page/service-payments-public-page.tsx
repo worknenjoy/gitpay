@@ -1,11 +1,6 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import {
-  Payments,
-  Shield,
-  Checklist,
-  Code
-} from '@mui/icons-material'
+import { Payments, Shield, Checklist, Code } from '@mui/icons-material'
 
 import SectionHero from 'design-library/molecules/heroes/section-hero/section-hero'
 import StepsHero from 'design-library/molecules/heroes/steps-hero/steps-hero'
@@ -17,7 +12,8 @@ const servicePaymentSteps = [
   {
     number: '1',
     title: 'Create a payment request',
-    description: 'Describe your service, set the amount, and generate a secure payment link in seconds',
+    description:
+      'Describe your service, set the amount, and generate a secure payment link in seconds',
     numberColor: '#bdd5cb'
   },
   {
@@ -52,11 +48,7 @@ const ServicePaymentsPublicPage = () => {
           />
         }
       />
-      <StepsHero
-        title="How does it work?"
-        steps={servicePaymentSteps}
-        contrast
-      />
+      <StepsHero title="How does it work?" steps={servicePaymentSteps} contrast />
       <SectionHero
         title={
           <FormattedMessage

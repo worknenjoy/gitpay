@@ -169,43 +169,38 @@ export default function StepsHero({ title, steps, contrast = false }: Props) {
               py: { xs: 4, md: 2 }
             }}
           >
-          <Typography
-            variant="h2"
-            sx={{
-              fontWeight: 900,
-              fontSize: { xs: '2.4rem', md: '2rem' },
-              lineHeight: 1.05,
-              mb: { xs: 5, md: 8 },
-            }}
-          >
-            {title}
-          </Typography>
-
-          <Grid
-            container
-            spacing={{ xs: 5, md: 4 }}
-            alignItems="center"
-            justifyContent="center"
-          >
-            {steps.map((step) => (
-              <Grid key={step.number} size={{ xs: 12, md: 4 }}>
-                <StepBlock {...step} />
-              </Grid>
-            ))}
-          </Grid>
-
-          {!mdUp && (
-            <Box
+            <Typography
+              variant="h2"
               sx={{
-                mt: 4,
-                display: 'flex',
-                justifyContent: 'center',
-                color: '#d28a4a'
+                fontWeight: 900,
+                fontSize: { xs: '2.4rem', md: '2rem' },
+                lineHeight: 1.05,
+                mb: { xs: 5, md: 8 }
               }}
             >
-              <PaidOutlinedIcon sx={{ fontSize: 34 }} />
-            </Box>
-          )}
+              {title}
+            </Typography>
+
+            <Grid container spacing={{ xs: 5, md: 4 }} alignItems="center" justifyContent="center">
+              {steps.map((step) => (
+                <Grid key={step.number} size={{ xs: 12, md: 4 }}>
+                  <StepBlock {...step} />
+                </Grid>
+              ))}
+            </Grid>
+
+            {!mdUp && (
+              <Box
+                sx={{
+                  mt: 4,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  color: '#d28a4a'
+                }}
+              >
+                <PaidOutlinedIcon sx={{ fontSize: 34 }} />
+              </Box>
+            )}
           </Box>
         </Container>
       </Box>
