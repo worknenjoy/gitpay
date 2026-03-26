@@ -8,6 +8,9 @@ const DeadlineMail = require('../mail/deadline')
 const TaskMail = require('../mail/task')
 const OrderCron = require('./orders/orderCron')
 const bountyClosedNotPaidComment = require('../bot/bountyClosedNotPaidComment')
+const {
+  notifyUnclaimedBounties: notifyUnclaimedBountiesService
+} = require('../services/issues/claims/unclaimedBountyService')
 
 i18n.configure({
   directory:
@@ -134,6 +137,14 @@ const TaskCron = {
       })
     }
     return tasks
+  },
+  notifyUnclaimedBounties: async () => {
+    const unclaimedBountiesWithMergedPrs = await notifyUnclaimedBountiesService()
+    console.log(
+      'Monthly unclaimed bounty notifications processed:',
+      unclaimedBountiesWithMergedPrs.length
+    )
+    return unclaimedBountiesWithMergedPrs
   }
 }
 
@@ -168,11 +179,19 @@ const weeklyJobBountiesClosedNotPaid = new CronJob({
   }
 })
 
+const monthlyJobNotifyUnclaimedBounties = new CronJob({
+  cronTime: '0 0 0 26 * *', // every month on the 26th at 12:00AM
+  onTick: () => {
+    TaskCron.notifyUnclaimedBounties()
+  }
+})
+
 module.exports = {
   dailyJob,
   weeklyJob,
   weeklyJobLatest,
   weeklyJobBountiesClosedNotPaid,
+  monthlyJobNotifyUnclaimedBounties,
   TaskCron,
   OrderCron
 }

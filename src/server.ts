@@ -12,7 +12,7 @@ require('./client/auth/passport')
 const load = require('./app')
 const i18n = require('i18n')
 const xFrameOptions = require('x-frame-options')
-const { dailyJob } = require('./crons/cron')
+const { dailyJob, monthlyJobNotifyUnclaimedBounties } = require('./crons/cron')
 
 if (process.env.NODE_ENV !== 'production') {
   const cors = require('cors')
@@ -43,6 +43,8 @@ i18n.configure({
 app.use(i18n.init)
 
 dailyJob.start()
+monthlyJobNotifyUnclaimedBounties.start()
+
 app.use(passport.initialize())
 app.use(passport.session())
 
