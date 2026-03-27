@@ -334,8 +334,7 @@ async function loadUserLogins(userIds: number[]): Promise<Map<number, string>> {
   for (const u of users) {
     const id = Number(u?.id)
     if (!Number.isFinite(id)) continue
-    const login =
-      u?.username || u?.name || (u?.email ? String(u.email) : '')
+    const login = u?.username || u?.name || (u?.email ? String(u.email) : '')
     map.set(id, login ? String(login) : '')
   }
   return map
@@ -344,9 +343,7 @@ async function loadUserLogins(userIds: number[]): Promise<Map<number, string>> {
 // === Main ===
 
 ;(async () => {
-  console.log(
-    `${C.bold}${C.magenta}🚀 Year-End Open Tasks & Wallet Balances Report${C.reset}`
-  )
+  console.log(`${C.bold}${C.magenta}🚀 Year-End Open Tasks & Wallet Balances Report${C.reset}`)
   console.time('[Total] Report time')
 
   // Determine year range from earliest task to current year.
@@ -371,9 +368,7 @@ async function loadUserLogins(userIds: number[]): Promise<Map<number, string>> {
   })
 
   const nowYear = moment.utc().year()
-  const firstTaskYear = tasks.length
-    ? moment.utc(tasks[0].createdAt).year()
-    : nowYear
+  const firstTaskYear = tasks.length ? moment.utc(tasks[0].createdAt).year() : nowYear
   const fromYear = firstTaskYear
   const toYear = nowYear
 
@@ -385,15 +380,16 @@ async function loadUserLogins(userIds: number[]): Promise<Map<number, string>> {
   const endPendingAtByTask = await loadTaskEndPendingAt(taskIds)
   const stripeChargeIdsByTask = await buildStripeChargeIdsByTask(taskIds)
 
-  const contributorIds = tasks
-    .map((t) => Number(t?.userId))
-    .filter((id) => Number.isFinite(id))
+  const contributorIds = tasks.map((t) => Number(t?.userId)).filter((id) => Number.isFinite(id))
   const contributorLoginById = await loadUserLogins([...new Set(contributorIds)])
 
   // ── Table 1: Open tasks as-of 12/31 for each year ──
 
   for (let year = fromYear; year <= toYear; year++) {
-    const asOfExclusive = moment.utc({ year: year + 1, month: 0, day: 1 }).startOf('day').toDate()
+    const asOfExclusive = moment
+      .utc({ year: year + 1, month: 0, day: 1 })
+      .startOf('day')
+      .toDate()
 
     type TaskRow = {
       id: string
@@ -412,16 +408,12 @@ async function loadUserLogins(userIds: number[]): Promise<Map<number, string>> {
       const taskId = Number(t.id)
       const userId = Number(t?.userId)
       const login = userId ? contributorLoginById.get(userId) || '' : ''
-      const contributorLabel = login
-        ? `${login} (${userId})`
-        : userId
-          ? String(userId)
-          : ''
+      const contributorLabel = login ? `${login} (${userId})` : userId ? String(userId) : ''
 
       const sources =
-        t.Orders?.map(
-          (o: any) => `${o.provider} ${formatUSD(toCents(Number(o.amount)))}`
-        ).join(' · ') || 'N/A'
+        t.Orders?.map((o: any) => `${o.provider} ${formatUSD(toCents(Number(o.amount)))}`).join(
+          ' · '
+        ) || 'N/A'
 
       const chargeIds = stripeChargeIdsByTask.get(taskId) || []
 
@@ -475,7 +467,10 @@ async function loadUserLogins(userIds: number[]): Promise<Map<number, string>> {
   const userLoginById = await loadUserLogins(allUserIds)
 
   for (let year = fromYear; year <= toYear; year++) {
-    const asOfExclusive = moment.utc({ year: year + 1, month: 0, day: 1 }).startOf('day').toDate()
+    const asOfExclusive = moment
+      .utc({ year: year + 1, month: 0, day: 1 })
+      .startOf('day')
+      .toDate()
 
     const centsByUser = await buildWalletBalanceByUserAsOf(asOfExclusive, walletToUser)
 
