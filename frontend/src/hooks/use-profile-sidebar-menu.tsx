@@ -11,7 +11,8 @@ import {
   Shield as PaymentRequestDisputesIcon,
   SwapHoriz as PayoutIcon,
   Public as ExploreIcon,
-  AssignmentTurnedIn as ClaimIcon
+  AssignmentTurnedIn as ClaimIcon,
+  Code as SolutionIcon
 } from '@mui/icons-material'
 import useUserTypes from './use-user-types'
 
@@ -46,6 +47,8 @@ const useProfileSidebarMenu = ({ user }) => {
       setSelected(6)
     } else if (path.includes('/profile/payouts')) {
       setSelected(7)
+    } else if (path.includes('/profile/solutions')) {
+      setSelected(10)
     } else {
       setSelected(null)
     }
@@ -96,6 +99,18 @@ const useProfileSidebarMenu = ({ user }) => {
             />
           ),
           selected: selected === 2
+        },
+        {
+          include: isContributor,
+          onClick: () => history.push('/profile/solutions'),
+          icon: <SolutionIcon />,
+          label: (
+            <FormattedMessage
+              id="account.profile.sidemenu.issues.solutions"
+              defaultMessage="Solutions"
+            />
+          ),
+          selected: selected === 10
         }
       ]
     },

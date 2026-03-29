@@ -5,6 +5,18 @@ import { useIntl } from 'react-intl'
 import { Tooltip, Typography, IconButton } from '@mui/material'
 import FileCopyIcon from '@mui/icons-material/FileCopy'
 
+type LinkFieldProps = {
+  url: string
+  icon?: React.ReactNode
+  iconImg?: boolean
+  title?: string
+  tooltipTitle?: string
+  external?: boolean
+  copiable?: boolean
+  limit?: number
+  width?: number | string
+}
+
 const LinkField = ({
   url,
   icon,
@@ -15,7 +27,7 @@ const LinkField = ({
   copiable = false,
   limit = 42,
   width = 350
-}) => {
+}: LinkFieldProps) => {
   const history = useHistory()
   const intl = useIntl()
   const [copied, setCopied] = useState(false)
@@ -52,7 +64,7 @@ const LinkField = ({
             {iconImg && (
               <img
                 width="18"
-                src={icon}
+                src={icon as string}
                 style={{
                   borderRadius: '50%',
                   padding: 3,

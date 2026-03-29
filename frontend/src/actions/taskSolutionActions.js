@@ -22,6 +22,10 @@ const UPDATE_TASK_SOLUTION_ERROR = 'UPDATE_TASK_SOLUTION_ERROR'
 
 const CLEAN_PULL_REQUEST_DATA_STATE = 'CLEAN_PULL_REQUEST_DATA_STATE'
 
+const LIST_TASK_SOLUTIONS_REQUESTED = 'LIST_TASK_SOLUTIONS_REQUESTED'
+const LIST_TASK_SOLUTIONS_SUCCESS = 'LIST_TASK_SOLUTIONS_SUCCESS'
+const LIST_TASK_SOLUTIONS_ERROR = 'LIST_TASK_SOLUTIONS_ERROR'
+
 const ERRORS = {
   COULD_NOT_GET_TASK_SOLUTION: 'issue.solution.dialog.get.error',
   COULD_NOT_UPDATE_TASK_SOLUTION: 'issue.solution.dialog.update.error',
@@ -196,12 +200,29 @@ const cleanPullRequestDataState = () => {
   return { type: CLEAN_PULL_REQUEST_DATA_STATE, pullRequestData: {} }
 }
 
+const listTaskSolutions = () => {
+  validToken()
+  return (dispatch) => {
+    dispatch({ type: LIST_TASK_SOLUTIONS_REQUESTED, completed: false })
+    return axios
+      .get(`${api.API_URL}/tasksolutions/list`)
+      .then((response) => {
+        return dispatch({ type: LIST_TASK_SOLUTIONS_SUCCESS, completed: true, taskSolutions: response.data })
+      })
+      .catch((error) => {
+        dispatch(addNotification('issue.solution.list.error', { severity: 'error' }))
+        return dispatch({ type: LIST_TASK_SOLUTIONS_ERROR, completed: true, error })
+      })
+  }
+}
+
 export {
   fetchPullRequestData,
   createTaskSolution,
   updateTaskSolution,
   getTaskSolution,
   cleanPullRequestDataState,
+  listTaskSolutions,
   GET_TASK_SOLUTION_REQUESTED,
   GET_TASK_SOLUTION_SUCCESS,
   GET_TASK_SOLUTION_ERROR,
@@ -211,5 +232,8 @@ export {
   CREATE_TASK_SOLUTION_SUCCESS,
   UPDATE_TASK_SOLUTION_REQUESTED,
   UPDATE_TASK_SOLUTION_SUCCESS,
-  CLEAN_PULL_REQUEST_DATA_STATE
+  CLEAN_PULL_REQUEST_DATA_STATE,
+  LIST_TASK_SOLUTIONS_REQUESTED,
+  LIST_TASK_SOLUTIONS_SUCCESS,
+  LIST_TASK_SOLUTIONS_ERROR
 }

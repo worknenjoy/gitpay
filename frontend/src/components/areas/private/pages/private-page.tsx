@@ -20,6 +20,7 @@ import OrganizationIssuesExploreContainer from '../../../../containers/profile/p
 import MyOrganizationIssuesContainer from '../../../../containers/profile/profile-my-organization-issues'
 import InvoiceSettingsContainer from '../../../../containers/account/invoice-settings/invoice-settings'
 import PayoutSettings from '../features/payout-settings/pages/payout-settings-page'
+import TaskSolutionsContainer from '../../../../containers/tasks/task-solutions'
 
 const PrivatePage = ({
   fetchOrganizations,
@@ -87,6 +88,8 @@ const PrivatePage = ({
           />
 
           <Route exact path="/profile/wallets" component={WalletsContainer} />
+
+          <Route exact path="/profile/solutions" component={TaskSolutionsContainer} />
 
           <Route exact path="/profile/claims" component={ClaimsContainer} />
 

@@ -40,6 +40,17 @@ export const createTaskSolution = async (req: any, res: any) => {
   }
 }
 
+export const listTaskSolutions = async (req: any, res: any) => {
+  try {
+    const data = await Tasks.taskSolutionList(req.user.id)
+    res.send(data)
+  } catch (error: any) {
+    // eslint-disable-next-line no-console
+    console.log('taskSolutionList error on controller', error)
+    res.status(error.StatusCodeError || 400).send({ error: error.message })
+  }
+}
+
 export const updateTaskSolution = async (req: any, res: any) => {
   try {
     const data = await Tasks.taskSolutionUpdate({ ...req.body, userId: req.user.id }, req.params.id)

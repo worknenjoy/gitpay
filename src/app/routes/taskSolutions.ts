@@ -10,6 +10,7 @@ const router = express.Router()
 router.use(secure)
 
 router.get('/', controllers.getTaskSolution)
+router.get('/list', controllers.listTaskSolutions)
 router.get('/fetch', controllers.fetchPullRequestData)
 router.post('/create', controllers.createTaskSolution)
 router.patch('/:id', controllers.updateTaskSolution)

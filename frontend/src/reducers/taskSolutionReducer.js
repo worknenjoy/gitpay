@@ -5,13 +5,29 @@ import {
   GET_TASK_SOLUTION_SUCCESS,
   CREATE_TASK_SOLUTION_REQUESTED,
   CREATE_TASK_SOLUTION_SUCCESS,
-  CLEAN_PULL_REQUEST_DATA_STATE
+  CLEAN_PULL_REQUEST_DATA_STATE,
+  LIST_TASK_SOLUTIONS_REQUESTED,
+  LIST_TASK_SOLUTIONS_SUCCESS,
+  LIST_TASK_SOLUTIONS_ERROR
 } from '../actions/taskSolutionActions'
 
 const initialState = {
   taskSolution: {},
   pullRequestData: {},
   completed: false
+}
+
+export const taskSolutions = (state = { data: [], completed: false }, action) => {
+  switch (action.type) {
+    case LIST_TASK_SOLUTIONS_REQUESTED:
+      return { ...state, completed: false }
+    case LIST_TASK_SOLUTIONS_SUCCESS:
+      return { ...state, completed: true, data: action.taskSolutions }
+    case LIST_TASK_SOLUTIONS_ERROR:
+      return { ...state, completed: true, error: action.error }
+    default:
+      return state
+  }
 }
 
 export const taskSolution = (state = initialState, action) => {

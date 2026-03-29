@@ -15,7 +15,7 @@ import { preferences } from './preferencesReducer'
 import { roles } from './userRoleReducer'
 import { organizations, organization } from './organizationsReducer'
 import { contact } from './contactReducer'
-import taskSolution from './taskSolutionReducer'
+import taskSolution, { taskSolutions } from './taskSolutionReducer'
 import couponReducer from './couponReducer'
 import { profileReducer } from './profileReducer'
 import { labels } from './labelReducer'
@@ -56,6 +56,7 @@ const reducers = combineReducers({
   organization,
   contact,
   taskSolutionReducer: taskSolution,
+  taskSolutions,
   couponReducer: couponReducer,
   profileReducer: profileReducer,
   intl: intlReducer,
