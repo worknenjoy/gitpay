@@ -207,7 +207,11 @@ const listTaskSolutions = () => {
     return axios
       .get(`${api.API_URL}/tasksolutions/list`)
       .then((response) => {
-        return dispatch({ type: LIST_TASK_SOLUTIONS_SUCCESS, completed: true, taskSolutions: response.data })
+        return dispatch({
+          type: LIST_TASK_SOLUTIONS_SUCCESS,
+          completed: true,
+          taskSolutions: response.data
+        })
       })
       .catch((error) => {
         dispatch(addNotification('issue.solution.list.error', { severity: 'error' }))

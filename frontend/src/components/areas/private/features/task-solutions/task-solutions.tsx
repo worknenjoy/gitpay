@@ -46,9 +46,7 @@ const TaskSolutions = ({ user, taskSolutions, listTaskSolutions }) => {
         tableData: taskSolutions,
         tableHeaderMetadata: {
           issue: {
-            label: (
-              <FormattedMessage id="account.profile.solutions.issue" defaultMessage="Issue" />
-            )
+            label: <FormattedMessage id="account.profile.solutions.issue" defaultMessage="Issue" />
           },
           pullRequestURL: {
             label: (
@@ -60,10 +58,7 @@ const TaskSolutions = ({ user, taskSolutions, listTaskSolutions }) => {
           },
           isPRMerged: {
             label: (
-              <FormattedMessage
-                id="account.profile.solutions.isPRMerged"
-                defaultMessage="Merged"
-              />
+              <FormattedMessage id="account.profile.solutions.isPRMerged" defaultMessage="Merged" />
             )
           },
           createdAt: {
@@ -92,10 +87,7 @@ const TaskSolutions = ({ user, taskSolutions, listTaskSolutions }) => {
             item.isPRMerged ? (
               <Chip
                 label={
-                  <FormattedMessage
-                    id="account.profile.solutions.merged"
-                    defaultMessage="Merged"
-                  />
+                  <FormattedMessage id="account.profile.solutions.merged" defaultMessage="Merged" />
                 }
                 color="success"
                 size="small"
@@ -103,10 +95,7 @@ const TaskSolutions = ({ user, taskSolutions, listTaskSolutions }) => {
             ) : (
               <Chip
                 label={
-                  <FormattedMessage
-                    id="account.profile.solutions.open"
-                    defaultMessage="Open"
-                  />
+                  <FormattedMessage id="account.profile.solutions.open" defaultMessage="Open" />
                 }
                 variant="outlined"
                 size="small"
