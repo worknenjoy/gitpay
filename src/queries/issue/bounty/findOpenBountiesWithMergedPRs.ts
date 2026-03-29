@@ -26,11 +26,15 @@ export const findOpenBountiesWithMergedPRs = async () => {
     tasks.map(async (issue: any) => {
       try {
         const timeline = await getIssueTimeline(issue.url)
-        const closingPrs = timeline
-          .filter((event: any) => event.event === 'connected')
-          .filter((event: any) => event.source?.issue?.pull_request)
-          .map((event: any) => event.source.issue)
-        const mergedPrs = closingPrs.filter((pr: any) => pr?.pull_request?.merged_at != null)
+        const extractPRs = (eventType: string) =>
+          timeline
+            .filter((event: any) => event.event === eventType)
+            .filter((event: any) => event.source?.issue?.pull_request)
+            .map((event: any) => event.source.issue)
+
+        const connectedPrs = extractPRs('connected')
+        const linkedPrs = connectedPrs.length > 0 ? connectedPrs : extractPRs('cross-referenced')
+        const mergedPrs = linkedPrs.filter((pr: any) => pr?.pull_request?.merged_at != null)
         if (mergedPrs.length === 0) {
           return false
         }
