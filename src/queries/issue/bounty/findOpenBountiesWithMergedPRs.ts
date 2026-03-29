@@ -3,7 +3,6 @@ import { type IssueStatus } from '../../../types/issue'
 import Models from '../../../models'
 import { IssueStatuses } from '../../../constants/issue'
 import { getIssueTimeline } from '../../provider/github/getIssueTimeline'
-import { findUsersByProvider } from '../../user/findUsersByProvider'
 
 const models = Models as any
 
@@ -19,7 +18,7 @@ export const findOpenBountiesWithMergedPRs = async () => {
         { createdAt: { [Op.lt]: ONE_YEAR_AGO } }
       ]
     },
-    include: [models.Order]
+    include: [models.Order, models.User]
   })
 
   const results = await Promise.all(
@@ -38,29 +37,14 @@ export const findOpenBountiesWithMergedPRs = async () => {
         if (mergedPrs.length === 0) {
           return false
         }
-        const entriesForIssue = await Promise.all(
-          mergedPrs.map(async (pr: any) => {
-            const usersOnGitpay = await findUsersByProvider({
-              provider: 'github',
-              provider_id: String(pr?.user?.id),
-              provider_username: pr?.user?.login,
-              provider_email: pr?.user?.email
-            })
 
-            return (usersOnGitpay ?? [])
-              .filter((u: any) => u?.id)
-              .map((user: any) => ({
-                issue,
-                providerIssues: mergedPrs,
-                user
-              }))
-          })
-        )
-        if (entriesForIssue.length === 0) {
-          return false
+        const user = issue.User ?? null
+
+        return {
+          issue,
+          providerIssues: mergedPrs,
+          user
         }
-
-        return entriesForIssue.flat()
       } catch (err) {
         console.error('Error processing issue', issue.id, err)
         return false
@@ -68,16 +52,14 @@ export const findOpenBountiesWithMergedPRs = async () => {
     })
   )
 
-  const resultsFlat = results.flat().filter(Boolean) as any[]
+  const resultsFlat = results.filter(Boolean) as any[]
 
   const seenIds = new Set<string | number>()
   const deduped = resultsFlat.filter((entry: any) => {
     const issueId = entry?.issue?.id
-    const userId = entry?.user?.id
-    if (issueId == null || userId == null) return false
-    const key = `${issueId}:${userId}`
-    if (seenIds.has(key)) return false
-    seenIds.add(key)
+    if (issueId == null) return false
+    if (seenIds.has(issueId)) return false
+    seenIds.add(issueId)
     return true
   })
   return deduped
