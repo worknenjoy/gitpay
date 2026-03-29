@@ -2,7 +2,7 @@ import { Op } from 'sequelize'
 import { type IssueStatus } from '../../../types/issue'
 import Models from '../../../models'
 import { IssueStatuses } from '../../../constants/issue'
-import { findIssueLinkedPullRequest } from '../pull-request/findIssueLinkedPullRequest'
+import { getIssueTimeline } from '../../provider/github/getIssueTimeline'
 import { findUsersByProvider } from '../../user/findUsersByProvider'
 
 const models = Models as any
@@ -25,8 +25,12 @@ export const findOpenBountiesWithMergedPRs = async () => {
   const results = await Promise.all(
     tasks.map(async (issue: any) => {
       try {
-        const linkedPrs = await findIssueLinkedPullRequest(issue.id)
-        const mergedPrs = linkedPrs.filter((pr: any) => pr?.pull_request?.merged_at != null)
+        const timeline = await getIssueTimeline(issue.url)
+        const closingPrs = timeline
+          .filter((event: any) => event.event === 'connected')
+          .filter((event: any) => event.source?.issue?.pull_request)
+          .map((event: any) => event.source.issue)
+        const mergedPrs = closingPrs.filter((pr: any) => pr?.pull_request?.merged_at != null)
         if (mergedPrs.length === 0) {
           return false
         }
