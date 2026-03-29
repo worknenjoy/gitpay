@@ -67,7 +67,8 @@
     "paypal:refund-old-open-bounties": "tsx src/scripts/payments/refund_old_open_bounties_paypal.ts",
     "script:issue:report_unclaimed_bounties": "tsx src/scripts/issues/report_unclaimed_bounties.ts",
     "scripts:issue:notify_unclaimed_bounties": "tsx src/scripts/issues/notify_unclaimed_bounties.ts",
-    "scripts:issue:report_old_issues_without_merged_prs": "tsx src/scripts/issues/report_old_issues_without_merged_prs.ts"
+    "scripts:issue:report_old_issues_without_merged_prs": "tsx src/scripts/issues/report_old_issues_without_merged_prs.ts",
+    "scripts:issue:report_open_bounties_with_merged_prs": "tsx src/scripts/issues/report_open_bounties_with_merged_prs.ts"
   },
   "husky": {
     "hooks": {
