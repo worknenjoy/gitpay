@@ -193,6 +193,23 @@ function buildSamples(moduleName: string, methodName: string): any[] {
     }
   }
 
+  if (moduleName === 'openBounty') {
+    const issue = {
+      id: 456,
+      title: 'Sample open bounty issue title',
+      url: 'https://github.com/sample/repo/issues/456',
+      value: 50
+    }
+    const pullRequest = {
+      html_url: 'https://github.com/sample/repo/pull/789',
+      user: { login: 'contributor-user' },
+      pull_request: { merged_at: '2025-01-15T10:00:00Z' }
+    }
+    if (/notifyOpenBountyWithMergedPR/i.test(methodName)) {
+      return [user, issue, pullRequest]
+    }
+  }
+
   if (moduleName === 'payout') {
     const payout = {
       amount: 1000,

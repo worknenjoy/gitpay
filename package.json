@@ -68,7 +68,8 @@
     "script:issue:report_unclaimed_bounties": "tsx src/scripts/issues/report_unclaimed_bounties.ts",
     "scripts:issue:notify_unclaimed_bounties": "tsx src/scripts/issues/notify_unclaimed_bounties.ts",
     "scripts:issue:report_old_issues_without_merged_prs": "tsx src/scripts/issues/report_old_issues_without_merged_prs.ts",
-    "scripts:issue:report_open_bounties_with_merged_prs": "tsx src/scripts/issues/report_open_bounties_with_merged_prs.ts"
+    "scripts:issue:report_open_bounties_with_merged_prs": "tsx src/scripts/issues/report_open_bounties_with_merged_prs.ts",
+    "scripts:issue:notify_open_bounties_with_merged_prs": "tsx src/scripts/issues/notify_open_bounties_with_merged_prs.ts"
   },
   "husky": {
     "hooks": {
