@@ -253,5 +253,12 @@
   "mail.issue.claim.item": "Unclaimed bounty",
   "mail.issue.claim.cta": "Claim your bounty",
   "mail.issue.claim.details": "<p><strong>You are one step away from claiming your bounty.</strong></p><p>Here are the steps you need to complete:</p><p>1. Log in to your <a href=\"http://gitpay.me/#/profile\">Gitpay account</a>.</p><p>2. Activate your bank account in <a href=\"http://gitpay.me/#/profile/payout-settings/bank-account\">Payout Settings</a>.</p><p>3. Go to the issue page on Gitpay: <a href=\"{{issueUrl}}\">{{title}}</a>.</p><p>4. Click on <strong>Send Solution</strong>.</p><p>5. Send your PR which solve the issue: <a href=\"{{prURL}}\">{{prURL}}</a></p>",
-  "mail.issue.claim.footer": "<p>If you have any questions or issues with your payout, please get in touch with us at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>"
+  "mail.issue.claim.footer": "<p>If you have any questions or issues with your payout, please get in touch with us at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>",
+  "mail.issue.open.bounty.subject": "Action needed: your issue on Gitpay has a merged PR",
+  "mail.issue.open.bounty.intro": "Hello {{name}},",
+  "mail.issue.open.bounty.message": "<p>The issue you created on Gitpay more than a year ago still has an open bounty attached to it.</p><p>Issue: <a href=\"{{issueUrl}}\">{{title}}</a> (see on <a href=\"{{issueOriginalUrl}}\">GitHub</a>)</p><p>A related <a href=\"{{prURL}}\">Pull Request was merged</a> by <strong>{{prAuthor}}</strong>. If this PR solved the issue, please close it on GitHub so the contributor can claim the bounty.</p><p>If this PR did not solve the issue, you can ignore this message.</p>",
+  "mail.issue.open.bounty.item": "Open bounty",
+  "mail.issue.open.bounty.cta": "View issue on Gitpay",
+  "mail.issue.open.bounty.details": "<p>To release the bounty to the contributor:</p><p>1. Review the <a href=\"{{prURL}}\">merged Pull Request</a>.</p><p>2. If it solves your issue, close it on <a href=\"{{issueOriginalUrl}}\">GitHub</a>.</p><p>3. The contributor will then be able to claim the bounty on <a href=\"{{issueUrl}}\">Gitpay</a>.</p>",
+  "mail.issue.open.bounty.footer": "<p>If you have any questions, please contact us at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>"
 }
