@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Typography, Chip, Button } from '@mui/material'
-import { AttachMoney as MoneyIcon, EmojiFoodBeverage as CoffeeIcon } from '@mui/icons-material'
+import { Typography, Chip, Button, Divider, Tooltip } from '@mui/material'
+import { AttachMoney as MoneyIcon, EmojiFoodBeverage as CoffeeIcon, InfoOutlined, VisibilityOff } from '@mui/icons-material'
 import { FormattedMessage, useIntl } from 'react-intl'
 import MomentComponent from 'moment'
 import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer'
 import {
   SidebarItem,
   SidebarSection,
+  SidebarCard,
   SpanText,
   TaskInfoContent,
   StatusChip,
@@ -14,6 +15,7 @@ import {
   SidebarRoot
 } from './issue-sidebar.styles'
 import IssuePublicStatus from 'design-library/atoms/status/issue-public-status/issue-public-status'
+import TaskStateStatus from 'design-library/atoms/status/task-state-status/task-state-status'
 import TaskDeadlineDrawer from 'design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer'
 import IssueActionsByRole from 'design-library/atoms/buttons/issue-actions-by-role/issue-actions-by-role'
 import Constants from '../../../../../consts'
@@ -21,7 +23,6 @@ import inviteCover from 'images/funds.png'
 import IssueLevelDropdown from 'design-library/atoms/inputs/dropdowns/issue-level-dropdown/issue-level-dropdown'
 import { messages } from '../../../../../messages/messages'
 import IssueInviteCard from 'design-library/molecules/cards/issue-cards/issue-invite-card/issue-invite-card'
-import IssuePaymentsList from 'design-library/molecules/lists/issue-payments-list/issue-payments-list'
 import useIssueAuthor from '../../../../../hooks/use-issue-author'
 import IssueSidebarPlaceholder from './issue-sidebar.placeholder'
 
@@ -108,52 +109,111 @@ const IssueSidebar = ({
       ? MomentComponent(taskData.deadline).diff(MomentComponent(), 'days')
       : false
 
-  const paidOrders = (taskData.orders || taskData.Orders)?.filter((o) => o.paid)
 
-  return isReady ? (
-    <SidebarRoot>
-      {task.values && task.values.available > 0 && (
-        <div style={{ textAlign: 'center', marginTop: 10 }}>
-          <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-            <FormattedMessage id="task.value.label" defaultMessage="Value offered" />
-          </Typography>
-          <div>
-            <div style={{ verticalAlign: 'sub', display: 'inline-block' }}>
-              <MoneyIcon />
-            </div>
-            <Typography variant="h5" component="span">
-              {task.values.available}
-              {taskData.paid && <Chip sx={{ ml: 1 }} size="small" label="paid" />}
-            </Typography>
-          </div>
-        </div>
-      )}
+    return isReady ? (
+      <SidebarRoot>
+        {/* Not listed chip at the top */}
+        {taskData && taskData.not_listed && (
+          <SidebarSection style={{ marginTop: 0, marginBottom: 10, justifyContent: 'center' }}>
+            <Tooltip
+              title={
+                <FormattedMessage
+                  id="task.notListed.tooltip"
+                  defaultMessage="This task is visible by a direct link but not listed in our network."
+                />
+              }
+              arrow
+            >
+              <Chip
+                icon={<VisibilityOff fontSize="small" style={{ color: 'inherit' }} />}
+                label={<FormattedMessage id="task.notListed.info" defaultMessage="Not listed" />}
+                color="warning"
+                size="small"
+                style={{ fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}
+              />
+            </Tooltip>
+          </SidebarSection>
+        )}
 
-      <SidebarSection>
-        <SidebarItem>
-          <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-            <FormattedMessage id="task.publicy.label" defaultMessage="Publicy" />
-          </Typography>
-          <div>
-            <IssuePublicStatus status={taskData.private ? 'private' : 'public'} />
-          </div>
-        </SidebarItem>
+        {/* Top: Gitpay state + funded value */}
+        <SidebarSection>
+          {taskData.state && (
+            <SidebarItem>
+              <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+                <FormattedMessage id="task.state.label" defaultMessage="State" />
+              </Typography>
+              <div>
+                <TaskStateStatus state={taskData.state} completed={taskCompleted} />
+              </div>
+            </SidebarItem>
+          )}
+          {task.values && task.values.available > 0 && (
+            <SidebarItem>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+                <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+                  <FormattedMessage id="task.value.funded.label" defaultMessage="Value funded" />
+                </Typography>
+                <Tooltip
+                  title={intl.formatMessage({
+                    id: 'task.value.funded.tooltip',
+                    defaultMessage: 'The funds are already on Gitpay and available to pay out to whoever completes the PR'
+                  })}
+                  arrow
+                >
+                  <span style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer', marginLeft: 2 }}>
+                    <InfoOutlined fontSize="small" style={{ color: '#888' }} />
+                  </span>
+                </Tooltip>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+                <MoneyIcon fontSize="small" />
+                <Typography variant="h6" component="span">
+                  {task.values.available}
+                </Typography>
+                {taskData.paid && <Chip size="small" label="paid" />}
+              </div>
+            </SidebarItem>
+          )}
+        </SidebarSection>
 
-        {taskData.status && (
+      {/* Provider card: visibility + issue status */}
+      <SidebarCard elevation={0} variant="outlined">
+        <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', fontWeight: 600, letterSpacing: 0.5 }}>
+          {taskData.provider
+            ? taskData.provider.charAt(0).toUpperCase() + taskData.provider.slice(1)
+            : <FormattedMessage id="task.provider.label" defaultMessage="Provider" />}
+        </Typography>
+        <Divider sx={{ my: 1 }} />
+        <SidebarSection>
+
           <SidebarItem>
             <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.status.label" defaultMessage="Status" />
+              <FormattedMessage id="task.visibility.label" defaultMessage="Visibility" />
             </Typography>
             <div>
-              <StatusChip
-                status={taskData.status}
-                label={intl.formatMessage(Constants.STATUSES[taskData.status])}
-                avatar={<StatusAvatarDot status={taskData.status}> </StatusAvatarDot>}
-              />
+              {/* Use GitHub repo visibility if available, fallback to private flag */}
+              <IssuePublicStatus status={taskData.repoVisibility ? taskData.repoVisibility : (taskData.private ? 'private' : 'public')} />
             </div>
           </SidebarItem>
-        )}
-      </SidebarSection>
+
+
+
+          {taskData.status && (
+            <SidebarItem>
+              <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+                <FormattedMessage id="task.status.label" defaultMessage="Issue status" />
+              </Typography>
+              <div>
+                <StatusChip
+                  status={taskData.status}
+                  label={intl.formatMessage(Constants.STATUSES[taskData.status])}
+                  avatar={<StatusAvatarDot status={taskData.status}> </StatusAvatarDot>}
+                />
+              </div>
+            </SidebarItem>
+          )}
+        </SidebarSection>
+      </SidebarCard>
 
       <SidebarSection>
         {taskData.level && !issueAuthor && (
@@ -262,12 +322,6 @@ const IssueSidebar = ({
           setDeadlineForm(false)
         }}
       />
-
-      {taskData && (taskData.orders?.length || taskData.Orders?.length) ? (
-        <IssuePaymentsList orders={paidOrders} />
-      ) : (
-        <div />
-      )}
 
       <IssueActionsByRole
         issue={task}

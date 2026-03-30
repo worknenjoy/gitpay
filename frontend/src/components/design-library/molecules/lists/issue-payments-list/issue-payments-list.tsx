@@ -12,13 +12,6 @@ export default function IssuePaymentsList({ orders }) {
   if (!orders) return <div />
   return orders && orders.length > 0 ? (
     <Root dense>
-      <Typography
-        variant="caption"
-        align="center"
-        style={{ display: 'inline-block', width: '100%', marginBottom: 10 }}
-      >
-        Paid by
-      </Typography>
       {orders &&
         orders.map((order) => {
           return (

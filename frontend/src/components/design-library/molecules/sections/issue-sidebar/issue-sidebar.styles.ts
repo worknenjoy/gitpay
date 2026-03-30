@@ -1,5 +1,12 @@
-import { Avatar, Chip } from '@mui/material'
+import { Avatar, Chip, Paper } from '@mui/material'
 import { styled } from '@mui/material/styles'
+
+export const SidebarCard = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(1.5),
+  marginBottom: theme.spacing(2),
+  borderRadius: (theme.shape.borderRadius as number) * 2,
+  backgroundColor: theme.palette.background.paper
+}))
 
 export const SidebarRoot = styled('div')(({ theme }) => ({
   backgroundColor: '#eee',

@@ -9,6 +9,7 @@ export interface TaskAttributes {
   type?: string | null
   level?: string | null
   status: string
+  state?: string | null
   deadline?: Date | null
   url?: string | null
   title?: string | null
@@ -34,6 +35,7 @@ export type TaskCreationAttributes = Optional<
   | 'type'
   | 'level'
   | 'status'
+  | 'state'
   | 'deadline'
   | 'url'
   | 'title'
@@ -61,6 +63,7 @@ export default class Task
   public type!: string | null
   public level!: string | null
   public status!: string
+  public state!: string | null
   public deadline!: Date | null
   public url!: string | null
   public title!: string | null
@@ -110,6 +113,11 @@ export default class Task
         status: {
           type: DataTypes.STRING,
           defaultValue: 'open'
+        },
+        state: {
+          type: DataTypes.ENUM('created', 'funded', 'claimed', 'completed'),
+          allowNull: true,
+          defaultValue: 'created'
         },
         deadline: {
           type: DataTypes.DATE,

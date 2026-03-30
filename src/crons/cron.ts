@@ -11,6 +11,9 @@ const bountyClosedNotPaidComment = require('../bot/bountyClosedNotPaidComment')
 const {
   notifyUnclaimedBounties: notifyUnclaimedBountiesService
 } = require('../services/issues/claims/unclaimedBountyService')
+const {
+  syncAllTaskStates
+} = require('../services/tasks/taskStateService')
 
 i18n.configure({
   directory:
@@ -145,6 +148,10 @@ const TaskCron = {
       unclaimedBountiesWithMergedPrs.length
     )
     return unclaimedBountiesWithMergedPrs
+  },
+  syncTaskStates: async () => {
+    const { total, updated } = await syncAllTaskStates()
+    console.log(`Task state sync complete. Processed: ${total}, Updated: ${updated}`)
   }
 }
 
@@ -186,12 +193,20 @@ const monthlyJobNotifyUnclaimedBounties = new CronJob({
   }
 })
 
+const dailyJobSyncTaskStates = new CronJob({
+  cronTime: '0 0 1 * * *', // every day at 1:00AM
+  onTick: () => {
+    TaskCron.syncTaskStates()
+  }
+})
+
 module.exports = {
   dailyJob,
   weeklyJob,
   weeklyJobLatest,
   weeklyJobBountiesClosedNotPaid,
   monthlyJobNotifyUnclaimedBounties,
+  dailyJobSyncTaskStates,
   TaskCron,
   OrderCron
 }
