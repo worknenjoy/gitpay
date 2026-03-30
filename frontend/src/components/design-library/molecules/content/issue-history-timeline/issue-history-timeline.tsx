@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Box,
-  Typography,
-  Paper,
-  Avatar,
-  Chip,
-  Tooltip
-} from '@mui/material'
+import { Box, Typography, Paper, Avatar, Chip, Tooltip } from '@mui/material'
 import {
   AddCircleOutline as CreatedIcon,
   MonetizationOn as BountyIcon,
@@ -143,8 +136,7 @@ function buildMessage(
   if (isDescription) {
     return (
       <span>
-        {label}{' '}
-        <FormattedMessage id="task.history.was.updated" defaultMessage="was updated" />
+        {label} <FormattedMessage id="task.history.was.updated" defaultMessage="was updated" />
       </span>
     )
   }
@@ -152,8 +144,7 @@ function buildMessage(
   if (!hasOld) {
     return (
       <span>
-        {label}{' '}
-        <FormattedMessage id="task.history.set.to" defaultMessage="set to" />{' '}
+        {label} <FormattedMessage id="task.history.set.to" defaultMessage="set to" />{' '}
         <strong>{fmtNew}</strong>
       </span>
     )
@@ -161,10 +152,9 @@ function buildMessage(
 
   return (
     <span>
-      {label}{' '}
-      <FormattedMessage id="task.history.changed.from" defaultMessage="changed from" />{' '}
-      <strong>{fmtOld}</strong>{' '}
-      <FormattedMessage id="task.history.to" defaultMessage="to" /> <strong>{fmtNew}</strong>
+      {label} <FormattedMessage id="task.history.changed.from" defaultMessage="changed from" />{' '}
+      <strong>{fmtOld}</strong> <FormattedMessage id="task.history.to" defaultMessage="to" />{' '}
+      <strong>{fmtNew}</strong>
     </span>
   )
 }
@@ -226,18 +216,13 @@ const IssueHistoryTimeline = ({ histories }: IssueHistoryTimelineProps) => {
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <TimelineDot isCreate />
                 {!isLast && (
-                  <Box
-                    sx={{ width: 2, flex: 1, bgcolor: 'divider', mt: 0.5, minHeight: 20 }}
-                  />
+                  <Box sx={{ width: 2, flex: 1, bgcolor: 'divider', mt: 0.5, minHeight: 20 }} />
                 )}
               </Box>
               <Box sx={{ flex: 1, pb: 1 }}>
                 <Paper variant="outlined" sx={{ p: 1.5, borderRadius: 2 }}>
                   <Typography variant="body2" fontWeight={500}>
-                    <FormattedMessage
-                      id="task.history.created"
-                      defaultMessage="Task was created"
-                    />
+                    <FormattedMessage id="task.history.created" defaultMessage="Task was created" />
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
                     {moment(entry.createdAt).fromNow()} ·{' '}
@@ -250,9 +235,7 @@ const IssueHistoryTimeline = ({ histories }: IssueHistoryTimelineProps) => {
         }
 
         // For 'update', flatten field changes — filter out noise
-        const relevantFields = fields.filter(
-          (f) => f !== 'updatedAt' && f !== 'id'
-        )
+        const relevantFields = fields.filter((f) => f !== 'updatedAt' && f !== 'id')
         if (relevantFields.length === 0) return null
 
         // Determine primary field for icon/color (first relevant field)
@@ -263,9 +246,7 @@ const IssueHistoryTimeline = ({ histories }: IssueHistoryTimelineProps) => {
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <TimelineDot field={primaryField} />
               {!isLast && (
-                <Box
-                  sx={{ width: 2, flex: 1, bgcolor: 'divider', mt: 0.5, minHeight: 20 }}
-                />
+                <Box sx={{ width: 2, flex: 1, bgcolor: 'divider', mt: 0.5, minHeight: 20 }} />
               )}
             </Box>
             <Box sx={{ flex: 1, pb: 1 }}>

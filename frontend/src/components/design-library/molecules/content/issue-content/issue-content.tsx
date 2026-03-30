@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import { Button, Container, Badge, Box } from '@mui/material'
-import { ExpandLess, ExpandMore, History as HistoryIcon, Article as DescriptionIcon, Paid as PaidIcon } from '@mui/icons-material'
+import {
+  ExpandLess,
+  ExpandMore,
+  History as HistoryIcon,
+  Article as DescriptionIcon,
+  Paid as PaidIcon
+} from '@mui/icons-material'
 import { FormattedMessage } from 'react-intl'
 import ShowMoreText from 'react-show-more-text'
 import { marked } from 'marked'
@@ -59,7 +65,7 @@ const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messag
         </Box>
       ),
       value: 1
-    },
+    }
   ]
 
   return completed ? (
