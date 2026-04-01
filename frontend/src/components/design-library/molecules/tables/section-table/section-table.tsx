@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Skeleton } from '@mui/material'
 import { DescriptionOutlined as NoDataIcon } from '@mui/icons-material'
@@ -58,6 +58,20 @@ const SectionTable = ({
   const [sortedBy, setSortedBy] = useState(null)
   const [sortDirection, setSortDirection] = useState('asc')
   const [sortedData, setSortedData] = useState(tableData.data)
+
+  // Server-side: keep last completed rows so we can show them dimmed while
+  // the next page is loading instead of collapsing to a skeleton.
+  const previousRowsRef = useRef<any[]>(tableData.data)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
+  useEffect(() => {
+    if (tableData.completed) {
+      previousRowsRef.current = tableData.data
+      setIsTransitioning(false)
+    } else if (isServerSide && previousRowsRef.current.length > 0) {
+      setIsTransitioning(true)
+    }
+  }, [tableData.completed, isServerSide])
 
   useEffect(() => {
     const newSortedData = isServerSide
@@ -250,22 +264,24 @@ const SectionTable = ({
     <TableWrapper component={Paper}>
       <StyledTable>
         <TableHeadCustom />
-        <TableBody>
-          {!tableData.completed ? (
+        <TableBody
+          sx={{
+            opacity: isTransitioning ? 0.4 : 1,
+            pointerEvents: isTransitioning ? 'none' : 'auto',
+            transition: 'opacity 0.15s ease'
+          }}
+        >
+          {!tableData.completed && !isTransitioning ? (
             <TablePlaceholder
               completed={tableData.completed}
               size={Object.entries(tableHeaderMetadata).length}
             />
           ) : (
-            displayedRows.map((n) => (
+            (isTransitioning ? previousRowsRef.current : displayedRows).map((n) => (
               <TableRow key={n.id}>
                 {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
                   <StyledTableCell key={fieldId}>
-                    {!tableData.completed ? (
-                      <Skeleton variant="text" animation="wave" />
-                    ) : (
-                      <div>{handleCustomRenderer(fieldId, n) || '--'}</div>
-                    )}
+                    <div>{handleCustomRenderer(fieldId, n) || '--'}</div>
                   </StyledTableCell>
                 ))}
               </TableRow>
