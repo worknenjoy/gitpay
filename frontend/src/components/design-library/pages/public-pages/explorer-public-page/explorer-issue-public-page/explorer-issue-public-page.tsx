@@ -19,6 +19,7 @@ const ExplorerIssuePublicPage = ({
       listLabels={listLabels}
       filterTasks={filterTasks}
       listLanguages={listLanguages}
+      serverSidePagination
     />
   )
 }

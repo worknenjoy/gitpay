@@ -160,8 +160,8 @@ const listTaskRequested = () => {
   return { type: LIST_TASK_REQUESTED, completed: false }
 }
 
-const listTaskSuccess = (tasks) => {
-  return { type: LIST_TASK_SUCCESS, completed: true, data: tasks.data }
+const listTaskSuccess = (tasks, totalCount = null) => {
+  return { type: LIST_TASK_SUCCESS, completed: true, data: tasks.data, totalCount }
 }
 
 const listTaskError = (error) => {
@@ -433,15 +433,42 @@ const deleteTask = (task) => {
   }
 }
 
-const listTasks = ({ organizationId, projectId, userId, status, labelIds, languageIds }) => {
+const listTasks = ({
+  organizationId,
+  projectId,
+  userId,
+  status,
+  labelIds,
+  languageIds,
+  page,
+  limit,
+  hasBounty
+} = {}) => {
   validToken()
   return (dispatch) => {
     dispatch(listTaskRequested())
+    const params = {
+      organizationId,
+      projectId,
+      userId,
+      status,
+      labelIds,
+      languageIds,
+      ...(limit != null && { limit, page: page ?? 0 }),
+      ...(hasBounty != null && { hasBounty })
+    }
     return axios
-      .get(api.API_URL + '/tasks/list', {
-        params: { organizationId, projectId, userId, status, labelIds, languageIds }
-      })
+      .get(api.API_URL + '/tasks/list', { params })
       .then((response) => {
+        // Detect paginated response: { data: [], totalCount: N }
+        if (
+          response.data &&
+          typeof response.data === 'object' &&
+          !Array.isArray(response.data) &&
+          'totalCount' in response.data
+        ) {
+          return dispatch(listTaskSuccess({ data: response.data.data }, response.data.totalCount))
+        }
         return dispatch(listTaskSuccess(response))
       })
       .catch((error) => {

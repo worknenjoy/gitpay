@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
 import { Typography, Chip, Button, Divider, Tooltip } from '@mui/material'
-import { AttachMoney as MoneyIcon, EmojiFoodBeverage as CoffeeIcon, InfoOutlined, VisibilityOff } from '@mui/icons-material'
+import {
+  AttachMoney as MoneyIcon,
+  EmojiFoodBeverage as CoffeeIcon,
+  InfoOutlined,
+  VisibilityOff
+} from '@mui/icons-material'
 import { FormattedMessage, useIntl } from 'react-intl'
 import MomentComponent from 'moment'
 import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer'
@@ -109,94 +114,116 @@ const IssueSidebar = ({
       ? MomentComponent(taskData.deadline).diff(MomentComponent(), 'days')
       : false
 
-
-    return isReady ? (
-      <SidebarRoot>
-        {/* Not listed chip at the top */}
-        {taskData && taskData.not_listed && (
-          <SidebarSection style={{ marginTop: 0, marginBottom: 10, justifyContent: 'center' }}>
-            <Tooltip
-              title={
-                <FormattedMessage
-                  id="task.notListed.tooltip"
-                  defaultMessage="This task is visible by a direct link but not listed in our network."
-                />
-              }
-              arrow
-            >
-              <Chip
-                icon={<VisibilityOff fontSize="small" style={{ color: 'inherit' }} />}
-                label={<FormattedMessage id="task.notListed.info" defaultMessage="Not listed" />}
-                color="warning"
-                size="small"
-                style={{ fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}
+  return isReady ? (
+    <SidebarRoot>
+      {/* Not listed chip at the top */}
+      {taskData && taskData.not_listed && (
+        <SidebarSection style={{ marginTop: 0, marginBottom: 10, justifyContent: 'center' }}>
+          <Tooltip
+            title={
+              <FormattedMessage
+                id="task.notListed.tooltip"
+                defaultMessage="This task is visible by a direct link but not listed in our network."
               />
-            </Tooltip>
-          </SidebarSection>
-        )}
-
-        {/* Top: Gitpay state + funded value */}
-        <SidebarSection>
-          {taskData.state && (
-            <SidebarItem>
-              <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-                <FormattedMessage id="task.state.label" defaultMessage="State" />
-              </Typography>
-              <div>
-                <TaskStateStatus state={taskData.state} completed={taskCompleted} />
-              </div>
-            </SidebarItem>
-          )}
-          {task.values && task.values.available > 0 && (
-            <SidebarItem>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
-                <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-                  <FormattedMessage id="task.value.funded.label" defaultMessage="Value funded" />
-                </Typography>
-                <Tooltip
-                  title={intl.formatMessage({
-                    id: 'task.value.funded.tooltip',
-                    defaultMessage: 'The funds are already on Gitpay and available to pay out to whoever completes the PR'
-                  })}
-                  arrow
-                >
-                  <span style={{ display: 'inline-flex', alignItems: 'center', cursor: 'pointer', marginLeft: 2 }}>
-                    <InfoOutlined fontSize="small" style={{ color: '#888' }} />
-                  </span>
-                </Tooltip>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
-                <MoneyIcon fontSize="small" />
-                <Typography variant="h6" component="span">
-                  {task.values.available}
-                </Typography>
-                {taskData.paid && <Chip size="small" label="paid" />}
-              </div>
-            </SidebarItem>
-          )}
+            }
+            arrow
+          >
+            <Chip
+              icon={<VisibilityOff fontSize="small" style={{ color: 'inherit' }} />}
+              label={<FormattedMessage id="task.notListed.info" defaultMessage="Not listed" />}
+              color="warning"
+              size="small"
+              style={{ fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}
+            />
+          </Tooltip>
         </SidebarSection>
+      )}
+
+      {/* Top: Gitpay state + funded value */}
+      <SidebarSection>
+        {taskData.state && (
+          <SidebarItem>
+            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+              <FormattedMessage id="task.state.label" defaultMessage="State" />
+            </Typography>
+            <div>
+              <TaskStateStatus state={taskData.state} completed={taskCompleted} />
+            </div>
+          </SidebarItem>
+        )}
+        {task.values && task.values.available > 0 && (
+          <SidebarItem>
+            <div
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}
+            >
+              <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
+                <FormattedMessage id="task.value.funded.label" defaultMessage="Value funded" />
+              </Typography>
+              <Tooltip
+                title={intl.formatMessage({
+                  id: 'task.value.funded.tooltip',
+                  defaultMessage:
+                    'The funds are already on Gitpay and available to pay out to whoever completes the PR'
+                })}
+                arrow
+              >
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    marginLeft: 2
+                  }}
+                >
+                  <InfoOutlined fontSize="small" style={{ color: '#888' }} />
+                </span>
+              </Tooltip>
+            </div>
+            <div
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}
+            >
+              <MoneyIcon fontSize="small" />
+              <Typography variant="h6" component="span">
+                {task.values.available}
+              </Typography>
+              {taskData.paid && <Chip size="small" label="paid" />}
+            </div>
+          </SidebarItem>
+        )}
+      </SidebarSection>
 
       {/* Provider card: visibility + issue status */}
       <SidebarCard elevation={0} variant="outlined">
-        <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', fontWeight: 600, letterSpacing: 0.5 }}>
-          {taskData.provider
-            ? taskData.provider.charAt(0).toUpperCase() + taskData.provider.slice(1)
-            : <FormattedMessage id="task.provider.label" defaultMessage="Provider" />}
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ textTransform: 'uppercase', fontWeight: 600, letterSpacing: 0.5 }}
+        >
+          {taskData.provider ? (
+            taskData.provider.charAt(0).toUpperCase() + taskData.provider.slice(1)
+          ) : (
+            <FormattedMessage id="task.provider.label" defaultMessage="Provider" />
+          )}
         </Typography>
         <Divider sx={{ my: 1 }} />
         <SidebarSection>
-
           <SidebarItem>
             <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
               <FormattedMessage id="task.visibility.label" defaultMessage="Visibility" />
             </Typography>
             <div>
               {/* Use GitHub repo visibility if available, fallback to private flag */}
-              <IssuePublicStatus status={taskData.repoVisibility ? taskData.repoVisibility : (taskData.private ? 'private' : 'public')} />
+              <IssuePublicStatus
+                status={
+                  taskData.repoVisibility
+                    ? taskData.repoVisibility
+                    : taskData.private
+                      ? 'private'
+                      : 'public'
+                }
+              />
             </div>
           </SidebarItem>
-
-
 
           {taskData.status && (
             <SidebarItem>

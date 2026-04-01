@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Skeleton } from '@mui/material'
 import { DescriptionOutlined as NoDataIcon } from '@mui/icons-material'
 
 import {
@@ -20,23 +19,63 @@ import TablePlaceholder from './section-table.placeholder'
 import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
 
 type MetaDataProps = {
-  numeric: boolean
-  dataBaseKey: string
+  numeric?: boolean
+  dataBaseKey?: string
   label: string
   minWidth?: number
   width?: number
   align?: 'left' | 'right' | 'center'
 }
 
-const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {} }) => {
+interface ServerSidePaginationProps {
+  enabled: boolean
+  totalCount: number
+  page: number
+  rowsPerPage: number
+  onPageChange: (page: number) => void
+  onRowsPerPageChange: (rowsPerPage: number) => void
+}
+
+interface SectionTableProps {
+  tableData: { data: any[]; completed: boolean }
+  tableHeaderMetadata: Record<string, MetaDataProps>
+  customColumnRenderer?: Record<string, (item: any, rowData?: any) => React.ReactNode>
+  serverSidePagination?: ServerSidePaginationProps
+}
+
+const SectionTable = ({
+  tableData,
+  tableHeaderMetadata,
+  customColumnRenderer = {},
+  serverSidePagination
+}: SectionTableProps) => {
+  const isServerSide = !!serverSidePagination?.enabled
+
+  // Internal state — only active in client-side mode
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sortedBy, setSortedBy] = useState(null)
   const [sortDirection, setSortDirection] = useState('asc')
   const [sortedData, setSortedData] = useState(tableData.data)
 
+  // Keep last completed rows so pagination shows previous data dimmed
+  // instead of collapsing to skeletons between pages.
+  const previousRowsRef = useRef<any[]>(tableData.data)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
   useEffect(() => {
-    const newSortedData = sortData(tableData.data, sortedBy, sortDirection)
+    if (tableData.completed) {
+      previousRowsRef.current = tableData.data
+      setIsTransitioning(false)
+    } else if (isServerSide && previousRowsRef.current.length > 0) {
+      setIsTransitioning(true)
+    }
+  }, [tableData.completed, isServerSide])
+
+  useEffect(() => {
+    const newSortedData = isServerSide
+      ? tableData.data
+      : sortData(tableData.data, sortedBy, sortDirection)
     setSortedData(newSortedData)
   }, [tableData, sortedBy, sortDirection])
 
@@ -134,24 +173,51 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
     })
   }
 
+  // Resolve active page and rowsPerPage
+  const activePage = isServerSide ? (serverSidePagination.page ?? 0) : page
+  const activeRowsPerPage = isServerSide ? (serverSidePagination.rowsPerPage ?? 10) : rowsPerPage
+
   const handleChangePage = (event, newPage) => {
-    setPage(newPage)
+    if (isServerSide) {
+      serverSidePagination.onPageChange(newPage)
+    } else {
+      setPage(newPage)
+    }
   }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
+    const newRowsPerPage = parseInt(event.target.value, 10)
+    if (isServerSide) {
+      serverSidePagination.onRowsPerPageChange(newRowsPerPage)
+    } else {
+      setRowsPerPage(newRowsPerPage)
+      setPage(0)
+    }
   }
 
-  const emptyRows = sortedData.length
-    ? rowsPerPage - Math.min(rowsPerPage, sortedData.length - page * rowsPerPage)
-    : 0
+  // In server-side mode, all data returned is already the current page — no slicing needed
+  const displayedRows = isServerSide
+    ? sortedData
+    : sortedData.slice(
+        activePage * activeRowsPerPage,
+        activePage * activeRowsPerPage + activeRowsPerPage
+      )
+
+  const emptyRows = isServerSide
+    ? 0
+    : sortedData.length
+      ? activeRowsPerPage -
+        Math.min(activeRowsPerPage, sortedData.length - activePage * activeRowsPerPage)
+      : 0
+
+  const paginationCount = isServerSide ? (serverSidePagination.totalCount ?? 0) : sortedData.length
 
   const TableCellWithSortLogic = ({ fieldId, defaultMessage, sortHandler }) => (
     <TableSortLabel
-      active={fieldId === sortedBy && sortDirection !== 'none'}
+      active={!isServerSide && fieldId === sortedBy && sortDirection !== 'none'}
       direction={sortDirection as 'asc' | 'desc'}
-      onClick={() => sortHandler(fieldId)}
+      onClick={isServerSide ? undefined : () => sortHandler(fieldId)}
+      hideSortIcon={isServerSide}
     >
       {defaultMessage}
     </TableSortLabel>
@@ -197,22 +263,24 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
     <TableWrapper component={Paper}>
       <StyledTable>
         <TableHeadCustom />
-        <TableBody>
-          {!tableData.completed ? (
+        <TableBody
+          sx={{
+            opacity: isTransitioning ? 0.4 : 1,
+            pointerEvents: isTransitioning ? 'none' : 'auto',
+            transition: 'opacity 0.15s ease'
+          }}
+        >
+          {!tableData.completed && !isTransitioning ? (
             <TablePlaceholder
-              completed={tableData.completed}
-              size={Object.entries(tableHeaderMetadata).length}
+              rowCount={activeRowsPerPage}
+              columnCount={Object.keys(tableHeaderMetadata).length}
             />
           ) : (
-            sortedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((n) => (
+            (isTransitioning ? previousRowsRef.current : displayedRows).map((n) => (
               <TableRow key={n.id}>
                 {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
                   <StyledTableCell key={fieldId}>
-                    {!tableData.completed ? (
-                      <Skeleton variant="text" animation="wave" />
-                    ) : (
-                      <div>{handleCustomRenderer(fieldId, n) || '--'}</div>
-                    )}
+                    <div>{handleCustomRenderer(fieldId, n) || '--'}</div>
                   </StyledTableCell>
                 ))}
               </TableRow>
@@ -228,9 +296,9 @@ const SectionTable = ({ tableData, tableHeaderMetadata, customColumnRenderer = {
           <TableRow>
             <TablePagination
               colSpan={3}
-              count={sortedData.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
+              count={paginationCount}
+              rowsPerPage={activeRowsPerPage}
+              page={activePage}
               onPageChange={(e, page) => handleChangePage(e, page)}
               onRowsPerPageChange={handleChangeRowsPerPage}
               ActionsComponent={TablePaginationActions}

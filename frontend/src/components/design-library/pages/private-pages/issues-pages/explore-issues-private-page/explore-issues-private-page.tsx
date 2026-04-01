@@ -50,6 +50,7 @@ const ExploreIssuesPrivatePage = ({
             listLabels={listLabels}
             listLanguages={listLanguages}
             listTasks={listTasks}
+            serverSidePagination
           />
         </TopSection>
       </Container>

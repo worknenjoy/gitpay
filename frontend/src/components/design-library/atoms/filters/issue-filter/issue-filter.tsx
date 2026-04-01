@@ -70,30 +70,36 @@ const IssueFilter: React.FC<IssueFilterProps> = ({ onFilter, counts }) => {
       >
         <MenuItemCustom value={'all'}>
           {intl.formatMessage(messages.allTasks)}
-          <Chip
-            label={allIssues}
-            size="small"
-            variant="outlined"
-            sx={taskListState.tab === 'all' ? classes.chipActive : classes.chip}
-          />
+          {allIssues !== -1 && (
+            <Chip
+              label={allIssues}
+              size="small"
+              variant="outlined"
+              sx={taskListState.tab === 'all' ? classes.chipActive : classes.chip}
+            />
+          )}
         </MenuItemCustom>
         <MenuItemCustom value={'withBounties'}>
           {intl.formatMessage(messages.allPublicTasksWithBounties)}
-          <Chip
-            label={withBounties}
-            size="small"
-            variant="outlined"
-            sx={taskListState.tab === 'withBounties' ? classes.chipActive : classes.chip}
-          />
+          {withBounties !== -1 && (
+            <Chip
+              label={withBounties}
+              size="small"
+              variant="outlined"
+              sx={taskListState.tab === 'withBounties' ? classes.chipActive : classes.chip}
+            />
+          )}
         </MenuItemCustom>
         <MenuItemCustom value={'noBounties'}>
           {intl.formatMessage(messages.allPublicTasksNoBounties)}
-          <Chip
-            label={noBounties}
-            size="small"
-            variant="outlined"
-            sx={taskListState.tab === 'noBounties' ? classes.chipActive : classes.chip}
-          />
+          {noBounties !== -1 && (
+            <Chip
+              label={noBounties}
+              size="small"
+              variant="outlined"
+              sx={taskListState.tab === 'noBounties' ? classes.chipActive : classes.chip}
+            />
+          )}
         </MenuItemCustom>
       </Select>
     </FormControl>

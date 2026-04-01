@@ -48,12 +48,7 @@ const TaskStateStatus = ({ state, completed = true }: TaskStateStatusProps) => {
 
   return (
     <TaskStateStatusRoot>
-      <BaseStatus
-        classes={classes}
-        status={state}
-        statusList={statusList}
-        completed={completed}
-      />
+      <BaseStatus classes={classes} status={state} statusList={statusList} completed={completed} />
     </TaskStateStatusRoot>
   )
 }

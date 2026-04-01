@@ -12,7 +12,7 @@ const ExploreIssuesPage = ({
 }) => {
   useEffect(() => {
     filterTasks({})
-    listTasks({})
+    listTasks({ page: 0, limit: 10 })
   }, [])
 
   return (

@@ -16,7 +16,7 @@ const ExploreIssuesPage = ({
 
   useEffect(() => {
     filterTasks({})
-    listTasks({})
+    listTasks({ page: 0, limit: 10 })
   }, [history.location.pathname])
 
   return (
