@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { DescriptionOutlined as NoDataIcon } from '@mui/icons-material'
 
@@ -58,6 +58,19 @@ const SectionTable = ({
   const [sortDirection, setSortDirection] = useState('asc')
   const [sortedData, setSortedData] = useState(tableData.data)
 
+  // Keep last completed rows so pagination shows previous data dimmed
+  // instead of collapsing to skeletons between pages.
+  const previousRowsRef = useRef<any[]>(tableData.data)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
+  useEffect(() => {
+    if (tableData.completed) {
+      previousRowsRef.current = tableData.data
+      setIsTransitioning(false)
+    } else if (isServerSide && previousRowsRef.current.length > 0) {
+      setIsTransitioning(true)
+    }
+  }, [tableData.completed, isServerSide])
 
   useEffect(() => {
     const newSortedData = isServerSide
@@ -250,14 +263,20 @@ const SectionTable = ({
     <TableWrapper component={Paper}>
       <StyledTable>
         <TableHeadCustom />
-        <TableBody>
-          {!tableData.completed ? (
+        <TableBody
+          sx={{
+            opacity: isTransitioning ? 0.4 : 1,
+            pointerEvents: isTransitioning ? 'none' : 'auto',
+            transition: 'opacity 0.15s ease'
+          }}
+        >
+          {!tableData.completed && !isTransitioning ? (
             <TablePlaceholder
               rowCount={activeRowsPerPage}
               columnCount={Object.keys(tableHeaderMetadata).length}
             />
           ) : (
-            displayedRows.map((n) => (
+            (isTransitioning ? previousRowsRef.current : displayedRows).map((n) => (
               <TableRow key={n.id}>
                 {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
                   <StyledTableCell key={fieldId}>
