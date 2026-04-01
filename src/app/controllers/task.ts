@@ -58,7 +58,13 @@ export const listTasks = async (req: any, res: any) => {
     }
 
     const data = await taskSearch(query)
-    res.send(data)
+    // When paginated, taskSearch returns { rows, count }; otherwise a plain array
+    if (data && !Array.isArray(data) && 'rows' in data && 'count' in data) {
+      const { rows, count } = data as { rows: any[]; count: number }
+      res.send({ data: rows, totalCount: count })
+    } else {
+      res.send(data)
+    }
   } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log(error)

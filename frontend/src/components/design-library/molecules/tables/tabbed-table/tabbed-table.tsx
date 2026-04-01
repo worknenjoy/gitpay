@@ -31,7 +31,7 @@ const TabbedTable = ({ tabs, activeTab, onChange }: TabbedTableProps) => {
 
   const { label, value, table } = currentTab || {}
   const { tableData, tableHeaderMetadata, customColumnRenderer } = table || {
-    tableData: { data: [] },
+    tableData: { data: [], completed: false },
     tableHeaderMetadata: [],
     customColumnRenderer: {}
   }

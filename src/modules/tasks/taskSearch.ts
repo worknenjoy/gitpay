@@ -80,9 +80,36 @@ export async function taskSearch(searchParams: any) {
   if (searchParams.status) whereBase.status = searchParams.status
   if (searchParams.url) whereBase.url = searchParams.url
 
+  // hasBounty filter: 'true' → value > 0, 'false' → value <= 0
+  if (searchParams.hasBounty === 'true' || searchParams.hasBounty === true) {
+    whereBase.value = { [Op.gt]: 0 }
+  } else if (searchParams.hasBounty === 'false' || searchParams.hasBounty === false) {
+    whereBase.value = { [Op.lte]: 0 }
+  }
+
   const labelIds = Array.isArray(searchParams.labelIds)
     ? searchParams.labelIds.map((n: any) => parseInt(n, 10)).filter(Number.isFinite)
     : []
+
+  const languageIds = Array.isArray(searchParams.languageIds)
+    ? searchParams.languageIds.map((n: any) => parseInt(n, 10)).filter(Number.isFinite)
+    : searchParams.languageIds
+      ? [searchParams.languageIds]
+          .flat()
+          .map((n: any) => parseInt(n, 10))
+          .filter(Number.isFinite)
+      : []
+
+  // Pagination params
+  const isPaginated = searchParams.limit != null
+  const limit = isPaginated ? parseInt(searchParams.limit, 10) : undefined
+  const computedOffset = isPaginated
+    ? searchParams.offset != null
+      ? parseInt(searchParams.offset, 10)
+      : searchParams.page != null
+        ? parseInt(searchParams.page, 10) * limit!
+        : 0
+    : undefined
 
   const ordersInclude = {
     model: currentModels.Order,
@@ -161,9 +188,14 @@ export async function taskSearch(searchParams: any) {
                   model: currentModels.ProgrammingLanguage,
                   as: 'ProgrammingLanguages',
                   attributes: ['id', 'name'],
-                  through: { attributes: [] }
+                  through: { attributes: [] },
+                  ...(languageIds.length > 0 && {
+                    where: { id: { [Op.in]: languageIds } },
+                    required: true
+                  })
                 }
-              ]
+              ],
+              ...(languageIds.length > 0 && { required: true })
             },
             ordersInclude
           ],
@@ -179,6 +211,12 @@ export async function taskSearch(searchParams: any) {
 
     projects.forEach((p: any) => p.Tasks.forEach((t: any) => tasks.push(t)))
     attachLabelsVirtual(tasks)
+
+    if (isPaginated) {
+      const count = tasks.length
+      const rows = tasks.slice(computedOffset, computedOffset! + limit!)
+      return { rows, count }
+    }
     return tasks
   }
 
@@ -207,37 +245,64 @@ export async function taskSearch(searchParams: any) {
     makeLabelJsonAttr('Task')
   ]
 
+  // Build the Project include, optionally requiring language match
+  const projectInclude: any = {
+    model: currentModels.Project,
+    attributes: ['id', 'name', 'repo', 'OrganizationId'],
+    include: [
+      {
+        model: currentModels.ProgrammingLanguage,
+        as: 'ProgrammingLanguages',
+        attributes: ['id', 'name'],
+        through: { attributes: [] },
+        ...(languageIds.length > 0 && {
+          where: { id: { [Op.in]: languageIds } },
+          required: true
+        })
+      }
+    ],
+    ...(languageIds.length > 0 && { required: true })
+  }
+
+  const includeBase = [
+    {
+      model: currentModels.User,
+      attributes: ['id', 'provider', 'name', 'username', 'picture_url', 'country', 'language']
+    },
+    {
+      model: currentModels.Assign,
+      separate: true,
+      attributes: ['id', 'status', 'message', 'createdAt', 'TaskId', 'userId'],
+      include: [
+        { model: currentModels.User, attributes: ['id', 'username', 'picture_url', 'name'] }
+      ],
+      order: [['createdAt', 'DESC']]
+    },
+    projectInclude,
+    ordersInclude
+  ]
+
+  if (isPaginated) {
+    const result = await currentModels.Task.findAndCountAll({
+      where: whereTasks,
+      attributes: taskAttrs,
+      include: includeBase,
+      distinct: true,
+      limit,
+      offset: computedOffset,
+      order: [
+        ['status', 'DESC'],
+        ['id', 'DESC']
+      ]
+    })
+    attachLabelsVirtual(result.rows)
+    return { rows: result.rows, count: result.count }
+  }
+
   const rows = await currentModels.Task.findAll({
     where: whereTasks,
     attributes: taskAttrs,
-    include: [
-      {
-        model: currentModels.User,
-        attributes: ['id', 'provider', 'name', 'username', 'picture_url', 'country', 'language']
-      },
-      {
-        model: currentModels.Assign,
-        separate: true,
-        attributes: ['id', 'status', 'message', 'createdAt', 'TaskId', 'userId'],
-        include: [
-          { model: currentModels.User, attributes: ['id', 'username', 'picture_url', 'name'] }
-        ],
-        order: [['createdAt', 'DESC']]
-      },
-      {
-        model: currentModels.Project,
-        attributes: ['id', 'name', 'repo', 'OrganizationId'],
-        include: [
-          {
-            model: currentModels.ProgrammingLanguage,
-            as: 'ProgrammingLanguages',
-            attributes: ['id', 'name'],
-            through: { attributes: [] }
-          }
-        ]
-      },
-      ordersInclude
-    ],
+    include: includeBase,
     distinct: true,
     order: [
       ['status', 'DESC'],
@@ -247,13 +312,12 @@ export async function taskSearch(searchParams: any) {
 
   attachLabelsVirtual(rows)
 
+  // Legacy in-memory language filter for non-paginated path (kept for backward compat
+  // when languageIds filter is not moved into the join for some reason)
+  if (languageIds.length === 0) return rows
+
   return rows.filter((task: any) => {
     const project = task.Project
-    if (searchParams.languageIds && searchParams.languageIds.length > 0) {
-      return project?.ProgrammingLanguages?.some((pl: any) =>
-        searchParams.languageIds.includes(`${pl.id}`)
-      )
-    }
-    return true
+    return project?.ProgrammingLanguages?.some((pl: any) => languageIds.includes(pl.id))
   })
 }

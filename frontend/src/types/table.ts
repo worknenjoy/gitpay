@@ -6,7 +6,7 @@ export type TableTabsContentProps = {
     data: Array<any>
   }
   tableHeaderMetadata: any
-  customColumnRenderer?: { [key: string]: (value: any, rowData: any) => React.ReactNode }
+  customColumnRenderer?: { [key: string]: (value: any, rowData?: any) => React.ReactNode }
 }
 
 export type TableTabsProps = {

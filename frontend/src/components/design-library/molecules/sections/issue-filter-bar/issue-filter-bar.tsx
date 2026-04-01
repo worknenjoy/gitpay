@@ -42,6 +42,9 @@ interface TaskFiltersProps {
   filterTasks?: any
   languages: any
   listLanguages?: any
+  // Server-side mode props
+  serverSideMode?: boolean
+  onServerFilterChange?: (filters: Record<string, any>) => void
 }
 
 const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
@@ -51,16 +54,17 @@ const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
   listTasks,
   filterTasks,
   languages,
-  listLanguages
+  listLanguages,
+  serverSideMode = false,
+  onServerFilterChange
 }) => {
   // Keep the currently applied filters here
   const [activeFilters, setActiveFilters] = React.useState<Record<string, any>>({})
 
-  // Wrap listTasks to merge new partial filters with the current ones
+  // Client-side mode: merge new partial filters and call listTasks
   const mergedListTasks = useCallback(
     (partial: Record<string, any> = {}) => {
       setActiveFilters((prev) => {
-        // Merge and remove keys explicitly set to undefined (to "clear" a filter)
         const next = Object.fromEntries(
           Object.entries({ ...prev, ...partial }).filter(([, v]) => v !== undefined)
         )
@@ -71,7 +75,25 @@ const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
     [listTasks]
   )
 
+  // Server-side mode: merge new partial filters and notify parent
+  const mergedServerFilters = useCallback(
+    (partial: Record<string, any> = {}) => {
+      setActiveFilters((prev) => {
+        const next = Object.fromEntries(
+          Object.entries({ ...prev, ...partial }).filter(([, v]) => v !== undefined)
+        )
+        onServerFilterChange?.(next)
+        return next
+      })
+    },
+    [onServerFilterChange]
+  )
+
   const counts = useMemo(() => {
+    if (serverSideMode) {
+      // Counts are not meaningful when only the current page is loaded
+      return { allIssues: -1, withBounties: -1, noBounties: -1 }
+    }
     const base = issues ?? []
     const toNum = (v: any) => (typeof v === 'number' ? v : parseFloat(v)) || 0
     return {
@@ -79,37 +101,58 @@ const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
       withBounties: base.filter((t: any) => toNum(t.value) > 0).length,
       noBounties: base.filter((t: any) => toNum(t.value) === 0).length
     }
-  }, [issues])
+  }, [issues, serverSideMode])
 
   const handleFilter = (value: string) => {
-    switch (value) {
-      case 'withBounties':
-        filterTasks('issuesWithBounties')
-        break
-      case 'noBounties':
-        filterTasks('contribution')
-        break
-      default:
-        filterTasks('all')
+    if (serverSideMode) {
+      switch (value) {
+        case 'withBounties':
+          mergedServerFilters({ hasBounty: 'true' })
+          break
+        case 'noBounties':
+          mergedServerFilters({ hasBounty: 'false' })
+          break
+        default:
+          mergedServerFilters({ hasBounty: undefined })
+      }
+    } else {
+      switch (value) {
+        case 'withBounties':
+          filterTasks('issuesWithBounties')
+          break
+        case 'noBounties':
+          filterTasks('contribution')
+          break
+        default:
+          filterTasks('all')
+      }
     }
   }
 
   const handleStatusFilter = (value: string) => {
-    switch (value) {
-      case 'all':
-        mergedListTasks({ status: undefined })
-        break
-      case 'open':
-        mergedListTasks({ status: 'open' })
-        break
-      case 'closed':
-        mergedListTasks({ status: 'closed' })
-        break
-      default:
-        mergedListTasks({})
-        break
+    const statusValue = value === 'all' ? undefined : value
+    if (serverSideMode) {
+      mergedServerFilters({ status: statusValue })
+    } else {
+      switch (value) {
+        case 'all':
+          mergedListTasks({ status: undefined })
+          break
+        case 'open':
+          mergedListTasks({ status: 'open' })
+          break
+        case 'closed':
+          mergedListTasks({ status: 'closed' })
+          break
+        default:
+          mergedListTasks({})
+          break
+      }
     }
   }
+
+  // The listTasks prop passed to sub-filters (labels/languages)
+  const subFilterListTasks = serverSideMode ? mergedServerFilters : mergedListTasks
 
   return (
     <AppBar position="static" color="transparent" elevation={0} sx={{ md: { p: 0, m: 0 } }}>
@@ -121,13 +164,13 @@ const IssueFiltersBar: React.FC<TaskFiltersProps> = ({
           <IssueFilterStatus onFilter={handleStatusFilter} />
         </IssueStatusFilterWrapper>
         <LabelsFilterWrapper>
-          <LabelsFilter labels={labels} listLabels={listLabels} listTasks={mergedListTasks} />
+          <LabelsFilter labels={labels} listLabels={listLabels} listTasks={subFilterListTasks} />
         </LabelsFilterWrapper>
         <LanguageFilterWrapper>
           <LanguageFilter
             languages={languages}
             listLanguages={listLanguages}
-            listTasks={mergedListTasks}
+            listTasks={subFilterListTasks}
           />
         </LanguageFilterWrapper>
       </FiltersToolbar>
