@@ -177,7 +177,8 @@ export const tasks = (
     filteredData: [],
     filterType: 'all',
     filterValue: null,
-    filterAdditional: null
+    filterAdditional: null,
+    totalCount: null
   },
   action
 ) => {
@@ -185,7 +186,12 @@ export const tasks = (
     case LIST_TASK_REQUESTED:
       return { ...state, completed: action.completed }
     case LIST_TASK_SUCCESS:
-      return { ...state, completed: action.completed, data: action.data }
+      return {
+        ...state,
+        completed: action.completed,
+        data: action.data,
+        totalCount: action.totalCount ?? null
+      }
     case LIST_TASK_ERROR:
       return { ...state, completed: action.completed, error: action.error }
     case FETCH_PROJECT_REQUESTED:
