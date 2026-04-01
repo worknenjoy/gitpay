@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { DescriptionOutlined as NoDataIcon } from '@mui/icons-material'
 
@@ -58,19 +58,6 @@ const SectionTable = ({
   const [sortDirection, setSortDirection] = useState('asc')
   const [sortedData, setSortedData] = useState(tableData.data)
 
-  // Server-side: keep last completed rows so we can show them dimmed while
-  // the next page is loading instead of collapsing to a skeleton.
-  const previousRowsRef = useRef<any[]>(tableData.data)
-  const [isTransitioning, setIsTransitioning] = useState(false)
-
-  useEffect(() => {
-    if (tableData.completed) {
-      previousRowsRef.current = tableData.data
-      setIsTransitioning(false)
-    } else if (isServerSide && previousRowsRef.current.length > 0) {
-      setIsTransitioning(true)
-    }
-  }, [tableData.completed, isServerSide])
 
   useEffect(() => {
     const newSortedData = isServerSide
@@ -263,20 +250,14 @@ const SectionTable = ({
     <TableWrapper component={Paper}>
       <StyledTable>
         <TableHeadCustom />
-        <TableBody
-          sx={{
-            opacity: isTransitioning ? 0.4 : 1,
-            pointerEvents: isTransitioning ? 'none' : 'auto',
-            transition: 'opacity 0.15s ease'
-          }}
-        >
-          {!tableData.completed && !isTransitioning ? (
+        <TableBody>
+          {!tableData.completed ? (
             <TablePlaceholder
-              completed={tableData.completed}
-              size={Object.entries(tableHeaderMetadata).length}
+              rowCount={activeRowsPerPage}
+              columnCount={Object.keys(tableHeaderMetadata).length}
             />
           ) : (
-            (isTransitioning ? previousRowsRef.current : displayedRows).map((n) => (
+            displayedRows.map((n) => (
               <TableRow key={n.id}>
                 {Object.entries(tableHeaderMetadata).map(([fieldId]) => (
                   <StyledTableCell key={fieldId}>

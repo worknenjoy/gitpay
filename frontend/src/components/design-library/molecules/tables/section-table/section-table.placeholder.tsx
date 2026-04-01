@@ -3,15 +3,18 @@ import { TableRow } from '@mui/material'
 import { Skeleton } from '@mui/material'
 import { StyledTableCell } from './section-table.styles'
 
-const TablePlaceholder: React.FC<{ size: number; completed: boolean }> = ({ size, completed }) => (
+const ROW_HEIGHT = 53
+
+const TablePlaceholder: React.FC<{ rowCount: number; columnCount: number }> = ({
+  rowCount,
+  columnCount
+}) => (
   <React.Fragment>
-    {[...Array(size)].map((_, rowIndex) => (
-      <TableRow key={rowIndex}>
-        {[...Array(size)].map((_, cellIndex) => (
+    {[...Array(rowCount)].map((_, rowIndex) => (
+      <TableRow key={rowIndex} style={{ height: ROW_HEIGHT }}>
+        {[...Array(columnCount)].map((_, cellIndex) => (
           <StyledTableCell key={cellIndex}>
-            <div style={{ width: 80, padding: '8px 4px' }}>
-              {!completed ? <Skeleton variant="text" animation="wave" /> : <div />}
-            </div>
+            <Skeleton variant="text" animation="wave" />
           </StyledTableCell>
         ))}
       </TableRow>
