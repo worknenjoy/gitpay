@@ -21,6 +21,7 @@ import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-b
 type MetaDataProps = {
   numeric?: boolean
   dataBaseKey?: string
+  serverSortKey?: string
   label: string
   minWidth?: number
   width?: number
@@ -34,6 +35,7 @@ interface ServerSidePaginationProps {
   rowsPerPage: number
   onPageChange: (page: number) => void
   onRowsPerPageChange: (rowsPerPage: number) => void
+  onSortChange?: (sortBy: string, sortDirection: 'asc' | 'desc' | 'none') => void
 }
 
 interface SectionTableProps {
@@ -158,7 +160,7 @@ const SectionTable = ({
     setSortedData(newSortedData)
   }
 
-  const sortHandler = (fieldId) => {
+  const sortHandler = (fieldId, serverSortKey?: string) => {
     setSortedBy((prevSortedBy) => {
       const newSortDirection =
         prevSortedBy === fieldId
@@ -168,7 +170,13 @@ const SectionTable = ({
               ? 'none'
               : 'asc'
           : 'asc'
-      handleSort(fieldId, newSortDirection)
+
+      if (isServerSide) {
+        setSortDirection(newSortDirection)
+        serverSidePagination.onSortChange?.(serverSortKey ?? fieldId, newSortDirection as any)
+      } else {
+        handleSort(fieldId, newSortDirection)
+      }
       return fieldId
     })
   }
@@ -212,16 +220,19 @@ const SectionTable = ({
 
   const paginationCount = isServerSide ? (serverSidePagination.totalCount ?? 0) : sortedData.length
 
-  const TableCellWithSortLogic = ({ fieldId, defaultMessage, sortHandler }) => (
-    <TableSortLabel
-      active={!isServerSide && fieldId === sortedBy && sortDirection !== 'none'}
-      direction={sortDirection as 'asc' | 'desc'}
-      onClick={isServerSide ? undefined : () => sortHandler(fieldId)}
-      hideSortIcon={isServerSide}
-    >
-      {defaultMessage}
-    </TableSortLabel>
-  )
+  const TableCellWithSortLogic = ({ fieldId, metadata, sortHandler }) => {
+    const isSortable = isServerSide ? !!metadata.serverSortKey : !!metadata.sortable
+    return (
+      <TableSortLabel
+        active={isSortable && fieldId === sortedBy && sortDirection !== 'none'}
+        direction={sortDirection === 'none' ? 'asc' : (sortDirection as 'asc' | 'desc')}
+        onClick={isSortable ? () => sortHandler(fieldId, metadata.serverSortKey) : undefined}
+        hideSortIcon={!isSortable}
+      >
+        {metadata.label}
+      </TableSortLabel>
+    )
+  }
 
   const TableHeadCustom = () => (
     <TableHead>
@@ -231,7 +242,7 @@ const SectionTable = ({
             <TableCellWithSortLogic
               sortHandler={sortHandler}
               fieldId={fieldId}
-              defaultMessage={metadata.label}
+              metadata={metadata}
             />
           </TableCell>
         ))}

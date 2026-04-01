@@ -111,6 +111,19 @@ export async function taskSearch(searchParams: any) {
         : 0
     : undefined
 
+  // Sort params — only direct Task columns are supported
+  const SORTABLE_COLUMNS: Record<string, string> = {
+    title: 'title',
+    status: 'status',
+    value: 'value',
+    createdAt: 'createdAt'
+  }
+  const sortCol = searchParams.sortBy && SORTABLE_COLUMNS[searchParams.sortBy]
+  const sortDir = searchParams.sortDirection === 'asc' ? 'ASC' : 'DESC'
+  const orderClause: any[] = sortCol
+    ? [[sortCol, sortDir]]
+    : [['status', 'DESC'], ['id', 'DESC']]
+
   const ordersInclude = {
     model: currentModels.Order,
     separate: true,
@@ -290,10 +303,7 @@ export async function taskSearch(searchParams: any) {
       distinct: true,
       limit,
       offset: computedOffset,
-      order: [
-        ['status', 'DESC'],
-        ['id', 'DESC']
-      ]
+      order: orderClause
     })
     attachLabelsVirtual(result.rows)
     return { rows: result.rows, count: result.count }
@@ -304,10 +314,7 @@ export async function taskSearch(searchParams: any) {
     attributes: taskAttrs,
     include: includeBase,
     distinct: true,
-    order: [
-      ['status', 'DESC'],
-      ['id', 'DESC']
-    ]
+    order: orderClause
   })
 
   attachLabelsVirtual(rows)

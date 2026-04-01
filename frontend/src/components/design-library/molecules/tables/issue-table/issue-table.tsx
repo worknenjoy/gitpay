@@ -51,24 +51,25 @@ export const IssuesTable = ({
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(defaultRowsPerPage)
   const [currentFilters, setCurrentFilters] = React.useState<Record<string, any>>({})
+  const [currentSort, setCurrentSort] = React.useState<{ sortBy?: string; sortDirection?: string }>({})
 
   // Called by IssueFiltersBar when any filter changes (server-side mode)
   const handleServerFilterChange = React.useCallback(
     (filters: Record<string, any>) => {
       setCurrentFilters(filters)
       setPage(0)
-      listTasks({ ...filters, page: 0, limit: rowsPerPage })
+      listTasks({ ...filters, page: 0, limit: rowsPerPage, ...currentSort })
     },
-    [listTasks, rowsPerPage]
+    [listTasks, rowsPerPage, currentSort]
   )
 
   // Called by SectionTable when page changes (server-side mode)
   const handlePageChange = React.useCallback(
     (newPage: number) => {
       setPage(newPage)
-      listTasks({ ...currentFilters, page: newPage, limit: rowsPerPage })
+      listTasks({ ...currentFilters, page: newPage, limit: rowsPerPage, ...currentSort })
     },
-    [listTasks, currentFilters, rowsPerPage]
+    [listTasks, currentFilters, rowsPerPage, currentSort]
   )
 
   // Called by SectionTable when rows-per-page changes (server-side mode)
@@ -76,9 +77,20 @@ export const IssuesTable = ({
     (newRowsPerPage: number) => {
       setRowsPerPage(newRowsPerPage)
       setPage(0)
-      listTasks({ ...currentFilters, page: 0, limit: newRowsPerPage })
+      listTasks({ ...currentFilters, page: 0, limit: newRowsPerPage, ...currentSort })
     },
-    [listTasks, currentFilters]
+    [listTasks, currentFilters, currentSort]
+  )
+
+  // Called by SectionTable when a column header is clicked (server-side mode)
+  const handleSortChange = React.useCallback(
+    (sortBy: string, sortDirection: 'asc' | 'desc' | 'none') => {
+      const newSort = sortDirection === 'none' ? {} : { sortBy, sortDirection }
+      setCurrentSort(newSort)
+      setPage(0)
+      listTasks({ ...currentFilters, page: 0, limit: rowsPerPage, ...newSort })
+    },
+    [listTasks, currentFilters, rowsPerPage]
   )
 
   return (
@@ -106,7 +118,8 @@ export const IssuesTable = ({
                 page,
                 rowsPerPage,
                 onPageChange: handlePageChange,
-                onRowsPerPageChange: handleRowsPerPageChange
+                onRowsPerPageChange: handleRowsPerPageChange,
+                onSortChange: handleSortChange
               }
             : undefined
         }

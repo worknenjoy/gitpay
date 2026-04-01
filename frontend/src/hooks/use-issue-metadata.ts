@@ -44,18 +44,21 @@ const useIssueMetadata = (options: UseIssueMetadataOptions = {}) => {
     const baseMetadata = {
       issue: {
         sortable: true,
+        serverSortKey: 'title',
         numeric: false,
         dataBaseKey: 'title',
         label: intl.formatMessage(messages.issue)
       },
       status: {
         sortable: true,
+        serverSortKey: 'status',
         numeric: false,
         dataBaseKey: 'description',
         label: intl.formatMessage(messages.status)
       },
       value: {
         sortable: true,
+        serverSortKey: 'value',
         numeric: true,
         dataBaseKey: 'value',
         label: intl.formatMessage(messages.amount)
@@ -74,6 +77,7 @@ const useIssueMetadata = (options: UseIssueMetadataOptions = {}) => {
       },
       createdAt: {
         sortable: true,
+        serverSortKey: 'createdAt',
         numeric: false,
         dataBaseKey: 'createdAt',
         label: intl.formatMessage(messages.createdAt)
