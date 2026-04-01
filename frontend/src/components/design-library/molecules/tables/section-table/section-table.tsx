@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Skeleton } from '@mui/material'
 import { DescriptionOutlined as NoDataIcon } from '@mui/icons-material'
 
 import {
