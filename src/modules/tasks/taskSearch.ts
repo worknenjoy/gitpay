@@ -122,7 +122,10 @@ export async function taskSearch(searchParams: any) {
   const sortDir = searchParams.sortDirection === 'asc' ? 'ASC' : 'DESC'
   const orderClause: any[] = sortCol
     ? [[sortCol, sortDir]]
-    : [['status', 'DESC'], ['id', 'DESC']]
+    : [
+        ['status', 'DESC'],
+        ['id', 'DESC']
+      ]
 
   const ordersInclude = {
     model: currentModels.Order,

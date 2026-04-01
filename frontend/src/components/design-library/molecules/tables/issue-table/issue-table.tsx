@@ -51,7 +51,9 @@ export const IssuesTable = ({
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(defaultRowsPerPage)
   const [currentFilters, setCurrentFilters] = React.useState<Record<string, any>>({})
-  const [currentSort, setCurrentSort] = React.useState<{ sortBy?: string; sortDirection?: string }>({})
+  const [currentSort, setCurrentSort] = React.useState<{ sortBy?: string; sortDirection?: string }>(
+    {}
+  )
 
   // Called by IssueFiltersBar when any filter changes (server-side mode)
   const handleServerFilterChange = React.useCallback(
