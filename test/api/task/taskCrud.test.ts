@@ -236,16 +236,17 @@ describe('Task CRUD', () => {
     expect(mailSpySuccess).to.have.been.called()
   })
 
-  xit('should receive code on the platform from github auth to the redirected url for private tasks but invalid code', async () => {
+  it('should redirect to profile with an error when private task auth returns an invalid code', async () => {
     const res = await agent
       .get(
         '/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7'
       )
-      .expect(401)
+      .expect(302)
 
-    expect(res.statusCode).to.equal(401)
-    expect(res.body.error).to.equal('bad_verification_code')
-    expect(res.body).to.exist
+    expect(res.statusCode).to.equal(302)
+    expect(res.headers.location).to.equal(
+      `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=bad_verification_code`
+    )
   })
 
   it('should receive code on the platform from github auth to the redirected url for private tasks with a valid code', async () => {
