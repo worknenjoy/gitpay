@@ -75,7 +75,7 @@ You can do this with: `cp .env.example .env`
 1. Install by running the following command: `brew install postgres`
 2. Start the command service by running the following command: `brew services start postgresql`
 3. Create a postgres user by running the following command: `createuser postgres -s`
-4. Login into the Postgres cli by running the following command: `psql -U postgres`
+4. Log in to the Postgres CLI by running the following command: `psql -U postgres`
 5. Create a test database by typing the following command: `create database gitpay_test;`
 6. Create a dev database by running the following command: `create database gitpay_dev;`
 7. Run this command to exit: `\q`
@@ -85,7 +85,7 @@ You can do this with: `cp .env.example .env`
 1. Install by running the following command: `sudo apt install postgresql`
 2. Start the command service by running the following command: `sudo service postgresql start`
 3. Create a postgres user by running the following command: `createuser postgres -s`
-4. Login into the Postgres cli by running the following command: `sudo -i -u postgres`
+4. Log in to the Postgres CLI by running the following command: `sudo -i -u postgres`
 5. Access the Postgres prompt by running the following command: `psql`
 6. Make sure the Postgres user has the correct password by typing the following command: `ALTER USER postgres WITH PASSWORD 'postgres';`
 7. Create a test database by running the following command: `CREATE DATABASE gitpay_test;`
@@ -94,9 +94,9 @@ You can do this with: `cp .env.example .env`
 
 #### Install PostgreSQL (Windows)
 
-1. Download: access `https://www.enterprisedb.com/downloads/postgres-postgresql-downloads` and download the exe file for windows;
-2. Install: proceed the installation with the postgreSQL setup wizard; once it is requested to provide a password for the database superuser, type `postgres`.
-3. Login into postgres: `psql -U postgres`
+1. Download: access `https://www.enterprisedb.com/downloads/postgres-postgresql-downloads` and download the `.exe` file for Windows;
+2. Install: proceed with the PostgreSQL setup wizard; once it asks for a password for the database superuser, type `postgres`.
+3. Log in to Postgres: `psql -U postgres`
 4. Make sure postgres user has the correct password: `ALTER USER postgres WITH PASSWORD 'postgres';`
 5. Create test database: `CREATE DATABASE gitpay_test;`
 6. Create a dev database: `CREATE DATABASE gitpay_dev;`
