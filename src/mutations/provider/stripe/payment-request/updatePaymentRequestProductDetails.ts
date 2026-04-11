@@ -6,8 +6,12 @@ export async function updatePaymentRequestProductDetails(
   stripeAccount?: string
 ) {
   const stripe = getStripeClient()
-  return stripe.products.update(productId, {
-    name: params.name,
-    description: params.description ?? undefined
-  }, { stripeAccount })
+  return stripe.products.update(
+    productId,
+    {
+      name: params.name,
+      description: params.description ?? undefined
+    },
+    { stripeAccount }
+  )
 }

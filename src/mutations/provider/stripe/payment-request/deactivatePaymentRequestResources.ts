@@ -11,7 +11,11 @@ export async function deactivatePaymentRequestStripeResources(
 
   if (resources.paymentLinkId) {
     try {
-      await stripe.paymentLinks.update(resources.paymentLinkId, { active: false }, { stripeAccount })
+      await stripe.paymentLinks.update(
+        resources.paymentLinkId,
+        { active: false },
+        { stripeAccount }
+      )
     } catch (error) {
       console.error('Failed to deactivate Stripe payment link', error)
     }

@@ -29,41 +29,49 @@ export async function createPaymentRequestStripeResources(
 
   const user = await findUser(params.metadata?.user_id ?? null)
 
-  const product = await stripe.products.create({
-    name: params.title,
-    description: params.description,
-    metadata: {
-      payment_request_id: params.metadata?.payment_request_id ?? null,
-      user_id: params.metadata?.user_id ?? null
+  const product = await stripe.products.create(
+    {
+      name: params.title,
+      description: params.description,
+      metadata: {
+        payment_request_id: params.metadata?.payment_request_id ?? null,
+        user_id: params.metadata?.user_id ?? null
+      }
     },
-  },
-  {
+    {
       stripeAccount: user?.account_id || undefined
-  })
+    }
+  )
 
   const finalAmount = params.amount ? Math.round(params.amount * 100) : 0
   const finalPriceData = params.custom_amount
     ? { custom_unit_amount: { enabled: true } }
     : { unit_amount: finalAmount }
 
-  const price = await stripe.prices.create({
-    ...finalPriceData,
-    currency: params.currency,
-    product: product.id,
-    metadata: {
-      payment_request_id: params.metadata?.payment_request_id ?? null,
-      user_id: params.metadata?.user_id ?? null
+  const price = await stripe.prices.create(
+    {
+      ...finalPriceData,
+      currency: params.currency,
+      product: product.id,
+      metadata: {
+        payment_request_id: params.metadata?.payment_request_id ?? null,
+        user_id: params.metadata?.user_id ?? null
+      }
+    },
+    {
+      stripeAccount: user?.account_id || undefined
     }
-  }, {
-    stripeAccount: user?.account_id || undefined
-  })
+  )
 
-  const paymentLink = await stripe.paymentLinks.create({
-    line_items: [{ price: price.id, quantity: 1 }],
-    application_fee_amount: Math.round(finalAmount * 0.08),
-  }, {
-    stripeAccount: user?.account_id || undefined
-  })
+  const paymentLink = await stripe.paymentLinks.create(
+    {
+      line_items: [{ price: price.id, quantity: 1 }],
+      application_fee_amount: Math.round(finalAmount * 0.08)
+    },
+    {
+      stripeAccount: user?.account_id || undefined
+    }
+  )
 
   return {
     productId: product.id,

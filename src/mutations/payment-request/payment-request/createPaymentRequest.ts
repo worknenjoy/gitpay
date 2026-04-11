@@ -88,10 +88,14 @@ export async function createPaymentRequest(
         { transaction }
       )
 
-      await updatePaymentRequestPaymentLinkMetadata(paymentLinkId, {
-        payment_request_id: createPaymentRequest.id,
-        user_id: createPaymentRequest.userId
-      }, stripeAccount)
+      await updatePaymentRequestPaymentLinkMetadata(
+        paymentLinkId,
+        {
+          payment_request_id: createPaymentRequest.id,
+          user_id: createPaymentRequest.userId
+        },
+        stripeAccount
+      )
 
       return createPaymentRequest
     } catch (error) {
