@@ -36,7 +36,7 @@ export const handleChargeRefundedIssue = async (event: any) => {
         user.dataValues,
         i18n.__('mail.webhook.payment.refund.subject'),
         i18n.__('mail.webhook.payment.refund.message', {
-          amount: (event.data.object.amount / 100).toString()
+          amount: (event.data.object.amount_refunded / 100).toString()
         })
       )
     }
