@@ -1,6 +1,6 @@
 import { getStripeClient } from '../../../../provider/stripe/client'
 
-export async function listPaymentLinkLineItems(paymentLinkId: string, limit = 1) {
+export async function listPaymentLinkLineItems(paymentLinkId: string, limit = 1, stripeAccount?: string) {
   const stripe = getStripeClient()
-  return stripe.paymentLinks.listLineItems(paymentLinkId, { limit })
+  return stripe.paymentLinks.listLineItems(paymentLinkId, { limit }, { stripeAccount })
 }

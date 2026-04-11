@@ -3,7 +3,8 @@ import type { StripePaymentRequestMetadata } from './createPaymentRequestResourc
 
 export async function updatePaymentRequestPaymentLinkMetadata(
   paymentLinkId: string,
-  metadata: StripePaymentRequestMetadata
+  metadata: StripePaymentRequestMetadata,
+  stripeAccount?: string
 ) {
   const stripe = getStripeClient()
 
@@ -12,5 +13,5 @@ export async function updatePaymentRequestPaymentLinkMetadata(
       payment_request_id: metadata.payment_request_id ?? null,
       user_id: metadata.user_id ?? null
     }
-  })
+  }, { stripeAccount })
 }

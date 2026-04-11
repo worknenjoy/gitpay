@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import Stripe from '../../../client/payment/stripe'
+import checkoutSessionCompleted from '../../../modules/webhooks/checkoutSessionCompleted'
 import { payoutCreated } from '../../../modules/webhooks/payouts'
 import { payoutUpdated } from '../../../modules/webhooks/payouts'
 import { payoutFailed } from '../../../modules/webhooks/payouts'
@@ -46,6 +47,10 @@ exports.webhookConnect = async (req: any, res: any) => {
         return await payoutPaid(event, req, res)
       case 'payout.updated':
         return await payoutUpdated(event, req, res)
+      case 'checkout.session.completed':
+        return await checkoutSessionCompleted(event, req, res)
+      case 'checkout.session.async_payment_succeeded':
+        return await checkoutSessionCompleted(event, req, res)
       default:
         return res.status(200).json(event)
     }

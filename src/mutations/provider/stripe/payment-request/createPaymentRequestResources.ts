@@ -1,4 +1,5 @@
 import { getStripeClient } from '../../../../provider/stripe/client'
+import { findUser } from '../../../../queries/user/findUser'
 
 export type StripePaymentRequestMetadata = {
   payment_request_id?: number | string | null
@@ -26,13 +27,18 @@ export async function createPaymentRequestStripeResources(
 ): Promise<PaymentRequestStripeResources> {
   const stripe = getStripeClient()
 
+  const user = await findUser(params.metadata?.user_id ?? null)
+
   const product = await stripe.products.create({
     name: params.title,
     description: params.description,
     metadata: {
       payment_request_id: params.metadata?.payment_request_id ?? null,
       user_id: params.metadata?.user_id ?? null
-    }
+    },
+  },
+  {
+      stripeAccount: user?.account_id || undefined
   })
 
   const finalAmount = params.amount ? Math.round(params.amount * 100) : 0
@@ -48,10 +54,15 @@ export async function createPaymentRequestStripeResources(
       payment_request_id: params.metadata?.payment_request_id ?? null,
       user_id: params.metadata?.user_id ?? null
     }
+  }, {
+    stripeAccount: user?.account_id || undefined
   })
 
   const paymentLink = await stripe.paymentLinks.create({
-    line_items: [{ price: price.id, quantity: 1 }]
+    line_items: [{ price: price.id, quantity: 1 }],
+    application_fee_amount: Math.round(finalAmount * 0.08),
+  }, {
+    stripeAccount: user?.account_id || undefined
   })
 
   return {

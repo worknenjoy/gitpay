@@ -6,6 +6,7 @@ import {
   updatePaymentRequestPaymentLinkMetadata
 } from '../../provider/stripe/payment-request'
 import { sanitizePaymentRequestInstructionsContent } from '../../../utils/sanitize/paymentRequestInstructions'
+import { findUser } from '../../../queries/user/findUser'
 
 const models = Models as any
 
@@ -48,6 +49,8 @@ export async function createPaymentRequest(
 
   const run = async (transaction: Transaction) => {
     const resources: any = {}
+    const user = await findUser(userId ?? null)
+    const stripeAccount = user?.account_id || undefined
 
     try {
       const createdResources = await createPaymentRequestStripeResources({
@@ -88,11 +91,11 @@ export async function createPaymentRequest(
       await updatePaymentRequestPaymentLinkMetadata(paymentLinkId, {
         payment_request_id: createPaymentRequest.id,
         user_id: createPaymentRequest.userId
-      })
+      }, stripeAccount)
 
       return createPaymentRequest
     } catch (error) {
-      await deactivatePaymentRequestStripeResources(resources)
+      await deactivatePaymentRequestStripeResources(resources, stripeAccount)
       throw error
     }
   }

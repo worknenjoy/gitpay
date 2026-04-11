@@ -6,6 +6,7 @@ import {
   updatePaymentRequestPaymentLinkActive,
   updatePaymentRequestProductDetails
 } from '../../provider/stripe/payment-request'
+import { findUser } from '../../../queries/user/findUser'
 
 const models = Models as any
 
