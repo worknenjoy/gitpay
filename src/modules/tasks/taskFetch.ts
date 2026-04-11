@@ -15,7 +15,10 @@ export async function taskFetch(taskParams: any) {
       id: taskParams.id
     },
     include: [
-      currentModels.User,
+      {
+        model: currentModels.User,
+        attributes: { exclude: ['password'] }
+      },
       {
         model: currentModels.Project,
         include: [currentModels.Organization]
