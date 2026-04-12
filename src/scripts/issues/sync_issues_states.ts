@@ -2,9 +2,13 @@ import { syncAllIssuesStates } from '../../services/issues/state/issueStateServi
 
 const syncTaskStatesScript = async () => {
   console.log('Starting task state sync...')
-  const { result } = await syncAllIssuesStates()
+  const { result = [] } = await syncAllIssuesStates()
 
   console.log(`\nTask state sync complete. Updated: ${result.length}`)
+  if(result.length === 0) {
+    console.log('No tasks were updated.')
+    return
+  }
   console.log('Updated tasks:')
   result.forEach((task: any) => {
     console.log(`- Task ID: ${task.id}, New State: ${task.state}`)
