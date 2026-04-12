@@ -70,7 +70,8 @@
     "scripts:issue:report_old_issues_without_merged_prs": "tsx src/scripts/issues/report_old_issues_without_merged_prs.ts",
     "scripts:issue:report_open_bounties_with_merged_prs": "tsx src/scripts/issues/report_open_bounties_with_merged_prs.ts",
     "scripts:issue:notify_open_bounties_with_merged_prs": "tsx src/scripts/issues/notify_open_bounties_with_merged_prs.ts",
-    "scripts:tasks:sync_task_states": "tsx src/scripts/tasks/sync_task_states.ts"
+    "scripts:issue:sync_states": "tsx src/scripts/issues/sync_issues_states.ts",
+    "scripts:issue:sync_stale": "tsx src/scripts/issues/sync_issues_stale.ts"
   },
   "husky": {
     "hooks": {

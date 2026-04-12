@@ -11,7 +11,7 @@ const bountyClosedNotPaidComment = require('../bot/bountyClosedNotPaidComment')
 const {
   notifyUnclaimedBounties: notifyUnclaimedBountiesService
 } = require('../services/issues/claims/unclaimedBountyService')
-const { syncAllTaskStates } = require('../services/tasks/taskStateService')
+const { syncAllTaskStates } = require('../services/issues/state/issueStateService')
 
 i18n.configure({
   directory:
