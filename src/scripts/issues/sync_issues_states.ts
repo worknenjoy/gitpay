@@ -5,7 +5,7 @@ const syncTaskStatesScript = async () => {
   const { result = [] } = await syncAllIssuesStates()
 
   console.log(`\nTask state sync complete. Updated: ${result.length}`)
-  if(result.length === 0) {
+  if (result.length === 0) {
     console.log('No tasks were updated.')
     return
   }

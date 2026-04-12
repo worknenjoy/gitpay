@@ -13,7 +13,7 @@ export const markIssueAsClaimed = async (issueId: number) => {
   }
 
   if (issue.state === TaskStates.CLAIMED) {
-    return issue
+    throw new Error(`Issue with id ${issueId} is already in CLAIMED state`)
   }
 
   await issue.update({ state: TaskStates.CLAIMED })

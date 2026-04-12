@@ -6,9 +6,7 @@ const models = Models as any
 const findNewClaimedIssues = async () => {
   const tasks = await models.Task.findAll({
     where: {
-      state: {
-        [models.Sequelize.Op.notIn]: [TaskStates.CLAIMED, TaskStates.COMPLETED, TaskStates.CLOSED]
-      },
+      state: TaskStates.FUNDED,
       [models.Sequelize.Op.or]: [
         { paid: true },
         { transfer_id: { [models.Sequelize.Op.ne]: null } },

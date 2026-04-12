@@ -4,6 +4,7 @@ import { truncateModels } from '../../helpers'
 import { TaskFactory, OrderFactory, UserFactory, TransferFactory } from '../../factories'
 import { syncAllIssuesStates } from '../../../src/services/issues/state/issueStateService'
 import { TaskStates, ClosedReasons } from '../../../src/constants/task'
+import nock from 'nock'
 
 const models = Models as any
 
@@ -19,28 +20,28 @@ describe('Services - Issues - issueStateService', () => {
     userId = user.id
   })
 
-  describe('resolveIssueState', () => {
+  describe('Claimed State', () => {
     it('returns claimed when issue has a transfer_id', async () => {
-      await TaskFactory({ userId, transfer_id: 'tr_abc123' })
-      await TaskFactory({ userId })
+      await TaskFactory({ userId, transfer_id: 'tr_abc123', state: TaskStates.FUNDED })
+      await TaskFactory({ userId, state: TaskStates.FUNDED })
       const result = await syncAllIssuesStates()
       expect(result.length).to.equal(1)
       expect(result[0].state).to.equal(TaskStates.CLAIMED)
     })
     it('returns claimed when issue has a TransferId', async () => {
-      const task = await TaskFactory({ userId, transfer_id: null })
+      const task = await TaskFactory({ userId, transfer_id: null, state: TaskStates.FUNDED })
       const transfer = await TransferFactory({ transfer_id: 'tr_abc123', taskId: task.id, userId, to: userId })
-      await TaskFactory({ userId })
+      await TaskFactory({ userId, state: TaskStates.FUNDED })
       const result = await syncAllIssuesStates()
       expect(result.length).to.equal(1)
       expect(result[0].state).to.equal(TaskStates.CLAIMED)
     })
     it('returns claimed when issue has a transfer', async () => {
-      const task = await TaskFactory({ userId })
+      const task = await TaskFactory({ userId, state: TaskStates.FUNDED })
       const transfer = await TransferFactory({ transfer_id: 'tr_abc123', taskId: task.id, userId, to: userId })
       task.Transfer = transfer
       await task.save()
-      await TaskFactory({ userId })
+      await TaskFactory({ userId, state: TaskStates.FUNDED })
       const result = await syncAllIssuesStates()
       expect(result.length).to.equal(1)
       expect(result[0].state).to.equal(TaskStates.CLAIMED)
@@ -51,6 +52,27 @@ describe('Services - Issues - issueStateService', () => {
       expect(result.length).to.equal(0)
       const updatedTask = await models.Task.findByPk(task.id)
       expect(updatedTask.state).to.equal(TaskStates.CLAIMED)
+    })
+    it('returns nothing when the state is already completed', async () => {
+      const task = await TaskFactory({ userId, transfer_id: 'tr_abc123', state: TaskStates.COMPLETED })
+      const result = await syncAllIssuesStates()
+      expect(result.length).to.equal(0)
+    })
+    it('returns nothing when the state is already closed', async () => {
+      const task = await TaskFactory({ userId, state: TaskStates.CLOSED, closed_reason: ClosedReasons.OTHER })
+      const result = await syncAllIssuesStates()
+      expect(result.length).to.equal(0)
+    })
+  })
+  describe("Completed State", () => {
+    it('returns completed when issue is in claimed state and has a transfer_id and not reversed in the last 3 months', async () => {
+      const task = await TaskFactory({ userId, state: TaskStates.CLAIMED })
+      const transfer = await TransferFactory({ transfer_id: 'tr_abc123', taskId: task.id, userId, to: userId, status: 'created' })
+      task.Transfer = transfer
+      await task.save()
+      const result = await syncAllIssuesStates()
+      expect(result.length).to.equal(1)
+      expect(result[0].state).to.equal(TaskStates.COMPLETED)
     })
     it('returns nothing when the state is already completed', async () => {
       const task = await TaskFactory({ userId, transfer_id: 'tr_abc123', state: TaskStates.COMPLETED })
