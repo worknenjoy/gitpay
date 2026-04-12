@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import Models from '../../../src/models'
 import { truncateModels } from '../../helpers'
-import { TaskFactory, OrderFactory, UserFactory, TransferFactory } from '../../factories'
+import { TaskFactory, UserFactory, TransferFactory } from '../../factories'
 import { syncAllIssuesStates } from '../../../src/services/issues/state/issueStateService'
 import { TaskStates, ClosedReasons } from '../../../src/constants/task'
 import nock from 'nock'

@@ -1,5 +1,3 @@
-import { TaskStates } from '../../../../constants/task'
-import { markIssueAsClaimed } from '../../../../mutations/issue/state/markIssueStateAsClaimed'
 import { markIssueStateAsCompleted } from '../../../../mutations/issue/state/markIssueStateAsCompleted'
 import findNewClaimedToCompletedIssues from '../../../../queries/issue/claims/findNewClaimedToCompletedIssues'
 

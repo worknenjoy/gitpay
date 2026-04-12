@@ -16,8 +16,10 @@ export const markIssueStateAsCompleted = async (issueId: number) => {
     throw new Error(`Issue with id ${issueId} is already in COMPLETED state`)
   }
 
-  if(issue.state !== TaskStates.CLAIMED) {
-    throw new Error(`Issue with id ${issueId} is not in CLAIMED state and cannot be marked as COMPLETED`)
+  if (issue.state !== TaskStates.CLAIMED) {
+    throw new Error(
+      `Issue with id ${issueId} is not in CLAIMED state and cannot be marked as COMPLETED`
+    )
   }
   await issue.update({ state: TaskStates.COMPLETED })
   await issue.reload() // Reload the issue to get the updated state

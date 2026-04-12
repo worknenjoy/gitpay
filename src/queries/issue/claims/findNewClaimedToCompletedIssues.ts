@@ -16,7 +16,7 @@ const findNewClaimedToCompletedIssues = async () => {
       state: {
         [models.Sequelize.Op.notIn]: [TaskStates.COMPLETED, TaskStates.CLOSED],
         [models.Sequelize.Op.in]: [TaskStates.CLAIMED]
-      },
+      }
     },
     include: [models.Order, models.Transfer]
   })
@@ -28,9 +28,9 @@ const findNewClaimedToCompletedIssues = async () => {
       if (!transfer) return null
       if (transfer.status === 'reversed') return null
       if (transfer.status === 'failed') return null
-      if(transfer.status === 'pending') return null
-      if(transfer.status === 'canceled') return null
-      if(transfer.status === 'created') return task
+      if (transfer.status === 'pending') return null
+      if (transfer.status === 'canceled') return null
+      if (transfer.status === 'created') return task
       return null
     })
   )
