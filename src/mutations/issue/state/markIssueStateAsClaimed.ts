@@ -1,8 +1,7 @@
-import { TaskStates } from "../../../constants/task"
+import { TaskStates } from '../../../constants/task'
 import Models from '../../../models'
 
 const models = Models as any
-
 
 export const markIssueAsClaimed = async (issueId: number) => {
   const issue = await models.Task.findByPk(issueId, {

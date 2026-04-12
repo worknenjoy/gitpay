@@ -15,7 +15,7 @@ const findNewClaimedIssues = async () => {
         { TransferId: { [models.Sequelize.Op.ne]: null } },
         { '$Transfer.id$': { [models.Sequelize.Op.ne]: null } }
       ]
-     },
+    },
     include: [models.Order, models.Transfer]
   })
   return tasks

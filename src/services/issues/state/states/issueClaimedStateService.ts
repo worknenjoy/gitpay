@@ -1,6 +1,5 @@
-import { markIssueAsClaimed } from "../../../../mutations/issue/state/markIssueStateAsClaimed"
-import findNewClaimedIssues from "../../../../queries/issue/claims/findNewClaimedIssues"
-
+import { markIssueAsClaimed } from '../../../../mutations/issue/state/markIssueStateAsClaimed'
+import findNewClaimedIssues from '../../../../queries/issue/claims/findNewClaimedIssues'
 
 export const issueClaimedStateService = async () => {
   const claimedStatesToCheck = await findNewClaimedIssues()
