@@ -1,26 +1,14 @@
-import { syncAllTaskStates } from '../../services/issues/state/issueStateService'
+import { syncAllIssuesStates } from '../../services/issues/state/issueStateService'
 
 const syncTaskStatesScript = async () => {
   console.log('Starting task state sync...')
-  const { total, updated, changes } = await syncAllTaskStates()
+  const { result } = await syncAllIssuesStates()
 
-  if (changes.length > 0) {
-    console.log('\nUpdated tasks:')
-    for (const change of changes) {
-      const stateChange = `${change.previousState} → ${change.newState}`
-      const reasonChange =
-        change.newClosedReason !== change.previousClosedReason
-          ? ` (closed_reason: ${change.previousClosedReason ?? 'null'} → ${change.newClosedReason ?? 'null'})`
-          : ''
-      console.log(
-        `  [#${change.id}] "${change.title}" — ${stateChange}${reasonChange} | url: ${change.url ?? 'N/A'}`
-      )
-    }
-  } else {
-    console.log('No tasks required updates.')
-  }
-
-  console.log(`\nTask state sync complete. Processed: ${total}, Updated: ${updated}`)
+  console.log(`\nTask state sync complete. Updated: ${result.length}`)
+  console.log('Updated tasks:')
+  result.forEach((task: any) => {
+    console.log(`- Task ID: ${task.id}, New State: ${task.state}`)
+  })
 }
 
 syncTaskStatesScript().catch((err) => {
