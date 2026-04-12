@@ -11,11 +11,15 @@ export interface IssueStaleChange {
   updatedAt: Date
 }
 
-export async function syncStaleIssues(): Promise<{ total: number; updated: number; changes: IssueStaleChange[] }> {
+export async function syncStaleIssues(): Promise<{
+  total: number
+  updated: number
+  changes: IssueStaleChange[]
+}> {
   const cutoff = new Date(Date.now() - ONE_YEAR_MS)
 
   const tasks = await models.Task.findAll({
-    where: { stale_at: null },
+    where: { stale_at: null }
   })
 
   let updated = 0
@@ -28,7 +32,7 @@ export async function syncStaleIssues(): Promise<{ total: number; updated: numbe
         id: task.id,
         title: task.title,
         url: task.url ?? null,
-        updatedAt: lastActivity,
+        updatedAt: lastActivity
       })
       await task.update({ stale_at: new Date() })
       updated++

@@ -7,7 +7,9 @@ const syncStaleIssuesScript = async () => {
   if (changes.length > 0) {
     console.log('\nMarked as stale:')
     for (const change of changes) {
-      console.log(`  [#${change.id}] "${change.title}" — last activity: ${change.updatedAt.toISOString()} | url: ${change.url ?? 'N/A'}`)
+      console.log(
+        `  [#${change.id}] "${change.title}" — last activity: ${change.updatedAt.toISOString()} | url: ${change.url ?? 'N/A'}`
+      )
     }
   } else {
     console.log('No issues required stale updates.')

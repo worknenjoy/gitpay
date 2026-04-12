@@ -12,7 +12,9 @@ const syncTaskStatesScript = async () => {
         change.newClosedReason !== change.previousClosedReason
           ? ` (closed_reason: ${change.previousClosedReason ?? 'null'} → ${change.newClosedReason ?? 'null'})`
           : ''
-      console.log(`  [#${change.id}] "${change.title}" — ${stateChange}${reasonChange} | url: ${change.url ?? 'N/A'}`)
+      console.log(
+        `  [#${change.id}] "${change.title}" — ${stateChange}${reasonChange} | url: ${change.url ?? 'N/A'}`
+      )
     }
   } else {
     console.log('No tasks required updates.')

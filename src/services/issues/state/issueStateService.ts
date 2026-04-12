@@ -9,9 +9,13 @@ export interface TaskStateResult {
 }
 
 export async function resolveTaskState(task: any): Promise<TaskStateResult> {
-
   // claimed: a Transfer record is associated (payment pending)
-  if (task.paid || task.transfer_id || task.TransferId || (task.Transfer && task.Transfer.length > 0)) {
+  if (
+    task.paid ||
+    task.transfer_id ||
+    task.TransferId ||
+    (task.Transfer && task.Transfer.length > 0)
+  ) {
     return { state: TaskStates.CLAIMED }
   }
 
@@ -42,9 +46,13 @@ export interface TaskStateChange {
   newClosedReason?: string | null
 }
 
-export async function syncAllTaskStates(): Promise<{ total: number; updated: number; changes: TaskStateChange[] }> {
+export async function syncAllTaskStates(): Promise<{
+  total: number
+  updated: number
+  changes: TaskStateChange[]
+}> {
   const tasks = await models.Task.findAll({
-    include: [models.Order, models.Transfer],
+    include: [models.Order, models.Transfer]
   })
 
   let updated = 0
@@ -61,7 +69,7 @@ export async function syncAllTaskStates(): Promise<{ total: number; updated: num
         previousState: task.state,
         newState,
         previousClosedReason: task.closed_reason ?? null,
-        newClosedReason: closed_reason ?? null,
+        newClosedReason: closed_reason ?? null
       })
       await task.update({ state: newState, ...(closed_reason !== undefined && { closed_reason }) })
       updated++
