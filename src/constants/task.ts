@@ -2,7 +2,16 @@ export const TaskStates = {
   CREATED: 'created',
   FUNDED: 'funded',
   CLAIMED: 'claimed',
-  COMPLETED: 'completed'
+  COMPLETED: 'completed',
+  CLOSED: 'closed'
 } as const
 
 export type TaskState = (typeof TaskStates)[keyof typeof TaskStates]
+
+export const ClosedReasons = {
+  REFUNDED: 'refunded',
+  MANUAL: 'manual',
+  OTHER: 'other'
+} as const
+
+export type ClosedReason = (typeof ClosedReasons)[keyof typeof ClosedReasons]

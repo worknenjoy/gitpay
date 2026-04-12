@@ -10,6 +10,9 @@ export interface TaskAttributes {
   level?: string | null
   status: string
   state?: string | null
+  closed_reason?: string | null
+  claim_retries?: number | null
+  stale_at?: Date | null
   deadline?: Date | null
   url?: string | null
   title?: string | null
@@ -36,6 +39,9 @@ export type TaskCreationAttributes = Optional<
   | 'level'
   | 'status'
   | 'state'
+  | 'closed_reason'
+  | 'claim_retries'
+  | 'stale_at'
   | 'deadline'
   | 'url'
   | 'title'
@@ -64,6 +70,9 @@ export default class Task
   public level!: string | null
   public status!: string
   public state!: string | null
+  public closed_reason!: string | null
+  public claim_retries!: number | null
+  public stale_at!: Date | null
   public deadline!: Date | null
   public url!: string | null
   public title!: string | null
@@ -115,9 +124,22 @@ export default class Task
           defaultValue: 'open'
         },
         state: {
-          type: DataTypes.ENUM('created', 'funded', 'claimed', 'completed'),
+          type: DataTypes.ENUM('created', 'funded', 'claimed', 'completed', 'closed'),
           allowNull: true,
           defaultValue: 'created'
+        },
+        closed_reason: {
+          type: DataTypes.ENUM('refunded', 'manual', 'other'),
+          allowNull: true
+        },
+        claim_retries: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+          defaultValue: 0
+        },
+        stale_at: {
+          type: DataTypes.DATE,
+          allowNull: true
         },
         deadline: {
           type: DataTypes.DATE,

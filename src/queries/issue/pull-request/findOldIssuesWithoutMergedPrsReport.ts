@@ -84,6 +84,7 @@ export const findOldIssuesWithoutMergedPrsReport = async (
       ...options.findOptions,
       where: {
         [Op.and]: [
+          { createdAt: { [Op.lt]: cutoffDate } },
           { value: { [Op.gt]: 0 } },
           { status: IssueStatuses.OPEN as IssueStatus },
           { paid: false },
