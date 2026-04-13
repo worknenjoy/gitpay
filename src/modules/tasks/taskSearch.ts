@@ -70,6 +70,11 @@ function groupBy(arr: any[], keyFn: (item: any) => any) {
   return map
 }
 
+function safeIntParam(val: any): number | null {
+  const n = parseInt(val, 10)
+  return Number.isFinite(n) && n > 0 ? n : null
+}
+
 export async function taskSearch(searchParams: any) {
   const whereBase: any = {
     [Op.or]: [{ private: null }, { private: false }]
@@ -77,6 +82,37 @@ export async function taskSearch(searchParams: any) {
 
   if (searchParams.projectId) whereBase.ProjectId = { [Op.eq]: parseInt(searchParams.projectId) }
   if (searchParams.userId) whereBase.userId = searchParams.userId
+
+  const assignedToId = safeIntParam(searchParams.assignedTo)
+  if (assignedToId !== null) {
+    whereBase[Op.and] = [
+      ...(whereBase[Op.and] ?? []),
+      Sequelize.literal(
+        `EXISTS (SELECT 1 FROM "Assigns" a WHERE a."id" = "Task"."assigned" AND a."userId" = ${assignedToId})`
+      )
+    ]
+  }
+
+  const interestedUserId = safeIntParam(searchParams.interestedUserId)
+  if (interestedUserId !== null) {
+    whereBase[Op.and] = [
+      ...(whereBase[Op.and] ?? []),
+      Sequelize.literal(
+        `EXISTS (SELECT 1 FROM "Assigns" a WHERE a."TaskId" = "Task"."id" AND a."userId" = ${interestedUserId})`
+      )
+    ]
+  }
+
+  const supportedByUserId = safeIntParam(searchParams.supportedByUserId)
+  if (supportedByUserId !== null) {
+    whereBase[Op.and] = [
+      ...(whereBase[Op.and] ?? []),
+      Sequelize.literal(
+        `EXISTS (SELECT 1 FROM "Orders" o WHERE o."TaskId" = "Task"."id" AND o."userId" = ${supportedByUserId} AND o."status" = 'succeeded')`
+      )
+    ]
+  }
+
   if (searchParams.status) whereBase.status = searchParams.status
   if (searchParams.url) whereBase.url = searchParams.url
 

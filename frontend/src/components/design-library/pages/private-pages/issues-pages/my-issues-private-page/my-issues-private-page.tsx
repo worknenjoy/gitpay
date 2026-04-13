@@ -14,7 +14,7 @@ import Breadcrumbs from 'design-library/molecules/breadcrumbs/breadcrumb/breadcr
 import useMyIssueTabs from '../../../../../../hooks/use-my-issues-tabs'
 import { FormattedMessage } from 'react-intl'
 
-const MyIssuesPrivatePage = ({ user, issues }) => {
+const MyIssuesPrivatePage = ({ user, issues, serverSidePagination }) => {
   const issueMetadata = useIssueMetadata({ includeProject: true })
 
   const issueTableData = {
@@ -51,7 +51,7 @@ const MyIssuesPrivatePage = ({ user, issues }) => {
           />
         </TopSection>
         <TopSection>
-          <TabbedTable tabs={currentTabs} activeTab={activeTab} />
+          <TabbedTable tabs={currentTabs} activeTab={activeTab} serverSidePagination={serverSidePagination} />
         </TopSection>
       </Container>
     </ExplorePaper>

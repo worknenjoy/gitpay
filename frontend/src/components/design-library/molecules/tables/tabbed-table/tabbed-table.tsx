@@ -4,13 +4,24 @@ import SectionTable from '../section-table/section-table'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
 import { TableTabsProps } from 'types/table'
 
+type ServerSidePaginationProps = {
+  enabled: boolean
+  totalCount: number
+  page: number
+  rowsPerPage: number
+  onPageChange: (page: number) => void
+  onRowsPerPageChange: (rowsPerPage: number) => void
+  onSortChange?: (sortBy: string, sortDirection: 'asc' | 'desc' | 'none') => void
+}
+
 type TabbedTableProps = {
   tabs: Array<TableTabsProps>
   activeTab?: string
   onChange?: (newValue: string) => void
+  serverSidePagination?: ServerSidePaginationProps
 }
 
-const TabbedTable = ({ tabs, activeTab, onChange }: TabbedTableProps) => {
+const TabbedTable = ({ tabs, activeTab, onChange, serverSidePagination }: TabbedTableProps) => {
   const [currentTab, setCurrentTab] = React.useState(
     tabs.find((tab) => tab.value === activeTab) || tabs[0]
   )
@@ -57,6 +68,7 @@ const TabbedTable = ({ tabs, activeTab, onChange }: TabbedTableProps) => {
         tableData={tableData}
         tableHeaderMetadata={tableHeaderMetadata}
         customColumnRenderer={customColumnRenderer}
+        serverSidePagination={serverSidePagination}
       />
     </BaseTabs>
   )

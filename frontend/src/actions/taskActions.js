@@ -444,7 +444,10 @@ const listTasks = ({
   limit,
   hasBounty,
   sortBy,
-  sortDirection
+  sortDirection,
+  assignedTo,
+  interestedUserId,
+  supportedByUserId
 } = {}) => {
   validToken()
   return (dispatch) => {
@@ -458,7 +461,10 @@ const listTasks = ({
       languageIds,
       ...(limit != null && { limit, page: page ?? 0 }),
       ...(hasBounty != null && { hasBounty }),
-      ...(sortBy != null && { sortBy, sortDirection })
+      ...(sortBy != null && { sortBy, sortDirection }),
+      ...(assignedTo != null && { assignedTo }),
+      ...(interestedUserId != null && { interestedUserId }),
+      ...(supportedByUserId != null && { supportedByUserId })
     }
     return axios
       .get(api.API_URL + '/tasks/list', { params })
