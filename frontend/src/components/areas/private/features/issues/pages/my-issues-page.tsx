@@ -15,7 +15,9 @@ const MyIssuesPage = ({ user, issues, listTasks }) => {
   const { filter } = useParams<{ filter: string }>()
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE)
-  const [currentSort, setCurrentSort] = React.useState<{ sortBy?: string; sortDirection?: string }>({})
+  const [currentSort, setCurrentSort] = React.useState<{ sortBy?: string; sortDirection?: string }>(
+    {}
+  )
 
   // getCurrentUser returns state.loggedIn = { data: { id, ... }, logged, ... }
   const userId = user?.data?.id
@@ -92,11 +94,7 @@ const MyIssuesPage = ({ user, issues, listTasks }) => {
   }
 
   return (
-    <MyIssuesPrivatePage
-      user={user}
-      issues={issues}
-      serverSidePagination={serverSidePagination}
-    />
+    <MyIssuesPrivatePage user={user} issues={issues} serverSidePagination={serverSidePagination} />
   )
 }
 
