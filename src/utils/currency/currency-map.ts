@@ -16,6 +16,7 @@ export const currencyMap: CurrencyMap = {
   CZ: 'CZK', // Czech Republic
   DK: 'DKK',
   EE: 'EUR', // Estonia
+  EG: 'EGP', // Egypt
   FI: 'EUR',
   FR: 'EUR',
   DE: 'EUR',
