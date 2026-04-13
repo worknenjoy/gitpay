@@ -9,14 +9,12 @@ import MainHero from 'design-library/molecules/heroes/main-hero/main-hero'
 import CardsHero from 'design-library/molecules/heroes/cards-hero/cards-hero'
 import SecondaryHero from 'design-library/molecules/heroes/secondary-hero/secondary-hero'
 import CallToActionHero from 'design-library/molecules/heroes/call-to-action-hero/call-to-action-hero'
-import bountyImage from 'images/roles/bounty.png'
 import notificationsImage from 'images/roles/notifications.png'
 import paymentCycleImage from 'images/roles/payment-cycle.png'
 import sharingImage from 'images/roles/sharing.png'
 
 const Home = () => {
   const history = useHistory()
-  // using styled components from home.styles
   const intl = useIntl()
 
   return (
@@ -51,135 +49,67 @@ const Home = () => {
         ]}
       />
       <CardsHero
-        withContrast
-        title={
-          <FormattedMessage
-            id="welcome.roles.hero.title"
-            defaultMessage="Choose your role and get started"
-          />
-        }
-        description={
-          <FormattedMessage
-            id="welcome.roles.hero.description"
-            defaultMessage="Each role has a different journey. Pick the one that fits you best."
-          />
-        }
+        withContrast={true}
+        title="What is Gitpay for"
         cards={[
           {
-            type: 'maintainer',
-            title: (
-              <FormattedMessage
-                id="welcome.roles.hero.maintainer.title"
-                defaultMessage="Maintainer"
-              />
-            ),
+            type: 'service-payments',
+            title: '💼 Service Payments',
+            descriptionListIcon: <TaskAlt fontSize="small" />,
             descriptionList: [
               {
                 text: (
                   <FormattedMessage
-                    id="welcome.roles.hero.maintainer.description"
-                    defaultMessage="Import issues from your repository, organize work, and pay bounties when tasks are completed."
+                    id="welcome.usecases.service.item1"
+                    defaultMessage="Receive payments for delivered work."
                   />
-                ),
-                icon: <TaskAlt fontSize="small" />
-              }
-            ],
-            image: notificationsImage,
-            actionLabel: (
-              <FormattedMessage
-                id="welcome.roles.hero.maintainer.action"
-                defaultMessage="Signup as maintainer"
-              />
-            ),
-            onAction: () => history.push('/signup/maintainer')
-          },
-          {
-            type: 'contributor',
-            title: (
-              <FormattedMessage
-                id="welcome.roles.hero.contributor.title"
-                defaultMessage="Contributor"
-              />
-            ),
-            descriptionList: [
+                )
+              },
               {
                 text: (
                   <FormattedMessage
-                    id="welcome.roles.hero.contributor.description"
-                    defaultMessage="Find tasks, submit pull requests, and get rewarded for solving issues."
+                    id="welcome.usecases.service.item2"
+                    defaultMessage="Create a payment request"
                   />
-                ),
-                icon: <Work fontSize="small" />
-              }
-            ],
-            image: sharingImage,
-            actionLabel: (
-              <FormattedMessage
-                id="welcome.roles.hero.contributor.action"
-                defaultMessage="Signup as contributor"
-              />
-            ),
-            onAction: () => history.push('/signup/contributor')
-          },
-          {
-            type: 'funding',
-            title: (
-              <FormattedMessage id="welcome.roles.hero.sponsor.title" defaultMessage="Funding" />
-            ),
-            descriptionList: [
+                )
+              },
               {
                 text: (
                   <FormattedMessage
-                    id="welcome.roles.hero.sponsor.description"
-                    defaultMessage="Fund bounties for open-source issues and support the work you want to see shipped."
+                    id="welcome.usecases.service.item3"
+                    defaultMessage="Share a payment link with your client"
                   />
-                ),
-                icon: <AttachMoney fontSize="small" />
-              }
-            ],
-            image: bountyImage,
-            actionLabel: (
-              <FormattedMessage
-                id="welcome.roles.hero.sponsor.action"
-                defaultMessage="Signup as funding"
-              />
-            ),
-            onAction: () => history.push('/signup/funding')
-          },
-          {
-            type: 'service-provider',
-            title: (
-              <FormattedMessage
-                id="welcome.roles.hero.serviceProvider.title"
-                defaultMessage="Service Provider"
-              />
-            ),
-            descriptionList: [
+                )
+              },
               {
                 text: (
                   <FormattedMessage
-                    id="welcome.roles.hero.serviceProvider.description"
-                    defaultMessage="Deliver specialized services and use payment requests to receive funds through Gitpay."
+                    id="welcome.usecases.service.item4"
+                    defaultMessage="Deliver the work"
                   />
-                ),
-                icon: <CardMembership fontSize="small" />
+                )
+              },
+              {
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.service.item5"
+                    defaultMessage="Receive payouts directly to your bank account"
+                  />
+                )
+              },
+              {
+                text: (
+                  <FormattedMessage
+                    id="welcome.usecases.service.item6"
+                    defaultMessage="This works for developers, consultants, freelancers, and service providers who want a simple way to request payment."
+                  />
+                )
               }
             ],
             image: paymentCycleImage,
-            actionLabel: (
-              <FormattedMessage
-                id="welcome.roles.hero.serviceProvider.action"
-                defaultMessage="Signup as service provider"
-              />
-            ),
-            onAction: () => history.push('/signup/service-provider')
-          }
-        ]}
-      />
-      <CardsHero
-        withContrast={false}
-        title="What is Gitpay for"
-        cards={[
+            actionLabel: 'Explore service payments',
+            onAction: () => history.push('/use-cases/service-payments')
+          },
           {
             type: 'open-source',
             title: '🧩 Open Source',
@@ -287,69 +217,11 @@ const Home = () => {
             image: sharingImage,
             actionLabel: 'Explore private projects',
             onAction: () => history.push('/use-cases/private-projects')
-          },
-          {
-            type: 'service-payments',
-            title: '💼 Service Payments',
-            descriptionListIcon: <TaskAlt fontSize="small" />,
-            descriptionList: [
-              {
-                text: (
-                  <FormattedMessage
-                    id="welcome.usecases.service.item1"
-                    defaultMessage="Receive payments for delivered work."
-                  />
-                )
-              },
-              {
-                text: (
-                  <FormattedMessage
-                    id="welcome.usecases.service.item2"
-                    defaultMessage="Create a payment request"
-                  />
-                )
-              },
-              {
-                text: (
-                  <FormattedMessage
-                    id="welcome.usecases.service.item3"
-                    defaultMessage="Share a payment link with your client"
-                  />
-                )
-              },
-              {
-                text: (
-                  <FormattedMessage
-                    id="welcome.usecases.service.item4"
-                    defaultMessage="Deliver the work"
-                  />
-                )
-              },
-              {
-                text: (
-                  <FormattedMessage
-                    id="welcome.usecases.service.item5"
-                    defaultMessage="Receive payouts directly to your bank account"
-                  />
-                )
-              },
-              {
-                text: (
-                  <FormattedMessage
-                    id="welcome.usecases.service.item6"
-                    defaultMessage="This works for developers, consultants, freelancers, and service providers who want a simple way to request payment."
-                  />
-                )
-              }
-            ],
-            image: paymentCycleImage,
-            actionLabel: 'Explore service payments',
-            onAction: () => history.push('/use-cases/service-payments')
           }
         ]}
       />
       <SecondaryHero
-        withContrast
+        withContrast={false}
         animation="/lottie/how-it-works.lottie"
         title={intl.formatMessage({
           id: 'welcome.secondary.hero.title',
@@ -419,7 +291,7 @@ const Home = () => {
         ]}
       />
       <CallToActionHero
-        withContrast={false}
+        withContrast={true}
         title={
           <FormattedMessage
             id="welcome.cta.hero.title"
