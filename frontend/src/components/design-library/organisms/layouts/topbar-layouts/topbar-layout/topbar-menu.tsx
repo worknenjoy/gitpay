@@ -13,7 +13,7 @@ export const TopbarMenu = ({ onClick }: TopbarMenuProps) => {
 
   const handleClick = (itemClick: { path?: string }) => {
     onClick?.()
-    if(itemClick.path) history.push(itemClick.path)
+    if (itemClick.path) history.push(itemClick.path)
   }
 
   return (

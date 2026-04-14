@@ -39,9 +39,7 @@ const Bottom = ({ info, getInfo }) => {
   const navItems = useMainNavItems()
   const mainMenuItems = navItems.map((item) => ({
     label: item.label,
-    onClick: item.external
-      ? () => window.open(item.href)
-      : () => navigateTo(item.path as string)
+    onClick: item.external ? () => window.open(item.href) : () => navigateTo(item.path as string)
   }))
 
   const legalMenuItems = [
