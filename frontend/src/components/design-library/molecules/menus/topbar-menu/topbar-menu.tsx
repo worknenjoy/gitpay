@@ -1,39 +1,28 @@
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
 import {
   LinkButton,
   LabelButton
 } from '../../../organisms/layouts/topbar-layouts/topbar-layout/TopbarStyles'
+import useMainNavItems from '../../../../../hooks/use-main-nav-items'
 
 export const TopbarMenu = () => {
-  const menuItems = [
-    {
-      onClick: () => window.location.assign('/#/welcome'),
-      message: <FormattedMessage id="topbar.link.about" defaultMessage="About us" />
-    },
-    {
-      onClick: () => window.location.assign('/#/pricing'),
-      message: <FormattedMessage id="topbar.link.prices" defaultMessage="Prices" />
-    },
-    {
-      onClick: () => window.location.assign('/#/team'),
-      message: <FormattedMessage id="task.actions.team" defaultMessage="Team" />
-    },
-    {
-      onClick: () => window.open('https://docs.gitpay.me/en'),
-      message: <FormattedMessage id="task.actions.docs" defaultMessage="Documentation" />
-    },
-    {
-      onClick: () => window.location.assign('/#/tasks/open'),
-      message: <FormattedMessage id="topbar.link.explore" defaultMessage="Explore" />
-    }
-  ]
+  const navItems = useMainNavItems()
 
   return (
     <>
-      {menuItems.map((item, index) => (
-        <LinkButton key={index} onClick={item.onClick} variant="text" size="small" color="primary">
-          <LabelButton>{item.message}</LabelButton>
+      {navItems.map((item) => (
+        <LinkButton
+          key={item.id}
+          onClick={
+            item.external
+              ? () => window.open(item.href)
+              : () => window.location.assign('/#' + (item.topbarPath || item.path))
+          }
+          variant="text"
+          size="small"
+          color="primary"
+        >
+          <LabelButton>{item.label}</LabelButton>
         </LinkButton>
       ))}
     </>

@@ -9,6 +9,7 @@ import StatsBar from '../../../../molecules/sections/stats-bar/stats-bar'
 import SlackCard from './SlackCard'
 import GithubCard from './GithubCard'
 import VerticalMenuList from '../../../../molecules/lists/vertical-menu-list/vertical-menu-list'
+import useMainNavItems from '../../../../../../hooks/use-main-nav-items'
 
 import {
   Container,
@@ -35,28 +36,13 @@ const Bottom = ({ info, getInfo }) => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
-  const mainMenuItems = [
-    {
-      label: <FormattedMessage id="bottom.menu.about-us" defaultMessage="About us" />,
-      onClick: () => navigateTo('/welcome')
-    },
-    {
-      label: <FormattedMessage id="bottom.menu.pricing" defaultMessage="Pricing" />,
-      onClick: () => navigateTo('/pricing')
-    },
-    {
-      label: <FormattedMessage id="bottom.menu.team" defaultMessage="Team" />,
-      onClick: () => navigateTo('/team')
-    },
-    {
-      label: <FormattedMessage id="bottom.menu.documentation" defaultMessage="Documentation" />,
-      onClick: () => window.open('https://docs.gitpay.me/en')
-    },
-    {
-      label: <FormattedMessage id="bottom.menu.explore" defaultMessage="Explore" />,
-      onClick: () => navigateTo('/explore/issues')
-    }
-  ]
+  const navItems = useMainNavItems()
+  const mainMenuItems = navItems.map((item) => ({
+    label: item.label,
+    onClick: item.external
+      ? () => window.open(item.href)
+      : () => navigateTo(item.path as string)
+  }))
 
   const legalMenuItems = [
     {
