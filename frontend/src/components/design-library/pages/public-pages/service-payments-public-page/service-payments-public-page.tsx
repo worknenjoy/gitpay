@@ -36,14 +36,14 @@ const ServicePaymentsPublicPage = () => {
       <SectionHero
         title={
           <FormattedMessage
-            id="servicePaymentsPublicPage.title"
-            defaultMessage="Service Payments on Gitpay"
+            id="charge.customers.page.title"
+            defaultMessage="Charge Customers on Gitpay"
           />
         }
         image={CollectionFlatBuild}
         content={
           <FormattedMessage
-            id="servicePaymentsPublicPage.content"
+            id="charge.customers.page.content"
             defaultMessage="Get paid for your work requests to your customers deliveries in one place. Gitpay's Service Payments streamline the process of requesting, delivering, and receiving payments for services directly through our platform."
           />
         }
@@ -52,13 +52,13 @@ const ServicePaymentsPublicPage = () => {
       <SectionHero
         title={
           <FormattedMessage
-            id="servicePaymentsPublicPage.bestFit.title"
+            id="charge.customers.page.bestFit.title"
             defaultMessage="Why Gitpay for service providers?"
           />
         }
         content={
           <FormattedMessage
-            id="servicePaymentsPublicPage.bestFit.content"
+            id="charge.customers.page.bestFit.content"
             defaultMessage="Gitpay works well for service providers who sell services or digital deliverables."
           />
         }
@@ -68,13 +68,13 @@ const ServicePaymentsPublicPage = () => {
             icon: <Payments />,
             primaryText: (
               <FormattedMessage
-                id="servicePaymentsPublicPage.bestFit.item.primary.freelancers"
+                id="charge.customers.page.bestFit.item.primary.freelancers"
                 defaultMessage="Accept payments easily"
               />
             ),
             secondaryText: (
               <FormattedMessage
-                id="servicePaymentsPublicPage.bestFit.item.secondary.freelancers"
+                id="charge.customers.page.bestFit.item.secondary.freelancers"
                 defaultMessage="Send a simple payment link to your clients."
               />
             )
@@ -83,13 +83,13 @@ const ServicePaymentsPublicPage = () => {
             icon: <Shield />,
             primaryText: (
               <FormattedMessage
-                id="servicePaymentsPublicPage.bestFit.item.primary.clientWork"
+                id="charge.customers.page.bestFit.item.primary.clientWork"
                 defaultMessage="Reduce disputes"
               />
             ),
             secondaryText: (
               <FormattedMessage
-                id="servicePaymentsPublicPage.bestFit.item.secondary.clientWork"
+                id="charge.customers.page.bestFit.item.secondary.clientWork"
                 defaultMessage="Keep a clear record of payments and delivery."
               />
             )
@@ -98,13 +98,13 @@ const ServicePaymentsPublicPage = () => {
             icon: <Checklist />,
             primaryText: (
               <FormattedMessage
-                id="servicePaymentsPublicPage.bestFit.item.primary.projectBased"
+                id="charge.customers.page.bestFit.item.primary.projectBased"
                 defaultMessage="Stay organized"
               />
             ),
             secondaryText: (
               <FormattedMessage
-                id="servicePaymentsPublicPage.bestFit.item.secondary.projectBased"
+                id="charge.customers.page.bestFit.item.secondary.projectBased"
                 defaultMessage="Track payments and payouts in one place."
               />
             )
@@ -113,13 +113,13 @@ const ServicePaymentsPublicPage = () => {
             icon: <Code />,
             primaryText: (
               <FormattedMessage
-                id="servicePaymentsPublicPage.bestFit.item.primary.providers"
+                id="charge.customers.page.bestFit.item.primary.providers"
                 defaultMessage="Built for digital work"
               />
             ),
             secondaryText: (
               <FormattedMessage
-                id="servicePaymentsPublicPage.bestFit.item.secondary.providers"
+                id="charge.customers.page.bestFit.item.secondary.providers"
                 defaultMessage="Gitpay is designed for service providers delivering digital services."
               />
             )
@@ -130,7 +130,7 @@ const ServicePaymentsPublicPage = () => {
         withContrast={true}
         title={
           <FormattedMessage
-            id="servicePaymentsPublicPage.callToAction.title"
+            id="charge.customers.page.callToAction.title"
             defaultMessage="Start receiving payments for delivered services on Gitpay"
           />
         }
@@ -138,7 +138,7 @@ const ServicePaymentsPublicPage = () => {
           {
             label: (
               <FormattedMessage
-                id="servicePaymentsPublicPage.callToAction.signup"
+                id="charge.customers.page.callToAction.signup"
                 defaultMessage="Signup as service provider"
               />
             ),

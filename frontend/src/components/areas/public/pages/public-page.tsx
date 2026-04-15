@@ -14,6 +14,8 @@ import TeamPage from '../features/team/pages/team'
 import OpenSourcePage from '../features/welcome/pages/open-source-page'
 import PrivateProjectsPage from '../features/welcome/pages/private-projects-page'
 import ServicePaymentsPage from '../features/welcome/pages/service-payments-page'
+import FundWorkPage from '../features/welcome/pages/fund-work-page'
+import BountiesPage from '../features/welcome/pages/bounties-page'
 import CountriesPage from '../features/countries/pages/countries-page'
 
 const PublicPage = ({
@@ -51,6 +53,8 @@ const PublicPage = ({
           <Route exact path="/use-cases/open-source" component={OpenSourcePage} />
           <Route exact path="/use-cases/private-projects" component={PrivateProjectsPage} />
           <Route exact path="/use-cases/service-payments" component={ServicePaymentsPage} />
+          <Route exact path="/use-cases/fund-work" component={FundWorkPage} />
+          <Route exact path="/use-cases/bounties" component={BountiesPage} />
           <Route exact path="/countries" component={CountriesPage} />
           <Route exact path="/team" render={() => <TeamPage joinTeamAPICall={joinTeam} />} />
           <Route path="/pricing" component={PricingPage} />

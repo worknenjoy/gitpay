@@ -58,7 +58,12 @@ const CardsHero = ({ title, description, cards, withContrast = false }: CardsHer
                 <Typography variant="h6" gutterBottom>
                   {card.title}
                 </Typography>
-                {card.descriptionList?.length ? (
+                {card.description && (
+                  <Typography variant="body2" color="textSecondary" paragraph>
+                    {card.description}
+                  </Typography>
+                )}
+                {card.descriptionList?.length && (
                   <DescriptionList>
                     {card.descriptionList.map((item, index) => (
                       <DescriptionListItem key={index}>
@@ -73,10 +78,6 @@ const CardsHero = ({ title, description, cards, withContrast = false }: CardsHer
                       </DescriptionListItem>
                     ))}
                   </DescriptionList>
-                ) : (
-                  <Typography variant="body2" color="textSecondary" paragraph>
-                    {card.description}
-                  </Typography>
                 )}
                 <ActionButton
                   size="small"
