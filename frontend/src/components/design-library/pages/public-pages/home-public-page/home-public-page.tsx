@@ -50,13 +50,33 @@ const Home = () => {
       />
       <CardsHero
         withContrast={true}
-        title={<FormattedMessage id="welcome.usecases.title" defaultMessage="Payment flows for work delivered" />}
-        description={<FormattedMessage id="welcome.usecases.description" defaultMessage="Send a payment link and get paid directly" />}
+        title={
+          <FormattedMessage
+            id="welcome.usecases.title"
+            defaultMessage="Payment flows for work delivered"
+          />
+        }
+        description={
+          <FormattedMessage
+            id="welcome.usecases.description"
+            defaultMessage="Send a payment link and get paid directly"
+          />
+        }
         cards={[
           {
             type: 'service-payments',
-            title: <FormattedMessage id="welcome.usecases.payment.title" defaultMessage="Charge Customers" />,
-            description: <FormattedMessage id="welcome.usecases.payment.description" defaultMessage="Send a payment link and get paid directly" />,
+            title: (
+              <FormattedMessage
+                id="welcome.usecases.payment.title"
+                defaultMessage="Charge Customers"
+              />
+            ),
+            description: (
+              <FormattedMessage
+                id="welcome.usecases.payment.description"
+                defaultMessage="Send a payment link and get paid directly"
+              />
+            ),
             descriptionListIcon: <TaskAlt fontSize="small" />,
             descriptionList: [
               {
@@ -85,13 +105,20 @@ const Home = () => {
               }
             ],
             image: paymentCycleImage,
-            actionLabel: <FormattedMessage id="welcome.usecases.payment.action" defaultMessage="Learn more" />,
+            actionLabel: (
+              <FormattedMessage id="welcome.usecases.payment.action" defaultMessage="Learn more" />
+            ),
             onAction: () => history.push('/use-cases/service-payments')
           },
           {
             type: 'open-source',
             title: <FormattedMessage id="welcome.usecases.fund.title" defaultMessage="Fund work" />,
-            description: <FormattedMessage id="welcome.usecases.fund.description" defaultMessage="Attach bounties and get work done." />,
+            description: (
+              <FormattedMessage
+                id="welcome.usecases.fund.description"
+                defaultMessage="Attach bounties and get work done."
+              />
+            ),
             descriptionListIcon: <TaskAlt fontSize="small" />,
             descriptionList: [
               {
@@ -117,16 +144,28 @@ const Home = () => {
                     defaultMessage="Contributor claim bounty when the work is merged."
                   />
                 )
-              },
+              }
             ],
             image: notificationsImage,
-            actionLabel: <FormattedMessage id="welcome.usecases.fund.action" defaultMessage="Learn more" />,
+            actionLabel: (
+              <FormattedMessage id="welcome.usecases.fund.action" defaultMessage="Learn more" />
+            ),
             onAction: () => history.push('/use-cases/fund-work')
           },
           {
             type: 'earn-from-work',
-            title: <FormattedMessage id="welcome.usecases.bounties.title" defaultMessage="Earn from work" />,
-            description: <FormattedMessage id="welcome.usecases.bounties.description" defaultMessage="Get paid for work delivered on Git repositories." />,
+            title: (
+              <FormattedMessage
+                id="welcome.usecases.bounties.title"
+                defaultMessage="Earn from work"
+              />
+            ),
+            description: (
+              <FormattedMessage
+                id="welcome.usecases.bounties.description"
+                defaultMessage="Get paid for work delivered on Git repositories."
+              />
+            ),
             descriptionListIcon: <TaskAlt fontSize="small" />,
             descriptionList: [
               {
@@ -152,10 +191,12 @@ const Home = () => {
                     defaultMessage="Claim the bounty and receive payment through Gitpay in your bank account."
                   />
                 )
-              },
+              }
             ],
             image: sharingImage,
-            actionLabel: <FormattedMessage id="welcome.usecases.bounties.action" defaultMessage="Learn more" />,
+            actionLabel: (
+              <FormattedMessage id="welcome.usecases.bounties.action" defaultMessage="Learn more" />
+            ),
             onAction: () => history.push('/use-cases/bounties')
           }
         ]}
@@ -165,7 +206,7 @@ const Home = () => {
         animation="/lottie/how-it-works.lottie"
         title={intl.formatMessage({
           id: 'welcome.secondary.hero.title',
-          defaultMessage: "Why people use Gitpay"
+          defaultMessage: 'Why people use Gitpay'
         })}
         items={[
           {
