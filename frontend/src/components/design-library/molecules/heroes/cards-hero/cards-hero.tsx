@@ -44,7 +44,7 @@ const CardsHero = ({ title, description, cards, withContrast = false }: CardsHer
           {title}
         </Typography>
         {description && (
-          <Typography variant="h6" color="textSecondary">
+          <Typography variant="body1" color="textSecondary">
             {description}
           </Typography>
         )}
