@@ -59,7 +59,7 @@ const Home = () => {
         description={
           <FormattedMessage
             id="welcome.usecases.description"
-            defaultMessage="Send a payment link and get paid directly"
+            defaultMessage="Whether you want to charge customers, fund open source work, or get paid for your contributions, Gitpay has a clear flow to manage payments tied to real work."
           />
         }
         cards={[
