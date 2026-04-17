@@ -157,7 +157,11 @@ const SectionTable = ({
   }
 
   const handleSort = (fieldId, sortDirection) => {
-    const newSortedData = sortData(Array.isArray(tableData?.data) ? tableData.data : [], fieldId, sortDirection)
+    const newSortedData = sortData(
+      Array.isArray(tableData?.data) ? tableData.data : [],
+      fieldId,
+      sortDirection
+    )
     setSortedBy(fieldId)
     setSortDirection(sortDirection)
     setSortedData(newSortedData)

@@ -23,7 +23,12 @@ const MyProjectIssuesPage = ({ user, project, issues, listTasks, fetchProject })
   const userId = user?.data?.id
 
   const fetchIssues = useCallback(
-    (pageOverride?: number, rowsOverride?: number, sortOverride?: typeof currentSort, filterOverride?: string) => {
+    (
+      pageOverride?: number,
+      rowsOverride?: number,
+      sortOverride?: typeof currentSort,
+      filterOverride?: string
+    ) => {
       if (!userId) return
       const activePage = pageOverride ?? page
       const activeRows = rowsOverride ?? rowsPerPage

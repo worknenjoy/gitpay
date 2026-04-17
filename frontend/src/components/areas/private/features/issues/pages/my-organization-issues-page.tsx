@@ -11,13 +11,7 @@ const TAB_TO_PARAM: Record<string, string> = {
 
 const DEFAULT_ROWS_PER_PAGE = 10
 
-const MyOrganizationIssuesPage = ({
-  user,
-  organization,
-  issues,
-  listTasks,
-  fetchOrganization
-}) => {
+const MyOrganizationIssuesPage = ({ user, organization, issues, listTasks, fetchOrganization }) => {
   const { filter, organization_id } = useParams<{ filter: string; organization_id: string }>()
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE)
@@ -28,7 +22,12 @@ const MyOrganizationIssuesPage = ({
   const userId = user?.data?.id
 
   const fetchIssues = useCallback(
-    (pageOverride?: number, rowsOverride?: number, sortOverride?: typeof currentSort, filterOverride?: string) => {
+    (
+      pageOverride?: number,
+      rowsOverride?: number,
+      sortOverride?: typeof currentSort,
+      filterOverride?: string
+    ) => {
       if (!userId) return
       const activePage = pageOverride ?? page
       const activeRows = rowsOverride ?? rowsPerPage

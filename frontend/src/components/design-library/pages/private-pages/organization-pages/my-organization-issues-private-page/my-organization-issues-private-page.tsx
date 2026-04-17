@@ -75,7 +75,11 @@ const MyOrganizationIssuesPrivatePage = ({ organization, user, issues, serverSid
           <ProjectListCompact projects={projectList} />
         </TopSection>
         <TopSection>
-          <TabbedTable tabs={currentTabs} activeTab={activeTab} serverSidePagination={serverSidePagination} />
+          <TabbedTable
+            tabs={currentTabs}
+            activeTab={activeTab}
+            serverSidePagination={serverSidePagination}
+          />
         </TopSection>
       </Container>
     </ExplorePaper>

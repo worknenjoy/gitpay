@@ -72,7 +72,11 @@ const MyProjectIssuesPrivatePage = ({ project, user, issues, serverSidePaginatio
           />
         </TopSection>
         <TopSection>
-          <TabbedTable tabs={currentTabs} activeTab={activeTab} serverSidePagination={serverSidePagination} />
+          <TabbedTable
+            tabs={currentTabs}
+            activeTab={activeTab}
+            serverSidePagination={serverSidePagination}
+          />
         </TopSection>
       </Container>
     </ExplorePaper>
