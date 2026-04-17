@@ -22,6 +22,7 @@ type MetaDataProps = {
   numeric?: boolean
   dataBaseKey?: string
   serverSortKey?: string
+  sortable?: boolean
   label: string
   minWidth?: number
   width?: number
@@ -178,9 +179,9 @@ const SectionTable = ({
               : 'asc'
           : 'asc'
 
-      if (isServerSide) {
+      if (isServerSide && serverSortKey) {
         setSortDirection(newSortDirection)
-        serverSidePagination.onSortChange?.(serverSortKey ?? fieldId, newSortDirection as any)
+        serverSidePagination.onSortChange?.(serverSortKey, newSortDirection as any)
       } else {
         handleSort(fieldId, newSortDirection)
       }
@@ -228,7 +229,7 @@ const SectionTable = ({
   const paginationCount = isServerSide ? (serverSidePagination.totalCount ?? 0) : sortedData.length
 
   const TableCellWithSortLogic = ({ fieldId, metadata, sortHandler }) => {
-    const isSortable = isServerSide ? !!metadata.serverSortKey : !!metadata.sortable
+    const isSortable = !!metadata.serverSortKey || !!metadata.sortable
     return (
       <TableSortLabel
         active={isSortable && fieldId === sortedBy && sortDirection !== 'none'}
