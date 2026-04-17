@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import ExploreProjectPage from 'design-library/pages/private-pages/project-pages/explore-project-issues-private-page/explore-project-issues-private-page'
 import { useParams } from 'react-router-dom'
 
+const DEFAULT_ROWS_PER_PAGE = 10
+
 const UserProjectIssuesExplorePage = ({
   filterTasks,
   listTasks,
@@ -24,7 +26,7 @@ const UserProjectIssuesExplorePage = ({
   }, [project_id])
 
   useEffect(() => {
-    listTasksWithProject({ projectId: project_id })
+    listTasksWithProject({ page: 0, limit: DEFAULT_ROWS_PER_PAGE })
   }, [project_id])
 
   return (
@@ -37,6 +39,7 @@ const UserProjectIssuesExplorePage = ({
       listLabels={listLabels}
       languages={languages}
       listLanguages={listLanguages}
+      defaultRowsPerPage={DEFAULT_ROWS_PER_PAGE}
     />
   )
 }

@@ -18,7 +18,8 @@ const ExploreOrganizationIssuesPrivatePage = ({
   listLabels,
   languages,
   listLanguages,
-  user
+  user,
+  defaultRowsPerPage
 }) => {
   const { data, completed } = organization
   const projectList = { data: data?.Projects || [], completed }
@@ -74,6 +75,8 @@ const ExploreOrganizationIssuesPrivatePage = ({
             listLabels={listLabels}
             listLanguages={listLanguages}
             listTasks={listTasks}
+            serverSidePagination={true}
+            defaultRowsPerPage={defaultRowsPerPage}
           />
         </TopSection>
       </Container>

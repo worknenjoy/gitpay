@@ -52,22 +52,24 @@ const SectionTable = ({
   serverSidePagination
 }: SectionTableProps) => {
   const isServerSide = !!serverSidePagination?.enabled
+  const safeData = Array.isArray(tableData?.data) ? tableData.data : []
 
   // Internal state — only active in client-side mode
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [sortedBy, setSortedBy] = useState(null)
   const [sortDirection, setSortDirection] = useState('asc')
-  const [sortedData, setSortedData] = useState(tableData.data)
+  const [sortedData, setSortedData] = useState(safeData)
 
   // Keep last completed rows so pagination shows previous data dimmed
   // instead of collapsing to skeletons between pages.
-  const previousRowsRef = useRef<any[]>(tableData.data)
+  const previousRowsRef = useRef<any[]>(safeData)
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   useEffect(() => {
+    const currentSafeData = Array.isArray(tableData?.data) ? tableData.data : []
     if (tableData.completed) {
-      previousRowsRef.current = tableData.data
+      previousRowsRef.current = currentSafeData
       setIsTransitioning(false)
     } else if (isServerSide && previousRowsRef.current.length > 0) {
       setIsTransitioning(true)
@@ -75,9 +77,10 @@ const SectionTable = ({
   }, [tableData.completed, isServerSide])
 
   useEffect(() => {
+    const currentSafeData = Array.isArray(tableData?.data) ? tableData.data : []
     const newSortedData = isServerSide
-      ? tableData.data
-      : sortData(tableData.data, sortedBy, sortDirection)
+      ? currentSafeData
+      : sortData(currentSafeData, sortedBy, sortDirection)
     setSortedData(newSortedData)
   }, [tableData, sortedBy, sortDirection])
 
@@ -154,7 +157,7 @@ const SectionTable = ({
   }
 
   const handleSort = (fieldId, sortDirection) => {
-    const newSortedData = sortData(tableData.data, fieldId, sortDirection)
+    const newSortedData = sortData(Array.isArray(tableData?.data) ? tableData.data : [], fieldId, sortDirection)
     setSortedBy(fieldId)
     setSortDirection(sortDirection)
     setSortedData(newSortedData)
@@ -250,7 +253,7 @@ const SectionTable = ({
     </TableHead>
   )
 
-  if (tableData.completed && tableData.data.length === 0) {
+  if (tableData.completed && safeData.length === 0) {
     return (
       <RootPaper sx={{ p: 2 }}>
         <EmptyBase

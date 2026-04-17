@@ -197,7 +197,7 @@ export const tasks = (
     case FETCH_PROJECT_REQUESTED:
       return { ...state, completed: action.completed }
     case FETCH_PROJECT_SUCCESS:
-      return { ...state, completed: action.completed, data: action.data.Tasks }
+      return { ...state, completed: action.completed, data: action.data.Tasks || [] }
     case FETCH_PROJECT_ERROR:
       return { ...state, completed: action.completed, error: action.error }
     case FILTER_TASK_REQUESTED:

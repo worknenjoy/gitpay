@@ -16,7 +16,8 @@ const ExploreProjectPage = ({
   labels,
   listLabels,
   languages,
-  listLanguages
+  listLanguages,
+  defaultRowsPerPage
 }) => {
   return (
     <ExplorePaper elevation={0}>
@@ -63,6 +64,8 @@ const ExploreProjectPage = ({
             listLabels={listLabels}
             listLanguages={listLanguages}
             listTasks={listTasks}
+            serverSidePagination={true}
+            defaultRowsPerPage={defaultRowsPerPage}
           />
         </TopSection>
       </Container>
