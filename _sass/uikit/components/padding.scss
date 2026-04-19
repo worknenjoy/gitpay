@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Padding
 // Description:     Utilities for padding
 //
@@ -13,8 +11,13 @@
 // Variables
 // ========================================================================
 
+$padding-padding:                                        $global-gutter !default;
+$padding-padding-l:                                      $global-medium-gutter !default;
 
+$padding-small-padding:                                  $global-small-gutter !default;
 
+$padding-large-padding:                                  $global-gutter !default;
+$padding-large-padding-l:                                $global-large-gutter !default;
 
 
 /* ========================================================================
@@ -73,6 +76,6 @@
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-padding-misc)) {@include hook-padding-misc();}
+@if(mixin-exists(hook-padding-misc)) {@include hook-padding-misc();}
 
 // @mixin hook-padding-misc(){}

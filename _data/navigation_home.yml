@@ -7,7 +7,7 @@
     title: Cobrar clientes
     desc: Defina entregas claras, valide o trabalho e cobre com confiança
   doc: service-provider
-  icon: file-edit
+  icon: users
 
 - en:
     title: Fund work

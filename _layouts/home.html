@@ -20,7 +20,7 @@ lang: en
 
         {% if page.categories.subtitle %}<p class="subtitle uk-text-lead uk-text-center">{{ page.categories.subtitle | escape }}</p>{% endif %}
 
-        <div class="uk-child-width-1-{{ columns }}@m uk-grid-match uk-text-center uk-margin-medium-top" data-uk-grid>
+        <div class="uk-child-width-1-{{ columns }}@m uk-grid-match uk-text-center uk-margin-medium-top uk-flex-center" data-uk-grid>
         {% for item in site.data.navigation_home %}
             {% if item.title %}
             {% assign doc_url = item.doc | prepend:"/docs/" | append:"/" %}
