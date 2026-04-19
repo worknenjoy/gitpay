@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Iconnav
 // Description:     Component to create icon navigations
 //
@@ -15,9 +13,14 @@
 // Variables
 // ========================================================================
 
+$iconnav-margin-horizontal:                       $global-small-margin !default;
+$iconnav-margin-vertical:                         $iconnav-margin-horizontal !default;
 
+$iconnav-item-color:                              $global-muted-color !default;
 
+$iconnav-item-hover-color:                        $global-color !default;
 
+$iconnav-item-active-color:                       $global-color !default;
 
 
 /* ========================================================================
@@ -40,16 +43,18 @@
     list-style: none;
     /* 3 */
     margin-left: (-$iconnav-margin-horizontal);
-    @if(meta.mixin-exists(hook-iconnav)) {@include hook-iconnav();}
+    @if(mixin-exists(hook-iconnav)) {@include hook-iconnav();}
 }
 
 /*
- * Space is allocated based on content dimensions, but shrinks: 0 1 auto
- * 1. Gutter
+ * 1. Space is allocated solely based on content dimensions: 0 0 auto
+ * 2. Gutter
  */
 
 .uk-iconnav > * {
     /* 1 */
+    flex: none;
+    /* 2 */
     padding-left: $iconnav-margin-horizontal;
 }
 
@@ -59,38 +64,30 @@
 
 /*
  * Items must target `a` elements to exclude other elements (e.g. dropdowns)
- * 1. Center content vertically if there is still some text
- * 2. Imitate white space gap when using flexbox
- * 3. Force text not to affect item height
- * 4. Style
- * 5. Required for `a` if there is still some text
+ * 1. Prevent gap if child element is `inline-block`, e.g. an icon
+ * 2. Style
  */
 
 .uk-iconnav > * > a {
     /* 1 */
-    display: flex;
-    align-items: center;
+    display: block;
     /* 2 */
-    column-gap: 0.25em;
-    /* 3 */
-    line-height: 0;
-    /* 4 */
     color: $iconnav-item-color;
-    /* 5 */
-    text-decoration: none;
-    @if(meta.mixin-exists(hook-iconnav-item)) {@include hook-iconnav-item();}
+    @if(mixin-exists(hook-iconnav-item)) {@include hook-iconnav-item();}
 }
 
-/* Hover */
-.uk-iconnav > * > a:hover {
+/* Hover + Focus */
+.uk-iconnav > * > a:hover,
+.uk-iconnav > * > a:focus {
     color: $iconnav-item-hover-color;
-    @if(meta.mixin-exists(hook-iconnav-item-hover)) {@include hook-iconnav-item-hover();}
+    outline: none;
+    @if(mixin-exists(hook-iconnav-item-hover)) {@include hook-iconnav-item-hover();}
 }
 
 /* Active */
 .uk-iconnav > .uk-active > a {
     color: $iconnav-item-active-color;
-    @if(meta.mixin-exists(hook-iconnav-item-active)) {@include hook-iconnav-item-active();}
+    @if(mixin-exists(hook-iconnav-item-active)) {@include hook-iconnav-item-active();}
 }
 
 
@@ -120,7 +117,7 @@
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-iconnav-misc)) {@include hook-iconnav-misc();}
+@if(mixin-exists(hook-iconnav-misc)) {@include hook-iconnav-misc();}
 
 // @mixin hook-iconnav(){}
 // @mixin hook-iconnav-item(){}
@@ -132,6 +129,9 @@
 // Inverse
 // ========================================================================
 
+$inverse-iconnav-item-color:                $inverse-global-muted-color !default;
+$inverse-iconnav-item-hover-color:          $inverse-global-color !default;
+$inverse-iconnav-item-active-color:         $inverse-global-color !default;
 
 
 

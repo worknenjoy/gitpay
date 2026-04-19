@@ -1,6 +1,3 @@
-@use "sass:meta";
-@use "sass:math";
-
 // Name:            Spinner
 // Description:     Component to create a loading spinner
 //
@@ -12,7 +9,11 @@
 // Variables
 // ========================================================================
 
-$spinner-radius:                                 math.floor((($spinner-size - $spinner-stroke-width) * 0.5)) !default; // Minus stroke width to prevent overflow clipping
+$spinner-size:                                   30px !default;
+$spinner-stroke-width:                           1 !default;
+$spinner-radius:                                 floor(($spinner-size - $spinner-stroke-width) / 2) !default; // Minus stroke width to prevent overflow clipping
+$spinner-circumference:                          round(2 * 3.141 * $spinner-radius) !default;
+$spinner-duration:                               1.4s !default;
 
 
 /* ========================================================================
@@ -24,7 +25,7 @@ $spinner-radius:                                 math.floor((($spinner-size - $s
  */
 
 .uk-spinner {
-    @if(meta.mixin-exists(hook-spinner)) {@include hook-spinner();}
+    @if(mixin-exists(hook-spinner)) {@include hook-spinner();}
 }
 
 
@@ -54,12 +55,12 @@ $spinner-radius:                                 math.floor((($spinner-size - $s
 @keyframes uk-spinner-dash {
     0% { stroke-dashoffset: $spinner-circumference; }
     50% {
-        stroke-dashoffset: ($spinner-circumference * 0.25);
-        transform: rotate(135deg);
+        stroke-dashoffset: $spinner-circumference/4;
+        transform:rotate(135deg);
     }
     100% {
         stroke-dashoffset: $spinner-circumference;
-        transform: rotate(450deg);
+        transform:rotate(450deg);
     }
 }
 
@@ -67,7 +68,7 @@ $spinner-radius:                                 math.floor((($spinner-size - $s
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-spinner-misc)) {@include hook-spinner-misc();}
+@if(mixin-exists(hook-spinner-misc)) {@include hook-spinner-misc();}
 
 // @mixin hook-spinner(){}
 // @mixin hook-spinner-misc(){}

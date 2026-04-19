@@ -1,6 +1,3 @@
-@use "sass:meta";
-@use "sass:string";
-
 // Name:            Utility
 // Description:     Utilities collection
 //
@@ -11,14 +8,16 @@
 //                  `uk-resize-*`
 //                  `uk-display-*`
 //                  `uk-inline-*`
+//                  `uk-height-*`
 //                  `uk-responsive-*`
 //                  `uk-preserve-width`
-//                  `uk-object-*`
 //                  `uk-border-*`
 //                  `uk-box-shadow-*`
 //                  `uk-box-shadow-bottom`
 //                  `uk-dropcap`
+//                  `uk-leader`
 //                  `uk-logo`
+//                  `uk-svg`
 //                  `uk-blend-*`
 //                  `uk-transform-*`
 //                  `uk-transform-origin-*`
@@ -34,13 +33,36 @@
 // Variables
 // ========================================================================
 
+$panel-scrollable-height:                        170px !default;
+$panel-scrollable-padding:                       10px !default;
+$panel-scrollable-border-width:                  $global-border-width !default;
+$panel-scrollable-border:                        $global-border !default;
 
+$height-small-height:                            150px !default;
+$height-medium-height:                           300px !default;
+$height-large-height:                            450px !default;
 
+$border-rounded-border-radius:                   5px !default;
 
+$box-shadow-duration:                            0.1s !default;
 
+$box-shadow-bottom-height:                       30px !default;
+$box-shadow-bottom-border-radius:                100% !default;
+$box-shadow-bottom-background:                   #444 !default;
+$box-shadow-bottom-blur:                         20px !default;
 
+$dropcap-margin-right:                           10px !default;
+$dropcap-font-size:                              (($global-line-height * 3) * 1em) !default;
 
+$leader-fill-content:                            '.' !default;
+$leader-fill-margin-left:                        $global-small-gutter !default;
 
+$logo-font-size:                                 $global-large-font-size !default;
+$logo-font-family:                               $global-font-family !default;
+$logo-color:                                     $global-color !default;
+$logo-hover-color:                               $global-color !default;
+
+$dragover-box-shadow:                            0 0 20px rgba(100,100,100,0.3) !default;
 
 
 /* ========================================================================
@@ -52,10 +74,21 @@
  ========================================================================== */
 
 .uk-panel {
-    display: flow-root;
     position: relative;
     box-sizing: border-box;
 }
+
+/*
+ * Micro clearfix
+ */
+
+.uk-panel::before,
+.uk-panel::after {
+    content: "";
+    display: table;
+}
+
+.uk-panel::after { clear: both; }
 
 /*
  * Remove margin from the last-child
@@ -73,8 +106,9 @@
     padding: $panel-scrollable-padding;
     border: $panel-scrollable-border-width solid $panel-scrollable-border;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
     resize: both;
-    @if(meta.mixin-exists(hook-panel-scrollable)) {@include hook-panel-scrollable();}
+    @if(mixin-exists(hook-panel-scrollable)) {@include hook-panel-scrollable();}
 }
 
 
@@ -112,84 +146,31 @@
 .uk-float-right { float: right; }
 
 /* 1 */
-[class*="uk-float-"] { max-width: 100%; }
+[class*='uk-float-'] { max-width: 100%; }
 
 
-/* Overflow
+/* Overfow
  ========================================================================== */
 
 .uk-overflow-hidden { overflow: hidden; }
 
 /*
  * Enable scrollbars if content is clipped
+ * Note: Firefox ignores `padding-bottom` for the scrollable overflow https://bugzilla.mozilla.org/show_bug.cgi?id=748518
  */
 
-.uk-overflow-auto { overflow: auto; }
+.uk-overflow-auto {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
 
 .uk-overflow-auto > :last-child { margin-bottom: 0; }
-
-/*
- * Overflow fade
- * 1. Overflow
- * 2. Mask
- * 3. Hide scrollbar
- */
-
-@property --uk-overflow-fade-start-opacity {
-    syntax: "<number>";
-    inherits: false;
-    initial-value: 0;
-}
-
-@property --uk-overflow-fade-end-opacity {
-    syntax: "<number>";
-    inherits: false;
-    initial-value: 0;
-}
-
-.uk-overflow-fade-horizontal {
-    overflow-x: auto;
-    --uk-overflow-fade-direction: right;
-}
-
-.uk-overflow-fade-vertical {
-    overflow-y: auto;
-    --uk-overflow-fade-direction: bottom;
-}
-
-.uk-overflow-fade-horizontal,
-.uk-overflow-fade-vertical {
-    /* 1 */
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-    /* 2 */
-    mask-image: linear-gradient(
-        to var(--uk-overflow-fade-direction),
-        rgba(0,0,0,var(--uk-overflow-fade-start-opacity)),
-        #000 $overflow-fade-size,
-        #000 string.unquote('calc(100% - #{$overflow-fade-size})'),
-        rgba(0,0,0,var(--uk-overflow-fade-end-opacity))
-    );
-    /* 3 */
-    scrollbar-width: none;
-}
-
-.uk-overflow-fade-horizontal > *,
-.uk-overflow-fade-vertical > * { min-width: max-content; }
-
-
-/* Box Sizing
- ========================================================================== */
-
-.uk-box-sizing-content { box-sizing: content-box; }
-.uk-box-sizing-border { box-sizing: border-box; }
 
 
 /* Resize
  ========================================================================== */
 
 .uk-resize { resize: both; }
-.uk-resize-horizontal { resize: horizontal; }
 .uk-resize-vertical { resize: vertical; }
 
 
@@ -209,12 +190,12 @@
  * 2. Create position context
  * 3. Prevent content overflow
  * 4. Behave like most inline-block elements
- * 5. Force new layer without creating a new stacking context
+ * 5. Force hardware acceleration without creating a new stacking context
  *    to fix 1px glitch when combined with overlays and transitions in Webkit
  * 6. Clip child elements
  */
 
-[class*="uk-inline"] {
+[class*='uk-inline'] {
     /* 1 */
     display: inline-block;
     /* 2 */
@@ -233,6 +214,37 @@
 }
 
 
+/* Height
+ ========================================================================== */
+
+[class*='uk-height'] { box-sizing: border-box; }
+
+/*
+ * Only works if parent element has a height set
+ */
+
+.uk-height-1-1 { height: 100%; }
+
+/*
+ * Useful to create image teasers
+ */
+
+.uk-height-viewport { min-height: 100vh; }
+
+/*
+ * Pixel
+ * Useful for `overflow: auto`
+ */
+
+.uk-height-small { height: $height-small-height; }
+.uk-height-medium { height: $height-medium-height; }
+.uk-height-large { height: $height-large-height; }
+
+.uk-height-max-small { max-height: $height-small-height; }
+.uk-height-max-medium { max-height: $height-medium-height; }
+.uk-height-max-large { max-height: $height-large-height; }
+
+
 /* Responsive objects
  ========================================================================== */
 
@@ -242,13 +254,11 @@
  */
 
 .uk-preserve-width,
+.uk-preserve-width audio,
 .uk-preserve-width canvas,
 .uk-preserve-width img,
 .uk-preserve-width svg,
-.uk-preserve-width video {
-    max-width: none;
-    object-fit: fill;
-}
+.uk-preserve-width video { max-width: none; }
 
 /*
  * Responsiveness
@@ -285,50 +295,18 @@
     max-width: none;
 }
 
-/*
- * Fix initial iframe width. Without the viewport is expanded on iOS devices
- */
-
-[uk-responsive],
-[data-uk-responsive] { max-width: 100%; }
-
-
-/* Object
- ========================================================================== */
-
-.uk-object-cover { object-fit: cover; }
-.uk-object-contain { object-fit: contain; }
-.uk-object-fill { object-fit: fill; }
-.uk-object-none { object-fit: none; }
-.uk-object-scale-down { object-fit: scale-down; }
-
-/*
- * Position
- */
-
-.uk-object-top-left { object-position: 0 0; }
-.uk-object-top-center { object-position: 50% 0; }
-.uk-object-top-right { object-position: 100% 0; }
-.uk-object-center-left { object-position: 0 50%; }
-.uk-object-center-center { object-position: 50% 50%; }
-.uk-object-center-right { object-position: 100% 50%; }
-.uk-object-bottom-left { object-position: 0 100%; }
-.uk-object-bottom-center { object-position: 50% 100%; }
-.uk-object-bottom-right { object-position: 100% 100%; }
-
 
 /* Border
  ========================================================================== */
 
 .uk-border-circle { border-radius: 50%; }
-.uk-border-pill { border-radius: 500px; }
 .uk-border-rounded { border-radius: $border-rounded-border-radius; }
 
 /*
  * Fix `overflow: hidden` to be ignored with border-radius and CSS transforms in Webkit
  */
 
-.uk-inline-clip[class*="uk-border-"] { -webkit-transform: translateZ(0); }
+.uk-inline-clip[class*='uk-border-'] { -webkit-transform: translateZ(0); }
 
 
 /* Box-shadow
@@ -343,7 +321,7 @@
  * Hover
  */
 
-[class*="uk-box-shadow-hover"] { transition: box-shadow $box-shadow-duration ease-in-out; }
+[class*='uk-box-shadow-hover'] { transition: box-shadow $box-shadow-duration ease-in-out; }
 
 .uk-box-shadow-hover-small:hover { box-shadow: $global-small-box-shadow; }
 .uk-box-shadow-hover-medium:hover { box-shadow: $global-medium-box-shadow; }
@@ -357,7 +335,8 @@
 /*
  * 1. Set position.
  * 2. Set style
- * 3. Fix shadow being clipped in Safari if container is animated
+ * 3. Blur doesn't work on pseudo elements with negative `z-index` in Edge.
+ *    Solved by using `before` and add position context to child elements.
  */
 
 @supports (filter: blur(0)) {
@@ -365,28 +344,27 @@
     .uk-box-shadow-bottom {
         display: inline-block;
         position: relative;
-        z-index: 0;
         max-width: 100%;
         vertical-align: middle;
     }
 
-    .uk-box-shadow-bottom::after {
-        content: "";
+    .uk-box-shadow-bottom::before {
+        content: '';
         /* 1 */
         position: absolute;
-        bottom: $box-shadow-bottom-bottom;
+        bottom: (-$box-shadow-bottom-height);
         left: 0;
         right: 0;
-        z-index: -1;
         /* 2 */
         height: $box-shadow-bottom-height;
         border-radius: $box-shadow-bottom-border-radius;
         background: $box-shadow-bottom-background;
         filter: blur($box-shadow-bottom-blur);
-        /* 3 */
-        will-change: filter;
-        @if(meta.mixin-exists(hook-box-shadow-bottom)) {@include hook-box-shadow-bottom();}
+        @if(mixin-exists(hook-box-shadow-bottom)) {@include hook-box-shadow-bottom();}
     }
+
+    /* 3 */
+    .uk-box-shadow-bottom > * { position: relative; }
 
 }
 
@@ -394,69 +372,103 @@
 /* Drop cap
  ========================================================================== */
 
-/*
- * 1. Firefox doesn't apply `::first-letter` if the first letter is inside child elements
- *    https://bugzilla.mozilla.org/show_bug.cgi?id=214004
- * 2. In Firefox, a floating `::first-letter` doesn't have a line box and there for no `line-height`
- *    https://bugzilla.mozilla.org/show_bug.cgi?id=317933
- */
-
 .uk-dropcap::first-letter,
-/* 1 */
 .uk-dropcap > p:first-of-type::first-letter {
     display: block;
     margin-right: $dropcap-margin-right;
     float: left;
     font-size: $dropcap-font-size;
-    line-height: $dropcap-line-height;
-    @if(meta.mixin-exists(hook-dropcap)) {@include hook-dropcap();}
+    line-height: 1;
+    @if(mixin-exists(hook-dropcap)) {@include hook-dropcap();}
 }
 
-/* 2 */
-@-moz-document url-prefix() {
 
-  .uk-dropcap::first-letter,
-  .uk-dropcap > p:first-of-type::first-letter { margin-top: 1.1%; }
+/* Leader
+ ========================================================================== */
 
+.uk-leader { overflow: hidden; }
+
+/*
+ * 1. Place element in text flow
+ * 2. Never break into a new line
+ * 3. Get a string back with as many repeating characters to fill the container
+ * 4. Prevent wrapping. Overflowing characters will be clipped by the container
+ */
+
+.uk-leader-fill::after {
+    /* 1 */
+    display: inline-block;
+    margin-left: $leader-fill-margin-left;
+    /* 2 */
+    width: 0;
+    /* 3 */
+    content: attr(data-fill);
+    /* 4 */
+    white-space: nowrap;
+    @if(mixin-exists(hook-leader)) {@include hook-leader();}
 }
+
+/*
+ * Hide if media does not match
+ */
+
+.uk-leader-fill.uk-leader-hide::after { display: none; }
+
+/* Pass fill character to JS */
+.var-leader-fill:before { content: $leader-fill-content; }
 
 
 /* Logo
  ========================================================================== */
 
 /*
- * 1. Style
- * 2. Required for `a`
- * 3. Behave like image but can be overridden through flex utility classes
+ * 1. Required for `a`
  */
 
 .uk-logo {
-    /* 1 */
     font-size: $logo-font-size;
     font-family: $logo-font-family;
     color: $logo-color;
-    /* 2 */
-    text-decoration: none;
-    @if(meta.mixin-exists(hook-logo)) {@include hook-logo();}
-}
-
-/* 3 */
-:where(.uk-logo) {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-/* Hover */
-.uk-logo:hover {
-    color: $logo-hover-color;
     /* 1 */
     text-decoration: none;
-    @if(meta.mixin-exists(hook-logo-hover)) {@include hook-logo-hover();}
+    @if(mixin-exists(hook-logo)) {@include hook-logo();}
 }
 
-.uk-logo :where(img, svg, video) { display: block; }
+/* Hover + Focus */
+.uk-logo:hover,
+.uk-logo:focus {
+    color: $logo-hover-color;
+    outline: none;
+    /* 1 */
+    text-decoration: none;
+    @if(mixin-exists(hook-logo-hover)) {@include hook-logo-hover();}
+}
 
 .uk-logo-inverse { display: none; }
+
+
+/* SVG
+ ========================================================================== */
+
+/*
+ * 1. Fill all SVG elements with the current text color if no `fill` attribute is set
+ * 2. Set the fill and stroke color of all SVG elements to the current text color
+ * 3. Fix for uppercase attribute names in Edge. Will be fixed in Windows 10 builds 16251+
+ */
+
+/* 1 */
+.uk-svg,
+/* 2 */
+.uk-svg:not(.uk-preserve) [fill*='#']:not(.uk-preserve),
+.uk-svg:not(.uk-preserve) [FILL*='#']:not(.uk-preserve) { fill: currentcolor; } // 3
+.uk-svg:not(.uk-preserve) [stroke*='#']:not(.uk-preserve),
+.uk-svg:not(.uk-preserve) [STROKE*='#']:not(.uk-preserve) { stroke: currentcolor; } // 3
+
+/*
+ * Fix Firefox blurry SVG rendering: https://bugzilla.mozilla.org/show_bug.cgi?id=1046835
+ */
+
+.uk-svg { transform: translate(0,0); }
 
 
 /* Disabled State
@@ -533,11 +545,12 @@
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-utility-misc)) {@include hook-utility-misc();}
+@if(mixin-exists(hook-utility-misc)) {@include hook-utility-misc();}
 
 // @mixin hook-panel-scrollable(){}
 // @mixin hook-box-shadow-bottom(){}
 // @mixin hook-dropcap(){}
+// @mixin hook-leader(){}
 // @mixin hook-logo(){}
 // @mixin hook-logo-hover(){}
 // @mixin hook-utility-misc(){}
@@ -546,9 +559,12 @@
 // Inverse
 // ========================================================================
 
+$inverse-logo-color:                            $inverse-global-color !default;
+$inverse-logo-hover-color:                      $inverse-global-color !default;
 
 
 
 // @mixin hook-inverse-dropcap(){}
+// @mixin hook-inverse-leader(){}
 // @mixin hook-inverse-logo(){}
 // @mixin hook-inverse-logo-hover(){}

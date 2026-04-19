@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Text
 // Description:     Utilities for text
 //
@@ -11,12 +9,29 @@
 // Variables
 // ========================================================================
 
+$text-lead-font-size:                            $global-large-font-size !default;
+$text-lead-line-height:                          1.5 !default;
+$text-lead-color:                                $global-emphasis-color !default;
 
+$text-meta-font-size:                            $global-small-font-size !default;
+$text-meta-line-height:                          1.4 !default;
+$text-meta-color:                                $global-muted-color !default;
 
+$text-small-font-size:                           $global-small-font-size !default;
+$text-small-line-height:                         1.5 !default;
 
+$text-large-font-size:                           $global-large-font-size !default;
+$text-large-line-height:                         1.5 !default;
 
+$text-bold-font-weight:                          bolder !default;
 
+$text-muted-color:                               $global-muted-color !default;
+$text-primary-color:                             $global-primary-background !default;
+$text-success-color:                             $global-success-background !default;
+$text-warning-color:                             $global-warning-background !default;
+$text-danger-color:                              $global-danger-background !default;
 
+$text-background-color:                          $global-primary-background !default;
 
 
 /* ========================================================================
@@ -31,14 +46,14 @@
     font-size: $text-lead-font-size;
     line-height: $text-lead-line-height;
     color: $text-lead-color;
-    @if(meta.mixin-exists(hook-text-lead)) {@include hook-text-lead();}
+    @if(mixin-exists(hook-text-lead)) {@include hook-text-lead();}
 }
 
 .uk-text-meta {
     font-size: $text-meta-font-size;
     line-height: $text-meta-line-height;
     color: $text-meta-color;
-    @if(meta.mixin-exists(hook-text-meta)) {@include hook-text-meta();}
+    @if(mixin-exists(hook-text-meta)) {@include hook-text-meta();}
 }
 
 
@@ -48,59 +63,35 @@
 .uk-text-small {
     font-size: $text-small-font-size;
     line-height: $text-small-line-height;
-    @if(meta.mixin-exists(hook-text-small)) {@include hook-text-small();}
+    @if(mixin-exists(hook-text-small)) {@include hook-text-small();}
 }
 
 .uk-text-large {
     font-size: $text-large-font-size;
     line-height: $text-large-line-height;
-    @if(meta.mixin-exists(hook-text-large)) {@include hook-text-large();}
-}
-
-.uk-text-default {
-    font-size: $global-font-size;
-    line-height: $global-line-height;
+    @if(mixin-exists(hook-text-large)) {@include hook-text-large();}
 }
 
 
 /* Weight modifier
  ========================================================================== */
 
-.uk-text-light { font-weight: 300; }
-.uk-text-normal { font-weight: 400; }
-.uk-text-bold { font-weight: 700; }
-
-.uk-text-lighter { font-weight: lighter; }
-.uk-text-bolder { font-weight: bolder; }
-
-
-/* Style modifier
- ========================================================================== */
-
-.uk-text-italic { font-style: italic; }
+.uk-text-bold { font-weight: $text-bold-font-weight; }
 
 
 /* Transform modifier
  ========================================================================== */
 
-.uk-text-capitalize { text-transform: capitalize !important; }
 .uk-text-uppercase { text-transform: uppercase !important; }
+.uk-text-capitalize { text-transform: capitalize !important; }
 .uk-text-lowercase { text-transform: lowercase !important; }
-
-
-/* Decoration modifier
- ========================================================================== */
-
-.uk-text-decoration-none { text-decoration: none !important; }
 
 
 /* Color modifiers
  ========================================================================== */
 
 .uk-text-muted { color: $text-muted-color !important; }
-.uk-text-emphasis { color: $text-emphasis-color !important; }
 .uk-text-primary { color: $text-primary-color !important; }
-.uk-text-secondary { color: $text-secondary-color !important; }
 .uk-text-success { color: $text-success-color !important; }
 .uk-text-warning { color: $text-warning-color !important; }
 .uk-text-danger { color: $text-danger-color !important; }
@@ -110,22 +101,29 @@
  ========================================================================== */
 
 /*
- * 1. The background clips to the foreground text. Works in all browsers.
- * 2. Default color is set to transparent.
- * 3. Container fits the text
- * 4. Style
+ * 1. The background clips to the foreground text. Works in Chrome, Firefox, Safari, Edge and Opera
+ *    Default color is set to transparent
+ * 2. Container fits the text
+ * 3. Fallback color for IE11
  */
 
 .uk-text-background {
     /* 1 */
     -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     /* 2 */
-    color: transparent !important;
-    /* 3 */
     display: inline-block;
-    /* 4 */
-    background-color: $text-background-color;
-    @if(meta.mixin-exists(hook-text-background)) {@include hook-text-background();}
+    /* 3 */
+    color: $text-background-color !important;
+}
+
+@supports (-webkit-background-clip: text) {
+
+    .uk-text-background {
+        background-color: $text-background-color;
+        @if(mixin-exists(hook-text-background)) {@include hook-text-background();}
+    }
+
 }
 
 
@@ -211,32 +209,36 @@
 th.uk-text-truncate,
 td.uk-text-truncate { max-width: 0; }
 
+
 /*
- * Wrap long words onto the next line and break them if they are too long to fit.
- * 1. Make it work with table cells in all browsers.
- * Note: Not using `hyphens: auto` because it hyphenates text even if not needed.
+ * 1. Wrap long words onto the next line and break them if they are too long to fit
+ * 2. Legacy `word-wrap` as fallback for `overflow-wrap`
+ * 3. Add a hyphen where the word breaks
+ * 4. Fix `overflow-wrap` which doesn't work with table cells in Chrome, Opera, IE11 and Edge
+ *    Must use `break-all` to support IE11 and Edge
  */
 
- .uk-text-break { overflow-wrap: break-word; }
-
- /* 1 */
- th.uk-text-break,
- td.uk-text-break { word-break: break-word; }
-
-
-/* Stroke modifiers
- ========================================================================== */
-
-.uk-text-stroke {
-    -webkit-text-stroke: $text-stroke-text-stroke;
-    -webkit-text-fill-color: transparent;
+.uk-text-break {
+    /* 1 */
+    overflow-wrap: break-word;
+    /* 2 */
+    word-wrap: break-word;
+    /* 3 */
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
 }
+
+/* 4 */
+th.uk-text-break,
+td.uk-text-break { word-break: break-all; }
+
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-text-misc)) {@include hook-text-misc();}
+@if(mixin-exists(hook-text-misc)) {@include hook-text-misc();}
 
 // @mixin hook-text-lead(){}
 // @mixin hook-text-meta(){}
@@ -249,6 +251,10 @@ td.uk-text-truncate { max-width: 0; }
 // Inverse
 // ========================================================================
 
+$inverse-text-lead-color:                       $inverse-global-color !default;
+$inverse-text-meta-color:                       $inverse-global-muted-color !default;
+$inverse-text-muted-color:                      $inverse-global-muted-color !default;
+$inverse-text-primary-color:                    $inverse-global-color !default;
 
 
 
