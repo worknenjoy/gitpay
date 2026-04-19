@@ -2,12 +2,12 @@
 
 - en:
     title: Charge customers
-    desc: Set clear deliverables, validate work, and request payment with confidence
+    desc: It's not centralized
   br:
     title: Cobrar clientes
     desc: Defina entregas claras, valide o trabalho e cobre com confiança
   doc: service-provider
-  icon: file-edit
+  icon: world
 
 - en:
     title: Fund work
