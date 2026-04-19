@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Align
 // Description:     Utilities to align embedded content
 //
@@ -11,10 +13,7 @@
 // Variables
 // ========================================================================
 
-$align-margin-horizontal:                        $global-gutter !default;
-$align-margin-vertical:                          $global-gutter !default;
 
-$align-margin-horizontal-l:                      $global-medium-gutter !default;
 
 
 /* ========================================================================
@@ -25,12 +24,12 @@ $align-margin-horizontal-l:                      $global-medium-gutter !default;
  * Default
  */
 
-[class*='uk-align'] {
+[class*="uk-align"] {
     display: block;
     margin-bottom: $align-margin-vertical;
 }
 
-* + [class*='uk-align'] { margin-top: $align-margin-vertical; }
+* + [class*="uk-align"] { margin-top: $align-margin-vertical; }
 
 /*
  * Center
@@ -137,6 +136,6 @@ $align-margin-horizontal-l:                      $global-medium-gutter !default;
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-align-misc)) {@include hook-align-misc();}
+@if(meta.mixin-exists(hook-align-misc)) {@include hook-align-misc();}
 
 // @mixin hook-align-misc(){}

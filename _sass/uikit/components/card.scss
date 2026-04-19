@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Card
 // Description:     Component to create boxed content containers
 //
@@ -14,6 +16,7 @@
 //                  `uk-card-default`
 //                  `uk-card-primary`
 //                  `uk-card-secondary`
+//                  `uk-card-overlay`
 //                  `uk-card-small`
 //                  `uk-card-large`
 //
@@ -25,62 +28,20 @@
 // Variables
 // ========================================================================
 
-$card-body-padding-horizontal:                  $global-gutter !default;
-$card-body-padding-vertical:                    $global-gutter !default;
 
-$card-body-padding-horizontal-l:                $global-medium-gutter !default;
-$card-body-padding-vertical-l:                  $global-medium-gutter !default;
 
-$card-header-padding-horizontal:                $global-gutter !default;
-$card-header-padding-vertical:                  round($global-gutter / 2) !default;
 
-$card-header-padding-horizontal-l:              $global-medium-gutter !default;
-$card-header-padding-vertical-l:                round($global-medium-gutter / 2) !default;
 
-$card-footer-padding-horizontal:                $global-gutter !default;
-$card-footer-padding-vertical:                  ($global-gutter / 2) !default;
 
-$card-footer-padding-horizontal-l:              $global-medium-gutter !default;
-$card-footer-padding-vertical-l:                round($global-medium-gutter / 2) !default;
 
-$card-title-font-size:                          $global-large-font-size !default;
-$card-title-line-height:                        1.4 !default;
 
-$card-badge-top:                                $global-gutter !default;
-$card-badge-right:                              $card-badge-top !default;
 
-$card-hover-background:                         $global-muted-background !default;
 
-$card-default-background:                       $global-muted-background !default;
-$card-default-color:                            $global-color !default;
-$card-default-title-color:                      $global-emphasis-color !default;
-$card-default-hover-background:                 darken($card-default-background, 5%) !default;
 
-$card-primary-background:                       $global-primary-background !default;
-$card-primary-color:                            $global-inverse-color !default;
-$card-primary-title-color:                      $card-primary-color !default;
-$card-primary-hover-background:                 darken($card-primary-background, 5%) !default;
-$card-primary-color-mode:                       light !default;
 
-$card-secondary-background:                     $global-secondary-background !default;
-$card-secondary-color:                          $global-inverse-color !default;
-$card-secondary-title-color:                    $card-secondary-color !default;
-$card-secondary-hover-background:               darken($card-secondary-background, 5%) !default;
-$card-secondary-color-mode:                     light !default;
 
-$card-small-body-padding-horizontal:            $global-margin !default;
-$card-small-body-padding-vertical:              $global-margin !default;
-$card-small-header-padding-horizontal:          $global-margin !default;
-$card-small-header-padding-vertical:            round($global-margin / 1.5) !default;
-$card-small-footer-padding-horizontal:          $global-margin !default;
-$card-small-footer-padding-vertical:            round($global-margin / 1.5) !default;
 
-$card-large-body-padding-horizontal-l:          $global-large-gutter !default;
-$card-large-body-padding-vertical-l:            $global-large-gutter !default;
-$card-large-header-padding-horizontal-l:        $global-large-gutter !default;
-$card-large-header-padding-vertical-l:          round($global-large-gutter / 2) !default;
-$card-large-footer-padding-horizontal-l:        $global-large-gutter !default;
-$card-large-footer-padding-vertical-l:          round($global-large-gutter / 2) !default;
+
 
 
 /* ========================================================================
@@ -90,7 +51,7 @@ $card-large-footer-padding-vertical-l:          round($global-large-gutter / 2) 
 .uk-card {
     position: relative;
     box-sizing: border-box;
-    @if(mixin-exists(hook-card)) {@include hook-card();}
+    @if(meta.mixin-exists(hook-card)) {@include hook-card();}
 }
 
 
@@ -98,18 +59,21 @@ $card-large-footer-padding-vertical-l:          round($global-large-gutter / 2) 
  ========================================================================== */
 
 .uk-card-body {
+    display: flow-root;
     padding: $card-body-padding-vertical $card-body-padding-horizontal;
-    @if(mixin-exists(hook-card-body)) {@include hook-card-body();}
+    @if(meta.mixin-exists(hook-card-body)) {@include hook-card-body();}
 }
 
 .uk-card-header {
+    display: flow-root;
     padding: $card-header-padding-vertical $card-header-padding-horizontal;
-    @if(mixin-exists(hook-card-header)) {@include hook-card-header();}
+    @if(meta.mixin-exists(hook-card-header)) {@include hook-card-header();}
 }
 
 .uk-card-footer {
+    display: flow-root;
     padding: $card-footer-padding-vertical $card-footer-padding-horizontal;
-    @if(mixin-exists(hook-card-footer)) {@include hook-card-footer();}
+    @if(meta.mixin-exists(hook-card-footer)) {@include hook-card-footer();}
 }
 
 /* Desktop and bigger */
@@ -122,24 +86,6 @@ $card-large-footer-padding-vertical-l:          round($global-large-gutter / 2) 
     .uk-card-footer { padding: $card-footer-padding-vertical-l $card-footer-padding-horizontal-l; }
 
 }
-
-/*
- * Micro clearfix
- */
-
-.uk-card-body::before,
-.uk-card-body::after,
-.uk-card-header::before,
-.uk-card-header::after,
-.uk-card-footer::before,
-.uk-card-footer::after {
-    content: "";
-    display: table;
-}
-
-.uk-card-body::after,
-.uk-card-header::after,
-.uk-card-footer::after { clear: both; }
 
 /*
  * Remove margin from the last-child
@@ -158,26 +104,26 @@ $card-large-footer-padding-vertical-l:          round($global-large-gutter / 2) 
  * Implemented by the theme
  */
 
-[class*='uk-card-media'] {
-    @if(mixin-exists(hook-card-media)) {@include hook-card-media();}
+[class*="uk-card-media"] {
+    @if(meta.mixin-exists(hook-card-media)) {@include hook-card-media();}
 }
 
 .uk-card-media-top,
 .uk-grid-stack > .uk-card-media-left,
-.uk-grid-stack > .uk-card-media-right  {
-    @if(mixin-exists(hook-card-media-top)) {@include hook-card-media-top();}
+.uk-grid-stack > .uk-card-media-right {
+    @if(meta.mixin-exists(hook-card-media-top)) {@include hook-card-media-top();}
 }
 
 .uk-card-media-bottom {
-    @if(mixin-exists(hook-card-media-bottom)) {@include hook-card-media-bottom();}
+    @if(meta.mixin-exists(hook-card-media-bottom)) {@include hook-card-media-bottom();}
 }
 
 :not(.uk-grid-stack) > .uk-card-media-left {
-    @if(mixin-exists(hook-card-media-left)) {@include hook-card-media-left();}
+    @if(meta.mixin-exists(hook-card-media-left)) {@include hook-card-media-left();}
 }
 
 :not(.uk-grid-stack) > .uk-card-media-right {
-    @if(mixin-exists(hook-card-media-right)) {@include hook-card-media-right();}
+    @if(meta.mixin-exists(hook-card-media-right)) {@include hook-card-media-right();}
 }
 
 
@@ -187,19 +133,39 @@ $card-large-footer-padding-vertical-l:          round($global-large-gutter / 2) 
 .uk-card-title {
     font-size: $card-title-font-size;
     line-height: $card-title-line-height;
-    @if(mixin-exists(hook-card-title)) {@include hook-card-title();}
+    @if(meta.mixin-exists(hook-card-title)) {@include hook-card-title();}
 }
 
 
 /* Badge
  ========================================================================== */
 
+/*
+ * 1. Position
+ * 2. Size
+ * 3. Style
+ * 4. Center child vertically
+ */
+
 .uk-card-badge {
+    /* 1 */
     position: absolute;
     top: $card-badge-top;
     right: $card-badge-right;
     z-index: 1;
-    @if(mixin-exists(hook-card-badge)) {@include hook-card-badge();}
+    /* 2 */
+    height: $card-badge-height;
+    padding: 0 $card-badge-padding-horizontal;
+    /* 3 */
+    background: $card-badge-background;
+    color: $card-badge-color;
+    font-size: $card-badge-font-size;
+    /* 4 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 0;
+    @if(meta.mixin-exists(hook-card-badge)) {@include hook-card-badge();}
 }
 
 /*
@@ -212,9 +178,9 @@ $card-large-footer-padding-vertical-l:          round($global-large-gutter / 2) 
 /* Hover modifier
  ========================================================================== */
 
-.uk-card-hover:not(.uk-card-default):not(.uk-card-primary):not(.uk-card-secondary):hover {
-    background: $card-hover-background;
-    @if(mixin-exists(hook-card-hover)) {@include hook-card-hover();}
+.uk-card-hover:not(.uk-card-default, .uk-card-primary, .uk-card-secondary, .uk-card-overlay):hover {
+    background-color: $card-hover-background;
+    @if(meta.mixin-exists(hook-card-hover)) {@include hook-card-hover();}
 }
 
 
@@ -227,80 +193,118 @@ $card-large-footer-padding-vertical-l:          round($global-large-gutter / 2) 
  */
 
 .uk-card-default {
-    background: $card-default-background;
+    --uk-inverse: #{$card-default-color-mode};
+    background-color: $card-default-background;
     color: $card-default-color;
-    @if(mixin-exists(hook-card-default)) {@include hook-card-default();}
+    @if(meta.mixin-exists(hook-card-default)) {@include hook-card-default();}
 }
 
 .uk-card-default .uk-card-title {
     color: $card-default-title-color;
-    @if(mixin-exists(hook-card-default-title)) {@include hook-card-default-title();}
+    @if(meta.mixin-exists(hook-card-default-title)) {@include hook-card-default-title();}
 }
 
 .uk-card-default.uk-card-hover:hover {
     background-color: $card-default-hover-background;
-    @if(mixin-exists(hook-card-default-hover)) {@include hook-card-default-hover();}
+    @if(meta.mixin-exists(hook-card-default-hover)) {@include hook-card-default-hover();}
 }
 
 .uk-card-default .uk-card-header {
-    @if(mixin-exists(hook-card-default-header)) {@include hook-card-default-header();}
+    @if(meta.mixin-exists(hook-card-default-header)) {@include hook-card-default-header();}
 }
 
 .uk-card-default .uk-card-footer {
-    @if(mixin-exists(hook-card-default-footer)) {@include hook-card-default-footer();}
+    @if(meta.mixin-exists(hook-card-default-footer)) {@include hook-card-default-footer();}
 }
+
+// Color Mode
+@if ( $card-default-color-mode == light ) { .uk-card-default.uk-card-body { @extend .uk-light !optional;} }
+@if ( $card-default-color-mode == light ) { .uk-card-default > :not([class*="uk-card-media"]) { @extend .uk-light !optional;} }
+@if ( $card-default-color-mode == dark ) { .uk-card-default.uk-card-body { @extend .uk-dark !optional;} }
+@if ( $card-default-color-mode == dark ) { .uk-card-default > :not([class*="uk-card-media"]) { @extend .uk-dark !optional;} }
 
 /*
  * Primary
  */
 
 .uk-card-primary {
-    background: $card-primary-background;
+    --uk-inverse: #{$card-primary-color-mode};
+    background-color: $card-primary-background;
     color: $card-primary-color;
-    @if(mixin-exists(hook-card-primary)) {@include hook-card-primary();}
+    @if(meta.mixin-exists(hook-card-primary)) {@include hook-card-primary();}
 }
 
 .uk-card-primary .uk-card-title {
     color: $card-primary-title-color;
-    @if(mixin-exists(hook-card-primary-title)) {@include hook-card-primary-title();}
+    @if(meta.mixin-exists(hook-card-primary-title)) {@include hook-card-primary-title();}
 }
 
 .uk-card-primary.uk-card-hover:hover {
     background-color: $card-primary-hover-background;
-    @if(mixin-exists(hook-card-primary-hover)) {@include hook-card-primary-hover();}
+    @if(meta.mixin-exists(hook-card-primary-hover)) {@include hook-card-primary-hover();}
 }
 
 // Color Mode
 @if ( $card-primary-color-mode == light ) { .uk-card-primary.uk-card-body { @extend .uk-light !optional;} }
-@if ( $card-primary-color-mode == light ) { .uk-card-primary > :not([class*='uk-card-media']) { @extend .uk-light !optional;} }
+@if ( $card-primary-color-mode == light ) { .uk-card-primary > :not([class*="uk-card-media"]) { @extend .uk-light !optional;} }
 @if ( $card-primary-color-mode == dark ) { .uk-card-primary.uk-card-body { @extend .uk-dark !optional;} }
-@if ( $card-primary-color-mode == dark ) { .uk-card-primary > :not([class*='uk-card-media']) { @extend .uk-dark !optional;} }
+@if ( $card-primary-color-mode == dark ) { .uk-card-primary > :not([class*="uk-card-media"]) { @extend .uk-dark !optional;} }
 
 /*
  * Secondary
  */
 
 .uk-card-secondary {
-    background: $card-secondary-background;
+    --uk-inverse: #{$card-secondary-color-mode};
+    background-color: $card-secondary-background;
     color: $card-secondary-color;
-    @if(mixin-exists(hook-card-secondary)) {@include hook-card-secondary();}
+    @if(meta.mixin-exists(hook-card-secondary)) {@include hook-card-secondary();}
 }
 
 .uk-card-secondary .uk-card-title {
     color: $card-secondary-title-color;
-    @if(mixin-exists(hook-card-secondary-title)) {@include hook-card-secondary-title();}
+    @if(meta.mixin-exists(hook-card-secondary-title)) {@include hook-card-secondary-title();}
 }
 
 .uk-card-secondary.uk-card-hover:hover {
     background-color: $card-secondary-hover-background;
-    @if(mixin-exists(hook-card-secondary-hover)) {@include hook-card-secondary-hover();}
+    @if(meta.mixin-exists(hook-card-secondary-hover)) {@include hook-card-secondary-hover();}
 }
 
 // Color Mode
 @if ( $card-secondary-color-mode == light ) { .uk-card-secondary.uk-card-body { @extend .uk-light !optional;} }
-@if ( $card-secondary-color-mode == light ) { .uk-card-secondary > :not([class*='uk-card-media']) { @extend .uk-light !optional;} }
+@if ( $card-secondary-color-mode == light ) { .uk-card-secondary > :not([class*="uk-card-media"]) { @extend .uk-light !optional;} }
 @if ( $card-secondary-color-mode == dark ) { .uk-card-secondary.uk-card-body { @extend .uk-dark !optional;} }
-@if ( $card-secondary-color-mode == dark ) { .uk-card-secondary > :not([class*='uk-card-media']) { @extend .uk-dark !optional;} }
+@if ( $card-secondary-color-mode == dark ) { .uk-card-secondary > :not([class*="uk-card-media"]) { @extend .uk-dark !optional;} }
+
+
+/*
+ * Overlay
+ */
+
+.uk-card-overlay {
+    --uk-inverse: #{$card-overlay-color-mode};
+    background-color: $card-overlay-background;
+    color: $card-overlay-color;
+    @if(meta.mixin-exists(hook-card-overlay)) {@include hook-card-overlay();}
+}
+
+.uk-card-overlay .uk-card-title {
+    color: $card-overlay-title-color;
+    @if(meta.mixin-exists(hook-card-overlay-title)) {@include hook-card-overlay-title();}
+}
+
+.uk-card-overlay.uk-card-hover:hover {
+    background-color: $card-overlay-hover-background;
+    @if(meta.mixin-exists(hook-card-overlay-hover)) {@include hook-card-overlay-hover();}
+}
+
+
+// Color Mode
+@if ( $card-overlay-color-mode == light ) { .uk-card-overlay.uk-card-body { @extend .uk-light !optional;} }
+@if ( $card-overlay-color-mode == light ) { .uk-card-overlay > :not([class*="uk-card-media"]) { @extend .uk-light !optional;} }
+@if ( $card-overlay-color-mode == dark ) { .uk-card-overlay.uk-card-body { @extend .uk-dark !optional;} }
+@if ( $card-overlay-color-mode == dark ) { .uk-card-overlay > :not([class*="uk-card-media"]) { @extend .uk-dark !optional;} }
 
 
 /* Size modifier
@@ -335,7 +339,7 @@ $card-large-footer-padding-vertical-l:          round($global-large-gutter / 2) 
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-card-misc)) {@include hook-card-misc();}
+@if(meta.mixin-exists(hook-card-misc)) {@include hook-card-misc();}
 
 // @mixin hook-card(){}
 // @mixin hook-card-body(){}
@@ -360,4 +364,16 @@ $card-large-footer-padding-vertical-l:          round($global-large-gutter / 2) 
 // @mixin hook-card-secondary(){}
 // @mixin hook-card-secondary-title(){}
 // @mixin hook-card-secondary-hover(){}
+// @mixin hook-card-overlay(){}
+// @mixin hook-card-overlay-title(){}
+// @mixin hook-card-overlay-hover(){}
 // @mixin hook-card-misc(){}
+
+
+// Inverse
+// ========================================================================
+
+
+
+
+// @mixin hook-inverse-card-badge(){}

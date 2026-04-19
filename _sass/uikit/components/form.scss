@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Form
 // Description:     Styles for forms
 //
@@ -35,75 +37,27 @@
 // Variables
 // ========================================================================
 
-$form-height:                                    $global-control-height !default;
-$form-line-height:                               $form-height !default;
-$form-padding-horizontal:                        10px !default;
-$form-padding-vertical:                          4px !default;
 
-$form-background:                                $global-muted-background !default;
-$form-color:                                     $global-color !default;
 
-$form-focus-background:                          $global-muted-background !default;
-$form-focus-color:                               $global-color !default;
 
-$form-disabled-background:                       $global-muted-background !default;
-$form-disabled-color:                            $global-muted-color !default;
 
-$form-placeholder-color:                         $global-muted-color !default;
 
-$form-small-height:                              $global-control-small-height !default;
-$form-small-padding-horizontal:                  8px !default;
-$form-small-line-height:                         $form-small-height !default;
-$form-small-font-size:                           $global-small-font-size !default;
 
-$form-large-height:                              $global-control-large-height !default;
-$form-large-padding-horizontal:                  12px !default;
-$form-large-line-height:                         $form-large-height !default;
-$form-large-font-size:                           $global-medium-font-size !default;
 
-$form-danger-color:                              $global-danger-background !default;
-$form-success-color:                             $global-success-background !default;
 
-$form-width-xsmall:                              50px !default;
-$form-width-small:                               130px !default;
-$form-width-medium:                              200px !default;
-$form-width-large:                               500px !default;
 
-$form-select-padding-right:                      20px !default;
-$form-select-icon-color:                         $global-color !default;
-$form-select-disabled-icon-color:                $global-muted-color !default;
 
-$form-radio-size:                                16px !default;
-$form-radio-margin-top:                          -4px !default;
-$form-radio-background:                          darken($global-muted-background, 5%) !default;
 
-$form-radio-checked-background:                  $global-primary-background !default;
-$form-radio-checked-icon-color:                  $global-inverse-color !default;
 
-$form-radio-checked-focus-background:            darken($global-primary-background, 10%) !default;
 
-$form-radio-disabled-background:                 $global-muted-background !default;
-$form-radio-disabled-icon-color:                 $global-muted-color !default;
 
-$form-legend-font-size:                          $global-large-font-size !default;
-$form-legend-line-height:                        1.4 !default;
 
-$form-stacked-margin-bottom:                     $global-small-margin !default;
 
-$form-horizontal-label-width:                    200px !default;
-$form-horizontal-label-margin-top:               7px !default;
-$form-horizontal-controls-margin-left:           215px !default;
-$form-horizontal-controls-text-padding-top:      7px !default;
 
-$form-icon-width:                                $form-height !default;
-$form-icon-font-size:                            $global-font-size !default;
-$form-icon-color:                                $global-muted-color !default;
-$form-icon-hover-color:                          $global-color !default;
 
-$internal-form-select-image: "data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22#000%22%20points%3D%2212%201%209%206%2015%206%22%20%2F%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22#000%22%20points%3D%2212%2013%209%208%2015%208%22%20%2F%3E%0A%3C%2Fsvg%3E%0A" !default;
-$internal-form-radio-image: "data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Ccircle%20fill%3D%22#000%22%20cx%3D%228%22%20cy%3D%228%22%20r%3D%222%22%20%2F%3E%0A%3C%2Fsvg%3E" !default;
-$internal-form-checkbox-image: "data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2214%22%20height%3D%2211%22%20viewBox%3D%220%200%2014%2011%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Cpolygon%20fill%3D%22#000%22%20points%3D%2212%201%205%207.5%202%205%201%205.5%205%2010%2013%201.5%22%20%2F%3E%0A%3C%2Fsvg%3E%0A" !default;
-$internal-form-checkbox-indeterminate-image: "data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%20%20%20%20%3Crect%20fill%3D%22#000%22%20x%3D%223%22%20y%3D%228%22%20width%3D%2210%22%20height%3D%221%22%20%2F%3E%0A%3C%2Fsvg%3E" !default;
+
+
+
 
 
 /* ========================================================================
@@ -174,13 +128,25 @@ $internal-form-checkbox-indeterminate-image: "data:image/svg+xml;charset=UTF-8,%
 .uk-input[type="search"]::-webkit-search-cancel-button,
 .uk-input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
 
-
 /*
  * Correct the cursor style of increment and decrement buttons in Chrome.
  */
 
 .uk-input[type="number"]::-webkit-inner-spin-button,
 .uk-input[type="number"]::-webkit-outer-spin-button { height: auto; }
+
+/*
+ * Correct vertical alignment in Safari.
+ */
+
+.uk-input[type="date"]::-webkit-datetime-edit,
+.uk-input[type="time"]::-webkit-datetime-edit,
+.uk-input[type="datetime-local"]::-webkit-datetime-edit {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    padding: 0;
+}
 
 /*
  * Removes placeholder transparency in Firefox.
@@ -198,17 +164,20 @@ $internal-form-checkbox-indeterminate-image: "data:image/svg+xml;charset=UTF-8,%
 
 /*
  * Define consistent border, margin, and padding.
+ * 1. Reset `min-width`
  */
 
 .uk-fieldset {
     border: none;
     margin: 0;
     padding: 0;
+    /* 1 */
+    min-width: 0;
 }
 
 
 /* Input, select and textarea
- * Allowed: `text`, `password`, `datetime`, `datetime-local`, `date`,  `month`,
+ * Allowed: `text`, `password`, `datetime-local`, `date`,  `month`,
             `time`, `week`, `number`, `email`, `url`, `search`, `tel`, `color`
  * Disallowed: `range`, `radio`, `checkbox`, `file`, `submit`, `reset` and `image`
  ========================================================================== */
@@ -240,28 +209,37 @@ $internal-form-checkbox-indeterminate-image: "data:image/svg+xml;charset=UTF-8,%
     padding: 0 $form-padding-horizontal;
     background: $form-background;
     color: $form-color;
-    @if(mixin-exists(hook-form)) {@include hook-form();}
+    @if(meta.mixin-exists(hook-form)) {@include hook-form();}
 }
 
 /*
  * Single-line
- * 1. Allow any element to look like an `input` or `select` element
- * 2. Make sure line-height is not larger than height
- *    Also needed to center the text vertically
  */
 
 .uk-input,
 .uk-select:not([multiple]):not([size]) {
     height: $form-height;
     vertical-align: middle;
-    /* 1 */
-    display: inline-block;
-    @if(mixin-exists(hook-form-single-line)) {@include hook-form-single-line();}
+    @if(meta.mixin-exists(hook-form-single-line)) {@include hook-form-single-line();}
 }
 
-/* 2 */
-.uk-input:not(input),
-.uk-select:not(select) { line-height: $form-line-height; }
+/*
+ * 1. Allow any element to look like an `input` or `select` element
+ * 2. Make sure line-height is not larger than height. Also needed to center the text vertically
+ * 3. Prevent text from wrapping onto multiple lines, and truncate with an ellipsis
+ */
+
+.uk-input:where(:not(input)),
+.uk-select:where(:not(select)) {
+    /* 1 */
+    display: inline-block;
+    /* 2 */
+    line-height: $form-line-height;
+    /* 3 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 /*
  * Multi-line
@@ -270,11 +248,13 @@ $internal-form-checkbox-indeterminate-image: "data:image/svg+xml;charset=UTF-8,%
 .uk-select[multiple],
 .uk-select[size],
 .uk-textarea {
-    padding-top: $form-padding-vertical;
-    padding-bottom: $form-padding-vertical;
+    padding: $form-multi-line-padding-vertical $form-multi-line-padding-horizontal;
     vertical-align: top;
-    @if(mixin-exists(hook-form-multi-line)) {@include hook-form-multi-line();}
+    @if(meta.mixin-exists(hook-form-multi-line)) {@include hook-form-multi-line();}
 }
+
+.uk-select[multiple],
+.uk-select[size] { resize: vertical; }
 
 /* Focus */
 .uk-input:focus,
@@ -283,7 +263,7 @@ $internal-form-checkbox-indeterminate-image: "data:image/svg+xml;charset=UTF-8,%
     outline: none;
     background-color: $form-focus-background;
     color: $form-focus-color;
-    @if(mixin-exists(hook-form-focus)) {@include hook-form-focus();}
+    @if(meta.mixin-exists(hook-form-focus)) {@include hook-form-focus();}
 }
 
 /* Disabled */
@@ -292,50 +272,16 @@ $internal-form-checkbox-indeterminate-image: "data:image/svg+xml;charset=UTF-8,%
 .uk-textarea:disabled {
     background-color: $form-disabled-background;
     color: $form-disabled-color;
-    @if(mixin-exists(hook-form-disabled)) {@include hook-form-disabled();}
+    @if(meta.mixin-exists(hook-form-disabled)) {@include hook-form-disabled();}
 }
 
 /*
  * Placeholder
  */
 
-.uk-input:-ms-input-placeholder { color: $form-placeholder-color !important; }
 .uk-input::placeholder { color: $form-placeholder-color; }
 
-.uk-textarea:-ms-input-placeholder { color: $form-placeholder-color !important; }
 .uk-textarea::placeholder { color: $form-placeholder-color; }
-
-
-/* Style modifier (`uk-input`, `uk-select` and `uk-textarea`)
- ========================================================================== */
-
-/*
- * Small
- */
-
-.uk-form-small { font-size: $form-small-font-size; }
-
-.uk-form-small:not(textarea):not([multiple]):not([size]) {
-    height: $form-small-height;
-    padding-left: $form-small-padding-horizontal;
-    padding-right: $form-small-padding-horizontal;
-}
-
-.uk-form-small:not(select):not(input):not(textarea) { line-height: $form-small-line-height; }
-
-/*
- * Large
- */
-
-.uk-form-large { font-size: $form-large-font-size; }
-
-.uk-form-large:not(textarea):not([multiple]):not([size]) {
-    height: $form-large-height;
-    padding-left: $form-large-padding-horizontal;
-    padding-right: $form-large-padding-horizontal;
-}
-
-.uk-form-large:not(select):not(input):not(textarea) { line-height: $form-large-line-height; }
 
 
 /* Style modifier (`uk-input`, `uk-select` and `uk-textarea`)
@@ -348,7 +294,7 @@ $internal-form-checkbox-indeterminate-image: "data:image/svg+xml;charset=UTF-8,%
 .uk-form-danger,
 .uk-form-danger:focus {
     color: $form-danger-color;
-    @if(mixin-exists(hook-form-danger)) {@include hook-form-danger();}
+    @if(meta.mixin-exists(hook-form-danger)) {@include hook-form-danger();}
 }
 
 /*
@@ -356,9 +302,9 @@ $internal-form-checkbox-indeterminate-image: "data:image/svg+xml;charset=UTF-8,%
  */
 
 .uk-form-success,
-.uk-form-success:focus  {
+.uk-form-success:focus {
     color: $form-success-color;
-    @if(mixin-exists(hook-form-success)) {@include hook-form-success();}
+    @if(meta.mixin-exists(hook-form-success)) {@include hook-form-success();}
 }
 
 /*
@@ -367,11 +313,11 @@ $internal-form-checkbox-indeterminate-image: "data:image/svg+xml;charset=UTF-8,%
 
 .uk-form-blank {
     background: none;
-    @if(mixin-exists(hook-form-blank)) {@include hook-form-blank();}
+    @if(meta.mixin-exists(hook-form-blank)) {@include hook-form-blank();}
 }
 
 .uk-form-blank:focus {
-    @if(mixin-exists(hook-form-blank-focus)) {@include hook-form-blank-focus();}
+    @if(meta.mixin-exists(hook-form-blank-focus)) {@include hook-form-blank-focus();}
 }
 
 
@@ -400,7 +346,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
 /*
  * 1. Remove default style. Also works in Firefox
  * 2. Style
- * 3. Remove default style in IE 10/11
+ * 3. Set `color` for options in the select dropdown, because the inherited `color` might be too light.
  */
 
 .uk-select:not([multiple]):not([size]) {
@@ -415,7 +361,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
 }
 
 /* 3 */
-.uk-select:not([multiple]):not([size])::-ms-expand { display: none; }
+.uk-select:not([multiple]):not([size]) option { color: $form-select-option-color; }
 
 /*
  * Disabled
@@ -424,8 +370,27 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
 .uk-select:not([multiple]):not([size]):disabled { @include svg-fill($internal-form-select-image, "#000", $form-select-disabled-icon-color); }
 
 
+/* Datalist
+ ========================================================================== */
+
+/*
+ * 1. Remove default style in Chrome
+ */
+
+ .uk-input[list] {
+    padding-right: $form-datalist-padding-right;
+    background-repeat: no-repeat;
+    background-position: 100% 50%;
+}
+
+.uk-input[list]:hover,
+.uk-input[list]:focus { @include svg-fill($internal-form-datalist-image, "#000", $form-datalist-icon-color); }
+
+/* 1 */
+.uk-input[list]::-webkit-calendar-picker-indicator { display: none !important; }
+
+
 /* Radio and checkbox
- * Note: Does not work in IE11
  ========================================================================== */
 
 /*
@@ -434,7 +399,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
  * 3. Vertical alignment
  * 4. Remove default style
  * 5. Fix black background on iOS
- * 6. Center icons
+ * 6. Cover icons
  */
 
 .uk-radio,
@@ -454,9 +419,8 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
     /* 5 */
     background-color: $form-radio-background;
     /* 6 */
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    @if(mixin-exists(hook-form-radio)) {@include hook-form-radio();}
+    background-size: cover;
+    @if(meta.mixin-exists(hook-form-radio)) {@include hook-form-radio();}
 }
 
 .uk-radio { border-radius: 50%; }
@@ -464,8 +428,9 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
 /* Focus */
 .uk-radio:focus,
 .uk-checkbox:focus {
+    background-color: $form-radio-focus-background;
     outline: none;
-    @if(mixin-exists(hook-form-radio-focus)) {@include hook-form-radio-focus();}
+    @if(meta.mixin-exists(hook-form-radio-focus)) {@include hook-form-radio-focus();}
 }
 
 /*
@@ -476,7 +441,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
 .uk-checkbox:checked,
 .uk-checkbox:indeterminate {
     background-color: $form-radio-checked-background;
-    @if(mixin-exists(hook-form-radio-checked)) {@include hook-form-radio-checked();}
+    @if(meta.mixin-exists(hook-form-radio-checked)) {@include hook-form-radio-checked();}
 }
 
 /* Focus */
@@ -484,7 +449,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
 .uk-checkbox:checked:focus,
 .uk-checkbox:indeterminate:focus {
     background-color: $form-radio-checked-focus-background;
-    @if(mixin-exists(hook-form-radio-checked-focus)) {@include hook-form-radio-checked-focus();}
+    @if(meta.mixin-exists(hook-form-radio-checked-focus)) {@include hook-form-radio-checked-focus();}
 }
 
 /*
@@ -502,12 +467,66 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
 .uk-radio:disabled,
 .uk-checkbox:disabled {
     background-color: $form-radio-disabled-background;
-    @if(mixin-exists(hook-form-radio-disabled)) {@include hook-form-radio-disabled();}
+    @if(meta.mixin-exists(hook-form-radio-disabled)) {@include hook-form-radio-disabled();}
 }
 
 .uk-radio:disabled:checked { @include svg-fill($internal-form-radio-image, "#000", $form-radio-disabled-icon-color); }
 .uk-checkbox:disabled:checked { @include svg-fill($internal-form-checkbox-image, "#000", $form-radio-disabled-icon-color); }
 .uk-checkbox:disabled:indeterminate { @include svg-fill($internal-form-checkbox-indeterminate-image, "#000", $form-radio-disabled-icon-color); }
+
+
+/* Style modifier (`uk-input`, `uk-select`, `uk-textarea`, `uk-radio`, `uk-checkbox`)
+ ========================================================================== */
+
+/*
+ * Small
+ */
+
+.uk-form-small:is(.uk-input, .uk-search-input, .uk-select, .uk-textarea) { font-size: $form-small-font-size; }
+
+/* Single-line */
+.uk-form-small:is(.uk-input, .uk-search-input, .uk-select:not([multiple]):not([size])) {
+    height: $form-small-height;
+    padding-left: $form-small-padding-horizontal;
+    padding-right: $form-small-padding-horizontal;
+}
+
+/* Multi-line */
+.uk-form-small:is(.uk-select[multiple], .uk-select[size], .uk-textarea) { padding: $form-small-multi-line-padding-vertical $form-small-multi-line-padding-horizontal; }
+
+/* Any element */
+.uk-form-small:not(select):not(input):not(textarea):not([type="radio"]):not([type="checkbox"]) { line-height: $form-small-line-height; }
+
+/* Radio + Checkbox */
+.uk-form-small:is(.uk-radio, .uk-checkbox) {
+    height: $form-small-radio-size;
+    width: $form-small-radio-size;
+}
+
+/*
+ * Large
+ */
+
+.uk-form-large:is(.uk-input, .uk-search-input, .uk-select, .uk-textarea) { font-size: $form-large-font-size; }
+
+/* Single-line */
+.uk-form-large:is(.uk-input, .uk-search-input, .uk-select:not([multiple]):not([size])) {
+    height: $form-large-height;
+    padding-left: $form-large-padding-horizontal;
+    padding-right: $form-large-padding-horizontal;
+}
+
+/* Multi-line */
+.uk-form-large:is(.uk-select[multiple], .uk-select[size], .uk-textarea) { padding: $form-large-multi-line-padding-vertical $form-large-multi-line-padding-horizontal; }
+
+/* Any element */
+.uk-form-large:not(select):not(input):not(textarea):not([type="radio"]):not([type="checkbox"]) { line-height: $form-large-line-height; }
+
+/* Radio + Checkbox */
+.uk-form-large:is(.uk-radio, .uk-checkbox) {
+    height: $form-large-radio-size;
+    width: $form-large-radio-size;
+}
 
 
 /* Legend
@@ -531,7 +550,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
     /* 4 */
     font-size: $form-legend-font-size;
     line-height: $form-legend-line-height;
-    @if(mixin-exists(hook-form-legend)) {@include hook-form-legend();}
+    @if(meta.mixin-exists(hook-form-legend)) {@include hook-form-legend();}
 }
 
 
@@ -560,7 +579,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
  * 1. Position and resize the form control to always cover its container
  * 2. Required for Firefox for positioning to the left
  * 3. Required for Webkit to make `height` work
- * 4. Hide controle and show cursor
+ * 4. Hide controls and show cursor
  * 5. Needed for the cursor
  * 6. Clip height caused by 5. Needed for Webkit only
  */
@@ -594,7 +613,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
  ========================================================================== */
 
 .uk-form-label {
-    @if(mixin-exists(hook-form-label)) {@include hook-form-label();}
+    @if(meta.mixin-exists(hook-form-label)) {@include hook-form-label();}
 }
 
 
@@ -608,7 +627,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
 .uk-form-stacked .uk-form-label {
     display: block;
     margin-bottom: $form-stacked-margin-bottom;
-    @if(mixin-exists(hook-form-stacked-label)) {@include hook-form-stacked-label();}
+    @if(meta.mixin-exists(hook-form-stacked-label)) {@include hook-form-stacked-label();}
 }
 
 /*
@@ -622,7 +641,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
     .uk-form-horizontal .uk-form-label {
         display: block;
         margin-bottom: $form-stacked-margin-bottom;
-        @if(mixin-exists(hook-form-stacked-label)) {@include hook-form-stacked-label();}
+        @if(meta.mixin-exists(hook-form-stacked-label)) {@include hook-form-stacked-label();}
     }
 
 }
@@ -634,7 +653,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
         width: $form-horizontal-label-width;
         margin-top: $form-horizontal-label-margin-top;
         float: left;
-        @if(mixin-exists(hook-form-horizontal-label)) {@include hook-form-horizontal-label();}
+        @if(meta.mixin-exists(hook-form-horizontal-label)) {@include hook-form-horizontal-label();}
     }
 
     .uk-form-horizontal .uk-form-controls { margin-left: $form-horizontal-controls-margin-left; }
@@ -669,6 +688,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
     align-items: center;
     /* 4 */
     color: $form-icon-color;
+    @if(meta.mixin-exists(hook-form-icon)) {@include hook-form-icon();}
 }
 
 /*
@@ -687,7 +707,7 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
  * Input padding
  */
 
-.uk-form-icon:not(.uk-form-icon-flip) + .uk-input { padding-left: $form-icon-width !important; }
+.uk-form-icon:not(.uk-form-icon-flip) ~ .uk-input { padding-left: $form-icon-width !important; }
 
 /*
  * Position modifier
@@ -698,13 +718,13 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
     left: auto;
 }
 
-.uk-form-icon-flip + .uk-input { padding-right: $form-icon-width !important; }
+.uk-form-icon-flip ~ .uk-input { padding-right: $form-icon-width !important; }
 
 
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-form-misc)) {@include hook-form-misc();}
+@if(meta.mixin-exists(hook-form-misc)) {@include hook-form-misc();}
 
 // @mixin hook-form(){}
 // @mixin hook-form-single-line(){}
@@ -724,26 +744,20 @@ select.uk-form-width-xsmall { width: ($form-width-xsmall + 25px); }
 // @mixin hook-form-label(){}
 // @mixin hook-form-stacked-label(){}
 // @mixin hook-form-horizontal-label(){}
+// @mixin hook-form-icon(){}
 // @mixin hook-form-misc(){}
 
 
 // Inverse
 // ========================================================================
 
-$inverse-form-background:                       $inverse-global-muted-background !default;
-$inverse-form-color:                            $inverse-global-color !default;
-$inverse-form-focus-background:                 $inverse-global-muted-background !default;
-$inverse-form-focus-color:                      $inverse-global-color !default;
-$inverse-form-placeholder-color:                $inverse-global-muted-color !default;
 
-$inverse-form-select-icon-color:                $inverse-global-color !default;
 
-$inverse-form-radio-background:                 darken($inverse-global-muted-background, 5%) !default;
 
-$inverse-form-radio-checked-background:         $inverse-global-primary-background !default;
-$inverse-form-radio-checked-icon-color:         $inverse-global-inverse-color !default;
 
-$inverse-form-radio-checked-focus-background:   darken($inverse-global-primary-background, 10%) !default;
+
+
+
 
 
 
@@ -754,3 +768,4 @@ $inverse-form-radio-checked-focus-background:   darken($inverse-global-primary-b
 // @mixin hook-inverse-form-radio-checked(){}
 // @mixin hook-inverse-form-radio-checked-focus(){}
 // @mixin hook-inverse-form-label(){}
+// @mixin hook-inverse-form-icon(){}
