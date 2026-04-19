@@ -1,0 +1,44 @@
+@use "sass:meta";
+
+// Name:            Dropnav
+// Description:     Component to create dropdown/dropbar menus based on Drop component
+//
+// Component:       `uk-dropnav`
+//
+// Sub-objects:     `uk-dropnav-dropbar`
+//
+// ========================================================================
+
+
+// Variables
+// ========================================================================
+
+
+
+/* ========================================================================
+   Component: Dropnav
+ ========================================================================== */
+/*
+ * 1. Position
+ * 2. Reset dropbar
+ * 3. Width
+ */
+
+.uk-dropnav-dropbar {
+    /* 1 */
+    position: absolute;
+    z-index: $dropnav-dropbar-z-index;
+    /* 2 */
+    padding: 0;
+    /* 3 */
+    left: 0;
+    right: 0;
+}
+
+
+// Hooks
+// ========================================================================
+
+@if(meta.mixin-exists(hook-dropnav-misc)) {@include hook-dropnav-misc();}
+
+// @mixin hook-dropnav-misc(){}
