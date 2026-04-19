@@ -7,9 +7,9 @@ hero:
     image: main-icon.png
     search: true
 categories:
-    columns: 5
+    columns: 4
     title: How it works
-    subtitle: The full Gitpay flow from account setup to payment release
+    subtitle: Start with the core Gitpay sections for setup, charging, funding, and delivery
 #featured:
 #    title: O que é importante saber
 #    tag: featured

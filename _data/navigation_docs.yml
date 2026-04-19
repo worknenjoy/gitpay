@@ -5,21 +5,21 @@ contributor:
       title: Documentação
     docs:
       en:
-        - Charge Customers
         - What is Gitpay?
         - Get Started
+        - Charge Customers
         - Fund an Issue
         - Work on an Issue
       br:
-        - Prestador de serviço
         - Por onde começar?
         - Começando
+        - Prestador de serviço
         - Patrocinador
         - Contribuidor
       pages:
-        - service-provider
         - getting-started
         - getting-started-contributor
+        - service-provider
         - sponsor
         - contributor
 
@@ -61,21 +61,21 @@ sponsor:
       title: Documentação
     docs:
       en:
-        - Charge Customers
         - What is Gitpay?
         - Get Started
+        - Charge Customers
         - Fund an Issue
         - Work on an Issue
       br:
-        - Prestador de serviço
         - Por onde começar?
         - Começando
+        - Prestador de serviço
         - Patrocinador
         - Contribuidor
       pages:
-        - service-provider
         - getting-started
         - getting-started-contributor
+        - service-provider
         - sponsor
         - contributor
 
@@ -86,20 +86,20 @@ service-provider:
       title: Documentação
     docs:
       en:
-        - Charge Customers
         - What is Gitpay?
         - Get Started
+        - Charge Customers
         - Fund an Issue
         - Work on an Issue
       br:
-        - Prestador de serviço
         - Por onde começar?
         - Começando
+        - Prestador de serviço
         - Patrocinador
         - Contribuidor
       pages:
-        - service-provider
         - getting-started
         - getting-started-contributor
+        - service-provider
         - sponsor
         - contributor

@@ -6,41 +6,32 @@
   br:
     title: 🚀 Comece
     desc: Crie sua conta
-  doc: getting-started
+  doc: getting-started-contributor
   icon: user
 
 - en:
-    title: 💰 Fund a Task
-    desc: Create a task from a GitHub issue, set a bounty, and track delivery
+    title: 🧾 Charge Customers
+    desc: Creating payment links, activating your bank account, payment methods, disputes, and fees
   br:
-    title: 💰 Financie uma tarefa
-    desc: Crie uma tarefa com issue do GitHub, defina recompensa e acompanhe a entrega
+    title: 🧾 Cobrar clientes
+    desc: Links de pagamento, conta bancária, métodos, disputas e taxas
+  doc: service-provider
+  icon: credit-card
+
+- en:
+    title: 💰 Fund an Issue
+    desc: Create a task from a GitHub issue, set a bounty, track delivery, and release payment
+  br:
+    title: 💰 Financie uma issue
+    desc: Crie tarefa com issue, defina recompensa, acompanhe e libere pagamento
   doc: sponsor
   icon: users
 
 - en:
-    title: 🛠️ Work on a Task
-    desc: Browse tasks, apply and get assigned, submit a Pull Request, and get paid
+    title: 🛠️ Work on an Issue
+    desc: Browse available tasks, apply, submit a Pull Request, request payment, and get paid
   br:
-    title: 🛠️ Trabalhe em uma tarefa
-    desc: Encontre tarefas, candidate-se, envie um Pull Request e receba
+    title: 🛠️ Trabalhe em uma issue
+    desc: Veja tarefas, candidate-se, envie PR, solicite pagamento e receba
   doc: contributor
   icon: git-fork
-
-- en:
-    title: ✅ Review & Release Payment
-    desc: Review a Pull Request, approve and merge, then release payment
-  br:
-    title: ✅ Revisar e liberar pagamento
-    desc: Revise o Pull Request, aprove e faça merge para liberar o pagamento
-  doc: maintainer
-  icon: check
-
-- en:
-    title: ⚙️ Payments & Settings
-    desc: Connect your bank account, understand fees, and check invoices and history
-  br:
-    title: ⚙️ Pagamentos e configurações
-    desc: Conecte sua conta bancária, entenda taxas e veja histórico e faturas
-  doc: payments
-  icon: credit-card
