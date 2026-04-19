@@ -2,8 +2,8 @@
 layout: doc
 lang: en
 role: contributor
-title: Contributor
-subtitle: Earn bounties by solving issues and submitting pull requests
+title: Earn from work
+subtitle: Earn from work by solving funded issues and submitting pull requests
 tags:
 ---
 
@@ -15,7 +15,7 @@ tags:
 ## Who this page is for
 This guide is for people who want to work on tasks posted on Gitpay (issues) and get paid after the work is reviewed and accepted.
 
-## Typical workflow
+## Typical workflow to earn from work
 1. Pick a task you can deliver.
 2. Apply to work on it.
 3. Implement the fix/feature on a branch or fork.

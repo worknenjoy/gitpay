@@ -2,8 +2,8 @@
 layout: doc
 lang: en
 role: sponsor
-title: Sponsor
-subtitle: Fund work on issues and help projects ship faster
+title: Fund work
+subtitle: Fund work with clear delivery expectations and transparent progress
 tags:
 ---
 
@@ -13,9 +13,9 @@ tags:
 {:toc}
 
 ## Who this page is for
-This guide is for individuals or organizations who want to sponsor tasks so contributors can work on them and get paid when the work is accepted.
+This guide is for individuals, teams, or organizations that want to fund work so contributors can deliver and get paid when results are accepted.
 
-## What you get from sponsoring
+## What you get from funding work
 - Faster delivery on important issues.
 - Transparent progress through the repository workflow.
 - Clear acceptance and payment conditions.
