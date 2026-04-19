@@ -63,6 +63,17 @@ const nockAuthLimitExceeded = () => {
     .reply(200, getSingleRepo.repo)
 }
 
+const nockAuthInvalidCode = () => {
+  nock('https://github.com')
+    .persist()
+    .post('/login/oauth/access_token/', { code: 'eb518274e906c68580f7' })
+    .basicAuth({ user: secrets.github.id, pass: secrets.github.secret })
+    .reply(200, {
+      error: 'bad_verification_code',
+      error_description: 'The code passed is incorrect or expired.'
+    })
+}
+
 describe('Task CRUD', () => {
   const createTask = async (authorizationHeader: string, params?: any) => {
     const res = await agent
@@ -236,16 +247,20 @@ describe('Task CRUD', () => {
     expect(mailSpySuccess).to.have.been.called()
   })
 
-  xit('should receive code on the platform from github auth to the redirected url for private tasks but invalid code', async () => {
+  it('should redirect to profile with an error when private task auth returns an invalid code', async () => {
+    nockAuthInvalidCode()
     const res = await agent
       .get(
         '/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7'
       )
-      .expect(401)
+      .expect(302)
 
-    expect(res.statusCode).to.equal(401)
-    expect(res.body.error).to.equal('bad_verification_code')
-    expect(res.body).to.exist
+    expect(res.statusCode).to.equal(302)
+    expect(res.headers.location).to.equal(
+      `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodeURIComponent(
+        'The code passed is incorrect or expired.'
+      )}`
+    )
   })
 
   it('should receive code on the platform from github auth to the redirected url for private tasks with a valid code', async () => {
