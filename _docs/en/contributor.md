@@ -2,8 +2,8 @@
 layout: doc
 lang: en
 role: contributor
-title: Contributor
-subtitle: Earn bounties by solving issues and submitting pull requests
+title: Earn from work
+subtitle: Earn from work by solving funded issues and submitting pull requests
 tags:
 ---
 
