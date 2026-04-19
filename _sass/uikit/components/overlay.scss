@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Overlay
 // Description:     Component to create content areas overlaying an image
 //
@@ -14,13 +16,8 @@
 // Variables
 // ========================================================================
 
-$overlay-padding-horizontal:                     $global-gutter !default;
-$overlay-padding-vertical:                       $global-gutter !default;
 
-$overlay-default-background:                     rgba($global-background, 0.8) !default;
 
-$overlay-primary-background:                     rgba($global-secondary-background, 0.8) !default;
-$overlay-primary-color-mode:                     light !default;
 
 
 /* ========================================================================
@@ -29,7 +26,7 @@ $overlay-primary-color-mode:                     light !default;
 
 .uk-overlay {
     padding: $overlay-padding-vertical $overlay-padding-horizontal;
-    @if(mixin-exists(hook-overlay)) {@include hook-overlay();}
+    @if(meta.mixin-exists(hook-overlay)) {@include hook-overlay();}
 }
 
 /*
@@ -43,7 +40,7 @@ $overlay-primary-color-mode:                     light !default;
  ========================================================================== */
 
 .uk-overlay-icon {
-    @if(mixin-exists(hook-overlay-icon)) {@include hook-overlay-icon();}
+    @if(meta.mixin-exists(hook-overlay-icon)) {@include hook-overlay-icon();}
 }
 
 
@@ -55,17 +52,23 @@ $overlay-primary-color-mode:                     light !default;
  */
 
 .uk-overlay-default {
+    --uk-inverse: #{$overlay-default-color-mode};
     background: $overlay-default-background;
-    @if(mixin-exists(hook-overlay-default)) {@include hook-overlay-default();}
+    @if(meta.mixin-exists(hook-overlay-default)) {@include hook-overlay-default();}
 }
+
+// Color Mode
+@if ( $overlay-default-color-mode == light ) { .uk-overlay-default { @extend .uk-light !optional;} }
+@if ( $overlay-default-color-mode == dark ) { .uk-overlay-default { @extend .uk-dark !optional;} }
 
 /*
  * Primary
  */
 
 .uk-overlay-primary {
+    --uk-inverse: #{$overlay-primary-color-mode};
     background: $overlay-primary-background;
-    @if(mixin-exists(hook-overlay-primary)) {@include hook-overlay-primary();}
+    @if(meta.mixin-exists(hook-overlay-primary)) {@include hook-overlay-primary();}
 }
 
 // Color Mode
@@ -76,7 +79,7 @@ $overlay-primary-color-mode:                     light !default;
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-overlay-misc)) {@include hook-overlay-misc();}
+@if(meta.mixin-exists(hook-overlay-misc)) {@include hook-overlay-misc();}
 
 // @mixin hook-overlay(){}
 // @mixin hook-overlay-icon(){}
