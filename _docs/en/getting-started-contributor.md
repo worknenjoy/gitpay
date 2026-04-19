@@ -2,9 +2,9 @@
 layout: doc
 lang: en
 role: contributor
-title: Getting started
-subtitle: Start delivering tasks and getting paid as a contributor
-tags: contributor, getting-started
+title: Get Started
+subtitle: Create your account and configure the basics before funding or working on tasks
+tags: getting-started, account
 ---
 
 #### Table of contents
@@ -12,24 +12,13 @@ tags: contributor, getting-started
 * TOC
 {:toc}
 
-## What this guide covers
-This page helps you go from “I found a task” to “my work was accepted and I got paid”.
-
-## The basic flow
-1. Pick a task you can deliver.
-2. Apply to work on it.
-3. Get assigned (or approved).
-4. Implement the change on a branch (usually via a fork).
-5. Open a Pull Request.
-6. Address review + pass CI.
-7. Once accepted/merged, payment is released according to the project rules.
-
-## Before you start
-- Make sure you can run the project locally (if required).
-- Clarify acceptance criteria in the issue (screenshots, test steps, edge cases).
-- Confirm the expected delivery format (PR, patch, link, etc.).
+## Create your account
+1. Sign up and verify your email.
+2. Complete your profile so maintainers and sponsors can identify you.
+3. Add payout details if you plan to receive payments.
+4. Review task and payment rules before starting funded work.
 
 ## Next steps
-- Learn the [Git Workflow](/docs/en/git-workflow)
-- Review [Pull Requests](/docs/en/pull-requests)
-- Understand [How to receive payments](/docs/en/payments)
+- Read [Fund an Issue](/docs/en/sponsor)
+- Read [Work on an Issue](/docs/en/contributor)
+- Read [Charge Customers](/docs/en/service-provider)

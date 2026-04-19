@@ -2,8 +2,8 @@
 layout: doc
 lang: en
 role: contributor
-title: Earn from work
-subtitle: Earn from work by solving funded issues and submitting pull requests
+title: Work on an Issue
+subtitle: From finding a task to requesting payment and getting paid
 tags:
 ---
 
@@ -12,17 +12,22 @@ tags:
 * TOC
 {:toc}
 
-## Who this page is for
-This guide is for people who want to work on tasks posted on Gitpay (issues) and get paid after the work is reviewed and accepted.
+## Browse available tasks
+Find funded issues that match your skills, timeline, and technical context.
 
-## 🛠️ Work on a Task
-- Browse available tasks that match your skills and scope.
-- Apply and get assigned by the maintainer before starting implementation.
-- Submit a Pull Request with clear test steps and requested evidence.
-- Get paid after review, approval, and merge according to project payment rules.
+## Apply and get assigned
+Apply to the issue and wait for assignment before starting delivery work.
+
+## Submit a Pull Request
+Deliver your solution in a Pull Request with test evidence and implementation notes.
+
+## Request payment for work completed
+After acceptance conditions are met, request payment through the task flow.
+
+## Get paid
+Payment is released based on approved delivery and the configured payout method.
 
 ## Next steps
-- Read [Getting started](/docs/en/getting-started-contributor)
-- Understand [How to receive payments](/docs/en/payments)
-- Learn the [Git Workflow](/docs/en/git-workflow)
-- Review [Pull Requests](/docs/en/pull-requests)
+- Read [What is Gitpay?](/docs/en/getting-started)
+- Read [Get Started](/docs/en/getting-started-contributor)
+- Read [Fund an Issue](/docs/en/sponsor)

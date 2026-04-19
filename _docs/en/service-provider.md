@@ -1,9 +1,9 @@
 ---
 layout: doc
 lang: en
-role: service-provider
-title: Charge customers
-subtitle: Charge customers with clear scope, verifiable delivery, and transparent payment flow
+role: contributor
+title: Charge Customers
+subtitle: Charge clients with payment links, payout setup, and dispute handling
 tags:
 ---
 
@@ -12,21 +12,22 @@ tags:
 * TOC
 {:toc}
 
-## Who this page is for
-This guide is for freelancers, consultants, agencies, and teams that deliver work in repositories and need a reliable way to charge customers.
+## Creating payment links
+Create payment links tied to approved deliverables so customers can pay with clear context.
 
-## How Gitpay helps
-- Connect customer deliverables to Git history (issues, commits, pull requests).
-- Make acceptance explicit through review and merge.
-- Reduce payment disputes by defining acceptance criteria before work starts.
+## Activating your bank account
+Enable and verify your bank account so payouts can be transferred after payment collection.
 
-## Recommended workflow
-1. Define scope, acceptance criteria, and payment expectations with the customer.
-2. Track work in repository issues and milestones.
-3. Deliver through Pull Requests with evidence of completion.
-4. Use accepted/merged work as the validation signal to charge and collect payment.
+## Supported payment methods
+Use supported methods available in your region and account configuration.
+
+## Disputes and refunds
+Handle disputes and refunds according to the payment method policy and platform workflow.
+
+## Fees and payouts
+Review transaction fees and payout timing before charging customers.
 
 ## Next steps
-- Read [Getting started](/docs/en/getting-started-service-provider)
-- Review [Pull Requests](/docs/en/pull-requests)
-- Understand [How to receive payments](/docs/en/payments)
+- Read [What is Gitpay?](/docs/en/getting-started)
+- Read [Get Started](/docs/en/getting-started-contributor)
+- Read [Fund an Issue](/docs/en/sponsor)

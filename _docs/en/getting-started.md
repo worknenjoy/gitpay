@@ -1,8 +1,8 @@
 ---
 layout: doc
 lang: en
-title: Getting Started
-subtitle: Understand how Gitpay works and fundamentals
+title: What is Gitpay?
+subtitle: Understand how Gitpay works and how each workflow is connected
 tags:
 ---
 
@@ -11,16 +11,15 @@ tags:
 * TOC
 {:toc}
 
-## What is Gitpay?
-Gitpay is a platform that connects sponsors, maintainers, and contributors to fund software tasks and pay for accepted delivery through Pull Requests.
+Gitpay is a platform for funding and delivering software work with clear scope, review-based acceptance, and transparent payment release.
 
-## 🚀 Get Started
-- Create your account.
-- Complete your profile and connect payment details so you can fund or receive bounties.
-- Review the role guides below to follow the correct workflow for your use case.
+It helps:
+- People and teams fund issues with defined bounties.
+- Contributors get assigned, deliver via Pull Requests, and request payment.
+- Service providers charge customers with traceable delivery and payout records.
 
 ## Next steps
-- Read [Fund work](/docs/en/sponsor)
-- Read [Earn from work](/docs/en/contributor)
-- Read [Maintainer](/docs/en/maintainer)
-- Read [How our payment system works](/docs/en/payments)
+- Read [Get Started](/docs/en/getting-started-contributor)
+- Read [Fund an Issue](/docs/en/sponsor)
+- Read [Work on an Issue](/docs/en/contributor)
+- Read [Charge Customers](/docs/en/service-provider)
