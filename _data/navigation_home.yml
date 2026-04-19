@@ -1,11 +1,11 @@
 # Categories home page navigation
 
 - en:
-    title: Charge customers
-    desc: It's not centralized
+    title: It's not centralized
+    desc: Collaborate through open repository workflows without centralized control
   br:
-    title: Cobrar clientes
-    desc: Não é centralizado
+    title: Não é centralizado
+    desc: Colabore em fluxos abertos no repositório, sem controle centralizado
   doc: service-provider
   icon: world
 
