@@ -15,7 +15,7 @@ tags:
 ## Who this page is for
 This guide is for people who want to work on tasks posted on Gitpay (issues) and get paid after the work is reviewed and accepted.
 
-## Typical workflow to earn from work
+## Typical workflow
 1. Pick a task you can deliver.
 2. Apply to work on it.
 3. Implement the fix/feature on a branch or fork.

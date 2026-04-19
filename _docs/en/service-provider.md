@@ -15,7 +15,7 @@ tags:
 ## Who this page is for
 This guide is for freelancers, consultants, agencies, and teams that deliver work in repositories and need a reliable way to charge customers.
 
-## How Gitpay helps you charge customers
+## How Gitpay helps
 - Connect customer deliverables to Git history (issues, commits, pull requests).
 - Make acceptance explicit through review and merge.
 - Reduce payment disputes by defining acceptance criteria before work starts.
