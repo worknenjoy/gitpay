@@ -1,1 +1,8772 @@
-((t,e)=>{"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define("uikit",e):(t="undefined"!=typeof globalThis?globalThis:t||self).UIkit=e()})(this,function(){let{hasOwnProperty:i,toString:e}=Object.prototype;function Z(t,e){return i.call(t,e)}let n=/\B([A-Z])/g,j=$t(t=>t.replace(n,"-$1").toLowerCase()),r=/-(\w)/g,F=$t(t=>(t.charAt(0).toLowerCase()+t.slice(1)).replace(r,(t,e)=>e.toUpperCase())),q=$t(t=>t.charAt(0).toUpperCase()+t.slice(1));function V(t,e){var i;return null==(i=null==t?void 0:t.startsWith)?void 0:i.call(t,e)}function W(t,e){var i;return null==(i=null==t?void 0:t.endsWith)?void 0:i.call(t,e)}function b(t,e){var i;return null==(i=null==t?void 0:t.includes)?void 0:i.call(t,e)}function R(t,e){var i;return null==(i=null==t?void 0:t.findIndex)?void 0:i.call(t,e)}let{isArray:U,from:X}=Array,J=Object.assign;function Y(t){return"function"==typeof t}function G(t){return null!==t&&"object"==typeof t}function K(t){return"[object Object]"===e.call(t)}function Q(t){return G(t)&&t===t.window}function tt(t){return 9===st(t)}function et(t){return 1<=st(t)}function it(t){return 1===st(t)}function st(t){return!Q(t)&&G(t)&&t.nodeType}function nt(t){return"boolean"==typeof t}function c(t){return"string"==typeof t}function rt(t){return"number"==typeof t}function ot(t){return rt(t)||c(t)&&!isNaN(t-parseFloat(t))}function lt(t){return!(U(t)?t.length:G(t)&&Object.keys(t).length)}function m(t){return void 0===t}function at(t){return nt(t)?t:"true"===t||"1"===t||""===t||"false"!==t&&"0"!==t&&t}function ht(t){t=Number(t);return!isNaN(t)&&t}function C(t){return parseFloat(t)||0}function l(t){return t&&d(t)[0]}function d(t){return et(t)?[t]:Array.from(t||[]).filter(et)}function ct(t){return Q(t)?t:(null==(t=tt(t=l(t))?t:null==t?void 0:t.ownerDocument)?void 0:t.defaultView)||window}function dt(t,i){return t===i||G(t)&&G(i)&&Object.keys(t).length===Object.keys(i).length&&pt(t,(t,e)=>t===i[e])}function ut(t,e,i){return t.replace(new RegExp(e+"|"+i,"g"),t=>t===e?i:e)}function gt(t){return t[t.length-1]}function pt(t,e){for(var i in t)if(!1===e(t[i],i))return!1;return!0}function ft(t,i){return t.reduce((t,e)=>t+C(Y(i)?i(e):e[i]),0)}function vt(t,e){let i=new Set;return t.filter(({[e]:t})=>!i.has(t)&&i.add(t))}function mt(i,t){return t.reduce((t,e)=>({...t,[e]:i[e]}),{})}function w(t,e=0,i=1){return Math.min(Math.max(ht(t)||0,e),i)}function x(){}function wt(...t){return[["bottom","top"],["right","left"]].every(([e,i])=>0<Math.min(...t.map(({[e]:t})=>t))-Math.max(...t.map(({[i]:t})=>t)))}function xt(t,e){return t.x<=e.right&&t.x>=e.left&&t.y<=e.bottom&&t.y>=e.top}function yt(t,e,i){var s="width"===e?"height":"width";return{[s]:t[e]?Math.round(i*t[s]/t[e]):t[s],[e]:i}}function kt(t,e){for(var i in t={...t})t=t[i]>e[i]?yt(t,i,e[i]):t;return t}let bt={ratio:yt,contain:kt,cover:function(t,e){for(var i in t=kt(t,e))t=t[i]<e[i]?yt(t,i,e[i]):t;return t}};function Ct(t,e,i=0,s=!1){var n=(e=d(e)).length;return n?(t=ot(t)?ht(t):"next"===t?i+1:"previous"===t?i-1:"last"===t?n-1:e.indexOf(l(t)),s?w(t,0,n-1):(t%=n)<0?t+n:t):-1}function $t(i){let s=Object.create(null);return(t,...e)=>s[t]||(s[t]=i(t,...e))}function v(t,...i){for(let e of d(t)){var s=Mt(i).filter(t=>!f(e,t));s.length&&e.classList.add(...s)}}function y(t,...i){for(let e of d(t)){var s=Mt(i).filter(t=>f(e,t));s.length&&e.classList.remove(...s)}}function Lt(t,e,i){i=Mt(i),y(t,e=Mt(e).filter(t=>!b(i,t))),v(t,i)}function f(t,e){return[e]=Mt(e),d(t).some(t=>t.classList.contains(e))}function u(t,e,i){var s,n=Mt(e);m(i)||(i=!!i);for(s of d(t))for(var r of n)s.classList.toggle(r,i)}function Mt(t){return t?U(t)?t.map(Mt).flat():String(t).split(" ").filter(Boolean):[]}function k(t,e,i){var s;if(G(e))for(var n in e)k(t,n,e[n]);else{if(m(i))return null==(s=l(t))?void 0:s.getAttribute(e);for(var r of d(t))null===i?St(r,e):r.setAttribute(e,i)}}function Bt(t,e){return d(t).some(t=>t.hasAttribute(e))}function St(t,e){d(t).forEach(t=>t.removeAttribute(e))}function It(t,e){for(var i of[e,"data-"+e])if(Bt(t,i))return k(t,i)}let Et="undefined"!=typeof window,$=Et&&"rtl"===document.dir;var Tt=Et&&"ontouchstart"in window,t=Et&&window.PointerEvent;let zt=t?"pointerdown":Tt?"touchstart":"mousedown",At=t?"pointermove":Tt?"touchmove":"mousemove",Ot=t?"pointerup":Tt?"touchend":"mouseup",Pt=t?"pointerenter":Tt?"":"mouseenter",Dt=t?"pointerleave":Tt?"":"mouseleave",_t=t?"pointercancel":"touchcancel",Nt={area:!0,base:!0,br:!0,col:!0,embed:!0,hr:!0,img:!0,input:!0,keygen:!0,link:!0,meta:!0,param:!0,source:!0,track:!0,wbr:!0};function Ht(t){return d(t).some(t=>Nt[t.tagName.toLowerCase()])}let Zt=Et&&Element.prototype.checkVisibility||function(){return this.offsetWidth||this.offsetHeight||this.getClientRects().length};function L(t){return d(t).some(t=>Zt.call(t))}let jt="input,select,textarea,button";function Ft(t){return d(t).some(t=>g(t,jt))}let qt=jt+",a[href],[tabindex]";function Vt(t){return g(t,qt)}function M(t){return null==(t=l(t))?void 0:t.parentElement}function Wt(t,e){return d(t).filter(t=>g(t,e))}function g(t,e){return d(t).some(t=>t.matches(e))}function Rt(t,e){for(var i=[];t=M(t);)e&&!g(t,e)||i.push(t);return i}function B(t,e){t=(t=l(t))?X(t.children):[];return e?Wt(t,e):t}function Ut(t,e){return e?d(t).indexOf(l(e)):B(M(t)).indexOf(t)}function Xt(e){return(e=l(e))&&["origin","pathname","search"].every(t=>e[t]===location[t])}function Jt(t){var e;if(Xt(t))return{hash:t,ownerDocument:e}=l(t),(t=decodeURIComponent(t).slice(1))?e.getElementById(t)||e.getElementsByName(t)[0]:e.documentElement}function o(t,e){return Gt(t,Qt(t,e))}function Yt(t,e){return Kt(t,Qt(t,e))}function Gt(t,e){return l(re(t,l(e),"querySelector"))}function Kt(t,e){return d(re(t,l(e),"querySelectorAll"))}function Qt(t,e=document){return tt(e)||ie(t).isContextSelector?e:e.ownerDocument}let te=/([!>+~-])(?=\s+[!>+~-]|\s*$)/g,ee=/(\([^)]*\)|[^,])+/g,ie=$t(t=>{let e=!1;if(!t||!c(t))return{};var i,s=[];for(i of t.match(ee))i=i.trim().replace(te,"$1 *"),e=e||["!","+","~","-",">"].includes(i[0]),s.push(i);return{selector:s.join(","),selectors:s,isContextSelector:e}}),se=/(\([^)]*\)|\S)*/,ne=$t(t=>{var[e]=(t=t.slice(1).trim()).match(se);return[e,t.slice(e.length+1)]});function re(i,s=document,n){var r,t=ie(i);if(!t.isContextSelector)return t.selector?oe(s,n,t.selector):i;i="";var o,l=1===t.selectors.length;for(o of t.selectors){let t,e=s;if("!"===o[0]&&([t,o]=ne(o),e=null==(r=s.parentElement)?void 0:r.closest(t),!o)&&l)return e;if(e&&"-"===o[0]&&([t,o]=ne(o),e=g(e=e.previousElementSibling,t)?e:null,!o)&&l)return e;if(e){if(l)return"~"===o[0]||"+"===o[0]?(o=`:scope > :nth-child(${Ut(e)+1}) `+o,e=e.parentElement):">"===o[0]&&(o=":scope "+o),oe(e,n,o);i+=(i?",":"")+(e=>{for(var i=[];e.parentNode;){var t=k(e,"id");if(t){i.unshift("#"+le(t));break}{let t=e.tagName;"HTML"!==t&&(t+=`:nth-child(${Ut(e)+1})`),i.unshift(t),e=e.parentNode}}return i.join(" > ")})(e)+" "+o}}return oe(s=tt(s)?s:s.ownerDocument,n,i)}function oe(t,e,i){try{return t[e](i)}catch{return null}}function le(t){return c(t)?CSS.escape(t):""}function h(...t){let[e,i,s,n,r=!1]=ce(t);var o,l,a;1<n.length&&(n=(o=n,t=>U(t.detail)?o(t,...t.detail):o(t))),null!=r&&r.self&&(n=(l=n,function(t){if(t.target===t.currentTarget||t.target===t.current)return l.call(null,t)})),s&&(n=function(i,s){return e=>{var t=">"===i[0]?Kt(i,e.currentTarget).reverse().find(t=>t.contains(e.target)):e.target.closest(i);t&&(e.current=t,s.call(this,e),delete e.current)}}(s,n));for(a of i)for(var h of e)h.addEventListener(a,n,r);return()=>ae(e,i,n,r)}function ae(...t){var e,[i,t,,s,n=!1]=ce(t);for(e of t)for(var r of i)r.removeEventListener(e,s,n)}function S(...t){let[e,i,s,n,r=!1,o]=ce(t),l=h(e,i,s,t=>{var e=!o||o(t);e&&(l(),n(t,e))},r);return l}function I(t,e,i){return ge(t).every(t=>t.dispatchEvent(he(e,!0,!0,i)))}function he(t,e=!0,i=!1,s){return t=c(t)?new CustomEvent(t,{bubbles:e,cancelable:i,detail:s}):t}function ce(t){return t[0]=ge(t[0]),c(t[1])&&(t[1]=t[1].split(" ")),Y(t[2])&&t.splice(2,0,!1),t}function de(t){return t&&"addEventListener"in t}function ue(t){return de(t)?t:l(t)}function ge(t){return U(t)?t.map(ue).filter(Boolean):c(t)?Kt(t):de(t)?[t]:d(t)}function pe(t){return"touch"===t.pointerType||!!t.touches}function fe(t){var{clientX:e,clientY:t}=(null==(e=t.touches)?void 0:e[0])||(null==(e=t.changedTouches)?void 0:e[0])||t;return{x:e,y:t}}let ve={"animation-iteration-count":!0,"column-count":!0,"fill-opacity":!0,"flex-grow":!0,"flex-shrink":!0,"font-weight":!0,"line-height":!0,opacity:!0,order:!0,orphans:!0,"stroke-dasharray":!0,"stroke-dashoffset":!0,widows:!0,"z-index":!0,zoom:!0};function E(t,e,i,s){var n,t=d(t);for(n of t)if(c(e)){if(e=we(e),m(i))return getComputedStyle(n).getPropertyValue(e);n.style.setProperty(e,!ot(i)||ve[e]||xe(e)?i||rt(i)?i:"":i+"px",s)}else{if(U(e)){var r,o={};for(r of e)o[r]=E(n,r);return o}if(G(e))for(var l in e)E(n,l,e[l],i)}return t[0]}function me(t,e){for(var i in e)E(t,i,"")}let we=$t(t=>{if(xe(t))return t;t=j(t);var e,i=document.documentElement.style;if(t in i)return t;for(e of["webkit","moz"]){var s=`-${e}-`+t;if(s in i)return s}});function xe(t){return V(t,"--")}let ye="uk-transition",ke="transitionend",be="transitioncanceled";let T={start:function(t,o,l=400,a="linear",h){return l=Math.round(l),Promise.all(d(t).map(r=>new Promise((e,i)=>{h||r.offsetHeight;let s=setTimeout(()=>I(r,ke),l),n=(S(r,[ke,be],({type:t})=>{clearTimeout(s),y(r,ye),me(r,n),t===be?i():e(r)},{self:!0}),v(r,ye),{transitionProperty:Object.keys(o).map(we).join(","),transitionDuration:l+"ms",transitionTimingFunction:a});E(r,{...n,...o})})))},async stop(t){I(t,ke),await Promise.resolve()},async cancel(t){I(t,be),await Promise.resolve()},inProgress(t){return f(t,ye)}},Ce="uk-animation",$e="animationend",Le="animationcanceled";function Me(t,o,l=200,a,h){return Promise.all(d(t).map(r=>new Promise((e,i)=>{f(r,Ce)&&I(r,Le);let s=[o,Ce,Ce+"-"+(h?"leave":"enter"),a&&"uk-transform-origin-"+a,h&&Ce+"-reverse"],n=setTimeout(()=>I(r,$e),l);S(r,[$e,Le],({type:t})=>{clearTimeout(n),t===Le?i():e(r),E(r,"animationDuration",""),y(r,s)},{self:!0}),E(r,"animationDuration",l+"ms"),v(r,s)})))}let Be={in:Me,out(t,e,i,s){return Me(t,e,i,s,!0)},inProgress(t){return f(t,Ce)},cancel(t){I(t,Le)}};function a(i,...t){return t.some(t=>{var e;return(null==(e=null==i?void 0:i.tagName)?void 0:e.toLowerCase())===t.toLowerCase()})}function Se(t){return(t=z(t))&&(t.innerHTML=""),t}function Ie(t,e){return m(e)?z(t).innerHTML:p(Se(t),e)}t=ze("prepend");let p=ze("append"),Ee=ze("before"),Te=ze("after");function ze(i){return function(t,e){e=d(c(e)?Ne(e):e);return null!=(t=z(t))&&t[i](...e),He(e)}}function Ae(t){d(t).forEach(t=>t.remove())}function Oe(t,e){for(e=l(Ee(t,e));e.firstElementChild;)e=e.firstElementChild;return p(e,t),e}function Pe(t,e){return d(d(t).map(t=>t.hasChildNodes()?Oe(X(t.childNodes),e):p(t,e)))}function De(t){d(t).map(M).filter((t,e,i)=>i.indexOf(t)===e).forEach(t=>t.replaceWith(...t.childNodes))}let _e=/^<(\w+)\s*\/?>(?:<\/\1>)?$/;function Ne(t){var e=_e.exec(t);return e?document.createElement(e[1]):((e=document.createElement("template")).innerHTML=t.trim(),He(e.content.childNodes))}function He(t){return 1<t.length?t:t[0]}function Ze(t,e){if(it(t))for(e(t),t=t.firstElementChild;t;)Ze(t,e),t=t.nextElementSibling}function z(t,e){return je(t)?l(Ne(t)):Gt(t,e)}function A(t,e){return je(t)?d(Ne(t)):Kt(t,e)}function je(t){return c(t)&&V(t.trim(),"<")}let Fe={width:["left","right"],height:["top","bottom"]};function O(t){t=it(t)?l(t).getBoundingClientRect():{height:We(t),width:Re(t),top:0,left:0};return{height:t.height,width:t.width,top:t.top,left:t.left,bottom:t.top+t.height,right:t.left+t.width}}function P(t,e){e&&E(t,{left:0,top:0});var i,s=O(t);if(t){var n,{scrollY:r,scrollX:o}=ct(t),l={height:r,width:o};for(n in Fe)for(var a of Fe[n])s[a]+=l[n]}if(!e)return s;for(i of["left","top"])E(t,i,e[i]-s[i])}function qe(t){let{top:e,left:i}=P(t);var{ownerDocument:{body:s,documentElement:n},offsetParent:r}=l(t);let o=r||n;for(;o&&(o===s||o===n)&&"static"===E(o,"position");)o=o.parentNode;return it(o)&&(r=P(o),e-=r.top+C(E(o,"borderTopWidth")),i-=r.left+C(E(o,"borderLeftWidth"))),{top:e-C(E(t,"marginTop")),left:i-C(E(t,"marginLeft"))}}function Ve(t){for(var e,i=[(t=l(t)).offsetTop,t.offsetLeft];t=t.offsetParent;)if(i[0]+=t.offsetTop+C(E(t,"borderTopWidth")),i[1]+=t.offsetLeft+C(E(t,"borderLeftWidth")),"fixed"===E(t,"position"))return e=ct(t),i[0]+=e.scrollY,i[1]+=e.scrollX,i;return i}let We=Ue("height"),Re=Ue("width");function Ue(s){let n=q(s);return(t,e)=>{var i;return m(e)?Q(t)?t["inner"+n]:tt(t)?(i=t.documentElement,Math.max(i["offset"+n],i["scroll"+n])):(e="auto"===(e=E(t=l(t),s))?t["offset"+n]:C(e)||0)-Xe(t,s):E(t,s,e||0===e?+e+Xe(t,s)+"px":"")}}function Xe(e,t,i="border-box"){return E(e,"boxSizing")===i?ft(Fe[t],t=>C(E(e,"padding-"+t))+C(E(e,`border-${t}-width`))):0}function Je(t){for(var e in Fe)for(var i in Fe[e])if(Fe[e][i]===t)return Fe[e][1-i];return t}function D(t,i="width",s=window,n=!1){return c(t)?ft(Ge(t),t=>{var e=Qe(t);return e?("vh"===e?(ti||(ei||(E(ei=z("<div>"),{height:"100vh",position:"fixed"}),h(window,"resize",()=>ti=null)),p(document.body,ei),ti=ei.clientHeight,Ae(ei)),ti):"vw"===e?Re(ct(s)):n?s["offset"+q(i)]:O(s)[i])*C(t)/100:t}):C(t)}let Ye=/-?\d+(?:\.\d+)?(?:v[wh]|%|px)?/g,Ge=$t(t=>t.toString().replace(/\s/g,"").match(Ye)||[]),Ke=/(?:v[hw]|%)$/,Qe=$t(t=>(t.match(Ke)||[])[0]);let ti,ei;let ii={read:function(t){return si.push(t),li(),t},write:function(t){return ni.push(t),li(),t},clear:function(t){hi(si,t),hi(ni,t)},flush:oi},si=[],ni=[];let ri=!1;function oi(){ai(si),ai(ni.splice(0)),ri=!1,(si.length||ni.length)&&li()}function li(){ri||(ri=!0,queueMicrotask(oi))}function ai(t){for(var e;e=t.shift();)try{e()}catch(t){console.error(t)}}function hi(t,e){e=t.indexOf(e);~e&&t.splice(e,1)}class ci{init(){this.positions=[];let e;this.unbind=h(document,"mousemove",t=>e=fe(t)),this.interval=setInterval(()=>{e&&(this.positions.push(e),5<this.positions.length)&&this.positions.shift()},50)}cancel(){var t;null!=(t=this.unbind)&&t.call(this),clearInterval(this.interval)}movesTo(t){if(!this.positions||this.positions.length<2)return!1;let e=O(t);var{left:t,right:i,top:s,bottom:n}=e,[r]=this.positions,o=gt(this.positions);let l=[r,o];return!xt(o,e)&&[[{x:t,y:s},{x:i,y:n}],[{x:t,y:n},{x:i,y:s}]].some(t=>{t=(([{x:t,y:e},{x:i,y:s}],[{x:n,y:r},{x:o,y:l}])=>{var a=(l-r)*(i-t)-(o-n)*(s-e);return 0!=a&&!((o=((o-n)*(e-r)-(l-r)*(t-n))/a)<0)&&{x:t+o*(i-t),y:e+o*(s-e)}})(l,t);return t&&xt(t,e)})}}function di(t,i,e={},{intersecting:s=!0}={}){var n,r=new IntersectionObserver(s?(t,e)=>{t.some(t=>t.isIntersecting)&&i(t,e)}:i,e);for(n of d(t))r.observe(n);return r}let ui=Et&&window.ResizeObserver;function gi(t,e,i={box:"border-box"}){if(ui)return vi(ResizeObserver,t,e,i);let s=[h(window,"load resize",e),h(document,"loadedmetadata load",e,!0)];return{disconnect:()=>s.map(t=>t())}}function pi(t){return{disconnect:h([window,window.visualViewport],"resize",t)}}function fi(t,e,i){return vi(MutationObserver,t,e,i)}function vi(t,e,i,s){var n,r=new t(i);for(n of d(e))r.observe(n,s);return r}function mi(t){ki(t)&&$i(t,{func:"playVideo",method:"play"}),yi(t)&&t.play().catch(x)}function wi(t){ki(t)&&t[Mi]&&$i(t,{func:"pauseVideo",method:"pause"}),yi(t)&&t.pause()}function xi(t){ki(t)&&$i(t,{func:"mute",method:"setVolume",value:0}),yi(t)&&(t.muted=!0)}function yi(t){return a(t,"video")}function ki(t){return a(t,"iframe")&&(bi(t)||Ci(t))}function bi(t){return!!t.src.match(/\/\/.*?youtube(-nocookie)?\.[a-z]+\/(watch\?v=[^&\s]+|embed)|youtu\.be\/.*/)}function Ci(t){return!!t.src.match(/vimeo\.com\/video\/.*/)}async function $i(t,e){await(e=>{if(e[Mi])return e[Mi];let i=bi(e),s=Ci(e),n=++Bi,r;return e[Mi]=new Promise(t=>{i&&S(e,"load",()=>{var t=()=>Li(e,{event:"listening",id:n});r=setInterval(t,100),t()}),S(window,"message",t,!1,({data:t})=>{try{return t=JSON.parse(t),i&&(null==t?void 0:t.id)===n&&"onReady"===t.event||s&&Number(null==t?void 0:t.player_id)===n}catch{}}),e.src=""+e.src+(b(e.src,"?")?"&":"?")+(i?"enablejsapi=1":"api=1&player_id="+n)}).then(()=>clearInterval(r))})(t),Li(t,e)}function Li(t,e){t.contentWindow.postMessage(JSON.stringify({event:"command",...e}),"*")}let Mi="_ukPlayer",Bi=0;function Si(t,n=0,r=0){return!!L(t)&&wt(...Ai(t).map(t=>{var{top:t,left:e,bottom:i,right:s}=Oi(t);return{top:t-n,left:e-r,bottom:i+n,right:s+r}}).concat(P(t)))}function Ii(c,{offset:d=0}={}){let f=L(c)?Ti(c,!1,["hidden"]):[];return f.reduce((t,e,i)=>{let{scrollTop:s,scrollHeight:n,offsetHeight:r}=e;var o=Oi(e);let l=n-o.height;var{height:i,top:a}=f[i-1]?Oi(f[i-1]):P(c);let h=Math.ceil(a-o.top-d+s);return 0<d&&r<i+d?h+=d:d=0,h>l?(d-=h-l,h=l):h<0&&(d-=h,h=0),()=>{return d=e,u=h-s,g=c,p=l,new Promise(s=>{let n=d.scrollTop,r=(t=Math.abs(u),40*Math.pow(t,.375));var t;let o=Date.now(),l=Ni(d)===d,a=P(g).top+(l?0:n),h=0,c=15;!function t(){e=w((Date.now()-o)/r);var e=.5*(1-Math.cos(Math.PI*e));let i=0;f[0]===d&&n+u<p&&(i=P(g).top+(l?0:d.scrollTop)-a-O(Pi(g)).height),"auto"!==E(d,"scrollBehavior")&&E(d,"scrollBehavior","auto"),d.scrollTop=n+(u+i)*e,E(d,"scrollBehavior",""),1!=e||h!==i&&c--?(h=i,requestAnimationFrame(t)):s()}()}).then(t);var d,u,g,p}},()=>Promise.resolve())()}function Ei(t,e=0,i=0){var s,n,r,o;return L(t)?({scrollHeight:n,scrollTop:s}=r=zi(t,!0),o=Oi(r).height,n=n-o,r=Ve(t)[0]-Ve(r)[0],(o=Math.max(0,r-o+e))<(e=Math.min(n,r+t.offsetHeight-i))?w((s-o)/(e-o)):1):0}function Ti(t,e=!1,i=[]){var s=Ni(t);let n=Rt(t).reverse();t=R(n=n.slice(n.indexOf(s)+1),t=>"fixed"===E(t,"position"));return~t&&(n=n.slice(t)),[s].concat(n.filter(t=>E(t,"overflow").split(" ").some(t=>b(["auto","scroll",...i],t))&&(!e||t.scrollHeight>Oi(t).height))).reverse()}function zi(...t){return Ti(...t)[0]}function Ai(t){return Ti(t,!1,["hidden","clip"])}function Oi(t){var e,i,s,n=ct(t),r=Ni(t),o=!et(t)||t.contains(r);if(o&&n.visualViewport)return{height:i,width:s,scale:u,pageTop:g,pageLeft:e}=n.visualViewport,{height:i=Math.round(i*u),width:s=Math.round(s*u),top:g,left:e,bottom:g+i,right:e+s};var l=P(o?n:t);if("inline"!==E(t,"display")){var a,h,c,d,{body:u,documentElement:g}=n.document,p=o?r===g||r.clientHeight<u.clientHeight?r:u:t;for([a,h,c,d]of[["width","x","left","right"],["height","y","top","bottom"]]){var f=l[a]%1;l[c]+=C(E(p,`border-${c}-width`)),l[a]=l[h]=p["client"+q(a)]-(f?f<.5?-f:1-f:0),l[d]=l[a]+l[c]}}return l}function Pi(i){var s,n=ct(i).document,{left:r,width:o,top:t}=O(i=i||n.body);for(s of t?[0,t]:[0]){let t;for(let e of n.elementsFromPoint(r+o/2,s))e.contains(i)||f(e,"uk-togglable-leave")||!(_i(e,"fixed")&&Di(Rt(i).reverse().find(t=>!t.contains(e)&&!_i(t,"static")))<Di(e)||_i(e,"sticky")&&(!i||M(e).contains(i)))||t&&!(O(t).height<O(e).height)||(t=e);if(t)return t}}function Di(t){return C(E(t,"zIndex"))}function _i(t,e){return E(t,"position")===e}function Ni(t){return ct(t).document.scrollingElement}let Hi=[["width","x","left","right"],["height","y","top","bottom"]];function Zi(t,e,i){i={attach:{element:["left","top"],target:["left","top"],...i.attach},offset:[0,0],placement:[],...i},P(t,ji(t,e=U(e)?e:[e,e],i))}function ji(e,i,s){var n,r,o,l,a,h=Fi(e,i,s),{boundary:t,viewportOffset:c=0,placement:d}=s;let u=h;for([n,[r,,o,l]]of Object.entries(Hi)){var g,p,f=((t,e,i,s,n)=>{let r=Ri(...Wi(t,e).map(Oi));return i&&(r[Hi[n][2]]+=i,r[Hi[n][3]]-=i),r=s?Ri(r,P(U(s)?s[n]:s)):r})(e,i[n],c,t,n);if(!Ui(h,f,n)){let t=0;if("flip"===d[n]){var v=s.attach.target[n];if(v===l&&h[l]<=f[l]||v===o&&h[o]>=f[o])continue;t=([v,a,{offset:g,attach:m},p]=[e,i,s,n],Fi(v,a,{attach:{element:Xi(m.element,p),target:Xi(m.target,p)},offset:((t,e)=>((t=[...t])[e]*=-1,t))(g,p)})[o]-h[o]);v=((t,e,i,s)=>{var[s,n,r,o]=Hi[s],[t]=Wi(t,e),e=Oi(t);return["auto","scroll"].includes(E(t,"overflow-"+n))&&(e[r]-=t["scroll"+q(r)],e[o]=e[r]+t["scroll"+q(s)]),e[r]+=i,e[o]-=i,e})(e,i[n],c,n);if(!Ui(qi(h,t,n),v,n)){if(Ui(h,v,n))continue;if(s.recursion)return!1;var m=ji(e,i,{...a=s,attach:{element:a.attach.element.map(Ji).reverse(),target:a.attach.target.map(Ji).reverse()},offset:a.offset.reverse(),placement:a.placement.reverse(),recursion:!0});if(m&&Ui(m,v,1-n))return m;continue}}else"shift"===d[n]&&(g=P(i[n]),p=s.offset,t=w(w(h[o],f[o],f[l]-h[r]),g[o]-h[r]+p[n],g[l]-p[n])-h[o]);u=qi(u,t,n)}}return u}function Fi(t,e,i){var s,n,r,o,{attach:l,offset:a}={attach:{element:["left","top"],target:["left","top"],...i.attach},offset:[0,0],...i};let h=P(t);for([s,[n,,r,o]]of Object.entries(Hi)){var c=(l.target[s]===l.element[s]?Oi:P)(e[s]);h=qi(h,c[r]-h[r]+Vi(l.target[s],o,c[n])-Vi(l.element[s],o,h[n])+ +a[s],s)}return h}function qi(t,e,i){var[,i,s,n]=Hi[i],r={...t};return r[s]=t[i]=t[s]+e,r[n]+=e,r}function Vi(t,e,i){return"center"===t?i/2:t===e?i:0}function Wi(e,t){return Ai(t).filter(t=>t.contains(e))}function Ri(...t){var e,i={};for(e of t)for(var[,,s,n]of Hi)i[s]=Math.max(i[s]||0,e[s]),i[n]=Math.min(...[i[n],e[n]].filter(rt));return i}function Ui(t,e,i){var[,,i,s]=Hi[i];return t[i]>=e[i]&&t[s]<=e[s]}function Xi(t,e){var i=[...t],t=Hi[e].indexOf(t[e]);return~t&&(i[e]=Hi[e][1-t%2+2]),i}function Ji(e){for(let t=0;t<Hi.length;t++){var i=Hi[t].indexOf(e);if(~i)return Hi[1-t][i%2+2]}}let Yi=Object.freeze({__proto__:null,$:z,$$:A,Animation:Be,Dimensions:bt,MouseTracker:ci,Transition:T,addClass:v,after:Te,append:p,apply:Ze,assign:J,attr:k,before:Ee,boxModelAdjust:Xe,camelize:F,children:B,clamp:w,createEvent:he,css:E,data:It,dimensions:O,each:pt,empty:Se,endsWith:W,escape:le,fastdom:ii,filter:Wt,find:Gt,findAll:Kt,findIndex:R,flipPosition:Je,fragment:Ne,getCoveringElement:Pi,getEventPos:fe,getIndex:Ct,getTargetedElement:Jt,hasAttr:Bt,hasClass:f,hasOwn:Z,hasTouch:Tt,height:We,html:Ie,hyphenate:j,inBrowser:Et,includes:b,index:Ut,intersectRect:wt,isArray:U,isBoolean:nt,isDocument:tt,isElement:it,isEmpty:lt,isEqual:dt,isFocusable:Vt,isFunction:Y,isInView:Si,isInput:Ft,isNode:et,isNumber:rt,isNumeric:ot,isObject:G,isPlainObject:K,isRtl:$,isSameSiteAnchor:Xt,isString:c,isTag:a,isTouch:pe,isUndefined:m,isVisible:L,isVoidElement:Ht,isWindow:Q,last:gt,matches:g,memoize:$t,mute:xi,noop:x,observeIntersection:di,observeMutation:fi,observeResize:gi,observeViewportResize:pi,off:ae,offset:P,offsetPosition:Ve,offsetViewport:Oi,on:h,once:S,overflowParents:Ai,parent:M,parents:Rt,pause:wi,pick:mt,play:mi,pointInRect:xt,pointerCancel:_t,pointerDown:zt,pointerEnter:Pt,pointerLeave:Dt,pointerMove:At,pointerUp:Ot,position:qe,positionAt:Zi,prepend:t,propName:we,query:o,queryAll:Yt,ready:function(t){"loading"!==document.readyState?t():S(document,"DOMContentLoaded",t)},remove:Ae,removeAttr:St,removeClass:y,replaceClass:Lt,resetProps:me,scrollIntoView:Ii,scrollParent:zi,scrollParents:Ti,scrolledOver:Ei,selFocusable:qt,selInput:jt,sortBy:function(t,i){return t.slice().sort(({[i]:t=0},{[i]:e=0})=>e<t?1:t<e?-1:0)},startsWith:V,sumBy:ft,swap:ut,toArray:X,toBoolean:at,toEventTargets:ge,toFloat:C,toNode:l,toNodes:d,toNumber:ht,toPx:D,toWindow:ct,toggleClass:u,trigger:I,ucfirst:q,uniqueBy:vt,unwrap:De,width:Re,wrapAll:Oe,wrapInner:Pe}),Gi={connected(){v(this.$el,this.$options.id)}},Ki=["days","hours","minutes","seconds"],Qi={mixins:[Gi],props:{date:String,clsWrapper:String,role:String,reload:Boolean},data:{date:"",clsWrapper:".uk-countdown-%unit%",role:"timer",reload:!1},connected(){this.$el.role=this.role,this.date=C(Date.parse(this.$props.date)),this.started=this.end=!1,this.start()},disconnected(){this.stop()},events:{name:"visibilitychange",el:()=>document,handler(){document.hidden?this.stop():this.start()}},methods:{start(){this.stop(),this.update()},stop(){this.timer&&(clearInterval(this.timer),I(this.$el,"countdownstop"),this.timer=null)},update(){var e,s=(t=>({total:t=Math.max(0,t-Date.now())/1e3,seconds:t%60,minutes:t/60%60,hours:t/60/60%24,days:t/60/60/24}))(this.date);s.total?this.timer||(this.started=!0,this.timer=setInterval(this.update,1e3),I(this.$el,"countdownstart")):(this.stop(),this.end||(I(this.$el,"countdownend"),this.end=!0,this.reload&&this.started&&window.location.reload()));for(e of Ki){let i=z(this.clsWrapper.replace("%unit%",e),this.$el);if(i){let t=Math.trunc(s[e]).toString().padStart(2,"0");i.textContent!==t&&((t=t.split("")).length!==i.children.length&&Ie(i,t.map(()=>"<span></span>").join("")),t.forEach((t,e)=>i.children[e].textContent=t))}}}}};let _={};function t1(t,e,i){return _.computed(Y(t)?t.call(i,i):t,Y(e)?e.call(i,i):e)}function e1(t,e){return t=t&&!U(t)?[t]:t,e?t?t.concat(e):U(e)?e:[e]:t}function i1(t,e){return m(e)?t:e}function s1(e,i,s){let n={};if((i=Y(i)?i.options:i).extends&&(e=s1(e,i.extends,s)),i.mixins)for(var t of i.mixins)e=s1(e,t,s);for(var r in e)l(r);for(var o in i)Z(e,o)||l(o);function l(t){n[t]=(_[t]||i1)(e[t],i[t],s)}return n}function n1(t,e=[]){try{return t?V(t,"{")?JSON.parse(t):e.length&&!b(t,":")?{[e[0]]:t}:t.split(";").reduce((t,e)=>{var[e,i]=e.split(/:(.*)/);return e&&!m(i)&&(t[e.trim()]=i.trim()),t},{}):{}}catch{return{}}}function r1(t,e){var i;return t===Boolean?at(e):t===Number?ht(e):"list"===t?(i=e,U(i)?i:c(i)?i.split(o1).map(t=>ot(t)?ht(t):at(t.trim())):[i]):t===Object&&c(e)?n1(e):t?t(e):e}_.events=_.watch=_.observe=_.created=_.beforeConnect=_.connected=_.beforeDisconnect=_.disconnected=_.destroy=e1,_.args=function(t,e){return!1!==e&&e1(e||t)},_.update=function(t,e){return e1(t,Y(e)?{read:e}:e)},_.props=function(t,e){if(U(e)){var i,s={};for(i of e)s[i]=String;e=s}return _.methods(t,e)},_.computed=_.methods=function(t,e){return e?t?{...t,...e}:e:t},_.i18n=_.data=function(e,i,t){return t?t1(e,i,t):i?e?function(t){return t1(e,i,t)}:i:e};let o1=/,(?![^(]*\))/;function l1(t,e="update"){t._connected&&t._updates.length&&(t._updateCount||(t._updateCount=0,requestAnimationFrame(()=>t._updateCount=0)),t._queued||(t._queued=new Set,ii.read(()=>{if(t._connected){var s=t,n=t._queued;for(let{read:e,write:i,events:t=[]}of s._updates)if(n.has("update")||t.some(t=>n.has(t))){let t;e&&(t=e.call(s,s._data,n))&&K(t)&&J(s._data,t),i&&!1!==t&&ii.write(()=>{s._connected&&i.call(s,s._data,n)})}}t._queued=null})),t._updateCount++<20)&&t._queued.add(e.type||e)}function a1(t){return f1(gi,t,"resize")}function h1(t){return f1(di,t)}function c1(t){return f1(fi,t)}function d1(o={}){return h1({handler:function(t,e){var i,s,{targets:n=this.$el,preload:r=5}=o;for(i of d(Y(n)?n(this):n))A('[loading="lazy"]',i).slice(0,r-1).forEach(t=>St(t,"loading"));for(s of t.filter(({isIntersecting:t})=>t).map(({target:t})=>t))e.unobserve(s)},...o})}function u1(t){return f1((t,e)=>pi(e),t,"resize")}function g1(t){return f1((t,e)=>({disconnect:h(d(t).map(t=>{var e=t.ownerDocument,t=zi(t,!0);return t===e.scrollingElement?e:t}),"scroll",e,{passive:!0})}),t,"scroll")}function p1(t){return{observe(t,e){return{observe:x,unobserve:x,disconnect:h(t,zt,e,{passive:!0})}},handler(t){if(pe(t)){let o=fe(t),l="tagName"in t.target?t.target:M(t.target);S(document,Ot+` ${_t} scroll`,t=>{let{x:n,y:r}=fe(t);("scroll"!==t.type&&l&&n&&100<Math.abs(o.x-n)||r&&100<Math.abs(o.y-r))&&setTimeout(()=>{var t,e,i,s;I(l,"swipe"),I(l,"swipe"+(t=o.x,e=o.y,i=n,s=r,Math.abs(t-i)>=Math.abs(e-s)?0<t-i?"Left":"Right":0<e-s?"Up":"Down"))})})}},...t}}function f1(t,e,i){return{observe:t,handler(){l1(this,i)},...e}}Tt={props:{margin:String,firstColumn:Boolean},data:{margin:"uk-margin-small-top",firstColumn:"uk-first-column"},observe:[c1({options:{childList:!0}}),c1({options:{attributes:!0,attributeFilter:["style"]}}),a1({handler(t){for(var{target:e,borderBoxSize:[{inlineSize:i,blockSize:s}]}of t)if(e===this.$el&&!i&&!s)return;this.$emit("resize")},target:({$el:t})=>[t,...B(t)]})],update:{read(){return{rows:v1(B(this.$el))}},write({rows:t}){for(var e of t)for(var i of e)u(i,this.margin,t[0]!==e),u(i,this.firstColumn,e[$?e.length-1:0]===i)},events:["resize"]}};function v1(i){var e,s=[[]],n=i.some((t,e)=>e&&i[e-1].offsetParent!==t.offsetParent);for(e of i)if(L(e)){var r=m1(e,n);for(let t=s.length-1;0<=t;t--){var o=s[t];if(!o[0]){o.push(e);break}var l=m1(o[0],n);if(r.top>=l.bottom-1&&r.top!==l.top){s.push([e]);break}if(r.bottom-1>l.top||r.top===l.top){let t=o.length-1;for(;0<=t;t--){var a=m1(o[t],n);if(r.left>=a.left)break}o.splice(t+1,0,e);break}if(0===t){s.unshift([e]);break}}}return s}function m1(t,e=!1){let{offsetTop:i,offsetLeft:s,offsetHeight:n,offsetWidth:r}=t;return e&&([i,s]=Ve(t)),{top:i,left:s,bottom:i+n,right:s+r}}function w1(){return new Promise(t=>requestAnimationFrame(t))}function x1(e){return new Promise(t=>setTimeout(t,e))}let y1="uk-transition-leave",k1="uk-transition-enter";function b1(r,o,l,a=0){let t=C1(o,!0),h={opacity:1},c={opacity:0},d=()=>t===C1(o);var e=t=>()=>d()?t():Promise.reject(),i=e(async()=>{v(o,y1),await(a?L1(o).reduce(async(t,e,i,s)=>{await t,Si(e)&&d()?(await x1(a),t=T.start(e,c,l/2,"ease"),s.length-1===i&&await t):E(e,c)},Promise.resolve()):T.start(o,c,l/2,"ease")),y(o,y1)}),e=e(async()=>{var t,e=We(o),i=(v(o,k1),r(),E(a?B(o):o,c),We(o,e),await x1(),We(o,""),We(o));E(o,"alignContent","flex-start"),We(o,e);let s=[],n=l/2;a&&(t=L1(o),E(B(o),c),s=t.reduce(async(t,e,i,s)=>{await t,Si(e)&&d()?(await x1(a),t=T.start(e,h,l/2,"ease").then(()=>d()&&me(e,h)),s.length-1===i&&await t):me(e,h)},Promise.resolve()),n+=t.length*a),a&&e===i||(t={height:i,...a?{}:h},s.push(T.start(o,t,n,"ease"))),await Promise.all(s),y(o,k1),d()&&(me(o,{height:"",alignContent:"",...h}),delete o.dataset.transition)});return(f(o,y1)?$1(o):f(o,k1)?$1(o).then(i):i()).then(e)}function C1(t,e){return e&&(t.dataset.transition=1+C1(t)),ht(t.dataset.transition)||0}function $1(t){return Promise.all(B(t).filter(T.inProgress).map(e=>new Promise(t=>S(e,"transitionend transitioncanceled",t))))}function L1(t){return v1(B(t)).flat().filter(L)}async function M1(t,i,s){await w1();let e=B(i);var n=e.map(t=>B1(t,!0)),r={...E(i,["height","padding"]),display:"block"};let o=e.filter(t=>Si(t));var l=e.concat(i);await Promise.all(l.map(T.cancel)),E(l,"transitionProperty","none"),await t();let a=B(i).filter(t=>!b(e,t));e=e.concat(a),await Promise.resolve(),E(l,"transitionProperty","");var h,c,d,u,t=k(i,"style"),l=E(i,["height","padding"]);h=i,c=e,d=n,n=c.map((t,e)=>!!(M(t)&&e in d)&&(d[e]?L(t)?S1(t):{opacity:0}:{opacity:L(t)?1:0})),u=n.map((t,e)=>{var i,e=M(c[e])===h&&(d[e]||B1(c[e]));return!!e&&(t?"opacity"in t||(i=e.opacity,i%1?t.opacity=1:delete e.opacity):delete e.opacity,e)});let[g,p]=[n,u],f=e.map(t=>({style:k(t,"style")}));o.push(...e.filter(t=>Si(t))),e.forEach((t,e)=>p[e]&&E(t,p[e])),E(i,r),I(i,"scroll"),await w1();n=e.map((t,e)=>{if(M(t)===i&&o.includes(t))return T.start(t,g[e],s,"ease",!a.includes(t))}).concat(T.start(i,l,s,"ease",!0));try{await Promise.all(n),e.forEach((t,e)=>{k(t,f[e]),M(t)===i&&E(t,"display",0===g[e].opacity?"none":"")}),k(i,"style",t)}catch{k(e,"style",""),me(i,r)}}function B1(t,e){var i=E(t,"zIndex");return!!L(t)&&{display:"",opacity:e?E(t,"opacity"):"0",pointerEvents:"none",position:"absolute",zIndex:"auto"===i?Ut(t):i,...S1(t)}}function S1(t){var{height:e,width:i}=O(t),{top:s,left:n}=qe(t),r=Oi(t.ownerDocument);return{height:e,width:i,top:w(s,r.top-e-r.height,r.bottom+r.height),left:w(n,r.left-i-r.width,r.right+r.width),transform:"",...E(t,["marginTop","marginLeft"])}}t={props:{duration:Number,animation:Boolean},data:{duration:150,animation:"slide"},methods:{animate(t,e=this.$el){var i=this.animation;return("fade"===i?b1:"delayed-fade"===i?(...t)=>b1(...t,40):i?M1:()=>(t(),Promise.resolve()))(t,e,this.duration).catch(x)}}};function I1(t){t.target.closest('a[href="#"],a[href=""]')&&t.preventDefault()}let N={TAB:9,ENTER:13,ESC:27,SPACE:32,END:35,HOME:36,LEFT:37,UP:38,RIGHT:39,DOWN:40},E1={mixins:[t],args:"target",props:{target:String,selActive:Boolean},data:{target:"",selActive:!1,attrItem:"uk-filter-control",cls:"uk-active",duration:250},computed:{children:({target:t},e)=>A(t+" > *",e),toggles:({attrItem:t},e)=>A(`[${t}],[data-${t}]`,e)},watch:{toggles(e){this.updateState();var i=A(this.selActive,this.$el);for(let t of e){!1!==this.selActive&&u(t,this.cls,b(i,t));var s=z("a,button",s=t)||s;a(s,"a")&&(s.role="button")}},children(t,e){e&&this.updateState()}},events:{name:"click keydown",delegate:({attrItem:t})=>`[${t}],[data-${t}]`,handler(t){"keydown"===t.type&&t.keyCode!==N.SPACE||t.target.closest("a,button")&&(I1(t),this.apply(t.current))}},methods:{apply(t){var e,i,s=this.getState(),t=z1(t,this.attrItem,this.getState());e=s,i=t,["filter","sort"].every(t=>dt(e[t],i[t]))||this.setState(t)},getState(){return this.toggles.filter(t=>f(t,this.cls)).reduce((t,e)=>z1(e,this.attrItem,t),{filter:{"":""},sort:[]})},async setState(o,e=!0){o={filter:{"":""},sort:[],...o},I(this.$el,"beforeFilter",[this,o]);for(var t of this.toggles)u(t,this.cls,((t,e,{filter:i={"":""},sort:[s,n]})=>{var{filter:t="",group:e="",sort:r,order:o="asc"}=T1(t,e);return m(r)?e in i&&t===i[e]||!t&&e&&!(e in i)&&!i[""]:s===r&&n===o})(t,this.attrItem,o));await Promise.all(A(this.target,this.$el).map(r=>{var t=()=>{var t=o,e=r,i=B(r);for(let e of i)E(e,"display",Object.values(t.filter).every(t=>!t||g(e,t))?"":"none");var[s,n]=t.sort;s&&!dt(s=((t,i,s)=>[...t].sort((t,e)=>(It(t,i)||"").localeCompare(It(e,i),void 0,{numeric:!0})*("asc"===s||-1)))(i,s,n),i)&&p(e,s)};return e?this.animate(t,r):t()})),I(this.$el,"afterFilter",[this])},updateState(){ii.write(()=>this.setState(this.getState(),!1))}}};function T1(t,e){return n1(It(t,e),["filter"])}function z1(t,e,i){var{filter:t,group:e,sort:s,order:n="asc"}=T1(t,e);return(t||m(s))&&(e?t?(delete i.filter[""],i.filter[e]=t):(delete i.filter[e],(lt(i.filter)||""in i.filter)&&(i.filter={"":t||""})):i.filter={"":t||""}),m(s)||(i.sort=[s,n]),i}var A1={args:"dataSrc",props:{dataSrc:String,sources:String,margin:String,target:String,loading:String},data:{dataSrc:"",sources:!1,margin:"50%",target:!1,loading:"lazy"},connected(){"lazy"!==this.loading?this.load():N1(this.$el)&&(this.$el.loading="lazy",O1(this.$el))},disconnected(){this.img&&(this.img.onload=""),delete this.img},observe:h1({handler(t,e){this.load(),e.disconnect()},options:({margin:t})=>({rootMargin:t}),filter:({loading:t})=>"lazy"===t,target:({$el:t,$props:e})=>e.target?[t,...Yt(e.target,t)]:t}),methods:{load(){var t;return this.img||(St(t=N1(this.$el)?this.$el:((t,e,i)=>{let s=new Image;return _1(s,i),D1(t,s),s.onload=()=>O1(t,s.currentSrc),s.src=e,s})(this.$el,this.dataSrc,this.sources),"loading"),O1(this.$el,t.currentSrc),this.img=t)}}};function O1(t,e){var i;N1(t)?(a(i=M(t),"picture")?B(i):[t]).forEach(t=>D1(t,t)):e&&!b(t.style.backgroundImage,e)&&(E(t,"backgroundImage",`url(${le(e)})`),I(t,he("load",!1)))}let P1=["data-src","data-srcset","sizes"];function D1(t,e){for(var i of P1){var s=It(t,i);s&&k(e,i.replace(/data-/g,""),s)}}function _1(t,e){if((e=(t=>{if(!t)return[];if(V(t,"["))try{t=JSON.parse(t)}catch{t=[]}else t=n1(t);return(t=U(t)?t:[t]).filter(t=>!lt(t))})(e)).length){var i,s=Ne("<picture>");for(i of e){var n=Ne("<source>");k(n,i),p(s,n)}p(s,t)}}function N1(t){return a(t,"img")}let H1;function Z1(s){let t=h(s,"touchstart",t=>{if(1===t.targetTouches.length&&!g(t.target,'input[type="range"]')){let i=fe(t).y;t=h(s,"touchmove",t=>{var e=fe(t).y;e===i||(i=e,Ti(t.target).some(t=>{var e;return!!s.contains(t)&&({scrollHeight:t,clientHeight:e}=t,e<t)}))||t.preventDefault()},{passive:!1});S(s,"scroll touchend touchcancel",t,{capture:!0})}},{passive:!0});if(H1)return t;H1=!0;let e=document.scrollingElement,i={overflowY:CSS.supports("overflow","clip")?"clip":"hidden",touchAction:"none",scrollbarGutter:Re(window)-e.clientWidth?"stable":""};return E(e,i),()=>{H1=!1,t(),me(e,i)}}var j1={props:{container:Boolean},data:{container:!0},computed:{container({container:t}){return!0===t&&this.$container||t&&z(t)}}},F1={props:{cls:Boolean,animation:"list",duration:Number,velocity:Number,origin:String,transition:String},data:{cls:!1,animation:[!1],duration:200,velocity:.2,origin:!1,transition:"ease",clsEnter:"uk-togglable-enter",clsLeave:"uk-togglable-leave"},computed:{hasAnimation:({animation:t})=>!!t[0],hasTransition:({animation:e})=>["slide","reveal"].some(t=>V(e[0],t))},methods:{async toggleElement(t,r,o){try{return await Promise.all(d(t).map(e=>{let i=nt(r)?r:!this.isToggled(e);if(!I(e,"before"+(i?"show":"hide"),[this]))return Promise.reject();var t=(Y(o)?o:!1!==o&&this.hasAnimation?this.hasTransition?async function(e,t,{animation:i,duration:s,velocity:n,transition:r,_toggle:o}){let l,[a="reveal",h="top"]=(null==(l=i[0])?void 0:l.split("-"))||[],c=[["left","right"],["top","bottom"]],d=c[b(c[0],h)?0:1],u=d[1]===h,g=["width","height"][c.indexOf(d)],p="margin-"+d[0],f="margin-"+h,v=O(e)[g],m=T.inProgress(e);await T.cancel(e),t&&o(e,!0);var i=Object.fromEntries(["padding","border","width","height","minWidth","minHeight","overflowY","overflowX",p,f].map(t=>[t,e.style[t]])),w=O(e),x=C(E(e,p)),y=C(E(e,f)),k=w[g]+y;m||t||(v+=y);var[y]=Pe(e,"<div>"),w=(E(y,{boxSizing:"border-box",height:w.height,width:w.width,...E(e,["overflow","padding","borderTop","borderRight","borderBottom","borderLeft","borderImage",f])}),E(e,{padding:0,border:0,minWidth:0,minHeight:0,[f]:0,width:w.width,height:w.height,overflow:"hidden",[g]:v}),v/k),n=(s=(n*k+s)*(t?1-w:w),{[g]:t?k:0});u&&(E(e,p,k-v+x),n[p]=t?x:k+x);!u^"reveal"===a&&(E(y,p,-k+v),T.start(y,{[p]:t?0:-k},s,r));try{await T.start(e,n,s,r)}finally{E(e,i),De(y.firstChild),t||o(e,!1)}}:function(t,e,i){let{animation:s,duration:n,_toggle:r}=i;if(e)return r(t,!0),Be.in(t,s[0],n,i.origin);return Be.out(t,s[1]||s[0],n,i.origin).then(()=>r(t,!1))}:function(t,e,{_toggle:i}){return Be.cancel(t),T.cancel(t),i(t,e)})(e,i,this);let s=i?this.clsEnter:this.clsLeave;v(e,s),I(e,i?"show":"hide",[this]);var n=()=>{var t;y(e,s),I(e,i?"shown":"hidden",[this]),i&&null!=(t=A("[autofocus]",e).find(L))&&t.focus({preventScroll:!0})};return t?t.then(n,()=>(y(e,s),Promise.reject())):n()})),!0}catch{return!1}},isToggled(t=this.$el){return!!f(t=l(t),this.clsEnter)||!f(t,this.clsLeave)&&(this.cls?f(t,this.cls.split(" ")[0]):L(t))},_toggle(e,i){if(e){i=Boolean(i);let t;this.cls?(t=b(this.cls," ")||i!==f(e,this.cls))&&u(e,this.cls,b(this.cls," ")?void 0:i):(t=i===e.hidden)&&(e.hidden=!i),t&&I(e,"toggled",[i,this])}}}};let q1=[],V1={mixins:[Gi,j1,F1],props:{selPanel:String,selClose:String,escClose:Boolean,bgClose:Boolean,stack:Boolean,role:String},data:{cls:"uk-open",escClose:!0,bgClose:!0,overlay:!0,stack:!1,role:"dialog"},computed:{panel:({selPanel:t},e)=>z(t,e),transitionElement(){return this.panel}},connected(){var t=this.panel||this.$el;t.role=this.role,this.overlay&&(t.ariaModal=!0)},beforeDisconnect(){b(q1,this)&&this.toggleElement(this.$el,!1,!1)},events:[{name:"click",delegate:({selClose:t})=>t+',a[href*="#"]',handler(t){var{current:e,defaultPrevented:i}=t,s=e.hash;!i&&s&&Xt(e)&&!this.$el.contains(z(s))?this.hide():g(e,this.selClose)&&(I1(t),this.hide())}},{name:"toggle",self:!0,handler(t,e){t.defaultPrevented||(t.preventDefault(),this.target=null==e?void 0:e.$el,this.isToggled()===b(q1,this)&&this.toggle())}},{name:"beforeshow",self:!0,handler(t){if(b(q1,this))return!1;!this.stack&&q1.length?(Promise.all(q1.map(t=>t.hide())).then(this.show),t.preventDefault()):q1.push(this)}},{name:"show",self:!0,handler(){this.stack&&E(this.$el,"zIndex",C(E(this.$el,"zIndex"))+q1.length);let t=[this.overlay&&(i=this,h(document,"focusin",t=>{gt(q1)!==i||i.$el.contains(t.target)||i.$el.focus()})),this.overlay&&Z1(this.$el),this.bgClose&&(n=this,h(document,zt,({target:s})=>{gt(q1)!==n||n.overlay&&!n.$el.contains(s)||!n.panel||n.panel.contains(s)||S(document,Ot+` ${_t} scroll`,({defaultPrevented:t,type:e,target:i})=>{t||e!==Ot||s!==i||n.hide()},!0)})),this.escClose&&(e=this,h(document,"keydown",t=>{27===t.keyCode&&gt(q1)===e&&e.hide()}))];var e,n,i;S(this.$el,"hidden",()=>t.forEach(t=>t&&t()),{self:!0}),v(document.documentElement,this.clsPage),R1(this.target,!0)}},{name:"shown",self:!0,handler(){Vt(this.$el)||(this.$el.tabIndex=-1),g(this.$el,":focus-within")||this.$el.focus()}},{name:"hidden",self:!0,handler(){b(q1,this)&&q1.splice(q1.indexOf(this),1),E(this.$el,"zIndex","");let t=this.target;q1.some(t=>t.clsPage===this.clsPage)||(y(document.documentElement,this.clsPage),queueMicrotask(()=>{Vt(t)&&t.focus({preventScroll:!0})})),R1(t,!1),this.target=null}}],methods:{toggle(){return this.isToggled()?this.hide():this.show()},async show(){return this.container&&M(this.$el)!==this.container&&(p(this.container,this.$el),await w1()),this.toggleElement(this.$el,!0,W1)},hide(){return this.toggleElement(this.$el,!1,W1)}}};function W1(r,o,{transitionElement:l,_toggle:a}){return new Promise((s,n)=>S(r,"show hide",()=>{var t;null!=(t=r._reject)&&t.call(r),r._reject=n,a(r,o);let e=S(l,"transitionstart",()=>{S(l,"transitionend transitioncancel",s,{self:!0}),clearTimeout(i)},{self:!0}),i=setTimeout(()=>{e(),s()},(t=E(l,"transitionDuration"))?W(t,"ms")?C(t):1e3*C(t):0)})).then(()=>delete r._reject)}function R1(t,e){null!=t&&t.ariaExpanded&&(t.ariaExpanded=e)}var U1={slide:{show(t){return[{transform:H(-100*t)},{transform:""}]},percent(t){return X1(t)},translate(t,e){return[{transform:H(-100*e*t)},{transform:H(100*e*(1-t))}]}}};function X1(t){return Math.abs(new DOMMatrix(E(t,"transform")).m41/t.offsetWidth)}function H(t=0,e="%"){return t?`translate3d(${t+e}, 0, 0)`:""}function J1(t,e,i){I(t,he(e,!1,!1,i))}function Y1(){let e;return{promise:new Promise(t=>e=t),resolve:e}}let G1={props:{i18n:Object},data:{i18n:null},methods:{t(t,...e){let i,s,n,r=0;return(null==(n=(null==(i=this.i18n)?void 0:i[t])||(null==(s=this.$options.i18n)?void 0:s[t]))?void 0:n.replace(/%s/g,()=>e[r++]||""))||""}}},K1={props:{autoplay:Boolean,autoplayInterval:Number,pauseOnHover:Boolean},data:{autoplay:!1,autoplayInterval:7e3,pauseOnHover:!0},connected(){k(this.list,"aria-live",this.autoplay?"off":"polite"),this.autoplay&&this.startAutoplay()},disconnected(){this.stopAutoplay()},update(){k(this.slides,"tabindex","-1")},events:[{name:"visibilitychange",el:()=>document,filter:({autoplay:t})=>t,handler(){document.hidden?this.stopAutoplay():this.startAutoplay()}}],methods:{startAutoplay(){this.stopAutoplay(),this.interval=setInterval(()=>{this.stack.length||!L(this.$el)||this.draggable&&g(this.$el,":focus-within")&&!g(this.$el,":focus")||this.pauseOnHover&&g(this.$el,":hover")||this.show("next")},this.autoplayInterval)},stopAutoplay(){clearInterval(this.interval)}}},Q1={passive:!1,capture:!0};let ts="touchmove mousemove",es={props:{draggable:Boolean},data:{draggable:!0,threshold:10,angleThreshold:45},created(){for(var t of["start","move","end"]){let i=this[t];this[t]=t=>{var e=fe(t);$&&(e.x=-e.x),this.prevPos=dt(e,this.pos)?this.prevPos:this.pos,this.pos=e,i(t)}}},events:[{name:"touchstart mousedown",passive:!0,delegate:({selList:t})=>t+" > *",handler(t){var e;!this.draggable||this.parallax||!pe(t)&&"none"!==E(e=t.target,"userSelect")&&X(e.childNodes).some(t=>3===t.nodeType&&t.textContent.trim())||t.target.closest(jt)||0<t.button||this.length<2||this.start(t)}},{name:"dragstart",handler(t){t.preventDefault()}},{name:ts,el:({list:t})=>t,handler:x,...Q1}],methods:{start(){this.drag=this.pos,this._transitioner?(this.percent=this._transitioner.percent(),this.drag.x+=this._transitioner.getDistance()*this.percent*this.dir,this._transitioner.cancel(),this._transitioner.translate(this.percent),this.dragging=!0,this.stack=[]):this.prevIndex=this.index,h(document,ts,this.move,Q1),h(document,"touchend touchcancel mouseup click input scroll",this.end,{passive:!0,capture:!0,once:!0}),E(this.list,"userSelect","none")},move(o){var l=this.pos.x-this.drag.x;if(!(0==l||!this.dragging&&(c=this.pos,h=this.drag,180*Math.atan2(Math.abs(h.y-c.y),Math.abs(h.x-c.x))/Math.PI>this.angleThreshold)||this.prevPos.x===this.pos.x||!this.dragging&&Math.abs(l)<this.threshold)){o.cancelable&&o.preventDefault(),this.dragging=!0,this.dir=l<0?1:-1;let{slides:t,prevIndex:e}=this,i=Math.abs(l),s=this.getIndex(e+this.dir),n=is.call(this,e,s);for(;s!==e&&i>n;)this.drag.x-=n*this.dir,e=s,i-=n,s=this.getIndex(e+this.dir),n=is.call(this,e,s);this.percent=i/n;var a,h=t[e],c=t[s],o=this.index!==s,d=e===s;let r;for(a of[this.index,this.prevIndex])b([s,e],a)||(I(t[a],"itemhidden",[this]),d&&(r=!0,this.prevIndex=e));(this.index===e&&this.prevIndex!==e||r)&&I(t[this.index],"itemshown",[this]),o&&(this.prevIndex=e,this.index=s,d||(I(h,"beforeitemhide",[this]),I(h,"itemhide",[this])),I(c,"beforeitemshow",[this]),I(c,"itemshow",[this])),this._transitioner=this._translate(Math.abs(this.percent),h,!d&&c)}},end(){var t;ae(document,ts,this.move,Q1),this.dragging&&(setTimeout(h(this.list,"click",t=>t.preventDefault(),Q1)),this.dragging=null,this.index===this.prevIndex?(this.percent=1-this.percent,this.dir*=-1,this._show(!1,this.index,!0),this._transitioner=null):((t=this.dir<0==this.prevPos.x>this.pos.x)?(I(this.slides[this.prevIndex],"itemhidden",[this]),I(this.slides[this.index],"itemshown",[this]),this.percent=1-this.percent):this.index=this.prevIndex,this.show(0<this.dir&&!t||this.dir<0&&t?"next":"previous",!0))),E(this.list,{userSelect:""}),this.drag=this.percent=null}}};function is(t,e){return this._getTransitioner(t,t!==e&&e).getDistance()||this.slides[t].offsetWidth}function ss(t,e,i){t._watches.push({name:i,...K(e)?e:{handler:e}})}let ns={subtree:!0,childList:!0};function rs(s,n,r){s._hasComputed=!0,Object.defineProperty(s,n,{enumerable:!0,get(){var{_computed:t,$props:e,$el:i}=s;return Z(t,n)||(t[n]=(r.get||r).call(s,e,i),r.observe&&s._computedObserver&&(e=r.observe.call(s,e),s._computedObserver.observe(["~","+","-"].includes(e[0])?i.parentElement:i.getRootNode(),ns))),t[n]},set(t){var e=s._computed;e[n]=r.set?r.set.call(s,t):t,m(e[n])&&delete e[n]}})}function os(r){var t;r._hasComputed&&(t={read:()=>{var t,e,i,s=r,n=ls(r);for({name:t,handler:e,immediate:i=!0}of s._watches)(s._initial&&i||Z(n,t)&&!dt(n[t],s[t]))&&e.call(s,s[t],n[t]);s._initial=!1},events:["resize","computed"]},r._updates.unshift(t),r._computedObserver=fi(r.$el,()=>l1(r,"computed"),ns),r._disconnect.push(()=>{r._computedObserver.disconnect(),r._computedObserver=null,ls(r)}))}function ls(t){var e={...t._computed};return t._computed={},e}function as(t,{name:e,el:i,handler:s,capture:n,passive:r,delegate:o,filter:l,self:a}){l&&!l.call(t,t)||t._disconnect.push(h(i?i.call(t,t):t.$el,e,null==o?void 0:o.call(t,t),s.bind(t),{passive:r,capture:n,self:a}))}function hs(t){for(var e of t.$options.observe||[])((e,i)=>{let{observe:s,target:n=e.$el,handler:r,options:o,filter:t,args:l}=i;if(!t||t.call(e,e)){var i="_observe"+e._disconnect.length,a=(Y(n)&&!Z(e,i)&&rs(e,i,()=>{var t=n.call(e,e);return U(t)?d(t):t}),r=c(r)?e[r]:r.bind(e),Y(o)&&(o=o.call(e,e)),Z(e,i)?e[i]:n);let t=s(a,r,o,l);Y(n)&&U(e[i])&&ss(e,{handler:((n,r)=>(t,e)=>{for(var i of e)b(t,i)||(n.unobserve?n.unobserve(i):n.observe&&n.disconnect());for(var s of t)b(e,s)&&n.unobserve||n.observe(s,r)})(t,o),immediate:!1},i),e._disconnect.push(()=>t.disconnect())}})(t,e)}function cs(t){var e={},{args:t=[],props:i={},el:s,id:n}=t;if(i){for(var r in i){var o=j(r),l=It(s,o);m(l)||(l=i[r]===Boolean&&""===l||r1(i[r],l),"target"===o&&V(l,"_"))||(e[r]=l)}var a,h=n1(It(s,n),t);for(a in h){var c=F(a);m(i[c])||(e[c]=r1(i[c],h[a]))}}return e}let ds=$t((t,e)=>{e=Object.keys(e),t=e.concat(t).map(t=>[j(t),"data-"+j(t)]).flat();return{attributes:e,filter:t}});function us(e,t){null!=(t=e.$options[t])&&t.forEach(t=>t.call(e))}function gs(t){if(!t._connected){var e,i=t,{$options:s,$props:n}=i,r=cs(s),{computed:o,methods:l}=(J(n,r),s);for(e in n)!(e in r)||o&&Z(o,e)||l&&Z(l,e)||(i[e]=n[e]);us(t,"beforeConnect"),t._connected=!0,t._disconnect=[];var a,h,c=t;for(a of c.$options.events||[])if(Z(a,"handler"))as(c,a);else for(var d in a)as(c,{name:d,handler:a[d]});(h=t)._data={},h._updates=[...h.$options.update||[]],h._disconnect.push(()=>h._updates=h._data=null);var u,g=t;g._watches=[];for(u of g.$options.watch||[])for(var[p,f]of Object.entries(u))ss(g,f,p);g._initial=!0,hs(t);{var v=t;let{$options:n,$props:r}=v,{id:o,props:i,el:l}=n;if(i){let{attributes:s,filter:t}=ds(o,i),e=new MutationObserver(t=>{let i=cs(n);t.some(({attributeName:t})=>{var e=t.replace("data-","");return(e===o?s:[F(e),F(t)]).some(t=>!m(i[t])&&i[t]!==r[t])})&&v.$reset()});e.observe(l,{attributes:!0,attributeFilter:t}),v._disconnect.push(()=>e.disconnect())}}os(t),us(t,"connected"),l1(t)}}function ps(t){t._connected&&(us(t,"beforeDisconnect"),t._disconnect.forEach(t=>t()),t._disconnect=null,us(t,"disconnected"),t._connected=!1)}let fs=0;function vs(t,e={}){e.data=(({data:t={}},{args:s=[],props:e={}})=>{for(var i in t=U(t)?t.slice(0,s.length).reduce((t,e,i)=>(K(e)?J(t,e):t[s[i]]=e,t),{}):t)m(t[i])?delete t[i]:e[i]&&(t[i]=r1(e[i],t[i]));return t})(e,t.constructor.options),t.$options=s1(t.constructor.options,e,t),t.$props={},t._uid=fs++;var i,s=t,{data:n={}}=s.$options;for(i in n)s.$props[i]=s[i]=n[i];var r=t,o=r.$options.methods;if(o)for(var l in o)r[l]=o[l].bind(r);var a=t,h=a.$options.computed;if(a._computed={},h)for(var c in h)rs(a,c,h[c]);us(t,"created"),e.el&&t.$mount(e.el)}let ms=function(t){vs(this,t)},ws=(ms.util=Yi,ms.options={},ms.version="3.25.15","uk-"),xs="__uikit__",ys={};function ks(i,t){let e,s,n=ws+j(i);if(!t)return ys[n].options||(ys[n]=ms.extend(ys[n])),ys[n];i=F(i),ms[i]=(t,e)=>bs(i,t,e);t=null!=(e=t.options)?e:{...t};return t.id=n,t.name=i,null!=(s=t.install)&&s.call(t,ms,t,i),ms._initialized&&!t.functional&&requestAnimationFrame(()=>bs(i,`[${n}],[data-${n}]`)),ys[n]=t}function bs(i,t,s,...e){let n=ks(i);return n.options.functional?new n({data:K(t)?t:[t,s,...e]}):t?A(t).map(r)[0]:r();function r(t){var e=$s(t,i);if(e){if(!s)return e;e.$destroy()}return new n({el:t,data:s})}}function Cs(t){return(null==t?void 0:t[xs])||{}}function $s(t,e){return Cs(t)[e]}function Ls(t,e){for(var i of Rt(t=t?l(t):document.body).reverse())Ms(i,e);Ze(t,t=>Ms(t,e))}function Ms(t,e){var i,s=Cs(t);for(i in s)l1(s[i],e)}let Bs=1;function Ss(t,e=null){return(null==e?void 0:e.id)||t.$options.id+"-"+Bs++}var Is={i18n:{next:"Next slide",previous:"Previous slide",slideX:"Slide %s",slideLabel:"%s of %s"},data:{selNav:!1,role:"region"},computed:{nav:({selNav:t},e)=>A(t,e),navChildren(){return this.nav.map(t=>B(t)).flat()},selNavItem:({attrItem:t})=>`[${t}],[data-${t}]`,navItems(t,e){return A(this.selNavItem,e)}},watch:{nav(t,e){k(t,"role","tablist"),this.padNavitems(),e&&this.$emit()},list(t){a(t,"ul")&&k(t,"role","presentation")},navChildren(t){k(t,"role","presentation"),this.padNavitems(),this.updateNav()},navItems(t){for(var i of t){var s,n=It(i,this.attrItem),i=z("a,button",i)||i;let t,e=null;ot(n)?(s=ht(n),(s=this.slides[s])&&(s.id||(s.id=Ss(this,s)),e=s.id),t=this.t("slideX",C(n)+1),i.role="tab"):(this.list&&(this.list.id||(this.list.id=Ss(this,this.list)),e=this.list.id),t=this.t(n)),i.ariaControls=e,i.ariaLabel=i.ariaLabel||t}},slides(t){t.forEach((t,e)=>k(t,{role:this.nav.length?"tabpanel":"group","aria-label":this.t("slideLabel",e+1,this.length),"aria-roledescription":this.nav.length?null:"slide"})),this.padNavitems()}},connected(){this.$el.role=this.role,this.$el.ariaRoleDescription="carousel"},update:[{write(){this.navItems.concat(this.nav).forEach(t=>t&&(t.hidden=!this.maxIndex)),this.updateNav()},events:["resize"]}],events:[{name:"click keydown",delegate:({selNavItem:t})=>t,filter:({parallax:t})=>!t,handler(t){!t.target.closest("a,button")||"click"!==t.type&&t.keyCode!==N.SPACE||(I1(t),this.show(It(t.current,this.attrItem)))}},{name:"itemshow",handler(){this.updateNav()}},{name:"keydown",delegate:({selNavItem:t})=>t,filter:({parallax:t})=>!t,handler(t){var{current:e,keyCode:i}=t;ot(It(e,this.attrItem))&&~(e=i===N.HOME?0:i===N.END?"last":i===N.LEFT?"previous":i===N.RIGHT?"next":-1)&&(t.preventDefault(),this.show(e))}}],methods:{updateNav(){var t,e=this.getValidIndex();for(t of this.navItems){var i,s=It(t,this.attrItem),n=z("a,button",t)||t;ot(s)?(i=ht(s)===e,u(t,this.clsActive,i),u(n,"uk-disabled",!!this.parallax),n.ariaSelected=i,n.tabIndex=i&&!this.parallax?null:-1,i&&n&&g(M(t),":focus-within")&&n.focus()):u(t,"uk-invisible",this.finite&&("previous"===s&&0===e||"next"===s&&e>=this.maxIndex))}},padNavitems(){for(var t of this.nav){var i=B(t),s=[];for(let t=0;t<this.length;t++){let e=`${this.attrItem}="${t}"`;s[t]=i.findLast(t=>t.matches(`[${e}]`))||z(`<li ${e}><a href></a></li>`)}dt(s,i)||Ie(t,s)}}}},Es={mixins:[K1,es,Is,G1],props:{clsActivated:String,easing:String,index:Number,finite:Boolean,velocity:Number},data:()=>({easing:"ease",finite:!1,velocity:1,index:0,prevIndex:-1,stack:[],percent:0,clsActive:"uk-active",clsActivated:"",clsEnter:"uk-slide-enter",clsLeave:"uk-slide-leave",clsSlideActive:"uk-slide-active",Transitioner:!1,transitionOptions:{}}),connected(){this.prevIndex=-1,this.index=this.getValidIndex(this.$props.index),this.stack=[]},disconnected(){y(this.slides,this.clsActive)},computed:{duration:({velocity:t},e)=>Ts(e.offsetWidth/t),list:({selList:t},e)=>z(t,e),maxIndex(){return this.length-1},slides(){return B(this.list)},length(){return this.slides.length}},watch:{slides(t,e){e&&this.$emit()}},events:{itemshow({target:t}){v(t,this.clsEnter,this.clsSlideActive)},itemshown({target:t}){y(t,this.clsEnter)},itemhide({target:t}){v(t,this.clsLeave)},itemhidden({target:t}){y(t,this.clsLeave,this.clsSlideActive)}},methods:{async show(i,s=!1){if(!this.dragging&&this.length&&!this.parallax){let t=this.stack,e=s?0:t.length;var n,r,o,l,a,h=()=>{t.splice(e,1),t.length&&this.show(t.shift(),!0)};t[s?"unshift":"push"](i),!s&&1<t.length?2===t.length&&null!=(n=this._transitioner)&&n.forward(Math.min(this.duration,200)):(n=this.getIndex(this.index),r=f(this.slides,this.clsActive)&&this.slides[n],o=this.getIndex(i,this.index),r===(l=this.slides[o])?h():(this.dir=(a=n,"next"!==(i=i)&&("previous"===i||i<a)?-1:1),this.prevIndex=n,this.index=o,r&&!I(r,"beforeitemhide",[this])||!I(l,"beforeitemshow",[this,r])?(this.index=this.prevIndex,h()):(r&&I(r,"itemhide",[this]),I(l,"itemshow",[this]),await this._show(r,l,s),r&&I(r,"itemhidden",[this]),I(l,"itemshown",[this]),t.shift(),this._transitioner=null,await w1(),t.length&&this.show(t.shift(),!0))))}},getIndex(t=this.index,e=this.index){return w(Ct(t,this.slides,e,this.finite),0,Math.max(0,this.maxIndex))},getValidIndex(t=this.index,e=this.prevIndex){return this.getIndex(t,e)},async _show(t,e,i){if(this._transitioner=this._getTransitioner(t,e,this.dir,{easing:i?e.offsetWidth<600?"cubic-bezier(0.25, 0.46, 0.45, 0.94)":"cubic-bezier(0.165, 0.84, 0.44, 1)":this.easing,...this.transitionOptions}),i||t)return e=this.stack.length,this._transitioner[1<e?"forward":"show"](1<e?Math.min(this.duration,75+75/(e-1)):this.duration,this.percent);this._translate(1)},_translate(t,e=this.prevIndex,i=this.index){e=this._getTransitioner(e!==i&&e,i);return e.translate(t),e},_getTransitioner(t=this.prevIndex,e=this.index,i=this.dir||1,s=this.transitionOptions){return new this.Transitioner(rt(t)?this.slides[t]:t,rt(e)?this.slides[e]:e,i*($?-1:1),s)}}};function Ts(t){return.5*t+300}var zs={mixins:[Es],props:{animation:String},data:{animation:"slide",clsActivated:"uk-transition-active",Animations:U1,Transitioner:function(s,n,r,{animation:t,easing:o}){let{percent:e,translate:i,show:l=x}=t,a=l(r),{promise:h,resolve:c}=Y1();return{dir:r,show(t,e=0,i){i=i?"linear":o;return t-=Math.round(t*w(e,-1,1)),this.translate(e),J1(n,"itemin",{percent:e,duration:t,timing:i,dir:r}),J1(s,"itemout",{percent:1-e,duration:t,timing:i,dir:r}),Promise.all([T.start(n,a[1],t,i),T.start(s,a[0],t,i)]).then(()=>{this.reset(),c()},x),h},cancel(){return T.cancel([n,s])},reset(){me([n,s],a[0])},async forward(t,e=this.percent()){return await this.cancel(),this.show(t,e,!0)},translate(t){this.reset();var e=i(t,r);E(n,e[1]),E(s,e[0]),J1(n,"itemtranslatein",{percent:t,dir:r}),J1(s,"itemtranslateout",{percent:1-t,dir:r})},percent(){return e(s||n,n,r)},getDistance(){return null==s?void 0:s.offsetWidth}}}},computed:{animation({animation:t,Animations:e}){return{...e[t]||e.slide,name:t}},transitionOptions(){return{animation:this.animation}}},observe:a1(),events:{itemshow({target:t}){v(t,this.clsActive)},itemshown({target:t}){v(t,this.clsActivated)},itemhidden({target:t}){y(t,this.clsActive,this.clsActivated)}}},As={...U1,fade:{show(){return[{opacity:0,zIndex:0},{zIndex:-1}]},percent(t){return 1-E(t,"opacity")},translate(t){return[{opacity:1-t,zIndex:0},{zIndex:-1}]}},scale:{show(){return[{opacity:0,transform:Os(1.5),zIndex:0},{zIndex:-1}]},percent(t){return 1-E(t,"opacity")},translate(t){return[{opacity:1-t,transform:Os(1+.5*t),zIndex:0},{zIndex:-1}]}},pull:{show(t){return t<0?[{transform:H(30),zIndex:-1},{transform:"",zIndex:0}]:[{transform:H(-100),zIndex:0},{transform:"",zIndex:-1}]},percent(t,e,i){return i<0?1-X1(e):X1(t)},translate(t,e){return e<0?[{transform:H(30*t),zIndex:-1},{transform:H(-100*(1-t)),zIndex:0}]:[{transform:H(100*-t),zIndex:0},{transform:H(30*(1-t)),zIndex:-1}]}},push:{show(t){return t<0?[{transform:H(100),zIndex:0},{transform:"",zIndex:-1}]:[{transform:H(-30),zIndex:-1},{transform:"",zIndex:0}]},percent(t,e,i){return 0<i?1-X1(e):X1(t)},translate(t,e){return e<0?[{transform:H(100*t),zIndex:0},{transform:H(-30*(1-t)),zIndex:-1}]:[{transform:H(-30*t),zIndex:-1},{transform:H(100*(1-t)),zIndex:0}]}}};function Os(t){return`scale3d(${t}, ${t}, 1)`}var Ps={...U1,fade:{show(){return[{opacity:0},{opacity:1}]},percent(t){return 1-E(t,"opacity")},translate(t){return[{opacity:1-t},{opacity:t}]}},scale:{show(){return[{opacity:0,transform:Os(.8)},{opacity:1,transform:Os(1)}]},percent(t){return 1-E(t,"opacity")},translate(t){return[{opacity:1-t,transform:Os(1-.2*t)},{opacity:t,transform:Os(.8+.2*t)}]}}},Ds={i18n:{counter:"%s / %s"},mixins:[V1,zs],functional:!0,props:{counter:Boolean,preload:Number,nav:Boolean,slidenav:Boolean,delayControls:Number,videoAutoplay:Boolean,template:String},data:()=>({counter:!1,preload:1,nav:!1,slidenav:!0,delayControls:3e3,videoAutoplay:!1,items:[],cls:"uk-open",clsPage:"uk-lightbox-page",clsFit:"uk-lightbox-items-fit",clsZoom:"uk-lightbox-zoom",attrItem:"uk-lightbox-item",selList:".uk-lightbox-items",selClose:".uk-close-large",selNav:".uk-lightbox-thumbnav, .uk-lightbox-dotnav",selCaption:".uk-lightbox-caption",selCounter:".uk-lightbox-counter",pauseOnHover:!1,velocity:2,Animations:Ps,template:'<div class="uk-lightbox uk-overflow-hidden">  <div class="uk-lightbox-items"></div>  <div class="uk-position-top-right uk-position-small uk-transition-fade" uk-inverse>  <button class="uk-lightbox-close uk-close-large" type="button" uk-close></button>  </div>  <div class="uk-lightbox-slidenav uk-position-center-left uk-position-medium uk-transition-fade" uk-inverse>  <a href uk-slidenav-previous uk-lightbox-item="previous"></a>  </div>  <div class="uk-lightbox-slidenav uk-position-center-right uk-position-medium uk-transition-fade" uk-inverse>  <a href uk-slidenav-next uk-lightbox-item="next"></a>  </div>  <div class="uk-position-center-right uk-position-medium uk-transition-fade" uk-inverse style="max-height: 90vh; overflow: auto;">  <ul class="uk-lightbox-thumbnav uk-lightbox-thumbnav-vertical uk-thumbnav uk-thumbnav-vertical"></ul>  <ul class="uk-lightbox-dotnav uk-dotnav uk-dotnav-vertical"></ul>  </div>  <div class="uk-lightbox-counter uk-text-large uk-position-top-left uk-position-small uk-transition-fade" uk-inverse></div>  <div class="uk-lightbox-caption uk-position-bottom uk-text-center uk-transition-slide-bottom uk-transition-opaque"></div>  </div>'}),created(){let t=z(this.template);a(t,"template")&&(t=Ne(Ie(t)));var e,i,s=z(this.selList,t);let n=this.$props.nav;Ae(A(this.selNav,t).filter(t=>!g(t,".uk-"+n)));for([e,i]of this.items.entries())p(s,"<div>"),"thumbnav"===n&&Oe(((t,e)=>(e=t.poster||t.thumb&&("image"===t.type||Ns(t.thumb))?_s("img",{src:t.poster||t.thumb,alt:""}):t.thumb&&("video"===t.type||Hs(t.thumb))?_s("video",{src:t.thumb,loop:"",playsinline:"",muted:"","uk-video":"inline"===e}):_s("canvas"),t.thumbRatio&&(e.style.aspectRatio=t.thumbRatio),e))(i,this.videoAutoplay),p(z(this.selNav,t),`<li uk-lightbox-item="${e}"><a href></a></li>`));this.slidenav||Ae(A(".uk-lightbox-slidenav",t)),this.counter||Ae(z(this.selCounter,t)),v(s,this.clsFit);var r=z("[uk-close]",t),o=this.t("close");r&&o&&(r.dataset.i18n=JSON.stringify({label:o})),this.$mount(p(this.container,t))},events:[{name:"click",self:!0,filter:({bgClose:t})=>t,delegate:({selList:t})=>t+" > *",handler(t){t.defaultPrevented||this.hide()}},{name:"click",self:!0,delegate:({clsZoom:t})=>"."+t,handler(t){t.defaultPrevented||u(this.list,this.clsFit)}},{name:At+` ${zt} keydown`,filter:({delayControls:t})=>t,handler(){this.showControls()}},{name:"shown",self:!0,handler(){this.showControls()}},{name:"hide",self:!0,handler(){this.hideControls(),y(this.slides,this.clsActive),T.stop(this.slides)}},{name:"hidden",self:!0,handler(){this.$destroy(!0)}},{name:"keyup",el:()=>document,handler({keyCode:e}){if(this.isToggled()&&this.draggable){let t=-1;e===N.LEFT?t="previous":e===N.RIGHT?t="next":e===N.HOME?t=0:e===N.END&&(t="last"),~t&&this.show(t)}}},{name:"beforeitemshow",handler(t){Ie(z(this.selCaption,this.$el),this.getItem().caption||""),Ie(z(this.selCounter,this.$el),this.t("counter",this.index+1,this.slides.length));for(let t=-this.preload;t<=this.preload;t++)this.loadItem(this.index+t);this.isToggled()||(this.draggable=!1,t.preventDefault(),this.toggleElement(this.$el,!0,!1),this.animation=Ps.scale,y(t.target,this.clsActive),this.stack.splice(1,0,this.index))}},{name:"itemshown",handler(){this.draggable=this.$props.draggable}},{name:"itemload",async handler(t,e){var{source:i,type:s,attrs:n={}}=e;if(this.setItem(e,"<span uk-spinner uk-inverse></span>"),i){var r={allowfullscreen:"",style:"max-width: 100%; box-sizing: border-box;","uk-responsive":"","uk-video":Boolean(this.videoAutoplay)};if("image"===s||Ns(i)){let t=_s("img");_1(t,e.sources),k(t,{src:i,...mt(e,["alt","srcset","sizes"]),...n}),h(t,"load",()=>this.setItem(e,M(t)||t)),h(t,"error",()=>this.setError(e))}else if("video"===s||Hs(i)){var o="inline"===this.videoAutoplay;let t=_s("video",{src:i,playsinline:"",controls:o?null:"",loop:o?"":null,muted:o?"":null,poster:this.videoAutoplay?null:e.poster,"uk-video":Boolean(this.videoAutoplay),...n});h(t,"loadedmetadata",()=>this.setItem(e,t)),h(t,"error",()=>this.setError(e))}else if("iframe"===s||i.match(/\.(html|php)($|\?)/i))this.setItem(e,_s("iframe",{src:i,allowfullscreen:"",class:"uk-lightbox-iframe",...n}));else if(o=i.match(/\/\/(?:.*?youtube(-nocookie)?\..*?(?:[?&]v=|\/shorts\/)|youtu\.be\/)([\w-]{11})[&?]?(.*)?/))this.setItem(e,_s("iframe",{src:`https://www.youtube${o[1]||""}.com/embed/`+o[2]+(o[3]?"?"+o[3]:""),width:1920,height:1080,...r,...n}));else if(o=i.match(/\/\/.*?vimeo\.[a-z]+\/(\d+)[&?]?(.*)?/))try{var{height:l,width:a}=await(await fetch("https://vimeo.com/api/oembed.json?maxwidth=1920&url="+encodeURI(i),{credentials:"omit"})).json();this.setItem(e,_s("iframe",{src:"https://player.vimeo.com/video/"+o[1]+(o[2]?"?"+o[2]:""),width:a,height:l,...r,...n}))}catch{this.setError(e)}}}},{name:"itemloaded",handler(){this.$emit("resize")}}],update:{read(){for(var t of A(this.selList+" :not([controls]):is(img,video)",this.$el))u(t,this.clsZoom,(t.naturalHeight||t.videoHeight)-this.$el.offsetHeight>Math.max(0,(t.naturalWidth||t.videoWidth)-this.$el.offsetWidth))},events:["resize"]},methods:{loadItem(t=this.index){t=this.getItem(t);this.getSlide(t).childElementCount||I(this.$el,"itemload",[t])},getItem(t=this.index){return this.items[Ct(t,this.slides)]},setItem(t,e){I(this.$el,"itemloaded",[this,Ie(this.getSlide(t),e)])},getSlide(t){return this.slides[this.items.indexOf(t)]},setError(t){this.setItem(t,'<span uk-icon="icon: bolt; ratio: 2" uk-inverse></span>')},showControls(){clearTimeout(this.controlsTimer),this.controlsTimer=this.delayControls&&setTimeout(this.hideControls,this.delayControls),v(this.$el,"uk-active","uk-transition-active")},hideControls(){y(this.$el,"uk-active","uk-transition-active")}}};function _s(t,e){t=Ne(`<${t}>`);return k(t,e),t}function Ns(t){return null!=t&&t.match(/\.(avif|jpe?g|jfif|a?png|gif|svg|webp)($|\?)/i)}function Hs(t){return null!=t&&t.match(/\.(mp4|webm|ogv)($|\?)/i)}let Zs={install:function(t,e){t.lightboxPanel||t.component("lightboxPanel",Ds);J(e.props,t.component("lightboxPanel").options.props)},props:{toggle:String},data:{toggle:"a"},computed:{toggles:({toggle:t},e)=>A(t,e)},watch:{toggles(t){this.hide();for(var e of t)a(e,"a")&&(e.role="button")}},disconnected(){this.hide()},events:{name:"click",delegate:({toggle:t})=>t,handler(t){t.defaultPrevented||(t.preventDefault(),g(t.current,".uk-disabled *, .uk-disabled, [disabled]"))||this.show(t.current)}},methods:{show(t){var i=this.toggles.map(js);if("thumbnav"===this.nav&&!function(i,s){for(let[t,e]of Object.entries(i)){var n;s[t].thumb||(n=Rt(e).reverse().concat(e).find(t=>this.$el.contains(t)&&(t===e||1===A(this.toggle,t).length)))&&(n=z("img,video",n))&&(s[t].thumb=n.currentSrc||n.poster||n.src,s[t].thumbRatio=(n.naturalWidth||n.videoWidth)/(n.naturalHeight||n.videoHeight))}}.call(this,this.toggles,i),i=vt(i,"source"),it(t)){let e=js(t).source;t=R(i,({source:t})=>e===t)}return this.panel=this.panel||this.$create("lightboxPanel",{...this.$props,items:i}),h(this.panel.$el,"hidden",()=>this.panel=null),this.panel.show(t)},hide(){var t;return null==(t=this.panel)?void 0:t.hide()}}};function js(t){var e,i={};for(e of t.getAttributeNames()){var s=e.replace(/^data-/,"");i["href"===s?"source":s]=t.getAttribute(e)}return i.attrs=n1(i.attrs),i}U1={mixins:[j1],functional:!0,args:["message","status"],data:{message:"",status:"",timeout:5e3,group:"",pos:"top-center",clsContainer:"uk-notification",clsClose:"uk-notification-close",clsMsg:"uk-notification-message"},install:function(s){s.notification.closeAll=function(e,i){Ze(document.body,t=>{t=s.getComponent(t,"notification");!t||e&&e!==t.group||t.close(i)})}},computed:{marginProp:({pos:t})=>"margin-"+t.match(/[a-z]+(?=-)/)[0],startProps(){return{opacity:0,[this.marginProp]:-this.$el.offsetHeight}}},created(){var t=this.clsContainer+"-"+this.pos,e=`data-${this.clsContainer}-container`,t=z(`.${t}[${e}]`,this.container)||p(this.container,`<div class="${this.clsContainer} ${t}" ${e}></div>`);this.$mount(p(t,`<div class="${this.clsMsg}${this.status?` ${this.clsMsg}-`+this.status:""}" role="alert">  <a href class="${this.clsClose}" data-uk-close></a>  <div>${this.message}</div>  </div>`))},async connected(){var t=C(E(this.$el,this.marginProp));await T.start(E(this.$el,this.startProps),{opacity:1,[this.marginProp]:t}),this.timeout&&(this.timer=setTimeout(this.close,this.timeout))},events:{click(t){I1(t),this.close()},[Pt](){this.timer&&clearTimeout(this.timer)},[Dt](){this.timeout&&(this.timer=setTimeout(this.close,this.timeout))}},methods:{async close(t){var e;this.timer&&clearTimeout(this.timer),t||await T.start(this.$el,this.startProps),t=this.$el,e=M(t),I(t,"close",[this]),Ae(t),null!=e&&e.hasChildNodes()||Ae(e)}}};var Fs={props:{media:Boolean},data:{media:!1},connected(){var e=((t,e)=>{if(c(t))if(V(t,"@"))t=C(E(e,"--uk-breakpoint-"+t.slice(1)));else if(isNaN(t))return t;return t&&ot(t)?`(min-width: ${t}px)`:""})(this.media,this.$el);if(this.matchMedia=!0,e){this.mediaObj=window.matchMedia(e);let t=()=>{this.matchMedia=this.mediaObj.matches,I(this.$el,he("mediachange",!1,!0,[this.mediaObj]))};this.offMediaObj=h(this.mediaObj,"change",()=>{t(),this.$emit("resize")}),t()}},disconnected(){var t;null!=(t=this.offMediaObj)&&t.call(this)}};function qs(t){return L(t)?Math.ceil(Math.max(0,...A("[stroke]",t).map(t=>{var e;return(null==(e=t.getTotalLength)?void 0:e.call(t))||0}))):0}let Vs={x:Rs,y:Rs,rotate:Rs,scale:Rs,color:Us,backgroundColor:Us,borderColor:Us,blur:Xs,hue:Xs,fopacity:Xs,grayscale:Xs,invert:Xs,saturate:Xs,sepia:Xs,opacity:function(i,t,s){1===s.length&&s.unshift(ln(t,i,""));return s=en(s),(t,e)=>{t[i]=nn(s,e)}},stroke:function(t,e,i){1===i.length&&i.unshift(0);let s=on(i),n=qs(e);return(i=en(i.reverse(),t=>(t=C(t),"%"===s?t*n/100:t))).some(([t])=>t)?(E(e,"strokeDasharray",n),(t,e)=>{t.strokeDashoffset=nn(i,e)}):x},bgx:Js,bgy:Js};var Ws=Object.keys,Ws={mixins:[Fs],props:an(Ws(Vs),"list"),data:an(Ws(Vs),void 0),computed:{props(t,e){var i,s={};for(i in t)i in Vs&&!m(t[i])&&(s[i]=t[i].slice());var n,r={};for(n in s)r[n]=Vs[n](n,e,s[n],s);return r}},events:{load(){this.$emit()}},methods:{reset(){me(this.$el,this.getCss(0))},getCss(t){var e,i={};for(e in this.props)this.props[e](i,w(t));return i.willChange=Object.keys(i).map(we).join(","),i}}};function Rs(i,s,n){let r=on(n)||{x:"px",y:"px",rotate:"deg"}[i]||"",t;return"x"===i||"y"===i?(i="translate"+q(i),t=t=>C(C(t).toFixed("px"===r?0:6))):"scale"===i&&(r="",t=t=>{var e;return on([t])?D(t,"width",s,!0)/s["offset"+(null!=(e=t.endsWith)&&e.call(t,"vh")?"Height":"Width")]:C(t)}),1===n.length&&n.unshift("scale"===i?1:0),n=en(n,t),(t,e)=>{t.transform=`${t.transform||""} ${i}(${nn(n,e)}${r})`}}function Us(r,e,o){return 1===o.length&&o.unshift(ln(e,r,"")),o=en(o,t=>ln(e,"color",t).split(/[(),]/g).slice(1,-1).concat(1).slice(0,4).map(C)),(t,e)=>{let[i,s,n]=sn(o,e);e=i.map((t,e)=>(t+=n*(s[e]-t),3===e?C(t):parseInt(t,10))).join(",");t[r]=`rgba(${e})`}}function Xs(i,t,s){1===s.length&&s.unshift(0);let n=on(s)||{blur:"px",hue:"deg"}[i]||"%";return i={fopacity:"opacity",hue:"hue-rotate"}[i]||i,s=en(s),(t,e)=>{e=nn(s,e);t.filter=`${t.filter||""} ${i}(${e+n})`}}function Js(t,e,i,n){1===i.length&&i.unshift(0);let s="bgy"===t?"height":"width";n[t]=en(i,t=>D(t,s,e));i=["bgx","bgy"].filter(t=>t in n);if(2===i.length&&"bgx"===t)return x;if("cover"===ln(e,"backgroundSize","")){var r=e;var o=n;t=(t=>{let e=E(t,"backgroundImage").replace(/^none|url\(["']?(.+?)["']?\)$/,"$1");if(Qs[e])return Qs[e];let i=new Image;return!e||(i.src=e,i.naturalWidth)||Ks[e]?Qs[e]=tn(i):(S(i,"error load",()=>{Qs[e]=tn(i),I(t,he("load",!1))}),Ks[e]=!0,tn(i))})(r);if(!t.width)return x;var l,a,h={width:r.offsetWidth,height:r.offsetHeight},c=["bgx","bgy"].filter(t=>t in o),d={};for(l of c){var u=o[l].map(([t])=>t),g=Math.min(...u),p=Math.max(...u),u=u.indexOf(g)<u.indexOf(p),f=p-g;d[l]=(u?-f:0)-(u?g:p)+"px",h["bgy"===l?"height":"width"]+=f}let i=bt.cover(t,h);for(a of c){var v="bgy"===a?"height":"width",v=i[v]-h[v];d[a]=`max(${Ys(r,a)},-${v}px) + `+d[a]}let s=Gs(c,d,o);return(t,e)=>{s(t,e),t.backgroundSize=`${i.width}px ${i.height}px`,t.backgroundRepeat="no-repeat"}}var m,w={};for(m of i)w[m]=Ys(e,m);return Gs(i,w,n)}function Ys(t,e){return ln(t,"background-position-"+e.slice(-1),"")}function Gs(n,r,o){return function(t,e){for(var i of n){var s=nn(o[i],e);t["background-position-"+i.slice(-1)]=`calc(${r[i]} + ${s}px)`}}}let Ks={},Qs={};function tn(t){return{width:t.naturalWidth,height:t.naturalHeight}}function en(s,n=C){var r=[],o=s.length;let l=0;for(let i=0;i<o;i++){let[t,e]=c(s[i])?s[i].trim().split(/ (?![^(]*\))/):[s[i]];if(t=n(t),e=e?C(e)/100:null,0===i?null===e?e=0:e&&r.push([t,0]):i===o-1&&(null===e?e=1:1!==e&&(r.push([t,e]),e=1)),r.push([t,e]),null===e)l++;else if(l){var a=r[i-l-1][1],h=(e-a)/(l+1);for(let t=l;0<t;t--)r[i-t][1]=a+h*(l-t+1);l=0}}return r}function sn(t,e){var i=R(t.slice(1),([,t])=>e<=t)+1;return[t[i-1][0],t[i][0],(e-t[i-1][1])/(t[i][1]-t[i-1][1])]}function nn(t,e){var[t,e,i]=sn(t,e);return t+(e-t)*i}let rn=/^-?\d+(?:\.\d+)?(\S+)?/;function on(t,e){var i;for(i of t){var s=null==(s=i.match)?void 0:s.call(i,rn);if(s)return s[1]}return e}function ln(t,e,i){var s=t.style[e],i=E(E(t,e,i),e);return t.style[e]=s,i}function an(t,i){return t.reduce((t,e)=>(t[e]=i,t),{})}function hn(t,e){return 0<=e?Math.pow(t,e+1):1-Math.pow(1-t,1-e)}var cn={mixins:[Ws],props:{target:String,viewport:Number,easing:Number,start:String,end:String},data:{target:!1,viewport:1,easing:1,start:0,end:0},computed:{target:({target:t},e)=>function t(e){return e?"offsetTop"in e?e:t(M(e)):document.documentElement}(t&&o(t,e)||e),start({start:t}){return D(t,"height",this.target,!0)},end({end:t,viewport:e}){return D(t||(e=100*(1-e))&&e+`vh+${e}%`,"height",this.target,!0)}},observe:[u1(),g1({target:({target:t})=>t}),a1({target:({$el:t,target:e})=>[t,e,zi(e,!0)]})],update:{read({percent:t},e){return e.has("scroll")||(t=!1),!!L(this.$el)&&(this.matchMedia?(e=t,{percent:t=hn(Ei(this.target,this.start,this.end),this.easing),style:e!==t&&this.getCss(t)}):void 0)},write({style:t}){this.matchMedia?t&&E(this.$el,t):this.reset()},events:["scroll","resize"]}};var dn={props:{parallax:Boolean,parallaxTarget:Boolean,parallaxStart:String,parallaxEnd:String,parallaxEasing:Number},data:{parallax:!1,parallaxTarget:!1,parallaxStart:0,parallaxEnd:0,parallaxEasing:0},observe:[a1({target:({$el:t,parallaxTarget:e})=>[t,e],filter:({parallax:t})=>t}),g1({filter:({parallax:t})=>t})],computed:{parallaxTarget({parallaxTarget:t},e){return t&&o(t,e)||this.list}},update:{read(){var t;return!!this.parallax&&!!(t=this.parallaxTarget)&&(t=hn(Ei(t,D(this.parallaxStart,"height",t,!0),D(this.parallaxEnd,"height",t,!0)),this.parallaxEasing),{parallax:this.getIndexAt(t)})},write({parallax:t}){var[e,t]=t,i=this.getValidIndex(e+Math.ceil(t)),s=this.slides[e],n=this.slides[i],{triggerShow:r,triggerShown:o,triggerHide:l,triggerHidden:a}=(e=>{let{clsSlideActive:i,clsEnter:s,clsLeave:n}=e;return{triggerShow:r,triggerShown:o,triggerHide:l,triggerHidden:a};function r(t){f(t,n)&&(l(t),a(t)),f(t,i)||(I(t,"beforeitemshow",[e]),I(t,"itemshow",[e]))}function o(t){f(t,s)&&I(t,"itemshown",[e])}function l(t){f(t,i)||r(t),f(t,s)&&o(t),f(t,n)||(I(t,"beforeitemhide",[e]),I(t,"itemhide",[e]))}function a(t){f(t,n)&&I(t,"itemhidden",[e])}})(this);if(~this.prevIndex)for(var h of new Set([this.index,this.prevIndex]))b([i,e],h)||(l(this.slides[h]),a(this.slides[h]));var c=this.prevIndex!==e||this.index!==i;this.dir=1,this.prevIndex=e,this.index=i,s!==n&&l(s),r(n),c&&o(s),this._translate(s===n?1:t,s,n)},events:["scroll","resize"]},methods:{getIndexAt(t){t*=this.length-1;return[Math.floor(t),t%1]}}};var un={update:{write(){var t;this.stack.length||this.dragging||this.parallax||(t=this.getValidIndex(),~this.prevIndex&&this.index===t?this._translate(1):this.show(t))},events:["resize"]}},gn={observe:d1({target:({slides:t})=>t,targets:t=>t.getAdjacentSlides()}),methods:{getAdjacentSlides(){return[1,-1].map(t=>this.slides[this.getIndex(this.index+t)])}}};function pn(t,e,i){var s=mn(t,e);return i?s-(i=t,(O(e).width-O(i).width)/2):Math.min(s,fn(e))}function fn(t){return Math.max(0,vn(t)-O(t).width)}function vn(t,e){return ft(B(t).slice(0,e),t=>O(t).width)}function mn(t,e){return t&&(qe(t).left+($?O(t).width-O(e).width:0))*($?-1:1)||0}function wn(i,s){--s;let n=O(i).width,r=s+n+2;return B(i).filter(t=>{var e=mn(t,i),t=e+Math.min(O(t).width,n);return s<=e&&t<=r})}var xn={mixins:[Gi,Es,un,dn,gn],props:{center:Boolean,sets:Boolean,active:String},data:{center:!1,sets:!1,attrItem:"uk-slider-item",selList:".uk-slider-items",selNav:".uk-slider-nav",clsContainer:"uk-slider-container",active:"all",Transitioner:function(c,d,u,{center:s,easing:n,list:g}){let t=c?pn(c,g,s):pn(d,g,s)+O(d).width*u,p=d?pn(d,g,s):t+O(c).width*u*($?-1:1),{promise:r,resolve:o}=Y1();return{dir:u,show(t,e=0,i){i=i?"linear":n;return t-=Math.round(t*w(e,-1,1)),E(g,"transitionProperty","none"),this.translate(e),E(g,"transitionProperty",""),e=c?e:w(e,0,1),J1(this.getItemIn(),"itemin",{percent:e,duration:t,timing:i,dir:u}),c&&J1(this.getItemIn(!0),"itemout",{percent:1-e,duration:t,timing:i,dir:u}),T.start(g,{transform:H(-p*($?-1:1),"px")},t,i).then(o,x),r},cancel(){return T.cancel(g)},reset(){E(g,"transform","")},async forward(t,e=this.percent()){return await this.cancel(),this.show(t,e,!0)},translate(t){if(t!==this.percent()){var e,i=this.getDistance()*u*($?-1:1),s=(E(g,"transform",H(w(-p+(i-i*t),-vn(g),O(g).width)*($?-1:1),"px")),this.getActives()),n=this.getItemIn(),r=this.getItemIn(!0);t=c?w(t,-1,1):0;for(e of B(g)){var o=b(s,e),l=e===n,a=e===r,h=l||!a&&(o||u*($?-1:1)==-1^mn(e,g)>mn(c||d));J1(e,"itemtranslate"+(h?"in":"out"),{dir:u,percent:a?1-t:l?t:o?1:0})}}},percent(){return Math.abs((new DOMMatrix(E(g,"transform")).m41*($?-1:1)+t)/(p-t))},getDistance(){return Math.abs(p-t)},getItemIn(t=!1){let e=this.getActives(),i=wn(g,pn(d||c,g,s));return t&&(t=e,e=i,i=t),i[R(i,t=>!b(e,t))]},getActives(){return wn(g,pn(c||d,g,s))}}}},computed:{finite({finite:t}){return t||((t,e)=>{if(!t||t.length<2)return!0;var i=O(t).width;if(!e)return Math.ceil(vn(t))<Math.trunc(i+(t=>Math.max(0,...B(t).map(t=>O(t).width)))(t));var n,r=B(t),o=Math.trunc(i/2);for(n in r){var l,a=r[n],h=O(a).width;let i=new Set([a]),s=0;for(l of[-1,1]){let t=h/2,e=0;for(;t<o;){var c=r[Ct(+n+l+e++*l,r)];if(i.has(c))return!0;t+=O(c).width,i.add(c)}s=Math.max(s,(h+O(r[Ct(+n+l,r)]).width)/2-(t-o))}if(Math.trunc(s)>ft(r.filter(t=>!i.has(t)),t=>O(t).width))return!0}return!1})(this.list,this.center)},maxIndex(){if(!this.finite||this.center&&!this.sets)return this.length-1;if(this.center)return gt(this.sets);let e=0,i=fn(this.list);var t=R(this.slides,t=>{if(e>=i-.005)return!0;e+=O(t).width});return~t?t:this.length-1},sets({sets:t}){if(t&&!this.parallax){let e=0;var i=[],s=O(this.list).width;for(let t=0;t<this.length;t++){var n=O(this.slides[t]).width;e+n>s&&(e=0),this.center?e<s/2&&e+n+O(this.slides[Ct(t+1,this.slides)]).width/2>s/2&&(i.push(t),e=(s-n)/2):0===e&&i.push(Math.min(t,this.maxIndex)),e+=n}return i.length?i:void 0}},transitionOptions(){return{center:this.center,list:this.list}},slides(){return B(this.list).filter(L)}},connected(){u(this.$el,this.clsContainer,!z("."+this.clsContainer,this.$el))},observe:[a1({target:({slides:t,$el:e})=>[e,...t]}),h1({handler(t){for(var{target:e,isIntersecting:i}of t)e.ariaHidden=e.inert=!i},target:({slides:t})=>t,args:{intersecting:!1},options:({$el:t})=>({root:t,rootMargin:"0px -10px"})})],update:{write(){for(var t of this.navItems){var e=ht(It(t,this.attrItem));!1!==e&&(t.hidden=!this.maxIndex||e>this.maxIndex||this.sets&&!b(this.sets,e))}this.reorder(),this.parallax||this._translate(1),this.updateActiveClasses()},events:["resize"]},events:{beforeitemshow(t){!this.dragging&&this.sets&&this.stack.length<2&&!b(this.sets,this.index)&&(this.index=this.getValidIndex());var e=Math.abs(this.index-this.prevIndex+(0<this.dir&&this.index<this.prevIndex||this.dir<0&&this.index>this.prevIndex?(this.maxIndex+1)*this.dir:0));if(!this.dragging&&1<e){for(let t=0;t<e;t++)this.stack.splice(1,0,0<this.dir?"next":"previous");t.preventDefault()}else{var t=this.dir<0||!this.slides[this.prevIndex]?this.index:this.prevIndex,i=vn(this.list)/this.length;this.duration=Ts(i/this.velocity)*(O(this.slides[t]).width/i),this.reorder()}},itemshow(){~this.prevIndex&&v(this._getTransitioner().getItemIn(),this.clsActive),this.updateActiveClasses(this.prevIndex)},itemshown(){this.updateActiveClasses()}},methods:{reorder(){if(this.finite)E(this.slides,"order","");else{let i=0<this.dir&&this.slides[this.prevIndex]?this.prevIndex:this.index;if(this.slides.forEach((t,e)=>E(t,"order",0<this.dir&&e<i?1:this.dir<0&&e>=this.index?-1:"")),this.center&&this.length){var s=this.slides[i];let t=(O(this.list).width-O(s).width)/2,e=0;for(;0<t;){var n=this.getIndex(--e+i,i),r=this.slides[n];E(r,"order",n>i?-2:-1),t-=O(r).width}}}},updateActiveClasses(t=this.index){let e=this._getTransitioner(t).getActives();"all"!==this.active&&(e=[this.slides[this.getValidIndex(t)]]);var i,s=[this.clsActive,!this.sets||b(this.sets,C(this.index))?this.clsActivated:""];for(i of this.slides)u(i,s,b(e,i))},getValidIndex(t=this.index,e=this.prevIndex){var i;if(t=this.getIndex(t,e),this.sets)do{if(b(this.sets,t))return t}while(i=t,(t=this.getIndex(t+this.dir,e))!==i);return t},getAdjacentSlides(){var i,t=O(this.list).width,s=-t,n=2*t,r=O(this.slides[this.index]).width,o=this.center?(t-r)/2:0,l=new Set;for(i of[-1,1]){let t=o+(0<i?r:0),e=0;do{var a=this.slides[this.getIndex(this.index+i+e++*i)];t+=O(a).width*i,l.add(a)}while(this.length>e&&t>s&&t<n)}return Array.from(l)},getIndexAt(t){let e=-1;let i=t*(this.center?vn(this.list)-(O(this.slides[0]).width+O(gt(this.slides)).width)/2:vn(this.list,this.maxIndex)),s;do{var n=O(this.slides[++e]).width,n=this.center?(n+O(this.slides[e+1]).width)/2:n;s=i/n%1,i-=n}while(0<=i&&e<this.maxIndex);return[e,s]}}};Ws={mixins:[Ws],beforeConnect(){this.item=this.$el.closest(`.${this.$options.id.replace("parallax","items")} > *`)},disconnected(){this.item=null},events:[{name:"itemin itemout",self:!0,el:({item:t})=>t,handler({type:i,detail:{percent:s,duration:n,timing:r,dir:o}}){ii.read(()=>{if(this.matchMedia){let t=this.getCss(kn(i,o,s)),e=this.getCss(yn(i)?.5:0<o?1:0);ii.write(()=>{E(this.$el,t),T.start(this.$el,e,n,r).catch(x)})}})}},{name:"transitioncanceled transitionend",self:!0,el:({item:t})=>t,handler(){T.cancel(this.$el)}},{name:"itemtranslatein itemtranslateout",self:!0,el:({item:t})=>t,handler({type:e,detail:{percent:i,dir:s}}){ii.read(()=>{if(this.matchMedia){let t=this.getCss(kn(e,s,i));ii.write(()=>E(this.$el,t))}else this.reset()})}}]};function yn(t){return W(t,"in")}function kn(t,e,i){return i/=2,yn(t)^e<0?i:1-i}let bn={mixins:[Gi,zs,un,dn,gn],props:{ratio:String,minHeight:String,maxHeight:String},data:{ratio:"16:9",minHeight:void 0,maxHeight:void 0,selList:".uk-slideshow-items",attrItem:"uk-slideshow-item",selNav:".uk-slideshow-nav",Animations:As},watch:{list(t){E(t,{aspectRatio:this.ratio?this.ratio.replace(":","/"):void 0,minHeight:this.minHeight,maxHeight:this.maxHeight,width:"100%"})}},methods:{getAdjacentSlides(){return[1,-1].map(t=>this.slides[this.getIndex(this.index+t)])}}},Cn={mixins:[Gi,t],props:{group:String,threshold:Number,clsItem:String,clsPlaceholder:String,clsDrag:String,clsDragState:String,clsBase:String,clsNoDrag:String,clsEmpty:String,clsCustom:String,handle:String},data:{group:!1,threshold:5,clsItem:"uk-sortable-item",clsPlaceholder:"uk-sortable-placeholder",clsDrag:"uk-sortable-drag",clsDragState:"uk-drag",clsBase:"uk-sortable",clsNoDrag:"uk-sortable-nodrag",clsEmpty:"uk-sortable-empty",clsCustom:"",handle:!1,pos:{}},events:{name:zt,passive:!1,handler(t){this.init(t)}},computed:{target:(t,e)=>(e.tBodies||[e])[0],items(){return B(this.target)},isEmpty(){return!this.items.length},handles({handle:t},e){return t?A(t,e):this.items}},watch:{isEmpty(t){u(this.target,this.clsEmpty,t)},handles(t,e){var i={touchAction:"none",userSelect:"none"};me(e,i),E(t,i)}},update:{write(t){var e,i,s,n,r,o,l;this.drag&&M(this.placeholder)&&({pos:{x:l,y:e},origin:{offsetTop:s,offsetLeft:o},placeholder:i}=this,E(this.drag,{top:e-s,left:l-o}),s=this.getSortable(document.elementFromPoint(l,e)))&&(o=s.items,!o.some(T.inProgress))&&(r={x:l,y:e},n=o[R(o,t=>xt(r,O(t)))],!o.length||n&&n!==i)&&(o=this.getSortable(i),!1===(l=((t,e,i,s,n)=>{if(B(t).length){var r=O(e);if(n){var n=O(i),[o,l,a,h]=Ln([r.top,r.bottom],[n.top,n.bottom])?[s.x,"width","left","right"]:[s.y,"height","top","bottom"],l=n[l]<r[l]?r[l]-n[l]:0;if(n[a]<r[a])return!(l&&o<r[a]+l)&&e.nextElementSibling;if(l&&o>r[h]-l)return!1}else if(!((t,e)=>{var i=1===B(t).length;i&&p(t,e);let s=B(t),n=s.some((t,e)=>{let i=O(t);return s.slice(e+1).some(t=>{t=O(t);return!Ln([i.left,i.right],[t.left,t.right])})});return i&&Ae(e),n})(t,i))return s.y<r.top+r.height/2?e:e.nextElementSibling;return e}})(s.target,n,i,{x:l,y:e},s===o&&t.moved!==n))||l&&i===l||(s!==o?(o.remove(i),t.moved=n):delete t.moved,s.insert(i,l),this.touched.add(s)))},events:["move"]},methods:{init(t){let{target:e,button:i,defaultPrevented:s}=t;var[n]=this.items.filter(t=>t.contains(e));!n||s||0<i||Ft(e)||e.closest("."+this.clsNoDrag)||this.handle&&!e.closest(this.handle)||(t.preventDefault(),this.pos=fe(t),this.touched=new Set([this]),this.placeholder=n,this.origin={target:e,index:Ut(n),...this.pos},h(document,At,this.move),h(document,Ot,this.end),this.threshold)||this.start(t)},start(t){this.drag=((t,e)=>{let i;if(a(e,"li","tr")){i=z("<div>"),p(i,e.cloneNode(!0).children);for(var s of e.getAttributeNames())k(i,s,e.getAttribute(s))}else i=e.cloneNode(!0);return p(t,i),E(i,"margin","0","important"),E(i,{boxSizing:"border-box",width:e.offsetWidth,height:e.offsetHeight,padding:E(e,"padding")}),We(i.firstElementChild,We(e.firstElementChild)),i})(this.$container,this.placeholder);var{left:e,top:i}=O(this.placeholder);J(this.origin,{offsetLeft:this.pos.x-e,offsetTop:this.pos.y-i}),v(this.drag,this.clsDrag,this.clsCustom),v(this.placeholder,this.clsPlaceholder),v(this.items,this.clsItem),v(document.documentElement,this.clsDragState),I(this.$el,"start",[this,this.placeholder]);{var s=this.pos;let e=Date.now();$n=setInterval(()=>{let{x:t,y:o}=s,l=(o+=document.scrollingElement.scrollTop,.3*(Date.now()-e));e=Date.now(),Ti(document.elementFromPoint(t,s.y)).reverse().some(t=>{let{scrollTop:e,scrollHeight:i}=t;var{top:s,bottom:n,height:r}=Oi(t);if(s<o&&s+35>o)e-=l;else{if(!(n>o&&n-35<o))return;e+=l}if(0<e&&e<i-r)return t.scrollTop=e,!0})},15)}this.move(t)},move:(e=>{let i;return function(...t){i||(i=!0,e.call(this,...t),requestAnimationFrame(()=>i=!1))}})(function(t){J(this.pos,fe(t)),!this.drag&&(Math.abs(this.pos.x-this.origin.x)>this.threshold||Math.abs(this.pos.y-this.origin.y)>this.threshold)&&this.start(t),this.$emit("move")}),end(){if(ae(document,At,this.move),ae(document,Ot,this.end),this.drag){clearInterval($n);var t,e,i=this.getSortable(this.placeholder);this===i?this.origin.index!==Ut(this.placeholder)&&I(this.$el,"moved",[this,this.placeholder]):(I(i.$el,"added",[i,this.placeholder]),I(this.$el,"removed",[this,this.placeholder])),I(this.$el,"stop",[this,this.placeholder]),Ae(this.drag),this.drag=null;for({clsPlaceholder:t,clsItem:e}of this.touched)for(var s of this.touched)y(s.items,t,e);this.touched=null,y(document.documentElement,this.clsDragState)}},insert(t,e){v(this.items,this.clsItem),e&&e.previousElementSibling!==t?this.animate(()=>Ee(e,t)):e||this.target.lastElementChild===t||this.animate(()=>p(this.target,t))},remove(t){this.target.contains(t)&&this.animate(()=>Ae(t))},getSortable(t){do{var e=this.$getComponent(t,"sortable");if(e&&(e===this||!1!==this.group&&e.group===this.group))return e}while(t=M(t))}}},$n;function Ln(t,e){return t[1]>e[0]&&e[1]>t[0]}zs={props:{pos:String,offset:Boolean,flip:Boolean,shift:Boolean,inset:Boolean},data:{pos:"bottom-"+($?"right":"left"),offset:!1,flip:!0,shift:!0,inset:!1},connected(){this.pos=this.$props.pos.split("-").concat("center").slice(0,2),[this.dir,this.align]=this.pos,this.axis=b(["top","bottom"],this.dir)?"y":"x"},methods:{positionAt(t,e,i){var s=[this.getPositionOffset(t),this.getShiftOffset(t)],n=[this.flip&&"flip",this.shift&&"shift"],r={element:[this.inset?this.dir:Je(this.dir),this.align],target:[this.dir,this.align]};if("y"===this.axis){for(var o in r)r[o].reverse();s.reverse(),n.reverse()}var l=Mn(t),a=O(t);E(t,{top:-a.height,left:-a.width}),Zi(t,e,{attach:r,offset:s,boundary:i,placement:n,viewportOffset:this.getViewportOffset(t)}),l()},getPositionOffset(t=this.$el){return D(!1===this.offset?E(t,"--uk-position-offset"):this.offset,"x"===this.axis?"width":"height",t)*(b(["left","top"],this.dir)?-1:1)*(this.inset?-1:1)},getShiftOffset(t=this.$el){return"center"===this.align?0:D(E(t,"--uk-position-shift-offset"),"y"===this.axis?"width":"height",t)*(b(["left","top"],this.align)?1:-1)},getViewportOffset(t){return D(E(t,"--uk-position-viewport-offset"))}}};function Mn(t){let e=zi(t),i=e.scrollTop;return()=>{i!==e.scrollTop&&(e.scrollTop=i)}}un={mixins:[j1,F1,zs],data:{pos:"top",animation:["uk-animation-scale-up"],duration:100,cls:"uk-active"},connected(){var t;Vt(t=this.$el)||(t.tabIndex=0)},disconnected(){this.hide()},methods:{show(){if(this.isToggled(this.tooltip||null))return;let{delay:s=0,title:n}=(t=>{let{el:i,id:e,data:s}=t;return["delay","title"].reduce((t,e)=>({[e]:It(i,e),...t}),{...n1(It(i,e),["title"]),...s})})(this.$options);if(n){let t=k(this.$el,"title"),e=h(this.$el,["blur",Dt],t=>!pe(t)&&this.hide()),i=(this.reset=()=>{k(this.$el,{title:t,"aria-describedby":null}),e()},Ss(this));k(this.$el,{title:null,"aria-describedby":i}),clearTimeout(this.showTimer),this.showTimer=setTimeout(()=>this._show(n,i),s)}},async hide(){var t;g(this.$el,"input:focus")||(clearTimeout(this.showTimer),this.isToggled(this.tooltip||null)&&await this.toggleElement(this.tooltip,!1,!1),null!=(t=this.reset)&&t.call(this),Ae(this.tooltip),this.tooltip=null)},async _show(t,e){this.tooltip=p(this.container,`<div id="${e}" class="uk-${this.$options.name}" role="tooltip">  <div class="uk-${this.$options.name}-inner">${t}</div>  </div>`),h(this.tooltip,"toggled",(t,e)=>{if(e){var e=()=>this.positionAt(this.tooltip,this.$el),[i,s]=(e(),((t,e,[i,s])=>{let n=P(t),r=P(e),o=[["left","right"],["top","bottom"]];for(var l of o){if(n[l[0]]>=r[l[1]]){i=l[1];break}if(n[l[1]]<=r[l[0]]){i=l[0];break}}return t=b(o[0],i)?o[1]:o[0],s=t.find(t=>n[t]===r[t])||"center",[i,s]})(this.tooltip,this.$el,this.pos));this.origin="y"===this.axis?Je(i)+"-"+s:s+"-"+Je(i);let t=[S(document,"keydown "+zt,this.hide,!1,t=>t.type===zt&&!this.$el.contains(t.target)||"keydown"===t.type&&t.keyCode===N.ESC),h([document,...Ai(this.$el)],"scroll",e,{passive:!0})];S(this.tooltip,"hide",()=>t.forEach(t=>t()),{self:!0})}}),await this.toggleElement(this.tooltip,!0)||this.hide()}},events:{[`focus ${Pt} `+zt](t){pe(t)&&t.type!==zt||"loading"===document.readyState||this.show()}}};dn={mixins:[G1],i18n:{invalidMime:"Invalid File Type: %s",invalidName:"Invalid File Name: %s",invalidSize:"Invalid File Size: %s Kilobytes Max"},props:{allow:String,clsDragover:String,concurrent:Number,maxSize:Number,method:String,mime:String,multiple:Boolean,name:String,params:Object,type:String,url:String},data:{allow:!1,clsDragover:"uk-dragover",concurrent:1,maxSize:0,method:"POST",mime:!1,multiple:!1,name:"files[]",params:{},type:"",url:"",abort:x,beforeAll:x,beforeSend:x,complete:x,completeAll:x,error:x,fail:x,load:x,loadEnd:x,loadStart:x,progress:x},events:{change(t){g(t.target,'input[type="file"]')&&(t.preventDefault(),t.target.files&&this.upload(t.target.files),t.target.value="")},drop(t){Sn(t);t=t.dataTransfer;null!=t&&t.files&&(y(this.$el,this.clsDragover),this.upload(t.files))},dragenter(t){Sn(t)},dragover(t){Sn(t),v(this.$el,this.clsDragover)},dragleave(t){Sn(t),y(this.$el,this.clsDragover)}},methods:{async upload(t){if((t=X(t)).length){I(this.$el,"upload",[t]);for(var e of t){if(this.maxSize&&1e3*this.maxSize<e.size)return void this.fail(this.t("invalidSize",this.maxSize));if(this.allow&&!Bn(this.allow,e.name))return void this.fail(this.t("invalidName",this.allow));if(this.mime&&!Bn(this.mime,e.type))return void this.fail(this.t("invalidMime",this.mime))}this.multiple||(t=t.slice(0,1)),this.beforeAll(this,t);let n=((e,i)=>{var s=[];for(let t=0;t<e.length;t+=i)s.push(e.slice(t,t+i));return s})(t,this.concurrent),r=async t=>{let e=new FormData;for(var i in t.forEach(t=>e.append(this.name,t)),this.params)e.append(i,this.params[i]);try{var s=await(async(t,e)=>{await(t={url:t,data:null,method:"GET",headers:{},xhr:new XMLHttpRequest,beforeSend:x,responseType:"",...e}).beforeSend(t);var r=t.url,o=t;return new Promise((t,e)=>{let i=o.xhr;for(var s in o)if(s in i)try{i[s]=o[s]}catch{}for(var n in i.open(o.method.toUpperCase(),r),o.headers)i.setRequestHeader(n,o.headers[n]);h(i,"load",()=>{0===i.status||200<=i.status&&i.status<300||304===i.status?t(i):e(J(Error(i.statusText),{xhr:i,status:i.status}))}),h(i,"error",()=>e(J(Error("Network Error"),{xhr:i}))),h(i,"timeout",()=>e(J(Error("Network Timeout"),{xhr:i}))),i.send(o.data)})})(this.url,{data:e,method:this.method,responseType:this.type,beforeSend:t=>{var e,i=t.xhr;h(i.upload,"progress",this.progress);for(e of["loadStart","load","loadEnd","abort"])h(i,e.toLowerCase(),this[e]);return this.beforeSend(t)}});this.complete(s),n.length?await r(n.shift()):this.completeAll(s)}catch(t){this.error(t)}};await r(n.shift())}}}};function Bn(t,e){return e.match(new RegExp(`^${t.replace(/\//g,"\\/").replace(/\*\*/g,"(\\/[^\\/]+)*").replace(/\*/g,"[^\\/]+").replace(/((?!\\))\?/g,"$1.")}$`,"i"))}function Sn(t){t.preventDefault(),t.stopPropagation()}gn=Object.freeze({__proto__:null,Countdown:Qi,Filter:E1,Lightbox:Zs,LightboxPanel:Ds,Notification:U1,Parallax:cn,Slider:xn,SliderParallax:Ws,Slideshow:bn,SlideshowParallax:Ws,Sortable:Cn,Tooltip:un,Upload:dn});function In(t){I(document,"uikit:init",t),document.body&&Ze(document.body,Tn),new MutationObserver(En).observe(document,{subtree:!0,childList:!0,attributes:!0}),t._initialized=!0}function En(t){var e,i,s,n;for({addedNodes:e,removedNodes:i,target:s,attributeName:n}of t){for(var r of e)Ze(r,Tn);for(var o of i)Ze(o,zn);var l=n&&An(n);l&&(Bt(s,n)?bs(l,s):null!=(l=$s(s,l))&&l.$destroy())}}function Tn(t){var e,i,s=Cs(t);for(e in s)gs(s[e]);for(i of t.getAttributeNames()){var n=An(i);n&&bs(n,t)}}function zn(t){var e,i=Cs(t);for(e in i)ps(i[e])}function An(t){V(t,"data-")&&(t=t.slice(5));t=ys[t];return t&&(t.options||t).name}{(As=ms).component=ks,As.getComponents=Cs,As.getComponent=$s,As.update=Ls,As.use=function(t){if(!t.installed)return t.call(null,this),t.installed=!0,this},As.mixin=function(t,e){(e=(c(e)?this.component(e):e)||this).options=s1(e.options,t)},As.extend=function(t){t=t||{};function e(t){vs(this,t)}return((e.prototype=Object.create(this.prototype)).constructor=e).options=s1(this.options,t),e.super=this,e.extend=this.extend,e};let e;Object.defineProperty(As,"container",{get(){return e||document.body},set(t){e=z(t)}})}(t=ms).prototype.$mount=function(t){var e,i;i=this,(e=t)[xs]||(e[xs]={}),e[xs][i.$options.name]=i,(this.$options.el=t).isConnected&&gs(this)},t.prototype.$destroy=function(t=!1){var e,i,s=this,n=s.$options.el;n&&ps(s),us(s,"destroy"),e=s,null!=(i=(n=n)[xs])&&delete i[e.$options.name],lt(n[xs])&&delete n[xs],t&&Ae(s.$el)},t.prototype.$create=bs,t.prototype.$emit=function(t){l1(this,t)},t.prototype.$update=function(t=this.$el,e){Ls(t,e)},t.prototype.$reset=function(){ps(this),gs(this)},t.prototype.$getComponent=$s,Object.defineProperties(t.prototype,{$el:{get(){return this.$options.el}},$container:Object.getOwnPropertyDescriptor(t,"container")});U1={mixins:[Gi,F1],props:{animation:Boolean,targets:String,active:null,collapsible:Boolean,multiple:Boolean,toggle:String,content:String,offset:Number},data:{targets:"> *",active:!1,animation:!0,collapsible:!0,multiple:!1,clsOpen:"uk-open",toggle:".uk-accordion-title",content:".uk-accordion-content",offset:0},computed:{items:({targets:t},e)=>A(t,e),toggles({toggle:e}){return this.items.map(t=>z(e,t))},contents({content:i}){return this.items.map(t=>{var e;return(null==(e=t._wrapper)?void 0:e.firstElementChild)||z(i,t)})}},watch:{items(t,e){e||f(t,this.clsOpen)||(e=!1!==this.active&&t[Number(this.active)]||!this.collapsible&&t[0])&&this.toggle(e,!1)},toggles(){this.$emit()},contents(t){for(let e of t){var i=f(this.items.find(t=>t.contains(e)),this.clsOpen);On(e,!i)}this.$emit()}},observe:d1(),events:[{name:"click keydown",delegate:({targets:t,$props:e})=>t+" "+e.toggle,handler(t){var e;"keydown"===t.type&&t.keyCode!==N.SPACE||-1!==(e=Ut(this.toggles,t.current))&&(I1(t),t=(i=>{let s=zi(i,!0),t;return function e(){t=requestAnimationFrame(()=>{var t=O(i).top;t<0&&(s.scrollTop+=t),e()})}(),()=>requestAnimationFrame(()=>cancelAnimationFrame(t))})(t.target),this.toggle(e).finally(t))}},{name:"show hide shown hidden",self:!0,delegate:({targets:t})=>t,handler(){this.$emit()}}],update(){var t,e=Wt(this.items,"."+this.clsOpen);for(t in this.items){var i,s=this.toggles[t],n=this.contents[t];s&&n&&(s.id=Ss(this,s),n.id=Ss(this,n),i=b(e,this.items[t]),k(s,{role:a(s,"a")?"button":null,"aria-controls":n.id,"aria-expanded":i,"aria-disabled":!this.collapsible&&e.length<2&&i}),k(n,{role:"region","aria-labelledby":s.id}),a(n,"ul"))&&k(B(n),"role","presentation")}},methods:{toggle(t,i){let e=[t=this.items[Ct(t,this.items)]],s=Wt(this.items,"."+this.clsOpen);return this.multiple||b(s,e[0])||(e=e.concat(s)),!this.collapsible&&s.length<2&&b(s,t)&&(e=[]),Promise.all(e.map(t=>this.toggleElement(t,!b(s,t),(t,e)=>{if(u(t,this.clsOpen,e),!1!==i&&this.animation)return(async(t,e,{content:i,duration:s,velocity:n,transition:r})=>{i=(null==(o=t._wrapper)?void 0:o.firstElementChild)||z(i,t),t._wrapper||(t._wrapper=Oe(i,"<div>"));var o=t._wrapper,l=(E(o,"overflow","hidden"),C(E(o,"height"))),a=(await T.cancel(o),On(i,!1),ft(["marginTop","marginBottom"],t=>E(i,t))+O(i).height),h=l/a;s=a?(n*a+s)*(e?1-h:h):0,E(o,"height",l),await T.start(o,{height:e?a:0},s,r),De(i),delete t._wrapper,e||On(i,!0)})(t,e,this);On(z(this.content,t),!e)})))}}};function On(t,e){t&&(t.hidden=e)}cn={mixins:[Gi,F1],args:"animation",props:{animation:Boolean,close:String},data:{animation:!0,selClose:".uk-alert-close",duration:150},events:{name:"click",delegate:({selClose:t})=>t,handler(t){I1(t),this.close()}},methods:{async close(){await this.toggleElement(this.$el,!1,Pn),this.$destroy(!0)}}};function Pn(t,e,{duration:i,transition:s,velocity:n}){var r=C(E(t,"height"));return E(t,"height",r),T.start(t,{height:0,marginTop:0,marginBottom:0,paddingTop:0,paddingBottom:0,borderTop:0,borderBottom:0,opacity:0},n*r+i,s)}xn={args:"autoplay",props:{automute:Boolean,autoplay:Boolean,restart:Boolean,hoverTarget:Boolean},data:{automute:!1,autoplay:!0,restart:!1,hoverTarget:!1},beforeConnect(){var t=a(this.$el,"video");"inview"===this.autoplay&&t&&!Bt(this.$el,"preload")&&(this.$el.preload="none"),t||Bt(this.$el,"allow")||(this.$el.allow="autoplay"),"hover"===this.autoplay&&(t?this.$el.tabIndex=0:this.autoplay=!0),(this.automute||Bt(this.$el,"muted"))&&xi(this.$el)},events:[{name:Pt+" focusin",el:({hoverTarget:t,$el:e})=>o(t,e)||e,filter:({autoplay:t})=>"hover"===t,handler(t){!pe(t)||(t=this.$el).paused||t.ended?mi(this.$el):Dn(this.$el,this.restart)}},{name:Dt+" focusout",el:({hoverTarget:t,$el:e})=>o(t,e)||e,filter:({autoplay:t})=>"hover"===t,handler(t){pe(t)||Dn(this.$el,this.restart)}}],observe:[h1({filter:({$el:t})=>"none"===t.preload,handler([{target:t}]){t.preload="",this.$reset()}}),h1({filter:({$el:t,autoplay:e})=>"hover"!==e&&"none"!==t.preload,handler([{isIntersecting:t,target:e}]){document.fullscreenElement||(t?this.autoplay&&mi(e):Dn(e,this.restart))},args:{intersecting:!1},options:({$el:t,autoplay:e})=>({root:"inview"===e?null:M(t).closest(":not(a)")})})]};function Dn(t,e){wi(t),e&&a(t,"video")&&(t.currentTime=0)}Ws={mixins:[xn],props:{width:Number,height:Number},data:{automute:!0},created(){this.useObjectFit=a(this.$el,"img","video")},observe:a1({target:({$el:t})=>_n(t)||M(t),filter:({useObjectFit:t})=>!t}),update:{read(){var t,e,i;return!(this.useObjectFit||({$el:e,width:i=e.clientWidth,height:t=e.clientHeight}=this,e=_n(e)||M(e),!(i=bt.cover({width:i,height:t},{width:e.offsetWidth,height:e.offsetHeight})).width)||!i.height)&&i},write({height:t,width:e}){E(this.$el,{height:t,width:e})},events:["resize"]}};function _n(t){for(;t=M(t);)if("static"!==E(t,"position"))return t}let s,Nn={mixins:[Gi,j1,zs,F1],args:"pos",props:{mode:"list",toggle:Boolean,boundary:Boolean,boundaryX:Boolean,boundaryY:Boolean,target:Boolean,targetX:Boolean,targetY:Boolean,stretch:Boolean,delayShow:Number,delayHide:Number,autoUpdate:Boolean,animateOut:Boolean,bgScroll:Boolean,closeOnScroll:Boolean},data:{mode:["click","hover"],toggle:"- *",boundary:!1,boundaryX:!1,boundaryY:!1,target:!1,targetX:!1,targetY:!1,stretch:!1,delayShow:0,delayHide:800,autoUpdate:!0,animateOut:!1,bgScroll:!0,animation:["uk-animation-fade"],cls:"uk-open",container:!1,closeOnScroll:!1,selClose:".uk-drop-close"},computed:{boundary({boundary:t,boundaryX:e,boundaryY:i},s){return[o(e||t,s)||window,o(i||t,s)||window]},target({target:t,targetX:e,targetY:i},s){return e=e||t||this.targetEl,i=i||t||this.targetEl,[!0===e?window:o(e,s),!0===i?window:o(i,s)]}},created(){this.tracker=new ci},connected(){v(this.$el,"uk-drop"),this.toggle&&!this.targetEl&&(this.targetEl=(t=>((t=t.$create("toggle",o(t.toggle,t.$el),{target:t.$el,mode:t.mode}).$el).ariaHasPopup=!0,t))(this)),k(this.targetEl,"aria-expanded",!1),this._style=mt(this.$el.style,["width","height"])},disconnected(){this.isActive()&&(this.hide(!1),s=null),E(this.$el,this._style)},events:[{name:"click",delegate:({selClose:t})=>t,handler(t){I1(t),this.hide(!1)}},{name:"click",delegate:()=>'a[href*="#"]',handler({defaultPrevented:t,current:e}){var i=e.hash;!t&&i&&Xt(e)&&!this.$el.contains(z(i))&&this.hide(!1)}},{name:"beforescroll",handler(){this.hide(!1)}},{name:"toggle",self:!0,handler(t,e){t.preventDefault(),this.isToggled()?this.hide(!1):this.show(null==e?void 0:e.$el,!1)}},{name:"toggleshow",self:!0,handler(t,e){t.preventDefault(),this.show(null==e?void 0:e.$el)}},{name:"togglehide",self:!0,handler(t){t.preventDefault(),g(this.$el,":focus,:hover")||this.hide()}},{name:Pt+" focusin",filter:({mode:t})=>b(t,"hover"),handler(t){pe(t)||this.clearTimers()}},{name:Dt+" focusout",filter:({mode:t})=>b(t,"hover"),handler(t){!pe(t)&&t.relatedTarget&&this.hide()}},{name:"toggled",self:!0,handler(t,e){e&&(this.clearTimers(),this.position())}},{name:"show",self:!0,handler(){(s=this).tracker.init(),k(this.targetEl,"aria-expanded",!0);let t=[(t=>{let e=()=>t.$emit(),i=[pi(e),gi(Ai(t.$el).concat(t.target),e)];return()=>i.map(t=>t.disconnect())})(this),(i=this,h(document,"keydown",t=>{t.keyCode===N.ESC&&i.hide(!1)})),(n=this,h(document,zt,({target:s})=>{n.$el.contains(s)||S(document,Ot+` ${_t} scroll`,({defaultPrevented:t,type:e,target:i})=>{t||e!==Ot||s!==i||null!=(t=n.targetEl)&&t.contains(s)||n.hide(!1)},!0)})),this.autoUpdate&&Hn(this),this.closeOnScroll&&Hn(e=this,()=>e.hide(!1))];var e,n,i;S(this.$el,"hide",()=>t.forEach(t=>t&&t()),{self:!0}),this.bgScroll||S(this.$el,"hidden",Z1(this.$el),{self:!0})}},{name:"beforehide",self:!0,handler(){this.clearTimers()}},{name:"hide",handler({target:t}){this.$el!==t?s=null===s&&this.$el.contains(t)&&this.isToggled()?this:s:(s=this.isActive()?null:s,this.tracker.cancel(),k(this.targetEl,"aria-expanded",!1))}}],update:{write(){this.isToggled()&&!f(this.$el,this.clsEnter)&&this.position()}},methods:{show(e=this.targetEl,i=!0){if(this.isToggled()&&e&&this.targetEl&&e!==this.targetEl&&this.hide(!1,!1),this.targetEl=e,this.clearTimers(),!this.isActive()){if(s){if(i&&s.isDelaying())return void(this.showTimer=setTimeout(()=>g(e,":hover")&&this.show(),10));let t;for(;s&&t!==s&&!s.$el.contains(this.$el);)(t=s).hide(!1,!1);i=!1}this.container&&M(this.$el)!==this.container&&p(this.container,this.$el),v(this.$el,this.clsEnter),this.showTimer=setTimeout(()=>this.toggleElement(this.$el,!0),i&&this.delayShow||0)}},hide(t=!0,e=!0){var i=()=>{y(this.$el,this.clsEnter),this.toggleElement(this.$el,!1,this.animateOut&&e)};this.clearTimers(),(this.isDelayedHide=t)&&this.isDelaying()?this.hideTimer=setTimeout(this.hide,50):t&&this.delayHide?this.hideTimer=setTimeout(i,this.delayHide):i()},clearTimers(){clearTimeout(this.showTimer),clearTimeout(this.hideTimer),this.showTimer=null,this.hideTimer=null},isActive(){return s===this},isDelaying(){return[this.$el,...A(".uk-drop",this.$el)].some(t=>this.tracker.movesTo(t))},position(){var t,e,i,s=Mn(this.$el),n=(y(this.$el,"uk-drop-stack"),E(this.$el,this._style),this.$el.hidden=!0,this.target.map(t=>{return e=this.$el,Oi(Ai(t).find(t=>t.contains(e)));var e})),r=this.getViewportOffset(this.$el),o=[[0,["x","width","left","right"]],[1,["y","height","top","bottom"]]];for([t,[e,i]]of o)this.axis!==e&&b([e,!0],this.stretch)&&E(this.$el,{[i]:Math.min(P(this.boundary[t])[i],n[t][i]-2*r),["overflow-"+e]:"auto"});var l,a,h,c,d,u,g,p,f=n[0].width-2*r;this.$el.hidden=!1,E(this.$el,"maxWidth",""),this.$el.offsetWidth>f&&v(this.$el,"uk-drop-stack"),E(this.$el,"maxWidth",f),this.positionAt(this.$el,this.target,this.boundary);for([l,[a,h,c,d]]of o)this.axis===a&&b([a,!0],this.stretch)&&(u=Math.abs(this.getPositionOffset()),g=P(this.target[l]),p=P(this.$el),E(this.$el,{[h]:(g[c]>p[c]?g[this.inset?d:c]-Math.max(P(this.boundary[l])[c],n[l][c]+r):Math.min(P(this.boundary[l])[d],n[l][d]-r)-g[this.inset?c:d])-u,["overflow-"+a]:"auto"}),this.positionAt(this.$el,this.target,this.boundary));s()}}};function Hn(t,e=()=>t.$emit()){return h([document,...Ai(t.$el)],"scroll",e,{passive:!0})}un={mixins:[Gi,j1],props:{align:String,boundary:Boolean,dropbar:Boolean,dropbarAnchor:Boolean,duration:Number,mode:Boolean,offset:Boolean,stretch:Boolean,delayShow:Boolean,delayHide:Boolean,target:Boolean,targetX:Boolean,targetY:Boolean,animation:Boolean,animateOut:Boolean,closeOnScroll:Boolean},data:{align:$?"right":"left",clsDrop:"uk-dropdown",clsDropbar:"uk-dropnav-dropbar",boundary:!0,dropbar:!1,dropbarAnchor:!1,flip:!0,delayShow:160,duration:200,container:!1,selNavItem:"> li > a, > ul > li > a"},computed:{dropbarAnchor:({dropbarAnchor:t},e)=>o(t,e)||e,dropbar({dropbar:t}){return t?(t=this._dropbar||o(t,this.$el)||z("+ ."+this.clsDropbar,this.$el))||(this._dropbar=z("<div>")):null},dropContainer(t,e){return this.container||e},dropdowns({clsDrop:t},e){var i=A("."+t,e);if(this.dropContainer!==e)for(var s of A("."+t,this.dropContainer)){var n=null==(n=this.getDropdown(s))?void 0:n.targetEl;!b(i,s)&&n&&this.$el.contains(n)&&i.push(s)}return i},items({selNavItem:t},e){return A(t,e)}},watch:{dropbar(t){v(t,"uk-dropbar","uk-dropbar-top",this.clsDropbar,`uk-${this.$options.name}-dropbar`)},dropdowns(){this.initializeDropdowns()}},connected(){this.initializeDropdowns();{var i=this.$el;let e=()=>t.forEach(t=>t()),t=[S(i.ownerDocument,At,t=>i.contains(t.target)||e()),h(i,"mouseenter "+Pt,t=>t.stopPropagation(),{capture:!0}),h(i,"mouseleave "+Dt,e,{capture:!0})]}},disconnected(){Ae(this._dropbar),delete this._dropbar},events:[{name:"mouseover focusin",delegate:({selNavItem:t})=>t,handler({current:t}){var e=this.getActive();e&&b(e.mode,"hover")&&e.targetEl&&!t.contains(e.targetEl)&&!e.isDelaying()&&e.hide(!1)}},{name:"keydown",self:!0,delegate:({selNavItem:t})=>t,handler(t){let e,{current:i,keyCode:s}=t;var n,r=this.getActive();s===N.DOWN&&((null==r?void 0:r.targetEl)===i?(t.preventDefault(),null!=(e=z(qt,r.$el))&&e.focus()):(n=this.dropdowns.find(t=>(null==(t=this.getDropdown(t))?void 0:t.targetEl)===i))&&(t.preventDefault(),i.click(),S(n,"show",t=>null==(t=z(qt,t.target))?void 0:t.focus()))),Zn(t,this.items,r)}},{name:"keydown",el:({dropContainer:t})=>t,delegate:({clsDrop:t})=>"."+t,handler(e){var{current:i,keyCode:s,target:n}=e;if(!Ft(n)&&b(this.dropdowns,i)){n=this.getActive();let t=-1;s===N.HOME?t=0:s===N.END?t="last":s===N.UP?t="previous":s===N.DOWN?t="next":s===N.ESC&&null!=(s=n.targetEl)&&s.focus(),~t?(e.preventDefault(),(s=A(qt,i))[Ct(t,s,R(s,t=>g(t,":focus")))].focus()):Zn(e,this.items,n)}}},{name:"mouseleave",el:({dropbar:t})=>t,filter:({dropbar:t})=>t,handler(){var t=this.getActive();t&&b(t.mode,"hover")&&!this.dropdowns.some(t=>g(t,":hover"))&&t.hide()}},{name:"beforeshow",el:({dropContainer:t})=>t,filter:({dropbar:t})=>t,handler({target:t}){this.isDropbarDrop(t)&&(this.dropbar.previousElementSibling!==this.dropbarAnchor&&Te(this.dropbarAnchor,this.dropbar),v(t,this.clsDrop+"-dropbar"))}},{name:"show",el:({dropContainer:t})=>t,filter:({dropbar:t})=>t,handler({target:i}){if(this.isDropbarDrop(i)){let e=this.getDropdown(i);var t=()=>{var t=Math.max(...Rt(i,"."+this.clsDrop).concat(i).map(t=>P(t).bottom));P(this.dropbar,{left:P(this.dropbar).left,top:this.getDropbarOffset(e.getPositionOffset())}),this.transitionTo(t-P(this.dropbar).top+C(E(i,"marginBottom")),i)};this._observer=gi([e.$el,...e.target],t),t()}}},{name:"beforehide",el:({dropContainer:t})=>t,filter:({dropbar:t})=>t,handler(t){let e=this.getActive();g(this.dropbar,":hover")&&e.$el===t.target&&this.isDropbarDrop(e.$el)&&b(e.mode,"hover")&&e.isDelayedHide&&!this.items.some(t=>e.targetEl!==t&&g(t,":focus"))&&t.preventDefault()}},{name:"hide",el:({dropContainer:t})=>t,filter:({dropbar:t})=>t,handler({target:t}){var e;this.isDropbarDrop(t)&&(null!=(e=this._observer)&&e.disconnect(),(e=this.getActive())&&e.$el!==t||this.transitionTo(0))}}],methods:{getActive(){var t;return b(this.dropdowns,null==(t=s)?void 0:t.$el)&&s},async transitionTo(t,e){var i,s=this.dropbar,n=We(s);e=n<t&&e,await T.cancel([e,s]),e&&0<(i=P(e).top-P(s).top-n)&&E(e,"transitionDelay",i/t*this.duration+"ms"),E(e,"clipPath",`polygon(0 0,100% 0,100% ${n}px,0 ${n}px)`),We(s,n),await Promise.all([T.start(s,{height:t},this.duration),T.start(e,{clipPath:`polygon(0 0,100% 0,100% ${t}px,0 ${t}px)`},this.duration).finally(()=>E(e,{clipPath:"",transitionDelay:""}))]).catch(x)},getDropdown(t){return this.$getComponent(t,"drop")||this.$getComponent(t,"dropdown")},isDropbarDrop(t){return b(this.dropdowns,t)&&f(t,this.clsDrop)},getDropbarOffset(t){var{$el:e,target:i,targetY:s}=this,{top:s,height:i}=P(o(s||i||e,e));return s+i+t},initializeDropdowns(){this.$create("drop",this.dropdowns.filter(t=>!this.getDropdown(t)),{...this.$props,flip:this.flip&&!this.$props.dropbar,shift:!0,pos:"bottom-"+this.align,boundary:!1,boundaryX:!0===this.boundary?this.$el:this.boundary})}}};function Zn(t,e,i){var{current:s,keyCode:n}=t;let r=-1;n===N.HOME?r=0:n===N.END?r="last":n===N.LEFT?r="previous":n===N.RIGHT?r="next":n===N.TAB&&(null!=(n=i.targetEl)&&n.focus(),null!=(n=i.hide))&&n.call(i,!1),~r&&(t.preventDefault(),null!=(n=i.hide)&&n.call(i,!1),e[Ct(r,e,e.indexOf(i.targetEl||s))].focus())}dn={mixins:[Gi],args:"target",props:{target:Boolean},data:{target:!1},computed:{input:(t,e)=>z(jt,e),state(){return this.input.nextElementSibling},target({target:t},e){return t&&(!0===t&&M(this.input)===e&&this.input.nextElementSibling||z(t,e))}},update(){var{target:e,input:i}=this;if(e){let t;var s=Ft(e)?"value":"textContent",n=e[s],r=null!=(r=i.files)&&r[0]?i.files[0].name:g(i,"select")&&(t=A("option",i).filter(t=>t.selected)[0])?t.textContent:i.value;n!==r&&(e[s]=r)}},events:[{name:"change",handler(){this.$emit()}},{name:"reset",el:({$el:t})=>t.closest("form"),handler(){this.$emit()}}]},As={extends:Tt,mixins:[Gi],name:"grid",props:{masonry:Boolean,parallax:String,parallaxStart:String,parallaxEnd:String,parallaxJustify:Boolean},data:{margin:"uk-grid-margin",clsStack:"uk-grid-stack",masonry:!1,parallax:0,parallaxStart:0,parallaxEnd:0,parallaxJustify:!1},connected(){this.masonry&&v(this.$el,"uk-flex-top","uk-flex-wrap-top")},observe:g1({filter:({parallax:t,parallaxJustify:e})=>t||e}),update:[{write({rows:t}){u(this.$el,this.clsStack,!t.some(t=>1<t.length))},events:["resize"]},{read(t){let s=t.rows,{masonry:e,parallax:i,parallaxJustify:n,margin:r}=this;if(i=Math.max(0,D(i)),!(e||i||n)||jn(s)||s[0].some((e,i)=>s.some(t=>t[i]&&t[i].offsetWidth!==e.offsetWidth)))return t.translates=t.scrollColumns=!1;t=s,l=r;let o=C((c=t.flat().find(t=>f(t,l)))?E(c,"marginTop"):E(t[0][0],"paddingLeft"));var l;let a,h;e?[a,h]=((t,e,i)=>{let s=[],n=[],r=Array(t[0].length).fill(0),o=0;for(var l of t){var a,h=$?l.slice().reverse():l;let t=0;for(a in h){var{offsetWidth:c,offsetHeight:d}=h[a],u=i?a:r.indexOf(Math.min(...r));Fn(s,u,h[a]),Fn(n,u,[(u-a)*c*($?-1:1),r[u]-o]),r[u]+=d+e,t=Math.max(t,d)}o+=t+e}return[s,n]})(s,o,"next"===e):a=(t=>{var e,i=[];for(e of t)for(var s in e)Fn(i,s,e[s]);return i})(s);var c=a.map(t=>ft(t,"offsetHeight")+o*(t.length-1));let d=Math.max(0,...c),u,g,p;return(i||n)&&(u=c.map((t,e)=>n?d-t+i:i/(e%2||8)),n||(i=Math.max(...c.map((t,e)=>t+u[e]-d))),g=D(this.parallaxStart,"height",this.$el,!0),p=D(this.parallaxEnd,"height",this.$el,!0)),{columns:a,translates:h,scrollColumns:u,parallaxStart:g,parallaxEnd:p,padding:i,height:h?d:""}},write({height:t,padding:e}){E(this.$el,"paddingBottom",e||""),!1!==t&&E(this.$el,"height",t)},events:["resize"]},{read({rows:t,scrollColumns:e,parallaxStart:i,parallaxEnd:s}){return{scrolled:!(!e||jn(t))&&Ei(this.$el,i,s)}},write({columns:t,scrolled:r,scrollColumns:o,translates:l}){(r||l)&&t.forEach((t,n)=>t.forEach((t,e)=>{let[i,s]=l&&l[n][e]||[0,0];r&&(s+=r*o[n]),E(t,"transform",`translate(${i}px, ${s}px)`)}))},events:["scroll","resize"]}]};function jn(t){return t.flat().some(t=>"absolute"===E(t,"position"))}function Fn(t,e,i){t[e]||(t[e]=[]),t[e].push(i)}t={args:"target",props:{target:String,row:Boolean},data:{target:"> *",row:!0},computed:{elements:({target:t},e)=>A(t,e)},observe:a1({target:({$el:t,elements:e})=>e.reduce((t,e)=>t.concat(e,...e.children),[t])}),events:{name:"loadingdone",el:()=>document.fonts,handler(){this.$emit("resize")}},update:{read(){return{rows:(this.row?v1(this.elements):[this.elements]).map(qn)}},write({rows:e}){for(let{heights:i,elements:t}of e)t.forEach((t,e)=>E(t,"minHeight",i[e]))},events:["resize"]}};function qn(t){if(t.length<2)return{heights:[""],elements:t};let i=t.map(Vn),s=Math.max(...i);return{heights:t.map((t,e)=>i[e].toFixed(2)===s.toFixed(2)?"":s),elements:t}}function Vn(t){var e=mt(t.style,["display","minHeight"]),i=(L(t)||E(t,"display","block","important"),E(t,"minHeight",""),O(t).height-Xe(t,"height","content-box"));return E(t,e),i}var zs={args:"target",props:{target:String},data:{target:""},computed:{target:{get:({target:t},e)=>o(t,e),observe:({target:t})=>t}},observe:a1({target:({target:t})=>t}),update:{read(){return!!this.target&&{height:this.target.offsetHeight}},write({height:t}){E(this.$el,"minHeight",t)},events:["resize"]}},j1={mixins:[Fs],props:{expand:Boolean,offsetTop:Boolean,offsetBottom:Boolean,min:Number,property:String},data:{expand:!1,offsetTop:!1,offsetBottom:!1,min:0,property:"min-height"},observe:[u1({filter:({expand:t})=>t}),a1({target:({$el:t})=>Ti(t)})],update:{read(){if(!L(this.$el))return!1;if(!this.matchMedia)return{minHeight:!1};var t=Xe(this.$el,"height","content-box"),{body:e,scrollingElement:i}=document,s=zi(this.$el),n=Oi(s===e?i:s).height,i=i===s||e===s;let r="calc("+(i?"100vh":n+"px");return this.expand?(e=O(s).height-O(this.$el).height,r+=` - ${e}px`):(this.offsetTop&&(i?(e=P(!0===this.offsetTop?this.$el:o(this.offsetTop,this.$el)).top,r+=0<e&&e<n/2?` - ${e}px`:""):r+=` - ${Xe(s,"height",E(s,"boxSizing"))}px`),!0===this.offsetBottom?r+=` - ${O(this.$el.nextElementSibling).height}px`:ot(this.offsetBottom)?r+=` - ${this.offsetBottom}vh`:this.offsetBottom&&W(this.offsetBottom,"px")?r+=` - ${C(this.offsetBottom)}px`:c(this.offsetBottom)&&(r+=` - ${O(o(this.offsetBottom,this.$el)).height}px`)),{minHeight:r+=`${t?` - ${t}px`:""})`}},write({minHeight:t}){E(this.$el,this.property,!1===t?"":`max(${this.min||0}px, ${t})`)},events:["resize"]}},Wn='<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"/><path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"/></svg>',Rn={args:"src",props:{width:Number,height:Number,ratio:Number},data:{ratio:1},connected(){this.svg=this.getSvg().then(t=>{var e;if(this._connected)return e=((t,e)=>{var i;return Ht(e)||a(e,"canvas")?(e.hidden=!0,Un(t,i=e.nextElementSibling)?i:Te(e,t)):(i=e.lastElementChild,Un(t,i)?i:p(e,t))})(t,this.$el),this.svgEl&&e!==this.svgEl&&Ae(this.svgEl),function(i,e){let s=["width","height"],t=s.map(t=>this[t]);t.some(t=>t)||(t=s.map(t=>k(e,t)));var n=k(e,"viewBox");n&&!t.some(t=>t)&&(t=n.split(" ").slice(2));t.forEach((t,e)=>k(i,s[e],C(t)*this.ratio||null))}.call(this,e,t),this.svgEl=e},x)},disconnected(){this.svg.then(t=>{this._connected||(Ht(this.$el)&&(this.$el.hidden=!1),Ae(t),this.svgEl=null)}),this.svg=null},methods:{async getSvg(){}}};function Un(t,e){return a(t,"svg")&&a(e,"svg")&&t.innerHTML===e.innerHTML}function Xn(t,e){return d(Ne(t=e&&b(t,"<symbol")?Yn(t)[e]||t:t)).filter(it)[0]}let Jn=/<symbol([^]*?id=(['"])(.+?)\2[^]*?<\/)symbol>/g,Yn=$t(function(t){for(var e,i={};e=Jn.exec(t);)i[e[3]]=`<svg ${e[1]}svg>`;return i}),Gn={spinner:'<svg width="30" height="30" viewBox="0 0 30 30"><circle fill="none" stroke="#000" cx="15" cy="15" r="14"/></svg>',totop:'<svg width="18" height="10" viewBox="0 0 18 10"><polyline fill="none" stroke="#000" stroke-width="1.2" points="1 9 9 1 17 9"/></svg>',marker:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="1" height="11" x="9" y="4"/><rect width="11" height="1" x="4" y="9"/></svg>',"accordion-icon":'<svg width="13" height="13" viewBox="0 0 13 13"><style>.uk-accordion-icon svg&gt;[class*=&quot;line-&quot;]{transition:0.2s ease-out;transition-property:transform, opacity;transform-origin:center}[aria-expanded=&quot;true&quot;] .uk-accordion-icon svg&gt;.line-1{transform:rotate(-45deg);opacity:0}[aria-expanded=&quot;true&quot;] .uk-accordion-icon svg&gt;.line-2{transform:rotate(90deg)}</style><rect width="13" height="1" fill="#000" x="0" y="6" class="line-1"/><rect width="1" height="13" fill="#000" x="6" y="0" class="line-2"/></svg>',"close-icon":'<svg width="14" height="14" viewBox="0 0 14 14"><line fill="none" stroke="#000" stroke-width="1.1" x1="1" y1="1" x2="13" y2="13"/><line fill="none" stroke="#000" stroke-width="1.1" x1="13" y1="1" x2="1" y2="13"/></svg>',"close-large":'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" stroke-width="1.4" x1="1" y1="1" x2="19" y2="19"/><line fill="none" stroke="#000" stroke-width="1.4" x1="19" y1="1" x2="1" y2="19"/></svg>',"drop-parent-icon":'<svg width="12" height="12" viewBox="0 0 12 12"><polyline fill="none" stroke="#000" stroke-width="1.1" points="1 3.5 6 8.5 11 3.5"/></svg>',"nav-parent-icon":'<svg width="12" height="12" viewBox="0 0 12 12"><polyline fill="none" stroke="#000" stroke-width="1.1" points="1 3.5 6 8.5 11 3.5"/></svg>',"nav-parent-icon-large":'<svg width="14" height="14" viewBox="0 0 14 14"><polyline fill="none" stroke="#000" stroke-width="1.1" points="1 4 7 10 13 4"/></svg>',"navbar-parent-icon":'<svg width="12" height="12" viewBox="0 0 12 12"><polyline fill="none" stroke="#000" stroke-width="1.1" points="1 3.5 6 8.5 11 3.5"/></svg>',"navbar-toggle-icon":'<svg width="20" height="20" viewBox="0 0 20 20"><style>.uk-navbar-toggle-icon svg&gt;[class*=&quot;line-&quot;]{transition:0.2s ease-in-out;transition-property:transform, opacity;transform-origin:center;opacity:1}.uk-navbar-toggle-icon svg&gt;.line-3{opacity:0}[aria-expanded=&quot;true&quot;].uk-navbar-toggle-icon svg&gt;.line-3,[aria-expanded=&quot;true&quot;]&gt;.uk-navbar-toggle-icon svg&gt;.line-3{opacity:1}[aria-expanded=&quot;true&quot;].uk-navbar-toggle-icon svg&gt;.line-2,[aria-expanded=&quot;true&quot;]&gt;.uk-navbar-toggle-icon svg&gt;.line-2{transform:rotate(45deg)}[aria-expanded=&quot;true&quot;].uk-navbar-toggle-icon svg&gt;.line-3,[aria-expanded=&quot;true&quot;]&gt;.uk-navbar-toggle-icon svg&gt;.line-3{transform:rotate(-45deg)}[aria-expanded=&quot;true&quot;].uk-navbar-toggle-icon svg&gt;.line-1,[aria-expanded=&quot;true&quot;]&gt;.uk-navbar-toggle-icon svg&gt;.line-1,[aria-expanded=&quot;true&quot;].uk-navbar-toggle-icon svg&gt;.line-4,[aria-expanded=&quot;true&quot;]&gt;.uk-navbar-toggle-icon svg&gt;.line-4{opacity:0}[aria-expanded=&quot;true&quot;].uk-navbar-toggle-icon svg&gt;.line-1,[aria-expanded=&quot;true&quot;]&gt;.uk-navbar-toggle-icon svg&gt;.line-1{transform:translateY(6px) scaleX(0)}[aria-expanded=&quot;true&quot;].uk-navbar-toggle-icon svg&gt;.line-4,[aria-expanded=&quot;true&quot;]&gt;.uk-navbar-toggle-icon svg&gt;.line-4{transform:translateY(-6px) scaleX(0)}</style><rect width="20" height="2" y="3" class="line-1"/><rect width="20" height="2" y="9" class="line-2"/><rect width="20" height="2" y="9" class="line-3"/><rect width="20" height="2" y="15" class="line-4"/></svg>',"overlay-icon":'<svg width="40" height="40" viewBox="0 0 40 40"><rect width="1" height="40" x="19" y="0"/><rect width="40" height="1" x="0" y="19"/></svg>',"pagination-next":'<svg width="7" height="12" viewBox="0 0 7 12"><polyline fill="none" stroke="#000" stroke-width="1.2" points="1 1 6 6 1 11"/></svg>',"pagination-previous":'<svg width="7" height="12" viewBox="0 0 7 12"><polyline fill="none" stroke="#000" stroke-width="1.2" points="6 1 1 6 6 11"/></svg>',"search-icon":Wn,"search-medium":'<svg width="24" height="24" viewBox="0 0 24 24"><circle fill="none" stroke="#000" stroke-width="1.1" cx="10.5" cy="10.5" r="9.5"/><line fill="none" stroke="#000" stroke-width="1.1" x1="23" y1="23" x2="17" y2="17"/></svg>',"search-large":'<svg width="40" height="40" viewBox="0 0 40 40"><circle fill="none" stroke="#000" stroke-width="1.8" cx="17.5" cy="17.5" r="16.5"/><line fill="none" stroke="#000" stroke-width="1.8" x1="38" y1="39" x2="29" y2="30"/></svg>',"search-toggle-icon":Wn,"slidenav-next":'<svg width="14" height="24" viewBox="0 0 14 24"><polyline fill="none" stroke="#000" stroke-width="1.4" points="1.225,23 12.775,12 1.225,1"/></svg>',"slidenav-next-large":'<svg width="25" height="40" viewBox="0 0 25 40"><polyline fill="none" stroke="#000" stroke-width="2" points="4.002,38.547 22.527,20.024 4,1.5"/></svg>',"slidenav-previous":'<svg width="14" height="24" viewBox="0 0 14 24"><polyline fill="none" stroke="#000" stroke-width="1.4" points="12.775,1 1.225,12 12.775,23"/></svg>',"slidenav-previous-large":'<svg width="25" height="40" viewBox="0 0 25 40"><polyline fill="none" stroke="#000" stroke-width="2" points="20.527,1.5 2,20.024 20.525,38.547"/></svg>'},Kn={install:function(s){s.icon.add=(t,e)=>{let i=c(t)?{[t]:e}:t;pt(i,(t,e)=>{Gn[e]=t,delete hr[e]}),s._initialized&&Ze(document.body,t=>pt(s.getComponents(t),t=>{t.$options.isIcon&&t.icon in i&&t.$reset()}))}},mixins:[Rn],args:"icon",props:{icon:String},isIcon:!0,beforeConnect(){v(this.$el,"uk-icon")},async connected(){var t=await this.svg;t&&(t.ariaHidden=!0)},methods:{async getSvg(){var t=(t=>(t=cr[t]||t,Gn[t]?(hr[t]||(hr[t]=Xn(Gn[(t=>$?ut(ut(t,"left","right"),"previous","next"):t)(t)]||Gn[t])),hr[t].cloneNode(!0)):null))(this.icon);if(t)return t;throw"Icon not found."}}};var Wn={args:!1,extends:Kn,data:t=>({icon:j(t.constructor.options.name)}),beforeConnect(){v(this.$el,this.$options.id)}},Qn={extends:Wn,beforeConnect(){var t=this.$props.icon;this.icon=this.$el.closest(".uk-nav-primary")?t+"-large":t}},tr={extends:Wn,mixins:[G1],i18n:{toggle:"Open Search",submit:"Submit Search"},beforeConnect(){var t=f(this.$el,"uk-search-toggle")||f(this.$el,"uk-navbar-toggle");this.icon=t?"search-toggle-icon":f(this.$el,"uk-search-icon")&&this.$el.closest(".uk-search-large")?"search-large":this.$el.closest(".uk-search-medium")?"search-medium":this.$props.icon,Bt(this.$el,"aria-label")||(t?this.$el.ariaLabel=this.t("toggle"):(t=this.$el.closest("a,button"))&&(t.ariaLabel=this.t("submit")))}},er={extends:Wn,beforeConnect(){this.$el.role="status"},methods:{async getSvg(){var t=await Kn.methods.getSvg.call(this);return 1!==this.ratio&&E(z("circle",t),"strokeWidth",1/this.ratio),t}}},ir={extends:Wn,mixins:[G1],beforeConnect(){var t=this.$el.closest("a,button"),e=(k(t,"role",null!==this.role&&a(t,"a")?"button":this.role),this.t("label"));e&&!Bt(t,"aria-label")&&k(t,"aria-label",e)}},sr={extends:ir,beforeConnect(){v(this.$el,"uk-slidenav");var t=this.$props.icon;this.icon=f(this.$el,"uk-slidenav-large")?t+"-large":t}},nr={extends:ir,i18n:{label:"Open menu"},beforeConnect(){var t=this.$el.closest("a,button");t&&(t.ariaExpanded=!1)}},rr={extends:ir,i18n:{label:"Close"},beforeConnect(){this.icon="close-"+(f(this.$el,"uk-close-large")?"large":"icon")}},or={extends:ir,i18n:{label:"Open"}},lr={extends:ir,i18n:{label:"Back to top"}},ar={extends:ir,i18n:{label:"Next page"},data:{role:null}},ir={extends:ir,i18n:{label:"Previous page"},data:{role:null}};let hr={};let cr={twitter:"x"};var dr={props:{target:String,selActive:String},data:{target:!1,selActive:!1},connected(){this.isIntersecting=0},computed:{target:({target:t},e)=>t?A(t,e):e},watch:{target:{handler(){queueMicrotask(()=>this.$reset())},immediate:!1}},observe:[h1({handler(t){this.isIntersecting=t.reduce((t,{isIntersecting:e})=>t+(e?1:this.isIntersecting?-1:0),this.isIntersecting),this.$emit()},target:({target:t})=>t,args:{intersecting:!1}}),c1({target:({target:t})=>t,options:{attributes:!0,attributeFilter:["class"]}}),{target:({target:t})=>t,observe:(t,e)=>{let i=gi([...d(t),document.documentElement],e),s=[h(document,"scroll itemshown itemhidden",e,{passive:!0,capture:!0}),h(document,"show hide transitionstart",t=>(e(),i.observe(t.target))),h(document,"shown hidden transitionend transitioncancel",t=>(e(),i.unobserve(t.target)))];return{observe:i.observe.bind(i),unobserve:i.unobserve.bind(i),disconnect(){i.disconnect(),s.map(t=>t())}}},handler(){this.$emit()}}],update:{read(){if(!this.isIntersecting)return!1;for(var t of d(this.target)){var e=!this.selActive||g(t,this.selActive)?(t=>{var e,i=O(t),s=O(window);if(!wt(i,s))return!1;let{left:n,top:r,height:o,width:l}=i,a="";for(e of[.25,.5,.75]){var h=t.ownerDocument.elementsFromPoint(Math.max(0,Math.min(n+l*e,s.width-1)),Math.max(0,Math.min(r+o/2,s.height-1)));for(let e of h)if(!(t.contains(e)||!(t=>{if("visible"===E(t,"visibility")){for(;t;){if("0"===E(t,"opacity"))return;t=M(t)}return 1}})(e)||e.closest('[class*="-leave"]')&&h.some(t=>e!==t&&g(t,'[class*="-enter"]')))){var c=E(e,"--uk-inverse");if(c){if(c===a)return"uk-"+c;a=c;break}}}return a?"uk-"+a:""})(t):"";!1!==e&&Lt(t,"uk-light uk-dark",e)}}}};var ur={mixins:[Gi,Fs],props:{fill:String},data:{fill:"",clsWrapper:"uk-leader-fill",clsHide:"uk-leader-hide",attrFill:"data-fill"},computed:{fill:({fill:t},e)=>t||E(e,"--uk-leader-fill-content")},connected(){[this.wrapper]=Pe(this.$el,`<span class="${this.clsWrapper}">`)},disconnected(){De(this.wrapper.childNodes)},observe:a1(),update:{read(){return{width:Math.trunc(this.$el.offsetWidth/2),fill:this.fill,hide:!this.matchMedia}},write({width:t,fill:e,hide:i}){u(this.wrapper,this.clsHide,i),k(this.wrapper,this.attrFill,new Array(t).join(e))},events:["resize"]}},gr={install:function({modal:o}){function r(t,e,s=x,n=x){e={bgClose:!1,escClose:!0,...e,i18n:{...o.i18n,...null==e?void 0:e.i18n}};let r=o.dialog(t(e),e);return J(new Promise(e=>{let i=h(r.$el,"hide",()=>e(s()));h(r.$el,"submit","form",t=>{t.preventDefault(),e(n(r)),i(),r.hide()})}),{dialog:r})}o.dialog=function(t,e){let i=o(z(`<div><div class="uk-modal-dialog">${t}</div></div>`),{stack:!0,role:"alertdialog",...e});return i.show(),h(i.$el,"hidden",async()=>{await Promise.resolve(),i.$destroy(!0)},{self:!0}),i},o.alert=function(e,t){return r(({i18n:t})=>`<div class="uk-modal-body">${c(e)?e:Ie(e)}</div>  <div class="uk-modal-footer uk-text-right">  <button class="uk-button uk-button-primary uk-modal-close" type="button" autofocus>${t.ok}</button>  </div>`,t)},o.confirm=function(e,t){return r(({i18n:t})=>`<form>  <div class="uk-modal-body">${c(e)?e:Ie(e)}</div>  <div class="uk-modal-footer uk-text-right">  <button class="uk-button uk-button-default uk-modal-close" type="button">${t.cancel}</button>  <button class="uk-button uk-button-primary" autofocus>${t.ok}</button>  </div>  </form>`,t,()=>Promise.reject())},o.prompt=function(e,t,i){var i=r(({i18n:t})=>`<form class="uk-form-stacked">  <div class="uk-modal-body">  <label>${c(e)?e:Ie(e)}</label>  <input class="uk-input" autofocus>  </div>  <div class="uk-modal-footer uk-text-right">  <button class="uk-button uk-button-default uk-modal-close" type="button">${t.cancel}</button>  <button class="uk-button uk-button-primary">${t.ok}</button>  </div>  </form>`,i,()=>null,()=>n.value),s=i.dialog.$el;let n=z("input",s);return n.value=t||"",h(s,"show",()=>n.select()),i},o.i18n={ok:"Ok",cancel:"Cancel"}},mixins:[V1],data:{clsPage:"uk-modal-page",selPanel:".uk-modal-dialog",selClose:'[class*="uk-modal-close"]'},events:[{name:"fullscreenchange webkitendfullscreen",capture:!0,handler(t){a(t.target,"video")&&this.isToggled()&&!document.fullscreenElement&&this.hide()}},{name:"show",self:!0,handler(){f(this.panel,"uk-margin-auto-vertical")?v(this.$el,"uk-flex"):E(this.$el,"display","block"),We(this.$el)}},{name:"hidden",self:!0,handler(){E(this.$el,"display",""),y(this.$el,"uk-flex")}}]};let pr={extends:U1,data:{targets:"> .uk-parent",toggle:"> a",content:"> ul"}},fr="uk-navbar-transparent",vr={extends:un,props:{dropbarTransparentMode:Boolean},data:{flip:!1,autoUpdate:!1,delayShow:200,clsDrop:"uk-navbar-dropdown",selNavItem:".uk-navbar-nav > li > a,a.uk-navbar-item,button.uk-navbar-item,.uk-navbar-item a,.uk-navbar-item button,.uk-navbar-toggle",dropbarTransparentMode:!1},computed:{navbarContainer:(t,e)=>e.closest(".uk-navbar-container")},watch:{items(){var t,e=f(this.$el,"uk-navbar-justify");for(t of A(".uk-navbar-nav, .uk-navbar-left, .uk-navbar-right",this.$el)){var i=e?A(".uk-navbar-nav > li > a, .uk-navbar-item, .uk-navbar-toggle",t).length:"";E(t,"flexGrow",i)}}},events:[{name:"show",el:({dropContainer:t})=>t,handler({target:t}){"remove"===this.getTransparentMode(t)&&f(this.navbarContainer,fr)&&(y(this.navbarContainer,fr),this._transparent=!0)}},{name:"hide",el:({dropContainer:t})=>t,async handler(){await x1(),!this._transparent||s&&this.dropContainer.contains(s.$el)||(v(this.navbarContainer,fr),this._transparent=null)}}],methods:{getTransparentMode(t){var e;if(this.navbarContainer)return this.dropbar&&this.isDropbarDrop(t)?this.dropbarTransparentMode:(e=this.getDropdown(t))&&f(t,"uk-dropbar")?e.inset?"behind":"remove":void 0},getDropbarOffset(t){var{top:e,height:i}=P(this.navbarContainer);return e+("behind"===this.dropbarTransparentMode?0:i+t)}}},mr={mixins:[V1],args:"mode",props:{mode:String,flip:Boolean,overlay:Boolean,swiping:Boolean},data:{mode:"slide",flip:!1,overlay:!1,clsPage:"uk-offcanvas-page",clsContainer:"uk-offcanvas-container",selPanel:".uk-offcanvas-bar",clsFlip:"uk-offcanvas-flip",clsContainerAnimation:"uk-offcanvas-container-animation",clsSidebarAnimation:"uk-offcanvas-bar-animation",clsMode:"uk-offcanvas",clsOverlay:"uk-offcanvas-overlay",selClose:".uk-offcanvas-close",container:!1,swiping:!0},computed:{clsFlip:({flip:t,clsFlip:e})=>t?e:"",clsOverlay:({overlay:t,clsOverlay:e})=>t?e:"",clsMode:({mode:t,clsMode:e})=>e+"-"+t,clsSidebarAnimation:({mode:t,clsSidebarAnimation:e})=>"none"===t||"reveal"===t?"":e,clsContainerAnimation:({mode:t,clsContainerAnimation:e})=>"push"!==t&&"reveal"!==t?"":e,transitionElement({mode:t}){return"reveal"===t?M(this.panel):this.panel}},observe:p1({filter:({swiping:t})=>t}),update:{read(){this.isToggled()&&!L(this.$el)&&this.hide()},events:["resize"]},events:[{name:"touchmove",self:!0,passive:!1,filter:({overlay:t})=>t,handler(t){t.cancelable&&t.preventDefault()}},{name:"show",self:!0,handler(){"reveal"!==this.mode||f(M(this.panel),this.clsMode)||v(Oe(this.panel,"<div>"),this.clsMode);var{body:t,scrollingElement:e}=document;v(t,this.clsContainer,this.clsFlip),E(t,"touchAction","pan-y pinch-zoom"),E(this.$el,"display","block"),E(this.panel,"maxWidth",e.clientWidth),v(this.$el,this.clsOverlay),v(this.panel,this.clsSidebarAnimation,"reveal"===this.mode?"":this.clsMode),We(t),v(t,this.clsContainerAnimation),this.clsContainerAnimation&&(wr().content+=",user-scalable=0")}},{name:"hide",self:!0,handler(){y(document.body,this.clsContainerAnimation),E(document.body,"touchAction","")}},{name:"hidden",self:!0,handler(){var t;this.clsContainerAnimation&&((t=wr()).content=t.content.replace(/,user-scalable=0$/,"")),"reveal"===this.mode&&f(M(this.panel),this.clsMode)&&De(this.panel),y(this.panel,this.clsSidebarAnimation,this.clsMode),y(this.$el,this.clsOverlay),E(this.$el,"display",""),E(this.panel,"maxWidth",""),y(document.body,this.clsContainer,this.clsFlip)}},{name:"swipeLeft swipeRight",handler(t){this.isToggled()&&W(t.type,"Left")^this.flip&&this.hide()}}]};function wr(){return z('meta[name="viewport"]',document.head)||p(document.head,'<meta name="viewport">')}var xr={mixins:[Gi],props:{selContainer:String,selContent:String,minHeight:Number},data:{selContainer:".uk-modal",selContent:".uk-modal-dialog",minHeight:150},computed:{container:({selContainer:t},e)=>e.closest(t),content:({selContent:t},e)=>e.closest(t)},observe:a1({target:({container:t,content:e})=>[t,e]}),update:{read(){return!!(this.content&&this.container&&L(this.$el))&&{max:Math.max(this.minHeight,We(this.container)-(O(this.content).height-We(this.$el)))}},write({max:t}){E(this.$el,{minHeight:this.minHeight,maxHeight:t})},events:["resize"]}},yr={data:{threshold:5,fadeDuration:.05},events:[{name:"scroll",self:!0,passive:!0,handler(){this.$emit()}},{name:zt,handler:function(i){var{target:t,button:e,defaultPrevented:s}=i;if(!(s||0<e||pe(i)||t.closest(jt)||Ft(t))){i.preventDefault();let t={passive:!1,capture:!0},{$el:r,threshold:o,$options:l}=this,a,e=h(document,At,(t=>{let i=fe(t),s=i,n=s;return function(t){n=s,s=fe(t);var t=f(r,l.id+"-vertical"),e=t?"y":"x";(a=a||Math.abs(s[e]-i[e])>o)&&(e=n[e]-s[e],r[t?"scrollTop":"scrollLeft"]+=e)}})(i),t);h(document,[Ot,_t],function(){e(),a&&setTimeout(h(r,"click",t=>t.preventDefault(),t))},{capture:!0,once:!0})}}}],observe:[c1({options:{subtree:!0,childList:!0}}),a1({target:({$el:t})=>[t,...B(t)]})],update:{read(){var t,e=[];for(t of["Width","Height"])e.push(this.$el["scroll"+t]-this.$el["client"+t]);return{overflow:e}},write({overflow:i}){for(let e=0;e<2;e++){var t,s;u(this.$el,this.$options.id+"-"+(e?"vertical":"horizontal"),i[e]&&!i[e-1]),i[e-1]||(t=e?"Top":"Left",t=i[e]?this.$el["scroll"+t]/i[e]:0,E(this.$el,{"--uk-overflow-fade-start-opacity":(s=t=>i[e]?w((this.fadeDuration-t)/this.fadeDuration):1)(t),"--uk-overflow-fade-end-opacity":s(1-t)}))}},events:["resize"]}};let kr={props:["width","height"],connected(){v(this.$el,"uk-responsive-width"),E(this.$el,"aspectRatio",this.width+"/"+this.height)}},br={props:{offset:Number},data:{offset:0},connected(){var t=this;Cr.size||h(document,"click",$r),Cr.add(t)},disconnected(){Cr.delete(this),Cr.size||ae(document,"click",$r)},methods:{async scrollTo(t){t=t&&z(t)||document.body,I(this.$el,"beforescroll",[this,t])&&(await Ii(t,{offset:this.offset}),I(this.$el,"scrolled",[this,t]))}}},Cr=new Set;function $r(t){if(!t.defaultPrevented)for(var e of Cr)e.$el.contains(t.target)&&Xt(e.$el)&&(t.preventDefault(),window.location.href!==e.$el.href&&window.history.pushState({},"",e.$el.href),e.scrollTo(Jt(e.$el)))}let Lr="uk-scrollspy-inview",Mr={args:"cls",props:{cls:String,target:String,hidden:Boolean,margin:String,repeat:Boolean,delay:Number},data:()=>({cls:"",target:!1,hidden:!0,margin:"-1px",repeat:!1,delay:0}),computed:{elements:({target:t},e)=>t?A(t,e):[e]},watch:{elements(t){this.hidden&&E(Wt(t,`:not(.${Lr})`),"opacity",0)}},connected(){this.elementData=new Map},disconnected(){for(var[t,e]of this.elementData.entries())y(t,Lr,e.cls||"");delete this.elementData},observe:h1({target:({elements:t})=>t,handler(t){var e,i,s=this.elementData;for({target:e,isIntersecting:i}of t){s.has(e)||s.set(e,{cls:It(e,"uk-scrollspy-class")||this.cls});var n=s.get(e);!this.repeat&&n.show||(n.show=i)}this.$emit()},options:({margin:t})=>({rootMargin:t}),args:{intersecting:!1}}),update:[{write(i){for(let[t,e]of this.elementData.entries())!e.show||e.inview||e.queued?!e.show&&e.inview&&!e.queued&&this.repeat&&this.toggle(t,!1):(e.queued=!0,i.promise=(i.promise||Promise.resolve()).then(async()=>{await x1(e.show?this.delay:0),this.toggle(t,!0),setTimeout(()=>{e.queued=!1,this.$emit()},300)}))}}],methods:{toggle(e,i){var s,n=null==(n=this.elementData)?void 0:n.get(e);if(n){null!=(s=n.off)&&s.call(n),E(e,"opacity",!i&&this.hidden?0:""),u(e,Lr,i),u(e,n.cls);let t;(t=n.cls.match(/\buk-animation-[\w-]+/g))&&(s=()=>y(e,t),i?n.off=S(e,"animationcancel animationend",s,{self:!0}):s()),I(e,i?"inview":"outview"),n.inview=i}}}},Br={props:{cls:String,closest:Boolean,scroll:Boolean,target:String,offset:Number},data:{cls:"uk-active",closest:!1,scroll:!1,target:'a[href]:not([role="button"])',offset:0},computed:{links:{get({target:t},e){return A(t,e).filter(Jt)},observe:()=>"*"},targets(){return this.links.map(t=>Jt(t))},elements({closest:e}){return this.links.map(t=>t.closest(e||"*"))}},watch:{links(t){this.scroll&&this.$create("scroll",t,{offset:this.offset})}},observe:[h1(),g1()],update:[{read(){var e=this.targets,t=e.length;if(!t||!L(this.$el))return!1;var i=zi(e,!0),{scrollTop:s,scrollHeight:n}=i,r=Oi(i);let o=!1;if(n-r.height<=s)o=t-1;else{var l=this.offset+O(Pi()).height+.1*r.height;for(let t=0;t<e.length&&!(0<P(e[t]).top-r.top-l);t++)o=+t}return{active:o}},write({active:e}){var i=this.elements,t=!1!==e&&!f(i[e],this.cls);this.links.forEach(t=>t.blur());for(let t=0;t<i.length;t++)u(i[t],this.cls,+t===e);t&&I(this.$el,"active",[e,i[e]])},events:["scroll","resize"]}]},Sr={mixins:[Gi,Fs],props:{position:String,top:null,bottom:null,start:null,end:null,offset:String,offsetEnd:String,overflowFlip:Boolean,animation:String,clsActive:String,clsInactive:String,clsFixed:String,clsBelow:String,selTarget:String,showOnUp:Boolean,targetOffset:Number},data:{position:"top",top:!1,bottom:!1,start:!1,end:!1,offset:0,offsetEnd:0,overflowFlip:!1,animation:"",clsActive:"uk-active",clsInactive:"",clsFixed:"uk-sticky-fixed",clsBelow:"uk-sticky-below",selTarget:"",showOnUp:!1,targetOffset:!1},computed:{target:({selTarget:t},e)=>t&&z(t,e)||e},connected(){this.start=Er(this.start||this.top),this.end=Er(this.end||this.bottom),this.placeholder=z("+ .uk-sticky-placeholder",this.$el)||z('<div class="uk-sticky-placeholder"></div>'),this.isFixed=!1,this.setActive(!1)},beforeDisconnect(){this.isFixed&&(this.hide(),y(this.target,this.clsInactive)),Tr(this.$el),Ae(this.placeholder),this.placeholder=null},observe:[u1(),g1({target:()=>document.scrollingElement}),a1({target:({$el:t})=>[t,Or(t),document.scrollingElement],handler(t){this.$emit(this._data.resized&&t.some(({target:t})=>t===Or(this.$el))?"update":"resize"),this._data.resized=!0}})],events:[{name:"load hashchange popstate",el:()=>window,filter:({targetOffset:t})=>!1!==t,async handler(){var t,e,i=document.scrollingElement;location.hash&&0!==i.scrollTop&&(await x1(),t=P(z(location.hash)),e=P(this.$el),this.isFixed)&&wt(t,e)&&(i.scrollTop=Math.ceil(t.top-e.height-D(this.targetOffset,"height",this.placeholder)-D(this.offset,"height",this.placeholder)))}}],update:[{read({height:n,width:r,margin:o,sticky:l},a){if(this.inactive=!this.matchMedia||!L(this.$el)||!this.$el.offsetHeight,!this.inactive){var h=We(window),c=Math.max(0,document.scrollingElement.scrollHeight-h);if(c){a=this.isFixed&&a.has("update"),a=(a&&(Ar(this.target),this.hide()),this.active||({height:n,width:r}=O(this.$el),o=E(this.$el,"margin")),a&&this.show(),D("100vh","height"));let t=this.position,e=(this.overflowFlip&&a<n&&(t="top"===t?"bottom":"top"),this.isFixed?this.placeholder:this.$el),[i,s]=[this.offset,this.offsetEnd].map(t=>D(t,"height",l?this.$el:e));"bottom"===t&&(n<h||this.overflowFlip)&&(i+=h-n);var h=n+i+s,h=this.overflowFlip?0:Math.max(0,h-a),d=P(e).top-new DOMMatrix(E(e,"transform")).m42,u=O(this.$el).height,g=(!1===this.start?d:Ir(this.start,this.$el,d))-i,p=!1===this.end?c:Math.min(c,Ir(this.end,this.$el,d+n,!0)-u-i+h);return l=!this.showOnUp&&g+i===d&&p===Math.min(c,Ir(!0,this.$el,0,!0)-u-i+h)&&"hidden"!==E(Or(this.$el),"overflowY"),{start:g,end:p,offset:i,overflow:h,height:n,elHeight:u,width:r,margin:o,top:Ve(e)[0],sticky:l,viewport:a,maxScrollHeight:c}}this.inactive=!0}},write({height:t,width:e,margin:i,offset:s,sticky:n}){!this.inactive&&!n&&this.isFixed||Tr(this.$el),!this.inactive&&(n&&(t=e=i=0,E(this.$el,{position:"sticky",top:s})),s=this.placeholder,E(s,{height:t,width:e,margin:i}),M(s)!==M(this.$el)||n^Ut(s)<Ut(this.$el))&&((n?Ee:Te)(this.$el,s),s.hidden=!0)},events:["resize"]},{read({scroll:t=0,dir:e="down",overflow:i,overflowScroll:s=0,start:n,end:r,elHeight:o,height:l,sticky:a,maxScrollHeight:h}){var h=Math.min(document.scrollingElement.scrollTop,h),c=this.isFixed?this.placeholder:this.$el;return{dir:t<=h?"down":"up",prevDir:e,scroll:h,prevScroll:t,below:h>P(c).top+(a?Math.min(l,o):l),offsetParentTop:P(c.offsetParent).top,overflowScroll:w(s+w(h,n,r)-w(t,n,r),0,i)}},write(t,e){var i,e=e.has("scroll"),{initTimestamp:s=0,dir:n,prevDir:r,scroll:o,prevScroll:l=0,top:a,start:h,below:c}=t;o<0||o===l&&e||this.showOnUp&&!e&&!this.isFixed||((300<(i=Date.now())-s||n!==r)&&(t.initScroll=o,t.initTimestamp=i),this.showOnUp&&!this.isFixed&&Math.abs(t.initScroll-o)<=30&&Math.abs(l-o)<=10)||(this.inactive||o<h||this.showOnUp&&(o<=h||"down"===n&&e||"up"===n&&!this.isFixed&&!c)?this.isFixed?this.animation&&c?f(this.$el,"uk-animation-leave")||Be.out(this.$el,this.animation).then(()=>this.hide(),x):this.hide():Be.inProgress(this.$el)&&o<a&&(Be.cancel(this.$el),this.hide()):this.isFixed?this.update():this.animation&&c?(this.show(),Be.in(this.$el,this.animation).catch(x)):(Ar(this.target),this.show()))},events:["resize","resizeViewport","scroll"]}],methods:{show(){this.isFixed=!0,this.update(),this.placeholder.hidden=!1},hide(){var{offset:t,sticky:e}=this._data;this.setActive(!1),y(this.$el,this.clsFixed,this.clsBelow),e?E(this.$el,"top",t):Tr(this.$el),this.placeholder.hidden=!0,this.isFixed=!1},update(){let{width:e,scroll:i=0,overflow:s,overflowScroll:n=0,start:t,end:r,offset:o,offsetParentTop:l,sticky:a,below:h}=this._data;var c=0!==t||t<i;if(!a){let t="fixed";r<i&&(o+=r-l+n-s,t="absolute"),E(this.$el,{position:t,width:e,marginTop:0},"important")}E(this.$el,"top",o-n),this.setActive(c),u(this.$el,this.clsBelow,h),v(this.$el,this.clsFixed)},setActive(t){var e=this.active;(this.active=t)?(Lt(this.target,this.clsInactive,this.clsActive),e!==t&&I(this.$el,"active")):(Lt(this.target,this.clsActive,this.clsInactive),e!==t&&(Ar(this.target),I(this.$el,"inactive")))}}};function Ir(t,e,i,s){return t?ot(t)||c(t)&&t.match(/^-?\d/)?i+D(t,"height",e,!0):P(i=!0===t?Or(e):o(t,e)).bottom-(s&&null!=i&&i.contains(e)?C(E(i,"paddingBottom"))+C(E(i,"borderBottomWidth")):0):0}function Er(t){return"true"===t||"false"!==t&&t}function Tr(t){E(t,{position:"",top:"",marginTop:"",width:""})}let zr="uk-transition-disable";async function Ar(t){f(t,zr)||(v(t,zr),await w1(),y(t,zr))}function Or(t){for(;t=M(t);)if(L(t))return t}var Pr,Rn={mixins:[Rn],args:"src",props:{src:String,icon:String,attributes:"list",strokeAnimation:Boolean},data:{strokeAnimation:!1},observe:[c1({async handler(){var t=await this.svg;t&&Dr.call(this,t)},options:{attributes:!0,attributeFilter:["id","class","style"]}})],async connected(){b(this.src,"#")&&([this.src,this.icon]=this.src.split("#",2));var t,e=await this.svg;e&&(Dr.call(this,e),this.strokeAnimation)&&(t=qs(e=e))&&E(e,"--uk-animation-stroke",t)},methods:{async getSvg(){return a(this.$el,"img")&&!this.$el.complete&&"lazy"===this.$el.loading&&await new Promise(t=>S(this.$el,"load",t)),Xn(await _r(this.src),this.icon)||Promise.reject("SVG not found.")}}};function Dr(e){var t,i=this.$el;v(e,k(i,"class"),"uk-svg");for(let t=0;t<i.style.length;t++){var s=i.style[t];E(e,s,E(i,s))}for(t in this.attributes){var[n,r]=this.attributes[t].split(":",2);k(e,n,r)}e.ariaHidden=this.$el.ariaHidden,this.$el.id||St(e,"id")}let _r=$t(async t=>{if(t){t=await fetch(t);if("image/svg+xml"===t.headers.get("Content-Type"))return t.text()}return Promise.reject()});let Nr=".uk-disabled *, .uk-disabled, [disabled]",Hr={mixins:[F1],args:"connect",props:{connect:String,toggle:String,itemNav:String,active:Number,followFocus:Boolean,swiping:Boolean},data:{connect:"~.uk-switcher",toggle:"> * > :first-child",itemNav:!1,active:0,cls:"uk-active",attrItem:"uk-switcher-item",selVertical:".uk-nav",followFocus:!1,swiping:!0},computed:{connects:{get:({connect:t},e)=>Yt(t,e),observe:({connect:t})=>t},connectChildren(){return this.connects.map(t=>B(t)).flat()},toggles:({toggle:t},e)=>A(t,e),children(t,e){return B(e).filter(e=>this.toggles.some(t=>e.contains(t)))}},watch:{connects(t){this.swiping&&E(t,"touchAction","pan-y pinch-zoom"),this.$emit()},connectChildren(){let i=Math.max(0,this.index());for(var t of this.connects)B(t).forEach((t,e)=>u(t,this.cls,e===i));this.$emit()},toggles(){this.$emit();var t=this.index();this.show(~t?t:this.next(this.active))}},connected(){this.$el.role="tablist"},observe:[d1({targets:({connectChildren:t})=>t}),p1({target:({connects:t})=>t,filter:({swiping:t})=>t})],events:[{name:"click keydown",delegate:({toggle:t})=>t,handler(t){g(t.current,Nr)||"click"!==t.type&&t.keyCode!==N.SPACE||(I1(t),this.show(t.current))}},{name:"keydown",delegate:({toggle:t})=>t,handler(t){var{current:e,keyCode:i}=t,s=g(this.$el,this.selVertical),i=i===N.HOME?0:i===N.END?"last":i===N.LEFT&&!s||i===N.UP&&s?"previous":i===N.RIGHT&&!s||i===N.DOWN&&s?"next":-1;~i&&(t.preventDefault(),(s=this.toggles[this.next(i,this.toggles.indexOf(e))]).focus(),this.followFocus)&&this.show(s)}},{name:"click",el:({$el:t,connects:e,itemNav:i})=>e.concat(i?Yt(i,t):[]),delegate:({attrItem:t})=>`[${t}],[data-${t}]`,handler(t){t.target.closest("a,button")&&(I1(t),this.show(It(t.current,this.attrItem)))}},{name:"swipeRight swipeLeft",filter:({swiping:t})=>t,el:({connects:t})=>t,handler({type:t}){this.show(W(t,"Left")?"next":"previous")}}],update(){var t,e;for(t of this.connects)a(t,"ul")&&(t.role="presentation");for(e in k(B(this.$el),"role","presentation"),this.toggles){var i=this.toggles[e],s=null==(s=this.connects[0])?void 0:s.children[e];i.role="tab",s&&(i.id=Ss(this,i),s.id=Ss(this,s),i.ariaControls=s.id,k(s,{role:"tabpanel","aria-labelledby":i.id}))}k(this.$el,"aria-orientation",g(this.$el,this.selVertical)?"vertical":null)},methods:{index(){return R(this.children,t=>f(t,this.cls))},next(e,t=this.index()){if(ot(e))for(let t=0;t<this.toggles.length;t++){var i=Ct(t+ +e,this.toggles);if(!g(this.toggles[i],Nr))return i}var s=this.toggles.filter(t=>!g(t,Nr));return Ct(s[Ct(e,s,s.indexOf(this.toggles[t]))],this.toggles)},show(t){var e=this.index();let i=this.next(t),s=(this.children.forEach((t,e)=>{u(t,this.cls,i===e),k(this.toggles[e],{"aria-selected":i===e,tabindex:i===e?null:-1})}),0<=e&&e!==i);this.connects.forEach(async({children:t})=>{var e=X(t).filter((t,e)=>e!==i&&f(t,this.cls));await this.toggleElement(e,!1,s)&&await this.toggleElement(t[i],!0,s)})}}},Zr={mixins:[Gi],extends:Hr,props:{media:Boolean},data:{media:960,attrItem:"uk-tab-item",selVertical:".uk-tab-left,.uk-tab-right"},connected(){var t=f(this.$el,"uk-tab-left")?"uk-tab-left":!!f(this.$el,"uk-tab-right")&&"uk-tab-right";t&&this.$create("toggle",this.$el,{cls:t,mode:"media",media:this.media})}},jr={mixins:[Fs,F1],args:"target",props:{href:String,target:null,mode:"list",queued:Boolean},data:{href:!1,target:!1,mode:"click",queued:!0},computed:{target:{get:({target:t},e)=>(t=Yt(t||e.hash,e)).length?t:[e],observe:({target:t})=>t}},connected(){b(this.mode,"media")||(Vt(this.$el)||(this.$el.tabIndex=0),!this.cls&&a(this.$el,"a")&&(this.$el.role="button"))},observe:d1({targets:({target:t})=>t}),events:[{name:zt,filter:({mode:t})=>b(t,"hover"),handler(t){this._preventClick=null,!pe(t)||nt(this._showState)||this.$el.disabled||(I(this.$el,"focus"),S(document,zt,()=>I(this.$el,"blur"),!0,t=>!this.$el.contains(t.target)),b(this.mode,"click")&&(this._preventClick=!0))}},{name:Pt+` ${Dt} focus blur`,filter:({mode:t})=>b(t,"hover"),handler(t){var e,i;pe(t)||this.$el.disabled||"loading"===document.readyState||(e=b([Pt,"focus"],t.type),i=this.isToggled(this.target),!e&&(!nt(this._showState)||t.type===Dt&&g(this.$el,":focus")||"blur"===t.type&&g(this.$el,":hover"))?i===this._showState&&(this._showState=null):e&&nt(this._showState)&&i!==this._showState||(this._showState=e?i:null,this.toggle("toggle"+(e?"show":"hide"))))}},{name:"keydown",filter:({$el:t,mode:e})=>b(e,"click")&&!a(t,"input"),handler(t){t.keyCode!==N.SPACE&&t.keyCode!==N.ENTER||(t.preventDefault(),this.$el.click())}},{name:"click",filter:({mode:e})=>["click","hover"].some(t=>b(e,t)),handler(t){var e,i;t.defaultPrevented||(i=Xt(e=t.target.closest("a[href]"))&&(!e.hash||g(this.target,e.hash)),(this._preventClick||i||e&&!this.isToggled(this.target))&&t.preventDefault(),this._preventClick)||!b(this.mode,"click")||e&&!i&&!t.defaultPrevented||this.toggle()}},{name:"mediachange",filter:({mode:t})=>b(t,"media"),el:({target:t})=>t,handler(t,e){e.matches^this.isToggled(this.target)&&this.toggle()}}],methods:{async toggle(t){if(I(this.target,t||"toggle",[this])){if(Bt(this.$el,"aria-expanded")&&(this.$el.ariaExpanded=!this.isToggled(this.target)),!this.queued)return this.toggleElement(this.target);var e=this.target.filter(t=>f(t,this.clsLeave));if(e.length)for(var i of this.target){var s=b(e,i);this.toggleElement(i,s,s)}else{let e=this.target.filter(this.isToggled);await this.toggleElement(e,!1)&&await this.toggleElement(this.target.filter(t=>!b(e,t)),!0)}}}}},Fr=Object.freeze({__proto__:null,Accordion:U1,AccordionIcon:Wn,Alert:cn,Close:rr,Cover:Ws,Drop:Nn,DropParentIcon:Wn,Dropdown:Nn,Dropnav:un,FormCustom:dn,Grid:As,HeightMatch:t,HeightPlaceholder:zs,HeightViewport:j1,Icon:Kn,Img:A1,Inverse:dr,Leader:ur,Margin:Tt,Marker:or,Modal:gr,Nav:pr,NavParentIcon:Qn,Navbar:vr,NavbarParentIcon:Wn,NavbarToggleIcon:nr,Offcanvas:mr,OverflowAuto:xr,OverflowFade:yr,OverlayIcon:Wn,PaginationNext:ar,PaginationPrevious:ir,Responsive:kr,Scroll:br,Scrollspy:Mr,ScrollspyNav:Br,SearchIcon:tr,SlidenavNext:sr,SlidenavPrevious:sr,Spinner:er,Sticky:Sr,Svg:Rn,Switcher:Hr,Tab:Zr,Toggle:jr,Totop:lr,Video:xn});return pt(Fr,(t,e)=>ms.component(e,t)),Pr=ms,Et&&window.MutationObserver&&(document.body?requestAnimationFrame(()=>In(Pr)):new MutationObserver((t,e)=>{document.body&&(In(Pr),e.disconnect())}).observe(document.documentElement,{childList:!0})),pt(gn,(t,e)=>ms.component(e,t)),ms}),((t,e)=>{"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define("uikiticons",e):(t="undefined"!=typeof globalThis?globalThis:t||self).UIkitIcons=e()})(this,function(){var e={"500px":'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M9.624,11.866c-0.141,0.132,0.479,0.658,0.662,0.418c0.051-0.046,0.607-0.61,0.662-0.664c0,0,0.738,0.719,0.814,0.719 c0.1,0,0.207-0.055,0.322-0.17c0.27-0.269,0.135-0.416,0.066-0.495l-0.631-0.616l0.658-0.668c0.146-0.156,0.021-0.314-0.1-0.449 c-0.182-0.18-0.359-0.226-0.471-0.125l-0.656,0.654l-0.654-0.654c-0.033-0.034-0.08-0.045-0.124-0.045 c-0.079,0-0.191,0.068-0.307,0.181c-0.202,0.202-0.247,0.351-0.133,0.462l0.665,0.665L9.624,11.866z"/><path d="M11.066,2.884c-1.061,0-2.185,0.248-3.011,0.604c-0.087,0.034-0.141,0.106-0.15,0.205C7.893,3.784,7.919,3.909,7.982,4.066 c0.05,0.136,0.187,0.474,0.452,0.372c0.844-0.326,1.779-0.507,2.633-0.507c0.963,0,1.9,0.191,2.781,0.564 c0.695,0.292,1.357,0.719,2.078,1.34c0.051,0.044,0.105,0.068,0.164,0.068c0.143,0,0.273-0.137,0.389-0.271 c0.191-0.214,0.324-0.395,0.135-0.575c-0.686-0.654-1.436-1.138-2.363-1.533C13.24,3.097,12.168,2.884,11.066,2.884z"/><path d="M16.43,15.747c-0.092-0.028-0.242,0.05-0.309,0.119l0,0c-0.652,0.652-1.42,1.169-2.268,1.521 c-0.877,0.371-1.814,0.551-2.779,0.551c-0.961,0-1.896-0.189-2.775-0.564c-0.848-0.36-1.612-0.879-2.268-1.53 c-0.682-0.688-1.196-1.455-1.529-2.268c-0.325-0.799-0.471-1.643-0.471-1.643c-0.045-0.24-0.258-0.249-0.567-0.203 c-0.128,0.021-0.519,0.079-0.483,0.36v0.01c0.105,0.644,0.289,1.284,0.545,1.895c0.417,0.969,1.002,1.849,1.756,2.604 c0.757,0.754,1.636,1.34,2.604,1.757C8.901,18.785,9.97,19,11.088,19c1.104,0,2.186-0.215,3.188-0.645 c1.838-0.896,2.604-1.757,2.604-1.757c0.182-0.204,0.227-0.317-0.1-0.643C16.779,15.956,16.525,15.774,16.43,15.747z"/><path d="M5.633,13.287c0.293,0.71,0.723,1.341,1.262,1.882c0.54,0.54,1.172,0.971,1.882,1.264c0.731,0.303,1.509,0.461,2.298,0.461 c0.801,0,1.578-0.158,2.297-0.461c0.711-0.293,1.344-0.724,1.883-1.264c0.543-0.541,0.971-1.172,1.264-1.882 c0.314-0.721,0.463-1.5,0.463-2.298c0-0.79-0.148-1.569-0.463-2.289c-0.293-0.699-0.721-1.329-1.264-1.881 c-0.539-0.541-1.172-0.959-1.867-1.263c-0.721-0.303-1.5-0.461-2.299-0.461c-0.802,0-1.613,0.159-2.322,0.461 c-0.577,0.25-1.544,0.867-2.119,1.454v0.012V2.108h8.16C15.1,2.104,15.1,1.69,15.1,1.552C15.1,1.417,15.1,1,14.809,1H5.915 C5.676,1,5.527,1.192,5.527,1.384v6.84c0,0.214,0.273,0.372,0.529,0.428c0.5,0.105,0.614-0.056,0.737-0.224l0,0 c0.18-0.273,0.776-0.884,0.787-0.894c0.901-0.905,2.117-1.408,3.416-1.408c1.285,0,2.5,0.501,3.412,1.408 c0.914,0.914,1.408,2.122,1.408,3.405c0,1.288-0.508,2.496-1.408,3.405c-0.9,0.896-2.152,1.406-3.438,1.406 c-0.877,0-1.711-0.229-2.433-0.671v-4.158c0-0.553,0.237-1.151,0.643-1.614c0.462-0.519,1.094-0.799,1.782-0.799 c0.664,0,1.293,0.253,1.758,0.715c0.459,0.459,0.709,1.071,0.709,1.723c0,1.385-1.094,2.468-2.488,2.468 c-0.273,0-0.769-0.121-0.781-0.125c-0.281-0.087-0.405,0.306-0.438,0.436c-0.159,0.496,0.079,0.585,0.123,0.607 c0.452,0.137,0.743,0.157,1.129,0.157c1.973,0,3.572-1.6,3.572-3.57c0-1.964-1.6-3.552-3.572-3.552c-0.97,0-1.872,0.36-2.546,1.038 c-0.656,0.631-1.027,1.487-1.027,2.322v3.438v-0.011c-0.372-0.42-0.732-1.041-0.981-1.682c-0.102-0.248-0.315-0.202-0.607-0.113 c-0.135,0.035-0.519,0.157-0.44,0.439C5.372,12.799,5.577,13.164,5.633,13.287z"/></svg>',album:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="10" height="1" x="5" y="2"/><rect width="14" height="1" x="3" y="4"/><rect width="17" height="11" fill="none" stroke="#000" x="1.5" y="6.5"/></svg>',android:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="m14.88,6.77l1.66-2.87c.09-.16.04-.37-.12-.46-.16-.09-.37-.04-.46.12l-1.68,2.91c-1.28-.59-2.73-.91-4.28-.91s-3,.33-4.28.91l-1.68-2.91c-.09-.16-.3-.22-.46-.12-.16.09-.22.3-.12.46l1.66,2.87C2.26,8.32.32,11.22,0,14.61h20c-.32-3.39-2.26-6.29-5.12-7.84h0Zm-9.47,5.03c-.46,0-.84-.38-.84-.84s.38-.84.84-.84.84.38.84.84c0,.46-.37.84-.84.84Zm9.18,0c-.46,0-.84-.38-.84-.84s.38-.84.84-.84.84.38.84.84c0,.46-.37.84-.84.84Z"/></svg>',"android-robot":'<svg width="20" height="20" viewBox="0 0 20 20"><path d="m17.61,7.96v4.64c-.06,1.48-2.17,1.48-2.23,0v-4.64c.06-1.48,2.17-1.48,2.23,0Z"/><path d="m4.62,7.96v4.64c-.06,1.48-2.17,1.48-2.23,0v-4.64c.06-1.48,2.17-1.48,2.23,0Z"/><path d="m12.78,2.85c-.11-.07-.23-.13-.34-.19.13-.23.65-1.17.79-1.42.07-.12-.05-.27-.18-.23-.04.01-.07.04-.09.08l-.79,1.43c-1.32-.6-2.98-.6-4.3,0-.13-.23-.65-1.18-.79-1.43-.04-.07-.14-.1-.21-.06-.08.04-.1.14-.06.21,0,0,.79,1.42.79,1.42-1.49.77-2.53,2.28-2.53,3.99-.02,0,9.93,0,9.93,0,.01-1.55-.87-2.98-2.19-3.8Zm-5.07,1.98c-.23,0-.41-.19-.41-.41.01-.27.21-.41.41-.41s.4.14.42.41c0,.22-.18.42-.41.41Zm4.58,0c-.23,0-.42-.19-.41-.41.01-.28.21-.41.41-.41s.4.14.41.41c0,.23-.19.41-.41.41Z"/><path d="m14.97,7.03v7.2c0,.66-.54,1.2-1.2,1.2h-.8v2.46c-.06,1.48-2.16,1.48-2.23,0,0,0,0-2.46,0-2.46h-1.48v2.46c0,.61-.5,1.11-1.11,1.11s-1.11-.5-1.11-1.11v-2.46h-.8c-.66,0-1.2-.54-1.2-1.2,0,0,0-7.2,0-7.2h9.93Z"/></svg>',apple:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="m17.23,6.93c-.1.08-1.95,1.12-1.95,3.43,0,2.67,2.35,3.62,2.42,3.64-.01.06-.37,1.29-1.24,2.55-.77,1.11-1.58,2.22-2.8,2.22s-1.54-.71-2.95-.71-1.87.73-2.99.73-1.9-1.03-2.8-2.29c-1.04-1.48-1.88-3.78-1.88-5.96,0-3.5,2.28-5.36,4.51-5.36,1.19,0,2.18.78,2.93.78s1.82-.83,3.17-.83c.51,0,2.36.05,3.57,1.79h0Zm-4.21-3.27c.56-.66.96-1.59.96-2.51,0-.13-.01-.26-.03-.36-.91.03-1.99.61-2.65,1.36-.51.58-.99,1.5-.99,2.44,0,.14.02.28.03.33.06.01.15.02.24.02.82,0,1.85-.55,2.44-1.28h0Z"/></svg>',"arrow-down":'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="10" y1="3.48" x2="10" y2="15.48"/><polyline fill="none" stroke="#000" points="6.16 12 10 15.84 13.84 12"/></svg>',"arrow-down-arrow-up":'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="7" y1="3.38" x2="7" y2="15.38"/><polyline fill="none" stroke="#000" points="10.18 12.75 7 15.93 3.83 12.76"/><line fill="none" stroke="#000" x1="13" y1="16.62" x2="13" y2="4.62"/><polyline fill="none" stroke="#000" points="9.82 7.25 13 4.07 16.17 7.24"/></svg>',"arrow-left":'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="16.53" y1="10" x2="4.53" y2="10"/><polyline fill="none" stroke="#000" points="8 6.16 4.18 10 8 13.84"/></svg>',"arrow-right":'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="3.47" y1="10" x2="15.47" y2="10"/><polyline fill="none" stroke="#000" points="11.98 13.84 15.82 10 11.98 6.16"/></svg>',"arrow-up":'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="10" y1="16.53" x2="10" y2="4.53"/><polyline fill="none" stroke="#000" points="13.84 8 10 4.17 6.16 8"/></svg>',"arrow-up-right":'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="4.5" y1="15.53" x2="16.5" y2="3.53"/><polyline fill="none" stroke="#000" points="16.5 9 16.5 3.5 11 3.5"/></svg>',bag:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" d="M7.5,7.5V4A2.48,2.48,0,0,1,10,1.5,2.54,2.54,0,0,1,12.5,4V7.5"/><polygon fill="none" stroke="#000" points="16.5 7.5 3.5 7.5 2.5 18.5 17.5 18.5 16.5 7.5"/></svg>',ban:'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9"/><line fill="none" stroke="#000" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5"/></svg>',behance:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M9.5,10.6c-0.4-0.5-0.9-0.9-1.6-1.1c1.7-1,2.2-3.2,0.7-4.7C7.8,4,6.3,4,5.2,4C3.5,4,1.7,4,0,4v12c1.7,0,3.4,0,5.2,0 c1,0,2.1,0,3.1-0.5C10.2,14.6,10.5,12.3,9.5,10.6L9.5,10.6z M5.6,6.1c1.8,0,1.8,2.7-0.1,2.7c-1,0-2,0-2.9,0V6.1H5.6z M2.6,13.8v-3.1 c1.1,0,2.1,0,3.2,0c2.1,0,2.1,3.2,0.1,3.2L2.6,13.8z"/><path d="M19.9,10.9C19.7,9.2,18.7,7.6,17,7c-4.2-1.3-7.3,3.4-5.3,7.1c0.9,1.7,2.8,2.3,4.7,2.1c1.7-0.2,2.9-1.3,3.4-2.9h-2.2 c-0.4,1.3-2.4,1.5-3.5,0.6c-0.4-0.4-0.6-1.1-0.6-1.7H20C20,11.7,19.9,10.9,19.9,10.9z M13.5,10.6c0-1.6,2.3-2.7,3.5-1.4 c0.4,0.4,0.5,0.9,0.6,1.4H13.5L13.5,10.6z"/><rect width="5" height="1.4" x="13" y="4"/></svg>',bell:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.1" d="M17,15.5 L3,15.5 C2.99,14.61 3.79,13.34 4.1,12.51 C4.58,11.3 4.72,10.35 5.19,7.01 C5.54,4.53 5.89,3.2 7.28,2.16 C8.13,1.56 9.37,1.5 9.81,1.5 L9.96,1.5 C9.96,1.5 11.62,1.41 12.67,2.17 C14.08,3.2 14.42,4.54 14.77,7.02 C15.26,10.35 15.4,11.31 15.87,12.52 C16.2,13.34 17.01,14.61 17,15.5 L17,15.5 Z"/><path fill="none" stroke="#000" d="M12.39,16 C12.39,17.37 11.35,18.43 9.91,18.43 C8.48,18.43 7.42,17.37 7.42,16"/></svg>',bluesky:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M9.993,9.149c-.772-1.495-2.865-4.288-4.813-5.662-1.866-1.317-2.58-1.09-3.043-.878-.54.246-.637,1.075-.637,1.563s.265,4.003.444,4.587c.579,1.939,2.628,2.595,4.519,2.382.096-.014.193-.029.294-.039-.096.014-.198.029-.294.039-2.768.41-5.233,1.418-2.001,5.011,3.55,3.675,4.866-.786,5.541-3.053.675,2.262,1.452,6.564,5.474,3.053,3.024-3.053.83-4.601-1.939-5.011-.096-.01-.198-.024-.294-.039.101.014.198.024.294.039,1.89.212,3.945-.444,4.519-2.382.174-.588.444-4.099.444-4.587s-.096-1.317-.637-1.563c-.468-.212-1.177-.439-3.043.878-1.963,1.379-4.056,4.167-4.827,5.662h0Z"/></svg>',bold:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M5,15.3 C5.66,15.3 5.9,15 5.9,14.53 L5.9,5.5 C5.9,4.92 5.56,4.7 5,4.7 L5,4 L8.95,4 C12.6,4 13.7,5.37 13.7,6.9 C13.7,7.87 13.14,9.17 10.86,9.59 L10.86,9.7 C13.25,9.86 14.29,11.28 14.3,12.54 C14.3,14.47 12.94,16 9,16 L5,16 L5,15.3 Z M9,9.3 C11.19,9.3 11.8,8.5 11.85,7 C11.85,5.65 11.3,4.8 9,4.8 L7.67,4.8 L7.67,9.3 L9,9.3 Z M9.185,15.22 C11.97,15 12.39,14 12.4,12.58 C12.4,11.15 11.39,10 9,10 L7.67,10 L7.67,15 L9.18,15 Z"/></svg>',bolt:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M4.74,20 L7.73,12 L3,12 L15.43,1 L12.32,9 L17.02,9 L4.74,20 L4.74,20 L4.74,20 Z M9.18,11 L7.1,16.39 L14.47,10 L10.86,10 L12.99,4.67 L5.61,11 L9.18,11 L9.18,11 L9.18,11 Z"/></svg>',bookmark:'<svg width="20" height="20" viewBox="0 0 20 20"><polygon fill="none" stroke="#000" points="5.5 1.5 15.5 1.5 15.5 17.5 10.5 12.5 5.5 17.5"/></svg>',calendar:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M 2,3 2,17 18,17 18,3 2,3 Z M 17,16 3,16 3,8 17,8 17,16 Z M 17,7 3,7 3,4 17,4 17,7 Z"/><rect width="1" height="3" x="6" y="2"/><rect width="1" height="3" x="13" y="2"/></svg>',camera:'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10.8" r="3.8"/><path fill="none" stroke="#000" d="M1,4.5 C0.7,4.5 0.5,4.7 0.5,5 L0.5,17 C0.5,17.3 0.7,17.5 1,17.5 L19,17.5 C19.3,17.5 19.5,17.3 19.5,17 L19.5,5 C19.5,4.7 19.3,4.5 19,4.5 L13.5,4.5 L13.5,2.9 C13.5,2.6 13.3,2.5 13,2.5 L7,2.5 C6.7,2.5 6.5,2.6 6.5,2.9 L6.5,4.5 L1,4.5 L1,4.5 Z"/></svg>',cart:'<svg width="20" height="20" viewBox="0 0 20 20"><circle cx="7.3" cy="17.3" r="1.4"/><circle cx="13.3" cy="17.3" r="1.4"/><polyline fill="none" stroke="#000" points="0 2 3.2 4 5.3 12.5 16 12.5 18 6.5 8 6.5"/></svg>',check:'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" stroke-width="1.1" points="4,10 8,15 17,4"/></svg>',"chevron-double-left":'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" stroke-width="1.03" points="10 14 6 10 10 6"/><polyline fill="none" stroke="#000" stroke-width="1.03" points="14 14 10 10 14 6"/></svg>',"chevron-double-right":'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" stroke-width="1.03" points="10 6 14 10 10 14"/><polyline fill="none" stroke="#000" stroke-width="1.03" points="6 6 10 10 6 14"/></svg>',"chevron-down":'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" stroke-width="1.03" points="16 7 10 13 4 7"/></svg>',"chevron-left":'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" stroke-width="1.03" points="13 16 7 10 13 4"/></svg>',"chevron-right":'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" stroke-width="1.03" points="7 4 13 10 7 16"/></svg>',"chevron-up":'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" stroke-width="1.03" points="4 13 10 7 16 13"/></svg>',clock:'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9"/><rect width="1" height="7" x="9" y="4"/><path fill="none" stroke="#000" stroke-width="1.1" d="M13.018,14.197 L9.445,10.625"/></svg>',close:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.06" d="M16,16 L4,4"/><path fill="none" stroke="#000" stroke-width="1.06" d="M16,4 L4,16"/></svg>',"close-circle":'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9"/><line fill="none" stroke="#000" x1="13.18" y1="6.82" x2="6.82" y2="13.18"/><line fill="none" stroke="#000" x1="6.82" y1="6.82" x2="13.18" y2="13.18"/></svg>',"cloud-download":'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.1" d="M6.5,13.28h-2.75c-1.79,0-3.25-1.44-3.25-3.22,0-1.63,1.22-2.98,2.8-3.19.08-2.89,2.45-5.2,5.38-5.2,2.51,0,4.63,1.71,5.21,4.02.5-.22,1.04-.34,1.61-.34,2.21,0,4,1.77,4,3.96s-1.79,3.96-4,3.96h-3"/><path fill="none" stroke="#000" d="M9.5,18.17v-10"/><polyline fill="none" stroke="#000" points="12.67 15.66 9.5 18.83 6.33 15.66"/></svg>',"cloud-upload":'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.1" d="M6.5,13.77h-2.75c-1.79,0-3.25-1.44-3.25-3.22,0-1.63,1.22-2.98,2.81-3.19.07-2.89,2.44-5.2,5.37-5.2,2.51,0,4.63,1.71,5.21,4.02.5-.22,1.04-.34,1.61-.34,2.21,0,4,1.77,4,3.96s-1.79,3.96-4,3.96h-3"/><path fill="none" stroke="#000" d="M9.51,9.34v9"/><polyline fill="none" stroke="#000" points="6.34 11.85 9.51 8.68 12.68 11.85"/></svg>',code:'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" stroke-width="1.01" points="13,4 19,10 13,16"/><polyline fill="none" stroke="#000" stroke-width="1.01" points="7,4 1,10 7,16"/></svg>',cog:'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" cx="9.997" cy="10" r="3.31"/><path fill="none" stroke="#000" d="M18.488,12.285 L16.205,16.237 C15.322,15.496 14.185,15.281 13.303,15.791 C12.428,16.289 12.047,17.373 12.246,18.5 L7.735,18.5 C7.938,17.374 7.553,16.299 6.684,15.791 C5.801,15.27 4.655,15.492 3.773,16.237 L1.5,12.285 C2.573,11.871 3.317,10.999 3.317,9.991 C3.305,8.98 2.573,8.121 1.5,7.716 L3.765,3.784 C4.645,4.516 5.794,4.738 6.687,4.232 C7.555,3.722 7.939,2.637 7.735,1.5 L12.263,1.5 C12.072,2.637 12.441,3.71 13.314,4.22 C14.206,4.73 15.343,4.516 16.225,3.794 L18.487,7.714 C17.404,8.117 16.661,8.988 16.67,10.009 C16.672,11.018 17.415,11.88 18.488,12.285 L18.488,12.285 Z"/></svg>',comment:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M6,18.71 L6,14 L1,14 L1,1 L19,1 L19,14 L10.71,14 L6,18.71 L6,18.71 Z M2,13 L7,13 L7,16.29 L10.29,13 L18,13 L18,2 L2,2 L2,13 L2,13 Z"/></svg>',commenting:'<svg width="20" height="20" viewBox="0 0 20 20"><polygon fill="none" stroke="#000" points="1.5,1.5 18.5,1.5 18.5,13.5 10.5,13.5 6.5,17.5 6.5,13.5 1.5,13.5"/><circle cx="10" cy="8" r="1"/><circle cx="6" cy="8" r="1"/><circle cx="14" cy="8" r="1"/></svg>',comments:'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" points="2 0.5 19.5 0.5 19.5 13"/><path d="M5,19.71 L5,15 L0,15 L0,2 L18,2 L18,15 L9.71,15 L5,19.71 L5,19.71 L5,19.71 Z M1,14 L6,14 L6,17.29 L9.29,14 L17,14 L17,3 L1,3 L1,14 L1,14 L1,14 Z"/></svg>',copy:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="12" height="16" fill="none" stroke="#000" x="3.5" y="2.5"/><polyline fill="none" stroke="#000" points="5 0.5 17.5 0.5 17.5 17"/></svg>',"credit-card":'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="17" height="12" fill="none" stroke="#000" x="1.5" y="4.5"/><rect width="18" height="3" x="1" y="7"/></svg>',crosshairs:'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" cx="10" cy="10" r="7.5"/><line fill="none" stroke="#000" x1="10" x2="10" y2="8"/><line fill="none" stroke="#000" x1="10" y1="12" x2="10" y2="20"/><line fill="none" stroke="#000" y1="10" x2="8" y2="10"/><line fill="none" stroke="#000" x1="12" y1="10" x2="20" y2="10"/></svg>',database:'<svg width="20" height="20" viewBox="0 0 20 20"><ellipse fill="none" stroke="#000" cx="10" cy="4.64" rx="7.5" ry="3.14"/><path fill="none" stroke="#000" d="M17.5,8.11 C17.5,9.85 14.14,11.25 10,11.25 C5.86,11.25 2.5,9.84 2.5,8.11"/><path fill="none" stroke="#000" d="M17.5,11.25 C17.5,12.99 14.14,14.39 10,14.39 C5.86,14.39 2.5,12.98 2.5,11.25"/><path fill="none" stroke="#000" d="M17.49,4.64 L17.5,14.36 C17.5,16.1 14.14,17.5 10,17.5 C5.86,17.5 2.5,16.09 2.5,14.36 L2.5,4.64"/></svg>',desktop:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="1" height="2" x="8" y="15"/><rect width="1" height="2" x="11" y="15"/><rect width="10" height="1" x="5" y="16"/><rect width="17" height="11" fill="none" stroke="#000" x="1.5" y="3.5"/></svg>',discord:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M16.074,4.361a14.243,14.243,0,0,0-3.61-1.134,10.61,10.61,0,0,0-.463.96,13.219,13.219,0,0,0-4,0,10.138,10.138,0,0,0-.468-.96A14.206,14.206,0,0,0,3.919,4.364,15.146,15.146,0,0,0,1.324,14.5a14.435,14.435,0,0,0,4.428,2.269A10.982,10.982,0,0,0,6.7,15.21a9.294,9.294,0,0,1-1.494-.727c.125-.093.248-.19.366-.289a10.212,10.212,0,0,0,8.854,0c.119.1.242.2.366.289a9.274,9.274,0,0,1-1.5.728,10.8,10.8,0,0,0,.948,1.562,14.419,14.419,0,0,0,4.431-2.27A15.128,15.128,0,0,0,16.074,4.361Zm-8.981,8.1a1.7,1.7,0,0,1-1.573-1.79A1.689,1.689,0,0,1,7.093,8.881a1.679,1.679,0,0,1,1.573,1.791A1.687,1.687,0,0,1,7.093,12.462Zm5.814,0a1.7,1.7,0,0,1-1.573-1.79,1.689,1.689,0,0,1,1.573-1.791,1.679,1.679,0,0,1,1.573,1.791A1.688,1.688,0,0,1,12.907,12.462Z"/></svg>',download:'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="10" y1="2.09" x2="10" y2="14.09"/><polyline fill="none" stroke="#000" points="6.16 10.62 10 14.46 13.84 10.62"/><line stroke="#000" x1="3.5" y1="17.5" x2="16.5" y2="17.5"/></svg>',dribbble:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.4" d="M1.3,8.9c0,0,5,0.1,8.6-1c1.4-0.4,2.6-0.9,4-1.9 c1.4-1.1,2.5-2.5,2.5-2.5"/><path fill="none" stroke="#000" stroke-width="1.4" d="M3.9,16.6c0,0,1.7-2.8,3.5-4.2 c1.8-1.3,4-2,5.7-2.2C16,10,19,10.6,19,10.6"/><path fill="none" stroke="#000" stroke-width="1.4" d="M6.9,1.6c0,0,3.3,4.6,4.2,6.8 c0.4,0.9,1.3,3.1,1.9,5.2c0.6,2,0.9,4.4,0.9,4.4"/><circle fill="none" stroke="#000" stroke-width="1.4" cx="10" cy="10" r="9"/></svg>',etsy:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M8,4.26C8,4.07,8,4,8.31,4h4.46c.79,0,1.22.67,1.53,1.91l.25,1h.76c.14-2.82.26-4,.26-4S13.65,3,12.52,3H6.81L3.75,2.92v.84l1,.2c.73.11.9.27,1,1,0,0,.06,2,.06,5.17s-.06,5.14-.06,5.14c0,.59-.23.81-1,.94l-1,.2v.84l3.06-.1h5.11c1.15,0,3.82.1,3.82.1,0-.7.45-3.88.51-4.22h-.73l-.76,1.69a2.25,2.25,0,0,1-2.45,1.47H9.4c-1,0-1.44-.4-1.44-1.24V10.44s2.16,0,2.86.06c.55,0,.85.19,1.06,1l.23,1H13L12.9,9.94,13,7.41h-.85l-.28,1.13c-.16.74-.28.84-1,1-1,.1-2.89.09-2.89.09Z"/></svg>',expand:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.1" d="M2.48,17.52l6.52-6.52"/><polyline fill="none" stroke="#000" points="6.97 17.52 2.48 17.52 2.48 13.03"/><path fill="none" stroke="#000" stroke-width="1.1" d="M17.52,2.48l-6.52,6.52"/><polyline fill="none" stroke="#000" points="13.03 2.48 17.52 2.48 17.52 6.97"/></svg>',eye:'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" cx="10" cy="10" r="3.45"/><path fill="none" stroke="#000" d="m19.5,10c-2.4,3.66-5.26,7-9.5,7h0,0,0c-4.24,0-7.1-3.34-9.49-7C2.89,6.34,5.75,3,9.99,3h0,0,0c4.25,0,7.11,3.34,9.5,7Z"/></svg>',"eye-slash":'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" d="m7.56,7.56c.62-.62,1.49-1.01,2.44-1.01,1.91,0,3.45,1.54,3.45,3.45,0,.95-.39,1.82-1.01,2.44"/><path fill="none" stroke="#000" d="m19.5,10c-2.4,3.66-5.26,7-9.5,7h0,0,0c-4.24,0-7.1-3.34-9.49-7C2.89,6.34,5.75,3,9.99,3h0,0,0c4.25,0,7.11,3.34,9.5,7Z"/><line fill="none" stroke="#000" x1="2.5" y1="2.5" x2="17.5" y2="17.5"/></svg>',facebook:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M11,10h2.6l0.4-3H11V5.3c0-0.9,0.2-1.5,1.5-1.5H14V1.1c-0.3,0-1-0.1-2.1-0.1C9.6,1,8,2.4,8,5v2H5.5v3H8v8h3V10z"/></svg>',file:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="13" height="17" fill="none" stroke="#000" x="3.5" y="1.5"/></svg>',"file-edit":'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" d="M18.65,1.68 C18.41,1.45 18.109,1.33 17.81,1.33 C17.499,1.33 17.209,1.45 16.98,1.68 L8.92,9.76 L8,12.33 L10.55,11.41 L18.651,3.34 C19.12,2.87 19.12,2.15 18.65,1.68 L18.65,1.68 L18.65,1.68 Z"/><polyline fill="none" stroke="#000" points="16.5 8.482 16.5 18.5 3.5 18.5 3.5 1.5 14.211 1.5"/></svg>',"file-pdf":'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="13" height="17" fill="none" stroke="#000" x="3.5" y="1.5"/><path d="M14.65 11.67c-.48.3-1.37-.19-1.79-.37a4.65 4.65 0 0 1 1.49.06c.35.1.36.28.3.31zm-6.3.06l.43-.79a14.7 14.7 0 0 0 .75-1.64 5.48 5.48 0 0 0 1.25 1.55l.2.15a16.36 16.36 0 0 0-2.63.73zM9.5 5.32c.2 0 .32.5.32.97a1.99 1.99 0 0 1-.23 1.04 5.05 5.05 0 0 1-.17-1.3s0-.71.08-.71zm-3.9 9a4.35 4.35 0 0 1 1.21-1.46l.24-.22a4.35 4.35 0 0 1-1.46 1.68zm9.23-3.3a2.05 2.05 0 0 0-1.32-.3 11.07 11.07 0 0 0-1.58.11 4.09 4.09 0 0 1-.74-.5 5.39 5.39 0 0 1-1.32-2.06 10.37 10.37 0 0 0 .28-2.62 1.83 1.83 0 0 0-.07-.25.57.57 0 0 0-.52-.4H9.4a.59.59 0 0 0-.6.38 6.95 6.95 0 0 0 .37 3.14c-.26.63-1 2.12-1 2.12-.3.58-.57 1.08-.82 1.5l-.8.44A3.11 3.11 0 0 0 5 14.16a.39.39 0 0 0 .15.42l.24.13c1.15.56 2.28-1.74 2.66-2.42a23.1 23.1 0 0 1 3.59-.85 4.56 4.56 0 0 0 2.91.8.5.5 0 0 0 .3-.21 1.1 1.1 0 0 0 .12-.75.84.84 0 0 0-.14-.25z"/></svg>',"file-text":'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="13" height="17" fill="none" stroke="#000" x="3.5" y="1.5"/><line fill="none" stroke="#000" x1="6" y1="12.5" x2="12" y2="12.5"/><line fill="none" stroke="#000" x1="6" y1="8.5" x2="14" y2="8.5"/><line fill="none" stroke="#000" x1="6" y1="6.5" x2="14" y2="6.5"/><line fill="none" stroke="#000" x1="6" y1="10.5" x2="14" y2="10.5"/></svg>',flickr:'<svg width="20" height="20" viewBox="0 0 20 20"><circle cx="5.5" cy="9.5" r="3.5"/><circle cx="14.5" cy="9.5" r="3.5"/></svg>',folder:'<svg width="20" height="20" viewBox="0 0 20 20"><polygon fill="none" stroke="#000" points="9.5 5.5 8.5 3.5 1.5 3.5 1.5 16.5 18.5 16.5 18.5 5.5"/></svg>',forward:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M2.47,13.11 C4.02,10.02 6.27,7.85 9.04,6.61 C9.48,6.41 10.27,6.13 11,5.91 L11,2 L18.89,9 L11,16 L11,12.13 C9.25,12.47 7.58,13.19 6.02,14.25 C3.03,16.28 1.63,18.54 1.63,18.54 C1.63,18.54 1.38,15.28 2.47,13.11 L2.47,13.11 Z M5.3,13.53 C6.92,12.4 9.04,11.4 12,10.92 L12,13.63 L17.36,9 L12,4.25 L12,6.8 C11.71,6.86 10.86,7.02 9.67,7.49 C6.79,8.65 4.58,10.96 3.49,13.08 C3.18,13.7 2.68,14.87 2.49,16 C3.28,15.05 4.4,14.15 5.3,13.53 L5.3,13.53 Z"/></svg>',foursquare:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M15.23,2 C15.96,2 16.4,2.41 16.5,2.86 C16.57,3.15 16.56,3.44 16.51,3.73 C16.46,4.04 14.86,11.72 14.75,12.03 C14.56,12.56 14.16,12.82 13.61,12.83 C13.03,12.84 11.09,12.51 10.69,13 C10.38,13.38 7.79,16.39 6.81,17.53 C6.61,17.76 6.4,17.96 6.08,17.99 C5.68,18.04 5.29,17.87 5.17,17.45 C5.12,17.28 5.1,17.09 5.1,16.91 C5.1,12.4 4.86,7.81 5.11,3.31 C5.17,2.5 5.81,2.12 6.53,2 L15.23,2 L15.23,2 Z M9.76,11.42 C9.94,11.19 10.17,11.1 10.45,11.1 L12.86,11.1 C13.12,11.1 13.31,10.94 13.36,10.69 C13.37,10.64 13.62,9.41 13.74,8.83 C13.81,8.52 13.53,8.28 13.27,8.28 C12.35,8.29 11.42,8.28 10.5,8.28 C9.84,8.28 9.83,7.69 9.82,7.21 C9.8,6.85 10.13,6.55 10.5,6.55 C11.59,6.56 12.67,6.55 13.76,6.55 C14.03,6.55 14.23,6.4 14.28,6.14 C14.34,5.87 14.67,4.29 14.67,4.29 C14.67,4.29 14.82,3.74 14.19,3.74 L7.34,3.74 C7,3.75 6.84,4.02 6.84,4.33 C6.84,7.58 6.85,14.95 6.85,14.99 C6.87,15 8.89,12.51 9.76,11.42 L9.76,11.42 Z"/></svg>',future:'<svg width="20" height="20" viewBox="0 0 20 20"><polyline points="19 2 18 2 18 6 14 6 14 7 19 7 19 2"/><path fill="none" stroke="#000" stroke-width="1.1" d="M18,6.548 C16.709,3.29 13.354,1 9.6,1 C4.6,1 0.6,5 0.6,10 C0.6,15 4.6,19 9.6,19 C14.6,19 18.6,15 18.6,10"/><rect width="1" height="7" x="9" y="4"/><path fill="none" stroke="#000" stroke-width="1.1" d="M13.018,14.197 L9.445,10.625"/></svg>',"git-branch":'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" d="m13.5,8c0,2.41-1.57,2.87-3.44,3.25-1.47.29-3.56.81-3.56,3.75V5"/><circle fill="none" stroke="#000" cx="6.5" cy="3" r="1.79"/><circle fill="none" stroke="#000" cx="13.5" cy="6" r="1.79"/><circle fill="none" stroke="#000" cx="6.5" cy="17" r="1.79"/></svg>',"git-fork":'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" cx="6" cy="3" r="1.79"/><circle fill="none" stroke="#000" cx="14" cy="3" r="1.79"/><circle fill="none" stroke="#000" cx="10" cy="17" r="1.79"/><path fill="none" stroke="#000" d="m6,4.78v1.99c0,2.63,4,3.66,4,6.75,0,1.55.01,1.24.01,1.24,0-.18,0,.31,0-1.24,0-3.09,3.99-4.12,3.99-6.75v-1.99"/></svg>',github:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M10,1 C5.03,1 1,5.03 1,10 C1,13.98 3.58,17.35 7.16,18.54 C7.61,18.62 7.77,18.34 7.77,18.11 C7.77,17.9 7.76,17.33 7.76,16.58 C5.26,17.12 4.73,15.37 4.73,15.37 C4.32,14.33 3.73,14.05 3.73,14.05 C2.91,13.5 3.79,13.5 3.79,13.5 C4.69,13.56 5.17,14.43 5.17,14.43 C5.97,15.8 7.28,15.41 7.79,15.18 C7.87,14.6 8.1,14.2 8.36,13.98 C6.36,13.75 4.26,12.98 4.26,9.53 C4.26,8.55 4.61,7.74 5.19,7.11 C5.1,6.88 4.79,5.97 5.28,4.73 C5.28,4.73 6.04,4.49 7.75,5.65 C8.47,5.45 9.24,5.35 10,5.35 C10.76,5.35 11.53,5.45 12.25,5.65 C13.97,4.48 14.72,4.73 14.72,4.73 C15.21,5.97 14.9,6.88 14.81,7.11 C15.39,7.74 15.73,8.54 15.73,9.53 C15.73,12.99 13.63,13.75 11.62,13.97 C11.94,14.25 12.23,14.8 12.23,15.64 C12.23,16.84 12.22,17.81 12.22,18.11 C12.22,18.35 12.38,18.63 12.84,18.54 C16.42,17.35 19,13.98 19,10 C19,5.03 14.97,1 10,1 L10,1 Z"/></svg>',"github-alt":'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M10,0.5 C4.75,0.5 0.5,4.76 0.5,10.01 C0.5,15.26 4.75,19.51 10,19.51 C15.24,19.51 19.5,15.26 19.5,10.01 C19.5,4.76 15.25,0.5 10,0.5 L10,0.5 Z M12.81,17.69 C12.81,17.69 12.81,17.7 12.79,17.69 C12.47,17.75 12.35,17.59 12.35,17.36 L12.35,16.17 C12.35,15.45 12.09,14.92 11.58,14.56 C12.2,14.51 12.77,14.39 13.26,14.21 C13.87,13.98 14.36,13.69 14.74,13.29 C15.42,12.59 15.76,11.55 15.76,10.17 C15.76,9.25 15.45,8.46 14.83,7.8 C15.1,7.08 15.07,6.29 14.75,5.44 L14.51,5.42 C14.34,5.4 14.06,5.46 13.67,5.61 C13.25,5.78 12.79,6.03 12.31,6.35 C11.55,6.16 10.81,6.05 10.09,6.05 C9.36,6.05 8.61,6.15 7.88,6.35 C7.28,5.96 6.75,5.68 6.26,5.54 C6.07,5.47 5.9,5.44 5.78,5.44 L5.42,5.44 C5.06,6.29 5.04,7.08 5.32,7.8 C4.7,8.46 4.4,9.25 4.4,10.17 C4.4,11.94 4.96,13.16 6.08,13.84 C6.53,14.13 7.05,14.32 7.69,14.43 C8.03,14.5 8.32,14.54 8.55,14.55 C8.07,14.89 7.82,15.42 7.82,16.16 L7.82,17.51 C7.8,17.69 7.7,17.8 7.51,17.8 C4.21,16.74 1.82,13.65 1.82,10.01 C1.82,5.5 5.49,1.83 10,1.83 C14.5,1.83 18.17,5.5 18.17,10.01 C18.18,13.53 15.94,16.54 12.81,17.69 L12.81,17.69 Z"/></svg>',gitter:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="1.531" height="11.471" x="3.5" y="1"/><rect width="1.529" height="15.294" x="7.324" y="4.059"/><rect width="1.527" height="15.294" x="11.148" y="4.059"/><rect width="1.529" height="8.412" x="14.971" y="4.059"/></svg>',google:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M17.86,9.09 C18.46,12.12 17.14,16.05 13.81,17.56 C9.45,19.53 4.13,17.68 2.47,12.87 C0.68,7.68 4.22,2.42 9.5,2.03 C11.57,1.88 13.42,2.37 15.05,3.65 C15.22,3.78 15.37,3.93 15.61,4.14 C14.9,4.81 14.23,5.45 13.5,6.14 C12.27,5.08 10.84,4.72 9.28,4.98 C8.12,5.17 7.16,5.76 6.37,6.63 C4.88,8.27 4.62,10.86 5.76,12.82 C6.95,14.87 9.17,15.8 11.57,15.25 C13.27,14.87 14.76,13.33 14.89,11.75 L10.51,11.75 L10.51,9.09 L17.86,9.09 L17.86,9.09 Z"/></svg>',grid:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="3" height="3" x="2" y="2"/><rect width="3" height="3" x="8" y="2"/><rect width="3" height="3" x="14" y="2"/><rect width="3" height="3" x="2" y="8"/><rect width="3" height="3" x="8" y="8"/><rect width="3" height="3" x="14" y="8"/><rect width="3" height="3" x="2" y="14"/><rect width="3" height="3" x="8" y="14"/><rect width="3" height="3" x="14" y="14"/></svg>',happy:'<svg width="20" height="20" viewBox="0 0 20 20"><circle cx="13" cy="7" r="1"/><circle cx="7" cy="7" r="1"/><circle fill="none" stroke="#000" cx="10" cy="10" r="8.5"/><path fill="none" stroke="#000" d="M14.6,11.4 C13.9,13.3 12.1,14.5 10,14.5 C7.9,14.5 6.1,13.3 5.4,11.4"/></svg>',hashtag:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M15.431,8 L15.661,7 L12.911,7 L13.831,3 L12.901,3 L11.98,7 L9.29,7 L10.21,3 L9.281,3 L8.361,7 L5.23,7 L5,8 L8.13,8 L7.21,12 L4.23,12 L4,13 L6.98,13 L6.061,17 L6.991,17 L7.911,13 L10.601,13 L9.681,17 L10.611,17 L11.531,13 L14.431,13 L14.661,12 L11.76,12 L12.681,8 L15.431,8 Z M10.831,12 L8.141,12 L9.061,8 L11.75,8 L10.831,12 Z"/></svg>',heart:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.03" d="M10,4 C10,4 8.1,2 5.74,2 C3.38,2 1,3.55 1,6.73 C1,8.84 2.67,10.44 2.67,10.44 L10,18 L17.33,10.44 C17.33,10.44 19,8.84 19,6.73 C19,3.55 16.62,2 14.26,2 C11.9,2 10,4 10,4 L10,4 Z"/></svg>',history:'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="#000" points="1 2 2 2 2 6 6 6 6 7 1 7 1 2"/><path fill="none" stroke="#000" stroke-width="1.1" d="M2.1,6.548 C3.391,3.29 6.746,1 10.5,1 C15.5,1 19.5,5 19.5,10 C19.5,15 15.5,19 10.5,19 C5.5,19 1.5,15 1.5,10"/><rect width="1" height="7" x="9" y="4"/><path fill="none" stroke="#000" stroke-width="1.1" d="M13.018,14.197 L9.445,10.625"/></svg>',home:'<svg width="20" height="20" viewBox="0 0 20 20"><polygon points="18.65 11.35 10 2.71 1.35 11.35 0.65 10.65 10 1.29 19.35 10.65"/><polygon points="15 4 18 4 18 7 17 7 17 5 15 5"/><polygon points="3 11 4 11 4 18 7 18 7 12 12 12 12 18 16 18 16 11 17 11 17 19 11 19 11 13 8 13 8 19 3 19"/></svg>',image:'<svg width="20" height="20" viewBox="0 0 20 20"><circle cx="16.1" cy="6.1" r="1.1"/><rect width="19" height="15" fill="none" stroke="#000" x=".5" y="2.5"/><polyline fill="none" stroke="#000" stroke-width="1.01" points="4,13 8,9 13,14"/><polyline fill="none" stroke="#000" stroke-width="1.01" points="11,12 12.5,10.5 16,14"/></svg>',info:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M12.13,11.59 C11.97,12.84 10.35,14.12 9.1,14.16 C6.17,14.2 9.89,9.46 8.74,8.37 C9.3,8.16 10.62,7.83 10.62,8.81 C10.62,9.63 10.12,10.55 9.88,11.32 C8.66,15.16 12.13,11.15 12.14,11.18 C12.16,11.21 12.16,11.35 12.13,11.59 C12.08,11.95 12.16,11.35 12.13,11.59 L12.13,11.59 Z M11.56,5.67 C11.56,6.67 9.36,7.15 9.36,6.03 C9.36,5 11.56,4.54 11.56,5.67 L11.56,5.67 Z"/><circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9"/></svg>',instagram:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M13.55,1H6.46C3.45,1,1,3.44,1,6.44v7.12c0,3,2.45,5.44,5.46,5.44h7.08c3.02,0,5.46-2.44,5.46-5.44V6.44 C19.01,3.44,16.56,1,13.55,1z M17.5,14c0,1.93-1.57,3.5-3.5,3.5H6c-1.93,0-3.5-1.57-3.5-3.5V6c0-1.93,1.57-3.5,3.5-3.5h8 c1.93,0,3.5,1.57,3.5,3.5V14z"/><circle cx="14.87" cy="5.26" r="1.09"/><path d="M10.03,5.45c-2.55,0-4.63,2.06-4.63,4.6c0,2.55,2.07,4.61,4.63,4.61c2.56,0,4.63-2.061,4.63-4.61 C14.65,7.51,12.58,5.45,10.03,5.45L10.03,5.45L10.03,5.45z M10.08,13c-1.66,0-3-1.34-3-2.99c0-1.65,1.34-2.99,3-2.99s3,1.34,3,2.99 C13.08,11.66,11.74,13,10.08,13L10.08,13L10.08,13z"/></svg>',italic:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M12.63,5.48 L10.15,14.52 C10,15.08 10.37,15.25 11.92,15.3 L11.72,16 L6,16 L6.2,15.31 C7.78,15.26 8.19,15.09 8.34,14.53 L10.82,5.49 C10.97,4.92 10.63,4.76 9.09,4.71 L9.28,4 L15,4 L14.81,4.69 C13.23,4.75 12.78,4.91 12.63,5.48 L12.63,5.48 Z"/></svg>',joomla:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M7.8,13.4l1.7-1.7L5.9,8c-0.6-0.5-0.6-1.5,0-2c0.6-0.6,1.4-0.6,2,0l1.7-1.7c-1-1-2.3-1.3-3.6-1C5.8,2.2,4.8,1.4,3.7,1.4 c-1.3,0-2.3,1-2.3,2.3c0,1.1,0.8,2,1.8,2.3c-0.4,1.3-0.1,2.8,1,3.8L7.8,13.4L7.8,13.4z"/><path d="M10.2,4.3c1-1,2.5-1.4,3.8-1c0.2-1.1,1.1-2,2.3-2c1.3,0,2.3,1,2.3,2.3c0,1.2-0.9,2.2-2,2.3c0.4,1.3,0,2.8-1,3.8L13.9,8 c0.6-0.5,0.6-1.5,0-2c-0.5-0.6-1.5-0.6-2,0L8.2,9.7L6.5,8"/><path d="M14.1,16.8c-1.3,0.4-2.8,0.1-3.8-1l1.7-1.7c0.6,0.6,1.5,0.6,2,0c0.5-0.6,0.6-1.5,0-2l-3.7-3.7L12,6.7l3.7,3.7 c1,1,1.3,2.4,1,3.6c1.1,0.2,2,1.1,2,2.3c0,1.3-1,2.3-2.3,2.3C15.2,18.6,14.3,17.8,14.1,16.8"/><path d="M13.2,12.2l-3.7,3.7c-1,1-2.4,1.3-3.6,1c-0.2,1-1.2,1.8-2.2,1.8c-1.3,0-2.3-1-2.3-2.3c0-1.1,0.8-2,1.8-2.3 c-0.3-1.3,0-2.7,1-3.7l1.7,1.7c-0.6,0.6-0.6,1.5,0,2c0.6,0.6,1.4,0.6,2,0l3.7-3.7"/></svg>',laptop:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="1" y="16"/><rect width="15" height="10" fill="none" stroke="#000" x="2.5" y="4.5"/></svg>',lifesaver:'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" cx="10" cy="10" r="9"/><circle fill="none" stroke="#000" cx="10" cy="10" r="5"/><line fill="none" stroke="#000" stroke-width="1.1" x1="5.17" y1="2.39" x2="8.11" y2="5.33"/><line fill="none" stroke="#000" stroke-width="1.1" x1="5.33" y1="8.11" x2="2.39" y2="5.17"/><line fill="none" stroke="#000" stroke-width="1.1" x1="14.83" y1="17.61" x2="11.89" y2="14.67"/><line fill="none" stroke="#000" stroke-width="1.1" x1="14.67" y1="11.89" x2="17.61" y2="14.83"/><line fill="none" stroke="#000" stroke-width="1.1" x1="17.61" y1="5.17" x2="14.67" y2="8.11"/><line fill="none" stroke="#000" stroke-width="1.1" x1="11.89" y1="5.33" x2="14.83" y2="2.39"/><line fill="none" stroke="#000" stroke-width="1.1" x1="8.11" y1="14.67" x2="5.17" y2="17.61"/><line fill="none" stroke="#000" stroke-width="1.1" x1="2.39" y1="14.83" x2="5.33" y2="11.89"/></svg>',link:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.1" d="M10.625,12.375 L7.525,15.475 C6.825,16.175 5.925,16.175 5.225,15.475 L4.525,14.775 C3.825,14.074 3.825,13.175 4.525,12.475 L7.625,9.375"/><path fill="none" stroke="#000" stroke-width="1.1" d="M9.325,7.375 L12.425,4.275 C13.125,3.575 14.025,3.575 14.724,4.275 L15.425,4.975 C16.125,5.675 16.125,6.575 15.425,7.275 L12.325,10.375"/><path fill="none" stroke="#000" stroke-width="1.1" d="M7.925,11.875 L11.925,7.975"/></svg>',"link-external":'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" points="6 4 10 4 10 8"/><line fill="none" stroke="#000" x1="4.5" y1="9.5" x2="10" y2="4"/></svg>',linkedin:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M5.77,17.89 L5.77,7.17 L2.21,7.17 L2.21,17.89 L5.77,17.89 L5.77,17.89 Z M3.99,5.71 C5.23,5.71 6.01,4.89 6.01,3.86 C5.99,2.8 5.24,2 4.02,2 C2.8,2 2,2.8 2,3.85 C2,4.88 2.77,5.7 3.97,5.7 L3.99,5.7 L3.99,5.71 L3.99,5.71 Z"/><path d="M7.75,17.89 L11.31,17.89 L11.31,11.9 C11.31,11.58 11.33,11.26 11.43,11.03 C11.69,10.39 12.27,9.73 13.26,9.73 C14.55,9.73 15.06,10.71 15.06,12.15 L15.06,17.89 L18.62,17.89 L18.62,11.74 C18.62,8.45 16.86,6.92 14.52,6.92 C12.6,6.92 11.75,7.99 11.28,8.73 L11.3,8.73 L11.3,7.17 L7.75,7.17 C7.79,8.17 7.75,17.89 7.75,17.89 L7.75,17.89 L7.75,17.89 Z"/></svg>',list:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="12" height="1" x="6" y="4"/><rect width="12" height="1" x="6" y="9"/><rect width="12" height="1" x="6" y="14"/><rect width="2" height="1" x="2" y="4"/><rect width="2" height="1" x="2" y="9"/><rect width="2" height="1" x="2" y="14"/></svg>',location:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.01" d="M10,0.5 C6.41,0.5 3.5,3.39 3.5,6.98 C3.5,11.83 10,19 10,19 C10,19 16.5,11.83 16.5,6.98 C16.5,3.39 13.59,0.5 10,0.5 L10,0.5 Z"/><circle fill="none" stroke="#000" cx="10" cy="6.8" r="2.3"/></svg>',lock:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="13" height="10" fill="none" stroke="#000" x="3.5" y="8.5"/><path fill="none" stroke="#000" d="M6.5,8 L6.5,4.88 C6.5,3.01 8.07,1.5 10,1.5 C11.93,1.5 13.5,3.01 13.5,4.88 L13.5,8"/></svg>',mail:'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" points="1.4,6.5 10,11 18.6,6.5"/><path d="M 1,4 1,16 19,16 19,4 1,4 Z M 18,15 2,15 2,5 18,5 18,15 Z"/></svg>',mastodon:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="m18.5,6.87c0-3.95-2.59-5.11-2.59-5.11-1.31-.6-3.55-.85-5.88-.87h-.06c-2.33.02-4.57.27-5.88.87,0,0-2.59,1.16-2.59,5.11,0,.91-.02,1.99.01,3.14.09,3.87.71,7.68,4.28,8.62,1.65.44,3.06.53,4.2.47,2.07-.11,3.23-.74,3.23-.74l-.07-1.5s-1.48.47-3.14.41c-1.64-.06-3.38-.18-3.64-2.2-.02-.18-.04-.37-.04-.57,0,0,1.61.39,3.66.49,1.25.06,2.42-.07,3.61-.22,2.28-.27,4.27-1.68,4.52-2.97.39-2.02.36-4.94.36-4.94Zm-3.05,5.09h-1.9v-4.65c0-.98-.41-1.48-1.24-1.48-.91,0-1.37.59-1.37,1.76v2.54h-1.89v-2.54c0-1.17-.46-1.76-1.37-1.76-.82,0-1.24.5-1.24,1.48v4.65h-1.9v-4.79c0-.98.25-1.76.75-2.33.52-.58,1.19-.87,2.03-.87.97,0,1.71.37,2.19,1.12l.47.79.47-.79c.49-.75,1.22-1.12,2.19-1.12.84,0,1.51.29,2.03.87.5.58.75,1.35.75,2.33v4.79Z"/></svg>',menu:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="16" height="1" x="2" y="4"/><rect width="16" height="1" x="2" y="9"/><rect width="16" height="1" x="2" y="14"/></svg>',microphone:'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="10" y1="16.44" x2="10" y2="18.5"/><line fill="none" stroke="#000" x1="7" y1="18.5" x2="13" y2="18.5"/><path fill="none" stroke="#000" stroke-width="1.1" d="M13.5 4.89v5.87a3.5 3.5 0 0 1-7 0V4.89a3.5 3.5 0 0 1 7 0z"/><path fill="none" stroke="#000" stroke-width="1.1" d="M15.5 10.36V11a5.5 5.5 0 0 1-11 0v-.6"/></svg>',microsoft:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="m2,2h7.58v7.58H2V2Zm8.42,0h7.58v7.58h-7.58V2ZM2,10.42h7.58v7.58H2v-7.58Zm8.42,0h7.58v7.58h-7.58"/></svg>',minus:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="18" height="1" x="1" y="9"/></svg>',"minus-circle":'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9.5" cy="9.5" r="9"/><line fill="none" stroke="#000" x1="5" y1="9.5" x2="14" y2="9.5"/></svg>',more:'<svg width="20" height="20" viewBox="0 0 20 20"><circle cx="3" cy="10" r="2"/><circle cx="10" cy="10" r="2"/><circle cx="17" cy="10" r="2"/></svg>',"more-vertical":'<svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="3" r="2"/><circle cx="10" cy="10" r="2"/><circle cx="10" cy="17" r="2"/></svg>',move:'<svg width="20" height="20" viewBox="0 0 20 20"><polygon points="4,5 1,5 1,9 2,9 2,6 4,6"/><polygon points="1,16 2,16 2,18 4,18 4,19 1,19"/><polygon points="14,16 14,19 11,19 11,18 13,18 13,16"/><rect width="13" height="13" fill="none" stroke="#000" x="5.5" y="1.5"/><rect width="1" height="3" x="1" y="11"/><rect width="3" height="1" x="6" y="18"/></svg>',nut:'<svg width="20" height="20" viewBox="0 0 20 20"><polygon fill="none" stroke="#000" points="2.5,5.7 10,1.3 17.5,5.7 17.5,14.3 10,18.7 2.5,14.3"/><circle fill="none" stroke="#000" cx="10" cy="10" r="3.5"/></svg>',"paint-bucket":'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.1" d="m6.42,2.16l5.28,5.28"/><path d="m18.49,11.83s1.51,2.06,1.51,3.36c0,.92-.76,1.64-1.51,1.64h0c-.75,0-1.49-.72-1.49-1.64,0-1.3,1.49-3.36,1.49-3.36h0Z"/><line fill="none" stroke="#000" x1="1.26" y1="10.5" x2="16" y2="10.5"/><polygon fill="none" stroke="#000" stroke-width="1.1" points="10.2 1.55 17.6 8.93 8.08 18.45 .7 11.07 10.2 1.55"/></svg>',pencil:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" d="M17.25,6.01 L7.12,16.1 L3.82,17.2 L5.02,13.9 L15.12,3.88 C15.71,3.29 16.66,3.29 17.25,3.88 C17.83,4.47 17.83,5.42 17.25,6.01 L17.25,6.01 Z"/><path fill="none" stroke="#000" d="M15.98,7.268 L13.851,5.148"/></svg>',phone:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" d="M15.5,17 C15.5,17.8 14.8,18.5 14,18.5 L7,18.5 C6.2,18.5 5.5,17.8 5.5,17 L5.5,3 C5.5,2.2 6.2,1.5 7,1.5 L14,1.5 C14.8,1.5 15.5,2.2 15.5,3 L15.5,17 L15.5,17 L15.5,17 Z"/><circle cx="10.5" cy="16.5" r=".8"/></svg>',"phone-landscape":'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" d="M17,5.5 C17.8,5.5 18.5,6.2 18.5,7 L18.5,14 C18.5,14.8 17.8,15.5 17,15.5 L3,15.5 C2.2,15.5 1.5,14.8 1.5,14 L1.5,7 C1.5,6.2 2.2,5.5 3,5.5 L17,5.5 L17,5.5 L17,5.5 Z"/><circle cx="3.8" cy="10.5" r=".8"/></svg>',pinterest:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M10.21,1 C5.5,1 3,4.16 3,7.61 C3,9.21 3.85,11.2 5.22,11.84 C5.43,11.94 5.54,11.89 5.58,11.69 C5.62,11.54 5.8,10.8 5.88,10.45 C5.91,10.34 5.89,10.24 5.8,10.14 C5.36,9.59 5,8.58 5,7.65 C5,5.24 6.82,2.91 9.93,2.91 C12.61,2.91 14.49,4.74 14.49,7.35 C14.49,10.3 13,12.35 11.06,12.35 C9.99,12.35 9.19,11.47 9.44,10.38 C9.75,9.08 10.35,7.68 10.35,6.75 C10.35,5.91 9.9,5.21 8.97,5.21 C7.87,5.21 6.99,6.34 6.99,7.86 C6.99,8.83 7.32,9.48 7.32,9.48 C7.32,9.48 6.24,14.06 6.04,14.91 C5.7,16.35 6.08,18.7 6.12,18.9 C6.14,19.01 6.26,19.05 6.33,18.95 C6.44,18.81 7.74,16.85 8.11,15.44 C8.24,14.93 8.79,12.84 8.79,12.84 C9.15,13.52 10.19,14.09 11.29,14.09 C14.58,14.09 16.96,11.06 16.96,7.3 C16.94,3.7 14,1 10.21,1"/></svg>',play:'<svg width="20" height="20" viewBox="0 0 20 20"><polygon fill="none" stroke="#000" points="6.5,5 14.5,10 6.5,15"/></svg>',"play-circle":'<svg width="20" height="20" viewBox="0 0 20 20"><polygon fill="none" stroke="#000" stroke-width="1.1" points="8.5 7 13.5 10 8.5 13"/><circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9"/></svg>',plus:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="1" height="17" x="9" y="1"/><rect width="17" height="1" x="1" y="9"/></svg>',"plus-circle":'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9.5" cy="9.5" r="9"/><line fill="none" stroke="#000" x1="9.5" y1="5" x2="9.5" y2="14"/><line fill="none" stroke="#000" x1="5" y1="9.5" x2="14" y2="9.5"/></svg>',print:'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" points="4.5 13.5 1.5 13.5 1.5 6.5 18.5 6.5 18.5 13.5 15.5 13.5"/><polyline fill="none" stroke="#000" points="15.5 6.5 15.5 2.5 4.5 2.5 4.5 6.5"/><rect width="11" height="6" fill="none" stroke="#000" x="4.5" y="11.5"/><rect width="8" height="1" x="6" y="13"/><rect width="8" height="1" x="6" y="15"/></svg>',pull:'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="10" y1="11" x2="10" y2="2"/><polyline fill="none" stroke="#000" points="6.5 5.5 4 5.5 4 18.5 16 18.5 16 5.5 13.5 5.5"/><polyline fill="none" stroke="#000" points="13.18 8.2 10 11.38 6.83 8.21"/></svg>',push:'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="10" y1="11" x2="10" y2="1"/><polyline fill="none" stroke="#000" points="6.5 6.5 4 6.5 4 19.5 16 19.5 16 6.5 13.5 6.5"/><polyline fill="none" stroke="#000" points="6.82 3.88 10 .71 13.17 3.88"/></svg>',question:'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9"/><circle cx="9.99" cy="14.24" r="1.05"/><path fill="none" stroke="#000" stroke-width="1.2" d="m7.72,7.61c0-3.04,4.55-3.06,4.55-.07,0,.95-.91,1.43-1.49,2.03-.48.49-.72.98-.78,1.65-.01.13-.02.24-.02.35"/></svg>',"quote-right":'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M17.27,7.79 C17.27,9.45 16.97,10.43 15.99,12.02 C14.98,13.64 13,15.23 11.56,15.97 L11.1,15.08 C12.34,14.2 13.14,13.51 14.02,11.82 C14.27,11.34 14.41,10.92 14.49,10.54 C14.3,10.58 14.09,10.6 13.88,10.6 C12.06,10.6 10.59,9.12 10.59,7.3 C10.59,5.48 12.06,4 13.88,4 C15.39,4 16.67,5.02 17.05,6.42 C17.19,6.82 17.27,7.27 17.27,7.79 L17.27,7.79 Z"/><path d="M8.68,7.79 C8.68,9.45 8.38,10.43 7.4,12.02 C6.39,13.64 4.41,15.23 2.97,15.97 L2.51,15.08 C3.75,14.2 4.55,13.51 5.43,11.82 C5.68,11.34 5.82,10.92 5.9,10.54 C5.71,10.58 5.5,10.6 5.29,10.6 C3.47,10.6 2,9.12 2,7.3 C2,5.48 3.47,4 5.29,4 C6.8,4 8.08,5.02 8.46,6.42 C8.6,6.82 8.68,7.27 8.68,7.79 L8.68,7.79 Z"/></svg>',receiver:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.01" d="M6.189,13.611C8.134,15.525 11.097,18.239 13.867,18.257C16.47,18.275 18.2,16.241 18.2,16.241L14.509,12.551L11.539,13.639L6.189,8.29L7.313,5.355L3.76,1.8C3.76,1.8 1.732,3.537 1.7,6.092C1.667,8.809 4.347,11.738 6.189,13.611"/></svg>',reddit:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M19 9.05a2.56 2.56 0 0 0-2.56-2.56 2.59 2.59 0 0 0-1.88.82 10.63 10.63 0 0 0-4.14-1v-.08c.58-1.62 1.58-3.89 2.7-4.1.38-.08.77.12 1.19.57a1.15 1.15 0 0 0-.06.37 1.48 1.48 0 1 0 1.51-1.45 1.43 1.43 0 0 0-.76.19A2.29 2.29 0 0 0 12.91 1c-2.11.43-3.39 4.38-3.63 5.19 0 0 0 .11-.06.11a10.65 10.65 0 0 0-3.75 1A2.56 2.56 0 0 0 1 9.05a2.42 2.42 0 0 0 .72 1.76A5.18 5.18 0 0 0 1.24 13c0 3.66 3.92 6.64 8.73 6.64s8.74-3 8.74-6.64a5.23 5.23 0 0 0-.46-2.13A2.58 2.58 0 0 0 19 9.05zm-16.88 0a1.44 1.44 0 0 1 2.27-1.19 7.68 7.68 0 0 0-2.07 1.91 1.33 1.33 0 0 1-.2-.72zM10 18.4c-4.17 0-7.55-2.4-7.55-5.4S5.83 7.53 10 7.53 17.5 10 17.5 13s-3.38 5.4-7.5 5.4zm7.69-8.61a7.62 7.62 0 0 0-2.09-1.91 1.41 1.41 0 0 1 .84-.28 1.47 1.47 0 0 1 1.44 1.45 1.34 1.34 0 0 1-.21.72z"/><path d="M6.69 12.58a1.39 1.39 0 1 1 1.39-1.39 1.38 1.38 0 0 1-1.38 1.39z"/><path d="M14.26 11.2a1.39 1.39 0 1 1-1.39-1.39 1.39 1.39 0 0 1 1.39 1.39z"/><path d="M13.09 14.88a.54.54 0 0 1-.09.77 5.3 5.3 0 0 1-3.26 1.19 5.61 5.61 0 0 1-3.4-1.22.55.55 0 1 1 .73-.83 4.09 4.09 0 0 0 5.25 0 .56.56 0 0 1 .77.09z"/></svg>',refresh:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.1" d="M17.08,11.15 C17.09,11.31 17.1,11.47 17.1,11.64 C17.1,15.53 13.94,18.69 10.05,18.69 C6.16,18.68 3,15.53 3,11.63 C3,7.74 6.16,4.58 10.05,4.58 C10.9,4.58 11.71,4.73 12.46,5"/><polyline fill="none" stroke="#000" points="9.9 2 12.79 4.89 9.79 7.9"/></svg>',reply:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M17.7,13.11 C16.12,10.02 13.84,7.85 11.02,6.61 C10.57,6.41 9.75,6.13 9,5.91 L9,2 L1,9 L9,16 L9,12.13 C10.78,12.47 12.5,13.19 14.09,14.25 C17.13,16.28 18.56,18.54 18.56,18.54 C18.56,18.54 18.81,15.28 17.7,13.11 L17.7,13.11 Z M14.82,13.53 C13.17,12.4 11.01,11.4 8,10.92 L8,13.63 L2.55,9 L8,4.25 L8,6.8 C8.3,6.86 9.16,7.02 10.37,7.49 C13.3,8.65 15.54,10.96 16.65,13.08 C16.97,13.7 17.48,14.86 17.68,16 C16.87,15.05 15.73,14.15 14.82,13.53 L14.82,13.53 Z"/></svg>',rss:'<svg width="20" height="20" viewBox="0 0 20 20"><circle cx="3.12" cy="16.8" r="1.85"/><path fill="none" stroke="#000" stroke-width="1.1" d="M1.5,8.2 C1.78,8.18 2.06,8.16 2.35,8.16 C7.57,8.16 11.81,12.37 11.81,17.57 C11.81,17.89 11.79,18.19 11.76,18.5"/><path fill="none" stroke="#000" stroke-width="1.1" d="M1.5,2.52 C1.78,2.51 2.06,2.5 2.35,2.5 C10.72,2.5 17.5,9.24 17.5,17.57 C17.5,17.89 17.49,18.19 17.47,18.5"/></svg>',search:'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"/><path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"/></svg>',server:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="1" height="2" x="3" y="3"/><rect width="1" height="2" x="5" y="3"/><rect width="1" height="2" x="7" y="3"/><rect width="1" height="1" x="16" y="3"/><rect width="1" height="1" x="16" y="10"/><circle fill="none" stroke="#000" cx="9.9" cy="17.4" r="1.4"/><rect width="1" height="2" x="3" y="10"/><rect width="1" height="2" x="5" y="10"/><rect width="1" height="2" x="9.5" y="14"/><rect width="6" height="1" x="3" y="17"/><rect width="6" height="1" x="11" y="17"/><rect width="17" height="5" fill="none" stroke="#000" x="1.5" y="1.5"/><rect width="17" height="5" fill="none" stroke="#000" x="1.5" y="8.5"/></svg>',settings:'<svg width="20" height="20" viewBox="0 0 20 20"><ellipse fill="none" stroke="#000" cx="6.11" cy="3.55" rx="2.11" ry="2.15"/><ellipse fill="none" stroke="#000" cx="6.11" cy="15.55" rx="2.11" ry="2.15"/><circle fill="none" stroke="#000" cx="13.15" cy="9.55" r="2.15"/><rect width="3" height="1" x="1" y="3"/><rect width="8" height="1" x="10" y="3"/><rect width="8" height="1" x="1" y="9"/><rect width="3" height="1" x="15" y="9"/><rect width="3" height="1" x="1" y="15"/><rect width="8" height="1" x="10" y="15"/></svg>',shrink:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.1" d="M2,18l6-6"/><polyline fill="none" stroke="#000" points="4 11.5 8.49 11.5 8.49 15.99"/><path fill="none" stroke="#000" stroke-width="1.1" d="M18,2l-6,6"/><polyline fill="none" stroke="#000" points="15.99 8.49 11.5 8.49 11.5 4"/></svg>',"sign-in":'<svg width="20" height="20" viewBox="0 0 20 20"><polygon points="7 2 17 2 17 17 7 17 7 16 16 16 16 3 7 3 7 2"/><line stroke="#000" x1="3" y1="9.5" x2="12" y2="9.5"/><polyline fill="none" stroke="#000" points="9.2 6.33 12.37 9.5 9.2 12.67"/></svg>',"sign-out":'<svg width="20" height="20" viewBox="0 0 20 20"><polygon points="13 2 3 2 3 17 13 17 13 16 4 16 4 3 13 3 13 2"/><line stroke="#000" x1="7.96" y1="9.49" x2="16.96" y2="9.49"/><polyline fill="none" stroke="#000" points="14.17 6.31 17.35 9.48 14.17 12.66"/></svg>',signal:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="m7.86,1.34l.2.81c-.79.19-1.54.51-2.24.93l-.43-.71c.77-.46,1.6-.81,2.47-1.02Zm4.28,0l-.2.81c.79.19,1.54.51,2.24.93l.43-.72c-.77-.46-1.6-.81-2.47-1.02h0ZM2.37,5.39c-.46.77-.81,1.6-1.02,2.47l.81.2c.19-.79.51-1.54.93-2.24l-.71-.43Zm-.45,4.61c0-.41.03-.81.09-1.21l-.83-.13c-.13.89-.13,1.79,0,2.67l.83-.13c-.06-.4-.09-.81-.09-1.21h0Zm12.69,7.63l-.43-.72c-.7.42-1.45.73-2.24.93l.2.81c.87-.21,1.7-.56,2.46-1.02h0Zm3.47-7.63c0,.41-.03.81-.09,1.21l.83.13c.13-.89.13-1.79,0-2.67l-.83.13c.06.4.09.81.09,1.21Zm.58,2.14l-.81-.2c-.19.79-.51,1.54-.93,2.24l.72.43c.46-.77.81-1.6,1.02-2.47h0Zm-7.44,5.85c-.8.12-1.62.12-2.42,0l-.13.83c.89.13,1.79.13,2.67,0l-.13-.83Zm5.29-3.2c-.48.65-1.06,1.23-1.71,1.71l.5.67c.72-.53,1.36-1.16,1.89-1.88l-.67-.5Zm-1.71-11.29c.65.48,1.23,1.06,1.71,1.71l.67-.5c-.53-.72-1.17-1.35-1.88-1.88l-.5.67Zm-11.29,1.71c.48-.65,1.06-1.23,1.71-1.71l-.5-.67c-.72.53-1.35,1.17-1.88,1.88l.67.5Zm14.14.18l-.72.43c.42.7.73,1.45.93,2.24l.81-.2c-.21-.87-.56-1.7-1.02-2.46h0Zm-8.84-3.38c.8-.12,1.62-.12,2.42,0l.13-.83c-.89-.13-1.79-.13-2.67,0l.13.83Zm-4.86,15.38l-1.73.4.4-1.73-.81-.19-.4,1.73c-.07.28.02.58.22.78s.5.29.78.22l1.73-.39-.19-.82Zm-1.96-2.26l.81.19.28-1.2c-.41-.68-.71-1.42-.9-2.19l-.81.2c.18.74.46,1.45.82,2.12l-.2.88Zm3.9,1.81l-1.19.28.19.81.88-.2c.67.36,1.38.64,2.12.82l.2-.81c-.77-.19-1.51-.5-2.19-.9h0ZM10,2.75c-2.63,0-5.06,1.43-6.34,3.74s-1.19,5.12.21,7.36l-.7,2.97,2.97-.7c2.61,1.64,5.96,1.46,8.37-.46s3.34-5.15,2.32-8.06c-1.02-2.91-3.77-4.85-6.85-4.85Z"/></svg>',social:'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" stroke-width="1.1" x1="13.4" y1="14" x2="6.3" y2="10.7"/><line fill="none" stroke="#000" stroke-width="1.1" x1="13.5" y1="5.5" x2="6.5" y2="8.8"/><circle fill="none" stroke="#000" stroke-width="1.1" cx="15.5" cy="4.6" r="2.3"/><circle fill="none" stroke="#000" stroke-width="1.1" cx="15.5" cy="14.8" r="2.3"/><circle fill="none" stroke="#000" stroke-width="1.1" cx="4.5" cy="9.8" r="2.3"/></svg>',sorting:'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="7" y1="3.38" x2="7" y2="15.38"/><polyline fill="none" stroke="#000" points="10.18 12.75 7 15.93 3.83 12.76"/><line fill="none" stroke="#000" x1="13" y1="16.62" x2="13" y2="4.62"/><polyline fill="none" stroke="#000" points="9.82 7.25 13 4.07 16.17 7.24"/></svg>',soundcloud:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M17.2,9.4c-0.4,0-0.8,0.1-1.101,0.2c-0.199-2.5-2.399-4.5-5-4.5c-0.6,0-1.2,0.1-1.7,0.3C9.2,5.5,9.1,5.6,9.1,5.6V15h8 c1.601,0,2.801-1.2,2.801-2.8C20,10.7,18.7,9.4,17.2,9.4L17.2,9.4z"/><rect width="1.5" height="8.5" x="6" y="6.5"/><rect width="1.5" height="7" x="3" y="8"/><rect width="1.5" height="5" y="10"/></svg>',star:'<svg width="20" height="20" viewBox="0 0 20 20"><polygon fill="none" stroke="#000" stroke-width="1.01" points="10 2 12.63 7.27 18.5 8.12 14.25 12.22 15.25 18 10 15.27 4.75 18 5.75 12.22 1.5 8.12 7.37 7.27"/></svg>',strikethrough:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M6,13.02 L6.65,13.02 C7.64,15.16 8.86,16.12 10.41,16.12 C12.22,16.12 12.92,14.93 12.92,13.89 C12.92,12.55 11.99,12.03 9.74,11.23 C8.05,10.64 6.23,10.11 6.23,7.83 C6.23,5.5 8.09,4.09 10.4,4.09 C11.44,4.09 12.13,4.31 12.72,4.54 L13.33,4 L13.81,4 L13.81,7.59 L13.16,7.59 C12.55,5.88 11.52,4.89 10.07,4.89 C8.84,4.89 7.89,5.69 7.89,7.03 C7.89,8.29 8.89,8.78 10.88,9.45 C12.57,10.03 14.38,10.6 14.38,12.91 C14.38,14.75 13.27,16.93 10.18,16.93 C9.18,16.93 8.17,16.69 7.46,16.39 L6.52,17 L6,17 L6,13.02 L6,13.02 Z"/><rect width="15" height="1" x="3" y="10"/></svg>',table:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="18" height="1" x="1" y="3"/><rect width="18" height="1" x="1" y="7"/><rect width="18" height="1" x="1" y="11"/><rect width="18" height="1" x="1" y="15"/></svg>',tablet:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" d="M5,18.5 C4.2,18.5 3.5,17.8 3.5,17 L3.5,3 C3.5,2.2 4.2,1.5 5,1.5 L16,1.5 C16.8,1.5 17.5,2.2 17.5,3 L17.5,17 C17.5,17.8 16.8,18.5 16,18.5 L5,18.5 L5,18.5 L5,18.5 Z"/><circle cx="10.5" cy="16.3" r=".8"/></svg>',"tablet-landscape":'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" d="M1.5,5 C1.5,4.2 2.2,3.5 3,3.5 L17,3.5 C17.8,3.5 18.5,4.2 18.5,5 L18.5,16 C18.5,16.8 17.8,17.5 17,17.5 L3,17.5 C2.2,17.5 1.5,16.8 1.5,16 L1.5,5 L1.5,5 L1.5,5 Z"/><circle cx="3.7" cy="10.5" r=".8"/></svg>',tag:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" stroke-width="1.1" d="M17.5,3.71 L17.5,7.72 C17.5,7.96 17.4,8.2 17.21,8.39 L8.39,17.2 C7.99,17.6 7.33,17.6 6.93,17.2 L2.8,13.07 C2.4,12.67 2.4,12.01 2.8,11.61 L11.61,2.8 C11.81,2.6 12.08,2.5 12.34,2.5 L16.19,2.5 C16.52,2.5 16.86,2.63 17.11,2.88 C17.35,3.11 17.48,3.4 17.5,3.71 L17.5,3.71 Z"/><circle cx="14" cy="6" r="1"/></svg>',telegram:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="m10,1.09C5.08,1.09,1.09,5.08,1.09,10s3.99,8.91,8.91,8.91,8.91-3.99,8.91-8.91S14.92,1.09,10,1.09Zm4.25,5.8c-.03.36-.23,1.62-.44,2.99-.31,1.93-.64,4.04-.64,4.04,0,0-.05.59-.49.7s-1.16-.36-1.29-.46c-.1-.08-1.93-1.24-2.6-1.8-.18-.15-.39-.46.03-.82.93-.85,2.04-1.91,2.7-2.58.31-.31.62-1.03-.67-.15-1.83,1.26-3.63,2.45-3.63,2.45,0,0-.41.26-1.19.03-.77-.23-1.67-.54-1.67-.54,0,0-.62-.39.44-.8h0s4.46-1.83,6-2.47c.59-.26,2.6-1.08,2.6-1.08,0,0,.93-.36.85.52Z"/></svg>',threads:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="m14.47,9.29c-.08-.04-.16-.08-.25-.11-.14-2.66-1.6-4.18-4.04-4.2-.01,0-.02,0-.03,0-1.46,0-2.67.62-3.42,1.76l1.34.92c.56-.85,1.43-1.03,2.08-1.03,0,0,.01,0,.02,0,.8,0,1.41.24,1.8.69.29.33.48.79.57,1.37-.71-.12-1.48-.16-2.31-.11-2.32.13-3.81,1.49-3.71,3.37.05.95.53,1.77,1.34,2.31.69.45,1.57.67,2.49.62,1.21-.07,2.16-.53,2.83-1.38.5-.64.82-1.48.96-2.52.58.35,1.01.81,1.24,1.36.4.94.43,2.48-.83,3.74-1.1,1.1-2.43,1.58-4.43,1.59-2.22-.02-3.9-.73-4.99-2.12-1.02-1.3-1.55-3.18-1.57-5.58.02-2.4.55-4.28,1.57-5.58,1.09-1.39,2.77-2.1,4.99-2.12,2.24.02,3.95.73,5.08,2.13.56.68.98,1.54,1.25,2.55l1.57-.42c-.33-1.23-.86-2.3-1.58-3.18-1.45-1.79-3.58-2.7-6.32-2.72h-.01c-2.73.02-4.84.94-6.25,2.73-1.26,1.6-1.9,3.82-1.93,6.61h0s0,.01,0,.01c.02,2.79.67,5.01,1.93,6.61,1.41,1.8,3.51,2.71,6.25,2.73h.01c2.43-.02,4.14-.65,5.55-2.06,1.85-1.84,1.79-4.16,1.18-5.58-.44-1.02-1.27-1.84-2.41-2.39Zm-4.2,3.95c-1.02.06-2.07-.4-2.12-1.38-.04-.72.52-1.53,2.19-1.63.19-.01.38-.02.56-.02.61,0,1.17.06,1.69.17-.19,2.41-1.32,2.8-2.32,2.85Z"/></svg>',thumbnails:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="5" height="5" fill="none" stroke="#000" x="3.5" y="3.5"/><rect width="5" height="5" fill="none" stroke="#000" x="11.5" y="3.5"/><rect width="5" height="5" fill="none" stroke="#000" x="11.5" y="11.5"/><rect width="5" height="5" fill="none" stroke="#000" x="3.5" y="11.5"/></svg>',tiktok:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M17.24,6V8.82a6.79,6.79,0,0,1-4-1.28v5.81A5.26,5.26,0,1,1,8,8.1a4.36,4.36,0,0,1,.72.05v2.9A2.57,2.57,0,0,0,7.64,11a2.4,2.4,0,1,0,2.77,2.38V2h2.86a4,4,0,0,0,1.84,3.38A4,4,0,0,0,17.24,6Z"/></svg>',trash:'<svg width="20" height="20" viewBox="0 0 20 20"><polyline fill="none" stroke="#000" points="6.5 3 6.5 1.5 13.5 1.5 13.5 3"/><polyline fill="none" stroke="#000" points="4.5 4 4.5 18.5 15.5 18.5 15.5 4"/><rect width="1" height="9" x="8" y="7"/><rect width="1" height="9" x="11" y="7"/><rect width="16" height="1" x="2" y="3"/></svg>',"triangle-down":'<svg width="20" height="20" viewBox="0 0 20 20"><polygon points="5 7 15 7 10 12"/></svg>',"triangle-left":'<svg width="20" height="20" viewBox="0 0 20 20"><polygon points="12 5 7 10 12 15"/></svg>',"triangle-right":'<svg width="20" height="20" viewBox="0 0 20 20"><polygon points="8 5 13 10 8 15"/></svg>',"triangle-up":'<svg width="20" height="20" viewBox="0 0 20 20"><polygon points="5 13 10 8 15 13"/></svg>',tripadvisor:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M19.021,7.866C19.256,6.862,20,5.854,20,5.854h-3.346C14.781,4.641,12.504,4,9.98,4C7.363,4,4.999,4.651,3.135,5.876H0\tc0,0,0.738,0.987,0.976,1.988c-0.611,0.837-0.973,1.852-0.973,2.964c0,2.763,2.249,5.009,5.011,5.009\tc1.576,0,2.976-0.737,3.901-1.879l1.063,1.599l1.075-1.615c0.475,0.611,1.1,1.111,1.838,1.451c1.213,0.547,2.574,0.612,3.825,0.15\tc2.589-0.963,3.913-3.852,2.964-6.439c-0.175-0.463-0.4-0.876-0.675-1.238H19.021z M16.38,14.594\tc-1.002,0.371-2.088,0.328-3.06-0.119c-0.688-0.317-1.252-0.817-1.657-1.438c-0.164-0.25-0.313-0.52-0.417-0.811\tc-0.124-0.328-0.186-0.668-0.217-1.014c-0.063-0.689,0.037-1.396,0.339-2.043c0.448-0.971,1.251-1.71,2.25-2.079\tc2.075-0.765,4.375,0.3,5.14,2.366c0.762,2.066-0.301,4.37-2.363,5.134L16.38,14.594L16.38,14.594z M8.322,13.066\tc-0.72,1.059-1.935,1.76-3.309,1.76c-2.207,0-4.001-1.797-4.001-3.996c0-2.203,1.795-4.002,4.001-4.002\tc2.204,0,3.999,1.8,3.999,4.002c0,0.137-0.024,0.261-0.04,0.396c-0.067,0.678-0.284,1.313-0.648,1.853v-0.013H8.322z M2.472,10.775\tc0,1.367,1.112,2.479,2.476,2.479c1.363,0,2.472-1.11,2.472-2.479c0-1.359-1.11-2.468-2.472-2.468\tC3.584,8.306,2.473,9.416,2.472,10.775L2.472,10.775z M12.514,10.775c0,1.367,1.104,2.479,2.471,2.479\tc1.363,0,2.474-1.108,2.474-2.479c0-1.359-1.11-2.468-2.474-2.468c-1.364,0-2.477,1.109-2.477,2.468H12.514z M3.324,10.775\tc0-0.893,0.726-1.618,1.614-1.618c0.889,0,1.625,0.727,1.625,1.618c0,0.898-0.725,1.627-1.625,1.627\tc-0.901,0-1.625-0.729-1.625-1.627H3.324z M13.354,10.775c0-0.893,0.726-1.618,1.627-1.618c0.886,0,1.61,0.727,1.61,1.618\tc0,0.898-0.726,1.627-1.626,1.627s-1.625-0.729-1.625-1.627H13.354z M9.977,4.875c1.798,0,3.425,0.324,4.849,0.968\tc-0.535,0.015-1.061,0.108-1.586,0.3c-1.264,0.463-2.264,1.388-2.815,2.604c-0.262,0.551-0.398,1.133-0.448,1.72\tC9.79,7.905,7.677,5.873,5.076,5.82C6.501,5.208,8.153,4.875,9.94,4.875H9.977z"/></svg>',tumblr:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M6.885,8.598c0,0,0,3.393,0,4.996c0,0.282,0,0.66,0.094,0.942c0.377,1.509,1.131,2.545,2.545,3.11 c1.319,0.472,2.356,0.472,3.676,0c0.565-0.188,1.132-0.659,1.132-0.659l-0.849-2.263c0,0-1.036,0.378-1.603,0.283 c-0.565-0.094-1.226-0.66-1.226-1.508c0-1.603,0-4.902,0-4.902h2.828V5.771h-2.828V2H8.205c0,0-0.094,0.66-0.188,0.942 C7.828,3.791,7.262,4.733,6.603,5.394C5.848,6.147,5,6.43,5,6.43v2.168H6.885z"/></svg>',tv:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="6" height="1" x="7" y="16"/><rect width="19" height="11" fill="none" stroke="#000" x=".5" y="3.5"/></svg>',twitch:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M5.23,1,2,4.23V15.85H5.88v3.23L9.1,15.85h2.59L17.5,10V1Zm11,8.4L13.62,12H11L8.78,14.24V12H5.88V2.29H16.21Z"/><rect width="1.29" height="3.88" x="12.98" y="4.55"/><rect width="1.29" height="3.88" x="9.43" y="4.55"/></svg>',twitter:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M19,4.74 C18.339,5.029 17.626,5.229 16.881,5.32 C17.644,4.86 18.227,4.139 18.503,3.28 C17.79,3.7 17.001,4.009 16.159,4.17 C15.485,3.45 14.526,3 13.464,3 C11.423,3 9.771,4.66 9.771,6.7 C9.771,6.99 9.804,7.269 9.868,7.539 C6.795,7.38 4.076,5.919 2.254,3.679 C1.936,4.219 1.754,4.86 1.754,5.539 C1.754,6.82 2.405,7.95 3.397,8.61 C2.79,8.589 2.22,8.429 1.723,8.149 L1.723,8.189 C1.723,9.978 2.997,11.478 4.686,11.82 C4.376,11.899 4.049,11.939 3.713,11.939 C3.475,11.939 3.245,11.919 3.018,11.88 C3.49,13.349 4.852,14.419 6.469,14.449 C5.205,15.429 3.612,16.019 1.882,16.019 C1.583,16.019 1.29,16.009 1,15.969 C2.635,17.019 4.576,17.629 6.662,17.629 C13.454,17.629 17.17,12 17.17,7.129 C17.17,6.969 17.166,6.809 17.157,6.649 C17.879,6.129 18.504,5.478 19,4.74"/></svg>',uikit:'<svg width="20" height="20" viewBox="0 0 20 20"><polygon points="14.4,3.1 11.3,5.1 15,7.3 15,12.9 10,15.7 5,12.9 5,8.5 2,6.8 2,14.8 9.9,19.5 18,14.8 18,5.3"/><polygon points="9.8,4.2 6.7,2.4 9.8,0.4 12.9,2.3"/></svg>',unlock:'<svg width="20" height="20" viewBox="0 0 20 20"><rect width="13" height="10" fill="none" stroke="#000" x="3.5" y="8.5"/><path fill="none" stroke="#000" d="M6.5,8.5 L6.5,4.9 C6.5,3 8.1,1.5 10,1.5 C11.9,1.5 13.5,3 13.5,4.9"/></svg>',upload:'<svg width="20" height="20" viewBox="0 0 20 20"><line fill="none" stroke="#000" x1="10" y1="15.17" x2="10" y2="3.17"/><polyline fill="none" stroke="#000" points="13.84 6.63 10 2.8 6.16 6.64"/><line fill="#fff" stroke="#000" x1="3.5" y1="17.5" x2="16.5" y2="17.5"/></svg>',user:'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9.9" cy="6.4" r="4.4"/><path fill="none" stroke="#000" stroke-width="1.1" d="M1.5,19 C2.3,14.5 5.8,11.2 10,11.2 C14.2,11.2 17.7,14.6 18.5,19.2"/></svg>',users:'<svg width="20" height="20" viewBox="0 0 20 20"><circle fill="none" stroke="#000" stroke-width="1.1" cx="7.7" cy="8.6" r="3.5"/><path fill="none" stroke="#000" stroke-width="1.1" d="M1,18.1 C1.7,14.6 4.4,12.1 7.6,12.1 C10.9,12.1 13.7,14.8 14.3,18.3"/><path fill="none" stroke="#000" stroke-width="1.1" d="M11.4,4 C12.8,2.4 15.4,2.8 16.3,4.7 C17.2,6.6 15.7,8.9 13.6,8.9 C16.5,8.9 18.8,11.3 19.2,14.1"/></svg>',"video-camera":'<svg width="20" height="20" viewBox="0 0 20 20"><polygon fill="none" stroke="#000" points="19.5 5.9 19.5 14.1 14.5 10.4 14.5 15.5 .5 15.5 .5 4.5 14.5 4.5 14.5 9.6 19.5 5.9"/></svg>',vimeo:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M2.065,7.59C1.84,7.367,1.654,7.082,1.468,6.838c-0.332-0.42-0.137-0.411,0.274-0.772c1.026-0.91,2.004-1.896,3.127-2.688 c1.017-0.713,2.365-1.173,3.286-0.039c0.849,1.045,0.869,2.629,1.084,3.891c0.215,1.309,0.421,2.648,0.88,3.901 c0.127,0.352,0.37,1.018,0.81,1.074c0.567,0.078,1.145-0.917,1.408-1.289c0.684-0.987,1.611-2.317,1.494-3.587 c-0.115-1.349-1.572-1.095-2.482-0.773c0.146-1.514,1.555-3.216,2.912-3.792c1.439-0.597,3.579-0.587,4.302,1.036 c0.772,1.759,0.078,3.802-0.763,5.396c-0.918,1.731-2.1,3.333-3.363,4.829c-1.114,1.329-2.432,2.787-4.093,3.422 c-1.897,0.723-3.021-0.686-3.667-2.318c-0.705-1.777-1.056-3.771-1.565-5.621C4.898,8.726,4.644,7.836,4.136,7.191 C3.473,6.358,2.72,7.141,2.065,7.59C1.977,7.502,2.115,7.551,2.065,7.59L2.065,7.59z"/></svg>',warning:'<svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="14" r="1"/><circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9"/><path d="M10.97,7.72 C10.85,9.54 10.56,11.29 10.56,11.29 C10.51,11.87 10.27,12 9.99,12 C9.69,12 9.49,11.87 9.43,11.29 C9.43,11.29 9.16,9.54 9.03,7.72 C8.96,6.54 9.03,6 9.03,6 C9.03,5.45 9.46,5.02 9.99,5 C10.53,5.01 10.97,5.44 10.97,6 C10.97,6 11.04,6.54 10.97,7.72 L10.97,7.72 Z"/></svg>',whatsapp:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M16.7,3.3c-1.8-1.8-4.1-2.8-6.7-2.8c-5.2,0-9.4,4.2-9.4,9.4c0,1.7,0.4,3.3,1.3,4.7l-1.3,4.9l5-1.3c1.4,0.8,2.9,1.2,4.5,1.2 l0,0l0,0c5.2,0,9.4-4.2,9.4-9.4C19.5,7.4,18.5,5,16.7,3.3 M10.1,17.7L10.1,17.7c-1.4,0-2.8-0.4-4-1.1l-0.3-0.2l-3,0.8l0.8-2.9 l-0.2-0.3c-0.8-1.2-1.2-2.7-1.2-4.2c0-4.3,3.5-7.8,7.8-7.8c2.1,0,4.1,0.8,5.5,2.3c1.5,1.5,2.3,3.4,2.3,5.5 C17.9,14.2,14.4,17.7,10.1,17.7 M14.4,11.9c-0.2-0.1-1.4-0.7-1.6-0.8c-0.2-0.1-0.4-0.1-0.5,0.1c-0.2,0.2-0.6,0.8-0.8,0.9 c-0.1,0.2-0.3,0.2-0.5,0.1c-0.2-0.1-1-0.4-1.9-1.2c-0.7-0.6-1.2-1.4-1.3-1.6c-0.1-0.2,0-0.4,0.1-0.5C8,8.8,8.1,8.7,8.2,8.5 c0.1-0.1,0.2-0.2,0.2-0.4c0.1-0.2,0-0.3,0-0.4C8.4,7.6,7.9,6.5,7.7,6C7.5,5.5,7.3,5.6,7.2,5.6c-0.1,0-0.3,0-0.4,0 c-0.2,0-0.4,0.1-0.6,0.3c-0.2,0.2-0.8,0.8-0.8,2c0,1.2,0.8,2.3,1,2.4c0.1,0.2,1.7,2.5,4,3.5c0.6,0.2,1,0.4,1.3,0.5 c0.6,0.2,1.1,0.2,1.5,0.1c0.5-0.1,1.4-0.6,1.6-1.1c0.2-0.5,0.2-1,0.1-1.1C14.8,12.1,14.6,12,14.4,11.9"/></svg>',wordpress:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M10,0.5c-5.2,0-9.5,4.3-9.5,9.5s4.3,9.5,9.5,9.5c5.2,0,9.5-4.3,9.5-9.5S15.2,0.5,10,0.5L10,0.5L10,0.5z M15.6,3.9h-0.1 c-0.8,0-1.4,0.7-1.4,1.5c0,0.7,0.4,1.3,0.8,1.9c0.3,0.6,0.7,1.3,0.7,2.3c0,0.7-0.3,1.5-0.6,2.7L14.1,15l-3-8.9 c0.5,0,0.9-0.1,0.9-0.1C12.5,6,12.5,5.3,12,5.4c0,0-1.3,0.1-2.2,0.1C9,5.5,7.7,5.4,7.7,5.4C7.2,5.3,7.2,6,7.6,6c0,0,0.4,0.1,0.9,0.1 l1.3,3.5L8,15L5,6.1C5.5,6.1,5.9,6,5.9,6C6.4,6,6.3,5.3,5.9,5.4c0,0-1.3,0.1-2.2,0.1c-0.2,0-0.3,0-0.5,0c1.5-2.2,4-3.7,6.9-3.7 C12.2,1.7,14.1,2.6,15.6,3.9L15.6,3.9L15.6,3.9z M2.5,6.6l3.9,10.8c-2.7-1.3-4.6-4.2-4.6-7.4C1.8,8.8,2,7.6,2.5,6.6L2.5,6.6L2.5,6.6 z M10.2,10.7l2.5,6.9c0,0,0,0.1,0.1,0.1C11.9,18,11,18.2,10,18.2c-0.8,0-1.6-0.1-2.3-0.3L10.2,10.7L10.2,10.7L10.2,10.7z M14.2,17.1 l2.5-7.3c0.5-1.2,0.6-2.1,0.6-2.9c0-0.3,0-0.6-0.1-0.8c0.6,1.2,1,2.5,1,4C18.3,13,16.6,15.7,14.2,17.1L14.2,17.1L14.2,17.1z"/></svg>',world:'<svg width="20" height="20" viewBox="0 0 20 20"><path fill="none" stroke="#000" d="M1,10.5 L19,10.5"/><path fill="none" stroke="#000" d="M2.35,15.5 L17.65,15.5"/><path fill="none" stroke="#000" d="M2.35,5.5 L17.523,5.5"/><path fill="none" stroke="#000" d="M10,19.46 L9.98,19.46 C7.31,17.33 5.61,14.141 5.61,10.58 C5.61,7.02 7.33,3.83 10,1.7 C10.01,1.7 9.99,1.7 10,1.7 L10,1.7 C12.67,3.83 14.4,7.02 14.4,10.58 C14.4,14.141 12.67,17.33 10,19.46 L10,19.46 L10,19.46 L10,19.46 Z"/><circle fill="none" stroke="#000" cx="10" cy="10.5" r="9"/></svg>',x:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="m15.08,2.1h2.68l-5.89,6.71,6.88,9.1h-5.4l-4.23-5.53-4.84,5.53H1.59l6.24-7.18L1.24,2.1h5.54l3.82,5.05,4.48-5.05Zm-.94,14.23h1.48L6,3.61h-1.6l9.73,12.71h0Z"/></svg>',xing:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M4.4,4.56 C4.24,4.56 4.11,4.61 4.05,4.72 C3.98,4.83 3.99,4.97 4.07,5.12 L5.82,8.16 L5.82,8.17 L3.06,13.04 C2.99,13.18 2.99,13.33 3.06,13.44 C3.12,13.55 3.24,13.62 3.4,13.62 L6,13.62 C6.39,13.62 6.57,13.36 6.71,13.12 C6.71,13.12 9.41,8.35 9.51,8.16 C9.49,8.14 7.72,5.04 7.72,5.04 C7.58,4.81 7.39,4.56 6.99,4.56 L4.4,4.56 L4.4,4.56 Z"/><path d="M15.3,1 C14.91,1 14.74,1.25 14.6,1.5 C14.6,1.5 9.01,11.42 8.82,11.74 C8.83,11.76 12.51,18.51 12.51,18.51 C12.64,18.74 12.84,19 13.23,19 L15.82,19 C15.98,19 16.1,18.94 16.16,18.83 C16.23,18.72 16.23,18.57 16.16,18.43 L12.5,11.74 L12.5,11.72 L18.25,1.56 C18.32,1.42 18.32,1.27 18.25,1.16 C18.21,1.06 18.08,1 17.93,1 L15.3,1 L15.3,1 Z"/></svg>',yelp:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M17.175,14.971c-0.112,0.77-1.686,2.767-2.406,3.054c-0.246,0.1-0.487,0.076-0.675-0.069\tc-0.122-0.096-2.446-3.859-2.446-3.859c-0.194-0.293-0.157-0.682,0.083-0.978c0.234-0.284,0.581-0.393,0.881-0.276\tc0.016,0.01,4.21,1.394,4.332,1.482c0.178,0.148,0.263,0.379,0.225,0.646L17.175,14.971L17.175,14.971z M11.464,10.789\tc-0.203-0.307-0.199-0.666,0.009-0.916c0,0,2.625-3.574,2.745-3.657c0.203-0.135,0.452-0.141,0.69-0.025\tc0.691,0.335,2.085,2.405,2.167,3.199v0.027c0.024,0.271-0.082,0.491-0.273,0.623c-0.132,0.083-4.43,1.155-4.43,1.155\tc-0.322,0.096-0.68-0.06-0.882-0.381L11.464,10.789z M9.475,9.563C9.32,9.609,8.848,9.757,8.269,8.817c0,0-3.916-6.16-4.007-6.351\tc-0.057-0.212,0.011-0.455,0.202-0.65C5.047,1.211,8.21,0.327,9.037,0.529c0.27,0.069,0.457,0.238,0.522,0.479\tc0.047,0.266,0.433,5.982,0.488,7.264C10.098,9.368,9.629,9.517,9.475,9.563z M9.927,19.066c-0.083,0.225-0.273,0.373-0.54,0.421\tc-0.762,0.13-3.15-0.751-3.647-1.342c-0.096-0.131-0.155-0.262-0.167-0.394c-0.011-0.095,0-0.189,0.036-0.272\tc0.061-0.155,2.917-3.538,2.917-3.538c0.214-0.272,0.595-0.355,0.952-0.213c0.345,0.13,0.56,0.428,0.536,0.749\tC10.014,14.479,9.977,18.923,9.927,19.066z M3.495,13.912c-0.235-0.009-0.444-0.148-0.568-0.382c-0.089-0.17-0.151-0.453-0.19-0.794\tC2.63,11.701,2.761,10.144,3.07,9.648c0.145-0.226,0.357-0.345,0.592-0.336c0.154,0,4.255,1.667,4.255,1.667\tc0.321,0.118,0.521,0.453,0.5,0.833c-0.023,0.37-0.236,0.655-0.551,0.738L3.495,13.912z"/></svg>',yootheme:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="m16.15,5.48c-1.37,0-2.45.61-3.11,1.54-.66-.93-1.74-1.54-3.11-1.54-1.75,0-3.03,1-3.57,2.41v-2.22h-2.01v4.45c0,.85-.31,1.35-1.18,1.35s-1.18-.5-1.18-1.35v-4.45H0v4.86c0,.7.17,1.33.53,1.82.34.49.88.85,1.6,1v3.16h2.1v-3.16c1.28-.28,1.96-1.17,2.1-2.35.52,1.44,1.81,2.48,3.59,2.48,1.37,0,2.45-.61,3.11-1.54.66.93,1.74,1.54,3.11,1.54,2.37,0,3.85-1.82,3.85-4s-1.49-4-3.85-4Zm-6.22,5.99c-1.11,0-1.85-.72-1.85-1.99s.74-1.99,1.85-1.99,1.85.72,1.85,1.99-.74,1.99-1.85,1.99Zm6.22,0c-1.11,0-1.85-.72-1.85-1.99s.74-1.99,1.85-1.99,1.85.72,1.85,1.99-.74,1.99-1.85,1.99Z"/></svg>',youtube:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M15,4.1c1,0.1,2.3,0,3,0.8c0.8,0.8,0.9,2.1,0.9,3.1C19,9.2,19,10.9,19,12c-0.1,1.1,0,2.4-0.5,3.4c-0.5,1.1-1.4,1.5-2.5,1.6 c-1.2,0.1-8.6,0.1-11,0c-1.1-0.1-2.4-0.1-3.2-1c-0.7-0.8-0.7-2-0.8-3C1,11.8,1,10.1,1,8.9c0-1.1,0-2.4,0.5-3.4C2,4.5,3,4.3,4.1,4.2 C5.3,4.1,12.6,4,15,4.1z M8,7.5v6l5.5-3L8,7.5z"/></svg>'};function i(t){i.installed||t.icon.add(e)}return"undefined"!=typeof window&&window.UIkit&&window.UIkit.use(i),i}),(()=>{var o={compile:function(s){return n.template.replace(n.pattern,function(t,e){var i=n.middleware(e,s[e],n.template);return void 0!==i?i:s[e]||t})},setOptions:function(t){n.pattern=t.pattern||n.pattern,n.template=t.template||n.template,"function"==typeof t.middleware&&(n.middleware=t.middleware)}};let n={pattern:/\{(.*?)\}/g,template:"",middleware:function(){}};var i=function(t,e){var i=e.length,s=t.length;if(i<s)return!1;if(s===i)return t===e;t:for(var n=0,r=0;n<s;n++){for(var o=t.charCodeAt(n);r<i;)if(e.charCodeAt(r++)===o)continue t;return!1}return!0},e=new function(){this.matches=function(t,e){return i(e.toLowerCase(),t.toLowerCase())}},s=new function(){this.matches=function(e,t){return!!e&&(e=e.trim().toLowerCase(),(t=t.trim().toLowerCase()).split(" ").filter(function(t){return 0<=e.indexOf(t)}).length===t.split(" ").length)}},l={put:function(t){if(d(t))return u(t);if((t=>Boolean(t)&&"[object Array]"===Object.prototype.toString.call(t))(t))return(i=>{var s=[];c();for(let t=0,e=i.length;t<e;t++)d(i[t])&&s.push(u(i[t]));return s})(t);return},clear:c,search:function(t){return t?((e,i,s,n)=>{var r=[];for(let t=0;t<e.length&&r.length<n.limit;t++){var o=((t,e,i,s)=>{for(var n in t)if(!((i,s)=>{for(let t=0,e=s.length;t<e;t++){var n=s[t];if(new RegExp(n).test(i))return 1}})(t[n],s.exclude)&&i.matches(t[n],e))return t})(e[t],i,s,n);o&&r.push(o)}return r})(a,t,h.searchStrategy,h).sort(h.sort):[]},setOptions:function(t){(h=t||{}).fuzzy=t.fuzzy||!1,h.limit=t.limit||10,h.searchStrategy=t.fuzzy?e:s,h.sort=t.sort||r,h.exclude=t.exclude||[]}};function r(){return 0}let a=[],h={};function c(){return a.length=0,a}function d(t){return Boolean(t)&&"[object Object]"===Object.prototype.toString.call(t)}function u(t){return a.push(t),a}h.fuzzy=!1,h.limit=10,h.searchStrategy=h.fuzzy?e:s,h.sort=r,h.exclude=[];var g={load:function(t,e){var i=window.XMLHttpRequest?new window.XMLHttpRequest:new ActiveXObject("Microsoft.XMLHTTP");i.open("GET",t,!0),i.onreadystatechange=((t,e)=>function(){if(4===t.readyState&&200===t.status)try{e(null,JSON.parse(t.responseText))}catch(t){e(t,null)}})(i,e),i.send()}};function p(t){if(!((e=t)&&void 0!==e.required&&e.required instanceof Array))throw new Error("-- OptionsValidator: required options missing");var e;if(!(this instanceof p))return new p(t);let s=t.required;this.getRequiredOptions=function(){return s},this.validate=function(e){let i=[];return s.forEach(function(t){void 0===e[t]&&i.push(t)}),i}}var f={merge:function(t,e){var i={};for(var s in t)i[s]=t[s],void 0!==e[s]&&(i[s]=e[s]);return i},isJSON:function(t){try{return t instanceof Object&&JSON.parse(JSON.stringify(t))?!0:!1}catch(t){return!1}}};{var t=window;let r={searchInput:null,resultsContainer:null,json:[],success:Function.prototype,searchResultTemplate:'<li><a href="{url}" title="{desc}">{title}</a></li>',templateMiddleware:Function.prototype,sortMiddleware:function(){return 0},noResultsText:"No results found",limit:10,fuzzy:!1,debounceTime:null,exclude:[]},i,e=function(t,e){e?(clearTimeout(i),i=setTimeout(t,e)):t.call()},s=["searchInput","resultsContainer","json"],n=p({required:s});function v(t){l.put(t),r.searchInput.addEventListener("input",function(t){-1===[13,16,20,37,38,39,40,91].indexOf(t.which)&&(m(),e(function(){x(t.target.value)},r.debounceTime))})}function m(){r.resultsContainer.innerHTML=""}function w(t){r.resultsContainer.innerHTML+=t}function x(t){if((n=t)&&0<n.length){m();var e=l.search(t),i=t,s=e.length;if(0===s)w(r.noResultsText);else for(let t=0;t<s;t++)e[t].query=i,w(o.compile(e[t]))}var n}function y(t){throw new Error("SimpleJekyllSearch --- "+t)}t.SimpleJekyllSearch=function(t){0<n.validate(t).length&&y("You must specify the following required options: "+s),r=f.merge(r,t),o.setOptions({template:r.searchResultTemplate,middleware:r.templateMiddleware}),l.setOptions({fuzzy:r.fuzzy,limit:r.limit,sort:r.sortMiddleware,exclude:r.exclude}),f.isJSON(r.json)?v(r.json):(i=r.json,g.load(i,function(t,e){t&&y("failed to get JSON ("+i+")"),v(e)}));var i,t={search:x};return"function"==typeof r.success&&r.success.call(t),t}}})();
+(function(global, factory) {
+    typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define("uikit", factory) : global.UIkit = factory();
+})(this, function() {
+    "use strict";
+    function bind(fn, context) {
+        return function(a) {
+            var l = arguments.length;
+            return l ? l > 1 ? fn.apply(context, arguments) : fn.call(context, a) : fn.call(context);
+        };
+    }
+    var ref = Object.prototype;
+    var hasOwnProperty = ref.hasOwnProperty;
+    function hasOwn(obj, key) {
+        return hasOwnProperty.call(obj, key);
+    }
+    var hyphenateRe = /([a-z\d])([A-Z])/g;
+    function hyphenate(str) {
+        return str.replace(hyphenateRe, "$1-$2").toLowerCase();
+    }
+    var camelizeRE = /-(\w)/g;
+    function camelize(str) {
+        return str.replace(camelizeRE, toUpper);
+    }
+    function toUpper(_, c) {
+        return c ? c.toUpperCase() : "";
+    }
+    function ucfirst(str) {
+        return str.length ? toUpper(null, str.charAt(0)) + str.slice(1) : "";
+    }
+    var strPrototype = String.prototype;
+    var startsWithFn = strPrototype.startsWith || function(search) {
+        return this.lastIndexOf(search, 0) === 0;
+    };
+    function startsWith(str, search) {
+        return startsWithFn.call(str, search);
+    }
+    var endsWithFn = strPrototype.endsWith || function(search) {
+        return this.substr(-search.length) === search;
+    };
+    function endsWith(str, search) {
+        return endsWithFn.call(str, search);
+    }
+    var includesFn = function(search) {
+        return ~this.indexOf(search);
+    };
+    var includesStr = strPrototype.includes || includesFn;
+    var includesArray = Array.prototype.includes || includesFn;
+    function includes(obj, search) {
+        return obj && (isString(obj) ? includesStr : includesArray).call(obj, search);
+    }
+    var isArray = Array.isArray;
+    function isFunction(obj) {
+        return typeof obj === "function";
+    }
+    function isObject(obj) {
+        return obj !== null && typeof obj === "object";
+    }
+    function isPlainObject(obj) {
+        return isObject(obj) && Object.getPrototypeOf(obj) === Object.prototype;
+    }
+    function isWindow(obj) {
+        return isObject(obj) && obj === obj.window;
+    }
+    function isDocument(obj) {
+        return isObject(obj) && obj.nodeType === 9;
+    }
+    function isJQuery(obj) {
+        return isObject(obj) && !!obj.jquery;
+    }
+    function isNode(element) {
+        return element instanceof Node || isObject(element) && element.nodeType === 1;
+    }
+    function isNodeCollection(element) {
+        return element instanceof NodeList || element instanceof HTMLCollection;
+    }
+    function isBoolean(value) {
+        return typeof value === "boolean";
+    }
+    function isString(value) {
+        return typeof value === "string";
+    }
+    function isNumber(value) {
+        return typeof value === "number";
+    }
+    function isNumeric(value) {
+        return isNumber(value) || isString(value) && !isNaN(value - parseFloat(value));
+    }
+    function isUndefined(value) {
+        return value === void 0;
+    }
+    function toBoolean(value) {
+        return isBoolean(value) ? value : value === "true" || value === "1" || value === "" ? true : value === "false" || value === "0" ? false : value;
+    }
+    function toNumber(value) {
+        var number = Number(value);
+        return !isNaN(number) ? number : false;
+    }
+    function toFloat(value) {
+        return parseFloat(value) || 0;
+    }
+    function toNode(element) {
+        return isNode(element) || isWindow(element) || isDocument(element) ? element : isNodeCollection(element) || isJQuery(element) ? element[0] : isArray(element) ? toNode(element[0]) : null;
+    }
+    var arrayProto = Array.prototype;
+    function toNodes(element) {
+        return isNode(element) ? [ element ] : isNodeCollection(element) ? arrayProto.slice.call(element) : isArray(element) ? element.map(toNode).filter(Boolean) : isJQuery(element) ? element.toArray() : [];
+    }
+    function toList(value) {
+        return isArray(value) ? value : isString(value) ? value.split(/,(?![^(]*\))/).map(function(value) {
+            return isNumeric(value) ? toNumber(value) : toBoolean(value.trim());
+        }) : [ value ];
+    }
+    function toMs(time) {
+        return !time ? 0 : endsWith(time, "ms") ? toFloat(time) : toFloat(time) * 1e3;
+    }
+    function swap(value, a, b) {
+        return value.replace(new RegExp(a + "|" + b, "mg"), function(match) {
+            return match === a ? b : a;
+        });
+    }
+    var assign = Object.assign || function(target) {
+        var args = [], len = arguments.length - 1;
+        while (len-- > 0) args[len] = arguments[len + 1];
+        target = Object(target);
+        for (var i = 0; i < args.length; i++) {
+            var source = args[i];
+            if (source !== null) {
+                for (var key in source) {
+                    if (hasOwn(source, key)) {
+                        target[key] = source[key];
+                    }
+                }
+            }
+        }
+        return target;
+    };
+    function each(obj, cb) {
+        for (var key in obj) {
+            if (cb.call(obj[key], obj[key], key) === false) {
+                break;
+            }
+        }
+    }
+    function sortBy(collection, prop) {
+        return collection.sort(function(a, b) {
+            return a[prop] - b[prop];
+        });
+    }
+    function clamp(number, min, max) {
+        if (min === void 0) min = 0;
+        if (max === void 0) max = 1;
+        return Math.min(Math.max(number, min), max);
+    }
+    function noop() {}
+    function intersectRect(r1, r2) {
+        return r1.left <= r2.right && r2.left <= r1.right && r1.top <= r2.bottom && r2.top <= r1.bottom;
+    }
+    function pointInRect(point, rect) {
+        return intersectRect({
+            top: point.y,
+            bottom: point.y,
+            left: point.x,
+            right: point.x
+        }, rect);
+    }
+    var Dimensions = {
+        ratio: function ratio(dimensions, prop, value) {
+            var obj;
+            var aProp = prop === "width" ? "height" : "width";
+            return obj = {}, obj[aProp] = Math.round(value * dimensions[aProp] / dimensions[prop]), 
+            obj[prop] = value, obj;
+        },
+        contain: function contain(dimensions, maxDimensions) {
+            var this$1 = this;
+            dimensions = assign({}, dimensions);
+            each(dimensions, function(_, prop) {
+                return dimensions = dimensions[prop] > maxDimensions[prop] ? this$1.ratio(dimensions, prop, maxDimensions[prop]) : dimensions;
+            });
+            return dimensions;
+        },
+        cover: function cover(dimensions, maxDimensions) {
+            var this$1 = this;
+            dimensions = this.contain(dimensions, maxDimensions);
+            each(dimensions, function(_, prop) {
+                return dimensions = dimensions[prop] < maxDimensions[prop] ? this$1.ratio(dimensions, prop, maxDimensions[prop]) : dimensions;
+            });
+            return dimensions;
+        }
+    };
+    function attr(element, name, value) {
+        if (isObject(name)) {
+            for (var key in name) {
+                attr(element, key, name[key]);
+            }
+            return;
+        }
+        if (isUndefined(value)) {
+            element = toNode(element);
+            return element && element.getAttribute(name);
+        } else {
+            toNodes(element).forEach(function(element) {
+                if (isFunction(value)) {
+                    value = value.call(element, attr(element, name));
+                }
+                if (value === null) {
+                    removeAttr(element, name);
+                } else {
+                    element.setAttribute(name, value);
+                }
+            });
+        }
+    }
+    function hasAttr(element, name) {
+        return toNodes(element).some(function(element) {
+            return element.hasAttribute(name);
+        });
+    }
+    function removeAttr(element, name) {
+        element = toNodes(element);
+        name.split(" ").forEach(function(name) {
+            return element.forEach(function(element) {
+                return element.removeAttribute(name);
+            });
+        });
+    }
+    function filterAttr(element, attribute, pattern, replacement) {
+        attr(element, attribute, function(value) {
+            return value ? value.replace(pattern, replacement) : value;
+        });
+    }
+    function data(element, attribute) {
+        for (var i = 0, attrs = [ attribute, "data-" + attribute ]; i < attrs.length; i++) {
+            if (hasAttr(element, attrs[i])) {
+                return attr(element, attrs[i]);
+            }
+        }
+    }
+    function query(selector, context) {
+        return toNode(selector) || find(selector, isContextSelector(selector) ? context : document);
+    }
+    function queryAll(selector, context) {
+        var nodes = toNodes(selector);
+        return nodes.length && nodes || findAll(selector, isContextSelector(selector) ? context : document);
+    }
+    function find(selector, context) {
+        return toNode(_query(selector, context, "querySelector"));
+    }
+    function findAll(selector, context) {
+        return toNodes(_query(selector, context, "querySelectorAll"));
+    }
+    function _query(selector, context, queryFn) {
+        if (context === void 0) context = document;
+        if (!selector || !isString(selector)) {
+            return null;
+        }
+        selector = selector.replace(contextSanitizeRe, "$1 *");
+        var removes;
+        if (isContextSelector(selector)) {
+            removes = [];
+            selector = selector.split(",").map(function(selector, i) {
+                var ctx = context;
+                selector = selector.trim();
+                if (selector[0] === "!") {
+                    var selectors = selector.substr(1).trim().split(" ");
+                    ctx = closest(context.parentNode, selectors[0]);
+                    selector = selectors.slice(1).join(" ");
+                }
+                if (!ctx) {
+                    return null;
+                }
+                if (!ctx.id) {
+                    ctx.id = "uk-" + Date.now() + i;
+                    removes.push(function() {
+                        return removeAttr(ctx, "id");
+                    });
+                }
+                return "#" + escape(ctx.id) + " " + selector;
+            }).filter(Boolean).join(",");
+            context = document;
+        }
+        try {
+            return context[queryFn](selector);
+        } catch (e) {
+            return null;
+        } finally {
+            removes && removes.forEach(function(remove) {
+                return remove();
+            });
+        }
+    }
+    var contextSelectorRe = /(^|,)\s*[!>+~]/;
+    var contextSanitizeRe = /([!>+~])(?=\s+[!>+~]|\s*$)/g;
+    function isContextSelector(selector) {
+        return isString(selector) && selector.match(contextSelectorRe);
+    }
+    var elProto = Element.prototype;
+    var matchesFn = elProto.matches || elProto.webkitMatchesSelector || elProto.msMatchesSelector;
+    function matches(element, selector) {
+        return toNodes(element).some(function(element) {
+            return matchesFn.call(element, selector);
+        });
+    }
+    var closestFn = elProto.closest || function(selector) {
+        var ancestor = this;
+        do {
+            if (matches(ancestor, selector)) {
+                return ancestor;
+            }
+            ancestor = ancestor.parentNode;
+        } while (ancestor && ancestor.nodeType === 1);
+    };
+    function closest(element, selector) {
+        if (startsWith(selector, ">")) {
+            selector = selector.slice(1);
+        }
+        return isNode(element) ? element.parentNode && closestFn.call(element, selector) : toNodes(element).map(function(element) {
+            return element.parentNode && closestFn.call(element, selector);
+        }).filter(Boolean);
+    }
+    function parents(element, selector) {
+        var elements = [];
+        var parent = toNode(element).parentNode;
+        while (parent && parent.nodeType === 1) {
+            if (matches(parent, selector)) {
+                elements.push(parent);
+            }
+            parent = parent.parentNode;
+        }
+        return elements;
+    }
+    var escapeFn = window.CSS && CSS.escape || function(css) {
+        return css.replace(/([^\x7f-\uFFFF\w-])/g, function(match) {
+            return "\\" + match;
+        });
+    };
+    function escape(css) {
+        return isString(css) ? escapeFn.call(null, css) : "";
+    }
+    var voidElements = {
+        area: true,
+        base: true,
+        br: true,
+        col: true,
+        embed: true,
+        hr: true,
+        img: true,
+        input: true,
+        keygen: true,
+        link: true,
+        menuitem: true,
+        meta: true,
+        param: true,
+        source: true,
+        track: true,
+        wbr: true
+    };
+    function isVoidElement(element) {
+        return toNodes(element).some(function(element) {
+            return voidElements[element.tagName.toLowerCase()];
+        });
+    }
+    function isVisible(element) {
+        return toNodes(element).some(function(element) {
+            return element.offsetHeight || element.getBoundingClientRect().height;
+        });
+    }
+    var selInput = "input,select,textarea,button";
+    function isInput(element) {
+        return toNodes(element).some(function(element) {
+            return matches(element, selInput);
+        });
+    }
+    function filter(element, selector) {
+        return toNodes(element).filter(function(element) {
+            return matches(element, selector);
+        });
+    }
+    function within(element, selector) {
+        return !isString(selector) ? element === selector || (isDocument(selector) ? selector.documentElement : toNode(selector)).contains(toNode(element)) : matches(element, selector) || closest(element, selector);
+    }
+    function on() {
+        var args = [], len = arguments.length;
+        while (len--) args[len] = arguments[len];
+        var ref = getArgs(args);
+        var target = ref[0];
+        var type = ref[1];
+        var selector = ref[2];
+        var listener = ref[3];
+        var useCapture = ref[4];
+        target = toEventTarget(target);
+        if (selector) {
+            listener = delegate(target, selector, listener);
+        }
+        if (listener.length > 1) {
+            listener = detail(listener);
+        }
+        type.split(" ").forEach(function(type) {
+            return target && target.addEventListener(type, listener, useCapture);
+        });
+        return function() {
+            return off(target, type, listener, useCapture);
+        };
+    }
+    function off(target, type, listener, useCapture) {
+        if (useCapture === void 0) useCapture = false;
+        target = toEventTarget(target);
+        target && type.split(" ").forEach(function(type) {
+            return target.removeEventListener(type, listener, useCapture);
+        });
+    }
+    function once() {
+        var args = [], len = arguments.length;
+        while (len--) args[len] = arguments[len];
+        var ref = getArgs(args);
+        var element = ref[0];
+        var type = ref[1];
+        var selector = ref[2];
+        var listener = ref[3];
+        var useCapture = ref[4];
+        var condition = ref[5];
+        var off = on(element, type, selector, function(e) {
+            var result = !condition || condition(e);
+            if (result) {
+                off();
+                listener(e, result);
+            }
+        }, useCapture);
+        return off;
+    }
+    function trigger(target, event, detail) {
+        return toEventTargets(target).reduce(function(notCanceled, target) {
+            return notCanceled && target.dispatchEvent(createEvent(event, true, true, detail));
+        }, true);
+    }
+    function createEvent(e, bubbles, cancelable, detail) {
+        if (bubbles === void 0) bubbles = true;
+        if (cancelable === void 0) cancelable = false;
+        if (isString(e)) {
+            var event = document.createEvent("CustomEvent");
+            event.initCustomEvent(e, bubbles, cancelable, detail);
+            e = event;
+        }
+        return e;
+    }
+    function getArgs(args) {
+        if (isString(args[0])) {
+            args[0] = find(args[0]);
+        }
+        if (isFunction(args[2])) {
+            args.splice(2, 0, false);
+        }
+        return args;
+    }
+    function delegate(element, selector, listener) {
+        var this$1 = this;
+        return function(e) {
+            var target = e.target;
+            var current = selector[0] === ">" ? findAll(selector, element).reverse().filter(function(element) {
+                return within(target, element);
+            })[0] : closest(target, selector);
+            if (current) {
+                e.delegate = element;
+                e.current = current;
+                listener.call(this$1, e);
+            }
+        };
+    }
+    function detail(listener) {
+        return function(e) {
+            return isArray(e.detail) ? listener.apply(listener, [ e ].concat(e.detail)) : listener(e);
+        };
+    }
+    function isEventTarget(target) {
+        return "EventTarget" in window ? target instanceof EventTarget : target && "addEventListener" in target;
+    }
+    function toEventTarget(target) {
+        return isEventTarget(target) ? target : toNode(target);
+    }
+    function toEventTargets(target) {
+        return isEventTarget(target) ? [ target ] : isArray(target) ? target.map(toEventTarget).filter(Boolean) : toNodes(target);
+    }
+    function preventClick() {
+        var timer = setTimeout(once(document, "click", function(e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            clearTimeout(timer);
+        }, true));
+        trigger(document, "touchcancel");
+    }
+    var Promise = "Promise" in window ? window.Promise : PromiseFn;
+    var Deferred = function Deferred() {
+        var this$1 = this;
+        this.promise = new Promise(function(resolve, reject) {
+            this$1.reject = reject;
+            this$1.resolve = resolve;
+        });
+    };
+    var RESOLVED = 0;
+    var REJECTED = 1;
+    var PENDING = 2;
+    var async = "setImmediate" in window ? setImmediate : setTimeout;
+    function PromiseFn(executor) {
+        this.state = PENDING;
+        this.value = undefined;
+        this.deferred = [];
+        var promise = this;
+        try {
+            executor(function(x) {
+                promise.resolve(x);
+            }, function(r) {
+                promise.reject(r);
+            });
+        } catch (e) {
+            promise.reject(e);
+        }
+    }
+    PromiseFn.reject = function(r) {
+        return new PromiseFn(function(resolve, reject) {
+            reject(r);
+        });
+    };
+    PromiseFn.resolve = function(x) {
+        return new PromiseFn(function(resolve, reject) {
+            resolve(x);
+        });
+    };
+    PromiseFn.all = function all(iterable) {
+        return new PromiseFn(function(resolve, reject) {
+            var result = [];
+            var count = 0;
+            if (iterable.length === 0) {
+                resolve(result);
+            }
+            function resolver(i) {
+                return function(x) {
+                    result[i] = x;
+                    count += 1;
+                    if (count === iterable.length) {
+                        resolve(result);
+                    }
+                };
+            }
+            for (var i = 0; i < iterable.length; i += 1) {
+                PromiseFn.resolve(iterable[i]).then(resolver(i), reject);
+            }
+        });
+    };
+    PromiseFn.race = function race(iterable) {
+        return new PromiseFn(function(resolve, reject) {
+            for (var i = 0; i < iterable.length; i += 1) {
+                PromiseFn.resolve(iterable[i]).then(resolve, reject);
+            }
+        });
+    };
+    var p = PromiseFn.prototype;
+    p.resolve = function resolve(x) {
+        var promise = this;
+        if (promise.state === PENDING) {
+            if (x === promise) {
+                throw new TypeError("Promise settled with itself.");
+            }
+            var called = false;
+            try {
+                var then = x && x.then;
+                if (x !== null && isObject(x) && isFunction(then)) {
+                    then.call(x, function(x) {
+                        if (!called) {
+                            promise.resolve(x);
+                        }
+                        called = true;
+                    }, function(r) {
+                        if (!called) {
+                            promise.reject(r);
+                        }
+                        called = true;
+                    });
+                    return;
+                }
+            } catch (e) {
+                if (!called) {
+                    promise.reject(e);
+                }
+                return;
+            }
+            promise.state = RESOLVED;
+            promise.value = x;
+            promise.notify();
+        }
+    };
+    p.reject = function reject(reason) {
+        var promise = this;
+        if (promise.state === PENDING) {
+            if (reason === promise) {
+                throw new TypeError("Promise settled with itself.");
+            }
+            promise.state = REJECTED;
+            promise.value = reason;
+            promise.notify();
+        }
+    };
+    p.notify = function notify() {
+        var this$1 = this;
+        async(function() {
+            if (this$1.state !== PENDING) {
+                while (this$1.deferred.length) {
+                    var ref = this$1.deferred.shift();
+                    var onResolved = ref[0];
+                    var onRejected = ref[1];
+                    var resolve = ref[2];
+                    var reject = ref[3];
+                    try {
+                        if (this$1.state === RESOLVED) {
+                            if (isFunction(onResolved)) {
+                                resolve(onResolved.call(undefined, this$1.value));
+                            } else {
+                                resolve(this$1.value);
+                            }
+                        } else if (this$1.state === REJECTED) {
+                            if (isFunction(onRejected)) {
+                                resolve(onRejected.call(undefined, this$1.value));
+                            } else {
+                                reject(this$1.value);
+                            }
+                        }
+                    } catch (e) {
+                        reject(e);
+                    }
+                }
+            }
+        });
+    };
+    p.then = function then(onResolved, onRejected) {
+        var this$1 = this;
+        return new PromiseFn(function(resolve, reject) {
+            this$1.deferred.push([ onResolved, onRejected, resolve, reject ]);
+            this$1.notify();
+        });
+    };
+    p.catch = function(onRejected) {
+        return this.then(undefined, onRejected);
+    };
+    function ajax(url, options) {
+        return new Promise(function(resolve, reject) {
+            var env = assign({
+                data: null,
+                method: "GET",
+                headers: {},
+                xhr: new XMLHttpRequest(),
+                beforeSend: noop,
+                responseType: ""
+            }, options);
+            env.beforeSend(env);
+            var xhr = env.xhr;
+            for (var prop in env) {
+                if (prop in xhr) {
+                    try {
+                        xhr[prop] = env[prop];
+                    } catch (e) {}
+                }
+            }
+            xhr.open(env.method.toUpperCase(), url);
+            for (var header in env.headers) {
+                xhr.setRequestHeader(header, env.headers[header]);
+            }
+            on(xhr, "load", function() {
+                if (xhr.status === 0 || xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+                    resolve(xhr);
+                } else {
+                    reject(assign(Error(xhr.statusText), {
+                        xhr: xhr,
+                        status: xhr.status
+                    }));
+                }
+            });
+            on(xhr, "error", function() {
+                return reject(assign(Error("Network Error"), {
+                    xhr: xhr
+                }));
+            });
+            on(xhr, "timeout", function() {
+                return reject(assign(Error("Network Timeout"), {
+                    xhr: xhr
+                }));
+            });
+            xhr.send(env.data);
+        });
+    }
+    function getImage(src) {
+        return new Promise(function(resolve, reject) {
+            var img = new Image();
+            img.onerror = reject;
+            img.onload = function() {
+                return resolve(img);
+            };
+            img.src = src;
+        });
+    }
+    function isReady() {
+        return document.readyState === "complete" || document.readyState !== "loading" && !document.documentElement.doScroll;
+    }
+    function ready(fn) {
+        if (isReady()) {
+            fn();
+            return;
+        }
+        var handle = function() {
+            unbind1();
+            unbind2();
+            fn();
+        };
+        var unbind1 = on(document, "DOMContentLoaded", handle);
+        var unbind2 = on(window, "load", handle);
+    }
+    function index(element, ref) {
+        return ref ? toNodes(element).indexOf(toNode(ref)) : toNodes((element = toNode(element)) && element.parentNode.children).indexOf(element);
+    }
+    function getIndex(i, elements, current, finite) {
+        if (current === void 0) current = 0;
+        if (finite === void 0) finite = false;
+        elements = toNodes(elements);
+        var length = elements.length;
+        i = isNumeric(i) ? toNumber(i) : i === "next" ? current + 1 : i === "previous" ? current - 1 : index(elements, i);
+        if (finite) {
+            return clamp(i, 0, length - 1);
+        }
+        i %= length;
+        return i < 0 ? i + length : i;
+    }
+    function empty(element) {
+        element = toNode(element);
+        element.innerHTML = "";
+        return element;
+    }
+    function html(parent, html) {
+        parent = toNode(parent);
+        return isUndefined(html) ? parent.innerHTML : append(parent.hasChildNodes() ? empty(parent) : parent, html);
+    }
+    function prepend(parent, element) {
+        parent = toNode(parent);
+        if (!parent.hasChildNodes()) {
+            return append(parent, element);
+        } else {
+            return insertNodes(element, function(element) {
+                return parent.insertBefore(element, parent.firstChild);
+            });
+        }
+    }
+    function append(parent, element) {
+        parent = toNode(parent);
+        return insertNodes(element, function(element) {
+            return parent.appendChild(element);
+        });
+    }
+    function before(ref, element) {
+        ref = toNode(ref);
+        return insertNodes(element, function(element) {
+            return ref.parentNode.insertBefore(element, ref);
+        });
+    }
+    function after(ref, element) {
+        ref = toNode(ref);
+        return insertNodes(element, function(element) {
+            return ref.nextSibling ? before(ref.nextSibling, element) : append(ref.parentNode, element);
+        });
+    }
+    function insertNodes(element, fn) {
+        element = isString(element) ? fragment(element) : element;
+        return element ? "length" in element ? toNodes(element).map(fn) : fn(element) : null;
+    }
+    function remove(element) {
+        toNodes(element).map(function(element) {
+            return element.parentNode && element.parentNode.removeChild(element);
+        });
+    }
+    function wrapAll(element, structure) {
+        structure = toNode(before(element, structure));
+        while (structure.firstChild) {
+            structure = structure.firstChild;
+        }
+        append(structure, element);
+        return structure;
+    }
+    function wrapInner(element, structure) {
+        return toNodes(toNodes(element).map(function(element) {
+            return element.hasChildNodes ? wrapAll(toNodes(element.childNodes), structure) : append(element, structure);
+        }));
+    }
+    function unwrap(element) {
+        toNodes(element).map(function(element) {
+            return element.parentNode;
+        }).filter(function(value, index, self) {
+            return self.indexOf(value) === index;
+        }).forEach(function(parent) {
+            before(parent, parent.childNodes);
+            remove(parent);
+        });
+    }
+    var fragmentRE = /^\s*<(\w+|!)[^>]*>/;
+    var singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
+    function fragment(html) {
+        var matches = singleTagRE.exec(html);
+        if (matches) {
+            return document.createElement(matches[1]);
+        }
+        var container = document.createElement("div");
+        if (fragmentRE.test(html)) {
+            container.insertAdjacentHTML("beforeend", html.trim());
+        } else {
+            container.textContent = html;
+        }
+        return container.childNodes.length > 1 ? toNodes(container.childNodes) : container.firstChild;
+    }
+    function apply(node, fn) {
+        if (!node || node.nodeType !== 1) {
+            return;
+        }
+        fn(node);
+        node = node.firstElementChild;
+        while (node) {
+            apply(node, fn);
+            node = node.nextElementSibling;
+        }
+    }
+    function addClass(element) {
+        var args = [], len = arguments.length - 1;
+        while (len-- > 0) args[len] = arguments[len + 1];
+        apply$1(element, args, "add");
+    }
+    function removeClass(element) {
+        var args = [], len = arguments.length - 1;
+        while (len-- > 0) args[len] = arguments[len + 1];
+        apply$1(element, args, "remove");
+    }
+    function removeClasses(element, cls) {
+        filterAttr(element, "class", new RegExp("(^|\\s)" + cls + "(?!\\S)", "g"), "");
+    }
+    function replaceClass(element) {
+        var args = [], len = arguments.length - 1;
+        while (len-- > 0) args[len] = arguments[len + 1];
+        args[0] && removeClass(element, args[0]);
+        args[1] && addClass(element, args[1]);
+    }
+    function hasClass(element, cls) {
+        return toNodes(element).some(function(element) {
+            return element.classList.contains(cls);
+        });
+    }
+    function toggleClass(element) {
+        var args = [], len = arguments.length - 1;
+        while (len-- > 0) args[len] = arguments[len + 1];
+        if (!args.length) {
+            return;
+        }
+        args = getArgs$1(args);
+        var force = !isString(args[args.length - 1]) ? args.pop() : [];
+        args = args.filter(Boolean);
+        toNodes(element).forEach(function(ref) {
+            var classList = ref.classList;
+            for (var i = 0; i < args.length; i++) {
+                supports.Force ? classList.toggle.apply(classList, [ args[i] ].concat(force)) : classList[(!isUndefined(force) ? force : !classList.contains(args[i])) ? "add" : "remove"](args[i]);
+            }
+        });
+    }
+    function apply$1(element, args, fn) {
+        args = getArgs$1(args).filter(Boolean);
+        args.length && toNodes(element).forEach(function(ref) {
+            var classList = ref.classList;
+            supports.Multiple ? classList[fn].apply(classList, args) : args.forEach(function(cls) {
+                return classList[fn](cls);
+            });
+        });
+    }
+    function getArgs$1(args) {
+        return args.reduce(function(args, arg) {
+            return args.concat.call(args, isString(arg) && includes(arg, " ") ? arg.trim().split(" ") : arg);
+        }, []);
+    }
+    var supports = {};
+    (function() {
+        var list = document.createElement("_").classList;
+        if (list) {
+            list.add("a", "b");
+            list.toggle("c", false);
+            supports.Multiple = list.contains("b");
+            supports.Force = !list.contains("c");
+        }
+        list = null;
+    })();
+    var cssNumber = {
+        "animation-iteration-count": true,
+        "column-count": true,
+        "fill-opacity": true,
+        "flex-grow": true,
+        "flex-shrink": true,
+        "font-weight": true,
+        "line-height": true,
+        opacity: true,
+        order: true,
+        orphans: true,
+        widows: true,
+        "z-index": true,
+        zoom: true
+    };
+    function css(element, property, value) {
+        return toNodes(element).map(function(element) {
+            if (isString(property)) {
+                property = propName(property);
+                if (isUndefined(value)) {
+                    return getStyle(element, property);
+                } else if (!value && value !== 0) {
+                    element.style.removeProperty(property);
+                } else {
+                    element.style[property] = isNumeric(value) && !cssNumber[property] ? value + "px" : value;
+                }
+            } else if (isArray(property)) {
+                var styles = getStyles(element);
+                return property.reduce(function(props, property) {
+                    props[property] = styles[propName(property)];
+                    return props;
+                }, {});
+            } else if (isObject(property)) {
+                each(property, function(value, property) {
+                    return css(element, property, value);
+                });
+            }
+            return element;
+        })[0];
+    }
+    function getStyles(element, pseudoElt) {
+        element = toNode(element);
+        return element.ownerDocument.defaultView.getComputedStyle(element, pseudoElt);
+    }
+    function getStyle(element, property, pseudoElt) {
+        return getStyles(element, pseudoElt)[property];
+    }
+    var vars = {};
+    function getCssVar(name) {
+        if (!(name in vars)) {
+            var element = append(document.documentElement, document.createElement("div"));
+            addClass(element, "var-" + name);
+            try {
+                vars[name] = getStyle(element, "content", ":before").replace(/^["'](.*)["']$/, "$1");
+                vars[name] = JSON.parse(vars[name]);
+            } catch (e) {}
+            document.documentElement.removeChild(element);
+        }
+        return vars[name];
+    }
+    var cssProps = {};
+    function propName(name) {
+        var ret = cssProps[name];
+        if (!ret) {
+            ret = cssProps[name] = vendorPropName(name) || name;
+        }
+        return ret;
+    }
+    var cssPrefixes = [ "webkit", "moz", "ms" ];
+    var ref$1 = document.createElement("_");
+    var style = ref$1.style;
+    function vendorPropName(name) {
+        name = hyphenate(name);
+        if (name in style) {
+            return name;
+        }
+        var i = cssPrefixes.length, prefixedName;
+        while (i--) {
+            prefixedName = "-" + cssPrefixes[i] + "-" + name;
+            if (prefixedName in style) {
+                return prefixedName;
+            }
+        }
+    }
+    function transition(element, props, duration, timing) {
+        if (duration === void 0) duration = 400;
+        if (timing === void 0) timing = "linear";
+        return Promise.all(toNodes(element).map(function(element) {
+            return new Promise(function(resolve, reject) {
+                for (var name in props) {
+                    var value = css(element, name);
+                    if (value === "") {
+                        css(element, name, value);
+                    }
+                }
+                var timer = setTimeout(function() {
+                    return trigger(element, "transitionend");
+                }, duration);
+                once(element, "transitionend transitioncanceled", function(ref) {
+                    var type = ref.type;
+                    clearTimeout(timer);
+                    removeClass(element, "uk-transition");
+                    css(element, {
+                        "transition-property": "",
+                        "transition-duration": "",
+                        "transition-timing-function": ""
+                    });
+                    type === "transitioncanceled" ? reject() : resolve();
+                }, false, function(ref) {
+                    var target = ref.target;
+                    return element === target;
+                });
+                addClass(element, "uk-transition");
+                css(element, assign({
+                    "transition-property": Object.keys(props).map(propName).join(","),
+                    "transition-duration": duration + "ms",
+                    "transition-timing-function": timing
+                }, props));
+            });
+        }));
+    }
+    var Transition = {
+        start: transition,
+        stop: function stop(element) {
+            trigger(element, "transitionend");
+            return Promise.resolve();
+        },
+        cancel: function cancel(element) {
+            trigger(element, "transitioncanceled");
+        },
+        inProgress: function inProgress(element) {
+            return hasClass(element, "uk-transition");
+        }
+    };
+    var animationPrefix = "uk-animation-";
+    var clsCancelAnimation = "uk-cancel-animation";
+    function animate(element, animation, duration, origin, out) {
+        var arguments$1 = arguments;
+        if (duration === void 0) duration = 200;
+        return Promise.all(toNodes(element).map(function(element) {
+            return new Promise(function(resolve, reject) {
+                if (hasClass(element, clsCancelAnimation)) {
+                    requestAnimationFrame(function() {
+                        return Promise.resolve().then(function() {
+                            return animate.apply(void 0, arguments$1).then(resolve, reject);
+                        });
+                    });
+                    return;
+                }
+                var cls = animation + " " + animationPrefix + (out ? "leave" : "enter");
+                if (startsWith(animation, animationPrefix)) {
+                    if (origin) {
+                        cls += " uk-transform-origin-" + origin;
+                    }
+                    if (out) {
+                        cls += " " + animationPrefix + "reverse";
+                    }
+                }
+                reset();
+                once(element, "animationend animationcancel", function(ref) {
+                    var type = ref.type;
+                    var hasReset = false;
+                    if (type === "animationcancel") {
+                        reject();
+                        reset();
+                    } else {
+                        resolve();
+                        Promise.resolve().then(function() {
+                            hasReset = true;
+                            reset();
+                        });
+                    }
+                    requestAnimationFrame(function() {
+                        if (!hasReset) {
+                            addClass(element, clsCancelAnimation);
+                            requestAnimationFrame(function() {
+                                return removeClass(element, clsCancelAnimation);
+                            });
+                        }
+                    });
+                }, false, function(ref) {
+                    var target = ref.target;
+                    return element === target;
+                });
+                css(element, "animationDuration", duration + "ms");
+                addClass(element, cls);
+                function reset() {
+                    css(element, "animationDuration", "");
+                    removeClasses(element, animationPrefix + "\\S*");
+                }
+            });
+        }));
+    }
+    var inProgress = new RegExp(animationPrefix + "(enter|leave)");
+    var Animation = {
+        in: function in$1(element, animation, duration, origin) {
+            return animate(element, animation, duration, origin, false);
+        },
+        out: function out(element, animation, duration, origin) {
+            return animate(element, animation, duration, origin, true);
+        },
+        inProgress: function inProgress$1(element) {
+            return inProgress.test(attr(element, "class"));
+        },
+        cancel: function cancel(element) {
+            trigger(element, "animationcancel");
+        }
+    };
+    function $(selector, context) {
+        return !isString(selector) ? toNode(selector) : isHtml(selector) ? toNode(fragment(selector)) : find(selector, context);
+    }
+    function $$(selector, context) {
+        return !isString(selector) ? toNodes(selector) : isHtml(selector) ? toNodes(fragment(selector)) : findAll(selector, context);
+    }
+    function isHtml(str) {
+        return str[0] === "<" || str.match(/^\s*</);
+    }
+    var dirs = {
+        width: [ "x", "left", "right" ],
+        height: [ "y", "top", "bottom" ]
+    };
+    function positionAt(element, target, elAttach, targetAttach, elOffset, targetOffset, flip, boundary) {
+        elAttach = getPos(elAttach);
+        targetAttach = getPos(targetAttach);
+        var flipped = {
+            element: elAttach,
+            target: targetAttach
+        };
+        if (!element || !target) {
+            return flipped;
+        }
+        var dim = getDimensions(element);
+        var targetDim = getDimensions(target);
+        var position = targetDim;
+        moveTo(position, elAttach, dim, -1);
+        moveTo(position, targetAttach, targetDim, 1);
+        elOffset = getOffsets(elOffset, dim.width, dim.height);
+        targetOffset = getOffsets(targetOffset, targetDim.width, targetDim.height);
+        elOffset["x"] += targetOffset["x"];
+        elOffset["y"] += targetOffset["y"];
+        position.left += elOffset["x"];
+        position.top += elOffset["y"];
+        boundary = getDimensions(boundary || window$1(element));
+        if (flip) {
+            each(dirs, function(ref, prop) {
+                var dir = ref[0];
+                var align = ref[1];
+                var alignFlip = ref[2];
+                if (!(flip === true || includes(flip, dir))) {
+                    return;
+                }
+                var elemOffset = elAttach[dir] === align ? -dim[prop] : elAttach[dir] === alignFlip ? dim[prop] : 0;
+                var targetOffset = targetAttach[dir] === align ? targetDim[prop] : targetAttach[dir] === alignFlip ? -targetDim[prop] : 0;
+                if (position[align] < boundary[align] || position[align] + dim[prop] > boundary[alignFlip]) {
+                    var centerOffset = dim[prop] / 2;
+                    var centerTargetOffset = targetAttach[dir] === "center" ? -targetDim[prop] / 2 : 0;
+                    elAttach[dir] === "center" && (apply(centerOffset, centerTargetOffset) || apply(-centerOffset, -centerTargetOffset)) || apply(elemOffset, targetOffset);
+                }
+                function apply(elemOffset, targetOffset) {
+                    var newVal = position[align] + elemOffset + targetOffset - elOffset[dir] * 2;
+                    if (newVal >= boundary[align] && newVal + dim[prop] <= boundary[alignFlip]) {
+                        position[align] = newVal;
+                        [ "element", "target" ].forEach(function(el) {
+                            flipped[el][dir] = !elemOffset ? flipped[el][dir] : flipped[el][dir] === dirs[prop][1] ? dirs[prop][2] : dirs[prop][1];
+                        });
+                        return true;
+                    }
+                }
+            });
+        }
+        offset(element, position);
+        return flipped;
+    }
+    function offset(element, coordinates) {
+        element = toNode(element);
+        if (coordinates) {
+            var currentOffset = offset(element);
+            var pos = css(element, "position");
+            [ "left", "top" ].forEach(function(prop) {
+                if (prop in coordinates) {
+                    var value = css(element, prop);
+                    element.style[prop] = coordinates[prop] - currentOffset[prop] + toFloat(pos === "absolute" && value === "auto" ? position(element)[prop] : value) + "px";
+                }
+            });
+            return;
+        }
+        return getDimensions(element);
+    }
+    function getDimensions(element) {
+        element = toNode(element);
+        var ref = window$1(element);
+        var top = ref.pageYOffset;
+        var left = ref.pageXOffset;
+        if (isWindow(element)) {
+            var height = element.innerHeight;
+            var width = element.innerWidth;
+            return {
+                top: top,
+                left: left,
+                height: height,
+                width: width,
+                bottom: top + height,
+                right: left + width
+            };
+        }
+        var display = false;
+        if (!isVisible(element)) {
+            display = element.style.display;
+            element.style.display = "block";
+        }
+        var rect = element.getBoundingClientRect();
+        if (display !== false) {
+            element.style.display = display;
+        }
+        return {
+            height: rect.height,
+            width: rect.width,
+            top: rect.top + top,
+            left: rect.left + left,
+            bottom: rect.bottom + top,
+            right: rect.right + left
+        };
+    }
+    function position(element) {
+        element = toNode(element);
+        var parent = offsetParent(element);
+        var parentOffset = parent === docEl(element) ? {
+            top: 0,
+            left: 0
+        } : offset(parent);
+        var ref = [ "top", "left" ].reduce(function(props, prop) {
+            var propName$$1 = ucfirst(prop);
+            props[prop] -= parentOffset[prop] + (toFloat(css(element, "margin" + propName$$1)) || 0) + (toFloat(css(parent, "border" + propName$$1 + "Width")) || 0);
+            return props;
+        }, offset(element));
+        var top = ref.top;
+        var left = ref.left;
+        return {
+            top: top,
+            left: left
+        };
+    }
+    function offsetParent(element) {
+        var parent = toNode(element).offsetParent;
+        while (parent && css(parent, "position") === "static") {
+            parent = parent.offsetParent;
+        }
+        return parent || docEl(element);
+    }
+    var height = dimension("height");
+    var width = dimension("width");
+    function dimension(prop) {
+        var propName$$1 = ucfirst(prop);
+        return function(element, value) {
+            element = toNode(element);
+            if (isUndefined(value)) {
+                if (isWindow(element)) {
+                    return element["inner" + propName$$1];
+                }
+                if (isDocument(element)) {
+                    var doc = element.documentElement;
+                    return Math.max(doc["offset" + propName$$1], doc["scroll" + propName$$1]);
+                }
+                value = css(element, prop);
+                value = value === "auto" ? element["offset" + propName$$1] : toFloat(value) || 0;
+                return value - boxModelAdjust(prop, element);
+            } else {
+                css(element, prop, !value && value !== 0 ? "" : +value + boxModelAdjust(prop, element) + "px");
+            }
+        };
+    }
+    function boxModelAdjust(prop, element) {
+        return css(element, "boxSizing") === "border-box" ? dirs[prop].slice(1).map(ucfirst).reduce(function(value, prop) {
+            return value + toFloat(css(element, "padding" + prop)) + toFloat(css(element, "border" + prop + "Width"));
+        }, 0) : 0;
+    }
+    function moveTo(position, attach, dim, factor) {
+        each(dirs, function(ref, prop) {
+            var dir = ref[0];
+            var align = ref[1];
+            var alignFlip = ref[2];
+            if (attach[dir] === alignFlip) {
+                position[align] += dim[prop] * factor;
+            } else if (attach[dir] === "center") {
+                position[align] += dim[prop] * factor / 2;
+            }
+        });
+    }
+    function getPos(pos) {
+        var x = /left|center|right/;
+        var y = /top|center|bottom/;
+        pos = (pos || "").split(" ");
+        if (pos.length === 1) {
+            pos = x.test(pos[0]) ? pos.concat([ "center" ]) : y.test(pos[0]) ? [ "center" ].concat(pos) : [ "center", "center" ];
+        }
+        return {
+            x: x.test(pos[0]) ? pos[0] : "center",
+            y: y.test(pos[1]) ? pos[1] : "center"
+        };
+    }
+    function getOffsets(offsets, width, height) {
+        var ref = (offsets || "").split(" ");
+        var x = ref[0];
+        var y = ref[1];
+        return {
+            x: x ? toFloat(x) * (endsWith(x, "%") ? width / 100 : 1) : 0,
+            y: y ? toFloat(y) * (endsWith(y, "%") ? height / 100 : 1) : 0
+        };
+    }
+    function flipPosition(pos) {
+        switch (pos) {
+          case "left":
+            return "right";
+
+          case "right":
+            return "left";
+
+          case "top":
+            return "bottom";
+
+          case "bottom":
+            return "top";
+
+          default:
+            return pos;
+        }
+    }
+    function isInView(element, top, left) {
+        if (top === void 0) top = 0;
+        if (left === void 0) left = 0;
+        element = toNode(element);
+        var win = window$1(element);
+        return isVisible(element) && intersectRect(element.getBoundingClientRect(), {
+            top: top,
+            left: left,
+            bottom: top + height(win),
+            right: left + width(win)
+        });
+    }
+    function scrolledOver(element) {
+        if (!isVisible(element)) {
+            return 0;
+        }
+        element = toNode(element);
+        var win = window$1(element);
+        var doc = document$1(element);
+        var elHeight = element.offsetHeight;
+        var top = positionTop(element);
+        var vp = height(win);
+        var vh = vp + Math.min(0, top - vp);
+        var diff = Math.max(0, vp - (height(doc) - (top + elHeight)));
+        return clamp((vh + win.pageYOffset - top) / ((vh + (elHeight - (diff < vp ? diff : 0))) / 100) / 100);
+    }
+    function positionTop(element) {
+        var top = 0;
+        do {
+            top += element.offsetTop;
+        } while (element = element.offsetParent);
+        return top;
+    }
+    function window$1(element) {
+        return isWindow(element) ? element : document$1(element).defaultView;
+    }
+    function document$1(element) {
+        return toNode(element).ownerDocument;
+    }
+    function docEl(element) {
+        return document$1(element).documentElement;
+    }
+    var isRtl = attr(document.documentElement, "dir") === "rtl";
+    var hasTouchEvents = "ontouchstart" in window;
+    var hasPointerEvents = window.PointerEvent;
+    var hasTouch = hasTouchEvents || window.DocumentTouch && document instanceof DocumentTouch || navigator.maxTouchPoints;
+    var pointerDown = !hasTouch ? "mousedown" : "mousedown " + (hasTouchEvents ? "touchstart" : "pointerdown");
+    var pointerMove = !hasTouch ? "mousemove" : "mousemove " + (hasTouchEvents ? "touchmove" : "pointermove");
+    var pointerUp = !hasTouch ? "mouseup" : "mouseup " + (hasTouchEvents ? "touchend" : "pointerup");
+    var pointerEnter = hasTouch && hasPointerEvents ? "pointerenter" : "mouseenter";
+    var pointerLeave = hasTouch && hasPointerEvents ? "pointerleave" : "mouseleave";
+    var fastdom = {
+        reads: [],
+        writes: [],
+        read: function read(task) {
+            this.reads.push(task);
+            scheduleFlush();
+            return task;
+        },
+        write: function write(task) {
+            this.writes.push(task);
+            scheduleFlush();
+            return task;
+        },
+        clear: function clear(task) {
+            return remove$1(this.reads, task) || remove$1(this.writes, task);
+        },
+        flush: function flush() {
+            runTasks(this.reads);
+            runTasks(this.writes.splice(0, this.writes.length));
+            this.scheduled = false;
+            if (this.reads.length || this.writes.length) {
+                scheduleFlush();
+            }
+        }
+    };
+    function scheduleFlush() {
+        if (!fastdom.scheduled) {
+            fastdom.scheduled = true;
+            requestAnimationFrame(fastdom.flush.bind(fastdom));
+        }
+    }
+    function runTasks(tasks) {
+        var task;
+        while (task = tasks.shift()) {
+            task();
+        }
+    }
+    function remove$1(array, item) {
+        var index = array.indexOf(item);
+        return !!~index && !!array.splice(index, 1);
+    }
+    function MouseTracker() {}
+    MouseTracker.prototype = {
+        positions: [],
+        position: null,
+        init: function init() {
+            var this$1 = this;
+            this.positions = [];
+            this.position = null;
+            var ticking = false;
+            this.unbind = on(document, "mousemove", function(e) {
+                if (ticking) {
+                    return;
+                }
+                setTimeout(function() {
+                    var time = Date.now();
+                    var ref = this$1.positions;
+                    var length = ref.length;
+                    if (length && time - this$1.positions[length - 1].time > 100) {
+                        this$1.positions.splice(0, length);
+                    }
+                    this$1.positions.push({
+                        time: time,
+                        x: e.pageX,
+                        y: e.pageY
+                    });
+                    if (this$1.positions.length > 5) {
+                        this$1.positions.shift();
+                    }
+                    ticking = false;
+                }, 5);
+                ticking = true;
+            });
+        },
+        cancel: function cancel() {
+            if (this.unbind) {
+                this.unbind();
+            }
+        },
+        movesTo: function movesTo(target) {
+            if (this.positions.length < 2) {
+                return false;
+            }
+            var p = offset(target);
+            var position$$1 = this.positions[this.positions.length - 1];
+            var ref = this.positions;
+            var prevPos = ref[0];
+            if (p.left <= position$$1.x && position$$1.x <= p.right && p.top <= position$$1.y && position$$1.y <= p.bottom) {
+                return false;
+            }
+            var points = [ [ {
+                x: p.left,
+                y: p.top
+            }, {
+                x: p.right,
+                y: p.bottom
+            } ], [ {
+                x: p.right,
+                y: p.top
+            }, {
+                x: p.left,
+                y: p.bottom
+            } ] ];
+            if (p.right <= position$$1.x) {} else if (p.left >= position$$1.x) {
+                points[0].reverse();
+                points[1].reverse();
+            } else if (p.bottom <= position$$1.y) {
+                points[0].reverse();
+            } else if (p.top >= position$$1.y) {
+                points[1].reverse();
+            }
+            return !!points.reduce(function(result, point) {
+                return result + (slope(prevPos, point[0]) < slope(position$$1, point[0]) && slope(prevPos, point[1]) > slope(position$$1, point[1]));
+            }, 0);
+        }
+    };
+    function slope(a, b) {
+        return (b.y - a.y) / (b.x - a.x);
+    }
+    var strats = {};
+    strats.args = strats.events = strats.init = strats.created = strats.beforeConnect = strats.connected = strats.ready = strats.beforeDisconnect = strats.disconnected = strats.destroy = function(parentVal, childVal) {
+        parentVal = parentVal && !isArray(parentVal) ? [ parentVal ] : parentVal;
+        return childVal ? parentVal ? parentVal.concat(childVal) : isArray(childVal) ? childVal : [ childVal ] : parentVal;
+    };
+    strats.update = function(parentVal, childVal) {
+        return strats.args(parentVal, isFunction(childVal) ? {
+            read: childVal
+        } : childVal);
+    };
+    strats.props = function(parentVal, childVal) {
+        if (isArray(childVal)) {
+            childVal = childVal.reduce(function(value, key) {
+                value[key] = String;
+                return value;
+            }, {});
+        }
+        return strats.methods(parentVal, childVal);
+    };
+    strats.computed = strats.defaults = strats.methods = function(parentVal, childVal) {
+        return childVal ? parentVal ? assign({}, parentVal, childVal) : childVal : parentVal;
+    };
+    var defaultStrat = function(parentVal, childVal) {
+        return isUndefined(childVal) ? parentVal : childVal;
+    };
+    function mergeOptions(parent, child) {
+        var options = {};
+        if (child.mixins) {
+            for (var i = 0, l = child.mixins.length; i < l; i++) {
+                parent = mergeOptions(parent, child.mixins[i]);
+            }
+        }
+        for (var key in parent) {
+            mergeKey(key);
+        }
+        for (var key$1 in child) {
+            if (!hasOwn(parent, key$1)) {
+                mergeKey(key$1);
+            }
+        }
+        function mergeKey(key) {
+            options[key] = (strats[key] || defaultStrat)(parent[key], child[key]);
+        }
+        return options;
+    }
+    var id = 0;
+    var Player = function Player(el) {
+        this.id = ++id;
+        this.el = toNode(el);
+    };
+    Player.prototype.isVideo = function isVideo() {
+        return this.isYoutube() || this.isVimeo() || this.isHTML5();
+    };
+    Player.prototype.isHTML5 = function isHTML5() {
+        return this.el.tagName === "VIDEO";
+    };
+    Player.prototype.isIFrame = function isIFrame() {
+        return this.el.tagName === "IFRAME";
+    };
+    Player.prototype.isYoutube = function isYoutube() {
+        return this.isIFrame() && !!this.el.src.match(/\/\/.*?youtube(-nocookie)?\.[a-z]+\/(watch\?v=[^&\s]+|embed)|youtu\.be\/.*/);
+    };
+    Player.prototype.isVimeo = function isVimeo() {
+        return this.isIFrame() && !!this.el.src.match(/vimeo\.com\/video\/.*/);
+    };
+    Player.prototype.enableApi = function enableApi() {
+        var this$1 = this;
+        if (this.ready) {
+            return this.ready;
+        }
+        var youtube = this.isYoutube();
+        var vimeo = this.isVimeo();
+        var poller;
+        if (youtube || vimeo) {
+            return this.ready = new Promise(function(resolve) {
+                once(this$1.el, "load", function() {
+                    if (youtube) {
+                        var listener = function() {
+                            return post(this$1.el, {
+                                event: "listening",
+                                id: this$1.id
+                            });
+                        };
+                        poller = setInterval(listener, 100);
+                        listener();
+                    }
+                });
+                listen(function(data$$1) {
+                    return youtube && data$$1.id === this$1.id && data$$1.event === "onReady" || vimeo && Number(data$$1.player_id) === this$1.id;
+                }).then(function() {
+                    resolve();
+                    poller && clearInterval(poller);
+                });
+                attr(this$1.el, "src", "" + this$1.el.src + (includes(this$1.el.src, "?") ? "&" : "?") + (youtube ? "enablejsapi=1" : "api=1&player_id=" + this$1.id));
+            });
+        }
+        return Promise.resolve();
+    };
+    Player.prototype.play = function play() {
+        var this$1 = this;
+        if (!this.isVideo()) {
+            return;
+        }
+        if (this.isIFrame()) {
+            this.enableApi().then(function() {
+                return post(this$1.el, {
+                    func: "playVideo",
+                    method: "play"
+                });
+            });
+        } else if (this.isHTML5()) {
+            try {
+                var promise = this.el.play();
+                if (promise) {
+                    promise.catch(noop);
+                }
+            } catch (e) {}
+        }
+    };
+    Player.prototype.pause = function pause() {
+        var this$1 = this;
+        if (!this.isVideo()) {
+            return;
+        }
+        if (this.isIFrame()) {
+            this.enableApi().then(function() {
+                return post(this$1.el, {
+                    func: "pauseVideo",
+                    method: "pause"
+                });
+            });
+        } else if (this.isHTML5()) {
+            this.el.pause();
+        }
+    };
+    Player.prototype.mute = function mute() {
+        var this$1 = this;
+        if (!this.isVideo()) {
+            return;
+        }
+        if (this.isIFrame()) {
+            this.enableApi().then(function() {
+                return post(this$1.el, {
+                    func: "mute",
+                    method: "setVolume",
+                    value: 0
+                });
+            });
+        } else if (this.isHTML5()) {
+            this.el.muted = true;
+            attr(this.el, "muted", "");
+        }
+    };
+    function post(el, cmd) {
+        try {
+            el.contentWindow.postMessage(JSON.stringify(assign({
+                event: "command"
+            }, cmd)), "*");
+        } catch (e) {}
+    }
+    function listen(cb) {
+        return new Promise(function(resolve) {
+            once(window, "message", function(_, data$$1) {
+                return resolve(data$$1);
+            }, false, function(ref) {
+                var data$$1 = ref.data;
+                if (!data$$1 || !isString(data$$1)) {
+                    return;
+                }
+                try {
+                    data$$1 = JSON.parse(data$$1);
+                } catch (e) {
+                    return;
+                }
+                return data$$1 && cb(data$$1);
+            });
+        });
+    }
+    var touch = {};
+    var clickTimeout;
+    var swipeTimeout;
+    var tapTimeout;
+    var clicked;
+    function swipeDirection(ref) {
+        var x1 = ref.x1;
+        var x2 = ref.x2;
+        var y1 = ref.y1;
+        var y2 = ref.y2;
+        return Math.abs(x1 - x2) >= Math.abs(y1 - y2) ? x1 - x2 > 0 ? "Left" : "Right" : y1 - y2 > 0 ? "Up" : "Down";
+    }
+    function cancelAll() {
+        clickTimeout && clearTimeout(clickTimeout);
+        swipeTimeout && clearTimeout(swipeTimeout);
+        tapTimeout && clearTimeout(tapTimeout);
+        clickTimeout = swipeTimeout = tapTimeout = null;
+        touch = {};
+    }
+    ready(function() {
+        on(document, "click", function() {
+            return clicked = true;
+        }, true);
+        on(document, pointerDown, function(e) {
+            var target = e.target;
+            var ref = getPos$1(e);
+            var x = ref.x;
+            var y = ref.y;
+            var now = Date.now();
+            var type = getType(e.type);
+            if (touch.type && touch.type !== type) {
+                return;
+            }
+            touch.el = "tagName" in target ? target : target.parentNode;
+            clickTimeout && clearTimeout(clickTimeout);
+            touch.x1 = x;
+            touch.y1 = y;
+            if (touch.last && now - touch.last <= 250) {
+                touch = {};
+            }
+            touch.type = type;
+            touch.last = now;
+            clicked = e.button > 0;
+        });
+        on(document, pointerMove, function(e) {
+            if (e.defaultPrevented) {
+                return;
+            }
+            var ref = getPos$1(e);
+            var x = ref.x;
+            var y = ref.y;
+            touch.x2 = x;
+            touch.y2 = y;
+        });
+        on(document, pointerUp, function(ref) {
+            var type = ref.type;
+            var target = ref.target;
+            if (touch.type !== getType(type)) {
+                return;
+            }
+            if (touch.x2 && Math.abs(touch.x1 - touch.x2) > 30 || touch.y2 && Math.abs(touch.y1 - touch.y2) > 30) {
+                swipeTimeout = setTimeout(function() {
+                    if (touch.el) {
+                        trigger(touch.el, "swipe");
+                        trigger(touch.el, "swipe" + swipeDirection(touch));
+                    }
+                    touch = {};
+                });
+            } else if ("last" in touch) {
+                tapTimeout = setTimeout(function() {
+                    return trigger(touch.el, "tap");
+                });
+                if (touch.el && type !== "mouseup" && within(target, touch.el)) {
+                    clickTimeout = setTimeout(function() {
+                        clickTimeout = null;
+                        if (touch.el && !clicked) {
+                            trigger(touch.el, "click");
+                        }
+                        touch = {};
+                    }, 350);
+                }
+            } else {
+                touch = {};
+            }
+        });
+        on(document, "touchcancel", cancelAll);
+        on(window, "scroll", cancelAll);
+    });
+    var touching = false;
+    on(document, "touchstart", function() {
+        return touching = true;
+    }, true);
+    on(document, "click", function() {
+        touching = false;
+    });
+    on(document, "touchcancel", function() {
+        return touching = false;
+    }, true);
+    function isTouch(e) {
+        return touching || e.pointerType === "touch";
+    }
+    function getPos$1(e) {
+        var touches = e.touches;
+        var changedTouches = e.changedTouches;
+        var ref = touches && touches[0] || changedTouches && changedTouches[0] || e;
+        var x = ref.pageX;
+        var y = ref.pageY;
+        return {
+            x: x,
+            y: y
+        };
+    }
+    function getType(type) {
+        return type.slice(0, 5);
+    }
+    var util = Object.freeze({
+        ajax: ajax,
+        getImage: getImage,
+        transition: transition,
+        Transition: Transition,
+        animate: animate,
+        Animation: Animation,
+        attr: attr,
+        hasAttr: hasAttr,
+        removeAttr: removeAttr,
+        filterAttr: filterAttr,
+        data: data,
+        addClass: addClass,
+        removeClass: removeClass,
+        removeClasses: removeClasses,
+        replaceClass: replaceClass,
+        hasClass: hasClass,
+        toggleClass: toggleClass,
+        $: $,
+        $$: $$,
+        positionAt: positionAt,
+        offset: offset,
+        position: position,
+        height: height,
+        width: width,
+        flipPosition: flipPosition,
+        isInView: isInView,
+        scrolledOver: scrolledOver,
+        isReady: isReady,
+        ready: ready,
+        index: index,
+        getIndex: getIndex,
+        empty: empty,
+        html: html,
+        prepend: prepend,
+        append: append,
+        before: before,
+        after: after,
+        remove: remove,
+        wrapAll: wrapAll,
+        wrapInner: wrapInner,
+        unwrap: unwrap,
+        fragment: fragment,
+        apply: apply,
+        isRtl: isRtl,
+        hasTouch: hasTouch,
+        pointerDown: pointerDown,
+        pointerMove: pointerMove,
+        pointerUp: pointerUp,
+        pointerEnter: pointerEnter,
+        pointerLeave: pointerLeave,
+        on: on,
+        off: off,
+        once: once,
+        trigger: trigger,
+        createEvent: createEvent,
+        toEventTargets: toEventTargets,
+        preventClick: preventClick,
+        fastdom: fastdom,
+        isVoidElement: isVoidElement,
+        isVisible: isVisible,
+        selInput: selInput,
+        isInput: isInput,
+        filter: filter,
+        within: within,
+        bind: bind,
+        hasOwn: hasOwn,
+        hyphenate: hyphenate,
+        camelize: camelize,
+        ucfirst: ucfirst,
+        startsWith: startsWith,
+        endsWith: endsWith,
+        includes: includes,
+        isArray: isArray,
+        isFunction: isFunction,
+        isObject: isObject,
+        isPlainObject: isPlainObject,
+        isWindow: isWindow,
+        isDocument: isDocument,
+        isJQuery: isJQuery,
+        isNode: isNode,
+        isNodeCollection: isNodeCollection,
+        isBoolean: isBoolean,
+        isString: isString,
+        isNumber: isNumber,
+        isNumeric: isNumeric,
+        isUndefined: isUndefined,
+        toBoolean: toBoolean,
+        toNumber: toNumber,
+        toFloat: toFloat,
+        toNode: toNode,
+        toNodes: toNodes,
+        toList: toList,
+        toMs: toMs,
+        swap: swap,
+        assign: assign,
+        each: each,
+        sortBy: sortBy,
+        clamp: clamp,
+        noop: noop,
+        intersectRect: intersectRect,
+        pointInRect: pointInRect,
+        Dimensions: Dimensions,
+        MouseTracker: MouseTracker,
+        mergeOptions: mergeOptions,
+        Player: Player,
+        Promise: Promise,
+        Deferred: Deferred,
+        query: query,
+        queryAll: queryAll,
+        find: find,
+        findAll: findAll,
+        matches: matches,
+        closest: closest,
+        parents: parents,
+        escape: escape,
+        css: css,
+        getStyles: getStyles,
+        getStyle: getStyle,
+        getCssVar: getCssVar,
+        propName: propName,
+        isTouch: isTouch,
+        getPos: getPos$1
+    });
+    function componentAPI(UIkit) {
+        var DATA = UIkit.data;
+        UIkit.components = {};
+        UIkit.component = function(id, options) {
+            var name = camelize(id);
+            if (isPlainObject(options)) {
+                options.name = name;
+                options = UIkit.extend(options);
+            } else if (isUndefined(options)) {
+                return UIkit.components[name];
+            } else {
+                options.options.name = name;
+            }
+            UIkit.components[name] = options;
+            UIkit[name] = function(element, data) {
+                var i = arguments.length, argsArray = Array(i);
+                while (i--) argsArray[i] = arguments[i];
+                if (isPlainObject(element)) {
+                    return new UIkit.components[name]({
+                        data: element
+                    });
+                }
+                if (UIkit.components[name].options.functional) {
+                    return new UIkit.components[name]({
+                        data: [].concat(argsArray)
+                    });
+                }
+                return element && element.nodeType ? init(element) : $$(element).map(init)[0];
+                function init(element) {
+                    var cmp = UIkit.getComponent(element, name);
+                    if (cmp && data) {
+                        cmp.$reset(data);
+                    }
+                    return cmp || new UIkit.components[name]({
+                        el: element,
+                        data: data || {}
+                    });
+                }
+            };
+            if (UIkit._initialized && !options.options.functional) {
+                fastdom.read(function() {
+                    return UIkit[name]("[uk-" + id + "],[data-uk-" + id + "]");
+                });
+            }
+            return UIkit.components[name];
+        };
+        UIkit.getComponents = function(element) {
+            return element && element[DATA] || {};
+        };
+        UIkit.getComponent = function(element, name) {
+            return UIkit.getComponents(element)[name];
+        };
+        UIkit.connect = function(node) {
+            if (node[DATA]) {
+                for (var name in node[DATA]) {
+                    node[DATA][name]._callConnected();
+                }
+            }
+            for (var i = 0; i < node.attributes.length; i++) {
+                var name$1 = getComponentName(node.attributes[i].name);
+                if (name$1 && name$1 in UIkit.components) {
+                    UIkit[name$1](node);
+                }
+            }
+        };
+        UIkit.disconnect = function(node) {
+            for (var name in node[DATA]) {
+                node[DATA][name]._callDisconnected();
+            }
+        };
+    }
+    function getComponentName(attribute) {
+        return startsWith(attribute, "uk-") || startsWith(attribute, "data-uk-") ? camelize(attribute.replace("data-uk-", "").replace("uk-", "")) : false;
+    }
+    function boot(UIkit) {
+        var connect = UIkit.connect;
+        var disconnect = UIkit.disconnect;
+        if (!("MutationObserver" in window)) {
+            return;
+        }
+        if (document.body) {
+            init();
+        } else {
+            new MutationObserver(function() {
+                if (document.body) {
+                    this.disconnect();
+                    init();
+                }
+            }).observe(document, {
+                childList: true,
+                subtree: true
+            });
+        }
+        function init() {
+            apply(document.body, connect);
+            fastdom.flush();
+            new MutationObserver(function(mutations) {
+                return mutations.forEach(applyMutation);
+            }).observe(document, {
+                childList: true,
+                subtree: true,
+                characterData: true,
+                attributes: true
+            });
+            UIkit._initialized = true;
+        }
+        function applyMutation(mutation) {
+            var target = mutation.target;
+            var type = mutation.type;
+            var update = type !== "attributes" ? applyChildList(mutation) : applyAttribute(mutation);
+            update && UIkit.update(target);
+        }
+        function applyAttribute(ref) {
+            var target = ref.target;
+            var attributeName = ref.attributeName;
+            if (attributeName === "href") {
+                return true;
+            }
+            var name = getComponentName(attributeName);
+            if (!name || !(name in UIkit.components)) {
+                return;
+            }
+            if (hasAttr(target, attributeName)) {
+                UIkit[name](target);
+                return true;
+            }
+            var component = UIkit.getComponent(target, name);
+            if (component) {
+                component.$destroy();
+                return true;
+            }
+        }
+        function applyChildList(ref) {
+            var addedNodes = ref.addedNodes;
+            var removedNodes = ref.removedNodes;
+            for (var i = 0; i < addedNodes.length; i++) {
+                apply(addedNodes[i], connect);
+            }
+            for (var i$1 = 0; i$1 < removedNodes.length; i$1++) {
+                apply(removedNodes[i$1], disconnect);
+            }
+            return true;
+        }
+        function apply(node, fn) {
+            if (node.nodeType !== 1 || hasAttr(node, "uk-no-boot")) {
+                return;
+            }
+            fn(node);
+            node = node.firstElementChild;
+            while (node) {
+                var next = node.nextElementSibling;
+                apply(node, fn);
+                node = next;
+            }
+        }
+    }
+    function globalAPI(UIkit) {
+        var DATA = UIkit.data;
+        UIkit.use = function(plugin) {
+            if (plugin.installed) {
+                return;
+            }
+            plugin.call(null, this);
+            plugin.installed = true;
+            return this;
+        };
+        UIkit.mixin = function(mixin, component) {
+            component = (isString(component) ? UIkit.components[component] : component) || this;
+            mixin = mergeOptions({}, mixin);
+            mixin.mixins = component.options.mixins;
+            delete component.options.mixins;
+            component.options = mergeOptions(mixin, component.options);
+        };
+        UIkit.extend = function(options) {
+            options = options || {};
+            var Super = this;
+            var Sub = function UIkitComponent(options) {
+                this._init(options);
+            };
+            Sub.prototype = Object.create(Super.prototype);
+            Sub.prototype.constructor = Sub;
+            Sub.options = mergeOptions(Super.options, options);
+            Sub["super"] = Super;
+            Sub.extend = Super.extend;
+            return Sub;
+        };
+        UIkit.update = function(element, e) {
+            e = createEvent(e || "update");
+            element = element ? toNode(element) : document.body;
+            apply(element, function(element) {
+                return update(element[DATA], e);
+            });
+            while (element && element.parentNode) {
+                update(element.parentNode[DATA], e);
+                element = element.parentNode;
+            }
+        };
+        var container;
+        Object.defineProperty(UIkit, "container", {
+            get: function get() {
+                return container || document.body;
+            },
+            set: function set(element) {
+                container = $(element);
+            }
+        });
+        function update(data, e) {
+            if (!data) {
+                return;
+            }
+            for (var name in data) {
+                if (data[name]._isReady) {
+                    data[name]._callUpdate(e);
+                }
+            }
+        }
+    }
+    function hooksAPI(UIkit) {
+        UIkit.prototype._callHook = function(hook) {
+            var this$1 = this;
+            var handlers = this.$options[hook];
+            if (handlers) {
+                handlers.forEach(function(handler) {
+                    return handler.call(this$1);
+                });
+            }
+        };
+        UIkit.prototype._callConnected = function() {
+            var this$1 = this;
+            if (this._connected) {
+                return;
+            }
+            this._data = {};
+            this._callHook("beforeConnect");
+            this._connected = true;
+            this._initEvents();
+            this._initObserver();
+            this._callHook("connected");
+            if (!this._isReady) {
+                ready(function() {
+                    return this$1._callReady();
+                });
+            }
+            this._callUpdate();
+        };
+        UIkit.prototype._callDisconnected = function() {
+            if (!this._connected) {
+                return;
+            }
+            this._callHook("beforeDisconnect");
+            if (this._observer) {
+                this._observer.disconnect();
+                this._observer = null;
+            }
+            this._unbindEvents();
+            this._callHook("disconnected");
+            this._connected = false;
+        };
+        UIkit.prototype._callReady = function() {
+            if (this._isReady) {
+                return;
+            }
+            this._isReady = true;
+            this._callHook("ready");
+            this._resetComputeds();
+            this._callUpdate();
+        };
+        UIkit.prototype._callUpdate = function(e) {
+            var this$1 = this;
+            e = createEvent(e || "update");
+            var type = e.type;
+            if (includes([ "update", "load", "resize" ], type)) {
+                this._resetComputeds();
+            }
+            var updates = this.$options.update;
+            var ref = this._frames;
+            var reads = ref.reads;
+            var writes = ref.writes;
+            if (!updates) {
+                return;
+            }
+            updates.forEach(function(ref, i) {
+                var read = ref.read;
+                var write = ref.write;
+                var events = ref.events;
+                if (type !== "update" && !includes(events, type)) {
+                    return;
+                }
+                if (read && !includes(fastdom.reads, reads[i])) {
+                    reads[i] = fastdom.read(function() {
+                        var result = read.call(this$1, this$1._data, e);
+                        if (result === false && write) {
+                            fastdom.clear(writes[i]);
+                            delete writes[i];
+                        } else if (isPlainObject(result)) {
+                            assign(this$1._data, result);
+                        }
+                        delete reads[i];
+                    });
+                }
+                if (write && !includes(fastdom.writes, writes[i])) {
+                    writes[i] = fastdom.write(function() {
+                        write.call(this$1, this$1._data, e);
+                        delete writes[i];
+                    });
+                }
+            });
+        };
+    }
+    function stateAPI(UIkit) {
+        var uid = 0;
+        UIkit.prototype.props = {};
+        UIkit.prototype._init = function(options) {
+            options = options || {};
+            options = this.$options = mergeOptions(this.constructor.options, options, this);
+            this.$el = null;
+            this.$name = UIkit.prefix + hyphenate(this.$options.name);
+            this.$props = {};
+            this._frames = {
+                reads: {},
+                writes: {}
+            };
+            this._events = [];
+            this._uid = uid++;
+            this._initData();
+            this._initMethods();
+            this._initComputeds();
+            this._callHook("created");
+            if (options.el) {
+                this.$mount(options.el);
+            }
+        };
+        UIkit.prototype._initData = function() {
+            var this$1 = this;
+            var ref = this.$options;
+            var defaults = ref.defaults;
+            var data$$1 = ref.data;
+            if (data$$1 === void 0) data$$1 = {};
+            var args = ref.args;
+            if (args === void 0) args = [];
+            var props = ref.props;
+            if (props === void 0) props = {};
+            var el = ref.el;
+            if (args.length && isArray(data$$1)) {
+                data$$1 = data$$1.slice(0, args.length).reduce(function(data$$1, value, index) {
+                    if (isPlainObject(value)) {
+                        assign(data$$1, value);
+                    } else {
+                        data$$1[args[index]] = value;
+                    }
+                    return data$$1;
+                }, {});
+            }
+            for (var key in assign({}, defaults, props)) {
+                this$1.$props[key] = this$1[key] = hasOwn(data$$1, key) && !isUndefined(data$$1[key]) ? coerce(props[key], data$$1[key], el) : defaults ? defaults[key] && isArray(defaults[key]) ? defaults[key].concat() : defaults[key] : null;
+            }
+        };
+        UIkit.prototype._initMethods = function() {
+            var this$1 = this;
+            var ref = this.$options;
+            var methods = ref.methods;
+            if (methods) {
+                for (var key in methods) {
+                    this$1[key] = bind(methods[key], this$1);
+                }
+            }
+        };
+        UIkit.prototype._initComputeds = function() {
+            var this$1 = this;
+            var ref = this.$options;
+            var computed = ref.computed;
+            this._resetComputeds();
+            if (computed) {
+                for (var key in computed) {
+                    registerComputed(this$1, key, computed[key]);
+                }
+            }
+        };
+        UIkit.prototype._resetComputeds = function() {
+            this._computeds = {};
+        };
+        UIkit.prototype._initProps = function(props) {
+            var this$1 = this;
+            var key;
+            this._resetComputeds();
+            props = props || getProps(this.$options, this.$name);
+            for (key in props) {
+                if (!isUndefined(props[key])) {
+                    this$1.$props[key] = props[key];
+                }
+            }
+            var exclude = [ this.$options.computed, this.$options.methods ];
+            for (key in this$1.$props) {
+                if (key in props && notIn(exclude, key)) {
+                    this$1[key] = this$1.$props[key];
+                }
+            }
+        };
+        UIkit.prototype._initEvents = function() {
+            var this$1 = this;
+            var ref = this.$options;
+            var events = ref.events;
+            if (events) {
+                events.forEach(function(event) {
+                    if (!hasOwn(event, "handler")) {
+                        for (var key in event) {
+                            registerEvent(this$1, event[key], key);
+                        }
+                    } else {
+                        registerEvent(this$1, event);
+                    }
+                });
+            }
+        };
+        UIkit.prototype._unbindEvents = function() {
+            this._events.forEach(function(unbind) {
+                return unbind();
+            });
+            this._events = [];
+        };
+        UIkit.prototype._initObserver = function() {
+            var this$1 = this;
+            var ref = this.$options;
+            var attrs = ref.attrs;
+            var props = ref.props;
+            var el = ref.el;
+            if (this._observer || !props || !attrs) {
+                return;
+            }
+            attrs = isArray(attrs) ? attrs : Object.keys(props).map(function(key) {
+                return hyphenate(key);
+            });
+            this._observer = new MutationObserver(function() {
+                var data$$1 = getProps(this$1.$options, this$1.$name);
+                if (attrs.some(function(key) {
+                    return !isUndefined(data$$1[key]) && data$$1[key] !== this$1.$props[key];
+                })) {
+                    this$1.$reset(data$$1);
+                }
+            });
+            this._observer.observe(el, {
+                attributes: true,
+                attributeFilter: attrs.concat([ this.$name, "data-" + this.$name ])
+            });
+        };
+        function getProps(opts, name) {
+            var data$$1 = {};
+            var args = opts.args;
+            if (args === void 0) args = [];
+            var props = opts.props;
+            if (props === void 0) props = {};
+            var el = opts.el;
+            if (!props) {
+                return data$$1;
+            }
+            for (var key in props) {
+                var prop = hyphenate(key);
+                if (hasAttr(el, prop)) {
+                    var value = coerce(props[key], attr(el, prop), el);
+                    if (prop === "target" && (!value || startsWith(value, "_"))) {
+                        continue;
+                    }
+                    data$$1[key] = value;
+                }
+            }
+            var options = parseOptions(data(el, name), args);
+            for (var key$1 in options) {
+                var prop$1 = camelize(key$1);
+                if (props[prop$1] !== undefined) {
+                    data$$1[prop$1] = coerce(props[prop$1], options[key$1], el);
+                }
+            }
+            return data$$1;
+        }
+        function parseOptions(options, args) {
+            var obj;
+            if (args === void 0) args = [];
+            try {
+                return !options ? {} : startsWith(options, "{") ? JSON.parse(options) : args.length && !includes(options, ":") ? (obj = {}, 
+                obj[args[0]] = options, obj) : options.split(";").reduce(function(options, option) {
+                    var ref = option.split(/:(.+)/);
+                    var key = ref[0];
+                    var value = ref[1];
+                    if (key && value) {
+                        options[key.trim()] = value.trim();
+                    }
+                    return options;
+                }, {});
+            } catch (e) {
+                return {};
+            }
+        }
+        function registerComputed(component, key, cb) {
+            Object.defineProperty(component, key, {
+                enumerable: true,
+                get: function get() {
+                    var _computeds = component._computeds;
+                    var $props = component.$props;
+                    var $el = component.$el;
+                    if (!hasOwn(_computeds, key)) {
+                        _computeds[key] = cb.call(component, $props, $el);
+                    }
+                    return _computeds[key];
+                },
+                set: function set(value) {
+                    component._computeds[key] = value;
+                }
+            });
+        }
+        function registerEvent(component, event, key) {
+            if (!isPlainObject(event)) {
+                event = {
+                    name: key,
+                    handler: event
+                };
+            }
+            var name = event.name;
+            var el = event.el;
+            var handler = event.handler;
+            var capture = event.capture;
+            var delegate = event.delegate;
+            var filter = event.filter;
+            var self = event.self;
+            el = isFunction(el) ? el.call(component) : el || component.$el;
+            if (isArray(el)) {
+                el.forEach(function(el) {
+                    return registerEvent(component, assign({}, event, {
+                        el: el
+                    }), key);
+                });
+                return;
+            }
+            if (!el || filter && !filter.call(component)) {
+                return;
+            }
+            handler = detail(isString(handler) ? component[handler] : bind(handler, component));
+            if (self) {
+                handler = selfFilter(handler);
+            }
+            component._events.push(on(el, name, !delegate ? null : isString(delegate) ? delegate : delegate.call(component), handler, capture));
+        }
+        function selfFilter(handler) {
+            return function selfHandler(e) {
+                if (e.target === e.currentTarget || e.target === e.current) {
+                    return handler.call(null, e);
+                }
+            };
+        }
+        function notIn(options, key) {
+            return options.every(function(arr) {
+                return !arr || !hasOwn(arr, key);
+            });
+        }
+        function detail(listener) {
+            return function(e) {
+                return isArray(e.detail) ? listener.apply(void 0, [ e ].concat(e.detail)) : listener(e);
+            };
+        }
+        function coerce(type, value, context) {
+            if (type === Boolean) {
+                return toBoolean(value);
+            } else if (type === Number) {
+                return toNumber(value);
+            } else if (type === "query") {
+                return query(value, context);
+            } else if (type === "list") {
+                return toList(value);
+            } else if (type === "media") {
+                return toMedia(value);
+            }
+            return type ? type(value) : value;
+        }
+        function toMedia(value) {
+            if (isString(value)) {
+                if (value[0] === "@") {
+                    var name = "media-" + value.substr(1);
+                    value = toFloat(getCssVar(name));
+                } else if (isNaN(value)) {
+                    return value;
+                }
+            }
+            return value && !isNaN(value) ? "(min-width: " + value + "px)" : false;
+        }
+    }
+    function instanceAPI(UIkit) {
+        var DATA = UIkit.data;
+        UIkit.prototype.$mount = function(el) {
+            var ref = this.$options;
+            var name = ref.name;
+            if (!el[DATA]) {
+                el[DATA] = {};
+            }
+            if (el[DATA][name]) {
+                return;
+            }
+            el[DATA][name] = this;
+            this.$el = this.$options.el = this.$options.el || el;
+            this._initProps();
+            this._callHook("init");
+            if (within(el, document)) {
+                this._callConnected();
+            }
+        };
+        UIkit.prototype.$emit = function(e) {
+            this._callUpdate(e);
+        };
+        UIkit.prototype.$reset = function(data) {
+            this._callDisconnected();
+            this._initProps(data);
+            this._callConnected();
+        };
+        UIkit.prototype.$destroy = function(removeEl) {
+            if (removeEl === void 0) removeEl = false;
+            var ref = this.$options;
+            var el = ref.el;
+            var name = ref.name;
+            if (el) {
+                this._callDisconnected();
+            }
+            this._callHook("destroy");
+            if (!el || !el[DATA]) {
+                return;
+            }
+            delete el[DATA][name];
+            if (!Object.keys(el[DATA]).length) {
+                delete el[DATA];
+            }
+            if (removeEl) {
+                remove(this.$el);
+            }
+        };
+    }
+    var UIkit$2 = function(options) {
+        this._init(options);
+    };
+    UIkit$2.util = util;
+    UIkit$2.data = "__uikit__";
+    UIkit$2.prefix = "uk-";
+    UIkit$2.options = {};
+    globalAPI(UIkit$2);
+    hooksAPI(UIkit$2);
+    stateAPI(UIkit$2);
+    instanceAPI(UIkit$2);
+    componentAPI(UIkit$2);
+    var Class = {
+        init: function init() {
+            addClass(this.$el, this.$name);
+        }
+    };
+    var Container = {
+        props: {
+            container: Boolean
+        },
+        defaults: {
+            container: true
+        },
+        computed: {
+            container: function container(ref) {
+                var container = ref.container;
+                return container === true && UIkit$2.container || container && $(container);
+            }
+        }
+    };
+    var Togglable = {
+        props: {
+            cls: Boolean,
+            animation: "list",
+            duration: Number,
+            origin: String,
+            transition: String,
+            queued: Boolean
+        },
+        defaults: {
+            cls: false,
+            animation: [ false ],
+            duration: 200,
+            origin: false,
+            transition: "linear",
+            queued: false,
+            initProps: {
+                overflow: "",
+                height: "",
+                paddingTop: "",
+                paddingBottom: "",
+                marginTop: "",
+                marginBottom: ""
+            },
+            hideProps: {
+                overflow: "hidden",
+                height: 0,
+                paddingTop: 0,
+                paddingBottom: 0,
+                marginTop: 0,
+                marginBottom: 0
+            }
+        },
+        computed: {
+            hasAnimation: function hasAnimation(ref) {
+                var animation = ref.animation;
+                return !!animation[0];
+            },
+            hasTransition: function hasTransition(ref) {
+                var animation = ref.animation;
+                return this.hasAnimation && animation[0] === true;
+            }
+        },
+        methods: {
+            toggleElement: function toggleElement(targets, show, animate) {
+                var this$1 = this;
+                return new Promise(function(resolve) {
+                    targets = toNodes(targets);
+                    var all = function(targets) {
+                        return Promise.all(targets.map(function(el) {
+                            return this$1._toggleElement(el, show, animate);
+                        }));
+                    };
+                    var toggled = targets.filter(function(el) {
+                        return this$1.isToggled(el);
+                    });
+                    var untoggled = targets.filter(function(el) {
+                        return !includes(toggled, el);
+                    });
+                    var p;
+                    if (!this$1.queued || !isUndefined(animate) || !isUndefined(show) || !this$1.hasAnimation || targets.length < 2) {
+                        p = all(untoggled.concat(toggled));
+                    } else {
+                        var body = document.body;
+                        var scroll = body.scrollTop;
+                        var el = toggled[0];
+                        var inProgress = Animation.inProgress(el) && hasClass(el, "uk-animation-leave") || Transition.inProgress(el) && el.style.height === "0px";
+                        p = all(toggled);
+                        if (!inProgress) {
+                            p = p.then(function() {
+                                var p = all(untoggled);
+                                body.scrollTop = scroll;
+                                return p;
+                            });
+                        }
+                    }
+                    p.then(resolve, noop);
+                });
+            },
+            toggleNow: function toggleNow(targets, show) {
+                var this$1 = this;
+                return new Promise(function(resolve) {
+                    return Promise.all(toNodes(targets).map(function(el) {
+                        return this$1._toggleElement(el, show, false);
+                    })).then(resolve, noop);
+                });
+            },
+            isToggled: function isToggled(el) {
+                var nodes = toNodes(el || this.$el);
+                return this.cls ? hasClass(nodes, this.cls.split(" ")[0]) : !hasAttr(nodes, "hidden");
+            },
+            updateAria: function updateAria(el) {
+                if (this.cls === false) {
+                    attr(el, "aria-hidden", !this.isToggled(el));
+                }
+            },
+            _toggleElement: function _toggleElement(el, show, animate) {
+                var this$1 = this;
+                show = isBoolean(show) ? show : Animation.inProgress(el) ? hasClass(el, "uk-animation-leave") : Transition.inProgress(el) ? el.style.height === "0px" : !this.isToggled(el);
+                if (!trigger(el, "before" + (show ? "show" : "hide"), [ this ])) {
+                    return Promise.reject();
+                }
+                var promise = (animate === false || !this.hasAnimation ? this._toggleImmediate : this.hasTransition ? this._toggleHeight : this._toggleAnimation)(el, show);
+                trigger(el, show ? "show" : "hide", [ this ]);
+                return promise.then(function() {
+                    trigger(el, show ? "shown" : "hidden", [ this$1 ]);
+                    trigger(el, "resize");
+                });
+            },
+            _toggle: function _toggle(el, toggled) {
+                if (!el) {
+                    return;
+                }
+                var changed;
+                if (this.cls) {
+                    changed = includes(this.cls, " ") || Boolean(toggled) !== hasClass(el, this.cls);
+                    changed && toggleClass(el, this.cls, includes(this.cls, " ") ? undefined : toggled);
+                } else {
+                    changed = Boolean(toggled) === hasAttr(el, "hidden");
+                    changed && attr(el, "hidden", !toggled ? "" : null);
+                }
+                $$("[autofocus]", el).some(function(el) {
+                    return isVisible(el) && (el.focus() || true);
+                });
+                this.updateAria(el);
+                changed && trigger(el, "resize");
+            },
+            _toggleImmediate: function _toggleImmediate(el, show) {
+                this._toggle(el, show);
+                return Promise.resolve();
+            },
+            _toggleHeight: function _toggleHeight(el, show) {
+                var this$1 = this;
+                var inProgress = Transition.inProgress(el);
+                var inner = el.hasChildNodes ? toFloat(css(el.firstElementChild, "marginTop")) + toFloat(css(el.lastElementChild, "marginBottom")) : 0;
+                var currentHeight = isVisible(el) ? height(el) + (inProgress ? 0 : inner) : 0;
+                Transition.cancel(el);
+                if (!this.isToggled(el)) {
+                    this._toggle(el, true);
+                }
+                height(el, "");
+                fastdom.flush();
+                var endHeight = height(el) + (inProgress ? 0 : inner);
+                height(el, currentHeight);
+                return (show ? Transition.start(el, assign({}, this.initProps, {
+                    overflow: "hidden",
+                    height: endHeight
+                }), Math.round(this.duration * (1 - currentHeight / endHeight)), this.transition) : Transition.start(el, this.hideProps, Math.round(this.duration * (currentHeight / endHeight)), this.transition).then(function() {
+                    return this$1._toggle(el, false);
+                })).then(function() {
+                    return css(el, this$1.initProps);
+                });
+            },
+            _toggleAnimation: function _toggleAnimation(el, show) {
+                var this$1 = this;
+                Animation.cancel(el);
+                if (show) {
+                    this._toggle(el, true);
+                    return Animation.in(el, this.animation[0], this.duration, this.origin);
+                }
+                return Animation.out(el, this.animation[1] || this.animation[0], this.duration, this.origin).then(function() {
+                    return this$1._toggle(el, false);
+                });
+            }
+        }
+    };
+    var active;
+    var Modal = {
+        mixins: [ Class, Container, Togglable ],
+        props: {
+            selPanel: String,
+            selClose: String,
+            escClose: Boolean,
+            bgClose: Boolean,
+            stack: Boolean
+        },
+        defaults: {
+            cls: "uk-open",
+            escClose: true,
+            bgClose: true,
+            overlay: true,
+            stack: false
+        },
+        computed: {
+            panel: function panel(ref, $el) {
+                var selPanel = ref.selPanel;
+                return $(selPanel, $el);
+            },
+            transitionElement: function transitionElement() {
+                return this.panel;
+            },
+            transitionDuration: function transitionDuration() {
+                return toMs(css(this.transitionElement, "transitionDuration"));
+            }
+        },
+        events: [ {
+            name: "click",
+            delegate: function delegate() {
+                return this.selClose;
+            },
+            handler: function handler(e) {
+                e.preventDefault();
+                this.hide();
+            }
+        }, {
+            name: "toggle",
+            self: true,
+            handler: function handler(e) {
+                if (e.defaultPrevented) {
+                    return;
+                }
+                e.preventDefault();
+                this.toggle();
+            }
+        }, {
+            name: "beforeshow",
+            self: true,
+            handler: function handler(e) {
+                var prev = active && active !== this && active;
+                active = this;
+                if (prev) {
+                    if (this.stack) {
+                        this.prev = prev;
+                    } else {
+                        prev.hide().then(this.show);
+                        e.preventDefault();
+                        return;
+                    }
+                }
+                registerEvents();
+            }
+        }, {
+            name: "beforehide",
+            self: true,
+            handler: function handler() {
+                active = active && active !== this && active || this.prev;
+                if (!active) {
+                    deregisterEvents();
+                }
+            }
+        }, {
+            name: "show",
+            self: true,
+            handler: function handler() {
+                if (!hasClass(document.documentElement, this.clsPage)) {
+                    this.scrollbarWidth = width(window) - width(document);
+                    css(document.body, "overflowY", this.scrollbarWidth && this.overlay ? "scroll" : "");
+                }
+                addClass(document.documentElement, this.clsPage);
+            }
+        }, {
+            name: "hidden",
+            self: true,
+            handler: function handler() {
+                var this$1 = this;
+                var found;
+                var ref = this;
+                var prev = ref.prev;
+                while (prev) {
+                    if (prev.clsPage === this$1.clsPage) {
+                        found = true;
+                        break;
+                    }
+                    prev = prev.prev;
+                }
+                if (!found) {
+                    removeClass(document.documentElement, this.clsPage);
+                }
+                !this.prev && css(document.body, "overflowY", "");
+            }
+        } ],
+        methods: {
+            toggle: function toggle() {
+                return this.isToggled() ? this.hide() : this.show();
+            },
+            show: function show() {
+                if (this.isToggled()) {
+                    return;
+                }
+                if (this.container && this.$el.parentNode !== this.container) {
+                    append(this.container, this.$el);
+                    this._callConnected();
+                }
+                return this.toggleNow(this.$el, true);
+            },
+            hide: function hide() {
+                if (this.isToggled()) {
+                    return this.toggleNow(this.$el, false);
+                }
+            },
+            getActive: function getActive() {
+                return active;
+            },
+            _toggleImmediate: function _toggleImmediate(el, show) {
+                var this$1 = this;
+                return new Promise(function(resolve) {
+                    return requestAnimationFrame(function() {
+                        this$1._toggle(el, show);
+                        if (this$1.transitionDuration) {
+                            once(this$1.transitionElement, "transitionend", resolve, false, function(e) {
+                                return e.target === this$1.transitionElement;
+                            });
+                        } else {
+                            resolve();
+                        }
+                    });
+                });
+            }
+        }
+    };
+    var events;
+    function registerEvents() {
+        if (events) {
+            return;
+        }
+        events = [ on(document, "click", function(ref) {
+            var target = ref.target;
+            var defaultPrevented = ref.defaultPrevented;
+            if (active && active.bgClose && !defaultPrevented && (!active.overlay || within(target, active.$el)) && (!active.panel || !within(target, active.panel))) {
+                active.hide();
+            }
+        }), on(document, "keydown", function(e) {
+            if (e.keyCode === 27 && active && active.escClose) {
+                e.preventDefault();
+                active.hide();
+            }
+        }) ];
+    }
+    function deregisterEvents() {
+        events && events.forEach(function(unbind) {
+            return unbind();
+        });
+        events = null;
+    }
+    var Position = {
+        props: {
+            pos: String,
+            offset: null,
+            flip: Boolean,
+            clsPos: String
+        },
+        defaults: {
+            pos: "bottom-" + (!isRtl ? "left" : "right"),
+            flip: true,
+            offset: false,
+            clsPos: ""
+        },
+        computed: {
+            pos: function pos(ref) {
+                var pos = ref.pos;
+                return (pos + (!includes(pos, "-") ? "-center" : "")).split("-");
+            },
+            dir: function dir() {
+                return this.pos[0];
+            },
+            align: function align() {
+                return this.pos[1];
+            }
+        },
+        methods: {
+            positionAt: function positionAt$1(element, target, boundary) {
+                removeClasses(element, this.clsPos + "-(top|bottom|left|right)(-[a-z]+)?");
+                css(element, {
+                    top: "",
+                    left: ""
+                });
+                var node;
+                var ref = this;
+                var offset$$1 = ref.offset;
+                offset$$1 = isNumeric(offset$$1) ? offset$$1 : (node = $(offset$$1)) ? offset(node)[axis === "x" ? "left" : "top"] - offset(target)[axis === "x" ? "right" : "bottom"] : 0;
+                var axis = this.getAxis();
+                var ref$1 = positionAt(element, target, axis === "x" ? flipPosition(this.dir) + " " + this.align : this.align + " " + flipPosition(this.dir), axis === "x" ? this.dir + " " + this.align : this.align + " " + this.dir, axis === "x" ? "" + (this.dir === "left" ? -offset$$1 : offset$$1) : " " + (this.dir === "top" ? -offset$$1 : offset$$1), null, this.flip, boundary).target;
+                var x = ref$1.x;
+                var y = ref$1.y;
+                this.dir = axis === "x" ? x : y;
+                this.align = axis === "x" ? y : x;
+                toggleClass(element, this.clsPos + "-" + this.dir + "-" + this.align, this.offset === false);
+            },
+            getAxis: function getAxis() {
+                return this.dir === "top" || this.dir === "bottom" ? "y" : "x";
+            }
+        }
+    };
+    function mixin(UIkit) {
+        UIkit.mixin.class = Class;
+        UIkit.mixin.container = Container;
+        UIkit.mixin.modal = Modal;
+        UIkit.mixin.position = Position;
+        UIkit.mixin.togglable = Togglable;
+    }
+    function Accordion(UIkit) {
+        UIkit.component("accordion", {
+            mixins: [ Class, Togglable ],
+            props: {
+                targets: String,
+                active: null,
+                collapsible: Boolean,
+                multiple: Boolean,
+                toggle: String,
+                content: String,
+                transition: String
+            },
+            defaults: {
+                targets: "> *",
+                active: false,
+                animation: [ true ],
+                collapsible: true,
+                multiple: false,
+                clsOpen: "uk-open",
+                toggle: "> .uk-accordion-title",
+                content: "> .uk-accordion-content",
+                transition: "ease"
+            },
+            computed: {
+                items: function items(ref, $el) {
+                    var targets = ref.targets;
+                    return $$(targets, $el);
+                }
+            },
+            events: [ {
+                name: "click",
+                delegate: function delegate() {
+                    return this.targets + " " + this.$props.toggle;
+                },
+                handler: function handler(e) {
+                    e.preventDefault();
+                    this.toggle(index($$(this.targets + " " + this.$props.toggle, this.$el), e.current));
+                }
+            } ],
+            connected: function connected() {
+                if (this.active === false) {
+                    return;
+                }
+                var active = this.items[Number(this.active)];
+                if (active && !hasClass(active, this.clsOpen)) {
+                    this.toggle(active, false);
+                }
+            },
+            update: function update() {
+                var this$1 = this;
+                this.items.forEach(function(el) {
+                    return this$1._toggleImmediate($(this$1.content, el), hasClass(el, this$1.clsOpen));
+                });
+                var active = !this.collapsible && !hasClass(this.items, this.clsOpen) && this.items[0];
+                if (active) {
+                    this.toggle(active, false);
+                }
+            },
+            methods: {
+                toggle: function toggle(item, animate) {
+                    var this$1 = this;
+                    var index = getIndex(item, this.items);
+                    var active = filter(this.items, "." + this.clsOpen);
+                    item = this.items[index];
+                    item && [ item ].concat(!this.multiple && !includes(active, item) && active || []).forEach(function(el) {
+                        var isItem = el === item;
+                        var state = isItem && !hasClass(el, this$1.clsOpen);
+                        if (!state && isItem && !this$1.collapsible && active.length < 2) {
+                            return;
+                        }
+                        toggleClass(el, this$1.clsOpen, state);
+                        var content = el._wrapper ? el._wrapper.firstElementChild : $(this$1.content, el);
+                        if (!el._wrapper) {
+                            el._wrapper = wrapAll(content, "<div>");
+                            attr(el._wrapper, "hidden", state ? "" : null);
+                        }
+                        this$1._toggleImmediate(content, true);
+                        this$1.toggleElement(el._wrapper, state, animate).then(function() {
+                            if (hasClass(el, this$1.clsOpen) === state) {
+                                if (!state) {
+                                    this$1._toggleImmediate(content, false);
+                                }
+                                el._wrapper = null;
+                                unwrap(content);
+                            }
+                        });
+                    });
+                }
+            }
+        });
+    }
+    function Alert(UIkit) {
+        UIkit.component("alert", {
+            attrs: true,
+            mixins: [ Class, Togglable ],
+            args: "animation",
+            props: {
+                close: String
+            },
+            defaults: {
+                animation: [ true ],
+                selClose: ".uk-alert-close",
+                duration: 150,
+                hideProps: assign({
+                    opacity: 0
+                }, Togglable.defaults.hideProps)
+            },
+            events: [ {
+                name: "click",
+                delegate: function delegate() {
+                    return this.selClose;
+                },
+                handler: function handler(e) {
+                    e.preventDefault();
+                    this.close();
+                }
+            } ],
+            methods: {
+                close: function close() {
+                    var this$1 = this;
+                    this.toggleElement(this.$el).then(function() {
+                        return this$1.$destroy(true);
+                    });
+                }
+            }
+        });
+    }
+    function Core(UIkit) {
+        ready(function() {
+            var scroll = 0;
+            var started = 0;
+            on(window, "load resize", function(e) {
+                return UIkit.update(null, e);
+            });
+            on(window, "scroll", function(e) {
+                e.dir = scroll <= window.pageYOffset ? "down" : "up";
+                e.scrollY = scroll = window.pageYOffset;
+                UIkit.update(null, e);
+            });
+            on(document, "animationstart", function(ref) {
+                var target = ref.target;
+                if ((css(target, "animationName") || "").match(/^uk-.*(left|right)/)) {
+                    started++;
+                    css(document.body, "overflowX", "hidden");
+                    setTimeout(function() {
+                        if (!--started) {
+                            css(document.body, "overflowX", "");
+                        }
+                    }, toMs(css(target, "animationDuration")) + 100);
+                }
+            }, true);
+            if (!hasTouch) {
+                return;
+            }
+            var cls = "uk-hover";
+            on(document, "tap", function(ref) {
+                var target = ref.target;
+                return $$("." + cls).forEach(function(el) {
+                    return !within(target, el) && removeClass(el, cls);
+                });
+            });
+            Object.defineProperty(UIkit, "hoverSelector", {
+                set: function set(selector) {
+                    on(document, "tap", selector, function(ref) {
+                        var current = ref.current;
+                        return addClass(current, cls);
+                    });
+                }
+            });
+            UIkit.hoverSelector = ".uk-animation-toggle, .uk-transition-toggle, [uk-hover]";
+        });
+    }
+    function Cover(UIkit) {
+        UIkit.component("cover", {
+            mixins: [ Class, UIkit.components.video.options ],
+            props: {
+                width: Number,
+                height: Number
+            },
+            defaults: {
+                automute: true
+            },
+            update: {
+                write: function write() {
+                    var el = this.$el;
+                    if (!isVisible(el)) {
+                        return;
+                    }
+                    var ref = el.parentNode;
+                    var height = ref.offsetHeight;
+                    var width = ref.offsetWidth;
+                    css(css(el, {
+                        width: "",
+                        height: ""
+                    }), Dimensions.cover({
+                        width: this.width || el.clientWidth,
+                        height: this.height || el.clientHeight
+                    }, {
+                        width: width + (width % 2 ? 1 : 0),
+                        height: height + (height % 2 ? 1 : 0)
+                    }));
+                },
+                events: [ "load", "resize" ]
+            },
+            events: {
+                loadedmetadata: function loadedmetadata() {
+                    this.$emit();
+                }
+            }
+        });
+    }
+    function Drop(UIkit) {
+        var active;
+        UIkit.component("drop", {
+            mixins: [ Position, Togglable ],
+            args: "pos",
+            props: {
+                mode: "list",
+                toggle: Boolean,
+                boundary: "query",
+                boundaryAlign: Boolean,
+                delayShow: Number,
+                delayHide: Number,
+                clsDrop: String
+            },
+            defaults: {
+                mode: [ "click", "hover" ],
+                toggle: true,
+                boundary: window,
+                boundaryAlign: false,
+                delayShow: 0,
+                delayHide: 800,
+                clsDrop: false,
+                hoverIdle: 200,
+                animation: [ "uk-animation-fade" ],
+                cls: "uk-open"
+            },
+            computed: {
+                clsDrop: function clsDrop(ref) {
+                    var clsDrop = ref.clsDrop;
+                    return clsDrop || "uk-" + this.$options.name;
+                },
+                clsPos: function clsPos() {
+                    return this.clsDrop;
+                }
+            },
+            init: function init() {
+                this.tracker = new MouseTracker();
+                addClass(this.$el, this.clsDrop);
+            },
+            connected: function connected() {
+                var ref = this.$props;
+                var toggle = ref.toggle;
+                this.toggle = toggle && UIkit.toggle(isString(toggle) ? query(toggle, this.$el) : this.$el.previousElementSibling, {
+                    target: this.$el,
+                    mode: this.mode
+                });
+                this.updateAria(this.$el);
+            },
+            events: [ {
+                name: "click",
+                delegate: function delegate() {
+                    return "." + this.clsDrop + "-close";
+                },
+                handler: function handler(e) {
+                    e.preventDefault();
+                    this.hide(false);
+                }
+            }, {
+                name: "click",
+                delegate: function delegate() {
+                    return 'a[href^="#"]';
+                },
+                handler: function handler(e) {
+                    if (e.defaultPrevented) {
+                        return;
+                    }
+                    var id = e.target.hash;
+                    if (!id) {
+                        e.preventDefault();
+                    }
+                    if (!id || !within(id, this.$el)) {
+                        this.hide(false);
+                    }
+                }
+            }, {
+                name: "beforescroll",
+                handler: function handler() {
+                    this.hide(false);
+                }
+            }, {
+                name: "toggle",
+                self: true,
+                handler: function handler(e, toggle) {
+                    e.preventDefault();
+                    if (this.isToggled()) {
+                        this.hide(false);
+                    } else {
+                        this.show(toggle, false);
+                    }
+                }
+            }, {
+                name: pointerEnter,
+                filter: function filter() {
+                    return includes(this.mode, "hover");
+                },
+                handler: function handler(e) {
+                    if (isTouch(e)) {
+                        return;
+                    }
+                    if (active && active !== this && active.toggle && includes(active.toggle.mode, "hover") && !within(e.target, active.toggle.$el) && !pointInRect({
+                        x: e.pageX,
+                        y: e.pageY
+                    }, offset(active.$el))) {
+                        active.hide(false);
+                    }
+                    e.preventDefault();
+                    this.show(this.toggle);
+                }
+            }, {
+                name: "toggleshow",
+                handler: function handler(e, toggle) {
+                    if (toggle && !includes(toggle.target, this.$el)) {
+                        return;
+                    }
+                    e.preventDefault();
+                    this.show(toggle || this.toggle);
+                }
+            }, {
+                name: "togglehide " + pointerLeave,
+                handler: function handler(e, toggle) {
+                    if (isTouch(e) || toggle && !includes(toggle.target, this.$el)) {
+                        return;
+                    }
+                    e.preventDefault();
+                    if (this.toggle && includes(this.toggle.mode, "hover")) {
+                        this.hide();
+                    }
+                }
+            }, {
+                name: "beforeshow",
+                self: true,
+                handler: function handler() {
+                    this.clearTimers();
+                    Animation.cancel(this.$el);
+                    this.position();
+                }
+            }, {
+                name: "show",
+                self: true,
+                handler: function handler() {
+                    this.tracker.init();
+                    if (this.toggle) {
+                        addClass(this.toggle.$el, this.cls);
+                        attr(this.toggle.$el, "aria-expanded", "true");
+                    }
+                    registerEvent();
+                }
+            }, {
+                name: "beforehide",
+                self: true,
+                handler: function handler() {
+                    this.clearTimers();
+                }
+            }, {
+                name: "hide",
+                handler: function handler(ref) {
+                    var target = ref.target;
+                    if (this.$el !== target) {
+                        active = active === null && within(target, this.$el) && this.isToggled() ? this : active;
+                        return;
+                    }
+                    active = this.isActive() ? null : active;
+                    if (this.toggle) {
+                        removeClass(this.toggle.$el, this.cls);
+                        attr(this.toggle.$el, "aria-expanded", "false");
+                        this.toggle.$el.blur();
+                        $$("a, button", this.toggle.$el).forEach(function(el) {
+                            return el.blur();
+                        });
+                    }
+                    this.tracker.cancel();
+                }
+            } ],
+            update: {
+                write: function write() {
+                    if (this.isToggled() && !Animation.inProgress(this.$el)) {
+                        this.position();
+                    }
+                },
+                events: [ "resize" ]
+            },
+            methods: {
+                show: function show(toggle, delay) {
+                    var this$1 = this;
+                    if (delay === void 0) delay = true;
+                    var show = function() {
+                        return !this$1.isToggled() && this$1.toggleElement(this$1.$el, true);
+                    };
+                    var tryShow = function() {
+                        this$1.toggle = toggle || this$1.toggle;
+                        this$1.clearTimers();
+                        if (this$1.isActive()) {
+                            return;
+                        } else if (delay && active && active !== this$1 && active.isDelaying) {
+                            this$1.showTimer = setTimeout(this$1.show, 10);
+                            return;
+                        } else if (this$1.isParentOf(active)) {
+                            if (active.hideTimer) {
+                                active.hide(false);
+                            } else {
+                                return;
+                            }
+                        } else if (active && !this$1.isChildOf(active) && !this$1.isParentOf(active)) {
+                            var prev;
+                            while (active && active !== prev && !this$1.isChildOf(active)) {
+                                prev = active;
+                                active.hide(false);
+                            }
+                        }
+                        if (delay && this$1.delayShow) {
+                            this$1.showTimer = setTimeout(show, this$1.delayShow);
+                        } else {
+                            show();
+                        }
+                        active = this$1;
+                    };
+                    if (toggle && this.toggle && toggle.$el !== this.toggle.$el) {
+                        once(this.$el, "hide", tryShow);
+                        this.hide(false);
+                    } else {
+                        tryShow();
+                    }
+                },
+                hide: function hide(delay) {
+                    var this$1 = this;
+                    if (delay === void 0) delay = true;
+                    var hide = function() {
+                        return this$1.toggleNow(this$1.$el, false);
+                    };
+                    this.clearTimers();
+                    this.isDelaying = this.tracker.movesTo(this.$el);
+                    if (delay && this.isDelaying) {
+                        this.hideTimer = setTimeout(this.hide, this.hoverIdle);
+                    } else if (delay && this.delayHide) {
+                        this.hideTimer = setTimeout(hide, this.delayHide);
+                    } else {
+                        hide();
+                    }
+                },
+                clearTimers: function clearTimers() {
+                    clearTimeout(this.showTimer);
+                    clearTimeout(this.hideTimer);
+                    this.showTimer = null;
+                    this.hideTimer = null;
+                    this.isDelaying = false;
+                },
+                isActive: function isActive() {
+                    return active === this;
+                },
+                isChildOf: function isChildOf(drop) {
+                    return drop && drop !== this && within(this.$el, drop.$el);
+                },
+                isParentOf: function isParentOf(drop) {
+                    return drop && drop !== this && within(drop.$el, this.$el);
+                },
+                position: function position() {
+                    removeClasses(this.$el, this.clsDrop + "-(stack|boundary)");
+                    css(this.$el, {
+                        top: "",
+                        left: "",
+                        display: "block"
+                    });
+                    toggleClass(this.$el, this.clsDrop + "-boundary", this.boundaryAlign);
+                    var boundary = offset(this.boundary);
+                    var alignTo = this.boundaryAlign ? boundary : offset(this.toggle.$el);
+                    if (this.align === "justify") {
+                        var prop = this.getAxis() === "y" ? "width" : "height";
+                        css(this.$el, prop, alignTo[prop]);
+                    } else if (this.$el.offsetWidth > Math.max(boundary.right - alignTo.left, alignTo.right - boundary.left)) {
+                        addClass(this.$el, this.clsDrop + "-stack");
+                    }
+                    this.positionAt(this.$el, this.boundaryAlign ? this.boundary : this.toggle.$el, this.boundary);
+                    css(this.$el, "display", "");
+                }
+            }
+        });
+        UIkit.drop.getActive = function() {
+            return active;
+        };
+        var registered;
+        function registerEvent() {
+            if (registered) {
+                return;
+            }
+            registered = true;
+            on(document, "click", function(ref) {
+                var target = ref.target;
+                var defaultPrevented = ref.defaultPrevented;
+                var prev;
+                if (defaultPrevented) {
+                    return;
+                }
+                while (active && active !== prev && !within(target, active.$el) && !(active.toggle && within(target, active.toggle.$el))) {
+                    prev = active;
+                    active.hide(false);
+                }
+            });
+        }
+    }
+    function Dropdown(UIkit) {
+        UIkit.component("dropdown", UIkit.components.drop.extend({
+            name: "dropdown"
+        }));
+    }
+    function FormCustom(UIkit) {
+        UIkit.component("form-custom", {
+            mixins: [ Class ],
+            args: "target",
+            props: {
+                target: Boolean
+            },
+            defaults: {
+                target: false
+            },
+            computed: {
+                input: function input(_, $el) {
+                    return $(selInput, $el);
+                },
+                state: function state() {
+                    return this.input.nextElementSibling;
+                },
+                target: function target(ref, $el) {
+                    var target = ref.target;
+                    return target && (target === true && this.input.parentNode === $el && this.input.nextElementSibling || query(target, $el));
+                }
+            },
+            update: function update() {
+                var ref = this;
+                var target = ref.target;
+                var input = ref.input;
+                if (!target) {
+                    return;
+                }
+                var option;
+                target[isInput(target) ? "value" : "textContent"] = input.files && input.files[0] ? input.files[0].name : matches(input, "select") && (option = $$("option", input).filter(function(el) {
+                    return el.selected;
+                })[0]) ? option.textContent : input.value;
+            },
+            events: [ {
+                name: "focusin focusout mouseenter mouseleave",
+                delegate: selInput,
+                handler: function handler(ref) {
+                    var type = ref.type;
+                    var current = ref.current;
+                    if (current === this.input) {
+                        toggleClass(this.state, "uk-" + (includes(type, "focus") ? "focus" : "hover"), includes([ "focusin", "mouseenter" ], type));
+                    }
+                }
+            }, {
+                name: "change",
+                handler: function handler() {
+                    this.$emit();
+                }
+            } ]
+        });
+    }
+    function Gif(UIkit) {
+        UIkit.component("gif", {
+            update: {
+                read: function read(data) {
+                    var inview = isInView(this.$el);
+                    if (!inview || data.isInView === inview) {
+                        return false;
+                    }
+                    data.isInView = inview;
+                },
+                write: function write() {
+                    this.$el.src = this.$el.src;
+                },
+                events: [ "scroll", "load", "resize" ]
+            }
+        });
+    }
+    function Grid(UIkit) {
+        UIkit.component("grid", UIkit.components.margin.extend({
+            mixins: [ Class ],
+            name: "grid",
+            defaults: {
+                margin: "uk-grid-margin",
+                clsStack: "uk-grid-stack"
+            },
+            update: {
+                write: function write(ref) {
+                    var stacks = ref.stacks;
+                    toggleClass(this.$el, this.clsStack, stacks);
+                },
+                events: [ "load", "resize" ]
+            }
+        }));
+    }
+    function HeightMatch(UIkit) {
+        UIkit.component("height-match", {
+            args: "target",
+            props: {
+                target: String,
+                row: Boolean
+            },
+            defaults: {
+                target: "> *",
+                row: true
+            },
+            computed: {
+                elements: function elements(ref, $el) {
+                    var target = ref.target;
+                    return $$(target, $el);
+                }
+            },
+            update: {
+                read: function read() {
+                    var this$1 = this;
+                    var lastOffset = false;
+                    css(this.elements, "minHeight", "");
+                    return {
+                        rows: !this.row ? [ this.match(this.elements) ] : this.elements.reduce(function(rows, el) {
+                            if (lastOffset !== el.offsetTop) {
+                                rows.push([ el ]);
+                            } else {
+                                rows[rows.length - 1].push(el);
+                            }
+                            lastOffset = el.offsetTop;
+                            return rows;
+                        }, []).map(function(elements) {
+                            return this$1.match(elements);
+                        })
+                    };
+                },
+                write: function write(ref) {
+                    var rows = ref.rows;
+                    rows.forEach(function(ref) {
+                        var height = ref.height;
+                        var elements = ref.elements;
+                        return css(elements, "minHeight", height);
+                    });
+                },
+                events: [ "load", "resize" ]
+            },
+            methods: {
+                match: function match(elements) {
+                    if (elements.length < 2) {
+                        return {};
+                    }
+                    var heights = [];
+                    var max = 0;
+                    elements.forEach(function(el) {
+                        var style, hidden;
+                        if (!isVisible(el)) {
+                            style = attr(el, "style");
+                            hidden = attr(el, "hidden");
+                            attr(el, {
+                                style: (style || "") + ";display:block !important;",
+                                hidden: null
+                            });
+                        }
+                        max = Math.max(max, el.offsetHeight);
+                        heights.push(el.offsetHeight);
+                        if (!isUndefined(style)) {
+                            attr(el, {
+                                style: style,
+                                hidden: hidden
+                            });
+                        }
+                    });
+                    elements = elements.filter(function(el, i) {
+                        return heights[i] < max;
+                    });
+                    return {
+                        height: max,
+                        elements: elements
+                    };
+                }
+            }
+        });
+    }
+    function HeightViewport(UIkit) {
+        UIkit.component("height-viewport", {
+            props: {
+                expand: Boolean,
+                offsetTop: Boolean,
+                offsetBottom: Boolean,
+                minHeight: Number
+            },
+            defaults: {
+                expand: false,
+                offsetTop: false,
+                offsetBottom: false,
+                minHeight: 0
+            },
+            update: {
+                write: function write() {
+                    css(this.$el, "boxSizing", "border-box");
+                    var viewport = height(window);
+                    var minHeight, offsetTop = 0;
+                    if (this.expand) {
+                        css(this.$el, {
+                            height: "",
+                            minHeight: ""
+                        });
+                        var diff = viewport - offsetHeight(document.documentElement);
+                        if (diff > 0) {
+                            minHeight = offsetHeight(this.$el) + diff;
+                        }
+                    } else {
+                        var ref = offset(this.$el);
+                        var top = ref.top;
+                        if (top < viewport / 2 && this.offsetTop) {
+                            offsetTop += top;
+                        }
+                        if (this.offsetBottom === true) {
+                            offsetTop += offsetHeight(this.$el.nextElementSibling);
+                        } else if (isNumeric(this.offsetBottom)) {
+                            offsetTop += viewport / 100 * this.offsetBottom;
+                        } else if (this.offsetBottom && endsWith(this.offsetBottom, "px")) {
+                            offsetTop += toFloat(this.offsetBottom);
+                        } else if (isString(this.offsetBottom)) {
+                            offsetTop += offsetHeight(query(this.offsetBottom, this.$el));
+                        }
+                        minHeight = offsetTop ? "calc(100vh - " + offsetTop + "px)" : "100vh";
+                    }
+                    if (!minHeight) {
+                        return;
+                    }
+                    css(this.$el, {
+                        height: "",
+                        minHeight: minHeight
+                    });
+                    var elHeight = this.$el.offsetHeight;
+                    if (this.minHeight && this.minHeight > elHeight) {
+                        css(this.$el, "minHeight", this.minHeight);
+                    }
+                    if (viewport - offsetTop >= elHeight) {
+                        css(this.$el, "height", minHeight);
+                    }
+                },
+                events: [ "load", "resize" ]
+            }
+        });
+        function offsetHeight(el) {
+            return el && el.offsetHeight || 0;
+        }
+    }
+    var closeIcon = '<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><line fill="none" stroke="#000" stroke-width="1.1" x1="1" y1="1" x2="13" y2="13"/><line fill="none" stroke="#000" stroke-width="1.1" x1="13" y1="1" x2="1" y2="13"/></svg>';
+    var closeLarge = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><line fill="none" stroke="#000" stroke-width="1.4" x1="1" y1="1" x2="19" y2="19"/><line fill="none" stroke="#000" stroke-width="1.4" x1="19" y1="1" x2="1" y2="19"/></svg>';
+    var marker = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="4" width="1" height="11"/><rect x="4" y="9" width="11" height="1"/></svg>';
+    var navbarToggleIcon = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect y="9" width="20" height="2"/><rect y="3" width="20" height="2"/><rect y="15" width="20" height="2"/></svg>';
+    var overlayIcon = '<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><rect x="19" y="0" width="1" height="40"/><rect x="0" y="19" width="40" height="1"/></svg>';
+    var paginationNext = '<svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#000" stroke-width="1.2" points="1 1 6 6 1 11"/></svg>';
+    var paginationPrevious = '<svg width="7" height="12" viewBox="0 0 7 12" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#000" stroke-width="1.2" points="6 1 1 6 6 11"/></svg>';
+    var searchIcon = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7"/><path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z"/></svg>';
+    var searchLarge = '<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#000" stroke-width="1.8" cx="17.5" cy="17.5" r="16.5"/><line fill="none" stroke="#000" stroke-width="1.8" x1="38" y1="39" x2="29" y2="30"/></svg>';
+    var searchNavbar = '<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#000" stroke-width="1.1" cx="10.5" cy="10.5" r="9.5"/><line fill="none" stroke="#000" stroke-width="1.1" x1="23" y1="23" x2="17" y2="17"/></svg>';
+    var slidenavNext = '<svg width="14px" height="24px" viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#000" stroke-width="1.4" points="1.225,23 12.775,12 1.225,1 "/></svg>';
+    var slidenavNextLarge = '<svg width="25px" height="40px" viewBox="0 0 25 40" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#000" stroke-width="2" points="4.002,38.547 22.527,20.024 4,1.5 "/></svg>';
+    var slidenavPrevious = '<svg width="14px" height="24px" viewBox="0 0 14 24" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#000" stroke-width="1.4" points="12.775,1 1.225,12 12.775,23 "/></svg>';
+    var slidenavPreviousLarge = '<svg width="25px" height="40px" viewBox="0 0 25 40" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#000" stroke-width="2" points="20.527,1.5 2,20.024 20.525,38.547 "/></svg>';
+    var spinner = '<svg width="30" height="30" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#000" cx="15" cy="15" r="14"/></svg>';
+    var totop = '<svg width="18" height="10" viewBox="0 0 18 10" xmlns="http://www.w3.org/2000/svg"><polyline fill="none" stroke="#000" stroke-width="1.2" points="1 9 9 1 17 9 "/></svg>';
+    function Icon(UIkit) {
+        var parsed = {};
+        var icons = {
+            spinner: spinner,
+            totop: totop,
+            marker: marker,
+            "close-icon": closeIcon,
+            "close-large": closeLarge,
+            "navbar-toggle-icon": navbarToggleIcon,
+            "overlay-icon": overlayIcon,
+            "pagination-next": paginationNext,
+            "pagination-previous": paginationPrevious,
+            "search-icon": searchIcon,
+            "search-large": searchLarge,
+            "search-navbar": searchNavbar,
+            "slidenav-next": slidenavNext,
+            "slidenav-next-large": slidenavNextLarge,
+            "slidenav-previous": slidenavPrevious,
+            "slidenav-previous-large": slidenavPreviousLarge
+        };
+        UIkit.component("icon", UIkit.components.svg.extend({
+            attrs: [ "icon", "ratio" ],
+            mixins: [ Class ],
+            name: "icon",
+            args: "icon",
+            props: [ "icon" ],
+            defaults: {
+                exclude: [ "id", "style", "class", "src", "icon" ]
+            },
+            init: function init() {
+                addClass(this.$el, "uk-icon");
+                if (isRtl) {
+                    this.icon = swap(swap(this.icon, "left", "right"), "previous", "next");
+                }
+            },
+            methods: {
+                getSvg: function getSvg() {
+                    var icon = getIcon(this.icon);
+                    if (!icon) {
+                        return Promise.reject("Icon not found.");
+                    }
+                    return Promise.resolve(icon);
+                }
+            }
+        }));
+        [ "marker", "navbar-toggle-icon", "overlay-icon", "pagination-previous", "pagination-next", "totop" ].forEach(function(name) {
+            return registerComponent(name);
+        });
+        [ "slidenav-previous", "slidenav-next" ].forEach(function(name) {
+            return registerComponent(name, {
+                init: function init() {
+                    addClass(this.$el, "uk-slidenav");
+                    if (hasClass(this.$el, "uk-slidenav-large")) {
+                        this.icon += "-large";
+                    }
+                }
+            });
+        });
+        registerComponent("search-icon", {
+            init: function init() {
+                if (hasClass(this.$el, "uk-search-icon") && parents(this.$el, ".uk-search-large").length) {
+                    this.icon = "search-large";
+                } else if (parents(this.$el, ".uk-search-navbar").length) {
+                    this.icon = "search-navbar";
+                }
+            }
+        });
+        registerComponent("close", {
+            init: function init() {
+                this.icon = "close-" + (hasClass(this.$el, "uk-close-large") ? "large" : "icon");
+            }
+        });
+        registerComponent("spinner", {
+            connected: function connected() {
+                var this$1 = this;
+                this.svg.then(function(svg) {
+                    return this$1.ratio !== 1 && css($("circle", svg), "stroke-width", 1 / this$1.ratio);
+                }, noop);
+            }
+        });
+        UIkit.icon.add = function(added) {
+            Object.keys(added).forEach(function(name) {
+                icons[name] = added[name];
+                delete parsed[name];
+            });
+            if (UIkit._initialized) {
+                apply(document.body, function(el) {
+                    var icon = UIkit.getComponent(el, "icon");
+                    if (icon) {
+                        icon.$reset();
+                    }
+                });
+            }
+        };
+        function registerComponent(name, mixin$$1) {
+            UIkit.component(name, UIkit.components.icon.extend({
+                name: name,
+                mixins: mixin$$1 ? [ mixin$$1 ] : [],
+                defaults: {
+                    icon: name
+                }
+            }));
+        }
+        function getIcon(icon) {
+            if (!icons[icon]) {
+                return null;
+            }
+            if (!parsed[icon]) {
+                parsed[icon] = $(icons[icon].trim());
+            }
+            return parsed[icon];
+        }
+    }
+    function Leader(UIkit) {
+        UIkit.component("leader", {
+            mixins: [ Class ],
+            props: {
+                fill: String,
+                media: "media"
+            },
+            defaults: {
+                fill: "",
+                media: false,
+                clsWrapper: "uk-leader-fill",
+                clsHide: "uk-leader-hide",
+                attrFill: "data-fill"
+            },
+            computed: {
+                fill: function fill(ref) {
+                    var fill = ref.fill;
+                    return fill || getCssVar("leader-fill");
+                }
+            },
+            connected: function connected() {
+                var assign;
+                assign = wrapInner(this.$el, '<span class="' + this.clsWrapper + '">'), this.wrapper = assign[0];
+            },
+            disconnected: function disconnected() {
+                unwrap(this.wrapper.childNodes);
+            },
+            update: [ {
+                read: function read(ref) {
+                    var changed = ref.changed;
+                    var width = ref.width;
+                    var prev = width;
+                    width = Math.floor(this.$el.offsetWidth / 2);
+                    return {
+                        width: width,
+                        changed: changed || prev !== width,
+                        hide: this.media && !window.matchMedia(this.media).matches
+                    };
+                },
+                write: function write(data) {
+                    toggleClass(this.wrapper, this.clsHide, data.hide);
+                    if (data.changed) {
+                        data.changed = false;
+                        attr(this.wrapper, this.attrFill, new Array(data.width).join(this.fill));
+                    }
+                },
+                events: [ "load", "resize" ]
+            } ]
+        });
+    }
+    function Margin(UIkit) {
+        UIkit.component("margin", {
+            props: {
+                margin: String,
+                firstColumn: Boolean
+            },
+            defaults: {
+                margin: "uk-margin-small-top",
+                firstColumn: "uk-first-column"
+            },
+            update: {
+                read: function read(data) {
+                    var items = this.$el.children;
+                    if (!items.length || !isVisible(this.$el)) {
+                        return data.rows = false;
+                    }
+                    data.stacks = true;
+                    var rows = [ [] ];
+                    for (var i = 0; i < items.length; i++) {
+                        var el = items[i];
+                        var dim = el.getBoundingClientRect();
+                        if (!dim.height) {
+                            continue;
+                        }
+                        for (var j = rows.length - 1; j >= 0; j--) {
+                            var row = rows[j];
+                            if (!row[0]) {
+                                row.push(el);
+                                break;
+                            }
+                            var leftDim = row[0].getBoundingClientRect();
+                            if (dim.top >= Math.floor(leftDim.bottom)) {
+                                rows.push([ el ]);
+                                break;
+                            }
+                            if (Math.floor(dim.bottom) > leftDim.top) {
+                                data.stacks = false;
+                                if (dim.left < leftDim.left && !isRtl) {
+                                    row.unshift(el);
+                                    break;
+                                }
+                                row.push(el);
+                                break;
+                            }
+                            if (j === 0) {
+                                rows.unshift([ el ]);
+                                break;
+                            }
+                        }
+                    }
+                    data.rows = rows;
+                },
+                write: function write(ref) {
+                    var this$1 = this;
+                    var rows = ref.rows;
+                    rows.forEach(function(row, i) {
+                        return row.forEach(function(el, j) {
+                            toggleClass(el, this$1.margin, i !== 0);
+                            toggleClass(el, this$1.firstColumn, j === 0);
+                        });
+                    });
+                },
+                events: [ "load", "resize" ]
+            }
+        });
+    }
+    function Modal$1(UIkit) {
+        UIkit.component("modal", {
+            mixins: [ Modal ],
+            defaults: {
+                clsPage: "uk-modal-page",
+                selPanel: ".uk-modal-dialog",
+                selClose: ".uk-modal-close, .uk-modal-close-default, .uk-modal-close-outside, .uk-modal-close-full"
+            },
+            events: [ {
+                name: "show",
+                self: true,
+                handler: function handler() {
+                    if (hasClass(this.panel, "uk-margin-auto-vertical")) {
+                        addClass(this.$el, "uk-flex");
+                    } else {
+                        css(this.$el, "display", "block");
+                    }
+                    height(this.$el);
+                }
+            }, {
+                name: "hidden",
+                self: true,
+                handler: function handler() {
+                    css(this.$el, "display", "");
+                    removeClass(this.$el, "uk-flex");
+                }
+            } ]
+        });
+        UIkit.component("overflow-auto", {
+            mixins: [ Class ],
+            computed: {
+                modal: function modal(_, $el) {
+                    return closest($el, ".uk-modal");
+                },
+                panel: function panel(_, $el) {
+                    return closest($el, ".uk-modal-dialog");
+                }
+            },
+            connected: function connected() {
+                css(this.$el, "minHeight", 150);
+            },
+            update: {
+                write: function write() {
+                    if (!this.panel || !this.modal) {
+                        return;
+                    }
+                    var current = css(this.$el, "maxHeight");
+                    css(css(this.$el, "maxHeight", 150), "maxHeight", Math.max(150, 150 + height(this.modal) - this.panel.offsetHeight));
+                    if (current !== css(this.$el, "maxHeight")) {
+                        trigger(this.$el, "resize");
+                    }
+                },
+                events: [ "load", "resize" ]
+            }
+        });
+        UIkit.modal.dialog = function(content, options) {
+            var dialog = UIkit.modal(' <div class="uk-modal"> <div class="uk-modal-dialog">' + content + "</div> </div> ", options);
+            dialog.show();
+            on(dialog.$el, "hidden", function(ref) {
+                var target = ref.target;
+                var currentTarget = ref.currentTarget;
+                if (target === currentTarget) {
+                    dialog.$destroy(true);
+                }
+            });
+            return dialog;
+        };
+        UIkit.modal.alert = function(message, options) {
+            options = assign({
+                bgClose: false,
+                escClose: false,
+                labels: UIkit.modal.labels
+            }, options);
+            return new Promise(function(resolve) {
+                return on(UIkit.modal.dialog(' <div class="uk-modal-body">' + (isString(message) ? message : html(message)) + '</div> <div class="uk-modal-footer uk-text-right"> <button class="uk-button uk-button-primary uk-modal-close" autofocus>' + options.labels.ok + "</button> </div> ", options).$el, "hide", resolve);
+            });
+        };
+        UIkit.modal.confirm = function(message, options) {
+            options = assign({
+                bgClose: false,
+                escClose: true,
+                labels: UIkit.modal.labels
+            }, options);
+            return new Promise(function(resolve, reject) {
+                var confirm = UIkit.modal.dialog(' <form> <div class="uk-modal-body">' + (isString(message) ? message : html(message)) + '</div> <div class="uk-modal-footer uk-text-right"> <button class="uk-button uk-button-default uk-modal-close" type="button">' + options.labels.cancel + '</button> <button class="uk-button uk-button-primary" autofocus>' + options.labels.ok + "</button> </div> </form> ", options);
+                var resolved = false;
+                on(confirm.$el, "submit", "form", function(e) {
+                    e.preventDefault();
+                    resolve();
+                    resolved = true;
+                    confirm.hide();
+                });
+                on(confirm.$el, "hide", function() {
+                    if (!resolved) {
+                        reject();
+                    }
+                });
+            });
+        };
+        UIkit.modal.prompt = function(message, value, options) {
+            options = assign({
+                bgClose: false,
+                escClose: true,
+                labels: UIkit.modal.labels
+            }, options);
+            return new Promise(function(resolve) {
+                var prompt = UIkit.modal.dialog(' <form class="uk-form-stacked"> <div class="uk-modal-body"> <label>' + (isString(message) ? message : html(message)) + '</label> <input class="uk-input" autofocus> </div> <div class="uk-modal-footer uk-text-right"> <button class="uk-button uk-button-default uk-modal-close" type="button">' + options.labels.cancel + '</button> <button class="uk-button uk-button-primary">' + options.labels.ok + "</button> </div> </form> ", options), input = $("input", prompt.$el);
+                input.value = value;
+                var resolved = false;
+                on(prompt.$el, "submit", "form", function(e) {
+                    e.preventDefault();
+                    resolve(input.value);
+                    resolved = true;
+                    prompt.hide();
+                });
+                on(prompt.$el, "hide", function() {
+                    if (!resolved) {
+                        resolve(null);
+                    }
+                });
+            });
+        };
+        UIkit.modal.labels = {
+            ok: "Ok",
+            cancel: "Cancel"
+        };
+    }
+    function Nav(UIkit) {
+        UIkit.component("nav", UIkit.components.accordion.extend({
+            name: "nav",
+            defaults: {
+                targets: "> .uk-parent",
+                toggle: "> a",
+                content: "> ul"
+            }
+        }));
+    }
+    function Navbar(UIkit) {
+        UIkit.component("navbar", {
+            mixins: [ Class ],
+            props: {
+                dropdown: String,
+                mode: "list",
+                align: String,
+                offset: Number,
+                boundary: Boolean,
+                boundaryAlign: Boolean,
+                clsDrop: String,
+                delayShow: Number,
+                delayHide: Number,
+                dropbar: Boolean,
+                dropbarMode: String,
+                dropbarAnchor: "query",
+                duration: Number
+            },
+            defaults: {
+                dropdown: ".uk-navbar-nav > li",
+                align: !isRtl ? "left" : "right",
+                clsDrop: "uk-navbar-dropdown",
+                mode: undefined,
+                offset: undefined,
+                delayShow: undefined,
+                delayHide: undefined,
+                boundaryAlign: undefined,
+                flip: "x",
+                boundary: true,
+                dropbar: false,
+                dropbarMode: "slide",
+                dropbarAnchor: false,
+                duration: 200
+            },
+            computed: {
+                boundary: function boundary(ref, $el) {
+                    var boundary = ref.boundary;
+                    var boundaryAlign = ref.boundaryAlign;
+                    return boundary === true || boundaryAlign ? $el : boundary;
+                },
+                pos: function pos(ref) {
+                    var align = ref.align;
+                    return "bottom-" + align;
+                }
+            },
+            beforeConnect: function beforeConnect() {
+                var ref = this.$props;
+                var dropbar = ref.dropbar;
+                this.dropbar = dropbar && (isString(dropbar) && query(dropbar, this.$el) || $("<div></div>"));
+                if (this.dropbar) {
+                    addClass(this.dropbar, "uk-navbar-dropbar");
+                    if (this.dropbarMode === "slide") {
+                        addClass(this.dropbar, "uk-navbar-dropbar-slide");
+                    }
+                }
+            },
+            disconnected: function disconnected() {
+                this.dropbar && remove(this.dropbar);
+            },
+            update: function update() {
+                UIkit.drop($$(this.dropdown + " ." + this.clsDrop, this.$el).filter(function(el) {
+                    return !UIkit.getComponent(el, "drop") && !UIkit.getComponent(el, "dropdown");
+                }), assign({}, this.$props, {
+                    boundary: this.boundary,
+                    pos: this.pos,
+                    offset: this.dropbar || this.offset
+                }));
+            },
+            events: [ {
+                name: "mouseover",
+                delegate: function delegate() {
+                    return this.dropdown;
+                },
+                handler: function handler(ref) {
+                    var current = ref.current;
+                    var active = this.getActive();
+                    if (active && active.toggle && !within(active.toggle.$el, current) && !active.tracker.movesTo(active.$el)) {
+                        active.hide(false);
+                    }
+                }
+            }, {
+                name: "mouseleave",
+                el: function el() {
+                    return this.dropbar;
+                },
+                handler: function handler() {
+                    var active = this.getActive();
+                    if (active && !matches(this.dropbar, ":hover")) {
+                        active.hide();
+                    }
+                }
+            }, {
+                name: "beforeshow",
+                capture: true,
+                filter: function filter() {
+                    return this.dropbar;
+                },
+                handler: function handler() {
+                    if (!this.dropbar.parentNode) {
+                        after(this.dropbarAnchor || this.$el, this.dropbar);
+                    }
+                }
+            }, {
+                name: "show",
+                capture: true,
+                filter: function filter() {
+                    return this.dropbar;
+                },
+                handler: function handler(_, drop) {
+                    var $el = drop.$el;
+                    var dir = drop.dir;
+                    this.clsDrop && addClass($el, this.clsDrop + "-dropbar");
+                    if (dir === "bottom") {
+                        this.transitionTo($el.offsetHeight + toFloat(css($el, "marginTop")) + toFloat(css($el, "marginBottom")), $el);
+                    }
+                }
+            }, {
+                name: "beforehide",
+                filter: function filter() {
+                    return this.dropbar;
+                },
+                handler: function handler(e, ref) {
+                    var $el = ref.$el;
+                    var active = this.getActive();
+                    if (matches(this.dropbar, ":hover") && active && active.$el === $el) {
+                        e.preventDefault();
+                    }
+                }
+            }, {
+                name: "hide",
+                filter: function filter() {
+                    return this.dropbar;
+                },
+                handler: function handler(_, ref) {
+                    var $el = ref.$el;
+                    var active = this.getActive();
+                    if (!active || active && active.$el === $el) {
+                        this.transitionTo(0);
+                    }
+                }
+            } ],
+            methods: {
+                getActive: function getActive() {
+                    var active = UIkit.drop.getActive();
+                    return active && includes(active.mode, "hover") && within(active.toggle.$el, this.$el) && active;
+                },
+                transitionTo: function transitionTo(newHeight, el) {
+                    var ref = this;
+                    var dropbar = ref.dropbar;
+                    var oldHeight = isVisible(dropbar) ? height(dropbar) : 0;
+                    el = oldHeight < newHeight && el;
+                    css(el, {
+                        height: oldHeight,
+                        overflow: "hidden"
+                    });
+                    height(dropbar, oldHeight);
+                    Transition.cancel([ el, dropbar ]);
+                    return Transition.start([ el, dropbar ], {
+                        height: newHeight
+                    }, this.duration).catch(noop).then(function() {
+                        return css(el, {
+                            height: "",
+                            overflow: ""
+                        });
+                    });
+                }
+            }
+        });
+    }
+    var scroll;
+    function Offcanvas(UIkit) {
+        UIkit.component("offcanvas", {
+            mixins: [ Modal ],
+            args: "mode",
+            props: {
+                content: String,
+                mode: String,
+                flip: Boolean,
+                overlay: Boolean
+            },
+            defaults: {
+                content: ".uk-offcanvas-content",
+                mode: "slide",
+                flip: false,
+                overlay: false,
+                clsPage: "uk-offcanvas-page",
+                clsContainer: "uk-offcanvas-container",
+                selPanel: ".uk-offcanvas-bar",
+                clsFlip: "uk-offcanvas-flip",
+                clsContent: "uk-offcanvas-content",
+                clsContentAnimation: "uk-offcanvas-content-animation",
+                clsSidebarAnimation: "uk-offcanvas-bar-animation",
+                clsMode: "uk-offcanvas",
+                clsOverlay: "uk-offcanvas-overlay",
+                selClose: ".uk-offcanvas-close"
+            },
+            computed: {
+                content: function content(ref) {
+                    var content = ref.content;
+                    return $(content) || document.body;
+                },
+                clsFlip: function clsFlip(ref) {
+                    var flip = ref.flip;
+                    var clsFlip = ref.clsFlip;
+                    return flip ? clsFlip : "";
+                },
+                clsOverlay: function clsOverlay(ref) {
+                    var overlay = ref.overlay;
+                    var clsOverlay = ref.clsOverlay;
+                    return overlay ? clsOverlay : "";
+                },
+                clsMode: function clsMode(ref) {
+                    var mode = ref.mode;
+                    var clsMode = ref.clsMode;
+                    return clsMode + "-" + mode;
+                },
+                clsSidebarAnimation: function clsSidebarAnimation(ref) {
+                    var mode = ref.mode;
+                    var clsSidebarAnimation = ref.clsSidebarAnimation;
+                    return mode === "none" || mode === "reveal" ? "" : clsSidebarAnimation;
+                },
+                clsContentAnimation: function clsContentAnimation(ref) {
+                    var mode = ref.mode;
+                    var clsContentAnimation = ref.clsContentAnimation;
+                    return mode !== "push" && mode !== "reveal" ? "" : clsContentAnimation;
+                },
+                transitionElement: function transitionElement(ref) {
+                    var mode = ref.mode;
+                    return mode === "reveal" ? this.panel.parentNode : this.panel;
+                }
+            },
+            update: {
+                write: function write() {
+                    if (this.getActive() === this) {
+                        if (this.overlay || this.clsContentAnimation) {
+                            width(this.content, width(window) - this.scrollbarWidth);
+                        }
+                        if (this.overlay) {
+                            height(this.content, height(window));
+                            if (scroll) {
+                                this.content.scrollTop = scroll.y;
+                            }
+                        }
+                    }
+                },
+                events: [ "resize" ]
+            },
+            events: [ {
+                name: "click",
+                delegate: function delegate() {
+                    return 'a[href^="#"]';
+                },
+                handler: function handler(ref) {
+                    var current = ref.current;
+                    if (current.hash && $(current.hash, this.content)) {
+                        scroll = null;
+                        this.hide();
+                    }
+                }
+            }, {
+                name: "beforescroll",
+                filter: function filter() {
+                    return this.overlay;
+                },
+                handler: function handler(e, scroll, target) {
+                    if (scroll && target && this.isToggled() && $(target, this.content)) {
+                        once(this.$el, "hidden", function() {
+                            return scroll.scrollTo(target);
+                        });
+                        e.preventDefault();
+                    }
+                }
+            }, {
+                name: "show",
+                self: true,
+                handler: function handler() {
+                    scroll = scroll || {
+                        x: window.pageXOffset,
+                        y: window.pageYOffset
+                    };
+                    if (this.mode === "reveal" && !hasClass(this.panel, this.clsMode)) {
+                        wrapAll(this.panel, "<div>");
+                        addClass(this.panel.parentNode, this.clsMode);
+                    }
+                    css(document.documentElement, "overflowY", (!this.clsContentAnimation || this.flip) && this.scrollbarWidth && this.overlay ? "scroll" : "");
+                    addClass(document.body, this.clsContainer, this.clsFlip, this.clsOverlay);
+                    height(document.body);
+                    addClass(this.content, this.clsContentAnimation);
+                    addClass(this.panel, this.clsSidebarAnimation, this.mode !== "reveal" ? this.clsMode : "");
+                    addClass(this.$el, this.clsOverlay);
+                    css(this.$el, "display", "block");
+                    height(this.$el);
+                }
+            }, {
+                name: "hide",
+                self: true,
+                handler: function handler() {
+                    removeClass(this.content, this.clsContentAnimation);
+                    var active = this.getActive();
+                    if (this.mode === "none" || active && active !== this && active !== this.prev) {
+                        trigger(this.panel, "transitionend");
+                    }
+                }
+            }, {
+                name: "hidden",
+                self: true,
+                handler: function handler() {
+                    if (this.mode === "reveal") {
+                        unwrap(this.panel);
+                    }
+                    if (!this.overlay) {
+                        scroll = {
+                            x: window.pageXOffset,
+                            y: window.pageYOffset
+                        };
+                    } else if (!scroll) {
+                        var ref = this.content;
+                        var x = ref.scrollLeft;
+                        var y = ref.scrollTop;
+                        scroll = {
+                            x: x,
+                            y: y
+                        };
+                    }
+                    removeClass(this.panel, this.clsSidebarAnimation, this.clsMode);
+                    removeClass(this.$el, this.clsOverlay);
+                    css(this.$el, "display", "");
+                    removeClass(document.body, this.clsContainer, this.clsFlip, this.clsOverlay);
+                    document.body.scrollTop = scroll.y;
+                    css(document.documentElement, "overflowY", "");
+                    width(this.content, "");
+                    height(this.content, "");
+                    window.scrollTo(scroll.x, scroll.y);
+                    scroll = null;
+                }
+            }, {
+                name: "swipeLeft swipeRight",
+                handler: function handler(e) {
+                    if (this.isToggled() && isTouch(e) && (e.type === "swipeLeft" && !this.flip || e.type === "swipeRight" && this.flip)) {
+                        this.hide();
+                    }
+                }
+            } ]
+        });
+    }
+    function Responsive(UIkit) {
+        UIkit.component("responsive", {
+            props: [ "width", "height" ],
+            init: function init() {
+                addClass(this.$el, "uk-responsive-width");
+            },
+            update: {
+                read: function read() {
+                    return isVisible(this.$el) && this.width && this.height ? {
+                        width: width(this.$el.parentNode),
+                        height: this.height
+                    } : false;
+                },
+                write: function write(dim) {
+                    height(this.$el, Dimensions.contain({
+                        height: this.height,
+                        width: this.width
+                    }, dim).height);
+                },
+                events: [ "load", "resize" ]
+            }
+        });
+    }
+    function Scroll(UIkit) {
+        UIkit.component("scroll", {
+            props: {
+                duration: Number,
+                offset: Number
+            },
+            defaults: {
+                duration: 1e3,
+                offset: 0
+            },
+            methods: {
+                scrollTo: function scrollTo(el) {
+                    var this$1 = this;
+                    el = el && $(el) || document.body;
+                    var docHeight = height(document);
+                    var winHeight = height(window);
+                    var target = offset(el).top - this.offset;
+                    if (target + winHeight > docHeight) {
+                        target = docHeight - winHeight;
+                    }
+                    if (!trigger(this.$el, "beforescroll", [ this, el ])) {
+                        return;
+                    }
+                    var start = Date.now();
+                    var startY = window.pageYOffset;
+                    var step = function() {
+                        var currentY = startY + (target - startY) * ease(clamp((Date.now() - start) / this$1.duration));
+                        window.scrollTo(window.pageXOffset, currentY);
+                        if (currentY !== target) {
+                            requestAnimationFrame(step);
+                        } else {
+                            trigger(this$1.$el, "scrolled", [ this$1, el ]);
+                        }
+                    };
+                    step();
+                }
+            },
+            events: {
+                click: function click(e) {
+                    if (e.defaultPrevented) {
+                        return;
+                    }
+                    e.preventDefault();
+                    this.scrollTo(escape(this.$el.hash).substr(1));
+                }
+            }
+        });
+        function ease(k) {
+            return .5 * (1 - Math.cos(Math.PI * k));
+        }
+    }
+    function Scrollspy(UIkit) {
+        UIkit.component("scrollspy", {
+            args: "cls",
+            props: {
+                cls: "list",
+                target: String,
+                hidden: Boolean,
+                offsetTop: Number,
+                offsetLeft: Number,
+                repeat: Boolean,
+                delay: Number
+            },
+            defaults: {
+                cls: [],
+                target: false,
+                hidden: true,
+                offsetTop: 0,
+                offsetLeft: 0,
+                repeat: false,
+                delay: 0,
+                inViewClass: "uk-scrollspy-inview"
+            },
+            computed: {
+                elements: function elements(ref, $el) {
+                    var target = ref.target;
+                    return target ? $$(target, $el) : [ $el ];
+                }
+            },
+            update: [ {
+                write: function write() {
+                    if (this.hidden) {
+                        css(filter(this.elements, ":not(." + this.inViewClass + ")"), "visibility", "hidden");
+                    }
+                }
+            }, {
+                read: function read(els) {
+                    var this$1 = this;
+                    if (!UIkit._initialized) {
+                        if (document.readyState === "complete") {
+                            requestAnimationFrame(function() {
+                                return this$1.$emit();
+                            });
+                        }
+                        return false;
+                    }
+                    this.elements.forEach(function(el, i) {
+                        var elData = els[i];
+                        if (!elData || elData.el !== el) {
+                            var cls = data(el, "uk-scrollspy-class");
+                            elData = {
+                                el: el,
+                                toggles: cls && cls.split(",") || this$1.cls
+                            };
+                        }
+                        elData.show = isInView(el, this$1.offsetTop, this$1.offsetLeft);
+                        els[i] = elData;
+                    });
+                },
+                write: function write(els) {
+                    var this$1 = this;
+                    var index = this.elements.length === 1 ? 1 : 0;
+                    this.elements.forEach(function(el, i) {
+                        var elData = els[i];
+                        var cls = elData.toggles[i] || elData.toggles[0];
+                        if (elData.show && !elData.inview && !elData.timer) {
+                            var show = function() {
+                                css(el, "visibility", "");
+                                addClass(el, this$1.inViewClass);
+                                toggleClass(el, cls);
+                                trigger(el, "inview");
+                                UIkit.update(el);
+                                elData.inview = true;
+                                delete elData.timer;
+                            };
+                            if (this$1.delay && index) {
+                                elData.timer = setTimeout(show, this$1.delay * index);
+                            } else {
+                                show();
+                            }
+                            index++;
+                        } else if (!elData.show && elData.inview && this$1.repeat) {
+                            if (elData.timer) {
+                                clearTimeout(elData.timer);
+                                delete elData.timer;
+                            }
+                            css(el, "visibility", this$1.hidden ? "hidden" : "");
+                            removeClass(el, this$1.inViewClass);
+                            toggleClass(el, cls);
+                            trigger(el, "outview");
+                            UIkit.update(el);
+                            elData.inview = false;
+                        }
+                    });
+                },
+                events: [ "scroll", "load", "resize" ]
+            } ]
+        });
+    }
+    function ScrollspyNav(UIkit) {
+        UIkit.component("scrollspy-nav", {
+            props: {
+                cls: String,
+                closest: String,
+                scroll: Boolean,
+                overflow: Boolean,
+                offset: Number
+            },
+            defaults: {
+                cls: "uk-active",
+                closest: false,
+                scroll: false,
+                overflow: true,
+                offset: 0
+            },
+            computed: {
+                links: function links(_, $el) {
+                    return $$('a[href^="#"]', $el).filter(function(el) {
+                        return el.hash;
+                    });
+                },
+                elements: function elements() {
+                    return this.closest ? closest(this.links, this.closest) : this.links;
+                },
+                targets: function targets() {
+                    return $$(this.links.map(function(el) {
+                        return el.hash;
+                    }).join(","));
+                }
+            },
+            update: [ {
+                read: function read() {
+                    if (this.scroll) {
+                        UIkit.scroll(this.links, {
+                            offset: this.offset || 0
+                        });
+                    }
+                }
+            }, {
+                read: function read(data) {
+                    var this$1 = this;
+                    var scroll = window.pageYOffset + this.offset + 1;
+                    var max = height(document) - height(window) + this.offset;
+                    data.active = false;
+                    this.targets.every(function(el, i) {
+                        var ref = offset(el);
+                        var top = ref.top;
+                        var last = i + 1 === this$1.targets.length;
+                        if (!this$1.overflow && (i === 0 && top > scroll || last && top + el.offsetTop < scroll)) {
+                            return false;
+                        }
+                        if (!last && offset(this$1.targets[i + 1]).top <= scroll) {
+                            return true;
+                        }
+                        if (scroll >= max) {
+                            for (var j = this$1.targets.length - 1; j > i; j--) {
+                                if (isInView(this$1.targets[j])) {
+                                    el = this$1.targets[j];
+                                    break;
+                                }
+                            }
+                        }
+                        return !(data.active = $(filter(this$1.links, '[href="#' + el.id + '"]')));
+                    });
+                },
+                write: function write(ref) {
+                    var active = ref.active;
+                    this.links.forEach(function(el) {
+                        return el.blur();
+                    });
+                    removeClass(this.elements, this.cls);
+                    if (active) {
+                        trigger(this.$el, "active", [ active, addClass(this.closest ? closest(active, this.closest) : active, this.cls) ]);
+                    }
+                },
+                events: [ "scroll", "load", "resize" ]
+            } ]
+        });
+    }
+    function Sticky(UIkit) {
+        UIkit.component("sticky", {
+            mixins: [ Class ],
+            attrs: true,
+            props: {
+                top: null,
+                bottom: Boolean,
+                offset: Number,
+                animation: String,
+                clsActive: String,
+                clsInactive: String,
+                clsFixed: String,
+                clsBelow: String,
+                selTarget: String,
+                widthElement: "query",
+                showOnUp: Boolean,
+                media: "media",
+                target: Number
+            },
+            defaults: {
+                top: 0,
+                bottom: false,
+                offset: 0,
+                animation: "",
+                clsActive: "uk-active",
+                clsInactive: "",
+                clsFixed: "uk-sticky-fixed",
+                clsBelow: "uk-sticky-below",
+                selTarget: "",
+                widthElement: false,
+                showOnUp: false,
+                media: false,
+                target: false
+            },
+            computed: {
+                selTarget: function selTarget(ref, $el) {
+                    var selTarget = ref.selTarget;
+                    return selTarget && $(selTarget, $el) || $el;
+                }
+            },
+            connected: function connected() {
+                this.placeholder = $('<div class="uk-sticky-placeholder"></div>');
+                this.widthElement = this.$props.widthElement || this.placeholder;
+                if (!this.isActive) {
+                    this.hide();
+                }
+            },
+            disconnected: function disconnected() {
+                if (this.isActive) {
+                    this.isActive = false;
+                    this.hide();
+                    removeClass(this.selTarget, this.clsInactive);
+                }
+                remove(this.placeholder);
+                this.placeholder = null;
+                this.widthElement = null;
+            },
+            ready: function ready() {
+                var this$1 = this;
+                if (!(this.target && location.hash && window.pageYOffset > 0)) {
+                    return;
+                }
+                var target = $(location.hash);
+                if (target) {
+                    fastdom.read(function() {
+                        var ref = offset(target);
+                        var top = ref.top;
+                        var elTop = offset(this$1.$el).top;
+                        var elHeight = this$1.$el.offsetHeight;
+                        if (elTop + elHeight >= top && elTop <= top + target.offsetHeight) {
+                            window.scrollTo(0, top - elHeight - this$1.target - this$1.offset);
+                        }
+                    });
+                }
+            },
+            events: [ {
+                name: "active",
+                self: true,
+                handler: function handler() {
+                    replaceClass(this.selTarget, this.clsInactive, this.clsActive);
+                }
+            }, {
+                name: "inactive",
+                self: true,
+                handler: function handler() {
+                    replaceClass(this.selTarget, this.clsActive, this.clsInactive);
+                }
+            } ],
+            update: [ {
+                write: function write() {
+                    var ref = this;
+                    var placeholder = ref.placeholder;
+                    var outerHeight = (this.isActive ? placeholder : this.$el).offsetHeight;
+                    css(placeholder, assign({
+                        height: css(this.$el, "position") !== "absolute" ? outerHeight : ""
+                    }, css(this.$el, [ "marginTop", "marginBottom", "marginLeft", "marginRight" ])));
+                    if (!within(placeholder, document)) {
+                        after(this.$el, placeholder);
+                        attr(placeholder, "hidden", "");
+                    }
+                    attr(this.widthElement, "hidden", null);
+                    this.width = this.widthElement.offsetWidth;
+                    attr(this.widthElement, "hidden", this.isActive ? null : "");
+                    this.topOffset = offset(this.isActive ? placeholder : this.$el).top;
+                    this.bottomOffset = this.topOffset + outerHeight;
+                    var bottom = parseProp("bottom", this);
+                    this.top = Math.max(toFloat(parseProp("top", this)), this.topOffset) - this.offset;
+                    this.bottom = bottom && bottom - outerHeight;
+                    this.inactive = this.media && !window.matchMedia(this.media).matches;
+                    if (this.isActive) {
+                        this.update();
+                    }
+                },
+                events: [ "load", "resize" ]
+            }, {
+                read: function read(_, ref) {
+                    var scrollY = ref.scrollY;
+                    if (scrollY === void 0) scrollY = window.pageYOffset;
+                    return {
+                        scroll: this.scroll = scrollY,
+                        visible: isVisible(this.$el)
+                    };
+                },
+                write: function write(ref, ref$1) {
+                    var this$1 = this;
+                    var visible = ref.visible;
+                    var scroll = ref.scroll;
+                    if (ref$1 === void 0) ref$1 = {};
+                    var dir = ref$1.dir;
+                    if (scroll < 0 || !visible || this.disabled || this.showOnUp && !dir) {
+                        return;
+                    }
+                    if (this.inactive || scroll < this.top || this.showOnUp && (scroll <= this.top || dir === "down" || dir === "up" && !this.isActive && scroll <= this.bottomOffset)) {
+                        if (!this.isActive) {
+                            return;
+                        }
+                        this.isActive = false;
+                        if (this.animation && scroll > this.topOffset) {
+                            Animation.cancel(this.$el);
+                            Animation.out(this.$el, this.animation).then(function() {
+                                return this$1.hide();
+                            }, noop);
+                        } else {
+                            this.hide();
+                        }
+                    } else if (this.isActive) {
+                        this.update();
+                    } else if (this.animation) {
+                        Animation.cancel(this.$el);
+                        this.show();
+                        Animation.in(this.$el, this.animation).catch(noop);
+                    } else {
+                        this.show();
+                    }
+                },
+                events: [ "scroll" ]
+            } ],
+            methods: {
+                show: function show() {
+                    this.isActive = true;
+                    this.update();
+                    attr(this.placeholder, "hidden", null);
+                },
+                hide: function hide() {
+                    if (!this.isActive || hasClass(this.selTarget, this.clsActive)) {
+                        trigger(this.$el, "inactive");
+                    }
+                    removeClass(this.$el, this.clsFixed, this.clsBelow);
+                    css(this.$el, {
+                        position: "",
+                        top: "",
+                        width: ""
+                    });
+                    attr(this.placeholder, "hidden", "");
+                },
+                update: function update() {
+                    var active = this.top !== 0 || this.scroll > this.top;
+                    var top = Math.max(0, this.offset);
+                    if (this.bottom && this.scroll > this.bottom - this.offset) {
+                        top = this.bottom - this.scroll;
+                    }
+                    css(this.$el, {
+                        position: "fixed",
+                        top: top + "px",
+                        width: this.width
+                    });
+                    if (hasClass(this.selTarget, this.clsActive)) {
+                        if (!active) {
+                            trigger(this.$el, "inactive");
+                        }
+                    } else if (active) {
+                        trigger(this.$el, "active");
+                    }
+                    toggleClass(this.$el, this.clsBelow, this.scroll > this.bottomOffset);
+                    addClass(this.$el, this.clsFixed);
+                }
+            }
+        });
+        function parseProp(prop, ref) {
+            var $props = ref.$props;
+            var $el = ref.$el;
+            var propOffset = ref[prop + "Offset"];
+            var value = $props[prop];
+            if (!value) {
+                return;
+            }
+            if (isNumeric(value)) {
+                return propOffset + toFloat(value);
+            } else if (isString(value) && value.match(/^-?\d+vh$/)) {
+                return height(window) * toFloat(value) / 100;
+            } else {
+                var el = value === true ? $el.parentNode : query(value, $el);
+                if (el) {
+                    return offset(el).top + el.offsetHeight;
+                }
+            }
+        }
+    }
+    var svgs = {};
+    function Svg(UIkit) {
+        UIkit.component("svg", {
+            attrs: true,
+            props: {
+                id: String,
+                icon: String,
+                src: String,
+                style: String,
+                width: Number,
+                height: Number,
+                ratio: Number,
+                class: String
+            },
+            defaults: {
+                ratio: 1,
+                id: false,
+                exclude: [ "src" ],
+                class: ""
+            },
+            init: function init() {
+                this.class += " uk-svg";
+            },
+            connected: function connected() {
+                var this$1 = this;
+                if (!this.icon && includes(this.src, "#")) {
+                    var parts = this.src.split("#");
+                    if (parts.length > 1) {
+                        var assign;
+                        assign = parts, this.src = assign[0], this.icon = assign[1];
+                    }
+                }
+                this.svg = this.getSvg().then(function(svg) {
+                    var el;
+                    if (isString(svg)) {
+                        if (this$1.icon && includes(svg, "<symbol")) {
+                            svg = parseSymbols(svg, this$1.icon) || svg;
+                        }
+                        el = $(svg.substr(svg.indexOf("<svg")));
+                    } else {
+                        el = svg.cloneNode(true);
+                    }
+                    if (!el) {
+                        return Promise.reject("SVG not found.");
+                    }
+                    var dimensions = attr(el, "viewBox");
+                    if (dimensions) {
+                        dimensions = dimensions.split(" ");
+                        this$1.width = this$1.$props.width || dimensions[2];
+                        this$1.height = this$1.$props.height || dimensions[3];
+                    }
+                    this$1.width *= this$1.ratio;
+                    this$1.height *= this$1.ratio;
+                    for (var prop in this$1.$options.props) {
+                        if (this$1[prop] && !includes(this$1.exclude, prop)) {
+                            attr(el, prop, this$1[prop]);
+                        }
+                    }
+                    if (!this$1.id) {
+                        removeAttr(el, "id");
+                    }
+                    if (this$1.width && !this$1.height) {
+                        removeAttr(el, "height");
+                    }
+                    if (this$1.height && !this$1.width) {
+                        removeAttr(el, "width");
+                    }
+                    var root = this$1.$el;
+                    if (isVoidElement(root) || root.tagName === "CANVAS") {
+                        attr(root, {
+                            hidden: true,
+                            id: null
+                        });
+                        var next = root.nextElementSibling;
+                        if (next && el.isEqualNode(next)) {
+                            el = next;
+                        } else {
+                            after(root, el);
+                        }
+                    } else {
+                        var last = root.lastElementChild;
+                        if (last && el.isEqualNode(last)) {
+                            el = last;
+                        } else {
+                            append(root, el);
+                        }
+                    }
+                    this$1.svgEl = el;
+                    return el;
+                }, noop);
+            },
+            disconnected: function disconnected() {
+                var this$1 = this;
+                if (isVoidElement(this.$el)) {
+                    attr(this.$el, {
+                        hidden: null,
+                        id: this.id || null
+                    });
+                }
+                if (this.svg) {
+                    this.svg.then(function(svg) {
+                        return (!this$1._connected || svg !== this$1.svgEl) && remove(svg);
+                    }, noop);
+                }
+                this.svg = this.svgEl = null;
+            },
+            methods: {
+                getSvg: function getSvg() {
+                    var this$1 = this;
+                    if (!this.src) {
+                        return Promise.reject();
+                    }
+                    if (svgs[this.src]) {
+                        return svgs[this.src];
+                    }
+                    svgs[this.src] = new Promise(function(resolve, reject) {
+                        if (startsWith(this$1.src, "data:")) {
+                            resolve(decodeURIComponent(this$1.src.split(",")[1]));
+                        } else {
+                            ajax(this$1.src).then(function(xhr) {
+                                return resolve(xhr.response);
+                            }, function() {
+                                return reject("SVG not found.");
+                            });
+                        }
+                    });
+                    return svgs[this.src];
+                }
+            }
+        });
+        var symbolRe = /<symbol(.*?id=(['"])(.*?)\2[^]*?<\/)symbol>/g;
+        var symbols = {};
+        function parseSymbols(svg, icon) {
+            if (!symbols[svg]) {
+                symbols[svg] = {};
+                var match;
+                while (match = symbolRe.exec(svg)) {
+                    symbols[svg][match[3]] = '<svg xmlns="http://www.w3.org/2000/svg"' + match[1] + "svg>";
+                }
+            }
+            return symbols[svg][icon];
+        }
+    }
+    function Switcher(UIkit) {
+        UIkit.component("switcher", {
+            mixins: [ Togglable ],
+            args: "connect",
+            props: {
+                connect: String,
+                toggle: String,
+                active: Number,
+                swiping: Boolean
+            },
+            defaults: {
+                connect: "~.uk-switcher",
+                toggle: "> *",
+                active: 0,
+                swiping: true,
+                cls: "uk-active",
+                clsContainer: "uk-switcher",
+                attrItem: "uk-switcher-item",
+                queued: true
+            },
+            computed: {
+                connects: function connects(ref, $el) {
+                    var connect = ref.connect;
+                    return queryAll(connect, $el);
+                },
+                toggles: function toggles(ref, $el) {
+                    var toggle = ref.toggle;
+                    return $$(toggle, $el);
+                }
+            },
+            events: [ {
+                name: "click",
+                delegate: function delegate() {
+                    return this.toggle + ":not(.uk-disabled)";
+                },
+                handler: function handler(e) {
+                    e.preventDefault();
+                    this.show(e.current);
+                }
+            }, {
+                name: "click",
+                el: function el() {
+                    return this.connects;
+                },
+                delegate: function delegate() {
+                    return "[" + this.attrItem + "],[data-" + this.attrItem + "]";
+                },
+                handler: function handler(e) {
+                    e.preventDefault();
+                    this.show(data(e.current, this.attrItem));
+                }
+            }, {
+                name: "swipeRight swipeLeft",
+                filter: function filter() {
+                    return this.swiping;
+                },
+                el: function el() {
+                    return this.connects;
+                },
+                handler: function handler(e) {
+                    if (!isTouch(e)) {
+                        return;
+                    }
+                    e.preventDefault();
+                    if (!window.getSelection().toString()) {
+                        this.show(e.type === "swipeLeft" ? "next" : "previous");
+                    }
+                }
+            } ],
+            update: function update() {
+                var this$1 = this;
+                this.connects.forEach(function(list) {
+                    return this$1.updateAria(list.children);
+                });
+                this.show(filter(this.toggles, "." + this.cls)[0] || this.toggles[this.active] || this.toggles[0]);
+            },
+            methods: {
+                show: function show(item) {
+                    var this$1 = this;
+                    var ref = this.toggles;
+                    var length = ref.length;
+                    var prev = !!this.connects.length && index(filter(this.connects[0].children, "." + this.cls)[0]);
+                    var hasPrev = prev >= 0;
+                    var dir = item === "previous" ? -1 : 1;
+                    var toggle, next = getIndex(item, this.toggles, prev);
+                    for (var i = 0; i < length; i++, next = (next + dir + length) % length) {
+                        if (!matches(this$1.toggles[next], ".uk-disabled, [disabled]")) {
+                            toggle = this$1.toggles[next];
+                            break;
+                        }
+                    }
+                    if (!toggle || prev >= 0 && hasClass(toggle, this.cls) || prev === next) {
+                        return;
+                    }
+                    removeClass(this.toggles, this.cls);
+                    attr(this.toggles, "aria-expanded", false);
+                    addClass(toggle, this.cls);
+                    attr(toggle, "aria-expanded", true);
+                    this.connects.forEach(function(list) {
+                        if (!hasPrev) {
+                            this$1.toggleNow(list.children[next]);
+                        } else {
+                            this$1.toggleElement([ list.children[prev], list.children[next] ]);
+                        }
+                    });
+                }
+            }
+        });
+    }
+    function Tab(UIkit) {
+        UIkit.component("tab", UIkit.components.switcher.extend({
+            mixins: [ Class ],
+            name: "tab",
+            props: {
+                media: "media"
+            },
+            defaults: {
+                media: 960,
+                attrItem: "uk-tab-item"
+            },
+            init: function init() {
+                var cls = hasClass(this.$el, "uk-tab-left") ? "uk-tab-left" : hasClass(this.$el, "uk-tab-right") ? "uk-tab-right" : false;
+                if (cls) {
+                    UIkit.toggle(this.$el, {
+                        cls: cls,
+                        mode: "media",
+                        media: this.media
+                    });
+                }
+            }
+        }));
+    }
+    function Toggle(UIkit) {
+        UIkit.component("toggle", {
+            mixins: [ UIkit.mixin.togglable ],
+            args: "target",
+            props: {
+                href: String,
+                target: null,
+                mode: "list",
+                media: "media"
+            },
+            defaults: {
+                href: false,
+                target: false,
+                mode: "click",
+                queued: true,
+                media: false
+            },
+            computed: {
+                target: function target(ref, $el) {
+                    var href = ref.href;
+                    var target = ref.target;
+                    target = queryAll(target || href, $el);
+                    return target.length && target || [ $el ];
+                }
+            },
+            events: [ {
+                name: pointerEnter + " " + pointerLeave,
+                filter: function filter() {
+                    return includes(this.mode, "hover");
+                },
+                handler: function handler(e) {
+                    if (!isTouch(e)) {
+                        this.toggle("toggle" + (e.type === pointerEnter ? "show" : "hide"));
+                    }
+                }
+            }, {
+                name: "click",
+                filter: function filter() {
+                    return includes(this.mode, "click") || hasTouch;
+                },
+                handler: function handler(e) {
+                    if (!isTouch(e) && !includes(this.mode, "click")) {
+                        return;
+                    }
+                    var link;
+                    if (closest(e.target, 'a[href="#"], button') || (link = closest(e.target, "a[href]")) && (this.cls || !isVisible(this.target) || link.hash && matches(this.target, link.hash))) {
+                        once(document, "click", function(e) {
+                            return e.preventDefault();
+                        });
+                    }
+                    this.toggle();
+                }
+            } ],
+            update: {
+                write: function write() {
+                    if (!includes(this.mode, "media") || !this.media) {
+                        return;
+                    }
+                    var toggled = this.isToggled(this.target);
+                    if (window.matchMedia(this.media).matches ? !toggled : toggled) {
+                        this.toggle();
+                    }
+                },
+                events: [ "load", "resize" ]
+            },
+            methods: {
+                toggle: function toggle(type) {
+                    if (trigger(this.target, type || "toggle", [ this ])) {
+                        this.toggleElement(this.target);
+                    }
+                }
+            }
+        });
+    }
+    function Video(UIkit) {
+        UIkit.component("video", {
+            args: "autoplay",
+            props: {
+                automute: Boolean,
+                autoplay: Boolean
+            },
+            defaults: {
+                automute: false,
+                autoplay: true
+            },
+            computed: {
+                inView: function inView(ref) {
+                    var autoplay = ref.autoplay;
+                    return autoplay === "inview";
+                }
+            },
+            connected: function connected() {
+                if (this.inView && !hasAttr(this.$el, "preload")) {
+                    this.$el.preload = "none";
+                }
+            },
+            ready: function ready() {
+                this.player = new Player(this.$el);
+                if (this.automute) {
+                    this.player.mute();
+                }
+            },
+            update: [ {
+                read: function read(_, ref) {
+                    var type = ref.type;
+                    return !this.player || (type === "scroll" || type === "resize") && !this.inView ? false : {
+                        visible: isVisible(this.$el) && css(this.$el, "visibility") !== "hidden",
+                        inView: this.inView && isInView(this.$el)
+                    };
+                },
+                write: function write(ref) {
+                    var visible = ref.visible;
+                    var inView = ref.inView;
+                    if (!visible || this.inView && !inView) {
+                        this.player.pause();
+                    } else if (this.autoplay === true || this.inView && inView) {
+                        this.player.play();
+                    }
+                },
+                events: [ "load", "resize", "scroll" ]
+            } ]
+        });
+    }
+    function core(UIkit) {
+        UIkit.use(Toggle);
+        UIkit.use(Accordion);
+        UIkit.use(Alert);
+        UIkit.use(Video);
+        UIkit.use(Cover);
+        UIkit.use(Drop);
+        UIkit.use(Dropdown);
+        UIkit.use(FormCustom);
+        UIkit.use(HeightMatch);
+        UIkit.use(HeightViewport);
+        UIkit.use(Margin);
+        UIkit.use(Gif);
+        UIkit.use(Grid);
+        UIkit.use(Leader);
+        UIkit.use(Modal$1);
+        UIkit.use(Nav);
+        UIkit.use(Navbar);
+        UIkit.use(Offcanvas);
+        UIkit.use(Responsive);
+        UIkit.use(Scroll);
+        UIkit.use(Scrollspy);
+        UIkit.use(ScrollspyNav);
+        UIkit.use(Sticky);
+        UIkit.use(Svg);
+        UIkit.use(Icon);
+        UIkit.use(Switcher);
+        UIkit.use(Tab);
+        UIkit.use(Core);
+    }
+    UIkit$2.version = "3.0.0-beta.42";
+    mixin(UIkit$2);
+    core(UIkit$2);
+    function plugin(UIkit) {
+        if (plugin.installed) {
+            return;
+        }
+        var ref = UIkit.util;
+        var $ = ref.$;
+        var empty = ref.empty;
+        var html = ref.html;
+        UIkit.component("countdown", {
+            mixins: [ UIkit.mixin.class ],
+            attrs: true,
+            props: {
+                date: String,
+                clsWrapper: String
+            },
+            defaults: {
+                date: "",
+                clsWrapper: ".uk-countdown-%unit%"
+            },
+            computed: {
+                date: function date(ref) {
+                    var date = ref.date;
+                    return Date.parse(date);
+                },
+                days: function days(ref, $el) {
+                    var clsWrapper = ref.clsWrapper;
+                    return $(clsWrapper.replace("%unit%", "days"), $el);
+                },
+                hours: function hours(ref, $el) {
+                    var clsWrapper = ref.clsWrapper;
+                    return $(clsWrapper.replace("%unit%", "hours"), $el);
+                },
+                minutes: function minutes(ref, $el) {
+                    var clsWrapper = ref.clsWrapper;
+                    return $(clsWrapper.replace("%unit%", "minutes"), $el);
+                },
+                seconds: function seconds(ref, $el) {
+                    var clsWrapper = ref.clsWrapper;
+                    return $(clsWrapper.replace("%unit%", "seconds"), $el);
+                },
+                units: function units() {
+                    var this$1 = this;
+                    return [ "days", "hours", "minutes", "seconds" ].filter(function(unit) {
+                        return this$1[unit];
+                    });
+                }
+            },
+            connected: function connected() {
+                this.start();
+            },
+            disconnected: function disconnected() {
+                var this$1 = this;
+                this.stop();
+                this.units.forEach(function(unit) {
+                    return empty(this$1[unit]);
+                });
+            },
+            events: [ {
+                name: "visibilitychange",
+                el: document,
+                handler: function handler() {
+                    if (document.hidden) {
+                        this.stop();
+                    } else {
+                        this.start();
+                    }
+                }
+            } ],
+            update: {
+                write: function write() {
+                    var this$1 = this;
+                    var timespan = getTimeSpan(this.date);
+                    if (timespan.total <= 0) {
+                        this.stop();
+                        timespan.days = timespan.hours = timespan.minutes = timespan.seconds = 0;
+                    }
+                    this.units.forEach(function(unit) {
+                        var digits = String(Math.floor(timespan[unit]));
+                        digits = digits.length < 2 ? "0" + digits : digits;
+                        var el = this$1[unit];
+                        if (el.textContent !== digits) {
+                            digits = digits.split("");
+                            if (digits.length !== el.children.length) {
+                                html(el, digits.map(function() {
+                                    return "<span></span>";
+                                }).join(""));
+                            }
+                            digits.forEach(function(digit, i) {
+                                return el.children[i].textContent = digit;
+                            });
+                        }
+                    });
+                }
+            },
+            methods: {
+                start: function start() {
+                    var this$1 = this;
+                    this.stop();
+                    if (this.date && this.units.length) {
+                        this.$emit();
+                        this.timer = setInterval(function() {
+                            return this$1.$emit();
+                        }, 1e3);
+                    }
+                },
+                stop: function stop() {
+                    if (this.timer) {
+                        clearInterval(this.timer);
+                        this.timer = null;
+                    }
+                }
+            }
+        });
+        function getTimeSpan(date) {
+            var total = date - Date.now();
+            return {
+                total: total,
+                seconds: total / 1e3 % 60,
+                minutes: total / 1e3 / 60 % 60,
+                hours: total / 1e3 / 60 / 60 % 24,
+                days: total / 1e3 / 60 / 60 / 24
+            };
+        }
+    }
+    function plugin$1(UIkit) {
+        if (plugin$1.installed) {
+            return;
+        }
+        var ref = UIkit.util;
+        var addClass = ref.addClass;
+        var css = ref.css;
+        var scrolledOver = ref.scrolledOver;
+        var sortBy = ref.sortBy;
+        var toFloat = ref.toFloat;
+        UIkit.component("grid-parallax", UIkit.components.grid.extend({
+            props: {
+                target: String,
+                translate: Number
+            },
+            defaults: {
+                target: false,
+                translate: 150
+            },
+            computed: {
+                translate: function translate(ref) {
+                    var translate = ref.translate;
+                    return Math.abs(translate);
+                }
+            },
+            init: function init() {
+                addClass(this.$el, "uk-grid");
+            },
+            disconnected: function disconnected() {
+                this.reset();
+                css(this.$el, "marginBottom", "");
+            },
+            update: [ {
+                read: function read(ref) {
+                    var rows = ref.rows;
+                    return {
+                        columns: rows && rows[0] && rows[0].length || 0,
+                        rows: rows && rows.map(function(elements) {
+                            return sortBy(elements, "offsetLeft");
+                        })
+                    };
+                },
+                write: function write(ref) {
+                    var columns = ref.columns;
+                    css(this.$el, "marginBottom", columns > 1 ? this.translate + toFloat(css(css(this.$el, "marginBottom", ""), "marginBottom")) : "");
+                },
+                events: [ "load", "resize" ]
+            }, {
+                read: function read() {
+                    return {
+                        scrolled: scrolledOver(this.$el) * this.translate
+                    };
+                },
+                write: function write(ref) {
+                    var rows = ref.rows;
+                    var columns = ref.columns;
+                    var scrolled = ref.scrolled;
+                    if (!rows || columns === 1 || !scrolled) {
+                        return this.reset();
+                    }
+                    rows.forEach(function(row) {
+                        return row.forEach(function(el, i) {
+                            return css(el, "transform", "translateY(" + (i % 2 ? scrolled : scrolled / 8) + "px)");
+                        });
+                    });
+                },
+                events: [ "scroll", "load", "resize" ]
+            } ],
+            methods: {
+                reset: function reset() {
+                    css(this.$el.children, "transform", "");
+                }
+            }
+        }));
+        UIkit.components.gridParallax.options.update.unshift({
+            read: function read() {
+                this.reset();
+            },
+            events: [ "load", "resize" ]
+        });
+    }
+    function AnimationsPlugin(UIkit) {
+        var ref = UIkit.util;
+        var css = ref.css;
+        var Animations = {
+            slide: {
+                show: function show(dir) {
+                    return [ {
+                        transform: translate(dir * -100)
+                    }, {
+                        transform: translate()
+                    } ];
+                },
+                percent: function percent(current) {
+                    return Animations.translated(current);
+                },
+                translate: function translate$1(percent, dir) {
+                    return [ {
+                        transform: translate(dir * -100 * percent)
+                    }, {
+                        transform: translate(dir * 100 * (1 - percent))
+                    } ];
+                }
+            },
+            translated: function translated(el) {
+                return Math.abs(css(el, "transform").split(",")[4] / el.offsetWidth) || 0;
+            }
+        };
+        return Animations;
+    }
+    function translate(value, unit) {
+        if (value === void 0) value = 0;
+        if (unit === void 0) unit = "%";
+        return "translateX(" + value + (value ? unit : "") + ")";
+    }
+    function scale3d(value) {
+        return "scale3d(" + value + ", " + value + ", 1)";
+    }
+    function TransitionerPlugin(UIkit) {
+        var ref = UIkit.util;
+        var createEvent = ref.createEvent;
+        var clamp = ref.clamp;
+        var css = ref.css;
+        var Deferred = ref.Deferred;
+        var noop = ref.noop;
+        var Promise = ref.Promise;
+        var Transition = ref.Transition;
+        var trigger = ref.trigger;
+        function Transitioner(prev, next, dir, ref) {
+            var animation = ref.animation;
+            var easing = ref.easing;
+            var percent = animation.percent;
+            var translate = animation.translate;
+            var show = animation.show;
+            if (show === void 0) show = noop;
+            var props = show(dir);
+            var deferred = new Deferred();
+            return {
+                dir: dir,
+                show: function show(duration, percent, linear) {
+                    var this$1 = this;
+                    if (percent === void 0) percent = 0;
+                    var timing = linear ? "linear" : easing;
+                    duration -= Math.round(duration * clamp(percent, -1, 1));
+                    this.translate(percent);
+                    triggerUpdate(next, "itemin", {
+                        percent: percent,
+                        duration: duration,
+                        timing: timing,
+                        dir: dir
+                    });
+                    triggerUpdate(prev, "itemout", {
+                        percent: 1 - percent,
+                        duration: duration,
+                        timing: timing,
+                        dir: dir
+                    });
+                    Promise.all([ Transition.start(next, props[1], duration, timing), Transition.start(prev, props[0], duration, timing) ]).then(function() {
+                        this$1.reset();
+                        deferred.resolve();
+                    }, noop);
+                    return deferred.promise;
+                },
+                stop: function stop() {
+                    return Transition.stop([ next, prev ]);
+                },
+                cancel: function cancel() {
+                    Transition.cancel([ next, prev ]);
+                },
+                reset: function reset() {
+                    for (var prop in props[0]) {
+                        css([ next, prev ], prop, "");
+                    }
+                },
+                forward: function forward(duration, percent) {
+                    if (percent === void 0) percent = this.percent();
+                    Transition.cancel([ next, prev ]);
+                    return this.show(duration, percent, true);
+                },
+                translate: function translate$1(percent) {
+                    this.reset();
+                    var props = translate(percent, dir);
+                    css(next, props[1]);
+                    css(prev, props[0]);
+                    triggerUpdate(next, "itemtranslatein", {
+                        percent: percent,
+                        dir: dir
+                    });
+                    triggerUpdate(prev, "itemtranslateout", {
+                        percent: 1 - percent,
+                        dir: dir
+                    });
+                },
+                percent: function percent$1() {
+                    return percent(prev || next, next, dir);
+                },
+                getDistance: function getDistance() {
+                    return prev.offsetWidth;
+                }
+            };
+        }
+        function triggerUpdate(el, type, data) {
+            trigger(el, createEvent(type, false, false, data));
+        }
+        return Transitioner;
+    }
+    function AutoplayMixin(UIkit) {
+        var ref = UIkit.util;
+        var pointerDown = ref.pointerDown;
+        return {
+            props: {
+                autoplay: Boolean,
+                autoplayInterval: Number,
+                pauseOnHover: Boolean
+            },
+            defaults: {
+                autoplay: false,
+                autoplayInterval: 7e3,
+                pauseOnHover: true
+            },
+            connected: function connected() {
+                this.startAutoplay();
+            },
+            disconnected: function disconnected() {
+                this.stopAutoplay();
+            },
+            events: [ {
+                name: "visibilitychange",
+                el: document,
+                handler: function handler() {
+                    if (document.hidden) {
+                        this.stopAutoplay();
+                    } else {
+                        this.startAutoplay();
+                    }
+                }
+            }, {
+                name: pointerDown,
+                handler: "stopAutoplay"
+            }, {
+                name: "mouseenter",
+                filter: function filter() {
+                    return this.autoplay;
+                },
+                handler: function handler() {
+                    this.isHovering = true;
+                }
+            }, {
+                name: "mouseleave",
+                filter: function filter() {
+                    return this.autoplay;
+                },
+                handler: function handler() {
+                    this.isHovering = false;
+                }
+            } ],
+            methods: {
+                startAutoplay: function startAutoplay() {
+                    var this$1 = this;
+                    this.stopAutoplay();
+                    if (this.autoplay) {
+                        this.interval = setInterval(function() {
+                            return !(this$1.isHovering && this$1.pauseOnHover) && !this$1.stack.length && this$1.show("next");
+                        }, this.autoplayInterval);
+                    }
+                },
+                stopAutoplay: function stopAutoplay() {
+                    if (this.interval) {
+                        clearInterval(this.interval);
+                    }
+                }
+            }
+        };
+    }
+    function DragMixin(UIkit) {
+        var ref = UIkit.util;
+        var getPos = ref.getPos;
+        var includes = ref.includes;
+        var isRtl = ref.isRtl;
+        var isTouch = ref.isTouch;
+        var off = ref.off;
+        var on = ref.on;
+        var pointerDown = ref.pointerDown;
+        var pointerMove = ref.pointerMove;
+        var pointerUp = ref.pointerUp;
+        var preventClick = ref.preventClick;
+        var trigger = ref.trigger;
+        return {
+            defaults: {
+                threshold: 10,
+                preventCatch: false
+            },
+            init: function init() {
+                var this$1 = this;
+                [ "start", "move", "end" ].forEach(function(key) {
+                    var fn = this$1[key];
+                    this$1[key] = function(e) {
+                        var pos = getPos(e).x * (isRtl ? -1 : 1);
+                        this$1.prevPos = pos !== this$1.pos ? this$1.pos : this$1.prevPos;
+                        this$1.pos = pos;
+                        fn(e);
+                    };
+                });
+            },
+            events: [ {
+                name: pointerDown,
+                delegate: function delegate() {
+                    return this.slidesSelector;
+                },
+                handler: function handler(e) {
+                    if (!isTouch(e) && hasTextNodesOnly(e.target) || e.button > 0 || this.length < 2 || this.preventCatch) {
+                        return;
+                    }
+                    this.start(e);
+                }
+            }, {
+                name: "dragstart",
+                handler: function handler(e) {
+                    e.preventDefault();
+                }
+            } ],
+            methods: {
+                start: function start() {
+                    this.drag = this.pos;
+                    if (this._transitioner) {
+                        this.percent = this._transitioner.percent();
+                        this.drag += this._transitioner.getDistance() * this.percent * this.dir;
+                        this._transitioner.translate(this.percent);
+                        this._transitioner.cancel();
+                        this.dragging = true;
+                        this.stack = [];
+                    } else {
+                        this.prevIndex = this.index;
+                    }
+                    this.unbindMove = on(document, pointerMove, this.move, {
+                        capture: true,
+                        passive: false
+                    });
+                    on(window, "scroll", this.unbindMove);
+                    on(document, pointerUp, this.end, true);
+                },
+                move: function move(e) {
+                    var this$1 = this;
+                    var distance = this.pos - this.drag;
+                    if (distance === 0 || this.prevPos === this.pos || !this.dragging && Math.abs(distance) < this.threshold) {
+                        return;
+                    }
+                    e.cancelable && e.preventDefault();
+                    this.dragging = true;
+                    this.dir = distance < 0 ? 1 : -1;
+                    var ref = this;
+                    var slides = ref.slides;
+                    var ref$1 = this;
+                    var prevIndex = ref$1.prevIndex;
+                    var dis = Math.abs(distance);
+                    var nextIndex = this.getIndex(prevIndex + this.dir, prevIndex);
+                    var width = this._getDistance(prevIndex, nextIndex) || slides[prevIndex].offsetWidth;
+                    while (nextIndex !== prevIndex && dis > width) {
+                        this$1.drag -= width * this$1.dir;
+                        prevIndex = nextIndex;
+                        dis -= width;
+                        nextIndex = this$1.getIndex(prevIndex + this$1.dir, prevIndex);
+                        width = this$1._getDistance(prevIndex, nextIndex) || slides[prevIndex].offsetWidth;
+                    }
+                    this.percent = dis / width;
+                    var prev = slides[prevIndex];
+                    var next = slides[nextIndex];
+                    var changed = this.index !== nextIndex;
+                    var edge = prevIndex === nextIndex;
+                    var itemShown;
+                    [ this.index, this.prevIndex ].filter(function(i) {
+                        return !includes([ nextIndex, prevIndex ], i);
+                    }).forEach(function(i) {
+                        trigger(slides[i], "itemhidden", [ this$1 ]);
+                        if (edge) {
+                            itemShown = true;
+                            this$1.prevIndex = prevIndex;
+                        }
+                    });
+                    if (this.index === prevIndex && this.prevIndex !== prevIndex || itemShown) {
+                        trigger(slides[this.index], "itemshown", [ this ]);
+                    }
+                    if (changed) {
+                        this.prevIndex = prevIndex;
+                        this.index = nextIndex;
+                        !edge && trigger(prev, "beforeitemhide", [ this ]);
+                        trigger(next, "beforeitemshow", [ this ]);
+                    }
+                    this._transitioner = this._translate(Math.abs(this.percent), prev, !edge && next);
+                    if (changed) {
+                        !edge && trigger(prev, "itemhide", [ this ]);
+                        trigger(next, "itemshow", [ this ]);
+                    }
+                },
+                end: function end() {
+                    off(window, "scroll", this.unbindMove);
+                    this.unbindMove();
+                    off(document, pointerUp, this.end, true);
+                    if (this.dragging) {
+                        this.dragging = null;
+                        if (this.index === this.prevIndex) {
+                            this.percent = 1 - this.percent;
+                            this.dir *= -1;
+                            this._show(false, this.index, true);
+                            this._transitioner = null;
+                        } else {
+                            var dirChange = (isRtl ? this.dir * (isRtl ? 1 : -1) : this.dir) < 0 === this.prevPos > this.pos;
+                            this.index = dirChange ? this.index : this.prevIndex;
+                            if (dirChange) {
+                                this.percent = 1 - this.percent;
+                            }
+                            this.show(this.dir > 0 && !dirChange || this.dir < 0 && dirChange ? "next" : "previous", true);
+                        }
+                        preventClick();
+                    }
+                    this.drag = this.percent = null;
+                }
+            }
+        };
+        function hasTextNodesOnly(el) {
+            return !el.children.length && el.childNodes.length;
+        }
+    }
+    function NavMixin(UIkit) {
+        var ref = UIkit.util;
+        var $ = ref.$;
+        var $$ = ref.$$;
+        var data = ref.data;
+        var html = ref.html;
+        var toggleClass = ref.toggleClass;
+        var toNumber = ref.toNumber;
+        return {
+            defaults: {
+                selNav: false
+            },
+            computed: {
+                nav: function nav(ref, $el) {
+                    var selNav = ref.selNav;
+                    return $(selNav, $el);
+                },
+                navItemSelector: function navItemSelector(ref) {
+                    var attrItem = ref.attrItem;
+                    return "[" + attrItem + "],[data-" + attrItem + "]";
+                },
+                navItems: function navItems(_, $el) {
+                    return $$(this.navItemSelector, $el);
+                }
+            },
+            update: [ {
+                write: function write() {
+                    var this$1 = this;
+                    if (this.nav && this.length !== this.nav.children.length) {
+                        html(this.nav, this.slides.map(function(_, i) {
+                            return "<li " + this$1.attrItem + '="' + i + '"><a href="#"></a></li>';
+                        }).join(""));
+                    }
+                    toggleClass($$(this.navItemSelector, this.$el).concat(this.nav), "uk-hidden", !this.maxIndex);
+                    this.updateNav();
+                },
+                events: [ "load", "resize" ]
+            } ],
+            events: [ {
+                name: "click",
+                delegate: function delegate() {
+                    return this.navItemSelector;
+                },
+                handler: function handler(e) {
+                    e.preventDefault();
+                    e.current.blur();
+                    this.show(data(e.current, this.attrItem));
+                }
+            }, {
+                name: "itemshow",
+                handler: "updateNav"
+            } ],
+            methods: {
+                updateNav: function updateNav() {
+                    var this$1 = this;
+                    var i = this.getValidIndex();
+                    this.navItems.forEach(function(el) {
+                        var cmd = data(el, this$1.attrItem);
+                        toggleClass(el, this$1.clsActive, toNumber(cmd) === i);
+                        toggleClass(el, "uk-invisible", this$1.finite && (cmd === "previous" && i === 0 || cmd === "next" && i >= this$1.maxIndex));
+                    });
+                }
+            }
+        };
+    }
+    function plugin$5(UIkit) {
+        if (plugin$5.installed) {
+            return;
+        }
+        var ref = UIkit.util;
+        var $ = ref.$;
+        var assign = ref.assign;
+        var clamp = ref.clamp;
+        var fastdom = ref.fastdom;
+        var getIndex = ref.getIndex;
+        var hasClass = ref.hasClass;
+        var isNumber = ref.isNumber;
+        var isRtl = ref.isRtl;
+        var Promise = ref.Promise;
+        var toNodes = ref.toNodes;
+        var trigger = ref.trigger;
+        UIkit.mixin.slider = {
+            attrs: true,
+            mixins: [ AutoplayMixin(UIkit), DragMixin(UIkit), NavMixin(UIkit) ],
+            props: {
+                clsActivated: Boolean,
+                easing: String,
+                index: Number,
+                finite: Boolean,
+                velocity: Number
+            },
+            defaults: {
+                easing: "ease",
+                finite: false,
+                velocity: 1,
+                index: 0,
+                stack: [],
+                percent: 0,
+                clsActive: "uk-active",
+                clsActivated: false,
+                Transitioner: false,
+                transitionOptions: {}
+            },
+            computed: {
+                duration: function duration(ref, $el) {
+                    var velocity = ref.velocity;
+                    return speedUp($el.offsetWidth / velocity);
+                },
+                length: function length() {
+                    return this.slides.length;
+                },
+                list: function list(ref, $el) {
+                    var selList = ref.selList;
+                    return $(selList, $el);
+                },
+                maxIndex: function maxIndex() {
+                    return this.length - 1;
+                },
+                slidesSelector: function slidesSelector(ref) {
+                    var selList = ref.selList;
+                    return selList + " > *";
+                },
+                slides: function slides() {
+                    return toNodes(this.list.children);
+                }
+            },
+            methods: {
+                show: function show(index, force) {
+                    var this$1 = this;
+                    if (force === void 0) force = false;
+                    if (this.dragging || !this.length) {
+                        return;
+                    }
+                    var ref = this;
+                    var stack = ref.stack;
+                    var queueIndex = force ? 0 : stack.length;
+                    var reset = function() {
+                        stack.splice(queueIndex, 1);
+                        if (stack.length) {
+                            this$1.show(stack.shift(), true);
+                        }
+                    };
+                    stack[force ? "unshift" : "push"](index);
+                    if (!force && stack.length > 1) {
+                        if (stack.length === 2) {
+                            this._transitioner.forward(Math.min(this.duration, 200));
+                        }
+                        return;
+                    }
+                    var prevIndex = this.index;
+                    var prev = hasClass(this.slides, this.clsActive) && this.slides[prevIndex];
+                    var nextIndex = this.getIndex(index, this.index);
+                    var next = this.slides[nextIndex];
+                    if (prev === next) {
+                        reset();
+                        return;
+                    }
+                    this.dir = getDirection(index, prevIndex);
+                    this.prevIndex = prevIndex;
+                    this.index = nextIndex;
+                    prev && trigger(prev, "beforeitemhide", [ this ]);
+                    if (!trigger(next, "beforeitemshow", [ this, prev ])) {
+                        this.index = this.prevIndex;
+                        reset();
+                        return;
+                    }
+                    var promise = this._show(prev, next, force).then(function() {
+                        prev && trigger(prev, "itemhidden", [ this$1 ]);
+                        trigger(next, "itemshown", [ this$1 ]);
+                        return new Promise(function(resolve) {
+                            fastdom.write(function() {
+                                stack.shift();
+                                if (stack.length) {
+                                    this$1.show(stack.shift(), true);
+                                } else {
+                                    this$1._transitioner = null;
+                                }
+                                resolve();
+                            });
+                        });
+                    });
+                    prev && trigger(prev, "itemhide", [ this ]);
+                    trigger(next, "itemshow", [ this ]);
+                    return promise;
+                },
+                getIndex: function getIndex$1(index, prev) {
+                    if (index === void 0) index = this.index;
+                    if (prev === void 0) prev = this.index;
+                    return clamp(getIndex(index, this.slides, prev, this.finite), 0, this.maxIndex);
+                },
+                getValidIndex: function getValidIndex(index, prevIndex) {
+                    if (index === void 0) index = this.index;
+                    if (prevIndex === void 0) prevIndex = this.prevIndex;
+                    return this.getIndex(index, prevIndex);
+                },
+                _show: function _show(prev, next, force) {
+                    this._transitioner = this._getTransitioner(prev, next, this.dir, assign({
+                        easing: force ? next.offsetWidth < 600 ? "cubic-bezier(0.25, 0.46, 0.45, 0.94)" : "cubic-bezier(0.165, 0.84, 0.44, 1)" : this.easing
+                    }, this.transitionOptions));
+                    if (!force && !prev) {
+                        this._transitioner.translate(1);
+                        return Promise.resolve();
+                    }
+                    var ref = this.stack;
+                    var length = ref.length;
+                    return this._transitioner[length > 1 ? "forward" : "show"](length > 1 ? Math.min(this.duration, 75 + 75 / (length - 1)) : this.duration, this.percent);
+                },
+                _getDistance: function _getDistance(prev, next) {
+                    return new this._getTransitioner(prev, prev !== next && next).getDistance();
+                },
+                _translate: function _translate(percent, prev, next) {
+                    if (prev === void 0) prev = this.prevIndex;
+                    if (next === void 0) next = this.index;
+                    var transitioner = this._getTransitioner(prev !== next ? prev : false, next);
+                    transitioner.translate(percent);
+                    return transitioner;
+                },
+                _getTransitioner: function _getTransitioner(prev, next, dir, options) {
+                    if (prev === void 0) prev = this.prevIndex;
+                    if (next === void 0) next = this.index;
+                    if (dir === void 0) dir = this.dir || 1;
+                    if (options === void 0) options = this.transitionOptions;
+                    return new this.Transitioner(isNumber(prev) ? this.slides[prev] : prev, isNumber(next) ? this.slides[next] : next, dir * (isRtl ? -1 : 1), options);
+                }
+            }
+        };
+        function getDirection(index, prevIndex) {
+            return index === "next" ? 1 : index === "previous" ? -1 : index < prevIndex ? -1 : 1;
+        }
+    }
+    function speedUp(x) {
+        return .5 * x + 300;
+    }
+    function plugin$4(UIkit) {
+        if (plugin$4.installed) {
+            return;
+        }
+        UIkit.use(plugin$5);
+        var mixin = UIkit.mixin;
+        var UIkit_util = UIkit.util;
+        var addClass = UIkit_util.addClass;
+        var assign = UIkit_util.assign;
+        var fastdom = UIkit_util.fastdom;
+        var isNumber = UIkit_util.isNumber;
+        var removeClass = UIkit_util.removeClass;
+        var Animations = AnimationsPlugin(UIkit);
+        var Transitioner = TransitionerPlugin(UIkit);
+        UIkit.mixin.slideshow = {
+            mixins: [ mixin.slider ],
+            props: {
+                animation: String
+            },
+            defaults: {
+                animation: "slide",
+                clsActivated: "uk-transition-active",
+                Animations: Animations,
+                Transitioner: Transitioner
+            },
+            computed: {
+                animation: function animation(ref) {
+                    var animation = ref.animation;
+                    var Animations = ref.Animations;
+                    return assign(animation in Animations ? Animations[animation] : Animations.slide, {
+                        name: animation
+                    });
+                },
+                transitionOptions: function transitionOptions() {
+                    return {
+                        animation: this.animation
+                    };
+                }
+            },
+            events: {
+                "itemshow itemhide itemshown itemhidden": function itemshowitemhideitemshownitemhidden(ref) {
+                    var target = ref.target;
+                    UIkit.update(target);
+                },
+                itemshow: function itemshow() {
+                    isNumber(this.prevIndex) && fastdom.flush();
+                },
+                beforeitemshow: function beforeitemshow(ref) {
+                    var target = ref.target;
+                    addClass(target, this.clsActive);
+                },
+                itemshown: function itemshown(ref) {
+                    var target = ref.target;
+                    addClass(target, this.clsActivated);
+                },
+                itemhidden: function itemhidden(ref) {
+                    var target = ref.target;
+                    removeClass(target, this.clsActive, this.clsActivated);
+                }
+            }
+        };
+    }
+    function AnimationsPlugin$1(UIkit) {
+        var mixin = UIkit.mixin;
+        var UIkit_util = UIkit.util;
+        var assign = UIkit_util.assign;
+        var css = UIkit_util.css;
+        return assign({}, mixin.slideshow.defaults.Animations, {
+            fade: {
+                show: function show() {
+                    return [ {
+                        opacity: 0
+                    }, {
+                        opacity: 1
+                    } ];
+                },
+                percent: function percent(current) {
+                    return 1 - css(current, "opacity");
+                },
+                translate: function translate$$1(percent) {
+                    return [ {
+                        opacity: 1 - percent
+                    }, {
+                        opacity: percent
+                    } ];
+                }
+            },
+            scale: {
+                show: function show() {
+                    return [ {
+                        opacity: 0,
+                        transform: scale3d(1 - .2)
+                    }, {
+                        opacity: 1,
+                        transform: scale3d(1)
+                    } ];
+                },
+                percent: function percent(current) {
+                    return 1 - css(current, "opacity");
+                },
+                translate: function translate$$1(percent) {
+                    return [ {
+                        opacity: 1 - percent,
+                        transform: scale3d(1 - .2 * percent)
+                    }, {
+                        opacity: percent,
+                        transform: scale3d(1 - .2 + .2 * percent)
+                    } ];
+                }
+            }
+        });
+    }
+    function plugin$3(UIkit) {
+        if (plugin$3.installed) {
+            return;
+        }
+        UIkit.use(plugin$4);
+        var mixin = UIkit.mixin;
+        var util = UIkit.util;
+        var $ = util.$;
+        var addClass = util.addClass;
+        var ajax = util.ajax;
+        var append = util.append;
+        var assign = util.assign;
+        var attr = util.attr;
+        var css = util.css;
+        var getImage = util.getImage;
+        var html = util.html;
+        var index = util.index;
+        var on = util.on;
+        var pointerDown = util.pointerDown;
+        var pointerMove = util.pointerMove;
+        var removeClass = util.removeClass;
+        var Transition = util.Transition;
+        var trigger = util.trigger;
+        var Animations = AnimationsPlugin$1(UIkit);
+        UIkit.component("lightbox-panel", {
+            mixins: [ mixin.container, mixin.modal, mixin.togglable, mixin.slideshow ],
+            functional: true,
+            props: {
+                delayControls: Number,
+                preload: Number,
+                videoAutoplay: Boolean,
+                template: String
+            },
+            defaults: {
+                preload: 1,
+                videoAutoplay: false,
+                delayControls: 3e3,
+                items: [],
+                cls: "uk-open",
+                clsPage: "uk-lightbox-page",
+                selList: ".uk-lightbox-items",
+                attrItem: "uk-lightbox-item",
+                selClose: ".uk-close-large",
+                pauseOnHover: false,
+                velocity: 2,
+                Animations: Animations,
+                template: '<div class="uk-lightbox uk-overflow-hidden"> <ul class="uk-lightbox-items"></ul> <div class="uk-lightbox-toolbar uk-position-top uk-text-right uk-transition-slide-top uk-transition-opaque"> <button class="uk-lightbox-toolbar-icon uk-close-large" type="button" uk-close></button> </div> <a class="uk-lightbox-button uk-position-center-left uk-position-medium uk-transition-fade" href="#" uk-slidenav-previous uk-lightbox-item="previous"></a> <a class="uk-lightbox-button uk-position-center-right uk-position-medium uk-transition-fade" href="#" uk-slidenav-next uk-lightbox-item="next"></a> <div class="uk-lightbox-toolbar uk-lightbox-caption uk-position-bottom uk-text-center uk-transition-slide-bottom uk-transition-opaque"></div> </div>'
+            },
+            created: function created() {
+                var this$1 = this;
+                this.$mount(append(this.container, this.template));
+                this.caption = $(".uk-lightbox-caption", this.$el);
+                this.items.forEach(function() {
+                    return append(this$1.list, "<li></li>");
+                });
+            },
+            events: [ {
+                name: pointerMove + " " + pointerDown + " keydown",
+                handler: "showControls"
+            }, {
+                name: "click",
+                self: true,
+                delegate: function delegate() {
+                    return this.slidesSelector;
+                },
+                handler: function handler(e) {
+                    e.preventDefault();
+                    this.hide();
+                }
+            }, {
+                name: "shown",
+                self: true,
+                handler: "showControls"
+            }, {
+                name: "hide",
+                self: true,
+                handler: function handler() {
+                    this.hideControls();
+                    removeClass(this.slides, this.clsActive);
+                    Transition.stop(this.slides);
+                }
+            }, {
+                name: "keyup",
+                el: document,
+                handler: function handler(e) {
+                    if (!this.isToggled(this.$el)) {
+                        return;
+                    }
+                    switch (e.keyCode) {
+                      case 37:
+                        this.show("previous");
+                        break;
+
+                      case 39:
+                        this.show("next");
+                        break;
+                    }
+                }
+            }, {
+                name: "beforeitemshow",
+                handler: function handler(e) {
+                    if (this.isToggled()) {
+                        return;
+                    }
+                    this.preventCatch = true;
+                    e.preventDefault();
+                    this.toggleNow(this.$el, true);
+                    this.animation = Animations["scale"];
+                    removeClass(e.target, this.clsActive);
+                    this.stack.splice(1, 0, this.index);
+                }
+            }, {
+                name: "itemshow",
+                handler: function handler(ref) {
+                    var this$1 = this;
+                    var target = ref.target;
+                    var i = index(target);
+                    var ref$1 = this.getItem(i);
+                    var caption = ref$1.caption;
+                    css(this.caption, "display", caption ? "" : "none");
+                    html(this.caption, caption);
+                    for (var j = 0; j <= this.preload; j++) {
+                        this$1.loadItem(this$1.getIndex(i + j));
+                        this$1.loadItem(this$1.getIndex(i - j));
+                    }
+                }
+            }, {
+                name: "itemshown",
+                handler: function handler() {
+                    this.preventCatch = false;
+                }
+            }, {
+                name: "itemload",
+                handler: function handler(_, item) {
+                    var this$1 = this;
+                    var source = item.source;
+                    var type = item.type;
+                    var alt = item.alt;
+                    this.setItem(item, "<span uk-spinner></span>");
+                    if (!source) {
+                        return;
+                    }
+                    var matches;
+                    if (type === "image" || source.match(/\.(jp(e)?g|png|gif|svg)$/i)) {
+                        getImage(source).then(function(img) {
+                            return this$1.setItem(item, '<img width="' + img.width + '" height="' + img.height + '" src="' + source + '" alt="' + (alt ? alt : "") + '">');
+                        }, function() {
+                            return this$1.setError(item);
+                        });
+                    } else if (type === "video" || source.match(/\.(mp4|webm|ogv)$/i)) {
+                        var video = $("<video controls playsinline" + (item.poster ? ' poster="' + item.poster + '"' : "") + ' uk-video="' + this.videoAutoplay + '"></video>');
+                        attr(video, "src", source);
+                        on(video, "error", function() {
+                            return this$1.setError(item);
+                        });
+                        on(video, "loadedmetadata", function() {
+                            attr(video, {
+                                width: video.videoWidth,
+                                height: video.videoHeight
+                            });
+                            this$1.setItem(item, video);
+                        });
+                    } else if (type === "iframe") {
+                        this.setItem(item, '<iframe class="uk-lightbox-iframe" src="' + source + '" frameborder="0" allowfullscreen></iframe>');
+                    } else if (matches = source.match(/\/\/.*?youtube(-nocookie)?\.[a-z]+\/watch\?v=([^&\s]+)/) || source.match(/()youtu\.be\/(.*)/)) {
+                        var id = matches[2];
+                        var setIframe = function(width, height) {
+                            if (width === void 0) width = 640;
+                            if (height === void 0) height = 450;
+                            return this$1.setItem(item, getIframe("//www.youtube" + (matches[1] || "") + ".com/embed/" + id, width, height, this$1.videoAutoplay));
+                        };
+                        getImage("//img.youtube.com/vi/" + id + "/maxresdefault.jpg").then(function(ref) {
+                            var width = ref.width;
+                            var height = ref.height;
+                            if (width === 120 && height === 90) {
+                                getImage("//img.youtube.com/vi/" + id + "/0.jpg").then(function(ref) {
+                                    var width = ref.width;
+                                    var height = ref.height;
+                                    return setIframe(width, height);
+                                }, setIframe);
+                            } else {
+                                setIframe(width, height);
+                            }
+                        }, setIframe);
+                    } else if (matches = source.match(/(\/\/.*?)vimeo\.[a-z]+\/([0-9]+).*?/)) {
+                        ajax("//vimeo.com/api/oembed.json?maxwidth=1920&url=" + encodeURI(source), {
+                            responseType: "json"
+                        }).then(function(ref) {
+                            var ref_response = ref.response;
+                            var height = ref_response.height;
+                            var width = ref_response.width;
+                            return this$1.setItem(item, getIframe("//player.vimeo.com/video/" + matches[2], width, height, this$1.videoAutoplay));
+                        });
+                    }
+                }
+            } ],
+            methods: {
+                loadItem: function loadItem(index) {
+                    if (index === void 0) index = this.index;
+                    var item = this.getItem(index);
+                    if (item.content) {
+                        return;
+                    }
+                    trigger(this.$el, "itemload", [ item ]);
+                },
+                getItem: function getItem(index) {
+                    if (index === void 0) index = this.index;
+                    return this.items[index] || {};
+                },
+                setItem: function setItem(item, content) {
+                    assign(item, {
+                        content: content
+                    });
+                    var el = html(this.slides[this.items.indexOf(item)], content);
+                    trigger(this.$el, "itemloaded", [ this, el ]);
+                    UIkit.update(el);
+                },
+                setError: function setError(item) {
+                    this.setItem(item, '<span uk-icon="icon: bolt; ratio: 2"></span>');
+                },
+                showControls: function showControls() {
+                    clearTimeout(this.controlsTimer);
+                    this.controlsTimer = setTimeout(this.hideControls, this.delayControls);
+                    addClass(this.$el, "uk-active", "uk-transition-active");
+                },
+                hideControls: function hideControls() {
+                    removeClass(this.$el, "uk-active", "uk-transition-active");
+                }
+            }
+        });
+        function getIframe(src, width, height, autoplay) {
+            return '<iframe src="' + src + '" width="' + width + '" height="' + height + '" style="max-width: 100%; box-sizing: border-box;" frameborder="0" allowfullscreen uk-video="autoplay: ' + autoplay + '" uk-responsive></iframe>';
+        }
+    }
+    function plugin$2(UIkit) {
+        if (plugin$2.installed) {
+            return;
+        }
+        UIkit.use(plugin$3);
+        var util = UIkit.util;
+        var $$ = util.$$;
+        var assign = util.assign;
+        var data = util.data;
+        var index = util.index;
+        var ref = UIkit.components.lightboxPanel;
+        var options = ref.options;
+        UIkit.component("lightbox", {
+            attrs: true,
+            props: assign({
+                toggle: String
+            }, options.props),
+            defaults: assign({
+                toggle: "a"
+            }, Object.keys(options.props).reduce(function(defaults, key) {
+                defaults[key] = options.defaults[key];
+                return defaults;
+            }, {})),
+            computed: {
+                toggles: function toggles(ref, $el) {
+                    var toggle = ref.toggle;
+                    return $$(toggle, $el);
+                }
+            },
+            disconnected: function disconnected() {
+                this._destroy();
+            },
+            events: [ {
+                name: "click",
+                delegate: function delegate() {
+                    return this.toggle + ":not(.uk-disabled)";
+                },
+                handler: function handler(e) {
+                    e.preventDefault();
+                    e.current.blur();
+                    this.show(index(this.toggles, e.current));
+                }
+            } ],
+            update: function update(data) {
+                data.toggles = data.toggles || this.toggles;
+                if (this.panel && this.animation) {
+                    this.panel.$props.animation = this.animation;
+                    this.panel.$emit();
+                }
+                if (!this.panel || isEqualList(data.toggles, this.toggles)) {
+                    return;
+                }
+                data.toggles = this.toggles;
+                this._destroy();
+                this._init();
+            },
+            methods: {
+                _init: function _init() {
+                    return this.panel = this.panel || UIkit.lightboxPanel(assign({}, this.$props, {
+                        items: this.toggles.reduce(function(items, el) {
+                            items.push([ "href", "caption", "type", "poster", "alt" ].reduce(function(obj, attr) {
+                                obj[attr === "href" ? "source" : attr] = data(el, attr);
+                                return obj;
+                            }, {}));
+                            return items;
+                        }, [])
+                    }));
+                },
+                _destroy: function _destroy() {
+                    if (this.panel) {
+                        this.panel.$destroy(true);
+                        this.panel = null;
+                    }
+                },
+                show: function show(index) {
+                    if (!this.panel) {
+                        this._init();
+                    }
+                    return this.panel.show(index);
+                },
+                hide: function hide() {
+                    return this.panel && this.panel.hide();
+                }
+            }
+        });
+        function isEqualList(listA, listB) {
+            return listA.length === listB.length && listA.every(function(el, i) {
+                return el === listB[i];
+            });
+        }
+    }
+    function plugin$6(UIkit) {
+        var obj;
+        if (plugin$6.installed) {
+            return;
+        }
+        var ref = UIkit.util;
+        var append = ref.append;
+        var apply = ref.apply;
+        var closest = ref.closest;
+        var css = ref.css;
+        var pointerEnter = ref.pointerEnter;
+        var pointerLeave = ref.pointerLeave;
+        var remove = ref.remove;
+        var toFloat = ref.toFloat;
+        var Transition = ref.Transition;
+        var trigger = ref.trigger;
+        var containers = {};
+        UIkit.component("notification", {
+            functional: true,
+            args: [ "message", "status" ],
+            defaults: {
+                message: "",
+                status: "",
+                timeout: 5e3,
+                group: null,
+                pos: "top-center",
+                clsClose: "uk-notification-close",
+                clsMsg: "uk-notification-message"
+            },
+            created: function created() {
+                if (!containers[this.pos]) {
+                    containers[this.pos] = append(UIkit.container, '<div class="uk-notification uk-notification-' + this.pos + '"></div>');
+                }
+                var container = css(containers[this.pos], "display", "block");
+                this.$mount(append(container, '<div class="' + this.clsMsg + (this.status ? " " + this.clsMsg + "-" + this.status : "") + '"> <a href="#" class="' + this.clsClose + '" data-uk-close></a> <div>' + this.message + "</div> </div>"));
+            },
+            ready: function ready() {
+                var this$1 = this;
+                var marginBottom = toFloat(css(this.$el, "marginBottom"));
+                Transition.start(css(this.$el, {
+                    opacity: 0,
+                    marginTop: -this.$el.offsetHeight,
+                    marginBottom: 0
+                }), {
+                    opacity: 1,
+                    marginTop: 0,
+                    marginBottom: marginBottom
+                }).then(function() {
+                    if (this$1.timeout) {
+                        this$1.timer = setTimeout(this$1.close, this$1.timeout);
+                    }
+                });
+            },
+            events: (obj = {
+                click: function click(e) {
+                    if (closest(e.target, 'a[href="#"]')) {
+                        e.preventDefault();
+                    }
+                    this.close();
+                }
+            }, obj[pointerEnter] = function() {
+                if (this.timer) {
+                    clearTimeout(this.timer);
+                }
+            }, obj[pointerLeave] = function() {
+                if (this.timeout) {
+                    this.timer = setTimeout(this.close, this.timeout);
+                }
+            }, obj),
+            methods: {
+                close: function close(immediate) {
+                    var this$1 = this;
+                    var removeFn = function() {
+                        trigger(this$1.$el, "close", [ this$1 ]);
+                        remove(this$1.$el);
+                        if (!containers[this$1.pos].children.length) {
+                            css(containers[this$1.pos], "display", "none");
+                        }
+                    };
+                    if (this.timer) {
+                        clearTimeout(this.timer);
+                    }
+                    if (immediate) {
+                        removeFn();
+                    } else {
+                        Transition.start(this.$el, {
+                            opacity: 0,
+                            marginTop: -this.$el.offsetHeight,
+                            marginBottom: 0
+                        }).then(removeFn);
+                    }
+                }
+            }
+        });
+        UIkit.notification.closeAll = function(group, immediate) {
+            apply(document.body, function(el) {
+                var notification = UIkit.getComponent(el, "notification");
+                if (notification && (!group || group === notification.group)) {
+                    notification.close(immediate);
+                }
+            });
+        };
+    }
+    function plugin$8(UIkit) {
+        if (plugin$8.installed) {
+            return;
+        }
+        var mixin = UIkit.mixin;
+        var util = UIkit.util;
+        var css = util.css;
+        var Dimensions = util.Dimensions;
+        var each = util.each;
+        var getImage = util.getImage;
+        var includes = util.includes;
+        var isNumber = util.isNumber;
+        var isUndefined = util.isUndefined;
+        var toFloat = util.toFloat;
+        var props = [ "x", "y", "bgx", "bgy", "rotate", "scale", "color", "backgroundColor", "borderColor", "opacity", "blur", "hue", "grayscale", "invert", "saturate", "sepia", "fopacity" ];
+        mixin.parallax = {
+            props: props.reduce(function(props, prop) {
+                props[prop] = "list";
+                return props;
+            }, {
+                media: "media"
+            }),
+            defaults: props.reduce(function(defaults, prop) {
+                defaults[prop] = undefined;
+                return defaults;
+            }, {
+                media: false
+            }),
+            computed: {
+                props: function props$1(properties, $el) {
+                    var this$1 = this;
+                    return props.reduce(function(props, prop) {
+                        if (isUndefined(properties[prop])) {
+                            return props;
+                        }
+                        var isColor = prop.match(/color/i);
+                        var isCssProp = isColor || prop === "opacity";
+                        var pos, bgPos, diff;
+                        var steps = properties[prop].slice(0);
+                        if (isCssProp) {
+                            css($el, prop, "");
+                        }
+                        if (steps.length < 2) {
+                            steps.unshift((prop === "scale" ? 1 : isCssProp ? css($el, prop) : 0) || 0);
+                        }
+                        var unit = includes(steps.join(""), "%") ? "%" : "px";
+                        if (isColor) {
+                            var ref = $el.style;
+                            var color = ref.color;
+                            steps = steps.map(function(step) {
+                                return parseColor($el, step);
+                            });
+                            $el.style.color = color;
+                        } else {
+                            steps = steps.map(toFloat);
+                        }
+                        if (prop.match(/^bg/)) {
+                            css($el, "background-position-" + prop[2], "");
+                            bgPos = css($el, "backgroundPosition").split(" ")[prop[2] === "x" ? 0 : 1];
+                            if (this$1.covers) {
+                                var min = Math.min.apply(Math, steps);
+                                var max = Math.max.apply(Math, steps);
+                                var down = steps.indexOf(min) < steps.indexOf(max);
+                                diff = max - min;
+                                steps = steps.map(function(step) {
+                                    return step - (down ? min : max);
+                                });
+                                pos = (down ? -diff : 0) + "px";
+                            } else {
+                                pos = bgPos;
+                            }
+                        }
+                        props[prop] = {
+                            steps: steps,
+                            unit: unit,
+                            pos: pos,
+                            bgPos: bgPos,
+                            diff: diff
+                        };
+                        return props;
+                    }, {});
+                },
+                bgProps: function bgProps() {
+                    var this$1 = this;
+                    return [ "bgx", "bgy" ].filter(function(bg) {
+                        return bg in this$1.props;
+                    });
+                },
+                covers: function covers$1(_, $el) {
+                    return covers($el);
+                }
+            },
+            disconnected: function disconnected() {
+                delete this._image;
+            },
+            update: [ {
+                read: function read(data) {
+                    var this$1 = this;
+                    data.active = !this.media || window.matchMedia(this.media).matches;
+                    if (data.image) {
+                        data.image.dimEl = {
+                            width: this.$el.offsetWidth,
+                            height: this.$el.offsetHeight
+                        };
+                    }
+                    if ("image" in data || !this.covers || !this.bgProps.length) {
+                        return;
+                    }
+                    var src = css(this.$el, "backgroundImage").replace(/^none|url\(["']?(.+?)["']?\)$/, "$1");
+                    if (!src) {
+                        return;
+                    }
+                    data.image = false;
+                    getImage(src).then(function(img) {
+                        data.image = {
+                            width: img.naturalWidth,
+                            height: img.naturalHeight
+                        };
+                        this$1.$emit();
+                    });
+                },
+                write: function write(ref) {
+                    var this$1 = this;
+                    var image = ref.image;
+                    var active = ref.active;
+                    if (!image) {
+                        return;
+                    }
+                    if (!active) {
+                        css(this.$el, {
+                            backgroundSize: "",
+                            backgroundRepeat: ""
+                        });
+                        return;
+                    }
+                    var dimEl = image.dimEl;
+                    var dim = Dimensions.cover(image, dimEl);
+                    this.bgProps.forEach(function(prop) {
+                        var ref = this$1.props[prop];
+                        var diff = ref.diff;
+                        var bgPos = ref.bgPos;
+                        var steps = ref.steps;
+                        var attr = prop === "bgy" ? "height" : "width";
+                        var span = dim[attr] - dimEl[attr];
+                        if (!bgPos.match(/%$|0px/)) {
+                            return;
+                        }
+                        if (span < diff) {
+                            dimEl[attr] = dim[attr] + diff - span;
+                        } else if (span > diff) {
+                            var bgPosFloat = parseFloat(bgPos);
+                            if (bgPosFloat) {
+                                this$1.props[prop].steps = steps.map(function(step) {
+                                    return step - (span - diff) / (100 / bgPosFloat);
+                                });
+                            }
+                        }
+                        dim = Dimensions.cover(image, dimEl);
+                    });
+                    css(this.$el, {
+                        backgroundSize: dim.width + "px " + dim.height + "px",
+                        backgroundRepeat: "no-repeat"
+                    });
+                },
+                events: [ "load", "resize" ]
+            } ],
+            methods: {
+                reset: function reset() {
+                    var this$1 = this;
+                    each(this.getCss(0), function(_, prop) {
+                        return css(this$1.$el, prop, "");
+                    });
+                },
+                getCss: function getCss(percent) {
+                    var ref = this;
+                    var props = ref.props;
+                    var translated = false;
+                    return Object.keys(props).reduce(function(css, prop) {
+                        var ref = props[prop];
+                        var steps = ref.steps;
+                        var unit = ref.unit;
+                        var pos = ref.pos;
+                        var value = getValue(steps, percent);
+                        switch (prop) {
+                          case "x":
+                          case "y":
+                            if (translated) {
+                                break;
+                            }
+                            var ref$1 = [ "x", "y" ].map(function(dir) {
+                                return prop === dir ? value + unit : props[dir] ? getValue(props[dir].steps, percent) + props[dir].unit : 0;
+                            });
+                            var x = ref$1[0];
+                            var y = ref$1[1];
+                            translated = css.transform += " translate3d(" + x + ", " + y + ", 0)";
+                            break;
+
+                          case "rotate":
+                            css.transform += " rotate(" + value + "deg)";
+                            break;
+
+                          case "scale":
+                            css.transform += " scale(" + value + ")";
+                            break;
+
+                          case "bgy":
+                          case "bgx":
+                            css["background-position-" + prop[2]] = "calc(" + pos + " + " + (value + unit) + ")";
+                            break;
+
+                          case "color":
+                          case "backgroundColor":
+                          case "borderColor":
+                            var ref$2 = getStep(steps, percent);
+                            var start = ref$2[0];
+                            var end = ref$2[1];
+                            var p = ref$2[2];
+                            css[prop] = "rgba(" + start.map(function(value, i) {
+                                value = value + p * (end[i] - value);
+                                return i === 3 ? toFloat(value) : parseInt(value, 10);
+                            }).join(",") + ")";
+                            break;
+
+                          case "blur":
+                            css.filter += " blur(" + value + "px)";
+                            break;
+
+                          case "hue":
+                            css.filter += " hue-rotate(" + value + "deg)";
+                            break;
+
+                          case "fopacity":
+                            css.filter += " opacity(" + value + "%)";
+                            break;
+
+                          case "grayscale":
+                          case "invert":
+                          case "saturate":
+                          case "sepia":
+                            css.filter += " " + prop + "(" + value + "%)";
+                            break;
+
+                          default:
+                            css[prop] = value;
+                        }
+                        return css;
+                    }, {
+                        transform: "",
+                        filter: ""
+                    });
+                }
+            }
+        };
+        function parseColor(el, color) {
+            return css(css(el, "color", color), "color").split(/[(),]/g).slice(1, -1).concat(1).slice(0, 4).map(function(n) {
+                return toFloat(n);
+            });
+        }
+        function getStep(steps, percent) {
+            var count = steps.length - 1;
+            var index = Math.min(Math.floor(count * percent), count - 1);
+            var step = steps.slice(index, index + 2);
+            step.push(percent === 1 ? 1 : percent % (1 / count) * count);
+            return step;
+        }
+        function getValue(steps, percent) {
+            var ref = getStep(steps, percent);
+            var start = ref[0];
+            var end = ref[1];
+            var p = ref[2];
+            return (isNumber(start) ? start + Math.abs(start - end) * p * (start < end ? 1 : -1) : +end).toFixed(2);
+        }
+        function covers(el) {
+            var ref = el.style;
+            var backgroundSize = ref.backgroundSize;
+            var covers = css(css(el, "backgroundSize", ""), "backgroundSize") === "cover";
+            el.style.backgroundSize = backgroundSize;
+            return covers;
+        }
+    }
+    function plugin$7(UIkit) {
+        if (plugin$7.installed) {
+            return;
+        }
+        UIkit.use(plugin$8);
+        var mixin = UIkit.mixin;
+        var util = UIkit.util;
+        var clamp = util.clamp;
+        var css = util.css;
+        var scrolledOver = util.scrolledOver;
+        var query = util.query;
+        UIkit.component("parallax", {
+            mixins: [ mixin.parallax ],
+            props: {
+                target: String,
+                viewport: Number,
+                easing: Number
+            },
+            defaults: {
+                target: false,
+                viewport: 1,
+                easing: 1
+            },
+            computed: {
+                target: function target(ref, $el) {
+                    var target = ref.target;
+                    return target && query(target, $el) || $el;
+                }
+            },
+            update: [ {
+                read: function read(ref) {
+                    var percent = ref.percent;
+                    return {
+                        prev: percent,
+                        percent: ease(scrolledOver(this.target) / (this.viewport || 1), this.easing)
+                    };
+                },
+                write: function write(ref, ref$1) {
+                    var prev = ref.prev;
+                    var percent = ref.percent;
+                    var active = ref.active;
+                    var type = ref$1.type;
+                    if (type !== "scroll") {
+                        prev = false;
+                    }
+                    if (!active) {
+                        this.reset();
+                        return;
+                    }
+                    if (prev !== percent) {
+                        css(this.$el, this.getCss(percent));
+                    }
+                },
+                events: [ "scroll", "load", "resize" ]
+            } ]
+        });
+        function ease(percent, easing) {
+            return clamp(percent * (1 - (easing - easing * percent)));
+        }
+    }
+    function SliderReactive(UIkit) {
+        var ref = UIkit.util;
+        var removeClass = ref.removeClass;
+        return {
+            update: [ {
+                write: function write() {
+                    if (this.stack.length || this.dragging) {
+                        return;
+                    }
+                    var index = this.getValidIndex();
+                    delete this.index;
+                    removeClass(this.slides, this.clsActive, this.clsActivated);
+                    this.show(index);
+                },
+                events: [ "load", "resize" ]
+            } ]
+        };
+    }
+    function TransitionerPlugin$1(UIkit) {
+        var ref = UIkit.util;
+        var assign = ref.assign;
+        var clamp = ref.clamp;
+        var createEvent = ref.createEvent;
+        var css = ref.css;
+        var Deferred = ref.Deferred;
+        var includes = ref.includes;
+        var index = ref.index;
+        var isRtl = ref.isRtl;
+        var noop = ref.noop;
+        var sortBy = ref.sortBy;
+        var toNodes = ref.toNodes;
+        var Transition = ref.Transition;
+        var trigger = ref.trigger;
+        var Transitioner = assign(function(prev, next, dir, ref) {
+            var center = ref.center;
+            var easing = ref.easing;
+            var list = ref.list;
+            var deferred = new Deferred();
+            var from = prev ? Transitioner.getLeft(prev, list, center) : Transitioner.getLeft(next, list, center) + next.offsetWidth * dir, to = next ? Transitioner.getLeft(next, list, center) : from + prev.offsetWidth * dir * (isRtl ? -1 : 1);
+            return {
+                dir: dir,
+                show: function show(duration, percent, linear) {
+                    if (percent === void 0) percent = 0;
+                    var timing = linear ? "linear" : easing;
+                    duration -= Math.round(duration * clamp(percent, -1, 1));
+                    this.translate(percent);
+                    prev && this.updateTranslates();
+                    percent = prev ? percent : clamp(percent, 0, 1);
+                    triggerUpdate(this.getItemIn(), "itemin", {
+                        percent: percent,
+                        duration: duration,
+                        timing: timing,
+                        dir: dir
+                    });
+                    prev && triggerUpdate(this.getItemIn(true), "itemout", {
+                        percent: 1 - percent,
+                        duration: duration,
+                        timing: timing,
+                        dir: dir
+                    });
+                    Transition.start(list, {
+                        transform: translate(-to * (isRtl ? -1 : 1), "px")
+                    }, duration, timing).then(deferred.resolve, noop);
+                    return deferred.promise;
+                },
+                stop: function stop() {
+                    return Transition.stop(list);
+                },
+                cancel: function cancel() {
+                    Transition.cancel(list);
+                },
+                reset: function reset() {
+                    css(list, "transform", "");
+                },
+                forward: function forward(duration, percent) {
+                    if (percent === void 0) percent = this.percent();
+                    Transition.cancel(list);
+                    return this.show(duration, percent, true);
+                },
+                translate: function translate$1(percent) {
+                    var distance = this.getDistance() * dir * (isRtl ? -1 : 1);
+                    css(list, "transform", translate(clamp(-to + (distance - distance * percent), -Transitioner.getWidth(list), list.offsetWidth) * (isRtl ? -1 : 1), "px"));
+                    this.updateTranslates();
+                    if (prev) {
+                        percent = clamp(percent, -1, 1);
+                        triggerUpdate(this.getItemIn(), "itemtranslatein", {
+                            percent: percent,
+                            dir: dir
+                        });
+                        triggerUpdate(this.getItemIn(true), "itemtranslateout", {
+                            percent: 1 - percent,
+                            dir: dir
+                        });
+                    }
+                },
+                percent: function percent() {
+                    return Math.abs((css(list, "transform").split(",")[4] * (isRtl ? -1 : 1) + from) / (to - from));
+                },
+                getDistance: function getDistance() {
+                    return Math.abs(to - from);
+                },
+                getItemIn: function getItemIn(out) {
+                    if (out === void 0) out = false;
+                    var actives = this.getActives();
+                    var all = sortBy(slides(list), "offsetLeft");
+                    var i = index(all, actives[dir * (out ? -1 : 1) > 0 ? actives.length - 1 : 0]);
+                    return ~i && all[i + (prev && !out ? dir : 0)];
+                },
+                getActives: function getActives() {
+                    var left = Transitioner.getLeft(prev || next, list, center);
+                    return sortBy(slides(list).filter(function(slide) {
+                        var slideLeft = Transitioner.getElLeft(slide, list);
+                        return slideLeft >= left && slideLeft + slide.offsetWidth <= list.offsetWidth + left;
+                    }), "offsetLeft");
+                },
+                updateTranslates: function updateTranslates() {
+                    var actives = this.getActives();
+                    slides(list).forEach(function(slide) {
+                        var isActive = includes(actives, slide);
+                        triggerUpdate(slide, "itemtranslate" + (isActive ? "in" : "out"), {
+                            percent: isActive ? 1 : 0,
+                            dir: slide.offsetLeft <= next.offsetLeft ? 1 : -1
+                        });
+                    });
+                }
+            };
+        }, {
+            getLeft: function getLeft(el, list, center) {
+                var left = this.getElLeft(el, list);
+                return center ? left - this.center(el, list) : Math.min(left, this.getMax(list));
+            },
+            getMax: function getMax(list) {
+                return Math.max(0, this.getWidth(list) - list.offsetWidth);
+            },
+            getWidth: function getWidth(list) {
+                return slides(list).reduce(function(right, el) {
+                    return el.offsetWidth + right;
+                }, 0);
+            },
+            getMaxWidth: function getMaxWidth(list) {
+                return slides(list).reduce(function(right, el) {
+                    return Math.max(right, el.offsetWidth);
+                }, 0);
+            },
+            center: function center(el, list) {
+                return list.offsetWidth / 2 - el.offsetWidth / 2;
+            },
+            getElLeft: function getElLeft(el, list) {
+                return (el.offsetLeft + (isRtl ? el.offsetWidth - list.offsetWidth : 0)) * (isRtl ? -1 : 1);
+            }
+        });
+        function triggerUpdate(el, type, data) {
+            trigger(el, createEvent(type, false, false, data));
+        }
+        function slides(list) {
+            return toNodes(list.children);
+        }
+        return Transitioner;
+    }
+    function ParallaxPlugin(UIkit, parent) {
+        UIkit.use(plugin$8);
+        var mixin = UIkit.mixin;
+        var UIkit_util = UIkit.util;
+        var closest = UIkit_util.closest;
+        var css = UIkit_util.css;
+        var endsWith = UIkit_util.endsWith;
+        var noop = UIkit_util.noop;
+        var Transition = UIkit_util.Transition;
+        return {
+            mixins: [ mixin.parallax ],
+            computed: {
+                item: function item() {
+                    var slider = UIkit.getComponent(closest(this.$el, ".uk-" + parent), parent);
+                    return slider && closest(this.$el, slider.slidesSelector);
+                }
+            },
+            events: [ {
+                name: "itemshown",
+                self: true,
+                el: function el() {
+                    return this.item;
+                },
+                handler: function handler() {
+                    css(this.$el, this.getCss(.5));
+                }
+            }, {
+                name: "itemin itemout",
+                self: true,
+                el: function el() {
+                    return this.item;
+                },
+                handler: function handler(ref) {
+                    var type = ref.type;
+                    var ref_detail = ref.detail;
+                    var percent = ref_detail.percent;
+                    var duration = ref_detail.duration;
+                    var timing = ref_detail.timing;
+                    var dir = ref_detail.dir;
+                    Transition.cancel(this.$el);
+                    css(this.$el, this.getCss(getCurrent(type, dir, percent)));
+                    Transition.start(this.$el, this.getCss(isIn(type) ? .5 : dir > 0 ? 1 : 0), duration, timing).catch(noop);
+                }
+            }, {
+                name: "transitioncanceled transitionend",
+                self: true,
+                el: function el() {
+                    return this.item;
+                },
+                handler: function handler() {
+                    Transition.cancel(this.$el);
+                }
+            }, {
+                name: "itemtranslatein itemtranslateout",
+                self: true,
+                el: function el() {
+                    return this.item;
+                },
+                handler: function handler(ref) {
+                    var type = ref.type;
+                    var ref_detail = ref.detail;
+                    var percent = ref_detail.percent;
+                    var dir = ref_detail.dir;
+                    Transition.cancel(this.$el);
+                    css(this.$el, this.getCss(getCurrent(type, dir, percent)));
+                }
+            } ]
+        };
+        function isIn(type) {
+            return endsWith(type, "in");
+        }
+        function getCurrent(type, dir, percent) {
+            percent /= 2;
+            return !isIn(type) ? dir < 0 ? percent : 1 - percent : dir < 0 ? 1 - percent : percent;
+        }
+    }
+    function plugin$9(UIkit) {
+        if (plugin$9.installed) {
+            return;
+        }
+        UIkit.use(plugin$5);
+        var mixin = UIkit.mixin;
+        var UIkit_util = UIkit.util;
+        var $ = UIkit_util.$;
+        var $$ = UIkit_util.$$;
+        var addClass = UIkit_util.addClass;
+        var css = UIkit_util.css;
+        var data = UIkit_util.data;
+        var includes = UIkit_util.includes;
+        var isNumeric = UIkit_util.isNumeric;
+        var isUndefined = UIkit_util.isUndefined;
+        var offset = UIkit_util.offset;
+        var toggleClass = UIkit_util.toggleClass;
+        var toFloat = UIkit_util.toFloat;
+        var Transitioner = TransitionerPlugin$1(UIkit);
+        UIkit.component("slider-parallax", ParallaxPlugin(UIkit, "slider"));
+        UIkit.component("slider", {
+            mixins: [ mixin.class, mixin.slider, SliderReactive(UIkit) ],
+            props: {
+                center: Boolean,
+                sets: Boolean
+            },
+            defaults: {
+                center: false,
+                sets: false,
+                attrItem: "uk-slider-item",
+                selList: ".uk-slider-items",
+                selNav: ".uk-slider-nav",
+                clsContainer: "uk-slider-container",
+                Transitioner: Transitioner
+            },
+            computed: {
+                avgWidth: function avgWidth() {
+                    return Transitioner.getWidth(this.list) / this.length;
+                },
+                finite: function finite(ref) {
+                    var finite = ref.finite;
+                    return finite || Transitioner.getWidth(this.list) < this.list.offsetWidth + Transitioner.getMaxWidth(this.list) + this.center;
+                },
+                maxIndex: function maxIndex() {
+                    var this$1 = this;
+                    if (!this.finite || this.center && !this.sets) {
+                        return this.length - 1;
+                    }
+                    if (this.center) {
+                        return this.sets[this.sets.length - 1];
+                    }
+                    css(this.slides, "order", "");
+                    var max = Transitioner.getMax(this.list);
+                    var i = this.length;
+                    while (i--) {
+                        if (Transitioner.getElLeft(this$1.list.children[i], this$1.list) < max) {
+                            return Math.min(i + 1, this$1.length - 1);
+                        }
+                    }
+                    return 0;
+                },
+                sets: function sets(ref) {
+                    var this$1 = this;
+                    var sets = ref.sets;
+                    var width = this.list.offsetWidth / (this.center ? 2 : 1);
+                    var left = 0;
+                    var leftCenter = width;
+                    sets = sets && this.slides.reduce(function(sets, slide, i) {
+                        var dim = offset(slide);
+                        if (dim.right > left) {
+                            if (!this$1.center && i > this$1.maxIndex) {
+                                i = this$1.maxIndex;
+                            }
+                            if (!includes(sets, i)) {
+                                var cmp = this$1.slides[i + 1];
+                                if (this$1.center && cmp && dim.width < leftCenter - offset(cmp).width / 2) {
+                                    leftCenter -= dim.width;
+                                } else {
+                                    leftCenter = width;
+                                    sets.push(i);
+                                    left = dim.left + width + (this$1.center ? dim.width / 2 : 0);
+                                }
+                            }
+                        }
+                        return sets;
+                    }, []);
+                    return sets && sets.length && sets;
+                },
+                transitionOptions: function transitionOptions() {
+                    return {
+                        center: this.center,
+                        list: this.list
+                    };
+                }
+            },
+            connected: function connected() {
+                toggleClass(this.$el, this.clsContainer, !$("." + this.clsContainer, this.$el));
+            },
+            update: {
+                write: function write() {
+                    var this$1 = this;
+                    $$("[" + this.attrItem + "],[data-" + this.attrItem + "]", this.$el).forEach(function(el) {
+                        var index = data(el, this$1.attrItem);
+                        this$1.maxIndex && toggleClass(el, "uk-hidden", isNumeric(index) && (this$1.sets && !includes(this$1.sets, toFloat(index)) || index > this$1.maxIndex));
+                    });
+                },
+                events: [ "load", "resize" ]
+            },
+            events: {
+                beforeitemshow: function beforeitemshow(e) {
+                    var this$1 = this;
+                    if (!this.dragging && this.sets && this.stack.length < 2 && !includes(this.sets, this.index)) {
+                        this.index = this.getValidIndex();
+                    }
+                    var diff = Math.abs(this.index - this.prevIndex + (this.dir > 0 && this.index < this.prevIndex || this.dir < 0 && this.index > this.prevIndex ? (this.maxIndex + 1) * this.dir : 0));
+                    if (!this.dragging && diff > 1) {
+                        for (var i = 0; i < diff; i++) {
+                            this$1.stack.splice(1, 0, this$1.dir > 0 ? "next" : "previous");
+                        }
+                        e.preventDefault();
+                        return;
+                    }
+                    this.duration = speedUp(this.avgWidth / this.velocity) * ((this.dir < 0 || !this.slides[this.prevIndex] ? this.slides[this.index] : this.slides[this.prevIndex]).offsetWidth / this.avgWidth);
+                    this.reorder();
+                },
+                itemshow: function itemshow() {
+                    !isUndefined(this.prevIndex) && addClass(this._getTransitioner().getItemIn(), this.clsActive);
+                },
+                itemshown: function itemshown() {
+                    var this$1 = this;
+                    var actives = this._getTransitioner(this.index).getActives();
+                    this.slides.forEach(function(slide) {
+                        return toggleClass(slide, this$1.clsActive, includes(actives, slide));
+                    });
+                    (!this.sets || includes(this.sets, toFloat(this.index))) && this.slides.forEach(function(slide) {
+                        return toggleClass(slide, this$1.clsActivated, includes(actives, slide));
+                    });
+                }
+            },
+            methods: {
+                reorder: function reorder() {
+                    var this$1 = this;
+                    css(this.slides, "order", "");
+                    if (this.finite) {
+                        return;
+                    }
+                    var index = this.dir > 0 && this.slides[this.prevIndex] ? this.prevIndex : this.index;
+                    this.slides.forEach(function(slide, i) {
+                        return css(slide, "order", this$1.dir > 0 && i < index ? 1 : this$1.dir < 0 && i >= this$1.index ? -1 : "");
+                    });
+                    if (!this.center) {
+                        return;
+                    }
+                    var next = this.slides[index];
+                    var width = this.list.offsetWidth / 2 - next.offsetWidth / 2;
+                    var j = 0;
+                    while (width > 0) {
+                        var slideIndex = this$1.getIndex(--j + index, index);
+                        var slide = this$1.slides[slideIndex];
+                        css(slide, "order", slideIndex > index ? -2 : -1);
+                        width -= slide.offsetWidth;
+                    }
+                },
+                getValidIndex: function getValidIndex(index, prevIndex) {
+                    var this$1 = this;
+                    if (index === void 0) index = this.index;
+                    if (prevIndex === void 0) prevIndex = this.prevIndex;
+                    index = this.getIndex(index, prevIndex);
+                    if (!this.sets) {
+                        return index;
+                    }
+                    var prev;
+                    do {
+                        if (includes(this$1.sets, index)) {
+                            return index;
+                        }
+                        prev = index;
+                        index = this$1.getIndex(index + this$1.dir, prevIndex);
+                    } while (index !== prev);
+                    return index;
+                }
+            }
+        });
+    }
+    function AnimationsPlugin$2(UIkit) {
+        var mixin = UIkit.mixin;
+        var UIkit_util = UIkit.util;
+        var assign = UIkit_util.assign;
+        var css = UIkit_util.css;
+        var Animations = assign({}, mixin.slideshow.defaults.Animations, {
+            fade: {
+                show: function show() {
+                    return [ {
+                        opacity: 0,
+                        zIndex: 0
+                    }, {
+                        zIndex: -1
+                    } ];
+                },
+                percent: function percent(current) {
+                    return 1 - css(current, "opacity");
+                },
+                translate: function translate$$1(percent) {
+                    return [ {
+                        opacity: 1 - percent,
+                        zIndex: 0
+                    }, {
+                        zIndex: -1
+                    } ];
+                }
+            },
+            scale: {
+                show: function show() {
+                    return [ {
+                        opacity: 0,
+                        transform: scale3d(1 + .5),
+                        zIndex: 0
+                    }, {
+                        zIndex: -1
+                    } ];
+                },
+                percent: function percent(current) {
+                    return 1 - css(current, "opacity");
+                },
+                translate: function translate$$1(percent) {
+                    return [ {
+                        opacity: 1 - percent,
+                        transform: scale3d(1 + .5 * percent),
+                        zIndex: 0
+                    }, {
+                        zIndex: -1
+                    } ];
+                }
+            },
+            pull: {
+                show: function show(dir) {
+                    return dir < 0 ? [ {
+                        transform: translate(30),
+                        zIndex: -1
+                    }, {
+                        transform: translate(),
+                        zIndex: 0
+                    } ] : [ {
+                        transform: translate(-100),
+                        zIndex: 0
+                    }, {
+                        transform: translate(),
+                        zIndex: -1
+                    } ];
+                },
+                percent: function percent(current, next, dir) {
+                    return dir < 0 ? 1 - Animations.translated(next) : Animations.translated(current);
+                },
+                translate: function translate$1(percent, dir) {
+                    return dir < 0 ? [ {
+                        transform: translate(30 * percent),
+                        zIndex: -1
+                    }, {
+                        transform: translate(-100 * (1 - percent)),
+                        zIndex: 0
+                    } ] : [ {
+                        transform: translate(-percent * 100),
+                        zIndex: 0
+                    }, {
+                        transform: translate(30 * (1 - percent)),
+                        zIndex: -1
+                    } ];
+                }
+            },
+            push: {
+                show: function show(dir) {
+                    return dir < 0 ? [ {
+                        transform: translate(100),
+                        zIndex: 0
+                    }, {
+                        transform: translate(),
+                        zIndex: -1
+                    } ] : [ {
+                        transform: translate(-30),
+                        zIndex: -1
+                    }, {
+                        transform: translate(),
+                        zIndex: 0
+                    } ];
+                },
+                percent: function percent(current, next, dir) {
+                    return dir > 0 ? 1 - Animations.translated(next) : Animations.translated(current);
+                },
+                translate: function translate$2(percent, dir) {
+                    return dir < 0 ? [ {
+                        transform: translate(percent * 100),
+                        zIndex: 0
+                    }, {
+                        transform: translate(-30 * (1 - percent)),
+                        zIndex: -1
+                    } ] : [ {
+                        transform: translate(-30 * percent),
+                        zIndex: -1
+                    }, {
+                        transform: translate(100 * (1 - percent)),
+                        zIndex: 0
+                    } ];
+                }
+            }
+        });
+        return Animations;
+    }
+    function plugin$10(UIkit) {
+        if (plugin$10.installed) {
+            return;
+        }
+        UIkit.use(plugin$4);
+        var mixin = UIkit.mixin;
+        var height = UIkit.util.height;
+        var Animations = AnimationsPlugin$2(UIkit);
+        UIkit.component("slideshow-parallax", ParallaxPlugin(UIkit, "slideshow"));
+        UIkit.component("slideshow", {
+            mixins: [ mixin.class, mixin.slideshow, SliderReactive(UIkit) ],
+            props: {
+                ratio: String,
+                minHeight: Boolean,
+                maxHeight: Boolean
+            },
+            defaults: {
+                ratio: "16:9",
+                minHeight: false,
+                maxHeight: false,
+                selList: ".uk-slideshow-items",
+                attrItem: "uk-slideshow-item",
+                selNav: ".uk-slideshow-nav",
+                Animations: Animations
+            },
+            update: {
+                read: function read() {
+                    var ref = this.ratio.split(":").map(Number);
+                    var width = ref[0];
+                    var height = ref[1];
+                    height = height * this.$el.offsetWidth / width;
+                    if (this.minHeight) {
+                        height = Math.max(this.minHeight, height);
+                    }
+                    if (this.maxHeight) {
+                        height = Math.min(this.maxHeight, height);
+                    }
+                    return {
+                        height: height
+                    };
+                },
+                write: function write(ref) {
+                    var hgt = ref.height;
+                    height(this.list, Math.floor(hgt));
+                },
+                events: [ "load", "resize" ]
+            }
+        });
+    }
+    function plugin$11(UIkit) {
+        var obj;
+        if (plugin$11.installed) {
+            return;
+        }
+        var mixin = UIkit.mixin;
+        var util = UIkit.util;
+        var addClass = util.addClass;
+        var after = util.after;
+        var assign = util.assign;
+        var append = util.append;
+        var attr = util.attr;
+        var before = util.before;
+        var closest = util.closest;
+        var css = util.css;
+        var height = util.height;
+        var fastdom = util.fastdom;
+        var getPos = util.getPos;
+        var includes = util.includes;
+        var index = util.index;
+        var isInput = util.isInput;
+        var noop = util.noop;
+        var offset = util.offset;
+        var off = util.off;
+        var on = util.on;
+        var pointerDown = util.pointerDown;
+        var pointerMove = util.pointerMove;
+        var pointerUp = util.pointerUp;
+        var position = util.position;
+        var preventClick = util.preventClick;
+        var Promise = util.Promise;
+        var remove = util.remove;
+        var removeClass = util.removeClass;
+        var toggleClass = util.toggleClass;
+        var toNodes = util.toNodes;
+        var Transition = util.Transition;
+        var trigger = util.trigger;
+        var within = util.within;
+        UIkit.component("sortable", {
+            mixins: [ mixin.class ],
+            props: {
+                group: String,
+                animation: Number,
+                threshold: Number,
+                clsItem: String,
+                clsPlaceholder: String,
+                clsDrag: String,
+                clsDragState: String,
+                clsBase: String,
+                clsNoDrag: String,
+                clsEmpty: String,
+                clsCustom: String,
+                handle: String
+            },
+            defaults: {
+                group: false,
+                animation: 150,
+                threshold: 5,
+                clsItem: "uk-sortable-item",
+                clsPlaceholder: "uk-sortable-placeholder",
+                clsDrag: "uk-sortable-drag",
+                clsDragState: "uk-drag",
+                clsBase: "uk-sortable",
+                clsNoDrag: "uk-sortable-nodrag",
+                clsEmpty: "uk-sortable-empty",
+                clsCustom: "",
+                handle: false
+            },
+            init: function init() {
+                var this$1 = this;
+                [ "init", "start", "move", "end" ].forEach(function(key) {
+                    var fn = this$1[key];
+                    this$1[key] = function(e) {
+                        this$1.scrollY = window.pageYOffset;
+                        var ref = getPos(e);
+                        var x = ref.x;
+                        var y = ref.y;
+                        this$1.pos = {
+                            x: x,
+                            y: y
+                        };
+                        fn(e);
+                    };
+                });
+            },
+            events: (obj = {}, obj[pointerDown] = "init", obj),
+            update: {
+                write: function write() {
+                    if (this.clsEmpty) {
+                        toggleClass(this.$el, this.clsEmpty, !this.$el.children.length);
+                    }
+                    if (!this.drag) {
+                        return;
+                    }
+                    offset(this.drag, {
+                        top: this.pos.y + this.origin.top,
+                        left: this.pos.x + this.origin.left
+                    });
+                    var ref = offset(this.drag);
+                    var top = ref.top;
+                    var bottom = top + this.drag.offsetHeight;
+                    var scroll;
+                    if (top > 0 && top < this.scrollY) {
+                        scroll = this.scrollY - 5;
+                    } else if (bottom < height(document) && bottom > height(window) + this.scrollY) {
+                        scroll = this.scrollY + 5;
+                    }
+                    scroll && setTimeout(function() {
+                        return window.scrollTo(window.scrollX, scroll);
+                    }, 5);
+                }
+            },
+            methods: {
+                init: function init(e) {
+                    var target = e.target;
+                    var button = e.button;
+                    var defaultPrevented = e.defaultPrevented;
+                    var ref = toNodes(this.$el.children).filter(function(el) {
+                        return within(target, el);
+                    });
+                    var placeholder = ref[0];
+                    if (!placeholder || isInput(e.target) || this.handle && !within(target, this.handle) || button > 0 || within(target, "." + this.clsNoDrag) || defaultPrevented) {
+                        return;
+                    }
+                    e.preventDefault();
+                    this.touched = [ this ];
+                    this.placeholder = placeholder;
+                    this.origin = assign({
+                        target: target,
+                        index: index(placeholder)
+                    }, this.pos);
+                    on(document, pointerMove, this.move);
+                    on(document, pointerUp, this.end);
+                    on(window, "scroll", this.scroll);
+                    if (!this.threshold) {
+                        this.start(e);
+                    }
+                },
+                start: function start(e) {
+                    this.drag = append(UIkit.container, this.placeholder.outerHTML.replace(/^<li/i, "<div").replace(/li>$/i, "div>"));
+                    css(this.drag, assign({
+                        boxSizing: "border-box",
+                        width: this.placeholder.offsetWidth,
+                        height: this.placeholder.offsetHeight
+                    }, css(this.placeholder, [ "paddingLeft", "paddingRight", "paddingTop", "paddingBottom" ])));
+                    attr(this.drag, "uk-no-boot", "");
+                    addClass(this.drag, this.clsDrag, this.clsCustom);
+                    height(this.drag.firstElementChild, height(this.placeholder.firstElementChild));
+                    var ref = offset(this.placeholder);
+                    var left = ref.left;
+                    var top = ref.top;
+                    assign(this.origin, {
+                        left: left - this.pos.x,
+                        top: top - this.pos.y
+                    });
+                    addClass(this.placeholder, this.clsPlaceholder);
+                    addClass(this.$el.children, this.clsItem);
+                    addClass(document.documentElement, this.clsDragState);
+                    trigger(this.$el, "start", [ this, this.placeholder, this.drag ]);
+                    this.move(e);
+                },
+                move: function move(e) {
+                    if (!this.drag) {
+                        if (Math.abs(this.pos.x - this.origin.x) > this.threshold || Math.abs(this.pos.y - this.origin.y) > this.threshold) {
+                            this.start(e);
+                        }
+                        return;
+                    }
+                    this.$emit();
+                    var target = e.type === "mousemove" ? e.target : document.elementFromPoint(this.pos.x - document.body.scrollLeft, this.pos.y - document.body.scrollTop);
+                    var sortable = getSortable(target);
+                    var previous = getSortable(this.placeholder);
+                    var move = sortable !== previous;
+                    if (!sortable || within(target, this.placeholder) || move && (!sortable.group || sortable.group !== previous.group)) {
+                        return;
+                    }
+                    target = sortable.$el === target.parentNode && target || toNodes(sortable.$el.children).filter(function(element) {
+                        return within(target, element);
+                    })[0];
+                    if (move) {
+                        previous.remove(this.placeholder);
+                    } else if (!target) {
+                        return;
+                    }
+                    sortable.insert(this.placeholder, target);
+                    if (!includes(this.touched, sortable)) {
+                        this.touched.push(sortable);
+                    }
+                },
+                scroll: function scroll() {
+                    var scroll = window.pageYOffset;
+                    if (scroll !== this.scrollY) {
+                        this.pos.y += scroll - this.scrollY;
+                        this.scrollY = scroll;
+                        this.$emit();
+                    }
+                },
+                end: function end(e) {
+                    off(document, pointerMove, this.move);
+                    off(document, pointerUp, this.end);
+                    off(window, "scroll", this.scroll);
+                    if (!this.drag) {
+                        if (e.type !== "mouseup" && within(e.target, "a[href]")) {
+                            location.href = closest(e.target, "a[href]").href;
+                        }
+                        return;
+                    }
+                    preventClick();
+                    var sortable = getSortable(this.placeholder);
+                    if (this === sortable) {
+                        if (this.origin.index !== index(this.placeholder)) {
+                            trigger(this.$el, "moved", [ this, this.placeholder ]);
+                        }
+                    } else {
+                        trigger(sortable.$el, "added", [ sortable, this.placeholder ]);
+                        trigger(this.$el, "removed", [ this, this.placeholder ]);
+                    }
+                    trigger(this.$el, "stop", [ this ]);
+                    remove(this.drag);
+                    this.drag = null;
+                    var classes = this.touched.map(function(sortable) {
+                        return sortable.clsPlaceholder + " " + sortable.clsItem;
+                    }).join(" ");
+                    this.touched.forEach(function(sortable) {
+                        return removeClass(sortable.$el.children, classes);
+                    });
+                    removeClass(document.documentElement, this.clsDragState);
+                },
+                insert: function insert(element, target) {
+                    var this$1 = this;
+                    addClass(this.$el.children, this.clsItem);
+                    var insert = function() {
+                        if (target) {
+                            if (!within(element, this$1.$el) || isPredecessor(element, target)) {
+                                before(target, element);
+                            } else {
+                                after(target, element);
+                            }
+                        } else {
+                            append(this$1.$el, element);
+                        }
+                    };
+                    if (this.animation) {
+                        this.animate(insert);
+                    } else {
+                        insert();
+                    }
+                },
+                remove: function remove$1(element) {
+                    if (!within(element, this.$el)) {
+                        return;
+                    }
+                    if (this.animation) {
+                        this.animate(function() {
+                            return remove(element);
+                        });
+                    } else {
+                        remove(element);
+                    }
+                },
+                animate: function animate(action) {
+                    var this$1 = this;
+                    var props = [];
+                    var children = toNodes(this.$el.children);
+                    var reset = {
+                        position: "",
+                        width: "",
+                        height: "",
+                        pointerEvents: "",
+                        top: "",
+                        left: "",
+                        bottom: "",
+                        right: ""
+                    };
+                    children.forEach(function(el) {
+                        props.push(assign({
+                            position: "absolute",
+                            pointerEvents: "none",
+                            width: el.offsetWidth,
+                            height: el.offsetHeight
+                        }, position(el)));
+                    });
+                    action();
+                    children.forEach(Transition.cancel);
+                    css(this.$el.children, reset);
+                    UIkit.update(this.$el);
+                    fastdom.flush();
+                    css(this.$el, "minHeight", height(this.$el));
+                    var positions = children.map(function(el) {
+                        return position(el);
+                    });
+                    Promise.all(children.map(function(el, i) {
+                        return Transition.start(css(el, props[i]), positions[i], this$1.animation);
+                    })).then(function() {
+                        css(this$1.$el, "minHeight", "");
+                        css(children, reset);
+                        UIkit.update(this$1.$el);
+                        fastdom.flush();
+                    }, noop);
+                }
+            }
+        });
+        function getSortable(element) {
+            return element && (UIkit.getComponent(element, "sortable") || getSortable(element.parentNode));
+        }
+        function isPredecessor(element, target) {
+            return element.parentNode === target.parentNode && index(element) > index(target);
+        }
+    }
+    function plugin$12(UIkit) {
+        var obj;
+        if (plugin$12.installed) {
+            return;
+        }
+        var util = UIkit.util;
+        var mixin = UIkit.mixin;
+        var append = util.append;
+        var attr = util.attr;
+        var flipPosition = util.flipPosition;
+        var hasAttr = util.hasAttr;
+        var includes = util.includes;
+        var isTouch = util.isTouch;
+        var isVisible = util.isVisible;
+        var matches = util.matches;
+        var on = util.on;
+        var pointerDown = util.pointerDown;
+        var pointerEnter = util.pointerEnter;
+        var pointerLeave = util.pointerLeave;
+        var remove = util.remove;
+        var within = util.within;
+        var actives = [];
+        UIkit.component("tooltip", {
+            attrs: true,
+            args: "title",
+            mixins: [ mixin.container, mixin.togglable, mixin.position ],
+            props: {
+                delay: Number,
+                title: String
+            },
+            defaults: {
+                pos: "top",
+                title: "",
+                delay: 0,
+                animation: [ "uk-animation-scale-up" ],
+                duration: 100,
+                cls: "uk-active",
+                clsPos: "uk-tooltip"
+            },
+            beforeConnect: function beforeConnect() {
+                this._hasTitle = hasAttr(this.$el, "title");
+                attr(this.$el, {
+                    title: "",
+                    "aria-expanded": false
+                });
+            },
+            disconnected: function disconnected() {
+                this.hide();
+                attr(this.$el, {
+                    title: this._hasTitle ? this.title : null,
+                    "aria-expanded": null
+                });
+            },
+            methods: {
+                show: function show() {
+                    var this$1 = this;
+                    if (includes(actives, this)) {
+                        return;
+                    }
+                    actives.forEach(function(active) {
+                        return active.hide();
+                    });
+                    actives.push(this);
+                    this._unbind = on(document, "click", function(e) {
+                        return !within(e.target, this$1.$el) && this$1.hide();
+                    });
+                    clearTimeout(this.showTimer);
+                    this.tooltip = append(this.container, '<div class="' + this.clsPos + '" aria-hidden><div class="' + this.clsPos + '-inner">' + this.title + "</div></div>");
+                    attr(this.$el, "aria-expanded", true);
+                    this.positionAt(this.tooltip, this.$el);
+                    this.origin = this.getAxis() === "y" ? flipPosition(this.dir) + "-" + this.align : this.align + "-" + flipPosition(this.dir);
+                    this.showTimer = setTimeout(function() {
+                        this$1.toggleElement(this$1.tooltip, true);
+                        this$1.hideTimer = setInterval(function() {
+                            if (!isVisible(this$1.$el)) {
+                                this$1.hide();
+                            }
+                        }, 150);
+                    }, this.delay);
+                },
+                hide: function hide() {
+                    var index = actives.indexOf(this);
+                    if (!~index || matches(this.$el, "input") && this.$el === document.activeElement) {
+                        return;
+                    }
+                    actives.splice(index, 1);
+                    clearTimeout(this.showTimer);
+                    clearInterval(this.hideTimer);
+                    attr(this.$el, "aria-expanded", false);
+                    this.toggleElement(this.tooltip, false);
+                    this.tooltip && remove(this.tooltip);
+                    this.tooltip = false;
+                    this._unbind();
+                }
+            },
+            events: (obj = {}, obj["focus " + pointerEnter + " " + pointerDown] = function(e) {
+                if (e.type !== pointerDown || !isTouch(e)) {
+                    this.show();
+                }
+            }, obj.blur = "hide", obj[pointerLeave] = function(e) {
+                if (!isTouch(e)) {
+                    this.hide();
+                }
+            }, obj)
+        });
+    }
+    function plugin$13(UIkit) {
+        if (plugin$13.installed) {
+            return;
+        }
+        var ref = UIkit.util;
+        var addClass = ref.addClass;
+        var ajax = ref.ajax;
+        var matches = ref.matches;
+        var noop = ref.noop;
+        var on = ref.on;
+        var removeClass = ref.removeClass;
+        var trigger = ref.trigger;
+        UIkit.component("upload", {
+            props: {
+                allow: String,
+                clsDragover: String,
+                concurrent: Number,
+                maxSize: Number,
+                method: String,
+                mime: String,
+                msgInvalidMime: String,
+                msgInvalidName: String,
+                msgInvalidSize: String,
+                multiple: Boolean,
+                name: String,
+                params: Object,
+                type: String,
+                url: String
+            },
+            defaults: {
+                allow: false,
+                clsDragover: "uk-dragover",
+                concurrent: 1,
+                maxSize: 0,
+                method: "POST",
+                mime: false,
+                msgInvalidMime: "Invalid File Type: %s",
+                msgInvalidName: "Invalid File Name: %s",
+                msgInvalidSize: "Invalid File Size: %s Bytes Max",
+                multiple: false,
+                name: "files[]",
+                params: {},
+                type: "",
+                url: "",
+                abort: noop,
+                beforeAll: noop,
+                beforeSend: noop,
+                complete: noop,
+                completeAll: noop,
+                error: noop,
+                fail: noop,
+                load: noop,
+                loadEnd: noop,
+                loadStart: noop,
+                progress: noop
+            },
+            events: {
+                change: function change(e) {
+                    if (!matches(e.target, 'input[type="file"]')) {
+                        return;
+                    }
+                    e.preventDefault();
+                    if (e.target.files) {
+                        this.upload(e.target.files);
+                    }
+                    e.target.value = "";
+                },
+                drop: function drop(e) {
+                    stop(e);
+                    var transfer = e.dataTransfer;
+                    if (!transfer || !transfer.files) {
+                        return;
+                    }
+                    removeClass(this.$el, this.clsDragover);
+                    this.upload(transfer.files);
+                },
+                dragenter: function dragenter(e) {
+                    stop(e);
+                },
+                dragover: function dragover(e) {
+                    stop(e);
+                    addClass(this.$el, this.clsDragover);
+                },
+                dragleave: function dragleave(e) {
+                    stop(e);
+                    removeClass(this.$el, this.clsDragover);
+                }
+            },
+            methods: {
+                upload: function upload(files) {
+                    var this$1 = this;
+                    if (!files.length) {
+                        return;
+                    }
+                    trigger(this.$el, "upload", [ files ]);
+                    for (var i = 0; i < files.length; i++) {
+                        if (this$1.maxSize && this$1.maxSize * 1e3 < files[i].size) {
+                            this$1.fail(this$1.msgInvalidSize.replace("%s", this$1.allow));
+                            return;
+                        }
+                        if (this$1.allow && !match(this$1.allow, files[i].name)) {
+                            this$1.fail(this$1.msgInvalidName.replace("%s", this$1.allow));
+                            return;
+                        }
+                        if (this$1.mime && !match(this$1.mime, files[i].type)) {
+                            this$1.fail(this$1.msgInvalidMime.replace("%s", this$1.mime));
+                            return;
+                        }
+                    }
+                    if (!this.multiple) {
+                        files = [ files[0] ];
+                    }
+                    this.beforeAll(this, files);
+                    var chunks = chunk(files, this.concurrent);
+                    var upload = function(files) {
+                        var data = new FormData();
+                        files.forEach(function(file) {
+                            return data.append(this$1.name, file);
+                        });
+                        for (var key in this$1.params) {
+                            data.append(key, this$1.params[key]);
+                        }
+                        ajax(this$1.url, {
+                            data: data,
+                            method: this$1.method,
+                            responseType: this$1.type,
+                            beforeSend: function(env) {
+                                var xhr = env.xhr;
+                                xhr.upload && on(xhr.upload, "progress", this$1.progress);
+                                [ "loadStart", "load", "loadEnd", "abort" ].forEach(function(type) {
+                                    return on(xhr, type.toLowerCase(), this$1[type]);
+                                });
+                                this$1.beforeSend(env);
+                            }
+                        }).then(function(xhr) {
+                            this$1.complete(xhr);
+                            if (chunks.length) {
+                                upload(chunks.shift());
+                            } else {
+                                this$1.completeAll(xhr);
+                            }
+                        }, function(e) {
+                            return this$1.error(e.message);
+                        });
+                    };
+                    upload(chunks.shift());
+                }
+            }
+        });
+        function match(pattern, path) {
+            return path.match(new RegExp("^" + pattern.replace(/\//g, "\\/").replace(/\*\*/g, "(\\/[^\\/]+)*").replace(/\*/g, "[^\\/]+").replace(/((?!\\))\?/g, "$1.") + "$", "i"));
+        }
+        function chunk(files, size) {
+            var chunks = [];
+            for (var i = 0; i < files.length; i += size) {
+                var chunk = [];
+                for (var j = 0; j < size; j++) {
+                    chunk.push(files[i + j]);
+                }
+                chunks.push(chunk);
+            }
+            return chunks;
+        }
+        function stop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }
+    UIkit$2.use(plugin);
+    UIkit$2.use(plugin$1);
+    UIkit$2.use(plugin$2);
+    UIkit$2.use(plugin$6);
+    UIkit$2.use(plugin$7);
+    UIkit$2.use(plugin$9);
+    UIkit$2.use(plugin$10);
+    UIkit$2.use(plugin$11);
+    UIkit$2.use(plugin$12);
+    UIkit$2.use(plugin$13);
+    {
+        boot(UIkit$2);
+    }
+    return UIkit$2;
+});
+
+(function(global, factory) {
+    typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define("uikiticons", factory) : global.UIkitIcons = factory();
+})(this, function() {
+    "use strict";
+    var album = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="5" y="2" width="10" height="1" /> <rect x="3" y="4" width="14" height="1" /> <rect fill="none" stroke="#000" x="1.5" y="6.5" width="17" height="11" /></svg>';
+    var ban = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9" /> <line fill="none" stroke="#000" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5" /></svg>';
+    var behance = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M9.5,10.6c-0.4-0.5-0.9-0.9-1.6-1.1c1.7-1,2.2-3.2,0.7-4.7C7.8,4,6.3,4,5.2,4C3.5,4,1.7,4,0,4v12c1.7,0,3.4,0,5.2,0 c1,0,2.1,0,3.1-0.5C10.2,14.6,10.5,12.3,9.5,10.6L9.5,10.6z M5.6,6.1c1.8,0,1.8,2.7-0.1,2.7c-1,0-2,0-2.9,0V6.1H5.6z M2.6,13.8v-3.1 c1.1,0,2.1,0,3.2,0c2.1,0,2.1,3.2,0.1,3.2L2.6,13.8z" /> <path d="M19.9,10.9C19.7,9.2,18.7,7.6,17,7c-4.2-1.3-7.3,3.4-5.3,7.1c0.9,1.7,2.8,2.3,4.7,2.1c1.7-0.2,2.9-1.3,3.4-2.9h-2.2 c-0.4,1.3-2.4,1.5-3.5,0.6c-0.4-0.4-0.6-1.1-0.6-1.7H20C20,11.7,19.9,10.9,19.9,10.9z M13.5,10.6c0-1.6,2.3-2.7,3.5-1.4 c0.4,0.4,0.5,0.9,0.6,1.4H13.5L13.5,10.6z" /> <rect x="13" y="4" width="5" height="1.4" /></svg>';
+    var bell = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" stroke-width="1.1" d="M17,15.5 L3,15.5 C2.99,14.61 3.79,13.34 4.1,12.51 C4.58,11.3 4.72,10.35 5.19,7.01 C5.54,4.53 5.89,3.2 7.28,2.16 C8.13,1.56 9.37,1.5 9.81,1.5 L9.96,1.5 C9.96,1.5 11.62,1.41 12.67,2.17 C14.08,3.2 14.42,4.54 14.77,7.02 C15.26,10.35 15.4,11.31 15.87,12.52 C16.2,13.34 17.01,14.61 17,15.5 L17,15.5 Z" /> <path fill="none" stroke="#000" d="M12.39,16 C12.39,17.37 11.35,18.43 9.91,18.43 C8.48,18.43 7.42,17.37 7.42,16" /></svg>';
+    var bold = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M5,15.3 C5.66,15.3 5.9,15 5.9,14.53 L5.9,5.5 C5.9,4.92 5.56,4.7 5,4.7 L5,4 L8.95,4 C12.6,4 13.7,5.37 13.7,6.9 C13.7,7.87 13.14,9.17 10.86,9.59 L10.86,9.7 C13.25,9.86 14.29,11.28 14.3,12.54 C14.3,14.47 12.94,16 9,16 L5,16 L5,15.3 Z M9,9.3 C11.19,9.3 11.8,8.5 11.85,7 C11.85,5.65 11.3,4.8 9,4.8 L7.67,4.8 L7.67,9.3 L9,9.3 Z M9.185,15.22 C11.97,15 12.39,14 12.4,12.58 C12.4,11.15 11.39,10 9,10 L7.67,10 L7.67,15 L9.18,15 Z" /></svg>';
+    var bolt = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M4.74,20 L7.73,12 L3,12 L15.43,1 L12.32,9 L17.02,9 L4.74,20 L4.74,20 L4.74,20 Z M9.18,11 L7.1,16.39 L14.47,10 L10.86,10 L12.99,4.67 L5.61,11 L9.18,11 L9.18,11 L9.18,11 Z" /></svg>';
+    var bookmark = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon fill="none" stroke="#000" points="5.5 1.5 15.5 1.5 15.5 17.5 10.5 12.5 5.5 17.5" /></svg>';
+    var calendar = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M 2,3 2,17 18,17 18,3 2,3 Z M 17,16 3,16 3,8 17,8 17,16 Z M 17,7 3,7 3,4 17,4 17,7 Z" /> <rect width="1" height="3" x="6" y="2" /> <rect width="1" height="3" x="13" y="2" /></svg>';
+    var camera = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10.8" r="3.8" /> <path fill="none" stroke="#000" d="M1,4.5 C0.7,4.5 0.5,4.7 0.5,5 L0.5,17 C0.5,17.3 0.7,17.5 1,17.5 L19,17.5 C19.3,17.5 19.5,17.3 19.5,17 L19.5,5 C19.5,4.7 19.3,4.5 19,4.5 L13.5,4.5 L13.5,2.9 C13.5,2.6 13.3,2.5 13,2.5 L7,2.5 C6.7,2.5 6.5,2.6 6.5,2.9 L6.5,4.5 L1,4.5 L1,4.5 Z" /></svg>';
+    var cart = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle cx="7.3" cy="17.3" r="1.4" /> <circle cx="13.3" cy="17.3" r="1.4" /> <polyline fill="none" stroke="#000" points="0 2 3.2 4 5.3 12.5 16 12.5 18 6.5 8 6.5" /></svg>';
+    var check = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" stroke-width="1.1" points="4,10 8,15 17,4" /></svg>';
+    var clock = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9" /> <rect x="9" y="4" width="1" height="7" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M13.018,14.197 L9.445,10.625" /></svg>';
+    var close = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" stroke-width="1.06" d="M16,16 L4,4" /> <path fill="none" stroke="#000" stroke-width="1.06" d="M16,4 L4,16" /></svg>';
+    var code = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" stroke-width="1.01" points="13,4 19,10 13,16" /> <polyline fill="none" stroke="#000" stroke-width="1.01" points="7,4 1,10 7,16" /></svg>';
+    var cog = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" cx="9.997" cy="10" r="3.31" /> <path fill="none" stroke="#000" d="M18.488,12.285 L16.205,16.237 C15.322,15.496 14.185,15.281 13.303,15.791 C12.428,16.289 12.047,17.373 12.246,18.5 L7.735,18.5 C7.938,17.374 7.553,16.299 6.684,15.791 C5.801,15.27 4.655,15.492 3.773,16.237 L1.5,12.285 C2.573,11.871 3.317,10.999 3.317,9.991 C3.305,8.98 2.573,8.121 1.5,7.716 L3.765,3.784 C4.645,4.516 5.794,4.738 6.687,4.232 C7.555,3.722 7.939,2.637 7.735,1.5 L12.263,1.5 C12.072,2.637 12.441,3.71 13.314,4.22 C14.206,4.73 15.343,4.516 16.225,3.794 L18.487,7.714 C17.404,8.117 16.661,8.988 16.67,10.009 C16.672,11.018 17.415,11.88 18.488,12.285 L18.488,12.285 Z" /></svg>';
+    var comment = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M6,18.71 L6,14 L1,14 L1,1 L19,1 L19,14 L10.71,14 L6,18.71 L6,18.71 Z M2,13 L7,13 L7,16.29 L10.29,13 L18,13 L18,2 L2,2 L2,13 L2,13 Z" /></svg>';
+    var commenting = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon fill="none" stroke="#000" points="1.5,1.5 18.5,1.5 18.5,13.5 10.5,13.5 6.5,17.5 6.5,13.5 1.5,13.5" /> <circle cx="10" cy="8" r="1" /> <circle cx="6" cy="8" r="1" /> <circle cx="14" cy="8" r="1" /></svg>';
+    var comments = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" points="2 0.5 19.5 0.5 19.5 13" /> <path d="M5,19.71 L5,15 L0,15 L0,2 L18,2 L18,15 L9.71,15 L5,19.71 L5,19.71 L5,19.71 Z M1,14 L6,14 L6,17.29 L9.29,14 L17,14 L17,3 L1,3 L1,14 L1,14 L1,14 Z" /></svg>';
+    var copy = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect fill="none" stroke="#000" x="3.5" y="2.5" width="12" height="16" /> <polyline fill="none" stroke="#000" points="5 0.5 17.5 0.5 17.5 17" /></svg>';
+    var database = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <ellipse fill="none" stroke="#000" cx="10" cy="4.64" rx="7.5" ry="3.14" /> <path fill="none" stroke="#000" d="M17.5,8.11 C17.5,9.85 14.14,11.25 10,11.25 C5.86,11.25 2.5,9.84 2.5,8.11" /> <path fill="none" stroke="#000" d="M17.5,11.25 C17.5,12.99 14.14,14.39 10,14.39 C5.86,14.39 2.5,12.98 2.5,11.25" /> <path fill="none" stroke="#000" d="M17.49,4.64 L17.5,14.36 C17.5,16.1 14.14,17.5 10,17.5 C5.86,17.5 2.5,16.09 2.5,14.36 L2.5,4.64" /></svg>';
+    var desktop = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="8" y="15" width="1" height="2" /> <rect x="11" y="15" width="1" height="2" /> <rect x="5" y="16" width="10" height="1" /> <rect fill="none" stroke="#000" x="1.5" y="3.5" width="17" height="11" /></svg>';
+    var download = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" points="14,10 9.5,14.5 5,10" /> <rect x="3" y="17" width="13" height="1" /> <line fill="none" stroke="#000" x1="9.5" y1="13.91" x2="9.5" y2="3" /></svg>';
+    var dribbble = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" stroke-width="1.4" d="M1.3,8.9c0,0,5,0.1,8.6-1c1.4-0.4,2.6-0.9,4-1.9 c1.4-1.1,2.5-2.5,2.5-2.5" /> <path fill="none" stroke="#000" stroke-width="1.4" d="M3.9,16.6c0,0,1.7-2.8,3.5-4.2 c1.8-1.3,4-2,5.7-2.2C16,10,19,10.6,19,10.6" /> <path fill="none" stroke="#000" stroke-width="1.4" d="M6.9,1.6c0,0,3.3,4.6,4.2,6.8 c0.4,0.9,1.3,3.1,1.9,5.2c0.6,2,0.9,4.4,0.9,4.4" /> <circle fill="none" stroke="#000" stroke-width="1.4" cx="10" cy="10" r="9" /></svg>';
+    var expand = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="13 2 18 2 18 7 17 7 17 3 13 3" /> <polygon points="2 13 3 13 3 17 7 17 7 18 2 18" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M11,9 L17,3" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M3,17 L9,11" /></svg>';
+    var facebook = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M11,10h2.6l0.4-3H11V5.3c0-0.9,0.2-1.5,1.5-1.5H14V1.1c-0.3,0-1-0.1-2.1-0.1C9.6,1,8,2.4,8,5v2H5.5v3H8v8h3V10z" /></svg>';
+    var file = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect fill="none" stroke="#000" x="3.5" y="1.5" width="13" height="17" /></svg>';
+    var flickr = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle cx="5.5" cy="9.5" r="3.5" /> <circle cx="14.5" cy="9.5" r="3.5" /></svg>';
+    var folder = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon fill="none" stroke="#000" points="9.5 5.5 8.5 3.5 1.5 3.5 1.5 16.5 18.5 16.5 18.5 5.5" /></svg>';
+    var forward = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M2.47,13.11 C4.02,10.02 6.27,7.85 9.04,6.61 C9.48,6.41 10.27,6.13 11,5.91 L11,2 L18.89,9 L11,16 L11,12.13 C9.25,12.47 7.58,13.19 6.02,14.25 C3.03,16.28 1.63,18.54 1.63,18.54 C1.63,18.54 1.38,15.28 2.47,13.11 L2.47,13.11 Z M5.3,13.53 C6.92,12.4 9.04,11.4 12,10.92 L12,13.63 L17.36,9 L12,4.25 L12,6.8 C11.71,6.86 10.86,7.02 9.67,7.49 C6.79,8.65 4.58,10.96 3.49,13.08 C3.18,13.7 2.68,14.87 2.49,16 C3.28,15.05 4.4,14.15 5.3,13.53 L5.3,13.53 Z" /></svg>';
+    var foursquare = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M15.23,2 C15.96,2 16.4,2.41 16.5,2.86 C16.57,3.15 16.56,3.44 16.51,3.73 C16.46,4.04 14.86,11.72 14.75,12.03 C14.56,12.56 14.16,12.82 13.61,12.83 C13.03,12.84 11.09,12.51 10.69,13 C10.38,13.38 7.79,16.39 6.81,17.53 C6.61,17.76 6.4,17.96 6.08,17.99 C5.68,18.04 5.29,17.87 5.17,17.45 C5.12,17.28 5.1,17.09 5.1,16.91 C5.1,12.4 4.86,7.81 5.11,3.31 C5.17,2.5 5.81,2.12 6.53,2 L15.23,2 L15.23,2 Z M9.76,11.42 C9.94,11.19 10.17,11.1 10.45,11.1 L12.86,11.1 C13.12,11.1 13.31,10.94 13.36,10.69 C13.37,10.64 13.62,9.41 13.74,8.83 C13.81,8.52 13.53,8.28 13.27,8.28 C12.35,8.29 11.42,8.28 10.5,8.28 C9.84,8.28 9.83,7.69 9.82,7.21 C9.8,6.85 10.13,6.55 10.5,6.55 C11.59,6.56 12.67,6.55 13.76,6.55 C14.03,6.55 14.23,6.4 14.28,6.14 C14.34,5.87 14.67,4.29 14.67,4.29 C14.67,4.29 14.82,3.74 14.19,3.74 L7.34,3.74 C7,3.75 6.84,4.02 6.84,4.33 C6.84,7.58 6.85,14.95 6.85,14.99 C6.87,15 8.89,12.51 9.76,11.42 L9.76,11.42 Z" /></svg>';
+    var future = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline points="19 2 18 2 18 6 14 6 14 7 19 7 19 2" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M18,6.548 C16.709,3.29 13.354,1 9.6,1 C4.6,1 0.6,5 0.6,10 C0.6,15 4.6,19 9.6,19 C14.6,19 18.6,15 18.6,10" /> <rect x="9" y="4" width="1" height="7" /> <path d="M13.018,14.197 L9.445,10.625" fill="none" stroke="#000" stroke-width="1.1" /></svg>';
+    var github = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M10,1 C5.03,1 1,5.03 1,10 C1,13.98 3.58,17.35 7.16,18.54 C7.61,18.62 7.77,18.34 7.77,18.11 C7.77,17.9 7.76,17.33 7.76,16.58 C5.26,17.12 4.73,15.37 4.73,15.37 C4.32,14.33 3.73,14.05 3.73,14.05 C2.91,13.5 3.79,13.5 3.79,13.5 C4.69,13.56 5.17,14.43 5.17,14.43 C5.97,15.8 7.28,15.41 7.79,15.18 C7.87,14.6 8.1,14.2 8.36,13.98 C6.36,13.75 4.26,12.98 4.26,9.53 C4.26,8.55 4.61,7.74 5.19,7.11 C5.1,6.88 4.79,5.97 5.28,4.73 C5.28,4.73 6.04,4.49 7.75,5.65 C8.47,5.45 9.24,5.35 10,5.35 C10.76,5.35 11.53,5.45 12.25,5.65 C13.97,4.48 14.72,4.73 14.72,4.73 C15.21,5.97 14.9,6.88 14.81,7.11 C15.39,7.74 15.73,8.54 15.73,9.53 C15.73,12.99 13.63,13.75 11.62,13.97 C11.94,14.25 12.23,14.8 12.23,15.64 C12.23,16.84 12.22,17.81 12.22,18.11 C12.22,18.35 12.38,18.63 12.84,18.54 C16.42,17.35 19,13.98 19,10 C19,5.03 14.97,1 10,1 L10,1 Z" /></svg>';
+    var gitter = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="3.5" y="1" width="1.531" height="11.471" /> <rect x="7.324" y="4.059" width="1.529" height="15.294" /> <rect x="11.148" y="4.059" width="1.527" height="15.294" /> <rect x="14.971" y="4.059" width="1.529" height="8.412" /></svg>';
+    var google = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M17.86,9.09 C18.46,12.12 17.14,16.05 13.81,17.56 C9.45,19.53 4.13,17.68 2.47,12.87 C0.68,7.68 4.22,2.42 9.5,2.03 C11.57,1.88 13.42,2.37 15.05,3.65 C15.22,3.78 15.37,3.93 15.61,4.14 C14.9,4.81 14.23,5.45 13.5,6.14 C12.27,5.08 10.84,4.72 9.28,4.98 C8.12,5.17 7.16,5.76 6.37,6.63 C4.88,8.27 4.62,10.86 5.76,12.82 C6.95,14.87 9.17,15.8 11.57,15.25 C13.27,14.87 14.76,13.33 14.89,11.75 L10.51,11.75 L10.51,9.09 L17.86,9.09 L17.86,9.09 Z" /></svg>';
+    var grid = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="2" y="2" width="3" height="3" /> <rect x="8" y="2" width="3" height="3" /> <rect x="14" y="2" width="3" height="3" /> <rect x="2" y="8" width="3" height="3" /> <rect x="8" y="8" width="3" height="3" /> <rect x="14" y="8" width="3" height="3" /> <rect x="2" y="14" width="3" height="3" /> <rect x="8" y="14" width="3" height="3" /> <rect x="14" y="14" width="3" height="3" /></svg>';
+    var happy = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle cx="13" cy="7" r="1" /> <circle cx="7" cy="7" r="1" /> <circle fill="none" stroke="#000" cx="10" cy="10" r="8.5" /> <path fill="none" stroke="#000" d="M14.6,11.4 C13.9,13.3 12.1,14.5 10,14.5 C7.9,14.5 6.1,13.3 5.4,11.4" /></svg>';
+    var hashtag = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M15.431,8 L15.661,7 L12.911,7 L13.831,3 L12.901,3 L11.98,7 L9.29,7 L10.21,3 L9.281,3 L8.361,7 L5.23,7 L5,8 L8.13,8 L7.21,12 L4.23,12 L4,13 L6.98,13 L6.061,17 L6.991,17 L7.911,13 L10.601,13 L9.681,17 L10.611,17 L11.531,13 L14.431,13 L14.661,12 L11.76,12 L12.681,8 L15.431,8 Z M10.831,12 L8.141,12 L9.061,8 L11.75,8 L10.831,12 Z" /></svg>';
+    var heart = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" stroke-width="1.03" d="M10,4 C10,4 8.1,2 5.74,2 C3.38,2 1,3.55 1,6.73 C1,8.84 2.67,10.44 2.67,10.44 L10,18 L17.33,10.44 C17.33,10.44 19,8.84 19,6.73 C19,3.55 16.62,2 14.26,2 C11.9,2 10,4 10,4 L10,4 Z" /></svg>';
+    var history = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="#000" points="1 2 2 2 2 6 6 6 6 7 1 7 1 2" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M2.1,6.548 C3.391,3.29 6.746,1 10.5,1 C15.5,1 19.5,5 19.5,10 C19.5,15 15.5,19 10.5,19 C5.5,19 1.5,15 1.5,10" /> <rect x="9" y="4" width="1" height="7" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M13.018,14.197 L9.445,10.625" id="Shape" /></svg>';
+    var home = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="18.65 11.35 10 2.71 1.35 11.35 0.65 10.65 10 1.29 19.35 10.65" /> <polygon points="15 4 18 4 18 7 17 7 17 5 15 5" /> <polygon points="3 11 4 11 4 18 7 18 7 12 12 12 12 18 16 18 16 11 17 11 17 19 11 19 11 13 8 13 8 19 3 19" /></svg>';
+    var image = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle cx="16.1" cy="6.1" r="1.1" /> <rect fill="none" stroke="#000" x="0.5" y="2.5" width="19" height="15" /> <polyline fill="none" stroke="#000" stroke-width="1.01" points="4,13 8,9 13,14" /> <polyline fill="none" stroke="#000" stroke-width="1.01" points="11,12 12.5,10.5 16,14" /></svg>';
+    var info = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M12.13,11.59 C11.97,12.84 10.35,14.12 9.1,14.16 C6.17,14.2 9.89,9.46 8.74,8.37 C9.3,8.16 10.62,7.83 10.62,8.81 C10.62,9.63 10.12,10.55 9.88,11.32 C8.66,15.16 12.13,11.15 12.14,11.18 C12.16,11.21 12.16,11.35 12.13,11.59 C12.08,11.95 12.16,11.35 12.13,11.59 L12.13,11.59 Z M11.56,5.67 C11.56,6.67 9.36,7.15 9.36,6.03 C9.36,5 11.56,4.54 11.56,5.67 L11.56,5.67 Z" /> <circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9" /></svg>';
+    var instagram = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M13.55,1H6.46C3.45,1,1,3.44,1,6.44v7.12c0,3,2.45,5.44,5.46,5.44h7.08c3.02,0,5.46-2.44,5.46-5.44V6.44 C19.01,3.44,16.56,1,13.55,1z M17.5,14c0,1.93-1.57,3.5-3.5,3.5H6c-1.93,0-3.5-1.57-3.5-3.5V6c0-1.93,1.57-3.5,3.5-3.5h8 c1.93,0,3.5,1.57,3.5,3.5V14z" /> <circle cx="14.87" cy="5.26" r="1.09" /> <path d="M10.03,5.45c-2.55,0-4.63,2.06-4.63,4.6c0,2.55,2.07,4.61,4.63,4.61c2.56,0,4.63-2.061,4.63-4.61 C14.65,7.51,12.58,5.45,10.03,5.45L10.03,5.45L10.03,5.45z M10.08,13c-1.66,0-3-1.34-3-2.99c0-1.65,1.34-2.99,3-2.99s3,1.34,3,2.99 C13.08,11.66,11.74,13,10.08,13L10.08,13L10.08,13z" /></svg>';
+    var italic = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M12.63,5.48 L10.15,14.52 C10,15.08 10.37,15.25 11.92,15.3 L11.72,16 L6,16 L6.2,15.31 C7.78,15.26 8.19,15.09 8.34,14.53 L10.82,5.49 C10.97,4.92 10.63,4.76 9.09,4.71 L9.28,4 L15,4 L14.81,4.69 C13.23,4.75 12.78,4.91 12.63,5.48 L12.63,5.48 Z" /></svg>';
+    var joomla = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M7.8,13.4l1.7-1.7L5.9,8c-0.6-0.5-0.6-1.5,0-2c0.6-0.6,1.4-0.6,2,0l1.7-1.7c-1-1-2.3-1.3-3.6-1C5.8,2.2,4.8,1.4,3.7,1.4 c-1.3,0-2.3,1-2.3,2.3c0,1.1,0.8,2,1.8,2.3c-0.4,1.3-0.1,2.8,1,3.8L7.8,13.4L7.8,13.4z" /> <path d="M10.2,4.3c1-1,2.5-1.4,3.8-1c0.2-1.1,1.1-2,2.3-2c1.3,0,2.3,1,2.3,2.3c0,1.2-0.9,2.2-2,2.3c0.4,1.3,0,2.8-1,3.8L13.9,8 c0.6-0.5,0.6-1.5,0-2c-0.5-0.6-1.5-0.6-2,0L8.2,9.7L6.5,8" /> <path d="M14.1,16.8c-1.3,0.4-2.8,0.1-3.8-1l1.7-1.7c0.6,0.6,1.5,0.6,2,0c0.5-0.6,0.6-1.5,0-2l-3.7-3.7L12,6.7l3.7,3.7 c1,1,1.3,2.4,1,3.6c1.1,0.2,2,1.1,2,2.3c0,1.3-1,2.3-2.3,2.3C15.2,18.6,14.3,17.8,14.1,16.8" /> <path d="M13.2,12.2l-3.7,3.7c-1,1-2.4,1.3-3.6,1c-0.2,1-1.2,1.8-2.2,1.8c-1.3,0-2.3-1-2.3-2.3c0-1.1,0.8-2,1.8-2.3 c-0.3-1.3,0-2.7,1-3.7l1.7,1.7c-0.6,0.6-0.6,1.5,0,2c0.6,0.6,1.4,0.6,2,0l3.7-3.7" /></svg>';
+    var laptop = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect y="16" width="20" height="1" /> <rect fill="none" stroke="#000" x="2.5" y="4.5" width="15" height="10" /></svg>';
+    var lifesaver = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M10,0.5 C4.76,0.5 0.5,4.76 0.5,10 C0.5,15.24 4.76,19.5 10,19.5 C15.24,19.5 19.5,15.24 19.5,10 C19.5,4.76 15.24,0.5 10,0.5 L10,0.5 Z M10,1.5 C11.49,1.5 12.89,1.88 14.11,2.56 L11.85,4.82 C11.27,4.61 10.65,4.5 10,4.5 C9.21,4.5 8.47,4.67 7.79,4.96 L5.58,2.75 C6.87,1.95 8.38,1.5 10,1.5 L10,1.5 Z M4.96,7.8 C4.67,8.48 4.5,9.21 4.5,10 C4.5,10.65 4.61,11.27 4.83,11.85 L2.56,14.11 C1.88,12.89 1.5,11.49 1.5,10 C1.5,8.38 1.95,6.87 2.75,5.58 L4.96,7.79 L4.96,7.8 L4.96,7.8 Z M10,18.5 C8.25,18.5 6.62,17.97 5.27,17.06 L7.46,14.87 C8.22,15.27 9.08,15.5 10,15.5 C10.79,15.5 11.53,15.33 12.21,15.04 L14.42,17.25 C13.13,18.05 11.62,18.5 10,18.5 L10,18.5 Z M10,14.5 C7.52,14.5 5.5,12.48 5.5,10 C5.5,7.52 7.52,5.5 10,5.5 C12.48,5.5 14.5,7.52 14.5,10 C14.5,12.48 12.48,14.5 10,14.5 L10,14.5 Z M15.04,12.21 C15.33,11.53 15.5,10.79 15.5,10 C15.5,9.08 15.27,8.22 14.87,7.46 L17.06,5.27 C17.97,6.62 18.5,8.25 18.5,10 C18.5,11.62 18.05,13.13 17.25,14.42 L15.04,12.21 L15.04,12.21 Z" /></svg>';
+    var link = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" stroke-width="1.1" d="M10.625,12.375 L7.525,15.475 C6.825,16.175 5.925,16.175 5.225,15.475 L4.525,14.775 C3.825,14.074 3.825,13.175 4.525,12.475 L7.625,9.375" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M9.325,7.375 L12.425,4.275 C13.125,3.575 14.025,3.575 14.724,4.275 L15.425,4.975 C16.125,5.675 16.125,6.575 15.425,7.275 L12.325,10.375" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M7.925,11.875 L11.925,7.975" /></svg>';
+    var linkedin = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M5.77,17.89 L5.77,7.17 L2.21,7.17 L2.21,17.89 L5.77,17.89 L5.77,17.89 Z M3.99,5.71 C5.23,5.71 6.01,4.89 6.01,3.86 C5.99,2.8 5.24,2 4.02,2 C2.8,2 2,2.8 2,3.85 C2,4.88 2.77,5.7 3.97,5.7 L3.99,5.7 L3.99,5.71 L3.99,5.71 Z" /> <path d="M7.75,17.89 L11.31,17.89 L11.31,11.9 C11.31,11.58 11.33,11.26 11.43,11.03 C11.69,10.39 12.27,9.73 13.26,9.73 C14.55,9.73 15.06,10.71 15.06,12.15 L15.06,17.89 L18.62,17.89 L18.62,11.74 C18.62,8.45 16.86,6.92 14.52,6.92 C12.6,6.92 11.75,7.99 11.28,8.73 L11.3,8.73 L11.3,7.17 L7.75,7.17 C7.79,8.17 7.75,17.89 7.75,17.89 L7.75,17.89 L7.75,17.89 Z" /></svg>';
+    var list = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="6" y="4" width="12" height="1" /> <rect x="6" y="9" width="12" height="1" /> <rect x="6" y="14" width="12" height="1" /> <rect x="2" y="4" width="2" height="1" /> <rect x="2" y="9" width="2" height="1" /> <rect x="2" y="14" width="2" height="1" /></svg>';
+    var location = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" stroke-width="1.01" d="M10,0.5 C6.41,0.5 3.5,3.39 3.5,6.98 C3.5,11.83 10,19 10,19 C10,19 16.5,11.83 16.5,6.98 C16.5,3.39 13.59,0.5 10,0.5 L10,0.5 Z" /> <circle fill="none" stroke="#000" cx="10" cy="6.8" r="2.3" /></svg>';
+    var lock = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect fill="none" stroke="#000" height="10" width="13" y="8.5" x="3.5" /> <path fill="none" stroke="#000" d="M6.5,8 L6.5,4.88 C6.5,3.01 8.07,1.5 10,1.5 C11.93,1.5 13.5,3.01 13.5,4.88 L13.5,8" /></svg>';
+    var mail = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" points="1.4,6.5 10,11 18.6,6.5" /> <path d="M 1,4 1,16 19,16 19,4 1,4 Z M 18,15 2,15 2,5 18,5 18,15 Z" /></svg>';
+    var menu = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="2" y="4" width="16" height="1" /> <rect x="2" y="9" width="16" height="1" /> <rect x="2" y="14" width="16" height="1" /></svg>';
+    var minus = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect height="1" width="18" y="9" x="1" /></svg>';
+    var more = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle cx="3" cy="10" r="2" /> <circle cx="10" cy="10" r="2" /> <circle cx="17" cy="10" r="2" /></svg>';
+    var move = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="4,5 1,5 1,9 2,9 2,6 4,6 " /> <polygon points="1,16 2,16 2,18 4,18 4,19 1,19 " /> <polygon points="14,16 14,19 11,19 11,18 13,18 13,16 " /> <rect fill="none" stroke="#000" x="5.5" y="1.5" width="13" height="13" /> <rect x="1" y="11" width="1" height="3" /> <rect x="6" y="18" width="3" height="1" /></svg>';
+    var nut = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon fill="none" stroke="#000" points="2.5,5.7 10,1.3 17.5,5.7 17.5,14.3 10,18.7 2.5,14.3" /> <circle fill="none" stroke="#000" cx="10" cy="10" r="3.5" /></svg>';
+    var pagekit = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="3,1 17,1 17,16 10,16 10,13 14,13 14,4 6,4 6,16 10,16 10,19 3,19 " /></svg>';
+    var pencil = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" d="M17.25,6.01 L7.12,16.1 L3.82,17.2 L5.02,13.9 L15.12,3.88 C15.71,3.29 16.66,3.29 17.25,3.88 C17.83,4.47 17.83,5.42 17.25,6.01 L17.25,6.01 Z" /> <path fill="none" stroke="#000" d="M15.98,7.268 L13.851,5.148" /></svg>';
+    var phone = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" d="M15.5,17 C15.5,17.8 14.8,18.5 14,18.5 L7,18.5 C6.2,18.5 5.5,17.8 5.5,17 L5.5,3 C5.5,2.2 6.2,1.5 7,1.5 L14,1.5 C14.8,1.5 15.5,2.2 15.5,3 L15.5,17 L15.5,17 L15.5,17 Z" /> <circle cx="10.5" cy="16.5" r="0.8" /></svg>';
+    var pinterest = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M10.21,1 C5.5,1 3,4.16 3,7.61 C3,9.21 3.85,11.2 5.22,11.84 C5.43,11.94 5.54,11.89 5.58,11.69 C5.62,11.54 5.8,10.8 5.88,10.45 C5.91,10.34 5.89,10.24 5.8,10.14 C5.36,9.59 5,8.58 5,7.65 C5,5.24 6.82,2.91 9.93,2.91 C12.61,2.91 14.49,4.74 14.49,7.35 C14.49,10.3 13,12.35 11.06,12.35 C9.99,12.35 9.19,11.47 9.44,10.38 C9.75,9.08 10.35,7.68 10.35,6.75 C10.35,5.91 9.9,5.21 8.97,5.21 C7.87,5.21 6.99,6.34 6.99,7.86 C6.99,8.83 7.32,9.48 7.32,9.48 C7.32,9.48 6.24,14.06 6.04,14.91 C5.7,16.35 6.08,18.7 6.12,18.9 C6.14,19.01 6.26,19.05 6.33,18.95 C6.44,18.81 7.74,16.85 8.11,15.44 C8.24,14.93 8.79,12.84 8.79,12.84 C9.15,13.52 10.19,14.09 11.29,14.09 C14.58,14.09 16.96,11.06 16.96,7.3 C16.94,3.7 14,1 10.21,1" /></svg>';
+    var play = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon fill="none" stroke="#000" points="6.5,5 14.5,10 6.5,15" /></svg>';
+    var plus = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="9" y="1" width="1" height="17" /> <rect x="1" y="9" width="17" height="1" /></svg>';
+    var pull = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="6.85,8 9.5,10.6 12.15,8 12.85,8.7 9.5,12 6.15,8.7" /> <line fill="none" stroke="#000" x1="9.5" y1="11" x2="9.5" y2="2" /> <polyline fill="none" stroke="#000" points="6,5.5 3.5,5.5 3.5,18.5 15.5,18.5 15.5,5.5 13,5.5" /></svg>';
+    var push = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="12.15,4 9.5,1.4 6.85,4 6.15,3.3 9.5,0 12.85,3.3" /> <line fill="none" stroke="#000" x1="9.5" y1="10" x2="9.5" y2="1" /> <polyline fill="none" stroke="#000" points="6 5.5 3.5 5.5 3.5 18.5 15.5 18.5 15.5 5.5 13 5.5" /></svg>';
+    var question = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9" /> <circle cx="10.44" cy="14.42" r="1.05" /> <path fill="none" stroke="#000" stroke-width="1.2" d="M8.17,7.79 C8.17,4.75 12.72,4.73 12.72,7.72 C12.72,8.67 11.81,9.15 11.23,9.75 C10.75,10.24 10.51,10.73 10.45,11.4 C10.44,11.53 10.43,11.64 10.43,11.75" /></svg>';
+    var receiver = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" stroke-width="1.01" d="M6.189,13.611C8.134,15.525 11.097,18.239 13.867,18.257C16.47,18.275 18.2,16.241 18.2,16.241L14.509,12.551L11.539,13.639L6.189,8.29L7.313,5.355L3.76,1.8C3.76,1.8 1.732,3.537 1.7,6.092C1.667,8.809 4.347,11.738 6.189,13.611" /></svg>';
+    var refresh = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" stroke-width="1.1" d="M17.08,11.15 C17.09,11.31 17.1,11.47 17.1,11.64 C17.1,15.53 13.94,18.69 10.05,18.69 C6.16,18.68 3,15.53 3,11.63 C3,7.74 6.16,4.58 10.05,4.58 C10.9,4.58 11.71,4.73 12.46,5" /> <polyline fill="none" stroke="#000" points="9.9 2 12.79 4.89 9.79 7.9" /></svg>';
+    var reply = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M17.7,13.11 C16.12,10.02 13.84,7.85 11.02,6.61 C10.57,6.41 9.75,6.13 9,5.91 L9,2 L1,9 L9,16 L9,12.13 C10.78,12.47 12.5,13.19 14.09,14.25 C17.13,16.28 18.56,18.54 18.56,18.54 C18.56,18.54 18.81,15.28 17.7,13.11 L17.7,13.11 Z M14.82,13.53 C13.17,12.4 11.01,11.4 8,10.92 L8,13.63 L2.55,9 L8,4.25 L8,6.8 C8.3,6.86 9.16,7.02 10.37,7.49 C13.3,8.65 15.54,10.96 16.65,13.08 C16.97,13.7 17.48,14.86 17.68,16 C16.87,15.05 15.73,14.15 14.82,13.53 L14.82,13.53 Z" /></svg>';
+    var rss = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle cx="3.12" cy="16.8" r="1.85" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M1.5,8.2 C1.78,8.18 2.06,8.16 2.35,8.16 C7.57,8.16 11.81,12.37 11.81,17.57 C11.81,17.89 11.79,18.19 11.76,18.5" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M1.5,2.52 C1.78,2.51 2.06,2.5 2.35,2.5 C10.72,2.5 17.5,9.24 17.5,17.57 C17.5,17.89 17.49,18.19 17.47,18.5" /></svg>';
+    var search = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" stroke-width="1.1" cx="9" cy="9" r="7" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M14,14 L18,18 L14,14 Z" /></svg>';
+    var server = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="3" y="3" width="1" height="2" /> <rect x="5" y="3" width="1" height="2" /> <rect x="7" y="3" width="1" height="2" /> <rect x="16" y="3" width="1" height="1" /> <rect x="16" y="10" width="1" height="1" /> <circle fill="none" stroke="#000" cx="9.9" cy="17.4" r="1.4" /> <rect x="3" y="10" width="1" height="2" /> <rect x="5" y="10" width="1" height="2" /> <rect x="9.5" y="14" width="1" height="2" /> <rect x="3" y="17" width="6" height="1" /> <rect x="11" y="17" width="6" height="1" /> <rect fill="none" stroke="#000" x="1.5" y="1.5" width="17" height="5" /> <rect fill="none" stroke="#000" x="1.5" y="8.5" width="17" height="5" /></svg>';
+    var settings = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <ellipse fill="none" stroke="#000" cx="6.11" cy="3.55" rx="2.11" ry="2.15" /> <ellipse fill="none" stroke="#000" cx="6.11" cy="15.55" rx="2.11" ry="2.15" /> <circle fill="none" stroke="#000" cx="13.15" cy="9.55" r="2.15" /> <rect x="1" y="3" width="3" height="1" /> <rect x="10" y="3" width="8" height="1" /> <rect x="1" y="9" width="8" height="1" /> <rect x="15" y="9" width="3" height="1" /> <rect x="1" y="15" width="3" height="1" /> <rect x="10" y="15" width="8" height="1" /></svg>';
+    var shrink = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="11 4 12 4 12 8 16 8 16 9 11 9" /> <polygon points="4 11 9 11 9 16 8 16 8 12 4 12" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M12,8 L18,2" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M2,18 L8,12" /></svg>';
+    var social = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <line fill="none" stroke="#000" stroke-width="1.1" x1="13.4" y1="14" x2="6.3" y2="10.7" /> <line fill="none" stroke="#000" stroke-width="1.1" x1="13.5" y1="5.5" x2="6.5" y2="8.8" /> <circle fill="none" stroke="#000" stroke-width="1.1" cx="15.5" cy="4.6" r="2.3" /> <circle fill="none" stroke="#000" stroke-width="1.1" cx="15.5" cy="14.8" r="2.3" /> <circle fill="none" stroke="#000" stroke-width="1.1" cx="4.5" cy="9.8" r="2.3" /></svg>';
+    var soundcloud = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M17.2,9.4c-0.4,0-0.8,0.1-1.101,0.2c-0.199-2.5-2.399-4.5-5-4.5c-0.6,0-1.2,0.1-1.7,0.3C9.2,5.5,9.1,5.6,9.1,5.6V15h8 c1.601,0,2.801-1.2,2.801-2.8C20,10.7,18.7,9.4,17.2,9.4L17.2,9.4z" /> <rect x="6" y="6.5" width="1.5" height="8.5" /> <rect x="3" y="8" width="1.5" height="7" /> <rect y="10" width="1.5" height="5" /></svg>';
+    var star = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon fill="none" stroke="#000" stroke-width="1.01" points="10 2 12.63 7.27 18.5 8.12 14.25 12.22 15.25 18 10 15.27 4.75 18 5.75 12.22 1.5 8.12 7.37 7.27" /></svg>';
+    var strikethrough = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M6,13.02 L6.65,13.02 C7.64,15.16 8.86,16.12 10.41,16.12 C12.22,16.12 12.92,14.93 12.92,13.89 C12.92,12.55 11.99,12.03 9.74,11.23 C8.05,10.64 6.23,10.11 6.23,7.83 C6.23,5.5 8.09,4.09 10.4,4.09 C11.44,4.09 12.13,4.31 12.72,4.54 L13.33,4 L13.81,4 L13.81,7.59 L13.16,7.59 C12.55,5.88 11.52,4.89 10.07,4.89 C8.84,4.89 7.89,5.69 7.89,7.03 C7.89,8.29 8.89,8.78 10.88,9.45 C12.57,10.03 14.38,10.6 14.38,12.91 C14.38,14.75 13.27,16.93 10.18,16.93 C9.18,16.93 8.17,16.69 7.46,16.39 L6.52,17 L6,17 L6,13.02 L6,13.02 Z" /> <rect x="3" y="10" width="15" height="1" /></svg>';
+    var table = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="1" y="3" width="18" height="1" /> <rect x="1" y="7" width="18" height="1" /> <rect x="1" y="11" width="18" height="1" /> <rect x="1" y="15" width="18" height="1" /></svg>';
+    var tablet = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" d="M5,18.5 C4.2,18.5 3.5,17.8 3.5,17 L3.5,3 C3.5,2.2 4.2,1.5 5,1.5 L16,1.5 C16.8,1.5 17.5,2.2 17.5,3 L17.5,17 C17.5,17.8 16.8,18.5 16,18.5 L5,18.5 L5,18.5 L5,18.5 Z" /> <circle cx="10.5" cy="16.3" r="0.8" /></svg>';
+    var tag = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" stroke-width="1.1" d="M17.5,3.71 L17.5,7.72 C17.5,7.96 17.4,8.2 17.21,8.39 L8.39,17.2 C7.99,17.6 7.33,17.6 6.93,17.2 L2.8,13.07 C2.4,12.67 2.4,12.01 2.8,11.61 L11.61,2.8 C11.81,2.6 12.08,2.5 12.34,2.5 L16.19,2.5 C16.52,2.5 16.86,2.63 17.11,2.88 C17.35,3.11 17.48,3.4 17.5,3.71 L17.5,3.71 Z" /> <circle cx="14" cy="6" r="1" /></svg>';
+    var thumbnails = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect fill="none" stroke="#000" x="3.5" y="3.5" width="5" height="5" /> <rect fill="none" stroke="#000" x="11.5" y="3.5" width="5" height="5" /> <rect fill="none" stroke="#000" x="11.5" y="11.5" width="5" height="5" /> <rect fill="none" stroke="#000" x="3.5" y="11.5" width="5" height="5" /></svg>';
+    var trash = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" points="6.5 3 6.5 1.5 13.5 1.5 13.5 3" /> <polyline fill="none" stroke="#000" points="4.5 4 4.5 18.5 15.5 18.5 15.5 4" /> <rect x="8" y="7" width="1" height="9" /> <rect x="11" y="7" width="1" height="9" /> <rect x="2" y="3" width="16" height="1" /></svg>';
+    var tripadvisor = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M19.021,7.866C19.256,6.862,20,5.854,20,5.854h-3.346C14.781,4.641,12.504,4,9.98,4C7.363,4,4.999,4.651,3.135,5.876H0\tc0,0,0.738,0.987,0.976,1.988c-0.611,0.837-0.973,1.852-0.973,2.964c0,2.763,2.249,5.009,5.011,5.009\tc1.576,0,2.976-0.737,3.901-1.879l1.063,1.599l1.075-1.615c0.475,0.611,1.1,1.111,1.838,1.451c1.213,0.547,2.574,0.612,3.825,0.15\tc2.589-0.963,3.913-3.852,2.964-6.439c-0.175-0.463-0.4-0.876-0.675-1.238H19.021z M16.38,14.594\tc-1.002,0.371-2.088,0.328-3.06-0.119c-0.688-0.317-1.252-0.817-1.657-1.438c-0.164-0.25-0.313-0.52-0.417-0.811\tc-0.124-0.328-0.186-0.668-0.217-1.014c-0.063-0.689,0.037-1.396,0.339-2.043c0.448-0.971,1.251-1.71,2.25-2.079\tc2.075-0.765,4.375,0.3,5.14,2.366c0.762,2.066-0.301,4.37-2.363,5.134L16.38,14.594L16.38,14.594z M8.322,13.066\tc-0.72,1.059-1.935,1.76-3.309,1.76c-2.207,0-4.001-1.797-4.001-3.996c0-2.203,1.795-4.002,4.001-4.002\tc2.204,0,3.999,1.8,3.999,4.002c0,0.137-0.024,0.261-0.04,0.396c-0.067,0.678-0.284,1.313-0.648,1.853v-0.013H8.322z M2.472,10.775\tc0,1.367,1.112,2.479,2.476,2.479c1.363,0,2.472-1.11,2.472-2.479c0-1.359-1.11-2.468-2.472-2.468\tC3.584,8.306,2.473,9.416,2.472,10.775L2.472,10.775z M12.514,10.775c0,1.367,1.104,2.479,2.471,2.479\tc1.363,0,2.474-1.108,2.474-2.479c0-1.359-1.11-2.468-2.474-2.468c-1.364,0-2.477,1.109-2.477,2.468H12.514z M3.324,10.775\tc0-0.893,0.726-1.618,1.614-1.618c0.889,0,1.625,0.727,1.625,1.618c0,0.898-0.725,1.627-1.625,1.627\tc-0.901,0-1.625-0.729-1.625-1.627H3.324z M13.354,10.775c0-0.893,0.726-1.618,1.627-1.618c0.886,0,1.61,0.727,1.61,1.618\tc0,0.898-0.726,1.627-1.626,1.627s-1.625-0.729-1.625-1.627H13.354z M9.977,4.875c1.798,0,3.425,0.324,4.849,0.968\tc-0.535,0.015-1.061,0.108-1.586,0.3c-1.264,0.463-2.264,1.388-2.815,2.604c-0.262,0.551-0.398,1.133-0.448,1.72\tC9.79,7.905,7.677,5.873,5.076,5.82C6.501,5.208,8.153,4.875,9.94,4.875H9.977z" /></svg>';
+    var tumblr = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M6.885,8.598c0,0,0,3.393,0,4.996c0,0.282,0,0.66,0.094,0.942c0.377,1.509,1.131,2.545,2.545,3.11 c1.319,0.472,2.356,0.472,3.676,0c0.565-0.188,1.132-0.659,1.132-0.659l-0.849-2.263c0,0-1.036,0.378-1.603,0.283 c-0.565-0.094-1.226-0.66-1.226-1.508c0-1.603,0-4.902,0-4.902h2.828V5.771h-2.828V2H8.205c0,0-0.094,0.66-0.188,0.942 C7.828,3.791,7.262,4.733,6.603,5.394C5.848,6.147,5,6.43,5,6.43v2.168H6.885z" /></svg>';
+    var tv = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect x="7" y="16" width="6" height="1" /> <rect fill="none" stroke="#000" x="0.5" y="3.5" width="19" height="11" /></svg>';
+    var twitter = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M19,4.74 C18.339,5.029 17.626,5.229 16.881,5.32 C17.644,4.86 18.227,4.139 18.503,3.28 C17.79,3.7 17.001,4.009 16.159,4.17 C15.485,3.45 14.526,3 13.464,3 C11.423,3 9.771,4.66 9.771,6.7 C9.771,6.99 9.804,7.269 9.868,7.539 C6.795,7.38 4.076,5.919 2.254,3.679 C1.936,4.219 1.754,4.86 1.754,5.539 C1.754,6.82 2.405,7.95 3.397,8.61 C2.79,8.589 2.22,8.429 1.723,8.149 L1.723,8.189 C1.723,9.978 2.997,11.478 4.686,11.82 C4.376,11.899 4.049,11.939 3.713,11.939 C3.475,11.939 3.245,11.919 3.018,11.88 C3.49,13.349 4.852,14.419 6.469,14.449 C5.205,15.429 3.612,16.019 1.882,16.019 C1.583,16.019 1.29,16.009 1,15.969 C2.635,17.019 4.576,17.629 6.662,17.629 C13.454,17.629 17.17,12 17.17,7.129 C17.17,6.969 17.166,6.809 17.157,6.649 C17.879,6.129 18.504,5.478 19,4.74" /></svg>';
+    var uikit = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="14.4,3.1 11.3,5.1 15,7.3 15,12.9 10,15.7 5,12.9 5,8.5 2,6.8 2,14.8 9.9,19.5 18,14.8 18,5.3" /> <polygon points="9.8,4.2 6.7,2.4 9.8,0.4 12.9,2.3" /></svg>';
+    var unlock = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect fill="none" stroke="#000" x="3.5" y="8.5" width="13" height="10" /> <path fill="none" stroke="#000" d="M6.5,8.5 L6.5,4.9 C6.5,3 8.1,1.5 10,1.5 C11.9,1.5 13.5,3 13.5,4.9" /></svg>';
+    var upload = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" points="5 8 9.5 3.5 14 8 " /> <rect x="3" y="17" width="13" height="1" /> <line fill="none" stroke="#000" x1="9.5" y1="15" x2="9.5" y2="4" /></svg>';
+    var user = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" stroke-width="1.1" cx="9.9" cy="6.4" r="4.4" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M1.5,19 C2.3,14.5 5.8,11.2 10,11.2 C14.2,11.2 17.7,14.6 18.5,19.2" /></svg>';
+    var users = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" stroke-width="1.1" cx="7.7" cy="8.6" r="3.5" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M1,18.1 C1.7,14.6 4.4,12.1 7.6,12.1 C10.9,12.1 13.7,14.8 14.3,18.3" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M11.4,4 C12.8,2.4 15.4,2.8 16.3,4.7 C17.2,6.6 15.7,8.9 13.6,8.9 C16.5,8.9 18.8,11.3 19.2,14.1" /></svg>';
+    var vimeo = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M2.065,7.59C1.84,7.367,1.654,7.082,1.468,6.838c-0.332-0.42-0.137-0.411,0.274-0.772c1.026-0.91,2.004-1.896,3.127-2.688 c1.017-0.713,2.365-1.173,3.286-0.039c0.849,1.045,0.869,2.629,1.084,3.891c0.215,1.309,0.421,2.648,0.88,3.901 c0.127,0.352,0.37,1.018,0.81,1.074c0.567,0.078,1.145-0.917,1.408-1.289c0.684-0.987,1.611-2.317,1.494-3.587 c-0.115-1.349-1.572-1.095-2.482-0.773c0.146-1.514,1.555-3.216,2.912-3.792c1.439-0.597,3.579-0.587,4.302,1.036 c0.772,1.759,0.078,3.802-0.763,5.396c-0.918,1.731-2.1,3.333-3.363,4.829c-1.114,1.329-2.432,2.787-4.093,3.422 c-1.897,0.723-3.021-0.686-3.667-2.318c-0.705-1.777-1.056-3.771-1.565-5.621C4.898,8.726,4.644,7.836,4.136,7.191 C3.473,6.358,2.72,7.141,2.065,7.59C1.977,7.502,2.115,7.551,2.065,7.59L2.065,7.59z" /></svg>';
+    var warning = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle cx="10" cy="14" r="1" /> <circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9" /> <path d="M10.97,7.72 C10.85,9.54 10.56,11.29 10.56,11.29 C10.51,11.87 10.27,12 9.99,12 C9.69,12 9.49,11.87 9.43,11.29 C9.43,11.29 9.16,9.54 9.03,7.72 C8.96,6.54 9.03,6 9.03,6 C9.03,5.45 9.46,5.02 9.99,5 C10.53,5.01 10.97,5.44 10.97,6 C10.97,6 11.04,6.54 10.97,7.72 L10.97,7.72 Z" /></svg>';
+    var whatsapp = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M16.7,3.3c-1.8-1.8-4.1-2.8-6.7-2.8c-5.2,0-9.4,4.2-9.4,9.4c0,1.7,0.4,3.3,1.3,4.7l-1.3,4.9l5-1.3c1.4,0.8,2.9,1.2,4.5,1.2 l0,0l0,0c5.2,0,9.4-4.2,9.4-9.4C19.5,7.4,18.5,5,16.7,3.3 M10.1,17.7L10.1,17.7c-1.4,0-2.8-0.4-4-1.1l-0.3-0.2l-3,0.8l0.8-2.9 l-0.2-0.3c-0.8-1.2-1.2-2.7-1.2-4.2c0-4.3,3.5-7.8,7.8-7.8c2.1,0,4.1,0.8,5.5,2.3c1.5,1.5,2.3,3.4,2.3,5.5 C17.9,14.2,14.4,17.7,10.1,17.7 M14.4,11.9c-0.2-0.1-1.4-0.7-1.6-0.8c-0.2-0.1-0.4-0.1-0.5,0.1c-0.2,0.2-0.6,0.8-0.8,0.9 c-0.1,0.2-0.3,0.2-0.5,0.1c-0.2-0.1-1-0.4-1.9-1.2c-0.7-0.6-1.2-1.4-1.3-1.6c-0.1-0.2,0-0.4,0.1-0.5C8,8.8,8.1,8.7,8.2,8.5 c0.1-0.1,0.2-0.2,0.2-0.4c0.1-0.2,0-0.3,0-0.4C8.4,7.6,7.9,6.5,7.7,6C7.5,5.5,7.3,5.6,7.2,5.6c-0.1,0-0.3,0-0.4,0 c-0.2,0-0.4,0.1-0.6,0.3c-0.2,0.2-0.8,0.8-0.8,2c0,1.2,0.8,2.3,1,2.4c0.1,0.2,1.7,2.5,4,3.5c0.6,0.2,1,0.4,1.3,0.5 c0.6,0.2,1.1,0.2,1.5,0.1c0.5-0.1,1.4-0.6,1.6-1.1c0.2-0.5,0.2-1,0.1-1.1C14.8,12.1,14.6,12,14.4,11.9" /></svg>';
+    var wordpress = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M10,0.5c-5.2,0-9.5,4.3-9.5,9.5s4.3,9.5,9.5,9.5c5.2,0,9.5-4.3,9.5-9.5S15.2,0.5,10,0.5L10,0.5L10,0.5z M15.6,3.9h-0.1 c-0.8,0-1.4,0.7-1.4,1.5c0,0.7,0.4,1.3,0.8,1.9c0.3,0.6,0.7,1.3,0.7,2.3c0,0.7-0.3,1.5-0.6,2.7L14.1,15l-3-8.9 c0.5,0,0.9-0.1,0.9-0.1C12.5,6,12.5,5.3,12,5.4c0,0-1.3,0.1-2.2,0.1C9,5.5,7.7,5.4,7.7,5.4C7.2,5.3,7.2,6,7.6,6c0,0,0.4,0.1,0.9,0.1 l1.3,3.5L8,15L5,6.1C5.5,6.1,5.9,6,5.9,6C6.4,6,6.3,5.3,5.9,5.4c0,0-1.3,0.1-2.2,0.1c-0.2,0-0.3,0-0.5,0c1.5-2.2,4-3.7,6.9-3.7 C12.2,1.7,14.1,2.6,15.6,3.9L15.6,3.9L15.6,3.9z M2.5,6.6l3.9,10.8c-2.7-1.3-4.6-4.2-4.6-7.4C1.8,8.8,2,7.6,2.5,6.6L2.5,6.6L2.5,6.6 z M10.2,10.7l2.5,6.9c0,0,0,0.1,0.1,0.1C11.9,18,11,18.2,10,18.2c-0.8,0-1.6-0.1-2.3-0.3L10.2,10.7L10.2,10.7L10.2,10.7z M14.2,17.1 l2.5-7.3c0.5-1.2,0.6-2.1,0.6-2.9c0-0.3,0-0.6-0.1-0.8c0.6,1.2,1,2.5,1,4C18.3,13,16.6,15.7,14.2,17.1L14.2,17.1L14.2,17.1z" /></svg>';
+    var world = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" d="M1,10.5 L19,10.5" /> <path fill="none" stroke="#000" d="M2.35,15.5 L17.65,15.5" /> <path fill="none" stroke="#000" d="M2.35,5.5 L17.523,5.5" /> <path fill="none" stroke="#000" d="M10,19.46 L9.98,19.46 C7.31,17.33 5.61,14.141 5.61,10.58 C5.61,7.02 7.33,3.83 10,1.7 C10.01,1.7 9.99,1.7 10,1.7 L10,1.7 C12.67,3.83 14.4,7.02 14.4,10.58 C14.4,14.141 12.67,17.33 10,19.46 L10,19.46 L10,19.46 L10,19.46 Z" /> <circle fill="none" stroke="#000" cx="10" cy="10.5" r="9" /></svg>';
+    var xing = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M4.4,4.56 C4.24,4.56 4.11,4.61 4.05,4.72 C3.98,4.83 3.99,4.97 4.07,5.12 L5.82,8.16 L5.82,8.17 L3.06,13.04 C2.99,13.18 2.99,13.33 3.06,13.44 C3.12,13.55 3.24,13.62 3.4,13.62 L6,13.62 C6.39,13.62 6.57,13.36 6.71,13.12 C6.71,13.12 9.41,8.35 9.51,8.16 C9.49,8.14 7.72,5.04 7.72,5.04 C7.58,4.81 7.39,4.56 6.99,4.56 L4.4,4.56 L4.4,4.56 Z" /> <path d="M15.3,1 C14.91,1 14.74,1.25 14.6,1.5 C14.6,1.5 9.01,11.42 8.82,11.74 C8.83,11.76 12.51,18.51 12.51,18.51 C12.64,18.74 12.84,19 13.23,19 L15.82,19 C15.98,19 16.1,18.94 16.16,18.83 C16.23,18.72 16.23,18.57 16.16,18.43 L12.5,11.74 L12.5,11.72 L18.25,1.56 C18.32,1.42 18.32,1.27 18.25,1.16 C18.21,1.06 18.08,1 17.93,1 L15.3,1 L15.3,1 Z" /></svg>';
+    var yelp = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M17.175,14.971c-0.112,0.77-1.686,2.767-2.406,3.054c-0.246,0.1-0.487,0.076-0.675-0.069\tc-0.122-0.096-2.446-3.859-2.446-3.859c-0.194-0.293-0.157-0.682,0.083-0.978c0.234-0.284,0.581-0.393,0.881-0.276\tc0.016,0.01,4.21,1.394,4.332,1.482c0.178,0.148,0.263,0.379,0.225,0.646L17.175,14.971L17.175,14.971z M11.464,10.789\tc-0.203-0.307-0.199-0.666,0.009-0.916c0,0,2.625-3.574,2.745-3.657c0.203-0.135,0.452-0.141,0.69-0.025\tc0.691,0.335,2.085,2.405,2.167,3.199v0.027c0.024,0.271-0.082,0.491-0.273,0.623c-0.132,0.083-4.43,1.155-4.43,1.155\tc-0.322,0.096-0.68-0.06-0.882-0.381L11.464,10.789z M9.475,9.563C9.32,9.609,8.848,9.757,8.269,8.817c0,0-3.916-6.16-4.007-6.351\tc-0.057-0.212,0.011-0.455,0.202-0.65C5.047,1.211,8.21,0.327,9.037,0.529c0.27,0.069,0.457,0.238,0.522,0.479\tc0.047,0.266,0.433,5.982,0.488,7.264C10.098,9.368,9.629,9.517,9.475,9.563z M9.927,19.066c-0.083,0.225-0.273,0.373-0.54,0.421\tc-0.762,0.13-3.15-0.751-3.647-1.342c-0.096-0.131-0.155-0.262-0.167-0.394c-0.011-0.095,0-0.189,0.036-0.272\tc0.061-0.155,2.917-3.538,2.917-3.538c0.214-0.272,0.595-0.355,0.952-0.213c0.345,0.13,0.56,0.428,0.536,0.749\tC10.014,14.479,9.977,18.923,9.927,19.066z M3.495,13.912c-0.235-0.009-0.444-0.148-0.568-0.382c-0.089-0.17-0.151-0.453-0.19-0.794\tC2.63,11.701,2.761,10.144,3.07,9.648c0.145-0.226,0.357-0.345,0.592-0.336c0.154,0,4.255,1.667,4.255,1.667\tc0.321,0.118,0.521,0.453,0.5,0.833c-0.023,0.37-0.236,0.655-0.551,0.738L3.495,13.912z" /></svg>';
+    var youtube = '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M15,4.1c1,0.1,2.3,0,3,0.8c0.8,0.8,0.9,2.1,0.9,3.1C19,9.2,19,10.9,19,12c-0.1,1.1,0,2.4-0.5,3.4c-0.5,1.1-1.4,1.5-2.5,1.6 c-1.2,0.1-8.6,0.1-11,0c-1.1-0.1-2.4-0.1-3.2-1c-0.7-0.8-0.7-2-0.8-3C1,11.8,1,10.1,1,8.9c0-1.1,0-2.4,0.5-3.4C2,4.5,3,4.3,4.1,4.2 C5.3,4.1,12.6,4,15,4.1z M8,7.5v6l5.5-3L8,7.5z" /></svg>';
+    var Icons = {
+        album: album,
+        ban: ban,
+        behance: behance,
+        bell: bell,
+        bold: bold,
+        bolt: bolt,
+        bookmark: bookmark,
+        calendar: calendar,
+        camera: camera,
+        cart: cart,
+        check: check,
+        clock: clock,
+        close: close,
+        code: code,
+        cog: cog,
+        comment: comment,
+        commenting: commenting,
+        comments: comments,
+        copy: copy,
+        database: database,
+        desktop: desktop,
+        download: download,
+        dribbble: dribbble,
+        expand: expand,
+        facebook: facebook,
+        file: file,
+        flickr: flickr,
+        folder: folder,
+        forward: forward,
+        foursquare: foursquare,
+        future: future,
+        github: github,
+        gitter: gitter,
+        google: google,
+        grid: grid,
+        happy: happy,
+        hashtag: hashtag,
+        heart: heart,
+        history: history,
+        home: home,
+        image: image,
+        info: info,
+        instagram: instagram,
+        italic: italic,
+        joomla: joomla,
+        laptop: laptop,
+        lifesaver: lifesaver,
+        link: link,
+        linkedin: linkedin,
+        list: list,
+        location: location,
+        lock: lock,
+        mail: mail,
+        menu: menu,
+        minus: minus,
+        more: more,
+        move: move,
+        nut: nut,
+        pagekit: pagekit,
+        pencil: pencil,
+        phone: phone,
+        pinterest: pinterest,
+        play: play,
+        plus: plus,
+        pull: pull,
+        push: push,
+        question: question,
+        receiver: receiver,
+        refresh: refresh,
+        reply: reply,
+        rss: rss,
+        search: search,
+        server: server,
+        settings: settings,
+        shrink: shrink,
+        social: social,
+        soundcloud: soundcloud,
+        star: star,
+        strikethrough: strikethrough,
+        table: table,
+        tablet: tablet,
+        tag: tag,
+        thumbnails: thumbnails,
+        trash: trash,
+        tripadvisor: tripadvisor,
+        tumblr: tumblr,
+        tv: tv,
+        twitter: twitter,
+        uikit: uikit,
+        unlock: unlock,
+        upload: upload,
+        user: user,
+        users: users,
+        vimeo: vimeo,
+        warning: warning,
+        whatsapp: whatsapp,
+        wordpress: wordpress,
+        world: world,
+        xing: xing,
+        yelp: yelp,
+        youtube: youtube,
+        "500px": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M9.624,11.866c-0.141,0.132,0.479,0.658,0.662,0.418c0.051-0.046,0.607-0.61,0.662-0.664c0,0,0.738,0.719,0.814,0.719\t\tc0.1,0,0.207-0.055,0.322-0.17c0.27-0.269,0.135-0.416,0.066-0.495l-0.631-0.616l0.658-0.668c0.146-0.156,0.021-0.314-0.1-0.449\t\tc-0.182-0.18-0.359-0.226-0.471-0.125l-0.656,0.654l-0.654-0.654c-0.033-0.034-0.08-0.045-0.124-0.045\t\tc-0.079,0-0.191,0.068-0.307,0.181c-0.202,0.202-0.247,0.351-0.133,0.462l0.665,0.665L9.624,11.866z" /> <path d="M11.066,2.884c-1.061,0-2.185,0.248-3.011,0.604c-0.087,0.034-0.141,0.106-0.15,0.205C7.893,3.784,7.919,3.909,7.982,4.066\t\tc0.05,0.136,0.187,0.474,0.452,0.372c0.844-0.326,1.779-0.507,2.633-0.507c0.963,0,1.9,0.191,2.781,0.564\t\tc0.695,0.292,1.357,0.719,2.078,1.34c0.051,0.044,0.105,0.068,0.164,0.068c0.143,0,0.273-0.137,0.389-0.271\t\tc0.191-0.214,0.324-0.395,0.135-0.575c-0.686-0.654-1.436-1.138-2.363-1.533C13.24,3.097,12.168,2.884,11.066,2.884z" /> <path d="M16.43,15.747c-0.092-0.028-0.242,0.05-0.309,0.119l0,0c-0.652,0.652-1.42,1.169-2.268,1.521\t\tc-0.877,0.371-1.814,0.551-2.779,0.551c-0.961,0-1.896-0.189-2.775-0.564c-0.848-0.36-1.612-0.879-2.268-1.53\t\tc-0.682-0.688-1.196-1.455-1.529-2.268c-0.325-0.799-0.471-1.643-0.471-1.643c-0.045-0.24-0.258-0.249-0.567-0.203\t\tc-0.128,0.021-0.519,0.079-0.483,0.36v0.01c0.105,0.644,0.289,1.284,0.545,1.895c0.417,0.969,1.002,1.849,1.756,2.604\t\tc0.757,0.754,1.636,1.34,2.604,1.757C8.901,18.785,9.97,19,11.088,19c1.104,0,2.186-0.215,3.188-0.645\t\tc1.838-0.896,2.604-1.757,2.604-1.757c0.182-0.204,0.227-0.317-0.1-0.643C16.779,15.956,16.525,15.774,16.43,15.747z" /> <path d="M5.633,13.287c0.293,0.71,0.723,1.341,1.262,1.882c0.54,0.54,1.172,0.971,1.882,1.264c0.731,0.303,1.509,0.461,2.298,0.461\t\tc0.801,0,1.578-0.158,2.297-0.461c0.711-0.293,1.344-0.724,1.883-1.264c0.543-0.541,0.971-1.172,1.264-1.882\t\tc0.314-0.721,0.463-1.5,0.463-2.298c0-0.79-0.148-1.569-0.463-2.289c-0.293-0.699-0.721-1.329-1.264-1.881\t\tc-0.539-0.541-1.172-0.959-1.867-1.263c-0.721-0.303-1.5-0.461-2.299-0.461c-0.802,0-1.613,0.159-2.322,0.461\t\tc-0.577,0.25-1.544,0.867-2.119,1.454v0.012V2.108h8.16C15.1,2.104,15.1,1.69,15.1,1.552C15.1,1.417,15.1,1,14.809,1H5.915\t\tC5.676,1,5.527,1.192,5.527,1.384v6.84c0,0.214,0.273,0.372,0.529,0.428c0.5,0.105,0.614-0.056,0.737-0.224l0,0\t\tc0.18-0.273,0.776-0.884,0.787-0.894c0.901-0.905,2.117-1.408,3.416-1.408c1.285,0,2.5,0.501,3.412,1.408\t\tc0.914,0.914,1.408,2.122,1.408,3.405c0,1.288-0.508,2.496-1.408,3.405c-0.9,0.896-2.152,1.406-3.438,1.406\t\tc-0.877,0-1.711-0.229-2.433-0.671v-4.158c0-0.553,0.237-1.151,0.643-1.614c0.462-0.519,1.094-0.799,1.782-0.799\t\tc0.664,0,1.293,0.253,1.758,0.715c0.459,0.459,0.709,1.071,0.709,1.723c0,1.385-1.094,2.468-2.488,2.468\t\tc-0.273,0-0.769-0.121-0.781-0.125c-0.281-0.087-0.405,0.306-0.438,0.436c-0.159,0.496,0.079,0.585,0.123,0.607\t\tc0.452,0.137,0.743,0.157,1.129,0.157c1.973,0,3.572-1.6,3.572-3.57c0-1.964-1.6-3.552-3.572-3.552c-0.97,0-1.872,0.36-2.546,1.038\t\tc-0.656,0.631-1.027,1.487-1.027,2.322v3.438v-0.011c-0.372-0.42-0.732-1.041-0.981-1.682c-0.102-0.248-0.315-0.202-0.607-0.113\t\tc-0.135,0.035-0.519,0.157-0.44,0.439C5.372,12.799,5.577,13.164,5.633,13.287z" /></svg>',
+        "arrow-down": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="10.5,16.08 5.63,10.66 6.37,10 10.5,14.58 14.63,10 15.37,10.66" /> <line fill="none" stroke="#000" x1="10.5" y1="4" x2="10.5" y2="15" /></svg>',
+        "arrow-left": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" points="10 14 5 9.5 10 5" /> <line fill="none" stroke="#000" x1="16" y1="9.5" x2="5" y2="9.52" /></svg>',
+        "arrow-right": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" points="10 5 15 9.5 10 14" /> <line fill="none" stroke="#000" x1="4" y1="9.5" x2="15" y2="9.5" /></svg>',
+        "arrow-up": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="10.5,4 15.37,9.4 14.63,10.08 10.5,5.49 6.37,10.08 5.63,9.4" /> <line fill="none" stroke="#000" x1="10.5" y1="16" x2="10.5" y2="5" /></svg>',
+        "chevron-down": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" stroke-width="1.03" points="16 7 10 13 4 7" /></svg>',
+        "chevron-left": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" stroke-width="1.03" points="13 16 7 10 13 4" /></svg>',
+        "chevron-right": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" stroke-width="1.03" points="7 4 13 10 7 16" /></svg>',
+        "chevron-up": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polyline fill="none" stroke="#000" stroke-width="1.03" points="4 13 10 7 16 13" /></svg>',
+        "cloud-download": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" stroke-width="1.1" d="M6.5,14.61 L3.75,14.61 C1.96,14.61 0.5,13.17 0.5,11.39 C0.5,9.76 1.72,8.41 3.3,8.2 C3.38,5.31 5.75,3 8.68,3 C11.19,3 13.31,4.71 13.89,7.02 C14.39,6.8 14.93,6.68 15.5,6.68 C17.71,6.68 19.5,8.45 19.5,10.64 C19.5,12.83 17.71,14.6 15.5,14.6 L12.5,14.6" /> <polyline fill="none" stroke="#000" points="11.75 16 9.5 18.25 7.25 16" /> <path fill="none" stroke="#000" d="M9.5,18 L9.5,9.5" /></svg>',
+        "cloud-upload": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" stroke-width="1.1" d="M6.5,14.61 L3.75,14.61 C1.96,14.61 0.5,13.17 0.5,11.39 C0.5,9.76 1.72,8.41 3.31,8.2 C3.38,5.31 5.75,3 8.68,3 C11.19,3 13.31,4.71 13.89,7.02 C14.39,6.8 14.93,6.68 15.5,6.68 C17.71,6.68 19.5,8.45 19.5,10.64 C19.5,12.83 17.71,14.6 15.5,14.6 L12.5,14.6" /> <polyline fill="none" stroke="#000" points="7.25 11.75 9.5 9.5 11.75 11.75" /> <path fill="none" stroke="#000" d="M9.5,18 L9.5,9.5" /></svg>',
+        "credit-card": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <rect fill="none" stroke="#000" x="1.5" y="4.5" width="17" height="12" /> <rect x="1" y="7" width="18" height="3" /></svg>',
+        "file-edit": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" d="M18.65,1.68 C18.41,1.45 18.109,1.33 17.81,1.33 C17.499,1.33 17.209,1.45 16.98,1.68 L8.92,9.76 L8,12.33 L10.55,11.41 L18.651,3.34 C19.12,2.87 19.12,2.15 18.65,1.68 L18.65,1.68 L18.65,1.68 Z" /> <polyline fill="none" stroke="#000" points="16.5 8.482 16.5 18.5 3.5 18.5 3.5 1.5 14.211 1.5" /></svg>',
+        "git-branch": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" stroke-width="1.2" cx="7" cy="3" r="2" /> <circle fill="none" stroke="#000" stroke-width="1.2" cx="14" cy="6" r="2" /> <circle fill="none" stroke="#000" stroke-width="1.2" cx="7" cy="17" r="2" /> <path fill="none" stroke="#000" stroke-width="2" d="M14,8 C14,10.41 12.43,10.87 10.56,11.25 C9.09,11.54 7,12.06 7,15 L7,5" /></svg>',
+        "git-fork": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" stroke-width="1.2" cx="5.79" cy="2.79" r="1.79" /> <circle fill="none" stroke="#000" stroke-width="1.2" cx="14.19" cy="2.79" r="1.79" /> <ellipse fill="none" stroke="#000" stroke-width="1.2" cx="10.03" cy="16.79" rx="1.79" ry="1.79" /> <path fill="none" stroke="#000" stroke-width="2" d="M5.79,4.57 L5.79,6.56 C5.79,9.19 10.03,10.22 10.03,13.31 C10.03,14.86 10.04,14.55 10.04,14.55 C10.04,14.37 10.04,14.86 10.04,13.31 C10.04,10.22 14.2,9.19 14.2,6.56 L14.2,4.57" /></svg>',
+        "github-alt": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M10,0.5 C4.75,0.5 0.5,4.76 0.5,10.01 C0.5,15.26 4.75,19.51 10,19.51 C15.24,19.51 19.5,15.26 19.5,10.01 C19.5,4.76 15.25,0.5 10,0.5 L10,0.5 Z M12.81,17.69 C12.81,17.69 12.81,17.7 12.79,17.69 C12.47,17.75 12.35,17.59 12.35,17.36 L12.35,16.17 C12.35,15.45 12.09,14.92 11.58,14.56 C12.2,14.51 12.77,14.39 13.26,14.21 C13.87,13.98 14.36,13.69 14.74,13.29 C15.42,12.59 15.76,11.55 15.76,10.17 C15.76,9.25 15.45,8.46 14.83,7.8 C15.1,7.08 15.07,6.29 14.75,5.44 L14.51,5.42 C14.34,5.4 14.06,5.46 13.67,5.61 C13.25,5.78 12.79,6.03 12.31,6.35 C11.55,6.16 10.81,6.05 10.09,6.05 C9.36,6.05 8.61,6.15 7.88,6.35 C7.28,5.96 6.75,5.68 6.26,5.54 C6.07,5.47 5.9,5.44 5.78,5.44 L5.42,5.44 C5.06,6.29 5.04,7.08 5.32,7.8 C4.7,8.46 4.4,9.25 4.4,10.17 C4.4,11.94 4.96,13.16 6.08,13.84 C6.53,14.13 7.05,14.32 7.69,14.43 C8.03,14.5 8.32,14.54 8.55,14.55 C8.07,14.89 7.82,15.42 7.82,16.16 L7.82,17.51 C7.8,17.69 7.7,17.8 7.51,17.8 C4.21,16.74 1.82,13.65 1.82,10.01 C1.82,5.5 5.49,1.83 10,1.83 C14.5,1.83 18.17,5.5 18.17,10.01 C18.18,13.53 15.94,16.54 12.81,17.69 L12.81,17.69 Z" /></svg>',
+        "google-plus": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M12.9,9c0,2.7-0.6,5-3.2,6.3c-3.7,1.8-8.1,0.2-9.4-3.6C-1.1,7.6,1.9,3.3,6.1,3c1.7-0.1,3.2,0.3,4.6,1.3 c0.1,0.1,0.3,0.2,0.4,0.4c-0.5,0.5-1.2,1-1.7,1.6c-1-0.8-2.1-1.1-3.5-0.9C5,5.6,4.2,6,3.6,6.7c-1.3,1.3-1.5,3.4-0.5,5 c1,1.7,2.6,2.3,4.6,1.9c1.4-0.3,2.4-1.2,2.6-2.6H6.9V9H12.9z" /> <polygon points="20,9 20,11 18,11 18,13 16,13 16,11 14,11 14,9 16,9 16,7 18,7 18,9 " /></svg>',
+        "minus-circle": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" stroke-width="1.1" cx="9.5" cy="9.5" r="9" /> <line fill="none" stroke="#000" x1="5" y1="9.5" x2="14" y2="9.5" /></svg>',
+        "more-vertical": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle cx="10" cy="3" r="2" /> <circle cx="10" cy="10" r="2" /> <circle cx="10" cy="17" r="2" /></svg>',
+        "paint-bucket": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M10.21,1 L0,11.21 L8.1,19.31 L18.31,9.1 L10.21,1 L10.21,1 Z M16.89,9.1 L15,11 L1.7,11 L10.21,2.42 L16.89,9.1 Z" /> <path fill="none" stroke="#000" stroke-width="1.1" d="M6.42,2.33 L11.7,7.61" /> <path d="M18.49,12 C18.49,12 20,14.06 20,15.36 C20,16.28 19.24,17 18.49,17 L18.49,17 C17.74,17 17,16.28 17,15.36 C17,14.06 18.49,12 18.49,12 L18.49,12 Z" /></svg>',
+        "phone-landscape": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" d="M17,5.5 C17.8,5.5 18.5,6.2 18.5,7 L18.5,14 C18.5,14.8 17.8,15.5 17,15.5 L3,15.5 C2.2,15.5 1.5,14.8 1.5,14 L1.5,7 C1.5,6.2 2.2,5.5 3,5.5 L17,5.5 L17,5.5 L17,5.5 Z" /> <circle cx="3.8" cy="10.5" r="0.8" /></svg>',
+        "play-circle": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon fill="none" stroke="#000" stroke-width="1.1" points="8.5 7 13.5 10 8.5 13" /> <circle fill="none" stroke="#000" stroke-width="1.1" cx="10" cy="10" r="9" /></svg>',
+        "plus-circle": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#000" stroke-width="1.1" cx="9.5" cy="9.5" r="9" /> <line fill="none" stroke="#000" x1="9.5" y1="5" x2="9.5" y2="14" /> <line fill="none" stroke="#000" x1="5" y1="9.5" x2="14" y2="9.5" /></svg>',
+        "quote-right": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path d="M17.27,7.79 C17.27,9.45 16.97,10.43 15.99,12.02 C14.98,13.64 13,15.23 11.56,15.97 L11.1,15.08 C12.34,14.2 13.14,13.51 14.02,11.82 C14.27,11.34 14.41,10.92 14.49,10.54 C14.3,10.58 14.09,10.6 13.88,10.6 C12.06,10.6 10.59,9.12 10.59,7.3 C10.59,5.48 12.06,4 13.88,4 C15.39,4 16.67,5.02 17.05,6.42 C17.19,6.82 17.27,7.27 17.27,7.79 L17.27,7.79 Z" /> <path d="M8.68,7.79 C8.68,9.45 8.38,10.43 7.4,12.02 C6.39,13.64 4.41,15.23 2.97,15.97 L2.51,15.08 C3.75,14.2 4.55,13.51 5.43,11.82 C5.68,11.34 5.82,10.92 5.9,10.54 C5.71,10.58 5.5,10.6 5.29,10.6 C3.47,10.6 2,9.12 2,7.3 C2,5.48 3.47,4 5.29,4 C6.8,4 8.08,5.02 8.46,6.42 C8.6,6.82 8.68,7.27 8.68,7.79 L8.68,7.79 Z" /></svg>',
+        "sign-in": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="7 2 17 2 17 17 7 17 7 16 16 16 16 3 7 3" /> <polygon points="9.1 13.4 8.5 12.8 11.28 10 4 10 4 9 11.28 9 8.5 6.2 9.1 5.62 13 9.5" /></svg>',
+        "sign-out": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="13.1 13.4 12.5 12.8 15.28 10 8 10 8 9 15.28 9 12.5 6.2 13.1 5.62 17 9.5" /> <polygon points="13 2 3 2 3 17 13 17 13 16 4 16 4 3 13 3" /></svg>',
+        "tablet-landscape": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <path fill="none" stroke="#000" d="M1.5,5 C1.5,4.2 2.2,3.5 3,3.5 L17,3.5 C17.8,3.5 18.5,4.2 18.5,5 L18.5,16 C18.5,16.8 17.8,17.5 17,17.5 L3,17.5 C2.2,17.5 1.5,16.8 1.5,16 L1.5,5 L1.5,5 L1.5,5 Z" /> <circle cx="3.7" cy="10.5" r="0.8" /></svg>',
+        "triangle-down": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="5 7 15 7 10 12" /></svg>',
+        "triangle-left": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="12 5 7 10 12 15" /></svg>',
+        "triangle-right": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="8 5 13 10 8 15" /></svg>',
+        "triangle-up": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="5 13 10 8 15 13" /></svg>',
+        "video-camera": '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <polygon points="18,6 18,14 12,10 " /> <rect x="2" y="5" width="12" height="10" /></svg>'
+    };
+    function plugin(UIkit) {
+        if (plugin.installed) {
+            return;
+        }
+        UIkit.icon.add(Icons);
+    }
+    if (typeof window !== "undefined" && window.UIkit) {
+        window.UIkit.use(plugin);
+    }
+    return plugin;
+});
+
+(function() {
+    "use strict";
+    var _$JSONLoader_2 = {
+        load: load
+    };
+    function load(location, callback) {
+        var xhr = getXHR();
+        xhr.open("GET", location, true);
+        xhr.onreadystatechange = createStateChangeListener(xhr, callback);
+        xhr.send();
+    }
+    function createStateChangeListener(xhr, callback) {
+        return function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                try {
+                    callback(null, JSON.parse(xhr.responseText));
+                } catch (err) {
+                    callback(err, null);
+                }
+            }
+        };
+    }
+    function getXHR() {
+        return window.XMLHttpRequest ? new window.XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    "use strict";
+    var _$OptionsValidator_3 = function OptionsValidator(params) {
+        if (!validateParams(params)) {
+            throw new Error("-- OptionsValidator: required options missing");
+        }
+        if (!(this instanceof OptionsValidator)) {
+            return new OptionsValidator(params);
+        }
+        var requiredOptions = params.required;
+        this.getRequiredOptions = function() {
+            return requiredOptions;
+        };
+        this.validate = function(parameters) {
+            var errors = [];
+            requiredOptions.forEach(function(requiredOptionName) {
+                if (typeof parameters[requiredOptionName] === "undefined") {
+                    errors.push(requiredOptionName);
+                }
+            });
+            return errors;
+        };
+        function validateParams(params) {
+            if (!params) {
+                return false;
+            }
+            return typeof params.required !== "undefined" && params.required instanceof Array;
+        }
+    };
+    "use strict";
+    function fuzzysearch(needle, haystack) {
+        var tlen = haystack.length;
+        var qlen = needle.length;
+        if (qlen > tlen) {
+            return false;
+        }
+        if (qlen === tlen) {
+            return needle === haystack;
+        }
+        outer: for (var i = 0, j = 0; i < qlen; i++) {
+            var nch = needle.charCodeAt(i);
+            while (j < tlen) {
+                if (haystack.charCodeAt(j++) === nch) {
+                    continue outer;
+                }
+            }
+            return false;
+        }
+        return true;
+    }
+    var _$fuzzysearch_1 = fuzzysearch;
+    "use strict";
+    var _$FuzzySearchStrategy_5 = new FuzzySearchStrategy();
+    function FuzzySearchStrategy() {
+        this.matches = function(string, crit) {
+            return _$fuzzysearch_1(crit.toLowerCase(), string.toLowerCase());
+        };
+    }
+    "use strict";
+    var _$LiteralSearchStrategy_6 = new LiteralSearchStrategy();
+    function LiteralSearchStrategy() {
+        this.matches = function(str, crit) {
+            if (typeof str !== "string") {
+                return false;
+            }
+            str = str.trim();
+            return str.toLowerCase().indexOf(crit.toLowerCase()) >= 0;
+        };
+    }
+    "use strict";
+    var _$Repository_4 = {
+        put: put,
+        clear: clear,
+        search: search,
+        setOptions: setOptions
+    };
+    function NoSort() {
+        return 0;
+    }
+    var data = [];
+    var opt = {};
+    opt.fuzzy = false;
+    opt.limit = 10;
+    opt.searchStrategy = opt.fuzzy ? _$FuzzySearchStrategy_5 : _$LiteralSearchStrategy_6;
+    opt.sort = NoSort;
+    function put(data) {
+        if (isObject(data)) {
+            return addObject(data);
+        }
+        if (isArray(data)) {
+            return addArray(data);
+        }
+        return undefined;
+    }
+    function clear() {
+        data.length = 0;
+        return data;
+    }
+    function isObject(obj) {
+        return Boolean(obj) && Object.prototype.toString.call(obj) === "[object Object]";
+    }
+    function isArray(obj) {
+        return Boolean(obj) && Object.prototype.toString.call(obj) === "[object Array]";
+    }
+    function addObject(_data) {
+        data.push(_data);
+        return data;
+    }
+    function addArray(_data) {
+        var added = [];
+        clear();
+        for (var i = 0, len = _data.length; i < len; i++) {
+            if (isObject(_data[i])) {
+                added.push(addObject(_data[i]));
+            }
+        }
+        return added;
+    }
+    function search(crit) {
+        if (!crit) {
+            return [];
+        }
+        return findMatches(data, crit, opt.searchStrategy, opt).sort(opt.sort);
+    }
+    function setOptions(_opt) {
+        opt = _opt || {};
+        opt.fuzzy = _opt.fuzzy || false;
+        opt.limit = _opt.limit || 10;
+        opt.searchStrategy = _opt.fuzzy ? _$FuzzySearchStrategy_5 : _$LiteralSearchStrategy_6;
+        opt.sort = _opt.sort || NoSort;
+    }
+    function findMatches(data, crit, strategy, opt) {
+        var matches = [];
+        for (var i = 0; i < data.length && matches.length < opt.limit; i++) {
+            var match = findMatchesInObject(data[i], crit, strategy, opt);
+            if (match) {
+                matches.push(match);
+            }
+        }
+        return matches;
+    }
+    function findMatchesInObject(obj, crit, strategy, opt) {
+        for (var key in obj) {
+            if (!isExcluded(obj[key], opt.exclude) && strategy.matches(obj[key], crit)) {
+                return obj;
+            }
+        }
+    }
+    function isExcluded(term, excludedTerms) {
+        var excluded = false;
+        excludedTerms = excludedTerms || [];
+        for (var i = 0, len = excludedTerms.length; i < len; i++) {
+            var excludedTerm = excludedTerms[i];
+            if (!excluded && new RegExp(term).test(excludedTerm)) {
+                excluded = true;
+            }
+        }
+        return excluded;
+    }
+    "use strict";
+    var _$Templater_7 = {
+        compile: compile,
+        setOptions: __setOptions_7
+    };
+    var options = {};
+    options.pattern = /\{(.*?)\}/g;
+    options.template = "";
+    options.middleware = function() {};
+    function __setOptions_7(_options) {
+        options.pattern = _options.pattern || options.pattern;
+        options.template = _options.template || options.template;
+        if (typeof _options.middleware === "function") {
+            options.middleware = _options.middleware;
+        }
+    }
+    function compile(data) {
+        return options.template.replace(options.pattern, function(match, prop) {
+            var value = options.middleware(prop, data[prop], options.template);
+            if (typeof value !== "undefined") {
+                return value;
+            }
+            return data[prop] || match;
+        });
+    }
+    "use strict";
+    var _$utils_9 = {
+        merge: merge,
+        isJSON: isJSON
+    };
+    function merge(defaultParams, mergeParams) {
+        var mergedOptions = {};
+        for (var option in defaultParams) {
+            if (Object.prototype.hasOwnProperty.call(defaultParams, option)) {
+                mergedOptions[option] = defaultParams[option];
+                if (typeof mergeParams[option] !== "undefined") {
+                    mergedOptions[option] = mergeParams[option];
+                }
+            }
+        }
+        return mergedOptions;
+    }
+    function isJSON(json) {
+        try {
+            if (json instanceof Object && JSON.parse(JSON.stringify(json))) {
+                return true;
+            }
+            return false;
+        } catch (err) {
+            return false;
+        }
+    }
+    var _$src_8 = {};
+    (function(window) {
+        "use strict";
+        var options = {
+            searchInput: null,
+            resultsContainer: null,
+            json: [],
+            searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+            templateMiddleware: function() {},
+            sortMiddleware: function() {
+                return 0;
+            },
+            noResultsText: "No results found",
+            limit: 10,
+            fuzzy: false,
+            exclude: []
+        };
+        var requiredOptions = [ "searchInput", "resultsContainer", "json" ];
+        var optionsValidator = _$OptionsValidator_3({
+            required: requiredOptions
+        });
+        window.SimpleJekyllSearch = function(_options) {
+            var errors = optionsValidator.validate(_options);
+            if (errors.length > 0) {
+                throwError("You must specify the following required options: " + requiredOptions);
+            }
+            options = _$utils_9.merge(options, _options);
+            _$Templater_7.setOptions({
+                template: options.searchResultTemplate,
+                middleware: options.templateMiddleware
+            });
+            _$Repository_4.setOptions({
+                fuzzy: options.fuzzy,
+                limit: options.limit,
+                sort: options.sortMiddleware
+            });
+            if (_$utils_9.isJSON(options.json)) {
+                initWithJSON(options.json);
+            } else {
+                initWithURL(options.json);
+            }
+            return {
+                search: search
+            };
+        };
+        window.SimpleJekyllSearch.init = window.SimpleJekyllSearch;
+        if (typeof window.SimpleJekyllSearchInit === "function") {
+            window.SimpleJekyllSearchInit.call(this, window.SimpleJekyllSearch);
+        }
+        function initWithJSON(json) {
+            _$Repository_4.put(json);
+            registerInput();
+        }
+        function initWithURL(url) {
+            _$JSONLoader_2.load(url, function(err, json) {
+                if (err) {
+                    throwError("failed to get JSON (" + url + ")");
+                }
+                initWithJSON(json);
+            });
+        }
+        function emptyResultsContainer() {
+            options.resultsContainer.innerHTML = "";
+        }
+        function appendToResultsContainer(text) {
+            options.resultsContainer.innerHTML += text;
+        }
+        function registerInput() {
+            options.searchInput.addEventListener("keyup", function(e) {
+                if (isWhitelistedKey(e.which)) {
+                    emptyResultsContainer();
+                    search(e.target.value);
+                }
+            });
+        }
+        function search(query) {
+            if (isValidQuery(query)) {
+                emptyResultsContainer();
+                render(_$Repository_4.search(query));
+            }
+        }
+        function render(results) {
+            var len = results.length;
+            if (len === 0) {
+                return appendToResultsContainer(options.noResultsText);
+            }
+            for (var i = 0; i < len; i++) {
+                appendToResultsContainer(_$Templater_7.compile(results[i]));
+            }
+        }
+        function isValidQuery(query) {
+            return query && query.length > 0;
+        }
+        function isWhitelistedKey(key) {
+            return [ 13, 16, 20, 37, 38, 39, 40, 91 ].indexOf(key) === -1;
+        }
+        function throwError(message) {
+            throw new Error("SimpleJekyllSearch --- " + message);
+        }
+    })(window);
+})();

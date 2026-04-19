@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Slideshow
 // Description:     Component to create slideshows
 //
@@ -23,7 +21,7 @@
 .uk-slideshow {
     /* 1 */
     -webkit-tap-highlight-color: transparent;
-    @if(meta.mixin-exists(hook-slideshow)) {@include hook-slideshow();}
+    @if(mixin-exists(hook-slideshow)) {@include hook-slideshow();}
 }
 
 
@@ -35,7 +33,6 @@
  * 2. Reset list
  * 3. Clip child elements
  * 4. Prevent displaying the callout information on iOS.
- * 5. Disable horizontal panning gestures
  */
 
 .uk-slideshow-items {
@@ -50,8 +47,6 @@
     overflow: hidden;
     /* 4 */
     -webkit-touch-callout: none;
-    /* 5 */
-    touch-action: pan-y;
 }
 
 
@@ -63,6 +58,7 @@
  * 2. Take the full width
  * 3. Clip child elements, e.g. for `uk-cover`
  * 4. Optimize animation
+ * 5. Disable horizontal panning gestures in IE11 and Edge
  */
 
 .uk-slideshow-items > * {
@@ -77,6 +73,8 @@
     overflow: hidden;
     /* 4 */
     will-change: transform, opacity;
+    /* 5 */
+    touch-action: pan-y;
 }
 
 /*
@@ -89,7 +87,7 @@
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-slideshow-misc)) {@include hook-slideshow-misc();}
+@if(mixin-exists(hook-slideshow-misc)) {@include hook-slideshow-misc();}
 
 // @mixin hook-slideshow(){}
 // @mixin hook-slideshow-misc(){}

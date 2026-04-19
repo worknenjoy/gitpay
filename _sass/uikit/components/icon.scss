@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Icon
 // Description:     Component to create icons
 //
@@ -8,7 +6,6 @@
 // Modifiers:       `uk-icon-image`
 //                  `uk-icon-link`
 //                  `uk-icon-button`
-//                  `uk-icon-overlay`
 //
 // States:          `uk-preserve`
 //
@@ -18,11 +15,22 @@
 // Variables
 // ========================================================================
 
+$icon-image-size:                                20px !default;
 
+$icon-link-color:                                $global-muted-color !default;
+$icon-link-hover-color:                          $global-color !default;
+$icon-link-active-color:                         darken($global-color, 5%) !default;
 
+$icon-button-size:                               36px !default;
+$icon-button-border-radius:                      500px !default;
+$icon-button-background:                         $global-muted-background !default;
+$icon-button-color:                              $global-muted-color !default;
 
+$icon-button-hover-background:                   darken($icon-button-background, 5%) !default;
+$icon-button-hover-color:                        $global-color !default;
 
-
+$icon-button-active-background:                  darken($icon-button-background, 10%) !default;
+$icon-button-active-color:                       $global-color !default;
 
 
 /* ========================================================================
@@ -82,16 +90,19 @@ button.uk-icon:not(:disabled) { cursor: pointer; }
 
 /*
  * Set the fill and stroke color of all SVG elements to the current text color
+ * 1. Fix for uppercase attribute names in Edge. Will be fixed in Windows 10 builds 16251+
  */
 
-.uk-icon:not(.uk-preserve) [fill*="#"]:not(.uk-preserve) { fill: currentcolor; }
-.uk-icon:not(.uk-preserve) [stroke*="#"]:not(.uk-preserve) { stroke: currentcolor; }
+.uk-icon [fill*='#']:not(.uk-preserve),
+.uk-icon [FILL*='#']:not(.uk-preserve) { fill: currentcolor; } // 1
+.uk-icon [stroke*='#']:not(.uk-preserve),
+.uk-icon [STROKE*='#']:not(.uk-preserve) { stroke: currentcolor; } // 1
 
 /*
  * Fix Firefox blurry SVG rendering: https://bugzilla.mozilla.org/show_bug.cgi?id=1046835
  */
 
-.uk-icon > * { transform: translate(0, 0); }
+.uk-icon > * { transform: translate(0,0); }
 
 
 /* Image modifier
@@ -99,21 +110,15 @@ button.uk-icon:not(:disabled) { cursor: pointer; }
 
 /*
  * Display images in icon dimensions
- * 1. Required for `span` with background image
- * 2. Required for `image`
  */
 
 .uk-icon-image {
     width: $icon-image-size;
     height: $icon-image-size;
-    /* 1 */
     background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: contain;
     vertical-align: middle;
-    /* 2 */
-    object-fit: scale-down;
-    max-width: none;
 }
 
 
@@ -122,26 +127,25 @@ button.uk-icon:not(:disabled) { cursor: pointer; }
 
 /*
  * Link
- * 1. Allow text within link
  */
 
 .uk-icon-link {
     color: $icon-link-color;
-    /* 1 */
-    text-decoration: none !important;
-    @if(meta.mixin-exists(hook-icon-link)) {@include hook-icon-link();}
+    @if(mixin-exists(hook-icon-link)) {@include hook-icon-link();}
 }
 
-.uk-icon-link:hover {
+.uk-icon-link:hover,
+.uk-icon-link:focus {
     color: $icon-link-hover-color;
-    @if(meta.mixin-exists(hook-icon-link-hover)) {@include hook-icon-link-hover();}
+    outline: none;
+    @if(mixin-exists(hook-icon-link-hover)) {@include hook-icon-link-hover();}
 }
 
 /* OnClick + Active */
 .uk-icon-link:active,
 .uk-active > .uk-icon-link {
     color: $icon-link-active-color;
-    @if(meta.mixin-exists(hook-icon-link-active)) {@include hook-icon-link-active();}
+    @if(mixin-exists(hook-icon-link-active)) {@include hook-icon-link-active();}
 }
 
 /*
@@ -161,14 +165,16 @@ button.uk-icon:not(:disabled) { cursor: pointer; }
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    @if(meta.mixin-exists(hook-icon-button)) {@include hook-icon-button();}
+    @if(mixin-exists(hook-icon-button)) {@include hook-icon-button();}
 }
 
-/* Hover */
-.uk-icon-button:hover {
+/* Hover + Focus */
+.uk-icon-button:hover,
+.uk-icon-button:focus {
     background-color: $icon-button-hover-background;
     color: $icon-button-hover-color;
-    @if(meta.mixin-exists(hook-icon-button-hover)) {@include hook-icon-button-hover();}
+    outline: none;
+    @if(mixin-exists(hook-icon-button-hover)) {@include hook-icon-button-hover();}
 }
 
 /* OnClick + Active */
@@ -176,30 +182,14 @@ button.uk-icon:not(:disabled) { cursor: pointer; }
 .uk-active > .uk-icon-button {
     background-color: $icon-button-active-background;
     color: $icon-button-active-color;
-    @if(meta.mixin-exists(hook-icon-button-active)) {@include hook-icon-button-active();}
-}
-
-/*
- * Overlay
- */
-
-.uk-icon-overlay,
-a .uk-icon-overlay {
-    color: $icon-overlay-color;
-    @if(meta.mixin-exists(hook-icon-overlay)) {@include hook-icon-overlay();}
-}
-
-.uk-icon-overlay:hover,
-a:hover .uk-icon-overlay {
-    color: $icon-overlay-hover-color;
-    @if(meta.mixin-exists(hook-icon-overlay-hover)) {@include hook-icon-overlay-hover();}
+    @if(mixin-exists(hook-icon-button-active)) {@include hook-icon-button-active();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-icon-misc)) {@include hook-icon-misc();}
+@if(mixin-exists(hook-icon-misc)) {@include hook-icon-misc();}
 
 // @mixin hook-icon-link(){}
 // @mixin hook-icon-link-hover(){}
@@ -207,14 +197,21 @@ a:hover .uk-icon-overlay {
 // @mixin hook-icon-button(){}
 // @mixin hook-icon-button-hover(){}
 // @mixin hook-icon-button-active(){}
-// @mixin hook-icon-overlay(){}
-// @mixin hook-icon-overlay-hover(){}
 // @mixin hook-icon-misc(){}
 
 
 // Inverse
 // ========================================================================
 
+$inverse-icon-link-color:                       $inverse-global-muted-color !default;
+$inverse-icon-link-hover-color:                 $inverse-global-color !default;
+$inverse-icon-link-active-color:                $inverse-global-color !default;
+$inverse-icon-button-background:                $inverse-global-muted-background !default;
+$inverse-icon-button-color:                     $inverse-global-muted-color !default;
+$inverse-icon-button-hover-background:          darken($inverse-icon-button-background, 5%) !default;
+$inverse-icon-button-hover-color:               $inverse-global-color !default;
+$inverse-icon-button-active-background:         darken($inverse-icon-button-background, 10%) !default;
+$inverse-icon-button-active-color:              $inverse-global-color !default;
 
 
 
@@ -224,5 +221,3 @@ a:hover .uk-icon-overlay {
 // @mixin hook-inverse-icon-button(){}
 // @mixin hook-inverse-icon-button-hover(){}
 // @mixin hook-inverse-icon-button-active(){}
-// @mixin hook-inverse-icon-overlay(){}
-// @mixin hook-inverse-icon-overlay-hover(){}

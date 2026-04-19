@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Pagination
 // Description:     Component to create a page navigation
 //
@@ -17,7 +15,13 @@
 // Variables
 // ========================================================================
 
+$pagination-margin-horizontal:                   20px !default;
 
+$pagination-item-color:                          $global-muted-color !default;
+$pagination-item-hover-color:                    $global-color !default;
+$pagination-item-hover-text-decoration:          none !default;
+$pagination-item-active-color:                   $global-color !default;
+$pagination-item-disabled-color:                 $global-muted-color !default;
 
 
 /* ========================================================================
@@ -26,9 +30,8 @@
 
 /*
  * 1. Allow items to wrap into the next line
- * 2. Center items vertically if they have a different height
- * 3. Gutter
- * 4. Reset list
+ * 2. Gutter
+ * 3. Reset list
  */
 
 .uk-pagination {
@@ -36,13 +39,11 @@
     /* 1 */
     flex-wrap: wrap;
     /* 2 */
-    align-items: center;
-    /* 3 */
     margin-left: (-$pagination-margin-horizontal);
-    /* 4 */
+    /* 3 */
     padding: 0;
     list-style: none;
-    @if(meta.mixin-exists(hook-pagination)) {@include hook-pagination();}
+    @if(mixin-exists(hook-pagination)) {@include hook-pagination();}
 }
 
 /*
@@ -65,47 +66,43 @@
  ========================================================================== */
 
 /*
- * 1. Center content vertically, e.g. an icon
- * 2. Imitate white space gap when using flexbox
- * 3. Style
+ * 1. Prevent gap if child element is `inline-block`, e.g. an icon
+ * 2. Style
  */
 
 .uk-pagination > * > * {
     /* 1 */
-    display: flex;
-    align-items: center;
+    display: block;
     /* 2 */
-    column-gap: 0.25em;
-    /* 3 */
-    padding: $pagination-item-padding-vertical $pagination-item-padding-horizontal;
     color: $pagination-item-color;
-    @if(meta.mixin-exists(hook-pagination-item)) {@include hook-pagination-item();}
+    @if(mixin-exists(hook-pagination-item)) {@include hook-pagination-item();}
 }
 
-/* Hover */
-.uk-pagination > * > :hover {
+/* Hover + Focus */
+.uk-pagination > * > :hover,
+.uk-pagination > * > :focus {
     color: $pagination-item-hover-color;
     text-decoration: $pagination-item-hover-text-decoration;
-    @if(meta.mixin-exists(hook-pagination-item-hover)) {@include hook-pagination-item-hover();}
+    @if(mixin-exists(hook-pagination-item-hover)) {@include hook-pagination-item-hover();}
 }
 
 /* Active */
 .uk-pagination > .uk-active > * {
     color: $pagination-item-active-color;
-    @if(meta.mixin-exists(hook-pagination-item-active)) {@include hook-pagination-item-active();}
+    @if(mixin-exists(hook-pagination-item-active)) {@include hook-pagination-item-active();}
 }
 
 /* Disabled */
 .uk-pagination > .uk-disabled > * {
     color: $pagination-item-disabled-color;
-    @if(meta.mixin-exists(hook-pagination-item-disabled)) {@include hook-pagination-item-disabled();}
+    @if(mixin-exists(hook-pagination-item-disabled)) {@include hook-pagination-item-disabled();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-pagination-misc)) {@include hook-pagination-misc();}
+@if(mixin-exists(hook-pagination-misc)) {@include hook-pagination-misc();}
 
 // @mixin hook-pagination(){}
 // @mixin hook-pagination-item(){}
@@ -118,6 +115,10 @@
 // Inverse
 // ========================================================================
 
+$inverse-pagination-item-color:                 $inverse-global-muted-color !default;
+$inverse-pagination-item-hover-color:           $inverse-global-color !default;
+$inverse-pagination-item-active-color:          $inverse-global-color !default;
+$inverse-pagination-item-disabled-color:        $inverse-global-muted-color !default;
 
 
 

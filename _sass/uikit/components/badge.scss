@@ -1,8 +1,6 @@
-@use "sass:meta";
-
 // Name:            Badge
 // Description:     Component to create notification badges
-//
+
 // Component:       `uk-badge`
 //
 // ========================================================================
@@ -11,6 +9,15 @@
 // Variables
 // ========================================================================
 
+$badge-size:                                     22px !default;
+$badge-padding-vertical:                         0 !default;
+$badge-padding-horizontal:                       5px !default;
+$badge-border-radius:                            500px !default;
+$badge-background:                               $global-primary-background !default;
+$badge-color:                                    $global-inverse-color !default;
+$badge-font-size:                                $global-small-font-size !default;
+
+$badge-hover-color:                              $global-inverse-color !default;
 
 
 /* ========================================================================
@@ -31,30 +38,32 @@
     vertical-align: middle;
     /* 1 */
     background: $badge-background;
-    color: $badge-color !important;
+    color: $badge-color;
     font-size: $badge-font-size;
     /* 2 */
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    line-height: 0;
-    @if(meta.mixin-exists(hook-badge)) {@include hook-badge();}
+    @if(mixin-exists(hook-badge)) {@include hook-badge();}
 }
 
 /*
  * Required for `a`
  */
 
-.uk-badge:hover {
+.uk-badge:hover,
+.uk-badge:focus {
+    color: $badge-hover-color;
     text-decoration: none;
-    @if(meta.mixin-exists(hook-badge-hover)) {@include hook-badge-hover();}
+    outline: none;
+    @if(mixin-exists(hook-badge-hover)) {@include hook-badge-hover();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-badge-misc)) {@include hook-badge-misc();}
+@if(mixin-exists(hook-badge-misc)) {@include hook-badge-misc();}
 
 // @mixin hook-badge(){}
 // @mixin hook-badge-hover(){}
@@ -64,6 +73,9 @@
 // Inverse
 // ========================================================================
 
+$inverse-badge-background:                      $inverse-global-primary-background !default;
+$inverse-badge-color:                           $inverse-global-inverse-color !default;
+$inverse-badge-hover-color:                     $inverse-global-inverse-color !default;
 
 
 

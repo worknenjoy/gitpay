@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Subnav
 // Description:     Component to create a sub navigation
 //
@@ -17,10 +15,30 @@
 // Variables
 // ========================================================================
 
+$subnav-margin-horizontal:                       20px !default;
 
+$subnav-item-color:                              $global-muted-color !default;
+$subnav-item-hover-color:                        $global-color !default;
+$subnav-item-hover-text-decoration:              none !default;
+$subnav-item-active-color:                       $global-emphasis-color !default;
 
+$subnav-divider-margin-horizontal:               $subnav-margin-horizontal !default;
+$subnav-divider-border-height:                   1.5em !default;
+$subnav-divider-border-width:                    $global-border-width !default;
+$subnav-divider-border:                          $global-border !default;
 
+$subnav-pill-item-padding-vertical:              5px !default;
+$subnav-pill-item-padding-horizontal:            10px !default;
+$subnav-pill-item-background:                    transparent !default;
+$subnav-pill-item-color:                         $subnav-item-color !default;
+$subnav-pill-item-hover-background:              $global-muted-background !default;
+$subnav-pill-item-hover-color:                   $global-color !default;
+$subnav-pill-item-onclick-background:            $subnav-pill-item-hover-background !default;
+$subnav-pill-item-onclick-color:                 $subnav-pill-item-hover-color !default;
+$subnav-pill-item-active-background:             $global-primary-background !default;
+$subnav-pill-item-active-color:                  $global-inverse-color !default;
 
+$subnav-item-disabled-color:                     $global-muted-color !default;
 
 
 /* ========================================================================
@@ -29,9 +47,8 @@
 
 /*
  * 1. Allow items to wrap into the next line
- * 2. Center items vertically if they have a different height
- * 3. Gutter
- * 4. Reset list
+ * 2. Gutter
+ * 3. Reset list
  */
 
 .uk-subnav {
@@ -39,13 +56,11 @@
     /* 1 */
     flex-wrap: wrap;
     /* 2 */
-    align-items: center;
-    /* 3 */
     margin-left: (-$subnav-margin-horizontal);
-    /* 4 */
+    /* 3 */
     padding: 0;
     list-style: none;
-    @if(meta.mixin-exists(hook-subnav)) {@include hook-subnav();}
+    @if(mixin-exists(hook-subnav)) {@include hook-subnav();}
 }
 
 /*
@@ -70,33 +85,31 @@
 /*
  * Items must target `a` elements to exclude other elements (e.g. dropdowns)
  * Using `:first-child` instead of `a` to support `span` elements for text
- * 1. Center content vertically, e.g. an icon
- * 2. Imitate white space gap when using flexbox
- * 3. Style
+ * 1. Prevent gap if child element is `inline-block`, e.g. an icon
+ * 2. Style
  */
 
 .uk-subnav > * > :first-child {
     /* 1 */
-    display: flex;
-    align-items: center;
+    display: block;
     /* 2 */
-    column-gap: 0.25em;
-    /* 3 */
     color: $subnav-item-color;
-    @if(meta.mixin-exists(hook-subnav-item)) {@include hook-subnav-item();}
+    @if(mixin-exists(hook-subnav-item)) {@include hook-subnav-item();}
 }
 
-/* Hover */
-.uk-subnav > * > a:hover {
+/* Hover + Focus */
+.uk-subnav > * > a:hover,
+.uk-subnav > * > a:focus {
     color: $subnav-item-hover-color;
     text-decoration: $subnav-item-hover-text-decoration;
-    @if(meta.mixin-exists(hook-subnav-item-hover)) {@include hook-subnav-item-hover();}
+    outline: none;
+    @if(mixin-exists(hook-subnav-item-hover)) {@include hook-subnav-item-hover();}
 }
 
 /* Active */
 .uk-subnav > .uk-active > a {
     color: $subnav-item-active-color;
-    @if(meta.mixin-exists(hook-subnav-item-active)) {@include hook-subnav-item-active();}
+    @if(mixin-exists(hook-subnav-item-active)) {@include hook-subnav-item-active();}
 }
 
 
@@ -104,76 +117,60 @@
  ========================================================================== */
 
 /*
- * Set gutter
- */
-
-.uk-subnav-divider { margin-left: -(($subnav-divider-margin-horizontal * 2) + $subnav-divider-border-width); }
-
-/*
- * Align items and divider vertically
+ * 1. Align items and divider vertically
  */
 
 .uk-subnav-divider > * {
+    /* 1 */
     display: flex;
     align-items: center;
 }
 
 /*
  * Divider
- * 1. `nth-child` makes it also work without JS if it's only one row
+ * `nth-child` makes it also work without JS if it's only one row
  */
 
-.uk-subnav-divider > ::before {
+.uk-subnav-divider > :nth-child(n+2):not(.uk-first-column)::before {
     content: "";
     height: $subnav-divider-border-height;
     margin-left: ($subnav-divider-margin-horizontal - $subnav-margin-horizontal);
     margin-right: $subnav-divider-margin-horizontal;
-    border-left: $subnav-divider-border-width solid transparent;
-}
-
-/* 1 */
-.uk-subnav-divider > :nth-child(n+2):not(.uk-first-column)::before {
-    border-left-color: $subnav-divider-border;
-    @if(meta.mixin-exists(hook-subnav-divider)) {@include hook-subnav-divider();}
+    border-left: $subnav-divider-border-width solid $subnav-divider-border;
+    @if(mixin-exists(hook-subnav-divider)) {@include hook-subnav-divider();}
 }
 
 
 /* Pill modifier
  ========================================================================== */
 
-/*
- * Gutter
- */
-
-.uk-subnav-pill { margin-left: (-$subnav-pill-margin-horizontal); }
-.uk-subnav-pill > * { padding-left: $subnav-pill-margin-horizontal; }
-
 .uk-subnav-pill > * > :first-child {
     padding: $subnav-pill-item-padding-vertical $subnav-pill-item-padding-horizontal;
     background: $subnav-pill-item-background;
     color: $subnav-pill-item-color;
-    @if(meta.mixin-exists(hook-subnav-pill-item)) {@include hook-subnav-pill-item();}
+    @if(mixin-exists(hook-subnav-pill-item)) {@include hook-subnav-pill-item();}
 }
 
-/* Hover */
-.uk-subnav-pill > * > a:hover {
+/* Hover + Focus */
+.uk-subnav-pill > * > a:hover,
+.uk-subnav-pill > * > a:focus {
     background-color: $subnav-pill-item-hover-background;
     color: $subnav-pill-item-hover-color;
-    @if(meta.mixin-exists(hook-subnav-pill-item-hover)) {@include hook-subnav-pill-item-hover();}
+    @if(mixin-exists(hook-subnav-pill-item-hover)) {@include hook-subnav-pill-item-hover();}
 }
 
 /* OnClick */
 .uk-subnav-pill > * > a:active {
     background-color: $subnav-pill-item-onclick-background;
     color: $subnav-pill-item-onclick-color;
-    @if(meta.mixin-exists(hook-subnav-pill-item-onclick)) {@include hook-subnav-pill-item-onclick();}
+    @if(mixin-exists(hook-subnav-pill-item-onclick)) {@include hook-subnav-pill-item-onclick();}
 }
 
 /* Active */
 .uk-subnav-pill > .uk-active > a {
     background-color: $subnav-pill-item-active-background;
     color: $subnav-pill-item-active-color;
-    @if(meta.mixin-exists(hook-subnav-pill-item-active)) {@include hook-subnav-pill-item-active();}
+    @if(mixin-exists(hook-subnav-pill-item-active)) {@include hook-subnav-pill-item-active();}
 }
 
 
@@ -181,16 +178,16 @@
  * The same for all style modifiers
  ========================================================================== */
 
-.uk-subnav > .uk-disabled > :first-child {
+.uk-subnav > .uk-disabled > a {
     color: $subnav-item-disabled-color;
-    @if(meta.mixin-exists(hook-subnav-item-disabled)) {@include hook-subnav-item-disabled();}
+    @if(mixin-exists(hook-subnav-item-disabled)) {@include hook-subnav-item-disabled();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-subnav-misc)) {@include hook-subnav-misc();}
+@if(mixin-exists(hook-subnav-misc)) {@include hook-subnav-misc();}
 
 // @mixin hook-subnav(){}
 // @mixin hook-subnav-item(){}
@@ -208,6 +205,19 @@
 // Inverse
 // ========================================================================
 
+$inverse-subnav-item-color:                     $inverse-global-muted-color !default;
+$inverse-subnav-item-hover-color:               $inverse-global-color !default;
+$inverse-subnav-item-active-color:              $inverse-global-emphasis-color !default;
+$inverse-subnav-divider-border:                 $inverse-global-border !default;
+$inverse-subnav-pill-item-background:           transparent !default;
+$inverse-subnav-pill-item-color:                $inverse-global-muted-color !default;
+$inverse-subnav-pill-item-hover-background:     $inverse-global-muted-background !default;
+$inverse-subnav-pill-item-hover-color:          $inverse-global-color !default;
+$inverse-subnav-pill-item-onclick-background:   $inverse-subnav-pill-item-hover-background !default;
+$inverse-subnav-pill-item-onclick-color:        $inverse-subnav-pill-item-hover-color !default;
+$inverse-subnav-pill-item-active-background:    $inverse-global-primary-background !default;
+$inverse-subnav-pill-item-active-color:         $inverse-global-inverse-color !default;
+$inverse-subnav-item-disabled-color:            $inverse-global-muted-color !default;
 
 
 
