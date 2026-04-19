@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Description list
 // Description:     Styles for description lists
 //
@@ -13,7 +11,12 @@
 // Variables
 // ========================================================================
 
+$description-list-term-color:                    $global-emphasis-color !default;
+$description-list-term-margin-top:               $global-margin !default;
 
+$description-list-divider-term-margin-top:       $global-margin !default;
+$description-list-divider-term-border-width:     $global-border-width !default;
+$description-list-divider-term-border:           $global-border !default;
 
 
 /* ========================================================================
@@ -26,7 +29,7 @@
 
 .uk-description-list > dt {
     color: $description-list-term-color;
-    @if(meta.mixin-exists(hook-description-list-term)) {@include hook-description-list-term();}
+    @if(mixin-exists(hook-description-list-term)) {@include hook-description-list-term();}
 }
 
 .uk-description-list > dt:nth-child(n+2) {
@@ -38,7 +41,7 @@
  */
 
 .uk-description-list > dd {
-    @if(meta.mixin-exists(hook-description-list-description)) {@include hook-description-list-description();}
+    @if(mixin-exists(hook-description-list-description)) {@include hook-description-list-description();}
 }
 
 
@@ -53,14 +56,14 @@
     margin-top: $description-list-divider-term-margin-top;
     padding-top: $description-list-divider-term-margin-top;
     border-top: $description-list-divider-term-border-width solid $description-list-divider-term-border;
-    @if(meta.mixin-exists(hook-description-list-divider-term)) {@include hook-description-list-divider-term();}
+    @if(mixin-exists(hook-description-list-divider-term)) {@include hook-description-list-divider-term();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-description-list-misc)) {@include hook-description-list-misc();}
+@if(mixin-exists(hook-description-list-misc)) {@include hook-description-list-misc();}
 
 // @mixin hook-description-list-term(){}
 // @mixin hook-description-list-description(){}
