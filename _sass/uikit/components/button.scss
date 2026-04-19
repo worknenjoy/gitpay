@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Button
 // Description:     Styles for buttons
 //
@@ -22,59 +24,15 @@
 // Variables
 // ========================================================================
 
-$button-line-height:                             $global-control-height !default;
-$button-small-line-height:                       $global-control-small-height !default;
-$button-large-line-height:                       $global-control-large-height !default;
 
-$button-font-size:                               $global-font-size !default;
-$button-small-font-size:                         $global-small-font-size !default;
-$button-large-font-size:                         $global-medium-font-size !default;
 
-$button-padding-horizontal:                      $global-gutter !default;
-$button-small-padding-horizontal:                $global-small-gutter !default;
-$button-large-padding-horizontal:                $global-medium-gutter !default;
 
-$button-default-background:                      $global-muted-background !default;
-$button-default-color:                           $global-emphasis-color !default;
-$button-default-hover-background:                darken($button-default-background, 5%) !default;
-$button-default-hover-color:                     $global-emphasis-color !default;
-$button-default-active-background:               darken($button-default-background, 10%) !default;
-$button-default-active-color:                    $global-emphasis-color !default;
 
-$button-primary-background:                      $global-primary-background !default;
-$button-primary-color:                           $global-inverse-color !default;
-$button-primary-hover-background:                darken($button-primary-background, 5%) !default;
-$button-primary-hover-color:                     $global-inverse-color !default;
-$button-primary-active-background:               darken($button-primary-background, 10%) !default;
-$button-primary-active-color:                    $global-inverse-color !default;
 
-$button-secondary-background:                    $global-secondary-background !default;
-$button-secondary-color:                         $global-inverse-color !default;
-$button-secondary-hover-background:              darken($button-secondary-background, 5%) !default;
-$button-secondary-hover-color:                   $global-inverse-color !default;
-$button-secondary-active-background:             darken($button-secondary-background, 10%) !default;
-$button-secondary-active-color:                  $global-inverse-color !default;
 
-$button-danger-background:                       $global-danger-background !default;
-$button-danger-color:                            $global-inverse-color !default;
-$button-danger-hover-background:                 darken($button-danger-background, 5%) !default;
-$button-danger-hover-color:                      $global-inverse-color !default;
-$button-danger-active-background:                darken($button-danger-background, 10%) !default;
-$button-danger-active-color:                     $global-inverse-color !default;
 
-$button-disabled-background:                     $global-muted-background !default;
-$button-disabled-color:                          $global-muted-color !default;
 
-$button-text-line-height:                        $global-line-height !default;
-$button-text-color:                              $global-muted-color !default;
-$button-text-hover-color:                        $global-color !default;
-$button-text-disabled-color:                     $global-muted-color !default;
 
-$button-link-line-height:                        $global-line-height !default;
-$button-link-color:                              $global-link-color !default;
-$button-link-hover-color:                        $global-link-hover-color !default;
-$button-link-hover-text-decoration:              underline !default;
-$button-link-disabled-color:                     $global-muted-color !default;
 
 
 /* ========================================================================
@@ -84,10 +42,10 @@ $button-link-disabled-color:                     $global-muted-color !default;
 /*
  * 1. Remove margins in Chrome, Safari and Opera.
  * 2. Remove borders for `button`.
- * 3. Remove border-radius in Chrome.
- * 4. Address `overflow` set to `hidden` in IE.
- * 5. Correct `font` properties and `color` not being inherited for `button`.
- * 6. Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 3. Address `overflow` set to `hidden` in IE.
+ * 4. Correct `font` properties and `color` not being inherited for `button`.
+ * 5. Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 6. Remove default style for `input type="submit"`in iOS.
  * 7. Style
  * 8. `line-height` is used to create a height because it also centers the text vertically for `a` elements.
  *    Better would be to use height and flexbox to center the text vertically but flexbox doesn't work in Firefox on `button` elements.
@@ -101,14 +59,15 @@ $button-link-disabled-color:                     $global-muted-color !default;
     /* 2 */
     border: none;
     /* 3 */
-    border-radius: 0;
-    /* 4 */
     overflow: visible;
-    /* 5 */
+    /* 4 */
     font: inherit;
     color: inherit;
-    /* 6 */
+    /* 5 */
     text-transform: none;
+    /* 6 */
+    -webkit-appearance: none;
+    border-radius: 0;
     /* 7 */
     display: inline-block;
     box-sizing: border-box;
@@ -121,7 +80,7 @@ $button-link-disabled-color:                     $global-muted-color !default;
     text-align: center;
     /* 10 */
     text-decoration: none;
-    @if(mixin-exists(hook-button)) {@include hook-button();}
+    @if(meta.mixin-exists(hook-button)) {@include hook-button();}
 }
 
 .uk-button:not(:disabled) { cursor: pointer; }
@@ -137,21 +96,15 @@ $button-link-disabled-color:                     $global-muted-color !default;
 
 /* Hover */
 .uk-button:hover {
-    /* 8 */
+    /* 9 */
     text-decoration: none;
-    @if(mixin-exists(hook-button-hover)) {@include hook-button-hover();}
-}
-
-/* Focus */
-.uk-button:focus {
-    outline: none;
-    @if(mixin-exists(hook-button-focus)) {@include hook-button-focus();}
+    @if(meta.mixin-exists(hook-button-hover)) {@include hook-button-hover();}
 }
 
 /* OnClick + Active */
 .uk-button:active,
 .uk-button.uk-active {
-    @if(mixin-exists(hook-button-active)) {@include hook-button-active();}
+    @if(meta.mixin-exists(hook-button-active)) {@include hook-button-active();}
 }
 
 
@@ -165,15 +118,14 @@ $button-link-disabled-color:                     $global-muted-color !default;
 .uk-button-default {
     background-color: $button-default-background;
     color: $button-default-color;
-    @if(mixin-exists(hook-button-default)) {@include hook-button-default();}
+    @if(meta.mixin-exists(hook-button-default)) {@include hook-button-default();}
 }
 
-/* Hover + Focus */
-.uk-button-default:hover,
-.uk-button-default:focus {
+/* Hover */
+.uk-button-default:hover {
     background-color: $button-default-hover-background;
     color: $button-default-hover-color;
-    @if(mixin-exists(hook-button-default-hover)) {@include hook-button-default-hover();}
+    @if(meta.mixin-exists(hook-button-default-hover)) {@include hook-button-default-hover();}
 }
 
 /* OnClick + Active */
@@ -181,7 +133,7 @@ $button-link-disabled-color:                     $global-muted-color !default;
 .uk-button-default.uk-active {
     background-color: $button-default-active-background;
     color: $button-default-active-color;
-    @if(mixin-exists(hook-button-default-active)) {@include hook-button-default-active();}
+    @if(meta.mixin-exists(hook-button-default-active)) {@include hook-button-default-active();}
 }
 
 /*
@@ -191,15 +143,14 @@ $button-link-disabled-color:                     $global-muted-color !default;
 .uk-button-primary {
     background-color: $button-primary-background;
     color: $button-primary-color;
-    @if(mixin-exists(hook-button-primary)) {@include hook-button-primary();}
+    @if(meta.mixin-exists(hook-button-primary)) {@include hook-button-primary();}
 }
 
-/* Hover + Focus */
-.uk-button-primary:hover,
-.uk-button-primary:focus {
+/* Hover */
+.uk-button-primary:hover {
     background-color: $button-primary-hover-background;
     color: $button-primary-hover-color;
-    @if(mixin-exists(hook-button-primary-hover)) {@include hook-button-primary-hover();}
+    @if(meta.mixin-exists(hook-button-primary-hover)) {@include hook-button-primary-hover();}
 }
 
 /* OnClick + Active */
@@ -207,7 +158,7 @@ $button-link-disabled-color:                     $global-muted-color !default;
 .uk-button-primary.uk-active {
     background-color: $button-primary-active-background;
     color: $button-primary-active-color;
-    @if(mixin-exists(hook-button-primary-active)) {@include hook-button-primary-active();}
+    @if(meta.mixin-exists(hook-button-primary-active)) {@include hook-button-primary-active();}
 }
 
 /*
@@ -217,15 +168,14 @@ $button-link-disabled-color:                     $global-muted-color !default;
 .uk-button-secondary {
     background-color: $button-secondary-background;
     color: $button-secondary-color;
-    @if(mixin-exists(hook-button-secondary)) {@include hook-button-secondary();}
+    @if(meta.mixin-exists(hook-button-secondary)) {@include hook-button-secondary();}
 }
 
-/* Hover + Focus */
-.uk-button-secondary:hover,
-.uk-button-secondary:focus {
+/* Hover */
+.uk-button-secondary:hover {
     background-color: $button-secondary-hover-background;
     color: $button-secondary-hover-color;
-    @if(mixin-exists(hook-button-secondary-hover)) {@include hook-button-secondary-hover();}
+    @if(meta.mixin-exists(hook-button-secondary-hover)) {@include hook-button-secondary-hover();}
 }
 
 /* OnClick + Active */
@@ -233,7 +183,7 @@ $button-link-disabled-color:                     $global-muted-color !default;
 .uk-button-secondary.uk-active {
     background-color: $button-secondary-active-background;
     color: $button-secondary-active-color;
-    @if(mixin-exists(hook-button-secondary-active)) {@include hook-button-secondary-active();}
+    @if(meta.mixin-exists(hook-button-secondary-active)) {@include hook-button-secondary-active();}
 }
 
 /*
@@ -243,15 +193,14 @@ $button-link-disabled-color:                     $global-muted-color !default;
 .uk-button-danger {
     background-color: $button-danger-background;
     color: $button-danger-color;
-    @if(mixin-exists(hook-button-danger)) {@include hook-button-danger();}
+    @if(meta.mixin-exists(hook-button-danger)) {@include hook-button-danger();}
 }
 
-/* Hover + Focus */
-.uk-button-danger:hover,
-.uk-button-danger:focus {
+/* Hover */
+.uk-button-danger:hover {
     background-color: $button-danger-hover-background;
     color: $button-danger-hover-color;
-    @if(mixin-exists(hook-button-danger-hover)) {@include hook-button-danger-hover();}
+    @if(meta.mixin-exists(hook-button-danger-hover)) {@include hook-button-danger-hover();}
 }
 
 /* OnClick + Active */
@@ -259,7 +208,7 @@ $button-link-disabled-color:                     $global-muted-color !default;
 .uk-button-danger.uk-active {
     background-color: $button-danger-active-background;
     color: $button-danger-active-color;
-    @if(mixin-exists(hook-button-danger-active)) {@include hook-button-danger-active();}
+    @if(meta.mixin-exists(hook-button-danger-active)) {@include hook-button-danger-active();}
 }
 
 /*
@@ -273,7 +222,7 @@ $button-link-disabled-color:                     $global-muted-color !default;
 .uk-button-danger:disabled {
     background-color: $button-disabled-background;
     color: $button-disabled-color;
-    @if(mixin-exists(hook-button-disabled)) {@include hook-button-disabled();}
+    @if(meta.mixin-exists(hook-button-disabled)) {@include hook-button-disabled();}
 }
 
 
@@ -284,14 +233,14 @@ $button-link-disabled-color:                     $global-muted-color !default;
     padding: 0 $button-small-padding-horizontal;
     line-height: $button-small-line-height;
     font-size: $button-small-font-size;
-    @if(mixin-exists(hook-button-small)) {@include hook-button-small();}
+    @if(meta.mixin-exists(hook-button-small)) {@include hook-button-small();}
 }
 
 .uk-button-large {
     padding: 0 $button-large-padding-horizontal;
     line-height: $button-large-line-height;
     font-size: $button-large-font-size;
-    @if(mixin-exists(hook-button-large)) {@include hook-button-large();}
+    @if(meta.mixin-exists(hook-button-large)) {@include hook-button-large();}
 }
 
 
@@ -311,20 +260,19 @@ $button-link-disabled-color:                     $global-muted-color !default;
     background: none;
     /* 2 */
     color: $button-text-color;
-    @if(mixin-exists(hook-button-text)) {@include hook-button-text();}
+    @if(meta.mixin-exists(hook-button-text)) {@include hook-button-text();}
 }
 
-/* Hover + Focus */
-.uk-button-text:hover,
-.uk-button-text:focus {
+/* Hover */
+.uk-button-text:hover {
     color: $button-text-hover-color;
-    @if(mixin-exists(hook-button-text-hover)) {@include hook-button-text-hover();}
+    @if(meta.mixin-exists(hook-button-text-hover)) {@include hook-button-text-hover();}
 }
 
 /* Disabled */
 .uk-button-text:disabled {
     color: $button-text-disabled-color;
-    @if(mixin-exists(hook-button-text-disabled)) {@include hook-button-text-disabled();}
+    @if(meta.mixin-exists(hook-button-text-disabled)) {@include hook-button-text-disabled();}
 }
 
 /*
@@ -340,12 +288,11 @@ $button-link-disabled-color:                     $global-muted-color !default;
     background: none;
     /* 2 */
     color: $button-link-color;
-    @if(mixin-exists(hook-button-link)) {@include hook-button-link();}
+    @if(meta.mixin-exists(hook-button-link)) {@include hook-button-link();}
 }
 
-/* Hover + Focus */
-.uk-button-link:hover,
-.uk-button-link:focus {
+/* Hover */
+.uk-button-link:hover {
     color: $button-link-hover-color;
     text-decoration: $button-link-hover-text-decoration;
 }
@@ -361,7 +308,7 @@ $button-link-disabled-color:                     $global-muted-color !default;
  ========================================================================== */
 
 /*
- * 1. Using `flex` instead of `inline-block` to prevent whitespace betweent child elements
+ * 1. Using `flex` instead of `inline-block` to prevent whitespace between child elements
  * 2. Behave like button
  * 3. Create position context
  */
@@ -379,11 +326,10 @@ $button-link-disabled-color:                     $global-muted-color !default;
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-button-misc)) {@include hook-button-misc();}
+@if(meta.mixin-exists(hook-button-misc)) {@include hook-button-misc();}
 
 // @mixin hook-button(){}
 // @mixin hook-button-hover(){}
-// @mixin hook-button-focus(){}
 // @mixin hook-button-active(){}
 // @mixin hook-button-default(){}
 // @mixin hook-button-default-hover(){}
@@ -410,29 +356,6 @@ $button-link-disabled-color:                     $global-muted-color !default;
 // Inverse
 // ========================================================================
 
-$inverse-button-default-background:             $inverse-global-primary-background !default;
-$inverse-button-default-color:                  $inverse-global-inverse-color !default;
-$inverse-button-default-hover-background:       darken($inverse-button-default-background, 5%) !default;
-$inverse-button-default-hover-color:            $inverse-global-inverse-color !default;
-$inverse-button-default-active-background:      darken($inverse-button-default-background, 10%) !default;
-$inverse-button-default-active-color:           $inverse-global-inverse-color !default;
-$inverse-button-primary-background:             $inverse-global-primary-background !default;
-$inverse-button-primary-color:                  $inverse-global-inverse-color !default;
-$inverse-button-primary-hover-background:       darken($inverse-button-primary-background, 5%) !default;
-$inverse-button-primary-hover-color:            $inverse-global-inverse-color !default;
-$inverse-button-primary-active-background:      darken($inverse-button-primary-background, 10%) !default;
-$inverse-button-primary-active-color:           $inverse-global-inverse-color !default;
-$inverse-button-secondary-background:           $inverse-global-primary-background !default;
-$inverse-button-secondary-color:                $inverse-global-inverse-color !default;
-$inverse-button-secondary-hover-background:     darken($inverse-button-secondary-background, 5%) !default;
-$inverse-button-secondary-hover-color:          $inverse-global-inverse-color !default;
-$inverse-button-secondary-active-background:    darken($inverse-button-secondary-background, 10%) !default;
-$inverse-button-secondary-active-color:         $inverse-global-inverse-color !default;
-$inverse-button-text-color:                     $inverse-global-muted-color !default;
-$inverse-button-text-hover-color:               $inverse-global-color !default;
-$inverse-button-text-disabled-color:            $inverse-global-muted-color !default;
-$inverse-button-link-color:                     $inverse-global-muted-color !default;
-$inverse-button-link-hover-color:               $inverse-global-color !default;
 
 
 
