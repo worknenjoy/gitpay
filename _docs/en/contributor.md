@@ -15,16 +15,11 @@ tags:
 ## Who this page is for
 This guide is for people who want to work on tasks posted on Gitpay (issues) and get paid after the work is reviewed and accepted.
 
-## Typical workflow
-1. Pick a task you can deliver.
-2. Apply to work on it.
-3. Implement the fix/feature on a branch or fork.
-4. Submit a Pull Request.
-5. Address review feedback.
-6. Once merged/accepted, Gitpay triggers the bounty payment.
-
-## What “done” means
-In Gitpay, completion is tied to the Git workflow: the task is validated through the repository process (review, CI, merge) and then payment is released.
+## 🛠️ Work on a Task
+- Browse available tasks.
+- Apply and get assigned.
+- Submit a Pull Request.
+- Get paid.
 
 ## Next steps
 - Read [Getting started](/docs/en/getting-started-contributor)
