@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import ExploreOrganizationPage from 'design-library/pages/private-pages/organization-pages/explore-organization-issues-private-page/explore-organization-issues-private-page'
 import { useParams } from 'react-router-dom'
 
+const DEFAULT_ROWS_PER_PAGE = 10
+
 const UserOrganizationIssuesExplorePage = ({
   filterTasks,
   listTasks,
@@ -25,7 +27,7 @@ const UserOrganizationIssuesExplorePage = ({
   }, [organization_id])
 
   useEffect(() => {
-    listTasksWithOrganization({ organizationId: organization_id })
+    listTasksWithOrganization({ page: 0, limit: DEFAULT_ROWS_PER_PAGE })
   }, [organization_id])
 
   return (
@@ -39,6 +41,7 @@ const UserOrganizationIssuesExplorePage = ({
       languages={languages}
       listLanguages={listLanguages}
       user={user}
+      defaultRowsPerPage={DEFAULT_ROWS_PER_PAGE}
     />
   )
 }

@@ -13,7 +13,7 @@ import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 import ContextTitle from 'design-library/atoms/typography/context-title/context-title'
 import useMyIssueTabs from '../../../../../../hooks/use-my-issues-tabs'
 
-const MyProjectIssuesPrivatePage = ({ project, user, issues }) => {
+const MyProjectIssuesPrivatePage = ({ project, user, issues, serverSidePagination }) => {
   const { project_id, organization_id } = useParams<{
     project_id: string
     organization_id: string
@@ -72,7 +72,11 @@ const MyProjectIssuesPrivatePage = ({ project, user, issues }) => {
           />
         </TopSection>
         <TopSection>
-          <TabbedTable tabs={currentTabs} activeTab={activeTab} />
+          <TabbedTable
+            tabs={currentTabs}
+            activeTab={activeTab}
+            serverSidePagination={serverSidePagination}
+          />
         </TopSection>
       </Container>
     </ExplorePaper>

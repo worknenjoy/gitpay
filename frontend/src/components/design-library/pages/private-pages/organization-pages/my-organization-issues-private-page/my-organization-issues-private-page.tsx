@@ -14,7 +14,7 @@ import ContextTitle from 'design-library/atoms/typography/context-title/context-
 import ProjectListCompact from 'design-library/molecules/lists/project-list/project-list-compact/project-list-compact'
 import useMyIssueTabs from '../../../../../../hooks/use-my-issues-tabs'
 
-const MyOrganizationIssuesPrivatePage = ({ organization, user, issues }) => {
+const MyOrganizationIssuesPrivatePage = ({ organization, user, issues, serverSidePagination }) => {
   const { organization_id } = useParams<{ organization_id: string }>()
   const issueMetadata = useIssueMetadata({ includeProject: true })
 
@@ -75,7 +75,11 @@ const MyOrganizationIssuesPrivatePage = ({ organization, user, issues }) => {
           <ProjectListCompact projects={projectList} />
         </TopSection>
         <TopSection>
-          <TabbedTable tabs={currentTabs} activeTab={activeTab} />
+          <TabbedTable
+            tabs={currentTabs}
+            activeTab={activeTab}
+            serverSidePagination={serverSidePagination}
+          />
         </TopSection>
       </Container>
     </ExplorePaper>
