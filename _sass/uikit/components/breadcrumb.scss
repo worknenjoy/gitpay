@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Breadcrumb
 // Description:     Component to create a breadcrumb navigation
 //
@@ -11,15 +13,7 @@
 // Variables
 // ========================================================================
 
-$breadcrumb-item-font-size:                          $global-small-font-size !default;
-$breadcrumb-item-color:                              $global-muted-color !default;
-$breadcrumb-item-hover-color:                        $global-color !default;
-$breadcrumb-item-hover-text-decoration:              none !default;
-$breadcrumb-item-active-color:                       $global-color !default;
 
-$breadcrumb-divider:                                 "/" !default;
-$breadcrumb-divider-margin-horizontal:               20px !default;
-$breadcrumb-divider-color:                           $global-muted-color !default;
 
 
 /* ========================================================================
@@ -27,74 +21,77 @@ $breadcrumb-divider-color:                           $global-muted-color !defaul
  ========================================================================== */
 
 /*
- * 1. Allow items to wrap into the next line
- * 2. Reset list
+ * 1. Reset list
+ * 2. Remove space between elements
  */
 
 .uk-breadcrumb {
-    display: flex;
     /* 1 */
-    flex-wrap: wrap;
-    /* 2 */
     padding: 0;
     list-style: none;
-    @if(mixin-exists(hook-breadcrumb)) {@include hook-breadcrumb();}
+    /* 2 */
+    font-size: 0;
+    @if(meta.mixin-exists(hook-breadcrumb)) {@include hook-breadcrumb();}
 }
 
 /*
- * Space is allocated solely based on content dimensions: 0 0 auto
+ * 1. Doesn't generate any box and replaced by child boxes
  */
 
-.uk-breadcrumb > * { flex: none; }
+.uk-breadcrumb > * { display: contents; }
 
 
 /* Items
  ========================================================================== */
 
 .uk-breadcrumb > * > * {
-    display: inline-block;
     font-size: $breadcrumb-item-font-size;
     color: $breadcrumb-item-color;
-    @if(mixin-exists(hook-breadcrumb-item)) {@include hook-breadcrumb-item();}
+    @if(meta.mixin-exists(hook-breadcrumb-item)) {@include hook-breadcrumb-item();}
 }
 
-/* Hover + Focus */
-.uk-breadcrumb > * > :hover,
-.uk-breadcrumb > * > :focus {
+/* Hover */
+.uk-breadcrumb > * > :hover {
     color: $breadcrumb-item-hover-color;
     text-decoration: $breadcrumb-item-hover-text-decoration;
-    @if(mixin-exists(hook-breadcrumb-item-hover)) {@include hook-breadcrumb-item-hover();}
+    @if(meta.mixin-exists(hook-breadcrumb-item-hover)) {@include hook-breadcrumb-item-hover();}
 }
 
 /* Disabled */
 .uk-breadcrumb > .uk-disabled > * {
-    @if(mixin-exists(hook-breadcrumb-item-disabled)) {@include hook-breadcrumb-item-disabled();}
+    @if(meta.mixin-exists(hook-breadcrumb-item-disabled)) {@include hook-breadcrumb-item-disabled();}
 }
 
 /* Active */
-.uk-breadcrumb > :last-child > * {
+.uk-breadcrumb > :last-child > span,
+.uk-breadcrumb > :last-child > a:not([href]) {
     color: $breadcrumb-item-active-color;
-    @if(mixin-exists(hook-breadcrumb-item-active)) {@include hook-breadcrumb-item-active();}
+    @if(meta.mixin-exists(hook-breadcrumb-item-active)) {@include hook-breadcrumb-item-active();}
 }
 
 /*
  * Divider
  * `nth-child` makes it also work without JS if it's only one row
+ * 1. Remove space between inline block elements.
+ * 2. Style
  */
 
 .uk-breadcrumb > :nth-child(n+2):not(.uk-first-column)::before {
     content: $breadcrumb-divider;
     display: inline-block;
+    /* 1 */
     margin: 0 $breadcrumb-divider-margin-horizontal;
+    /* 2 */
+    font-size: $breadcrumb-divider-font-size;
     color: $breadcrumb-divider-color;
-    @if(mixin-exists(hook-breadcrumb-divider)) {@include hook-breadcrumb-divider();}
+    @if(meta.mixin-exists(hook-breadcrumb-divider)) {@include hook-breadcrumb-divider();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-breadcrumb-misc)) {@include hook-breadcrumb-misc();}
+@if(meta.mixin-exists(hook-breadcrumb-misc)) {@include hook-breadcrumb-misc();}
 
 // @mixin hook-breadcrumb(){}
 // @mixin hook-breadcrumb-item(){}
@@ -108,10 +105,6 @@ $breadcrumb-divider-color:                           $global-muted-color !defaul
 // Inverse
 // ========================================================================
 
-$inverse-breadcrumb-item-color:                 $inverse-global-muted-color !default;
-$inverse-breadcrumb-item-hover-color:           $inverse-global-color !default;
-$inverse-breadcrumb-item-active-color:          $inverse-global-color !default;
-$inverse-breadcrumb-divider-color:              $inverse-global-muted-color !default;
 
 
 
