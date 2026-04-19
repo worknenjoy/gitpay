@@ -2,14 +2,14 @@
 layout: home
 lang: en
 hero:
-    title: How Gitpay works?
-    subtitle: Gitpay is a platform to make easier to contribute for projects on demand  and get paid
+    title: What is Gitpay?
+    subtitle: Gitpay connects sponsors, maintainers, and contributors to fund tasks, deliver pull requests, and release payments
     image: main-icon.png
     search: true
 categories:
-    columns: 4
-    title: How to get started?
-    subtitle: "Let's into the Gitpay"
+    columns: 5
+    title: How it works
+    subtitle: The full Gitpay flow from account setup to payment release
 #featured:
 #    title: O que é importante saber
 #    tag: featured

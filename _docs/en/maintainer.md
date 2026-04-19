@@ -15,19 +15,12 @@ tags:
 ## Who this page is for
 This guide is for maintainers who want to list issues on Gitpay, guide contributors, and approve work so payments can be released.
 
-## Your responsibilities
-- Keep issues clear and testable.
-- Define acceptance criteria (what “done” means).
-- Review Pull Requests and request changes when needed.
-- Merge only when the work is ready for production.
+## ✅ Review & Release Payment
+- Review a Pull Request.
+- Approve and merge.
+- Release payment to contributor.
 
-## How payment is triggered
-Gitpay uses the repository workflow as the source of truth. When a task is completed according to your validation process (review + merge/acceptance), the bounty can be released.
-
-## Tips for maintainers
-- Prefer small, well-scoped tasks.
-- Document how to run the project locally.
-- Use CI to reduce review load.
+Payment release follows the project acceptance flow and is triggered after approved delivery based on your repository workflow.
 
 ## Next steps
 - Read [Getting started](/docs/en/getting-started-maintainer)

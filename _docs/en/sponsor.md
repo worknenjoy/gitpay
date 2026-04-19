@@ -15,17 +15,14 @@ tags:
 ## Who this page is for
 This guide is for individuals, teams, or organizations that want to fund work so contributors can deliver and get paid when results are accepted.
 
-## What you get from funding work
-- Faster delivery on important issues.
-- Transparent progress through the repository workflow.
-- Clear acceptance and payment conditions.
+## 💰 Fund a Task
+- Create a task from a GitHub issue.
+- Set a bounty.
+- Track delivery.
 
-## How it works at a high level
-1. A task is created and funded.
-2. A contributor applies and is assigned.
-3. Work is submitted via Pull Request.
-4. Once accepted, payment is released.
+Use clear scope and acceptance criteria so contributors can deliver faster and you can approve work with confidence.
 
 ## Next steps
 - Read [Getting started](/docs/en/getting-started-sponsor)
+- Read [Funding issues](/docs/en/funding-issues)
 - Understand [How to receive payments](/docs/en/payments)
