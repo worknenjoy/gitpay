@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Container } from '@mui/material'
 import { Grid } from '@mui/material'
 import ProfileUserHeader from 'design-library/molecules/headers/profile-user-header/profile-user-header'
@@ -10,45 +10,10 @@ import {
   customColumnRenderer
 } from 'design-library/molecules/tables/issue-table/issue-table'
 import { FormattedMessage } from 'react-intl'
-import { useParams } from 'react-router-dom'
 
-const UserProfilePublicPage = ({ user, searchUser, tasks, listTasks, filterTasks }) => {
-  const { userId } = useParams<{ userId: string }>()
+const UserProfilePublicPage = ({ user, tasks, searchUser, serverSidePagination, onTabChange }) => {
   const { data: profile } = user || {}
   const issueMetadata = useIssueMetadata({ includeProject: true })
-
-  const listTasksByUserId = async () => {
-    await listTasks({ userId: userId })
-    await filterTasks('all')
-  }
-
-  const filterTasksWithOrders = async () => {
-    await listTasks({})
-    await filterTasks('supported')
-  }
-
-  const filterTasksByState = async (value) => {
-    switch (value) {
-      case 'created':
-        await listTasksByUserId()
-        break
-      case 'supported':
-        await filterTasksWithOrders()
-        break
-      default:
-        await listTasksByUserId()
-        break
-    }
-  }
-
-  const handleTabbedTableChange = (newValue: string) => {
-    filterTasksByState(newValue)
-  }
-
-  useEffect(() => {
-    searchUser({ id: userId })
-    listTasksByUserId()
-  }, [userId])
 
   return (
     <React.Fragment>
@@ -60,8 +25,9 @@ const UserProfilePublicPage = ({ user, searchUser, tasks, listTasks, filterTasks
           <Root container>
             <Grid size={{ xs: 12, md: 12 }}>
               <TabbedTable
-                onChange={handleTabbedTableChange}
+                onChange={onTabChange}
                 activeTab={'created'}
+                serverSidePagination={serverSidePagination}
                 tabs={[
                   {
                     value: 'created',
