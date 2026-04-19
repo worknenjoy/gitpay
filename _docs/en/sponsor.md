@@ -1,7 +1,7 @@
 ---
 layout: doc
 lang: en
-role: contributor
+role: sponsor
 title: Fund an Issue
 subtitle: Fund and manage delivery from issue creation to payment release
 tags:

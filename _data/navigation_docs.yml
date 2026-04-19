@@ -56,32 +56,50 @@ maintainer:
 
 sponsor:
   - en:
-      title: Basic concepts
+      title: Documentation
     br:
-      title: Conceitos básicos
+      title: Documentação
     docs:
       en:
-        - Getting started
-        - Funding issues
+        - What is Gitpay?
+        - Get Started
+        - Fund an Issue
+        - Work on an Issue
+        - Charge Customers
       br:
+        - Por onde começar?
         - Começando
-        - Financiando tarefas
+        - Patrocinador
+        - Contribuidor
+        - Prestador de serviço
       pages:
-        - getting-started-sponsor
-        - funding-issues
+        - getting-started
+        - getting-started-contributor
+        - sponsor
+        - contributor
+        - service-provider
 
 service-provider:
   - en:
-      title: Basic concepts
+      title: Documentation
     br:
-      title: Conceitos básicos
+      title: Documentação
     docs:
       en:
-        - Getting started
-        - Delivering work
+        - What is Gitpay?
+        - Get Started
+        - Fund an Issue
+        - Work on an Issue
+        - Charge Customers
       br:
+        - Por onde começar?
         - Começando
-        - Entregando projetos
+        - Patrocinador
+        - Contribuidor
+        - Prestador de serviço
       pages:
-        - getting-started-service-provider
-        - delivering-work
+        - getting-started
+        - getting-started-contributor
+        - sponsor
+        - contributor
+        - service-provider

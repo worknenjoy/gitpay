@@ -1,7 +1,7 @@
 ---
 layout: doc
 lang: en
-role: contributor
+role: service-provider
 title: Charge Customers
 subtitle: Charge clients with payment links, payout setup, and dispute handling
 tags:
