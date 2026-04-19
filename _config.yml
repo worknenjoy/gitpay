@@ -29,12 +29,12 @@ author:
 
 # Social icons displayed in footer
 social:
-    email:          tarefas@gitpay.me
-    website:        gitpay.me
+    email:          mailto:contact@gitpay.me
+    website:        https://gitpay.me
     facebook:
     flickr:
     dribbble:
-    github:         https://worknenjoy.github.com/gitpay
+    github:         https://github.com/worknenjoy/gitpay
     googleplus:
     instagram:      https://www.instagram.com/worknenjoy
     linkedin:
