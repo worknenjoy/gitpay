@@ -20,6 +20,8 @@ This guide is for maintainers who want to list issues on Gitpay, guide contribut
 - Approve and merge.
 - Release payment to contributor.
 
+Payment release follows the project acceptance flow and is triggered after approved delivery based on your repository workflow.
+
 ## Next steps
 - Read [Getting started](/docs/en/getting-started-maintainer)
 - Review [Pull Requests](/docs/en/pull-requests)

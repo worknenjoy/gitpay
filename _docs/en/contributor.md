@@ -16,10 +16,10 @@ tags:
 This guide is for people who want to work on tasks posted on Gitpay (issues) and get paid after the work is reviewed and accepted.
 
 ## 🛠️ Work on a Task
-- Browse available tasks.
-- Apply and get assigned.
-- Submit a Pull Request.
-- Get paid.
+- Browse available tasks that match your skills and scope.
+- Apply and get assigned by the maintainer before starting implementation.
+- Submit a Pull Request with clear test steps and requested evidence.
+- Get paid after review, approval, and merge according to project payment rules.
 
 ## Next steps
 - Read [Getting started](/docs/en/getting-started-contributor)

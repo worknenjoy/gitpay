@@ -20,6 +20,9 @@ This guide is for individuals, teams, or organizations that want to fund work so
 - Set a bounty.
 - Track delivery.
 
+Use clear scope and acceptance criteria so contributors can deliver faster and you can approve work with confidence.
+
 ## Next steps
 - Read [Getting started](/docs/en/getting-started-sponsor)
+- Read [Funding issues](/docs/en/funding-issues)
 - Understand [How to receive payments](/docs/en/payments)

@@ -16,9 +16,11 @@ Gitpay is a platform that connects sponsors, maintainers, and contributors to fu
 
 ## 🚀 Get Started
 - Create your account.
+- Complete your profile and connect payment details so you can fund or receive bounties.
+- Review the role guides below to follow the correct workflow for your use case.
 
 ## Next steps
 - Read [Fund work](/docs/en/sponsor)
 - Read [Earn from work](/docs/en/contributor)
 - Read [Maintainer](/docs/en/maintainer)
-- Read [How our payment works](/docs/en/payments)
+- Read [How our payment system works](/docs/en/payments)
