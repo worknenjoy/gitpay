@@ -7,7 +7,10 @@ import { findPaymentRequestByPaymentLinkId } from '../../../queries/payment-requ
 import { findOrCreatePaymentRequestBalance } from '../../../queries/payment-request/payment-request-balance'
 
 import { updatePaymentRequestPaymentLinkActive } from '../../provider/stripe/payment-request'
-import { updatePaymentIntentMetadata, retrievePaymentIntent } from '../../provider/stripe/payment-intent'
+import {
+  updatePaymentIntentMetadata,
+  retrievePaymentIntent
+} from '../../provider/stripe/payment-intent'
 import { createTransfer, createTransferReversal } from '../../provider/stripe/transfer'
 
 const models = Models as any
