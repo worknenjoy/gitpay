@@ -126,6 +126,12 @@ export const createPrivateTask = async (req: any, res: any) => {
   const { url, code, userId } = req.query
   const githubClientId = secrets.github.id
   const githubClientSecret = secrets.github.secret
+  const redirectPrivateTaskError = (message?: string) => {
+    const encodedError = encodeURIComponent(message || 'We could not import the issue.')
+    return res.redirect(
+      `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodedError}`
+    )
+  }
   try {
     const response = await requestPromise({
       method: 'POST',
@@ -164,15 +170,12 @@ export const createPrivateTask = async (req: any, res: any) => {
         const isRateLimit =
           String(errorStatus) === '403' || /rate limit exceeded/i.test(errorMessage || '')
         const finalError = isRateLimit ? 'API limit reached, please try again later.' : errorMessage
-        const encodedError = encodeURIComponent(finalError || 'We could not import the issue.')
-        return res.redirect(
-          `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodedError}`
-        )
+        return redirectPrivateTaskError(finalError)
       }
     }
-    return res.status(response.access_token ? 200 : 401).send(response)
+    return redirectPrivateTaskError(response?.error_description || response?.error)
   } catch (e: any) {
-    return res.status(401).send(e)
+    return redirectPrivateTaskError(e?.message || e?.error?.message)
   }
 }
 
