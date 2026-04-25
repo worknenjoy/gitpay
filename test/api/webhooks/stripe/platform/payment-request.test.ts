@@ -65,6 +65,19 @@ describe('webhooks for payment requests', () => {
             user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
           }
         })
+
+      nock('https://api.stripe.com')
+        .get('/v1/payment_intents/pi_3RcoMHBrSjgsps2D1aOZ9Yl6')
+        .query(true)
+        .reply(200, {
+          id: 'pi_3RcoMHBrSjgsps2D1aOZ9Yl6',
+          object: 'payment_intent',
+          latest_charge: {
+            id: 'ch_3RcoMHBrSjgsps2D1aOZ9Yl6',
+            object: 'charge'
+          }
+        })
+
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
       await PaymentRequestFactory({
@@ -117,6 +130,19 @@ describe('webhooks for payment requests', () => {
             user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
           }
         })
+
+      nock('https://api.stripe.com')
+        .get('/v1/payment_intents/pi_3RcoMHBrSjgsps2D1aOZ9Yl6')
+        .query(true)
+        .reply(200, {
+          id: 'pi_3RcoMHBrSjgsps2D1aOZ9Yl6',
+          object: 'payment_intent',
+          latest_charge: {
+            id: 'ch_3RcoMHBrSjgsps2D1aOZ9Yl6',
+            object: 'charge'
+          }
+        })
+
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
       const paymentRequest = await PaymentRequestFactory({
@@ -198,6 +224,19 @@ describe('webhooks for payment requests', () => {
             user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
           }
         })
+
+      nock('https://api.stripe.com')
+        .get('/v1/payment_intents/pi_3RcoMHBrSjgsps2D1aOZ9Yl6')
+        .query(true)
+        .reply(200, {
+          id: 'pi_3RcoMHBrSjgsps2D1aOZ9Yl6',
+          object: 'payment_intent',
+          latest_charge: {
+            id: 'ch_3RcoMHBrSjgsps2D1aOZ9Yl6',
+            object: 'charge'
+          }
+        })
+
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
       const paymentRequest = await PaymentRequestFactory({
@@ -302,6 +341,19 @@ describe('webhooks for payment requests', () => {
             user_id: 'user_1KkomkBrSjgsps2DGGBtipW4'
           }
         })
+
+      nock('https://api.stripe.com')
+        .get('/v1/payment_intents/pi_3RcoMHBrSjgsps2D1aOZ9Yl6')
+        .query(true)
+        .reply(200, {
+          id: 'pi_3RcoMHBrSjgsps2D1aOZ9Yl6',
+          object: 'payment_intent',
+          latest_charge: {
+            id: 'ch_3RcoMHBrSjgsps2D1aOZ9Yl6',
+            object: 'charge'
+          }
+        })
+
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
       const paymentRequest = await PaymentRequestFactory({

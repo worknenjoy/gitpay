@@ -7,7 +7,7 @@ import { findPaymentRequestByPaymentLinkId } from '../../../queries/payment-requ
 import { findOrCreatePaymentRequestBalance } from '../../../queries/payment-request/payment-request-balance'
 
 import { updatePaymentRequestPaymentLinkActive } from '../../provider/stripe/payment-request'
-import { updatePaymentIntentMetadata } from '../../provider/stripe/payment-intent'
+import { updatePaymentIntentMetadata, retrievePaymentIntent } from '../../provider/stripe/payment-intent'
 import { createTransfer, createTransferReversal } from '../../provider/stripe/transfer'
 
 const models = Models as any
@@ -130,6 +130,12 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
         user_id: paymentRequest.userId
       })
 
+      const paymentIntent = await retrievePaymentIntent(paymentIntentId)
+      const chargeId = (paymentIntent.latest_charge as any)?.id
+      if (!chargeId) {
+        throw new Error('Could not retrieve charge ID from PaymentIntent')
+      }
+
       const paymentRequestBalance = await findOrCreatePaymentRequestBalance(paymentRequest.userId, {
         transaction: tx
       })
@@ -185,6 +191,7 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
             payment_request_id: paymentRequest.id,
             payment_request_payment_id: paymentRequestPayment.id
           },
+          source_transaction: chargeId,
           transfer_group: `payment_request_payment_${paymentRequestPayment.id}`
         } as any)
 
