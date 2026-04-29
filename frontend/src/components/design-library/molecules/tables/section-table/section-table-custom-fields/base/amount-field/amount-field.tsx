@@ -14,11 +14,7 @@ const AmountField = ({
 }) => {
   const intl = useIntl()
   const emptyDisplay = placeholder ?? intl.formatMessage(messages.noAmountDefined)
-  return (
-    <div>
-      {value && value !== '0' ? `${currency} ${value}` : emptyDisplay}
-    </div>
-  )
+  return <div>{value && value !== '0' ? `${currency} ${value}` : emptyDisplay}</div>
 }
 
 export default AmountField

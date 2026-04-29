@@ -217,17 +217,18 @@ export const ManyRows: Story = {
         provider: 'github',
         url: `https://github.com/worknenjoy/gitpay/issues/${400 + i}`,
         Labels: i % 3 === 0 ? [] : [{ name: ['bug', 'feature', 'enhancement', 'beginner'][i % 4] }],
-        Project: i % 4 === 0
-          ? null
-          : {
-              id: (i % 3) + 1,
-              name: ['gitpay', 'explore', 'data-tools'][i % 3],
-              OrganizationId: 1,
-              ProgrammingLanguages: [
-                { name: ['TypeScript', 'JavaScript', 'Python', 'Go', 'CSS'][i % 5] },
-                { name: ['JavaScript', 'TypeScript', 'Go', 'Ruby', 'MDX'][(i + 1) % 5] }
-              ]
-            }
+        Project:
+          i % 4 === 0
+            ? null
+            : {
+                id: (i % 3) + 1,
+                name: ['gitpay', 'explore', 'data-tools'][i % 3],
+                OrganizationId: 1,
+                ProgrammingLanguages: [
+                  { name: ['TypeScript', 'JavaScript', 'Python', 'Go', 'CSS'][i % 5] },
+                  { name: ['JavaScript', 'TypeScript', 'Go', 'Ruby', 'MDX'][(i + 1) % 5] }
+                ]
+              }
       }))
     }
   }

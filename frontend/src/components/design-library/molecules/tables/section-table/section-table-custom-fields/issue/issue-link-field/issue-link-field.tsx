@@ -38,7 +38,12 @@ const IssueLinkField = ({ issue }) => {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
       {issue?.url && logo ? (
-        <a target="_blank" href={issue.url} rel="noreferrer" style={{ flexShrink: 0, lineHeight: 0 }}>
+        <a
+          target="_blank"
+          href={issue.url}
+          rel="noreferrer"
+          style={{ flexShrink: 0, lineHeight: 0 }}
+        >
           <Tooltip
             title={`${intl.formatMessage(messages.onHoverTaskProvider)} ${issue.provider}`}
             placement="top"
@@ -59,9 +64,7 @@ const IssueLinkField = ({ issue }) => {
         <Avatar sx={{ width: 18, height: 18, fontSize: '0.6rem', flexShrink: 0 }}>?</Avatar>
       )}
       <a style={{ cursor: 'pointer' }} onClick={() => handleClickListItem(issue)}>
-        <Typography variant="body2">
-          {TextEllipsis(`${issue?.title || 'no title'}`, 42)}
-        </Typography>
+        <Typography variant="body2">{TextEllipsis(`${issue?.title || 'no title'}`, 42)}</Typography>
       </a>
     </div>
   )

@@ -10,7 +10,12 @@ const IssueProjectField = ({ issue }) => {
   const profile = isProfile ? '/profile' : ''
   const explore = isExplore ? '/explore' : ''
 
-  if (!project?.id) return <Typography variant="caption" color="text.disabled">–</Typography>
+  if (!project?.id)
+    return (
+      <Typography variant="caption" color="text.disabled">
+        –
+      </Typography>
+    )
 
   const { id, name, OrganizationId } = project
   const url = `${profile}${explore}/organizations/${OrganizationId}/projects/${id}`
