@@ -116,7 +116,7 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => {
     listOrders: (query: any) => dispatch(listOrders(query)),
     filterTaskOrders: (filter: any) => dispatch(filterTaskOrders(filter)),
     transferOrder: (order: any, params: any) => dispatch(transferOrder(order, params)),
-    listTasks: () => dispatch(listTasks()),
+    listTasks: (params?: any) => dispatch(listTasks(params)),
     filterTasks: (key: any, value: any, additional: any) =>
       dispatch(filterTasks(key, value, additional)),
     cancelPaypalPayment: (id: any) => dispatch(cancelOrder(id)),

@@ -189,7 +189,7 @@ export const tasks = (
       return {
         ...state,
         completed: action.completed,
-        data: action.data,
+        data: action.data ?? [],
         totalCount: action.totalCount ?? null
       }
     case LIST_TASK_ERROR:

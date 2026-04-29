@@ -1,12 +1,5 @@
 import { styled } from '@mui/material/styles'
-import {
-  Paper,
-  Table,
-  TableCell,
-  TableContainer,
-  TableContainerProps,
-  TableProps
-} from '@mui/material'
+import { Table, TableCell, TableContainer, TableContainerProps, TableProps } from '@mui/material'
 
 export const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
   textTransform: 'uppercase',

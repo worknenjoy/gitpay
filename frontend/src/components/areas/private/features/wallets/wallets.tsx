@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { messages } from '../../../../../messages/messages'
-import { Container, Button, Paper, useTheme, useMediaQuery } from '@mui/material'
+import { Container, Button, useTheme, useMediaQuery } from '@mui/material'
 import { FormattedMessage, useIntl } from 'react-intl'
 import AddFundsFormDrawer from '../payments/add-funds-form-drawer'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
@@ -238,7 +238,9 @@ const Wallets = ({
                 }}
                 tableData={walletOrders}
                 customColumnRenderer={{
-                  status: (item) => <InvoiceStatus status={item.status} completed={item.completed} />,
+                  status: (item) => (
+                    <InvoiceStatus status={item.status} completed={item.completed} />
+                  ),
                   value: (item) => formatCurrency(item.amount),
                   created: (item) => <CreatedField createdAt={item.createdAt} />,
                   dueDate: (item) => (
@@ -288,9 +290,10 @@ const Wallets = ({
                 }}
               />
             </div>
-        )) : (
-        <></>
-      )}
+          )
+        ) : (
+          <></>
+        )}
       </Container>
     </div>
   )

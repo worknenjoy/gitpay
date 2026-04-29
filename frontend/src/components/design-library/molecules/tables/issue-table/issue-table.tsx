@@ -50,6 +50,12 @@ export const IssuesTable = ({
   // Coordination state — only meaningful in server-side mode
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(defaultRowsPerPage)
+
+  React.useEffect(() => {
+    if (serverSidePagination) {
+      listTasks({ page: 0, limit: rowsPerPage })
+    }
+  }, [])
   const [currentFilters, setCurrentFilters] = React.useState<Record<string, any>>({})
   const [currentSort, setCurrentSort] = React.useState<{ sortBy?: string; sortDirection?: string }>(
     {}

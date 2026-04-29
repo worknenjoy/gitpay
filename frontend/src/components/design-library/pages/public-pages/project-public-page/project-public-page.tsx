@@ -36,6 +36,7 @@ const ProjectPublicPage = ({
         listLabels={listLabels}
         listLanguages={listLanguages}
         listTasks={listTasks}
+        serverSidePagination
       />
     </Container>
   )

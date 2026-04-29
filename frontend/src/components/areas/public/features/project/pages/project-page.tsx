@@ -27,17 +27,13 @@ const ProjectPage = ({
 }: ProjectPageProps) => {
   const { project_id } = useParams<{ project_id: string }>()
 
-  const listTasksWithProject = (params) => {
+  const listTasksWithProject = (params: Record<string, any>) => {
     listTasks({ ...params, projectId: project_id })
   }
 
   useEffect(() => {
     fetchProject(project_id)
   }, [project_id])
-
-  useEffect(() => {
-    listTasksWithProject({})
-  }, [project])
 
   return (
     <ProjectPublicPage

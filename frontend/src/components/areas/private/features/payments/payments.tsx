@@ -262,7 +262,7 @@ const Payments = ({
           onSend={transferOrder}
           onClose={() => setSelectedTransferOrder(null)}
           listOrders={() => listOrders({ userId: user.id })}
-          listTasks={() => listTasks({ userId: user.id })}
+          listTasks={(params) => listTasks({ userId: user.id, ...params })}
         />
       )}
     </>

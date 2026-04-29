@@ -23,10 +23,6 @@ const OrganizationPage = ({
     fetchOrganization(organization_id)
   }, [organization_id])
 
-  React.useEffect(() => {
-    listTasksWithOrganization({})
-  }, [organization])
-
   return (
     <OrganizationPublicPage
       organization={organization}

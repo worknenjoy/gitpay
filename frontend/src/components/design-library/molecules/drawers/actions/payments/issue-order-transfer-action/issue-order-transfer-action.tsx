@@ -9,7 +9,8 @@ import {
   ListItemAvatar,
   ListItemText,
   Skeleton,
-  ListItemButton
+  ListItemButton,
+  Pagination
 } from '@mui/material'
 import { SwapHorizontalCircleRounded } from '@mui/icons-material'
 
@@ -23,8 +24,10 @@ const IssueOrderTransferAction = ({
   listOrders,
   listTasks
 }) => {
+  const PAGE_SIZE = 10
   const [selectedIndex, setSelectedIndex] = React.useState(null)
   const [currentTaskId, setCurrentTaskId] = React.useState(null)
+  const [page, setPage] = React.useState(0)
 
   useEffect(() => {
     setCurrentTaskId(task.id)
@@ -45,8 +48,8 @@ const IssueOrderTransferAction = ({
   }
 
   useEffect(() => {
-    listTasks()
-  }, [])
+    listTasks({ page, limit: PAGE_SIZE })
+  }, [page])
 
   return (
     <Drawer
@@ -80,33 +83,39 @@ const IssueOrderTransferAction = ({
                 <Skeleton variant="rectangular" height={48} animation="wave" />
               </div>
             ) : (
-              <List
-                component="nav"
-                style={{
-                  overflowY: 'scroll',
-                  height: '65vh',
-                  margin: '20px 0',
-                  border: '1px solid #ccc'
-                }}
-              >
-                {tasks &&
-                  tasks.data.map((t, index) => {
-                    return (
-                      !t.paid && (
-                        <ListItemButton
-                          key={t.id}
-                          selected={selectedIndex === t.id}
-                          onClick={(event) => handleListItemClick(event, t.id, index)}
-                        >
-                          <ListItemAvatar>
-                            <SwapHorizontalCircleRounded />
-                          </ListItemAvatar>
-                          <ListItemText primary={t.title} secondary={t.status} />
-                        </ListItemButton>
+              <>
+                <List
+                  component="nav"
+                  style={{
+                    margin: '20px 0',
+                    border: '1px solid #ccc'
+                  }}
+                >
+                  {tasks &&
+                    tasks.data.map((t, index) => {
+                      return (
+                        !t.paid && (
+                          <ListItemButton
+                            key={t.id}
+                            selected={selectedIndex === t.id}
+                            onClick={(event) => handleListItemClick(event, t.id, index)}
+                          >
+                            <ListItemAvatar>
+                              <SwapHorizontalCircleRounded />
+                            </ListItemAvatar>
+                            <ListItemText primary={t.title} secondary={t.status} />
+                          </ListItemButton>
+                        )
                       )
-                    )
-                  })}
-              </List>
+                    })}
+                </List>
+                <Pagination
+                  count={Math.ceil((tasks.totalCount ?? 0) / PAGE_SIZE)}
+                  page={page + 1}
+                  onChange={(_, value) => setPage(value - 1)}
+                  style={{ marginBottom: 16, display: 'flex', justifyContent: 'center' }}
+                />
+              </>
             )}
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Paper } from '@mui/material'
+import { Container } from '@mui/material'
 import { AddOutlined as AddIcon } from '@mui/icons-material'
 import ProfileHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
