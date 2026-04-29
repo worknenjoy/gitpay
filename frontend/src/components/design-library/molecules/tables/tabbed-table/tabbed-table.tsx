@@ -64,6 +64,7 @@ const TabbedTable = ({ tabs, activeTab, onChange, serverSidePagination }: Tabbed
         </div>
       )}
       <SectionTable
+        transparent
         key={value}
         tableData={tableData}
         tableHeaderMetadata={tableHeaderMetadata}

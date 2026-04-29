@@ -227,6 +227,7 @@ const Wallets = ({
         ) : (
           <div style={{ marginTop: 10, marginBottom: 30 }}>
             <SectionTable
+              transparent
               tableHeaderMetadata={{
                 id: { label: intl.formatMessage(messages.cardTableHeaderId) },
                 status: { label: intl.formatMessage(messages.cardTableHeaderStatus) },

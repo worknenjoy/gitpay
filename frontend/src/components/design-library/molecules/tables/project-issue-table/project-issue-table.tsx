@@ -90,6 +90,7 @@ export const ProjectIssuesTable = ({
         onServerFilterChange={serverSidePagination ? handleServerFilterChange : undefined}
       />
       <SectionTable
+        transparent
         tableData={issues}
         tableHeaderMetadata={issueMetadata}
         customColumnRenderer={customColumnRenderer}

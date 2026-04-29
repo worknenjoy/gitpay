@@ -98,6 +98,7 @@ const PayoutsTable = ({ payouts }) => {
       tableData={payouts}
       tableHeaderMetadata={tableHeaderMetadata}
       customColumnRenderer={customColumnRenderer}
+      transparent
     />
   )
 }

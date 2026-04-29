@@ -80,6 +80,7 @@ const PrimaryDataPage = ({
             </CardsWrapper>
           )}
           <SectionTable
+            transparent
             tableData={table.tableData}
             tableHeaderMetadata={table.tableHeaderMetadata}
             customColumnRenderer={table.customColumnRenderer}

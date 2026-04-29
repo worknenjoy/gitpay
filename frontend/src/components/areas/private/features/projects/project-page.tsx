@@ -333,6 +333,7 @@ const TaskList: React.FC<TaskListProps> = ({
             tableData={tasks}
             tableHeaderMetadata={isProjectPage ? tableHeaderWithProject : tableHeaderDefault}
             customColumnRenderer={customColumnRenderer}
+            transparent
           />
         </TabContainer>
       </RootTabs>
