@@ -1,27 +1,28 @@
 import React from 'react'
-import { Box, Chip, Divider } from '@mui/material'
+import { Box, Chip, Divider, Grid } from '@mui/material'
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined'
 import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import ProjectCardCompact from 'design-library/molecules/cards/project-card/project-card-compact'
+import ProjectCard from 'design-library/molecules/cards/project-card/project-card'
 import ProjectListCompactPlaceholder from './project-list-compact.placeholder'
 
-const projectBounties = (tasks) =>
-  tasks.map((t) => (t.value ? t.value : 0)).reduce((a, b) => parseInt(a) + parseInt(b), 0)
+const projectBounties = (tasks: any[]) =>
+  tasks.map((t) => (t.value ? t.value : 0)).reduce((a: number, b: number) => a + Number(b), 0)
 
-const sortProjects = (data) =>
+const sortProjects = (data: any[]) =>
   data
-    .filter((p) => p.Tasks.some((t) => t.status === 'open'))
+    .filter((p) => p.Tasks.some((t: any) => t.status === 'open'))
     .sort((a, b) => projectBounties(b.Tasks) - projectBounties(a.Tasks))
 
-export default function ProjectListCompact({ projects }) {
-  const { data, completed } = projects
+export default function ProjectListCompact({ projects }: { projects: { data: any[]; completed?: boolean } | false }) {
+  if (!projects) return <ProjectListCompactPlaceholder />
+  const { data, completed = true } = projects
 
   if (!completed) return <ProjectListCompactPlaceholder />
 
   const sorted = sortProjects(data)
   const totalOpen = data.reduce(
-    (sum, p) => sum + p.Tasks.filter((t) => t.status === 'open').length,
+    (sum, p) => sum + p.Tasks.filter((t: any) => t.status === 'open').length,
     0
   )
   const totalBounties = data.reduce((sum, p) => sum + projectBounties(p.Tasks), 0)
@@ -57,11 +58,13 @@ export default function ProjectListCompact({ projects }) {
         )}
       </Box>
       <Divider sx={{ mb: 2 }} />
-      <Box display="flex" flexWrap="wrap" gap={1}>
+      <Grid container spacing={2}>
         {sorted.map((project) => (
-          <ProjectCardCompact key={project.id} project={project} size="large" />
+          <Grid key={project.id} size={{ lg: 4, md: 6, xs: 12 }}>
+            <ProjectCard project={project} completed={true} />
+          </Grid>
         ))}
-      </Box>
+      </Grid>
     </Box>
   )
 }

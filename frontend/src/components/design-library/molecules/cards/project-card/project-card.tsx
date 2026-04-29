@@ -1,15 +1,33 @@
 import React from 'react'
-import { Avatar, Box, Button, CardContent, Divider, Typography, Tooltip } from '@mui/material'
-import CorporateFareOutlinedIcon from '@mui/icons-material/CorporateFareOutlined'
-import LinkIcon from '@mui/icons-material/Link'
-import slugify from '@sindresorhus/slugify'
+import { Box, Card, CardContent, Chip, Divider, Typography } from '@mui/material'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Link, useHistory } from 'react-router-dom'
-import { RootCard } from './project-card.styles'
-
-import logoGithub from 'images/github-logo.png'
+import slugify from '@sindresorhus/slugify'
 import ProjectCardPlaceholder from './project-card.placeholder'
 
-const ProjectCard = ({ project, completed }) => {
+import logoGithub from 'images/github-logo.png'
+import logoBitbucket from 'images/bitbucket-logo.png'
+
+const LANGUAGE_COLORS: Record<string, string> = {
+  typescript: '#3178c6',
+  javascript: '#f1e05a',
+  react: '#61dafb',
+  node: '#41b883',
+  python: '#3572a5',
+  ruby: '#701516',
+  go: '#00add8',
+  rust: '#dea584',
+  java: '#b07219',
+  css: '#563d7c',
+  html: '#e34c26',
+}
+
+const projectBounties = (tasks: any[]) =>
+  tasks
+    .filter((t) => t.value && t.status !== 'open')
+    .reduce((sum, t) => sum + Number(t.value), 0)
+
+const ProjectCard = ({ project, completed }: { project: any; completed: boolean }) => {
   const history = useHistory()
   const baseOrganizationPath = `/organizations/${project?.Organization?.id}/${slugify(project?.Organization?.name || '')}`
   const baseProjectPath = `${baseOrganizationPath}/projects/${project?.id}/${slugify(project?.name || '')}`
@@ -30,48 +48,78 @@ const ProjectCard = ({ project, completed }) => {
 
   if (!completed) return <ProjectCardPlaceholder />
 
-  const githubUrl =
-    project.Organization &&
-    (project.Organization.provider === 'bitbucket'
-      ? `https://bitbucket.com/${project.Organization.name}/${project.name}`
-      : `https://github.com/${project.Organization.name}/${project.name}`)
+  const openIssues = project.Tasks?.filter((t: any) => t.status === 'open').length ?? 0
+  const totalIssues = project.Tasks?.length ?? 0
+  const paidOut = projectBounties(project.Tasks ?? [])
+
+  const isGitHub = project.Organization?.provider?.toLowerCase() !== 'bitbucket'
+  const providerLogo = isGitHub ? logoGithub : logoBitbucket
+  const providerLogoStyle = isGitHub
+    ? { borderRadius: '50%', backgroundColor: 'black', padding: 2 }
+    : { borderRadius: '50%' }
+
+  const languages: string[] = project.languages ?? []
 
   return (
-    <RootCard>
-      <CardContent
-        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4, pb: 2 }}
-      >
-        <Avatar
-          aria-label={project.name}
-          sx={{ width: 80, height: 80, fontSize: 32, mb: 2, bgcolor: 'primary.main' }}
-        >
-          {project.name[0]}
-        </Avatar>
+    <Card
+      variant="outlined"
+      sx={{
+        borderRadius: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'transparent',
+        transition: 'box-shadow 0.2s',
+        '&:hover': { boxShadow: 3 }
+      }}
+    >
+      <CardContent sx={{ pb: 1.5 }}>
+        {/* Header row */}
+        <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={1}>
+          <Box display="flex" alignItems="center" gap={0.75} minWidth={0} flexShrink={1}>
+            <img
+              width="16"
+              height="16"
+              src={providerLogo}
+              style={{ ...providerLogoStyle, display: 'block', flexShrink: 0 }}
+            />
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              noWrap
+              sx={{ flexShrink: 0 }}
+            >
+              {project.Organization?.name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{ flexShrink: 0 }}>
+              /
+            </Typography>
+            <Typography variant="subtitle2" fontWeight={700} noWrap>
+              <Link to={currentProjectPath} style={{ textDecoration: 'none', color: 'inherit' }}>
+                {project.name}
+              </Link>
+            </Typography>
+          </Box>
 
-        <Typography align="center" variant="h6" fontWeight={600} gutterBottom>
-          <Link to={currentProjectPath} style={{ textDecoration: 'none', color: 'inherit' }}>
-            {project.name}
-          </Link>
-        </Typography>
+          {openIssues > 0 && (
+            <Chip
+              label={`${openIssues} open`}
+              size="small"
+              color="warning"
+              variant="outlined"
+              sx={{ ml: 1, flexShrink: 0, height: 22, fontSize: 11 }}
+            />
+          )}
+        </Box>
 
-        {project.Organization && (
-          <Typography align="center" variant="body2" color="text.secondary" gutterBottom>
-            <CorporateFareOutlinedIcon sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }} />
-            <Link to={baseOrganizationPath} style={{ textDecoration: 'none', color: 'inherit' }}>
-              {project.Organization.name}
-            </Link>
-          </Typography>
-        )}
-
+        {/* Description */}
         {project.description && (
           <Typography
-            align="center"
             variant="body2"
             color="text.secondary"
             sx={{
-              mt: 1,
+              mb: languages.length > 0 ? 1.5 : 0,
               display: '-webkit-box',
-              WebkitLineClamp: 3,
+              WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
               lineHeight: 1.5
@@ -81,60 +129,73 @@ const ProjectCard = ({ project, completed }) => {
           </Typography>
         )}
 
-        <Box display="flex" alignItems="center" gap={1.5} mt={2}>
-          {githubUrl && (
-            <Tooltip title="View on GitHub">
-              <a href={githubUrl} target="_blank" rel="noreferrer">
-                <img
-                  width="22"
-                  src={logoGithub}
-                  style={{
-                    borderRadius: '50%',
-                    padding: 2,
-                    backgroundColor: 'black',
-                    display: 'block'
+        {/* Language chips */}
+        {languages.length > 0 && (
+          <Box display="flex" gap={0.75} flexWrap="wrap">
+            {languages.map((lang) => {
+              const color = LANGUAGE_COLORS[lang.toLowerCase()]
+              return (
+                <Chip
+                  key={lang}
+                  label={lang}
+                  size="small"
+                  variant="outlined"
+                  sx={{
+                    height: 22,
+                    fontSize: 11,
+                    borderColor: color ?? 'divider',
+                    color: color ?? 'text.secondary'
                   }}
                 />
-              </a>
-            </Tooltip>
-          )}
-          {project.websiteUrl && (
-            <Tooltip title={project.websiteUrl}>
-              <a
-                href={project.websiteUrl}
-                target="_blank"
-                rel="noreferrer"
-                style={{ color: 'inherit', display: 'flex', alignItems: 'center' }}
-              >
-                <LinkIcon sx={{ fontSize: 20, color: 'text.secondary' }} />
-              </a>
-            </Tooltip>
-          )}
-        </Box>
+              )
+            })}
+          </Box>
+        )}
       </CardContent>
 
       <Box flexGrow={1} />
       <Divider />
 
-      <Box p={2}>
-        <Button
-          fullWidth
-          variant="contained"
-          disableElevation
-          onClick={() => history.push(currentProjectPath)}
-          sx={{
-            borderRadius: 6,
-            bgcolor: 'grey.800',
-            color: 'white',
-            textTransform: 'none',
-            fontWeight: 600,
-            '&:hover': { bgcolor: 'grey.900' }
-          }}
-        >
-          View Project
-        </Button>
+      {/* Footer */}
+      <Box px={2} py={1.25} display="flex" justifyContent="space-between" alignItems="center">
+        <Box display="flex" gap={2}>
+          {paidOut > 0 && (
+            <Typography variant="caption" color="text.secondary">
+              Paid out{' '}
+              <Box component="span" fontWeight={700} color="text.primary">
+                ${paidOut.toLocaleString()}
+              </Box>
+            </Typography>
+          )}
+          <Typography variant="caption" color="text.secondary">
+            Issues{' '}
+            <Box component="span" fontWeight={700} color="text.primary">
+              {totalIssues}
+            </Box>
+          </Typography>
+        </Box>
+
+        <Link to={currentProjectPath} style={{ textDecoration: 'none' }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={0.5}
+            sx={{
+              color: 'warning.dark',
+              '&:hover .project-card-arrow': { transform: 'translateX(4px)' }
+            }}
+          >
+            <Typography variant="caption" fontWeight={600} color="inherit">
+              View project
+            </Typography>
+            <ArrowForwardIcon
+              className="project-card-arrow"
+              sx={{ fontSize: 14, transition: 'transform 0.2s ease', color: 'inherit' }}
+            />
+          </Box>
+        </Link>
       </Box>
-    </RootCard>
+    </Card>
   )
 }
 
