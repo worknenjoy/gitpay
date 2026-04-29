@@ -33,7 +33,7 @@ const MyIssuesDashboardCard = ({ issues }) => {
               values={{ issuesOpened: open }}
             />
           }
-          color="success"
+          sx={{ bgcolor: '#DCFCE7', color: '#166534' }}
         />
         <Chip
           size="small"
@@ -44,7 +44,7 @@ const MyIssuesDashboardCard = ({ issues }) => {
               values={{ closedIssues: closed }}
             />
           }
-          color="error"
+          sx={{ bgcolor: '#FFE4E6', color: '#9F1239' }}
         />
       </IssueDashboardCardChipList>
     </DashboardCardBase>

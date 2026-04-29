@@ -40,7 +40,7 @@ const BankAccountDashboardCard = ({ accounts = 0, verified = 0, pending = 0 }) =
               values={{ verified }}
             />
           }
-          color="primary"
+          sx={{ bgcolor: '#EDE9FE', color: '#5B21B6' }}
         />
         <Chip
           size="small"
@@ -51,7 +51,7 @@ const BankAccountDashboardCard = ({ accounts = 0, verified = 0, pending = 0 }) =
               values={{ pending }}
             />
           }
-          color="warning"
+          sx={{ bgcolor: '#FEF3C7', color: '#92400E' }}
         />
       </DashboardCardChipList>
     </DashboardCardBase>

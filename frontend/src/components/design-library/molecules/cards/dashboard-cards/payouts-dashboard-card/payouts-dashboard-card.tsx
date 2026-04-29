@@ -51,7 +51,7 @@ const PayoutsDashboardCard = ({ payouts }) => {
               values={{ completed }}
             />
           }
-          color="success"
+          sx={{ bgcolor: '#DCFCE7', color: '#166534' }}
         />
         <Chip
           size="small"
@@ -62,7 +62,7 @@ const PayoutsDashboardCard = ({ payouts }) => {
               values={{ in_transit }}
             />
           }
-          color="info"
+          sx={{ bgcolor: '#E0E7FF', color: '#3730A3' }}
         />
         <Chip
           size="small"
@@ -73,7 +73,7 @@ const PayoutsDashboardCard = ({ payouts }) => {
               values={{ pending }}
             />
           }
-          color="warning"
+          sx={{ bgcolor: '#FEF3C7', color: '#92400E' }}
         />
       </DashboardCardChipList>
     </DashboardCardBase>

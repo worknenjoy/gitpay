@@ -34,7 +34,7 @@ const WalletsDashboardCard = ({ wallets }) => {
               values={{ name: data[0]?.name, balance: formatCurrency(balance) }}
             />
           }
-          color="info"
+          sx={{ bgcolor: '#E0E7FF', color: '#3730A3' }}
         />
       </DashboardCardChipList>
     </DashboardCardBase>

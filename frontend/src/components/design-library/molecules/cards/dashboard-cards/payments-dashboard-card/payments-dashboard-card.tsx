@@ -53,7 +53,7 @@ const PaymentsDashboardCard = ({ payments }) => {
                 values={{ succeeded }}
               />
             }
-            color="success"
+            sx={{ bgcolor: '#DCFCE7', color: '#166534' }}
           />
           <Chip
             size="small"
@@ -64,7 +64,7 @@ const PaymentsDashboardCard = ({ payments }) => {
                 values={{ pending }}
               />
             }
-            color="warning"
+            sx={{ bgcolor: '#FEF3C7', color: '#92400E' }}
           />
           <Chip
             size="small"
@@ -75,7 +75,7 @@ const PaymentsDashboardCard = ({ payments }) => {
                 values={{ failed }}
               />
             }
-            color="error"
+            sx={{ bgcolor: '#FFE4E6', color: '#9F1239' }}
           />
           <Chip
             size="small"
@@ -86,7 +86,7 @@ const PaymentsDashboardCard = ({ payments }) => {
                 values={{ refunded: refunded }}
               />
             }
-            color="info"
+            sx={{ bgcolor: '#E0E7FF', color: '#3730A3' }}
           />
         </DashboardCardChipList>
       </div>

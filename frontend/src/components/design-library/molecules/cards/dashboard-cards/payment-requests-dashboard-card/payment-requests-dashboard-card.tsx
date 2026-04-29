@@ -42,7 +42,7 @@ const PaymentRequestsDashboardCard = ({ paymentRequests }) => {
               values={{ payments }}
             />
           }
-          color="success"
+          sx={{ bgcolor: '#DCFCE7', color: '#166534' }}
         />
         <Chip
           size="small"
@@ -53,7 +53,7 @@ const PaymentRequestsDashboardCard = ({ paymentRequests }) => {
               values={{ amount: formatCurrency(amount) }}
             />
           }
-          color="info"
+          sx={{ bgcolor: '#E0E7FF', color: '#3730A3' }}
         />
       </DashboardCardChipList>
     </DashboardCardBase>

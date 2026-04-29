@@ -34,7 +34,7 @@ const ClaimsDashboardCard = ({ claims }) => {
               values={{ amount: formatCurrency(amount) }}
             />
           }
-          color="info"
+          sx={{ bgcolor: '#E0E7FF', color: '#3730A3' }}
         />
       </DashboardCardChipList>
     </DashboardCardBase>
