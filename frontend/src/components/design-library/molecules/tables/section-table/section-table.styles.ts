@@ -17,7 +17,7 @@ export const StyledHeaderCell = styled(TableCell)(({ theme }) => ({
   padding: '8px 0 8px 16px'
 }))
 
-export const RootPaper = styled(Paper)(({ theme }) => ({
+export const RootPaper = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(3)
 }))
 

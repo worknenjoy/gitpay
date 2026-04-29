@@ -9,8 +9,7 @@ export const Root = styled('div')(({ theme }) => ({
   padding: theme.spacing(4),
   textAlign: 'center',
   border: `1px dashed ${theme.palette.divider}`,
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.background.paper
+  borderRadius: theme.shape.borderRadius
 }))
 
 export const Message = styled(Typography)(({ theme }) => ({

@@ -175,7 +175,7 @@ const Wallets = ({
                   onCreate={confirmWalletCreate}
                 />
               ) : (
-                <Paper style={{ padding: 20 }}>
+                <div style={{ padding: 20 }}>
                   <EmptyBase
                     actionText={
                       <FormattedMessage
@@ -199,13 +199,14 @@ const Wallets = ({
                     completed={wallets.completed}
                     onActionClick={createWalletName}
                   />
-                </Paper>
+                </div>
               )}
             </div>
           </div>
         )}
-        {walletOrders?.data?.length === 0 && walletOrders.completed ? (
-          <Paper sx={{ p: 2, mt: 2 }}>
+
+        {wallets.data.length !== 0 ? (
+          walletOrders?.data?.length === 0 && walletOrders.completed ? (
             <EmptyBase
               text={
                 <FormattedMessage
@@ -223,72 +224,73 @@ const Wallets = ({
               }
               onActionClick={(e) => openAddFundsDialog(e)}
             />
-          </Paper>
-        ) : (
-          <div style={{ marginTop: 10, marginBottom: 30 }}>
-            <SectionTable
-              transparent
-              tableHeaderMetadata={{
-                id: { label: intl.formatMessage(messages.cardTableHeaderId) },
-                status: { label: intl.formatMessage(messages.cardTableHeaderStatus) },
-                value: { label: intl.formatMessage(messages.cardTableHeaderValue) },
-                created: { label: intl.formatMessage(messages.cardTableHeaderCreated) },
-                dueDate: { label: intl.formatMessage(messages.cardTableHeaderDueDate) },
-                actions: { label: intl.formatMessage(messages.cardTableHeaderActions) }
-              }}
-              tableData={walletOrders}
-              customColumnRenderer={{
-                status: (item) => <InvoiceStatus status={item.status} completed={item.completed} />,
-                value: (item) => formatCurrency(item.amount),
-                created: (item) => <CreatedField createdAt={item.createdAt} />,
-                dueDate: (item) => (
-                  <InvoiceDueDate
-                    key={item.id}
-                    walletOrderId={item.id}
-                    fetchWalletOrder={fetchWalletOrder}
-                  />
-                ),
-                id: (item) => (
-                  <InvoiceId
-                    key={item.id}
-                    walletOrderId={item.id}
-                    fetchWalletOrder={fetchWalletOrder}
-                  />
-                ),
-                actions: (item) => (
-                  <div style={{ display: 'flex', gap: 10 }}>
-                    {item.status === 'open' && (
-                      <Button
-                        onClick={(e) => handleInvoicePayment(item.id)}
-                        variant="contained"
-                        color="secondary"
-                        size="small"
-                      >
-                        <FormattedMessage
-                          id="general.wallets.table.actions.pay"
-                          defaultMessage="Pay invoice"
-                        />
-                      </Button>
-                    )}
-                    {item.status === 'paid' && (
-                      <Button
-                        onClick={(e) => downloadInvoicePayment(item.id)}
-                        variant="contained"
-                        color="secondary"
-                        size="small"
-                      >
-                        <FormattedMessage
-                          id="general.wallets.table.actions.download"
-                          defaultMessage="Download invoice"
-                        />
-                      </Button>
-                    )}
-                  </div>
-                )
-              }}
-            />
-          </div>
-        )}
+          ) : (
+            <div style={{ marginTop: 10, marginBottom: 30 }}>
+              <SectionTable
+                transparent
+                tableHeaderMetadata={{
+                  id: { label: intl.formatMessage(messages.cardTableHeaderId) },
+                  status: { label: intl.formatMessage(messages.cardTableHeaderStatus) },
+                  value: { label: intl.formatMessage(messages.cardTableHeaderValue) },
+                  created: { label: intl.formatMessage(messages.cardTableHeaderCreated) },
+                  dueDate: { label: intl.formatMessage(messages.cardTableHeaderDueDate) },
+                  actions: { label: intl.formatMessage(messages.cardTableHeaderActions) }
+                }}
+                tableData={walletOrders}
+                customColumnRenderer={{
+                  status: (item) => <InvoiceStatus status={item.status} completed={item.completed} />,
+                  value: (item) => formatCurrency(item.amount),
+                  created: (item) => <CreatedField createdAt={item.createdAt} />,
+                  dueDate: (item) => (
+                    <InvoiceDueDate
+                      key={item.id}
+                      walletOrderId={item.id}
+                      fetchWalletOrder={fetchWalletOrder}
+                    />
+                  ),
+                  id: (item) => (
+                    <InvoiceId
+                      key={item.id}
+                      walletOrderId={item.id}
+                      fetchWalletOrder={fetchWalletOrder}
+                    />
+                  ),
+                  actions: (item) => (
+                    <div style={{ display: 'flex', gap: 10 }}>
+                      {item.status === 'open' && (
+                        <Button
+                          onClick={(e) => handleInvoicePayment(item.id)}
+                          variant="contained"
+                          color="secondary"
+                          size="small"
+                        >
+                          <FormattedMessage
+                            id="general.wallets.table.actions.pay"
+                            defaultMessage="Pay invoice"
+                          />
+                        </Button>
+                      )}
+                      {item.status === 'paid' && (
+                        <Button
+                          onClick={(e) => downloadInvoicePayment(item.id)}
+                          variant="contained"
+                          color="secondary"
+                          size="small"
+                        >
+                          <FormattedMessage
+                            id="general.wallets.table.actions.download"
+                            defaultMessage="Download invoice"
+                          />
+                        </Button>
+                      )}
+                    </div>
+                  )
+                }}
+              />
+            </div>
+        )) : (
+        <></>
+      )}
       </Container>
     </div>
   )

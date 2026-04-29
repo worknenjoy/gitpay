@@ -69,7 +69,7 @@ const PrimaryDataPage = ({
         }
       />
       {isEmpty || isSingleTableEmpty ? (
-        <Paper sx={{ p: 2 }}>{emptyComponent}</Paper>
+        emptyComponent
       ) : table ? (
         <>
           {cards?.length > 0 && (
