@@ -14,7 +14,11 @@ const sortProjects = (data: any[]) =>
     .filter((p) => p.Tasks.some((t: any) => t.status === 'open'))
     .sort((a, b) => projectBounties(b.Tasks) - projectBounties(a.Tasks))
 
-export default function ProjectListCompact({ projects }: { projects: { data: any[]; completed?: boolean } | false }) {
+export default function ProjectListCompact({
+  projects
+}: {
+  projects: { data: any[]; completed?: boolean } | false
+}) {
   if (!projects) return <ProjectListCompactPlaceholder />
   const { data, completed = true } = projects
 

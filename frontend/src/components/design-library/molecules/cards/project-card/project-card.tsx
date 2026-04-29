@@ -19,13 +19,11 @@ const LANGUAGE_COLORS: Record<string, string> = {
   rust: '#dea584',
   java: '#b07219',
   css: '#563d7c',
-  html: '#e34c26',
+  html: '#e34c26'
 }
 
 const projectBounties = (tasks: any[]) =>
-  tasks
-    .filter((t) => t.value && t.status !== 'open')
-    .reduce((sum, t) => sum + Number(t.value), 0)
+  tasks.filter((t) => t.value && t.status !== 'open').reduce((sum, t) => sum + Number(t.value), 0)
 
 const ProjectCard = ({ project, completed }: { project: any; completed: boolean }) => {
   const history = useHistory()
@@ -82,12 +80,7 @@ const ProjectCard = ({ project, completed }: { project: any; completed: boolean 
               src={providerLogo}
               style={{ ...providerLogoStyle, display: 'block', flexShrink: 0 }}
             />
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              noWrap
-              sx={{ flexShrink: 0 }}
-            >
+            <Typography variant="body2" color="text.secondary" noWrap sx={{ flexShrink: 0 }}>
               {project.Organization?.name}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ flexShrink: 0 }}>

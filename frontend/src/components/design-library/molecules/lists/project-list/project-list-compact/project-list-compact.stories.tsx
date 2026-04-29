@@ -27,11 +27,7 @@ const projects = [
     description: 'REST API service for managing bounties and contributions.',
     languages: ['TypeScript', 'Node'],
     Organization: { id: 1, name: 'worknenjoy', provider: 'github' },
-    Tasks: [
-      { status: 'open' },
-      { status: 'open' },
-      { status: 'closed', value: 300 }
-    ]
+    Tasks: [{ status: 'open' }, { status: 'open' }, { status: 'closed', value: 300 }]
   },
   {
     id: 3,

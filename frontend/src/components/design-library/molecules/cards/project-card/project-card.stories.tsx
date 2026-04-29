@@ -78,11 +78,7 @@ NoLanguages.args = {
       name: 'worknenjoy',
       provider: 'github'
     },
-    Tasks: [
-      { status: 'open' },
-      { status: 'open' },
-      { status: 'closed', value: 200 }
-    ]
+    Tasks: [{ status: 'open' }, { status: 'open' }, { status: 'closed', value: 200 }]
   }
 }
 
@@ -99,11 +95,7 @@ NoPaidOut.args = {
       name: 'opensource-org',
       provider: 'github'
     },
-    Tasks: [
-      { status: 'open' },
-      { status: 'open' },
-      { status: 'open' }
-    ]
+    Tasks: [{ status: 'open' }, { status: 'open' }, { status: 'open' }]
   }
 }
 
@@ -126,11 +118,13 @@ BitbucketProject.args = {
 
 export const GridOfCards = () => (
   <Grid container spacing={2}>
-    {[DefaultProjectCard.args, WithWebsite.args, NoLanguages.args, NoPaidOut.args].map((args, i) => (
-      <Grid key={i} size={{ lg: 4, md: 6, xs: 12 }}>
-        <ProjectCard {...args} />
-      </Grid>
-    ))}
+    {[DefaultProjectCard.args, WithWebsite.args, NoLanguages.args, NoPaidOut.args].map(
+      (args, i) => (
+        <Grid key={i} size={{ lg: 4, md: 6, xs: 12 }}>
+          <ProjectCard {...args} />
+        </Grid>
+      )
+    )}
   </Grid>
 )
 GridOfCards.storyName = 'Grid of Cards'
