@@ -72,9 +72,9 @@ const OrganizationList = ({ organizations }) => {
     )
   }
 
-  const totalProjects = countProjects(data)
-  const totalOpen = countOpenIssues(data)
-  const totalBounties = countBounties(data)
+  const totalProjects = countProjects(data ?? [])
+  const totalOpen = countOpenIssues(data ?? [])
+  const totalBounties = countBounties(data ?? [])
 
   return completed ? (
     <Root maxWidth={false}>
