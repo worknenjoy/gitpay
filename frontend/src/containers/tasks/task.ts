@@ -46,7 +46,7 @@ import {
   cleanPullRequestDataState
 } from '../../actions/taskSolutionActions'
 import { getTaskOrdersByFilter } from '../../selectors/task'
-import { getFilteredTasks, getProject } from '../../selectors/tasks'
+import { getProject } from '../../selectors/tasks'
 import { getCurrentUser } from '../../common/selectors/user/getUser'
 
 const mapStateToProps = (state: any, ownProps?: any) => {
@@ -64,7 +64,7 @@ const mapStateToProps = (state: any, ownProps?: any) => {
     // Preserve existing `task` and `completed` while exposing raw task state and task-solution completion flag
     taskRaw: state.task,
     taskSolutionCompleted: state.taskSolutionReducer.completed,
-    tasks: getFilteredTasks(state),
+    tasks: state.tasks,
     project: getProject(state.project),
     order: state.order,
     customer: state.customer,

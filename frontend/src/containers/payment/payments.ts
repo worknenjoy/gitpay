@@ -10,7 +10,6 @@ import {
   cancelOrder,
   updateOrder
 } from '../../actions/orderActions'
-import { getFilteredTasks } from '../../selectors/tasks'
 import { getCurrentUser } from '../../common/selectors/user/getUser'
 
 const mapStateToProps = (state: any, ownProps?: any) => {
@@ -18,7 +17,7 @@ const mapStateToProps = (state: any, ownProps?: any) => {
     user: getCurrentUser(state),
     orders: state.orders,
     order: state.order,
-    tasks: getFilteredTasks(state),
+    tasks: state.tasks,
     logged: state.loggedIn.logged
   }
 }

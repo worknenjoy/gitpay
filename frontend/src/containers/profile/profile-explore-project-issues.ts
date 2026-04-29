@@ -5,13 +5,13 @@ import { listTasks, filterTasks } from '../../actions/taskActions'
 import { fetchProject, listProjects } from '../../actions/projectActions'
 import { listLabels } from '../../actions/labelActions'
 import { listLanguage } from '../../actions/languageActions'
-import { getFilteredTasks, getProject } from '../../selectors/tasks'
+import { getProject } from '../../selectors/tasks'
 import { getCurrentUser } from '../../common/selectors/user/getUser'
 
 const mapStateToProps = (state: any, props: any) => {
   return {
     user: getCurrentUser(state),
-    issues: getFilteredTasks(state),
+    issues: state.tasks,
     project: getProject(state),
     labels: state.labels,
     languages: state.languages

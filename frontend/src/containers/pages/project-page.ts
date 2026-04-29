@@ -5,11 +5,9 @@ import { fetchProject } from '../../actions/projectActions'
 import { listTasks, filterTasks } from '../../actions/taskActions'
 import { listLabels } from '../../actions/labelActions'
 import { listLanguage } from '../../actions/languageActions'
-import { getFilteredTasks } from '../../selectors/tasks'
-
 const mapStateToProps = (state: any) => ({
   project: state.project,
-  issues: getFilteredTasks(state),
+  issues: state.tasks,
   labels: state.labels,
   languages: state.languages
 })

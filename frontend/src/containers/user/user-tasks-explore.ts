@@ -3,13 +3,12 @@ import ExploreIssuesPage from '../../components/areas/private/features/issues/pa
 import { listTasks, filterTasks } from '../../actions/taskActions'
 import { listLabels } from '../../actions/labelActions'
 import { listLanguage } from '../../actions/languageActions'
-import { getFilteredTasks } from '../../selectors/tasks'
 import { getCurrentUser } from '../../common/selectors/user/getUser'
 
 const mapStateToProps = (state: any, ownProps?: any) => {
   return {
     user: getCurrentUser(state),
-    issues: getFilteredTasks(state),
+    issues: state.tasks,
     labels: state.labels,
     languages: state.languages
   }

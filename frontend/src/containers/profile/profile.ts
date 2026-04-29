@@ -15,7 +15,6 @@ import {
   updateOrganization
 } from '../../actions/organizationsActions'
 import { addNotification, closeNotification } from '../../actions/notificationActions'
-import { getFilteredTasks } from '../../selectors/tasks'
 import { info } from '../../actions/infoActions'
 
 const mapStateToProps = (state: any, ownProps: any) => {
@@ -23,7 +22,7 @@ const mapStateToProps = (state: any, ownProps: any) => {
     logged: state.loggedIn.logged,
     user: state.loggedIn,
     preferences: state.preferences,
-    tasks: getFilteredTasks(state),
+    tasks: state.tasks,
     organizations: state.organizations.organizations,
     completed: state.loggedIn.completed,
     info: state.info

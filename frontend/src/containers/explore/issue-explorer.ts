@@ -4,10 +4,8 @@ import ExploreIssuePage from '../../components/areas/public/features/explore/pag
 import { listTasks, filterTasks } from '../../actions/taskActions'
 import { listLabels } from '../../actions/labelActions'
 import { listLanguage } from '../../actions/languageActions'
-import { getFilteredTasks } from '../../selectors/tasks'
-
 const mapStateToProps = (state: any) => ({
-  issues: getFilteredTasks(state),
+  issues: state.tasks,
   labels: state.labels,
   languages: state.languages
 })
