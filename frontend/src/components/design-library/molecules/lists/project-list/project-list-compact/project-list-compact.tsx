@@ -10,9 +10,7 @@ const projectBounties = (tasks: any[]) =>
   tasks.map((t) => (t.value ? t.value : 0)).reduce((a: number, b: number) => a + Number(b), 0)
 
 const sortProjects = (data: any[]) =>
-  data
-    .filter((p) => p.Tasks.some((t: any) => t.status === 'open'))
-    .sort((a, b) => projectBounties(b.Tasks) - projectBounties(a.Tasks))
+  [...data].sort((a, b) => projectBounties(b.Tasks ?? []) - projectBounties(a.Tasks ?? []))
 
 export default function ProjectListCompact({
   projects
@@ -26,10 +24,10 @@ export default function ProjectListCompact({
 
   const sorted = sortProjects(data)
   const totalOpen = data.reduce(
-    (sum, p) => sum + p.Tasks.filter((t: any) => t.status === 'open').length,
+    (sum, p) => sum + (p.Tasks ?? []).filter((t: any) => t.status === 'open').length,
     0
   )
-  const totalBounties = data.reduce((sum, p) => sum + projectBounties(p.Tasks), 0)
+  const totalBounties = data.reduce((sum, p) => sum + projectBounties(p.Tasks ?? []), 0)
 
   return (
     <Box mt={3}>
