@@ -325,7 +325,7 @@ const SectionTable = ({
         <TableFooter>
           <TableRow>
             <TablePagination
-              colSpan={3}
+              colSpan={Object.keys(tableHeaderMetadata).length}
               count={paginationCount}
               rowsPerPage={activeRowsPerPage}
               page={activePage}
