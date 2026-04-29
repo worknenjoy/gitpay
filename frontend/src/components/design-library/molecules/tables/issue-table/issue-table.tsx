@@ -16,7 +16,7 @@ export const customColumnRenderer = {
   issue: (item: any) => <IssueLinkField issue={item} />,
   status: (item: any) => <IssueStatusField issue={item} />,
   project: (item: any) => <IssueProjectField issue={item} />,
-  value: (item: any) => <AmountField value={item.value} />,
+  value: (item: any) => <AmountField value={item.value} placeholder="–" />,
   labels: (item: any) => <IssueLabelsField issue={item} />,
   languages: (item: any) => <IssueLanguageField issue={item} />,
   createdAt: (item: any) => <IssueCreatedField issue={item} />
@@ -112,6 +112,7 @@ export const IssuesTable = ({
         tableData={issues}
         tableHeaderMetadata={issueMetadata}
         customColumnRenderer={customColumnRenderer}
+        transparent
         serverSidePagination={
           serverSidePagination
             ? {

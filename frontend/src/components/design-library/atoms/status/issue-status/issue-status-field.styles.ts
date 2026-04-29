@@ -5,14 +5,20 @@ export const ChipStatusSuccess = styled(MuiChip)(({ theme }) => ({
   height: 'auto',
   verticalAlign: 'middle',
   backgroundColor: 'transparent',
-  color: theme.palette.primary.main
+  color: theme.palette.primary.main,
+  border: 'none',
+  '& .MuiChip-label': { paddingLeft: 4, paddingRight: 0 },
+  '& .MuiChip-avatar': { marginLeft: 0 }
 }))
 
 export const ChipStatusClosed = styled(MuiChip)(({ theme }) => ({
   height: 'auto',
   verticalAlign: 'middle',
   backgroundColor: 'transparent',
-  color: theme.palette.error.main
+  color: theme.palette.error.main,
+  border: 'none',
+  '& .MuiChip-label': { paddingLeft: 4, paddingRight: 0 },
+  '& .MuiChip-avatar': { marginLeft: 0 }
 }))
 
 export const AvatarStatusSuccess = styled(MuiAvatar)(({ theme }) => ({

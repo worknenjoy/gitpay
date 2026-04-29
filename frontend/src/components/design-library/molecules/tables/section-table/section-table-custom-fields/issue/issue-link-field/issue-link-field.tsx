@@ -2,7 +2,7 @@ import React from 'react'
 import TextEllipsis from 'text-ellipsis'
 import slugify from '@sindresorhus/slugify'
 import { useHistory } from 'react-router-dom'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { useIntl } from 'react-intl'
 import { Avatar, Tooltip, Typography } from '@mui/material'
 
 import logoGithub from 'images/github-logo.png'
@@ -29,43 +29,40 @@ const IssueLinkField = ({ issue }) => {
       case 'bitbucket':
         return logoBitbucket
       default:
-        return (
-          <Avatar>
-            <FormattedMessage id={`provider.label.notFound`} defaultMessage={'No provider'} />
-          </Avatar>
-        )
+        return null
     }
   }
 
+  const logo = getProviderLogo(issue.provider)
+
   return (
-    <div style={{ width: 350, display: 'flex', alignItems: 'center' }}>
-      <a style={{ cursor: 'pointer' }} onClick={() => handleClickListItem(issue)}>
-        <Typography variant="subtitle2">
-          {TextEllipsis(`${issue?.title || 'no title'}`, 42)}
-        </Typography>
-      </a>
-      {issue?.url && (
-        <a target="_blank" href={issue.url} rel="noreferrer">
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      {issue?.url && logo ? (
+        <a target="_blank" href={issue.url} rel="noreferrer" style={{ flexShrink: 0, lineHeight: 0 }}>
           <Tooltip
-            id="tooltip-fab"
             title={`${intl.formatMessage(messages.onHoverTaskProvider)} ${issue.provider}`}
             placement="top"
           >
             <img
-              width="24"
-              src={getProviderLogo(issue.provider)}
+              width="18"
+              src={logo}
               style={{
                 borderRadius: '50%',
-                padding: 3,
+                padding: 2,
                 backgroundColor: 'black',
-                borderColor: 'black',
-                borderWidth: 1,
-                marginLeft: 10
+                display: 'block'
               }}
             />
           </Tooltip>
         </a>
+      ) : (
+        <Avatar sx={{ width: 18, height: 18, fontSize: '0.6rem', flexShrink: 0 }}>?</Avatar>
       )}
+      <a style={{ cursor: 'pointer' }} onClick={() => handleClickListItem(issue)}>
+        <Typography variant="body2">
+          {TextEllipsis(`${issue?.title || 'no title'}`, 42)}
+        </Typography>
+      </a>
     </div>
   )
 }

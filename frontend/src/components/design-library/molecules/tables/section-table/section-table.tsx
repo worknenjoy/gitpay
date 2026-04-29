@@ -12,7 +12,13 @@ import {
   TableRow,
   TableSortLabel
 } from '@mui/material'
-import { RootPaper, TableWrapper, StyledTable, StyledTableCell } from './section-table.styles'
+import {
+  RootPaper,
+  TableWrapper,
+  StyledTable,
+  StyledTableCell,
+  StyledHeaderCell
+} from './section-table.styles'
 
 import TablePaginationActions from './section-table-pagination-actions/section-table-pagination-actions'
 import TablePlaceholder from './section-table.placeholder'
@@ -44,13 +50,15 @@ interface SectionTableProps {
   tableHeaderMetadata: Record<string, MetaDataProps>
   customColumnRenderer?: Record<string, (item: any, rowData?: any) => React.ReactNode>
   serverSidePagination?: ServerSidePaginationProps
+  transparent?: boolean
 }
 
 const SectionTable = ({
   tableData,
   tableHeaderMetadata,
   customColumnRenderer = {},
-  serverSidePagination
+  serverSidePagination,
+  transparent = false
 }: SectionTableProps) => {
   const isServerSide = !!serverSidePagination?.enabled
   const safeData = Array.isArray(tableData?.data) ? tableData.data : []
@@ -246,13 +254,13 @@ const SectionTable = ({
     <TableHead>
       <TableRow>
         {Object.entries(tableHeaderMetadata).map(([fieldId, metadata]: [string, MetaDataProps]) => (
-          <TableCell key={fieldId}>
+          <StyledHeaderCell key={fieldId}>
             <TableCellWithSortLogic
               sortHandler={sortHandler}
               fieldId={fieldId}
               metadata={metadata}
             />
-          </TableCell>
+          </StyledHeaderCell>
         ))}
       </TableRow>
     </TableHead>
@@ -279,7 +287,10 @@ const SectionTable = ({
   }
 
   return (
-    <TableWrapper component={Paper}>
+    <TableWrapper
+      component={transparent ? ('div' as any) : Paper}
+      sx={transparent ? { background: 'transparent', boxShadow: 'none' } : undefined}
+    >
       <StyledTable>
         <TableHeadCustom />
         <TableBody

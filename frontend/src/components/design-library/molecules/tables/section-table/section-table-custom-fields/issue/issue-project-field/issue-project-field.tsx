@@ -10,12 +10,21 @@ const IssueProjectField = ({ issue }) => {
   const profile = isProfile ? '/profile' : ''
   const explore = isExplore ? '/explore' : ''
 
-  if (!project?.id) return <Typography variant="caption">no project</Typography>
+  if (!project?.id) return <Typography variant="caption" color="text.disabled">–</Typography>
 
   const { id, name, OrganizationId } = project
   const url = `${profile}${explore}/organizations/${OrganizationId}/projects/${id}`
 
-  return <Chip label={project ? name : 'no project'} component={Link} href={'/#' + url} clickable />
+  return (
+    <Chip
+      label={name}
+      component={Link}
+      href={'/#' + url}
+      clickable
+      variant="outlined"
+      size="small"
+    />
+  )
 }
 
 export default IssueProjectField
