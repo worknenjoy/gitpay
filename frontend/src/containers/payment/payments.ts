@@ -28,8 +28,19 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => {
     addNotification: (message: any, options: any) => dispatch(addNotification(message, options)),
     filterTasks: (key: any, value: any, additional: any) =>
       dispatch(filterTasks(key, value, additional)),
-    listTasks: ({ organizationId, projectId, userId, status, labelIds, languageIds, page, limit }: any) =>
-      dispatch(listTasks({ organizationId, projectId, userId, status, labelIds, languageIds, page, limit })),
+    listTasks: ({
+      organizationId,
+      projectId,
+      userId,
+      status,
+      labelIds,
+      languageIds,
+      page,
+      limit
+    }: any) =>
+      dispatch(
+        listTasks({ organizationId, projectId, userId, status, labelIds, languageIds, page, limit })
+      ),
     listOrders: (query: any) => dispatch(listOrders(query)),
     getOrderDetails: (id: any) => dispatch(detailOrder(id)),
     refundOrder: (id: any) => dispatch(refundOrder(id)),
