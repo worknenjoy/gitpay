@@ -1,20 +1,12 @@
 import React from 'react'
-import { Avatar, Box, Button, CardContent, Chip, Divider, Typography, Tooltip } from '@mui/material'
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
-import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined'
-import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined'
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
-import LinkIcon from '@mui/icons-material/Link'
+import { Avatar, Box, Chip, Typography } from '@mui/material'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import slugify from '@sindresorhus/slugify'
-import { RootCard } from './organization-card.styles'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import OrganizationCardPlaceholder from './organization-card.placeholder'
-
-import logoGithub from 'images/github-logo.png'
+import ResourceCard from '../resource-card'
 
 const OrganizationCard = ({ organization, completed }) => {
-  const history = useHistory()
-
   if (!completed) return <OrganizationCardPlaceholder />
 
   const projects = organization.Projects || []
@@ -27,151 +19,94 @@ const OrganizationCard = ({ organization, completed }) => {
     (sum, p) => sum + (p.Tasks || []).reduce((b, t) => b + (t.value ? parseInt(t.value) : 0), 0),
     0
   )
-  const hasTasks = projects.some((p) => p.Tasks)
-
-  const githubUrl =
-    organization.provider === 'bitbucket'
-      ? `https://bitbucket.com/${organization.name}`
-      : `https://github.com/${organization.name}`
 
   const organizationPath = `/organizations/${organization.id}/${slugify(organization.name)}`
 
-  return (
-    <RootCard>
-      <CardContent
-        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4, pb: 2 }}
-      >
-        <Avatar
-          aria-label={organization.name}
-          sx={{ width: 80, height: 80, fontSize: 32, mb: 2, bgcolor: 'primary.main' }}
-        >
+  const header = (
+    <Box display='flex' justifyContent='space-between' alignItems='flex-start' mb={1}>
+      <Box display='flex' alignItems='center' gap={0.75} minWidth={0} overflow='hidden' flexShrink={1}>
+        <Avatar sx={{ width: 20, height: 20, fontSize: 11, bgcolor: 'primary.main', flexShrink: 0 }}>
           {organization.name[0]}
         </Avatar>
-
-        <Typography align="center" variant="h6" fontWeight={600} gutterBottom>
+        <Typography variant='subtitle2' fontWeight={700} noWrap>
           <Link to={organizationPath} style={{ textDecoration: 'none', color: 'inherit' }}>
             {organization.name}
           </Link>
         </Typography>
-
-        {organization.User && (
-          <Typography align="center" variant="body2" color="text.secondary" gutterBottom>
-            <AccountCircleOutlinedIcon sx={{ fontSize: 14, verticalAlign: 'middle', mr: 0.5 }} />
-            <Link
-              to={`/profile/users/${organization.User.id}`}
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              {organization.User.name || organization.User.username}
-            </Link>
-          </Typography>
-        )}
-
-        {organization.description && (
-          <Typography
-            align="center"
-            variant="body2"
-            color="text.secondary"
-            sx={{
-              mt: 1,
-              display: '-webkit-box',
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              lineHeight: 1.5
-            }}
-          >
-            {organization.description}
-          </Typography>
-        )}
-
-        <Box display="flex" alignItems="center" gap={1.5} mt={2}>
-          {organization.name && (
-            <Tooltip title="View on GitHub">
-              <a href={githubUrl} target="_blank" rel="noreferrer">
-                <img
-                  width="22"
-                  src={logoGithub}
-                  style={{
-                    borderRadius: '50%',
-                    padding: 2,
-                    backgroundColor: 'black',
-                    display: 'block'
-                  }}
-                />
-              </a>
-            </Tooltip>
-          )}
-          {organization.websiteUrl && (
-            <Tooltip title={organization.websiteUrl}>
-              <a
-                href={organization.websiteUrl}
-                target="_blank"
-                rel="noreferrer"
-                style={{ color: 'inherit', display: 'flex', alignItems: 'center' }}
-              >
-                <LinkIcon sx={{ fontSize: 20, color: 'text.secondary' }} />
-              </a>
-            </Tooltip>
-          )}
-        </Box>
-      </CardContent>
-
-      <Box flexGrow={1} />
+      </Box>
 
       {projectCount > 0 && (
-        <Box px={2} pb={2} display="flex" flexWrap="wrap" gap={0.75} justifyContent="center">
-          <Chip
-            icon={<FolderOutlinedIcon />}
-            label={`${projectCount} project${projectCount !== 1 ? 's' : ''}`}
-            size="small"
-            variant="outlined"
-          />
-          {hasTasks && (
-            <Chip
-              icon={<BugReportOutlinedIcon />}
-              label={
-                openIssues > 0
-                  ? `${openIssues} open issue${openIssues !== 1 ? 's' : ''}`
-                  : 'no open issues'
-              }
-              size="small"
-              variant="outlined"
-              color={openIssues > 0 ? 'warning' : 'default'}
-            />
-          )}
-          {bounties > 0 && (
-            <Chip
-              icon={<AttachMoneyIcon />}
-              label={`$${bounties} in bounties`}
-              size="small"
-              variant="outlined"
-              color="success"
-            />
-          )}
-        </Box>
+        <Chip
+          label={`${projectCount} project${projectCount !== 1 ? 's' : ''}`}
+          size='small'
+          variant='outlined'
+          sx={{ ml: 1, flexShrink: 0, height: 22, fontSize: 11 }}
+        />
       )}
+    </Box>
+  )
 
-      <Divider />
+  const footer = (
+    <>
+      <Box display='flex' gap={2}>
+        {bounties > 0 && (
+          <Typography variant='caption' color='text.secondary'>
+            Bounties{' '}
+            <Box component='span' fontWeight={700} color='text.primary'>
+              ${bounties.toLocaleString()}
+            </Box>
+          </Typography>
+        )}
+        {openIssues > 0 && (
+          <Typography variant='caption' color='text.secondary'>
+            Open issues{' '}
+            <Box component='span' fontWeight={700} color='text.primary'>
+              {openIssues}
+            </Box>
+          </Typography>
+        )}
+      </Box>
 
-      <Box p={2}>
-        <Button
-          fullWidth
-          variant="contained"
-          disableElevation
-          onClick={() => history.push(organizationPath)}
+      <Link to={organizationPath} style={{ textDecoration: 'none' }}>
+        <Box
+          display='flex'
+          alignItems='center'
+          gap={0.5}
           sx={{
-            borderRadius: 6,
-            bgcolor: 'grey.800',
-            color: 'white',
-            textTransform: 'none',
-            fontWeight: 600,
-            '&:hover': { bgcolor: 'grey.900' }
+            color: 'warning.dark',
+            '&:hover .org-card-arrow': { transform: 'translateX(4px)' }
           }}
         >
-          View Organization
-        </Button>
-      </Box>
-    </RootCard>
+          <Typography variant='caption' fontWeight={600} color='inherit'>
+            View organization
+          </Typography>
+          <ArrowForwardIcon
+            className='org-card-arrow'
+            sx={{ fontSize: 14, transition: 'transform 0.2s ease', color: 'inherit' }}
+          />
+        </Box>
+      </Link>
+    </>
+  )
+
+  return (
+    <ResourceCard header={header} footer={footer}>
+      {organization.description && (
+        <Typography
+          variant='body2'
+          color='text.secondary'
+          sx={{
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            lineHeight: 1.5
+          }}
+        >
+          {organization.description}
+        </Typography>
+      )}
+    </ResourceCard>
   )
 }
 

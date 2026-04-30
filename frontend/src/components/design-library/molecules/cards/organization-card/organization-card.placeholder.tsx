@@ -1,42 +1,34 @@
 import React from 'react'
-import { Box, CardContent, Divider, Skeleton } from '@mui/material'
-import { RootCard } from './organization-card.styles'
+import { Box, Card, CardContent, Divider, Skeleton } from '@mui/material'
 
-const OrganizationCardPlaceholder: React.FC = () => {
-  return (
-    <RootCard>
-      <CardContent
-        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', pt: 4, pb: 2 }}
-      >
-        <Skeleton variant="circular" width={80} height={80} sx={{ mb: 2 }} />
-
-        <Skeleton variant="text" width="55%" height={28} sx={{ mb: 0.5 }} />
-        <Skeleton variant="text" width="40%" height={20} sx={{ mb: 1 }} />
-
-        <Skeleton variant="text" width="90%" />
-        <Skeleton variant="text" width="80%" />
-        <Skeleton variant="text" width="70%" sx={{ mb: 2 }} />
-
-        <Box display="flex" gap={1.5} mt={1}>
-          <Skeleton variant="circular" width={26} height={26} />
-          <Skeleton variant="circular" width={26} height={26} />
+const OrganizationCardPlaceholder: React.FC = () => (
+  <Card variant='outlined' sx={{ borderRadius: 2, display: 'flex', flexDirection: 'column' }}>
+    <CardContent sx={{ pb: 1.5 }}>
+      <Box display='flex' justifyContent='space-between' alignItems='center' mb={1}>
+        <Box display='flex' alignItems='center' gap={0.75}>
+          <Skeleton variant='circular' width={20} height={20} />
+          <Skeleton variant='text' width={60} height={18} />
+          <Skeleton variant='text' width={8} height={18} />
+          <Skeleton variant='text' width={90} height={18} />
         </Box>
-      </CardContent>
-
-      <Box flexGrow={1} />
-
-      <Box px={2} pb={2} display="flex" flexWrap="wrap" gap={0.75} justifyContent="center">
-        <Skeleton variant="rounded" width={90} height={24} sx={{ borderRadius: 4 }} />
-        <Skeleton variant="rounded" width={110} height={24} sx={{ borderRadius: 4 }} />
+        <Skeleton variant='rounded' width={70} height={22} sx={{ borderRadius: 4 }} />
       </Box>
 
-      <Divider />
+      <Skeleton variant='text' width='95%' />
+      <Skeleton variant='text' width='70%' />
+    </CardContent>
 
-      <Box p={2}>
-        <Skeleton variant="rounded" width="100%" height={36} sx={{ borderRadius: 6 }} />
+    <Box flexGrow={1} />
+    <Divider />
+
+    <Box px={2} py={1.25} display='flex' justifyContent='space-between' alignItems='center'>
+      <Box display='flex' gap={2}>
+        <Skeleton variant='text' width={80} height={16} />
+        <Skeleton variant='text' width={70} height={16} />
       </Box>
-    </RootCard>
-  )
-}
+      <Skeleton variant='text' width={110} height={16} />
+    </Box>
+  </Card>
+)
 
 export default OrganizationCardPlaceholder
