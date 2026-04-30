@@ -60,21 +60,28 @@ const ProjectCard = ({ project, completed }: { project: any; completed: boolean 
   const languages: string[] = project.languages ?? []
 
   const header = (
-    <Box display='flex' justifyContent='space-between' alignItems='flex-start' mb={1}>
-      <Box display='flex' alignItems='center' gap={0.75} minWidth={0} overflow='hidden' flexShrink={1}>
+    <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={1}>
+      <Box
+        display="flex"
+        alignItems="center"
+        gap={0.75}
+        minWidth={0}
+        overflow="hidden"
+        flexShrink={1}
+      >
         <img
-          width='16'
-          height='16'
+          width="16"
+          height="16"
           src={providerLogo}
           style={{ ...providerLogoStyle, display: 'block', flexShrink: 0 }}
         />
-        <Typography variant='body2' color='text.secondary' noWrap sx={{ flexShrink: 0 }}>
+        <Typography variant="body2" color="text.secondary" noWrap sx={{ flexShrink: 0 }}>
           {project.Organization?.name}
         </Typography>
-        <Typography variant='body2' color='text.secondary' sx={{ flexShrink: 0 }}>
+        <Typography variant="body2" color="text.secondary" sx={{ flexShrink: 0 }}>
           /
         </Typography>
-        <Typography variant='subtitle2' fontWeight={700} noWrap>
+        <Typography variant="subtitle2" fontWeight={700} noWrap>
           <Link to={currentProjectPath} style={{ textDecoration: 'none', color: 'inherit' }}>
             {project.name}
           </Link>
@@ -84,9 +91,9 @@ const ProjectCard = ({ project, completed }: { project: any; completed: boolean 
       {openIssues > 0 && (
         <Chip
           label={`${openIssues} open`}
-          size='small'
-          color='warning'
-          variant='outlined'
+          size="small"
+          color="warning"
+          variant="outlined"
           sx={{ ml: 1, flexShrink: 0, height: 22, fontSize: 11 }}
         />
       )}
@@ -95,18 +102,18 @@ const ProjectCard = ({ project, completed }: { project: any; completed: boolean 
 
   const footer = (
     <>
-      <Box display='flex' gap={2}>
+      <Box display="flex" gap={2}>
         {paidOut > 0 && (
-          <Typography variant='caption' color='text.secondary'>
+          <Typography variant="caption" color="text.secondary">
             Paid out{' '}
-            <Box component='span' fontWeight={700} color='text.primary'>
+            <Box component="span" fontWeight={700} color="text.primary">
               ${paidOut.toLocaleString()}
             </Box>
           </Typography>
         )}
-        <Typography variant='caption' color='text.secondary'>
+        <Typography variant="caption" color="text.secondary">
           Issues{' '}
-          <Box component='span' fontWeight={700} color='text.primary'>
+          <Box component="span" fontWeight={700} color="text.primary">
             {totalIssues}
           </Box>
         </Typography>
@@ -114,19 +121,19 @@ const ProjectCard = ({ project, completed }: { project: any; completed: boolean 
 
       <Link to={currentProjectPath} style={{ textDecoration: 'none' }}>
         <Box
-          display='flex'
-          alignItems='center'
+          display="flex"
+          alignItems="center"
           gap={0.5}
           sx={{
             color: 'warning.dark',
             '&:hover .project-card-arrow': { transform: 'translateX(4px)' }
           }}
         >
-          <Typography variant='caption' fontWeight={600} color='inherit'>
+          <Typography variant="caption" fontWeight={600} color="inherit">
             View project
           </Typography>
           <ArrowForwardIcon
-            className='project-card-arrow'
+            className="project-card-arrow"
             sx={{ fontSize: 14, transition: 'transform 0.2s ease', color: 'inherit' }}
           />
         </Box>
@@ -138,8 +145,8 @@ const ProjectCard = ({ project, completed }: { project: any; completed: boolean 
     <ResourceCard header={header} footer={footer}>
       {project.description && (
         <Typography
-          variant='body2'
-          color='text.secondary'
+          variant="body2"
+          color="text.secondary"
           sx={{
             mb: languages.length > 0 ? 1.5 : 0,
             display: '-webkit-box',
@@ -154,15 +161,15 @@ const ProjectCard = ({ project, completed }: { project: any; completed: boolean 
       )}
 
       {languages.length > 0 && (
-        <Box display='flex' gap={0.75} flexWrap='wrap'>
+        <Box display="flex" gap={0.75} flexWrap="wrap">
           {languages.map((lang) => {
             const color = LANGUAGE_COLORS[lang.toLowerCase()]
             return (
               <Chip
                 key={lang}
                 label={lang}
-                size='small'
-                variant='outlined'
+                size="small"
+                variant="outlined"
                 sx={{
                   height: 22,
                   fontSize: 11,

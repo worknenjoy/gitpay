@@ -25,7 +25,7 @@ const ResourceCard = ({ header, children, footer }: ResourceCardProps) => (
     </CardContent>
     <Box flexGrow={1} />
     <Divider />
-    <Box px={2} py={1.25} display='flex' justifyContent='space-between' alignItems='center'>
+    <Box px={2} py={1.25} display="flex" justifyContent="space-between" alignItems="center">
       {footer}
     </Box>
   </Card>

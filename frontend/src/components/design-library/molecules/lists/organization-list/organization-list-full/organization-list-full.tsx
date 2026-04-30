@@ -45,17 +45,14 @@ const OrganizationList = ({ organizations }) => {
   const recordsPerPage = 12
 
   useEffect(() => {
-    data && setTotal(data.length)
-    changePage()
-  }, [data])
+    if (data) {
+      setTotal(data.length)
+      setCurrentOrganizations(paginate(data, recordsPerPage, page))
+    }
+  }, [data, page])
 
   const handlePagination = (e, value) => {
     setPage(value)
-    changePage()
-  }
-
-  const changePage = () => {
-    setCurrentOrganizations(paginate(data, recordsPerPage, page))
   }
 
   const pages = Math.ceil(total / recordsPerPage)

@@ -17,13 +17,15 @@ const ProjectListFull = ({ projects }) => {
   const recordsPerPage = 12
 
   useEffect(() => {
-    setTotal(filter(projects.data).length)
-    changePage()
-  }, [projects.data])
+    if (data) {
+      const filtered = filter(data)
+      setTotal(filtered.length)
+      setCurrentProjects(paginate(filtered, recordsPerPage, page))
+    }
+  }, [data, page])
 
   const handlePagination = (e, value) => {
     setPage(value)
-    changePage()
   }
 
   const hasOpenIssues = (project) => {
@@ -48,10 +50,6 @@ const ProjectListFull = ({ projects }) => {
 
   const filter = (data) => {
     return projectSortMoreBounties(projectsSort(data))
-  }
-
-  const changePage = () => {
-    setCurrentProjects(paginate(filter(data), recordsPerPage, page))
   }
 
   const pages = Math.ceil(total / recordsPerPage)
