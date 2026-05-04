@@ -77,11 +77,15 @@ function safeIntParam(val: any): number | null {
 
 export async function taskSearch(searchParams: any) {
   const whereBase: any = {
-    [Op.or]: [{ private: null }, { private: false }]
+    [Op.or]: [{ private: null }, { private: false }],
+    not_listed: { [Op.or]: [null, false] }
   }
 
   if (searchParams.projectId) whereBase.ProjectId = { [Op.eq]: parseInt(searchParams.projectId) }
-  if (searchParams.userId) whereBase.userId = searchParams.userId
+  if (searchParams.userId) {
+    whereBase.userId = searchParams.userId
+    delete whereBase.not_listed
+  }
 
   const assignedToId = safeIntParam(searchParams.assignedTo)
   if (assignedToId !== null) {

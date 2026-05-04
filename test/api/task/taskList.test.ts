@@ -308,6 +308,50 @@ describe('GET /tasks/list', () => {
     })
   })
 
+  describe('not_listed filtering', () => {
+    it('should exclude not_listed tasks from public listing', async () => {
+      const user = await UserFactory()
+      await TaskFactory({ userId: user.id, not_listed: false })
+      await TaskFactory({ userId: user.id, not_listed: true })
+
+      const res = await agent.get('/tasks/list').query({ limit: 10, page: 0 }).expect(200)
+
+      expect(res.body.data).to.be.an('array')
+      expect(res.body.data.length).to.equal(1)
+      expect(res.body.data[0].not_listed).to.equal(false)
+    })
+
+    it('should include not_listed tasks when filtering by owner userId', async () => {
+      const user = await UserFactory()
+      await TaskFactory({ userId: user.id, not_listed: false })
+      await TaskFactory({ userId: user.id, not_listed: true })
+
+      const res = await agent
+        .get('/tasks/list')
+        .query({ userId: user.id, limit: 10, page: 0 })
+        .expect(200)
+
+      expect(res.body.data).to.be.an('array')
+      expect(res.body.data.length).to.equal(2)
+    })
+
+    it('should not expose a not_listed task of one user when another user queries by their own userId', async () => {
+      const owner = await UserFactory()
+      const other = await UserFactory()
+      await TaskFactory({ userId: owner.id, not_listed: true })
+      await TaskFactory({ userId: other.id, not_listed: false })
+
+      const res = await agent
+        .get('/tasks/list')
+        .query({ userId: other.id, limit: 10, page: 0 })
+        .expect(200)
+
+      expect(res.body.data).to.be.an('array')
+      expect(res.body.data.length).to.equal(1)
+      expect(res.body.data[0].userId).to.equal(other.id)
+    })
+  })
+
   describe('safeIntParam validation', () => {
     it('should ignore non-integer values for assignedTo and return all tasks', async () => {
       const user = await UserFactory()
