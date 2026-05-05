@@ -24,6 +24,10 @@ export interface TaskAttributes {
   TransferId?: number | null
   ProjectId?: number | null
   userId?: number | null
+  funded_at?: Date | null
+  claimed_at?: Date | null
+  completed_at?: Date | null
+  closed_at?: Date | null
   createdAt?: Date
   updatedAt?: Date
 }
@@ -53,6 +57,10 @@ export type TaskCreationAttributes = Optional<
   | 'TransferId'
   | 'ProjectId'
   | 'userId'
+  | 'funded_at'
+  | 'claimed_at'
+  | 'completed_at'
+  | 'closed_at'
   | 'createdAt'
   | 'updatedAt'
 >
@@ -84,6 +92,10 @@ export default class Task
   public TransferId!: number | null
   public ProjectId!: number | null
   public userId!: number | null
+  public funded_at!: Date | null
+  public claimed_at!: Date | null
+  public completed_at!: Date | null
+  public closed_at!: Date | null
   public createdAt!: Date
   public updatedAt!: Date
 
@@ -191,6 +203,22 @@ export default class Task
             model: 'Projects',
             key: 'id'
           },
+          allowNull: true
+        },
+        funded_at: {
+          type: DataTypes.DATE,
+          allowNull: true
+        },
+        claimed_at: {
+          type: DataTypes.DATE,
+          allowNull: true
+        },
+        completed_at: {
+          type: DataTypes.DATE,
+          allowNull: true
+        },
+        closed_at: {
+          type: DataTypes.DATE,
           allowNull: true
         },
         createdAt: {

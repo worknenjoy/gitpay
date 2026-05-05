@@ -1,11 +1,10 @@
-import Models from '../../../models'
+import { issueFundedStateService } from './states/issueFundedStateService'
 import { issueClaimedStateService } from './states/issueClaimedStateService'
 import { issueCompletedStateService } from './states/issueCompletedStateService'
 
-const models = Models as any
-
 export async function syncAllIssuesStates(): Promise<any> {
+  const resultFunded = await issueFundedStateService()
   const resultClaimed = await issueClaimedStateService()
   const resultCompleted = await issueCompletedStateService()
-  return [...resultClaimed, ...resultCompleted]
+  return [...resultFunded, ...resultClaimed, ...resultCompleted]
 }

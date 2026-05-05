@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles'
 import { blue, green, grey, teal } from '@mui/material/colors'
 
-const PREFIX = 'TaskStateStatus'
+const PREFIX = 'IssueStateStatus'
 
 export const classes = {
   created: `${PREFIX}-created`,
@@ -10,7 +10,7 @@ export const classes = {
   completed: `${PREFIX}-completed`
 } as const
 
-export const TaskStateStatusRoot = styled('div')(({ theme }) => ({
+export const IssueStateStatusRoot = styled('div')(({ theme }) => ({
   [`.${classes.created}`]: {
     backgroundColor: grey[400],
     color: theme.palette.common.white,

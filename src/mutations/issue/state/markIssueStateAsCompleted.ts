@@ -1,5 +1,6 @@
 import { TaskStates } from '../../../constants/task'
 import Models from '../../../models'
+import { fillIssueTimestampFromTransfer } from './fillIssueTimestampFromTransfer'
 
 const models = Models as any
 
@@ -22,6 +23,7 @@ export const markIssueStateAsCompleted = async (issueId: number) => {
     )
   }
   await issue.update({ state: TaskStates.COMPLETED })
-  await issue.reload() // Reload the issue to get the updated state
+  await fillIssueTimestampFromTransfer(issue, 'completed_at')
+  await issue.reload()
   return issue
 }

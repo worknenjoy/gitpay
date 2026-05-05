@@ -20,7 +20,7 @@ import {
   SidebarRoot
 } from './issue-sidebar.styles'
 import IssuePublicStatus from 'design-library/atoms/status/issue-public-status/issue-public-status'
-import TaskStateStatus from 'design-library/atoms/status/task-state-status/task-state-status'
+import IssueStateStatus from 'design-library/atoms/status/issue-state-status/issue-state-status'
 import TaskDeadlineDrawer from 'design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer'
 import IssueActionsByRole from 'design-library/atoms/buttons/issue-actions-by-role/issue-actions-by-role'
 import Constants from '../../../../../consts'
@@ -147,7 +147,21 @@ const IssueSidebar = ({
               <FormattedMessage id="task.state.label" defaultMessage="State" />
             </Typography>
             <div>
-              <TaskStateStatus state={taskData.state} completed={taskCompleted} />
+              <IssueStateStatus
+                  state={taskData.state}
+                  completed={taskCompleted}
+                  date={
+                    taskData.state === 'created'
+                      ? taskData.createdAt
+                      : taskData.state === 'funded'
+                        ? taskData.funded_at
+                        : taskData.state === 'claimed'
+                          ? taskData.claimed_at
+                          : taskData.state === 'completed'
+                            ? taskData.completed_at
+                            : null
+                  }
+                />
             </div>
           </SidebarItem>
         )}

@@ -5,16 +5,19 @@ import {
   AssignmentInd as ClaimedIcon,
   TaskAlt as CompletedIcon
 } from '@mui/icons-material'
+import { Typography } from '@mui/material'
 import { useIntl } from 'react-intl'
+import MomentComponent from 'moment'
 import BaseStatus from 'design-library/atoms/status/base-status/base-status'
-import classes, { TaskStateStatusRoot } from './task-state-status.styles'
+import classes, { IssueStateStatusRoot } from './issue-state-status.styles'
 
-type TaskStateStatusProps = {
+type IssueStateStatusProps = {
   state?: string | null
   completed?: boolean
+  date?: string | Date | null
 }
 
-const TaskStateStatus = ({ state, completed = true }: TaskStateStatusProps) => {
+const IssueStateStatus = ({ state, completed = true, date }: IssueStateStatusProps) => {
   const intl = useIntl()
 
   const statusList = [
@@ -47,10 +50,15 @@ const TaskStateStatus = ({ state, completed = true }: TaskStateStatusProps) => {
   if (!state) return null
 
   return (
-    <TaskStateStatusRoot>
+    <IssueStateStatusRoot>
       <BaseStatus classes={classes} status={state} statusList={statusList} completed={completed} />
-    </TaskStateStatusRoot>
+      {date && (
+        <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 0.5 }}>
+          {MomentComponent(date).fromNow()}
+        </Typography>
+      )}
+    </IssueStateStatusRoot>
   )
 }
 
-export default TaskStateStatus
+export default IssueStateStatus

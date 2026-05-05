@@ -10,7 +10,10 @@ import {
   TrendingUp as StateIcon,
   History as DefaultIcon,
   LockOutlined as PrivacyIcon,
-  Star as LevelIcon
+  Star as LevelIcon,
+  Paid as FundedIcon,
+  AssignmentInd as ClaimedIcon,
+  TaskAlt as CompletedIcon
 } from '@mui/icons-material'
 import { FormattedMessage, useIntl } from 'react-intl'
 import moment from 'moment'
@@ -38,7 +41,10 @@ const FIELD_ICONS: Record<string, React.ReactElement> = {
   paid: <PaidIcon fontSize="small" />,
   level: <LevelIcon fontSize="small" />,
   private: <PrivacyIcon fontSize="small" />,
-  not_listed: <PrivacyIcon fontSize="small" />
+  not_listed: <PrivacyIcon fontSize="small" />,
+  funded_at: <FundedIcon fontSize="small" />,
+  claimed_at: <ClaimedIcon fontSize="small" />,
+  completed_at: <CompletedIcon fontSize="small" />
 }
 
 const FIELD_COLORS: Record<string, string> = {
@@ -51,7 +57,10 @@ const FIELD_COLORS: Record<string, string> = {
   paid: '#2e7d32',
   level: '#795548',
   private: '#455a64',
-  not_listed: '#455a64'
+  not_listed: '#455a64',
+  funded_at: '#1565c0',
+  claimed_at: '#00796b',
+  completed_at: '#2e7d32'
 }
 
 const STATUS_LABELS: Record<string, string> = {
@@ -76,6 +85,8 @@ function formatFieldValue(field: string, value: string | null | undefined): stri
   if (field === 'private') return value === 'true' ? 'Private' : 'Public'
   if (field === 'not_listed') return value === 'true' ? 'Unlisted' : 'Listed'
   if (field === 'deadline') return value ? moment(value).format('MMM D, YYYY') : '—'
+  if (['funded_at', 'claimed_at', 'completed_at'].includes(field))
+    return value ? moment(value).fromNow() : '—'
   if (value.length > 60) return value.slice(0, 60) + '…'
   return value
 }
@@ -106,6 +117,42 @@ function buildMessage(
 
   const hasOld = oldVal != null && oldVal !== 'null' && oldVal !== '0' && oldVal !== ''
   const isDescription = field === 'description' || field === 'title'
+
+  if (field === 'funded_at') {
+    return (
+      <span>
+        <FormattedMessage
+          id="task.history.funded"
+          defaultMessage="Funded {when}"
+          values={{ when: <strong>{fmtNew}</strong> }}
+        />
+      </span>
+    )
+  }
+
+  if (field === 'claimed_at') {
+    return (
+      <span>
+        <FormattedMessage
+          id="task.history.claimed"
+          defaultMessage="Claimed {when}"
+          values={{ when: <strong>{fmtNew}</strong> }}
+        />
+      </span>
+    )
+  }
+
+  if (field === 'completed_at') {
+    return (
+      <span>
+        <FormattedMessage
+          id="task.history.completed"
+          defaultMessage="Completed {when}"
+          values={{ when: <strong>{fmtNew}</strong> }}
+        />
+      </span>
+    )
+  }
 
   if (field === 'value') {
     if (!hasOld || fmtOld === '$0.00') {
