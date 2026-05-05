@@ -148,20 +148,20 @@ const IssueSidebar = ({
             </Typography>
             <div>
               <IssueStateStatus
-                  state={taskData.state}
-                  completed={taskCompleted}
-                  date={
-                    taskData.state === 'created'
-                      ? taskData.createdAt
-                      : taskData.state === 'funded'
-                        ? taskData.funded_at
-                        : taskData.state === 'claimed'
-                          ? taskData.claimed_at
-                          : taskData.state === 'completed'
-                            ? taskData.completed_at
-                            : null
-                  }
-                />
+                state={taskData.state}
+                completed={taskCompleted}
+                date={
+                  taskData.state === 'created'
+                    ? taskData.createdAt
+                    : taskData.state === 'funded'
+                      ? taskData.funded_at
+                      : taskData.state === 'claimed'
+                        ? taskData.claimed_at
+                        : taskData.state === 'completed'
+                          ? taskData.completed_at
+                          : null
+                }
+              />
             </div>
           </SidebarItem>
         )}
