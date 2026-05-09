@@ -1,6 +1,3 @@
-@use "sass:meta";
-@use "sass:math";
-
 // Name:            Table
 // Description:     Styles for tables
 //
@@ -25,17 +22,36 @@
 // Variables
 // ========================================================================
 
+$table-margin-vertical:                          $global-margin !default;
 
+$table-cell-padding-vertical:                    16px !default;
+$table-cell-padding-horizontal:                  12px !default;
 
+$table-header-cell-font-size:                    $global-font-size !default;
+$table-header-cell-font-weight:                  bold !default;
+$table-header-cell-color:                        $global-color !default;
 
+$table-footer-font-size:                         $global-small-font-size !default;
 
+$table-caption-font-size:                        $global-small-font-size !default;
+$table-caption-color:                            $global-muted-color !default;
 
+$table-row-active-background:                    #ffd !default;
 
+$table-divider-border-width:                     $global-border-width !default;
+$table-divider-border:                           $global-border !default;
 
+$table-striped-row-background:                   $global-muted-background !default;
 
+$table-hover-row-background:                     $table-row-active-background !default;
 
+$table-small-cell-padding-vertical:              10px !default;
+$table-small-cell-padding-horizontal:            12px !default;
 
+$table-large-cell-padding-vertical:              22px !default;
+$table-large-cell-padding-horizontal:            12px !default;
 
+$table-expand-min-width:                         150px !default;
 
 
 /* ========================================================================
@@ -56,7 +72,7 @@
     width: 100%;
     /* 3 */
     margin-bottom: $table-margin-vertical;
-    @if(meta.mixin-exists(hook-table)) {@include hook-table();}
+    @if(mixin-exists(hook-table)) {@include hook-table();}
 }
 
 /* Add margin if adjacent element */
@@ -78,7 +94,7 @@
     font-size: $table-header-cell-font-size;
     font-weight: $table-header-cell-font-weight;
     color: $table-header-cell-color;
-    @if(meta.mixin-exists(hook-table-header-cell)) {@include hook-table-header-cell();}
+    @if(mixin-exists(hook-table-header-cell)) {@include hook-table-header-cell();}
 }
 
 
@@ -88,7 +104,7 @@
 .uk-table td {
     padding: $table-cell-padding-vertical $table-cell-padding-horizontal;
     vertical-align: top;
-    @if(meta.mixin-exists(hook-table-cell)) {@include hook-table-cell();}
+    @if(mixin-exists(hook-table-cell)) {@include hook-table-cell();}
 }
 
 /*
@@ -103,7 +119,7 @@
 
 .uk-table tfoot {
     font-size: $table-footer-font-size;
-    @if(meta.mixin-exists(hook-table-footer)) {@include hook-table-footer();}
+    @if(mixin-exists(hook-table-footer)) {@include hook-table-footer();}
 }
 
 
@@ -114,7 +130,17 @@
     font-size: $table-caption-font-size;
     text-align: left;
     color: $table-caption-color;
-    @if(meta.mixin-exists(hook-table-caption)) {@include hook-table-caption();}
+    @if(mixin-exists(hook-table-caption)) {@include hook-table-caption();}
+}
+
+
+/* Row
+ ========================================================================== */
+
+.uk-table > tr.uk-active,
+.uk-table tbody tr.uk-active {
+    background: $table-row-active-background;
+    @if(mixin-exists(hook-table-row-active)) {@include hook-table-row-active();}
 }
 
 
@@ -136,7 +162,7 @@
 .uk-table-divider > :not(:first-child) > tr,
 .uk-table-divider > :first-child > tr:not(:first-child) {
     border-top: $table-divider-border-width solid $table-divider-border;
-    @if(meta.mixin-exists(hook-table-divider)) {@include hook-table-divider();}
+    @if(mixin-exists(hook-table-divider)) {@include hook-table-divider();}
 }
 
 /*
@@ -146,7 +172,7 @@
 .uk-table-striped > tr:nth-of-type(odd),
 .uk-table-striped tbody tr:nth-of-type(odd) {
     background: $table-striped-row-background;
-    @if(meta.mixin-exists(hook-table-striped)) {@include hook-table-striped();}
+    @if(mixin-exists(hook-table-striped)) {@include hook-table-striped();}
 }
 
 /*
@@ -156,18 +182,9 @@
 .uk-table-hover > tr:hover,
 .uk-table-hover tbody tr:hover {
     background: $table-hover-row-background;
-    @if(meta.mixin-exists(hook-table-hover)) {@include hook-table-hover();}
+    @if(mixin-exists(hook-table-hover)) {@include hook-table-hover();}
 }
 
-
-/* Active state
- ========================================================================== */
-
-.uk-table > tr.uk-active,
-.uk-table tbody tr.uk-active {
-    background: $table-row-active-background;
-    @if(meta.mixin-exists(hook-table-row-active)) {@include hook-table-row-active();}
-}
 
 /* Size modifier
  ========================================================================== */
@@ -175,13 +192,13 @@
 .uk-table-small th,
 .uk-table-small td {
     padding: $table-small-cell-padding-vertical $table-small-cell-padding-horizontal;
-    @if(meta.mixin-exists(hook-table-small)) {@include hook-table-small();}
+    @if(mixin-exists(hook-table-small)) {@include hook-table-small();}
 }
 
 .uk-table-large th,
 .uk-table-large td {
     padding: $table-large-cell-padding-vertical $table-large-cell-padding-horizontal;
-    @if(meta.mixin-exists(hook-table-large)) {@include hook-table-large();}
+    @if(mixin-exists(hook-table-large)) {@include hook-table-large();}
 }
 
 
@@ -245,11 +262,11 @@
 
     .uk-table-responsive th:not(:first-child):not(.uk-table-link),
     .uk-table-responsive td:not(:first-child):not(.uk-table-link),
-    .uk-table-responsive .uk-table-link:not(:first-child) > a { padding-top: math.round(($table-cell-padding-vertical * 0.33333)) !important; }
+    .uk-table-responsive .uk-table-link:not(:first-child) > a { padding-top: round($table-cell-padding-vertical / 3) !important; }
 
     .uk-table-responsive th:not(:last-child):not(.uk-table-link),
     .uk-table-responsive td:not(:last-child):not(.uk-table-link),
-    .uk-table-responsive .uk-table-link:not(:last-child) > a { padding-bottom: math.round(($table-cell-padding-vertical * 0.33333)) !important; }
+    .uk-table-responsive .uk-table-link:not(:last-child) > a { padding-bottom: round($table-cell-padding-vertical / 3) !important; }
 
     .uk-table-justify.uk-table-responsive th,
     .uk-table-justify.uk-table-responsive td {
@@ -263,7 +280,7 @@
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-table-misc)) {@include hook-table-misc();}
+@if(mixin-exists(hook-table-misc)) {@include hook-table-misc();}
 
 // @mixin hook-table(){}
 // @mixin hook-table-header-cell(){}
@@ -282,6 +299,12 @@
 // Inverse
 // ========================================================================
 
+$inverse-table-header-cell-color:                        $inverse-global-color !default;
+$inverse-table-caption-color:                            $inverse-global-muted-color !default;
+$inverse-table-row-active-background:                    fade-out($inverse-global-muted-background, 0.02) !default;
+$inverse-table-divider-border:                           $inverse-global-border !default;
+$inverse-table-striped-row-background:                   $inverse-global-muted-background !default;
+$inverse-table-hover-row-background:                     $inverse-table-row-active-background !default;
 
 
 

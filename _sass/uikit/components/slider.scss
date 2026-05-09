@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Slider
 // Description:     Component to create horizontal sliders
 //
@@ -13,11 +11,6 @@
 // ========================================================================
 
 
-// Variables
-// ========================================================================
-
-
-
 /* ========================================================================
    Component: Slider
  ========================================================================== */
@@ -29,7 +22,7 @@
 .uk-slider {
     /* 1 */
     -webkit-tap-highlight-color: transparent;
-    @if(meta.mixin-exists(hook-slider)) {@include hook-slider();}
+    @if(mixin-exists(hook-slider)) {@include hook-slider();}
 }
 
 
@@ -37,28 +30,12 @@
  ========================================================================== */
 
 /*
- * 1. Fallback for Safari 15 and older
- * 2. Clip child elements
- *    `clip` prevents accidental scrolling through elements in slide getting focused
- *    `clip` also works in only one direction
+ * 1. Clip child elements
  */
 
 .uk-slider-container {
     /* 1 */
-    overflow-x: hidden;
-    /* 2 */
-    overflow-x: clip;
-}
-
-/*
- * Widen container to prevent box-shadows from clipping, `large-box-shadow`
- */
-
-.uk-slider-container-offset {
-    margin-left: $slider-container-margin-left;
-    margin-right: $slider-container-margin-right;
-    padding-left: (-$slider-container-margin-left);
-    padding-right: (-$slider-container-margin-right);
+    overflow: hidden;
 }
 
 /* Items
@@ -67,7 +44,6 @@
 /*
  * 1. Optimize animation
  * 2. Create a containing block. In Safari it's neither created by `transform` nor `will-change`.
- * 3. Disable horizontal panning gestures
  */
 
 .uk-slider-items {
@@ -75,8 +51,6 @@
     will-change: transform;
     /* 2 */
     position: relative;
-    /* 3 */
-    touch-action: pan-y;
 }
 
 /*
@@ -102,24 +76,24 @@
 
 /*
  * 1. Let items take content dimensions (0 0 auto)
- *    `max-width` needed to keep image responsiveness and prevent content overflow
  * 2. Create position context
+ * 3. Disable horizontal panning gestures in IE11 and Edge
  */
 
 .uk-slider-items > * {
     /* 1 */
-    flex: none !important;
-    box-sizing: border-box;
-    max-width: 100%;
+    flex: none;
     /* 2 */
     position: relative;
+    /* 3 */
+    touch-action: pan-y;
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-slider-misc)) {@include hook-slider-misc();}
+@if(mixin-exists(hook-slider-misc)) {@include hook-slider-misc();}
 
 // @mixin hook-slider(){}
 // @mixin hook-slider-misc(){}

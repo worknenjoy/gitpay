@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Close
 // Description:     Component to create a close button
 //
@@ -11,6 +9,8 @@
 // Variables
 // ========================================================================
 
+$close-color:                                    $global-muted-color !default;
+$close-hover-color:                              $global-color !default;
 
 
 /* ========================================================================
@@ -23,20 +23,22 @@
 
 .uk-close {
     color: $close-color;
-    @if(meta.mixin-exists(hook-close)) {@include hook-close();}
+    @if(mixin-exists(hook-close)) {@include hook-close();}
 }
 
-/* Hover */
-.uk-close:hover {
+/* Hover + Focus */
+.uk-close:hover,
+.uk-close:focus {
     color: $close-hover-color;
-    @if(meta.mixin-exists(hook-close-hover)) {@include hook-close-hover();}
+    outline: none;
+    @if(mixin-exists(hook-close-hover)) {@include hook-close-hover();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-close-misc)) {@include hook-close-misc();}
+@if(mixin-exists(hook-close-misc)) {@include hook-close-misc();}
 
 // @mixin hook-close(){}
 // @mixin hook-close-hover(){}
@@ -46,6 +48,8 @@
 // Inverse
 // ========================================================================
 
+$inverse-close-color:                            $inverse-global-muted-color !default;
+$inverse-close-hover-color:                      $inverse-global-color !default;
 
 
 

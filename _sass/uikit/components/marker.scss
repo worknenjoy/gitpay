@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Marker
 // Description:     Component to create a marker icon
 //
@@ -11,7 +9,11 @@
 // Variables
 // ========================================================================
 
+$marker-padding:                                  5px !default;
+$marker-background:                               $global-secondary-background !default;
+$marker-color:                                    $global-inverse-color !default;
 
+$marker-hover-color:                              $global-inverse-color !default;
 
 
 /* ========================================================================
@@ -26,20 +28,22 @@
     padding: $marker-padding;
     background: $marker-background;
     color: $marker-color;
-    @if(meta.mixin-exists(hook-marker)) {@include hook-marker();}
+    @if(mixin-exists(hook-marker)) {@include hook-marker();}
 }
 
-/* Hover */
-.uk-marker:hover {
+/* Hover + Focus */
+.uk-marker:hover,
+.uk-marker:focus {
     color: $marker-hover-color;
-    @if(meta.mixin-exists(hook-marker-hover)) {@include hook-marker-hover();}
+    outline: none;
+    @if(mixin-exists(hook-marker-hover)) {@include hook-marker-hover();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-marker-misc)) {@include hook-marker-misc();}
+@if(mixin-exists(hook-marker-misc)) {@include hook-marker-misc();}
 
 // @mixin hook-marker(){}
 // @mixin hook-marker-hover(){}
@@ -49,6 +53,9 @@
 // Inverse
 // ========================================================================
 
+$inverse-marker-background:                   $global-muted-background !default;
+$inverse-marker-color:                        $global-color !default;
+$inverse-marker-hover-color:                  $global-color !default;
 
 
 

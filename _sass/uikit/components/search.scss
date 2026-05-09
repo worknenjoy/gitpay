@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Search
 // Description:     Component to create the search
 //
@@ -12,7 +10,6 @@
 //
 // Modifier:        `uk-search-default`
 //                  `uk-search-navbar`
-//                  `uk-search-medium`
 //                  `uk-search-large`
 //
 // ========================================================================
@@ -21,16 +18,35 @@
 // Variables
 // ========================================================================
 
+$search-color:                                       $global-color !default;
+$search-placeholder-color:                           $global-muted-color !default;
 
+$search-icon-color:                                  $global-muted-color !default;
 
+$search-default-width:                               180px !default;
+$search-default-height:                              $global-control-height !default;
+$search-default-padding-horizontal:                  6px !default;
+$search-default-background:                          $global-muted-background !default;
+$search-default-focus-background:                    $search-default-background !default;
 
+$search-default-icon-width:                          $global-control-height !default;
 
+$search-navbar-width:                                400px !default;
+$search-navbar-height:                               40px !default;
+$search-navbar-background:                           transparent !default;
+$search-navbar-font-size:                            $global-large-font-size !default;
 
+$search-navbar-icon-width:                           40px !default;
 
+$search-large-width:                                 500px !default;
+$search-large-height:                                80px !default;
+$search-large-background:                            transparent !default;
+$search-large-font-size:                             $global-xxlarge-font-size !default;
 
+$search-large-icon-width:                            80px !default;
 
-
-
+$search-toggle-color:                                $global-muted-color !default;
+$search-toggle-hover-color:                          $global-color !default;
 
 
 /* ========================================================================
@@ -104,17 +120,24 @@
     /* 9 */
     border: none;
     color: $search-color;
-    @if(meta.mixin-exists(hook-search-input)) {@include hook-search-input();}
+    @if(mixin-exists(hook-search-input)) {@include hook-search-input();}
 }
 
 .uk-search-input:focus { outline: none; }
 
 /* Placeholder */
+.uk-search-input:-ms-input-placeholder { color: $search-placeholder-color !important; }
 .uk-search-input::placeholder { color: $search-placeholder-color; }
 
 
 /* Icon (Adopts `uk-icon`)
  ========================================================================== */
+
+/*
+ * Remove default focus style
+ */
+
+.uk-search-icon:focus { outline: none; }
 
 /*
  * Position above input
@@ -135,7 +158,6 @@
     align-items: center;
     /* 3 */
     color: $search-icon-color;
-    @if(meta.mixin-exists(hook-search-icon)) {@include hook-search-icon();}
 }
 
 /*
@@ -174,26 +196,23 @@
     padding-left: $search-default-padding-horizontal;
     padding-right: $search-default-padding-horizontal;
     background: $search-default-background;
-    @if(meta.mixin-exists(hook-search-default-input)) {@include hook-search-default-input();}
+    @if(mixin-exists(hook-search-default-input)) {@include hook-search-default-input();}
 }
 
 /* Focus */
 .uk-search-default .uk-search-input:focus {
     background-color: $search-default-focus-background;
-    @if(meta.mixin-exists(hook-search-default-input-focus)) {@include hook-search-default-input-focus();}
+    @if(mixin-exists(hook-search-default-input-focus)) {@include hook-search-default-input-focus();}
 }
 
 /*
  * Icon
  */
 
-.uk-search-default .uk-search-icon {
-    padding-left: $search-default-padding-horizontal;
-    padding-right: $search-default-padding-horizontal;
-}
+.uk-search-default .uk-search-icon { width: $search-default-icon-width; }
 
-.uk-search-default:has(.uk-search-icon:not(.uk-search-icon-flip)) .uk-search-input { padding-left: ($search-default-icon-width + $search-default-padding-horizontal + $search-default-icon-padding); }
-.uk-search-default:has(.uk-search-icon-flip) .uk-search-input { padding-right: ($search-default-icon-width + $search-default-padding-horizontal + $search-default-icon-padding); }
+.uk-search-default .uk-search-icon:not(.uk-search-icon-flip) + .uk-search-input { padding-left: ($search-default-icon-width); }
+.uk-search-default .uk-search-icon-flip + .uk-search-input { padding-right: ($search-default-icon-width); }
 
 
 /* Navbar modifier
@@ -207,66 +226,19 @@
 
 .uk-search-navbar .uk-search-input {
     height: $search-navbar-height;
-    padding-left: $search-navbar-padding-horizontal;
-    padding-right: $search-navbar-padding-horizontal;
     background: $search-navbar-background;
-    @if(meta.mixin-exists(hook-search-navbar-input)) {@include hook-search-navbar-input();}
-}
-
-/* Focus */
-.uk-search-navbar .uk-search-input:focus {
-    background-color: $search-navbar-focus-background;
-    @if(meta.mixin-exists(hook-search-navbar-input-focus)) {@include hook-search-navbar-input-focus();}
+    font-size: $search-navbar-font-size;
+    @if(mixin-exists(hook-search-navbar-input)) {@include hook-search-navbar-input();}
 }
 
 /*
  * Icon
  */
 
-.uk-search-navbar .uk-search-icon {
-    padding-left: $search-navbar-padding-horizontal;
-    padding-right: $search-navbar-padding-horizontal;
-}
+.uk-search-navbar .uk-search-icon { width: $search-navbar-icon-width; }
 
-.uk-search-navbar:has(.uk-search-icon:not(.uk-search-icon-flip)) .uk-search-input { padding-left: ($search-navbar-icon-width + $search-navbar-padding-horizontal + $search-navbar-icon-padding); }
-.uk-search-navbar:has(.uk-search-icon-flip) .uk-search-input { padding-right: ($search-navbar-icon-width + $search-navbar-padding-horizontal + $search-navbar-icon-padding); }
-
-
-/* Medium modifier
- ========================================================================== */
-
-.uk-search-medium { width: $search-medium-width; }
-
-/*
- * Input
- */
-
-.uk-search-medium .uk-search-input {
-    height: $search-medium-height;
-    padding-left: $search-medium-padding-horizontal;
-    padding-right: $search-medium-padding-horizontal;
-    background: $search-medium-background;
-    font-size: $search-medium-font-size;
-    @if(meta.mixin-exists(hook-search-medium-input)) {@include hook-search-medium-input();}
-}
-
-/* Focus */
-.uk-search-medium .uk-search-input:focus {
-    background-color: $search-medium-focus-background;
-    @if(meta.mixin-exists(hook-search-medium-input-focus)) {@include hook-search-medium-input-focus();}
-}
-
-/*
- * Icon
- */
-
-.uk-search-medium .uk-search-icon {
-    padding-left: $search-medium-padding-horizontal;
-    padding-right: $search-medium-padding-horizontal;
-}
-
-.uk-search-medium:has(.uk-search-icon:not(.uk-search-icon-flip)) .uk-search-input { padding-left: ($search-medium-icon-width + $search-medium-padding-horizontal + $search-medium-icon-padding); }
-.uk-search-medium:has(.uk-search-icon-flip) .uk-search-input { padding-right: ($search-medium-icon-width + $search-medium-padding-horizontal + $search-medium-icon-padding); }
+.uk-search-navbar .uk-search-icon:not(.uk-search-icon-flip) + .uk-search-input { padding-left: ($search-navbar-icon-width); }
+.uk-search-navbar .uk-search-icon-flip + .uk-search-input { padding-right: ($search-navbar-icon-width); }
 
 
 /* Large modifier
@@ -280,30 +252,19 @@
 
 .uk-search-large .uk-search-input {
     height: $search-large-height;
-    padding-left: $search-large-padding-horizontal;
-    padding-right: $search-large-padding-horizontal;
     background: $search-large-background;
     font-size: $search-large-font-size;
-    @if(meta.mixin-exists(hook-search-large-input)) {@include hook-search-large-input();}
-}
-
-/* Focus */
-.uk-search-large .uk-search-input:focus {
-    background-color: $search-medium-focus-background;
-    @if(meta.mixin-exists(hook-search-large-input-focus)) {@include hook-search-large-input-focus();}
+    @if(mixin-exists(hook-search-large-input)) {@include hook-search-large-input();}
 }
 
 /*
  * Icon
  */
 
-.uk-search-large .uk-search-icon {
-    padding-left: $search-large-padding-horizontal;
-    padding-right: $search-large-padding-horizontal;
-}
+.uk-search-large .uk-search-icon { width: $search-large-icon-width; }
 
-.uk-search-large:has(.uk-search-icon:not(.uk-search-icon-flip)) .uk-search-input { padding-left: ($search-large-icon-width + $search-large-padding-horizontal + $search-large-icon-padding); }
-.uk-search-large:has(.uk-search-icon-flip) .uk-search-input { padding-right: ($search-large-icon-width + $search-large-padding-horizontal + $search-large-icon-padding); }
+.uk-search-large .uk-search-icon:not(.uk-search-icon-flip) + .uk-search-input { padding-left: ($search-large-icon-width); }
+.uk-search-large .uk-search-icon-flip + .uk-search-input { padding-right: ($search-large-icon-width); }
 
 
 /* Toggle
@@ -311,31 +272,27 @@
 
 .uk-search-toggle {
     color: $search-toggle-color;
-    @if(meta.mixin-exists(hook-search-toggle)) {@include hook-search-toggle();}
+    @if(mixin-exists(hook-search-toggle)) {@include hook-search-toggle();}
 }
 
-/* Hover */
-.uk-search-toggle:hover {
+/* Hover + Focus */
+.uk-search-toggle:hover,
+.uk-search-toggle:focus {
     color: $search-toggle-hover-color;
-    @if(meta.mixin-exists(hook-search-toggle-hover)) {@include hook-search-toggle-hover();}
+    @if(mixin-exists(hook-search-toggle-hover)) {@include hook-search-toggle-hover();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-search-misc)) {@include hook-search-misc();}
+@if(mixin-exists(hook-search-misc)) {@include hook-search-misc();}
 
 // @mixin hook-search-input(){}
-// @mixin hook-search-icon(){}
 // @mixin hook-search-default-input(){}
 // @mixin hook-search-default-input-focus(){}
 // @mixin hook-search-navbar-input(){}
-// @mixin hook-search-navbar-input-focus(){}
-// @mixin hook-search-medium-input(){}
-// @mixin hook-search-medium-input-focus(){}
 // @mixin hook-search-large-input(){}
-// @mixin hook-search-large-input-focus(){}
 
 // @mixin hook-search-toggle(){}
 // @mixin hook-search-toggle-hover(){}
@@ -346,22 +303,26 @@
 // Inverse
 // ========================================================================
 
+$inverse-search-color:                          $inverse-global-color !default;
+$inverse-search-placeholder-color:              $inverse-global-muted-color !default;
 
+$inverse-search-icon-color:                     $inverse-global-muted-color !default;
 
+$inverse-search-default-background:             $inverse-global-muted-background !default;
+$inverse-search-default-focus-background:       $inverse-search-default-background !default;
 
+$inverse-search-navbar-background:              transparent !default;
 
+$inverse-search-large-background:               transparent !default;
 
-
+$inverse-search-toggle-color:                   $inverse-global-muted-color !default;
+$inverse-search-toggle-hover-color:             $inverse-global-color !default;
 
 
 
 // @mixin hook-inverse-search-default-input(){}
 // @mixin hook-inverse-search-default-input-focus(){}
 // @mixin hook-inverse-search-navbar-input(){}
-// @mixin hook-inverse-search-navbar-input-focus(){}
-// @mixin hook-inverse-search-medium-input(){}
-// @mixin hook-inverse-search-medium-input-focus(){}
 // @mixin hook-inverse-search-large-input(){}
-// @mixin hook-inverse-search-large-input-focus(){}
 // @mixin hook-inverse-search-toggle(){}
 // @mixin hook-inverse-search-toggle-hover(){}

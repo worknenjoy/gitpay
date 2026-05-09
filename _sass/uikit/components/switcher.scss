@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Switcher
 // Description:     Component to navigate through different content panes
 //
@@ -44,6 +42,6 @@
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-switcher-misc)) {@include hook-switcher-misc();}
+@if(mixin-exists(hook-switcher-misc)) {@include hook-switcher-misc();}
 
 // @mixin hook-switcher-misc(){}

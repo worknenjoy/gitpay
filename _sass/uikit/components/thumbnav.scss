@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Thumbnav
 // Description:     Component to create thumbnail navigations
 //
@@ -15,6 +13,8 @@
 // Variables
 // ========================================================================
 
+$thumbnav-margin-horizontal:                     15px !default;
+$thumbnav-margin-vertical:                       $thumbnav-margin-horizontal !default;
 
 
 /* ========================================================================
@@ -37,16 +37,18 @@
     list-style: none;
     /* 3 */
     margin-left: (-$thumbnav-margin-horizontal);
-    @if(meta.mixin-exists(hook-thumbnav)) {@include hook-thumbnav();}
+    @if(mixin-exists(hook-thumbnav)) {@include hook-thumbnav();}
 }
 
 /*
- * Space is allocated based on content dimensions, but shrinks: 0 1 auto
- * 1. Gutter
+ * 1. Space is allocated solely based on content dimensions: 0 0 auto
+ * 2. Gutter
  */
 
 .uk-thumbnav > * {
     /* 1 */
+    flex: none;
+    /* 2 */
     padding-left: $thumbnav-margin-horizontal;
 }
 
@@ -60,17 +62,19 @@
 
 .uk-thumbnav > * > * {
     display: inline-block;
-    @if(meta.mixin-exists(hook-thumbnav-item)) {@include hook-thumbnav-item();}
+    @if(mixin-exists(hook-thumbnav-item)) {@include hook-thumbnav-item();}
 }
 
-/* Hover */
-.uk-thumbnav > * > :hover {
-    @if(meta.mixin-exists(hook-thumbnav-item-hover)) {@include hook-thumbnav-item-hover();}
+/* Hover + Focus */
+.uk-thumbnav > * > :hover,
+.uk-thumbnav > * > :focus {
+    outline: none;
+    @if(mixin-exists(hook-thumbnav-item-hover)) {@include hook-thumbnav-item-hover();}
 }
 
 /* Active */
 .uk-thumbnav > .uk-active > * {
-    @if(meta.mixin-exists(hook-thumbnav-item-active)) {@include hook-thumbnav-item-active();}
+    @if(mixin-exists(hook-thumbnav-item-active)) {@include hook-thumbnav-item-active();}
 }
 
 
@@ -100,7 +104,7 @@
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-thumbnav-misc)) {@include hook-thumbnav-misc();}
+@if(mixin-exists(hook-thumbnav-misc)) {@include hook-thumbnav-misc();}
 
 // @mixin hook-thumbnav(){}
 // @mixin hook-thumbnav-item(){}

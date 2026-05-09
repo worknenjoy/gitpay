@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Section
 // Description:     Component to create horizontal layout section
 //
@@ -23,14 +21,28 @@
 // Variables
 // ========================================================================
 
+$section-padding-vertical:                         $global-medium-margin !default;
+$section-padding-vertical-m:                       $global-large-margin !default;
 
+$section-xsmall-padding-vertical:                  $global-margin !default;
 
+$section-small-padding-vertical:                   $global-medium-margin !default;
 
+$section-large-padding-vertical:                   $global-large-margin !default;
+$section-large-padding-vertical-m:                 $global-xlarge-margin !default;
 
+$section-xlarge-padding-vertical:                  $global-xlarge-margin !default;
+$section-xlarge-padding-vertical-m:                ($global-large-margin + $global-xlarge-margin) !default;
 
+$section-default-background:                       $global-background !default;
 
+$section-muted-background:                         $global-muted-background !default;
 
+$section-primary-background:                       $global-primary-background !default;
+$section-primary-color-mode:                       light !default;
 
+$section-secondary-background:                     $global-secondary-background !default;
+$section-secondary-color-mode:                     light !default;
 
 
 /* ========================================================================
@@ -42,11 +54,10 @@
  */
 
 .uk-section {
-    display: flow-root;
     box-sizing: border-box; /* 1 */
     padding-top: $section-padding-vertical;
     padding-bottom: $section-padding-vertical;
-    @if(meta.mixin-exists(hook-section)) {@include hook-section();}
+    @if(mixin-exists(hook-section)) {@include hook-section();}
 }
 
 /* Desktop and bigger */
@@ -58,6 +69,18 @@
     }
 
 }
+
+/*
+ * Micro clearfix
+ */
+
+.uk-section::before,
+.uk-section::after {
+    content: "";
+    display: table;
+}
+
+.uk-section::after { clear: both; }
 
 /*
  * Remove margin from the last-child
@@ -78,9 +101,6 @@
     padding-bottom: $section-xsmall-padding-vertical;
 }
 
-.uk-section-xsmall-top { padding-top: $section-xsmall-padding-vertical; }
-.uk-section-xsmall-bottom { padding-bottom: $section-xsmall-padding-vertical; }
-
 /*
  * Small
  */
@@ -88,24 +108,6 @@
 .uk-section-small {
     padding-top: $section-small-padding-vertical;
     padding-bottom: $section-small-padding-vertical;
-}
-
-.uk-section-small-top { padding-top: $section-small-padding-vertical; }
-.uk-section-small-bottom { padding-bottom: $section-small-padding-vertical; }
-
-/*
- * Medium
- */
-
-.uk-section-medium-top { padding-top: $section-padding-vertical; }
-.uk-section-medium-bottom { padding-bottom: $section-padding-vertical; }
-
-/* Desktop and bigger */
-@media (min-width: $breakpoint-medium) {
-
-    .uk-section-medium-top { padding-top: $section-padding-vertical-m; }
-    .uk-section-medium-bottom { padding-bottom: $section-padding-vertical-m; }
-
 }
 
 /*
@@ -117,9 +119,6 @@
     padding-bottom: $section-large-padding-vertical;
 }
 
-.uk-section-large-top { padding-top: $section-large-padding-vertical; }
-.uk-section-large-bottom { padding-bottom: $section-large-padding-vertical; }
-
 /* Tablet landscape and bigger */
 @media (min-width: $breakpoint-medium) {
 
@@ -128,10 +127,8 @@
         padding-bottom: $section-large-padding-vertical-m;
     }
 
-    .uk-section-large-top { padding-top: $section-large-padding-vertical-m; }
-    .uk-section-large-bottom { padding-bottom: $section-large-padding-vertical-m; }
-
 }
+
 
 /*
  * XLarge
@@ -142,9 +139,6 @@
     padding-bottom: $section-xlarge-padding-vertical;
 }
 
-.uk-section-xlarge-top { padding-top: $section-xlarge-padding-vertical; }
-.uk-section-xlarge-bottom { padding-bottom: $section-xlarge-padding-vertical; }
-
 /* Tablet landscape and bigger */
 @media (min-width: $breakpoint-medium) {
 
@@ -152,9 +146,6 @@
         padding-top: $section-xlarge-padding-vertical-m;
         padding-bottom: $section-xlarge-padding-vertical-m;
     }
-
-    .uk-section-xlarge-top { padding-top: $section-xlarge-padding-vertical-m; }
-    .uk-section-xlarge-bottom { padding-bottom: $section-xlarge-padding-vertical-m; }
 
 }
 
@@ -167,49 +158,39 @@
  */
 
 .uk-section-default {
-    --uk-inverse: #{$section-default-color-mode};
     background: $section-default-background;
-    @if(meta.mixin-exists(hook-section-default)) {@include hook-section-default();}
+    @if(mixin-exists(hook-section-default)) {@include hook-section-default();}
 }
-
-@if ( $section-default-color-mode == light ) { .uk-section-default:not(.uk-preserve-color) { @extend .uk-light !optional;} }
-@if ( $section-default-color-mode == dark ) { .uk-section-default:not(.uk-preserve-color) { @extend .uk-dark !optional;} }
 
 /*
  * Muted
  */
 
 .uk-section-muted {
-    --uk-inverse: #{$section-muted-color-mode};
     background: $section-muted-background;
-    @if(meta.mixin-exists(hook-section-muted)) {@include hook-section-muted();}
+    @if(mixin-exists(hook-section-muted)) {@include hook-section-muted();}
 }
-
-@if ( $section-muted-color-mode == light ) { .uk-section-muted:not(.uk-preserve-color) { @extend .uk-light !optional;} }
-@if ( $section-muted-color-mode == dark ) { .uk-section-muted:not(.uk-preserve-color) { @extend .uk-dark !optional;} }
-
 
 /*
  * Primary
  */
 
 .uk-section-primary {
-    --uk-inverse: #{$section-primary-color-mode};
     background: $section-primary-background;
-    @if(meta.mixin-exists(hook-section-primary)) {@include hook-section-primary();}
+    @if(mixin-exists(hook-section-primary)) {@include hook-section-primary();}
 }
 
 @if ( $section-primary-color-mode == light ) { .uk-section-primary:not(.uk-preserve-color) { @extend .uk-light !optional;} }
 @if ( $section-primary-color-mode == dark ) { .uk-section-primary:not(.uk-preserve-color) { @extend .uk-dark !optional;} }
+
 
 /*
  * Secondary
  */
 
 .uk-section-secondary {
-    --uk-inverse: #{$section-secondary-color-mode};
     background: $section-secondary-background;
-    @if(meta.mixin-exists(hook-section-secondary)) {@include hook-section-secondary();}
+    @if(mixin-exists(hook-section-secondary)) {@include hook-section-secondary();}
 }
 
 @if ( $section-secondary-color-mode == light ) { .uk-section-secondary:not(.uk-preserve-color) { @extend .uk-light !optional;} }
@@ -225,14 +206,14 @@
  */
 
 .uk-section-overlap {
-    @if(meta.mixin-exists(hook-section-overlap)) {@include hook-section-overlap();}
+    @if(mixin-exists(hook-section-overlap)) {@include hook-section-overlap();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-section-misc)) {@include hook-section-misc();}
+@if(mixin-exists(hook-section-misc)) {@include hook-section-misc();}
 
 // @mixin hook-section(){}
 // @mixin hook-section-default(){}

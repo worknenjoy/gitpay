@@ -1,6 +1,3 @@
-@use "sass:meta";
-@use "sass:string";
-
 // Name:            Base
 // Description:     Default values for HTML elements
 //
@@ -14,16 +11,71 @@
 // Variables
 // ========================================================================
 
+$base-body-background:                           $global-background !default;
+$base-body-font-family:                          $global-font-family !default;
+$base-body-font-weight:                          normal !default;
+$base-body-font-size:                            $global-font-size !default;
+$base-body-line-height:                          $global-line-height !default;
+$base-body-color:                                $global-color !default;
 
+$base-link-color:                                $global-link-color !default;
+$base-link-text-decoration:                      none !default;
+$base-link-hover-color:                          $global-link-hover-color !default;
+$base-link-hover-text-decoration:                underline !default;
 
+$base-strong-font-weight:                        bolder !default;
+$base-code-font-size:                            $global-small-font-size !default;
+$base-code-font-family:                          Consolas, monaco, monospace !default;
+$base-code-color:                                $global-danger-background !default;
+$base-em-color:                                  $global-danger-background !default;
+$base-ins-background:                            #ffd !default;
+$base-ins-color:                                 $global-color !default;
+$base-mark-background:                           #ffd !default;
+$base-mark-color:                                $global-color !default;
+$base-quote-font-style:                          italic !default;
+$base-small-font-size:                           80% !default;
 
+$base-margin-vertical:                           $global-margin !default;
 
+$base-heading-font-family:                       $global-font-family !default;
+$base-heading-font-weight:                       normal !default;
+$base-heading-color:                             $global-emphasis-color !default;
+$base-heading-text-transform:                    none !default;
+$base-heading-margin-top:                        $global-medium-margin !default;
+$base-h1-font-size:                              $global-xxlarge-font-size !default;
+$base-h1-line-height:                            1.2 !default;
+$base-h2-font-size:                              $global-xlarge-font-size !default;
+$base-h2-line-height:                            1.3 !default;
+$base-h3-font-size:                              $global-large-font-size !default;
+$base-h3-line-height:                            1.4 !default;
+$base-h4-font-size:                              $global-medium-font-size !default;
+$base-h4-line-height:                            1.4 !default;
+$base-h5-font-size:                              $global-font-size !default;
+$base-h5-line-height:                            1.4 !default;
+$base-h6-font-size:                              $global-small-font-size !default;
+$base-h6-line-height:                            1.4 !default;
 
+$base-list-padding-left:                         30px !default;
 
+$base-hr-margin-vertical:                        $global-margin !default;
+$base-hr-border-width:                           $global-border-width !default;
+$base-hr-border:                                 $global-border !default;
 
+$base-blockquote-font-size:                      $global-medium-font-size !default;
+$base-blockquote-line-height:                    1.5 !default;
+$base-blockquote-font-style:                     italic !default;
+$base-blockquote-margin-vertical:                $global-margin !default;
+$base-blockquote-footer-margin-top:              $global-small-margin !default;
+$base-blockquote-footer-font-size:               $global-small-font-size !default;
+$base-blockquote-footer-line-height:             1.5 !default;
 
+$base-pre-font-size:                             $global-small-font-size !default;
+$base-pre-line-height:                           1.5 !default;
+$base-pre-font-family:                           $base-code-font-family !default;
+$base-pre-color:                                 $global-color !default;
 
-
+$base-selection-background:                      #39f !default;
+$base-selection-color:                           $global-inverse-color !default;
 
 
 /* ========================================================================
@@ -32,6 +84,7 @@
 
 /*
  * 1. Set `font-size` to support `rem` units
+ *    Not using `font` property because a leading hyphen (e.g. -apple-system) causes the font to break in IE11 and Edge
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  * 3. Style
  */
@@ -47,7 +100,7 @@ html {
     /* 3 */
     background: $base-body-background;
     color: $base-body-color;
-    @if(meta.mixin-exists(hook-base-body)) {@include hook-base-body();}
+    @if(mixin-exists(hook-base-body)) {@include hook-base-body();}
 }
 
 /*
@@ -61,6 +114,19 @@ body { margin: 0; }
  ========================================================================== */
 
 /*
+ * Remove gaps in links underline in iOS 8+ and Safari 8+.
+ */
+
+a { -webkit-text-decoration-skip: objects; }
+
+/*
+ * Remove the outline on focused links when they are also active or hovered
+ */
+
+a:active,
+a:hover { outline: none; }
+
+/*
  * Style
  */
 
@@ -69,40 +135,33 @@ a,
     color: $base-link-color;
     text-decoration: $base-link-text-decoration;
     cursor: pointer;
-    @if(meta.mixin-exists(hook-base-link)) {@include hook-base-link();}
+    @if(mixin-exists(hook-base-link)) {@include hook-base-link();}
 }
 
 a:hover,
-.uk-link:hover,
-.uk-link-toggle:hover .uk-link {
+.uk-link:hover {
     color: $base-link-hover-color;
     text-decoration: $base-link-hover-text-decoration;
-    @if(meta.mixin-exists(hook-base-link-hover)) {@include hook-base-link-hover();}
+    @if(mixin-exists(hook-base-link-hover)) {@include hook-base-link-hover();}
 }
-
-/*
- * Fix text underline offset if `vertical-align`is set to `middle`
- */
-
-a:has(.uk-text-middle),
-.uk-link:has(.uk-text-middle),
-.uk-link-toggle:hover .uk-link:has(.uk-text-middle) { text-underline-offset: 0.1875em; }
 
 
 /* Text-level semantics
  ========================================================================== */
 
 /*
- * 1. Add the correct text decoration in Edge.
- * 2. The shorthand declaration `underline dotted` is not supported in Safari.
+ * 1. Remove the bottom border in Chrome 57-.
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
  */
 
 abbr[title] {
     /* 1 */
-    text-decoration: underline dotted;
+    border-bottom: none;
     /* 2 */
-    -webkit-text-decoration-style: dotted;
+    text-decoration: underline;
+    text-decoration: underline dotted;
 }
+
 
 /*
  * Add the correct font weight in Chrome, Edge, and Safari.
@@ -127,7 +186,7 @@ strong { font-weight: $base-strong-font-weight; }
     /* 3 */
     color: $base-code-color;
     white-space: nowrap;
-    @if(meta.mixin-exists(hook-base-code)) {@include hook-base-code();}
+    @if(mixin-exists(hook-base-code)) {@include hook-base-code();}
 }
 
 /*
@@ -187,7 +246,7 @@ sub { bottom: -0.25em; }
  ========================================================================== */
 
 /*
- * Remove the gap between the element and the bottom of its parent container.
+ * Remove the gap between embedded content and the bottom of their containers.
  */
 
 audio,
@@ -198,49 +257,29 @@ svg,
 video { vertical-align: middle; }
 
 /*
- * 1. Constrain the element to its parent width.
- * 2. Take border and padding into account.
- * 3. Reset `height` attribute if present to scale the height based on the intrinsic aspect ratio.
- * 4. Scale height based on the extrinsic aspect ratio. Works only in Chrome yet.
- * 5. Size image to fill the element's content box.
- * Note: Add `iframe` as soon as `attr` is supported in all browsers and remove `uk-responsive`.
+ * Responsiveness
+ * 1. Set a maximum width
+ * 2. Auto scale the height. Only needed if `height` attribute is present
+ * 2. Corrects `max-width` behavior if padding and border are used
  */
 
+audio,
 canvas,
 img,
-svg,
 video {
     /* 1 */
     max-width: 100%;
     /* 2 */
-    box-sizing: border-box;
-    /* 3 */
     height: auto;
-    /* 4 */
-    aspect-ratio: string.unquote('attr(width type(<number>)) / attr(height type(<number>))');
-    /* 5 */
-    object-fit: cover;
+    /* 3 */
+    box-sizing: border-box;
 }
 
 /*
- * Deprecated: only needed for `img` elements with `uk-img`
- * 1. Hide `alt` text for lazy load images.
- * 2. Fix lazy loading images if parent element is set to `display: inline` and has `overflow: hidden`.
+ * Hide the overflow in IE.
  */
 
-img:not([src]) {
-    /* 1 */
-    visibility: hidden;
-    /* 2 */
-    min-width: 1px;
-}
-
-/*
- * Iframe
- * Remove border in all browsers
- */
-
-iframe { border: 0; }
+svg:not(:root) { overflow: hidden; }
 
 
 /* Block elements
@@ -278,19 +317,13 @@ h2, .uk-h2,
 h3, .uk-h3,
 h4, .uk-h4,
 h5, .uk-h5,
-h6, .uk-h6,
-.uk-heading-small,
-.uk-heading-medium,
-.uk-heading-large,
-.uk-heading-xlarge,
-.uk-heading-2xlarge,
-.uk-heading-3xlarge {
+h6, .uk-h6 {
     margin: 0 0 $base-margin-vertical 0;
     font-family: $base-heading-font-family;
     font-weight: $base-heading-font-weight;
     color: $base-heading-color;
     text-transform: $base-heading-text-transform;
-    @if(meta.mixin-exists(hook-base-heading)) {@include hook-base-heading();}
+    @if(mixin-exists(hook-base-heading)) {@include hook-base-heading();}
 }
 
 /* Add margin if adjacent element */
@@ -299,13 +332,7 @@ h6, .uk-h6,
 * + h3, * + .uk-h3,
 * + h4, * + .uk-h4,
 * + h5, * + .uk-h5,
-* + h6, * + .uk-h6,
-* + .uk-heading-small,
-* + .uk-heading-medium,
-* + .uk-heading-large,
-* + .uk-heading-xlarge,
-* + .uk-heading-2xlarge,
-* + .uk-heading-3xlarge { margin-top: $base-heading-margin-top; }
+* + h6, * + .uk-h6 { margin-top: $base-heading-margin-top; }
 
 /*
  * Sizes
@@ -314,45 +341,37 @@ h6, .uk-h6,
 h1, .uk-h1 {
     font-size: $base-h1-font-size;
     line-height: $base-h1-line-height;
-    @if(meta.mixin-exists(hook-base-h1)) {@include hook-base-h1();}
+    @if(mixin-exists(hook-base-h1)) {@include hook-base-h1();}
 }
 
 h2, .uk-h2 {
     font-size: $base-h2-font-size;
     line-height: $base-h2-line-height;
-    @if(meta.mixin-exists(hook-base-h2)) {@include hook-base-h2();}
+    @if(mixin-exists(hook-base-h2)) {@include hook-base-h2();}
 }
 
 h3, .uk-h3 {
     font-size: $base-h3-font-size;
     line-height: $base-h3-line-height;
-    @if(meta.mixin-exists(hook-base-h3)) {@include hook-base-h3();}
+    @if(mixin-exists(hook-base-h3)) {@include hook-base-h3();}
 }
 
 h4, .uk-h4 {
     font-size: $base-h4-font-size;
     line-height: $base-h4-line-height;
-    @if(meta.mixin-exists(hook-base-h4)) {@include hook-base-h4();}
+    @if(mixin-exists(hook-base-h4)) {@include hook-base-h4();}
 }
 
 h5, .uk-h5 {
     font-size: $base-h5-font-size;
     line-height: $base-h5-line-height;
-    @if(meta.mixin-exists(hook-base-h5)) {@include hook-base-h5();}
+    @if(mixin-exists(hook-base-h5)) {@include hook-base-h5();}
 }
 
 h6, .uk-h6 {
     font-size: $base-h6-font-size;
     line-height: $base-h6-line-height;
-    @if(meta.mixin-exists(hook-base-h6)) {@include hook-base-h6();}
-}
-
-/* Tablet landscape and bigger */
-@media (min-width: $breakpoint-medium) {
-
-    h1, .uk-h1 { font-size: $base-h1-font-size-m; }
-    h2, .uk-h2 { font-size: $base-h2-font-size-m; }
-
+    @if(mixin-exists(hook-base-h6)) {@include hook-base-h6();}
 }
 
 
@@ -383,26 +402,30 @@ dd { margin-left: 0; }
  ========================================================================== */
 
 /*
- * 1. Show the overflow in Chrome, Edge and IE.
- * 2. Add the correct text-align in Edge and IE.
- * 3. Style
+ * 1. Add the correct box sizing and height in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ * 3. Add the correct text-align in Edge and IE.
+ * 4. Style
  */
 
 hr, .uk-hr {
     /* 1 */
-    overflow: visible;
+    box-sizing: content-box;
+    height: 0;
     /* 2 */
-    text-align: inherit;
+    overflow: visible;
     /* 3 */
+    text-align: inherit;
+    /* 4 */
     margin: 0 0 $base-hr-margin-vertical 0;
     border: 0;
     border-top: $base-hr-border-width solid $base-hr-border;
-    @if(meta.mixin-exists(hook-base-hr)) {@include hook-base-hr();}
+    @if(mixin-exists(hook-base-hr)) {@include hook-base-hr();}
 }
 
 /* Add margin if adjacent element */
 * + hr,
-* + .uk-hr { margin-top: $base-hr-margin-vertical; }
+* + .uk-hr { margin-top: $base-hr-margin-vertical }
 
 
 /* Address
@@ -419,7 +442,7 @@ blockquote {
     font-size: $base-blockquote-font-size;
     line-height: $base-blockquote-line-height;
     font-style: $base-blockquote-font-style;
-    @if(meta.mixin-exists(hook-base-blockquote)) {@include hook-base-blockquote();}
+    @if(mixin-exists(hook-base-blockquote)) {@include hook-base-blockquote();}
 }
 
 /* Add margin if adjacent element */
@@ -432,10 +455,10 @@ blockquote {
 blockquote p:last-of-type { margin-bottom: 0; }
 
 blockquote footer {
-    margin-top: $base-blockquote-footer-margin-top;
+    margin-top:  $base-blockquote-footer-margin-top;
     font-size: $base-blockquote-footer-font-size;
     line-height: $base-blockquote-footer-line-height;
-    @if(meta.mixin-exists(hook-base-blockquote-footer)) {@include hook-base-blockquote-footer();}
+    @if(mixin-exists(hook-base-blockquote-footer)) {@include hook-base-blockquote-footer();}
 }
 
 
@@ -447,28 +470,26 @@ blockquote footer {
  */
 
 pre {
-    font: $base-pre-font-size string.unquote("/") $base-pre-line-height $base-pre-font-family;
+    font: $base-pre-font-size unquote("/") $base-pre-line-height $base-pre-font-family;
     color: $base-pre-color;
     -moz-tab-size: 4;
     tab-size: 4;
     /* 1 */
     overflow: auto;
-    @if(meta.mixin-exists(hook-base-pre)) {@include hook-base-pre();}
+    @if(mixin-exists(hook-base-pre)) {@include hook-base-pre();}
 }
 
 pre code { font-family: $base-pre-font-family; }
 
 
-/* Focus
- ========================================================================== */
-
-:focus { outline: none; }
-
-:focus-visible { outline: $base-focus-outline-width $base-focus-outline-style $base-focus-outline; }
-
-
 /* Selection pseudo-element
  ========================================================================== */
+
+::-moz-selection {
+    background: $base-selection-background;
+    color: $base-selection-color;
+    text-shadow: none;
+}
 
 ::selection {
     background: $base-selection-background;
@@ -503,6 +524,30 @@ summary { display: list-item; }
 template { display: none; }
 
 
+/* Iframe
+ ========================================================================== */
+
+iframe { border: 0; }
+
+
+/* Prevent the 300ms delay for touchscreen interactions
+ ========================================================================== */
+
+/*
+ * Most browsers prevent the 300ms delay automatically for sites that use the `width=device-width` property.
+ * For Safari on iOS 9.3+, IE 11 and Edge on desktops and IE 11 on Windows Phone 8.1 it must be applied manually.
+ */
+
+a,
+area,
+button,
+input,
+label,
+select,
+summary,
+textarea { touch-action: manipulation; }
+
+
 /* Pass media breakpoints to JS
  ========================================================================== */
 
@@ -510,17 +555,16 @@ template { display: none; }
  * Breakpoints
  */
 
-:root {
-    --uk-breakpoint-s: #{$breakpoint-small};
-    --uk-breakpoint-m: #{$breakpoint-medium};
-    --uk-breakpoint-l: #{$breakpoint-large};
-    --uk-breakpoint-xl: #{$breakpoint-xlarge};
-}
+.var-media-s::before  { content: '#{$breakpoint-small}'; }
+.var-media-m::before  { content: '#{$breakpoint-medium}'; }
+.var-media-l::before  { content: '#{$breakpoint-large}'; }
+.var-media-xl::before { content: '#{$breakpoint-xlarge}'; }
+
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-base-misc)) {@include hook-base-misc();}
+@if(mixin-exists(hook-base-misc)) {@include hook-base-misc();}
 
 // @mixin hook-base-body(){}
 // @mixin hook-base-link(){}
@@ -543,6 +587,13 @@ template { display: none; }
 // Inverse
 // ========================================================================
 
+$inverse-base-color:                            $inverse-global-color !default;
+$inverse-base-link-color:                       $inverse-global-emphasis-color !default;
+$inverse-base-link-hover-color:                 $inverse-global-emphasis-color !default;
+$inverse-base-code-color:                       $inverse-global-color !default;
+$inverse-base-em-color:                         $inverse-global-emphasis-color !default;
+$inverse-base-heading-color:                    $inverse-global-emphasis-color !default;
+$inverse-base-hr-border:                        $inverse-global-border !default;
 
 
 

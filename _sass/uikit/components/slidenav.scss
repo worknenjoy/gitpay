@@ -1,5 +1,3 @@
-@use "sass:meta";
-
 // Name:            Slidenav
 // Description:     Component to create previous/next icon navigations
 //
@@ -17,8 +15,15 @@
 // Variables
 // ========================================================================
 
+$slidenav-padding-vertical:                      5px !default;
+$slidenav-padding-horizontal:                    10px !default;
 
+$slidenav-color:                                 rgba($global-color, 0.5) !default;
+$slidenav-hover-color:                           rgba($global-color, 0.9) !default;
+$slidenav-active-color:                          rgba($global-color, 0.5) !default;
 
+$slidenav-large-padding-vertical:                10px !default;
+$slidenav-large-padding-horizontal:              $slidenav-large-padding-vertical !default;
 
 
 /* ========================================================================
@@ -32,19 +37,21 @@
 .uk-slidenav {
     padding: $slidenav-padding-vertical $slidenav-padding-horizontal;
     color: $slidenav-color;
-    @if(meta.mixin-exists(hook-slidenav)) {@include hook-slidenav();}
+    @if(mixin-exists(hook-slidenav)) {@include hook-slidenav();}
 }
 
-/* Hover */
-.uk-slidenav:hover {
+/* Hover + Focus */
+.uk-slidenav:hover,
+.uk-slidenav:focus {
     color: $slidenav-hover-color;
-    @if(meta.mixin-exists(hook-slidenav-hover)) {@include hook-slidenav-hover();}
+    outline: none;
+    @if(mixin-exists(hook-slidenav-hover)) {@include hook-slidenav-hover();}
 }
 
 /* OnClick */
 .uk-slidenav:active {
     color: $slidenav-active-color;
-    @if(meta.mixin-exists(hook-slidenav-active)) {@include hook-slidenav-active();}
+    @if(mixin-exists(hook-slidenav-active)) {@include hook-slidenav-active();}
 }
 
 
@@ -56,7 +63,7 @@
  */
 
 .uk-slidenav-previous {
-    @if(meta.mixin-exists(hook-slidenav-previous)) {@include hook-slidenav-previous();}
+    @if(mixin-exists(hook-slidenav-previous)) {@include hook-slidenav-previous();}
 }
 
 /*
@@ -64,7 +71,7 @@
  */
 
 .uk-slidenav-next {
-    @if(meta.mixin-exists(hook-slidenav-next)) {@include hook-slidenav-next();}
+    @if(mixin-exists(hook-slidenav-next)) {@include hook-slidenav-next();}
 }
 
 
@@ -73,7 +80,7 @@
 
 .uk-slidenav-large {
     padding: $slidenav-large-padding-vertical $slidenav-large-padding-horizontal;
-    @if(meta.mixin-exists(hook-slidenav-large)) {@include hook-slidenav-large();}
+    @if(mixin-exists(hook-slidenav-large)) {@include hook-slidenav-large();}
 }
 
 
@@ -82,14 +89,14 @@
 
 .uk-slidenav-container {
     display: flex;
-    @if(meta.mixin-exists(hook-slidenav-container)) {@include hook-slidenav-container();}
+    @if(mixin-exists(hook-slidenav-container)) {@include hook-slidenav-container();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(meta.mixin-exists(hook-slidenav-misc)) {@include hook-slidenav-misc();}
+@if(mixin-exists(hook-slidenav-misc)) {@include hook-slidenav-misc();}
 
 // @mixin hook-slidenav(){}
 // @mixin hook-slidenav-hover(){}
@@ -104,6 +111,9 @@
 // Inverse
 // ========================================================================
 
+$inverse-slidenav-color:                        rgba($inverse-global-color, 0.7) !default;
+$inverse-slidenav-hover-color:                  rgba($inverse-global-color, 0.95) !default;
+$inverse-slidenav-active-color:                 rgba($inverse-global-color, 0.7) !default;
 
 
 
