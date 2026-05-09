@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { Typography } from '@mui/material'
+import { AlertTitle, Typography } from '@mui/material'
 import { validAccount } from '../../../../../utils/valid-account'
 import api from '../../../../../consts'
 import Button from '../../../atoms/buttons/button/button'
@@ -42,15 +42,18 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
         />
       }
     >
-      <Typography variant="subtitle1" gutterBottom>
+      <AlertTitle>
+        <FormattedMessage id="profile.transfer.actionrequired" defaultMessage="Action required" />
+      </AlertTitle>
+      <Typography variant="body2" gutterBottom>
         <FormattedMessage
           id="profile.transfer.notactive"
-          defaultMessage="Your account is not active, please finish the setup of your account to receive payouts"
+          defaultMessage="Stripe needs additional information before payouts can continue for this account."
         />
       </Typography>
       {missingRequirements() && (
         <>
-          <Typography variant="subtitle1" gutterBottom>
+          <Typography variant="body2" gutterBottom sx={{ mt: 0.5 }}>
             <FormattedMessage
               id="profile.transfer.missingrequirements"
               defaultMessage="Missing requirements:"

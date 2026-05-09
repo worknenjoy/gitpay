@@ -4,8 +4,15 @@ import { Skeleton, Box } from '@mui/material'
 import Button from '../../buttons/button/button'
 import { CustomAlertStyled } from './alert.styles'
 
+const skeletonBgBySeverity = {
+  warning: '#FFF8F0',
+  info: '#F0F7FF',
+  error: '#FFF0F0',
+  success: '#F0FFF4'
+}
+
 export const CustomAlert = (props) => {
-  const { onClose, alertKey = 'default', actions, dismissable = false, completed, ...rest } = props
+  const { onClose, alertKey = 'default', actions, dismissable = false, completed, severity = 'info', ...rest } = props
   const fullAlertKey = `alert-dismissed-${alertKey}`
 
   const [open, setOpen] = useState(() => {
@@ -27,8 +34,23 @@ export const CustomAlert = (props) => {
 
   if (!completed) {
     return (
-      <Box>
-        <Skeleton variant="rectangular" height={56} />
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          gap: 1.5,
+          p: '12px 16px',
+          bgcolor: skeletonBgBySeverity[severity] ?? '#F0F7FF',
+          borderRadius: 1,
+          borderLeft: '4px solid',
+          borderColor: `${severity}.main`
+        }}
+      >
+        <Skeleton variant="circular" width={22} height={22} sx={{ mt: 0.25, flexShrink: 0 }} />
+        <Box sx={{ flex: 1 }}>
+          <Skeleton variant="text" width="28%" height={22} sx={{ mb: 0.5 }} />
+          <Skeleton variant="text" width="80%" height={18} />
+        </Box>
       </Box>
     )
   }
@@ -37,6 +59,7 @@ export const CustomAlert = (props) => {
     <CustomAlertStyled
       elevation={1}
       variant="standard"
+      severity={severity}
       action={
         <>
           {actions}
