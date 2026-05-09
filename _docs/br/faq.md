@@ -1,12 +1,13 @@
 ---
 layout: doc
-title: Plataforma
-subtitle: Tire as principais dúvidas relacionadas a plataforma
-tags: othertag
+lang: br
+title: FAQ
+subtitle: Tire as principais dúvidas relacionadas à plataforma
+tags:
 author:
 ---
 
-#### O que você vai ver aqui
+#### Índice
 {:.no_toc}
 * TOC
 {:toc}
