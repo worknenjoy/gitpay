@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Column
 // Description:     Utilities for text columns
 //
@@ -13,23 +15,19 @@
 // Variables
 // ========================================================================
 
-$column-gutter:                                  $global-gutter !default;
-$column-gutter-l:                                $global-medium-gutter !default;
 
-$column-divider-rule-color:                      $global-border !default;
-$column-divider-rule-width:                      1px !default;
 
 
 /* ========================================================================
    Component: Column
  ========================================================================== */
 
-[class*='uk-column-'] { column-gap: $column-gutter; }
+[class*="uk-column-"] { column-gap: $column-gutter; }
 
 /* Desktop and bigger */
 @media (min-width: $breakpoint-large) {
 
-    [class*='uk-column-'] { column-gap: $column-gutter-l; }
+    [class*="uk-column-"] { column-gap: $column-gutter-l; }
 
 }
 
@@ -37,7 +35,7 @@ $column-divider-rule-width:                      1px !default;
  * Fix image 1px line wrapping into the next column in Chrome
  */
 
-[class*='uk-column-'] img { transform: translate3d(0,0,0); }
+[class*="uk-column-"] img { transform: translate3d(0, 0, 0); }
 
 
 /* Divider
@@ -126,7 +124,7 @@ $column-divider-rule-width:                      1px !default;
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-column-misc)) {@include hook-column-misc();}
+@if(meta.mixin-exists(hook-column-misc)) {@include hook-column-misc();}
 
 // @mixin hook-column-misc(){}
 
@@ -134,5 +132,5 @@ $column-divider-rule-width:                      1px !default;
 // Inverse
 // ========================================================================
 
-$inverse-column-divider-rule-color:                     $inverse-global-border !default;
+
 

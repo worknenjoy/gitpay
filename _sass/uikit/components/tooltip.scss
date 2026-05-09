@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Tooltip
 // Description:     Component to create tooltips
 //
@@ -20,16 +22,7 @@
 // Variables
 // ========================================================================
 
-$tooltip-z-index:                                $global-z-index + 30 !default;
-$tooltip-max-width:                              200px !default;
-$tooltip-padding-vertical:                       3px !default;
-$tooltip-padding-horizontal:                     6px !default;
-$tooltip-background:                             #666 !default;
-$tooltip-border-radius:                          2px !default;
-$tooltip-color:                                  $global-inverse-color !default;
-$tooltip-font-size:                              12px !default;
 
-$tooltip-margin:                                 10px !default;
 
 
 /* ========================================================================
@@ -39,8 +32,9 @@ $tooltip-margin:                                 10px !default;
 /*
  * 1. Hide by default
  * 2. Position
- * 3. Dimensions
- * 4. Style
+ * 3. Remove tooltip from document flow to keep the UIkit container from changing its size when injected into the document initially
+ * 4. Dimensions
+ * 5. Style
  */
 
 .uk-tooltip {
@@ -49,36 +43,30 @@ $tooltip-margin:                                 10px !default;
     /* 2 */
     position: absolute;
     z-index: $tooltip-z-index;
+    --uk-position-offset: #{$tooltip-margin};
+    --uk-position-viewport-offset: 10;
     /* 3 */
+    top: 0;
+    /* 4 */
     box-sizing: border-box;
     max-width: $tooltip-max-width;
     padding: $tooltip-padding-vertical $tooltip-padding-horizontal;
-    /* 4 */
+    /* 5 */
     background: $tooltip-background;
     border-radius: $tooltip-border-radius;
     color: $tooltip-color;
     font-size: $tooltip-font-size;
-    @if(mixin-exists(hook-tooltip)) {@include hook-tooltip();}
+    @if(meta.mixin-exists(hook-tooltip)) {@include hook-tooltip();}
 }
 
 /* Show */
 .uk-tooltip.uk-active { display: block; }
 
 
-/* Direction / Alignment modifiers
- ========================================================================== */
-
-/* Direction */
-[class*='uk-tooltip-top'] { margin-top: (-$tooltip-margin); }
-[class*='uk-tooltip-bottom'] { margin-top: $tooltip-margin; }
-[class*='uk-tooltip-left'] { margin-left: (-$tooltip-margin); }
-[class*='uk-tooltip-right'] { margin-left: $tooltip-margin; }
-
-
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-tooltip-misc)) {@include hook-tooltip-misc();}
+@if(meta.mixin-exists(hook-tooltip-misc)) {@include hook-tooltip-misc();}
 
 // @mixin hook-tooltip(){}
 // @mixin hook-tooltip-misc(){}

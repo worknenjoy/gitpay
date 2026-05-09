@@ -1,3 +1,6 @@
+@use "sass:meta";
+@use "sass:string";
+
 // Name:            Heading
 // Description:     Styles for headings
 //
@@ -13,90 +16,91 @@
 // Variables
 // ========================================================================
 
-$heading-primary-font-size:                      $global-xxlarge-font-size !default;
-$heading-primary-line-height:                    1.2 !default;
+$heading-small-font-size:                        $heading-small-font-size-m * 0.8 !default;       // 38px 0.73
+$heading-medium-font-size:                       $heading-medium-font-size-m * 0.825 !default;    // 40px 0.714
+$heading-large-font-size:                        $heading-large-font-size-m * 0.85 !default;      // 50px 0.78
+$heading-xlarge-font-size:                       $heading-large-font-size-m !default;             // 4rem / 64px
+$heading-2xlarge-font-size:                      $heading-xlarge-font-size-m !default;            // 6rem / 96px
+$heading-3xlarge-font-size:                      $heading-2xlarge-font-size-m !default;           // 8rem / 128px
 
-$heading-primary-font-size-m:                    3.75rem !default; // 54px
-$heading-primary-line-height-m:                  1.1 !default;
+$heading-small-font-size-m:                      $heading-medium-font-size-l * 0.8125 !default;   // 3.25rem / 52px
+$heading-medium-font-size-m:                     $heading-medium-font-size-l * 0.875 !default;    // 3.5rem / 56px
+$heading-large-font-size-m:                      $heading-medium-font-size-l !default;            // 4rem / 64px
+$heading-xlarge-font-size-m:                     $heading-large-font-size-l !default;             // 6rem / 96px
+$heading-2xlarge-font-size-m:                    $heading-xlarge-font-size-l !default;            // 8rem / 128px
+$heading-3xlarge-font-size-m:                    $heading-2xlarge-font-size-l !default;           // 11rem / 176px
 
-$heading-hero-font-size:                         4rem !default; // 64px
-$heading-hero-line-height:                       1.1 !default;
+$heading-medium-font-size-l:                     4rem !default;                                   // 64px
+$heading-large-font-size-l:                      6rem !default;                                   // 96px
+$heading-xlarge-font-size-l:                     8rem !default;                                   // 128px
+$heading-2xlarge-font-size-l:                    11rem !default;                                  // 176px
+$heading-3xlarge-font-size-l:                    15rem !default;                                  // 240px
 
-$heading-hero-font-size-s:                       6rem !default; // 96px
-$heading-hero-line-height-s:                     1 !default;
 
-$heading-hero-font-size-m:                       8rem !default; // 128px
-$heading-hero-line-height-m:                     1 !default;
 
-$heading-divider-padding-bottom:                 10px !default;
-$heading-divider-border-width:                   $global-border-width !default;
-$heading-divider-border:                         $global-border !default;
 
-$heading-bullet-top:                             unquote('calc(-0.1 * 1em)') !default;
-$heading-bullet-height:                          0.9em !default;
-$heading-bullet-margin-right:                    10px !default;
-$heading-bullet-border-width:                    5px !default;
-$heading-bullet-border:                          $global-border !default;
-
-$heading-line-top:                               50% !default;
-$heading-line-height:                            $heading-line-border-width !default;
-$heading-line-width:                             2000px !default;
-$heading-line-border-width:                      $global-border-width !default;
-$heading-line-border:                            $global-border !default;
-$heading-line-margin-horizontal:                 0.6em !default;
 
 
 /* ========================================================================
    Component: Heading
  ========================================================================== */
 
-
-/* Primary
- ========================================================================== */
-
-.uk-heading-primary {
-    font-size: $heading-primary-font-size;
-    line-height: $heading-primary-line-height;
-    @if(mixin-exists(hook-heading-primary)) {@include hook-heading-primary();}
+.uk-heading-small {
+    font-size: $heading-small-font-size;
+    line-height: $heading-small-line-height;
+    @if(meta.mixin-exists(hook-heading-small)) {@include hook-heading-small();}
 }
 
-/* Tablet landscape and bigger */
+.uk-heading-medium {
+    font-size: $heading-medium-font-size;
+    line-height: $heading-medium-line-height;
+    @if(meta.mixin-exists(hook-heading-medium)) {@include hook-heading-medium();}
+}
+
+.uk-heading-large {
+    font-size: $heading-large-font-size;
+    line-height: $heading-large-line-height;
+    @if(meta.mixin-exists(hook-heading-large)) {@include hook-heading-large();}
+}
+
+.uk-heading-xlarge {
+    font-size: $heading-xlarge-font-size;
+    line-height: $heading-xlarge-line-height;
+    @if(meta.mixin-exists(hook-heading-xlarge)) {@include hook-heading-xlarge();}
+}
+
+.uk-heading-2xlarge {
+    font-size: $heading-2xlarge-font-size;
+    line-height: $heading-2xlarge-line-height;
+    @if(meta.mixin-exists(hook-heading-2xlarge)) {@include hook-heading-2xlarge();}
+}
+
+.uk-heading-3xlarge {
+    font-size: $heading-3xlarge-font-size;
+    line-height: $heading-3xlarge-line-height;
+    @if(meta.mixin-exists(hook-heading-3xlarge)) {@include hook-heading-3xlarge();}
+}
+
+/* Tablet Landscape and bigger */
 @media (min-width: $breakpoint-medium) {
 
-    .uk-heading-primary {
-        font-size: $heading-primary-font-size-m;
-        line-height: $heading-primary-line-height-m;
-    }
+    .uk-heading-small { font-size: $heading-small-font-size-m; }
+    .uk-heading-medium { font-size: $heading-medium-font-size-m; }
+    .uk-heading-large { font-size: $heading-large-font-size-m; }
+    .uk-heading-xlarge { font-size: $heading-xlarge-font-size-m; }
+    .uk-heading-2xlarge { font-size: $heading-2xlarge-font-size-m; }
+    .uk-heading-3xlarge { font-size: $heading-3xlarge-font-size-m; }
 
 }
 
+/* Laptop and bigger */
+@media (min-width: $breakpoint-large) {
 
-/* Hero
- ========================================================================== */
-
-.uk-heading-hero {
-    font-size: $heading-hero-font-size;
-    line-height: $heading-hero-line-height;
-    @if(mixin-exists(hook-heading-hero)) {@include hook-heading-hero();}
-}
-
-/* Phone landscape and bigger */
-@media (min-width: $breakpoint-small) {
-
-    .uk-heading-hero {
-        font-size: $heading-hero-font-size-s;
-        line-height: $heading-hero-line-height-s;
-    }
-
-}
-
-/* Tablet landscape and bigger */
-@media (min-width: $breakpoint-medium) {
-
-    .uk-heading-hero {
-        font-size: $heading-hero-font-size-m;
-        line-height: $heading-hero-line-height-m;
-    }
+    .uk-heading-medium { font-size: $heading-medium-font-size-l; }
+    .uk-heading-large { font-size: $heading-large-font-size-l; }
+    .uk-heading-xlarge { font-size: $heading-xlarge-font-size-l; }
+    .uk-heading-2xlarge { font-size: $heading-2xlarge-font-size-l; }
+    .uk-heading-3xlarge { font-size: $heading-3xlarge-font-size-l; }
 
 }
 
@@ -107,7 +111,7 @@ $heading-line-margin-horizontal:                 0.6em !default;
 .uk-heading-divider {
     padding-bottom: $heading-divider-padding-bottom;
     border-bottom: $heading-divider-border-width solid $heading-divider-border;
-    @if(mixin-exists(hook-heading-divider)) {@include hook-heading-divider();}
+    @if(meta.mixin-exists(hook-heading-divider)) {@include hook-heading-divider();}
 }
 
 
@@ -134,7 +138,7 @@ $heading-line-margin-horizontal:                 0.6em !default;
     height: $heading-bullet-height;
     margin-right: $heading-bullet-margin-right;
     border-left: $heading-bullet-border-width solid $heading-bullet-border;
-    @if(mixin-exists(hook-heading-bullet)) {@include hook-heading-bullet();}
+    @if(meta.mixin-exists(hook-heading-bullet)) {@include hook-heading-bullet();}
 }
 
 
@@ -167,12 +171,12 @@ $heading-line-margin-horizontal:                 0.6em !default;
     content: "";
     /* 1 */
     position: absolute;
-    top: unquote('calc(#{$heading-line-top} - (#{$heading-line-height} / 2))');
+    top: string.unquote('calc(#{$heading-line-top} - (#{$heading-line-height} / 2))');
     /* 2 */
     width: $heading-line-width;
     /* 3 */
     border-bottom: $heading-line-border-width solid $heading-line-border;
-    @if(mixin-exists(hook-heading-line)) {@include hook-heading-line();}
+    @if(meta.mixin-exists(hook-heading-line)) {@include hook-heading-line();}
 }
 
 .uk-heading-line > ::before {
@@ -188,8 +192,14 @@ $heading-line-margin-horizontal:                 0.6em !default;
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-heading-misc)) {@include hook-heading-misc();}
+@if(meta.mixin-exists(hook-heading-misc)) {@include hook-heading-misc();}
 
+// @mixin hook-heading-small(){}
+// @mixin hook-heading-medium(){}
+// @mixin hook-heading-large(){}
+// @mixin hook-heading-xlarge(){}
+// @mixin hook-heading-2xlarge(){}
+// @mixin hook-heading-3xlarge(){}
 // @mixin hook-heading-primary(){}
 // @mixin hook-heading-hero(){}
 // @mixin hook-heading-divider(){}
@@ -201,12 +211,15 @@ $heading-line-margin-horizontal:                 0.6em !default;
 // Inverse
 // ========================================================================
 
-$inverse-heading-divider-border:                   $inverse-global-border !default;
-$inverse-heading-bullet-border:                    $inverse-global-border !default;
-$inverse-heading-line-border:                      $inverse-global-border !default;
 
 
 
+// @mixin hook-inverse-heading-small(){}
+// @mixin hook-inverse-heading-medium(){}
+// @mixin hook-inverse-heading-large(){}
+// @mixin hook-inverse-heading-xlarge(){}
+// @mixin hook-inverse-heading-2xlarge(){}
+// @mixin hook-inverse-heading-3xlarge(){}
 // @mixin hook-inverse-heading-primary(){}
 // @mixin hook-inverse-heading-hero(){}
 // @mixin hook-inverse-heading-divider(){}

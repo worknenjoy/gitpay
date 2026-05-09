@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Notification
 // Description:     Component to create notification messages
 //
@@ -23,24 +25,9 @@
 // Variables
 // ========================================================================
 
-$notification-position:                                10px !default;
-$notification-z-index:                                 $global-z-index + 40 !default;
-$notification-width:                                   350px !default;
 
-$notification-message-margin-bottom:                   10px !default;
-$notification-message-padding:                         $global-small-gutter !default;
-$notification-message-background:                      $global-muted-background !default;
-$notification-message-color:                           $global-color !default;
-$notification-message-font-size:                       $global-medium-font-size !default;
-$notification-message-line-height:                     1.4 !default;
 
-$notification-close-top:                               $notification-message-padding + 5px !default;
-$notification-close-right:                             $notification-message-padding !default;
 
-$notification-message-primary-color:                   $global-primary-background !default;
-$notification-message-success-color:                   $global-success-background !default;
-$notification-message-warning-color:                   $global-warning-background !default;
-$notification-message-danger-color:                    $global-danger-background !default;
 
 
 /* ========================================================================
@@ -61,7 +48,7 @@ $notification-message-danger-color:                    $global-danger-background
     /* 2 */
     box-sizing: border-box;
     width: $notification-width;
-    @if(mixin-exists(hook-notification)) {@include hook-notification();}
+    @if(meta.mixin-exists(hook-notification)) {@include hook-notification();}
 }
 
 
@@ -77,7 +64,7 @@ $notification-message-danger-color:                    $global-danger-background
 .uk-notification-top-center,
 .uk-notification-bottom-center {
     left: 50%;
-    margin-left: ($notification-width / -2);
+    margin-left: ($notification-width * -0.5);
 }
 
 .uk-notification-bottom-left,
@@ -109,15 +96,16 @@ $notification-message-danger-color:                    $global-danger-background
 
 .uk-notification-message {
     position: relative;
-    margin-bottom: $notification-message-margin-bottom;
     padding: $notification-message-padding;
     background: $notification-message-background;
     color: $notification-message-color;
     font-size: $notification-message-font-size;
     line-height: $notification-message-line-height;
     cursor: pointer;
-    @if(mixin-exists(hook-notification-message)) {@include hook-notification-message();}
+    @if(meta.mixin-exists(hook-notification-message)) {@include hook-notification-message();}
 }
+
+* + .uk-notification-message { margin-top: $notification-message-margin-top; }
 
 
 /* Close
@@ -129,7 +117,7 @@ $notification-message-danger-color:                    $global-danger-background
     position: absolute;
     top: $notification-close-top;
     right: $notification-close-right;
-    @if(mixin-exists(hook-notification-close)) {@include hook-notification-close();}
+    @if(meta.mixin-exists(hook-notification-close)) {@include hook-notification-close();}
 }
 
 .uk-notification-message:hover .uk-notification-close { display: block; }
@@ -144,7 +132,7 @@ $notification-message-danger-color:                    $global-danger-background
 
 .uk-notification-message-primary {
     color: $notification-message-primary-color;
-    @if(mixin-exists(hook-notification-message-primary)) {@include hook-notification-message-primary();}
+    @if(meta.mixin-exists(hook-notification-message-primary)) {@include hook-notification-message-primary();}
 }
 
 /*
@@ -153,7 +141,7 @@ $notification-message-danger-color:                    $global-danger-background
 
 .uk-notification-message-success {
     color: $notification-message-success-color;
-    @if(mixin-exists(hook-notification-message-success)) {@include hook-notification-message-success();}
+    @if(meta.mixin-exists(hook-notification-message-success)) {@include hook-notification-message-success();}
 }
 
 /*
@@ -162,7 +150,7 @@ $notification-message-danger-color:                    $global-danger-background
 
 .uk-notification-message-warning {
     color: $notification-message-warning-color;
-    @if(mixin-exists(hook-notification-message-warning)) {@include hook-notification-message-warning();}
+    @if(meta.mixin-exists(hook-notification-message-warning)) {@include hook-notification-message-warning();}
 }
 
 /*
@@ -171,14 +159,14 @@ $notification-message-danger-color:                    $global-danger-background
 
 .uk-notification-message-danger {
     color: $notification-message-danger-color;
-    @if(mixin-exists(hook-notification-message-danger)) {@include hook-notification-message-danger();}
+    @if(meta.mixin-exists(hook-notification-message-danger)) {@include hook-notification-message-danger();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-notification-misc)) {@include hook-notification-misc();}
+@if(meta.mixin-exists(hook-notification-misc)) {@include hook-notification-misc();}
 
 // @mixin hook-notification(){}
 // @mixin hook-notification-message(){}

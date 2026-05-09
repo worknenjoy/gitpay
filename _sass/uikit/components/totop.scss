@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Totop
 // Description:     Component to create an icon to scroll back to top
 //
@@ -9,12 +11,8 @@
 // Variables
 // ========================================================================
 
-$totop-padding:                                  5px !default;
-$totop-color:                                    $global-muted-color !default;
 
-$totop-hover-color:                              $global-color !default;
 
-$totop-active-color:                             $global-emphasis-color !default;
 
 
 /* ========================================================================
@@ -22,34 +20,32 @@ $totop-active-color:                             $global-emphasis-color !default
  ========================================================================== */
 
 /*
- * Addopts `uk-icon`
+ * Adopts `uk-icon`
  */
 
 .uk-totop {
     padding: $totop-padding;
     color: $totop-color;
-    @if(mixin-exists(hook-totop)) {@include hook-totop();}
+    @if(meta.mixin-exists(hook-totop)) {@include hook-totop();}
 }
 
-/* Hover + Focus */
-.uk-totop:hover,
-.uk-totop:focus {
+/* Hover */
+.uk-totop:hover {
     color: $totop-hover-color;
-    outline: none;
-    @if(mixin-exists(hook-totop-hover)) {@include hook-totop-hover();}
+    @if(meta.mixin-exists(hook-totop-hover)) {@include hook-totop-hover();}
 }
 
 /* OnClick */
 .uk-totop:active {
     color: $totop-active-color;
-    @if(mixin-exists(hook-totop-active)) {@include hook-totop-active();}
+    @if(meta.mixin-exists(hook-totop-active)) {@include hook-totop-active();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-totop-misc)) {@include hook-totop-misc();}
+@if(meta.mixin-exists(hook-totop-misc)) {@include hook-totop-misc();}
 
 // @mixin hook-totop(){}
 // @mixin hook-totop-hover(){}
@@ -60,9 +56,6 @@ $totop-active-color:                             $global-emphasis-color !default
 // Inverse
 // ========================================================================
 
-$inverse-totop-color:                        $inverse-global-muted-color !default;
-$inverse-totop-hover-color:                  $inverse-global-color !default;
-$inverse-totop-active-color:                 $inverse-global-emphasis-color !default;
 
 
 

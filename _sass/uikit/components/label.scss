@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Name:            Label
 // Description:     Component to indicate important notes
 //
@@ -13,19 +15,7 @@
 // Variables
 // ========================================================================
 
-$label-padding-vertical:                         0 !default;
-$label-padding-horizontal:                       $global-small-margin !default;
-$label-background:                               $global-primary-background !default;
-$label-line-height:                              $global-line-height !default;
-$label-font-size:                                $global-small-font-size !default;
-$label-color:                                    $global-inverse-color !default;
 
-$label-success-background:                       $global-success-background !default;
-$label-success-color:                            $global-inverse-color !default;
-$label-warning-background:                       $global-warning-background !default;
-$label-warning-color:                            $global-inverse-color !default;
-$label-danger-background:                        $global-danger-background !default;
-$label-danger-color:                             $global-inverse-color !default;
 
 
 /* ========================================================================
@@ -41,7 +31,7 @@ $label-danger-color:                             $global-inverse-color !default;
     color: $label-color;
     vertical-align: middle;
     white-space: nowrap;
-    @if(mixin-exists(hook-label)) {@include hook-label();}
+    @if(meta.mixin-exists(hook-label)) {@include hook-label();}
 }
 
 
@@ -55,7 +45,7 @@ $label-danger-color:                             $global-inverse-color !default;
 .uk-label-success {
     background-color: $label-success-background;
     color: $label-success-color;
-    @if(mixin-exists(hook-label-success)) {@include hook-label-success();}
+    @if(meta.mixin-exists(hook-label-success)) {@include hook-label-success();}
 }
 
 /*
@@ -65,7 +55,7 @@ $label-danger-color:                             $global-inverse-color !default;
 .uk-label-warning {
     background-color: $label-warning-background;
     color: $label-warning-color;
-    @if(mixin-exists(hook-label-warning)) {@include hook-label-warning();}
+    @if(meta.mixin-exists(hook-label-warning)) {@include hook-label-warning();}
 }
 
 /*
@@ -75,14 +65,14 @@ $label-danger-color:                             $global-inverse-color !default;
 .uk-label-danger {
     background-color: $label-danger-background;
     color: $label-danger-color;
-    @if(mixin-exists(hook-label-danger)) {@include hook-label-danger();}
+    @if(meta.mixin-exists(hook-label-danger)) {@include hook-label-danger();}
 }
 
 
 // Hooks
 // ========================================================================
 
-@if(mixin-exists(hook-label-misc)) {@include hook-label-misc();}
+@if(meta.mixin-exists(hook-label-misc)) {@include hook-label-misc();}
 
 // @mixin hook-label(){}
 // @mixin hook-label-success(){}
@@ -94,8 +84,6 @@ $label-danger-color:                             $global-inverse-color !default;
 // Inverse
 // ========================================================================
 
-$inverse-label-background:                      $inverse-global-primary-background !default;
-$inverse-label-color:                           $inverse-global-inverse-color !default;
 
 
 
