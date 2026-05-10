@@ -116,6 +116,7 @@ export default function BankAccountsManager({
         }
         aside={
           <Button
+            size="small"
             variant="contained"
             color="secondary"
             startIcon={<AddIcon fontSize="small" />}

@@ -1,4 +1,5 @@
 export * from './createAccount'
+export * from './createAccountLink'
 export * from './updateAccount'
 export * from './deleteAccount'
 

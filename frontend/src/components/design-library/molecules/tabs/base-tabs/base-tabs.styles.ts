@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-import { Card } from '@mui/material'
+import { Card, CardContent } from '@mui/material'
 
 export const Root = styled('div')(({ theme }) => ({
   flexGrow: 1,
@@ -10,7 +10,11 @@ export const Root = styled('div')(({ theme }) => ({
 export const StyledCard = styled(Card)(({ theme }) => ({
   width: '100%',
   marginBottom: 20,
-  padding: 10
+  padding: '0 20px'
+}))
+
+export const StyledCardContent = styled(CardContent)(() => ({
+  paddingTop: 0
 }))
 
 export const StyledTabsVertical = styled('div')(({ theme }) => ({

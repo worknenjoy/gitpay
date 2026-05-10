@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useHistory } from 'react-router-dom'
 import {
-  Dashboard as DashboardIcon,
-  AccountBalanceWallet as WalletIcon,
-  LibraryBooks,
-  Payment as PaymentIcon,
-  Link as PaymentRequestLinksIcon,
-  CardMembership as PaymentRequestPaymentsIcon,
-  Shield as PaymentRequestDisputesIcon,
-  SwapHoriz as PayoutIcon,
-  Public as ExploreIcon,
-  AssignmentTurnedIn as ClaimIcon,
-  Code as SolutionIcon
+  DashboardOutlined as DashboardIcon,
+  AccountBalanceWalletOutlined as WalletIcon,
+  LibraryBooksOutlined as LibraryBooksIcon,
+  PaymentOutlined as PaymentIcon,
+  LinkOutlined as PaymentRequestLinksIcon,
+  CardMembershipOutlined as PaymentRequestPaymentsIcon,
+  ShieldOutlined as PaymentRequestDisputesIcon,
+  SwapHorizOutlined as PayoutIcon,
+  PublicOutlined as ExploreIcon,
+  AssignmentTurnedInOutlined as ClaimIcon,
+  CodeOutlined as SolutionIcon
 } from '@mui/icons-material'
 import useUserTypes from './use-user-types'
 
@@ -79,7 +79,7 @@ const useProfileSidebarMenu = ({ user }) => {
         {
           include: isContributor || isMaintainer || isFunding,
           onClick: () => history.push('/profile/tasks'),
-          icon: <LibraryBooks />,
+          icon: <LibraryBooksIcon />,
           label: (
             <FormattedMessage
               id="account.profile.sidemenu.issues.network"

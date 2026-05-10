@@ -11,7 +11,6 @@ const MainTitle = ({ title, subtitle }: MainTitleProps) => {
     <BaseTitle
       title={title}
       subtitle={subtitle}
-      level="h5" // Default level set to h5
     />
   )
 }

@@ -32,7 +32,12 @@ export const withProfilePayoutSettingsBankAccountTemplate = (Story: any, context
   const { user } = context.args
 
   return (
-    <PayoutSettingsBankAccount user={user} onSaveCountry={() => {}}>
+    <PayoutSettingsBankAccount
+      user={user}
+      onSaveCountry={() => {}}
+      verificationStatus={'verified'}
+      verificationTabDisabled={false}
+    >
       <Story />
     </PayoutSettingsBankAccount>
   )

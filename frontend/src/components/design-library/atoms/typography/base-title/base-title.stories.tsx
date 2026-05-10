@@ -27,3 +27,12 @@ export const Default = {
     subtitle: 'This is a default subtitle'
   }
 }
+
+
+export const LevelTwo = {
+  args: {
+    title: 'Another title',
+    subtitle: 'Another subtitle',
+    level: 2
+  }
+}

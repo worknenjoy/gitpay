@@ -213,4 +213,62 @@ describe('User Account', () => {
       expect(user.body.country).to.equal(null)
     })
   })
+
+  describe('account verification link', () => {
+    it('should generate account verification link for user with valid account_id', async () => {
+      nock('https://api.stripe.com')
+        .post('/v1/account_links')
+        .reply(200, {
+          object: 'account_link',
+          url: 'https://connect.stripe.com/setup/s/acct_1CVSl2EI8tTzMKoL/testlink123',
+          created: 1234567890,
+          expires_at: 1234571490
+        })
+
+      const reg = await register(agent, {
+        email: 'test_user_verification_link@gmail.com',
+        password: 'test',
+        account_id: 'acct_1CVSl2EI8tTzMKoL'
+      })
+
+      const loginRes = await login(agent, {
+        email: 'test_user_verification_link@gmail.com',
+        password: 'test'
+      })
+
+      const response = await agent
+        .post('/user/account/verification-link')
+        .set('Authorization', loginRes.headers.authorization)
+        .expect(200)
+
+      expect(response.statusCode).to.equal(200)
+      expect(response.body.object).to.equal('account_link')
+      expect(response.body.url).to.include('https://connect.stripe.com')
+    })
+
+    it('should return 401 when user has no account_id', async () => {
+      await register(agent, {
+        email: 'test_user_no_account@gmail.com',
+        password: 'test'
+      })
+
+      const loginRes = await login(agent, {
+        email: 'test_user_no_account@gmail.com',
+        password: 'test'
+      })
+
+      const response = await agent
+        .post('/user/account/verification-link')
+        .set('Authorization', loginRes.headers.authorization)
+        .expect(401)
+
+      expect(response.statusCode).to.equal(401)
+    })
+
+    it('should return 403 when unauthenticated', async () => {
+      await agent
+        .post('/user/account/verification-link')
+        .expect(403)
+    })
+  })
 })

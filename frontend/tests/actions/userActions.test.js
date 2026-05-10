@@ -387,4 +387,82 @@ describe('User Actions', () => {
       expect(actions[2].error.message).to.equal(expectedActions[2].error.message)
     })
   })
+
+  describe('fetchAccountVerificationLink', () => {
+    beforeEach(() => {
+      delete window.location
+      window.location = { href: '' }
+    })
+
+    it('creates FETCH_ACCOUNT_VERIFICATION_LINK_SUCCESS when link fetch succeeds', () => {
+      const verificationLinkData = {
+        object: 'account_link',
+        url: 'https://connect.stripe.com/setup/s/testlink123',
+        created: 1234567890,
+        expires_at: 1234571490
+      }
+
+      moxios.stubRequest(`${api.API_URL}/user/account/verification-link`, {
+        status: 200,
+        response: verificationLinkData
+      })
+
+      const expectedActions = [
+        { type: types.FETCH_ACCOUNT_VERIFICATION_LINK_REQUESTED, completed: false },
+        {
+          type: types.FETCH_ACCOUNT_VERIFICATION_LINK_SUCCESS,
+          completed: true,
+          data: verificationLinkData
+        }
+      ]
+
+      const store = mockStore({ intl: { messages: {} } })
+
+      return store.dispatch(actions.fetchAccountVerificationLink()).then(() => {
+        const dispatchedActions = store.getActions()
+        expect(dispatchedActions[0]).to.eql(expectedActions[0])
+        expect(dispatchedActions[1].type).to.equal(expectedActions[1].type)
+        expect(dispatchedActions[1].completed).to.equal(expectedActions[1].completed)
+        expect(dispatchedActions[1].data).to.eql(expectedActions[1].data)
+        expect(window.location.href).to.equal(verificationLinkData.url)
+      })
+    })
+
+    it('creates FETCH_ACCOUNT_VERIFICATION_LINK_ERROR with notification when link fetch fails', () => {
+      moxios.stubRequest(`${api.API_URL}/user/account/verification-link`, {
+        status: 500
+      })
+
+      const expectedActions = [
+        { type: types.FETCH_ACCOUNT_VERIFICATION_LINK_REQUESTED, completed: false },
+        {
+          type: typesNotification.ADD_NOTIFICATION,
+          text: 'actions.user.account.verification.link.error',
+          open: true,
+          link: undefined,
+          severity: 'error'
+        },
+        {
+          type: types.FETCH_ACCOUNT_VERIFICATION_LINK_ERROR,
+          completed: true,
+          error: new Error('Request failed with status code 500')
+        }
+      ]
+
+      const store = mockStore({ intl: { messages: {} } })
+
+      return store.dispatch(actions.fetchAccountVerificationLink()).then(() => {
+        const dispatchedActions = store.getActions()
+        expect(dispatchedActions[0]).to.eql(expectedActions[0])
+        expect(dispatchedActions[1].type).to.equal(expectedActions[1].type)
+        expect(dispatchedActions[1].text).to.equal(expectedActions[1].text)
+        expect(dispatchedActions[1].open).to.equal(expectedActions[1].open)
+        expect(dispatchedActions[1].link).to.equal(expectedActions[1].link)
+        expect(dispatchedActions[1].severity).to.equal(expectedActions[1].severity)
+        expect(dispatchedActions[2].type).to.equal(expectedActions[2].type)
+        expect(dispatchedActions[2].completed).to.equal(expectedActions[2].completed)
+        expect(dispatchedActions[2].error.message).to.equal(expectedActions[2].error.message)
+      })
+    })
+  })
 })

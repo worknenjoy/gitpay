@@ -73,6 +73,10 @@ const SEARCH_USER_REQUESTED = 'SEARCH_USER_REQUESTED'
 const SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS'
 const SEARCH_USER_ERROR = 'SEARCH_USER_ERROR'
 
+const FETCH_ACCOUNT_VERIFICATION_LINK_REQUESTED = 'FETCH_ACCOUNT_VERIFICATION_LINK_REQUESTED'
+const FETCH_ACCOUNT_VERIFICATION_LINK_SUCCESS = 'FETCH_ACCOUNT_VERIFICATION_LINK_SUCCESS'
+const FETCH_ACCOUNT_VERIFICATION_LINK_ERROR = 'FETCH_ACCOUNT_VERIFICATION_LINK_ERROR'
+
 /*
  * Account fetch
  */
@@ -882,6 +886,39 @@ const searchUser = (data) => {
   }
 }
 
+const fetchAccountVerificationLinkRequested = () => {
+  return { type: FETCH_ACCOUNT_VERIFICATION_LINK_REQUESTED, completed: false }
+}
+
+const fetchAccountVerificationLinkSuccess = (response) => {
+  return { type: FETCH_ACCOUNT_VERIFICATION_LINK_SUCCESS, completed: true, data: response.data }
+}
+
+const fetchAccountVerificationLinkError = (error) => {
+  return { type: FETCH_ACCOUNT_VERIFICATION_LINK_ERROR, completed: true, error }
+}
+
+const fetchAccountVerificationLink = () => {
+  validToken()
+  return (dispatch) => {
+    dispatch(fetchAccountVerificationLinkRequested())
+    return axios
+      .post(api.API_URL + '/user/account/verification-link')
+      .then((response) => {
+        dispatch(fetchAccountVerificationLinkSuccess(response))
+        if (response.data?.url) {
+          window.location.href = response.data.url
+        }
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log('error on fetch account verification link', error)
+        dispatch(addNotification('actions.user.account.verification.link.error', { severity: 'error' }))
+        return dispatch(fetchAccountVerificationLinkError(error))
+      })
+  }
+}
+
 export {
   FETCH_USER_ACCOUNT_REQUESTED,
   FETCH_USER_ACCOUNT_SUCCESS,
@@ -934,6 +971,9 @@ export {
   SEARCH_USER_REQUESTED,
   SEARCH_USER_SUCCESS,
   SEARCH_USER_ERROR,
+  FETCH_ACCOUNT_VERIFICATION_LINK_REQUESTED,
+  FETCH_ACCOUNT_VERIFICATION_LINK_SUCCESS,
+  FETCH_ACCOUNT_VERIFICATION_LINK_ERROR,
   fetchAccount,
   fetchAccountBalance,
   fetchAccountCountries,
@@ -952,5 +992,6 @@ export {
   getBankAccount,
   deleteBankAccount,
   deleteUser,
-  searchUser
+  searchUser,
+  fetchAccountVerificationLink
 }
