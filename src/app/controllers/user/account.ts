@@ -66,3 +66,14 @@ export const accountDelete = async (req: any, res: any) => {
     res.status(401).send(error)
   }
 }
+
+export const accountVerificationLink = async (req: any, res: any) => {
+  try {
+    const data = await user.userAccountLink({ id: req.user.id })
+    res.send(data)
+  } catch (error: any) {
+    // eslint-disable-next-line no-console
+    console.log('error on account verification link', error)
+    res.status(401).send(error)
+  }
+}

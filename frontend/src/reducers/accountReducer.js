@@ -25,7 +25,10 @@ import {
   UPDATE_BANKACCOUNT_ERROR,
   CREATE_BANKACCOUNT_REQUESTED,
   CREATE_BANKACCOUNT_SUCCESS,
-  CREATE_BANKACCOUNT_ERROR
+  CREATE_BANKACCOUNT_ERROR,
+  FETCH_ACCOUNT_VERIFICATION_LINK_REQUESTED,
+  FETCH_ACCOUNT_VERIFICATION_LINK_SUCCESS,
+  FETCH_ACCOUNT_VERIFICATION_LINK_ERROR
 } from '../actions/userActions'
 
 export const account = (state = { data: {}, completed: true, error: {} }, action) => {
@@ -79,6 +82,19 @@ export const balance = (state = { data: {}, completed: true, error: {} }, action
     case FETCH_USER_BALANCE_SUCCESS:
       return { ...state, completed: true, data: action.data, error: {} }
     case FETCH_USER_BALANCE_ERROR:
+      return { ...state, completed: true, error: action.error }
+    default:
+      return state
+  }
+}
+
+export const accountVerificationLink = (state = { data: {}, completed: true, error: {} }, action) => {
+  switch (action.type) {
+    case FETCH_ACCOUNT_VERIFICATION_LINK_REQUESTED:
+      return { ...state, completed: false }
+    case FETCH_ACCOUNT_VERIFICATION_LINK_SUCCESS:
+      return { ...state, completed: true, data: action.data, error: {} }
+    case FETCH_ACCOUNT_VERIFICATION_LINK_ERROR:
       return { ...state, completed: true, error: action.error }
     default:
       return state

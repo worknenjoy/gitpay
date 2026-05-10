@@ -12,7 +12,15 @@ const skeletonBgBySeverity = {
 }
 
 export const CustomAlert = (props) => {
-  const { onClose, alertKey = 'default', actions, dismissable = false, completed, severity = 'info', ...rest } = props
+  const {
+    onClose,
+    alertKey = 'default',
+    actions,
+    dismissable = false,
+    completed,
+    severity = 'info',
+    ...rest
+  } = props
   const fullAlertKey = `alert-dismissed-${alertKey}`
 
   const [open, setOpen] = useState(() => {

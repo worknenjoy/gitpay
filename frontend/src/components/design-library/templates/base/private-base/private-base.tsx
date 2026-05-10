@@ -39,7 +39,7 @@ const PrivateBase = ({
 }: PrivateBaseProps) => {
   // removed useStyles
   const history = useHistory()
-  const { data = {}, completed } = user
+  const { data = {}, completed } = user || {}
   const { email_verified } = data
   const [emailNotVerified, setEmailNotVerified] = React.useState(false)
 

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
-import { Tabs, Tab, Box, CardContent, Tooltip, useTheme, useMediaQuery } from '@mui/material'
+import { Tabs, Tab, Box, Tooltip, useTheme, useMediaQuery } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 import {
   Root,
   StyledCard,
+  StyledCardContent,
   StyledTabsColumn,
   StyledTabsVertical,
   TabPanelRoot,
@@ -27,7 +28,9 @@ function TabPanel(props: TabPanelProps) {
       <Box p={0}>
         {withCard ? (
           <StyledCard elevation={0}>
-            <CardContent>{children}</CardContent>
+            <StyledCardContent>
+              {children}
+            </StyledCardContent>
           </StyledCard>
         ) : (
           children
@@ -44,6 +47,7 @@ type BaseTabsProps = {
     link?: string
     disabled?: boolean
     tooltip?: string | React.ReactNode
+    icon?: React.ReactNode
     onChange?: (event: React.SyntheticEvent, value: string | number) => void
   }>
   activeTab?: string | number
@@ -104,13 +108,21 @@ const BaseTabs = ({
           scrollButtons={isVertical ? false : 'auto'}
         >
           {tabs.map((tab) => {
+            const tabLabel = tab.icon && !tab.disabled ? (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, whiteSpace: 'nowrap' }}>
+                {tab.label}
+                {tab.icon}
+              </Box>
+            ) : tab.label
+
             const tabElement = (
               <Tab
                 key={tab.value}
-                label={tab.label}
+                label={tabLabel}
                 onClick={(e) => handleTabClick(e, tab)}
                 value={tab.value}
                 disabled={tab.disabled}
+                sx={isVertical ? { maxWidth: 'none', width: '100%', alignItems: 'flex-end', paddingRight: 2 } : undefined}
               />
             )
 

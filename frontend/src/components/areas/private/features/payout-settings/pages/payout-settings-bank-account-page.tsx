@@ -4,6 +4,10 @@ import PayoutSettingsBankAccount from 'design-library/pages/private-pages/settin
 import PayoutSettingsBankAcccountHolderPage from './payout-settings-bank-account-holder-page'
 import PayoutSettingsBankAccountInfoPageContainer from '../../../../../../containers/account/payout-settings/payouts-settings-bank-account-banks'
 import PayoutSettingsBankAccountPayoutSchedulePage from './payout-settings-bank-account-payout-schedule-page'
+import PayoutSettingsBankAccountVerificationPage from './payout-settings-bank-account-verification-page'
+import PayoutSettingsBankAccountVerificationRefreshPage from './payout-settings-bank-account-verification-refresh-page'
+import PayoutSettingsBankAccountVerificationReturnPage from './payout-settings-bank-account-verification-return-page'
+import { getVerificationStatus, hasPlatformFillableRequirements } from 'design-library/pages/private-pages/settings-pages/payout-settings-bank-account-verification/payout-settings-bank-account-verification'
 
 const PayoutSettingsBankAccountPage = ({
   user,
@@ -13,7 +17,8 @@ const PayoutSettingsBankAccountPage = ({
   updateAccount,
   deleteAccount,
   fetchAccount,
-  fetchAccountCountries
+  fetchAccountCountries,
+  fetchAccountVerificationLink
 }) => {
   return (
     useEffect(() => {
@@ -21,7 +26,12 @@ const PayoutSettingsBankAccountPage = ({
       fetchAccountCountries()
     }, [fetchAccount, fetchAccountCountries]),
     (
-      <PayoutSettingsBankAccount user={user} onSaveCountry={createAccount}>
+      <PayoutSettingsBankAccount
+        user={user}
+        onSaveCountry={createAccount}
+        verificationStatus={account?.completed ? getVerificationStatus(account) : undefined}
+        verificationTabDisabled={hasPlatformFillableRequirements(account)}
+      >
         <HashRouter>
           <Switch>
             <Route
@@ -59,6 +69,38 @@ const PayoutSettingsBankAccountPage = ({
                   {...routeProps}
                   account={account}
                   updateAccount={updateAccount}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/profile/payout-settings/bank-account/account-verification"
+              component={(routeProps) => (
+                <PayoutSettingsBankAccountVerificationPage
+                  {...routeProps}
+                  account={account}
+                  fetchAccountVerificationLink={fetchAccountVerificationLink}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/profile/payout-settings/bank-account/account-verification/refresh"
+              component={(routeProps) => (
+                <PayoutSettingsBankAccountVerificationRefreshPage
+                  {...routeProps}
+                  account={account}
+                  fetchAccountVerificationLink={fetchAccountVerificationLink}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/profile/payout-settings/bank-account/account-verification/return"
+              component={(routeProps) => (
+                <PayoutSettingsBankAccountVerificationReturnPage
+                  {...routeProps}
+                  account={account}
                 />
               )}
             />

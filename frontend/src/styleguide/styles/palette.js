@@ -4,15 +4,15 @@ const Palette = {
   typography: {
     fontFamily: 'Roboto, Inter, Helvetica, Arial, sans-serif',
     h3: {
-      fontWeight: 200,
-      fontSize: 42,
-      lineHeight: '52px',
+      fontWeight: 500,
+      fontSize: 28,
+      lineHeight: 1.4,
       color: '#353A42'
     },
     h4: {
-      fontWeight: 200,
-      fontSize: 28,
-      lineHeight: '24px',
+      fontWeight: 500,
+      fontSize: 24,
+      lineHeight: 1.4,
       color: '#353A42'
     },
     h5: {
@@ -35,10 +35,16 @@ const Palette = {
       color: '#9B9B9B'
     },
     subtitle1: {
-      fontWeight: 500
+      fontWeight: 400,
+      fontSize: 14,
+      lineHeight: 1.4,
+      color: '#6e6e6e'
     },
     subtitle2: {
-      fontWeight: 400
+      fontWeight: 200,
+      fontSize: 14,
+      lineHeight: 1.4,
+      color: '#6e6e6e'
     }
   },
   palette: {

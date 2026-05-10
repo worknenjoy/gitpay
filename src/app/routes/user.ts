@@ -7,7 +7,8 @@ import {
   accountCountries,
   accountBalance,
   accountUpdate,
-  accountDelete
+  accountDelete,
+  accountVerificationLink
 } from '../controllers/user/account'
 import {
   createBankAccount,
@@ -39,6 +40,7 @@ router.delete('/account', accountDelete)
 
 router.get('/account/balance', accountBalance)
 router.get('/account/countries', accountCountries)
+router.post('/account/verification-link', accountVerificationLink)
 
 router.post('/bank_accounts', createBankAccount)
 router.get('/bank_accounts', userBankAccount)
