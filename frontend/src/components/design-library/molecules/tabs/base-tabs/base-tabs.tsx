@@ -28,9 +28,7 @@ function TabPanel(props: TabPanelProps) {
       <Box p={0}>
         {withCard ? (
           <StyledCard elevation={0}>
-            <StyledCardContent>
-              {children}
-            </StyledCardContent>
+            <StyledCardContent>{children}</StyledCardContent>
           </StyledCard>
         ) : (
           children
@@ -108,12 +106,15 @@ const BaseTabs = ({
           scrollButtons={isVertical ? false : 'auto'}
         >
           {tabs.map((tab) => {
-            const tabLabel = tab.icon && !tab.disabled ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, whiteSpace: 'nowrap' }}>
-                {tab.label}
-                {tab.icon}
-              </Box>
-            ) : tab.label
+            const tabLabel =
+              tab.icon && !tab.disabled ? (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, whiteSpace: 'nowrap' }}>
+                  {tab.label}
+                  {tab.icon}
+                </Box>
+              ) : (
+                tab.label
+              )
 
             const tabElement = (
               <Tab
@@ -122,7 +123,11 @@ const BaseTabs = ({
                 onClick={(e) => handleTabClick(e, tab)}
                 value={tab.value}
                 disabled={tab.disabled}
-                sx={isVertical ? { maxWidth: 'none', width: '100%', alignItems: 'flex-end', paddingRight: 2 } : undefined}
+                sx={
+                  isVertical
+                    ? { maxWidth: 'none', width: '100%', alignItems: 'flex-end', paddingRight: 2 }
+                    : undefined
+                }
               />
             )
 

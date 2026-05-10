@@ -88,7 +88,10 @@ export const balance = (state = { data: {}, completed: true, error: {} }, action
   }
 }
 
-export const accountVerificationLink = (state = { data: {}, completed: true, error: {} }, action) => {
+export const accountVerificationLink = (
+  state = { data: {}, completed: true, error: {} },
+  action
+) => {
   switch (action.type) {
     case FETCH_ACCOUNT_VERIFICATION_LINK_REQUESTED:
       return { ...state, completed: false }

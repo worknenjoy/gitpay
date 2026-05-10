@@ -9,7 +9,9 @@ import { VerificationStatus } from '../../../../../types/account'
 const verificationIcons: Record<VerificationStatus, React.ReactNode> = {
   warning: <WarningAmberIcon sx={{ color: 'warning.main', fontSize: 18 }} />,
   upcoming: <AccessTimeIcon sx={{ color: 'info.main', fontSize: 18 }} />,
-  verified: <CheckCircleIcon sx={{ color: 'success.main', fontSize: 20, flexShrink: 0, opacity: 1 }} />
+  verified: (
+    <CheckCircleIcon sx={{ color: 'success.main', fontSize: 20, flexShrink: 0, opacity: 1 }} />
+  )
 }
 
 const BankAccountTabs = ({

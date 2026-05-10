@@ -12,9 +12,7 @@ const ProfileSecondaryHeader = ({ title, subtitle, aside }: ProfileSecondaryHead
   return (
     <Container>
       <SecondaryTitle title={title} subtitle={subtitle} />
-      <div>
-        {aside && aside}
-      </div>
+      <div>{aside && aside}</div>
     </Container>
   )
 }

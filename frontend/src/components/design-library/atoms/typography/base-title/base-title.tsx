@@ -8,7 +8,9 @@ type BaseTitleProps = {
 }
 
 const BaseTitle = ({ title, subtitle, level = 1 }: BaseTitleProps) => {
-  const levelToVariantMap: { [key: number]: { title: TypographyVariant; subtitle: TypographyVariant } } = {
+  const levelToVariantMap: {
+    [key: number]: { title: TypographyVariant; subtitle: TypographyVariant }
+  } = {
     1: {
       title: 'h3',
       subtitle: 'subtitle1'
@@ -21,9 +23,7 @@ const BaseTitle = ({ title, subtitle, level = 1 }: BaseTitleProps) => {
 
   return (
     <div>
-      <Typography variant={levelToVariantMap[level].title}>
-        {title}
-      </Typography>
+      <Typography variant={levelToVariantMap[level].title}>{title}</Typography>
       <Typography variant={levelToVariantMap[level].subtitle} gutterBottom>
         {subtitle}
       </Typography>

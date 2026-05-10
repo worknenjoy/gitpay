@@ -39,10 +39,7 @@ ActionRequired.args = {
     data: {
       ...baseAccount.data,
       requirements: {
-        currently_due: [
-          'individual.verification.document',
-          'individual.id_number'
-        ],
+        currently_due: ['individual.verification.document', 'individual.id_number'],
         eventually_due: []
       }
     }
@@ -75,10 +72,7 @@ UpcomingRequirements.args = {
       ...baseAccount.data,
       requirements: {
         currently_due: [],
-        eventually_due: [
-          'individual.id_number',
-          'business_profile.url'
-        ],
+        eventually_due: ['individual.id_number', 'business_profile.url'],
         current_deadline: Math.floor(new Date('2026-06-30').getTime() / 1000)
       }
     }

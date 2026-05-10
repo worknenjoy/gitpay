@@ -6,7 +6,13 @@ import EmptyBase from '../../../../molecules/content/empty/empty-base/empty-base
 import EmptyBankAccount from '../../../../molecules/content/empty/empty-bank-account/empty-bank-account'
 import { FormattedMessage } from 'react-intl'
 
-const PayoutSetingsBankAccount = ({ children, user, onSaveCountry, verificationStatus, verificationTabDisabled }) => {
+const PayoutSetingsBankAccount = ({
+  children,
+  user,
+  onSaveCountry,
+  verificationStatus,
+  verificationTabDisabled
+}) => {
   const { completed, data } = user
   const [savingCountry, setSavingCountry] = React.useState(false)
   const [openCountryPicker, setOpenCountryPicker] = React.useState(false)
@@ -85,7 +91,12 @@ const PayoutSetingsBankAccount = ({ children, user, onSaveCountry, verificationS
           )}
         </>
       ) : (
-        <BankAccountTabs verificationStatus={verificationStatus} verificationTabDisabled={verificationTabDisabled}>{children}</BankAccountTabs>
+        <BankAccountTabs
+          verificationStatus={verificationStatus}
+          verificationTabDisabled={verificationTabDisabled}
+        >
+          {children}
+        </BankAccountTabs>
       )}
     </>
   ) : (

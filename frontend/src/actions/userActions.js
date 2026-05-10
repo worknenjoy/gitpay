@@ -913,7 +913,9 @@ const fetchAccountVerificationLink = () => {
       .catch((error) => {
         // eslint-disable-next-line no-console
         console.log('error on fetch account verification link', error)
-        dispatch(addNotification('actions.user.account.verification.link.error', { severity: 'error' }))
+        dispatch(
+          addNotification('actions.user.account.verification.link.error', { severity: 'error' })
+        )
         return dispatch(fetchAccountVerificationLinkError(error))
       })
   }

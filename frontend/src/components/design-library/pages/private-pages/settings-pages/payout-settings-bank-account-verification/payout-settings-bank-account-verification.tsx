@@ -9,7 +9,9 @@ import api from '../../../../../../consts'
 import { VerificationStatus } from '../../../../../../types/account'
 
 export const hasPlatformFillableRequirements = (account): boolean =>
-  (account?.data?.requirements?.currently_due || []).some((r: string) => api.ACCOUNT_FIELDS_ROUTES?.[r])
+  (account?.data?.requirements?.currently_due || []).some(
+    (r: string) => api.ACCOUNT_FIELDS_ROUTES?.[r]
+  )
 
 export const getVerificationStatus = (account): VerificationStatus => {
   const currentlyDue = account?.data?.requirements?.currently_due || []
@@ -150,7 +152,15 @@ const PayoutSettingsBankAccountVerification = ({
             })}
           </ul>
           {hasStripeOnlyFutureRequirements && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', mt: 4, gap: 1 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                mt: 4,
+                gap: 1
+              }}
+            >
               <Button
                 variant="contained"
                 color="secondary"
@@ -221,7 +231,15 @@ const PayoutSettingsBankAccountVerification = ({
             </>
           )}
           {hasStripeOnlyRequirements && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', mt: 4, gap: 1 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-end',
+                mt: 4,
+                gap: 1
+              }}
+            >
               <Button
                 variant="contained"
                 color="secondary"

@@ -28,7 +28,6 @@ export const Default = {
   }
 }
 
-
 export const LevelTwo = {
   args: {
     title: 'Another title',

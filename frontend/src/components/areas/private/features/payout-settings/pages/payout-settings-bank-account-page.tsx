@@ -7,7 +7,10 @@ import PayoutSettingsBankAccountPayoutSchedulePage from './payout-settings-bank-
 import PayoutSettingsBankAccountVerificationPage from './payout-settings-bank-account-verification-page'
 import PayoutSettingsBankAccountVerificationRefreshPage from './payout-settings-bank-account-verification-refresh-page'
 import PayoutSettingsBankAccountVerificationReturnPage from './payout-settings-bank-account-verification-return-page'
-import { getVerificationStatus, hasPlatformFillableRequirements } from 'design-library/pages/private-pages/settings-pages/payout-settings-bank-account-verification/payout-settings-bank-account-verification'
+import {
+  getVerificationStatus,
+  hasPlatformFillableRequirements
+} from 'design-library/pages/private-pages/settings-pages/payout-settings-bank-account-verification/payout-settings-bank-account-verification'
 
 const PayoutSettingsBankAccountPage = ({
   user,

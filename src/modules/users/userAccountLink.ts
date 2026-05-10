@@ -3,6 +3,8 @@ type UserAccountLinkParams = {
 }
 
 export async function userAccountLink(userParameters: UserAccountLinkParams) {
-  const { createUserAccountLink } = await import('../../mutations/user/account/createUserAccountLink')
+  const { createUserAccountLink } = await import(
+    '../../mutations/user/account/createUserAccountLink'
+  )
   return createUserAccountLink(userParameters)
 }

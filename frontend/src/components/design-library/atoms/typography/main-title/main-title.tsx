@@ -7,12 +7,7 @@ type MainTitleProps = {
 }
 
 const MainTitle = ({ title, subtitle }: MainTitleProps) => {
-  return (
-    <BaseTitle
-      title={title}
-      subtitle={subtitle}
-    />
-  )
+  return <BaseTitle title={title} subtitle={subtitle} />
 }
 
 export default MainTitle
