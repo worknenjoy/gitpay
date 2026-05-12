@@ -128,6 +128,10 @@ let msgs: any = defineMessages({
   ssnLast4: {
     id: 'consts.account.ssn.last4',
     defaultMessage: 'Last four digits of your SSN'
+  },
+  accountRejectedFraud: {
+    id: 'consts.account.rejected.fraud',
+    defaultMessage: 'Account rejected by Stripe'
   }
 })
 

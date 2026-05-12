@@ -8,6 +8,44 @@ import { CustomAlert } from './account-requirements.styles'
 
 const AccountRequirements = ({ user, account, intl, onClick }) => {
   const { completed = true } = account
+  const isRejected = account?.data?.requirements?.disabled_reason?.startsWith('rejected')
+
+  if (isRejected) {
+    return (
+      <CustomAlert
+        completed={completed}
+        severity="error"
+        action={
+          <Button
+            completed={completed}
+            component="a"
+            href="mailto:contact@gitpay.me"
+            variant="contained"
+            color="error"
+            label={
+              <FormattedMessage
+                id="payout-settings.verification.rejected.contact"
+                defaultMessage="Contact us at contact@gitpay.me"
+              />
+            }
+          />
+        }
+      >
+        <AlertTitle>
+          <FormattedMessage
+            id="payout-settings.verification.rejected.title"
+            defaultMessage="Account rejected by Stripe"
+          />
+        </AlertTitle>
+        <Typography variant="body2" gutterBottom>
+          <FormattedMessage
+            id="payout-settings.verification.rejected.description"
+            defaultMessage="Stripe rejected this payout account after a risk review. Payouts are currently disabled."
+          />
+        </Typography>
+      </CustomAlert>
+    )
+  }
 
   const missingRequirements = () => {
     if (account?.data?.requirements?.currently_due?.length > 0) {

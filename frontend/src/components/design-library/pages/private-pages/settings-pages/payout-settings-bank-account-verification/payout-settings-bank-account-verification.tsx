@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import SecondaryTitle from '../../../../atoms/typography/secondary-title/secondary-title'
 import { CustomAlert } from '../../../../atoms/alerts/alert/alert'
 import Button from '../../../../atoms/buttons/button/button'
+
 import api from '../../../../../../consts'
 import { VerificationStatus } from '../../../../../../types/account'
 
@@ -14,6 +15,8 @@ export const hasPlatformFillableRequirements = (account): boolean =>
   )
 
 export const getVerificationStatus = (account): VerificationStatus => {
+  const disabledReason = account?.data?.requirements?.disabled_reason || ''
+  if (disabledReason.startsWith('rejected')) return 'rejected'
   const currentlyDue = account?.data?.requirements?.currently_due || []
   const eventuallyDue = account?.data?.requirements?.eventually_due || []
   if (currentlyDue.length > 0) return 'warning'
@@ -74,6 +77,35 @@ const PayoutSettingsBankAccountVerification = ({
       <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
         <FormattedMessage id="payout-settings.verification.status" defaultMessage="Status" />
       </Typography>
+
+      {status === 'rejected' && (
+        <CustomAlert severity="error" completed={completed}>
+          <AlertTitle>
+            <FormattedMessage
+              id="payout-settings.verification.rejected.title"
+              defaultMessage="Account rejected by Stripe"
+            />
+          </AlertTitle>
+          <Typography variant="body2">
+            <FormattedMessage
+              id="payout-settings.verification.rejected.description"
+              defaultMessage="Stripe rejected this payout account after a risk review. Payouts are currently disabled."
+            />
+          </Typography>
+          <Button
+            variant="text"
+            color="error"
+            component="a"
+            href="mailto:contact@gitpay.me"
+            label={
+              <FormattedMessage
+                id="payout-settings.verification.rejected.contact"
+                defaultMessage="Contact us at contact@gitpay.me"
+              />
+            }
+          />
+        </CustomAlert>
+      )}
 
       {status === 'verified' && (
         <CustomAlert severity="success" completed={completed}>

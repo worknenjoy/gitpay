@@ -3,10 +3,12 @@ import { FormattedMessage } from 'react-intl'
 import WarningAmberIcon from '@mui/icons-material/WarningAmber'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import Tabs from '../base-tabs/base-tabs'
 import { VerificationStatus } from '../../../../../types/account'
 
 const verificationIcons: Record<VerificationStatus, React.ReactNode> = {
+  rejected: <ErrorOutlineIcon sx={{ color: 'error.main', fontSize: 18 }} />,
   warning: <WarningAmberIcon sx={{ color: 'warning.main', fontSize: 18 }} />,
   upcoming: <AccessTimeIcon sx={{ color: 'info.main', fontSize: 18 }} />,
   verified: (

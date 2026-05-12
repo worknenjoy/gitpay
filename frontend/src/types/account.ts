@@ -1,1 +1,1 @@
-export type VerificationStatus = 'warning' | 'upcoming' | 'verified'
+export type VerificationStatus = 'warning' | 'upcoming' | 'verified' | 'rejected'
