@@ -31,7 +31,6 @@ const ACCOUNT_FIELD_LABELS: Record<string, string> = {
   'individual.ssn_last_4': 'SSN last 4'
 }
 
-
 const PayoutMail: any = {
   payoutCreated: async function (user: any, payout: any) {
     const { email, language, receiveNotifications } = user || {}
@@ -152,19 +151,15 @@ const PayoutMail: any = {
     i18n.setLocale(language || 'en')
 
     try {
-      return await request(
-        email,
-        i18n.__('mail.webhook.payout.account.rejected.subject'),
-        [
-          {
-            type: 'text/html',
-            value: baseContentTemplate.baseContentEmailTemplate(
-              i18n.__('mail.webhook.payout.account.rejected.message'),
-              i18n.__('mail.webhook.payout.account.rejected.details')
-            )
-          }
-        ]
-      )
+      return await request(email, i18n.__('mail.webhook.payout.account.rejected.subject'), [
+        {
+          type: 'text/html',
+          value: baseContentTemplate.baseContentEmailTemplate(
+            i18n.__('mail.webhook.payout.account.rejected.message'),
+            i18n.__('mail.webhook.payout.account.rejected.details')
+          )
+        }
+      ])
     } catch (error) {
       console.error('Error sending account rejected email:', error)
     }
@@ -178,21 +173,17 @@ const PayoutMail: any = {
     const requirementsList = `<ul>${currentlyDue.map((r) => `<li>${ACCOUNT_FIELD_LABELS[r] || r}</li>`).join('')}</ul>`
 
     try {
-      return await request(
-        email,
-        i18n.__('mail.webhook.payout.account.currentlydue.subject'),
-        [
-          {
-            type: 'text/html',
-            value: baseContentTemplate.baseContentEmailTemplate(
-              i18n.__('mail.webhook.payout.account.currentlydue.message'),
-              i18n.__('mail.webhook.payout.account.currentlydue.requirements') +
-                requirementsList +
-                i18n.__('mail.webhook.payout.account.currentlydue.details')
-            )
-          }
-        ]
-      )
+      return await request(email, i18n.__('mail.webhook.payout.account.currentlydue.subject'), [
+        {
+          type: 'text/html',
+          value: baseContentTemplate.baseContentEmailTemplate(
+            i18n.__('mail.webhook.payout.account.currentlydue.message'),
+            i18n.__('mail.webhook.payout.account.currentlydue.requirements') +
+              requirementsList +
+              i18n.__('mail.webhook.payout.account.currentlydue.details')
+          )
+        }
+      ])
     } catch (error) {
       console.error('Error sending account currently due email:', error)
     }

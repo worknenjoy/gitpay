@@ -33,7 +33,9 @@ const notifyAccountVerificationScript = async () => {
       await PayoutMail.accountRejected(user.dataValues)
       countRejected++
     } else if (ssnDue.length > 0) {
-      console.log(`  [user ${id} / ${email}] Status: CURRENTLY_DUE (SSN last 4) — sending verification email.`)
+      console.log(
+        `  [user ${id} / ${email}] Status: CURRENTLY_DUE (SSN last 4) — sending verification email.`
+      )
       await PayoutMail.accountCurrentlyDue(user.dataValues, ssnDue)
       countCurrentlyDue++
     } else {
