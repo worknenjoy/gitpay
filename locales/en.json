@@ -150,7 +150,7 @@
   "mail.webhook.payout.finished.message": "<p>We made a payout to your bank account, and you will see it in your transactions as a payment from Gitpay.</p>",
   "mail.webhook.payout.finished.details": "<p>Be aware that your payout can take 5 business days to appear in your account.</p>",
   "mail.webhook.payout.finished.payout": "Payout amount paid",
-  "mail.webhook.payout.account.rejected.subject": "Action required: Your Gitpay payout account has been rejected",
+  "mail.webhook.payout.account.rejected.subject": "Action required: Your Gitpay account has been rejected to accept payouts",
   "mail.webhook.payout.account.rejected.message": "<p>Your Gitpay payout account has been rejected by Stripe after a risk review. <strong>Payouts are currently paused and need immediate action to resume.</strong></p>",
   "mail.webhook.payout.account.rejected.details": "<p>Please visit <a href=\"https://gitpay.me/#/profile/payout-settings/bank-account/account-verification\">your payout settings</a> to review the status of your account.</p><p>If you need help or couldn't activate your account, please contact us at <a href=\"mailto:contact@gitpay.me\">contact@gitpay.me</a>.</p>",
   "mail.webhook.payout.account.currentlydue.subject": "Action required: Your Gitpay payout account needs verification",
