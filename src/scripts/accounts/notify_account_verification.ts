@@ -3,8 +3,24 @@ import { findUsersWithAccountId } from '../../queries/user/findUsersWithAccountI
 import { retrieveAccount } from '../../queries/provider/stripe/account'
 import PayoutMail from '../../mail/payout'
 
+const parseStatusFilter = (): string | null => {
+  const idx = process.argv.indexOf('--status')
+  if (idx === -1) return null
+  const value = process.argv[idx + 1]
+  if (!value || !['rejected', 'currently_due'].includes(value)) {
+    console.error(`Invalid --status value: "${value}". Use "rejected" or "currently_due".`)
+    process.exit(1)
+  }
+  return value
+}
+
 const notifyAccountVerificationScript = async () => {
   i18nConfigure()
+
+  const statusFilter = parseStatusFilter()
+  if (statusFilter) {
+    console.log(`Filtering notifications by status: ${statusFilter}`)
+  }
 
   const users = await findUsersWithAccountId()
   console.log(`Found ${users.length} users with a connected Stripe account.`)
@@ -29,15 +45,23 @@ const notifyAccountVerificationScript = async () => {
     const ssnDue = currentlyDue.filter((r) => r === 'individual.ssn_last_4')
 
     if (disabledReason.startsWith('rejected')) {
-      console.log(`  [user ${id} / ${email}] Status: REJECTED — sending rejected email.`)
-      await PayoutMail.accountRejected(user.dataValues)
-      countRejected++
+      if (!statusFilter || statusFilter === 'rejected') {
+        console.log(`  [user ${id} / ${email}] Status: REJECTED — sending rejected email.`)
+        await PayoutMail.accountRejected(user.dataValues)
+        countRejected++
+      } else {
+        console.log(`  [user ${id} / ${email}] Status: REJECTED — skipped by filter.`)
+      }
     } else if (ssnDue.length > 0) {
-      console.log(
-        `  [user ${id} / ${email}] Status: CURRENTLY_DUE (SSN last 4) — sending verification email.`
-      )
-      await PayoutMail.accountCurrentlyDue(user.dataValues, ssnDue)
-      countCurrentlyDue++
+      if (!statusFilter || statusFilter === 'currently_due') {
+        console.log(
+          `  [user ${id} / ${email}] Status: CURRENTLY_DUE (SSN last 4) — sending verification email.`
+        )
+        await PayoutMail.accountCurrentlyDue(user.dataValues, ssnDue)
+        countCurrentlyDue++
+      } else {
+        console.log(`  [user ${id} / ${email}] Status: CURRENTLY_DUE — skipped by filter.`)
+      }
     } else {
       console.log(`  [user ${id} / ${email}] Status: OK — no action needed.`)
       countOk++
