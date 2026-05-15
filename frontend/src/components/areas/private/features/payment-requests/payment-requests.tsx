@@ -106,7 +106,8 @@ const PaymentRequests = ({
               />
             ),
             icon: <EditIcon />,
-            onClick: () => openEditPaymentRequest(item)
+            onClick: () => openEditPaymentRequest(item),
+            disabled: !isAccountValid
           }
         ]}
       />
@@ -143,7 +144,9 @@ const PaymentRequests = ({
         }}
         displayAction={isAccountValid}
         emptyComponent={
-          <EmptyPaymentRequest onActionClick={handleOpenCreatePaymentRequestDrawer} />
+          <EmptyPaymentRequest
+            onActionClick={isAccountValid ? handleOpenCreatePaymentRequestDrawer : undefined}
+          />
         }
         onActionClick={handleOpenCreatePaymentRequestDrawer}
         onActionText={

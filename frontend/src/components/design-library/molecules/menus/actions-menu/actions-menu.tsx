@@ -8,6 +8,7 @@ type ActionsMenuProps = {
     children: React.ReactNode
     onClick: () => void
     icon?: React.ReactNode
+    disabled?: boolean
     confirm?: {
       dialogMessage?: string | React.ReactNode
       alertMessage?: string | React.ReactNode
@@ -49,6 +50,7 @@ export const ActionsMenu = ({ actions }: ActionsMenuProps) => {
         {actions.map((action, index) => (
           <MenuItem
             key={index}
+            disabled={action.disabled}
             onClick={() => {
               action.onClick()
               handleCloseMenu()
