@@ -22,7 +22,7 @@ export async function orderRefund(orderParams: OrderRefundParams) {
     case 'stripe': {
       const refundAmountExcludingFees = calculateAmountWithPercent(
         order.amount,
-        8,
+        0,
         'decimal'
       ).centavos
       const refund = await stripe.refunds.create({

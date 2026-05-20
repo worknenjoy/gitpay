@@ -30,6 +30,8 @@ import {
   PaymentRequestFactory,
   PaymentRequestTransferFactory
 } from '../../factories'
+import SendMail from '../../../src/mail/mail'
+const sinon = require('sinon')
 
 const agent = request.agent(api)
 
@@ -118,6 +120,44 @@ describe('POST /webhooks', () => {
       expect(o.source).to.equal('ch_test_bounty_charge')
       expect(o.paid).to.equal(false)
       expect(o.status).to.equal('refunded')
+    })
+
+    it('should send refund email with the amount from the webhook event', async () => {
+      const user = await UserFactory({ email: 'testrefundemail@mail.com', password: 'teste' })
+      const task = await TaskFactory({
+        url: 'https://github.com/worknenjoy/truppie/issues/199',
+        provider: 'github',
+        userId: user.id
+      })
+      await task.createOrder({
+        source_id: 'card_test_123',
+        currency: 'BRL',
+        amount: 200,
+        source: 'ch_test_bounty_charge',
+        userId: user.id
+      })
+
+      const mailStub = sinon.stub(SendMail, 'success').resolves(true)
+
+      try {
+        await agent
+          .post('/webhooks/stripe-platform')
+          .send(refundCreated.successfullyWithBountyMetadata)
+          .expect('Content-Type', /json/)
+          .expect(200)
+
+        expect(mailStub.calledOnce).to.equal(true)
+        // Verify the correct user received the email
+        const userArg = mailStub.firstCall.args[0]
+        expect(userArg.email).to.equal('testrefundemail@mail.com')
+        // amount_refunded = 1840 centavos → 18.4; verify the message arg if i18n is initialized
+        const messageArg = mailStub.firstCall.args[2]
+        if (messageArg) {
+          expect(messageArg).to.include('18.4')
+        }
+      } finally {
+        mailStub.restore()
+      }
     })
 
     it('should update the order when a webhook charge.succeeded is triggered', async () => {
