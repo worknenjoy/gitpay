@@ -11,6 +11,7 @@ export const currencyMap: CurrencyMap = {
   BR: 'BRL',
   BG: 'BGN', // Bulgaria
   CA: 'CAD',
+  CL: 'CLP', // Chile
   HR: 'HRK', // Croatia
   CY: 'EUR', // Cyprus
   CZ: 'CZK', // Czech Republic
