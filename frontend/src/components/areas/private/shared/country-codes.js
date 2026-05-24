@@ -61,6 +61,7 @@ export const countryCodes = [
   { country: 'United Arab Emirates', code: 'AE', image: 'united-arab-emirates' },
   { country: 'United Kingdom', code: 'GB', image: 'united-kingdom' },
   { country: 'United States', code: 'US', image: 'united-states-of-america' }
+  ,{ country: 'Vietnam', code: 'VN', image: 'vietnam' }
 ]
 
 export const countryCurrencies = [
@@ -132,6 +133,7 @@ export const countryCurrencies = [
   { currency: 'Turkish Lira', symbol: '₺', code: 'TRY', countries: ['TR'] },
   { currency: 'United Arab Emirates Dirham', symbol: 'د.إ', code: 'AED', countries: ['AE'] },
   { currency: 'United States Dollar', symbol: '$', code: 'USD', countries: ['US'] }
+  ,{ currency: 'Vietnamese Dong', symbol: '₫', code: 'VND', countries: ['VN'] }
 ]
 
 export const countryCodesFull = [
