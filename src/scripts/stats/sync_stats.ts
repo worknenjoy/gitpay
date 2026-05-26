@@ -5,7 +5,8 @@ async function main() {
   try {
     const stats = await syncInfo()
 
-    const totalPaid = stats.total_paid_for_bounties_count + stats.total_paid_for_payment_requests_count
+    const totalPaid =
+      stats.total_paid_for_bounties_count + stats.total_paid_for_payment_requests_count
 
     console.log('=== Platform Public Stats Summary ===')
     console.log(`  Users                       : ${stats.users_count}`)
