@@ -3,6 +3,7 @@ import { Model, DataTypes, Optional, Sequelize } from 'sequelize'
 export interface PlatformPublicStatsAttributes {
   id: number
   users_count?: number
+  bounties_count?: number
   payment_requests_payments_count?: number
   payment_request_count?: number
   total_paid_for_bounties_count?: number
@@ -24,6 +25,7 @@ export default class PlatformPublicStats
 {
   public id!: number
   public users_count!: number
+  public bounties_count!: number
   public payment_requests_payments_count!: number
   public payment_request_count!: number
   public total_paid_for_bounties_count!: number
@@ -42,6 +44,10 @@ export default class PlatformPublicStats
           autoIncrement: true
         },
         users_count: {
+          type: DataTypes.INTEGER,
+          allowNull: true
+        },
+        bounties_count: {
           type: DataTypes.INTEGER,
           allowNull: true
         },

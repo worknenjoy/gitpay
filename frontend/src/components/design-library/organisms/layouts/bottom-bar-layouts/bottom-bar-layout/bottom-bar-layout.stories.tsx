@@ -17,7 +17,7 @@ Default.args = {
       tasks: 200,
       bounties: 85000,
       users: 5000,
-      paymentRequestCount: 140,
+      paymentRequestPaymentsCount: 5621,
       totalPaidForPaymentRequests: 40000,
       userCountriesCount: 42
     }

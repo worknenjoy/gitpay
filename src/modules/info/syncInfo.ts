@@ -2,6 +2,7 @@ import models from '../../models'
 import { fetchChannelUserCount } from './fetchChannelUserCount'
 import {
   countUsers,
+  countBounties,
   countUserCountries,
   countPaymentRequests,
   countPaymentRequestPayments,
@@ -13,6 +14,7 @@ const currentModels = models as any
 
 export interface SyncInfoResult {
   users_count: number
+  bounties_count: number
   payment_request_count: number
   payment_requests_payments_count: number
   total_paid_for_bounties_count: number
@@ -24,6 +26,7 @@ export interface SyncInfoResult {
 export async function syncInfo(): Promise<SyncInfoResult> {
   const [
     users_count,
+    bounties_count,
     payment_request_count,
     payment_requests_payments_count,
     total_paid_for_bounties_count,
@@ -32,6 +35,7 @@ export async function syncInfo(): Promise<SyncInfoResult> {
     slack_channel_users_count
   ] = await Promise.all([
     countUsers(),
+    countBounties(),
     countPaymentRequests(),
     countPaymentRequestPayments(),
     totalPaidForBounties(),
@@ -42,6 +46,7 @@ export async function syncInfo(): Promise<SyncInfoResult> {
 
   const stats: SyncInfoResult = {
     users_count,
+    bounties_count,
     payment_request_count,
     payment_requests_payments_count,
     total_paid_for_bounties_count,

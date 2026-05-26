@@ -18,7 +18,7 @@ export async function getInfo() {
   }
 
   return {
-    tasks: stats.payment_request_count,
+    tasks: stats.bounties_count,
     bounties: stats.total_paid_for_bounties_count,
     users: stats.users_count,
     channelUserCount: stats.slack_channel_users_count,

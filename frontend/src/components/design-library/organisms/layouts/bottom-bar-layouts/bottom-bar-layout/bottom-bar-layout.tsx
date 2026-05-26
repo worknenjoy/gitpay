@@ -33,7 +33,7 @@ const Bottom = ({ info, getInfo }) => {
     tasks,
     bounties,
     users,
-    paymentRequestCount,
+    paymentRequestPaymentsCount,
     totalPaidForPaymentRequests,
     userCountriesCount
   } = data || {}
@@ -129,7 +129,7 @@ const Bottom = ({ info, getInfo }) => {
           getInfo={getInfo}
           completed={completed}
           totalPaid={(bounties || 0) + (totalPaidForPaymentRequests || 0)}
-          workCount={(tasks || 0) + (paymentRequestCount || 0)}
+          workCount={(tasks || 0) + (paymentRequestPaymentsCount || 0)}
           users={users}
           countries={userCountriesCount}
         />
