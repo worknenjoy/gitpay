@@ -29,7 +29,14 @@ import logoWorknEnjoy from 'images/worknenjoy-logo.png'
 const Bottom = ({ info, getInfo }) => {
   const history = useHistory()
   const { data, completed } = info
-  const { tasks, bounties, users } = data || {}
+  const {
+    tasks,
+    bounties,
+    users,
+    paymentRequestCount,
+    totalPaidForPaymentRequests,
+    userCountriesCount
+  } = data || {}
 
   const navigateTo = (path: string) => {
     history.push(path)
@@ -121,9 +128,10 @@ const Bottom = ({ info, getInfo }) => {
         <StatsBar
           getInfo={getInfo}
           completed={completed}
-          tasks={tasks}
-          bounties={bounties}
+          totalPaid={(bounties || 0) + (totalPaidForPaymentRequests || 0)}
+          workCount={(tasks || 0) + (paymentRequestCount || 0)}
           users={users}
+          countries={userCountriesCount}
         />
       </Container>
     </SecBlock>

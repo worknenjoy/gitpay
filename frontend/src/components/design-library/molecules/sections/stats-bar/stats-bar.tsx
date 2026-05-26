@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, FormattedNumber } from 'react-intl'
 import styled from 'styled-components'
 
 import { Chip, Skeleton, Typography } from '@mui/material'
@@ -12,68 +12,59 @@ const Content = styled.span`
   display: inline-block;
 `
 
-const StatsBar = ({ getInfo, tasks, bounties, users, completed }) => {
+const Separator = styled.span`
+  margin: 0 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  opacity: 0.9;
+  vertical-align: middle;
+`
+
+const StatChip = ({ completed, value }: { completed: boolean; value: React.ReactNode }) => (
+  <Chip size="small" label={completed ? value : <Skeleton width={50} height={20} />} />
+)
+
+const StatsBar = ({ getInfo, totalPaid, workCount, users, countries, completed }) => {
   useEffect(() => {
     getInfo?.()
   }, [])
 
-  const stats = {
-    tasks: { value: tasks || '0' },
-    bounties: { value: '$' + (bounties || '0') },
-    users: { value: users || '0' }
-  }
-
   return (
     <Content>
       <Typography variant="body1" color="primary" gutterBottom>
-        <FormattedMessage
-          id="info.status.message"
-          defaultMessage="We paid {bounties} in bounties and freelancer work for {tasks} to our community of {users}"
-          values={{
-            tasks: (
-              <Chip
-                size="small"
-                label={
-                  completed ? (
-                    <FormattedMessage
-                      id="info.status.tasks"
-                      defaultMessage="{tasks} tasks"
-                      values={{
-                        tasks: stats.tasks.value
-                      }}
-                    />
-                  ) : (
-                    <Skeleton width={50} height={20} />
-                  )
-                }
-              />
-            ),
-            bounties: (
-              <Chip
-                size="small"
-                label={completed ? stats.bounties.value : <Skeleton width={50} height={20} />}
-              />
-            ),
-            users: (
-              <Chip
-                size="small"
-                label={
-                  completed ? (
-                    <FormattedMessage
-                      id="info.status.users"
-                      defaultMessage="{users} users"
-                      values={{
-                        users: stats.users.value
-                      }}
-                    />
-                  ) : (
-                    <Skeleton width={50} height={20} />
-                  )
-                }
-              />
-            )
-          }}
+        <StatChip
+          completed={completed}
+          value={
+            <FormattedMessage
+              id="info.status.total_paid"
+              defaultMessage="${amount}"
+              values={{ amount: <FormattedNumber value={totalPaid || 0} /> }}
+            />
+          }
         />
+        {' '}
+        <FormattedMessage id="info.status.paid_for_work" defaultMessage="paid for work through Gitpay" />
+        <Separator>•</Separator>
+        <StatChip
+          completed={completed}
+          value={<FormattedNumber value={workCount || 0} />}
+        />
+        {' '}
+        <FormattedMessage id="info.status.bounties_and_requests" defaultMessage="bounties and payment requests" />
+        <Separator>•</Separator>
+        <StatChip
+          completed={completed}
+          value={<FormattedNumber value={users || 0} />}
+        />
+        {' '}
+        <FormattedMessage id="info.status.users" defaultMessage="users" values={{ count: users || 0 }} />
+        <Separator>•</Separator>
+        <StatChip
+          completed={completed}
+          value={<FormattedNumber value={countries || 0} />}
+        />
+        {' '}
+        <FormattedMessage id="info.status.countries" defaultMessage="countries" values={{ count: countries || 0 }} />
       </Typography>
     </Content>
   )
