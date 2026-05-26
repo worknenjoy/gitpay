@@ -1,16 +1,30 @@
-import models from '../../models'
 import { fetchChannelUserCount } from './fetchChannelUserCount'
-
-const currentModels = models as any
+import { getLatestStats } from '../../queries/stats'
 
 export async function getInfo() {
-  const countTasks = await currentModels.Task.count()
-  const tasks = await currentModels.Task.findAll({ attributes: ['value'] })
-  const countUsers = await currentModels.User.count()
-  if (!tasks) throw new Error('Could not fetch tasks')
-  const bounties = tasks
-    .filter((t: any) => t.value)
-    .reduce((acc: number, t: any) => acc + parseInt(t.value), 0)
-  const channelUserCount = await fetchChannelUserCount()
-  return { tasks: countTasks, bounties, users: countUsers, channelUserCount }
+  const stats = await getLatestStats()
+
+  if (!stats) {
+    return {
+      tasks: 0,
+      bounties: 0,
+      users: 0,
+      channelUserCount: await fetchChannelUserCount(),
+      paymentRequestCount: 0,
+      paymentRequestPaymentsCount: 0,
+      totalPaidForPaymentRequests: 0,
+      userCountriesCount: 0
+    }
+  }
+
+  return {
+    tasks: stats.payment_request_count,
+    bounties: stats.total_paid_for_bounties_count,
+    users: stats.users_count,
+    channelUserCount: stats.slack_channel_users_count,
+    paymentRequestCount: stats.payment_request_count,
+    paymentRequestPaymentsCount: stats.payment_requests_payments_count,
+    totalPaidForPaymentRequests: stats.total_paid_for_payment_requests_count,
+    userCountriesCount: stats.total_user_countries_count
+  }
 }

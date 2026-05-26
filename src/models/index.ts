@@ -18,6 +18,7 @@ import PaymentRequestTransfer from './paymentRequestTransfer'
 import Payout from './payout'
 import Plan from './plan'
 import PlanSchema from './planSchema'
+import PlatformPublicStats from './platformPublicStats'
 import ProgrammingLanguage from './programminglanguage'
 import Project from './project'
 import ProjectProgrammingLanguage from './projectProgrammingLanguage'
@@ -108,6 +109,7 @@ const models = [
   Payout,
   Plan,
   PlanSchema,
+  PlatformPublicStats,
   ProgrammingLanguage,
   Project,
   ProjectProgrammingLanguage,
