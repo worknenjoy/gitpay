@@ -1,3 +1,4 @@
+export * from './getLatestStats'
 export * from './countUsers'
 export * from './countUserCountries'
 export * from './countBounties'
