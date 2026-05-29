@@ -11,5 +11,5 @@ export const StickyAlertWrapper = styled(Box)(({ theme }) => ({
   position: 'sticky',
   top: 0,
   zIndex: theme.zIndex.appBar,
-  width: '100%',
+  width: '100%'
 }))

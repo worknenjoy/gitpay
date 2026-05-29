@@ -111,10 +111,7 @@ function App() {
             <IntlProvider>
               <div>
                 <CssBaseline />
-                <PaymentPausedBanner
-                  open={paymentBannerOpen}
-                  onClose={handlePaymentBannerClose}
-                />
+                <PaymentPausedBanner open={paymentBannerOpen} onClose={handlePaymentBannerClose} />
                 <NotificationContainer />
                 <Routes />
                 <CookieConsentBar />

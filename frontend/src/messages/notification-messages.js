@@ -640,7 +640,8 @@ const messages = defineMessages({
   },
   paymentPausedMessage: {
     id: 'payment.paused.message',
-    defaultMessage: 'Gitpay has temporarily paused all payment operations while we look for a new payment provider. You can still create an account, but bank account management, payments, and payouts are currently unavailable. We apologize for the inconvenience.'
+    defaultMessage:
+      'Gitpay has temporarily paused all payment operations while we look for a new payment provider. You can still create an account, but bank account management, payments, and payouts are currently unavailable. We apologize for the inconvenience.'
   }
 })
 

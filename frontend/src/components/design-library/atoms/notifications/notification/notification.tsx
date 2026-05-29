@@ -1,5 +1,11 @@
 import React, { useCallback } from 'react'
-import { Snackbar, IconButton, AlertPropsColorOverrides, AlertColor, AlertTitle } from '@mui/material'
+import {
+  Snackbar,
+  IconButton,
+  AlertPropsColorOverrides,
+  AlertColor,
+  AlertTitle
+} from '@mui/material'
 import { OverridableStringUnion } from '@mui/types'
 
 import Close from '@mui/icons-material/Close'
@@ -19,7 +25,19 @@ type NotificationProps = {
   fullWidth?: boolean
 }
 
-const Notification = ({ open, onClose, message, link, linkLabel, severity, position = 'bottom', title, persistent = false, sticky = false, fullWidth = false }: NotificationProps) => {
+const Notification = ({
+  open,
+  onClose,
+  message,
+  link,
+  linkLabel,
+  severity,
+  position = 'bottom',
+  title,
+  persistent = false,
+  sticky = false,
+  fullWidth = false
+}: NotificationProps) => {
   const getActions = useCallback(() => {
     let actions = [
       <IconButton key="close" aria-label="Close" color="inherit" onClick={onClose}>
