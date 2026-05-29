@@ -13,8 +13,11 @@ import Palette from '../styleguide/styles/palette'
 import './app.css'
 import ReactGA from 'react-ga'
 
+import { useIntl } from 'react-intl'
 import Routes from './routes'
 import NotificationContainer from '../containers/shared/notification'
+import Notification from '../components/design-library/atoms/notifications/notification/notification'
+import notificationMessages from '../messages/notification-messages'
 
 import reducers from '../reducers/reducers'
 
@@ -69,8 +72,34 @@ store.dispatch(
 
 const theme = createTheme(Palette)
 
+const PAYMENT_PAUSED_KEY = 'payment-paused-banner-dismissed'
+
+function PaymentPausedBanner({ open, onClose }) {
+  const intl = useIntl()
+  return (
+    <Notification
+      open={open}
+      onClose={onClose}
+      severity="warning"
+      sticky
+      fullWidth
+      title={intl.formatMessage(notificationMessages.paymentPausedTitle)}
+      message={intl.formatMessage(notificationMessages.paymentPausedMessage)}
+    />
+  )
+}
+
 function App() {
   const [isLoading, setIsLoading] = useState(true)
+  const [paymentBannerOpen, setPaymentBannerOpen] = useState(
+    () => localStorage.getItem(PAYMENT_PAUSED_KEY) !== 'true'
+  )
+
+  const handlePaymentBannerClose = () => {
+    setPaymentBannerOpen(false)
+    localStorage.setItem(PAYMENT_PAUSED_KEY, 'true')
+  }
+
   useEffect(() => {
     setIsLoading(false)
   }, [isLoading, getCookieConsentValue])
@@ -82,6 +111,10 @@ function App() {
             <IntlProvider>
               <div>
                 <CssBaseline />
+                <PaymentPausedBanner
+                  open={paymentBannerOpen}
+                  onClose={handlePaymentBannerClose}
+                />
                 <NotificationContainer />
                 <Routes />
                 <CookieConsentBar />

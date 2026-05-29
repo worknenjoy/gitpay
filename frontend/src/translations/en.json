@@ -614,5 +614,7 @@
   "welcome.workflow.item.three.primary": "Learn by doing and receive bounties",
   "welcome.workflow.item.three.secondary": "Work in different projects and create solutions with distributed teams around the world, using tools that you are familiar and propose solutions for issues that you know. You will be able to be assigned for new challenges",
   "welcome.workflow.item.two.primary": "For all levels",
-  "welcome.workflow.item.two.secondary": "Beginners will learn how contribute to real companies with real projects, experienced contributors can help with revisions and hard tasks, and is possible to choose projects and tasks that you want to grow or that you are familiar and confortable to work with"
+  "welcome.workflow.item.two.secondary": "Beginners will learn how contribute to real companies with real projects, experienced contributors can help with revisions and hard tasks, and is possible to choose projects and tasks that you want to grow or that you are familiar and confortable to work with",
+  "payment.paused.title": "Payment Operations Paused",
+  "payment.paused.message": "Gitpay has temporarily paused all payment operations while we look for a new payment provider. You can still create an account, but bank account management, payments, and payouts are currently unavailable. We apologize for the inconvenience."
 }

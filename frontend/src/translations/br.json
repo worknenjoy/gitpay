@@ -522,5 +522,7 @@
   "welcome.workflow.item.three.primary": "Aprenda fazendo e receba recompensas",
   "welcome.workflow.item.three.secondary": "Trabalhe em diferentes projetos e crie soluções para times distribuidos pelo mundo, usando ferramentas com as quais você está familiarizado e proponha soluções para demandas que você conhece. Você também poderá ser atribuido para novos desafios",
   "welcome.workflow.item.two.primary": "Para todos os níveis",
-  "welcome.workflow.item.two.secondary": "Iniciantes aprenderão na prática como contribuir com empresas e projetos reais, receber ajuda de contribuidores mais experientes e que podem ajudar nas revisões das tarefas, e você sempre poderá escolher tarefas com as quais está familiarizado ou para seu crescimento"
+  "welcome.workflow.item.two.secondary": "Iniciantes aprenderão na prática como contribuir com empresas e projetos reais, receber ajuda de contribuidores mais experientes e que podem ajudar nas revisões das tarefas, e você sempre poderá escolher tarefas com as quais está familiarizado ou para seu crescimento",
+  "payment.paused.title": "Operações de Pagamento Pausadas",
+  "payment.paused.message": "O Gitpay pausou temporariamente todas as operações de pagamento enquanto buscamos um novo provedor. Você ainda pode criar uma conta, mas o gerenciamento de conta bancária, pagamentos e saques estão indisponíveis no momento. Pedimos desculpas pelo inconveniente."
 }

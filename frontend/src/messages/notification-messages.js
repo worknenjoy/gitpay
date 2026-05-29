@@ -633,6 +633,14 @@ const messages = defineMessages({
   notificationPaymentRequestPaymentRefundError: {
     id: 'actions.paymentRequestPayment.refund.failed',
     defaultMessage: 'We could not refund this payment request payment'
+  },
+  paymentPausedTitle: {
+    id: 'payment.paused.title',
+    defaultMessage: 'Payment Operations Paused'
+  },
+  paymentPausedMessage: {
+    id: 'payment.paused.message',
+    defaultMessage: 'Gitpay has temporarily paused all payment operations while we look for a new payment provider. You can still create an account, but bank account management, payments, and payouts are currently unavailable. We apologize for the inconvenience.'
   }
 })
 

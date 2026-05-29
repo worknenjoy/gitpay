@@ -50,3 +50,23 @@ Info.args = {
   message: 'This is an info message',
   severity: 'info'
 }
+
+export const TopPersistentWarning = Template.bind({})
+TopPersistentWarning.args = {
+  open: true,
+  message: 'This is a persistent warning that does not auto-hide.',
+  severity: 'warning',
+  title: 'Important Notice',
+  position: 'top',
+  persistent: true
+}
+
+export const StickyFullWidth = Template.bind({})
+StickyFullWidth.args = {
+  open: true,
+  message: 'This is a sticky full-width warning banner.',
+  severity: 'warning',
+  title: 'Important Notice',
+  sticky: true,
+  fullWidth: true
+}
