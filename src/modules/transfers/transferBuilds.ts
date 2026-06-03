@@ -1,4 +1,4 @@
-import { transferBuilds as transferBuildsMutation } from '../../mutations/transfer/transferBuilds'
+import { transferBuildsService } from '../../services/transfers/transferBuildsService'
 
 type TransferBuildsParams = {
   transfer_id?: string
@@ -7,5 +7,5 @@ type TransferBuildsParams = {
 }
 
 export async function transferBuilds(params: TransferBuildsParams) {
-  return transferBuildsMutation(params)
+  return transferBuildsService(params)
 }
