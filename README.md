@@ -9,7 +9,7 @@ Gitpay is an open-source platform that integrates payment workflows using Git. I
 
 ### Slack channel
 
-We have a Slack channel where you can collaborate with other people who are using Gitpay and work together to find solutions. Feel free to join the community and hang out on Slack with us.
+We have a Slack channel where you can collaborate with other Gitpay users to find solutions. Feel free to join the community and hang out with us on Slack.
 
 [Join us on Slack](https://join.slack.com/t/gitpay-workspace/shared_invite/zt-1ru4j0duc-mOPFRxkhRyMgavlGdlghmw)
 
