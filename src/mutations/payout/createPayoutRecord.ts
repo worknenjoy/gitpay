@@ -1,5 +1,4 @@
 import models from '../../models'
-import { findPayoutBySourceId } from '../../queries/payout/findPayoutBySourceId'
 
 const currentModels = models as any
 
@@ -16,13 +15,6 @@ export type CreatePayoutRecordParams = {
 export async function createPayoutRecord(params: CreatePayoutRecordParams) {
   if (!params.userId) {
     throw new Error('No userId provided')
-  }
-
-  if (params.source_id) {
-    const existing = await findPayoutBySourceId(params.source_id)
-    if (existing) {
-      throw new Error('This payout already exists')
-    }
   }
 
   return currentModels.Payout.build({

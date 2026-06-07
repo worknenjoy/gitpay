@@ -210,6 +210,24 @@ function buildSamples(moduleName: string, methodName: string): any[] {
     }
   }
 
+  if (moduleName === 'claim') {
+    const issue = {
+      id: 789,
+      title: 'Sample unclaimed bounty issue',
+      url: 'https://github.com/sample/repo/issues/789',
+      value: 75
+    }
+    const pullRequest = {
+      html_url: 'https://github.com/sample/repo/pull/999',
+      pull_request: { merged_at: '2025-03-10T12:00:00Z' }
+    }
+    if (/notifyDonatedBountyToGitpay/i.test(methodName)) {
+      return [user, issue]
+    }
+    // notifyUnclaimedBounties (default)
+    return [user, issue, pullRequest]
+  }
+
   if (moduleName === 'payout') {
     const payout = {
       amount: 1000,
@@ -258,7 +276,11 @@ async function run(): Promise<PreviewResult> {
   }
 
   const moduleFile = normalizeModuleName(rawModuleToken)
-  const mailModulePath = path.join(repoRoot, 'src', 'mail', `${moduleFile}.ts`)
+  let mailModulePath = path.join(repoRoot, 'src', 'mail', `${moduleFile}.ts`)
+
+  if (!fs.existsSync(mailModulePath)) {
+    mailModulePath = path.join(repoRoot, 'src', 'mail', 'templates', 'issue', `${moduleFile}.ts`)
+  }
 
   if (!fs.existsSync(mailModulePath)) {
     throw new Error(`Mail module not found: ${mailModulePath}`)
