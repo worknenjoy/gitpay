@@ -13,6 +13,7 @@ router.post('/:id/invite/', controllers.inviteUserToTask)
 router.post('/:id/funding/', controllers.inviteToFundingTask)
 router.post('/:id/report', controllers.reportTask)
 router.post('/:id/claim', controllers.requestClaimTask)
+router.post('/:id/donate-to-platform-funds', controllers.donateToPlatformFunds)
 router.get('/list', controllers.listTasks)
 
 router.use(secure)

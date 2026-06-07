@@ -27,7 +27,7 @@ const BaseStatus = ({ status, statusList, classes, styles, completed = true }: s
     statusList.find((item) => item.status === status) ||
     statusList.find((item) => item.status === 'unknown')
 
-  const { label, color, icon, message } = currentStatus
+  const { label, color, icon, message } = currentStatus ?? {}
 
   const chipStyleProps =
     color && styles && styles[color]
