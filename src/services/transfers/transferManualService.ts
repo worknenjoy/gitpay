@@ -107,12 +107,14 @@ export async function transferManualService(
   if (finalValue === 0) throw new Error('No paid orders found')
 
   const existingAssign = await assignExist({ userId: recipientUser.id, taskId })
-  const assign =
-    existingAssign || (await task.createAssign({ userId: recipientUser.id }))
+  const assign = existingAssign || (await task.createAssign({ userId: recipientUser.id }))
 
   if (!assign) throw new Error('Could not create assign')
 
-  await currentModels.Task.update({ assigned: assign.dataValues?.id ?? assign.id }, { where: { id: taskId } })
+  await currentModels.Task.update(
+    { assigned: assign.dataValues?.id ?? assign.id },
+    { where: { id: taskId } }
+  )
 
   const transfer = await createTransferRecord({
     taskId,

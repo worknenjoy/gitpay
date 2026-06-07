@@ -12,6 +12,7 @@ const {
   notifyUnclaimedBounties: notifyUnclaimedBountiesService
 } = require('../services/issues/claims/unclaimedBountyService')
 const { syncAllTaskStates } = require('../services/issues/state/issueStateService')
+const { syncInfo } = require('../modules/info/syncInfo')
 
 i18n.configure({
   directory:
@@ -150,6 +151,10 @@ const TaskCron = {
   syncTaskStates: async () => {
     const { total, updated } = await syncAllTaskStates()
     console.log(`Task state sync complete. Processed: ${total}, Updated: ${updated}`)
+  },
+  syncStats: async () => {
+    await syncInfo()
+    console.log('Platform public stats synced.')
   }
 }
 
@@ -160,6 +165,7 @@ const dailyJob = new CronJob({
     //TaskCron.rememberDeadline()
     //OrderCron.verify()
     OrderCron.checkExpiredPaypalOrders()
+    TaskCron.syncStats()
   }
 })
 

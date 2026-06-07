@@ -27,7 +27,9 @@ async function main() {
   const args = parseArgs()
 
   if (!args.taskId || !args.pullRequestURL) {
-    console.error('Usage: create_manual_transfer --taskId <n> --pullRequestURL <url> [--userId <n>]')
+    console.error(
+      'Usage: create_manual_transfer --taskId <n> --pullRequestURL <url> [--userId <n>]'
+    )
     process.exit(1)
   }
 
