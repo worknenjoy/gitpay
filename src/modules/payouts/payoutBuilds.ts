@@ -1,4 +1,7 @@
-import { createPayoutRecord, CreatePayoutRecordParams } from '../../mutations/payout/createPayoutRecord'
+import {
+  createPayoutRecord,
+  CreatePayoutRecordParams
+} from '../../mutations/payout/createPayoutRecord'
 
 type PayoutBuildsParams = Omit<CreatePayoutRecordParams, 'amount'> & { amount?: number }
 
