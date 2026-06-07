@@ -59,9 +59,11 @@ const PayoutMail: any = {
                 ]
               ]
             },
-            i18n.__('mail.webhook.payout.intransit.details', {
-              date: moment(payout.arrival_date * 1000).format('LLL')
-            })
+            payout.arrival_date
+              ? i18n.__('mail.webhook.payout.intransit.details', {
+                  date: moment(payout.arrival_date * 1000).format('LLL')
+                })
+              : ''
           )
         }
       ])

@@ -1,9 +1,10 @@
 import models from '../../models'
 import Stripe from '../../client/payment/stripe'
 import { calculateAmountWithPercent } from '../../utils'
+import { createPayoutRecord } from '../../mutations/payout/createPayoutRecord'
+import PayoutMail from '../../mail/payout'
 
 const stripe = Stripe()
-
 const currentModels = models as any
 
 type PayoutRequestParams = {
@@ -22,18 +23,6 @@ export async function payoutRequest(params: PayoutRequestParams) {
   const user = await currentModels.User.findByPk(params.userId)
   if (!user) {
     return { error: 'User not found' }
-  }
-
-  const existingPayout =
-    params.source_id &&
-    (await currentModels.Payout.findOne({
-      where: {
-        source_id: params.source_id
-      }
-    }))
-
-  if (existingPayout) {
-    return { error: 'This payout already exists' }
   }
 
   if (!user.account_id) return { error: 'User account not activated' }
@@ -62,16 +51,20 @@ export async function payoutRequest(params: PayoutRequestParams) {
     return { error: 'Error creating payout with Stripe' }
   }
 
-  const payout = await currentModels.Payout.build({
-    source_id: stripePayout.id,
-    userId: params.userId,
-    amount: finalAmount.centavos,
-    currency: params.currency,
-    method: params.method,
-    status: stripePayout.status
-  })
+  try {
+    const payout = await createPayoutRecord({
+      source_id: stripePayout.id,
+      userId: params.userId,
+      amount: finalAmount.centavos,
+      currency: params.currency,
+      method: params.method,
+      status: stripePayout.status
+    })
 
-  const newPayout = await payout.save()
+    await PayoutMail.payoutCreated(user, payout)
 
-  return newPayout
+    return payout
+  } catch (err: any) {
+    return { error: err.message }
+  }
 }
