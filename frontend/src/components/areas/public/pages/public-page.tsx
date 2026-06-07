@@ -17,6 +17,7 @@ import ServicePaymentsPage from '../features/welcome/pages/service-payments-page
 import FundWorkPage from '../features/welcome/pages/fund-work-page'
 import BountiesPage from '../features/welcome/pages/bounties-page'
 import CountriesPage from '../features/countries/pages/countries-page'
+import DonateToPlatformFundsConfirmation from '../features/issue/donate-to-platform-funds/donate-to-platform-funds-confirmation'
 
 const PublicPage = ({
   user,
@@ -58,6 +59,7 @@ const PublicPage = ({
           <Route exact path="/countries" component={CountriesPage} />
           <Route exact path="/team" render={() => <TeamPage joinTeamAPICall={joinTeam} />} />
           <Route path="/pricing" component={PricingPage} />
+          <Route exact path="/task/:id/donate-to-platform-funds" component={DonateToPlatformFundsConfirmation} />
           <Route exact path="/task/:id" component={TaskContainer} />
           <Route exact path="/task/:id/:slug" component={TaskContainer} />
           <Route exact path="/task/:id/orders" component={TaskContainer} />

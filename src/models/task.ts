@@ -28,6 +28,7 @@ export interface TaskAttributes {
   claimed_at?: Date | null
   completed_at?: Date | null
   closed_at?: Date | null
+  comment?: string | null
   createdAt?: Date
   updatedAt?: Date
 }
@@ -61,6 +62,7 @@ export type TaskCreationAttributes = Optional<
   | 'claimed_at'
   | 'completed_at'
   | 'closed_at'
+  | 'comment'
   | 'createdAt'
   | 'updatedAt'
 >
@@ -96,6 +98,7 @@ export default class Task
   public claimed_at!: Date | null
   public completed_at!: Date | null
   public closed_at!: Date | null
+  public comment!: string | null
   public createdAt!: Date
   public updatedAt!: Date
 
@@ -219,6 +222,10 @@ export default class Task
         },
         closed_at: {
           type: DataTypes.DATE,
+          allowNull: true
+        },
+        comment: {
+          type: DataTypes.TEXT,
           allowNull: true
         },
         createdAt: {

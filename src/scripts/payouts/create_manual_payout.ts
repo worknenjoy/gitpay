@@ -88,7 +88,8 @@ async function runUpdate(args: Record<string, string>, rl: readline.Interface) {
   }
 
   const p = payout.dataValues ?? payout
-  const user = payout.User?.dataValues ?? payout.User ?? await (models as any).User.findByPk(p.userId)
+  const user =
+    payout.User?.dataValues ?? payout.User ?? (await (models as any).User.findByPk(p.userId))
   const u = user?.dataValues ?? user
 
   console.log('\n--- Payout ---')
@@ -134,8 +135,12 @@ async function main() {
 
   if (!args.payoutId && !args.userId) {
     console.error('Usage:')
-    console.error('  Create: create_manual_payout --userId <n> --amount <n> [--currency usd] [--method manual] [--description "..."]')
-    console.error('  Update: create_manual_payout --payoutId <n> --status <status> [--paid true] [--arrival_date <unix>] [--reference_number <str>]')
+    console.error(
+      '  Create: create_manual_payout --userId <n> --amount <n> [--currency usd] [--method manual] [--description "..."]'
+    )
+    console.error(
+      '  Update: create_manual_payout --payoutId <n> --status <status> [--paid true] [--arrival_date <unix>] [--reference_number <str>]'
+    )
     process.exit(1)
   }
 

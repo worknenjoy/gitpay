@@ -17,6 +17,9 @@ import {
   invite as taskRequestAssignedUserInvite,
   confirm as taskRequestAssignedUserConfirm
 } from '../../modules/tasks'
+import { markIssueStateAsClosed } from '../../mutations/issue/state/markIssueStateAsClosed'
+// @ts-ignore - jsonwebtoken has no type definitions
+import jwt from 'jsonwebtoken'
 import { offerMessage, offerUpdate } from '../../modules/offers'
 
 export const createTask = async (req: any, res: any) => {
@@ -287,5 +290,33 @@ export const requestClaimTask = async (req: any, res: any) => {
     res.send(data)
   } catch (error: any) {
     res.send({ error: error.message })
+  }
+}
+
+// Donate unclaimed bounty to platform funds
+export const donateToPlatformFunds = async (req: any, res: any) => {
+  try {
+    const { token } = req.body
+    const taskId = parseInt(req.params.id, 10)
+
+    if (!token) {
+      return res.status(400).json({ error: 'missing_token' })
+    }
+
+    let payload: any
+    try {
+      payload = jwt.verify(token, process.env.SECRET_PHRASE as string)
+    } catch {
+      return res.status(401).json({ error: 'invalid_token' })
+    }
+
+    if (payload.action !== 'donate' || parseInt(payload.taskId, 10) !== taskId) {
+      return res.status(401).json({ error: 'invalid_token' })
+    }
+
+    const issue = await markIssueStateAsClosed(taskId)
+    return res.status(200).json({ success: true, issue })
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message })
   }
 }

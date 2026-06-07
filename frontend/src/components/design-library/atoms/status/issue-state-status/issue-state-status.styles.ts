@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-import { blue, green, grey, teal } from '@mui/material/colors'
+import { blue, green, grey, orange, teal } from '@mui/material/colors'
 
 const PREFIX = 'IssueStateStatus'
 
@@ -7,7 +7,8 @@ export const classes = {
   created: `${PREFIX}-created`,
   funded: `${PREFIX}-funded`,
   claimed: `${PREFIX}-claimed`,
-  completed: `${PREFIX}-completed`
+  completed: `${PREFIX}-completed`,
+  closed: `${PREFIX}-closed`
 } as const
 
 export const IssueStateStatusRoot = styled('div')(({ theme }) => ({
@@ -28,6 +29,11 @@ export const IssueStateStatusRoot = styled('div')(({ theme }) => ({
   },
   [`.${classes.completed}`]: {
     backgroundColor: green[600],
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': { color: theme.palette.common.white }
+  },
+  [`.${classes.closed}`]: {
+    backgroundColor: orange[700],
     color: theme.palette.common.white,
     '& .MuiSvgIcon-root': { color: theme.palette.common.white }
   }

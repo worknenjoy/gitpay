@@ -1,5 +1,8 @@
 import models from '../../models'
-import { updatePayoutRecord, UpdatePayoutRecordParams } from '../../mutations/payout/updatePayoutRecord'
+import {
+  updatePayoutRecord,
+  UpdatePayoutRecordParams
+} from '../../mutations/payout/updatePayoutRecord'
 import PayoutMail from '../../mail/payout'
 
 const currentModels = models as any

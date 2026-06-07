@@ -3,7 +3,8 @@ import {
   AddTask as CreatedIcon,
   Paid as FundedIcon,
   AssignmentInd as ClaimedIcon,
-  TaskAlt as CompletedIcon
+  TaskAlt as CompletedIcon,
+  DoNotDisturb as ClosedIcon
 } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import { useIntl } from 'react-intl'
@@ -44,6 +45,12 @@ const IssueStateStatus = ({ state, completed = true, date }: IssueStateStatusPro
       label: intl.formatMessage({ id: 'task.state.completed', defaultMessage: 'Completed' }),
       color: 'completed',
       icon: <CompletedIcon className={classes.completed} />
+    },
+    {
+      status: 'closed',
+      label: intl.formatMessage({ id: 'task.state.closed', defaultMessage: 'Closed' }),
+      color: 'closed',
+      icon: <ClosedIcon className={classes.closed} />
     }
   ]
 
