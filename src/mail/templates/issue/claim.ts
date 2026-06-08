@@ -48,7 +48,9 @@ const ClaimMail: any = {
               issueUrl,
               issueOriginalUrl,
               prURL
-            }) + balanceInfo + retryWarning,
+            }) +
+              balanceInfo +
+              retryWarning,
             {
               headers: ['Item', '<div style="text-align:right">Amount</div>'],
               rows: [

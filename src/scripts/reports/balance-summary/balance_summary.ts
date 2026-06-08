@@ -269,6 +269,8 @@ async function getTotalAmountForPendingTasks() {
       value: formatUSD(toCents(t.value)),
       created: moment(t.createdAt).format('YYYY-MM-DD HH:mm'),
       age: moment(t.createdAt).fromNow(),
+      state: t.state ?? '',
+      stale: t.stale_at ? moment(t.stale_at).format('YYYY-MM-DD') : '',
       source: sources,
       TransferId: t.TransferId ?? '',
       transfer_id: t.transfer_id ?? ''
@@ -282,6 +284,8 @@ async function getTotalAmountForPendingTasks() {
       { key: 'value', header: 'Value', align: 'right', minWidth: 10, maxWidth: 14 },
       { key: 'created', header: 'Created', minWidth: 16, maxWidth: 16 },
       { key: 'age', header: 'Age', minWidth: 10, maxWidth: 14 },
+      { key: 'state', header: 'State', minWidth: 8, maxWidth: 16 },
+      { key: 'stale', header: 'Stale At', minWidth: 10, maxWidth: 12 },
       { key: 'source', header: 'Source', minWidth: 18, maxWidth: 60 },
       { key: 'TransferId', header: 'TransferId', minWidth: 8, maxWidth: 12 },
       { key: 'transfer_id', header: 'transfer_id', minWidth: 8, maxWidth: 12 }
