@@ -2,7 +2,7 @@ import Models from '../../../models'
 
 const models = Models as any
 
-const ONE_YEAR_MS = 365 * 24 * 60 * 60 * 1000
+const THREE_MONTHS_MS = 3 * 30 * 24 * 60 * 60 * 1000
 
 export interface IssueStaleChange {
   id: number
@@ -16,7 +16,7 @@ export async function syncStaleIssues(): Promise<{
   updated: number
   changes: IssueStaleChange[]
 }> {
-  const cutoff = new Date(Date.now() - ONE_YEAR_MS)
+  const cutoff = new Date(Date.now() - THREE_MONTHS_MS)
 
   const tasks = await models.Task.findAll({
     where: { stale_at: null }
