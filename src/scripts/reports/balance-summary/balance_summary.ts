@@ -11,7 +11,24 @@ import { getEarningsForAllPeriods } from './periodEarnings'
 import { printPeriodEarnings } from './printPeriodEarnings'
 
 const models = Models as any
-const { Wallet, Order, Task, Payout, History, WalletOrder } = models
+const { Wallet, Order, Task, History, WalletOrder } = models
+
+// === CLI flags ===
+// Usage: npm run reports:balance_summary -- --stripe-balance --wallet-balance
+// Available flags:
+//   --stripe-balance     Show current Stripe balance
+//   --wallet-balance     Show total Wallet balance from DB
+//   --period-earnings    Show yesterday / last-7d / last-30d earnings
+//   --monthly-earnings   Show month-by-month earnings table
+//   --summary            Show the financial summary cards
+// No flags → run everything (default)
+const args = new Set(process.argv.slice(2))
+const ALL =
+  args.size === 0 ||
+  (args.size === 1 && args.has('--')) ||
+  (args.size === 1 && args.has('help')) ||
+  (args.size === 1 && args.has('--help'))
+const want = (flag: string) => ALL || args.has(flag)
 
 // === Console helpers & formatters ===
 const C = {
@@ -30,7 +47,6 @@ const C = {
   bgYellow: '\x1b[43m'
 }
 
-// --- layout helpers ---
 const stripAnsi = (s: string) => s.replace(/\x1b\[[0-9;]*m/g, '')
 const visibleLen = (s: string) => stripAnsi(s).length
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n))
@@ -84,8 +100,7 @@ function printTable<Row extends Record<string, any>>(
     return clamp(base, c.minWidth ?? 0, c.maxWidth ?? 999)
   })
 
-  // If table is too wide, shrink widest shrinkable columns first.
-  const tableOverhead = 1 + columns.length * 3 // borders + per-column padding
+  const tableOverhead = 1 + columns.length * 3
   const totalWidth = () => tableOverhead + colWidths.reduce((a, b) => a + b, 0)
   while (totalWidth() > maxWidth) {
     let widestIdx = -1
@@ -155,7 +170,7 @@ function printCard(title: string, entries: Array<[string, string]>, opts?: { wid
     28
   )
 
-  const innerWidth = width - 4 // borders + spaces
+  const innerWidth = width - 4
   const top = `┌${'─'.repeat(width - 2)}┐`
   const bottom = `└${'─'.repeat(width - 2)}┘`
   const titleLine = `│ ${padTo(`${C.bold}${title}${C.reset}`, width - 4, 'center')} │`
@@ -170,6 +185,7 @@ function printCard(title: string, entries: Array<[string, string]>, opts?: { wid
   }
   console.log(`${C.gray}${bottom}${C.reset}`)
 }
+
 const toCents = (n: number) => Math.round((Number(n) || 0) * 100)
 const formatUSD = (cents: number) =>
   (cents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })
@@ -193,10 +209,10 @@ async function getCurrentStripeBalance() {
 
   const pendingAmount = balance.pending
     .filter((a) => a.currency === 'usd')
-    .reduce((sum, a) => sum + a.amount, 0) // already in cents
+    .reduce((sum, a) => sum + a.amount, 0)
   const availableAmount = balance.available
     .filter((a) => a.currency === 'usd')
-    .reduce((sum, a) => sum + a.amount, 0) // already in cents
+    .reduce((sum, a) => sum + a.amount, 0)
 
   const totalAmount = pendingAmount + availableAmount
   console.log(
@@ -225,254 +241,144 @@ async function getTotalWalletBalance() {
 
   let totalWalletBalance = 0
   for (const w of wallets) {
-    totalWalletBalance += Number(w.balance) || 0 // DB values in decimal (USD)
+    totalWalletBalance += Number(w.balance) || 0
   }
 
-  // Show both DB-decimal view and USD formatted (converted to cents for display)
   console.log(
     `${C.blue}ℹ️  [Database] Total Wallet balance (DB decimal USD): ${totalWalletBalance.toFixed(2)} ` +
       `${C.gray}(${formatUSD(toCents(totalWalletBalance))})${C.reset}`
   )
 
   console.timeEnd('[Step] Wallet balance calculation time')
-  return totalWalletBalance // keep returning decimal
-}
-
-async function getTotalAmountForPendingTasks() {
-  console.log(
-    `${C.cyan}${C.bold}📝 [Step] Calculating total amount for pending Tasks in database...${C.reset}`
-  )
-  console.time('[Step] Pending Tasks amount calculation time')
-
-  const tasks = await Task.findAll({
-    where: {
-      value: { [Op.gt]: 0 }
-    },
-    include: [models.Order]
-  })
-
-  const pendingTasks = tasks.filter(
-    (t: any) => !t.paid && t.transfer_id === null && t.TransferId === null
-  )
-
-  let totalPendingTasksAmount = 0
-  for (const t of pendingTasks) {
-    totalPendingTasksAmount += Number(t.value) * 0.92 || 0 // 8% platform fee; DB values in decimal (USD)
-  }
-
-  const pendingTaskRows = pendingTasks.map((t: any) => {
-    const sources =
-      t.Orders?.map((o: any) => `${o.provider} ${formatUSD(toCents(o.amount))}`).join(' · ') ||
-      'N/A'
-    return {
-      id: String(t.id),
-      value: formatUSD(toCents(t.value)),
-      created: moment(t.createdAt).format('YYYY-MM-DD HH:mm'),
-      age: moment(t.createdAt).fromNow(),
-      state: t.state ?? '',
-      stale: t.stale_at ? moment(t.stale_at).format('YYYY-MM-DD') : '',
-      source: sources,
-      TransferId: t.TransferId ?? '',
-      transfer_id: t.transfer_id ?? ''
-    }
-  })
-
-  printTable(
-    `Pending Tasks (${pendingTasks.length})`,
-    [
-      { key: 'id', header: 'Task', align: 'right', minWidth: 4, maxWidth: 8 },
-      { key: 'value', header: 'Value', align: 'right', minWidth: 10, maxWidth: 14 },
-      { key: 'created', header: 'Created', minWidth: 16, maxWidth: 16 },
-      { key: 'age', header: 'Age', minWidth: 10, maxWidth: 14 },
-      { key: 'state', header: 'State', minWidth: 8, maxWidth: 16 },
-      { key: 'stale', header: 'Stale At', minWidth: 10, maxWidth: 12 },
-      { key: 'source', header: 'Source', minWidth: 18, maxWidth: 60 },
-      { key: 'TransferId', header: 'TransferId', minWidth: 8, maxWidth: 12 },
-      { key: 'transfer_id', header: 'transfer_id', minWidth: 8, maxWidth: 12 }
-    ],
-    pendingTaskRows,
-    { maxWidth: termWidth() }
-  )
-
-  let totalPendingPaypalOrdersAmount = 0
-  const pendingPaypalRows: Array<{
-    task: string
-    order: string
-    amount: string
-    created: string
-    age: string
-  }> = []
-  for (const t of pendingTasks) {
-    if (t.Orders?.length > 0) {
-      for (const order of t.Orders) {
-        if (order.provider === 'paypal' && order.status === 'succeeded') {
-          pendingPaypalRows.push({
-            task: String(t.id),
-            order: String(order.id),
-            amount: formatUSD(toCents(order.amount)),
-            created: moment(t.createdAt).format('YYYY-MM-DD HH:mm'),
-            age: moment(t.createdAt).fromNow()
-          })
-          totalPendingPaypalOrdersAmount += Number(order.amount) * 0.92 || 0 // 8% platform fee; DB values in decimal (USD)
-        }
-      }
-    }
-  }
-
-  printTable(
-    `Pending Tasks with PayPal Orders (${pendingPaypalRows.length})`,
-    [
-      { key: 'task', header: 'Task', align: 'right', minWidth: 4, maxWidth: 8 },
-      { key: 'order', header: 'Order', align: 'right', minWidth: 5, maxWidth: 10 },
-      { key: 'amount', header: 'Amount', align: 'right', minWidth: 10, maxWidth: 14 },
-      { key: 'created', header: 'Created', minWidth: 16, maxWidth: 16 },
-      { key: 'age', header: 'Age', minWidth: 10, maxWidth: 14 }
-    ],
-    pendingPaypalRows,
-    { maxWidth: termWidth() }
-  )
-
-  if (totalPendingPaypalOrdersAmount > 0) {
-    console.log(
-      `${C.yellow}⚠️  Note: Pending Tasks total includes ${formatUSD(toCents(totalPendingPaypalOrdersAmount))} from PayPal-related orders.${C.reset}`
-    )
-  }
-
-  console.log(
-    `${C.blue}ℹ️  [Database] Total amount of Tasks (DB decimal USD): ${pendingTasks.length} ` +
-      `${C.blue}ℹ️  [Database] Total amount for pending Tasks (DB decimal USD): ${totalPendingTasksAmount.toFixed(2)} ` +
-      `${C.gray}(${formatUSD(toCents(totalPendingTasksAmount))})${C.reset}`
-  )
-
-  console.timeEnd('[Step] Pending Tasks amount calculation time')
-  return {
-    totalPendingTasksAmount,
-    totalPendingPaypalOrdersAmount
-  } // keep returning decimal
-}
-
-async function getSummary() {
-  const stripeBalance = await getCurrentStripeBalance()
-  const paypalBalance = 448.67 // Placeholder for future PayPal integration
-  const totalWalletBalance = await getTotalWalletBalance()
-  const { totalPendingTasksAmount, totalPendingPaypalOrdersAmount } =
-    await getTotalAmountForPendingTasks()
-  const totalPendingTasksAmountOnlyStripe = totalPendingTasksAmount - totalPendingPaypalOrdersAmount
-
-  return {
-    stripeBalance,
-    paypalBalance,
-    totalWalletBalance,
-    totalPendingTasksAmount,
-    totalPendingPaypalOrdersAmount,
-    totalPendingTasksAmountOnlyStripe
-  }
+  return totalWalletBalance
 }
 
 ;(async () => {
-  console.log(`${C.bold}${C.magenta}🚀 Starting Gitpay Financial Summary (Simple)...${C.reset}`)
-  console.time('[Total] Financial summary time')
+  if (args.has('--help') || args.has('help')) {
+    console.log(`
+${C.bold}Usage:${C.reset} npm run reports:balance_summary -- [flags]
+
+${C.bold}Flags:${C.reset}
+  --stripe-balance     Show current Stripe balance (available + pending)
+  --wallet-balance     Show total Wallet balance from the database
+  --summary            Show the financial summary cards
+  --period-earnings    Show earnings for yesterday / last 7d / last 30d
+  --monthly-earnings   Show month-by-month earnings breakdown
+
+  (no flags)           Run all sections
+
+${C.bold}Examples:${C.reset}
+  npm run reports:balance_summary
+  npm run reports:balance_summary -- --monthly-earnings
+  npm run reports:balance_summary -- --stripe-balance --wallet-balance
+  npm run reports:balance_summary -- --summary
+`)
+    process.exit(0)
+  }
+
+  console.log(`${C.bold}${C.magenta}🚀 Starting Gitpay Balance Summary...${C.reset}`)
+  console.time('[Total] Balance summary time')
+
   try {
-    const summary = await getSummary()
+    const paypalBalance = 448.67 // Placeholder for future PayPal integration
 
-    // Convert to cents for consistent math:
-    const stripeAvailableCents = summary.stripeBalance.total
-    const paypalBalanceCents = toCents(summary.paypalBalance) // DB decimal -> cents
-    const walletBalanceCents = toCents(summary.totalWalletBalance) // DB decimal -> cents
-    const pendingTasksCents = toCents(summary.totalPendingTasksAmount) // DB decimal -> cents
-    const pendingTasksCentsOnlyStripe = toCents(summary.totalPendingTasksAmountOnlyStripe) // DB decimal -> cents
-    const pendingPaypalOrdersCents = toCents(summary.totalPendingPaypalOrdersAmount) // DB decimal -> cents
+    let stripeBalance: Awaited<ReturnType<typeof getCurrentStripeBalance>> | undefined
+    let totalWalletBalance: number | undefined
 
-    // Compute final available balance in cents
-    const totalAvailableCents =
-      stripeAvailableCents + paypalBalanceCents - walletBalanceCents - pendingTasksCents
-    const totalAvailableCentsOnlyStripe =
-      stripeAvailableCents - walletBalanceCents - pendingTasksCentsOnlyStripe
+    if (want('--stripe-balance') || want('--summary')) {
+      stripeBalance = await getCurrentStripeBalance()
+    }
 
-    // Pretty values
-    const stripeAvailableUSD = formatUSD(stripeAvailableCents)
-    const paypalBalanceUSD = formatUSD(paypalBalanceCents)
-    const walletBalanceUSD = formatUSD(walletBalanceCents)
-    const pendingTasksUSD = formatUSD(pendingTasksCents)
-    const pendingTasksUSDOnlyStripeUSD = formatUSD(pendingTasksCentsOnlyStripe)
-    const pendingPaypalOrdersUSD = formatUSD(pendingPaypalOrdersCents)
-    const finalUSD = formatUSD(totalAvailableCents)
-    const finalUSDOnlyStripe = formatUSD(totalAvailableCentsOnlyStripe)
+    if (want('--wallet-balance') || want('--summary')) {
+      totalWalletBalance = await getTotalWalletBalance()
+    }
 
-    // Nicer summary view
-    printCard('📊 Financial Summary', [
-      ['Stripe (avail + pending)', stripeAvailableUSD],
-      ['PayPal (placeholder)', paypalBalanceUSD],
-      ['Wallet balance (DB)', walletBalanceUSD],
-      ['Pending tasks (total)', pendingTasksUSD],
-      ['Pending tasks (Stripe only)', pendingTasksUSDOnlyStripeUSD],
-      ['PayPal-related pending', pendingPaypalOrdersUSD]
-    ])
+    if (want('--summary')) {
+      const stripeAvailableCents = stripeBalance!.total
+      const paypalBalanceCents = toCents(paypalBalance)
+      const walletBalanceCents = toCents(totalWalletBalance!)
 
-    printCard('🧠 Calculation (Paypal + Stripe)', [
-      ['Formula', 'Available = (Stripe + PayPal) - Wallet - Pending'],
-      ['Stripe + PayPal', `${stripeAvailableUSD} + ${paypalBalanceUSD}`],
-      ['Minus wallet', `- ${walletBalanceUSD}`],
-      ['Minus pending', `- ${pendingTasksUSD}`],
-      ['Result', finalUSD]
-    ])
+      const totalAvailableCents = stripeAvailableCents + paypalBalanceCents - walletBalanceCents
+      const totalAvailableCentsOnlyStripe = stripeAvailableCents - walletBalanceCents
 
-    const bannerColor =
-      totalAvailableCents > 0 ? C.bgGreen : totalAvailableCents < 0 ? C.bgRed : C.bgYellow
-    const bannerTextColor = totalAvailableCents >= 0 ? C.bold : `${C.bold}${C.reset}`
-    console.log(hr())
-    console.log(
-      `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE: ${finalUSD}  ${C.reset}`
-    )
-    console.log(hr())
+      const stripeAvailableUSD = formatUSD(stripeAvailableCents)
+      const paypalBalanceUSD = formatUSD(paypalBalanceCents)
+      const walletBalanceUSD = formatUSD(walletBalanceCents)
+      const finalUSD = formatUSD(totalAvailableCents)
+      const finalUSDOnlyStripe = formatUSD(totalAvailableCentsOnlyStripe)
 
-    printCard('🧠 Calculation (Stripe only)', [
-      ['Formula', 'Available = Stripe - Wallet - (Pending - PayPal-related)'],
-      ['Stripe', stripeAvailableUSD],
-      ['Minus wallet', `- ${walletBalanceUSD}`],
-      ['Minus pending adj.', `- (${pendingTasksUSD} - ${pendingPaypalOrdersUSD})`],
-      ['Result', finalUSDOnlyStripe]
-    ])
-    console.log(
-      `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE FOR STRIPE: ${finalUSDOnlyStripe}  ${C.reset}`
-    )
-    console.log(hr())
+      const bannerColor =
+        totalAvailableCents > 0 ? C.bgGreen : totalAvailableCents < 0 ? C.bgRed : C.bgYellow
+      const bannerTextColor = totalAvailableCents >= 0 ? C.bold : `${C.bold}${C.reset}`
 
-    const periodRows = await getEarningsForAllPeriods({
-      stripe,
-      stripeBalanceNowCents: stripeAvailableCents,
-      Task,
-      History,
-      Order,
-      WalletOrder
-    })
-    printPeriodEarnings(periodRows, { C, hr, formatUSD })
+      printCard('📊 Financial Summary', [
+        ['Stripe (avail + pending)', stripeAvailableUSD],
+        ['PayPal (placeholder)', paypalBalanceUSD],
+        ['Wallet balance (DB)', walletBalanceUSD]
+      ])
 
-    const fromEnv = process.env.BALANCE_SUMMARY_FROM
-    const fromDate = fromEnv ? moment.utc(fromEnv).toDate() : undefined
+      printCard('🧠 Calculation (Paypal + Stripe)', [
+        ['Formula', 'Available = (Stripe + PayPal) - Wallet'],
+        ['Stripe + PayPal', `${stripeAvailableUSD} + ${paypalBalanceUSD}`],
+        ['Minus wallet', `- ${walletBalanceUSD}`],
+        ['Result', finalUSD]
+      ])
 
-    const monthlyRows = await getMonthlyBalanceAllYears(
-      {
+      console.log(hr())
+      console.log(
+        `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE: ${finalUSD}  ${C.reset}`
+      )
+      console.log(hr())
+
+      printCard('🧠 Calculation (Stripe only)', [
+        ['Formula', 'Available = Stripe - Wallet'],
+        ['Stripe', stripeAvailableUSD],
+        ['Minus wallet', `- ${walletBalanceUSD}`],
+        ['Result', finalUSDOnlyStripe]
+      ])
+      console.log(
+        `${bannerColor}${bannerTextColor}  ✅ FINAL AVAILABLE BALANCE FOR STRIPE: ${finalUSDOnlyStripe}  ${C.reset}`
+      )
+      console.log(hr())
+    }
+
+    if (want('--period-earnings')) {
+      if (!stripeBalance) stripeBalance = await getCurrentStripeBalance()
+      const periodRows = await getEarningsForAllPeriods({
         stripe,
-        stripeBalanceNowCents: stripeAvailableCents,
+        stripeBalanceNowCents: stripeBalance.total,
         Task,
         History,
         Order,
         WalletOrder
-      },
-      fromDate ? { from: fromDate } : undefined
-    )
-    printMonthlyBalanceAllYears(monthlyRows, { C, hr, formatUSD })
+      })
+      printPeriodEarnings(periodRows, { C, hr, formatUSD })
+    }
 
-    // Keep original JSON dump for debugging if desired (commented to reduce noise)
-    // console.log(JSON.stringify(summary, null, 2));
+    if (want('--monthly-earnings')) {
+      if (!stripeBalance) stripeBalance = await getCurrentStripeBalance()
+      const fromEnv = process.env.BALANCE_SUMMARY_FROM
+      const fromDate = fromEnv ? moment.utc(fromEnv).toDate() : undefined
+      const monthlyRows = await getMonthlyBalanceAllYears(
+        {
+          stripe,
+          stripeBalanceNowCents: stripeBalance.total,
+          Task,
+          History,
+          Order,
+          WalletOrder
+        },
+        fromDate ? { from: fromDate } : undefined
+      )
+      printMonthlyBalanceAllYears(monthlyRows, { C, hr, formatUSD })
+    }
   } catch (err) {
-    console.error(`${C.red}❌ Failed to compute financial summary:${C.reset}`, err)
+    console.error(`${C.red}❌ Failed to compute balance summary:${C.reset}`, err)
     process.exitCode = 1
   } finally {
     if (models?.sequelize?.close) {
       await models.sequelize.close()
     }
-    console.timeEnd('[Total] Financial summary time')
+    console.timeEnd('[Total] Balance summary time')
   }
 })()
