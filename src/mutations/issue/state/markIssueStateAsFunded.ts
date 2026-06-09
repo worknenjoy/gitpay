@@ -14,7 +14,9 @@ export const markIssueStateAsFunded = async (issueId: number) => {
   }
 
   if (issue.state !== TaskStates.CREATED) {
-    throw new Error(`Issue with id ${issueId} is already past CREATED state (current: ${issue.state})`)
+    throw new Error(
+      `Issue with id ${issueId} is already past CREATED state (current: ${issue.state})`
+    )
   }
 
   await issue.update({ state: TaskStates.FUNDED })
