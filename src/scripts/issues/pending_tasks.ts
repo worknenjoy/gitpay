@@ -151,25 +151,29 @@ async function getPendingTasks() {
     totalPendingTasksAmount += Number(t.value) * 0.92 || 0
   }
 
-  const pendingTaskRows = pendingTasks.map((t: any) => {
-    const sources =
-      t.Orders?.map((o: any) => `${o.provider} ${formatUSD(toCents(o.amount))}`).join(' · ') ||
-      'N/A'
-    return {
-      id: String(t.id),
-      value: formatUSD(toCents(t.value)),
-      created: moment(t.createdAt).format('YYYY-MM-DD HH:mm'),
-      age: moment(t.createdAt).fromNow(),
-      status: t.status ?? '',
-      state: t.state ?? '',
-      stale: t.stale_at ? moment(t.stale_at).format('YYYY-MM-DD') : '',
-      source: sources,
-      action:
-        t.action === 'pending_claim'
-          ? `Pending claim, retries ${t.claim_retries ?? 0}`
-          : 'Eligible for refund'
-    }
-  })
+  const pendingTaskRows: Array<Record<string, string>> = []
+  for (const t of pendingTasks) {
+    const orders: any[] = t.Orders?.length > 0 ? t.Orders : [null]
+    const action =
+      t.action === 'pending_claim'
+        ? `Pending claim, retries ${t.claim_retries ?? 0}`
+        : 'Eligible for refund'
+    orders.forEach((o: any, i: number) => {
+      pendingTaskRows.push({
+        id: i === 0 ? String(t.id) : '',
+        value: i === 0 ? formatUSD(toCents(t.value)) : '',
+        created: i === 0 ? moment(t.createdAt).format('YYYY-MM-DD HH:mm') : '',
+        age: i === 0 ? moment(t.createdAt).fromNow() : '',
+        status: i === 0 ? (t.status ?? '') : '',
+        state: i === 0 ? (t.state ?? '') : '',
+        stale: i === 0 ? (t.stale_at ? moment(t.stale_at).format('YYYY-MM-DD') : '') : '',
+        source: o
+          ? `#${o.id} ${o.provider} ${formatUSD(toCents(o.amount))} [${o.status}]`
+          : 'N/A',
+        action: i === 0 ? action : ''
+      })
+    })
+  }
 
   printTable(
     `Pending Tasks (${pendingTasks.length})`,
@@ -181,7 +185,7 @@ async function getPendingTasks() {
       { key: 'status', header: 'Status', minWidth: 8, maxWidth: 12 },
       { key: 'state', header: 'State', minWidth: 8, maxWidth: 16 },
       { key: 'stale', header: 'Stale At', minWidth: 10, maxWidth: 12 },
-      { key: 'source', header: 'Source', minWidth: 18, maxWidth: 60 },
+      { key: 'source', header: 'Source', minWidth: 18, maxWidth: 40 },
       { key: 'action', header: 'Action', minWidth: 18, maxWidth: 30 }
     ],
     pendingTaskRows,
