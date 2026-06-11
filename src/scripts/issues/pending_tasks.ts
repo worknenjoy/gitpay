@@ -232,6 +232,50 @@ async function getPendingTasks() {
     )
   }
 
+  let totalPendingWalletOrdersAmount = 0
+  const pendingWalletRows: Array<{
+    task: string
+    order: string
+    amount: string
+    created: string
+    age: string
+  }> = []
+  for (const t of pendingTasks) {
+    if (t.Orders?.length > 0) {
+      for (const order of t.Orders) {
+        if (order.provider === 'wallet' && order.status === 'succeeded') {
+          pendingWalletRows.push({
+            task: String(t.id),
+            order: String(order.id),
+            amount: formatUSD(toCents(order.amount)),
+            created: moment(t.createdAt).format('YYYY-MM-DD HH:mm'),
+            age: moment(t.createdAt).fromNow()
+          })
+          totalPendingWalletOrdersAmount += Number(order.amount) * 0.92 || 0
+        }
+      }
+    }
+  }
+
+  printTable(
+    `Pending Tasks with Wallet Orders (${pendingWalletRows.length})`,
+    [
+      { key: 'task', header: 'Task', align: 'right', minWidth: 4, maxWidth: 8 },
+      { key: 'order', header: 'Order', align: 'right', minWidth: 5, maxWidth: 10 },
+      { key: 'amount', header: 'Amount', align: 'right', minWidth: 10, maxWidth: 14 },
+      { key: 'created', header: 'Created', minWidth: 16, maxWidth: 16 },
+      { key: 'age', header: 'Age', minWidth: 10, maxWidth: 14 }
+    ],
+    pendingWalletRows,
+    { maxWidth: termWidth() }
+  )
+
+  if (totalPendingWalletOrdersAmount > 0) {
+    console.log(
+      `${C.yellow}⚠️  Note: Pending Tasks total includes ${formatUSD(toCents(totalPendingWalletOrdersAmount))} from wallet-related orders.${C.reset}`
+    )
+  }
+
   console.log(
     `${C.blue}ℹ️  [Database] Total pending tasks: ${pendingTasks.length}` +
       ` | Total amount (after 8% fee): ${formatUSD(toCents(totalPendingTasksAmount))}${C.reset}`

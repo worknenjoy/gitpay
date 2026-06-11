@@ -43,6 +43,22 @@ export const refundUnclaimedBountyOrders = async (taskId: number) => {
         }
       } else if (order.provider === 'paypal') {
         await refundPaypalPayment({ orderId: order.id })
+      } else if (order.provider === 'wallet') {
+        await models.Order.update(
+          { status: 'refunded' },
+          { where: { id: order.id } }
+        )
+        // Re-fetching triggers the afterFind hook which recalculates and persists the wallet balance
+        if (order.source_id) {
+          await models.Wallet.findByPk(order.source_id)
+        }
+        const [user, task] = await Promise.all([
+          models.User.findByPk(order.userId),
+          models.Task.findByPk(order.TaskId)
+        ])
+        if (order.amount) {
+          PaymentMail.refund(user, task, order.dataValues)
+        }
       }
     } catch (err) {
       console.error(`Failed to refund order ${order.id} for task ${taskId}:`, err)
