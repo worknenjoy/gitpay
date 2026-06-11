@@ -13,7 +13,11 @@ export const markIssueStateAsCreated = async (issueId: number) => {
     )
   }
 
-  await issue.update({ state: TaskStates.CREATED, funded_at: null })
+  await issue.update({
+    state: TaskStates.CREATED,
+    funded_at: null,
+    comment: 'All orders were refunded — task reverted to created'
+  })
   await issue.reload()
   return issue
 }
