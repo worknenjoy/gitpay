@@ -44,10 +44,7 @@ export const refundUnclaimedBountyOrders = async (taskId: number) => {
       } else if (order.provider === 'paypal') {
         await refundPaypalPayment({ orderId: order.id })
       } else if (order.provider === 'wallet') {
-        await models.Order.update(
-          { status: 'refunded' },
-          { where: { id: order.id } }
-        )
+        await models.Order.update({ status: 'refunded' }, { where: { id: order.id } })
         // Re-fetching triggers the afterFind hook which recalculates and persists the wallet balance
         if (order.source_id) {
           await models.Wallet.findByPk(order.source_id)

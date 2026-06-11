@@ -153,7 +153,8 @@ async function getPendingTasks() {
 
   const pendingTaskRows: Array<Record<string, string>> = []
   for (const t of pendingTasks) {
-    const orders: any[] = t.Orders?.length > 0 ? t.Orders : [null]
+    const orders: any[] = t.Orders?.filter((o: any) => o.status !== 'open') ?? []
+    if (orders.length === 0) orders.push(null)
     const action =
       t.action === 'pending_claim'
         ? `Pending claim, retries ${t.claim_retries ?? 0}`
@@ -167,9 +168,7 @@ async function getPendingTasks() {
         status: i === 0 ? (t.status ?? '') : '',
         state: i === 0 ? (t.state ?? '') : '',
         stale: i === 0 ? (t.stale_at ? moment(t.stale_at).format('YYYY-MM-DD') : '') : '',
-        source: o
-          ? `#${o.id} ${o.provider} ${formatUSD(toCents(o.amount))} [${o.status}]`
-          : 'N/A',
+        source: o ? `#${o.id} ${o.provider} ${formatUSD(toCents(o.amount))} [${o.status}]` : 'N/A',
         action: i === 0 ? action : ''
       })
     })
