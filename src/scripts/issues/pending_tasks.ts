@@ -145,16 +145,14 @@ async function getPendingTasks() {
   )
   console.time('[Step] Pending Tasks amount calculation time')
 
-  const tasks = await Task.findAll({
+  const pendingTasks = await Task.findAll({
     where: {
-      value: { [Op.gt]: 0 }
+      //value: { [Op.gt]: 0 }
+      state: 'funded'
+
     },
     include: [models.Order]
   })
-
-  const pendingTasks = tasks.filter(
-    (t: any) => !t.paid && t.transfer_id === null && t.TransferId === null
-  )
 
   let totalPendingTasksAmount = 0
   for (const t of pendingTasks) {
