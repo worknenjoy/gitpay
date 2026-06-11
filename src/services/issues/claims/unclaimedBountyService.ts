@@ -1,7 +1,7 @@
 import { findUnclaimedBountiesWithMergedPrs } from '../../../queries/issue/bounty/findUnclaimedBountiesWithMergedPrs'
 import ClaimMail from '../../../mail/templates/issue/claim'
 import { incrementIssueClaimRetries } from '../../../mutations/issue/state/incrementIssueClaimRetries'
-import { markIssueStateAsClosed } from '../../../mutations/issue/state/markIssueStateAsClosed'
+import { refundUnclaimedBountyOrders } from './refundUnclaimedBountyOrders'
 
 const CLAIM_RETRY_LIMIT = 2
 
@@ -12,12 +12,9 @@ export const notifyUnclaimedBounties = async () => {
 
     if (retries >= CLAIM_RETRY_LIMIT) {
       console.log(
-        `Issue ${issue.id} reached retry limit (${retries}). Auto-donating to platform fund.`
+        `Issue ${issue.id} reached retry limit (${retries}). Refunding orders to original sponsors.`
       )
-      await markIssueStateAsClosed(issue.id)
-      if (user) {
-        await ClaimMail.notifyDonatedBountyToGitpay(user, issue)
-      }
+      await refundUnclaimedBountyOrders(issue.id)
     } else if (user) {
       console.log(
         `Notify user ${user.username} (${user.email}) about unclaimed bounty on issue ${issue.id}`

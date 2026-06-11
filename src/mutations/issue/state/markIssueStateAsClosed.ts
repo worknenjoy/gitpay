@@ -1,9 +1,13 @@
-import { TaskStates, ClosedReasons } from '../../../constants/task'
+import { TaskStates, ClosedReasons, type ClosedReason } from '../../../constants/task'
 import Models from '../../../models'
 
 const models = Models as any
 
-export const markIssueStateAsClosed = async (issueId: number, comment?: string) => {
+export const markIssueStateAsClosed = async (
+  issueId: number,
+  comment?: string,
+  closedReason?: ClosedReason
+) => {
   const issue = await models.Task.findByPk(issueId)
 
   if (!issue) {
@@ -16,7 +20,7 @@ export const markIssueStateAsClosed = async (issueId: number, comment?: string) 
 
   await issue.update({
     state: TaskStates.CLOSED,
-    closed_reason: ClosedReasons.OTHER,
+    closed_reason: closedReason ?? ClosedReasons.OTHER,
     closed_at: new Date(),
     comment: comment ?? 'donated claimed bounty to Gitpay platform'
   })

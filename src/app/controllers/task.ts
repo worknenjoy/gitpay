@@ -18,9 +18,13 @@ import {
   confirm as taskRequestAssignedUserConfirm
 } from '../../modules/tasks'
 import { markIssueStateAsClosed } from '../../mutations/issue/state/markIssueStateAsClosed'
+import ClaimMail from '../../mail/templates/issue/claim'
 // @ts-ignore - jsonwebtoken has no type definitions
 import jwt from 'jsonwebtoken'
 import { offerMessage, offerUpdate } from '../../modules/offers'
+import Models from '../../models'
+
+const models = Models as any
 
 export const createTask = async (req: any, res: any) => {
   try {
@@ -315,6 +319,12 @@ export const donateToPlatformFunds = async (req: any, res: any) => {
     }
 
     const issue = await markIssueStateAsClosed(taskId)
+
+    const user = await models.User.findByPk(payload.userId)
+    if (user) {
+      await ClaimMail.notifyDonatedBountyToGitpay(user, issue)
+    }
+
     return res.status(200).json({ success: true, issue })
   } catch (error: any) {
     return res.status(500).json({ error: error.message })
