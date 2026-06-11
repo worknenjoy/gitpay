@@ -3,7 +3,7 @@ const stripe = new Stripe(process.env.STRIPE_KEY as string)
 
 import Models from '../../models'
 import moment from 'moment'
-import findFundedIssues from '../../queries/issue/state/findFundedIssues'
+import { findPendingTasks } from '../../queries/issue/state/findPendingTasks'
 
 const models = Models as any
 
@@ -144,7 +144,7 @@ async function getPendingTasks() {
   )
   console.time('[Step] Pending Tasks amount calculation time')
 
-  const pendingTasks = await findFundedIssues()
+  const pendingTasks = await findPendingTasks()
 
   let totalPendingTasksAmount = 0
   for (const t of pendingTasks) {
@@ -164,8 +164,10 @@ async function getPendingTasks() {
       state: t.state ?? '',
       stale: t.stale_at ? moment(t.stale_at).format('YYYY-MM-DD') : '',
       source: sources,
-      TransferId: t.TransferId ?? '',
-      transfer_id: t.transfer_id ?? ''
+      action:
+        t.action === 'pending_claim'
+          ? `Pending claim, retries ${t.claim_retries ?? 0}`
+          : 'Eligible for refund'
     }
   })
 
@@ -180,8 +182,7 @@ async function getPendingTasks() {
       { key: 'state', header: 'State', minWidth: 8, maxWidth: 16 },
       { key: 'stale', header: 'Stale At', minWidth: 10, maxWidth: 12 },
       { key: 'source', header: 'Source', minWidth: 18, maxWidth: 60 },
-      { key: 'TransferId', header: 'TransferId', minWidth: 8, maxWidth: 12 },
-      { key: 'transfer_id', header: 'transfer_id', minWidth: 8, maxWidth: 12 }
+      { key: 'action', header: 'Action', minWidth: 18, maxWidth: 30 }
     ],
     pendingTaskRows,
     { maxWidth: termWidth() }
