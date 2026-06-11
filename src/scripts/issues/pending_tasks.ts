@@ -1,7 +1,6 @@
 import Stripe from 'stripe'
 const stripe = new Stripe(process.env.STRIPE_KEY as string)
 
-import { Op } from 'sequelize'
 import Models from '../../models'
 import moment from 'moment'
 
@@ -149,7 +148,6 @@ async function getPendingTasks() {
     where: {
       //value: { [Op.gt]: 0 }
       state: 'funded'
-
     },
     include: [models.Order]
   })
