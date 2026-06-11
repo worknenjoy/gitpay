@@ -3,9 +3,9 @@ const stripe = new Stripe(process.env.STRIPE_KEY as string)
 
 import Models from '../../models'
 import moment from 'moment'
+import findFundedIssues from '../../queries/issue/state/findFundedIssues'
 
 const models = Models as any
-const { Order, Task } = models
 
 const C = {
   reset: '\x1b[0m',
@@ -144,13 +144,7 @@ async function getPendingTasks() {
   )
   console.time('[Step] Pending Tasks amount calculation time')
 
-  const pendingTasks = await Task.findAll({
-    where: {
-      //value: { [Op.gt]: 0 }
-      state: 'funded'
-    },
-    include: [models.Order]
-  })
+  const pendingTasks = await findFundedIssues()
 
   let totalPendingTasksAmount = 0
   for (const t of pendingTasks) {

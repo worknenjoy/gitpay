@@ -1,13 +1,7 @@
-import Models from '../../../models'
-import { TaskStates } from '../../../constants/task'
-
-const models = Models as any
+import findFundedIssues from './findFundedIssues'
 
 const findFundedIssuesToRevertToCreated = async () => {
-  const fundedTasks = await models.Task.findAll({
-    where: { state: TaskStates.FUNDED },
-    include: [{ model: models.Order }]
-  })
+  const fundedTasks = await findFundedIssues()
 
   return fundedTasks.filter((task: any) => {
     const orders = task.Orders ?? []
