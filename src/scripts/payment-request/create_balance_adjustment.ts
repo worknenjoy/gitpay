@@ -28,11 +28,12 @@ function formatCents(cents: number, currency: string): string {
   return `${decimal} ${currency.toUpperCase()}`
 }
 
-function printDebtTable(rows: Array<{ index: number; id: number; email: string; balance: number; currency: string }>) {
+function printDebtTable(
+  rows: Array<{ index: number; id: number; email: string; balance: number; currency: string }>
+) {
   const COL = { idx: 4, id: 12, email: 30, balance: 20 }
   const sep = `${'─'.repeat(COL.idx + 2)}┼${'─'.repeat(COL.id + 2)}┼${'─'.repeat(COL.email + 2)}┼${'─'.repeat(COL.balance + 2)}`
-  const header =
-    ` ${'#'.padEnd(COL.idx)} │ ${'Balance ID'.padEnd(COL.id)} │ ${'User Email'.padEnd(COL.email)} │ ${'Balance'.padEnd(COL.balance)}`
+  const header = ` ${'#'.padEnd(COL.idx)} │ ${'Balance ID'.padEnd(COL.id)} │ ${'User Email'.padEnd(COL.email)} │ ${'Balance'.padEnd(COL.balance)}`
   console.log('\nAccounts with balance in debt:\n')
   console.log(header)
   console.log(sep)
@@ -48,7 +49,7 @@ function printDebtTable(rows: Array<{ index: number; id: number; email: string; 
 async function selectBalance(
   rl: readline.Interface,
   rows: Array<{ index: number; id: number; email: string; balance: number; currency: string }>
-): Promise<typeof rows[0] | null> {
+): Promise<(typeof rows)[0] | null> {
   const input = await prompt(rl, 'Enter number to select (or q to quit): ')
   if (input.trim().toLowerCase() === 'q') return null
   const n = parseInt(input.trim(), 10)
@@ -90,7 +91,9 @@ async function main() {
       console.log('\n--- Balance ---')
       console.log(`  id:              ${b.id}`)
       console.log(`  user:            ${user?.email ?? '(unknown)'}`)
-      console.log(`  current balance: ${currentBalance} cents (${formatCents(currentBalance, balanceCurrency)})`)
+      console.log(
+        `  current balance: ${currentBalance} cents (${formatCents(currentBalance, balanceCurrency)})`
+      )
       console.log('---------------')
     } else {
       const debtBalances = await currentModels.PaymentRequestBalance.findAll({
@@ -127,7 +130,9 @@ async function main() {
       balanceId = selected.id
       balanceCurrency = selected.currency
 
-      console.log(`\nSelected: Balance ID ${selected.id} — ${selected.email} — ${formatCents(selected.balance, selected.currency)}`)
+      console.log(
+        `\nSelected: Balance ID ${selected.id} — ${selected.email} — ${formatCents(selected.balance, selected.currency)}`
+      )
     }
 
     let amount: number
@@ -172,7 +177,9 @@ async function main() {
     console.log(`  type:                    CREDIT`)
     console.log(`  reason:                  ADJUSTMENT`)
     console.log(`  reason_details:          manual_payment_for_credit_due`)
-    console.log(`  amount:                  ${amount} cents (${formatCents(amount, balanceCurrency)})`)
+    console.log(
+      `  amount:                  ${amount} cents (${formatCents(amount, balanceCurrency)})`
+    )
     console.log('---------------------------')
 
     const confirm = await prompt(rl, '\nApply this adjustment? (y/n): ')
@@ -182,13 +189,19 @@ async function main() {
     }
 
     console.log('\nApplying balance adjustment...')
-    const result = await balanceAdjustmentService({ paymentRequestBalanceId: balanceId, amount, currency: balanceCurrency })
+    const result = await balanceAdjustmentService({
+      paymentRequestBalanceId: balanceId,
+      amount,
+      currency: balanceCurrency
+    })
 
     const newBalance = Number(result.balance.balance)
     console.log('\n--- Result ---')
     console.log(`  Transaction ID:  ${result.balanceTransaction.id}`)
     console.log(`  Credit applied:  ${amount} cents (${formatCents(amount, balanceCurrency)})`)
-    console.log(`  New balance:     ${newBalance} cents (${formatCents(newBalance, result.balance.currency || balanceCurrency)})`)
+    console.log(
+      `  New balance:     ${newBalance} cents (${formatCents(newBalance, result.balance.currency || balanceCurrency)})`
+    )
     console.log(`  User notified:   ${result.user.email}`)
     console.log('\nDone.')
   } catch (err: any) {

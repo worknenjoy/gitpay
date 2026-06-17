@@ -324,13 +324,16 @@ const PaymentRequestMail = {
 
     const balanceAmount = Number(balanceTransaction.PaymentRequestBalance.balance)
     const balanceLabel =
-      balanceAmount < 0 ? 'Current debt balance' :
-      balanceAmount > 0 ? 'Current credit balance' :
-      'Balance'
+      balanceAmount < 0
+        ? 'Current debt balance'
+        : balanceAmount > 0
+          ? 'Current credit balance'
+          : 'Balance'
 
-    const debitNote = balanceTransaction.type === 'DEBIT'
-      ? `<br/><p>${i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.debit_note')}</p>`
-      : ''
+    const debitNote =
+      balanceTransaction.type === 'DEBIT'
+        ? `<br/><p>${i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.debit_note')}</p>`
+        : ''
 
     try {
       return await request(
