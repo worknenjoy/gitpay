@@ -153,7 +153,8 @@ async function getPendingTasks() {
 
   const pendingTaskRows: Array<Record<string, string>> = []
   for (const t of pendingTasks) {
-    const orders: any[] = t.Orders?.filter((o: any) => o.status !== 'open' && o.status !== 'failed') ?? []
+    const orders: any[] =
+      t.Orders?.filter((o: any) => o.status !== 'open' && o.status !== 'failed') ?? []
     if (orders.length === 0) orders.push(null)
     const action =
       t.action === 'pending_claim'
