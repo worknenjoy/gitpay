@@ -38,6 +38,8 @@ const getReason = (reason_details: any) => {
       return i18n.__(
         'mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.refund_payment_request'
       )
+    case 'manual_payment_for_credit_due':
+      return 'Manual payment for credit due'
     default:
       return reason_details
   }
@@ -301,7 +303,8 @@ const PaymentRequestMail = {
   newBalanceTransactionForPaymentRequest: async (
     user: any,
     paymentRequestPayment: any,
-    balanceTransaction: any
+    balanceTransaction: any,
+    source?: string
   ) => {
     const to = user.email
     const language = user.language || 'en'
@@ -310,6 +313,24 @@ const PaymentRequestMail = {
       return
     }
     i18n.setLocale(language)
+
+    const customer = paymentRequestPayment?.PaymentRequestCustomer
+    let sourceDetails = ''
+    if (customer) {
+      sourceDetails = `${customer.name || 'N/A'} (${customer.email || 'N/A'})`
+    } else if (source) {
+      sourceDetails = source
+    }
+
+    const balanceAmount = Number(balanceTransaction.PaymentRequestBalance.balance)
+    const balanceLabel =
+      balanceAmount < 0 ? 'Current debt balance' :
+      balanceAmount > 0 ? 'Current credit balance' :
+      'Balance'
+
+    const debitNote = balanceTransaction.type === 'DEBIT'
+      ? `<br/><p>${i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.debit_note')}</p>`
+      : ''
 
     try {
       return await request(
@@ -325,8 +346,8 @@ const PaymentRequestMail = {
                 reason: balanceTransaction.reason,
                 reason_details: getReason(balanceTransaction.reason_details),
                 status: balanceTransaction.status,
-                customer_name: paymentRequestPayment.PaymentRequestCustomer?.name || 'N/A',
-                customer_email: paymentRequestPayment.PaymentRequestCustomer?.email || 'N/A',
+                customer_name: customer ? customer.name || 'N/A' : sourceDetails,
+                customer_email: customer ? customer.email || 'N/A' : '',
                 opened_at: balanceTransaction.openedAt
                   ? formatDate(balanceTransaction.openedAt)
                   : moment(balanceTransaction.createdAt).format('LLL'),
@@ -342,12 +363,12 @@ const PaymentRequestMail = {
                     `<div style="text-align:right">${calculateAmountWithPercent(balanceTransaction.amount, 0, 'centavos').decimal} ${balanceTransaction.currency}</div>`
                   ],
                   [
-                    'Current debt balance',
+                    balanceLabel,
                     `<div style="text-align:right">${calculateAmountWithPercent(balanceTransaction.PaymentRequestBalance.balance, 0, 'centavos').decimal} ${balanceTransaction.currency}</div>`
                   ]
                 ]
               },
-              `<div style="text-align: right">${i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.bottom')}</div>`
+              `<div style="text-align: right">${i18n.__('mail.paymentRequest.newBalanceTransactionForPaymentRequest.bottom')}</div>${debitNote}`
             )
           }
         ]

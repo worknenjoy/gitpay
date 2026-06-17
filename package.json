@@ -77,7 +77,8 @@
     "issues:pending": "tsx src/scripts/issues/pending_tasks.ts",
     "scripts:accounts:notify_verification": "tsx src/scripts/accounts/notify_account_verification.ts",
     "scripts:transfer:create_manual": "tsx src/scripts/transfers/create_manual_transfer.ts",
-    "scripts:payout:create_manual": "tsx src/scripts/payouts/create_manual_payout.ts"
+    "scripts:payout:create_manual": "tsx src/scripts/payouts/create_manual_payout.ts",
+    "scripts:payment-request:create_balance_adjustment": "tsx src/scripts/payment-request/create_balance_adjustment.ts"
   },
   "husky": {
     "hooks": {
