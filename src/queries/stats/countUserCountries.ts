@@ -1,12 +1,5 @@
-import Models from '../../models'
-import { Op } from 'sequelize'
-
-const models = Models as any
+import { countryCodesFull } from '../../../frontend/src/components/areas/private/shared/country-codes.js'
 
 export const countUserCountries = async (): Promise<number> => {
-  return models.User.count({
-    distinct: true,
-    col: 'country',
-    where: { country: { [Op.ne]: null } }
-  })
+  return countryCodesFull.length
 }

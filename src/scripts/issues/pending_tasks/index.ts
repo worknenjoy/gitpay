@@ -1,10 +1,13 @@
 import Models from '../../../models'
+import { i18nConfigure } from '../../../shared/i18n/i18n'
 import { C, listPendingTasks } from './list'
 import { refundPendingTasks } from './refund'
 
 // Usage:
 //   npm run issues:pending              — list pending tasks report
 //   npm run issues:pending -- --refund  — list + refund eligible tasks
+
+i18nConfigure()
 
 const models = Models as any
 const shouldRefund = process.argv.includes('--refund')
