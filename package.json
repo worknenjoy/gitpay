@@ -74,7 +74,7 @@
     "scripts:issue:notify_open_bounties_with_merged_prs": "tsx src/scripts/issues/notify_open_bounties_with_merged_prs.ts",
     "scripts:issue:sync_states": "tsx src/scripts/issues/sync_issues_states.ts",
     "scripts:issue:sync_stale": "tsx src/scripts/issues/sync_issues_stale.ts",
-    "issues:pending": "tsx src/scripts/issues/pending_tasks.ts",
+    "issues:pending": "tsx src/scripts/issues/pending_tasks/index.ts",
     "scripts:accounts:notify_verification": "tsx src/scripts/accounts/notify_account_verification.ts",
     "scripts:transfer:create_manual": "tsx src/scripts/transfers/create_manual_transfer.ts",
     "scripts:payout:create_manual": "tsx src/scripts/payouts/create_manual_payout.ts",

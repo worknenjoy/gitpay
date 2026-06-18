@@ -24,6 +24,7 @@ export interface OrderAttributes {
   TaskId?: number | null
   taskId?: number | null
   couponId?: number | null
+  comment?: string | null
   createdAt?: Date
   updatedAt?: Date
 }
@@ -53,6 +54,7 @@ export type OrderCreationAttributes = Optional<
   | 'TaskId'
   | 'taskId'
   | 'couponId'
+  | 'comment'
   | 'createdAt'
   | 'updatedAt'
 >
@@ -84,6 +86,7 @@ export default class Order
   public TaskId!: number | null
   public taskId!: number | null
   public couponId!: number | null
+  public comment!: string | null
   public createdAt!: Date
   public updatedAt!: Date
 
@@ -168,6 +171,10 @@ export default class Order
         paid: {
           type: DataTypes.BOOLEAN,
           defaultValue: false
+        },
+        comment: {
+          type: DataTypes.TEXT,
+          allowNull: true
         },
         createdAt: {
           type: DataTypes.DATE,

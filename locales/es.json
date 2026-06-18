@@ -9,5 +9,10 @@
   "mail.payment.oldBountyRefunded.content": "Un pago de PayPal que realizaste hace {{age}} para la issue <a href=\"{{url}}\">{{title}}</a> fue reembolsado automáticamente. Esto sucede cuando una recompensa permanece abierta por más de {{threshold}} sin ningún Pull Request fusionado y con un largo período de inactividad.<br/><br/>No se requiere ninguna acción de tu parte. Si el desarrollo se reanuda, puedes volver a financiar la recompensa desde la página de la issue.",
   "mail.payment.oldBountyRefunded.payoutNotice": "Como se excedió el límite de tiempo para reembolsos de PayPal, devolvimos los fondos mediante un pago (payout) de PayPal.",
   "mail.payment.oldBountyRefunded.footer": "Si crees que esto es un error, responde a este correo o contáctanos en contact@gitpay.me.",
-  "mail.payment.oldBountyRefunded.cta": "Ver recompensa en Gitpay"
+  "mail.payment.oldBountyRefunded.cta": "Ver recompensa en Gitpay",
+  "mail.payment.pendingBountyRefunded.subject": "Tu pago de recompensa en Gitpay ha sido reembolsado",
+  "mail.payment.pendingBountyRefunded.intro": "Hola {{name}},",
+  "mail.payment.pendingBountyRefunded.content": "Un pago realizado el {{date}} para la issue <a href=\"{{url}}\">{{title}}</a> fue reembolsado automáticamente. La recompensa ha estado abierta desde esa fecha sin una solución, por lo que devolvemos los fondos.<br/><br/>No se requiere ninguna acción de tu parte. Si el desarrollo se reanuda, puedes volver a financiar la recompensa desde la página de la issue.",
+  "mail.payment.pendingBountyRefunded.footer": "Si crees que esto es un error, responde a este correo o contáctanos en contact@gitpay.me.",
+  "mail.payment.pendingBountyRefunded.cta": "Ver tus pagos en Gitpay"
 }

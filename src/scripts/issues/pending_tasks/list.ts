@@ -1,13 +1,7 @@
-import Stripe from 'stripe'
-const stripe = new Stripe(process.env.STRIPE_KEY as string)
-
-import Models from '../../models'
 import moment from 'moment'
-import { findPendingTasks } from '../../queries/issue/state/findPendingTasks'
+import { findPendingTasks } from '../../../queries/issue/state/findPendingTasks'
 
-const models = Models as any
-
-const C = {
+export const C = {
   reset: '\x1b[0m',
   bold: '\x1b[1m',
   dim: '\x1b[2m',
@@ -21,9 +15,9 @@ const C = {
 }
 
 const stripAnsi = (s: string) => s.replace(/\x1b\[[0-9;]*m/g, '')
-const visibleLen = (s: string) => stripAnsi(s).length
-const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n))
-const termWidth = () => clamp(process.stdout.columns ?? 100, 60, 160)
+export const visibleLen = (s: string) => stripAnsi(s).length
+export const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n))
+export const termWidth = () => clamp(process.stdout.columns ?? 100, 60, 160)
 
 type Align = 'left' | 'right' | 'center'
 const padTo = (s: string, w: number, align: Align = 'left') => {
@@ -54,7 +48,7 @@ type TableColumn<Row extends Record<string, any>> = {
   maxWidth?: number
 }
 
-function printTable<Row extends Record<string, any>>(
+export function printTable<Row extends Record<string, any>>(
   title: string,
   columns: Array<TableColumn<Row>>,
   rows: Row[],
@@ -135,10 +129,10 @@ function printTable<Row extends Record<string, any>>(
 }
 
 const toCents = (n: number) => Math.round((Number(n) || 0) * 100)
-const formatUSD = (cents: number) =>
+export const formatUSD = (cents: number) =>
   (cents / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })
 
-async function getPendingTasks() {
+export async function listPendingTasks() {
   console.log(
     `${C.cyan}${C.bold}📝 [Step] Calculating total amount for pending Tasks in database...${C.reset}`
   )
@@ -286,21 +280,5 @@ async function getPendingTasks() {
   )
 
   console.timeEnd('[Step] Pending Tasks amount calculation time')
-  return { totalPendingTasksAmount, totalPendingPaypalOrdersAmount }
+  return { pendingTasks, totalPendingTasksAmount, totalPendingPaypalOrdersAmount }
 }
-
-;(async () => {
-  console.log(`${C.bold}${C.magenta}📋 Gitpay — Pending Issues/Tasks Report${C.reset}`)
-  console.time('[Total] Pending tasks report time')
-  try {
-    await getPendingTasks()
-  } catch (err) {
-    console.error(`${C.red}❌ Failed to compute pending tasks report:${C.reset}`, err)
-    process.exitCode = 1
-  } finally {
-    if (models?.sequelize?.close) {
-      await models.sequelize.close()
-    }
-    console.timeEnd('[Total] Pending tasks report time')
-  }
-})()

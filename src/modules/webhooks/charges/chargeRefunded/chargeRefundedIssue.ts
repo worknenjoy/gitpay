@@ -1,25 +1,14 @@
 import Models from '../../../../models'
 import i18n from 'i18n'
 import SendMail from '../../../../mail/mail'
+import { updateOrderAsRefunded } from '../../../../mutations/order/updateOrderAsRefunded'
 
 const models = Models as any
 
 export const handleChargeRefundedIssue = async (event: any) => {
   const { paid, status, source, id } = event.data.object
 
-  const order = await models.Order.update(
-    {
-      paid: false,
-      status: 'refunded'
-    },
-    {
-      where: {
-        source_id: source.id,
-        source: id
-      },
-      returning: true
-    }
-  )
+  const order = await updateOrderAsRefunded({ source_id: source.id, source: id })
 
   const orderStatus = order[0]
   const orderDetails = order[1][0]

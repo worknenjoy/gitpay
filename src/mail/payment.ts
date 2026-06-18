@@ -150,6 +150,65 @@ const PaymentMail = {
     }
   },
 
+  pendingBountyRefunded: async (user: any, task: any, order: any) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
+    i18n.setLocale(language)
+
+    const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
+    const paymentsUrl = `${process.env.FRONTEND_HOST}/#/profile/payments`
+    const currency = String(order.currency || 'usd').toLowerCase()
+    const symbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
+    const createdDate = task.createdAt
+      ? new Date(task.createdAt).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+      : '-'
+
+    try {
+      return await request(to, i18n.__('mail.payment.pendingBountyRefunded.subject'), [
+        {
+          type: 'text/html',
+          value: tableContentEmailTemplate(
+            i18n.__('mail.payment.pendingBountyRefunded.intro', {
+              name: user.name || user.username || 'Gitpay User'
+            }),
+            i18n.__('mail.payment.pendingBountyRefunded.content', {
+              date: createdDate,
+              title: task.title,
+              url: taskUrl
+            }),
+            {
+              headers: ['Field', 'Value'],
+              rows: [
+                ['Provider', String(order.provider || '-')],
+                ['Amount', `${symbol} ${order.amount}`],
+                ['Currency', String(order.currency || '').toUpperCase()],
+                ['Order ID', String(order.id)],
+                ['Issue created', createdDate]
+              ]
+            },
+            i18n.__('mail.payment.pendingBountyRefunded.footer'),
+            {
+              link: paymentsUrl,
+              text: i18n.__('mail.payment.pendingBountyRefunded.cta')
+            } as ActionButton
+          )
+        }
+      ])
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+
   oldBountyPaypalRefunded: async (
     user: any,
     task: any,
