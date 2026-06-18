@@ -15,11 +15,7 @@ type RefundStripePaymentParams = {
   ageDays?: number | null
 }
 
-export async function refundStripePayment({
-  orderId,
-  reason,
-  ageDays
-}: RefundStripePaymentParams) {
+export async function refundStripePayment({ orderId, reason, ageDays }: RefundStripePaymentParams) {
   const order = await models.Order.findByPk(orderId, {
     include: [models.User, models.Task]
   })
@@ -36,11 +32,7 @@ export async function refundStripePayment({
     return order.dataValues ?? order
   }
 
-  const refundAmountExcludingFees = calculateAmountWithPercent(
-    order.amount,
-    0,
-    'decimal'
-  ).centavos
+  const refundAmountExcludingFees = calculateAmountWithPercent(order.amount, 0, 'decimal').centavos
 
   const refund = await stripe.refunds.create({
     charge: order.source,
@@ -51,15 +43,9 @@ export async function refundStripePayment({
     throw new Error('stripe_refund_failed')
   }
 
-  const updateResult = await updateOrderAsRefunded(
-    { id: order.id },
-    { refund_id: refund.id }
-  )
+  const updateResult = await updateOrderAsRefunded({ id: order.id }, { refund_id: refund.id })
 
-  const orderData =
-    updateResult[1]?.[0]?.dataValues ??
-    updateResult[1]?.[0] ??
-    order.dataValues
+  const orderData = updateResult[1]?.[0]?.dataValues ?? updateResult[1]?.[0] ?? order.dataValues
 
   const user = order.User || (await models.User.findByPk(orderData.userId))
   const task = order.Task || (await models.Task.findByPk(orderData.TaskId))

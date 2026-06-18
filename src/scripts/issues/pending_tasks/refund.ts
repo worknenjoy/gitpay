@@ -7,9 +7,7 @@ import { C } from './list'
 
 const models = Models as any
 
-export async function refundPendingTasks(
-  pendingTasks: any[]
-) {
+export async function refundPendingTasks(pendingTasks: any[]) {
   const eligibleTasks = pendingTasks.filter((t: any) => t.action === 'eligible_for_refund')
 
   console.log(
