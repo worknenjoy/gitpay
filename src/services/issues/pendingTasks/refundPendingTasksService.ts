@@ -39,7 +39,13 @@ export async function refundPendingTasksService(
     )
 
     if (paidOrders.length === 0) {
-      results.push({ orderId: null, taskId: task.id, provider: 'n/a', status: 'skipped', reason: 'no qualifying paid orders' })
+      results.push({
+        orderId: null,
+        taskId: task.id,
+        provider: 'n/a',
+        status: 'skipped',
+        reason: 'no qualifying paid orders'
+      })
       skipped++
       continue
     }
@@ -82,7 +88,13 @@ export async function refundPendingTasksService(
           results.push({ orderId: order.id, taskId: task.id, provider, status: 'refunded' })
           refunded++
         } else {
-          results.push({ orderId: order.id, taskId: task.id, provider, status: 'skipped', reason: `unknown provider "${provider}"` })
+          results.push({
+            orderId: order.id,
+            taskId: task.id,
+            provider,
+            status: 'skipped',
+            reason: `unknown provider "${provider}"`
+          })
           skipped++
         }
       } catch (err: any) {

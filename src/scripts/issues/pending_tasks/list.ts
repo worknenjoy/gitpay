@@ -17,7 +17,7 @@ export const C = {
 const stripAnsi = (s: string) => s.replace(/\x1b\[[0-9;]*m/g, '')
 export const visibleLen = (s: string) => stripAnsi(s).length
 export const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n))
-export const termWidth = () => clamp(process.stdout.columns ?? 100, 60, 160)
+export const termWidth = () => clamp(process.stdout.columns ?? 120, 60, 220)
 
 type Align = 'left' | 'right' | 'center'
 const padTo = (s: string, w: number, align: Align = 'left') => {
@@ -180,9 +180,9 @@ export async function listPendingTasks() {
       { key: 'status', header: 'Status', minWidth: 8, maxWidth: 12 },
       { key: 'state', header: 'State', minWidth: 8, maxWidth: 16 },
       { key: 'stale', header: 'Stale At', minWidth: 10, maxWidth: 12 },
-      { key: 'source', header: 'Source', minWidth: 18, maxWidth: 40 },
-      { key: 'comment', header: 'Comment', minWidth: 10, maxWidth: 40 },
-      { key: 'action', header: 'Action', minWidth: 18, maxWidth: 30 }
+      { key: 'source', header: 'Source', minWidth: 18, maxWidth: 60 },
+      { key: 'comment', header: 'Comment', minWidth: 10, maxWidth: 70 },
+      { key: 'action', header: 'Action', minWidth: 18, maxWidth: 42 }
     ],
     pendingTaskRows,
     { maxWidth: termWidth() }
