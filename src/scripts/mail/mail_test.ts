@@ -135,6 +135,14 @@ function buildSamples(moduleName: string, methodName: string): any[] {
       }
       return [user, task, order, meta]
     }
+
+    if (/pendingBountyRefunded/i.test(methodName)) {
+      return [
+        user,
+        { ...task, createdAt: new Date('2024-11-01T10:00:00Z') },
+        { ...order, provider: 'stripe' }
+      ]
+    }
   }
 
   if (moduleName === 'paymentRequest') {

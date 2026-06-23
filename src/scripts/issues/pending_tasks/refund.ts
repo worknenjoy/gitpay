@@ -21,7 +21,7 @@ export async function refundPendingTasks(pendingTasks: any[]) {
       )
     } else {
       console.log(
-        `${C.gray}  Task #${r.taskId} Order #${r.orderId} (${r.provider}): not eligible for automated refund, skipping.${C.reset}`
+        `${C.gray}  ~ Task #${r.taskId}${r.orderId != null ? ` Order #${r.orderId}` : ''} (${r.provider}): skipped — ${r.reason ?? 'not eligible'}.${C.reset}`
       )
     }
   }

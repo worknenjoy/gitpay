@@ -8,11 +8,12 @@ import { refundWalletPayment } from '../../payments/refunds/refundWalletPayment'
 const models = Models as any
 
 export interface RefundOrderResult {
-  orderId: number
+  orderId: number | null
   taskId: number
   provider: string
   status: 'refunded' | 'failed' | 'skipped'
   error?: string
+  reason?: string
 }
 
 export interface RefundPendingTasksResult {
@@ -38,6 +39,7 @@ export async function refundPendingTasksService(
     )
 
     if (paidOrders.length === 0) {
+      results.push({ orderId: null, taskId: task.id, provider: 'n/a', status: 'skipped', reason: 'no qualifying paid orders' })
       skipped++
       continue
     }
@@ -80,7 +82,7 @@ export async function refundPendingTasksService(
           results.push({ orderId: order.id, taskId: task.id, provider, status: 'refunded' })
           refunded++
         } else {
-          results.push({ orderId: order.id, taskId: task.id, provider, status: 'skipped' })
+          results.push({ orderId: order.id, taskId: task.id, provider, status: 'skipped', reason: `unknown provider "${provider}"` })
           skipped++
         }
       } catch (err: any) {
