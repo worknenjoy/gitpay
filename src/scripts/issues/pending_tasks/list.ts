@@ -194,6 +194,7 @@ export async function listPendingTasks() {
     amount: string
     created: string
     age: string
+    comment: string
   }> = []
   for (const t of pendingTasks) {
     if (t.Orders?.length > 0) {
@@ -238,6 +239,7 @@ export async function listPendingTasks() {
     amount: string
     created: string
     age: string
+    comment: string
   }> = []
   for (const t of pendingTasks) {
     if (t.Orders?.length > 0) {
