@@ -86,20 +86,24 @@ export async function refundPendingTasksService(
       } catch (err: any) {
         const message = err?.message || String(err)
 
-        if (provider === 'paypal') {
-          try {
-            await models.Order.update(
-              {
-                comment: `PayPal refund failed [${new Date().toISOString()}]: ${message}`
-              },
-              { where: { id: order.id } }
-            )
-          } catch {
-            // secondary failure — ignore, primary error is captured in results
-          }
+        try {
+          await models.Order.update(
+            {
+              comment: `${provider} refund failed [${new Date().toISOString()}]: ${message}`
+            },
+            { where: { id: order.id } }
+          )
+        } catch {
+          // secondary failure — ignore, primary error is captured in results
         }
 
-        results.push({ orderId: order.id, taskId: task.id, provider, status: 'failed', error: message })
+        results.push({
+          orderId: order.id,
+          taskId: task.id,
+          provider,
+          status: 'failed',
+          error: message
+        })
         failed++
       }
     }

@@ -164,6 +164,7 @@ export async function listPendingTasks() {
         state: i === 0 ? (t.state ?? '') : '',
         stale: i === 0 ? (t.stale_at ? moment(t.stale_at).format('YYYY-MM-DD') : '') : '',
         source: o ? `#${o.id} ${o.provider} ${formatUSD(toCents(o.amount))} [${o.status}]` : 'N/A',
+        comment: o ? (o.comment ?? '') : '',
         action: i === 0 ? action : ''
       })
     })
@@ -180,6 +181,7 @@ export async function listPendingTasks() {
       { key: 'state', header: 'State', minWidth: 8, maxWidth: 16 },
       { key: 'stale', header: 'Stale At', minWidth: 10, maxWidth: 12 },
       { key: 'source', header: 'Source', minWidth: 18, maxWidth: 40 },
+      { key: 'comment', header: 'Comment', minWidth: 10, maxWidth: 40 },
       { key: 'action', header: 'Action', minWidth: 18, maxWidth: 30 }
     ],
     pendingTaskRows,
@@ -202,7 +204,8 @@ export async function listPendingTasks() {
             order: String(order.id),
             amount: formatUSD(toCents(order.amount)),
             created: moment(t.createdAt).format('YYYY-MM-DD HH:mm'),
-            age: moment(t.createdAt).fromNow()
+            age: moment(t.createdAt).fromNow(),
+            comment: order.comment ?? ''
           })
         }
       }
@@ -216,7 +219,8 @@ export async function listPendingTasks() {
       { key: 'order', header: 'Order', align: 'right', minWidth: 5, maxWidth: 10 },
       { key: 'amount', header: 'Amount', align: 'right', minWidth: 10, maxWidth: 14 },
       { key: 'created', header: 'Created', minWidth: 16, maxWidth: 16 },
-      { key: 'age', header: 'Age', minWidth: 10, maxWidth: 14 }
+      { key: 'age', header: 'Age', minWidth: 10, maxWidth: 14 },
+      { key: 'comment', header: 'Comment', minWidth: 10, maxWidth: 40 }
     ],
     pendingPaypalRows,
     { maxWidth: termWidth() }
@@ -244,7 +248,8 @@ export async function listPendingTasks() {
             order: String(order.id),
             amount: formatUSD(toCents(order.amount)),
             created: moment(t.createdAt).format('YYYY-MM-DD HH:mm'),
-            age: moment(t.createdAt).fromNow()
+            age: moment(t.createdAt).fromNow(),
+            comment: order.comment ?? ''
           })
         }
       }
@@ -258,7 +263,8 @@ export async function listPendingTasks() {
       { key: 'order', header: 'Order', align: 'right', minWidth: 5, maxWidth: 10 },
       { key: 'amount', header: 'Amount', align: 'right', minWidth: 10, maxWidth: 14 },
       { key: 'created', header: 'Created', minWidth: 16, maxWidth: 16 },
-      { key: 'age', header: 'Age', minWidth: 10, maxWidth: 14 }
+      { key: 'age', header: 'Age', minWidth: 10, maxWidth: 14 },
+      { key: 'comment', header: 'Comment', minWidth: 10, maxWidth: 40 }
     ],
     pendingWalletRows,
     { maxWidth: termWidth() }
