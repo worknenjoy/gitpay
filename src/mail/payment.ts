@@ -189,7 +189,7 @@ const PaymentMail = {
             {
               headers: ['Field', 'Value'],
               rows: [
-                ['Provider', String(order.provider || '-')],
+                ['Payment method', ({ stripe: 'Credit Card', paypal: 'PayPal', wallet: 'Wallet' } as Record<string, string>)[order.provider] || String(order.provider || '-')],
                 ['Amount', `${symbol} ${order.amount}`],
                 ['Currency', String(order.currency || '').toUpperCase()],
                 ['Order ID', String(order.id)],

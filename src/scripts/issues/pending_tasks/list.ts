@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { findPendingTasks } from '../../../queries/issue/state/findPendingTasks'
+import { listPendingTasksService } from '../../../services/issues/pendingTasks/listPendingTasksService'
 
 export const C = {
   reset: '\x1b[0m',
@@ -138,12 +138,12 @@ export async function listPendingTasks() {
   )
   console.time('[Step] Pending Tasks amount calculation time')
 
-  const pendingTasks = await findPendingTasks()
-
-  let totalPendingTasksAmount = 0
-  for (const t of pendingTasks) {
-    totalPendingTasksAmount += Number(t.value) * 0.92 || 0
-  }
+  const {
+    pendingTasks,
+    totalPendingTasksAmount,
+    totalPendingPaypalOrdersAmount,
+    totalPendingWalletOrdersAmount
+  } = await listPendingTasksService()
 
   const pendingTaskRows: Array<Record<string, string>> = []
   for (const t of pendingTasks) {
@@ -186,7 +186,6 @@ export async function listPendingTasks() {
     { maxWidth: termWidth() }
   )
 
-  let totalPendingPaypalOrdersAmount = 0
   const pendingPaypalRows: Array<{
     task: string
     order: string
@@ -205,7 +204,6 @@ export async function listPendingTasks() {
             created: moment(t.createdAt).format('YYYY-MM-DD HH:mm'),
             age: moment(t.createdAt).fromNow()
           })
-          totalPendingPaypalOrdersAmount += Number(order.amount) * 0.92 || 0
         }
       }
     }
@@ -230,7 +228,6 @@ export async function listPendingTasks() {
     )
   }
 
-  let totalPendingWalletOrdersAmount = 0
   const pendingWalletRows: Array<{
     task: string
     order: string
@@ -249,7 +246,6 @@ export async function listPendingTasks() {
             created: moment(t.createdAt).format('YYYY-MM-DD HH:mm'),
             age: moment(t.createdAt).fromNow()
           })
-          totalPendingWalletOrdersAmount += Number(order.amount) * 0.92 || 0
         }
       }
     }
