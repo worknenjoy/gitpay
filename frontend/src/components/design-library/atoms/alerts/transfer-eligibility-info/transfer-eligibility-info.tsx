@@ -20,10 +20,7 @@ const TransferEligibilityInfo = ({ user }: TransferEligibilityInfoProps) => {
   return (
     <Alert severity="info" sx={{ mb: 2 }}>
       <AlertTitle>
-        <FormattedMessage
-          id="transfer.eligibility.title"
-          defaultMessage="Payout account info"
-        />
+        <FormattedMessage id="transfer.eligibility.title" defaultMessage="Payout account info" />
       </AlertTitle>
       {!hasStripeAccount && (
         <Typography variant="body2" gutterBottom>
@@ -32,11 +29,7 @@ const TransferEligibilityInfo = ({ user }: TransferEligibilityInfoProps) => {
             defaultMessage="Card payments require a payout account from a {countriesLink}. Set it up in {settingsLink}."
             values={{
               countriesLink: (
-                <Link
-                  component="button"
-                  variant="body2"
-                  onClick={() => history.push('/countries')}
-                >
+                <Link component="button" variant="body2" onClick={() => history.push('/countries')}>
                   <FormattedMessage
                     id="transfer.eligibility.stripe.countries"
                     defaultMessage="supported country"
