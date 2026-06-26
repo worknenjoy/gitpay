@@ -31,8 +31,6 @@ interface IssueActionsProps {
   currentRole: string
   children?: React.ReactNode
   cleanPullRequestDataState: () => void
-  account: any
-  fetchAccount: () => void
   pullRequestData: any
   user: any
   taskSolution: any
@@ -62,8 +60,6 @@ const IssueActionsByRole = ({
   currentRole,
   cleanPullRequestDataState,
   pullRequestData,
-  account,
-  fetchAccount,
   user,
   taskSolution,
   taskSolutionCompleted,
@@ -135,8 +131,6 @@ const IssueActionsByRole = ({
       component: (
         <SendSolutionDrawer
           cleanPullRequestDataState={cleanPullRequestDataState}
-          account={account}
-          fetchAccount={fetchAccount}
           pullRequestData={pullRequestData}
           open={open}
           onClose={() => setOpen(false)}

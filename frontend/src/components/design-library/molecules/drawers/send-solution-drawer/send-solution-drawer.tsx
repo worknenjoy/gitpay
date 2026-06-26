@@ -3,8 +3,7 @@ import { useHistory } from 'react-router-dom'
 import SendSolutionForm from '../../../atoms/inputs/solution-input/solution-input'
 import { Typography } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
-import { validAccount } from '../../../../../utils/valid-account'
-import AccountRequirements from 'design-library/atoms/alerts/account-requirements/account-requirements'
+import TransferEligibilityInfo from 'design-library/atoms/alerts/transfer-eligibility-info/transfer-eligibility-info'
 import SendSolutionRequirements from '../../../../areas/public/features/issue/legacy/send-solution-requirements'
 import Drawer from 'design-library/molecules/drawers/drawer/drawer'
 import IssueSolutionCard from 'design-library/molecules/cards/issue-cards/issue-solution-card/issue-solution-card'
@@ -13,8 +12,6 @@ const SendSolutionDrawer = ({
   taskSolution,
   task,
   user,
-  fetchAccount,
-  account,
   getTaskSolution,
   createTaskSolution,
   updateTaskSolution,
@@ -49,10 +46,6 @@ const SendSolutionDrawer = ({
       )
     }
   }, [pullRequestURL])
-
-  useEffect(() => {
-    fetchAccount()
-  }, [])
 
   const handlePullRequestURLChange = (event) => {
     setPullRequestURL(event.target.value)
@@ -131,8 +124,7 @@ const SendSolutionDrawer = ({
                   shouldDisableForNoBountyAvailable ||
                   task.data.paid ||
                   task.data.transfer_id ||
-                  task.data.Transfer ||
-                  !validAccount(user?.data, account)
+                  task.data.Transfer
               }
         ]}
       >
@@ -142,11 +134,7 @@ const SendSolutionDrawer = ({
             defaultMessage="You can send a solution for this issue providing the Pull Request / Merge Request URL of your solution:"
           />
         </Typography>
-        <AccountRequirements
-          user={user?.data}
-          account={account}
-          onClick={() => history.push('/profile/payout-settings')}
-        />
+        <TransferEligibilityInfo user={user?.data} />
         {Object.keys(taskSolution || {}).length === 0 || editMode ? (
           <React.Fragment>
             <SendSolutionForm

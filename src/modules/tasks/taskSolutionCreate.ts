@@ -64,12 +64,6 @@ export async function taskSolutionCreate(taskSolutionParams: any) {
     } catch (err: any) {
       // eslint-disable-next-line no-console
       console.log('error to create task solution: ', err)
-      if (
-        err.type === 'StripeInvalidRequestError' &&
-        err.code === 'insufficient_capabilities_for_transfer'
-      ) {
-        throw new Error('issue.solution.error.insufficient_capabilities_for_transfer')
-      }
       throw new Error('COULD_NOT_CREATE_TASK_SOLUTION')
     }
   } else {

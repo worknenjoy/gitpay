@@ -100,10 +100,13 @@ export async function transferBuildsService(params: TransferBuildsParams) {
       transfer_id: params.transfer_id
     })
 
+    const pendingReasons: string[] = []
+
     if (stripeTotal > 0) {
       const dest = user?.account_id
       if (!dest) {
         TransferMail.paymentForInvalidAccount(user)
+        pendingReasons.push('Stripe: no account connected')
       } else {
         if (params.transfer_id) {
           await currentModels.Task.update(
@@ -129,83 +132,99 @@ export async function transferBuildsService(params: TransferBuildsParams) {
             transfer_group: `task_${taskData.id}`
           } as any
 
-          const stripeTransfer = await createStripeTransfer(transferData)
-          createdStripeTransferId = stripeTransfer?.id || null
+          try {
+            const stripeTransfer = await createStripeTransfer(transferData)
+            createdStripeTransferId = stripeTransfer?.id || null
 
-          if (stripeTransfer) {
-            await currentModels.Task.update(
-              { transfer_id: stripeTransfer.id },
-              { where: { id: params.taskId } }
-            )
+            if (stripeTransfer) {
+              await currentModels.Task.update(
+                { transfer_id: stripeTransfer.id },
+                { where: { id: params.taskId } }
+              )
 
-            const updateTransfer = await currentModels.Transfer.update(
-              {
-                transfer_id: stripeTransfer.id,
-                status: transfer_method === 'stripe' ? 'in_transit' : 'pending'
-              },
-              { where: { id: transfer.id }, returning: true }
-            )
+              const updateTransfer = await currentModels.Transfer.update(
+                {
+                  transfer_id: stripeTransfer.id,
+                  status: transfer_method === 'stripe' ? 'in_transit' : 'pending'
+                },
+                { where: { id: transfer.id }, returning: true }
+              )
 
-            const taskOwner = await findUserByIdSimple(taskData.userId)
-            if (taskOwner?.dataValues) {
-              TransferMail.notifyOwner(taskOwner.dataValues, taskData, taskData.value)
+              const taskOwner = await findUserByIdSimple(taskData.userId)
+              if (taskOwner?.dataValues) {
+                TransferMail.notifyOwner(taskOwner.dataValues, taskData, taskData.value)
+              }
+              TransferMail.success(user, taskData, taskData.value)
+              transfer = updateTransfer[1][0].dataValues
             }
-            TransferMail.success(user, taskData, taskData.value)
-            transfer = updateTransfer[1][0].dataValues
+          } catch (stripeError: any) {
+            if (
+              stripeError?.type === 'StripeInvalidRequestError' &&
+              stripeError?.code === 'insufficient_capabilities_for_transfer'
+            ) {
+              pendingReasons.push('Stripe: insufficient capabilities for transfer')
+            } else {
+              throw stripeError
+            }
           }
         }
       }
     }
 
-    if (paypalTotal > 0 && destination?.paypal_id) {
-      try {
-        const paypalTransfer = await PaypalConnect({
-          method: 'POST',
-          uri: `${process.env.PAYPAL_HOST}/v1/payments/payouts`,
-          body: {
-            sender_batch_header: {
-              sender_batch_id: `task_${taskData.id}`,
-              email_subject: 'Payment for task'
-            },
-            items: [
+    if (paypalTotal > 0) {
+      if (!destination?.paypal_id) {
+        pendingReasons.push('PayPal: no PayPal account connected')
+      } else {
+        try {
+          const paypalTransfer = await PaypalConnect({
+            method: 'POST',
+            uri: `${process.env.PAYPAL_HOST}/v1/payments/payouts`,
+            body: {
+              sender_batch_header: {
+                sender_batch_id: `task_${taskData.id}`,
+                email_subject: 'Payment for task'
+              },
+              items: [
+                {
+                  recipient_type: 'EMAIL',
+                  amount: {
+                    value: (paypalTotal * 0.92).toFixed(2),
+                    currency: 'USD'
+                  },
+                  receiver: user.email,
+                  note: 'Payment for issue on Gitpay',
+                  sender_item_id: `task_${taskData.id}`
+                }
+              ]
+            }
+          })
+
+          if (paypalTransfer) {
+            const paypalPayout = await currentModels.Payout.build({
+              source_id: paypalTransfer.batch_header.payout_batch_id,
+              method: 'paypal',
+              amount: paypalTotal * 0.92,
+              currency: 'usd',
+              userId: user.id
+            }).save()
+
+            if (!paypalPayout) {
+              return { error: 'Payout not created' }
+            }
+
+            const transferWithPayPalPayoutInfo = await currentModels.Transfer.update(
               {
-                recipient_type: 'EMAIL',
-                amount: {
-                  value: (paypalTotal * 0.92).toFixed(2),
-                  currency: 'USD'
-                },
-                receiver: user.email,
-                note: 'Payment for issue on Gitpay',
-                sender_item_id: `task_${taskData.id}`
-              }
-            ]
+                paypal_payout_id: paypalTransfer.batch_header.payout_batch_id,
+                status: transfer_method === 'paypal' ? 'in_transit' : 'pending'
+              },
+              { where: { id: transfer.id }, returning: true }
+            )
+            transfer = transferWithPayPalPayoutInfo[1][0].dataValues
           }
-        })
-
-        if (paypalTransfer) {
-          const paypalPayout = await currentModels.Payout.build({
-            source_id: paypalTransfer.batch_header.payout_batch_id,
-            method: 'paypal',
-            amount: paypalTotal * 0.92,
-            currency: 'usd',
-            userId: user.id
-          }).save()
-
-          if (!paypalPayout) {
-            return { error: 'Payout not created' }
-          }
-
-          const transferWithPayPalPayoutInfo = await currentModels.Transfer.update(
-            {
-              paypal_payout_id: paypalTransfer.batch_header.payout_batch_id,
-              status: transfer_method === 'paypal' ? 'in_transit' : 'pending'
-            },
-            { where: { id: transfer.id }, returning: true }
-          )
-          transfer = transferWithPayPalPayoutInfo[1][0].dataValues
+        } catch (e) {
+          console.log('paypalTransferError', e)
+          pendingReasons.push('PayPal: payout request failed')
         }
-      } catch (e) {
-        console.log('paypalTransferError', e)
       }
     }
 
@@ -220,6 +239,18 @@ export async function transferBuildsService(params: TransferBuildsParams) {
       if (updateTransferStatus[1]) {
         transfer = updateTransferStatus[1][0].dataValues
       }
+    }
+
+    if (pendingReasons.length > 0) {
+      const comment = pendingReasons.join('; ')
+      const updatedTransfer = await currentModels.Transfer.update(
+        { comment },
+        { where: { id: transfer.id }, returning: true }
+      )
+      if (updatedTransfer[1]) {
+        transfer = updatedTransfer[1][0].dataValues
+      }
+      TransferMail.pendingForReview(user, taskData, comment)
     }
 
     return transfer

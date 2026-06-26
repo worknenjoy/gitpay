@@ -126,6 +126,23 @@ const TransferMail = {
     }
   },
 
+  pendingForReview: async (user: any, task: any, reason: string) => {
+    try {
+      return await request('issues@gitpay.me', `Transfer pending for review: task ${task.id}`, [
+        {
+          type: 'text/html',
+          value: emailTemplate.baseContentEmailTemplate(
+            `<p>A transfer for task <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${task.title || task.id}</a> is pending manual review.</p>
+             <p>Recipient: ${user.email}</p>
+             <p>Reason: ${reason}</p>`
+          )
+        }
+      ])
+    } catch (error) {
+      console.error('Error sending pending review email:', error)
+    }
+  },
+
   transferBounty: async (order: any, taskFrom: any, taskTo: any, user: any) => {
     const to = user.email
     const language = user.language || 'en'

@@ -12,6 +12,7 @@ export type CreateTransferRecordParams = {
   paypalTotal: number
   status?: string
   transfer_id?: string
+  comment?: string
 }
 
 export async function createTransferRecord(params: CreateTransferRecordParams) {
@@ -25,7 +26,8 @@ export async function createTransferRecord(params: CreateTransferRecordParams) {
       userId: params.userId,
       to: params.to,
       paypal_transfer_amount: params.paypalTotal,
-      stripe_transfer_amount: params.stripeTotal
+      stripe_transfer_amount: params.stripeTotal,
+      comment: params.comment || null
     }).save({ transaction: t })
 
     const [taskUpdatedCount] = await currentModels.Task.update(

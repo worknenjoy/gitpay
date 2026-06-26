@@ -9,6 +9,7 @@ export interface TransferAttributes {
   paypal_payout_id?: string | null
   paypal_transfer_amount?: string | null
   stripe_transfer_amount?: string | null
+  comment?: string | null
   taskId: number
   userId: number
   to: number
@@ -26,6 +27,7 @@ export type TransferCreationAttributes = Optional<
   | 'paypal_payout_id'
   | 'paypal_transfer_amount'
   | 'stripe_transfer_amount'
+  | 'comment'
   | 'createdAt'
   | 'updatedAt'
 >
@@ -42,6 +44,7 @@ export default class Transfer
   public paypal_payout_id!: string | null
   public paypal_transfer_amount!: string | null
   public stripe_transfer_amount!: string | null
+  public comment!: string | null
   public taskId!: number
   public userId!: number
   public to!: number
@@ -82,6 +85,10 @@ export default class Transfer
         },
         stripe_transfer_amount: {
           type: DataTypes.DECIMAL,
+          allowNull: true
+        },
+        comment: {
+          type: DataTypes.TEXT,
           allowNull: true
         },
         taskId: {

@@ -230,7 +230,7 @@ describe('Task Solution', () => {
           .post('/tasksolutions/create')
           .set('Authorization', headers.authorization)
           .expect('Content-Type', /json/)
-          .expect(400)
+          .expect(200)
           .send({
             isConnectedToGitHub: true,
             isAuthorOfPR: true,
@@ -240,10 +240,12 @@ describe('Task Solution', () => {
             pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
             taskId: task.id
           })
-        expect(taskSolutionCreateRes.statusCode).to.equal(400)
-        expect(taskSolutionCreateRes.body.error).to.equal(
-          'issue.solution.error.insufficient_capabilities_for_transfer'
-        )
+        expect(taskSolutionCreateRes.statusCode).to.equal(200)
+        expect(taskSolutionCreateRes.body).to.have.property('id')
+        const pendingTransfer = await models.Transfer.findOne({ where: { taskId: task.id } })
+        expect(pendingTransfer).to.exist
+        expect(pendingTransfer.status).to.equal('pending')
+        expect(pendingTransfer.comment).to.include('insufficient capabilities')
       } catch (err) {
         throw err
       }

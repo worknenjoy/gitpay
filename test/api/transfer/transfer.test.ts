@@ -12,6 +12,7 @@ import {
   createTransfer,
   truncateModels
 } from '../../helpers'
+import { UserFactory, AssignFactory } from '../../factories'
 import Models from '../../../src/models'
 const models = Models as any
 import { updated } from '../../data/stripe/stripe.transfer.updated'
@@ -612,6 +613,89 @@ describe('POST /transfer', () => {
         const res2 = await createTransferWithTaskData(taskData, taskData.userId)
         expect(res2.body).to.exist
         expect(res2.body.error).to.equal('Only one transfer for an issue')
+      } catch (e) {
+        console.log('error on transfer', e)
+        throw e
+      }
+    })
+    it('should create pending transfer when assigned user has no Stripe account_id', async () => {
+      try {
+        const task = await createTask(agent)
+        const { body: taskData } = task
+        await createOrder({
+          userId: taskData.userId,
+          TaskId: taskData.id,
+          paid: true,
+          provider: 'stripe'
+        })
+        const assignUser = await UserFactory({ name: 'No Account User' })
+        const assign = await AssignFactory(
+          { TaskId: taskData.id, userId: assignUser.id },
+          { include: [models.User] }
+        )
+        await models.Task.update({ assigned: assign.id }, { where: { id: taskData.id } })
+        const res = await createTransferWithTaskData(taskData, taskData.userId)
+        expect(res.body).to.exist
+        expect(res.body.status).to.equal('pending')
+        expect(res.body.transfer_method).to.equal('stripe')
+        expect(res.body.comment).to.equal('Stripe: no account connected')
+        expect(res.body.transfer_id).to.be.null
+      } catch (e) {
+        console.log('error on transfer', e)
+        throw e
+      }
+    })
+    it('should create pending transfer when Stripe returns insufficient_capabilities_for_transfer', async () => {
+      try {
+        nock('https://api.stripe.com').persist().post('/v1/transfers').reply(400, {
+          error: {
+            type: 'invalid_request_error',
+            code: 'insufficient_capabilities_for_transfer',
+            message: 'This account does not have the capability to transfer funds.'
+          }
+        })
+        const task = await createTask(agent)
+        const { body: taskData } = task
+        await createOrder({
+          userId: taskData.userId,
+          TaskId: taskData.id,
+          paid: true,
+          provider: 'stripe'
+        })
+        const assign = await createAssign(agent, { taskId: taskData.id })
+        const res = await createTransferWithTaskData(taskData, taskData.userId)
+        expect(res.body).to.exist
+        expect(res.body.status).to.equal('pending')
+        expect(res.body.transfer_method).to.equal('stripe')
+        expect(res.body.comment).to.include('insufficient capabilities')
+        expect(res.body.transfer_id).to.be.null
+      } catch (e) {
+        console.log('error on transfer', e)
+        throw e
+      }
+    })
+    it('should create pending transfer for PayPal-only payment when user has no paypal_id', async () => {
+      try {
+        const task = await createTask(agent)
+        const { body: taskData } = task
+        await createOrder({
+          userId: taskData.userId,
+          TaskId: taskData.id,
+          paid: true,
+          provider: 'paypal'
+        })
+        const assignUser = await UserFactory({ name: 'No PayPal User' })
+        const assign = await AssignFactory(
+          { TaskId: taskData.id, userId: assignUser.id },
+          { include: [models.User] }
+        )
+        await models.Task.update({ assigned: assign.id }, { where: { id: taskData.id } })
+        const res = await createTransferWithTaskData(taskData, taskData.userId)
+        expect(res.body).to.exist
+        expect(res.body.status).to.equal('pending')
+        expect(res.body.transfer_method).to.equal('paypal')
+        expect(res.body.comment).to.equal('PayPal: no PayPal account connected')
+        expect(res.body.paypal_payout_id).to.be.null
       } catch (e) {
         console.log('error on transfer', e)
         throw e
