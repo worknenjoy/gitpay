@@ -3,7 +3,8 @@ import IssuePrivatePageComponent from 'design-library/pages/private-pages/issue-
 import { useParams } from 'react-router-dom'
 
 const IssuePrivatePage = (props) => {
-  const { fetchTask, syncTask } = props
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { fetchTask, syncTask, account, fetchAccount, ...rest } = props
   const { id } = useParams<{ id: string }>()
 
   useEffect(() => {
@@ -15,7 +16,7 @@ const IssuePrivatePage = (props) => {
     }
   }, [id])
 
-  return <IssuePrivatePageComponent {...props} />
+  return <IssuePrivatePageComponent {...rest} fetchTask={fetchTask} syncTask={syncTask} />
 }
 
 export default IssuePrivatePage

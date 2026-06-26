@@ -15,7 +15,8 @@
     "sitemap": "node sitemap-builder.js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "jest-preview": "jest-preview"
+    "jest-preview": "jest-preview",
+    "typecheck": "tsc --noEmit --skipLibCheck"
   },
   "jest": {
     "preset": "ts-jest",

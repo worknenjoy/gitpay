@@ -3,7 +3,6 @@ import React from 'react'
 
 const IssuePrivatePage = ({
   user,
-  account,
   fundingInviteTask,
   createTaskSolution,
   getTaskSolution,
@@ -13,7 +12,6 @@ const IssuePrivatePage = ({
   taskSolution,
   taskSolutionCompleted,
   cleanPullRequestDataState,
-  fetchAccount,
   inviteTask,
   messageAuthor,
   onDeleteTask,
@@ -37,13 +35,11 @@ const IssuePrivatePage = ({
       user={user}
       task={task}
       onDeleteTask={onDeleteTask}
-      account={account}
       updateTask={updateTask}
       reportTask={reportTask}
       messageAuthor={messageAuthor}
       inviteTask={inviteTask}
       cleanPullRequestDataState={cleanPullRequestDataState}
-      fetchAccount={fetchAccount}
       fundingInviteTask={fundingInviteTask}
       createTaskSolution={createTaskSolution}
       getTaskSolution={getTaskSolution}

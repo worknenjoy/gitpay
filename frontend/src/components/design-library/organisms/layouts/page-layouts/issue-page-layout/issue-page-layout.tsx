@@ -7,14 +7,12 @@ const IssuePage = ({
   user,
   task,
   onDeleteTask,
-  account,
   updateTask,
   reportTask,
   messageAuthor,
   inviteTask,
   fundingInviteTask,
   cleanPullRequestDataState,
-  fetchAccount,
   taskSolution,
   taskSolutionCompleted,
   getTaskSolution,
@@ -49,12 +47,10 @@ const IssuePage = ({
       <Grid size={{ xs: 12, sm: 12, md: 4 }} style={{ marginBottom: 40 }}>
         <IssueSidebar
           user={user}
-          account={account}
           task={task}
           updateTask={updateTask}
           inviteTask={inviteTask}
           cleanPullRequestDataState={cleanPullRequestDataState}
-          fetchAccount={fetchAccount}
           fundingInviteTask={fundingInviteTask}
           createTaskSolution={createTaskSolution}
           getTaskSolution={getTaskSolution}

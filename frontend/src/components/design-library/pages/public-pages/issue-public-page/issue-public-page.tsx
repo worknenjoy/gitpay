@@ -11,8 +11,6 @@ const IssuePublicPage = ({
   inviteTask,
   fundingInviteTask,
   cleanPullRequestDataState,
-  account,
-  fetchAccount,
   taskSolution,
   taskSolutionCompleted,
   getTaskSolution,
@@ -37,13 +35,11 @@ const IssuePublicPage = ({
       user={user}
       task={task}
       onDeleteTask={onDeleteTask}
-      account={account}
       updateTask={updateTask}
       reportTask={reportTask}
       messageAuthor={messageAuthor}
       inviteTask={inviteTask}
       cleanPullRequestDataState={cleanPullRequestDataState}
-      fetchAccount={fetchAccount}
       fundingInviteTask={fundingInviteTask}
       createTaskSolution={createTaskSolution}
       getTaskSolution={getTaskSolution}

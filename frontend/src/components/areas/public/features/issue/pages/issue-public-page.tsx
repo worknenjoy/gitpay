@@ -3,7 +3,8 @@ import IssuePublicPageComponent from 'design-library/pages/public-pages/issue-pu
 import { useParams } from 'react-router-dom'
 
 const IssuePublicPage = (props) => {
-  const { fetchTask, syncTask, addNotification } = props
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { fetchTask, syncTask, addNotification, account, fetchAccount, ...rest } = props
   const { id, status } = useParams<{ id: string; status?: string }>()
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const IssuePublicPage = (props) => {
     }
   }, [id, status])
 
-  return <IssuePublicPageComponent {...props} />
+  return <IssuePublicPageComponent {...rest} addNotification={addNotification} fetchTask={fetchTask} syncTask={syncTask} />
 }
 
 export default IssuePublicPage
