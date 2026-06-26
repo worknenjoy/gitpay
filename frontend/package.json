@@ -92,7 +92,7 @@
     "@mui/system": "^7.3.1",
     "@sindresorhus/slugify": "^2.2.0",
     "@storybook/addon-actions": "^6.5.16",
-    "@storybook/addon-controls": "^8.4.1",
+    "@storybook/addon-controls": "^9.0.8",
     "@storybook/addon-essentials": "^6.5.16",
     "@storybook/addon-interactions": "^6.5.16",
     "@storybook/addon-links": "^6.5.16",
