@@ -33,13 +33,11 @@ import IssueSidebarPlaceholder from './issue-sidebar.placeholder'
 
 const IssueSidebar = ({
   user,
-  account,
   task,
   updateTask,
   inviteTask,
   fundingInviteTask,
   cleanPullRequestDataState,
-  fetchAccount,
   fetchPullRequestData,
   taskSolution,
   taskSolutionCompleted,
@@ -368,8 +366,6 @@ const IssueSidebar = ({
         issue={task}
         currentRole={issueAuthor ? 'admin' : 'user'}
         cleanPullRequestDataState={cleanPullRequestDataState}
-        account={account}
-        fetchAccount={fetchAccount}
         user={user}
         taskSolution={taskSolution}
         taskSolutionCompleted={taskSolutionCompleted}

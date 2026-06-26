@@ -34,7 +34,6 @@ Admin.args = {
     hasIssueReference: true
   },
   cleanPullRequestDataState: () => {},
-  fetchAccount: () => {},
   currentRole: 'admin'
 }
 
@@ -49,6 +48,5 @@ User.args = {
     hasIssueReference: true
   },
   cleanPullRequestDataState: () => {},
-  fetchAccount: () => {},
   currentRole: 'user'
 }
