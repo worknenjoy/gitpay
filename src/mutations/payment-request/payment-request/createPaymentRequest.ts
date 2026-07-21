@@ -1,10 +1,6 @@
 import { Transaction } from 'sequelize'
 import Models from '../../../models'
-import {
-  createPaymentRequestStripeResources,
-  deactivatePaymentRequestStripeResources,
-  updatePaymentRequestPaymentLinkMetadata
-} from '../../provider/stripe/payment-request'
+import { getPaymentProvider } from '../../../providers'
 import { sanitizePaymentRequestInstructionsContent } from '../../../utils/sanitize/paymentRequestInstructions'
 
 const models = Models as any
@@ -19,6 +15,8 @@ export type PaymentRequestCreateParams = {
   custom_amount?: boolean
   send_instructions_email?: boolean
   instructions_content?: string
+  /** Optional override; defaults to PAYMENT_PROVIDER env */
+  provider?: string
 }
 
 export async function createPaymentRequest(
@@ -34,10 +32,12 @@ export async function createPaymentRequest(
     currency: currencyParam,
     custom_amount,
     send_instructions_email,
-    instructions_content
+    instructions_content,
+    provider: providerName
   } = paymentRequestParams
 
   const currency = currencyParam ?? 'usd'
+  const paymentProvider = getPaymentProvider(providerName)
 
   const sanitizedInstructionsContent = sanitizePaymentRequestInstructionsContent(
     instructions_content,
@@ -50,7 +50,7 @@ export async function createPaymentRequest(
     const resources: any = {}
 
     try {
-      const createdResources = await createPaymentRequestStripeResources({
+      const createdResources = await paymentProvider.createPaymentRequestResources({
         title,
         description,
         currency,
@@ -72,6 +72,7 @@ export async function createPaymentRequest(
       const createPaymentRequest = await models.PaymentRequest.create(
         {
           ...paymentRequestParams,
+          provider: paymentProvider.name,
           payment_link_id: paymentLinkId,
           payment_url: paymentUrl,
           currency,
@@ -85,14 +86,14 @@ export async function createPaymentRequest(
         { transaction }
       )
 
-      await updatePaymentRequestPaymentLinkMetadata(paymentLinkId, {
+      await paymentProvider.updatePaymentRequestPaymentLinkMetadata(paymentLinkId, {
         payment_request_id: createPaymentRequest.id,
         user_id: createPaymentRequest.userId
       })
 
       return createPaymentRequest
     } catch (error) {
-      await deactivatePaymentRequestStripeResources(resources)
+      await paymentProvider.deactivatePaymentRequestResources(resources)
       throw error
     }
   }

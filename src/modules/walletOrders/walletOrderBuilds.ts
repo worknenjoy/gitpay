@@ -1,9 +1,8 @@
-import stripe from '../../client/payment/stripe'
 import models from '../../models'
 import { createOrUpdateCustomer } from '../../mutations/user/customer/createOrUpdateCustomer'
+import { getDefaultPaymentProviderName, getPaymentProvider } from '../../providers'
 
 const currentModels = models as any
-const stripeInstance = stripe()
 
 type WalletOrderBuildsParams = {
   walletId: number
@@ -37,6 +36,9 @@ export async function walletOrderBuilds(params: WalletOrderBuildsParams) {
     return new Error({ error: 'No valid Wallet' } as any)
   }
 
+  const paymentProviderName = getDefaultPaymentProviderName()
+  const paymentProvider = getPaymentProvider(paymentProviderName)
+
   const walletOrder = await currentModels.WalletOrder.create(
     {
       ...params,
@@ -51,39 +53,35 @@ export async function walletOrderBuilds(params: WalletOrderBuildsParams) {
   )
   try {
     let userCustomer = user.customer_id
-    if (!userCustomer) {
+    if (paymentProvider.name === 'stripe' && !userCustomer) {
       const costumer = await createOrUpdateCustomer(user)
       userCustomer = costumer.id
     }
-    const invoice = await stripeInstance.invoices.create({
-      customer: userCustomer,
-      collection_method: 'send_invoice',
-      days_until_due: 30,
-      metadata: {
-        wallet_order_id: walletOrder.id
-      }
-    })
 
-    const invoiceItem = await stripeInstance.invoiceItems.create({
-      customer: userCustomer,
+    const amount = parseFloat(String(params.amount))
+    const invoice = await paymentProvider.createInvoice({
+      purpose: 'wallet_topup',
+      amount,
       currency: 'usd',
-      quantity: 1,
-      unit_amount: Math.round(parseFloat(params.amount as string) * 100),
-      invoice: invoice.id,
+      customerEmail: user.email,
+      customerName: user.name || user.username,
+      customerId: userCustomer,
+      dueDays: 30,
+      description: `Wallet top-up for wallet ${wallet.id}`,
       metadata: {
-        wallet_order_id: walletOrder.id
+        wallet_order_id: String(walletOrder.id),
+        wallet_id: String(wallet.id),
+        user_id: String(user.id),
+        purpose: 'wallet_topup'
       }
     })
-
-    const finalizeInvoice = await stripeInstance.invoices.finalizeInvoice(invoice.id)
-    //console.log('finalized invoice', finalizeInvoice)
 
     const updatedWalletOrder = await currentModels.WalletOrder.update(
       {
-        source_id: invoiceItem.id,
+        source_id: invoice.invoiceItemId || invoice.invoiceId,
         source_type: 'invoice-item',
-        source: invoice.id,
-        status: finalizeInvoice.status || invoice.status
+        source: invoice.invoiceId,
+        status: invoice.status || 'pending'
       },
       {
         where: {

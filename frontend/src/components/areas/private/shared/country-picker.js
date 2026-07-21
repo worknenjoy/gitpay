@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import MuiAlert from '@mui/material/Alert'
 import { FormattedMessage } from 'react-intl'
 
-import { countryCodes } from './country-codes'
+import { getSupportedCountryCodes } from './provider-country-codes'
+import { getCountryFlagSrc } from './country-flag'
 
 import {
   Button,
@@ -64,15 +65,23 @@ class CountryPicker extends Component {
     }))
 
     const getCountryButtons = () => {
-      return countryCodes.map((item) => {
-        const imageModule = require(`images/countries/${item.image}.png`)
-        const countryImageSrc = imageModule.default || imageModule
+      return getSupportedCountryCodes().map((item) => {
+        const countryImageSrc = getCountryFlagSrc(item.image)
         return (
           <CountryItemButton
+            key={item.code}
             variant={this.state.currentCountryCode === item.code ? 'outlined' : ''}
             onClick={(e) => this.handleCountry(e, item)}
           >
-            <img width="48" style={{ marginRight: 10 }} src={countryImageSrc} onLoad={() => {}} />
+            <img
+              width="48"
+              style={{ marginRight: 10 }}
+              src={countryImageSrc}
+              alt={item.country}
+              onError={(e) => {
+                e.currentTarget.src = getCountryFlagSrc('default')
+              }}
+            />
             <Typography component="span" gutterBottom>
               {item.country}
             </Typography>

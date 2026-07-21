@@ -63,6 +63,18 @@ You can do this with: `cp .env.example .env`
 
 #### You need to create the .env in order to run the project: `cp .env.example .env`
 
+### Payment providers (Stripe / Whop)
+
+Gitpay can process payments with **Stripe** (default) or **Whop** via a single platform config switch:
+
+```bash
+PAYMENT_PROVIDER=stripe   # or whop
+```
+
+When using Whop, also set `WHOP_API_KEY`, `WHOP_WEBHOOK_SECRET`, and `WHOP_COMPANY_ID`, and point the Whop dashboard webhook to `POST /webhooks/whop`. Rebuild the frontend so webpack picks up `PAYMENT_PROVIDER`.
+
+Full details (flows, webhooks, tests, onboarding): **[docs/payments-providers.md](docs/payments-providers.md)**.
+
 ### Important
 
 - Make sure to use Node v17 (you can use <a href="https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/"> Node Version Manager (NVM)</a> to manage and switch different Node versions)

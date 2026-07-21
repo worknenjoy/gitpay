@@ -53,6 +53,8 @@ module.exports = {
         NODE_ENV: JSON.stringify('development'),
         API_HOST: JSON.stringify('http://localhost:3000'),
         STRIPE_PUBKEY: JSON.stringify(process.env.STRIPE_PUBKEY),
+        PAYMENT_PROVIDER: JSON.stringify(process.env.PAYMENT_PROVIDER || 'stripe'),
+        WHOP_COMPANY_ID: JSON.stringify(process.env.WHOP_COMPANY_ID || ''),
         SLACK_CHANNEL_INVITE_LINK: JSON.stringify(process.env.SLACK_CHANNEL_INVITE_LINK),
         GOOGLE_RECAPTCHA_SITE_KEY: JSON.stringify(process.env.GOOGLE_RECAPTCHA_SITE_KEY)
       }

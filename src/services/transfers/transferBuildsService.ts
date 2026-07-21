@@ -11,6 +11,7 @@ import { findTaskByIdWithOrdersAndUser } from '../../queries/task/findTaskByIdWi
 import { findAssignByIdWithUser } from '../../queries/assign/findAssignByIdWithUser'
 import { findUserByIdSimple } from '../../queries/user/findUserByIdSimple'
 import { createTransferRecord } from '../../mutations/transfer/createTransferRecord'
+import { getPaymentProvider } from '../../providers'
 
 const currentModels = models as any
 
@@ -46,13 +47,12 @@ export async function transferBuildsService(params: TransferBuildsParams) {
   let finalValue = 0
   let isStripe = false
   let isPaypal = false
+  let isWhop = false
   let isMultiple = false
-
-  let allStripe = true
-  let allPaypal = true
 
   let stripeTotal = 0
   let paypalTotal = 0
+  let whopTotal = 0
 
   if (taskData.Orders.length === 0) {
     return { error: 'No orders found' }
@@ -66,27 +66,38 @@ export async function transferBuildsService(params: TransferBuildsParams) {
 
   orders.map((order: any) => {
     if ((order.provider === 'stripe' || order.provider === 'wallet') && order.paid) {
-      allPaypal = false
       isStripe = true
       stripeTotal += parseFloat(order.amount)
     }
+    if (order.provider === 'whop' && order.paid) {
+      isWhop = true
+      whopTotal += parseFloat(order.amount)
+    }
     if (order.provider === 'paypal' && order.paid) {
-      allStripe = false
       isPaypal = true
       paypalTotal += parseFloat(order.amount)
     }
     if (order.paid) finalValue += parseFloat(order.amount)
   })
 
-  if (isStripe && isPaypal) {
+  const activeRails = [isStripe, isPaypal, isWhop].filter(Boolean).length
+  if (activeRails > 1) {
     isMultiple = true
   }
 
   const user = destination?.dataValues
   let createdStripeTransferId: string | null = null
+  let createdWhopTransferId: string | null = null
 
   const transfer_method: string =
-    (isMultiple && 'multiple') || (isStripe && 'stripe') || (isPaypal && 'paypal') || 'stripe'
+    (isMultiple && 'multiple') ||
+    (isWhop && 'whop') ||
+    (isStripe && 'stripe') ||
+    (isPaypal && 'paypal') ||
+    'stripe'
+
+  // Record card-like totals (stripe + wallet + whop) in stripe_transfer_amount for reporting continuity
+  const platformCardTotal = stripeTotal + whopTotal
 
   try {
     let transfer = await createTransferRecord({
@@ -95,13 +106,14 @@ export async function transferBuildsService(params: TransferBuildsParams) {
       to: destination.id,
       value: finalValue,
       transfer_method,
-      stripeTotal,
+      stripeTotal: platformCardTotal,
       paypalTotal,
       transfer_id: params.transfer_id
     })
 
     const pendingReasons: string[] = []
 
+    // --- Stripe / wallet funded orders ---
     if (stripeTotal > 0) {
       const dest = user?.account_id
       if (!dest) {
@@ -171,6 +183,62 @@ export async function transferBuildsService(params: TransferBuildsParams) {
       }
     }
 
+    // --- Whop funded orders ---
+    if (whopTotal > 0) {
+      const dest = user?.whop_account_id
+      if (!dest) {
+        TransferMail.paymentForInvalidAccount(user)
+        pendingReasons.push('Whop: no connected account (whop_account_id)')
+      } else {
+        try {
+          const whopProvider = getPaymentProvider('whop')
+          // amount in cents (provider converts to major units for Whop API)
+          const amountCents = Math.floor(whopTotal * 100 * 0.92)
+          const whopTransfer = await whopProvider.createTransfer({
+            amount: amountCents,
+            currency: 'usd',
+            destination: dest,
+            description: `Payment for issue task_${taskData.id} on Gitpay`,
+            metadata: {
+              task_id: taskData.id,
+              transfer_id: transfer.id,
+              purpose: 'bounty_payout'
+            },
+            transferGroup: `task_${taskData.id}`
+          })
+
+          createdWhopTransferId = whopTransfer?.transferId || null
+
+          if (whopTransfer?.transferId) {
+            await currentModels.Task.update(
+              { transfer_id: whopTransfer.transferId },
+              { where: { id: params.taskId } }
+            )
+
+            const updateTransfer = await currentModels.Transfer.update(
+              {
+                transfer_id: whopTransfer.transferId,
+                status: transfer_method === 'whop' ? 'in_transit' : 'pending'
+              },
+              { where: { id: transfer.id }, returning: true }
+            )
+
+            const taskOwner = await findUserByIdSimple(taskData.userId)
+            if (taskOwner?.dataValues) {
+              TransferMail.notifyOwner(taskOwner.dataValues, taskData, taskData.value)
+            }
+            TransferMail.success(user, taskData, taskData.value)
+            transfer = updateTransfer[1][0].dataValues
+          }
+        } catch (whopError: any) {
+          console.error('whopTransferError', whopError)
+          pendingReasons.push(
+            `Whop: transfer failed${whopError?.message ? ` (${whopError.message})` : ''}`
+          )
+        }
+      }
+    }
+
     if (paypalTotal > 0) {
       if (!destination?.paypal_id) {
         pendingReasons.push('PayPal: no PayPal account connected')
@@ -229,9 +297,11 @@ export async function transferBuildsService(params: TransferBuildsParams) {
     }
 
     const bothComplete =
-      transfer_method === 'multiple' && transfer.transfer_id && transfer.paypal_payout_id
+      transfer_method === 'multiple' &&
+      transfer.transfer_id &&
+      (transfer.paypal_payout_id || (!isPaypal && transfer.transfer_id))
 
-    if (bothComplete) {
+    if (bothComplete && isPaypal && transfer.transfer_id && transfer.paypal_payout_id) {
       const updateTransferStatus = await currentModels.Transfer.update(
         { status: 'in_transit' },
         { where: { id: transfer.id }, returning: true }
@@ -257,6 +327,11 @@ export async function transferBuildsService(params: TransferBuildsParams) {
   } catch (error) {
     if (createdStripeTransferId) {
       await createTransferReversal(createdStripeTransferId, {}).catch(() => null)
+    }
+    if (createdWhopTransferId) {
+      await getPaymentProvider('whop')
+        .reverseTransfer(createdWhopTransferId, {})
+        .catch(() => null)
     }
     throw error
   }

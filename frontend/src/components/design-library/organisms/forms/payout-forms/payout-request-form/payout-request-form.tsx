@@ -40,7 +40,13 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
       event.preventDefault()
       const formData = new FormData(event.currentTarget)
       const data = Object.fromEntries(formData.entries())
-      onSubmit?.(event, { ...data, currency: currency, method: 'bank_account' })
+      const paymentProvider = process.env.PAYMENT_PROVIDER || 'stripe'
+      onSubmit?.(event, {
+        ...data,
+        currency: currency,
+        // Whop withdrawals use method "whop"; Stripe Connect uses bank_account → stripe path
+        method: paymentProvider === 'whop' ? 'whop' : 'bank_account'
+      })
     }
 
     const handleAddBalance = () => {

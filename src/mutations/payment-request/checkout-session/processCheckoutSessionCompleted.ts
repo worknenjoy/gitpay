@@ -6,12 +6,11 @@ import { calculateAmountWithPercent } from '../../../utils'
 import { findPaymentRequestByPaymentLinkId } from '../../../queries/payment-request/payment-request'
 import { findOrCreatePaymentRequestBalance } from '../../../queries/payment-request/payment-request-balance'
 
-import { updatePaymentRequestPaymentLinkActive } from '../../provider/stripe/payment-request'
+import { getPaymentProvider } from '../../../providers'
 import {
   updatePaymentIntentMetadata,
   retrievePaymentIntent
 } from '../../provider/stripe/payment-intent'
-import { createTransfer, createTransferReversal } from '../../provider/stripe/transfer'
 
 const models = Models as any
 
@@ -71,13 +70,15 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
   const transferAmountDecimal = amountAfterFee.decimal
   const transferAmountCents = amountAfterFee.centavos
 
-  let createdStripeTransferId: string | null = null
+  const paymentProvider = getPaymentProvider(paymentRequest.provider || undefined)
+
+  let createdTransferId: string | null = null
   let paymentLinkActiveChanged = false
 
   try {
     if (deactivate_after_payment) {
       // Keep legacy behavior: no extra Stripe retrieve call.
-      await updatePaymentRequestPaymentLinkActive(paymentLinkId, false)
+      await paymentProvider.updatePaymentRequestPaymentLinkActive(paymentLinkId, false)
       paymentLinkActiveChanged = true
     }
 
@@ -127,16 +128,20 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
       })
 
       // Stripe write: attach metadata to the PaymentIntent (kept inside tx to allow DB rollback on error).
-      await updatePaymentIntentMetadata(paymentIntentId, {
-        payment_request_payment_id: paymentRequestPayment.id,
-        payment_request_id: paymentRequest.id,
-        user_id: paymentRequest.userId
-      })
+      // Provider-specific; only Stripe PaymentIntents support this today.
+      let chargeId: string | undefined
+      if (paymentProvider.name === 'stripe') {
+        await updatePaymentIntentMetadata(paymentIntentId, {
+          payment_request_payment_id: paymentRequestPayment.id,
+          payment_request_id: paymentRequest.id,
+          user_id: paymentRequest.userId
+        })
 
-      const paymentIntent = await retrievePaymentIntent(paymentIntentId)
-      const chargeId = (paymentIntent.latest_charge as any)?.id
-      if (!chargeId) {
-        throw new Error('Could not retrieve charge ID from PaymentIntent')
+        const paymentIntent = await retrievePaymentIntent(paymentIntentId)
+        chargeId = (paymentIntent.latest_charge as any)?.id
+        if (!chargeId) {
+          throw new Error('Could not retrieve charge ID from PaymentIntent')
+        }
       }
 
       const paymentRequestBalance = await findOrCreatePaymentRequestBalance(paymentRequest.userId, {
@@ -184,31 +189,36 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
           )
         }
 
-        const transfer = await createTransfer({
+        // Stripe TransferCreateParams.amount is in cents (legacy behavior preserved).
+        // Whop destination is whop_account_id; Stripe is account_id (Connect).
+        const destination =
+          paymentProvider.name === 'whop' ? user?.whop_account_id : user?.account_id
+
+        const transfer = await paymentProvider.createTransfer({
           amount: resultingBalance,
           currency,
-          destination: user?.account_id,
+          destination,
           description: `Payment for service using Payment Request id: ${paymentRequest.id} and Payment Request Payment id: ${paymentRequestPayment.id}`,
           metadata: {
             user_id: paymentRequest.userId,
             payment_request_id: paymentRequest.id,
             payment_request_payment_id: paymentRequestPayment.id
           },
-          source_transaction: chargeId,
-          transfer_group: `payment_request_payment_${paymentRequestPayment.id}`
-        } as any)
+          sourceTransaction: chargeId,
+          transferGroup: `payment_request_payment_${paymentRequestPayment.id}`
+        })
 
-        if (!transfer?.id) {
+        if (!transfer?.transferId) {
           throw new Error('Failed to create transfer')
         }
 
-        createdStripeTransferId = transfer.id
+        createdTransferId = transfer.transferId
         transferCreated = true
 
         const paymentRequestTransferUpdate = await paymentRequest.update(
           {
             transfer_status: 'initiated',
-            transfer_id: transfer.id
+            transfer_id: transfer.transferId
           },
           { transaction: tx }
         )
@@ -242,12 +252,12 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
 
     return { ...result }
   } catch (error) {
-    if (createdStripeTransferId) {
-      await createTransferReversal(createdStripeTransferId, {}).catch(() => null)
+    if (createdTransferId) {
+      await paymentProvider.reverseTransfer(createdTransferId, {}).catch(() => null)
     }
 
     if (paymentLinkActiveChanged) {
-      await updatePaymentRequestPaymentLinkActive(paymentLinkId, true).catch(() => null)
+      await paymentProvider.updatePaymentRequestPaymentLinkActive(paymentLinkId, true).catch(() => null)
     }
 
     throw error

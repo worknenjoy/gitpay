@@ -40,6 +40,18 @@ Paypal.args = {
   sourceType: 'unknown'
 }
 
+export const Whop = Template.bind({})
+Whop.args = {
+  provider: 'whop',
+  sourceType: 'card'
+}
+
+export const WhopInvoice = Template.bind({})
+WhopInvoice.args = {
+  provider: 'whop',
+  sourceType: 'invoice-item'
+}
+
 export const Wallet = Template.bind({})
 Wallet.args = {
   provider: 'wallet',

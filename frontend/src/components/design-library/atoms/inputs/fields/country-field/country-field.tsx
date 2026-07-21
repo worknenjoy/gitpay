@@ -1,28 +1,22 @@
 import React from 'react'
 import Fieldset from '../../fieldset/fieldset'
 import { Typography } from '@mui/material'
-import { countryCodes } from '../../../../../areas/private/shared/country-codes'
+import { getSupportedCountryCodes } from '../../../../../areas/private/shared/provider-country-codes'
+import CountryFlagImage from '../../../../../areas/private/shared/country-flag-image'
 
 const CountryField = ({ country, completed }) => {
+  const countryCodes = getSupportedCountryCodes()
+  const match = countryCodes.find((c) => c.code === country)
+
   return (
     <Fieldset
       legend="Country"
       completed={completed}
       children={
         <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
-          <img
-            width="48"
-            src={
-              require(
-                `images/countries/${countryCodes.find((c) => c.code === country)?.image || 'default'}.png`
-              ).default ||
-              require(
-                `images/countries/${countryCodes.find((c) => c.code === country)?.image || 'default'}.png`
-              )
-            }
-          />
+          <CountryFlagImage image={match?.image} alt={match?.country || country} width={48} />
           <Typography component="span" style={{ marginLeft: 10 }}>
-            {countryCodes.find((c) => c.code === country)?.country || 'Country not found'}
+            {match?.country || 'Country not found'}
           </Typography>
           <input type="hidden" name="account_country" value={country} />
         </div>

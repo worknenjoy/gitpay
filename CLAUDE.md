@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Gitpay is an open-source platform that integrates payment workflows with Git repositories. It supports bounties (rewards attached to GitHub issues) and payment requests (requests for work delivered).
 
+### Payment providers
+
+Platform payments go through a connector abstraction (`src/providers/`). Configure `PAYMENT_PROVIDER=stripe|whop` (default `stripe`). See [docs/payments-providers.md](docs/payments-providers.md) for webhooks, Whop setup, and tests.
+
 ## Common Commands
 
 ### Development

@@ -93,7 +93,8 @@ const IssueOrderDetailsAction = ({ open, order, onClose, onCancel }) => {
             details={[
               ...commonOrderDetails,
               ...(data && data.provider === 'paypal' ? paypalOrderDetails : []),
-              ...(data && data.provider === 'stripe' ? stripeOrderDetails : [])
+              ...(data && data.provider === 'stripe' ? stripeOrderDetails : []),
+              ...(data && data.provider === 'whop' ? stripeOrderDetails : [])
             ]}
           />
         </div>

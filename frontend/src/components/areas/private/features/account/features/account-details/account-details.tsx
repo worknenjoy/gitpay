@@ -9,7 +9,8 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 
 import CountryPicker from '../../../../shared/country-picker'
-import { countryCodes } from '../../../../shared/country-codes'
+import { getSupportedCountryCodes } from '../../../../shared/provider-country-codes'
+import { getCountryFlagSrc } from '../../../../shared/country-flag'
 import Field from 'design-library/atoms/inputs/fields/field/field'
 import Alert from 'design-library/atoms/alerts/alert/alert'
 import TextMaskCustom from './TextMaskCustom'
@@ -37,7 +38,12 @@ const AccountDetails = ({
 }) => {
   const intl = useIntl()
   const [accountData, setAccountData] = useState({})
-  const [displayCurrentCountry, setDisplayCurrentCountry] = useState({ country: '', code: '' })
+  const [displayCurrentCountry, setDisplayCurrentCountry] = useState<{
+    country: string
+    code: string
+    image?: string | null
+    label?: string | null
+  }>({ country: '', code: '', image: null })
   const [userId] = useState('')
   const [openCountryPicker, setOpenCountryPicker] = useState(false)
   const [terms, setTerms] = useState(false)
@@ -89,7 +95,12 @@ const AccountDetails = ({
   }, [])
 
   const closeCountryPicker = (e, country) => {
-    setDisplayCurrentCountry(country)
+    setDisplayCurrentCountry({
+      country: country?.country || country?.label || '',
+      code: country?.code || '',
+      image: country?.image || null,
+      label: country?.label || country?.country || null
+    })
     setOpenCountryPicker(false)
   }
 
@@ -148,17 +159,17 @@ const AccountDetails = ({
                         <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
                           <img
                             width="48"
-                            src={
-                              require(
-                                `images/countries/${countryCodes.find((c) => c.code === account.data.country).image}.png`
-                              ).default ||
-                              require(
-                                `images/countries/${countryCodes.find((c) => c.code === account.data.country).image}.png`
-                              )
-                            }
+                            alt=""
+                            src={getCountryFlagSrc(
+                              getSupportedCountryCodes().find(
+                                (c) => c.code === account.data.country
+                              )?.image
+                            )}
                           />
                           <Typography component="span" style={{ marginLeft: 10 }}>
-                            {countryCodes.find((c) => c.code === account.data.country).country}
+                            {getSupportedCountryCodes().find(
+                              (c) => c.code === account.data.country
+                            )?.country || account.data.country}
                           </Typography>
                         </div>
                       </Grid>
@@ -186,17 +197,17 @@ const AccountDetails = ({
                       <div style={{ display: 'flex', alignItems: 'center', padding: 20 }}>
                         <img
                           width="48"
-                          src={
-                            require(
-                              `images/countries/${countryCodes.find((c) => c.code === displayCurrentCountry.code).image}.png`
-                            ).default ||
-                            require(
-                              `images/countries/${countryCodes.find((c) => c.code === displayCurrentCountry.code).image}.png`
-                            )
-                          }
+                          alt=""
+                          src={getCountryFlagSrc(
+                            getSupportedCountryCodes().find(
+                              (c) => c.code === displayCurrentCountry.code
+                            )?.image || displayCurrentCountry.image
+                          )}
                         />
                         <Typography component="span" style={{ marginLeft: 10 }}>
-                          {countryCodes.find((c) => c.code === displayCurrentCountry.code).country}
+                          {getSupportedCountryCodes().find(
+                            (c) => c.code === displayCurrentCountry.code
+                          )?.country || displayCurrentCountry.country}
                         </Typography>
                       </div>
                     </Grid>
