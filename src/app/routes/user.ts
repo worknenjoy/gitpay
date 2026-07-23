@@ -8,7 +8,9 @@ import {
   accountBalance,
   accountUpdate,
   accountDelete,
-  accountVerificationLink
+  accountVerificationLink,
+  accountVerificationReturn,
+  accountVerificationRefresh
 } from '../controllers/user/account'
 import {
   createBankAccount,
@@ -20,6 +22,10 @@ import secure from './secure'
 import { updateUser } from '../controllers/user/user'
 
 const router = express.Router()
+
+// Public: provider (Stripe/Whop) redirects the browser here after hosted verification
+router.get('/account/verification/return', accountVerificationReturn)
+router.get('/account/verification/refresh', accountVerificationRefresh)
 
 router.use('/', secure)
 

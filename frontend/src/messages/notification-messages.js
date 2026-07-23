@@ -336,6 +336,10 @@ const messages = defineMessages({
     id: 'actions.user.account.update.success',
     defaultMessage: 'Your account was updated successfully'
   },
+  notificationUserAccountVerificationSuccess: {
+    id: 'actions.user.account.verification.success',
+    defaultMessage: 'Your payout account was verified successfully'
+  },
   notificationUserAccountDeleteSuccess: {
     id: 'actions.user.account.delete.success',
     defaultMessage: 'Your account was deleted successfully'

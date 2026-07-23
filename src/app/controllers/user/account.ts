@@ -77,3 +77,26 @@ export const accountVerificationLink = async (req: any, res: any) => {
     res.status(401).send(error)
   }
 }
+
+/**
+ * Public browser callbacks after Stripe/Whop hosted verification.
+ * Redirect back into the SPA (same tab) with a success/refresh hash route.
+ * Pattern matches /orders/authorize.
+ */
+function frontendHost(): string {
+  return (process.env.FRONTEND_HOST || 'http://localhost:8082').replace(/\/$/, '')
+}
+
+export const accountVerificationReturn = async (req: any, res: any) => {
+  const base = frontendHost()
+  res.redirect(
+    `${base}/#/profile/payout-settings/bank-account/account-verification/return?status=success`
+  )
+}
+
+export const accountVerificationRefresh = async (req: any, res: any) => {
+  const base = frontendHost()
+  res.redirect(
+    `${base}/#/profile/payout-settings/bank-account/account-verification/refresh?status=expired`
+  )
+}

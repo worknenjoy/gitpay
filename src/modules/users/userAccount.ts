@@ -1,4 +1,4 @@
-import { getDefaultPaymentProviderName } from '../../providers'
+import { getPaymentProvider } from '../../providers'
 import { findUserByIdSimple } from '../../queries/user/findUserByIdSimple'
 
 type UserAccountParams = {
@@ -9,23 +9,29 @@ type UserAccountParams = {
  * Returns the connected payout account for the current payment provider.
  * Stripe: full Connect account object from Stripe API.
  * Whop: lightweight local representation based on Users.whop_account_id.
+ *
+ * Always includes `provider` and `active` (via PaymentProvider.isConnectedAccountActive)
+ * so clients can gate payment requests without provider-specific checks.
  */
 export async function userAccount(userParameters: UserAccountParams) {
-  const provider = getDefaultPaymentProviderName()
+  const paymentProvider = getPaymentProvider()
 
-  if (provider === 'whop') {
+  if (paymentProvider.name === 'whop') {
     const user = await findUserByIdSimple(userParameters.id)
     const whopAccountId = user?.dataValues?.whop_account_id
     if (!whopAccountId) {
-      return {}
+      return {
+        provider: paymentProvider.name,
+        active: false
+      }
     }
-    return {
+    const account = {
       id: whopAccountId,
       object: 'account',
-      provider: 'whop',
+      provider: paymentProvider.name,
       email: user?.dataValues?.email,
       country: user?.dataValues?.country,
-      // Frontend treats completed accounts as verification-ready; full KYC lives on Whop portal.
+      // Full KYC lives on the Whop portal; connected company id is enough for PR eligibility.
       completed: true,
       charges_enabled: true,
       payouts_enabled: true,
@@ -34,8 +40,20 @@ export async function userAccount(userParameters: UserAccountParams) {
         internal_user_id: String(userParameters.id)
       }
     }
+    return {
+      ...account,
+      active: paymentProvider.isConnectedAccountActive(account)
+    }
   }
 
   const { getUserStripeAccount } = await import('../../queries/user/stripe/getUserStripeAccount')
-  return getUserStripeAccount(userParameters.id)
+  const account = await getUserStripeAccount(userParameters.id)
+  const accountPayload =
+    account && typeof account === 'object' && !Array.isArray(account) ? account : {}
+
+  return {
+    ...accountPayload,
+    provider: paymentProvider.name,
+    active: paymentProvider.isConnectedAccountActive(accountPayload as any)
+  }
 }

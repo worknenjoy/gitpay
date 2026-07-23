@@ -132,6 +132,23 @@ export type AccountResult = {
   raw?: unknown
 }
 
+/**
+ * Normalized connected-account readiness for payouts / payment requests.
+ * Providers evaluate their native account payload into this shape.
+ */
+export type ConnectedAccountActiveParams = {
+  /** Provider account id when present */
+  id?: string | null
+  requirements?: {
+    currently_due?: string[]
+    disabled_reason?: string | null
+  } | null
+  charges_enabled?: boolean
+  payouts_enabled?: boolean
+  details_submitted?: boolean
+  [key: string]: unknown
+}
+
 export type AccountLinkParams = {
   accountId: string
   refreshUrl: string

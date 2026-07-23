@@ -22,14 +22,27 @@ export function getWhopCompanyId(): string {
 }
 
 export class WhopClient {
-  private apiKey: string
-  private baseUrl: string
-  companyId: string
+  private apiKeyOverride?: string
+  private baseUrlOverride?: string
+  private companyIdOverride?: string
 
   constructor(options: WhopClientOptions = {}) {
-    this.apiKey = options.apiKey || process.env.WHOP_API_KEY || ''
-    this.baseUrl = options.baseUrl || getBaseUrl()
-    this.companyId = options.companyId || getWhopCompanyId()
+    this.apiKeyOverride = options.apiKey
+    this.baseUrlOverride = options.baseUrl
+    this.companyIdOverride = options.companyId
+  }
+
+  /** Re-read env on each access so a restarted process isn't required after .env key updates if client is recreated; still prefer restarting nodemon. */
+  private get apiKey(): string {
+    return this.apiKeyOverride ?? process.env.WHOP_API_KEY ?? ''
+  }
+
+  private get baseUrl(): string {
+    return this.baseUrlOverride || getBaseUrl()
+  }
+
+  get companyId(): string {
+    return this.companyIdOverride || getWhopCompanyId()
   }
 
   async request<T = any>(
@@ -37,13 +50,14 @@ export class WhopClient {
     path: string,
     body?: Record<string, unknown> | null
   ): Promise<T> {
-    if (!this.apiKey && process.env.NODE_ENV !== 'test') {
+    const apiKey = this.apiKey
+    if (!apiKey && process.env.NODE_ENV !== 'test') {
       throw new Error('WHOP_API_KEY is not configured')
     }
 
     const url = `${this.baseUrl}${path.startsWith('/') ? path : `/${path}`}`
     const headers: Record<string, string> = {
-      Authorization: `Bearer ${this.apiKey}`,
+      Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
       Accept: 'application/json'
     }

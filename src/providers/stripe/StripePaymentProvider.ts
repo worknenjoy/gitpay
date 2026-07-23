@@ -5,6 +5,7 @@ import type {
   AccountResult,
   BountyCheckoutParams,
   BountyCheckoutResult,
+  ConnectedAccountActiveParams,
   ConnectedAccountParams,
   CreatePaymentRequestResourcesParams,
   DeactivatePaymentRequestResourcesParams,
@@ -265,6 +266,18 @@ export class StripePaymentProvider implements PaymentProvider {
       url: link.url,
       raw: link
     }
+  }
+
+  isConnectedAccountActive(account: ConnectedAccountActiveParams | null | undefined): boolean {
+    if (!account?.id) return false
+    const disabledReason = account.requirements?.disabled_reason
+    if (typeof disabledReason === 'string' && disabledReason.startsWith('rejected')) {
+      return false
+    }
+    if ((account.requirements?.currently_due?.length || 0) > 0) {
+      return false
+    }
+    return true
   }
 
   async verifyAndParseWebhook(

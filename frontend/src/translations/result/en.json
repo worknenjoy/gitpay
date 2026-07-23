@@ -684,10 +684,10 @@
   "payout-settings.verification.refresh.title": "Verification link expired",
   "payout-settings.verification.refresh.whatHappened": "What happened",
   "payout-settings.verification.rejected.contact": "Contact us at contact@gitpay.me",
-  "payout-settings.verification.rejected.description": "Stripe rejected this payout account after a risk review. Payouts are currently disabled.",
-  "payout-settings.verification.rejected.title": "Account rejected by Stripe",
+  "payout-settings.verification.rejected.description": "Your payment provider rejected this payout account after a risk review. Payouts are currently disabled.",
+  "payout-settings.verification.rejected.title": "Account rejected by payment provider",
   "payout-settings.verification.return.description": "Thanks — Stripe got your details and is reviewing them now. Most accounts are approved within a few minutes; some can take up to 1–2 business days.",
-  "payout-settings.verification.return.title": "Submission received · review in progress",
+  "payout-settings.verification.return.title": "Account verification submitted",
   "payout-settings.verification.status": "Status",
   "payout-settings.verification.subtitle": "Keep your account ready to receive payouts.",
   "payout-settings.verification.title": "Additional requirements",
@@ -759,7 +759,7 @@
   "profile.skills.subtitle": "Select your skills and preferences",
   "profile.transfer.actionrequired": "Action required",
   "profile.transfer.missingrequirements": "Missing requirements:",
-  "profile.transfer.notactive": "Stripe needs additional information before payouts can continue for this account.",
+  "profile.transfer.notactive": "Additional information is required before payouts can continue for this account.",
   "project.title": "Project",
   "projects.explore.organization.issues": "Organization",
   "projects.explore.project.issues": "Project",
@@ -1160,5 +1160,7 @@
   "welcome.usecases.payment.item2": "Set up payout schedules and get daily, weekly, or monthly payouts directly on your account.",
   "welcome.usecases.payment.item6": "This works for developers, consultants, freelancers, and service providers who want a simple way to request payment.",
   "welcome.usecases.payment.title": "Charge Customers",
-  "welcome.usecases.title": "Payment flows for work delivered"
+  "welcome.usecases.title": "Payment flows for work delivered",
+  "actions.user.account.verification.success": "Your payout account was verified successfully",
+  "payout-settings.verification.return.description.whop": "Thanks — your Whop payout account details were submitted successfully. Your account is ready to receive transfers once Whop finishes any remaining checks."
 }

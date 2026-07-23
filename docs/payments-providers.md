@@ -52,7 +52,30 @@ In `NODE_ENV=test`, signature verification is skipped for both providers.
 
 ### Whop dashboard setup
 
-1. Create an Account API key with payment, transfer, and company permissions.
+1. Create an **Account API key** (Developer → Account API Keys) with enough permissions for Gitpay.  
+   Prefer **Admin** while integrating, then narrow down. Custom keys that call `account_links` must include at least:
+   - `company:balance:read` (required by Whop for account onboarding / payout portal links)
+   - Company create / manage (connected accounts)
+   - Payments / checkout / invoices (pay-in)
+   - Transfers and withdrawals (pay-out)
+   - Webhooks as needed  
+
+   If you see  
+   `This API key is not authorized to scope to the following action: company:balance:read`  
+   even after selecting “all permissions”, check:
+
+   1. **Key type** — use a **Company / Account API key** under the **platform** business  
+      (Developer → **Company API Keys** / **Account API Keys**).  
+      **App API keys** (Apps section) often fail on `account_links` for connected accounts  
+      with this exact error even when every checkbox is selected.
+   2. **Same company as `WHOP_COMPANY_ID`** — the key must belong to the platform `biz_…`  
+      in env. Confirm with a call that returns your company id (e.g. account “me”).
+   3. **Sub-merchant parent** — `Users.whop_account_id` must be a **child** company  
+      created with `parent_company_id = WHOP_COMPANY_ID`. Links only work for  
+      sub-merchants of the key’s company.
+   4. **Recreate the key** — after changing roles/permissions, create a **new** key and  
+      update `WHOP_API_KEY` (some “edit permission” flows do not fully re-scope).
+   5. **Sandbox vs prod** — sandbox keys only work with `WHOP_SANDBOX=true` / sandbox API base URL.
 2. Create a webhook pointing to `https://<API_HOST>/webhooks/whop`.
 3. Subscribe at least to:
    - `payment.succeeded`, `payment.failed`
@@ -92,10 +115,38 @@ With `PAYMENT_PROVIDER=whop`:
 
 1. User creates payout account → `companies.create` → stores `Users.whop_account_id`.
 2. Verification link → `account_links` with `use_case: account_onboarding`.
-3. User completes KYC and adds a payout method in Whop.
+   Return/refresh URLs hit the **API**, which then redirects into the SPA (same pattern as `/orders/authorize`):
+
+   | Provider callback | API route | Frontend destination |
+   |-------------------|-----------|----------------------|
+   | Success / done | `GET /user/account/verification/return` | `/#/profile/payout-settings/bank-account/account-verification/return?status=success` |
+   | Expired / resume | `GET /user/account/verification/refresh` | `/#/profile/payout-settings/bank-account/account-verification/refresh?status=expired` |
+
+   Whop requires **https://** callback URLs. For local dev:
+   - Tunnel the API (`ngrok http 3000`) and set `WHOP_API_HOST=https://…` (or `API_HOST` with https).
+   - Keep `FRONTEND_HOST=http://localhost:8082` so the API can bounce the browser back to the local app with a success toast.
+3. User completes KYC and adds a payout method in Whop; they land back on the verification return page with a success message.
 4. Platform can transfer funds and the user can request withdrawals.
 
 With Stripe (default), existing Connect custom account flow is unchanged (`Users.account_id`).
+
+### Account readiness (`active`)
+
+`GET /user/account` always returns:
+
+| Field | Meaning |
+|-------|---------|
+| `provider` | Active payment provider name (`stripe` \| `whop`) |
+| `active` | Whether the connected account can use payouts / payment requests |
+
+`active` is computed by `PaymentProvider.isConnectedAccountActive(account)`:
+
+| Provider | Active when |
+|----------|-------------|
+| **Stripe** | Account has an `id`, is not rejected, and has no `requirements.currently_due` |
+| **Whop** | Account has a connected company `id` (`Users.whop_account_id`) |
+
+The frontend gates payment-request creation and the “Action required” banner via `validAccount()`, which prefers this `active` flag (no provider-specific branches).
 
 
 ## Supported countries (payout onboarding)

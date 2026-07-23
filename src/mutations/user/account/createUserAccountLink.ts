@@ -6,6 +6,30 @@ type CreateUserAccountLinkParams = {
   id: number
 }
 
+/**
+ * Public API origin used as Stripe/Whop return_url / refresh_url.
+ * Backend then redirects into FRONTEND_HOST SPA routes (see accountVerificationReturn).
+ *
+ * Whop requires https://. Prefer WHOP_API_HOST (tunnel to the API) for local dev;
+ * otherwise API_HOST is upgraded from http → https when needed.
+ */
+function getApiBaseUrlForAccountLinks(providerName: string): string {
+  if (providerName === 'whop') {
+    const raw =
+      process.env.WHOP_API_HOST ||
+      process.env.WHOP_FRONTEND_HOST || // legacy alias (prefer API tunnel)
+      process.env.API_HOST ||
+      'https://localhost:3000'
+    if (raw.startsWith('https://')) return raw.replace(/\/$/, '')
+    if (raw.startsWith('http://')) {
+      return `https://${raw.slice('http://'.length)}`.replace(/\/$/, '')
+    }
+    return `https://${raw}`.replace(/\/$/, '')
+  }
+
+  return (process.env.API_HOST || 'http://localhost:3000').replace(/\/$/, '')
+}
+
 export async function createUserAccountLink(userParameters: CreateUserAccountLinkParams) {
   const user = await findUserByIdSimple(userParameters.id)
 
@@ -13,11 +37,11 @@ export async function createUserAccountLink(userParameters: CreateUserAccountLin
     throw new Error('user.not_found')
   }
 
-  const frontendHost = process.env.FRONTEND_HOST || 'http://localhost:8082'
-  const refreshUrl = `${frontendHost}/#/profile/payout-settings/bank-account/account-verification/refresh`
-  const returnUrl = `${frontendHost}/#/profile/payout-settings/bank-account/account-verification/return`
-
   const providerName = getDefaultPaymentProviderName()
+  const apiHost = getApiBaseUrlForAccountLinks(providerName)
+  // Provider redirects here; controllers bounce to FRONTEND_HOST hash routes
+  const refreshUrl = `${apiHost}/user/account/verification/refresh`
+  const returnUrl = `${apiHost}/user/account/verification/return`
 
   if (providerName === 'whop') {
     const whopAccountId = user?.dataValues?.whop_account_id

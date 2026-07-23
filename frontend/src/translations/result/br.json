@@ -684,10 +684,10 @@
   "payout-settings.verification.refresh.title": "Link de verificação expirado",
   "payout-settings.verification.refresh.whatHappened": "O que aconteceu",
   "payout-settings.verification.rejected.contact": "Contate-nos em contact@gitpay.me",
-  "payout-settings.verification.rejected.description": "O Stripe rejeitou essa conta de pagamento após uma revisão de risco. Os pagamentos estão desativados no momento.",
-  "payout-settings.verification.rejected.title": "Conta rejeitada pelo Stripe",
+  "payout-settings.verification.rejected.description": "Seu provedor de pagamento rejeitou essa conta de pagamento após uma revisão de risco. Os pagamentos estão desativados no momento.",
+  "payout-settings.verification.rejected.title": "Conta rejeitada pelo provedor de pagamento",
   "payout-settings.verification.return.description": "Obrigado — Stripe recebeu seus dados e agora está revisando-os. A maioria das contas é aprovada dentro de alguns minutos; alguns podem levar até 1–2 dias úteis.",
-  "payout-settings.verification.return.title": "Envio recebido · revisão em andamento",
+  "payout-settings.verification.return.title": "Verificação da conta enviada",
   "payout-settings.verification.status": "SItuação",
   "payout-settings.verification.subtitle": "Mantenha sua conta pronta para receber pagamentos.",
   "payout-settings.verification.title": "Requisitos adicionais",
@@ -759,7 +759,7 @@
   "profile.skills.subtitle": "Selecione suas habilidades e preferências",
   "profile.transfer.actionrequired": "Ação necessária",
   "profile.transfer.missingrequirements": "Requisitos faltando:",
-  "profile.transfer.notactive": "Stripe precisa de informações adicionais para que os pagamentos possam continuar para essa conta.",
+  "profile.transfer.notactive": "Informações adicionais são necessárias para que os pagamentos possam continuar para essa conta.",
   "project.title": "Projecto",
   "projects.explore.organization.issues": "Cliente",
   "projects.explore.project.issues": "Projecto",
@@ -1160,5 +1160,7 @@
   "welcome.usecases.payment.item2": "Configure programações de pagamento e receba pagamentos diários, semanais ou mensais diretamente na sua conta.",
   "welcome.usecases.payment.item6": "Isto funciona para desenvolvedores, consultores, freelancers e provedores de serviços que queiram uma maneira simples de solicitar pagamento.",
   "welcome.usecases.payment.title": "Carregue clientes",
-  "welcome.usecases.title": "Fluxos de pagamento para trabalho entregue"
+  "welcome.usecases.title": "Fluxos de pagamento para trabalho entregue",
+  "actions.user.account.verification.success": "Sua conta de pagamento foi verificada com sucesso",
+  "payout-settings.verification.return.description.whop": "Obrigado — os dados da sua conta de pagamento Whop foram enviados com sucesso. Sua conta estará pronta para receber transferências após a Whop concluir quaisquer verificações restantes."
 }

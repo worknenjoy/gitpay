@@ -6,6 +6,7 @@ import type {
   AccountResult,
   BountyCheckoutParams,
   BountyCheckoutResult,
+  ConnectedAccountActiveParams,
   ConnectedAccountParams,
   CreatePaymentRequestResourcesParams,
   DeactivatePaymentRequestResourcesParams,
@@ -289,16 +290,50 @@ export class WhopPaymentProvider implements PaymentProvider {
   }
 
   async createAccountLink(params: AccountLinkParams): Promise<AccountLinkResult> {
-    const link = await this.client.post<any>('/account_links', {
-      company_id: params.accountId,
-      refresh_url: params.refreshUrl,
-      return_url: params.returnUrl,
-      use_case: params.type || 'account_onboarding'
-    })
-    return {
-      url: link.url,
-      raw: link
+    try {
+      const link = await this.client.post<any>('/account_links', {
+        company_id: params.accountId,
+        refresh_url: params.refreshUrl,
+        return_url: params.returnUrl,
+        use_case: params.type || 'account_onboarding'
+      })
+      return {
+        url: link.url,
+        raw: link
+      }
+    } catch (error: any) {
+      const message = String(error?.message || '')
+      // Whop often returns this when the key is an App key, not a Company/Account key,
+      // or when the key belongs to a different company than WHOP_COMPANY_ID / the sub-merchant parent.
+      if (
+        message.includes('company:balance:read') ||
+        message.includes('not authorized to scope')
+      ) {
+        const err: any = new Error(
+          [
+            error.message,
+            'Whop account_links requires a Company (Account) API key for the platform company',
+            `(WHOP_COMPANY_ID=${this.companyId() || 'unset'}) that can act on sub-merchant ${params.accountId}.`,
+            'If the verify script works but Gitpay fails, restart the API process so it reloads WHOP_API_KEY from .env',
+            '(dotenv only loads at process start; a long-running nodemon process may still hold an old key).',
+            'Use Developer → Company / Account API Keys, ensure WHOP_API_KEY matches that company,',
+            'and that the user company was created with parent_company_id set to WHOP_COMPANY_ID.'
+          ].join(' ')
+        )
+        err.status = error.status
+        err.body = error.body
+        throw err
+      }
+      throw error
     }
+  }
+
+  /**
+   * Whop KYC and payout methods are managed on the Whop portal.
+   * An account with a connected company id is treated as active for payment requests.
+   */
+  isConnectedAccountActive(account: ConnectedAccountActiveParams | null | undefined): boolean {
+    return Boolean(account?.id)
   }
 
   async verifyAndParseWebhook(

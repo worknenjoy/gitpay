@@ -4,6 +4,7 @@ import type {
   AccountResult,
   BountyCheckoutParams,
   BountyCheckoutResult,
+  ConnectedAccountActiveParams,
   ConnectedAccountParams,
   CreatePaymentRequestResourcesParams,
   DeactivatePaymentRequestResourcesParams,
@@ -67,6 +68,12 @@ export abstract class PaymentProvider {
   abstract createConnectedAccount(params: ConnectedAccountParams): Promise<AccountResult>
 
   abstract createAccountLink(params: AccountLinkParams): Promise<AccountLinkResult>
+
+  /**
+   * Whether a connected account is ready for payouts and payment requests.
+   * Each provider applies its own rules (e.g. Stripe requirements vs Whop company id).
+   */
+  abstract isConnectedAccountActive(account: ConnectedAccountActiveParams | null | undefined): boolean
 
   // --- Webhooks ---
 

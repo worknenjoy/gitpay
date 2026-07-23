@@ -7,6 +7,7 @@ import PersonalDetailsForm from '../../../../molecules/form-section/personal-det
 import AddressInformationForm from '../../../../molecules/form-section/address-information-form/address-information-form'
 import AcceptTermsField from '../../../../atoms/inputs/fields/accept-terms-field/accept-terms-field'
 import Alert from '../../../../atoms/alerts/alert/alert'
+import AccountRequirements from '../../../../atoms/alerts/account-requirements/account-requirements'
 import ProfileSecondaryHeader from '../../../../molecules/headers/profile-secondary-header/profile-secondary-header'
 import AccountHolderStatus from '../../../../atoms/status/account-status/account-holder-status/account-holder-status'
 import ConfirmButton from 'design-library/atoms/buttons/confirm-button/confirm-button'
@@ -25,7 +26,15 @@ const errorMapping = {
   'individual[last_name]': 'Invalid last name'
 }
 
-const AccountDetailsForm = ({ account, countries, onSubmit, onChange, onConfirmCloseAccount }) => {
+const AccountDetailsForm = ({
+  user,
+  account,
+  countries,
+  onSubmit,
+  onChange,
+  onConfirmCloseAccount,
+  onCompleteVerification
+}) => {
   const { data = {}, completed, error = {} } = account
   const { individual = {}, capabilities = {}, currency } = data
   const { tos_acceptance = {}, country = '' } = data
@@ -50,6 +59,12 @@ const AccountDetailsForm = ({ account, countries, onSubmit, onChange, onConfirmC
           />
         }
         aside={<AccountHolderStatus status={accountHolderStatus} completed={completed} />}
+      />
+      <AccountRequirements
+        user={user}
+        account={account}
+        forceShow
+        onClick={onCompleteVerification}
       />
       {error.raw && (
         <Alert severity="error" style={{ marginBottom: 10, margintTop: 10 }} completed={completed}>

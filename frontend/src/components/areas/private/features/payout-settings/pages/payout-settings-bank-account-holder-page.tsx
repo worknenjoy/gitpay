@@ -1,9 +1,16 @@
 import React, { useState } from 'react'
 import PayoutSettingsBankAccountHolder from 'design-library/pages/private-pages/settings-pages/payout-settings-bank-account-holder/payout-settings-bank-account-holder'
 
-const BankAccountHolderPage = ({ user, account, countries, updateAccount, deleteAccount }) => {
-  const { data, completed } = account
+const BankAccountHolderPage = ({
+  user,
+  account,
+  countries,
+  updateAccount,
+  deleteAccount,
+  fetchAccountVerificationLink
+}) => {
   const [terms, setTerms] = useState(false)
+  const [verificationLoading, setVerificationLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -42,13 +49,25 @@ const BankAccountHolderPage = ({ user, account, countries, updateAccount, delete
     })
   }
 
+  const handleCompleteVerification = () => {
+    if (!fetchAccountVerificationLink) return
+    setVerificationLoading(true)
+    Promise.resolve(fetchAccountVerificationLink()).finally(() => setVerificationLoading(false))
+  }
+
   return (
     <PayoutSettingsBankAccountHolder
-      account={account}
+      user={user}
+      account={
+        verificationLoading
+          ? { ...account, completed: false }
+          : account
+      }
       countries={countries}
       onSubmit={handleSubmit}
       onChange={setTerms}
       onConfirmCloseAccount={deleteAccount}
+      onCompleteVerification={handleCompleteVerification}
     />
   )
 }

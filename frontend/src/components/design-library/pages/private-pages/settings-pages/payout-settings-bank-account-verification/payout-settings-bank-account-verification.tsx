@@ -228,7 +228,7 @@ const PayoutSettingsBankAccountVerification = ({
             <Typography variant="body2">
               <FormattedMessage
                 id="profile.transfer.notactive"
-                defaultMessage="Stripe needs additional information before payouts can continue for this account."
+                defaultMessage="Additional information is required before payouts can continue for this account."
               />
             </Typography>
           </CustomAlert>

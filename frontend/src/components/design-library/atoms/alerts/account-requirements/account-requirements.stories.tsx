@@ -19,6 +19,9 @@ Primary.args = {
   },
   account: {
     data: {
+      id: 'acct_1',
+      provider: 'stripe',
+      active: false,
       requirements: {
         currently_due: ['external_account']
       }
@@ -28,6 +31,39 @@ Primary.args = {
   onClick: () => {}
 }
 
+export const ActiveAccount = Template.bind({})
+ActiveAccount.args = {
+  user: {
+    account_id: 'acct_1'
+  },
+  account: {
+    data: {
+      id: 'acct_1',
+      provider: 'stripe',
+      active: true
+    },
+    completed: true
+  },
+  onClick: () => {}
+}
+
+export const WhopVerificationRequired = Template.bind({})
+WhopVerificationRequired.args = {
+  user: {
+    whop_account_id: 'biz_1'
+  },
+  account: {
+    data: {
+      id: 'biz_1',
+      provider: 'whop',
+      active: false
+    },
+    completed: true
+  },
+  forceShow: true,
+  onClick: () => console.log('open Whop verification link')
+}
+
 export const LoadingState = Template.bind({})
 LoadingState.args = {
   user: {
@@ -35,6 +71,9 @@ LoadingState.args = {
   },
   account: {
     data: {
+      id: 'acct_1',
+      provider: 'stripe',
+      active: false,
       requirements: {
         currently_due: ['external_account']
       }

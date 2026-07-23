@@ -76,3 +76,38 @@ Loading.args = {
     data: {}
   }
 }
+
+export const WhopVerificationBanner = Template.bind({})
+WhopVerificationBanner.args = {
+  profileHeaderProps: {
+    title: 'Payout Settings',
+    subtitle: 'Manage your payout settings and preferences.'
+  },
+  user: {
+    completed: true,
+    data: {
+      id: '1',
+      name: 'Jane Doe',
+      whop_account_id: 'biz_whop_123',
+      Types: [{ name: 'provider' }]
+    }
+  },
+  account: {
+    completed: true,
+    data: {
+      id: 'biz_whop_123',
+      provider: 'whop',
+      active: false,
+      country: 'US',
+      email: 'jane@example.com'
+    }
+  },
+  countries: {
+    completed: true,
+    data: {
+      provider: 'whop',
+      countries: [{ country: 'United States', code: 'US' }]
+    }
+  },
+  onCompleteVerification: () => console.log('fetch Whop verification link')
+}
