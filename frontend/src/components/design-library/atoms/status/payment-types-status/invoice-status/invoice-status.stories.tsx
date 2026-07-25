@@ -29,6 +29,9 @@ export const Void = {
 export const Refunded = {
   args: { status: 'refunded' }
 }
+export const PartiallyRefunded = {
+  args: { status: 'partially_refunded' }
+}
 export const Loading = {
   args: {
     status: 'pending',
