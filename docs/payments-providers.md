@@ -82,6 +82,7 @@ In `NODE_ENV=test`, signature verification is skipped for both providers.
    - `invoice.paid`, `invoice.past_due`
    - `withdrawal.created`, `withdrawal.updated`
    - `refund.created`, `refund.updated`
+   - `dispute.created`, `dispute.updated` (payment-request balance clawback)
 4. Store the webhook secret as `WHOP_WEBHOOK_SECRET`.
 
 ## Flows
@@ -147,6 +148,56 @@ With Stripe (default), existing Connect custom account flow is unchanged (`Users
 | **Whop** | Account has a connected company `id` (`Users.whop_account_id`) |
 
 The frontend gates payment-request creation and the “Action required” banner via `validAccount()`, which prefers this `active` flag (no provider-specific branches).
+
+## Payment request: pay → transfer → emails
+
+Shared path for Stripe and Whop:
+
+1. Webhook: Stripe `checkout.session.completed` or Whop `payment.succeeded`
+2. `processPaymentRequestPaymentFromCheckoutSession` → `processCheckoutSessionCompleted`
+3. Creates `PaymentRequestPayment` (`source` = Stripe PI or Whop `pay_…`)
+4. Transfers net amount (after 8%) to Connect / `whop_account_id`
+5. Emails: payment made, optional instructions, transfer initiated
+
+### Whop adapter notes
+
+- Real `payment.succeeded` payloads often **omit `status`**; the event type means paid.
+- PR metadata is usually on **plan.metadata**; the handler merges plan + payment metadata.
+- Whop has no `source_transaction` on transfers; correlation is via transfer `metadata.source_payment_id`.
+- Transfers use `POST /transfers` with **`type: "ledger"`** (platform `origin_id` → connected `destination_id`).
+  Gitpay never uses `wallet_send` (crypto).
+
+  **`Sends are only supported from an Ethereum wallet`** is a **misleading Whop API error**. In practice it
+  often means:
+
+  1. **Available balance is 0** while funds sit in **pending** (card payments settle over 1–4 days).
+     Check `GET /ledger_accounts/{WHOP_COMPANY_ID}` → `balances[].balance` (available) vs `pending_balance`.
+  2. **Sandbox limitation**: [Whop sandbox docs](https://docs.whop.com/developer/guides/sandbox) list
+     **payouts as not available yet**; ledger transfers may fail the same way even with correct `type: ledger`.
+  3. Platform company not fully ready for transfers (less common if `capabilities.transfer` is `active`).
+
+  Before transferring, the platform needs **available** USD ≥ transfer amount. Destination must be a
+  connected company (`Users.whop_account_id` = `biz_…` under `WHOP_COMPANY_ID`).
+
+## Payment request: disputes / PR balance
+
+| Stripe | Whop |
+|--------|------|
+| `charge.dispute.created` → notify | `dispute.created` → notify |
+| `charge.dispute.funds_withdrawn` → **DEBIT** | Same on `dispute.created` (Whop withdraws immediately) |
+| `charge.dispute.closed` won → **CREDIT** | `dispute.updated` status `won` → **CREDIT** |
+
+Debit formula (cents):
+
+```
+disputed amount
++ 8% Gitpay platform fee
++ provider fee (Stripe balance_tx fee, or WHOP_DISPUTE_FEE_CENTS default 1500 = $15)
+```
+
+Lookup: `PaymentRequestPayment.source` = Stripe `payment_intent` or Whop `payment.id` (`pay_…`).
+
+Debits/credits are idempotent per `sourceId` + type so webhook retries are safe.
 
 
 ## Supported countries (payout onboarding)

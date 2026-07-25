@@ -225,34 +225,136 @@ export class WhopPaymentProvider implements PaymentProvider {
     }
   }
 
+  /**
+   * Fetch platform ledger available/pending USD (major units).
+   * GET /ledger_accounts/{biz_id} — id may be company or ldgr_…
+   */
+  async getCompanyLedgerBalances(companyId?: string): Promise<{
+    ledgerId: string | null
+    available: number
+    pending: number
+    reserve: number
+    raw: any
+  }> {
+    const id = companyId || this.companyId()
+    if (!id) {
+      return { ledgerId: null, available: 0, pending: 0, reserve: 0, raw: null }
+    }
+    try {
+      const ledger = await this.client.get<any>(`/ledger_accounts/${id}`)
+      const usd =
+        (ledger.balances || []).find(
+          (b: any) => String(b.currency || '').toLowerCase() === 'usd'
+        ) || ledger.balances?.[0]
+      return {
+        ledgerId: ledger.id || null,
+        available: Number(usd?.balance ?? 0),
+        pending: Number(usd?.pending_balance ?? 0),
+        reserve: Number(usd?.reserve_balance ?? 0),
+        raw: ledger
+      }
+    } catch (error) {
+      console.warn('[whop] getCompanyLedgerBalances failed', error)
+      return { ledgerId: null, available: 0, pending: 0, reserve: 0, raw: null }
+    }
+  }
+
   async createTransfer(params: TransferParams): Promise<TransferResult> {
-    // Stripe path uses cents; Whop transfer amount is decimal major units.
-    // Callers for PR currently pass cents for Stripe — Whop adapter converts when amount looks like cents
-    // by convention: createTransfer receives amount already in provider-native units from the service layer.
-    // For processCheckoutSessionCompleted we pass cents for Stripe; Whop provider expects major units.
-    // Use amount as-is if < 1000 and has decimals, else if integer and large assume cents from Stripe path.
-    // Better: TransferParams.amount is always major units for Whop, cents for Stripe at call site.
-    // processCheckoutSessionCompleted passes resultingBalance in cents for Stripe.
-    // When provider is Whop, convert cents → dollars here if metadata flag or if we document amount unit per provider.
-    //
-    // Convention used: TransferParams.amount is always the same unit as Stripe TransferCreate (cents)
-    // when coming from shared PR path; Whop converts to dollars.
+    // Shared callers (PR checkout, bounty transfers) pass amount in cents (Stripe convention).
+    // Whop ledger transfers use major currency units (e.g. 18.63).
     const amountMajor = params.amount / 100
+    const originId = this.companyId()
+    const destinationId = params.destination
+    const currency = (params.currency || 'usd').toLowerCase()
 
-    const transfer = await this.client.post<any>('/transfers', {
+    if (!originId) {
+      throw new Error('WHOP_COMPANY_ID is required for transfers (platform origin)')
+    }
+    if (!destinationId) {
+      throw new Error('Whop transfer destination (connected company biz_…) is required')
+    }
+
+    // Preflight: ledger transfers debit available balance only (not pending).
+    // Whop often returns a misleading "Ethereum wallet" error when available is 0.
+    const ledger = await this.getCompanyLedgerBalances(originId)
+    if (ledger.raw && ledger.available + 1e-9 < amountMajor) {
+      const err: any = new Error(
+        [
+          `Whop platform available balance is insufficient for ledger transfer.`,
+          `Need ${amountMajor} ${currency} available; have available=${ledger.available}, pending=${ledger.pending}, reserve=${ledger.reserve}.`,
+          `origin_id=${originId} (ledger ${ledger.ledgerId || 'unknown'}), destination_id=${destinationId}.`,
+          'Payments usually land in pending for 1–4 days before becoming available.',
+          'Sandbox: Whop docs note payouts/transfers may be limited; check sandbox.whop.com Balances',
+          'or wait for pending funds to settle / top up available balance.',
+          'This is not a crypto/wallet_send issue — we use type=ledger (fiat platform → connected company).'
+        ].join(' ')
+      )
+      err.status = 400
+      err.body = {
+        error: {
+          type: 'insufficient_available_balance',
+          available: ledger.available,
+          pending: ledger.pending,
+          required: amountMajor
+        }
+      }
+      throw err
+    }
+
+    // Explicit type: 'ledger' — platform fiat balance → connected company.
+    const body: Record<string, unknown> = {
+      type: 'ledger',
       amount: amountMajor,
-      currency: params.currency || 'usd',
-      origin_id: this.companyId(),
-      destination_id: params.destination,
-      metadata: params.metadata || {},
-      notes: params.description
-    })
+      currency,
+      origin_id: originId,
+      destination_id: destinationId,
+      metadata: params.metadata || {}
+    }
+    if (params.description) {
+      body.notes = params.description
+    }
+    const paymentRef =
+      (params.metadata as any)?.payment_request_payment_id ||
+      (params.metadata as any)?.source_payment_id ||
+      (params.metadata as any)?.order_id
+    if (paymentRef != null) {
+      body.idempotence_key = `gitpay_transfer_${paymentRef}`
+    }
 
-    return {
-      transferId: transfer.id,
-      amount: transfer.amount,
-      currency: transfer.currency,
-      raw: transfer
+    try {
+      const transfer = await this.client.post<any>('/transfers', body)
+      return {
+        transferId: transfer.id,
+        amount: transfer.amount,
+        currency: transfer.currency,
+        raw: transfer
+      }
+    } catch (error: any) {
+      const message = String(error?.message || '')
+      if (
+        message.includes('Ethereum wallet') ||
+        message.includes('wallet_send') ||
+        message.includes('only supported from') ||
+        message.includes('on-chain wallet')
+      ) {
+        const bal = await this.getCompanyLedgerBalances(originId)
+        const err: any = new Error(
+          [
+            error.message,
+            'Whop rejected the ledger transfer (often a misleading error when available fiat balance is 0',
+            'or when sandbox does not fully support platform transfers).',
+            `origin_id=${originId}, destination_id=${destinationId}, amount=${amountMajor} ${currency}.`,
+            `Platform ledger: available=${bal.available}, pending=${bal.pending}, reserve=${bal.reserve}.`,
+            'Ledger transfers require available (not pending) USD on the platform company.',
+            'Sandbox limitation: docs state payouts may not work yet — try production or wait for settlement.',
+            'We send type=ledger (not wallet_send).'
+          ].join(' ')
+        )
+        err.status = error.status
+        err.body = error.body
+        throw err
+      }
+      throw error
     }
   }
 

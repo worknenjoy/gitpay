@@ -194,6 +194,16 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
         const destination =
           paymentProvider.name === 'whop' ? user?.whop_account_id : user?.account_id
 
+        if (!destination) {
+          const field =
+            paymentProvider.name === 'whop' ? 'whop_account_id' : 'account_id'
+          const err: any = new Error(
+            `Cannot create ${paymentProvider.name} transfer: user.${field} is missing`
+          )
+          err.statusCode = 422
+          throw err
+        }
+
         const transfer = await paymentProvider.createTransfer({
           amount: resultingBalance,
           currency,
@@ -202,7 +212,9 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
           metadata: {
             user_id: paymentRequest.userId,
             payment_request_id: paymentRequest.id,
-            payment_request_payment_id: paymentRequestPayment.id
+            payment_request_payment_id: paymentRequestPayment.id,
+            // Whop has no source_transaction; keep pay_/pi_ for audit. Stripe also gets charge via sourceTransaction.
+            source_payment_id: paymentIntentId
           },
           sourceTransaction: chargeId,
           transferGroup: `payment_request_payment_${paymentRequestPayment.id}`
