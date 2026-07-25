@@ -72,6 +72,14 @@ const InvoiceStatus: React.FC<InvoiceStatusProps> = ({ status, completed = true 
       icon: <InfoIcon sx={styles.refunded} />
     },
     {
+      status: 'partially_refunded',
+      label: 'Partially refunded',
+      color: 'partially_refunded',
+      icon: <InfoIcon sx={styles.partially_refunded} />,
+      message:
+        'Part of this wallet order was refunded. The remaining credit may still apply to your balance.'
+    },
+    {
       status: 'unknown',
       label: 'Unknown',
       color: 'unknown',

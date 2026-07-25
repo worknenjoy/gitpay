@@ -272,7 +272,9 @@ const Wallets = ({
                           />
                         </Button>
                       )}
-                      {item.status === 'paid' && (
+                      {(item.status === 'paid' ||
+                        item.status === 'partially_refunded' ||
+                        item.status === 'refunded') && (
                         <Button
                           onClick={(e) => downloadInvoicePayment(item.id)}
                           variant="contained"

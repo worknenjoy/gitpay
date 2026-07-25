@@ -9,6 +9,7 @@ export type WalletOrderStatus =
   | 'uncollectible'
   | 'void'
   | 'refunded'
+  | 'partially_refunded'
 
 export interface WalletOrderAttributes {
   id: number
@@ -16,6 +17,7 @@ export interface WalletOrderAttributes {
   source_id?: string | null
   currency?: string | null
   amount: string
+  refunded_amount?: string | number
   description?: string | null
   source_type?: string | null
   source?: string | null
@@ -33,6 +35,7 @@ export type WalletOrderCreationAttributes = Optional<
   | 'id'
   | 'source_id'
   | 'currency'
+  | 'refunded_amount'
   | 'description'
   | 'source_type'
   | 'source'
@@ -54,6 +57,7 @@ export default class WalletOrder
   public source_id!: string | null
   public currency!: string | null
   public amount!: string
+  public refunded_amount!: string | number
   public description!: string | null
   public source_type!: string | null
   public source!: string | null
@@ -88,6 +92,11 @@ export default class WalletOrder
         amount: {
           type: DataTypes.DECIMAL,
           allowNull: false
+        },
+        refunded_amount: {
+          type: DataTypes.DECIMAL,
+          allowNull: false,
+          defaultValue: 0
         },
         description: {
           type: DataTypes.STRING,
@@ -127,7 +136,8 @@ export default class WalletOrder
             'failed',
             'uncollectible',
             'void',
-            'refunded'
+            'refunded',
+            'partially_refunded'
           ),
           defaultValue: 'pending'
         },
