@@ -58,6 +58,13 @@ export const getInvoiceStatusStyles = (theme: Theme) => ({
       color: theme.palette.common.white
     }
   },
+  partially_refunded: {
+    backgroundColor: blue[300],
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
+  },
   unknown: {
     backgroundColor: theme.palette.grey[500],
     color: theme.palette.common.white,

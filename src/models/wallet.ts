@@ -1,4 +1,4 @@
-import { Model, DataTypes, Optional, Sequelize } from 'sequelize'
+import { Model, DataTypes, Optional, Sequelize, Op } from 'sequelize'
 import Decimal from 'decimal.js'
 
 export interface WalletAttributes {
@@ -104,14 +104,17 @@ export default class Wallet
     const sequelize = this.sequelize
     if (!sequelize) throw new Error('Sequelize instance not found')
 
+    // paid: full amount counts; partially_refunded: remaining (amount - refunded_amount)
     const orders = await sequelize.models.WalletOrder.findAll({
       where: {
         walletId: this.id,
-        status: 'paid'
+        status: { [Op.in]: ['paid', 'partially_refunded'] }
       }
     })
     const balance = orders.reduce((acc: Decimal, order: any) => {
-      return acc.plus(order.amount)
+      const amount = new Decimal(order.amount || 0)
+      const refunded = new Decimal(order.refunded_amount || 0)
+      return acc.plus(amount.minus(refunded))
     }, new Decimal(0))
     return balance
   }
