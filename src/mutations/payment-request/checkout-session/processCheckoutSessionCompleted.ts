@@ -4,13 +4,11 @@ import Models from '../../../models'
 import { calculateAmountWithPercent } from '../../../utils'
 
 import { findPaymentRequestByPaymentLinkId } from '../../../queries/payment-request/payment-request'
-import { findOrCreatePaymentRequestBalance } from '../../../queries/payment-request/payment-request-balance'
+import { findPaymentRequestPayment } from '../../../queries/payment-request/payment-request-payment'
 
 import { getPaymentProvider } from '../../../providers'
-import {
-  updatePaymentIntentMetadata,
-  retrievePaymentIntent
-} from '../../provider/stripe/payment-intent'
+import { executePaymentRequestTransfer } from '../../../services/paymentRequest/executePaymentRequestTransfer'
+import { PaymentRequestTransferStatus } from '../../../services/paymentRequest/paymentRequestTransferStatuses'
 
 const models = Models as any
 
@@ -22,6 +20,14 @@ type CheckoutSession = {
   customer_details?: { name?: string; email?: string }
 }
 
+/**
+ * Record a payment-request payment from a checkout session, then run the transfer flow.
+ *
+ * Stripe: transfer is instant (source_transaction).
+ * Whop: transfer is attempted immediately; if platform available balance is still
+ * settling, payment is stored with transferStatus=pending_funds and the daily cron
+ * completes the transfer later.
+ */
 export async function processCheckoutSessionCompleted(session: CheckoutSession) {
   const paymentLinkId =
     typeof session.payment_link === 'string' ? session.payment_link : session.payment_link?.id
@@ -37,6 +43,66 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
     const err: any = new Error('Missing payment_intent on session')
     err.statusCode = 400
     throw err
+  }
+
+  // Idempotent: if payment already exists for this source, do not create a duplicate.
+  // Still allow transfer retries when transfer was deferred or never finished.
+  const existingPayment = await findPaymentRequestPayment(paymentIntentId)
+  if (existingPayment) {
+    const existingStatus = existingPayment.transferStatus
+
+    // Fully done — skip side effects
+    if (existingStatus === PaymentRequestTransferStatus.INITIATED) {
+      return {
+        paymentRequest: existingPayment.PaymentRequest,
+        paymentRequestPayment: existingPayment,
+        user: existingPayment.User,
+        currency: existingPayment.currency || existingPayment.PaymentRequest?.currency || 'usd',
+        originalAmountDecimal: Number(existingPayment.amount),
+        transferAmountDecimal: 0,
+        resultingBalanceCents: 0,
+        balanceTransactionForEmail: null,
+        updatedBalanceTransactionForEmail: null,
+        transferCreated: false,
+        transferDeferred: false,
+        alreadyProcessed: true
+      }
+    }
+
+    // pending_funds or incomplete (null) — ensure PR is paid, then run transfer flow
+    const existingPr = existingPayment.PaymentRequest
+    if (existingPr && existingPr.status !== 'paid') {
+      const deactivate = existingPr.deactivate_after_payment
+      const paymentProvider = getPaymentProvider(existingPr.provider || undefined)
+      if (deactivate && existingPr.payment_link_id) {
+        await paymentProvider
+          .updatePaymentRequestPaymentLinkActive(existingPr.payment_link_id, false)
+          .catch(() => null)
+      }
+      await existingPr.update({
+        status: 'paid',
+        active: deactivate ? false : existingPr.active
+      })
+    }
+
+    const transferResult = await executePaymentRequestTransfer({
+      paymentRequestPaymentId: existingPayment.id
+    })
+    return {
+      paymentRequest: transferResult.paymentRequest,
+      paymentRequestPayment: transferResult.paymentRequestPayment,
+      user: transferResult.user,
+      currency: transferResult.currency,
+      originalAmountDecimal: transferResult.originalAmountDecimal,
+      transferAmountDecimal: transferResult.transferAmountDecimal,
+      resultingBalanceCents: transferResult.resultingBalanceCents,
+      balanceTransactionForEmail: transferResult.balanceTransactionForEmail,
+      updatedBalanceTransactionForEmail: transferResult.updatedBalanceTransactionForEmail,
+      transferCreated: transferResult.transferCreated,
+      transferDeferred: transferResult.deferred,
+      // Payment record already existed — do not re-send payment-made email
+      alreadyProcessed: true
+    }
   }
 
   const paymentRequest = await findPaymentRequestByPaymentLinkId(paymentLinkId)
@@ -68,208 +134,107 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
     : calculateAmountWithPercent(amount, 8, 'decimal', currency)
 
   const transferAmountDecimal = amountAfterFee.decimal
-  const transferAmountCents = amountAfterFee.centavos
 
   const paymentProvider = getPaymentProvider(paymentRequest.provider || undefined)
 
-  let createdTransferId: string | null = null
   let paymentLinkActiveChanged = false
 
   try {
     if (deactivate_after_payment) {
-      // Keep legacy behavior: no extra Stripe retrieve call.
       await paymentProvider.updatePaymentRequestPaymentLinkActive(paymentLinkId, false)
       paymentLinkActiveChanged = true
     }
 
-    const result = await models.sequelize.transaction(async (tx: Transaction) => {
-      const paymentRequestUpdated = await paymentRequest.update(
-        {
-          status: 'paid',
-          active: deactivate_after_payment ? false : true
-        },
-        { transaction: tx }
-      )
-
-      if (!paymentRequestUpdated) {
-        throw new Error('Failed to update payment request')
-      }
-
-      const customer = await models.PaymentRequestCustomer.create(
-        {
-          name: customerDetails.name,
-          email: customerDetails.email,
-          userId: paymentRequest.userId,
-          sourceId: 'gcc_' + Math.random().toString(36).substring(2, 15)
-        },
-        { transaction: tx }
-      )
-
-      const paymentRequestPayment = await models.PaymentRequestPayment.create(
-        {
-          paymentRequestId: paymentRequest.id,
-          userId: paymentRequest.userId,
-          amount: originalAmount.decimal,
-          currency,
-          source: paymentIntentId,
-          status: session.payment_status,
-          customerId: customer.id
-        },
-        { transaction: tx }
-      )
-
-      await paymentRequestPayment.reload({
-        transaction: tx,
-        include: [
-          { model: models.PaymentRequest },
-          { model: models.User },
-          { model: models.PaymentRequestCustomer }
-        ]
-      })
-
-      // Stripe write: attach metadata to the PaymentIntent (kept inside tx to allow DB rollback on error).
-      // Provider-specific; only Stripe PaymentIntents support this today.
-      let chargeId: string | undefined
-      if (paymentProvider.name === 'stripe') {
-        await updatePaymentIntentMetadata(paymentIntentId, {
-          payment_request_payment_id: paymentRequestPayment.id,
-          payment_request_id: paymentRequest.id,
-          user_id: paymentRequest.userId
-        })
-
-        const paymentIntent = await retrievePaymentIntent(paymentIntentId)
-        chargeId = (paymentIntent.latest_charge as any)?.id
-        if (!chargeId) {
-          throw new Error('Could not retrieve charge ID from PaymentIntent')
-        }
-      }
-
-      const paymentRequestBalance = await findOrCreatePaymentRequestBalance(paymentRequest.userId, {
-        transaction: tx
-      })
-
-      if (!paymentRequestBalance) {
-        throw new Error('Failed to find or create payment request balance')
-      }
-
-      const previousBalance = Number.parseInt(paymentRequestBalance.balance, 10) || 0
-      const creditAmount = transferAmountCents
-      const resultingBalance = creditAmount + previousBalance
-
-      let balanceTransactionForEmail: any = null
-      let updatedBalanceTransactionForEmail: any = null
-      let transferCreated = false
-
-      if (resultingBalance <= 0) {
-        balanceTransactionForEmail = await models.PaymentRequestBalanceTransaction.create(
+    // Phase 1: always persist payment (independent of transfer success)
+    const { paymentRequestUpdated, paymentRequestPayment } = await models.sequelize.transaction(
+      async (tx: Transaction) => {
+        const paymentRequestUpdated = await paymentRequest.update(
           {
-            paymentRequestBalanceId: paymentRequestBalance.id,
-            amount: creditAmount,
-            type: 'CREDIT',
-            reason: 'ADJUSTMENT',
-            reason_details: 'payment_request_payment_applied',
-            status: 'completed'
-          },
-          { transaction: tx }
-        )
-      }
-
-      if (resultingBalance > 0) {
-        if (previousBalance < 0) {
-          balanceTransactionForEmail = await models.PaymentRequestBalanceTransaction.create(
-            {
-              paymentRequestBalanceId: paymentRequestBalance.id,
-              amount: previousBalance * -1,
-              type: 'CREDIT',
-              reason: 'ADJUSTMENT',
-              reason_details: 'payment_request_payment_applied',
-              status: 'completed'
-            },
-            { transaction: tx }
-          )
-        }
-
-        // Stripe TransferCreateParams.amount is in cents (legacy behavior preserved).
-        // Whop destination is whop_account_id; Stripe is account_id (Connect).
-        const destination =
-          paymentProvider.name === 'whop' ? user?.whop_account_id : user?.account_id
-
-        if (!destination) {
-          const field =
-            paymentProvider.name === 'whop' ? 'whop_account_id' : 'account_id'
-          const err: any = new Error(
-            `Cannot create ${paymentProvider.name} transfer: user.${field} is missing`
-          )
-          err.statusCode = 422
-          throw err
-        }
-
-        const transfer = await paymentProvider.createTransfer({
-          amount: resultingBalance,
-          currency,
-          destination,
-          description: `Payment for service using Payment Request id: ${paymentRequest.id} and Payment Request Payment id: ${paymentRequestPayment.id}`,
-          metadata: {
-            user_id: paymentRequest.userId,
-            payment_request_id: paymentRequest.id,
-            payment_request_payment_id: paymentRequestPayment.id,
-            // Whop has no source_transaction; keep pay_/pi_ for audit. Stripe also gets charge via sourceTransaction.
-            source_payment_id: paymentIntentId
-          },
-          sourceTransaction: chargeId,
-          transferGroup: `payment_request_payment_${paymentRequestPayment.id}`
-        })
-
-        if (!transfer?.transferId) {
-          throw new Error('Failed to create transfer')
-        }
-
-        createdTransferId = transfer.transferId
-        transferCreated = true
-
-        const paymentRequestTransferUpdate = await paymentRequest.update(
-          {
-            transfer_status: 'initiated',
-            transfer_id: transfer.transferId
+            status: 'paid',
+            active: deactivate_after_payment ? false : true
           },
           { transaction: tx }
         )
 
-        if (!paymentRequestTransferUpdate) {
-          throw new Error('Failed to update payment request transfer status')
+        if (!paymentRequestUpdated) {
+          throw new Error('Failed to update payment request')
         }
-      }
 
-      // Match previous behavior: when previous balance was negative, reload the transaction with its balance for email.
-      if (previousBalance < 0 && balanceTransactionForEmail?.id) {
-        updatedBalanceTransactionForEmail = await models.PaymentRequestBalanceTransaction.findByPk(
-          balanceTransactionForEmail.id,
-          { transaction: tx, include: [models.PaymentRequestBalance] }
+        const customer = await models.PaymentRequestCustomer.create(
+          {
+            name: customerDetails.name,
+            email: customerDetails.email,
+            userId: paymentRequest.userId,
+            sourceId: 'gcc_' + Math.random().toString(36).substring(2, 15)
+          },
+          { transaction: tx }
         )
+
+        const paymentRequestPayment = await models.PaymentRequestPayment.create(
+          {
+            paymentRequestId: paymentRequest.id,
+            userId: paymentRequest.userId,
+            amount: originalAmount.decimal,
+            currency,
+            source: paymentIntentId,
+            status: session.payment_status,
+            customerId: customer.id,
+            transferStatus: null
+          },
+          { transaction: tx }
+        )
+
+        await paymentRequestPayment.reload({
+          transaction: tx,
+          include: [
+            { model: models.PaymentRequest },
+            { model: models.User },
+            { model: models.PaymentRequestCustomer }
+          ]
+        })
+
+        return { paymentRequestUpdated, paymentRequestPayment }
       }
+    )
+
+    // Phase 2: transfer flow (Stripe instant; Whop may defer to pending_funds + pending claim)
+    // Payment is already committed — transfer failures must not lose the payment record.
+    try {
+      const transferResult = await executePaymentRequestTransfer({
+        paymentRequestPaymentId: paymentRequestPayment.id
+      })
 
       return {
-        paymentRequest: paymentRequestUpdated,
-        paymentRequestPayment,
-        user,
-        currency,
-        originalAmountDecimal: originalAmount.decimal,
-        transferAmountDecimal,
-        resultingBalanceCents: resultingBalance,
-        balanceTransactionForEmail,
-        updatedBalanceTransactionForEmail,
-        transferCreated
+        paymentRequest: transferResult.paymentRequest || paymentRequestUpdated,
+        paymentRequestPayment: transferResult.paymentRequestPayment || paymentRequestPayment,
+        user: transferResult.user || user,
+        currency: transferResult.currency || currency,
+        originalAmountDecimal: transferResult.originalAmountDecimal || originalAmount.decimal,
+        transferAmountDecimal: transferResult.transferAmountDecimal || transferAmountDecimal,
+        resultingBalanceCents: transferResult.resultingBalanceCents,
+        balanceTransactionForEmail: transferResult.balanceTransactionForEmail,
+        updatedBalanceTransactionForEmail: transferResult.updatedBalanceTransactionForEmail,
+        transferCreated: transferResult.transferCreated,
+        transferDeferred: transferResult.deferred
       }
-    })
-
-    return { ...result }
-  } catch (error) {
-    if (createdTransferId) {
-      await paymentProvider.reverseTransfer(createdTransferId, {}).catch(() => null)
+    } catch (transferError: any) {
+      // Payment is saved; rethrow for Stripe. For Whop, executePaymentRequestTransfer
+      // should already have deferred — if something still throws, surface it.
+      console.error(
+        '[processCheckoutSessionCompleted] transfer failed after payment saved',
+        {
+          paymentRequestPaymentId: paymentRequestPayment.id,
+          provider: paymentProvider.name,
+          error: transferError?.message || transferError
+        }
+      )
+      throw transferError
     }
-
+  } catch (error) {
     if (paymentLinkActiveChanged) {
-      await paymentProvider.updatePaymentRequestPaymentLinkActive(paymentLinkId, true).catch(() => null)
+      await paymentProvider
+        .updatePaymentRequestPaymentLinkActive(paymentLinkId, true)
+        .catch(() => null)
     }
 
     throw error

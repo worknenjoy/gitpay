@@ -15,6 +15,7 @@ import type {
   PaymentProviderName,
   PaymentRequestResourceMetadata,
   PaymentRequestResources,
+  UpdatePaymentRequestDetailsParams,
   PayoutParams,
   PayoutResult,
   ProviderWebhookEvent,
@@ -28,8 +29,10 @@ import {
   createPaymentRequestStripeResources,
   deactivatePaymentRequestStripeResources,
   updatePaymentRequestPaymentLinkActive,
-  updatePaymentRequestPaymentLinkMetadata
+  updatePaymentRequestPaymentLinkMetadata,
+  updatePaymentRequestProductDetails
 } from '../../mutations/provider/stripe/payment-request'
+import { listPaymentLinkLineItems } from '../../queries/provider/stripe/payment-link'
 import {
   createTransfer as createStripeTransfer,
   createTransferReversal
@@ -167,6 +170,35 @@ export class StripePaymentProvider implements PaymentProvider {
     return updatePaymentRequestPaymentLinkActive(paymentLinkId, active)
   }
 
+  async updatePaymentRequestDetails(params: UpdatePaymentRequestDetailsParams): Promise<unknown> {
+    const results: unknown[] = []
+
+    if (typeof params.active === 'boolean') {
+      results.push(await updatePaymentRequestPaymentLinkActive(params.paymentLinkId, params.active))
+    }
+
+    if (params.title !== undefined || params.description !== undefined) {
+      const lineItems = await listPaymentLinkLineItems(params.paymentLinkId, 1)
+      if (!lineItems?.data?.length) {
+        throw new Error('No line items found for the Stripe Payment Link')
+      }
+      const product = lineItems.data[0]?.price?.product
+      const productId =
+        typeof product === 'string' ? product : product && typeof product === 'object' ? product.id : null
+      if (!productId) {
+        throw new Error('Stripe Product not found for the Payment Link')
+      }
+      results.push(
+        await updatePaymentRequestProductDetails(productId, {
+          name: params.title,
+          description: params.description
+        })
+      )
+    }
+
+    return results
+  }
+
   async deactivatePaymentRequestResources(
     resources: DeactivatePaymentRequestResourcesParams
   ): Promise<void> {
@@ -175,13 +207,20 @@ export class StripePaymentProvider implements PaymentProvider {
 
   async refund(params: RefundParams): Promise<RefundResult> {
     const stripe = getStripeClient()
-    const refundParams: { charge: string; amount?: number } = {
-      charge: params.paymentReference
+    const ref = params.paymentReference
+    const refundParams: Record<string, unknown> = {}
+
+    // Payment-request payments store the PaymentIntent id; bounty refunds use charge ids.
+    if (ref.startsWith('pi_')) {
+      refundParams.payment_intent = ref
+    } else {
+      refundParams.charge = ref
     }
     if (typeof params.amountCents === 'number') {
       refundParams.amount = params.amountCents
     }
-    const refund = await stripe.refunds.create(refundParams)
+
+    const refund = await stripe.refunds.create(refundParams as any)
     if (!refund?.id) {
       throw new Error('stripe_refund_failed')
     }

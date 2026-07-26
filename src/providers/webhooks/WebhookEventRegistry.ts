@@ -62,6 +62,10 @@ export class WebhookEventRegistry {
     }
 
     // Unhandled events still acknowledge so providers do not retry endlessly.
+    // eslint-disable-next-line no-console
+    console.log(
+      `[webhook] unhandled ${event.provider} event type="${event.type}" (acked 200, no domain handler)`
+    )
     return res.status(200).json(event.raw ?? event)
   }
 }

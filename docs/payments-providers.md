@@ -79,11 +79,16 @@ In `NODE_ENV=test`, signature verification is skipped for both providers.
 2. Create a webhook pointing to `https://<API_HOST>/webhooks/whop`.
 3. Subscribe at least to:
    - `payment.succeeded`, `payment.failed`
+   - **`membership.activated`** and/or **`membership.went_valid`**  
+     (one-time plan / product checkout often delivers these when access is granted;  
+     Gitpay uses them as a paid signal for payment requests when `payment.succeeded` is missing)
    - `invoice.paid`, `invoice.past_due`
    - `withdrawal.created`, `withdrawal.updated`
    - `refund.created`, `refund.updated`
    - `dispute.created`, `dispute.updated` (payment-request balance clawback)
 4. Store the webhook secret as `WHOP_WEBHOOK_SECRET`.
+
+**If you only log `membership.activated` and never `payment.succeeded`:** that is common for Whop product/plan purchases. Ensure `membership.activated` is subscribed (and deploy code that handles it). Unhandled events still return HTTP 200 so Whop stops retrying — check logs for `[whop] membership.activated/went_valid`.
 
 ## Flows
 
@@ -149,15 +154,64 @@ With Stripe (default), existing Connect custom account flow is unchanged (`Users
 
 The frontend gates payment-request creation and the “Action required” banner via `validAccount()`, which prefers this `active` flag (no provider-specific branches).
 
+## Mixed Stripe + Whop payment requests
+
+`PAYMENT_PROVIDER` only defaults **new** resources (and frontend build). Each `PaymentRequests.provider` row is the source of truth for that request.
+
+| Operation | Routing |
+|-----------|---------|
+| Create | env default (`PAYMENT_PROVIDER`) unless override |
+| Pay webhook | Endpoint-specific (`/webhooks/stripe-platform` vs `/webhooks/whop`) |
+| Transfer | `getPaymentProvider(paymentRequest.provider)` |
+| Update title/active | `getPaymentProvider(paymentRequest.provider)` → Stripe link/product or Whop plan/product |
+| Refund | Same, from parent PR provider (`pi_…` / `pay_…`) |
+| Lists | DB only — Stripe and Whop rows appear together; payment list includes `PaymentRequest.provider` |
+
+When switching env to `whop`, keep Stripe keys and webhooks until open Stripe PRs are paid or closed.
+
 ## Payment request: pay → transfer → emails
 
 Shared path for Stripe and Whop:
 
 1. Webhook: Stripe `checkout.session.completed` or Whop `payment.succeeded`
 2. `processPaymentRequestPaymentFromCheckoutSession` → `processCheckoutSessionCompleted`
-3. Creates `PaymentRequestPayment` (`source` = Stripe PI or Whop `pay_…`)
-4. Transfers net amount (after 8%) to Connect / `whop_account_id`
-5. Emails: payment made, optional instructions, transfer initiated
+3. **Always** creates `PaymentRequestPayment` (`source` = Stripe PI or Whop `pay_…`) and marks the request paid
+4. Transfer flow is extracted into `executePaymentRequestTransfer` (shared by webhook + cron)
+5. Emails: payment made + optional instructions always; transfer initiated only when a transfer is created
+
+| Provider | Transfer timing |
+|----------|-----------------|
+| **Stripe** | Immediate (uses `source_transaction` on the charge) |
+| **Whop** | Tried immediately; if platform **available** balance is still settling, payment is stored with `transferStatus=pending_funds` and completed later |
+
+### Deferred Whop transfers (pending balance)
+
+Whop card payments often land in **pending** for 1–4 days before becoming **available**. Ledger transfers can only debit available balance.
+
+When transfer is deferred:
+
+| Field | Value |
+|-------|--------|
+| `PaymentRequestPayment` | **Always created** on pay (`status` = paid; `transferStatus` = `pending_funds`) |
+| `PaymentRequestPayment.transferStatus` | `pending_funds` |
+| `PaymentRequest.transfer_status` | `pending_funds` |
+| `PaymentRequest.transfer_id` | null until transfer succeeds |
+| `PaymentRequestTransfer` (Claims) | Created immediately with `status = pending`, `transfer_id = null` so Claims UI shows the claim while funds settle. Updated to `status = created` + provider `transfer_id` when cron/script succeeds. |
+
+**Why Claims was empty before:** Claims → “payment request transfers” reads `PaymentRequestTransfer` only. Older code created that row **after** a successful provider transfer, so deferred Whop pays left no claim and the cron only looked for `transferStatus = pending_funds` (never set if transfer threw a non-matched error).
+
+**Daily cron** (midnight, with the other daily jobs) runs `processPendingPaymentRequestTransfers`:
+
+- Loads payments with `transferStatus = pending_funds` (oldest first)
+- Retries `executePaymentRequestTransfer`
+- On success: sets status to `initiated`, creates `PaymentRequestTransfer`, sends transfer + balance emails
+- If still insufficient available balance: leaves `pending_funds` for the next day
+
+**Manual / ops script** (same logic as the cron):
+
+```bash
+npm run scripts:payment-request:process_pending_transfers
+```
 
 ### Whop adapter notes
 
@@ -178,6 +232,16 @@ Shared path for Stripe and Whop:
 
   Before transferring, the platform needs **available** USD ≥ transfer amount. Destination must be a
   connected company (`Users.whop_account_id` = `biz_…` under `WHOP_COMPANY_ID`).
+
+### Key source files
+
+| File | Role |
+|------|------|
+| `src/mutations/payment-request/checkout-session/processCheckoutSessionCompleted.ts` | Persist payment, then call transfer |
+| `src/services/paymentRequest/executePaymentRequestTransfer.ts` | Shared transfer + balance/debt logic |
+| `src/services/paymentRequest/processPendingPaymentRequestTransfers.ts` | Cron/script batch for `pending_funds` |
+| `src/crons/paymentRequests/paymentRequestTransferCron.ts` | Daily job wrapper |
+| `src/scripts/payment-request/process_pending_transfers.ts` | CLI entry for the same job |
 
 ## Payment request: disputes / PR balance
 

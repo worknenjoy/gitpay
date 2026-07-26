@@ -193,6 +193,129 @@ async function handlePaymentSucceeded(ctx: WebhookHandlerContext) {
   return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
 }
 
+/** Whop may send plan/product as an object `{ id }` or a bare id string. */
+function resolveWhopResourceId(value: unknown): string | null {
+  if (value == null || value === '') return null
+  if (typeof value === 'string') return value
+  if (typeof value === 'object' && value !== null && 'id' in value) {
+    const id = (value as { id?: unknown }).id
+    return id != null && id !== '' ? String(id) : null
+  }
+  return null
+}
+
+/**
+ * Whop product/plan checkouts often emit `membership.activated` (and sometimes
+ * `membership.went_valid`) when access is granted after purchase. For payment
+ * requests we create one-time plans; that event is a reliable "paid" signal even
+ * when `payment.succeeded` is delayed, filtered, or not delivered to this webhook.
+ *
+ * Payload shape differs from payments: no amount_after_fees / pay_ id. We match
+ * plan.id → PaymentRequests.payment_link_id and use the PR amount.
+ *
+ * Requires BOTH:
+ * 1) Whop dashboard webhook subscribed to `membership.activated`
+ * 2) This handler registered in `registerWhopHandlers` (restart API after deploy)
+ */
+async function handleMembershipActivated(ctx: WebhookHandlerContext) {
+  const membership = ctx.event.data?.object || ctx.rawEvent?.data || ctx.rawEvent
+  const planId =
+    resolveWhopResourceId(membership?.plan) ||
+    resolveWhopResourceId(membership?.plan_id) ||
+    resolveWhopResourceId(membership?.data?.plan)
+  const productId =
+    resolveWhopResourceId(membership?.product) ||
+    resolveWhopResourceId(membership?.product_id)
+
+  console.log('[whop] membership.activated/went_valid handler running', {
+    id: membership?.id,
+    planId,
+    productId,
+    planType: typeof membership?.plan,
+    keys: membership && typeof membership === 'object' ? Object.keys(membership) : [],
+    metadata: membership?.metadata || membership?.plan?.metadata
+  })
+
+  if (!planId && !productId) {
+    console.warn(
+      '[whop] membership event: missing plan/product id — cannot match PaymentRequest',
+      { membershipId: membership?.id }
+    )
+    return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+  }
+
+  const pr = planId
+    ? await models.PaymentRequest.findOne({ where: { payment_link_id: planId } })
+    : null
+
+  if (!pr) {
+    console.warn(
+      '[whop] membership event: no PaymentRequest with payment_link_id=',
+      planId,
+      '(check plan id matches PaymentRequests.payment_link_id)'
+    )
+    return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+  }
+
+  console.log('[whop] membership matched PaymentRequest', {
+    paymentRequestId: pr.id,
+    payment_link_id: pr.payment_link_id,
+    status: pr.status
+  })
+
+  // Prefer a real payment id when Whop embeds it; else membership id (idempotent per purchase)
+  const paymentSourceId =
+    membership?.payment?.id ||
+    membership?.payment_id ||
+    membership?.last_payment_id ||
+    membership?.id
+
+  const planMetadata = {
+    ...(membership?.plan?.metadata || {}),
+    ...(membership?.product?.metadata || {}),
+    ...(membership?.metadata || {}),
+    purpose: 'payment_request',
+    payment_request_id: String(pr.id),
+    payment_link_id: pr.payment_link_id,
+    user_id: pr.userId != null ? String(pr.userId) : undefined
+  }
+
+  // amount_total path uses major units → cents; PR amount is major (e.g. 100.00)
+  const amountMajor = Number(pr.amount) || 0
+
+  const pseudoPayment = {
+    id: paymentSourceId,
+    status: 'succeeded',
+    total: amountMajor,
+    currency: pr.currency || 'usd',
+    plan: {
+      id: pr.payment_link_id,
+      metadata: planMetadata
+    },
+    product: membership?.product,
+    user: membership?.user || membership?.member,
+    metadata: planMetadata
+  }
+
+  try {
+    const session = await resolvePaymentRequestSession(pseudoPayment, planMetadata)
+    session.payment_link = pr.payment_link_id
+    console.log('[whop] PR membership → checkout session', {
+      payment_link: session.payment_link,
+      payment_status: session.payment_status,
+      amount_total: session.amount_total,
+      payment_request_id: pr.id,
+      source: paymentSourceId
+    })
+    await processPaymentRequestPaymentFromCheckoutSession(session)
+    return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+  } catch (error: any) {
+    console.error('[whop] membership payment request error', error)
+    const status = error?.statusCode || error?.status || 500
+    return ctx.res.status(status).json({ error: error?.message || 'membership_pr_error' })
+  }
+}
+
 async function handlePaymentFailed(ctx: WebhookHandlerContext) {
   const payment = ctx.event.data.object || ctx.rawEvent?.data
   const metadata = payment?.metadata || {}
@@ -474,6 +597,9 @@ export function registerWhopHandlers(
   registry
     .onRaw('payment.succeeded', handlePaymentSucceeded)
     .onRaw('payment.failed', handlePaymentFailed)
+    // Plan/product checkout often delivers membership events instead of / before payment.succeeded
+    .onRaw('membership.activated', handleMembershipActivated)
+    .onRaw('membership.went_valid', handleMembershipActivated)
     .onRaw('invoice.paid', handleInvoicePaid)
     .onRaw('invoice.created', handleInvoiceCreated)
     .onRaw('invoice.past_due', handleInvoiceFailed)

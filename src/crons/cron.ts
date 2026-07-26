@@ -7,6 +7,7 @@ const i18n = require('i18n')
 const DeadlineMail = require('../mail/deadline')
 const TaskMail = require('../mail/task')
 const OrderCron = require('./orders/orderCron')
+const PaymentRequestTransferCron = require('./paymentRequests/paymentRequestTransferCron')
 const bountyClosedNotPaidComment = require('../bot/bountyClosedNotPaidComment')
 const {
   notifyUnclaimedBounties: notifyUnclaimedBountiesService
@@ -166,6 +167,7 @@ const dailyJob = new CronJob({
     //OrderCron.verify()
     OrderCron.checkExpiredPaypalOrders()
     TaskCron.syncStats()
+    PaymentRequestTransferCron.processPendingTransfers()
   }
 })
 
@@ -212,5 +214,6 @@ module.exports = {
   monthlyJobNotifyUnclaimedBounties,
   dailyJobSyncTaskStates,
   TaskCron,
-  OrderCron
+  OrderCron,
+  PaymentRequestTransferCron
 }

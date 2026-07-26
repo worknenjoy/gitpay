@@ -16,6 +16,7 @@ import type {
   PaymentProviderName,
   PaymentRequestResourceMetadata,
   PaymentRequestResources,
+  UpdatePaymentRequestDetailsParams,
   PayoutParams,
   PayoutResult,
   ProviderWebhookEvent,
@@ -199,6 +200,43 @@ export class WhopPaymentProvider implements PaymentProvider {
     }
   }
 
+  async updatePaymentRequestDetails(params: UpdatePaymentRequestDetailsParams): Promise<unknown> {
+    const results: unknown[] = []
+
+    if (typeof params.active === 'boolean') {
+      results.push(
+        await this.updatePaymentRequestPaymentLinkActive(params.paymentLinkId, params.active)
+      )
+    }
+
+    if (params.title !== undefined || params.description !== undefined) {
+      // payment_link_id is the Whop plan id; resolve product for title updates
+      const plan = await this.client.get<any>(`/plans/${params.paymentLinkId}`)
+      const productId = plan?.product_id || plan?.product?.id
+
+      if (productId && (params.title !== undefined || params.description !== undefined)) {
+        const productBody: Record<string, unknown> = {}
+        if (params.title !== undefined) {
+          productBody.title = String(params.title).slice(0, 80)
+        }
+        if (params.description !== undefined) {
+          productBody.description = params.description
+        }
+        results.push(await this.client.patch(`/products/${productId}`, productBody))
+      }
+
+      if (params.description !== undefined || params.title !== undefined) {
+        results.push(
+          await this.client.patch(`/plans/${params.paymentLinkId}`, {
+            description: params.description ?? params.title
+          })
+        )
+      }
+    }
+
+    return results
+  }
+
   async deactivatePaymentRequestResources(
     resources: DeactivatePaymentRequestResourcesParams
   ): Promise<void> {
@@ -347,11 +385,19 @@ export class WhopPaymentProvider implements PaymentProvider {
             `Platform ledger: available=${bal.available}, pending=${bal.pending}, reserve=${bal.reserve}.`,
             'Ledger transfers require available (not pending) USD on the platform company.',
             'Sandbox limitation: docs state payouts may not work yet — try production or wait for settlement.',
-            'We send type=ledger (not wallet_send).'
+            'We send type=ledger (not wallet_send).',
+            'insufficient_available_balance'
           ].join(' ')
         )
         err.status = error.status
-        err.body = error.body
+        err.body = {
+          error: {
+            type: 'insufficient_available_balance',
+            available: bal.available,
+            pending: bal.pending,
+            required: amountMajor
+          }
+        }
         throw err
       }
       throw error
@@ -485,6 +531,9 @@ export class WhopPaymentProvider implements PaymentProvider {
     const map: Record<string, NormalizedEventType> = {
       'payment.succeeded': 'payment.succeeded',
       'payment.failed': 'payment.failed',
+      // One-time plan checkouts often grant access via membership events
+      'membership.activated': 'payment.succeeded',
+      'membership.went_valid': 'payment.succeeded',
       'invoice.created': 'invoice.created',
       'invoice.paid': 'invoice.paid',
       'invoice.past_due': 'invoice.failed',

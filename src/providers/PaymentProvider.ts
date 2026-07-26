@@ -13,6 +13,7 @@ import type {
   PaymentProviderName,
   PaymentRequestResourceMetadata,
   PaymentRequestResources,
+  UpdatePaymentRequestDetailsParams,
   PayoutParams,
   PayoutResult,
   ProviderWebhookEvent,
@@ -47,6 +48,14 @@ export abstract class PaymentProvider {
   abstract updatePaymentRequestPaymentLinkActive(
     paymentLinkId: string,
     active: boolean
+  ): Promise<unknown>
+
+  /**
+   * Sync active flag and/or title/description on the provider checkout resource
+   * (Stripe Payment Link + Product, Whop Plan + Product).
+   */
+  abstract updatePaymentRequestDetails(
+    params: UpdatePaymentRequestDetailsParams
   ): Promise<unknown>
 
   abstract deactivatePaymentRequestResources(

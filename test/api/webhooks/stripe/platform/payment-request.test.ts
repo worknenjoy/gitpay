@@ -80,6 +80,10 @@ describe('webhooks for payment requests', () => {
 
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
+      await models.User.update(
+        { account_id: 'acct_1KkomkBrSjgsps2DGGGtipW4' },
+        { where: { id: currentUser.id } }
+      )
       await PaymentRequestFactory({
         title: 'Payment for services',
         amount: 1000,
@@ -356,6 +360,10 @@ describe('webhooks for payment requests', () => {
 
       const user = await registerAndLogin(agent)
       const { headers, body: currentUser } = user || {}
+      await models.User.update(
+        { account_id: 'acct_1KkomkBrSjgsps2DGGGtipW4' },
+        { where: { id: currentUser.id } }
+      )
       const paymentRequest = await PaymentRequestFactory({
         title: 'Payment for services',
         amount: 1,

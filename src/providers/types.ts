@@ -26,6 +26,14 @@ export type PaymentRequestResources = {
   paymentUrl: string
 }
 
+/** Sync payment-request title/description/active to the provider checkout resource */
+export type UpdatePaymentRequestDetailsParams = {
+  paymentLinkId: string
+  active?: boolean
+  title?: string
+  description?: string | null
+}
+
 export type BountyCheckoutParams = {
   amount: number
   currency: string
@@ -75,7 +83,11 @@ export type InvoiceResult = {
 }
 
 export type RefundParams = {
-  /** Charge id (Stripe) or payment id (Whop) */
+  /**
+   * Provider payment reference:
+   * - Stripe: charge id (`ch_…`) or payment intent id (`pi_…`)
+   * - Whop: payment id (`pay_…`)
+   */
   paymentReference: string
   amountCents?: number
   metadata?: Record<string, string>
