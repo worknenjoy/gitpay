@@ -135,6 +135,8 @@ export type PayoutResult = {
 export type ConnectedAccountParams = {
   email: string
   country?: string
+  /** Display name for the connected account / company */
+  title?: string
   metadata?: Record<string, string>
   type?: string
 }

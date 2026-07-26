@@ -11,6 +11,16 @@ import PayoutRequestDrawer from 'design-library/molecules/drawers/payout-request
 import Button from 'design-library/atoms/buttons/button/button'
 import { SettingsOutlined as SettingsIcon } from '@mui/icons-material'
 
+const paymentProvider = () =>
+  (typeof process !== 'undefined' && process.env && process.env.PAYMENT_PROVIDER) || 'stripe'
+
+const hasPayoutAccount = (userData: any) => {
+  if (paymentProvider() === 'whop') {
+    return Boolean(userData?.whop_account_id)
+  }
+  return Boolean(userData?.account_id)
+}
+
 const Payouts = ({
   payouts,
   balance,
@@ -26,8 +36,11 @@ const Payouts = ({
   const history = useHistory()
   const { data: userData, completed: userCompleted } = user || {}
   const { data, completed } = balance || {}
-  const available = data?.available || [{ amount: 0, currency: 'USD' }]
+  const available = data?.available?.length
+    ? data.available
+    : [{ amount: 0, currency: 'usd' }]
   const { data: accountData, completed: accountCompleted } = account || {}
+  const isWhop = paymentProvider() === 'whop' || accountData?.provider === 'whop'
   const payoutSchedule = accountData?.settings?.payouts?.schedule?.interval
 
   const [payoutRequestDrawer, setPayoutRequestDrawer] = React.useState(false)
@@ -47,17 +60,32 @@ const Payouts = ({
     fetchAccount()
     searchPayout()
     fetchAccountBalance()
-  }, [searchPayout, fetchAccountBalance])
+  }, [searchPayout, fetchAccountBalance, fetchAccount])
+
+  // Stripe: only enable request when schedule is manual (auto schedule pays without request).
+  // Whop: no Connect schedule — withdrawals are always on-demand.
+  const canRequestPayout = (amount: number) => {
+    if (amount <= 0) return false
+    if (isWhop) return true
+    return payoutSchedule === 'manual'
+  }
 
   return (
     <Container>
       <ProfileHeader
         title={<FormattedMessage id="payouts.title" defaultMessage="Payouts" />}
         subtitle={
-          <FormattedMessage
-            id="payouts.subtitle"
-            defaultMessage="Manage your payouts on the way to your bank account"
-          />
+          isWhop ? (
+            <FormattedMessage
+              id="payouts.subtitle.whop"
+              defaultMessage="Request a withdrawal from your Whop connected company balance to your bank or payout method"
+            />
+          ) : (
+            <FormattedMessage
+              id="payouts.subtitle"
+              defaultMessage="Manage your payouts on the way to your bank account"
+            />
+          )
         }
         aside={
           <Button
@@ -78,7 +106,7 @@ const Payouts = ({
           </Button>
         }
       />
-      {!userData?.account_id && userCompleted ? (
+      {!hasPayoutAccount(userData) && userCompleted ? (
         <Paper elevation={0} style={{ padding: 20, marginTop: 10 }}>
           <EmptyPayout onActionClick={() => history.push('/profile/payout-settings')} />
         </Paper>
@@ -91,23 +119,46 @@ const Payouts = ({
                 : { display: 'flex', flexDirection: 'row', justifyContent: 'flex-end' }
             }
           >
-            <StatusCard
-              name={<FormattedMessage id="payouts.schedule" defaultMessage="Payout Schedule" />}
-              status={payoutSchedule || 'No Info'}
-              onAdd={() => history.push('/profile/payout-settings/bank-account/payout-schedule')}
-              action={
-                <FormattedMessage
-                  id="payouts.editSchedule"
-                  defaultMessage="Change payout schedule"
-                />
-              }
-              actionProps={{ disabled: !accountCompleted }}
-              completed={accountCompleted}
-            />
+            {!isWhop && (
+              <StatusCard
+                name={<FormattedMessage id="payouts.schedule" defaultMessage="Payout Schedule" />}
+                status={payoutSchedule || 'No Info'}
+                onAdd={() => history.push('/profile/payout-settings/bank-account/payout-schedule')}
+                action={
+                  <FormattedMessage
+                    id="payouts.editSchedule"
+                    defaultMessage="Change payout schedule"
+                  />
+                }
+                actionProps={{ disabled: !accountCompleted }}
+                completed={accountCompleted}
+              />
+            )}
+            {isWhop && (
+              <StatusCard
+                name={
+                  <FormattedMessage id="payouts.method.whop" defaultMessage="Withdrawal method" />
+                }
+                status={
+                  <FormattedMessage
+                    id="payouts.method.whop.onDemand"
+                    defaultMessage="On demand (Whop)"
+                  />
+                }
+                onAdd={() => history.push('/profile/payout-settings/bank-account/account-holder')}
+                action={
+                  <FormattedMessage
+                    id="payouts.method.whop.manage"
+                    defaultMessage="Manage on Whop"
+                  />
+                }
+                actionProps={{ disabled: !accountCompleted }}
+                completed={accountCompleted}
+              />
+            )}
             {available.map((item, index) => (
-              <>
+              <React.Fragment key={index}>
                 <BalanceCard
-                  key={index}
                   name={<FormattedMessage id="payouts.balance" defaultMessage="Balance" />}
                   balance={item.amount}
                   currency={item.currency}
@@ -115,7 +166,7 @@ const Payouts = ({
                   action={
                     <FormattedMessage id="payouts.requestPayout" defaultMessage="Request payout" />
                   }
-                  actionProps={{ disabled: item.amount === 0 || payoutSchedule !== 'manual' }}
+                  actionProps={{ disabled: !canRequestPayout(item.amount) }}
                   completed={completed}
                   type="centavos"
                 />
@@ -127,7 +178,7 @@ const Payouts = ({
                   completed={completed}
                   onSuccess={handlePayoutRequestForm}
                 />
-              </>
+              </React.Fragment>
             ))}
           </div>
           <PayoutsTable payouts={payouts} />

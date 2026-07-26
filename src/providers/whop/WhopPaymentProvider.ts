@@ -411,29 +411,105 @@ export class WhopPaymentProvider implements PaymentProvider {
   }
 
   async createPayout(params: PayoutParams): Promise<PayoutResult> {
-    const withdrawal = await this.client.post<any>('/withdrawals', {
+    // Whop withdrawals use major currency units (e.g. 50.00), same as ledger transfers.
+    const body: Record<string, unknown> = {
       company_id: params.accountId,
       amount: params.amount,
-      currency: params.currency || 'usd',
-      payout_method_id: params.payoutMethodId
+      currency: (params.currency || 'usd').toLowerCase()
+    }
+    // Optional: omit when user has a default payout method configured on Whop
+    if (params.payoutMethodId) {
+      body.payout_method_id = params.payoutMethodId
+    }
+    if (params.metadata) {
+      body.metadata = params.metadata
+    }
+
+    // eslint-disable-next-line no-console
+    console.log('[whop] createPayout /withdrawals', {
+      company_id: body.company_id,
+      amount: body.amount,
+      currency: body.currency,
+      has_payout_method: Boolean(params.payoutMethodId)
     })
+
+    const withdrawal = await this.client.post<any>('/withdrawals', body)
     return {
-      payoutId: withdrawal.id,
-      status: withdrawal.status,
+      payoutId: withdrawal.id || withdrawal.withdrawal_id,
+      status: withdrawal.status || 'pending',
       raw: withdrawal
     }
   }
 
   async createConnectedAccount(params: ConnectedAccountParams): Promise<AccountResult> {
-    const company = await this.client.post<any>('/companies', {
-      email: params.email,
+    const email = params.email != null ? String(params.email).trim().toLowerCase() : ''
+    if (!email || !email.includes('@')) {
+      const err: any = new Error(
+        'Whop connected account requires a valid user email (Users.email)'
+      )
+      err.status = 422
+      throw err
+    }
+
+    const title =
+      (params.title && String(params.title).trim()) ||
+      (params.metadata?.title && String(params.metadata.title).trim()) ||
+      email
+
+    const body: Record<string, unknown> = {
+      email,
       parent_company_id: this.companyId(),
-      title: params.metadata?.title || params.email,
-      metadata: params.metadata || {}
+      title,
+      metadata: {
+        ...(params.metadata || {}),
+        // Keep title in metadata for ops / debugging
+        title
+      }
+    }
+
+    // Whop requires lowercase ISO 3166-1 alpha-2 (e.g. us, br, gb) — not uppercase
+    if (params.country) {
+      body.country = String(params.country).trim().toLowerCase()
+    }
+
+    // eslint-disable-next-line no-console
+    console.log('[whop] createConnectedAccount', {
+      email,
+      emailLength: email.length,
+      country: body.country,
+      title,
+      parent_company_id: body.parent_company_id,
+      baseUrl: process.env.WHOP_API_BASE_URL || process.env.WHOP_SANDBOX || 'production-default'
     })
-    return {
-      accountId: company.id,
-      raw: company
+
+    try {
+      const company = await this.client.post<any>('/companies', body)
+      return {
+        accountId: company.id,
+        raw: company
+      }
+    } catch (error: any) {
+      const message = String(error?.message || '')
+      // Whop validates deliverability (MX / "real" mailbox), not only format.
+      if (
+        message.toLowerCase().includes('email') ||
+        message.toLowerCase().includes('mail')
+      ) {
+        const err: any = new Error(
+          [
+            `Whop rejected email "${email}" when creating the connected company.`,
+            error.message,
+            'Whop requires a deliverable address (not format-only).',
+            'Use a real inbox on the Gitpay user (Users.email) — temporary, disposable, or no-reply addresses are often rejected.',
+            'Confirm the logged email matches the signed-in user profile.'
+          ].join(' ')
+        )
+        err.status = error.status || 400
+        err.body = error.body
+        err.email = email
+        throw err
+      }
+      throw error
     }
   }
 

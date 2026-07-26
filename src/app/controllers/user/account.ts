@@ -19,7 +19,11 @@ export const accountCreate = async (req: any, res: any) => {
   } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log(error)
-    res.send(false)
+    const status = error?.statusCode || error?.status || 400
+    res.status(status).json({
+      error: error?.message || 'account_create_failed',
+      details: error?.body || undefined
+    })
   }
 }
 
@@ -36,7 +40,10 @@ export const accountCountries = async (req: any, res: any) => {
 
 export const accountBalance = async (req: any, res: any) => {
   try {
-    const data = await user.userAccountBalance({ account_id: req.user.account_id })
+    const data = await user.userAccountBalance({
+      account_id: req.user.account_id,
+      userId: req.user.id
+    })
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console

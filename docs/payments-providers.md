@@ -107,7 +107,21 @@ In `NODE_ENV=test`, signature verification is skipped for both providers.
 |------|--------|------|
 | Pay assignee (bounty) | Transfer to `User.account_id` | Transfer to `User.whop_account_id` |
 | Payment request after pay | Transfer (source_transaction charge) | Transfer (platform balance → connected company) |
-| User withdraw | Connect Payout | Withdrawal on connected company |
+| User withdraw | Connect Payout (`POST /payouts/request`) | Whop `POST /withdrawals` via same Gitpay **Request payout** UI (`method: whop`) |
+
+### Payment request vs payout (Whop)
+
+| Step | Automatic? | API |
+|------|------------|-----|
+| Customer pays PR | Webhook | payment / membership |
+| Platform → seller company | Webhook or cron | `transfers` (ledger) |
+| Seller → bank | **User request** | Gitpay `POST /payouts/request` → Whop `withdrawals` |
+
+Gitpay **Payouts** page for Whop:
+
+- Shows connected company **available** balance (ledger → cents for UI)
+- **Request payout** creates a Whop withdrawal (on-demand; no Stripe-style schedule)
+- Requires `Users.whop_account_id` and a payout method configured on Whop (portal / verification)
 
 Money movement on Whop is always:
 

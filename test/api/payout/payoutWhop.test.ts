@@ -3,7 +3,7 @@ import request from 'supertest'
 import nock from 'nock'
 import api from '../../../src/server'
 import { registerAndLogin, truncateModels } from '../../helpers'
-import { withPaymentProvider, WHOP_API_HOST } from '../../helpers/whop'
+import { withPaymentProvider, pinWhopApiForTests, WHOP_API_HOST } from '../../helpers/whop'
 import Models from '../../../src/models'
 
 const agent = request.agent(api) as any
@@ -15,6 +15,7 @@ describe('POST /payouts/request (Whop)', () => {
     await truncateModels(models.Payout)
     process.env.WHOP_API_KEY = 'test_whop_key'
     process.env.WHOP_COMPANY_ID = 'biz_test_platform'
+    pinWhopApiForTests()
   })
 
   afterEach(() => {
@@ -23,6 +24,7 @@ describe('POST /payouts/request (Whop)', () => {
 
   it('should create a Whop withdrawal payout', async () => {
     await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
       nock(WHOP_API_HOST)
         .post('/api/v1/withdrawals')
         .reply(200, {
@@ -56,6 +58,7 @@ describe('POST /payouts/request (Whop)', () => {
 
   it('should error when user has no whop_account_id', async () => {
     await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
       const user = await registerAndLogin(agent)
 
       const res = await agent

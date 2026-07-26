@@ -135,10 +135,17 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
               checkboxes={[
                 {
                   label: (
-                    <FormattedMessage
-                      id="PayoutRequest.form.confirm"
-                      defaultMessage="I agree to transfer the funds from your current balance to your registered bank account. The amount will be included in the next payout."
-                    />
+                    process.env.PAYMENT_PROVIDER === 'whop' ? (
+                      <FormattedMessage
+                        id="PayoutRequest.form.confirm.whop"
+                        defaultMessage="I agree to withdraw this amount from my Whop connected company balance to my registered payout method on Whop."
+                      />
+                    ) : (
+                      <FormattedMessage
+                        id="PayoutRequest.form.confirm"
+                        defaultMessage="I agree to transfer the funds from your current balance to your registered bank account. The amount will be included in the next payout."
+                      />
+                    )
                   ),
                   name: 'custom_amount',
                   value: true,

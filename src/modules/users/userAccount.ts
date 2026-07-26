@@ -1,5 +1,7 @@
 import { getPaymentProvider } from '../../providers'
 import { findUserByIdSimple } from '../../queries/user/findUserByIdSimple'
+import { getWhopClient } from '../../providers/whop/client'
+import { WhopPaymentProvider } from '../../providers/whop/WhopPaymentProvider'
 
 type UserAccountParams = {
   id: number
@@ -8,7 +10,7 @@ type UserAccountParams = {
 /**
  * Returns the connected payout account for the current payment provider.
  * Stripe: full Connect account object from Stripe API.
- * Whop: lightweight local representation based on Users.whop_account_id.
+ * Whop: connected company from Whop API + local Users.whop_account_id.
  *
  * Always includes `provider` and `active` (via PaymentProvider.isConnectedAccountActive)
  * so clients can gate payment requests without provider-specific checks.
@@ -25,13 +27,53 @@ export async function userAccount(userParameters: UserAccountParams) {
         active: false
       }
     }
+
+    let company: any = null
+    try {
+      company = await getWhopClient().get<any>(`/companies/${whopAccountId}`)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[whop] retrieve company for user account failed', error)
+    }
+
+    let balances: { available: number; pending: number; reserve: number } | null = null
+    try {
+      const whop = paymentProvider as WhopPaymentProvider
+      if (typeof whop.getCompanyLedgerBalances === 'function') {
+        const ledger = await whop.getCompanyLedgerBalances(whopAccountId)
+        balances = {
+          available: ledger.available,
+          pending: ledger.pending,
+          reserve: ledger.reserve
+        }
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[whop] ledger balances for connected company failed', error)
+    }
+
     const account = {
       id: whopAccountId,
       object: 'account',
       provider: paymentProvider.name,
-      email: user?.dataValues?.email,
-      country: user?.dataValues?.country,
-      // Full KYC lives on the Whop portal; connected company id is enough for PR eligibility.
+      email: company?.email || user?.dataValues?.email || null,
+      country: company?.country || company?.business_address?.country || user?.dataValues?.country || null,
+      title: company?.title || company?.name || null,
+      verified: company?.verified ?? null,
+      route: company?.route || null,
+      url: company?.url || company?.hub_url || null,
+      created_at: company?.created_at || null,
+      parent_company_id: company?.parent_company_id || null,
+      // Friendly status for UI (AccountHolderStatus expects capabilities.transfers)
+      capabilities: {
+        transfers: 'active'
+      },
+      business_profile: {
+        name: company?.title || company?.name || null,
+        url: company?.url || null
+      },
+      balances,
+      // KYC / bank details are completed on Whop portal via account_links
       completed: true,
       charges_enabled: true,
       payouts_enabled: true,
@@ -40,6 +82,7 @@ export async function userAccount(userParameters: UserAccountParams) {
         internal_user_id: String(userParameters.id)
       }
     }
+
     return {
       ...account,
       active: paymentProvider.isConnectedAccountActive(account)

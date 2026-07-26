@@ -77,8 +77,8 @@ Loading.args = {
   }
 }
 
-export const WhopVerificationBanner = Template.bind({})
-WhopVerificationBanner.args = {
+export const WhopConnectedCompany = Template.bind({})
+WhopConnectedCompany.args = {
   profileHeaderProps: {
     title: 'Payout Settings',
     subtitle: 'Manage your payout settings and preferences.'
@@ -88,6 +88,7 @@ WhopVerificationBanner.args = {
     data: {
       id: '1',
       name: 'Jane Doe',
+      email: 'jane@example.com',
       whop_account_id: 'biz_whop_123',
       Types: [{ name: 'provider' }]
     }
@@ -97,9 +98,16 @@ WhopVerificationBanner.args = {
     data: {
       id: 'biz_whop_123',
       provider: 'whop',
-      active: false,
+      active: true,
+      title: 'Jane Consulting LLC',
       country: 'US',
-      email: 'jane@example.com'
+      email: 'jane@example.com',
+      verified: true,
+      created_at: '2026-03-01T12:00:00.000Z',
+      route: 'jane-consulting',
+      url: 'https://whop.com/jane-consulting',
+      capabilities: { transfers: 'active' },
+      balances: { available: 120.5, pending: 40, reserve: 0 }
     }
   },
   countries: {
