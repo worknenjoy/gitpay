@@ -126,6 +126,10 @@ const PaymentMail = {
   },
 
   refund: async (user: any, task: any, order: any) => {
+    if (!user?.email) {
+      console.warn('PaymentMail.refund skipped: missing user or email')
+      return
+    }
     const to = user.email
     const language = user.language || 'en'
     const receiveNotifications = user?.receiveNotifications
@@ -141,7 +145,7 @@ const PaymentMail = {
         {
           type: 'text/html',
           value: emailTemplate.baseContentEmailTemplate(
-            `<p>${i18n.__('mail.payment.content.refund', { value: order.amount, title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}</p>`
+            `<p>${i18n.__('mail.payment.content.refund', { value: order.amount, title: task?.title, url: `${process.env.FRONTEND_HOST}/#/task/${task?.id}` })}</p>`
           )
         }
       ])
@@ -151,6 +155,10 @@ const PaymentMail = {
   },
 
   pendingBountyRefunded: async (user: any, task: any, order: any) => {
+    if (!user?.email) {
+      console.warn('PaymentMail.pendingBountyRefunded skipped: missing user or email')
+      return
+    }
     const to = user.email
     const language = user.language || 'en'
     const receiveNotifications = user?.receiveNotifications
@@ -228,6 +236,10 @@ const PaymentMail = {
     order: any,
     meta: { ageDays: number | null; olderThanDays: number; returnMethod?: 'refund' | 'payout' }
   ) => {
+    if (!user?.email) {
+      console.warn('PaymentMail.oldBountyPaypalRefunded skipped: missing user or email')
+      return
+    }
     const to = user.email
     const language = user.language || 'en'
     const receiveNotifications = user?.receiveNotifications
