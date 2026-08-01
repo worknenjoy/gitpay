@@ -14,5 +14,10 @@
   "mail.payment.pendingBountyRefunded.intro": "Olá {{name}},",
   "mail.payment.pendingBountyRefunded.content": "Um pagamento feito em {{date}} para a issue <a href=\"{{url}}\">{{title}}</a> foi reembolsado automaticamente. A recompensa está aberta desde essa data sem uma solução, então devolvemos os fundos para você.<br/><br/>Nenhuma ação é necessária da sua parte. Se o desenvolvimento for retomado, você pode financiar a recompensa novamente na página da issue.",
   "mail.payment.pendingBountyRefunded.footer": "Se acredita que isso é um engano, responda este e-mail ou entre em contato em contact@gitpay.me.",
-  "mail.payment.pendingBountyRefunded.cta": "Ver seus pagamentos no Gitpay"
+  "mail.payment.pendingBountyRefunded.cta": "Ver seus pagamentos no Gitpay",
+  "mail.payment.paypalRefundFailed.subject": "Não foi possível reembolsar automaticamente o seu pagamento PayPal no Gitpay",
+  "mail.payment.paypalRefundFailed.intro": "Olá {{name}},",
+  "mail.payment.paypalRefundFailed.content": "Tentámos reembolsar automaticamente o seu pagamento PayPal da issue <a href=\"{{url}}\">{{title}}</a>, mas o reembolso não pôde ser concluído.<br/><br/><strong>Motivo:</strong> {{reason}}<br/><br/>O seu pagamento continua registado como pago. Para solicitar um <strong>reembolso manual</strong>, contacte-nos em <a href=\"mailto:{{contactEmail}}\">{{contactEmail}}</a> e inclua o ID do pedido (Order ID) dos detalhes abaixo.",
+  "mail.payment.paypalRefundFailed.footer": "Pedimos desculpa pelo inconveniente. Responda a este e-mail ou escreva para {{contactEmail}} e a nossa equipa ajudará a concluir o reembolso.",
+  "mail.payment.paypalRefundFailed.cta": "Ver os seus pagamentos no Gitpay"
 }

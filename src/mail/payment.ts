@@ -346,6 +346,77 @@ const PaymentMail = {
     } catch (error) {
       console.error('Error sending email:', error)
     }
+  },
+
+  /**
+   * Notify the payer that an automatic PayPal refund could not be completed.
+   * Status of the order is left unchanged; they must request a manual refund.
+   */
+  paypalRefundFailed: async (
+    user: any,
+    task: any,
+    order: any,
+    meta?: { reason?: string | null }
+  ) => {
+    if (!user?.email) {
+      console.warn('PaymentMail.paypalRefundFailed skipped: missing user or email')
+      return
+    }
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
+    i18n.setLocale(language)
+
+    const taskUrl = task?.id
+      ? `${process.env.FRONTEND_HOST}/#/task/${task.id}`
+      : `${process.env.FRONTEND_HOST}/#/profile/payments`
+    const paymentsUrl = `${process.env.FRONTEND_HOST}/#/profile/payments`
+    const currency = String(order.currency || 'usd').toLowerCase()
+    const symbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
+    const reason = (meta?.reason && String(meta.reason).trim()) || 'PayPal refund could not be completed'
+    const contactEmail = constants.notificationEmail
+
+    try {
+      return await request(to, i18n.__('mail.payment.paypalRefundFailed.subject'), [
+        {
+          type: 'text/html',
+          value: tableContentEmailTemplate(
+            i18n.__('mail.payment.paypalRefundFailed.intro', {
+              name: user.name || user.username || 'Gitpay User'
+            }),
+            i18n.__('mail.payment.paypalRefundFailed.content', {
+              title: task?.title || 'your bounty',
+              url: taskUrl,
+              reason,
+              contactEmail
+            }),
+            {
+              headers: ['Field', 'Value'],
+              rows: [
+                ['Provider', 'PayPal'],
+                ['Amount', `${symbol} ${order.amount}`],
+                ['Currency', String(order.currency || '').toUpperCase()],
+                ['Order ID', String(order.id)],
+                ['Reason', reason],
+                ['Contact', contactEmail]
+              ]
+            },
+            i18n.__('mail.payment.paypalRefundFailed.footer', { contactEmail }),
+            {
+              link: paymentsUrl,
+              text: i18n.__('mail.payment.paypalRefundFailed.cta')
+            } as ActionButton
+          )
+        }
+      ])
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
   }
 }
 

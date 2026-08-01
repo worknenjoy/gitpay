@@ -223,8 +223,9 @@ export async function refundPaypalPayment({
       }
     })
   } catch (err: any) {
-    const parsed = tryParseJson(err?.error)
-    const issue = parsed?.details?.[0]?.issue
+    const parsed = tryParseJson(err?.error) ?? tryParseJson(err?.response?.body) ?? tryParseJson(err?.body)
+    const detail = parsed?.details?.[0]
+    const issue = detail?.issue
     // If already refunded, treat as idempotent.
     if (issue === 'ALREADY_REFUNDED') {
       return order.dataValues ?? order
@@ -260,6 +261,14 @@ export async function refundPaypalPayment({
         payout
       }
     } else {
+      // Re-throw with a readable PayPal issue/description when available.
+      if (issue) {
+        const description = detail?.description || parsed?.message
+        const e: any = new Error(description ? `${issue}: ${description}` : String(issue))
+        e.cause = err
+        e.meta = { orderId: order.id, issue, paypal: parsed }
+        throw e
+      }
       throw err
     }
   }

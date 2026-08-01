@@ -5,9 +5,12 @@ import { refundWalletPayment } from '../../payments/refunds/refundWalletPayment'
 import { markIssueStateAsClosed } from '../../../mutations/issue/state/markIssueStateAsClosed'
 import { ClosedReasons } from '../../../constants/task'
 import { isRefundEligibleAction } from '../../../queries/issue/state/findPendingTasks'
+import PaymentMail from '../../../mail/payment'
 import Models from '../../../models'
 
 const models = Models as any
+
+const MANUAL_REFUND_CONTACT = 'contact@gitpay.me'
 
 export interface RefundOrderResult {
   orderId: number | null
@@ -24,6 +27,48 @@ export interface RefundPendingTasksResult {
   skipped: number
   closed: number
   results: RefundOrderResult[]
+}
+
+/** Best-effort extraction of a readable refund failure reason (esp. PayPal API bodies). */
+export function extractRefundFailureReason(err: any): string {
+  if (!err) return 'unknown_error'
+
+  const tryParse = (input: unknown): any => {
+    if (typeof input === 'string') {
+      try {
+        return JSON.parse(input)
+      } catch {
+        return null
+      }
+    }
+    return input && typeof input === 'object' ? input : null
+  }
+
+  const body = tryParse(err?.error) ?? tryParse(err?.response?.body) ?? tryParse(err?.body)
+  const detail = body?.details?.[0]
+  if (detail?.issue) {
+    const description = detail.description || body?.message
+    return description ? `${detail.issue}: ${description}` : String(detail.issue)
+  }
+  if (body?.name && body?.message) {
+    return `${body.name}: ${body.message}`
+  }
+  if (body?.message) {
+    return String(body.message)
+  }
+
+  if (err?.message && String(err.message).trim()) {
+    return String(err.message)
+  }
+
+  return String(err)
+}
+
+function buildRefundFailedComment(provider: string, reason: string): string {
+  return (
+    `${provider} refund failed [${new Date().toISOString()}]: ${reason}. ` +
+    `Manual refund required — user should contact ${MANUAL_REFUND_CONTACT}`
+  )
 }
 
 export async function refundPendingTasksService(
@@ -126,17 +171,44 @@ export async function refundPendingTasksService(
         }
       } catch (err: any) {
         taskRefundFailed = true
-        const message = err?.message || String(err)
+        const reason = extractRefundFailureReason(err)
 
+        // Keep order.status as-is (e.g. succeeded). Only record failure on comment.
         try {
           await models.Order.update(
-            {
-              comment: `${provider} refund failed [${new Date().toISOString()}]: ${message}`
-            },
+            { comment: buildRefundFailedComment(provider, reason) },
             { where: { id: order.id } }
           )
         } catch {
           // secondary failure — ignore, primary error is captured in results
+        }
+
+        // PayPal-only: notify payer that auto-refund failed and they need a manual refund.
+        if (provider === 'paypal') {
+          try {
+            const userId =
+              order.userId ?? order.get?.('userId') ?? order.dataValues?.userId ?? null
+            const user =
+              order.User ||
+              (userId != null ? await models.User.findByPk(userId) : null)
+            const taskForMail =
+              order.Task ||
+              task ||
+              (order.TaskId != null ? await models.Task.findByPk(order.TaskId) : null)
+
+            if (user) {
+              await PaymentMail.paypalRefundFailed(user, taskForMail, order, { reason })
+            } else {
+              console.warn(
+                `refundPendingTasksService: no user for PayPal order ${order.id}; skipped refund-failed email`
+              )
+            }
+          } catch (mailErr) {
+            console.error(
+              `refundPendingTasksService: paypalRefundFailed mail failed for order ${order.id}:`,
+              mailErr
+            )
+          }
         }
 
         results.push({
@@ -144,7 +216,7 @@ export async function refundPendingTasksService(
           taskId: task.id,
           provider,
           status: 'failed',
-          error: message
+          error: reason
         })
         failed++
       }
