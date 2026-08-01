@@ -68,4 +68,21 @@ describe('GET /user/account/countries', () => {
       expect(res.body.countries.find((c: any) => c.code === 'AR')).to.exist
     })
   })
+
+  it('returns default_currency from user country when PAYMENT_PROVIDER=whop', async () => {
+    await withPaymentProvider('whop', async () => {
+      const user = await registerAndLogin(agent)
+      await models.User.update({ country: 'BR' }, { where: { id: user.body.id } })
+
+      const res = await agent
+        .get('/user/account/countries')
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+
+      expect(res.body.provider).to.equal('whop')
+      expect(res.body.default_currency).to.equal('brl')
+      expect(res.body.supported_bank_account_currencies).to.have.property('brl')
+      expect(res.body.country).to.equal('BR')
+    })
+  })
 })

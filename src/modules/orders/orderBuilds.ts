@@ -150,16 +150,42 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
       ? currentModels.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan)
       : parseFloat(String(orderParameters.amount)) * (1 + (percentage || 0) / 100)
 
+    // Whop requires https:// redirect_url. Use public API tunnel (WHOP_API_HOST / ngrok),
+    // not FRONTEND_HOST (often http://localhost). API bounces to the SPA.
+    const { getWhopHttpsApiBaseUrl } = await import('../../providers/whop/redirectBase')
+    const apiHttps = getWhopHttpsApiBaseUrl()
+    const returnUrl =
+      apiHttps && orderParameters.taskId
+        ? `${apiHttps}/orders/whop/return?taskId=${encodeURIComponent(
+            String(orderParameters.taskId)
+          )}&orderId=${encodeURIComponent(String(orderCreated.dataValues.id))}`
+        : undefined
+
+    if (!returnUrl) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        '[orderBuilds][whop] No https WHOP_API_HOST/API_HOST for checkout redirect_url. ' +
+          'Set WHOP_API_HOST=https://your-ngrok-host (tunnel to API :3000). Checkout still works without redirect.'
+      )
+    }
+
+    const bountyTitle =
+      (taskTitle && String(taskTitle).trim()) ||
+      `Gitpay bounty #${orderCreated.dataValues.id}`
+    const bountyDescription = taskTitle
+      ? `Bounty for: ${taskTitle}`
+      : `Gitpay bounty order ${orderCreated.dataValues.id}`
+
     const checkout = await paymentProvider.createBountyCheckout({
       amount: totalPrice,
       currency: orderParameters.currency || 'usd',
-      description: taskTitle
-        ? `Bounty for: ${taskTitle}`
-        : `Gitpay bounty order ${orderCreated.dataValues.id}`,
+      title: bountyTitle,
+      description: bountyDescription,
       metadata: {
         order_id: String(orderCreated.dataValues.id),
         task_id: String(orderParameters.taskId),
-        purpose: 'bounty_order'
+        purpose: 'bounty_order',
+        ...(returnUrl ? { return_url: returnUrl } : {})
       },
       customerEmail: orderParameters.email || orderUser.email
     })

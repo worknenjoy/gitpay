@@ -8,12 +8,23 @@ import { executePaymentRequestTransfer } from './executePaymentRequestTransfer'
 
 const models = Models as any
 
+export type ProcessPendingTransfersOptions = {
+  /**
+   * Skip live Whop ledger transfer and write a mock transfer id (sandbox / ops).
+   * Cron must never pass this — only the CLI script with an explicit flag.
+   */
+  mockSettlement?: boolean
+  /** Limit to a single PaymentRequestPayment id */
+  paymentRequestPaymentId?: number
+}
+
 export type ProcessPendingTransfersResult = {
   scanned: number
   transferred: number
   deferred: number
   skipped: number
   failed: number
+  mockSettlement: boolean
   errors: Array<{ paymentRequestPaymentId: number; error: string }>
 }
 
@@ -25,15 +36,24 @@ export type ProcessPendingTransfersResult = {
  * was left null (earlier bug when transfer failed without marking pending_funds).
  *
  * Safe to run daily via cron or on demand via script.
+ * Pass `mockSettlement: true` only from the ops script when sandbox never settles.
  */
-export async function processPendingPaymentRequestTransfers(): Promise<ProcessPendingTransfersResult> {
+export async function processPendingPaymentRequestTransfers(
+  options: ProcessPendingTransfersOptions = {}
+): Promise<ProcessPendingTransfersResult> {
+  const mockSettlement = Boolean(options.mockSettlement)
+  const paymentWhere: any = {
+    [Op.or]: [
+      { transferStatus: PaymentRequestTransferStatus.PENDING_FUNDS },
+      { transferStatus: { [Op.is]: null } }
+    ]
+  }
+  if (options.paymentRequestPaymentId != null) {
+    paymentWhere.id = options.paymentRequestPaymentId
+  }
+
   const pendingPayments = await models.PaymentRequestPayment.findAll({
-    where: {
-      [Op.or]: [
-        { transferStatus: PaymentRequestTransferStatus.PENDING_FUNDS },
-        { transferStatus: { [Op.is]: null } }
-      ]
-    },
+    where: paymentWhere,
     include: [
       {
         model: models.PaymentRequest,
@@ -58,17 +78,20 @@ export async function processPendingPaymentRequestTransfers(): Promise<ProcessPe
     deferred: 0,
     skipped: 0,
     failed: 0,
+    mockSettlement,
     errors: []
   }
 
   console.log(
-    `[payment-request-transfer-cron] Found ${pendingPayments.length} payment(s) with transferStatus=${PaymentRequestTransferStatus.PENDING_FUNDS}`
+    `[payment-request-transfer-cron] Found ${pendingPayments.length} payment(s) with transferStatus=${PaymentRequestTransferStatus.PENDING_FUNDS}` +
+      (mockSettlement ? ' (mockSettlement=true)' : '')
   )
 
   for (const payment of pendingPayments) {
     try {
       const transferResult = await executePaymentRequestTransfer({
-        paymentRequestPaymentId: payment.id
+        paymentRequestPaymentId: payment.id,
+        mockSettlement
       })
 
       if (transferResult.skipped) {

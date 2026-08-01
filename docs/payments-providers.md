@@ -133,7 +133,13 @@ Whop’s Workforce **Bounties** API is **not** used for GitHub issue bounties (d
 
 With `PAYMENT_PROVIDER=whop`:
 
-1. User creates payout account → `companies.create` → stores `Users.whop_account_id`.
+1. User picks a **country** → `POST /user/account` → `companies.create` → stores `Users.whop_account_id`.
+   Gitpay sends to Whop:
+   - **email** (deliverable `Users.email`)
+   - **country** (lowercase ISO, e.g. `us`, `br`)
+   - **title** (display name)
+   - **metadata**: `internal_user_id` / `gitpay_user_id`, email, country, `currency` / `default_currency` (from country map), name, username  
+   Bank account numbers are **not** collected in Gitpay for Whop.
 2. Verification link → `account_links` with `use_case: account_onboarding`.
    Return/refresh URLs hit the **API**, which then redirects into the SPA (same pattern as `/orders/authorize`):
 
@@ -143,12 +149,14 @@ With `PAYMENT_PROVIDER=whop`:
    | Expired / resume | `GET /user/account/verification/refresh` | `/#/profile/payout-settings/bank-account/account-verification/refresh?status=expired` |
 
    Whop requires **https://** callback URLs. For local dev:
-   - Tunnel the API (`ngrok http 3000`) and set `WHOP_API_HOST=https://…` (or `API_HOST` with https).
-   - Keep `FRONTEND_HOST=http://localhost:8082` so the API can bounce the browser back to the local app with a success toast.
-3. User completes KYC and adds a payout method in Whop; they land back on the verification return page with a success message.
-4. Platform can transfer funds and the user can request withdrawals.
+   - Tunnel the API (`ngrok http 3000`) and set `WHOP_API_HOST=https://…` (e.g. `https://hesitant-hardy-foothold.ngrok-free.dev`).
+   - Keep `FRONTEND_HOST=http://localhost:8082` so the API can bounce the browser back to the local app.
+   - Same `WHOP_API_HOST` is used for **bounty checkout** `redirect_url` → `GET /orders/whop/return?taskId=…` → SPA task page.
+3. User completes **KYC and bank / payout method on Whop** (hosted portal). That is where the bank account is “settled” — not in Stripe-style Gitpay bank fields.
+4. Gitpay **Account holder** and **Bank account** tabs show connected company summary + **currency from the user’s country** (`currencyMap`), not Stripe Country Specs.
+5. Platform can transfer funds; the user requests withdrawals from Gitpay (**Request payout** → Whop `withdrawals`).
 
-With Stripe (default), existing Connect custom account flow is unchanged (`Users.account_id`).
+With Stripe (default), existing Connect custom account flow is unchanged (`Users.account_id` + external bank accounts in Gitpay).
 
 ### Account readiness (`active`)
 
@@ -227,6 +235,59 @@ When transfer is deferred:
 npm run scripts:payment-request:process_pending_transfers
 ```
 
+### Sandbox: emulating Whop settlement & payout
+
+Whop’s [sandbox docs](https://docs.whop.com/developer/guides/sandbox) note that **payouts may not be available**. Card payments also often stay in **pending** balance for days (or forever in sandbox), so ledger transfers fail with insufficient available balance.
+
+Use the same settlement script with explicit flags to complete the **Gitpay** side of the flow without waiting on Whop:
+
+| Step | Real production | Sandbox / dry-run |
+|------|-----------------|-------------------|
+| 1. Customer pays | Whop checkout + `payment.succeeded` webhook | Same, **or** `--bounty-orders` to mark unpaid Whop `Order`s paid |
+| 2. Platform → seller company | Webhook / cron `transfers` (ledger) | `--mock-settlement` writes `mock_tr_pr_…` and completes claims |
+| 3. Platform → bounty assignee | Transfer API after assign | `--bounty-transfers --mock-settlement` |
+| 4. Seller → bank | User **Request payout** → `withdrawals` | `--mock-payout --user-id=N --amount=…` |
+
+```bash
+# Retry deferred payment-request transfers (real Whop API — needs available balance)
+npm run scripts:payment-request:process_pending_transfers
+
+# Sandbox: complete deferred PR transfers without calling Whop ledger
+npm run scripts:payment-request:process_pending_transfers -- --mock-settlement
+
+# Emulate payment.succeeded for open Whop bounty orders
+npm run scripts:payment-request:process_pending_transfers -- --bounty-orders
+npm run scripts:payment-request:process_pending_transfers -- --bounty-orders --order-id=42
+
+# Bounty assignee transfer (mock ledger when sandbox cannot transfer)
+npm run scripts:payment-request:process_pending_transfers -- --bounty-transfers --mock-settlement
+npm run scripts:payment-request:process_pending_transfers -- --bounty-transfers --task-id=12 --mock-settlement
+
+# Emulate completed withdrawal (Gitpay Payout row only)
+npm run scripts:payment-request:process_pending_transfers -- --mock-payout --user-id=3 --amount=50
+
+# Full sandbox path after a real (or emulated) pay-in
+npm run scripts:payment-request:process_pending_transfers -- --mock-settlement --bounty-orders --bounty-transfers --mock-payout --user-id=3 --amount=50
+```
+
+**Architecture (services used by cron, webhooks, and script):**
+
+| Service | Role |
+|---------|------|
+| `executePaymentRequestTransfer` | Single PR payment → transfer (`mockSettlement` optional) |
+| `processPendingPaymentRequestTransfers` | Batch deferred PR transfers |
+| `markBountyOrderPaid` / `processUnpaidWhopBountyOrders` | Bounty pay-in (webhook + script) |
+| `transferBuildsService` | Bounty assignee transfer (`mockSettlement` optional) |
+| `processPendingBountyWhopTransfers` | Batch bounty transfers for script |
+| `mockPayoutSettlement` | Synthetic paid Whop withdrawal row |
+
+**Never enable `mockSettlement` on the daily cron** — only the CLI with an explicit flag.
+
+Mock transfer ids look like `mock_tr_pr_<paymentId>_<ts>` / `mock_tr_bounty_<taskId>_<ts>`.  
+Mock payouts use `source_id` like `mock_wdrl_<userId>_<ts>` and `method: whop`, `status: paid`.
+
+On **production**, omit mock flags: run real checkouts, wait for available balance (or fund the platform company), then use the cron/script without `--mock-settlement` and the normal **Request payout** UI for withdrawals.
+
 ### Whop adapter notes
 
 - Real `payment.succeeded` payloads often **omit `status`**; the event type means paid.
@@ -254,8 +315,11 @@ npm run scripts:payment-request:process_pending_transfers
 | `src/mutations/payment-request/checkout-session/processCheckoutSessionCompleted.ts` | Persist payment, then call transfer |
 | `src/services/paymentRequest/executePaymentRequestTransfer.ts` | Shared transfer + balance/debt logic |
 | `src/services/paymentRequest/processPendingPaymentRequestTransfers.ts` | Cron/script batch for `pending_funds` |
-| `src/crons/paymentRequests/paymentRequestTransferCron.ts` | Daily job wrapper |
-| `src/scripts/payment-request/process_pending_transfers.ts` | CLI entry for the same job |
+| `src/services/orders/markBountyOrderPaid.ts` | Bounty order paid (webhook + script) |
+| `src/services/orders/processPendingBountyWhopTransfers.ts` | Script batch for bounty assignee transfers |
+| `src/services/payouts/mockPayoutSettlement.ts` | Ops mock withdrawal completion |
+| `src/crons/paymentRequests/paymentRequestTransferCron.ts` | Daily job wrapper (no mock flags) |
+| `src/scripts/payment-request/process_pending_transfers.ts` | CLI: PR transfers + bounty + mock payout |
 
 ## Payment request: disputes / PR balance
 
@@ -305,8 +369,9 @@ When you switch `PAYMENT_PROVIDER`, rebuild the frontend so the country list mat
 # Stripe-focused
 npx mocha test/api/webhooks/stripe/**/*.test.ts
 
-# Whop-focused
-npx mocha test/api/webhooks/whop/*.test.ts test/api/**/*Whop*.test.ts
+# Whop-focused (webhooks, orders, payouts, settlement script services)
+npm run test:whop
+npx mocha test/api/scripts/whop-settlement.test.ts
 ```
 
 ## Adding a third provider

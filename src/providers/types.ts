@@ -37,6 +37,8 @@ export type UpdatePaymentRequestDetailsParams = {
 export type BountyCheckoutParams = {
   amount: number
   currency: string
+  /** Customer-facing product/checkout title (e.g. issue bounty title) */
+  title?: string
   description?: string
   metadata: Record<string, string>
   customerEmail?: string

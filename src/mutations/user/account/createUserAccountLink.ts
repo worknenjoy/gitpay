@@ -1,6 +1,7 @@
 import { findUserByIdSimple } from '../../../queries/user/findUserByIdSimple'
 import { createAccountLink } from '../../provider/stripe/user'
 import { getDefaultPaymentProviderName, getPaymentProvider } from '../../../providers'
+import { getWhopHttpsApiBaseUrl } from '../../../providers/whop/redirectBase'
 
 type CreateUserAccountLinkParams = {
   id: number
@@ -10,21 +11,14 @@ type CreateUserAccountLinkParams = {
  * Public API origin used as Stripe/Whop return_url / refresh_url.
  * Backend then redirects into FRONTEND_HOST SPA routes (see accountVerificationReturn).
  *
- * Whop requires https://. Prefer WHOP_API_HOST (tunnel to the API) for local dev;
- * otherwise API_HOST is upgraded from http → https when needed.
+ * Whop requires https://. Prefer WHOP_API_HOST (tunnel to the API) for local dev.
  */
 function getApiBaseUrlForAccountLinks(providerName: string): string {
   if (providerName === 'whop') {
-    const raw =
-      process.env.WHOP_API_HOST ||
-      process.env.WHOP_FRONTEND_HOST || // legacy alias (prefer API tunnel)
-      process.env.API_HOST ||
+    return (
+      getWhopHttpsApiBaseUrl() ||
       'https://localhost:3000'
-    if (raw.startsWith('https://')) return raw.replace(/\/$/, '')
-    if (raw.startsWith('http://')) {
-      return `https://${raw.slice('http://'.length)}`.replace(/\/$/, '')
-    }
-    return `https://${raw}`.replace(/\/$/, '')
+    )
   }
 
   return (process.env.API_HOST || 'http://localhost:3000').replace(/\/$/, '')

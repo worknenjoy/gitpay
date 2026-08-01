@@ -65,3 +65,11 @@ export const currencyMap: CurrencyMap = {
   PK: 'PKR', // Pakistan
   VN: 'VND' // Vietnam
 }
+
+/** ISO-3166 alpha-2 country → ISO-4217 currency (lowercase for providers). */
+export function currencyForCountry(country: string | null | undefined): string {
+  if (!country) return 'usd'
+  const code = String(country).trim().toUpperCase()
+  const mapped = currencyMap[code]
+  return mapped ? mapped.toLowerCase() : 'usd'
+}

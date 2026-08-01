@@ -3,7 +3,7 @@ import request from 'supertest'
 import nock from 'nock'
 import api from '../../../src/server'
 import { registerAndLogin, truncateModels } from '../../helpers'
-import { withPaymentProvider, WHOP_API_HOST } from '../../helpers/whop'
+import { withPaymentProvider, pinWhopApiForTests, WHOP_API_HOST } from '../../helpers/whop'
 import Models from '../../../src/models'
 import { TaskFactory } from '../../factories'
 import checkoutConfig from '../../data/whop/checkout-configuration.create'
@@ -19,6 +19,7 @@ describe('POST /orders (Whop)', () => {
     await truncateModels(models.Order)
     process.env.WHOP_API_KEY = 'test_whop_key'
     process.env.WHOP_COMPANY_ID = 'biz_test_platform'
+    pinWhopApiForTests()
 
     await models.PlanSchema.findOrCreate({
       where: { plan: 'open source', name: 'Open Source - default', feeType: 'charge' },
@@ -38,8 +39,22 @@ describe('POST /orders (Whop)', () => {
 
   it('should create a bounty order with Whop checkout session', async () => {
     await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      let productBody: any
+      let checkoutBody: any
+
       nock(WHOP_API_HOST)
-        .post('/api/v1/checkout_configurations')
+        .post('/api/v1/products', (body) => {
+          productBody = body
+          return true
+        })
+        .reply(200, { id: 'prod_bounty_1', title: 'Whop bounty task' })
+
+      nock(WHOP_API_HOST)
+        .post('/api/v1/checkout_configurations', (body) => {
+          checkoutBody = body
+          return true
+        })
         .reply(200, checkoutConfig)
 
       const user = await registerAndLogin(agent)
@@ -66,11 +81,21 @@ describe('POST /orders (Whop)', () => {
       expect(res.body.provider).to.equal('whop')
       expect(res.body.source_id).to.equal(checkoutConfig.id)
       expect(res.body.token).to.equal(checkoutConfig.id)
+      expect(res.body.payment_url).to.equal(checkoutConfig.purchase_url)
+      expect(res.body.status).to.equal('open')
+      expect(res.body.paid).to.not.equal(true)
+
+      // Product is created with the issue bounty title and linked on the plan
+      expect(productBody.title).to.equal('Whop bounty task')
+      expect(productBody.company_id).to.equal('biz_test_platform')
+      expect(checkoutBody.plan.product_id).to.equal('prod_bounty_1')
+      expect(checkoutBody.plan.title).to.equal('Whop bounty task')
     })
   })
 
   it('should create a bounty invoice order via Whop invoices', async () => {
     await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
       nock(WHOP_API_HOST).post('/api/v1/invoices').reply(200, invoiceCreate)
 
       const user = await registerAndLogin(agent)

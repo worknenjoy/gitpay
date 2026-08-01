@@ -2,6 +2,7 @@ import { getPaymentProvider } from '../../providers'
 import { findUserByIdSimple } from '../../queries/user/findUserByIdSimple'
 import { getWhopClient } from '../../providers/whop/client'
 import { WhopPaymentProvider } from '../../providers/whop/WhopPaymentProvider'
+import { currencyForCountry } from '../../utils/currency/currency-map'
 
 type UserAccountParams = {
   id: number
@@ -52,12 +53,24 @@ export async function userAccount(userParameters: UserAccountParams) {
       console.warn('[whop] ledger balances for connected company failed', error)
     }
 
+    const country =
+      company?.country ||
+      company?.business_address?.country ||
+      user?.dataValues?.country ||
+      null
+    const defaultCurrency =
+      company?.default_currency ||
+      company?.currency ||
+      currencyForCountry(country)
+
     const account = {
       id: whopAccountId,
       object: 'account',
       provider: paymentProvider.name,
       email: company?.email || user?.dataValues?.email || null,
-      country: company?.country || company?.business_address?.country || user?.dataValues?.country || null,
+      country,
+      default_currency: defaultCurrency,
+      currency: defaultCurrency,
       title: company?.title || company?.name || null,
       verified: company?.verified ?? null,
       route: company?.route || null,
@@ -74,6 +87,7 @@ export async function userAccount(userParameters: UserAccountParams) {
       },
       balances,
       // KYC / bank details are completed on Whop portal via account_links
+      // (payout method / bank is not stored in Gitpay — only company + currency here)
       completed: true,
       charges_enabled: true,
       payouts_enabled: true,

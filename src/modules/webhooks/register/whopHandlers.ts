@@ -7,9 +7,6 @@ import {
   withDrawnDisputeForPaymentRequest,
   closeDisputeForPaymentRequest
 } from '../../../services/payments/disputes/disputeService'
-import PaymentMail from '../../../mail/payment'
-const slack = require('../../../shared/slack')
-
 const models = Models as any
 
 /** Default Whop chargeback fee ($15) in cents — overridable via WHOP_DISPUTE_FEE_CENTS */
@@ -123,32 +120,26 @@ async function handlePaymentSucceeded(ctx: WebhookHandlerContext) {
   // Bounty order (embedded checkout)
   if (metadata.order_id || metadata.purpose === 'bounty_order') {
     const orderId = metadata.order_id
-    const order = await models.Order.findByPk(orderId, {
-      include: [models.User, models.Task]
-    })
-    if (!order) {
-      console.warn('[whop] order not found for payment', orderId)
+    if (!orderId) {
+      console.warn('[whop] bounty payment missing order_id')
       return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
     }
-
-    if (order.paid && order.status === 'succeeded') {
-      return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
-    }
-
-    await order.update({
-      paid: true,
-      status: 'succeeded',
-      source: payment.id,
-      provider: 'whop'
-    })
-
     try {
-      if (order.User && order.Task) {
-        await PaymentMail.success(order.User, order.Task, order.amount)
-        await slack.notifyBounty(order.Task, order, order.User, 'Whop payment')
+      const { markBountyOrderPaid } = await import(
+        '../../../services/orders/markBountyOrderPaid'
+      )
+      await markBountyOrderPaid({
+        orderId: Number(orderId),
+        paymentSourceId: payment.id,
+        provider: 'whop'
+      })
+    } catch (error: any) {
+      if (String(error?.message || '').includes('not found')) {
+        console.warn('[whop] order not found for payment', orderId)
+        return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
       }
-    } catch (mailErr) {
-      console.error('[whop] bounty paid side-effects error', mailErr)
+      console.error('[whop] bounty paid error', error)
+      return ctx.res.status(500).json({ error: error?.message || 'bounty_order_error' })
     }
 
     return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
@@ -339,23 +330,20 @@ async function handleInvoicePaid(ctx: WebhookHandlerContext) {
 
   // Bounty invoice order
   const order = await models.Order.findOne({
-    where: { source_id: invoiceId, provider: 'whop' },
-    include: [models.User, models.Task]
+    where: { source_id: invoiceId, provider: 'whop' }
   })
   if (order) {
-    if (!(order.paid && order.status === 'succeeded')) {
-      await order.update({
-        paid: true,
-        status: 'succeeded',
-        source: invoiceId
+    try {
+      const { markBountyOrderPaid } = await import(
+        '../../../services/orders/markBountyOrderPaid'
+      )
+      await markBountyOrderPaid({
+        orderId: order.id,
+        paymentSourceId: invoiceId,
+        provider: 'whop'
       })
-      try {
-        if (order.User && order.Task) {
-          await PaymentMail.success(order.User, order.Task, order.amount)
-        }
-      } catch (e) {
-        console.error('[whop] invoice order email error', e)
-      }
+    } catch (e) {
+      console.error('[whop] invoice order paid error', e)
     }
     return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
   }

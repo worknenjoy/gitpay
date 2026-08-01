@@ -1,8 +1,7 @@
 import { getDefaultPaymentProviderName } from '../../providers'
-import {
-  getSupportedCountriesForProvider,
-  type SupportedCountry
-} from '../../providers/shared/supportedCountries'
+import { getSupportedCountriesForProvider } from '../../providers/shared/supportedCountries'
+import { findUserByIdSimple } from '../../queries/user/findUserByIdSimple'
+import { currencyForCountry } from '../../utils/currency/currency-map'
 
 type UserAccountCountriesParams = {
   id: number
@@ -17,15 +16,25 @@ type UserAccountCountriesParams = {
  * - For Stripe with an existing account: also spreads Country Spec fields
  *   (`default_currency`, `supported_bank_account_currencies`, …) at the root
  *   so existing bank currency UI keeps working.
+ * - For Whop: `default_currency` is derived from the user's country (no Stripe Country Spec).
  */
 export async function userAccountCountries(userParameters: UserAccountCountriesParams) {
   const provider = getDefaultPaymentProviderName()
   const countries = getSupportedCountriesForProvider(provider)
 
   if (provider === 'whop') {
+    const user = await findUserByIdSimple(userParameters.id)
+    const country = user?.dataValues?.country || null
+    const default_currency = currencyForCountry(country)
     return {
       provider: 'whop',
-      countries
+      countries,
+      default_currency,
+      supported_bank_account_currencies: {
+        [default_currency]: default_currency
+      },
+      // Helpful for Account Holder form when account payload is still loading
+      country
     }
   }
 

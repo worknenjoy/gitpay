@@ -57,31 +57,83 @@ export class WhopPaymentProvider implements PaymentProvider {
   }
 
   async createBountyCheckout(params: BountyCheckoutParams): Promise<BountyCheckoutResult> {
+    // Top-level company_id is rejected for company-scoped API keys
+    // ("Cannot provide company_id for this configuration"), but inline plan requires
+    // plan.company_id (platform WHOP_COMPANY_ID).
+    // Create a Product so checkout shows the bounty title (empty product otherwise).
+    // Checkout-configuration metadata is copied to payments/memberships (webhook correlation).
+    // Do NOT put metadata on the inline plan — Whop rejects many values there.
     const companyId = this.companyId()
-    const checkout = await this.client.post<any>('/checkout_configurations', {
-      company_id: companyId,
-      currency: params.currency || 'usd',
+    if (!companyId) {
+      throw new Error('WHOP_COMPANY_ID is required to create a bounty checkout')
+    }
+
+    const rawMeta = params.metadata || {}
+    const redirectUrl = rawMeta.return_url || rawMeta.redirect_url || undefined
+    const metadata: Record<string, string> = {
+      purpose: String(rawMeta.purpose || 'bounty_order')
+    }
+    if (rawMeta.order_id != null && rawMeta.order_id !== '') {
+      metadata.order_id = String(rawMeta.order_id)
+    }
+    if (rawMeta.task_id != null && rawMeta.task_id !== '') {
+      metadata.task_id = String(rawMeta.task_id)
+    }
+
+    const productTitle = (
+      params.title ||
+      params.description ||
+      'Gitpay bounty'
+    )
+      .trim()
+      .slice(0, 80)
+
+    const product = await this.client.post<any>('/products', {
+      title: productTitle,
+      description: params.description || productTitle,
+      company_id: companyId
+    })
+
+    if (!product?.id) {
+      throw new Error('Whop product create failed: missing product id')
+    }
+
+    const body: Record<string, unknown> = {
       mode: 'payment',
-      metadata: params.metadata,
+      metadata,
       plan: {
         company_id: companyId,
+        product_id: product.id,
         initial_price: params.amount,
         plan_type: 'one_time',
         currency: params.currency || 'usd',
-        description: params.description,
+        title: productTitle,
+        description: params.description || productTitle,
         force_create_new_plan: true
-      },
-      redirect_url: params.metadata?.return_url || undefined
-    })
+      }
+    }
+    // redirect_url is top-level; Whop requires https:// (not http://localhost)
+    if (redirectUrl && String(redirectUrl).startsWith('https://')) {
+      body.redirect_url = String(redirectUrl)
+    }
+
+    const checkout = await this.client.post<any>('/checkout_configurations', body)
 
     const planId = checkout.plan?.id || checkout.plan_id
+    const purchaseUrl =
+      checkout.purchase_url ||
+      checkout.checkout_url ||
+      checkout.url ||
+      (planId ? `https://whop.com/checkout/${planId}` : undefined) ||
+      (checkout.id ? `https://whop.com/checkout/${checkout.id}` : undefined)
+
     return {
       sourceId: checkout.id,
       sessionId: checkout.id,
-      paymentUrl: checkout.purchase_url || (planId ? `https://whop.com/checkout/${planId}` : undefined),
+      paymentUrl: purchaseUrl,
       status: 'open',
       paid: false,
-      raw: checkout
+      raw: { ...checkout, product }
     }
   }
 

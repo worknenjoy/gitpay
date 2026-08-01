@@ -14,6 +14,12 @@ const models = Models as any
 
 export type ExecutePaymentRequestTransferParams = {
   paymentRequestPaymentId: number
+  /**
+   * When true (Whop sandbox / ops), skip the live provider transfer API and
+   * persist a synthetic transfer id so the rest of the flow can complete.
+   * Does not create a real ledger move on Whop.
+   */
+  mockSettlement?: boolean
 }
 
 export type ExecutePaymentRequestTransferResult = {
@@ -283,21 +289,36 @@ export async function executePaymentRequestTransfer(
   let createdTransferId: string | null = null
 
   try {
-    // Provider call first — only write balance/status after success
-    const transfer = await paymentProvider.createTransfer({
-      amount: resultingBalance,
-      currency,
-      destination,
-      description: `Payment for service using Payment Request id: ${paymentRequest.id} and Payment Request Payment id: ${paymentRequestPayment.id}`,
-      metadata: {
-        user_id: paymentRequest.userId,
-        payment_request_id: paymentRequest.id,
-        payment_request_payment_id: paymentRequestPayment.id,
-        source_payment_id: paymentIntentId
-      },
-      sourceTransaction: chargeId,
-      transferGroup: `payment_request_payment_${paymentRequestPayment.id}`
-    })
+    // Provider call first — only write balance/status after success.
+    // mockSettlement: sandbox often never frees available balance; ops can complete the Gitpay side.
+    let transfer: { transferId: string; amount?: number; currency?: string; raw?: unknown }
+
+    if (params.mockSettlement && paymentProvider.name === 'whop') {
+      transfer = {
+        transferId: `mock_tr_pr_${paymentRequestPayment.id}_${Date.now()}`,
+        amount: resultingBalance / 100,
+        currency,
+        raw: { mock: true, reason: 'mock_settlement' }
+      }
+      console.log(
+        `[payment-request-transfer] mockSettlement for payment ${paymentRequestPayment.id} → ${transfer.transferId}`
+      )
+    } else {
+      transfer = await paymentProvider.createTransfer({
+        amount: resultingBalance,
+        currency,
+        destination,
+        description: `Payment for service using Payment Request id: ${paymentRequest.id} and Payment Request Payment id: ${paymentRequestPayment.id}`,
+        metadata: {
+          user_id: paymentRequest.userId,
+          payment_request_id: paymentRequest.id,
+          payment_request_payment_id: paymentRequestPayment.id,
+          source_payment_id: paymentIntentId
+        },
+        sourceTransaction: chargeId,
+        transferGroup: `payment_request_payment_${paymentRequestPayment.id}`
+      })
+    }
 
     if (!transfer?.transferId) {
       throw new Error('Failed to create transfer')

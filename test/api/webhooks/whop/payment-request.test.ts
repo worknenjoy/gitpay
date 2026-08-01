@@ -358,6 +358,86 @@ describe('Whop webhooks for payment requests', () => {
     })
   })
 
+  it('should complete deferred Whop transfer with mockSettlement when sandbox has no balance', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_test_platform')
+        .reply(200, pendingLedger)
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      await PaymentRequestFactory({
+        title: 'Mock settle Whop PR',
+        amount: 100,
+        currency: 'usd',
+        payment_link_id: 'plan_mock_settle_pr',
+        provider: 'whop',
+        userId: user.body.id
+      })
+
+      await agent
+        .post('/webhooks/whop')
+        .send({
+          id: 'msg_whop_pr_mock',
+          api_version: 'v1',
+          type: 'payment.succeeded',
+          timestamp: '2026-05-12T18:42:11.041Z',
+          company_id: 'biz_test_platform',
+          data: {
+            id: 'pay_whop_mock_1',
+            status: 'succeeded',
+            amount_after_fees: 92,
+            total: 100,
+            currency: 'usd',
+            metadata: {
+              purpose: 'payment_request',
+              payment_link_id: 'plan_mock_settle_pr'
+            },
+            plan: { id: 'plan_mock_settle_pr' },
+            user: { name: 'Customer', email: 'customer@example.com' }
+          }
+        })
+        .expect(200)
+
+      const paymentBefore = await models.PaymentRequestPayment.findOne({
+        where: { source: 'pay_whop_mock_1' }
+      })
+      expect(paymentBefore.transferStatus).to.equal('pending_funds')
+
+      // No transfer nock — mockSettlement must not call Whop
+      const cronResult = await processPendingPaymentRequestTransfers({
+        mockSettlement: true
+      })
+      expect(cronResult.scanned).to.equal(1)
+      expect(cronResult.transferred).to.equal(1)
+      expect(cronResult.deferred).to.equal(0)
+      expect(cronResult.failed).to.equal(0)
+      expect(cronResult.mockSettlement).to.equal(true)
+
+      await paymentBefore.reload()
+      expect(paymentBefore.transferStatus).to.equal('initiated')
+      expect(paymentBefore.transferId).to.exist
+
+      const pr = await models.PaymentRequest.findOne({
+        where: { payment_link_id: 'plan_mock_settle_pr' }
+      })
+      expect(pr.transfer_status).to.equal('initiated')
+      expect(pr.transfer_id).to.match(/^mock_tr_pr_/)
+
+      const prTransfer = await models.PaymentRequestTransfer.findByPk(paymentBefore.transferId)
+      expect(prTransfer).to.exist
+      expect(prTransfer.status).to.equal('created')
+      expect(prTransfer.transfer_id).to.match(/^mock_tr_pr_/)
+      expect(prTransfer.transfer_method).to.equal('whop')
+    })
+  })
+
   it('cron should complete deferred Whop transfer once funds are available', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()

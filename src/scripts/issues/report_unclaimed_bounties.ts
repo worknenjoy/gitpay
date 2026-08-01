@@ -23,7 +23,9 @@ const reportUnclamedBountiesScript = async () => {
       console.log(`- GitPay User ID: ${user.id}`)
       console.log(`- GitPay User Email: ${user.email}`)
       console.log(`- GitPay User Username: ${user.username}`)
-      console.log(`- Notify user about unclaimed bounty!`)
+      console.log(
+        `- Eligible for notify (claim_retries: ${issue.claim_retries ?? 0}; report only — no email/refund)`
+      )
     } else {
       console.log('- No GitPay user found for this author.')
     }

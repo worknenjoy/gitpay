@@ -11,6 +11,8 @@ import { Field } from '../../../../atoms/inputs/fields/field/field'
 type AccountDetailsFormWhopProps = {
   user: any
   account: any
+  /** Countries payload may include default_currency derived from user.country */
+  countries?: any
   onConfirmCloseAccount?: () => void
   onCompleteVerification?: () => void
 }
@@ -50,6 +52,7 @@ const formatDate = (value: unknown) => {
 const AccountDetailsFormWhop = ({
   user,
   account,
+  countries,
   onConfirmCloseAccount,
   onCompleteVerification
 }: AccountDetailsFormWhopProps) => {
@@ -71,9 +74,14 @@ const AccountDetailsFormWhop = ({
 
   const displayName = title || business_profile?.name || user?.name || user?.email || '—'
   const displayEmail = email || user?.email || '—'
-  const displayCountry = country || user?.country || '—'
+  const displayCountry = country || user?.country || countries?.data?.country || '—'
   const transfersStatus = capabilities?.transfers || (active ? 'active' : 'pending')
-  const currency = data?.default_currency || data?.currency || 'usd'
+  // Currency comes from the user/account country — not Stripe Country Specs
+  const currency =
+    data?.default_currency ||
+    data?.currency ||
+    countries?.data?.default_currency ||
+    'usd'
 
   return (
     <Box>
@@ -169,6 +177,20 @@ const AccountDetailsFormWhop = ({
                   />
                 }
                 defaultValue={String(displayCountry).toUpperCase()}
+                disabled
+                completed={completed}
+              />
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Field
+                name="whop_currency"
+                label={
+                  <FormattedMessage
+                    id="payout-settings.whop.field.currency"
+                    defaultMessage="Payout currency"
+                  />
+                }
+                defaultValue={String(currency).toUpperCase()}
                 disabled
                 completed={completed}
               />

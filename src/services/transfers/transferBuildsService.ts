@@ -19,6 +19,11 @@ type TransferBuildsParams = {
   transfer_id?: string
   taskId?: number
   userId?: number
+  /**
+   * When true, Whop ledger transfers are not called; a mock transfer_id is stored.
+   * For sandbox / ops only — never set from the public API.
+   */
+  mockSettlement?: boolean
 }
 
 export async function transferBuildsService(params: TransferBuildsParams) {
@@ -191,33 +196,44 @@ export async function transferBuildsService(params: TransferBuildsParams) {
         pendingReasons.push('Whop: no connected account (whop_account_id)')
       } else {
         try {
-          const whopProvider = getPaymentProvider('whop')
           // amount in cents (provider converts to major units for Whop API)
           const amountCents = Math.floor(whopTotal * 100 * 0.92)
-          const whopTransfer = await whopProvider.createTransfer({
-            amount: amountCents,
-            currency: 'usd',
-            destination: dest,
-            description: `Payment for issue task_${taskData.id} on Gitpay`,
-            metadata: {
-              task_id: taskData.id,
-              transfer_id: transfer.id,
-              purpose: 'bounty_payout'
-            },
-            transferGroup: `task_${taskData.id}`
-          })
+          let whopTransferId: string | null = null
 
-          createdWhopTransferId = whopTransfer?.transferId || null
+          if (params.mockSettlement) {
+            whopTransferId = `mock_tr_bounty_${taskData.id}_${Date.now()}`
+            // eslint-disable-next-line no-console
+            console.log(
+              `[transferBuilds] mockSettlement Whop transfer for task ${taskData.id} → ${whopTransferId}`
+            )
+          } else {
+            const whopProvider = getPaymentProvider('whop')
+            const whopTransfer = await whopProvider.createTransfer({
+              amount: amountCents,
+              currency: 'usd',
+              destination: dest,
+              description: `Payment for issue task_${taskData.id} on Gitpay`,
+              metadata: {
+                task_id: taskData.id,
+                transfer_id: transfer.id,
+                purpose: 'bounty_payout'
+              },
+              transferGroup: `task_${taskData.id}`
+            })
+            whopTransferId = whopTransfer?.transferId || null
+          }
 
-          if (whopTransfer?.transferId) {
+          createdWhopTransferId = whopTransferId
+
+          if (whopTransferId) {
             await currentModels.Task.update(
-              { transfer_id: whopTransfer.transferId },
+              { transfer_id: whopTransferId },
               { where: { id: params.taskId } }
             )
 
             const updateTransfer = await currentModels.Transfer.update(
               {
-                transfer_id: whopTransfer.transferId,
+                transfer_id: whopTransferId,
                 status: transfer_method === 'whop' ? 'in_transit' : 'pending'
               },
               { where: { id: transfer.id }, returning: true }

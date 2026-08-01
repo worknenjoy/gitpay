@@ -4,6 +4,7 @@ import { findUserByIdSimple } from '../../../queries/user/findUserByIdSimple'
 import { createAccount, deleteAccount } from '../../provider/stripe/user'
 import { getDefaultPaymentProviderName, getPaymentProvider } from '../../../providers'
 import { isEmailValid } from '../../../validators/emailValidator'
+import { currencyForCountry } from '../../../utils/currency/currency-map'
 
 const currentModels = models as any
 
@@ -95,17 +96,23 @@ export async function createUserAccount(userParameters: UserAccountCreateParams)
         const accountName = resolveUserDisplayName(user, email)
         // Whop companies.create expects lowercase ISO country (us, br, …)
         const countryCode = country ? String(country).trim().toLowerCase() : country
+        const defaultCurrency = currencyForCountry(country)
 
         // Pass everything we already know so Whop pre-fills the connected company
+        // (email, country, currency, gitpay user relation). Bank / payout method
+        // is completed later on Whop via account_links — not stored in Gitpay.
         const account = await whop.createConnectedAccount({
           email,
           country: countryCode,
           title: accountName,
           metadata: {
             internal_user_id: String(user.dataValues.id),
+            gitpay_user_id: String(user.dataValues.id),
             title: accountName,
             email,
             country: countryCode || '',
+            currency: defaultCurrency,
+            default_currency: defaultCurrency,
             name: user.dataValues.name || '',
             username: user.dataValues.username || user.dataValues.provider_username || ''
           }

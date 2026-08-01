@@ -10,6 +10,8 @@ void authenticationHelpers
 const router = express.Router()
 
 router.get('/authorize', controllers.authorizeOrder)
+// Public: Whop redirects the browser here after checkout (https tunnel → API → SPA)
+router.get('/whop/return', controllers.whopCheckoutReturn)
 
 router.use(secure)
 router.get('/', controllers.listOrders)

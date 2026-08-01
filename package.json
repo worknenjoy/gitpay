@@ -52,7 +52,7 @@
     "prepush": "npm run lint-fix",
     "heroku-postbuild": "cd frontend && npm install && npm run production && npm run sitemap && cd .. && npm run build && npm run migrate && npm run seed",
     "stripe:webhook": "stripe listen --forward-to localhost:3000/webhooks/stripe-platform --forward-connect-to localhost:3000/webhooks/stripe-connect",
-    "test:whop": "cross-env NODE_ENV=test NODE_OPTIONS=\"--import tsx\" mocha --extension ts,js --timeout 30000 --exit \"test/api/webhooks/whop/**/*.test.ts\" \"test/api/**/*Whop*.test.ts\"",
+    "test:whop": "cross-env NODE_ENV=test NODE_OPTIONS=\"--import tsx\" mocha --extension ts,js --timeout 30000 --exit \"test/api/webhooks/whop/**/*.test.ts\" \"test/api/**/*Whop*.test.ts\" \"test/api/scripts/whop-settlement.test.ts\" \"test/api/user/userAccountCountries.test.ts\"",
     "simulate:webhook": "NODE_ENV=test node ./scripts/webhook_script.js",
     "typecheck": "tsc --noEmit",
     "mail:preview": "tsx src/scripts/mail/mail_test.ts",

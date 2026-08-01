@@ -31,6 +31,7 @@ const PayoutSetingsBankAccountHolder = ({
       <AccountDetailsFormWhop
         user={user}
         account={account}
+        countries={countries}
         onConfirmCloseAccount={onConfirmCloseAccount}
         onCompleteVerification={onCompleteVerification}
       />
