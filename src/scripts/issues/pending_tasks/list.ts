@@ -207,7 +207,8 @@ export async function listPendingTasks() {
 
   console.log(
     `${C.dim}Stale At (DB) = Tasks.stale_at from DB (set by scripts:issue:sync_stale). ` +
-      `Not calculated from Age. Age = createdAt. sync_stale uses updatedAt (~3 months). ` +
+      `Not calculated here. Age = createdAt. ` +
+      `sync_stale marks if createdAt > 6 months OR updatedAt > 3 months. ` +
       `With stale_at set: ${withStaleAt}/${pendingTasks.length}${C.reset}`
   )
 
