@@ -145,7 +145,21 @@ export async function listPendingTasks() {
     totalPendingWalletOrdersAmount
   } = await listPendingTasksService()
 
+  // Stale At is the DB column `stale_at` (set by scripts:issue:sync_stale), not derived from Age.
+  // sync_stale currently marks when updatedAt is older than ~3 months (not createdAt / Age).
+  const formatStaleAt = (t: any) => {
+    const staleAt = t.stale_at ?? t.staleAt ?? null
+    if (!staleAt) return '—'
+    return moment(staleAt).format('YYYY-MM-DD')
+  }
+  const formatUpdated = (t: any) => {
+    const updated = t.updatedAt ?? t.updated_at ?? null
+    if (!updated) return '—'
+    return moment(updated).format('YYYY-MM-DD HH:mm')
+  }
+
   const pendingTaskRows: Array<Record<string, string>> = []
+  let withStaleAt = 0
   for (const t of pendingTasks) {
     const orders: any[] =
       t.Orders?.filter((o: any) => o.status !== 'open' && o.status !== 'failed') ?? []
@@ -154,15 +168,17 @@ export async function listPendingTasks() {
       t.action === 'pending_claim'
         ? `Pending claim, retries ${t.claim_retries ?? 0}`
         : 'Eligible for refund'
+    if (t.stale_at ?? t.staleAt) withStaleAt++
     orders.forEach((o: any, i: number) => {
       pendingTaskRows.push({
         id: i === 0 ? String(t.id) : '',
         value: i === 0 ? formatUSD(toCents(t.value)) : '',
         created: i === 0 ? moment(t.createdAt).format('YYYY-MM-DD HH:mm') : '',
+        updated: i === 0 ? formatUpdated(t) : '',
         age: i === 0 ? moment(t.createdAt).fromNow() : '',
         status: i === 0 ? (t.status ?? '') : '',
         state: i === 0 ? (t.state ?? '') : '',
-        stale: i === 0 ? (t.stale_at ? moment(t.stale_at).format('YYYY-MM-DD') : '') : '',
+        stale: i === 0 ? formatStaleAt(t) : '',
         source: o ? `#${o.id} ${o.provider} ${formatUSD(toCents(o.amount))} [${o.status}]` : 'N/A',
         comment: o ? (o.comment ?? '') : '',
         action: i === 0 ? action : ''
@@ -176,16 +192,23 @@ export async function listPendingTasks() {
       { key: 'id', header: 'Task', align: 'right', minWidth: 4, maxWidth: 8 },
       { key: 'value', header: 'Value', align: 'right', minWidth: 10, maxWidth: 14 },
       { key: 'created', header: 'Created', minWidth: 16, maxWidth: 16 },
-      { key: 'age', header: 'Age', minWidth: 10, maxWidth: 14 },
+      { key: 'updated', header: 'Updated', minWidth: 16, maxWidth: 16 },
+      { key: 'age', header: 'Age (created)', minWidth: 10, maxWidth: 14 },
       { key: 'status', header: 'Status', minWidth: 8, maxWidth: 12 },
       { key: 'state', header: 'State', minWidth: 8, maxWidth: 16 },
-      { key: 'stale', header: 'Stale At', minWidth: 10, maxWidth: 12 },
+      { key: 'stale', header: 'Stale At (DB)', minWidth: 12, maxWidth: 14 },
       { key: 'source', header: 'Source', minWidth: 18, maxWidth: 60 },
       { key: 'comment', header: 'Comment', minWidth: 10, maxWidth: 70 },
       { key: 'action', header: 'Action', minWidth: 18, maxWidth: 42 }
     ],
     pendingTaskRows,
     { maxWidth: termWidth() }
+  )
+
+  console.log(
+    `${C.dim}Stale At (DB) = Tasks.stale_at from DB (set by scripts:issue:sync_stale). ` +
+      `Not calculated from Age. Age = createdAt. sync_stale uses updatedAt (~3 months). ` +
+      `With stale_at set: ${withStaleAt}/${pendingTasks.length}${C.reset}`
   )
 
   const pendingPaypalRows: Array<{

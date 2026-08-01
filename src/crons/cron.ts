@@ -141,12 +141,21 @@ const TaskCron = {
     return tasks
   },
   notifyUnclaimedBounties: async () => {
-    const unclaimedBountiesWithMergedPrs = await notifyUnclaimedBountiesService()
+    const results = await notifyUnclaimedBountiesService()
+    const counts = results.reduce(
+      (acc: Record<string, number>, r: { action: string }) => {
+        acc[r.action] = (acc[r.action] || 0) + 1
+        return acc
+      },
+      {}
+    )
     console.log(
       'Monthly unclaimed bounty notifications processed:',
-      unclaimedBountiesWithMergedPrs.length
+      results.length,
+      'outcomes:',
+      counts
     )
-    return unclaimedBountiesWithMergedPrs
+    return results
   },
   syncTaskStates: async () => {
     const { total, updated } = await syncAllTaskStates()

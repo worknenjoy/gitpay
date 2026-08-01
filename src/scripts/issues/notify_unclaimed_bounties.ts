@@ -1,20 +1,55 @@
 import { i18nConfigure } from '../../shared/i18n/i18n'
-import { notifyUnclaimedBounties } from '../../services/issues/claims/unclaimedBountyService'
+import {
+  CLAIM_RETRY_LIMIT,
+  notifyUnclaimedBounties,
+  type UnclaimedBountyAction,
+  type UnclaimedBountyResult
+} from '../../services/issues/claims/unclaimedBountyService'
+
+const ACTION_LABELS: Record<UnclaimedBountyAction, string> = {
+  notified: 'NOTIFIED (email sent, claim_retries incremented)',
+  refunded: 'REFUNDED (retry limit reached → orders refunded, state closed)',
+  skipped_no_user: 'SKIPPED (no GitPay user for PR author)',
+  skipped_notifications_disabled: 'SKIPPED (user has receiveNotifications=false)',
+  notify_failed: 'FAILED (notify)',
+  refund_failed: 'FAILED (refund — task may still be pending)'
+}
+
+const summarize = (results: UnclaimedBountyResult[]) => {
+  const counts: Partial<Record<UnclaimedBountyAction, number>> = {}
+  for (const r of results) {
+    counts[r.action] = (counts[r.action] ?? 0) + 1
+  }
+  return counts
+}
 
 const notifyUnclaimedBountiesScript = async () => {
   i18nConfigure()
-  const unclaimedBountiesWithMergedPrs = await notifyUnclaimedBounties()
-  console.log('Unclaimed Bounties with Merged PRs:', unclaimedBountiesWithMergedPrs.length)
+  const results = await notifyUnclaimedBounties()
+  const counts = summarize(results)
+
+  console.log('\n========== Unclaimed bounty notify run ==========')
+  console.log(`Claim retry limit: ${CLAIM_RETRY_LIMIT}`)
+  console.log(`Candidates: ${results.length}`)
   console.log(
-    'Total amount of unclaimed bounties with merged PRs:',
-    unclaimedBountiesWithMergedPrs.reduce((sum, { issue }) => sum + (Number(issue.value) || 0), 0)
+    'Total amount:',
+    results.reduce((sum, { issue }) => sum + (Number(issue.value) || 0), 0)
   )
-  for (const { issue, providerIssues, user } of unclaimedBountiesWithMergedPrs) {
+  console.log('Outcome counts:', counts)
+  console.log('=================================================\n')
+
+  for (const result of results) {
+    const { issue, providerIssues, user, action, claimRetriesBefore, claimRetriesAfter, error } =
+      result
     console.log('------------------- Issue Details -------------------------')
-    console.log(`Processing Issue ID: ${issue.id} with unclaimed bounty.`)
+    console.log(`Issue ID: ${issue.id}`)
     console.log(`Issue Title: ${issue.title}`)
     console.log(`Issue URL: ${issue.url}`)
     console.log(`Issue Bounty Value: ${issue.value}`)
+    console.log(`claim_retries before: ${claimRetriesBefore}`)
+    if (claimRetriesAfter != null) {
+      console.log(`claim_retries after:  ${claimRetriesAfter}`)
+    }
     console.log('------------------- Merged PRs Details --------------------')
     for (const pr of providerIssues) {
       console.log(`- Merged PR URL: ${pr.html_url}`)
@@ -25,12 +60,32 @@ const notifyUnclaimedBountiesScript = async () => {
       console.log(`- GitPay User ID: ${user.id}`)
       console.log(`- GitPay User Email: ${user.email}`)
       console.log(`- GitPay User Username: ${user.username}`)
-      console.log(`- Notify user about unclaimed bounty!`)
+      console.log(`- receiveNotifications: ${user.receiveNotifications}`)
     } else {
       console.log('- No GitPay user found for this author.')
     }
-    console.log('-----------------------------------------------------------')
+    console.log('------------------- Outcome -----------------------------')
+    console.log(`- ${ACTION_LABELS[action]}`)
+    if (error) {
+      console.log(`- Error: ${error}`)
+    }
+    console.log('-----------------------------------------------------------\n')
+  }
+
+  console.log('Done. Summary:', counts)
+  if ((counts.refunded ?? 0) > 0) {
+    console.log(
+      'Refunded tasks should no longer appear as pending claim (state=closed). Re-run pending list to verify.'
+    )
+  }
+  if ((counts.refund_failed ?? 0) > 0) {
+    console.log(
+      'Some refunds failed — those tasks can still appear as pending. Inspect errors above.'
+    )
   }
 }
 
-notifyUnclaimedBountiesScript()
+notifyUnclaimedBountiesScript().catch((err) => {
+  console.error('notify_unclaimed_bounties failed:', err)
+  process.exit(1)
+})
