@@ -13,9 +13,15 @@ type RefundStripePaymentParams = {
   orderId: number
   reason?: RefundStripePaymentReason
   ageDays?: number | null
+  olderThanDays?: number
 }
 
-export async function refundStripePayment({ orderId, reason, ageDays }: RefundStripePaymentParams) {
+export async function refundStripePayment({
+  orderId,
+  reason,
+  ageDays,
+  olderThanDays
+}: RefundStripePaymentParams) {
   const order = await models.Order.findByPk(orderId, {
     include: [models.User, models.Task]
   })
@@ -50,7 +56,17 @@ export async function refundStripePayment({ orderId, reason, ageDays }: RefundSt
   const user = order.User || (await models.User.findByPk(orderData.userId))
   const task = order.Task || (await models.Task.findByPk(orderData.TaskId))
 
+  // Regular refund notice (same family as charge.refunded / manual refunds)
   await PaymentMail.refund(user, task, orderData)
+
+  // Extra email explaining old/stale bounty policy when applicable
+  if (reason === 'old_open_bounty') {
+    await PaymentMail.oldBountyPaypalRefunded(user, task, orderData, {
+      ageDays: ageDays ?? null,
+      olderThanDays: olderThanDays ?? 365,
+      returnMethod: 'refund'
+    })
+  }
 
   return orderData
 }

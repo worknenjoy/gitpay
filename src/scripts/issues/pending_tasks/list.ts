@@ -158,17 +158,30 @@ export async function listPendingTasks() {
     return moment(updated).format('YYYY-MM-DD HH:mm')
   }
 
+  const actionLabel = (t: any): string => {
+    if (t.action === 'stale_unclaimed_eligible_for_refund') {
+      return 'Stale and no one to claim, eligible for refund'
+    }
+    if (t.action === 'pending_claim') {
+      return `Pending claim, retries ${t.claim_retries ?? 0}`
+    }
+    return 'Eligible for refund'
+  }
+
   const pendingTaskRows: Array<Record<string, string>> = []
   let withStaleAt = 0
+  const actionCounts: Record<string, number> = {
+    pending_claim: 0,
+    eligible_for_refund: 0,
+    stale_unclaimed_eligible_for_refund: 0
+  }
   for (const t of pendingTasks) {
     const orders: any[] =
       t.Orders?.filter((o: any) => o.status !== 'open' && o.status !== 'failed') ?? []
     if (orders.length === 0) orders.push(null)
-    const action =
-      t.action === 'pending_claim'
-        ? `Pending claim, retries ${t.claim_retries ?? 0}`
-        : 'Eligible for refund'
+    const action = actionLabel(t)
     if (t.stale_at ?? t.staleAt) withStaleAt++
+    if (t.action in actionCounts) actionCounts[t.action]++
     orders.forEach((o: any, i: number) => {
       pendingTaskRows.push({
         id: i === 0 ? String(t.id) : '',
@@ -199,7 +212,7 @@ export async function listPendingTasks() {
       { key: 'stale', header: 'Stale At (DB)', minWidth: 12, maxWidth: 14 },
       { key: 'source', header: 'Source', minWidth: 18, maxWidth: 60 },
       { key: 'comment', header: 'Comment', minWidth: 10, maxWidth: 70 },
-      { key: 'action', header: 'Action', minWidth: 18, maxWidth: 42 }
+      { key: 'action', header: 'Action', minWidth: 18, maxWidth: 48 }
     ],
     pendingTaskRows,
     { maxWidth: termWidth() }
@@ -210,6 +223,11 @@ export async function listPendingTasks() {
       `Not calculated here. Age = createdAt. ` +
       `sync_stale marks if createdAt > 6 months OR updatedAt > 3 months. ` +
       `With stale_at set: ${withStaleAt}/${pendingTasks.length}${C.reset}`
+  )
+  console.log(
+    `${C.dim}Actions: pending_claim=${actionCounts.pending_claim}, ` +
+      `stale_unclaimed_eligible_for_refund=${actionCounts.stale_unclaimed_eligible_for_refund}, ` +
+      `eligible_for_refund=${actionCounts.eligible_for_refund}${C.reset}`
   )
 
   const pendingPaypalRows: Array<{

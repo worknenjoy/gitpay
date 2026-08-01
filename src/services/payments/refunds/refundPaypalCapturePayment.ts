@@ -92,13 +92,13 @@ export async function refundPaypalCapturePayment({
   const user = order.User || (await models.User.findByPk(orderData.userId))
   const task = order.Task || (await models.Task.findByPk(orderData.TaskId))
 
+  await PaymentMail.refund(user, task, orderData)
+
   if (reason === 'old_open_bounty') {
     await PaymentMail.oldBountyPaypalRefunded(user, task, orderData, {
       ageDays: ageDays ?? null,
       olderThanDays: olderThanDays ?? 365
     })
-  } else {
-    await PaymentMail.refund(user, task, orderData)
   }
 
   return orderData

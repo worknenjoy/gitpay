@@ -217,6 +217,11 @@ const PaymentMail = {
     }
   },
 
+  /**
+   * Old open/stale bounty refund notification (reason: old_open_bounty).
+   * Used for PayPal, Stripe, and wallet — payment method comes from order.provider.
+   * Kept as oldBountyPaypalRefunded for existing call sites.
+   */
   oldBountyPaypalRefunded: async (
     user: any,
     task: any,
@@ -238,6 +243,15 @@ const PaymentMail = {
     const currency = String(order.currency || 'usd').toLowerCase()
     const symbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
     const value = order.amount
+    const provider = String(order.provider || 'paypal').toLowerCase()
+    const paymentMethod =
+      (
+        {
+          paypal: 'PayPal',
+          stripe: 'Credit card',
+          wallet: 'Wallet'
+        } as Record<string, string>
+      )[provider] || provider
 
     const ageDaysText = typeof meta?.ageDays === 'number' ? `${meta.ageDays} days` : '-'
 
@@ -269,8 +283,21 @@ const PaymentMail = {
         ? 'mail.payment.oldBountyRefunded.subjectPayout'
         : 'mail.payment.oldBountyRefunded.subject'
 
+    const providerRows: string[][] =
+      provider === 'stripe'
+        ? [
+            ['Charge ID', String(order.source || '-')],
+            ['Refund ID', String(order.refund_id || '-')]
+          ]
+        : provider === 'wallet'
+          ? [['Wallet ID', String(order.source_id || '-')]]
+          : [
+              ['Authorization ID', String(order.authorization_id || '-')],
+              ['Capture ID', String(order.transfer_id || '-')]
+            ]
+
     try {
-      return await request(to, i18n.__(subjectKey), [
+      return await request(to, i18n.__(subjectKey, { paymentMethod }), [
         {
           type: 'text/html',
           value: tableContentEmailTemplate(
@@ -278,6 +305,7 @@ const PaymentMail = {
               name: user.name || user.username || 'Gitpay User'
             }),
             `${i18n.__('mail.payment.oldBountyRefunded.content', {
+              paymentMethod,
               age: ageText ?? thresholdText,
               title: task.title,
               url: taskUrl,
@@ -286,13 +314,12 @@ const PaymentMail = {
             {
               headers: ['Field', 'Value'],
               rows: [
-                ['Provider', 'PayPal'],
+                ['Provider', paymentMethod],
                 ...(returnMethod === 'payout' ? [['Return method', 'Payout']] : []),
                 ['Amount', `${symbol} ${value}`],
                 ['Currency', String(order.currency || '').toUpperCase()],
                 ['Order ID', String(order.id)],
-                ['Authorization ID', String(order.authorization_id || '-')],
-                ['Capture ID', String(order.transfer_id || '-')],
+                ...providerRows,
                 ['Bounty age', ageDaysText]
               ]
             },
