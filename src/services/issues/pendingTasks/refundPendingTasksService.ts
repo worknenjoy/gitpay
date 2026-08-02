@@ -26,7 +26,37 @@ export interface RefundPendingTasksResult {
   failed: number
   skipped: number
   closed: number
+  forceClosed: number
   results: RefundOrderResult[]
+}
+
+export interface RefundPendingTasksOptions {
+  /**
+   * When true, close remaining pending tasks (and settle their paid orders).
+   * Amount is retained by the platform — no refund, no manual-refund path.
+   */
+  force?: boolean
+  /**
+   * When false, skip payment refunds and only force-close pending tasks (requires force).
+   * Defaults to true.
+   */
+  attemptRefund?: boolean
+}
+
+/** Task comment used when force-closing pending tasks for platform retention. */
+export const FORCE_CLOSE_COMMENT = 'nobody requested the transfer'
+
+/**
+ * Order status after force-close. Not `succeeded` (would look like active funding)
+ * and not `refunded` (money was not returned). Amount stays with the platform.
+ */
+export const FORCE_CLOSE_ORDER_STATUS = 'closed'
+
+/** Order comment: bounty closed; funds kept by the platform (not refunded). */
+export function buildForceCloseOrderComment(): string {
+  return (
+    `closed [${new Date().toISOString()}]: amount retained by platform — ${FORCE_CLOSE_COMMENT}`
+  )
 }
 
 /** Best-effort extraction of a readable refund failure reason (esp. PayPal API bodies). */
@@ -71,21 +101,103 @@ function buildRefundFailedComment(provider: string, reason: string): string {
   )
 }
 
+const isPaidSucceededOrder = (o: any) => o?.paid === true && o?.status === 'succeeded'
+
+/**
+ * Close a pending task and settle its paid orders for platform retention.
+ * No refund is issued — amount stays with the platform.
+ *
+ * Orders leave `succeeded` so state sync / funded queries no longer treat them
+ * as active funding (see findNewFundedIssues: status succeeded + paid).
+ */
+async function forceCloseTask(
+  task: any,
+  results: RefundOrderResult[]
+): Promise<'closed' | 'failed'> {
+  try {
+    let orders: any[] = task.Orders ?? []
+    if (!orders.length) {
+      orders = await models.Order.findAll({ where: { TaskId: task.id } })
+    }
+
+    const paidOrders = orders.filter(isPaidSucceededOrder)
+    const orderComment = buildForceCloseOrderComment()
+
+    for (const order of paidOrders) {
+      const provider = String(order.provider || 'n/a').toLowerCase()
+      // paid stays true (payment was collected); status leaves succeeded so
+      // findNewFundedIssues / reports of open bounties no longer match these.
+      await models.Order.update(
+        {
+          status: FORCE_CLOSE_ORDER_STATUS,
+          paid: true,
+          comment: orderComment
+        },
+        { where: { id: order.id } }
+      )
+      results.push({
+        orderId: order.id,
+        taskId: task.id,
+        provider,
+        status: 'closed',
+        reason: 'order closed — amount retained by platform'
+      })
+    }
+
+    await markIssueStateAsClosed(task.id, FORCE_CLOSE_COMMENT, ClosedReasons.MANUAL)
+    results.push({
+      orderId: null,
+      taskId: task.id,
+      provider: 'n/a',
+      status: 'closed',
+      reason: `force closed — ${FORCE_CLOSE_COMMENT}; amount retained by platform`
+    })
+    return 'closed'
+  } catch (err: any) {
+    results.push({
+      orderId: null,
+      taskId: task.id,
+      provider: 'n/a',
+      status: 'failed',
+      error: err?.message || String(err)
+    })
+    return 'failed'
+  }
+}
+
 export async function refundPendingTasksService(
-  pendingTasks: any[]
+  pendingTasks: any[],
+  options: RefundPendingTasksOptions = {}
 ): Promise<RefundPendingTasksResult> {
-  const eligibleTasks = pendingTasks.filter((t: any) => isRefundEligibleAction(t.action))
+  const force = options.force === true
+  const attemptRefund = options.attemptRefund !== false
 
   let refunded = 0
   let failed = 0
   let skipped = 0
   let closed = 0
+  let forceClosed = 0
   const results: RefundOrderResult[] = []
 
+  // Force-only path (npm run issues:pending -- --force):
+  // close all remaining pending tasks; amount retained by platform
+  if (force && !attemptRefund) {
+    for (const task of pendingTasks) {
+      const outcome = await forceCloseTask(task, results)
+      if (outcome === 'closed') {
+        closed++
+        forceClosed++
+      } else {
+        failed++
+      }
+    }
+    return { refunded, failed, skipped, closed, forceClosed, results }
+  }
+
+  const eligibleTasks = pendingTasks.filter((t: any) => isRefundEligibleAction(t.action))
+
   for (const task of eligibleTasks) {
-    const paidOrders: any[] = (task.Orders ?? []).filter(
-      (o: any) => o.paid === true && o.status === 'succeeded'
-    )
+    const paidOrders: any[] = (task.Orders ?? []).filter(isPaidSucceededOrder)
 
     if (paidOrders.length === 0) {
       results.push({
@@ -112,14 +224,24 @@ export async function refundPendingTasksService(
         })
         closed++
       } catch (err: any) {
-        results.push({
-          orderId: null,
-          taskId: task.id,
-          provider: 'n/a',
-          status: 'failed',
-          error: err?.message || String(err)
-        })
-        failed++
+        if (force) {
+          const outcome = await forceCloseTask(task, results)
+          if (outcome === 'closed') {
+            closed++
+            forceClosed++
+          } else {
+            failed++
+          }
+        } else {
+          results.push({
+            orderId: null,
+            taskId: task.id,
+            provider: 'n/a',
+            status: 'failed',
+            error: err?.message || String(err)
+          })
+          failed++
+        }
       }
       continue
     }
@@ -241,17 +363,36 @@ export async function refundPendingTasksService(
         })
         closed++
       } catch (err: any) {
-        results.push({
-          orderId: null,
-          taskId: task.id,
-          provider: 'n/a',
-          status: 'failed',
-          error: err?.message || String(err)
-        })
+        if (force) {
+          const outcome = await forceCloseTask(task, results)
+          if (outcome === 'closed') {
+            closed++
+            forceClosed++
+          } else {
+            failed++
+          }
+        } else {
+          results.push({
+            orderId: null,
+            taskId: task.id,
+            provider: 'n/a',
+            status: 'failed',
+            error: err?.message || String(err)
+          })
+          failed++
+        }
+      }
+    } else if (force && taskRefundFailed) {
+      // Failed refunds: close task + settle orders; amount retained by platform
+      const outcome = await forceCloseTask(task, results)
+      if (outcome === 'closed') {
+        closed++
+        forceClosed++
+      } else {
         failed++
       }
     }
   }
 
-  return { refunded, failed, skipped, closed, results }
+  return { refunded, failed, skipped, closed, forceClosed, results }
 }
