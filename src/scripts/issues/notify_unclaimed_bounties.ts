@@ -1,5 +1,6 @@
 import { i18nConfigure } from '../../shared/i18n/i18n'
 import {
+  CLAIM_RETRY_LIMIT,
   notifyUnclaimedBounties,
   type UnclaimedBountyAction,
   type UnclaimedBountyResult
@@ -28,6 +29,7 @@ const notifyUnclaimedBountiesScript = async () => {
   const counts = summarize(results)
 
   console.log('\n========== Unclaimed bounty notify run ==========')
+  console.log(`Claim retry limit: ${CLAIM_RETRY_LIMIT}`)
   console.log(`Candidates: ${results.length}`)
   console.log(
     'Total amount:',

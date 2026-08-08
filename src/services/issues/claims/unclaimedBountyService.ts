@@ -28,7 +28,7 @@ export const notifyUnclaimedBounties = async (): Promise<UnclaimedBountyResult[]
   const results: UnclaimedBountyResult[] = []
 
   for (const { issue, providerIssues, user } of unclaimedBountiesWithMergedPrs) {
-    const claimRetriesBefore = issue.claim_retries ?? 0
+    const claimRetriesBefore = Number(issue.claim_retries ?? 0)
     const base = {
       issue,
       providerIssues,
@@ -36,6 +36,7 @@ export const notifyUnclaimedBounties = async (): Promise<UnclaimedBountyResult[]
       claimRetriesBefore
     }
 
+    // At/over limit → refund sponsors and close task state (leaves pending list)
     if (claimRetriesBefore >= CLAIM_RETRY_LIMIT) {
       console.log(
         `Issue ${issue.id} reached retry limit (${claimRetriesBefore}). Refunding orders to original sponsors.`
@@ -71,10 +72,11 @@ export const notifyUnclaimedBounties = async (): Promise<UnclaimedBountyResult[]
     try {
       await ClaimMail.notifyUnclaimedBounties(user, issue, providerIssues[0].pull_request)
       const updatedIssue = await incrementIssueClaimRetries(issue.id)
+      const claimRetriesAfter = Number(updatedIssue.claim_retries ?? claimRetriesBefore + 1)
       results.push({
         ...base,
         action: 'notified',
-        claimRetriesAfter: updatedIssue.claim_retries ?? claimRetriesBefore + 1
+        claimRetriesAfter
       })
     } catch (err: any) {
       const error = err?.message || String(err)

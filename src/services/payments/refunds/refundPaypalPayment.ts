@@ -223,8 +223,9 @@ export async function refundPaypalPayment({
       }
     })
   } catch (err: any) {
-    const parsed = tryParseJson(err?.error)
-    const issue = parsed?.details?.[0]?.issue
+    const parsed = tryParseJson(err?.error) ?? tryParseJson(err?.response?.body) ?? tryParseJson(err?.body)
+    const detail = parsed?.details?.[0]
+    const issue = detail?.issue
     // If already refunded, treat as idempotent.
     if (issue === 'ALREADY_REFUNDED') {
       return order.dataValues ?? order
@@ -260,6 +261,14 @@ export async function refundPaypalPayment({
         payout
       }
     } else {
+      // Re-throw with a readable PayPal issue/description when available.
+      if (issue) {
+        const description = detail?.description || parsed?.message
+        const e: any = new Error(description ? `${issue}: ${description}` : String(issue))
+        e.cause = err
+        e.meta = { orderId: order.id, issue, paypal: parsed }
+        throw e
+      }
       throw err
     }
   }
@@ -284,22 +293,32 @@ export async function refundPaypalPayment({
   const orderData =
     updatedOrder.dataValues || (updatedOrder[0] && updatedOrder[0].dataValues) || order.dataValues
 
-  const user = order.User || (await models.User.findByPk(orderData.userId))
-  const task = order.Task || (await models.Task.findByPk(orderData.TaskId))
+  const orderForMail = { ...orderData, transfer_id: captureId }
 
-  if (reason === 'old_open_bounty') {
-    await PaymentMail.oldBountyPaypalRefunded(
-      user,
-      task,
-      { ...orderData, transfer_id: captureId },
-      {
-        ageDays: ageDays ?? null,
-        olderThanDays: olderThanDays ?? 365,
-        returnMethod
+  // Mail must not fail the refund: PayPal + order are already updated.
+  try {
+    const userId = orderData.userId ?? order.userId
+    const taskId = orderData.TaskId ?? order.TaskId
+    const user = order.User || (userId != null ? await models.User.findByPk(userId) : null)
+    const task = order.Task || (taskId != null ? await models.Task.findByPk(taskId) : null)
+
+    if (!user) {
+      console.warn(
+        `refundPaypalPayment: no user for order ${order.id} (userId=${userId}); skipping refund emails`
+      )
+    } else {
+      await PaymentMail.refund(user, task, orderForMail)
+
+      if (reason === 'old_open_bounty') {
+        await PaymentMail.oldBountyPaypalRefunded(user, task, orderForMail, {
+          ageDays: ageDays ?? null,
+          olderThanDays: olderThanDays ?? 365,
+          returnMethod
+        })
       }
-    )
-  } else {
-    await PaymentMail.refund(user, task, { ...orderData, transfer_id: captureId })
+    }
+  } catch (mailErr) {
+    console.error(`refundPaypalPayment: refund succeeded for order ${order.id} but mail failed:`, mailErr)
   }
 
   return orderData

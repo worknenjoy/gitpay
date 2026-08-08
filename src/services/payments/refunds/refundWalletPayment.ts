@@ -10,9 +10,15 @@ type RefundWalletPaymentParams = {
   orderId: number
   reason?: RefundWalletPaymentReason
   ageDays?: number | null
+  olderThanDays?: number
 }
 
-export async function refundWalletPayment({ orderId }: RefundWalletPaymentParams) {
+export async function refundWalletPayment({
+  orderId,
+  reason,
+  ageDays,
+  olderThanDays
+}: RefundWalletPaymentParams) {
   const order = await models.Order.findByPk(orderId, {
     include: [models.User, models.Task]
   })
@@ -36,10 +42,30 @@ export async function refundWalletPayment({ orderId }: RefundWalletPaymentParams
     await models.Wallet.findByPk(order.source_id)
   }
 
-  const user = order.User || (await models.User.findByPk(orderData.userId))
-  const task = order.Task || (await models.Task.findByPk(orderData.TaskId))
+  try {
+    const userId = orderData.userId ?? order.userId
+    const taskId = orderData.TaskId ?? order.TaskId
+    const user = order.User || (userId != null ? await models.User.findByPk(userId) : null)
+    const task = order.Task || (taskId != null ? await models.Task.findByPk(taskId) : null)
 
-  await PaymentMail.refund(user, task, orderData)
+    if (!user) {
+      console.warn(
+        `refundWalletPayment: no user for order ${order.id} (userId=${userId}); skipping refund emails`
+      )
+    } else {
+      await PaymentMail.refund(user, task, orderData)
+
+      if (reason === 'old_open_bounty') {
+        await PaymentMail.oldBountyPaypalRefunded(user, task, orderData, {
+          ageDays: ageDays ?? null,
+          olderThanDays: olderThanDays ?? 365,
+          returnMethod: 'refund'
+        })
+      }
+    }
+  } catch (mailErr) {
+    console.error(`refundWalletPayment: refund succeeded for order ${order.id} but mail failed:`, mailErr)
+  }
 
   return orderData
 }
