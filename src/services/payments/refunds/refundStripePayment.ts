@@ -56,7 +56,7 @@ export async function refundStripePayment({
   const taskId =
     order.get?.('TaskId') ?? order.TaskId ?? order.dataValues?.TaskId ?? null
 
-  const updateResult = await updateOrderAsRefunded({ id: order.id }, { refund_id: refund.id })
+  const updateResult = await updateOrderAsRefunded({ id: order.id }, { refund_id: refund.refundId })
 
   const orderData = updateResult[1]?.[0]?.dataValues ?? updateResult[1]?.[0] ?? order.dataValues
 
