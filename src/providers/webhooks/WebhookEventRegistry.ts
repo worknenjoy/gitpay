@@ -50,13 +50,13 @@ export class WebhookEventRegistry {
     }
 
     const rawHandler = this.rawHandlers.get(event.type)
-    if (rawHandler) {
+    if (typeof rawHandler === 'function') {
       return rawHandler(ctx)
     }
 
     if (normalizedType) {
       const normalizedHandler = this.normalizedHandlers.get(normalizedType)
-      if (normalizedHandler) {
+      if (typeof normalizedHandler === 'function') {
         return normalizedHandler(ctx)
       }
     }
