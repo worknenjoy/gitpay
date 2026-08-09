@@ -6,6 +6,7 @@
  *   npx tsx src/scripts/whop/verify_whop_key.ts biz_childCompanyId
  */
 import dotenv from 'dotenv'
+import { createHash } from 'crypto'
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config()
@@ -66,7 +67,8 @@ async function main() {
   console.log('Base URL:', base)
   console.log('WHOP_COMPANY_ID:', companyId || '(unset)')
   console.log('Child company arg:', childId || '(none)')
-  console.log('Key prefix:', apiKey.slice(0, 12) + '…')
+  const apiKeyFingerprint = createHash('sha256').update(apiKey).digest('hex').slice(0, 12)
+  console.log('Key fingerprint (sha256, first 12):', apiKeyFingerprint)
 
   const me = await get(base, apiKey, '/accounts/me')
   console.log('\n=== GET /accounts/me ===', me.status)
