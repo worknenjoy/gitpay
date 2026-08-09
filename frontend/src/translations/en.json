@@ -616,5 +616,9 @@
   "welcome.workflow.item.two.primary": "For all levels",
   "welcome.workflow.item.two.secondary": "Beginners will learn how contribute to real companies with real projects, experienced contributors can help with revisions and hard tasks, and is possible to choose projects and tasks that you want to grow or that you are familiar and confortable to work with",
   "payment.paused.title": "Payment Operations Paused",
-  "payment.paused.message": "Gitpay has temporarily paused all payment operations while we look for a new payment provider. You can still create an account, but bank account management, payments, and payouts are currently unavailable. We apologize for the inconvenience."
+  "payment.paused.message": "Gitpay has temporarily paused all payment operations while we look for a new payment provider. You can still create an account, but bank account management, payments, and payouts are currently unavailable. We apologize for the inconvenience.",
+  "actions.user.account.verification.success": "Your payout account was verified successfully",
+  "payout-settings.verification.return.title": "Account verification submitted",
+  "payout-settings.verification.return.description": "Thanks — Stripe got your details and is reviewing them now. Most accounts are approved within a few minutes; some can take up to 1–2 business days.",
+  "payout-settings.verification.return.description.whop": "Thanks — your Whop payout account details were submitted successfully. Your account is ready to receive transfers once Whop finishes any remaining checks."
 }

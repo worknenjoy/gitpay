@@ -10,6 +10,28 @@ import {
   orderTransfer,
   orderRefund
 } from '../../modules/orders'
+import { getFrontendHostBase } from '../../providers/whop/redirectBase'
+
+/**
+ * Public browser return after Whop bounty checkout.
+ * Whop requires https redirect_url; we use WHOP_API_HOST (ngrok → API) then bounce to SPA.
+ * GET /orders/whop/return?taskId=1&orderId=2
+ */
+export const whopCheckoutReturn = async (req: any, res: any) => {
+  const taskId = req.query.taskId || req.query.task_id
+  const orderId = req.query.orderId || req.query.order_id
+  const base = getFrontendHostBase()
+
+  if (taskId) {
+    const qs =
+      orderId != null && orderId !== ''
+        ? `?orderId=${encodeURIComponent(String(orderId))}&paid=1`
+        : '?paid=1'
+    return res.redirect(`${base}/#/task/${encodeURIComponent(String(taskId))}${qs}`)
+  }
+
+  return res.redirect(`${base}/#/profile/tasks`)
+}
 
 export const createOrder = async (req: any, res: any) => {
   try {

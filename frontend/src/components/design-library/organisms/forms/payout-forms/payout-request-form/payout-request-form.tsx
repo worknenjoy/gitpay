@@ -40,7 +40,13 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
       event.preventDefault()
       const formData = new FormData(event.currentTarget)
       const data = Object.fromEntries(formData.entries())
-      onSubmit?.(event, { ...data, currency: currency, method: 'bank_account' })
+      const paymentProvider = process.env.PAYMENT_PROVIDER || 'stripe'
+      onSubmit?.(event, {
+        ...data,
+        currency: currency,
+        // Whop withdrawals use method "whop"; Stripe Connect uses bank_account → stripe path
+        method: paymentProvider === 'whop' ? 'whop' : 'bank_account'
+      })
     }
 
     const handleAddBalance = () => {
@@ -129,10 +135,17 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
               checkboxes={[
                 {
                   label: (
-                    <FormattedMessage
-                      id="PayoutRequest.form.confirm"
-                      defaultMessage="I agree to transfer the funds from your current balance to your registered bank account. The amount will be included in the next payout."
-                    />
+                    process.env.PAYMENT_PROVIDER === 'whop' ? (
+                      <FormattedMessage
+                        id="PayoutRequest.form.confirm.whop"
+                        defaultMessage="I agree to withdraw this amount from my Whop connected company balance to my registered payout method on Whop."
+                      />
+                    ) : (
+                      <FormattedMessage
+                        id="PayoutRequest.form.confirm"
+                        defaultMessage="I agree to transfer the funds from your current balance to your registered bank account. The amount will be included in the next payout."
+                      />
+                    )
                   ),
                   name: 'custom_amount',
                   value: true,

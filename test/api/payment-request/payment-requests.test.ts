@@ -5,6 +5,7 @@ import nock from 'nock'
 import { registerAndLogin, truncateModels } from '../../helpers'
 import Models from '../../../src/models'
 import { PaymentRequestFactory } from '../../factories'
+import { resetPaymentProviderCache } from '../../../src/providers'
 
 const agent = request.agent(api)
 const models = Models as any
@@ -14,12 +15,19 @@ const samplePrice = require('../../data/stripe/stripe.price.create')
 const samplePaymentLink = require('../../data/stripe/stripe.paymentLinks.create')
 
 describe('POST /payment-request', () => {
+  let previousPaymentProvider: string | undefined
+
   beforeEach(async () => {
+    previousPaymentProvider = process.env.PAYMENT_PROVIDER
+    process.env.PAYMENT_PROVIDER = 'stripe'
+    resetPaymentProviderCache()
     await truncateModels(models.User)
     await truncateModels(models.PaymentRequest)
   })
   afterEach(async () => {
     nock.cleanAll()
+    process.env.PAYMENT_PROVIDER = previousPaymentProvider
+    resetPaymentProviderCache()
   })
 
   it('should create a new payment request', async () => {

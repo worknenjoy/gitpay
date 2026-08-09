@@ -146,6 +146,7 @@ function IssuePaymentDrawer({
             <CreditCardPaymentCard
               addNotification={addNotification}
               onPayment={updateTask}
+              createOrder={createOrder}
               price={price}
               formatedPrice={formatCurrency(priceAfterFee as number)}
               user={user?.data}

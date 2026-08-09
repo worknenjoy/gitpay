@@ -14,7 +14,7 @@ export async function paymentRequestPaymentList({ userId }: PaymentRequestPaymen
     include: [
       {
         model: currentModels.PaymentRequest,
-        attributes: ['title']
+        attributes: ['title', 'provider', 'transfer_status', 'transfer_id']
       },
       {
         model: currentModels.PaymentRequestCustomer,

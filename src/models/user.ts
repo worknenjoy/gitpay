@@ -27,6 +27,7 @@ export interface UserAttributes {
   picture_url?: string | null
   customer_id?: string | null
   account_id?: string | null
+  whop_account_id?: string | null
   paypal_id?: string | null
   os?: string | null
   skills?: string | null
@@ -66,6 +67,7 @@ export type UserCreationAttributes = Optional<
   | 'picture_url'
   | 'customer_id'
   | 'account_id'
+  | 'whop_account_id'
   | 'paypal_id'
   | 'os'
   | 'skills'
@@ -107,6 +109,7 @@ export default class User
   public picture_url!: string | null
   public customer_id!: string | null
   public account_id!: string | null
+  public whop_account_id!: string | null
   public paypal_id!: string | null
   public os!: string | null
   public skills!: string | null
@@ -216,6 +219,10 @@ export default class User
           allowNull: true
         },
         account_id: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        whop_account_id: {
           type: DataTypes.STRING,
           allowNull: true
         },

@@ -27,7 +27,7 @@ const InvoicePaymentCard: React.FC<InvoicePaymentCardProps> = ({
   const onInvoicePayment = async () => {
     setProcessingPayment(true)
     await createOrder({
-      provider: 'stripe',
+      provider: (process.env.PAYMENT_PROVIDER as string) || 'stripe',
       amount: price,
       userId: user?.id,
       email: user?.email,

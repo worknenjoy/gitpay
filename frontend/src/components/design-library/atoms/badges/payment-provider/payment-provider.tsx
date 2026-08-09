@@ -3,10 +3,11 @@ import {
   CreditCard as CreditCardIcon,
   Receipt as InvoiceIcon,
   AccountBalanceWallet as WalletIcon,
-  MoneyOff as UnknownPaymentIcon
+  MoneyOff as UnknownPaymentIcon,
+  Storefront as WhopIcon
 } from '@mui/icons-material'
 import { Chip } from '@mui/material'
-import { blue, green, grey, orange } from '@mui/material/colors'
+import { blue, green, grey, orange, purple } from '@mui/material/colors'
 import { paymentProviders, paymentSources } from '../../../../../consts'
 
 import logoPaypal from 'images/paypal-icon.png'
@@ -18,7 +19,7 @@ type statusProps = {
 
 type GetPaymentTypesProps = {
   label?: string
-  color?: 'card' | 'invoice' | 'paypal' | 'wallet' | 'unknown'
+  color?: 'card' | 'invoice' | 'paypal' | 'wallet' | 'whop' | 'unknown'
   icon?: JSX.Element
 }
 type GetPaymentType = (
@@ -51,6 +52,21 @@ export default function PaymentProvider({ provider, sourceType }: statusProps) {
             label: 'Card',
             color: 'card',
             icon: <CreditCardIcon />
+          }
+        }
+        break
+      case paymentProviders.whop:
+        if (currentPaymentSource === paymentSources.invoice) {
+          choosenPayment = {
+            label: 'Whop Invoice',
+            color: 'whop',
+            icon: <InvoiceIcon />
+          }
+        } else {
+          choosenPayment = {
+            label: 'Whop',
+            color: 'whop',
+            icon: <WhopIcon />
           }
         }
         break
@@ -91,6 +107,8 @@ export default function PaymentProvider({ provider, sourceType }: statusProps) {
         return { bgcolor: blue[300], color: 'common.white' }
       case 'wallet':
         return { bgcolor: grey[500], color: 'common.white' }
+      case 'whop':
+        return { bgcolor: purple[500], color: 'common.white' }
       default:
         return { bgcolor: grey[400], color: 'common.white' }
     }

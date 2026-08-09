@@ -1,7 +1,11 @@
-// Mirrors the length of countryCodesFull in frontend/src/components/areas/private/shared/country-codes.js
-// Update this when countries are added or removed from that list.
-const SUPPORTED_COUNTRIES_COUNT = 193
+import { getDefaultPaymentProviderName } from '../../providers'
+import { getSupportedCountriesForProvider } from '../../providers/shared/supportedCountries'
 
+/**
+ * Count of countries available for payout onboarding for the active provider.
+ * Stripe and Whop lists differ; this feeds public stats / marketing counts.
+ */
 export const countUserCountries = async (): Promise<number> => {
-  return SUPPORTED_COUNTRIES_COUNT
+  const provider = getDefaultPaymentProviderName()
+  return getSupportedCountriesForProvider(provider).length
 }

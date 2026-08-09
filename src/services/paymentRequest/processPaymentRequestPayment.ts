@@ -8,33 +8,8 @@ type CheckoutSession = {
   payment_status?: string
 }
 
-/**
- * Generic Payment Request payment processor.
- * This service is intentionally unaware of webhook HTTP/event wrappers.
- */
-export async function processPaymentRequestPaymentFromCheckoutSession(session: any): Promise<void> {
-  const paymentStatus = (session as CheckoutSession | null)?.payment_status
-  if (paymentStatus !== 'paid' && paymentStatus !== 'no_payment_required') {
-    return
-  }
-
-  const result = await processCheckoutSessionCompleted(session)
-
+async function sendTransferEmails(result: any): Promise<void> {
   const { user, paymentRequestPayment, paymentRequest } = result
-
-  try {
-    await PaymentRequestMail.paymentMadeForPaymentRequest(user, paymentRequestPayment)
-  } catch (error) {
-    console.error('Error sending payment made email:', error)
-  }
-
-  if (paymentRequest?.send_instructions_email && paymentRequest?.instructions_content) {
-    try {
-      await PaymentRequestMail.sendConfirmationWithInstructions(paymentRequestPayment)
-    } catch (error) {
-      console.error('Error sending customer confirmation email with instructions:', error)
-    }
-  }
 
   if (result.transferCreated) {
     try {
@@ -77,4 +52,46 @@ export async function processPaymentRequestPaymentFromCheckoutSession(session: a
       )
     })
   }
+}
+
+/**
+ * Generic Payment Request payment processor.
+ * This service is intentionally unaware of webhook HTTP/event wrappers.
+ *
+ * After payment is recorded:
+ * - always emails payment-made (+ optional instructions) on first processing
+ * - emails transfer-initiated only when a provider transfer was created
+ *   (Stripe: usually immediate; Whop: may be deferred until daily cron)
+ */
+export async function processPaymentRequestPaymentFromCheckoutSession(session: any): Promise<void> {
+  const paymentStatus = (session as CheckoutSession | null)?.payment_status
+  if (paymentStatus !== 'paid' && paymentStatus !== 'no_payment_required') {
+    return
+  }
+
+  const result = await processCheckoutSessionCompleted(session)
+
+  // Idempotent replay: only notify if a deferred transfer just completed
+  if ((result as any).alreadyProcessed) {
+    await sendTransferEmails(result)
+    return
+  }
+
+  const { user, paymentRequestPayment, paymentRequest } = result
+
+  try {
+    await PaymentRequestMail.paymentMadeForPaymentRequest(user, paymentRequestPayment)
+  } catch (error) {
+    console.error('Error sending payment made email:', error)
+  }
+
+  if (paymentRequest?.send_instructions_email && paymentRequest?.instructions_content) {
+    try {
+      await PaymentRequestMail.sendConfirmationWithInstructions(paymentRequestPayment)
+    } catch (error) {
+      console.error('Error sending customer confirmation email with instructions:', error)
+    }
+  }
+
+  await sendTransferEmails(result)
 }

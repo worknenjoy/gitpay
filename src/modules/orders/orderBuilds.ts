@@ -3,11 +3,10 @@ import models from '../../models'
 import URLSearchParams from 'url-search-params'
 import * as URL from 'url'
 import Decimal from 'decimal.js'
-import stripeModule from '../../client/payment/stripe'
-const stripe = stripeModule()
 import Sendmail from '../../mail/mail'
 import { userCustomerCreate } from '../users/userCustomerCreate'
 import { PaypalConnect } from '../../client/provider/paypal'
+import { getDefaultPaymentProviderName, getPaymentProvider } from '../../providers'
 const slack = require('../../shared/slack')
 
 const currentModels = models as any
@@ -16,7 +15,7 @@ type OrderBuildsParams = {
   source_id?: string
   source_type?: string
   currency: string
-  provider: string
+  provider?: string
   amount: number
   email: string
   userId: number
@@ -27,6 +26,13 @@ type OrderBuildsParams = {
 }
 
 export async function orderBuilds(orderParameters: OrderBuildsParams) {
+  // Config-only global switch: prefer PAYMENT_PROVIDER when client omits/overrides card PSP
+  const resolvedProvider =
+    orderParameters.provider ||
+    (orderParameters.source_type === 'wallet-funds' ? 'wallet' : getDefaultPaymentProviderName())
+
+  orderParameters.provider = resolvedProvider
+
   const { source_id, source_type, currency, provider, amount, email, userId, taskId, plan } =
     orderParameters
   const taskUrl = `${process.env.API_HOST}/#/task/${orderParameters.taskId}`
@@ -81,67 +87,51 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
   const taskTitle = orderCreated?.Task?.dataValues?.title || ''
   const percentage = orderCreated.Plan?.feePercentage
 
-  if (orderParameters.provider === 'stripe' && orderParameters.source_type === 'invoice-item') {
-    const unitAmount = (
-      parseInt(String(orderParameters.amount)) *
-      100 *
-      (1 + percentage / 100)
-    ).toFixed(0)
-    const quantity = 1
+  if (
+    (orderParameters.provider === 'stripe' || orderParameters.provider === 'whop') &&
+    orderParameters.source_type === 'invoice-item'
+  ) {
+    const amountWithFee =
+      parseFloat(String(orderParameters.amount)) * (1 + (percentage || 0) / 100)
 
-    if (!orderParameters.customer_id) {
+    if (orderParameters.provider === 'stripe' && !orderParameters.customer_id) {
       const newCustomer = await userCustomerCreate(orderUser.id, { email: orderUser.email })
       orderParameters.customer_id = newCustomer.id
       orderUserModel.reload()
     }
 
-    const invoice = await stripe.invoices.create({
-      customer: orderParameters.customer_id,
-      collection_method: 'send_invoice',
-      days_until_due: 30,
-      metadata: {
-        task_id: orderParameters.taskId,
-        order_id: orderCreated.dataValues.id
-      }
-    })
-
-    // Create invoice item (line item on the invoice)
-    // Note: We don't store the invoice item ID, only the invoice ID, as the invoice item is part of the invoice
-    const invoiceItem = await stripe.invoiceItems.create({
-      customer: orderParameters.customer_id,
-      currency: 'usd',
-      quantity,
+    const paymentProvider = getPaymentProvider(orderParameters.provider)
+    const invoice = await paymentProvider.createInvoice({
+      purpose: 'bounty_order',
+      amount: amountWithFee,
+      currency: orderParameters.currency || 'usd',
+      customerEmail: orderParameters.email || orderUser.email,
+      customerName: orderUser.name || orderUser.username,
+      customerId: orderParameters.customer_id,
+      dueDays: 30,
       description:
         'Development service for solving an issue on Gitpay: ' + taskTitle + '(' + taskUrl + ')',
-      unit_amount: unitAmount,
-      invoice: invoice.id,
       metadata: {
-        task_id: orderParameters.taskId,
-        order_id: orderCreated.dataValues.id
+        task_id: String(orderParameters.taskId),
+        order_id: String(orderCreated.dataValues.id),
+        purpose: 'bounty_order'
       }
     })
 
-    // Verify invoice item was created successfully
-    if (!invoiceItem || !invoiceItem.id) {
-      throw new Error('Failed to create invoice item')
-    }
-
-    const finalizedInvoice = await stripe.invoices.finalizeInvoice(invoice.id)
-    if (!finalizedInvoice || !finalizedInvoice.id) {
-      throw new Error('Failed to finalize invoice')
-    }
-    // TODO: check why they send the email on test environment, it should not send the email when testing
-    if (process.env.NODE_ENV !== 'test') {
+    if (process.env.NODE_ENV !== 'test' && invoice.hostedUrl) {
       Sendmail.success(
         { ...orderUser, email: orderParameters.email },
         'Invoice created',
-        `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${finalizedInvoice.hosted_invoice_url}`
+        `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${invoice.hostedUrl}`
       )
     }
 
     const orderUpdated = await orderCreated.update(
       {
-        source_id: invoice.id
+        source_id: invoice.invoiceId,
+        payment_url: invoice.hostedUrl || null,
+        provider: paymentProvider.name,
+        status: invoice.status || 'open'
       },
       {
         where: {
@@ -150,7 +140,71 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
         include: [{ model: currentModels.User }]
       }
     )
-    await stripe.invoices.sendInvoice(invoice.id)
+    return orderUpdated
+  }
+
+  // Whop embedded bounty checkout: create session for frontend WhopCheckoutEmbed
+  if (orderParameters.provider === 'whop' && orderParameters.source_type !== 'wallet-funds') {
+    const paymentProvider = getPaymentProvider('whop')
+    const totalPrice = currentModels.Plan.calcFinalPrice
+      ? currentModels.Plan.calcFinalPrice(orderParameters.amount, orderParameters.plan)
+      : parseFloat(String(orderParameters.amount)) * (1 + (percentage || 0) / 100)
+
+    // Whop requires https:// redirect_url. Use public API tunnel (WHOP_API_HOST / ngrok),
+    // not FRONTEND_HOST (often http://localhost). API bounces to the SPA.
+    const { getWhopHttpsApiBaseUrl } = await import('../../providers/whop/redirectBase')
+    const apiHttps = getWhopHttpsApiBaseUrl()
+    const returnUrl =
+      apiHttps && orderParameters.taskId
+        ? `${apiHttps}/orders/whop/return?taskId=${encodeURIComponent(
+            String(orderParameters.taskId)
+          )}&orderId=${encodeURIComponent(String(orderCreated.dataValues.id))}`
+        : undefined
+
+    if (!returnUrl) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        '[orderBuilds][whop] No https WHOP_API_HOST/API_HOST for checkout redirect_url. ' +
+          'Set WHOP_API_HOST=https://your-ngrok-host (tunnel to API :3000). Checkout still works without redirect.'
+      )
+    }
+
+    const bountyTitle =
+      (taskTitle && String(taskTitle).trim()) ||
+      `Gitpay bounty #${orderCreated.dataValues.id}`
+    const bountyDescription = taskTitle
+      ? `Bounty for: ${taskTitle}`
+      : `Gitpay bounty order ${orderCreated.dataValues.id}`
+
+    const checkout = await paymentProvider.createBountyCheckout({
+      amount: totalPrice,
+      currency: orderParameters.currency || 'usd',
+      title: bountyTitle,
+      description: bountyDescription,
+      metadata: {
+        order_id: String(orderCreated.dataValues.id),
+        task_id: String(orderParameters.taskId),
+        purpose: 'bounty_order',
+        ...(returnUrl ? { return_url: returnUrl } : {})
+      },
+      customerEmail: orderParameters.email || orderUser.email
+    })
+
+    const orderUpdated = await orderCreated.update(
+      {
+        source_id: checkout.sourceId,
+        payment_url: checkout.paymentUrl || null,
+        provider: 'whop',
+        status: checkout.status || 'open',
+        // session id for embed (also in source_id)
+        token: checkout.sessionId || checkout.sourceId
+      },
+      {
+        where: {
+          id: orderCreated.dataValues.id
+        }
+      }
+    )
     return orderUpdated
   }
 

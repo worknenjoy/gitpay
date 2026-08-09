@@ -3,7 +3,7 @@ import ClaimMail from '../../../mail/templates/issue/claim'
 import { incrementIssueClaimRetries } from '../../../mutations/issue/state/incrementIssueClaimRetries'
 import { refundUnclaimedBountyOrders } from './refundUnclaimedBountyOrders'
 
-export const CLAIM_RETRY_LIMIT = 2
+const CLAIM_RETRY_LIMIT = 2
 
 export type UnclaimedBountyAction =
   | 'notified'
@@ -87,3 +87,5 @@ export const notifyUnclaimedBounties = async (): Promise<UnclaimedBountyResult[]
 
   return results
 }
+
+export { CLAIM_RETRY_LIMIT }

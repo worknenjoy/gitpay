@@ -5,6 +5,7 @@ import BankAccountTabs from '../../../../molecules/tabs/bank-account-tabs/bank-a
 import EmptyBase from '../../../../molecules/content/empty/empty-base/empty-base'
 import EmptyBankAccount from '../../../../molecules/content/empty/empty-bank-account/empty-bank-account'
 import { FormattedMessage } from 'react-intl'
+import { getCountryFlagSrc } from '../../../../../areas/private/shared/country-flag'
 
 const PayoutSetingsBankAccount = ({
   children,
@@ -14,6 +15,9 @@ const PayoutSetingsBankAccount = ({
   verificationTabDisabled
 }) => {
   const { completed, data } = user
+  const paymentProvider = process.env.PAYMENT_PROVIDER || 'stripe'
+  const hasPayoutAccount =
+    paymentProvider === 'whop' ? Boolean(data?.whop_account_id) : Boolean(data?.account_id)
   const [savingCountry, setSavingCountry] = React.useState(false)
   const [openCountryPicker, setOpenCountryPicker] = React.useState(false)
   const [country, setCountry] = React.useState({
@@ -38,11 +42,7 @@ const PayoutSetingsBankAccount = ({
     })
   }
 
-  const getCountryImage = (image) => {
-    const imageModule = require(`images/countries/${image}.png`)
-    const countryImageSrc = imageModule.default || imageModule
-    return countryImageSrc
-  }
+  const getCountryImage = (image) => getCountryFlagSrc(image)
 
   const saveCountryAndContinue = async (country) => {
     setSavingCountry(true)
@@ -64,7 +64,7 @@ const PayoutSetingsBankAccount = ({
 
   return completed ? (
     <>
-      {!data?.account_id ? (
+      {!hasPayoutAccount ? (
         <>
           {!country?.code ? (
             <>

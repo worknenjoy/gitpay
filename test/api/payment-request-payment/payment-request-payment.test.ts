@@ -25,6 +25,7 @@ describe('Payment Request Payment', () => {
         description: 'A test payment request',
         amount: 1000,
         currency: 'USD',
+        provider: 'stripe',
         userId: currentUser.id
       })
       const paymentRequestCustomer = await currentModels.PaymentRequestCustomer.create({
@@ -36,8 +37,9 @@ describe('Payment Request Payment', () => {
       const paymentRequestPayment = await currentModels.PaymentRequestPayment.create({
         amount: 1000,
         currency: 'USD',
-        source: 'src_123',
+        source: 'pi_list_test_1',
         status: 'completed',
+        transferStatus: 'initiated',
         customerId: paymentRequestCustomer.id,
         userId: currentUser.id,
         paymentRequestId: paymentRequest.id
@@ -50,6 +52,10 @@ describe('Payment Request Payment', () => {
       expect(res.body).to.be.an('array')
       expect(res.body.length).to.equal(1)
       expect(res.body[0].id).to.equal(paymentRequestPayment.id)
+      expect(res.body[0].PaymentRequest).to.exist
+      expect(res.body[0].PaymentRequest.provider).to.equal('stripe')
+      expect(res.body[0].PaymentRequest.title).to.equal('Test Payment Request')
+      expect(res.body[0].transferStatus).to.equal('initiated')
     })
   })
   describe('POST /payment-request-payments/:id/refund', () => {
@@ -100,6 +106,7 @@ describe('Payment Request Payment', () => {
         description: 'A test payment request',
         amount: 1000,
         currency: 'USD',
+        provider: 'stripe',
         userId: currentUser.id
       })
       const paymentRequestCustomer = await currentModels.PaymentRequestCustomer.create({
@@ -111,7 +118,7 @@ describe('Payment Request Payment', () => {
       const paymentRequestPayment = await currentModels.PaymentRequestPayment.create({
         amount: 1000,
         currency: 'USD',
-        source: 'src_123',
+        source: 'pi_1JHh1Z2eZvKYlo2C4b5h6j7k',
         status: 'paid',
         customerId: paymentRequestCustomer.id,
         userId: currentUser.id,
@@ -142,6 +149,63 @@ describe('Payment Request Payment', () => {
       expect(refundedPayment).to.have.property('id', paymentRequestPayment.id)
       expect(refundedPayment).to.have.property('status', 'refunded')
       expect(refundedTransfer).to.have.property('status', 'reversed')
+    })
+
+    it('should refund a Whop payment-request payment via Whop API', async () => {
+      const { withPaymentProvider, pinWhopApiForTests, WHOP_API_HOST } = await import(
+        '../../helpers/whop'
+      )
+      await withPaymentProvider('whop', async () => {
+        pinWhopApiForTests()
+        nock(WHOP_API_HOST)
+          .post('/api/v1/payments/pay_whop_refund_1/refund')
+          .reply(200, { id: 'rfnd_whop_1', status: 'succeeded' })
+
+        const user = await registerAndLogin(agent)
+        const { headers, body: currentUser } = user || {}
+        const paymentRequest = await currentModels.PaymentRequest.create({
+          title: 'Whop PR',
+          description: 'Whop payment',
+          amount: 100,
+          currency: 'usd',
+          provider: 'whop',
+          transfer_id: 'tr_whop_1',
+          userId: currentUser.id
+        })
+        const customer = await currentModels.PaymentRequestCustomer.create({
+          name: 'Customer',
+          email: 'c@example.com',
+          sourceId: 'cust_1',
+          userId: currentUser.id
+        })
+        const payment = await currentModels.PaymentRequestPayment.create({
+          amount: 100,
+          currency: 'usd',
+          source: 'pay_whop_refund_1',
+          status: 'paid',
+          customerId: customer.id,
+          userId: currentUser.id,
+          paymentRequestId: paymentRequest.id
+        })
+        const transfer = await currentModels.PaymentRequestTransfer.create({
+          status: 'created',
+          transfer_id: 'tr_whop_1',
+          transfer_method: 'whop',
+          paymentRequestId: paymentRequest.id,
+          userId: currentUser.id
+        })
+
+        await agent
+          .post(`/payment-request-payments/${payment.id}/refund`)
+          .set('Authorization', headers['authorization'])
+          .expect(200)
+
+        await payment.reload()
+        await transfer.reload()
+        expect(payment.status).to.equal('refunded')
+        // Whop reverseTransfer is a no-op but local status is still marked reversed
+        expect(transfer.status).to.equal('reversed')
+      })
     })
   })
 })

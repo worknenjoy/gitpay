@@ -26,7 +26,9 @@ import Alert from 'design-library/atoms/alerts/alert/alert'
 import CountryPicker from '../../../../shared/country-picker'
 import Const from '../../../../../../../consts'
 
-import { countryCodes, countryCurrencies } from '../../../../shared/country-codes'
+import { countryCurrencies } from '../../../../shared/country-codes'
+import { getSupportedCountryCodes } from '../../../../shared/provider-country-codes'
+import { getCountryFlagSrc } from '../../../../shared/country-flag'
 
 const cardSx = { width: '100%', mb: 2, p: 1 } as const
 const cardEmptySx = { textAlign: 'center', mb: 5 } as const
@@ -343,7 +345,7 @@ const BankAccount = ({
                               disabled={!!bankAccountData.routing_number}
                             >
                               <option value="">Select bank country</option>
-                              {countryCodes.map((c, index) => (
+                              {getSupportedCountryCodes().map((c, index) => (
                                 <option
                                   key={index}
                                   value={c.code}
@@ -611,7 +613,8 @@ const BankAccount = ({
                               <Avatar>
                                 <img
                                   width={72}
-                                  src={require(`images/countries/${countryImage}.png`).default}
+                                  alt=""
+                                  src={getCountryFlagSrc(countryImage)}
                                 />
                               </Avatar>
                             }

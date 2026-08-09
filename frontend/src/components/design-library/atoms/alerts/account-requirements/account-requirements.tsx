@@ -6,9 +6,28 @@ import api from '../../../../../consts'
 import Button from '../../../atoms/buttons/button/button'
 import { CustomAlert } from './account-requirements.styles'
 
-const AccountRequirements = ({ user, account, intl, onClick }) => {
-  const { completed = true } = account
+const isWhopProvider = (account) => {
+  if (account?.data?.provider === 'whop') return true
+  if (account?.data?.provider === 'stripe') return false
+  const envProvider =
+    (typeof process !== 'undefined' && process.env && process.env.PAYMENT_PROVIDER) || 'stripe'
+  return envProvider === 'whop'
+}
+
+const hasWhopConnectedAccount = (user, account) =>
+  Boolean(account?.data?.id || user?.whop_account_id)
+
+/**
+ * Account requirements banner (design library).
+ * Stripe: shows when Connect account has missing requirements / not valid.
+ * Whop: can be forced on Account holder details when a connected company exists,
+ * prompting the user to complete verification via Whop account_links.
+ */
+const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }) => {
+  const { completed = true } = account || {}
   const isRejected = account?.data?.requirements?.disabled_reason?.startsWith('rejected')
+  const whop = isWhopProvider(account)
+  const whopConnected = hasWhopConnectedAccount(user, account)
 
   if (isRejected) {
     return (
@@ -34,13 +53,50 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
         <AlertTitle>
           <FormattedMessage
             id="payout-settings.verification.rejected.title"
-            defaultMessage="Account rejected by Stripe"
+            defaultMessage="Account rejected by payment provider"
           />
         </AlertTitle>
         <Typography variant="body2" gutterBottom>
           <FormattedMessage
             id="payout-settings.verification.rejected.description"
-            defaultMessage="Stripe rejected this payout account after a risk review. Payouts are currently disabled."
+            defaultMessage="Your payment provider rejected this payout account after a risk review. Payouts are currently disabled."
+          />
+        </Typography>
+      </CustomAlert>
+    )
+  }
+
+  // Whop: prompt to complete verification on Whop when connected (holder uses forceShow)
+  if (whop && whopConnected && (forceShow || !validAccount(user, account))) {
+    return (
+      <CustomAlert
+        completed={completed}
+        severity="warning"
+        action={
+          <Button
+            completed={completed}
+            onClick={onClick}
+            variant="contained"
+            color="secondary"
+            label={
+              <FormattedMessage
+                id="payout-settings.whop.verification.button"
+                defaultMessage="Complete verification on Whop"
+              />
+            }
+          />
+        }
+      >
+        <AlertTitle>
+          <FormattedMessage
+            id="profile.transfer.actionrequired"
+            defaultMessage="Action required"
+          />
+        </AlertTitle>
+        <Typography variant="body2" gutterBottom>
+          <FormattedMessage
+            id="payout-settings.whop.verification.description"
+            defaultMessage="Complete verification on Whop before you can receive payouts. You will be redirected to Whop to finish identity and payout setup."
           />
         </Typography>
       </CustomAlert>
@@ -64,6 +120,12 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
       })
     }
   }
+
+  // Stripe (and other) default path
+  if (whop) {
+    return null
+  }
+
   return !validAccount(user, account) ? (
     <CustomAlert
       completed={completed}
@@ -86,7 +148,7 @@ const AccountRequirements = ({ user, account, intl, onClick }) => {
       <Typography variant="body2" gutterBottom>
         <FormattedMessage
           id="profile.transfer.notactive"
-          defaultMessage="Stripe needs additional information before payouts can continue for this account."
+          defaultMessage="Additional information is required before payouts can continue for this account."
         />
       </Typography>
       {missingRequirements() && (

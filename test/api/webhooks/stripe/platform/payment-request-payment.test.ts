@@ -79,6 +79,12 @@ describe('Payment Request Payment Webhook', () => {
 
     const user = await registerAndLogin(agent)
     const { headers, body: currentUser } = user || {}
+    // The payment-request owner receives the Stripe transfer, so they need a
+    // connected account_id (executePaymentRequestTransfer requires it).
+    await models.User.update(
+      { account_id: 'acct_1KkomkBrSjgsps2DGGGtipW4' },
+      { where: { id: currentUser.id } }
+    )
     const paymentRequest = await PaymentRequestFactory({
       title: 'Payment for services',
       amount: 1,
@@ -143,6 +149,12 @@ describe('Payment Request Payment Webhook', () => {
 
     const user = await registerAndLogin(agent)
     const { body: currentUser } = user || {}
+    // The payment-request owner receives the Stripe transfer, so they need a
+    // connected account_id (executePaymentRequestTransfer requires it).
+    await models.User.update(
+      { account_id: 'acct_1KkomkBrSjgsps2DGGGtipW4' },
+      { where: { id: currentUser.id } }
+    )
 
     await PaymentRequestFactory({
       title: 'Payment for services',

@@ -32,6 +32,13 @@ describe('POST /wallet-order', () => {
         .reply(200, invoiceBasic.created, {
           'Content-Type': 'application/json'
         })
+
+      // StripePaymentProvider.createInvoice also emails the invoice.
+      nock('https://api.stripe.com')
+        .post('/v1/invoices/in_1Q2fh8BrSjgsps2DUqQsGLDj/send')
+        .reply(200, invoiceBasic.created, {
+          'Content-Type': 'application/json'
+        })
     })
     it('should create an initial wallet Order', async () => {
       nock('https://api.stripe.com').post('/v1/customers').reply(200, customer.customer, {

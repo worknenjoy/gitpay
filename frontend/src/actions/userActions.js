@@ -518,7 +518,11 @@ const createAccount = (country) => {
   validToken()
   return (dispatch, getState) => {
     dispatch(createUserAccountRequested())
-    const accountId = getState().loggedIn.data.account_id
+    const loggedUser = getState().loggedIn.data || {}
+    const paymentProvider = process.env.PAYMENT_PROVIDER || 'stripe'
+    // Stripe uses account_id; Whop uses whop_account_id
+    const accountId =
+      paymentProvider === 'whop' ? loggedUser.whop_account_id : loggedUser.account_id
 
     if (accountId) {
       dispatch(addNotification('actions.user.account.exist'))

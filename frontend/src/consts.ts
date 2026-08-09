@@ -176,6 +176,7 @@ export const status = {
 
 export enum paymentProviders {
   stripe = 'stripe',
+  whop = 'whop',
   paypal = 'paypal',
   wallet = 'wallet',
   unknown = 'unknown'

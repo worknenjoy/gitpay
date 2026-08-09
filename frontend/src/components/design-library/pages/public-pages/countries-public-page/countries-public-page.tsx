@@ -8,11 +8,15 @@ import {
   Layout,
   HeroContent,
   CountryCard,
-  FlagImage,
   CountryName,
   CurrencyLabel
 } from './countries-public-page.styles'
-import { countryCodes, countryCurrencies } from '../../../../areas/private/shared/country-codes'
+import { countryCurrencies } from '../../../../areas/private/shared/country-codes'
+import {
+  getSupportedCountryCodes,
+  getSupportedCountriesCount
+} from '../../../../areas/private/shared/provider-country-codes'
+import CountryFlagImage from '../../../../areas/private/shared/country-flag-image'
 
 const getCurrencyForCountry = (countryCode: string): string => {
   const match = countryCurrencies.find((c) => c.countries.includes(countryCode))
@@ -20,6 +24,9 @@ const getCurrencyForCountry = (countryCode: string): string => {
 }
 
 function CountriesPublicPage() {
+  const countryCodes = getSupportedCountryCodes()
+  const paymentProvider = process.env.PAYMENT_PROVIDER || 'stripe'
+
   return (
     <>
       <Layout>
@@ -37,7 +44,16 @@ function CountriesPublicPage() {
             <FormattedMessage
               id="countries.hero.count"
               defaultMessage="{count} supported countries"
-              values={{ count: countryCodes.length }}
+              values={{ count: getSupportedCountriesCount() }}
+            />
+          </Typography>
+          <Typography variant="body2" color="textSecondary" sx={{ mt: 0.5 }}>
+            <FormattedMessage
+              id="countries.hero.provider"
+              defaultMessage="Payout countries for {provider}"
+              values={{
+                provider: paymentProvider === 'whop' ? 'Whop' : 'Stripe'
+              }}
             />
           </Typography>
         </HeroContent>
@@ -51,8 +67,6 @@ function CountriesPublicPage() {
 
         <Grid container spacing={2} sx={{ mt: 2 }}>
           {countryCodes.map((item) => {
-            const imageModule = require(`images/countries/${item.image}.png`)
-            const flagSrc = imageModule.default || imageModule
             const currency = getCurrencyForCountry(item.code)
 
             return (
@@ -67,7 +81,12 @@ function CountriesPublicPage() {
                       '&:last-child': { pb: 1.5 }
                     }}
                   >
-                    <FlagImage src={flagSrc} alt={item.country} />
+                    <CountryFlagImage
+                      image={item.image}
+                      alt={item.country}
+                      width={56}
+                      style={{ marginBottom: 8, borderRadius: 2 }}
+                    />
                     <CountryName>{item.country}</CountryName>
                     {currency && <CurrencyLabel>{currency}</CurrencyLabel>}
                   </CardContent>

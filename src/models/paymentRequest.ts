@@ -13,6 +13,8 @@ export interface PaymentRequestAttributes {
   instructions_content?: string | null
   payment_link_id?: string | null
   payment_url?: string | null
+  /** Payment connector: stripe | whop */
+  provider: string
   status: string
   transfer_status: string
   transfer_id?: string | null
@@ -35,6 +37,7 @@ export type PaymentRequestCreationAttributes = Optional<
   | 'instructions_content'
   | 'payment_link_id'
   | 'payment_url'
+  | 'provider'
   | 'status'
   | 'transfer_status'
   | 'transfer_id'
@@ -59,6 +62,7 @@ export default class PaymentRequest
   public instructions_content!: string | null
   public payment_link_id!: string | null
   public payment_url!: string | null
+  public provider!: string
   public status!: string
   public transfer_status!: string
   public transfer_id!: string | null
@@ -118,6 +122,11 @@ export default class PaymentRequest
         payment_url: {
           type: DataTypes.STRING,
           allowNull: true
+        },
+        provider: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          defaultValue: 'stripe'
         },
         status: {
           type: DataTypes.STRING,

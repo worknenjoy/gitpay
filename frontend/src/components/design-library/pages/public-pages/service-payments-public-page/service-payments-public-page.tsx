@@ -19,7 +19,7 @@ const servicePaymentSteps = [
   {
     number: '2',
     title: 'Share with your customer',
-    description: 'Send the link — your client pays via secure Stripe checkout, no account needed',
+    description: 'Send the link — your client pays via secure checkout, no account needed',
     numberColor: '#73b89a'
   },
   {

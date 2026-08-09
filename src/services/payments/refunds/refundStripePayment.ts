@@ -1,11 +1,10 @@
 import Models from '../../../models'
 import PaymentMail from '../../../mail/payment'
 import { calculateAmountWithPercent } from '../../../utils'
-import stripeModule from '../../../client/payment/stripe'
+import { getPaymentProvider } from '../../../providers'
 import { updateOrderAsRefunded } from '../../../mutations/order/updateOrderAsRefunded'
 
 const models = Models as any
-const stripe = stripeModule()
 
 export type RefundStripePaymentReason = 'old_open_bounty'
 
@@ -40,12 +39,13 @@ export async function refundStripePayment({
 
   const refundAmountExcludingFees = calculateAmountWithPercent(order.amount, 0, 'decimal').centavos
 
-  const refund = await stripe.refunds.create({
-    charge: order.source,
-    amount: refundAmountExcludingFees
+  const paymentProvider = getPaymentProvider('stripe')
+  const refund = await paymentProvider.refund({
+    paymentReference: order.source,
+    amountCents: refundAmountExcludingFees
   })
 
-  if (!refund?.id) {
+  if (!refund?.refundId) {
     throw new Error('stripe_refund_failed')
   }
 
@@ -56,7 +56,7 @@ export async function refundStripePayment({
   const taskId =
     order.get?.('TaskId') ?? order.TaskId ?? order.dataValues?.TaskId ?? null
 
-  const updateResult = await updateOrderAsRefunded({ id: order.id }, { refund_id: refund.id })
+  const updateResult = await updateOrderAsRefunded({ id: order.id }, { refund_id: refund.refundId })
 
   const orderData = updateResult[1]?.[0]?.dataValues ?? updateResult[1]?.[0] ?? order.dataValues
 

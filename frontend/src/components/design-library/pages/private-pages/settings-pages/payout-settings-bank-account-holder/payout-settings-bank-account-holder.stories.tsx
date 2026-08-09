@@ -76,3 +76,46 @@ Loading.args = {
     data: {}
   }
 }
+
+export const WhopConnectedCompany = Template.bind({})
+WhopConnectedCompany.args = {
+  profileHeaderProps: {
+    title: 'Payout Settings',
+    subtitle: 'Manage your payout settings and preferences.'
+  },
+  user: {
+    completed: true,
+    data: {
+      id: '1',
+      name: 'Jane Doe',
+      email: 'jane@example.com',
+      whop_account_id: 'biz_whop_123',
+      Types: [{ name: 'provider' }]
+    }
+  },
+  account: {
+    completed: true,
+    data: {
+      id: 'biz_whop_123',
+      provider: 'whop',
+      active: true,
+      title: 'Jane Consulting LLC',
+      country: 'US',
+      email: 'jane@example.com',
+      verified: true,
+      created_at: '2026-03-01T12:00:00.000Z',
+      route: 'jane-consulting',
+      url: 'https://whop.com/jane-consulting',
+      capabilities: { transfers: 'active' },
+      balances: { available: 120.5, pending: 40, reserve: 0 }
+    }
+  },
+  countries: {
+    completed: true,
+    data: {
+      provider: 'whop',
+      countries: [{ country: 'United States', code: 'US' }]
+    }
+  },
+  onCompleteVerification: () => console.log('fetch Whop verification link')
+}

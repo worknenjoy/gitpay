@@ -8,11 +8,11 @@ import {
 
 const ACTION_LABELS: Record<UnclaimedBountyAction, string> = {
   notified: 'NOTIFIED (email sent, claim_retries incremented)',
-  refunded: 'REFUNDED (retry limit reached → orders refunded, state closed)',
+  refunded: 'REFUNDED (retry limit reached, orders refunded, state closed)',
   skipped_no_user: 'SKIPPED (no GitPay user for PR author)',
   skipped_notifications_disabled: 'SKIPPED (user has receiveNotifications=false)',
   notify_failed: 'FAILED (notify)',
-  refund_failed: 'FAILED (refund — task may still be pending)'
+  refund_failed: 'FAILED (refund)'
 }
 
 const summarize = (results: UnclaimedBountyResult[]) => {
@@ -73,16 +73,6 @@ const notifyUnclaimedBountiesScript = async () => {
   }
 
   console.log('Done. Summary:', counts)
-  if ((counts.refunded ?? 0) > 0) {
-    console.log(
-      'Refunded tasks should no longer appear as pending claim (state=closed). Re-run pending list to verify.'
-    )
-  }
-  if ((counts.refund_failed ?? 0) > 0) {
-    console.log(
-      'Some refunds failed — those tasks can still appear as pending. Inspect errors above.'
-    )
-  }
 }
 
 notifyUnclaimedBountiesScript().catch((err) => {

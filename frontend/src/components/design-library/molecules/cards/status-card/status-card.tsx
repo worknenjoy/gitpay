@@ -19,7 +19,8 @@ const Name = styled(Typography)(() => ({
 
 type StatusCardProps = {
   name: string | React.ReactNode
-  status: number
+  /** Display value: schedule interval, label, or custom node (e.g. FormattedMessage) */
+  status: string | number | React.ReactNode
   onAdd?: (e: any) => void
   action?: React.PropsWithChildren<any>
   actionProps?: any

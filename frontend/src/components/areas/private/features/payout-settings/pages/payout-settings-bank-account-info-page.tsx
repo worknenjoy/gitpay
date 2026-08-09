@@ -3,12 +3,15 @@ import PayoutSettingsBankAccountInfo from 'design-library/pages/private-pages/se
 
 const PayoutSettingsBankAccountInfoPage = ({
   user,
+  account,
   bankAccount,
   getBankAccount,
   updateBankAccount,
   createBankAccount,
   deleteBankAccount,
-  countries
+  countries,
+  fetchAccount,
+  fetchAccountCountries
 }) => {
   const [bankCode, setBankCode] = React.useState(null)
 
@@ -51,12 +54,15 @@ const PayoutSettingsBankAccountInfoPage = ({
 
   useEffect(() => {
     getBankAccount()
-  }, [getBankAccount])
+    fetchAccount && fetchAccount()
+    fetchAccountCountries && fetchAccountCountries()
+  }, [getBankAccount, fetchAccount, fetchAccountCountries])
 
   return (
     <div>
       <PayoutSettingsBankAccountInfo
         user={user}
+        account={account}
         bankAccount={bankAccount}
         onCreateSubmit={onCreateSubmit}
         onEditSubmit={onEditSubmit}

@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import Alert from '@mui/material/Alert'
 import { FormattedMessage } from 'react-intl'
 
-import { countryCodes } from '../../../../areas/private/shared/country-codes'
+import { getSupportedCountryCodes } from '../../../../areas/private/shared/provider-country-codes'
+import CountryFlagImage from '../../../../areas/private/shared/country-flag-image'
 
 import {
   Button,
@@ -36,9 +37,8 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
   }
 
   const getCountryButtons = () => {
+    const countryCodes = getSupportedCountryCodes()
     return countryCodes.map((item) => {
-      const imageModule = require(`images/countries/${item.image}.png`)
-      const countryImageSrc = imageModule.default || imageModule
       return (
         <CountryItem
           key={item.code}
@@ -51,7 +51,7 @@ const CountryPicker = ({ open, onClose, onSelectCountry }) => {
           variant={currentCountry.code === item.code ? 'outlined' : 'text'}
           onClick={() => handleCountry(item)}
         >
-          <img width="48" src={countryImageSrc} alt={item.country} />
+          <CountryFlagImage image={item.image} alt={item.country} width={48} />
           <Typography component="span" gutterBottom>
             {item.country}
           </Typography>

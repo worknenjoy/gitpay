@@ -155,6 +155,9 @@ describe('POST /order/refund', () => {
 
     const order = await models.Order.build({
       source_id: 'PAY-TEST',
+      // A paid Stripe order stores the charge id in `source` (see
+      // orderUpdateAfterStripe / markBountyOrderPaid); refunds use it.
+      source: 'ch_1J2Yal2eZvKYlo2C0qvW9j8D',
       currency: 'USD',
       amount: 200,
       provider: 'stripe',

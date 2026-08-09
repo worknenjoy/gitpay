@@ -19,7 +19,11 @@ export const accountCreate = async (req: any, res: any) => {
   } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log(error)
-    res.send(false)
+    const status = error?.statusCode || error?.status || 400
+    res.status(status).json({
+      error: error?.message || 'account_create_failed',
+      details: error?.body || undefined
+    })
   }
 }
 
@@ -36,7 +40,10 @@ export const accountCountries = async (req: any, res: any) => {
 
 export const accountBalance = async (req: any, res: any) => {
   try {
-    const data = await user.userAccountBalance({ account_id: req.user.account_id })
+    const data = await user.userAccountBalance({
+      account_id: req.user.account_id,
+      userId: req.user.id
+    })
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -76,4 +83,27 @@ export const accountVerificationLink = async (req: any, res: any) => {
     console.log('error on account verification link', error)
     res.status(401).send(error)
   }
+}
+
+/**
+ * Public browser callbacks after Stripe/Whop hosted verification.
+ * Redirect back into the SPA (same tab) with a success/refresh hash route.
+ * Pattern matches /orders/authorize.
+ */
+function frontendHost(): string {
+  return (process.env.FRONTEND_HOST || 'http://localhost:8082').replace(/\/$/, '')
+}
+
+export const accountVerificationReturn = async (req: any, res: any) => {
+  const base = frontendHost()
+  res.redirect(
+    `${base}/#/profile/payout-settings/bank-account/account-verification/return?status=success`
+  )
+}
+
+export const accountVerificationRefresh = async (req: any, res: any) => {
+  const base = frontendHost()
+  res.redirect(
+    `${base}/#/profile/payout-settings/bank-account/account-verification/refresh?status=expired`
+  )
 }

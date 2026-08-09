@@ -11,14 +11,20 @@ export async function transferCreatedPaymentRequest(event: any, req: any, res: a
   }
 
   try {
-    await models.PaymentRequestTransfer.create({
-      transfer_id: event.data.object.id,
-      paymentRequestId: paymentRequestId,
-      userId: userId,
-      value: event.data.object.amount / 100,
-      status: 'created',
-      transfer_method: 'stripe'
+    // May already exist when created in executePaymentRequestTransfer
+    const existing = await models.PaymentRequestTransfer.findOne({
+      where: { transfer_id: event.data.object.id }
     })
+    if (!existing) {
+      await models.PaymentRequestTransfer.create({
+        transfer_id: event.data.object.id,
+        paymentRequestId: paymentRequestId,
+        userId: userId,
+        value: event.data.object.amount / 100,
+        status: 'created',
+        transfer_method: 'stripe'
+      })
+    }
     return res.status(200).json(event)
   } catch (error) {
     console.error('Error creating payment request transfer:', error)

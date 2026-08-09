@@ -21,7 +21,8 @@ const PayoutSettingsBankAccountPage = ({
   deleteAccount,
   fetchAccount,
   fetchAccountCountries,
-  fetchAccountVerificationLink
+  fetchAccountVerificationLink,
+  addNotification
 }) => {
   return (
     useEffect(() => {
@@ -54,6 +55,7 @@ const PayoutSettingsBankAccountPage = ({
                   updateAccount={updateAccount}
                   deleteAccount={deleteAccount}
                   fetchAccountCountries={fetchAccountCountries}
+                  fetchAccountVerificationLink={fetchAccountVerificationLink}
                   account={account}
                   countries={countries}
                 />
@@ -104,6 +106,8 @@ const PayoutSettingsBankAccountPage = ({
                 <PayoutSettingsBankAccountVerificationReturnPage
                   {...routeProps}
                   account={account}
+                  fetchAccount={fetchAccount}
+                  addNotification={addNotification}
                 />
               )}
             />

@@ -96,7 +96,11 @@ export async function transferManualService(
   taskData.Orders.forEach((order: any) => {
     if (order.paid) {
       finalValue += parseFloat(order.amount)
-      if (order.provider === 'stripe' || order.provider === 'wallet') {
+      if (
+        order.provider === 'stripe' ||
+        order.provider === 'wallet' ||
+        order.provider === 'whop'
+      ) {
         stripeTotal += parseFloat(order.amount)
       } else if (order.provider === 'paypal') {
         paypalTotal += parseFloat(order.amount)

@@ -4,7 +4,12 @@ import { AlertTitle, Box, Divider, Typography } from '@mui/material'
 import SecondaryTitle from '../../../../atoms/typography/secondary-title/secondary-title'
 import { CustomAlert } from '../../../../atoms/alerts/alert/alert'
 
+const paymentProvider =
+  (typeof process !== 'undefined' && process.env && process.env.PAYMENT_PROVIDER) || 'stripe'
+
 const PayoutSettingsBankAccountVerificationReturn = ({ completed = true }) => {
+  const isWhop = paymentProvider === 'whop'
+
   return (
     <Box>
       <SecondaryTitle
@@ -26,18 +31,25 @@ const PayoutSettingsBankAccountVerificationReturn = ({ completed = true }) => {
         <FormattedMessage id="payout-settings.verification.status" defaultMessage="Status" />
       </Typography>
 
-      <CustomAlert severity="info" completed={completed}>
+      <CustomAlert severity="success" completed={completed}>
         <AlertTitle>
           <FormattedMessage
             id="payout-settings.verification.return.title"
-            defaultMessage="Submission received · review in progress"
+            defaultMessage="Account verification submitted"
           />
         </AlertTitle>
         <Typography variant="body2">
-          <FormattedMessage
-            id="payout-settings.verification.return.description"
-            defaultMessage="Thanks — Stripe got your details and is reviewing them now. Most accounts are approved within a few minutes; some can take up to 1–2 business days."
-          />
+          {isWhop ? (
+            <FormattedMessage
+              id="payout-settings.verification.return.description.whop"
+              defaultMessage="Thanks — your Whop payout account details were submitted successfully. Your account is ready to receive transfers once Whop finishes any remaining checks."
+            />
+          ) : (
+            <FormattedMessage
+              id="payout-settings.verification.return.description"
+              defaultMessage="Thanks — Stripe got your details and is reviewing them now. Most accounts are approved within a few minutes; some can take up to 1–2 business days."
+            />
+          )}
         </Typography>
       </CustomAlert>
     </Box>
