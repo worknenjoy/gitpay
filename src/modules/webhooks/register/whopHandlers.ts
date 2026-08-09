@@ -41,14 +41,26 @@ function whopMajorToCents(value: unknown): number {
  * consumed by processPaymentRequestPaymentFromCheckoutSession.
  *
  * payment.succeeded payloads often omit `status`; the event type is the source of truth for paid.
+ *
+ * - amount_total: charge/creator total (gross) → PaymentRequestPayment.amount + payment-made email
+ * - amount_after_fees: platform net after Whop processor fees → claim/transfer base (then Gitpay 8%)
  */
 function paymentToCheckoutSession(payment: any, options: { forcePaid?: boolean } = {}) {
   const metadata = mergePaymentMetadata(payment)
   const major =
-    payment?.amount_after_fees != null
-      ? payment.amount_after_fees
-      : payment?.total ?? payment?.usd_total ?? payment?.amount ?? payment?.final_amount ?? 0
+    payment?.total ??
+    payment?.usd_total ??
+    payment?.settlement_amount ??
+    payment?.amount ??
+    payment?.final_amount ??
+    0
   const cents = whopMajorToCents(major)
+
+  // Major units (e.g. 0.57). Only set when Whop provides it (payment.succeeded).
+  const amountAfterFeesMajor =
+    payment?.amount_after_fees != null && payment?.amount_after_fees !== ''
+      ? Number(payment.amount_after_fees)
+      : null
 
   const status = payment?.status
   const paidByStatus = status === 'succeeded' || status === 'paid' || status === 'complete'
@@ -61,6 +73,11 @@ function paymentToCheckoutSession(payment: any, options: { forcePaid?: boolean }
     payment_status,
     amount_total: cents,
     payment_intent: payment.id,
+    // Gitpay extension: not a Stripe field; used for Whop claim base
+    amount_after_fees:
+      amountAfterFeesMajor != null && Number.isFinite(amountAfterFeesMajor)
+        ? amountAfterFeesMajor
+        : null,
     customer_details: {
       name: payment.user?.name || payment.member?.name || metadata.customer_name,
       email:

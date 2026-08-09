@@ -154,15 +154,33 @@ export async function executePaymentRequestTransfer(
   }
 
   const currency = paymentRequest.currency || paymentRequestPayment.currency || 'usd'
-  const originalAmount = calculateAmountWithPercent(
-    Number(paymentRequestPayment.amount),
-    0,
-    'decimal',
-    currency
-  )
-  const amountAfterFee = paymentRequest.custom_amount
-    ? calculateAmountWithPercent(Number(paymentRequestPayment.amount), 8, 'decimal', currency)
-    : calculateAmountWithPercent(Number(paymentRequest.amount), 8, 'decimal', currency)
+  const paymentProviderName = paymentRequest.provider || getPaymentProvider().name
+
+  /**
+   * Fee base for Gitpay's 8% platform fee:
+   * - Whop: platform net after processor fees (amount_after_fees) when known
+   * - Stripe / fallback: custom → payment amount; fixed → PR amount
+   *
+   * originalAmountDecimal in results is this fee base (shown on transfer-initiated email),
+   * not necessarily the customer gross (that stays on payment.amount for payment-made).
+   */
+  let feeBaseDecimal: number
+  const whopNet = paymentRequestPayment.amount_after_fees
+  if (
+    paymentProviderName === 'whop' &&
+    whopNet != null &&
+    Number.isFinite(Number(whopNet)) &&
+    Number(whopNet) >= 0
+  ) {
+    feeBaseDecimal = Number(whopNet)
+  } else if (paymentRequest.custom_amount) {
+    feeBaseDecimal = Number(paymentRequestPayment.amount)
+  } else {
+    feeBaseDecimal = Number(paymentRequest.amount)
+  }
+
+  const originalAmount = calculateAmountWithPercent(feeBaseDecimal, 0, 'decimal', currency)
+  const amountAfterFee = calculateAmountWithPercent(feeBaseDecimal, 8, 'decimal', currency)
 
   const transferAmountDecimal = amountAfterFee.decimal
   const transferAmountCents = amountAfterFee.centavos

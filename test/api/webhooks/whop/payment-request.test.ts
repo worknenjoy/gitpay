@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import request from 'supertest'
 import nock from 'nock'
+import sinon from 'sinon'
 import api from '../../../../src/server'
 import { registerAndLogin, truncateModels } from '../../../helpers'
 import { withPaymentProvider, pinWhopApiForTests, WHOP_API_HOST } from '../../../helpers/whop'
@@ -8,6 +9,7 @@ import Models from '../../../../src/models'
 import { PaymentRequestFactory } from '../../../factories'
 import transferCreate from '../../../data/whop/transfer.create'
 import { processPendingPaymentRequestTransfers } from '../../../../src/services/paymentRequest/processPendingPaymentRequestTransfers'
+import PaymentRequestMail from '../../../../src/mail/paymentRequest'
 
 const agent = request.agent(api) as any
 const models = Models as any
@@ -52,6 +54,7 @@ describe('Whop webhooks for payment requests', () => {
 
   afterEach(() => {
     nock.cleanAll()
+    sinon.restore()
   })
 
   it('should mark payment request paid and transfer on payment.succeeded', async () => {
@@ -516,6 +519,318 @@ describe('Whop webhooks for payment requests', () => {
       const prTransfer = await models.PaymentRequestTransfer.findByPk(paymentBefore.transferId)
       expect(prTransfer).to.exist
       expect(prTransfer.transfer_method).to.equal('whop')
+    })
+  })
+
+  it('should store payment total (gross), not amount_after_fees', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_test_platform')
+        .reply(200, pendingLedger)
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      await PaymentRequestFactory({
+        title: 'Gross amount PR',
+        amount: 1,
+        currency: 'usd',
+        payment_link_id: 'plan_gross_amount_pr',
+        provider: 'whop',
+        userId: user.body.id
+      })
+
+      // Real Whop small charge: $1 total, ~$0.57 after processor fees
+      await agent
+        .post('/webhooks/whop')
+        .send({
+          id: 'msg_whop_gross_1',
+          api_version: 'v1',
+          type: 'payment.succeeded',
+          timestamp: '2026-05-12T18:42:11.041Z',
+          company_id: 'biz_test_platform',
+          data: {
+            id: 'pay_whop_gross_1',
+            status: 'succeeded',
+            amount_after_fees: 0.57,
+            total: 1,
+            currency: 'usd',
+            metadata: {
+              purpose: 'payment_request',
+              payment_link_id: 'plan_gross_amount_pr'
+            },
+            plan: { id: 'plan_gross_amount_pr' },
+            user: { name: 'Customer', email: 'customer@example.com' }
+          }
+        })
+        .expect(200)
+
+      const payment = await models.PaymentRequestPayment.findOne({
+        where: { source: 'pay_whop_gross_1' }
+      })
+      expect(payment).to.exist
+      // Gross charge total — not Whop processor net (0.57)
+      expect(Number(payment.amount)).to.equal(1)
+      // Net stored separately for claim base
+      expect(Number(payment.amount_after_fees)).to.equal(0.57)
+      // Claim value = net × 0.92 (centavos path ceils: 0.57*0.92 → 53¢ → 0.53)
+      const claim = await models.PaymentRequestTransfer.findByPk(payment.transferId)
+      expect(claim).to.exist
+      expect(Number(claim.value)).to.equal(0.53)
+    })
+  })
+
+  it('should process membership then payment.succeeded once (one payment-made, source upgraded to pay_)', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_test_platform')
+        .times(2)
+        .reply(200, pendingLedger)
+
+      const paymentMadeStub = sinon
+        .stub(PaymentRequestMail as any, 'paymentMadeForPaymentRequest')
+        .resolves()
+      const transferInitiatedStub = sinon
+        .stub(PaymentRequestMail as any, 'transferInitiatedForPaymentRequest')
+        .resolves()
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      await PaymentRequestFactory({
+        title: 'Dual event PR',
+        amount: 1,
+        currency: 'usd',
+        payment_link_id: 'plan_dual_event_pr',
+        provider: 'whop',
+        deactivate_after_payment: false,
+        userId: user.body.id
+      })
+
+      // 1) membership.activated (provisional source mem_…)
+      await agent
+        .post('/webhooks/whop')
+        .send({
+          id: 'msg_dual_mem',
+          api_version: 'v1',
+          type: 'membership.activated',
+          timestamp: '2026-05-12T18:42:11.041Z',
+          company_id: 'biz_test_platform',
+          data: {
+            id: 'mem_dual_event_1',
+            plan: {
+              id: 'plan_dual_event_pr',
+              metadata: { purpose: 'payment_request' }
+            },
+            product: { id: 'prod_dual' },
+            user: { name: 'Buyer', email: 'buyer@example.com' }
+          }
+        })
+        .expect(200)
+
+      // 2) payment.succeeded with Whop net after fees (must not create 2nd payment/email)
+      await agent
+        .post('/webhooks/whop')
+        .send({
+          id: 'msg_dual_pay',
+          api_version: 'v1',
+          type: 'payment.succeeded',
+          timestamp: '2026-05-12T18:42:12.041Z',
+          company_id: 'biz_test_platform',
+          data: {
+            id: 'pay_dual_event_1',
+            status: 'succeeded',
+            amount_after_fees: 0.57,
+            total: 1,
+            currency: 'usd',
+            metadata: {
+              purpose: 'payment_request',
+              payment_link_id: 'plan_dual_event_pr'
+            },
+            plan: { id: 'plan_dual_event_pr' },
+            user: { name: 'Buyer', email: 'buyer@example.com' }
+          }
+        })
+        .expect(200)
+
+      const pr = await models.PaymentRequest.findOne({
+        where: { payment_link_id: 'plan_dual_event_pr' }
+      })
+      expect(pr.status).to.equal('paid')
+
+      const payments = await models.PaymentRequestPayment.findAll({
+        where: { paymentRequestId: pr.id }
+      })
+      expect(payments).to.have.length(1)
+      expect(payments[0].source).to.equal('pay_dual_event_1')
+      expect(Number(payments[0].amount)).to.equal(1)
+      expect(Number(payments[0].amount_after_fees)).to.equal(0.57)
+
+      // Claim updated to net × 0.92 after payment.succeeded upgrades amount_after_fees
+      const claim = await models.PaymentRequestTransfer.findByPk(payments[0].transferId)
+      expect(claim).to.exist
+      expect(Number(claim.value)).to.equal(0.53)
+
+      // One payment-made email only (gross); claim/transfer email waits until transfer succeeds
+      expect(paymentMadeStub.callCount).to.equal(1)
+      const paymentMadeArg = paymentMadeStub.firstCall.args[1]
+      expect(Number(paymentMadeArg.amount)).to.equal(1)
+      expect(transferInitiatedStub.callCount).to.equal(0)
+    })
+  })
+
+  it('should process payment.succeeded then membership.activated once (no second payment-made)', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_test_platform')
+        .times(2)
+        .reply(200, pendingLedger)
+
+      const paymentMadeStub = sinon
+        .stub(PaymentRequestMail as any, 'paymentMadeForPaymentRequest')
+        .resolves()
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      await PaymentRequestFactory({
+        title: 'Dual reverse PR',
+        amount: 1,
+        currency: 'usd',
+        payment_link_id: 'plan_dual_reverse_pr',
+        provider: 'whop',
+        userId: user.body.id
+      })
+
+      await agent
+        .post('/webhooks/whop')
+        .send({
+          id: 'msg_dual_rev_pay',
+          api_version: 'v1',
+          type: 'payment.succeeded',
+          timestamp: '2026-05-12T18:42:11.041Z',
+          company_id: 'biz_test_platform',
+          data: {
+            id: 'pay_dual_reverse_1',
+            status: 'succeeded',
+            amount_after_fees: 0.57,
+            total: 1,
+            currency: 'usd',
+            metadata: {
+              purpose: 'payment_request',
+              payment_link_id: 'plan_dual_reverse_pr'
+            },
+            plan: { id: 'plan_dual_reverse_pr' },
+            user: { name: 'Buyer', email: 'buyer@example.com' }
+          }
+        })
+        .expect(200)
+
+      await agent
+        .post('/webhooks/whop')
+        .send({
+          id: 'msg_dual_rev_mem',
+          api_version: 'v1',
+          type: 'membership.activated',
+          timestamp: '2026-05-12T18:42:12.041Z',
+          company_id: 'biz_test_platform',
+          data: {
+            id: 'mem_dual_reverse_1',
+            plan: {
+              id: 'plan_dual_reverse_pr',
+              metadata: { purpose: 'payment_request' }
+            },
+            product: { id: 'prod_dual_rev' },
+            user: { name: 'Buyer', email: 'buyer@example.com' }
+          }
+        })
+        .expect(200)
+
+      const pr = await models.PaymentRequest.findOne({
+        where: { payment_link_id: 'plan_dual_reverse_pr' }
+      })
+      const payments = await models.PaymentRequestPayment.findAll({
+        where: { paymentRequestId: pr.id }
+      })
+      expect(payments).to.have.length(1)
+      expect(payments[0].source).to.equal('pay_dual_reverse_1')
+      expect(Number(payments[0].amount)).to.equal(1)
+      expect(paymentMadeStub.callCount).to.equal(1)
+    })
+  })
+
+  it('should send transfer-initiated with 8% of Whop net when transfer succeeds immediately', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST).post('/api/v1/transfers').reply(200, transferCreate)
+
+      const paymentMadeStub = sinon
+        .stub(PaymentRequestMail as any, 'paymentMadeForPaymentRequest')
+        .resolves()
+      const transferInitiatedStub = sinon
+        .stub(PaymentRequestMail as any, 'transferInitiatedForPaymentRequest')
+        .resolves()
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      await PaymentRequestFactory({
+        title: 'Fee email PR',
+        amount: 1,
+        currency: 'usd',
+        payment_link_id: 'plan_fee_email_pr',
+        provider: 'whop',
+        userId: user.body.id
+      })
+
+      await agent
+        .post('/webhooks/whop')
+        .send({
+          id: 'msg_fee_email',
+          api_version: 'v1',
+          type: 'payment.succeeded',
+          timestamp: '2026-05-12T18:42:11.041Z',
+          company_id: 'biz_test_platform',
+          data: {
+            id: 'pay_fee_email_1',
+            status: 'succeeded',
+            amount_after_fees: 0.57,
+            total: 1,
+            currency: 'usd',
+            metadata: {
+              purpose: 'payment_request',
+              payment_link_id: 'plan_fee_email_pr'
+            },
+            plan: { id: 'plan_fee_email_pr' },
+            user: { name: 'Customer', email: 'customer@example.com' }
+          }
+        })
+        .expect(200)
+
+      // Payment-made: customer gross
+      expect(paymentMadeStub.callCount).to.equal(1)
+      expect(Number(paymentMadeStub.firstCall.args[1].amount)).to.equal(1)
+
+      // Claim email: fee base = Whop net $0.57, after Gitpay 8% = $0.52
+      expect(transferInitiatedStub.callCount).to.equal(1)
+      const [, , feeBaseAmount, transferAmount] = transferInitiatedStub.firstCall.args
+      expect(Number(feeBaseAmount)).to.equal(0.57)
+      expect(Number(transferAmount)).to.equal(0.52)
     })
   })
 })
