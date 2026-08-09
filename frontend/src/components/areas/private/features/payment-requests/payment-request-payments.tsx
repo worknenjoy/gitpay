@@ -10,6 +10,7 @@ import { paymentRequestPaymentsMetadata } from './payment-requests-payments-tabl
 import { usePaymentRequestPaymentsCustomColumnRenderer } from './hooks/usePaymentRequestPaymentColumnRender'
 import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
 import { Payment } from '@mui/icons-material'
+import PaymentRequestPaymentDetailsAction from 'design-library/molecules/drawers/actions/payments/payment-request-payment-details-action/payment-request-payment-details-action'
 
 const PaymentRequestPayments = ({
   user,
@@ -20,10 +21,14 @@ const PaymentRequestPayments = ({
   refundPaymentRequestPayment
 }) => {
   const history = useHistory()
+  const [selectedPayment, setSelectedPayment] = React.useState<any | null>(null)
 
   const handleGoToPayoutSettings = () => history.push('/profile/payout-settings')
 
   const paymentRequestPaymentsCustomColumnRenderer = usePaymentRequestPaymentsCustomColumnRenderer({
+    onDetails: (item) => {
+      setSelectedPayment(item)
+    },
     onRefund: async (paymentId) => {
       await refundPaymentRequestPayment(paymentId)
       await listPaymentRequestPayments()
@@ -69,6 +74,12 @@ const PaymentRequestPayments = ({
             }
           />
         }
+      />
+      <PaymentRequestPaymentDetailsAction
+        open={!!selectedPayment}
+        onClose={() => setSelectedPayment(null)}
+        payment={selectedPayment}
+        completed={true}
       />
     </>
   )

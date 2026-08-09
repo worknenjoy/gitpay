@@ -7,6 +7,8 @@ import CloseIcon from '@mui/icons-material/Close'
 import DrawerActions from './drawer-actions/drawer-actions'
 import { CloseFab } from './drawer.styles'
 
+export type DrawerMode = 'default' | 'compact'
+
 type DrawerProps = {
   open: boolean
   onClose: any
@@ -15,6 +17,12 @@ type DrawerProps = {
   children?: any
   actions?: Array<any>
   completed?: boolean
+  /**
+   * Layout density.
+   * - default: full form-style side drawer (content-sized / wide)
+   * - compact: fixed narrow width, tighter padding — suited to details / definition lists
+   */
+  mode?: DrawerMode
 }
 
 const Drawer = ({
@@ -24,17 +32,21 @@ const Drawer = ({
   subtitle,
   children,
   actions = [],
-  completed = true
+  completed = true,
+  mode = 'default'
 }: DrawerProps) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isCompact = mode === 'compact'
   const closeDialogButton = () => {
     return (
-      <CloseFab size="small" aria-label="close" onClick={onClose}>
+      <CloseFab size="small" aria-label="close" onClick={onClose} $compact={isCompact}>
         <CloseIcon fontSize="small" />
       </CloseFab>
     )
   }
+
+  const paperWidth = isMobile ? '90vw' : isCompact ? 360 : null
 
   return (
     <MuiDrawer
@@ -46,32 +58,48 @@ const Drawer = ({
       sx={{
         '& .MuiDrawer-paper': {
           boxSizing: 'border-box',
-          width: isMobile ? '90vw' : null,
+          width: paperWidth,
           maxWidth: '100vw',
           height: '100vh'
         }
       }}
     >
-      <Box display="flex" flexDirection="column" height="100%" p={2}>
-        <Box flexGrow={1}>
-          <div style={{ padding: 20 }}>
+      <Box
+        display="flex"
+        flexDirection="column"
+        height="100%"
+        p={isCompact ? 0 : 2}
+      >
+        <Box flexGrow={1} sx={{ overflowY: 'auto' }}>
+          <Box
+            sx={{
+              position: 'relative',
+              padding: isCompact ? 2 : 2.5,
+              // leave room for the close fab
+              pr: isCompact ? 5 : 2.5
+            }}
+          >
             <div>
-              <Typography variant="h5" id="form-dialog-title" gutterBottom>
+              <Typography
+                variant={isCompact ? 'h6' : 'h5'}
+                id="form-dialog-title"
+                gutterBottom
+              >
                 {title}
               </Typography>
               {subtitle && (
-                <Typography variant="subtitle2" gutterBottom>
+                <Typography variant="subtitle2" gutterBottom color="text.secondary">
                   {subtitle}
                 </Typography>
               )}
             </div>
             {closeDialogButton()}
             {children}
-          </div>
+          </Box>
         </Box>
 
         {actions.length > 0 && (
-          <Box>
+          <Box sx={{ px: isCompact ? 2 : 0, pb: isCompact ? 2 : 0 }}>
             <DrawerActions actions={actions} completed={completed} />
           </Box>
         )}

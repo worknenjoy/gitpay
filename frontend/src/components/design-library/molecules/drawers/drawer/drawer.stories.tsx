@@ -39,3 +39,21 @@ Primary.args = {
     }
   ]
 }
+
+export const Compact = Template.bind({})
+Compact.args = {
+  open: true,
+  onClose: () => {},
+  mode: 'compact',
+  title: 'Payment details',
+  subtitle: 'Compact side panel for details',
+  children: 'Compact content sits in a fixed 360px drawer with tighter padding.',
+  actions: [
+    {
+      label: 'Close',
+      onClick: () => {},
+      variant: 'contained',
+      color: 'secondary'
+    }
+  ]
+}

@@ -1,13 +1,20 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import ReceiptIcon from '@mui/icons-material/Receipt'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 import TextField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field'
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field'
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
 import PaymentStatus from 'design-library/atoms/status/payment-types-status/payment-status/payment-status'
 import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
 
-export const usePaymentRequestPaymentsCustomColumnRenderer = ({ onRefund }) => ({
+export const usePaymentRequestPaymentsCustomColumnRenderer = ({
+  onDetails,
+  onRefund
+}: {
+  onDetails?: (item: any) => void
+  onRefund?: (id: number) => void | Promise<void>
+}) => ({
   status: (item: any) => <PaymentStatus status={item.status} />,
   paymentRequestTitle: (item: any) => <TextField title={item.PaymentRequest?.title} />,
   /*
@@ -21,6 +28,15 @@ export const usePaymentRequestPaymentsCustomColumnRenderer = ({ onRefund }) => (
   actions: (item: any) => (
     <ActionField
       actions={[
+        {
+          children: <FormattedMessage id="general.buttons.details" defaultMessage="Details" />,
+          icon: <VisibilityIcon />,
+          onClick: () => {
+            if (onDetails) {
+              onDetails(item)
+            }
+          }
+        },
         {
           children: <FormattedMessage id="general.buttons.refund" defaultMessage="Refund" />,
           icon: <ReceiptIcon />,
