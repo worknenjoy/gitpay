@@ -61,6 +61,7 @@ const PayoutSettingsBankAccountInfoPage = ({
   return (
     <div>
       <PayoutSettingsBankAccountInfo
+        provider="stripe"
         user={user}
         account={account}
         bankAccount={bankAccount}

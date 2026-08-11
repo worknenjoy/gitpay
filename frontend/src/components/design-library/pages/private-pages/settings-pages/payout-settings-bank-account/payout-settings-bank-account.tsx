@@ -15,9 +15,9 @@ const PayoutSetingsBankAccount = ({
   verificationTabDisabled
 }) => {
   const { completed, data } = user
-  const paymentProvider = process.env.PAYMENT_PROVIDER || 'stripe'
-  const hasPayoutAccount =
-    paymentProvider === 'whop' ? Boolean(data?.whop_account_id) : Boolean(data?.account_id)
+  // This is the Stripe (deprecated) tab — always evaluate the Stripe connected account,
+  // independent of the platform-wide PAYMENT_PROVIDER (which is now Whop).
+  const hasPayoutAccount = Boolean(data?.account_id)
   const [savingCountry, setSavingCountry] = React.useState(false)
   const [openCountryPicker, setOpenCountryPicker] = React.useState(false)
   const [country, setCountry] = React.useState({

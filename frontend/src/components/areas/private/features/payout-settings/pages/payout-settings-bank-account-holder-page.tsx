@@ -57,12 +57,9 @@ const BankAccountHolderPage = ({
 
   return (
     <PayoutSettingsBankAccountHolder
+      provider="stripe"
       user={user}
-      account={
-        verificationLoading
-          ? { ...account, completed: false }
-          : account
-      }
+      account={verificationLoading ? { ...account, completed: false } : account}
       countries={countries}
       onSubmit={handleSubmit}
       onChange={setTerms}

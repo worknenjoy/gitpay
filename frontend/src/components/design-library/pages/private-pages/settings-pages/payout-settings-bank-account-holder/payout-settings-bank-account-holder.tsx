@@ -22,9 +22,11 @@ const PayoutSetingsBankAccountHolder = ({
   onSubmit,
   onChange,
   onConfirmCloseAccount,
-  onCompleteVerification
+  onCompleteVerification,
+  /** Force a provider for this tab (Stripe tab passes 'stripe'); falls back to auto-detect */
+  provider: providerProp
 }) => {
-  const provider = resolveProvider(account)
+  const provider = providerProp || resolveProvider(account)
 
   if (provider === 'whop') {
     return (

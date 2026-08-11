@@ -19,7 +19,7 @@ import MyProjectIssuesContainer from '../../../../containers/profile/profile-my-
 import OrganizationIssuesExploreContainer from '../../../../containers/profile/profile-explore-organization-issues'
 import MyOrganizationIssuesContainer from '../../../../containers/profile/profile-my-organization-issues'
 import InvoiceSettingsContainer from '../../../../containers/account/invoice-settings/invoice-settings'
-import PayoutSettings from '../features/payout-settings/pages/payout-settings-page'
+import PayoutSettings from '../../../../containers/account/payout-settings/payout-settings-root'
 import TaskSolutionsContainer from '../../../../containers/tasks/task-solutions'
 
 const PrivatePage = ({

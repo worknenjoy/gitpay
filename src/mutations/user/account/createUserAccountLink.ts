@@ -5,6 +5,8 @@ import { getWhopHttpsApiBaseUrl } from '../../../providers/whop/redirectBase'
 
 type CreateUserAccountLinkParams = {
   id: number
+  /** Force a provider (Whop tab passes 'whop', Stripe tab passes 'stripe') */
+  provider?: string
 }
 
 /**
@@ -31,7 +33,21 @@ export async function createUserAccountLink(userParameters: CreateUserAccountLin
     throw new Error('user.not_found')
   }
 
-  const providerName = getDefaultPaymentProviderName()
+  // Prefer the explicit provider (which tab the user is on); otherwise resolve from
+  // the user's actual connected account so a legacy Stripe account still generates a
+  // Stripe link while the platform default is Whop. This is important when a user has
+  // BOTH a legacy Stripe account and a Whop account — the Whop tab must not hit Stripe.
+  const hasStripeAccount = Boolean(user?.dataValues?.account_id)
+  const hasWhopAccount = Boolean(user?.dataValues?.whop_account_id)
+  const requestedProvider = (userParameters.provider || '').toLowerCase()
+  const providerName =
+    requestedProvider === 'whop' || requestedProvider === 'stripe'
+      ? requestedProvider
+      : hasWhopAccount && !hasStripeAccount
+        ? 'whop'
+        : hasStripeAccount
+          ? 'stripe'
+          : getDefaultPaymentProviderName()
   const apiHost = getApiBaseUrlForAccountLinks(providerName)
   // Provider redirects here; controllers bounce to FRONTEND_HOST hash routes
   const refreshUrl = `${apiHost}/user/account/verification/refresh`

@@ -1,9 +1,12 @@
 import { Webhook } from 'standardwebhooks'
 import type { PaymentProvider } from '../PaymentProvider'
 import type {
+  AccountDispute,
   AccountLinkParams,
   AccountLinkResult,
+  AccountRequirementItem,
   AccountResult,
+  PayoutMethod,
   BountyCheckoutParams,
   BountyCheckoutResult,
   ConnectedAccountActiveParams,
@@ -605,11 +608,71 @@ export class WhopPaymentProvider implements PaymentProvider {
   }
 
   /**
+   * List payout methods (bank/card/crypto) configured for a connected company.
+   * Best-effort: Whop manages these on its hosted portal and the list endpoint may
+   * not be available for all keys — on any failure we return [] so the UI shows a
+   * "managed on Whop" empty state rather than an error.
+   */
+  async getPayoutMethods(accountId: string): Promise<PayoutMethod[]> {
+    const id = accountId || this.companyId()
+    if (!id) return []
+    try {
+      const response = await this.client.get<any>(`/companies/${id}/payout_methods`)
+      const list: any[] = Array.isArray(response)
+        ? response
+        : response?.data || response?.payout_methods || []
+      return list.map((m: any) => ({
+        id: m.id || m.payout_method_id,
+        type: m.type || m.method_type || null,
+        label: m.label || m.name || m.bank_name || null,
+        last4: m.last4 || m.last_four || null,
+        currency: m.currency || null,
+        default: Boolean(m.default || m.is_default),
+        raw: m
+      }))
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[whop] getPayoutMethods failed', error)
+      return []
+    }
+  }
+
+  /**
+   * Disputes are delivered to Gitpay via webhooks (dispute.created/updated), not
+   * fetched per company. No account-scoped list endpoint is used, so return [].
+   */
+  async getDisputes(_accountId: string): Promise<AccountDispute[]> {
+    return []
+  }
+
+  /**
+   * Derive the Payout Settings requirements checklist from data already fetched.
+   * Does not call additional Whop endpoints — statuses come from the company object
+   * plus whether a payout method exists.
+   */
+  buildRequirements(company: any, payoutMethods: PayoutMethod[]): AccountRequirementItem[] {
+    const verified = company?.verified
+    const hasProfile = Boolean(
+      (company?.title || company?.name) && company?.country && company?.email
+    )
+    const hasPayoutMethod = Array.isArray(payoutMethods) && payoutMethods.length > 0
+    return [
+      { key: 'identity_document', status: verified === true ? 'done' : 'required' },
+      { key: 'payout_method', status: hasPayoutMethod ? 'done' : 'required' },
+      { key: 'company_profile', status: hasProfile ? 'done' : 'required' },
+      { key: 'gitpay_connection', status: company?.parent_company_id ? 'done' : 'pending' }
+    ]
+  }
+
+  /**
    * Whop KYC and payout methods are managed on the Whop portal.
-   * An account with a connected company id is treated as active for payment requests.
+   * Active means a connected company exists and is not explicitly unverified.
+   * Defensive: an unknown (null) verified flag does not lock existing users out.
    */
   isConnectedAccountActive(account: ConnectedAccountActiveParams | null | undefined): boolean {
-    return Boolean(account?.id)
+    if (!account?.id) return false
+    if ((account as any)?.verified === false) return false
+    return true
   }
 
   async verifyAndParseWebhook(

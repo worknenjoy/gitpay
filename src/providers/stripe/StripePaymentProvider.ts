@@ -1,8 +1,10 @@
 import type { PaymentProvider } from '../PaymentProvider'
 import type {
+  AccountDispute,
   AccountLinkParams,
   AccountLinkResult,
   AccountResult,
+  PayoutMethod,
   BountyCheckoutParams,
   BountyCheckoutResult,
   ConnectedAccountActiveParams,
@@ -317,6 +319,37 @@ export class StripePaymentProvider implements PaymentProvider {
       return false
     }
     return true
+  }
+
+  /**
+   * Payout methods from the native Stripe Connect account's external accounts.
+   * The Stripe payout UI reads external_accounts directly, so this adapter simply
+   * normalizes what is already on the account payload (no extra API call).
+   */
+  async getPayoutMethods(accountId: string): Promise<PayoutMethod[]> {
+    try {
+      const stripe = getStripeClient()
+      const account: any = await stripe.accounts.retrieve(accountId)
+      const externalAccounts: any[] = account?.external_accounts?.data || []
+      return externalAccounts.map((ext: any) => ({
+        id: ext.id,
+        type: ext.object === 'bank_account' ? 'bank_account' : 'card',
+        label: ext.bank_name || ext.brand || null,
+        last4: ext.last4 || null,
+        currency: ext.currency || null,
+        default: Boolean(ext.default_for_currency),
+        raw: ext
+      }))
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[stripe] getPayoutMethods failed', error)
+      return []
+    }
+  }
+
+  /** Stripe disputes are handled via webhooks/dashboard; not listed per account here. */
+  async getDisputes(_accountId: string): Promise<AccountDispute[]> {
+    return []
   }
 
   async verifyAndParseWebhook(

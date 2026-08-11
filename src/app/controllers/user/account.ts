@@ -2,7 +2,7 @@ import * as user from '../../../modules/users'
 
 export const account = async (req: any, res: any) => {
   try {
-    const data = await user.userAccount({ id: req.user.id })
+    const data = await user.userAccount({ id: req.user.id, provider: req.query?.provider })
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -65,7 +65,10 @@ export const accountUpdate = async (req: any, res: any) => {
 
 export const accountDelete = async (req: any, res: any) => {
   try {
-    const data = await user.userAccountDelete({ userId: req.user.id })
+    const data = await user.userAccountDelete({
+      userId: req.user.id,
+      provider: req.body?.provider || req.query?.provider
+    })
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
@@ -76,7 +79,10 @@ export const accountDelete = async (req: any, res: any) => {
 
 export const accountVerificationLink = async (req: any, res: any) => {
   try {
-    const data = await user.userAccountLink({ id: req.user.id })
+    const data = await user.userAccountLink({
+      id: req.user.id,
+      provider: req.body?.provider || req.query?.provider
+    })
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
