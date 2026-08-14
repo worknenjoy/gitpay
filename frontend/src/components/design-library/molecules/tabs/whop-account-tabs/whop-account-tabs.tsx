@@ -39,7 +39,7 @@ const WhopAccountTabs = ({ children }: WhopAccountTabsProps) => {
       label: (
         <FormattedMessage
           id="payout-settings.whop.tabs.scheduleBalances"
-          defaultMessage="Payout schedule & balances"
+          defaultMessage="Payout schedule"
         />
       ),
       value: 'schedule-balances',

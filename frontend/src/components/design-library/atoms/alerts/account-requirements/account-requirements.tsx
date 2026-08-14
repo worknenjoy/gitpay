@@ -41,6 +41,7 @@ const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }
             href="mailto:contact@gitpay.me"
             variant="contained"
             color="error"
+            size="small"
             label={
               <FormattedMessage
                 id="payout-settings.verification.rejected.contact"
@@ -78,6 +79,7 @@ const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }
             onClick={onClick}
             variant="contained"
             color="secondary"
+            size="small"
             label={
               <FormattedMessage
                 id="payout-settings.whop.verification.button"
@@ -133,6 +135,7 @@ const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }
           onClick={onClick}
           variant="contained"
           color="secondary"
+          size="small"
           label={
             <FormattedMessage id="transfers.alert.button" defaultMessage="Update your account" />
           }

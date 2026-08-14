@@ -1,23 +1,53 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import DetailList from '../../data-display/detail-list/detail-list'
 import DetailRow from '../../../atoms/data-display/detail-row/detail-row'
-import BalanceCard from '../../cards/balance-card/balance-card'
 
 export type WhopScheduleBalancesPanelProps = {
   account?: any
   onManageOnWhop?: () => void
 }
 
+const normalizeWhopSchedule = (data: any) => {
+  const raw = data?.payout_schedule || data?.schedule || data?.settings?.payouts?.schedule || {}
+  const interval = raw.interval || raw.frequency || raw.type || raw.value || raw.schedule || null
+  const mode = raw.mode || raw.method || raw.type || null
+
+  if (interval === 'daily' || interval === 'weekly' || interval === 'monthly') {
+    return `Automatic · ${interval}`
+  }
+
+  if (interval === 'manual' || mode === 'manual') {
+    return 'Manual'
+  }
+
+  if (mode === 'automatic') {
+    return 'Automatic'
+  }
+
+  return 'Managed on Whop'
+}
+
+const getWhopPayoutMethod = (data: any) => {
+  const methods: any[] = data?.payout_methods || (data?.payout_method ? [data.payout_method] : [])
+  return methods.find((method) => method?.default) || methods[0] || null
+}
+
 /**
- * "Payout schedule & balances" panel. Whop pays out on demand (no fixed schedule),
- * and balances come from the connected company ledger.
+ * "Payout schedule" panel. Whop manages the actual payout method and payout timing,
+ * so Gitpay shows a read-only summary and redirects the user to the Whop portal if they
+ * need to change those settings.
  */
 const WhopScheduleBalancesPanel = ({ account, onManageOnWhop }: WhopScheduleBalancesPanelProps) => {
   const { data = {}, completed = true } = account || {}
-  const balances = data.balances || { available: 0, pending: 0, reserve: 0 }
+  const method = getWhopPayoutMethod(data)
+  const schedule = normalizeWhopSchedule(data)
   const currency = (data.currency || data.default_currency || 'usd').toUpperCase()
+  const methodLabel = method?.label || method?.type || 'Whop payout method'
+  const methodMeta = [method?.last4 ? `•••• ${method.last4}` : null, method?.currency || null]
+    .filter(Boolean)
+    .join(' · ')
 
   return (
     <Box>
@@ -32,7 +62,7 @@ const WhopScheduleBalancesPanel = ({ account, onManageOnWhop }: WhopScheduleBala
         subtitle={
           <FormattedMessage
             id="payout-settings.whop.schedule.subtitle"
-            defaultMessage="When and how your available balance is sent to your payout method."
+            defaultMessage="When and how Whop sends your available balance to your payout destination."
           />
         }
         action={
@@ -52,14 +82,11 @@ const WhopScheduleBalancesPanel = ({ account, onManageOnWhop }: WhopScheduleBala
         <DetailRow
           completed={completed}
           label={
-            <FormattedMessage id="payout-settings.whop.schedule.method" defaultMessage="Schedule" />
+            <FormattedMessage id="payout-settings.whop.method.label" defaultMessage="Payout method" />
           }
-          value={
-            <FormattedMessage
-              id="payout-settings.whop.schedule.onDemand"
-              defaultMessage="On demand (request a withdrawal on Whop)"
-            />
-          }
+          value={method ? `${methodLabel}${methodMeta ? ` · ${methodMeta}` : ''}` : 'Not set yet'}
+          status={method?.default ? 'DEFAULT' : undefined}
+          statusColor="success"
         />
         <DetailRow
           completed={completed}
@@ -71,58 +98,14 @@ const WhopScheduleBalancesPanel = ({ account, onManageOnWhop }: WhopScheduleBala
           }
           value={currency}
         />
-      </DetailList>
-
-      <Typography variant="subtitle1" sx={{ fontWeight: 700, mt: 3, mb: 1.5 }}>
-        <FormattedMessage
-          id="payout-settings.whop.balances.title"
-          defaultMessage="Company balances (Whop)"
+        <DetailRow
+          completed={completed}
+          label={
+            <FormattedMessage id="payout-settings.whop.schedule.method" defaultMessage="Schedule" />
+          }
+          value={schedule}
         />
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid size={{ xs: 12, sm: 4 }}>
-          <BalanceCard
-            completed={completed}
-            name={
-              <FormattedMessage
-                id="payout-settings.whop.balances.available"
-                defaultMessage="Available"
-              />
-            }
-            balance={Number(balances.available || 0)}
-            currency={currency}
-            type="decimal"
-          />
-        </Grid>
-        <Grid size={{ xs: 12, sm: 4 }}>
-          <BalanceCard
-            completed={completed}
-            name={
-              <FormattedMessage
-                id="payout-settings.whop.balances.pending"
-                defaultMessage="Pending"
-              />
-            }
-            balance={Number(balances.pending || 0)}
-            currency={currency}
-            type="decimal"
-          />
-        </Grid>
-        <Grid size={{ xs: 12, sm: 4 }}>
-          <BalanceCard
-            completed={completed}
-            name={
-              <FormattedMessage
-                id="payout-settings.whop.balances.reserve"
-                defaultMessage="Reserve"
-              />
-            }
-            balance={Number(balances.reserve || 0)}
-            currency={currency}
-            type="decimal"
-          />
-        </Grid>
-      </Grid>
+      </DetailList>
     </Box>
   )
 }

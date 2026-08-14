@@ -134,16 +134,16 @@ const Payouts = ({
             )}
             {isWhop && (
               <StatusCard
-                name={
-                  <FormattedMessage id="payouts.method.whop" defaultMessage="Withdrawal method" />
-                }
+                name={<FormattedMessage id="payouts.method.whop" defaultMessage="Payout method" />}
                 status={
-                  <FormattedMessage
-                    id="payouts.method.whop.onDemand"
-                    defaultMessage="On demand (Whop)"
-                  />
+                  accountData?.payout_method?.label ||
+                  accountData?.payout_methods?.find((method) => method?.default)?.label ||
+                  accountData?.payout_methods?.[0]?.label ||
+                  (accountData?.payout_methods?.length
+                    ? 'Managed on Whop'
+                    : 'Managed on Whop')
                 }
-                onAdd={() => history.push('/profile/payout-settings/bank-account/account-holder')}
+                onAdd={() => history.push('/profile/payout-settings/whop/payout-method')}
                 action={
                   <FormattedMessage
                     id="payouts.method.whop.manage"
