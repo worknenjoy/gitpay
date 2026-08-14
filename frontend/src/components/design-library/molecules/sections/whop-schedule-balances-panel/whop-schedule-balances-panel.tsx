@@ -82,7 +82,10 @@ const WhopScheduleBalancesPanel = ({ account, onManageOnWhop }: WhopScheduleBala
         <DetailRow
           completed={completed}
           label={
-            <FormattedMessage id="payout-settings.whop.method.label" defaultMessage="Payout method" />
+            <FormattedMessage
+              id="payout-settings.whop.method.label"
+              defaultMessage="Payout method"
+            />
           }
           value={method ? `${methodLabel}${methodMeta ? ` · ${methodMeta}` : ''}` : 'Not set yet'}
           status={method?.default ? 'DEFAULT' : undefined}

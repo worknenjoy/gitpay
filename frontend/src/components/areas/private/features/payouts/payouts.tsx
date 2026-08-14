@@ -139,9 +139,7 @@ const Payouts = ({
                   accountData?.payout_method?.label ||
                   accountData?.payout_methods?.find((method) => method?.default)?.label ||
                   accountData?.payout_methods?.[0]?.label ||
-                  (accountData?.payout_methods?.length
-                    ? 'Managed on Whop'
-                    : 'Managed on Whop')
+                  (accountData?.payout_methods?.length ? 'Managed on Whop' : 'Managed on Whop')
                 }
                 onAdd={() => history.push('/profile/payout-settings/whop/payout-method')}
                 action={
