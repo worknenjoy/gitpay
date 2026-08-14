@@ -2,17 +2,14 @@ import React from 'react'
 import { Box, Grid, Skeleton, Typography } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import PayoutProviderCard from '../../cards/payout-provider-card/payout-provider-card'
-import CountryPicker from '../../dialogs/country-picker-dialog/country-picker-dialog'
-import EmptyBase from '../../content/empty/empty-base/empty-base'
-import { getCountryFlagSrc } from '../../../../areas/private/shared/country-flag'
 
 export type PayoutProviderSelectorProps = {
   /** Whether the current user already has a legacy Stripe connected account */
   hasStripeAccount?: boolean
   /** Whether the current user already has a legacy PayPal account */
   hasPaypalAccount?: boolean
-  /** Called with the selected country code to create the Whop account */
-  onSaveCountry: (countryCode: string) => Promise<void> | void
+  /** Called to create the Whop account. Country is set on Whop itself during KYC, not here. */
+  onCreateAccount: () => Promise<void> | void
   /** Navigate to the existing Stripe tab */
   onAccessStripe?: () => void
   /** Navigate to the existing PayPal tab */
@@ -22,57 +19,29 @@ export type PayoutProviderSelectorProps = {
 
 /**
  * Payout Settings welcome screen. Renders the three provider cards; only Whop is
- * set-up-able for new users (country picker → create account). Deprecated cards are
- * context-aware: a legacy Stripe/PayPal account shows "Access existing account".
+ * set-up-able for new users — clicking through creates the account directly, no
+ * Gitpay-side country step (Whop's own account_onboarding/KYC flow collects that).
+ * Deprecated cards are context-aware: a legacy Stripe/PayPal account shows
+ * "Access existing account".
  */
 const PayoutProviderSelector = ({
   hasStripeAccount = false,
   hasPaypalAccount = false,
-  onSaveCountry,
+  onCreateAccount,
   onAccessStripe,
   onAccessPaypal,
   completed = true
 }: PayoutProviderSelectorProps) => {
-  const [openCountryPicker, setOpenCountryPicker] = React.useState(false)
-  const [savingCountry, setSavingCountry] = React.useState(false)
-  const [country, setCountry] = React.useState<{
-    code: string | null
-    label: string | null
-    image: string | null
-  }>({ code: null, label: null, image: null })
+  const [creating, setCreating] = React.useState(false)
 
-  const handleSelectCountry = (item: any) =>
-    setCountry({ code: item.code, label: item.label, image: item.image })
-
-  const handleSaveCountry = async () => {
-    if (!country.code) return
-    setSavingCountry(true)
-    await onSaveCountry(country.code)
-    setSavingCountry(false)
+  const handleCreateAccount = async () => {
+    setCreating(true)
+    await onCreateAccount()
+    setCreating(false)
   }
 
   if (!completed) {
     return <Skeleton variant="rectangular" width="100%" height={360} />
-  }
-
-  // Whop selected → confirm chosen country before creating the account
-  if (country.code) {
-    return (
-      <EmptyBase
-        actionText={
-          <FormattedMessage
-            id="payout.settings.choose.country"
-            defaultMessage="Choose country and continue"
-          />
-        }
-        text={country.label}
-        onActionClick={handleSaveCountry}
-        icon={
-          <img width={48} alt={country.label || ''} src={getCountryFlagSrc(country.image || '')} />
-        }
-        completed={!savingCountry}
-      />
-    )
   }
 
   return (
@@ -121,7 +90,8 @@ const PayoutProviderSelector = ({
                 defaultMessage="Set up on Whop"
               />
             }
-            onAction={() => setOpenCountryPicker(true)}
+            onAction={handleCreateAccount}
+            completed={!creating}
           />
         </Grid>
 
@@ -215,12 +185,6 @@ const PayoutProviderSelector = ({
           />
         </Grid>
       </Grid>
-
-      <CountryPicker
-        open={openCountryPicker}
-        onClose={() => setOpenCountryPicker(false)}
-        onSelectCountry={handleSelectCountry}
-      />
     </Box>
   )
 }

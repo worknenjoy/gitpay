@@ -12,7 +12,7 @@ import PayoutSettingsPaypalContainer from '../../../../../../containers/account/
 type PayoutSettingsPageProps = {
   user?: any
   account?: any
-  createAccount?: (country: string) => Promise<any> | void
+  createAccount?: (country?: string) => Promise<any> | void
   fetchAccount?: () => void
   fetchAccountCountries?: () => void
 }
@@ -38,8 +38,10 @@ const PayoutSettingsRoutes = ({
     if (fetchAccountCountries) fetchAccountCountries()
   }, [fetchAccount, fetchAccountCountries])
 
-  const handleSaveCountry = async (country: string) => {
-    if (createAccount) await createAccount(country)
+  const handleCreateWhopAccount = async () => {
+    if (!createAccount) return
+    const result: any = await createAccount()
+    if (result?.error) return // stay on the creation screen; notification already shown
     history.push('/profile/payout-settings/whop')
   }
 
@@ -57,7 +59,7 @@ const PayoutSettingsRoutes = ({
                 completed={completed}
                 hasStripeAccount={hasStripe}
                 hasPaypalAccount={hasPaypal}
-                onSaveCountry={handleSaveCountry}
+                onCreateAccount={handleCreateWhopAccount}
                 onAccessStripe={() => history.push('/profile/payout-settings/bank-account')}
                 onAccessPaypal={() => history.push('/profile/payout-settings/paypal')}
               />

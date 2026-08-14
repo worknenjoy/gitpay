@@ -14,10 +14,3 @@ export const Default = {
     children: <Typography>Identity &amp; business panel</Typography>
   }
 }
-
-export const RequirementsDue = {
-  args: {
-    requirementsDue: true,
-    children: <Typography>Identity &amp; business panel</Typography>
-  }
-}

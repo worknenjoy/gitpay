@@ -81,7 +81,8 @@ export const accountVerificationLink = async (req: any, res: any) => {
   try {
     const data = await user.userAccountLink({
       id: req.user.id,
-      provider: req.body?.provider || req.query?.provider
+      provider: req.body?.provider || req.query?.provider,
+      purpose: req.body?.purpose || req.query?.purpose
     })
     res.send(data)
   } catch (error: any) {
@@ -102,6 +103,18 @@ function frontendHost(): string {
 
 export const accountVerificationReturn = async (req: any, res: any) => {
   const base = frontendHost()
+  const provider = String(req.query?.provider || '').toLowerCase()
+
+  if (provider === 'whop') {
+    const status = req.query?.error ? 'error' : 'success'
+    const params = new URLSearchParams({ status })
+    if (req.query?.error) params.set('error', String(req.query.error))
+    res.redirect(
+      `${base}/#/profile/payout-settings/whop/account-verification/return?${params.toString()}`
+    )
+    return
+  }
+
   res.redirect(
     `${base}/#/profile/payout-settings/bank-account/account-verification/return?status=success`
   )
@@ -109,6 +122,15 @@ export const accountVerificationReturn = async (req: any, res: any) => {
 
 export const accountVerificationRefresh = async (req: any, res: any) => {
   const base = frontendHost()
+  const provider = String(req.query?.provider || '').toLowerCase()
+
+  if (provider === 'whop') {
+    res.redirect(
+      `${base}/#/profile/payout-settings/whop/account-verification/refresh?status=expired`
+    )
+    return
+  }
+
   res.redirect(
     `${base}/#/profile/payout-settings/bank-account/account-verification/refresh?status=expired`
   )

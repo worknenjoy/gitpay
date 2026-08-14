@@ -4,7 +4,7 @@ const meta = {
   title: 'Design Library/Molecules/Sections/PayoutProviderSelector',
   component: PayoutProviderSelector,
   args: {
-    onSaveCountry: async (code: string) => alert(`create whop account for ${code}`),
+    onCreateAccount: async () => alert('create whop account'),
     onAccessStripe: () => alert('go to stripe tab'),
     onAccessPaypal: () => alert('go to paypal tab')
   }

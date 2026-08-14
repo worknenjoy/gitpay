@@ -340,6 +340,19 @@ const messages = defineMessages({
     id: 'actions.user.account.verification.success',
     defaultMessage: 'Your payout account was verified successfully'
   },
+  notificationUserAccountVerificationError: {
+    id: 'actions.user.account.verification.error',
+    defaultMessage: 'We could not confirm your payout account verification'
+  },
+  notificationUserAccountVerificationExpired: {
+    id: 'actions.user.account.verification.expired',
+    defaultMessage: 'Your verification link expired. Please try again.'
+  },
+  notificationUserAccountVerificationPending: {
+    id: 'actions.user.account.verification.pending',
+    defaultMessage:
+      "Your verification is still being reviewed. We'll update your status once Whop confirms it."
+  },
   notificationUserAccountDeleteSuccess: {
     id: 'actions.user.account.delete.success',
     defaultMessage: 'Your account was deleted successfully'

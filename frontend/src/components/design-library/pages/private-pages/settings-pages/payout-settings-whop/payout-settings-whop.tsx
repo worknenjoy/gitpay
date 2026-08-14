@@ -8,39 +8,35 @@ import WhopAccountTabs from '../../../../molecules/tabs/whop-account-tabs/whop-a
 import { CustomAlert } from '../../../../atoms/alerts/alert/alert'
 import Button from '../../../../atoms/buttons/button/button'
 import ConfirmButton from '../../../../atoms/buttons/confirm-button/confirm-button'
+import { getWhopAccountStatus } from './getWhopAccountStatus'
 
 const WHOP_DOCS_URL = 'https://docs.whop.com'
 
 export type PayoutSettingsWhopProps = {
   account?: any
-  onCompleteVerification?: () => void
   onManageOnWhop?: () => void
   onDisconnect?: () => void
   children: React.ReactNode
 }
 
 /**
- * Whop payout tab: status header, connected/verification banner, vertical sub-nav
- * with the routed panel, and disconnect + docs footer.
+ * Whop payout tab: status header, connected/pending/rejected banner (matches
+ * getWhopAccountStatus exactly, so it never claims success for a pending account),
+ * vertical sub-nav with the routed panel, and disconnect + docs footer.
+ *
+ * The Requirements checklist banner was removed (temporarily — see
+ * getWhopAccountStatus.ts) because it was derived from `company.verified`, which Whop's
+ * docs confirm is a trust & safety review flag, not KYC/identity-verification completion —
+ * so it could show "required" for accounts that were genuinely already verified.
  */
 const PayoutSettingsWhop = ({
   account,
-  onCompleteVerification,
   onManageOnWhop,
   onDisconnect,
   children
 }: PayoutSettingsWhopProps) => {
-  const { data = {}, completed = true } = account || {}
-  const checklist: Array<{ status: string }> = data?.requirements?.checklist || []
-  const hasDue = checklist.some((item) => item.status === 'required')
-  const rejected = data?.requirements?.disabled_reason?.startsWith?.('rejected')
-  const status = rejected
-    ? 'rejected'
-    : hasDue
-      ? 'verification_required'
-      : data?.active
-        ? 'active'
-        : 'pending'
+  const { completed = true } = account || {}
+  const { status } = getWhopAccountStatus(account)
 
   return (
     <Box>
@@ -57,20 +53,20 @@ const PayoutSettingsWhop = ({
         aside={<PayoutAccountStatus status={status as any} completed={completed} />}
       />
 
-      {hasDue ? (
+      {status === 'rejected' ? (
         <CustomAlert
           completed={completed}
-          severity="warning"
+          severity="error"
           action={
             <Button
               completed={completed}
-              onClick={onCompleteVerification}
+              onClick={onManageOnWhop}
               variant="contained"
               color="secondary"
               label={
                 <FormattedMessage
-                  id="payout-settings.whop.verification.button"
-                  defaultMessage="Complete verification on Whop"
+                  id="payout-settings.whop.banner.rejected.button"
+                  defaultMessage="Resolve on Whop"
                 />
               }
             />
@@ -78,18 +74,18 @@ const PayoutSettingsWhop = ({
         >
           <Typography variant="subtitle2">
             <FormattedMessage
-              id="payout-settings.whop.banner.verify.title"
-              defaultMessage="Complete your verification on Whop"
+              id="payout-settings.whop.banner.rejected.title"
+              defaultMessage="Action needed on Whop"
             />
           </Typography>
           <Typography variant="body2">
             <FormattedMessage
-              id="payout-settings.whop.banner.verify.description"
-              defaultMessage="Whop still needs your identity document and a payout method before Gitpay can release money to you. Nothing is lost — you can leave and come back."
+              id="payout-settings.whop.banner.rejected.description"
+              defaultMessage="Whop flagged an issue with this account. Open Whop to resolve it before payouts can continue."
             />
           </Typography>
         </CustomAlert>
-      ) : (
+      ) : status === 'active' ? (
         <CustomAlert
           completed={completed}
           severity="success"
@@ -122,10 +118,43 @@ const PayoutSettingsWhop = ({
             />
           </Typography>
         </CustomAlert>
+      ) : (
+        <CustomAlert
+          completed={completed}
+          severity="warning"
+          action={
+            <Button
+              completed={completed}
+              onClick={onManageOnWhop}
+              variant="contained"
+              color="secondary"
+              endIcon={<OpenInNewIcon />}
+              label={
+                <FormattedMessage
+                  id="payout-settings.whop.banner.pending.button"
+                  defaultMessage="Check status on Whop"
+                />
+              }
+            />
+          }
+        >
+          <Typography variant="subtitle2">
+            <FormattedMessage
+              id="payout-settings.whop.banner.pending.title"
+              defaultMessage="Not yet enabled for payouts"
+            />
+          </Typography>
+          <Typography variant="body2">
+            <FormattedMessage
+              id="payout-settings.whop.banner.pending.description"
+              defaultMessage="Whop hasn't marked this account active for payouts yet. Open Whop to check what's still needed, or wait for Whop to finish reviewing it."
+            />
+          </Typography>
+        </CustomAlert>
       )}
 
       <Box sx={{ mt: 2 }}>
-        <WhopAccountTabs requirementsDue={hasDue}>{children}</WhopAccountTabs>
+        <WhopAccountTabs>{children}</WhopAccountTabs>
       </Box>
 
       <Box

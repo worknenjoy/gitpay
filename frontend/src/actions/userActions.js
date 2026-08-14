@@ -544,7 +544,13 @@ const createAccount = (country) => {
         return dispatch(createUserAccountSuccess(account))
       })
       .catch((error) => {
-        dispatch(addNotification('actions.user.account.create.error', { severity: 'error' }))
+        const apiMessage = error?.response?.data?.error
+        dispatch(
+          addNotification('actions.user.account.create.error', {
+            severity: 'error',
+            extra: apiMessage
+          })
+        )
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(createUserAccountError(error))
@@ -908,12 +914,16 @@ const fetchAccountVerificationLinkError = (error) => {
   return { type: FETCH_ACCOUNT_VERIFICATION_LINK_ERROR, completed: true, error }
 }
 
-const fetchAccountVerificationLink = (provider) => {
+const fetchAccountVerificationLink = (provider, purpose) => {
   validToken()
   return (dispatch) => {
     dispatch(fetchAccountVerificationLinkRequested())
+    const body = {
+      ...(provider ? { provider } : {}),
+      ...(purpose ? { purpose } : {})
+    }
     return axios
-      .post(api.API_URL + '/user/account/verification-link', provider ? { provider } : {})
+      .post(api.API_URL + '/user/account/verification-link', body)
       .then((response) => {
         dispatch(fetchAccountVerificationLinkSuccess(response))
         if (response.data?.url) {

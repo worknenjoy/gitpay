@@ -42,6 +42,19 @@ describe('User Account (Whop)', () => {
       pinWhopApiForTests()
       nock(WHOP_API_HOST).get('/api/v1/companies/biz_user_whop_1').reply(200, whopCompany)
       nock(WHOP_API_HOST)
+        .get('/api/v1/accounts/biz_user_whop_1')
+        // Account.country reflects the platform default (us), not the owner's actual
+        // verified country — see the identity_profiles mock below, which should win.
+        .reply(200, { id: 'biz_user_whop_1', country: 'us', owner: { id: 'user_test_owner_1' } })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/identity_profiles')
+        .query({ owner_id: 'user_test_owner_1', first: '1' })
+        .reply(200, {
+          data: [
+            { id: 'idpf_test_1', country: 'dk', personal_address: { country: 'DNK' } }
+          ]
+        })
+      nock(WHOP_API_HOST)
         .get('/api/v1/ledger_accounts/biz_user_whop_1')
         .reply(200, {
           id: 'ldgr_test_1',
@@ -50,16 +63,18 @@ describe('User Account (Whop)', () => {
           ]
         })
       nock(WHOP_API_HOST)
-        .get('/api/v1/companies/biz_user_whop_1/payout_methods')
+        .get('/api/v1/payout_methods')
+        .query({ company_id: 'biz_user_whop_1' })
         .reply(200, {
           data: [
             {
-              id: 'pm_test_1',
-              type: 'bank_account',
-              bank_name: 'Test Bank',
-              last4: '4242',
+              id: 'potk_test_1',
+              nickname: 'Ops checking',
+              institution_name: 'Test Bank',
+              account_reference: '****4242',
               currency: 'usd',
-              is_default: true
+              is_default: true,
+              destination: { category: 'next_day_bank', name: 'Test Bank', country_code: 'US' }
             }
           ]
         })
@@ -90,8 +105,93 @@ describe('User Account (Whop)', () => {
 
       expect(res.body.identity.identityCheck).to.equal('verified')
       expect(res.body.identity.taxForm).to.equal('W-8BEN')
-      expect(res.body.payout_method.id).to.equal('pm_test_1')
+      expect(res.body.payout_method.id).to.equal('potk_test_1')
+      expect(res.body.payout_method.label).to.equal('Ops checking')
+      expect(res.body.payout_method.last4).to.equal('4242')
       expect(res.body.payouts_enabled).to.equal(true)
+      // country comes from the owner's identity profile (their actual verified
+      // country), not Account.country (the platform default) or /companies/{id} —
+      // and is normalized to uppercase 2-letter ISO to match our country lists
+      expect(res.body.country).to.equal('DK')
+    })
+  })
+
+  it('normalizes a 3-letter ISO country code from personal_address when no 2-letter country is present', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST).get('/api/v1/companies/biz_user_whop_3').reply(200, {
+        ...whopCompany,
+        id: 'biz_user_whop_3',
+        owner_user: { id: 'user_test_owner_3' }
+      })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/accounts/biz_user_whop_3')
+        .reply(200, { id: 'biz_user_whop_3' })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/identity_profiles')
+        .query({ owner_id: 'user_test_owner_3', first: '1' })
+        .reply(200, {
+          data: [{ id: 'idpf_test_3', personal_address: { country: 'DNK' } }]
+        })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_user_whop_3')
+        .reply(200, { id: 'ldgr_test_3', balances: [] })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/payout_methods')
+        .query({ company_id: 'biz_user_whop_3' })
+        .reply(200, { data: [] })
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_user_whop_3' },
+        { where: { id: user.body.id } }
+      )
+
+      const res = await agent
+        .get('/user/account')
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+
+      expect(res.body.country).to.equal('DK')
+    })
+  })
+
+  it('syncs Users.country from the freshly-resolved Whop country', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST).get('/api/v1/companies/biz_user_whop_4').reply(200, {
+        ...whopCompany,
+        id: 'biz_user_whop_4',
+        owner_user: { id: 'user_test_owner_4' }
+      })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/accounts/biz_user_whop_4')
+        .reply(200, { id: 'biz_user_whop_4' })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/identity_profiles')
+        .query({ owner_id: 'user_test_owner_4', first: '1' })
+        .reply(200, { data: [{ id: 'idpf_test_4', country: 'dk' }] })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_user_whop_4')
+        .reply(200, { id: 'ldgr_test_4', balances: [] })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/payout_methods')
+        .query({ company_id: 'biz_user_whop_4' })
+        .reply(200, { data: [] })
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_user_whop_4', country: null },
+        { where: { id: user.body.id } }
+      )
+
+      await agent
+        .get('/user/account')
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+
+      const updated = await models.User.findByPk(user.body.id)
+      expect(updated.dataValues.country).to.equal('DK')
     })
   })
 
@@ -102,10 +202,14 @@ describe('User Account (Whop)', () => {
         .get('/api/v1/companies/biz_user_whop_2')
         .reply(200, { ...whopCompany, id: 'biz_user_whop_2', verified: false })
       nock(WHOP_API_HOST)
+        .get('/api/v1/accounts/biz_user_whop_2')
+        .reply(200, { id: 'biz_user_whop_2', country: null })
+      nock(WHOP_API_HOST)
         .get('/api/v1/ledger_accounts/biz_user_whop_2')
         .reply(200, { id: 'ldgr_test_2', balances: [] })
       nock(WHOP_API_HOST)
-        .get('/api/v1/companies/biz_user_whop_2/payout_methods')
+        .get('/api/v1/payout_methods')
+        .query({ company_id: 'biz_user_whop_2' })
         .reply(200, { data: [] })
 
       const user = await registerAndLogin(agent)
@@ -153,6 +257,55 @@ describe('User Account (Whop)', () => {
           expect(res.body.provider).to.equal('whop')
           expect(res.body.url).to.equal('https://whop.com/onboard/abc')
           expect(scope.isDone()).to.equal(true)
+        })
+      } finally {
+        if (previousApiHost === undefined) delete process.env.WHOP_API_HOST
+        else process.env.WHOP_API_HOST = previousApiHost
+      }
+    })
+
+    it('maps purpose=payout to the payouts_portal use_case, and defaults to account_onboarding', async () => {
+      const previousApiHost = process.env.WHOP_API_HOST
+      process.env.WHOP_API_HOST = 'https://api.whop.com'
+      try {
+        await withPaymentProvider('whop', async () => {
+          pinWhopApiForTests()
+
+          let lastBody: any = null
+          nock(WHOP_API_HOST)
+            .post('/api/v1/account_links')
+            .times(3)
+            .reply(200, function (_uri, body) {
+              lastBody = body
+              return { url: 'https://whop.com/onboard/abc' }
+            })
+
+          const user = await registerAndLogin(agent)
+          await models.User.update(
+            { whop_account_id: 'biz_user_whop_3' },
+            { where: { id: user.body.id } }
+          )
+
+          await agent
+            .post('/user/account/verification-link')
+            .set('Authorization', user.headers.authorization)
+            .send({ provider: 'whop', purpose: 'payout' })
+            .expect(200)
+          expect(lastBody.use_case).to.equal('payouts_portal')
+
+          await agent
+            .post('/user/account/verification-link')
+            .set('Authorization', user.headers.authorization)
+            .send({ provider: 'whop', purpose: 'identity' })
+            .expect(200)
+          expect(lastBody.use_case).to.equal('account_onboarding')
+
+          await agent
+            .post('/user/account/verification-link')
+            .set('Authorization', user.headers.authorization)
+            .send({ provider: 'whop' })
+            .expect(200)
+          expect(lastBody.use_case).to.equal('account_onboarding')
         })
       } finally {
         if (previousApiHost === undefined) delete process.env.WHOP_API_HOST

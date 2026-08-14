@@ -4,17 +4,20 @@ import PayoutSettingsWhop from 'design-library/pages/private-pages/settings-page
 import WhopIdentityPanel from 'design-library/molecules/sections/whop-identity-panel/whop-identity-panel'
 import WhopPayoutMethodPanel from 'design-library/molecules/sections/whop-payout-method-panel/whop-payout-method-panel'
 import WhopScheduleBalancesPanel from 'design-library/molecules/sections/whop-schedule-balances-panel/whop-schedule-balances-panel'
-import WhopRequirementsPanel from 'design-library/molecules/sections/whop-requirements-panel/whop-requirements-panel'
 import WhopDisputesPanel from 'design-library/molecules/sections/whop-disputes-panel/whop-disputes-panel'
+import WhopAccountVerificationReturnPage from './payout-settings-whop-verification-return-page'
 
 const WHOP_BASE = '/profile/payout-settings/whop'
 
 type PayoutSettingsWhopPageProps = {
   user?: any
   account?: any
+  countries?: any
   fetchAccount?: () => void
+  fetchAccountCountries?: () => void
   deleteAccount?: () => Promise<any> | void
-  fetchAccountVerificationLink?: () => void
+  fetchAccountVerificationLink?: (purpose?: string) => void
+  addNotification?: (message: string, options: { severity: string; extra?: string }) => void
 }
 
 /**
@@ -24,16 +27,22 @@ type PayoutSettingsWhopPageProps = {
 const PayoutSettingsWhopPage = ({
   user,
   account,
+  countries,
   fetchAccount,
+  fetchAccountCountries,
   deleteAccount,
-  fetchAccountVerificationLink
+  fetchAccountVerificationLink,
+  addNotification
 }: PayoutSettingsWhopPageProps) => {
   useEffect(() => {
     if (fetchAccount) fetchAccount()
-  }, [fetchAccount])
+    if (fetchAccountCountries) fetchAccountCountries()
+  }, [fetchAccount, fetchAccountCountries])
 
-  const handleVerification = () => {
-    if (fetchAccountVerificationLink) fetchAccountVerificationLink()
+  // 'identity' → Whop's KYC-only account link; 'payout' → the fuller hosted portal
+  // (withdrawals, payout methods, and identity) — see createUserAccountLink.ts.
+  const handleVerification = (purpose?: string) => () => {
+    if (fetchAccountVerificationLink) fetchAccountVerificationLink(purpose)
   }
 
   const handleDisconnect = async () => {
@@ -44,8 +53,7 @@ const PayoutSettingsWhopPage = ({
   return (
     <PayoutSettingsWhop
       account={account}
-      onCompleteVerification={handleVerification}
-      onManageOnWhop={handleVerification}
+      onManageOnWhop={handleVerification('payout')}
       onDisconnect={handleDisconnect}
     >
       <HashRouter>
@@ -53,12 +61,18 @@ const PayoutSettingsWhopPage = ({
           <Route exact path={WHOP_BASE} render={() => <Redirect to={`${WHOP_BASE}/identity`} />} />
           <Route
             exact
+            path={`${WHOP_BASE}/requirements`}
+            render={() => <Redirect to={`${WHOP_BASE}/identity`} />}
+          />
+          <Route
+            exact
             path={`${WHOP_BASE}/identity`}
             render={() => (
               <WhopIdentityPanel
                 account={account}
                 user={user}
-                onManageOnWhop={handleVerification}
+                countries={countries}
+                onManageOnWhop={handleVerification('identity')}
               />
             )}
           />
@@ -66,27 +80,47 @@ const PayoutSettingsWhopPage = ({
             exact
             path={`${WHOP_BASE}/payout-method`}
             render={() => (
-              <WhopPayoutMethodPanel account={account} onManageOnWhop={handleVerification} />
+              <WhopPayoutMethodPanel account={account} onManageOnWhop={handleVerification('payout')} />
             )}
           />
           <Route
             exact
             path={`${WHOP_BASE}/schedule-balances`}
             render={() => (
-              <WhopScheduleBalancesPanel account={account} onManageOnWhop={handleVerification} />
-            )}
-          />
-          <Route
-            exact
-            path={`${WHOP_BASE}/requirements`}
-            render={() => (
-              <WhopRequirementsPanel account={account} onResolveOnWhop={handleVerification} />
+              <WhopScheduleBalancesPanel
+                account={account}
+                onManageOnWhop={handleVerification('payout')}
+              />
             )}
           />
           <Route
             exact
             path={`${WHOP_BASE}/disputes`}
             render={() => <WhopDisputesPanel account={account} />}
+          />
+          <Route
+            exact
+            path={`${WHOP_BASE}/account-verification/return`}
+            render={() => (
+              <WhopAccountVerificationReturnPage
+                outcome="return"
+                fetchAccount={fetchAccount}
+                fetchAccountCountries={fetchAccountCountries}
+                addNotification={addNotification}
+              />
+            )}
+          />
+          <Route
+            exact
+            path={`${WHOP_BASE}/account-verification/refresh`}
+            render={() => (
+              <WhopAccountVerificationReturnPage
+                outcome="refresh"
+                fetchAccount={fetchAccount}
+                fetchAccountCountries={fetchAccountCountries}
+                addNotification={addNotification}
+              />
+            )}
           />
         </Switch>
       </HashRouter>

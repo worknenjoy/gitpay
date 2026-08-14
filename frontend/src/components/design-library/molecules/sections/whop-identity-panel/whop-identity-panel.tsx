@@ -2,10 +2,13 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import DetailList from '../../data-display/detail-list/detail-list'
 import DetailRow from '../../../atoms/data-display/detail-row/detail-row'
+import CountryCurrencyForm from '../../form-section/country-currency-form/country-currency-form'
 
 export type WhopIdentityPanelProps = {
   account?: any
   user?: any
+  /** Provider-aware `/user/account/countries` response (same shape used for Stripe) */
+  countries?: any
   onManageOnWhop?: () => void
   /** ISO date string of the last sync, if known */
   lastSyncedLabel?: React.ReactNode
@@ -29,6 +32,7 @@ const identityCheckChip = (status?: string | null) => {
 const WhopIdentityPanel = ({
   account,
   user,
+  countries,
   onManageOnWhop,
   lastSyncedLabel
 }: WhopIdentityPanelProps) => {
@@ -70,6 +74,12 @@ const WhopIdentityPanel = ({
         )
       }
     >
+      <CountryCurrencyForm
+        country={data.country}
+        countries={countries}
+        currency={countries?.data?.default_currency}
+        completed={completed}
+      />
       <DetailRow
         completed={completed}
         label={
@@ -105,16 +115,6 @@ const WhopIdentityPanel = ({
         completed={completed}
         label={<FormattedMessage id="payout-settings.whop.identity.email" defaultMessage="Email" />}
         value={data.email || user?.email}
-      />
-      <DetailRow
-        completed={completed}
-        label={
-          <FormattedMessage
-            id="payout-settings.whop.identity.country"
-            defaultMessage="Country of residence"
-          />
-        }
-        value={data.country ? String(data.country).toUpperCase() : undefined}
       />
       <DetailRow
         completed={completed}

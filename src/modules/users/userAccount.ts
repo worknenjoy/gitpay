@@ -3,6 +3,7 @@ import { findUserByIdSimple } from '../../queries/user/findUserByIdSimple'
 import { getWhopClient } from '../../providers/whop/client'
 import { WhopPaymentProvider } from '../../providers/whop/WhopPaymentProvider'
 import { currencyForCountry } from '../../utils/currency/currency-map'
+import { normalizeCountryCode } from '../../utils/country/iso3166Alpha3'
 
 type UserAccountParams = {
   id: number
@@ -43,6 +44,38 @@ export async function userAccount(userParameters: UserAccountParams) {
       console.warn('[whop] retrieve company for user account failed', error)
     }
 
+    // GET /accounts/{id} (Whop's newer Account resource) exposes fields the legacy
+    // /companies/{id} endpoint doesn't — notably `country` and `business_address`.
+    // Best-effort: if this call fails (e.g. older API key without access), fall back
+    // to what /companies has.
+    let whopAccount: any = null
+    try {
+      whopAccount = await getWhopClient().get<any>(`/accounts/${whopAccountId}`)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[whop] retrieve account (beta) for user account failed', error)
+    }
+
+    // Account.country above reflects the platform/business default, NOT necessarily the
+    // country the individual actually verified with on Whop (confirmed: a sub-merchant's
+    // Account.country came back "us" — the platform's own country — while the owner's
+    // real, most-recently-completed KYC address was Denmark). The individual's true
+    // verified country lives on their identity profile instead. Best-effort: not every
+    // account has one, or the owner id may not resolve.
+    let latestIdentityProfile: any = null
+    try {
+      const ownerId = whopAccount?.owner?.id || company?.owner_user?.id
+      if (ownerId) {
+        const identityProfiles = await getWhopClient().get<any>(
+          `/identity_profiles?owner_id=${encodeURIComponent(ownerId)}&first=1`
+        )
+        latestIdentityProfile = identityProfiles?.data?.[0] || null
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[whop] retrieve identity profile for user account failed', error)
+    }
+
     const whop = paymentProvider as WhopPaymentProvider
 
     let balances: { available: number; pending: number; reserve: number } | null = null
@@ -76,11 +109,34 @@ export async function userAccount(userParameters: UserAccountParams) {
       console.warn('[whop] disputes for connected company failed', error)
     }
 
-    const country =
+    // Sources are inconsistent about 2- vs 3-letter ISO country codes (e.g. Whop's
+    // identity profile has both `country` (2-letter) and `personal_address.country`
+    // (3-letter)) — normalizeCountryCode() accepts either and returns 2-letter,
+    // matching our country lists/flag lookups.
+    const rawCountry =
+      latestIdentityProfile?.country ||
+      latestIdentityProfile?.personal_address?.country ||
+      latestIdentityProfile?.business_address?.country ||
+      whopAccount?.country ||
+      whopAccount?.business_address?.country ||
       company?.country ||
       company?.business_address?.country ||
       user?.dataValues?.country ||
       null
+    const country = normalizeCountryCode(rawCountry) || rawCountry || null
+
+    // Keep Users.country in sync with whatever Whop reports, so the currency shown
+    // elsewhere (e.g. userAccountCountries.ts, which reads Users.country from the DB)
+    // doesn't drift from what this live-fetched account actually shows.
+    if (country && user && user.dataValues?.country !== country) {
+      try {
+        await user.update({ country })
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn('[whop] failed to sync Users.country from Whop', error)
+      }
+    }
+
     const defaultCurrency =
       company?.default_currency ||
       company?.currency ||

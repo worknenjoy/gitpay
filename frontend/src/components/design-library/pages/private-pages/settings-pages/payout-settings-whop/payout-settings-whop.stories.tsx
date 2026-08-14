@@ -20,7 +20,6 @@ const meta = {
   title: 'Design Library/Pages/Settings/PayoutSettingsWhop',
   component: PayoutSettingsWhop,
   args: {
-    onCompleteVerification: () => alert('verify on whop'),
     onManageOnWhop: () => alert('manage on whop'),
     onDisconnect: () => alert('disconnect')
   }
@@ -32,16 +31,24 @@ export const PayoutsActive = {
   render: (args: any) => {
     const account = {
       completed: true,
+      data: baseData
+    }
+    return (
+      <PayoutSettingsWhop {...args} account={account}>
+        <WhopIdentityPanel account={account} onManageOnWhop={args.onManageOnWhop} />
+      </PayoutSettingsWhop>
+    )
+  }
+}
+
+export const Pending = {
+  render: (args: any) => {
+    const account = {
+      completed: true,
       data: {
         ...baseData,
-        requirements: {
-          checklist: [
-            { key: 'identity_document', status: 'done' },
-            { key: 'payout_method', status: 'done' },
-            { key: 'company_profile', status: 'done' },
-            { key: 'gitpay_connection', status: 'done' }
-          ]
-        }
+        active: false,
+        identity: { ...baseData.identity, identityCheck: 'pending', taxForm: null }
       }
     }
     return (
@@ -52,7 +59,7 @@ export const PayoutsActive = {
   }
 }
 
-export const VerificationRequired = {
+export const Rejected = {
   render: (args: any) => {
     const account = {
       completed: true,
@@ -60,14 +67,7 @@ export const VerificationRequired = {
         ...baseData,
         active: false,
         identity: { ...baseData.identity, identityCheck: 'unverified', taxForm: null },
-        requirements: {
-          checklist: [
-            { key: 'identity_document', status: 'required' },
-            { key: 'payout_method', status: 'required' },
-            { key: 'company_profile', status: 'done' },
-            { key: 'gitpay_connection', status: 'done' }
-          ]
-        }
+        requirements: { disabled_reason: 'rejected.other' }
       }
     }
     return (

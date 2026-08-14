@@ -609,27 +609,36 @@ export class WhopPaymentProvider implements PaymentProvider {
 
   /**
    * List payout methods (bank/card/crypto) configured for a connected company.
-   * Best-effort: Whop manages these on its hosted portal and the list endpoint may
-   * not be available for all keys — on any failure we return [] so the UI shows a
-   * "managed on Whop" empty state rather than an error.
+   * GET /payout_methods?company_id=… — a top-level resource scoped by query param, NOT
+   * nested under /companies/{id} (see https://docs.whop.com/api-reference/payout-methods/list-payout-methods).
+   * Best-effort: on any failure we return [] so the UI shows a "managed on Whop" empty
+   * state rather than an error.
    */
   async getPayoutMethods(accountId: string): Promise<PayoutMethod[]> {
     const id = accountId || this.companyId()
     if (!id) return []
     try {
-      const response = await this.client.get<any>(`/companies/${id}/payout_methods`)
+      const response = await this.client.get<any>(
+        `/payout_methods?company_id=${encodeURIComponent(id)}`
+      )
       const list: any[] = Array.isArray(response)
         ? response
         : response?.data || response?.payout_methods || []
-      return list.map((m: any) => ({
-        id: m.id || m.payout_method_id,
-        type: m.type || m.method_type || null,
-        label: m.label || m.name || m.bank_name || null,
-        last4: m.last4 || m.last_four || null,
-        currency: m.currency || null,
-        default: Boolean(m.default || m.is_default),
-        raw: m
-      }))
+      return list.map((m: any) => {
+        // Real schema: id, nickname, institution_name, account_reference (masked, e.g.
+        // "****1234"), currency, is_default, destination: { category, name, country_code }.
+        const maskedDigits =
+          typeof m.account_reference === 'string' ? m.account_reference.replace(/\D/g, '') : ''
+        return {
+          id: m.id || m.payout_method_id,
+          type: m.destination?.category || m.type || m.method_type || null,
+          label: m.nickname || m.institution_name || m.destination?.name || m.label || null,
+          last4: maskedDigits || m.last4 || m.last_four || null,
+          currency: m.currency || null,
+          default: Boolean(m.is_default ?? m.default),
+          raw: m
+        }
+      })
     } catch (error) {
       // eslint-disable-next-line no-console
       console.warn('[whop] getPayoutMethods failed', error)

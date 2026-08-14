@@ -1,22 +1,19 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { alpha } from '@mui/material/styles'
-import WarningAmberIcon from '@mui/icons-material/WarningAmber'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import Tabs from '../base-tabs/base-tabs'
 
 export type WhopAccountTabsProps = {
   children: React.ReactNode
-  /** true when the Requirements & compliance section has items still due */
-  requirementsDue?: boolean
 }
 
 /**
- * Vertical Whop payout sub-navigation matching the screenshots:
- * Identity & business · Payout method · Payout schedule & balances ·
- * Requirements & compliance · Disputes / refunds.
+ * Vertical Whop payout sub-navigation: Identity & business · Payout method ·
+ * Payout schedule & balances · Disputes / refunds.
+ *
+ * "Requirements & compliance" was removed (temporarily) — its checklist was derived
+ * from a Whop field that turned out to mean something else; see getWhopAccountStatus.ts.
  */
-const WhopAccountTabs = ({ children, requirementsDue }: WhopAccountTabsProps) => {
+const WhopAccountTabs = ({ children }: WhopAccountTabsProps) => {
   const tabs = [
     {
       label: (
@@ -47,23 +44,6 @@ const WhopAccountTabs = ({ children, requirementsDue }: WhopAccountTabsProps) =>
       ),
       value: 'schedule-balances',
       link: '/profile/payout-settings/whop/schedule-balances'
-    },
-    {
-      label: (
-        <FormattedMessage
-          id="payout-settings.whop.tabs.requirements"
-          defaultMessage="Requirements"
-        />
-      ),
-      value: 'requirements',
-      link: '/profile/payout-settings/whop/requirements',
-      icon: requirementsDue ? (
-        <WarningAmberIcon
-          sx={{ color: (theme) => alpha(theme.palette.secondary.main, 0.7), fontSize: 18 }}
-        />
-      ) : (
-        <CheckCircleIcon sx={{ color: 'success.main', fontSize: 18 }} />
-      )
     },
     {
       label: (
