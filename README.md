@@ -118,7 +118,7 @@ Full details (flows, webhooks, tests, onboarding): **[docs/payments-providers.md
 
 To run the migrations
 
-`npm run migrate`
+`npm run migrate:dev`
 
 To create a new migration
 
