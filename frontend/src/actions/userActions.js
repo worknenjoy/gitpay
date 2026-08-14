@@ -463,12 +463,15 @@ const updateCustomer = (customerData) => {
  * Connected Account
  */
 
-const fetchAccount = () => {
+const fetchAccount = (provider) => {
   validToken()
   return (dispatch) => {
     dispatch(fetchUserAccountRequested())
+    const url = provider
+      ? `${api.API_URL}/user/account?provider=${encodeURIComponent(provider)}`
+      : `${api.API_URL}/user/account`
     return axios
-      .get(api.API_URL + '/user/account')
+      .get(url)
       .then((account) => {
         return dispatch(fetchUserAccountSuccess(account))
       })
@@ -541,7 +544,13 @@ const createAccount = (country) => {
         return dispatch(createUserAccountSuccess(account))
       })
       .catch((error) => {
-        dispatch(addNotification('actions.user.account.create.error', { severity: 'error' }))
+        const apiMessage = error?.response?.data?.error
+        dispatch(
+          addNotification('actions.user.account.create.error', {
+            severity: 'error',
+            extra: apiMessage
+          })
+        )
         // eslint-disable-next-line no-console
         console.log('error on create account', error)
         return dispatch(createUserAccountError(error))
@@ -575,12 +584,15 @@ const updateAccount = (account) => {
   }
 }
 
-const deleteAccount = () => {
+const deleteAccount = (provider) => {
   validToken()
   return (dispatch) => {
     dispatch(deleteUserAccountRequested())
+    const url = provider
+      ? `${api.API_URL}/user/account?provider=${encodeURIComponent(provider)}`
+      : `${api.API_URL}/user/account`
     return axios
-      .delete(api.API_URL + '/user/account')
+      .delete(url)
       .then((user) => {
         dispatch(addNotification('actions.user.account.delete.success'))
         return dispatch(deleteUserAccountSuccess(user))
@@ -902,12 +914,16 @@ const fetchAccountVerificationLinkError = (error) => {
   return { type: FETCH_ACCOUNT_VERIFICATION_LINK_ERROR, completed: true, error }
 }
 
-const fetchAccountVerificationLink = () => {
+const fetchAccountVerificationLink = (provider, purpose) => {
   validToken()
   return (dispatch) => {
     dispatch(fetchAccountVerificationLinkRequested())
+    const body = {
+      ...(provider ? { provider } : {}),
+      ...(purpose ? { purpose } : {})
+    }
     return axios
-      .post(api.API_URL + '/user/account/verification-link')
+      .post(api.API_URL + '/user/account/verification-link', body)
       .then((response) => {
         dispatch(fetchAccountVerificationLinkSuccess(response))
         if (response.data?.url) {

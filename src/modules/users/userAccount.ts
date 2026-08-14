@@ -3,9 +3,16 @@ import { findUserByIdSimple } from '../../queries/user/findUserByIdSimple'
 import { getWhopClient } from '../../providers/whop/client'
 import { WhopPaymentProvider } from '../../providers/whop/WhopPaymentProvider'
 import { currencyForCountry } from '../../utils/currency/currency-map'
+import { normalizeCountryCode } from '../../utils/country/iso3166Alpha3'
 
 type UserAccountParams = {
   id: number
+  /**
+   * Force a specific provider regardless of the global PAYMENT_PROVIDER.
+   * Used by the deprecated Stripe tab so legacy Stripe accounts still load
+   * while the platform default is Whop.
+   */
+  provider?: string
 }
 
 /**
@@ -17,7 +24,7 @@ type UserAccountParams = {
  * so clients can gate payment requests without provider-specific checks.
  */
 export async function userAccount(userParameters: UserAccountParams) {
-  const paymentProvider = getPaymentProvider()
+  const paymentProvider = getPaymentProvider(userParameters.provider)
 
   if (paymentProvider.name === 'whop') {
     const user = await findUserByIdSimple(userParameters.id)
@@ -37,9 +44,42 @@ export async function userAccount(userParameters: UserAccountParams) {
       console.warn('[whop] retrieve company for user account failed', error)
     }
 
+    // GET /accounts/{id} (Whop's newer Account resource) exposes fields the legacy
+    // /companies/{id} endpoint doesn't — notably `country` and `business_address`.
+    // Best-effort: if this call fails (e.g. older API key without access), fall back
+    // to what /companies has.
+    let whopAccount: any = null
+    try {
+      whopAccount = await getWhopClient().get<any>(`/accounts/${whopAccountId}`)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[whop] retrieve account (beta) for user account failed', error)
+    }
+
+    // Account.country above reflects the platform/business default, NOT necessarily the
+    // country the individual actually verified with on Whop (confirmed: a sub-merchant's
+    // Account.country came back "us" — the platform's own country — while the owner's
+    // real, most-recently-completed KYC address was Denmark). The individual's true
+    // verified country lives on their identity profile instead. Best-effort: not every
+    // account has one, or the owner id may not resolve.
+    let latestIdentityProfile: any = null
+    try {
+      const ownerId = whopAccount?.owner?.id || company?.owner_user?.id
+      if (ownerId) {
+        const identityProfiles = await getWhopClient().get<any>(
+          `/identity_profiles?owner_id=${encodeURIComponent(ownerId)}&first=1`
+        )
+        latestIdentityProfile = identityProfiles?.data?.[0] || null
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[whop] retrieve identity profile for user account failed', error)
+    }
+
+    const whop = paymentProvider as WhopPaymentProvider
+
     let balances: { available: number; pending: number; reserve: number } | null = null
     try {
-      const whop = paymentProvider as WhopPaymentProvider
       if (typeof whop.getCompanyLedgerBalances === 'function') {
         const ledger = await whop.getCompanyLedgerBalances(whopAccountId)
         balances = {
@@ -53,15 +93,69 @@ export async function userAccount(userParameters: UserAccountParams) {
       console.warn('[whop] ledger balances for connected company failed', error)
     }
 
-    const country =
+    let payoutMethods: Awaited<ReturnType<WhopPaymentProvider['getPayoutMethods']>> = []
+    try {
+      payoutMethods = await whop.getPayoutMethods(whopAccountId)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[whop] payout methods for connected company failed', error)
+    }
+
+    let disputes: Awaited<ReturnType<WhopPaymentProvider['getDisputes']>> = []
+    try {
+      disputes = await whop.getDisputes(whopAccountId)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[whop] disputes for connected company failed', error)
+    }
+
+    // Sources are inconsistent about 2- vs 3-letter ISO country codes (e.g. Whop's
+    // identity profile has both `country` (2-letter) and `personal_address.country`
+    // (3-letter)) — normalizeCountryCode() accepts either and returns 2-letter,
+    // matching our country lists/flag lookups.
+    const rawCountry =
+      latestIdentityProfile?.country ||
+      latestIdentityProfile?.personal_address?.country ||
+      latestIdentityProfile?.business_address?.country ||
+      whopAccount?.country ||
+      whopAccount?.business_address?.country ||
       company?.country ||
       company?.business_address?.country ||
       user?.dataValues?.country ||
       null
+    const country = normalizeCountryCode(rawCountry) || rawCountry || null
+
+    // Keep Users.country in sync with whatever Whop reports, so the currency shown
+    // elsewhere (e.g. userAccountCountries.ts, which reads Users.country from the DB)
+    // doesn't drift from what this live-fetched account actually shows.
+    if (country && user && user.dataValues?.country !== country) {
+      try {
+        await user.update({ country })
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn('[whop] failed to sync Users.country from Whop', error)
+      }
+    }
+
     const defaultCurrency =
       company?.default_currency ||
       company?.currency ||
       currencyForCountry(country)
+
+    // Requirements checklist derived from the company + payout methods (no extra API calls).
+    const requirementItems =
+      typeof whop.buildRequirements === 'function'
+        ? whop.buildRequirements(company, payoutMethods)
+        : []
+    const currentlyDue = requirementItems
+      .filter((item) => item.status === 'required')
+      .map((item) => item.key)
+    const requirementsMet = currentlyDue.length === 0
+    const verified = company?.verified ?? null
+    const identityCheck =
+      verified === true ? 'verified' : verified === false ? 'unverified' : 'pending'
+    const defaultPayoutMethod =
+      payoutMethods.find((method) => method.default) || payoutMethods[0] || null
 
     const account = {
       id: whopAccountId,
@@ -72,26 +166,43 @@ export async function userAccount(userParameters: UserAccountParams) {
       default_currency: defaultCurrency,
       currency: defaultCurrency,
       title: company?.title || company?.name || null,
-      verified: company?.verified ?? null,
+      verified,
       route: company?.route || null,
       url: company?.url || company?.hub_url || null,
       created_at: company?.created_at || null,
       parent_company_id: company?.parent_company_id || null,
       // Friendly status for UI (AccountHolderStatus expects capabilities.transfers)
       capabilities: {
-        transfers: 'active'
+        transfers: requirementsMet ? 'active' : 'pending'
       },
       business_profile: {
         name: company?.title || company?.name || null,
         url: company?.url || null
       },
       balances,
+      // Requirements & compliance checklist (Whop portal completes the underlying steps)
+      requirements: {
+        currently_due: currentlyDue,
+        disabled_reason: null,
+        checklist: requirementItems
+      },
+      // Identity & business (KYC completed on Whop; Gitpay reads the result)
+      identity: {
+        legalName: company?.title || company?.name || user?.dataValues?.name || null,
+        accountType: company?.account_type || company?.business_type || 'individual',
+        taxForm: company?.tax_form || null,
+        identityCheck
+      },
+      // Best-effort payout method; bank/card/crypto is added on the Whop portal
+      payout_method: defaultPayoutMethod,
+      payout_methods: payoutMethods,
+      // Disputes/refunds arrive via webhooks; empty until surfaced
+      disputes,
       // KYC / bank details are completed on Whop portal via account_links
-      // (payout method / bank is not stored in Gitpay — only company + currency here)
       completed: true,
-      charges_enabled: true,
-      payouts_enabled: true,
-      details_submitted: true,
+      charges_enabled: requirementsMet,
+      payouts_enabled: requirementsMet,
+      details_submitted: requirementsMet,
       metadata: {
         internal_user_id: String(userParameters.id)
       }

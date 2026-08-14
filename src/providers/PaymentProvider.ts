@@ -1,7 +1,9 @@
 import type {
+  AccountDispute,
   AccountLinkParams,
   AccountLinkResult,
   AccountResult,
+  PayoutMethod,
   BountyCheckoutParams,
   BountyCheckoutResult,
   ConnectedAccountActiveParams,
@@ -83,6 +85,24 @@ export abstract class PaymentProvider {
    * Each provider applies its own rules (e.g. Stripe requirements vs Whop company id).
    */
   abstract isConnectedAccountActive(account: ConnectedAccountActiveParams | null | undefined): boolean
+
+  /**
+   * Payout methods configured for a connected account (bank/card/crypto).
+   * Best-effort: providers that manage this on their own portal (Whop) or that
+   * cannot list it return an empty array so the UI shows a managed/empty state.
+   */
+  async getPayoutMethods(_accountId: string): Promise<PayoutMethod[]> {
+    return []
+  }
+
+  /**
+   * Disputes/chargebacks visible for a connected account.
+   * Best-effort: providers that only receive these via webhooks return an empty
+   * array so the UI renders an empty state rather than fabricated data.
+   */
+  async getDisputes(_accountId: string): Promise<AccountDispute[]> {
+    return []
+  }
 
   // --- Webhooks ---
 

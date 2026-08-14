@@ -4,7 +4,7 @@ import { Alert, Box, Paper, Typography, Divider } from '@mui/material'
 import BankAccountsManager from '../../../../organisms/forms/bank-account-forms/bank-accounts-manager/bank-accounts-manager'
 import Field from '../../../../atoms/inputs/fields/field/field'
 
-const paymentProvider =
+const envPaymentProvider =
   (typeof process !== 'undefined' && process.env && process.env.PAYMENT_PROVIDER) || 'stripe'
 
 type PayoutSettingsBankAccountInfoProps = {
@@ -18,6 +18,8 @@ type PayoutSettingsBankAccountInfoProps = {
   onDelete?: (account: any) => Promise<any> | void
   /** Optional — used on Whop bank tab to open verification / payout portal */
   onCompleteVerification?: () => void
+  /** Force a provider for this tab (Stripe tab passes 'stripe'); falls back to env */
+  provider?: string
 }
 
 /**
@@ -34,11 +36,12 @@ const PayoutSetingsBankAccountInfo = ({
   onCreateSubmit,
   onEditSubmit,
   onDelete,
-  onCompleteVerification
+  onCompleteVerification,
+  provider
 }: PayoutSettingsBankAccountInfoProps) => {
-  if (paymentProvider === 'whop') {
-    const country =
-      account?.data?.country || user?.data?.country || countries?.data?.country || '—'
+  const activeProvider = provider || envPaymentProvider
+  if (activeProvider === 'whop') {
+    const country = account?.data?.country || user?.data?.country || countries?.data?.country || '—'
     const currency = (
       account?.data?.default_currency ||
       account?.data?.currency ||

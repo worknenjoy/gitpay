@@ -1,0 +1,15 @@
+{
+  "id": "biz_user_whop_1",
+  "object": "company",
+  "title": "Alexandre Magno",
+  "email": "alexanmtz@gmail.com",
+  "country": "br",
+  "default_currency": "brl",
+  "verified": true,
+  "route": "alexandre-magno",
+  "url": "https://whop.com/alexandre-magno",
+  "created_at": "2026-08-09T00:00:00.000Z",
+  "parent_company_id": "biz_test_platform",
+  "account_type": "individual",
+  "tax_form": "W-8BEN"
+}

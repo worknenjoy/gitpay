@@ -165,6 +165,48 @@ export type ConnectedAccountActiveParams = {
   [key: string]: unknown
 }
 
+/**
+ * Normalized payout account detail structures used by the Payout Settings UI.
+ * Providers derive these from their native account payloads; missing data is
+ * expressed as `pending`/`null` rather than fabricated.
+ */
+export type AccountRequirementStatus = 'done' | 'required' | 'pending'
+
+export type AccountRequirementItem = {
+  /** Stable key, e.g. 'identity_document', 'payout_method', 'company_profile', 'gitpay_connection' */
+  key: string
+  status: AccountRequirementStatus
+}
+
+export type PayoutMethod = {
+  id: string
+  /** e.g. 'bank_account', 'card', 'crypto' */
+  type?: string | null
+  label?: string | null
+  last4?: string | null
+  currency?: string | null
+  default?: boolean
+  raw?: unknown
+}
+
+export type AccountIdentity = {
+  legalName?: string | null
+  accountType?: string | null
+  taxForm?: string | null
+  /** 'verified' | 'unverified' | 'pending' */
+  identityCheck?: string | null
+}
+
+export type AccountDispute = {
+  id: string
+  status?: string | null
+  amount?: number | null
+  currency?: string | null
+  reason?: string | null
+  created_at?: string | null
+  raw?: unknown
+}
+
 export type AccountLinkParams = {
   accountId: string
   refreshUrl: string

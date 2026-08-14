@@ -1,9 +1,12 @@
 import { Webhook } from 'standardwebhooks'
 import type { PaymentProvider } from '../PaymentProvider'
 import type {
+  AccountDispute,
   AccountLinkParams,
   AccountLinkResult,
+  AccountRequirementItem,
   AccountResult,
+  PayoutMethod,
   BountyCheckoutParams,
   BountyCheckoutResult,
   ConnectedAccountActiveParams,
@@ -605,11 +608,80 @@ export class WhopPaymentProvider implements PaymentProvider {
   }
 
   /**
+   * List payout methods (bank/card/crypto) configured for a connected company.
+   * GET /payout_methods?company_id=… — a top-level resource scoped by query param, NOT
+   * nested under /companies/{id} (see https://docs.whop.com/api-reference/payout-methods/list-payout-methods).
+   * Best-effort: on any failure we return [] so the UI shows a "managed on Whop" empty
+   * state rather than an error.
+   */
+  async getPayoutMethods(accountId: string): Promise<PayoutMethod[]> {
+    const id = accountId || this.companyId()
+    if (!id) return []
+    try {
+      const response = await this.client.get<any>(
+        `/payout_methods?company_id=${encodeURIComponent(id)}`
+      )
+      const list: any[] = Array.isArray(response)
+        ? response
+        : response?.data || response?.payout_methods || []
+      return list.map((m: any) => {
+        // Real schema: id, nickname, institution_name, account_reference (masked, e.g.
+        // "****1234"), currency, is_default, destination: { category, name, country_code }.
+        const maskedDigits =
+          typeof m.account_reference === 'string' ? m.account_reference.replace(/\D/g, '') : ''
+        return {
+          id: m.id || m.payout_method_id,
+          type: m.destination?.category || m.type || m.method_type || null,
+          label: m.nickname || m.institution_name || m.destination?.name || m.label || null,
+          last4: maskedDigits || m.last4 || m.last_four || null,
+          currency: m.currency || null,
+          default: Boolean(m.is_default ?? m.default),
+          raw: m
+        }
+      })
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn('[whop] getPayoutMethods failed', error)
+      return []
+    }
+  }
+
+  /**
+   * Disputes are delivered to Gitpay via webhooks (dispute.created/updated), not
+   * fetched per company. No account-scoped list endpoint is used, so return [].
+   */
+  async getDisputes(_accountId: string): Promise<AccountDispute[]> {
+    return []
+  }
+
+  /**
+   * Derive the Payout Settings requirements checklist from data already fetched.
+   * Does not call additional Whop endpoints — statuses come from the company object
+   * plus whether a payout method exists.
+   */
+  buildRequirements(company: any, payoutMethods: PayoutMethod[]): AccountRequirementItem[] {
+    const verified = company?.verified
+    const hasProfile = Boolean(
+      (company?.title || company?.name) && company?.country && company?.email
+    )
+    const hasPayoutMethod = Array.isArray(payoutMethods) && payoutMethods.length > 0
+    return [
+      { key: 'identity_document', status: verified === true ? 'done' : 'required' },
+      { key: 'payout_method', status: hasPayoutMethod ? 'done' : 'required' },
+      { key: 'company_profile', status: hasProfile ? 'done' : 'required' },
+      { key: 'gitpay_connection', status: company?.parent_company_id ? 'done' : 'pending' }
+    ]
+  }
+
+  /**
    * Whop KYC and payout methods are managed on the Whop portal.
-   * An account with a connected company id is treated as active for payment requests.
+   * Active means a connected company exists and is not explicitly unverified.
+   * Defensive: an unknown (null) verified flag does not lock existing users out.
    */
   isConnectedAccountActive(account: ConnectedAccountActiveParams | null | undefined): boolean {
-    return Boolean(account?.id)
+    if (!account?.id) return false
+    if ((account as any)?.verified === false) return false
+    return true
   }
 
   async verifyAndParseWebhook(

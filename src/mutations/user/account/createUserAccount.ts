@@ -10,7 +10,9 @@ const currentModels = models as any
 
 type UserAccountCreateParams = {
   id: number
-  country: string
+  /** Required for Stripe (Connect custom accounts); optional for Whop, which collects
+   * country itself during account_onboarding/KYC. */
+  country?: string
 }
 
 /**

@@ -33,18 +33,18 @@ const mapDispatchToProps = (dispatch: any) => {
     addNotification: (notification: any, options: any) =>
       dispatch(addNotification(notification, options)),
     updateUser: (user: any) => dispatch(updateUser(user)),
-    fetchAccount: () => dispatch(fetchAccount()),
+    fetchAccount: () => dispatch(fetchAccount('stripe')),
     fetchAccountCountries: () => dispatch(fetchAccountCountries()),
     changePassword: (password: any) => dispatch(changePassword(password)),
     deleteUser: (id: any) => dispatch(deleteUser(id)),
     createAccount: (account: any) => dispatch(createAccount(account)),
     updateAccount: (account) => dispatch(updateAccount(account)),
-    deleteAccount: () => dispatch(deleteAccount()),
+    deleteAccount: () => dispatch(deleteAccount('stripe')),
     createBankAccount: (bankAccount: any) => dispatch(createBankAccount(bankAccount)),
     updateBankAccount: (bankAccount: any) => dispatch(updateBankAccount(bankAccount)),
     getBankAccount: () => dispatch(getBankAccount()),
     deleteBankAccount: (bankAccountId: string) => dispatch(deleteBankAccount(bankAccountId)),
-    fetchAccountVerificationLink: () => dispatch(fetchAccountVerificationLink())
+    fetchAccountVerificationLink: () => dispatch(fetchAccountVerificationLink('stripe'))
   }
 }
 
