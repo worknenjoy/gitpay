@@ -228,21 +228,27 @@ export const whopCountryCodes: CountryOption[] = [
   { country: 'Mayotte', code: 'YT', image: 'default' },
   { country: 'South Africa', code: 'ZA', image: 'south-africa' },
   { country: 'Zambia', code: 'ZM', image: 'default' },
-  { country: 'Zimbabwe', code: 'ZW', image: 'default' },
+  { country: 'Zimbabwe', code: 'ZW', image: 'default' }
 ]
 
 /**
  * Returns countries for the active payment provider (webpack PAYMENT_PROVIDER).
  */
 export function getSupportedCountryCodes(
-  provider: string = (typeof process !== 'undefined' && process.env && process.env.PAYMENT_PROVIDER) || 'stripe'
+  provider: string = (typeof process !== 'undefined' &&
+    process.env &&
+    process.env.PAYMENT_PROVIDER) ||
+    'stripe'
 ): CountryOption[] {
   if (provider === 'whop') return whopCountryCodes
   return stripeCountryCodes as CountryOption[]
 }
 
 export function getSupportedCountriesCount(
-  provider: string = (typeof process !== 'undefined' && process.env && process.env.PAYMENT_PROVIDER) || 'stripe'
+  provider: string = (typeof process !== 'undefined' &&
+    process.env &&
+    process.env.PAYMENT_PROVIDER) ||
+    'stripe'
 ): number {
   return getSupportedCountryCodes(provider).length
 }

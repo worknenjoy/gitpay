@@ -56,9 +56,7 @@ export abstract class PaymentProvider {
    * Sync active flag and/or title/description on the provider checkout resource
    * (Stripe Payment Link + Product, Whop Plan + Product).
    */
-  abstract updatePaymentRequestDetails(
-    params: UpdatePaymentRequestDetailsParams
-  ): Promise<unknown>
+  abstract updatePaymentRequestDetails(params: UpdatePaymentRequestDetailsParams): Promise<unknown>
 
   abstract deactivatePaymentRequestResources(
     resources: DeactivatePaymentRequestResourcesParams
@@ -84,7 +82,9 @@ export abstract class PaymentProvider {
    * Whether a connected account is ready for payouts and payment requests.
    * Each provider applies its own rules (e.g. Stripe requirements vs Whop company id).
    */
-  abstract isConnectedAccountActive(account: ConnectedAccountActiveParams | null | undefined): boolean
+  abstract isConnectedAccountActive(
+    account: ConnectedAccountActiveParams | null | undefined
+  ): boolean
 
   /**
    * Payout methods configured for a connected account (bank/card/crypto).

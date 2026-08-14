@@ -143,13 +143,10 @@ const TaskCron = {
   },
   notifyUnclaimedBounties: async () => {
     const results = await notifyUnclaimedBountiesService()
-    const counts = results.reduce(
-      (acc: Record<string, number>, r: { action: string }) => {
-        acc[r.action] = (acc[r.action] || 0) + 1
-        return acc
-      },
-      {}
-    )
+    const counts = results.reduce((acc: Record<string, number>, r: { action: string }) => {
+      acc[r.action] = (acc[r.action] || 0) + 1
+      return acc
+    }, {})
     console.log(
       'Monthly unclaimed bounty notifications processed:',
       results.length,

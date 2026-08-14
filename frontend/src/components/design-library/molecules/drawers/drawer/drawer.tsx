@@ -64,12 +64,7 @@ const Drawer = ({
         }
       }}
     >
-      <Box
-        display="flex"
-        flexDirection="column"
-        height="100%"
-        p={isCompact ? 0 : 2}
-      >
+      <Box display="flex" flexDirection="column" height="100%" p={isCompact ? 0 : 2}>
         <Box flexGrow={1} sx={{ overflowY: 'auto' }}>
           <Box
             sx={{
@@ -80,11 +75,7 @@ const Drawer = ({
             }}
           >
             <div>
-              <Typography
-                variant={isCompact ? 'h6' : 'h5'}
-                id="form-dialog-title"
-                gutterBottom
-              >
+              <Typography variant={isCompact ? 'h6' : 'h5'} id="form-dialog-title" gutterBottom>
                 {title}
               </Typography>
               {subtitle && (

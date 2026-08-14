@@ -26,9 +26,7 @@ export async function payoutRequest(params: PayoutRequestParams) {
     return { error: 'User not found' }
   }
 
-  const method =
-    params.method ||
-    (getDefaultPaymentProviderName() === 'whop' ? 'whop' : 'stripe')
+  const method = params.method || (getDefaultPaymentProviderName() === 'whop' ? 'whop' : 'stripe')
 
   const finalAmount = calculateAmountWithPercent(
     params.amount,

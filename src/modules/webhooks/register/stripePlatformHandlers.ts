@@ -7,10 +7,7 @@ import customerSourceCreated from '../customerSourceCreated'
 import chargeUpdated from '../chargeUpdated'
 import chargeFailed from '../chargeFailed'
 import { handleChargeRefunded } from '../charges/chargeRefunded/chargeRefunded'
-import {
-  chargeDisputeCreatedWebhookHandler,
-  chargeDisputeClosedWebhookHandler
-} from '../charges'
+import { chargeDisputeCreatedWebhookHandler, chargeDisputeClosedWebhookHandler } from '../charges'
 import invoiceCreated from '../invoiceCreated'
 import invoiceUpdated from '../invoiceUpdated'
 import invoicePaid from '../invoicePaid'
@@ -23,9 +20,7 @@ import invoicePaymentSucceeded from '../invoicePaymentSucceeded'
 import invoicePaymentFailed from '../invoicePaymentFailed'
 
 /** Legacy Stripe handlers that take (event, paid, status, req, res) */
-function withPaidStatus(
-  handler: (event: any, paid: any, status: any, req: any, res: any) => any
-) {
+function withPaidStatus(handler: (event: any, paid: any, status: any, req: any, res: any) => any) {
   return (ctx: WebhookHandlerContext) => {
     const event = ctx.rawEvent
     const paid = event?.data?.object?.paid || false
@@ -53,10 +48,7 @@ export function registerStripePlatformHandlers(
     .onRaw('charge.succeeded', withPaidStatus(chargeSucceeded))
     .onRaw('charge.failed', withPaidStatus(chargeFailed))
     .onRaw('charge.dispute.created', withEvent(chargeDisputeCreatedWebhookHandler))
-    .onRaw(
-      'charge.dispute.funds_withdrawn',
-      withEvent(chargeDisputeFundsWithdrawnWebhookHandler)
-    )
+    .onRaw('charge.dispute.funds_withdrawn', withEvent(chargeDisputeFundsWithdrawnWebhookHandler))
     .onRaw('charge.dispute.closed', withEvent(chargeDisputeClosedWebhookHandler))
     .onRaw('invoice.created', withEvent(invoiceCreated))
     .onRaw('invoice.updated', withEvent(invoiceUpdated))

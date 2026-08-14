@@ -223,7 +223,8 @@ export async function refundPaypalPayment({
       }
     })
   } catch (err: any) {
-    const parsed = tryParseJson(err?.error) ?? tryParseJson(err?.response?.body) ?? tryParseJson(err?.body)
+    const parsed =
+      tryParseJson(err?.error) ?? tryParseJson(err?.response?.body) ?? tryParseJson(err?.body)
     const detail = parsed?.details?.[0]
     const issue = detail?.issue
     // If already refunded, treat as idempotent.
@@ -318,7 +319,10 @@ export async function refundPaypalPayment({
       }
     }
   } catch (mailErr) {
-    console.error(`refundPaypalPayment: refund succeeded for order ${order.id} but mail failed:`, mailErr)
+    console.error(
+      `refundPaypalPayment: refund succeeded for order ${order.id} but mail failed:`,
+      mailErr
+    )
   }
 
   return orderData

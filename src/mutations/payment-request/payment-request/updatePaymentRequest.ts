@@ -66,13 +66,10 @@ export async function updatePaymentRequest(
           typeof paymentRequestParams.active === 'boolean'
             ? !!paymentRequestUpdated.active
             : undefined,
-        title:
-          paymentRequestParams.title !== undefined
-            ? paymentRequestUpdated.title
-            : undefined,
+        title: paymentRequestParams.title !== undefined ? paymentRequestUpdated.title : undefined,
         description:
           paymentRequestParams.description !== undefined
-            ? paymentRequestUpdated.description ?? null
+            ? (paymentRequestUpdated.description ?? null)
             : undefined
       })
     } catch (error) {

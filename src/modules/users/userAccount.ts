@@ -138,9 +138,7 @@ export async function userAccount(userParameters: UserAccountParams) {
     }
 
     const defaultCurrency =
-      company?.default_currency ||
-      company?.currency ||
-      currencyForCountry(country)
+      company?.default_currency || company?.currency || currencyForCountry(country)
 
     // Requirements checklist derived from the company + payout methods (no extra API calls).
     const requirementItems =

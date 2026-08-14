@@ -611,11 +611,7 @@ const BankAccount = ({
                           <Chip
                             avatar={
                               <Avatar>
-                                <img
-                                  width={72}
-                                  alt=""
-                                  src={getCountryFlagSrc(countryImage)}
-                                />
+                                <img width={72} alt="" src={getCountryFlagSrc(countryImage)} />
                               </Avatar>
                             }
                             label={countryLabel}

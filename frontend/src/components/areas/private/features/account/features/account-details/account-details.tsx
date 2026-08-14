@@ -167,9 +167,8 @@ const AccountDetails = ({
                             )}
                           />
                           <Typography component="span" style={{ marginLeft: 10 }}>
-                            {getSupportedCountryCodes().find(
-                              (c) => c.code === account.data.country
-                            )?.country || account.data.country}
+                            {getSupportedCountryCodes().find((c) => c.code === account.data.country)
+                              ?.country || account.data.country}
                           </Typography>
                         </div>
                       </Grid>

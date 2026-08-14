@@ -186,7 +186,11 @@ export class StripePaymentProvider implements PaymentProvider {
       }
       const product = lineItems.data[0]?.price?.product
       const productId =
-        typeof product === 'string' ? product : product && typeof product === 'object' ? product.id : null
+        typeof product === 'string'
+          ? product
+          : product && typeof product === 'object'
+            ? product.id
+            : null
       if (!productId) {
         throw new Error('Stripe Product not found for the Payment Link')
       }

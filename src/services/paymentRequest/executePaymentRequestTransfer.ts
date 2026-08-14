@@ -269,8 +269,7 @@ export async function executePaymentRequestTransfer(
     })
   }
 
-  const destination =
-    paymentProvider.name === 'whop' ? user?.whop_account_id : user?.account_id
+  const destination = paymentProvider.name === 'whop' ? user?.whop_account_id : user?.account_id
 
   if (!destination) {
     const field = paymentProvider.name === 'whop' ? 'whop_account_id' : 'account_id'

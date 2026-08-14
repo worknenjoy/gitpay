@@ -25,16 +25,7 @@ function resolveOrderFromCreateResult(result: any): any | null {
  * Creates an order (checkout_configuration) then redirects to Whop purchase_url.
  */
 const WhopCheckout = (props: any) => {
-  const {
-    task,
-    price,
-    formatedPrice,
-    user,
-    createOrder,
-    onClose,
-    addNotification,
-    plan
-  } = props
+  const { task, price, formatedPrice, user, createOrder, onClose, addNotification, plan } = props
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [session, setSession] = useState<{
@@ -86,7 +77,10 @@ const WhopCheckout = (props: any) => {
       })
 
       // Error action / failed create
-      if (result?.error || (result?.completed === true && !result?.data && result?.type?.includes('ERROR'))) {
+      if (
+        result?.error ||
+        (result?.completed === true && !result?.data && result?.type?.includes('ERROR'))
+      ) {
         const msg =
           result?.error?.message ||
           result?.error?.response?.data?.error ||

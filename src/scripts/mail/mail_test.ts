@@ -142,7 +142,8 @@ function buildSamples(moduleName: string, methodName: string): any[] {
         task,
         { ...order, provider: 'paypal', currency: 'usd', amount: 50 },
         {
-          reason: 'REFUND_TIME_LIMIT_EXCEEDED: The refund time limit for this capture has been exceeded.'
+          reason:
+            'REFUND_TIME_LIMIT_EXCEEDED: The refund time limit for this capture has been exceeded.'
         }
       ]
     }

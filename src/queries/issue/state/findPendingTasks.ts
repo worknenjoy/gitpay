@@ -25,20 +25,12 @@ const toPlain = (t: any) => {
  * Classify a pending task for list/refund scripts.
  * Stale + closed + funded unclaimed → refund path (no claim retries).
  */
-export const classifyPendingTaskAction = (
-  task: any,
-  fromUnclaimed: boolean
-): PendingTaskAction => {
+export const classifyPendingTaskAction = (task: any, fromUnclaimed: boolean): PendingTaskAction => {
   const staleAt = task.stale_at ?? task.staleAt ?? null
   const status = task.status
   const state = task.state
 
-  if (
-    fromUnclaimed &&
-    staleAt &&
-    status === IssueStatuses.CLOSED &&
-    state === TaskStates.FUNDED
-  ) {
+  if (fromUnclaimed && staleAt && status === IssueStatuses.CLOSED && state === TaskStates.FUNDED) {
     return 'stale_unclaimed_eligible_for_refund'
   }
 

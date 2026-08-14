@@ -24,10 +24,7 @@ type CreateUserAccountLinkParams = {
  */
 function getApiBaseUrlForAccountLinks(providerName: string): string {
   if (providerName === 'whop') {
-    return (
-      getWhopHttpsApiBaseUrl() ||
-      'https://localhost:3000'
-    )
+    return getWhopHttpsApiBaseUrl() || 'https://localhost:3000'
   }
 
   return (process.env.API_HOST || 'http://localhost:3000').replace(/\/$/, '')

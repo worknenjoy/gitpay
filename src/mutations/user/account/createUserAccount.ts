@@ -86,7 +86,8 @@ export async function createUserAccount(userParameters: UserAccountCreateParams)
         console.log('[createUserAccount][whop] using user email', {
           userId: user.dataValues.id,
           email,
-          source: user.dataValues.email === email ||
+          source:
+            user.dataValues.email === email ||
             String(user.dataValues.email || '')
               .trim()
               .toLowerCase() === email

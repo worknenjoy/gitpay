@@ -98,9 +98,7 @@ const DetailsSidePanel = ({
           <React.Fragment key={sectionIndex}>
             {sectionIndex > 0 && <Divider />}
             <Section>
-              {section.title && (
-                <SectionTitle variant="subtitle1">{section.title}</SectionTitle>
-              )}
+              {section.title && <SectionTitle variant="subtitle1">{section.title}</SectionTitle>}
               {section.items.length === 0 ? (
                 <Typography variant="body2" color="text.secondary">
                   —

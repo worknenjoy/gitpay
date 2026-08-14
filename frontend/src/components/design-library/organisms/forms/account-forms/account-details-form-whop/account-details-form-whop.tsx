@@ -78,10 +78,7 @@ const AccountDetailsFormWhop = ({
   const transfersStatus = capabilities?.transfers || (active ? 'active' : 'pending')
   // Currency comes from the user/account country — not Stripe Country Specs
   const currency =
-    data?.default_currency ||
-    data?.currency ||
-    countries?.data?.default_currency ||
-    'usd'
+    data?.default_currency || data?.currency || countries?.data?.default_currency || 'usd'
 
   return (
     <Box>

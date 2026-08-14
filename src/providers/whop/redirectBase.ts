@@ -19,10 +19,7 @@ export function getWhopHttpsApiBaseUrl(): string | null {
     // Only auto-upgrade hostnames that are already public (not localhost)
     if (trimmed.startsWith('http://')) {
       const withoutProto = trimmed.slice('http://'.length)
-      if (
-        withoutProto.startsWith('localhost') ||
-        withoutProto.startsWith('127.0.0.1')
-      ) {
+      if (withoutProto.startsWith('localhost') || withoutProto.startsWith('127.0.0.1')) {
         continue
       }
       return `https://${withoutProto}`

@@ -36,9 +36,7 @@ const Payouts = ({
   const history = useHistory()
   const { data: userData, completed: userCompleted } = user || {}
   const { data, completed } = balance || {}
-  const available = data?.available?.length
-    ? data.available
-    : [{ amount: 0, currency: 'usd' }]
+  const available = data?.available?.length ? data.available : [{ amount: 0, currency: 'usd' }]
   const { data: accountData, completed: accountCompleted } = account || {}
   const isWhop = paymentProvider() === 'whop' || accountData?.provider === 'whop'
   const payoutSchedule = accountData?.settings?.payouts?.schedule?.interval

@@ -378,7 +378,8 @@ const PaymentMail = {
     const paymentsUrl = `${process.env.FRONTEND_HOST}/#/profile/payments`
     const currency = String(order.currency || 'usd').toLowerCase()
     const symbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
-    const reason = (meta?.reason && String(meta.reason).trim()) || 'PayPal refund could not be completed'
+    const reason =
+      (meta?.reason && String(meta.reason).trim()) || 'PayPal refund could not be completed'
     const contactEmail = constants.notificationEmail
 
     try {

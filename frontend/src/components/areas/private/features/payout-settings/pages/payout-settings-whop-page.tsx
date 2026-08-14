@@ -80,7 +80,10 @@ const PayoutSettingsWhopPage = ({
             exact
             path={`${WHOP_BASE}/payout-method`}
             render={() => (
-              <WhopPayoutMethodPanel account={account} onManageOnWhop={handleVerification('payout')} />
+              <WhopPayoutMethodPanel
+                account={account}
+                onManageOnWhop={handleVerification('payout')}
+              />
             )}
           />
           <Route

@@ -32,9 +32,7 @@ type PaymentRequestPaymentDetailsActionProps = {
   completed?: boolean
 }
 
-const MISSING = (
-  <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
-)
+const MISSING = <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
 
 const formatMoney = (value: number, currencySymbol = '$') => {
   const abs = Math.abs(value)
@@ -147,9 +145,7 @@ const buildSections = (payment: PaymentRequestPayment | null): DetailsSection[] 
 
   if (fees != null && fees > 0) {
     breakdownItems.push({
-      label: (
-        <FormattedMessage id="paymentRequest.payment.details.fees" defaultMessage="Fees" />
-      ),
+      label: <FormattedMessage id="paymentRequest.payment.details.fees" defaultMessage="Fees" />,
       value: formatMoney(-fees, currencySymbol),
       variant: 'negative'
     })
@@ -173,11 +169,7 @@ const buildSections = (payment: PaymentRequestPayment | null): DetailsSection[] 
       label: (
         <FormattedMessage id="paymentRequest.payment.details.status" defaultMessage="Status" />
       ),
-      value: payment.status ? (
-        <PaymentStatus status={payment.status as any} />
-      ) : (
-        MISSING
-      )
+      value: payment.status ? <PaymentStatus status={payment.status as any} /> : MISSING
     },
     {
       label: (
@@ -190,19 +182,13 @@ const buildSections = (payment: PaymentRequestPayment | null): DetailsSection[] 
     },
     {
       label: (
-        <FormattedMessage
-          id="paymentRequest.payment.details.customer"
-          defaultMessage="Customer"
-        />
+        <FormattedMessage id="paymentRequest.payment.details.customer" defaultMessage="Customer" />
       ),
       value: payment.PaymentRequestCustomer?.email || MISSING
     },
     {
       label: (
-        <FormattedMessage
-          id="paymentRequest.payment.details.provider"
-          defaultMessage="Provider"
-        />
+        <FormattedMessage id="paymentRequest.payment.details.provider" defaultMessage="Provider" />
       ),
       value: payment.PaymentRequest?.provider || MISSING
     },

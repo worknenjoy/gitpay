@@ -16,9 +16,7 @@ function resolveModule(key: string): string {
 }
 
 const PLACEHOLDER_KEY = './default.png'
-const placeholderSrc = knownKeys.has(PLACEHOLDER_KEY)
-  ? resolveModule(PLACEHOLDER_KEY)
-  : ''
+const placeholderSrc = knownKeys.has(PLACEHOLDER_KEY) ? resolveModule(PLACEHOLDER_KEY) : ''
 
 /**
  * Returns a flag image URL for a slug (e.g. "brazil", "united-states-of-america").

@@ -73,7 +73,7 @@ export const STRIPE_SUPPORTED_COUNTRIES: SupportedCountry[] = [
   { country: 'United Arab Emirates', code: 'AE' },
   { country: 'United Kingdom', code: 'GB' },
   { country: 'United States', code: 'US' },
-  { country: 'Vietnam', code: 'VN' },
+  { country: 'Vietnam', code: 'VN' }
 ]
 
 /** Whop payout-supported countries (from Whop docs; excludes sanctioned regions). */
@@ -294,12 +294,10 @@ export const WHOP_SUPPORTED_COUNTRIES: SupportedCountry[] = [
   { country: 'Mayotte', code: 'YT' },
   { country: 'South Africa', code: 'ZA' },
   { country: 'Zambia', code: 'ZM' },
-  { country: 'Zimbabwe', code: 'ZW' },
+  { country: 'Zimbabwe', code: 'ZW' }
 ]
 
-export function getSupportedCountriesForProvider(
-  provider: string = 'stripe'
-): SupportedCountry[] {
+export function getSupportedCountriesForProvider(provider: string = 'stripe'): SupportedCountry[] {
   if (provider === 'whop') return [...WHOP_SUPPORTED_COUNTRIES]
   return [...STRIPE_SUPPORTED_COUNTRIES]
 }

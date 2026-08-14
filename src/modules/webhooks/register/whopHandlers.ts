@@ -142,9 +142,7 @@ async function handlePaymentSucceeded(ctx: WebhookHandlerContext) {
       return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
     }
     try {
-      const { markBountyOrderPaid } = await import(
-        '../../../services/orders/markBountyOrderPaid'
-      )
+      const { markBountyOrderPaid } = await import('../../../services/orders/markBountyOrderPaid')
       await markBountyOrderPaid({
         orderId: Number(orderId),
         paymentSourceId: payment.id,
@@ -232,8 +230,7 @@ async function handleMembershipActivated(ctx: WebhookHandlerContext) {
     resolveWhopResourceId(membership?.plan_id) ||
     resolveWhopResourceId(membership?.data?.plan)
   const productId =
-    resolveWhopResourceId(membership?.product) ||
-    resolveWhopResourceId(membership?.product_id)
+    resolveWhopResourceId(membership?.product) || resolveWhopResourceId(membership?.product_id)
 
   console.log('[whop] membership.activated/went_valid handler running', {
     id: membership?.id,
@@ -245,10 +242,9 @@ async function handleMembershipActivated(ctx: WebhookHandlerContext) {
   })
 
   if (!planId && !productId) {
-    console.warn(
-      '[whop] membership event: missing plan/product id — cannot match PaymentRequest',
-      { membershipId: membership?.id }
-    )
+    console.warn('[whop] membership event: missing plan/product id — cannot match PaymentRequest', {
+      membershipId: membership?.id
+    })
     return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
   }
 
@@ -351,9 +347,7 @@ async function handleInvoicePaid(ctx: WebhookHandlerContext) {
   })
   if (order) {
     try {
-      const { markBountyOrderPaid } = await import(
-        '../../../services/orders/markBountyOrderPaid'
-      )
+      const { markBountyOrderPaid } = await import('../../../services/orders/markBountyOrderPaid')
       await markBountyOrderPaid({
         orderId: order.id,
         paymentSourceId: invoiceId,

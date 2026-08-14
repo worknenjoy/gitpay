@@ -64,7 +64,10 @@ export async function refundWalletPayment({
       }
     }
   } catch (mailErr) {
-    console.error(`refundWalletPayment: refund succeeded for order ${order.id} but mail failed:`, mailErr)
+    console.error(
+      `refundWalletPayment: refund succeeded for order ${order.id} but mail failed:`,
+      mailErr
+    )
   }
 
   return orderData

@@ -134,7 +134,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
             <Checkboxes
               checkboxes={[
                 {
-                  label: (
+                  label:
                     process.env.PAYMENT_PROVIDER === 'whop' ? (
                       <FormattedMessage
                         id="PayoutRequest.form.confirm.whop"
@@ -145,8 +145,7 @@ const PayoutRequestForm = forwardRef<PayoutRequestFormHandle, PayoutRequestFormP
                         id="PayoutRequest.form.confirm"
                         defaultMessage="I agree to transfer the funds from your current balance to your registered bank account. The amount will be included in the next payout."
                       />
-                    )
-                  ),
+                    ),
                   name: 'custom_amount',
                   value: true,
                   onChange: onConfirmPayoutCheck

@@ -104,9 +104,7 @@ export async function processPendingPaymentRequestTransfers(
 
       if (transferResult.deferred) {
         result.deferred += 1
-        console.log(
-          `[payment-request-transfer-cron] payment ${payment.id} still pending funds`
-        )
+        console.log(`[payment-request-transfer-cron] payment ${payment.id} still pending funds`)
         continue
       }
 
@@ -170,10 +168,7 @@ export async function processPendingPaymentRequestTransfers(
       result.failed += 1
       const message = error?.message || String(error)
       result.errors.push({ paymentRequestPaymentId: payment.id, error: message })
-      console.error(
-        `[payment-request-transfer-cron] payment ${payment.id} failed:`,
-        message
-      )
+      console.error(`[payment-request-transfer-cron] payment ${payment.id} failed:`, message)
     }
   }
 

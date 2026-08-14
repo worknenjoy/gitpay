@@ -88,10 +88,7 @@ const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }
         }
       >
         <AlertTitle>
-          <FormattedMessage
-            id="profile.transfer.actionrequired"
-            defaultMessage="Action required"
-          />
+          <FormattedMessage id="profile.transfer.actionrequired" defaultMessage="Action required" />
         </AlertTitle>
         <Typography variant="body2" gutterBottom>
           <FormattedMessage

@@ -91,8 +91,7 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
     (orderParameters.provider === 'stripe' || orderParameters.provider === 'whop') &&
     orderParameters.source_type === 'invoice-item'
   ) {
-    const amountWithFee =
-      parseFloat(String(orderParameters.amount)) * (1 + (percentage || 0) / 100)
+    const amountWithFee = parseFloat(String(orderParameters.amount)) * (1 + (percentage || 0) / 100)
 
     if (orderParameters.provider === 'stripe' && !orderParameters.customer_id) {
       const newCustomer = await userCustomerCreate(orderUser.id, { email: orderUser.email })
@@ -170,8 +169,7 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
     }
 
     const bountyTitle =
-      (taskTitle && String(taskTitle).trim()) ||
-      `Gitpay bounty #${orderCreated.dataValues.id}`
+      (taskTitle && String(taskTitle).trim()) || `Gitpay bounty #${orderCreated.dataValues.id}`
     const bountyDescription = taskTitle
       ? `Bounty for: ${taskTitle}`
       : `Gitpay bounty order ${orderCreated.dataValues.id}`

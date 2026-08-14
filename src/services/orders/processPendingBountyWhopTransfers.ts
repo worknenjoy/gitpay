@@ -80,16 +80,13 @@ export async function processPendingBountyWhopTransfers(
 
       if (transferResult?.error) {
         result.skipped += 1
-        console.log(
-          `[bounty-whop-transfer] task ${task.id} skipped: ${transferResult.error}`
-        )
+        console.log(`[bounty-whop-transfer] task ${task.id} skipped: ${transferResult.error}`)
         continue
       }
 
       result.transferred += 1
       console.log(
-        `[bounty-whop-transfer] task ${task.id} transferred` +
-          (mockSettlement ? ' (mock)' : '')
+        `[bounty-whop-transfer] task ${task.id} transferred` + (mockSettlement ? ' (mock)' : '')
       )
     } catch (error: any) {
       result.failed += 1

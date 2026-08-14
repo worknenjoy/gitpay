@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { getWhopAccountStatus } from 'design-library/pages/private-pages/settings-pages/payout-settings-whop/getWhopAccountStatus'
 

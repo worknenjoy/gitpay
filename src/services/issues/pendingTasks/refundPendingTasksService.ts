@@ -54,9 +54,7 @@ export const FORCE_CLOSE_ORDER_STATUS = 'closed'
 
 /** Order comment: bounty closed; funds kept by the platform (not refunded). */
 export function buildForceCloseOrderComment(): string {
-  return (
-    `closed [${new Date().toISOString()}]: amount retained by platform — ${FORCE_CLOSE_COMMENT}`
-  )
+  return `closed [${new Date().toISOString()}]: amount retained by platform — ${FORCE_CLOSE_COMMENT}`
 }
 
 /** Best-effort extraction of a readable refund failure reason (esp. PayPal API bodies). */
@@ -308,11 +306,8 @@ export async function refundPendingTasksService(
         // PayPal-only: notify payer that auto-refund failed and they need a manual refund.
         if (provider === 'paypal') {
           try {
-            const userId =
-              order.userId ?? order.get?.('userId') ?? order.dataValues?.userId ?? null
-            const user =
-              order.User ||
-              (userId != null ? await models.User.findByPk(userId) : null)
+            const userId = order.userId ?? order.get?.('userId') ?? order.dataValues?.userId ?? null
+            const user = order.User || (userId != null ? await models.User.findByPk(userId) : null)
             const taskForMail =
               order.Task ||
               task ||

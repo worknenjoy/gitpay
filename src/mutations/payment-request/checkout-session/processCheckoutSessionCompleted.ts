@@ -99,10 +99,7 @@ async function maybeUpgradePaymentSourceAndAmount(
     Number(session.amount_after_fees) >= 0
   ) {
     const net = Number(session.amount_after_fees)
-    if (
-      payment.amount_after_fees == null ||
-      Number(payment.amount_after_fees) !== net
-    ) {
+    if (payment.amount_after_fees == null || Number(payment.amount_after_fees) !== net) {
       updates.amount_after_fees = net
     }
   }
@@ -349,14 +346,11 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
     } catch (transferError: any) {
       // Payment is saved; rethrow for Stripe. For Whop, executePaymentRequestTransfer
       // should already have deferred — if something still throws, surface it.
-      console.error(
-        '[processCheckoutSessionCompleted] transfer failed after payment saved',
-        {
-          paymentRequestPaymentId: paymentRequestPayment.id,
-          provider: paymentProvider.name,
-          error: transferError?.message || transferError
-        }
-      )
+      console.error('[processCheckoutSessionCompleted] transfer failed after payment saved', {
+        paymentRequestPaymentId: paymentRequestPayment.id,
+        provider: paymentProvider.name,
+        error: transferError?.message || transferError
+      })
       throw transferError
     }
   } catch (error) {

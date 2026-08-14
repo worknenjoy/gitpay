@@ -83,13 +83,7 @@ export class WhopPaymentProvider implements PaymentProvider {
       metadata.task_id = String(rawMeta.task_id)
     }
 
-    const productTitle = (
-      params.title ||
-      params.description ||
-      'Gitpay bounty'
-    )
-      .trim()
-      .slice(0, 80)
+    const productTitle = (params.title || params.description || 'Gitpay bounty').trim().slice(0, 80)
 
     const product = await this.client.post<any>('/products', {
       title: productTitle,
@@ -306,10 +300,7 @@ export class WhopPaymentProvider implements PaymentProvider {
       // Whop refund amount is in major currency units
       body.amount = params.amountCents / 100
     }
-    const refund = await this.client.post<any>(
-      `/payments/${params.paymentReference}/refund`,
-      body
-    )
+    const refund = await this.client.post<any>(`/payments/${params.paymentReference}/refund`, body)
     // SDK uses POST /payments/{id}/refund - check path
     return {
       refundId: refund.id || refund.refund_id || params.paymentReference,
@@ -499,9 +490,7 @@ export class WhopPaymentProvider implements PaymentProvider {
   async createConnectedAccount(params: ConnectedAccountParams): Promise<AccountResult> {
     const email = params.email != null ? String(params.email).trim().toLowerCase() : ''
     if (!email || !email.includes('@')) {
-      const err: any = new Error(
-        'Whop connected account requires a valid user email (Users.email)'
-      )
+      const err: any = new Error('Whop connected account requires a valid user email (Users.email)')
       err.status = 422
       throw err
     }
@@ -546,10 +535,7 @@ export class WhopPaymentProvider implements PaymentProvider {
     } catch (error: any) {
       const message = String(error?.message || '')
       // Whop validates deliverability (MX / "real" mailbox), not only format.
-      if (
-        message.toLowerCase().includes('email') ||
-        message.toLowerCase().includes('mail')
-      ) {
+      if (message.toLowerCase().includes('email') || message.toLowerCase().includes('mail')) {
         const err: any = new Error(
           [
             `Whop rejected email "${email}" when creating the connected company.`,
@@ -584,10 +570,7 @@ export class WhopPaymentProvider implements PaymentProvider {
       const message = String(error?.message || '')
       // Whop often returns this when the key is an App key, not a Company/Account key,
       // or when the key belongs to a different company than WHOP_COMPANY_ID / the sub-merchant parent.
-      if (
-        message.includes('company:balance:read') ||
-        message.includes('not authorized to scope')
-      ) {
+      if (message.includes('company:balance:read') || message.includes('not authorized to scope')) {
         const err: any = new Error(
           [
             error.message,

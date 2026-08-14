@@ -27,10 +27,7 @@ function isStaleByUpdatedAt(updatedAt: Date, now: moment.Moment): boolean {
   return moment(updatedAt).isBefore(now.clone().subtract(STALE_UPDATED_MONTHS, 'months'))
 }
 
-function resolveStaleReason(
-  byCreated: boolean,
-  byUpdated: boolean
-): StaleReason | null {
+function resolveStaleReason(byCreated: boolean, byUpdated: boolean): StaleReason | null {
   if (byCreated && byUpdated) return 'created_at+updated_at'
   if (byCreated) return 'created_at'
   if (byUpdated) return 'updated_at'

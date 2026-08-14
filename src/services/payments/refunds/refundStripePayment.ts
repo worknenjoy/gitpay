@@ -51,10 +51,8 @@ export async function refundStripePayment({
 
   // Resolve sponsor before update — order.userId is the source of truth (association can be null
   // if the User row was deleted or the join did not load).
-  const userId =
-    order.get?.('userId') ?? order.userId ?? order.dataValues?.userId ?? null
-  const taskId =
-    order.get?.('TaskId') ?? order.TaskId ?? order.dataValues?.TaskId ?? null
+  const userId = order.get?.('userId') ?? order.userId ?? order.dataValues?.userId ?? null
+  const taskId = order.get?.('TaskId') ?? order.TaskId ?? order.dataValues?.TaskId ?? null
 
   const updateResult = await updateOrderAsRefunded({ id: order.id }, { refund_id: refund.refundId })
 
@@ -63,10 +61,8 @@ export async function refundStripePayment({
   // Mail must not fail the refund: Stripe + order are already updated.
   try {
     // Always re-fetch by PK — do not rely only on order.User (LEFT JOIN can be null with orphan FK)
-    const user =
-      (userId != null ? await models.User.findByPk(userId) : null) || order.User || null
-    const task =
-      (taskId != null ? await models.Task.findByPk(taskId) : null) || order.Task || null
+    const user = (userId != null ? await models.User.findByPk(userId) : null) || order.User || null
+    const task = (taskId != null ? await models.Task.findByPk(taskId) : null) || order.Task || null
 
     if (!user) {
       console.warn(

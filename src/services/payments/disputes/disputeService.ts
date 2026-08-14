@@ -232,7 +232,9 @@ export const closeDisputeForPaymentRequest = async ({
         ]
       })
 
-      console.log(`Created PaymentRequestBalanceTransaction CREDIT for Dispute source: ${source_id}`)
+      console.log(
+        `Created PaymentRequestBalanceTransaction CREDIT for Dispute source: ${source_id}`
+      )
     }
   }
 
