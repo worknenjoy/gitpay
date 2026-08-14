@@ -139,11 +139,11 @@ For more information related to database seeding please refer: https://en.wikipe
 
 To seed the database
 
-`npm run seed`
+`npm run seed:dev`
 
 For test environment
 
-`npm run seed-test`
+`npm run seed:test:dev`
 
 _For exhaustive list of options available, refer `migration.js` in root directory_
 
