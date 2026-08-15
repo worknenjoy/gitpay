@@ -231,6 +231,44 @@ describe('User Account (Whop)', () => {
     })
   })
 
+  it('never trusts GET /accounts/{id} (beta) for country — it can reflect another account entirely', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST).get('/api/v1/companies/biz_user_whop_8').reply(200, {
+        ...whopCompany,
+        id: 'biz_user_whop_8',
+        country: 'br'
+      })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/accounts/biz_user_whop_8')
+        // No `owner` here, so the identity-profile lookup (the reliable source) can't
+        // resolve — forcing the fallback chain to skip straight past this beta payload.
+        // Its `country` stands in for a value leaked from an unrelated account/the
+        // platform default, and must never win over /companies' own country.
+        .reply(200, { id: 'biz_user_whop_8', country: 'bj' })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_user_whop_8')
+        .reply(200, { id: 'ldgr_test_8', balances: [] })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/payout_methods')
+        .query({ company_id: 'biz_user_whop_8' })
+        .reply(200, { data: [] })
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_user_whop_8' },
+        { where: { id: user.body.id } }
+      )
+
+      const res = await agent
+        .get('/user/account')
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+
+      expect(res.body.country).to.equal('BR')
+    })
+  })
+
   it('should be active when Whop capabilities.standard_payout is active even if company.verified is not yet true', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()

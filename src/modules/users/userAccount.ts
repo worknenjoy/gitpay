@@ -44,10 +44,14 @@ export async function userAccount(userParameters: UserAccountParams) {
       console.warn('[whop] retrieve company for user account failed', error)
     }
 
-    // GET /accounts/{id} (Whop's newer Account resource) exposes fields the legacy
-    // /companies/{id} endpoint doesn't — notably `country` and `business_address`.
-    // Best-effort: if this call fails (e.g. older API key without access), fall back
-    // to what /companies has.
+    // GET /accounts/{id} (Whop's newer, beta Account resource), queried with this user's
+    // own whopAccountId. Used below for owner.id (to scope the identity-profile lookup)
+    // and capabilities.standard_payout — NOT for country/business_address: confirmed those
+    // fields on this beta endpoint don't reliably scope to the specific sub-merchant (one
+    // observed case returned "us", the platform's own country, for a sub-merchant whose
+    // real KYC address was Denmark; another case leaked a completely unrelated account's
+    // country after that account onboarded). Best-effort: if this call fails (e.g. older
+    // API key without access), the code below still has /companies and Users.country.
     let whopAccount: any = null
     try {
       whopAccount = await getWhopClient().get<any>(`/accounts/${whopAccountId}`)
@@ -56,12 +60,8 @@ export async function userAccount(userParameters: UserAccountParams) {
       console.warn('[whop] retrieve account (beta) for user account failed', error)
     }
 
-    // Account.country above reflects the platform/business default, NOT necessarily the
-    // country the individual actually verified with on Whop (confirmed: a sub-merchant's
-    // Account.country came back "us" — the platform's own country — while the owner's
-    // real, most-recently-completed KYC address was Denmark). The individual's true
-    // verified country lives on their identity profile instead. Best-effort: not every
-    // account has one, or the owner id may not resolve.
+    // The individual's true verified country lives on their identity profile. Best-effort:
+    // not every account has one, or the owner id may not resolve.
     let latestIdentityProfile: any = null
     try {
       const ownerId = whopAccount?.owner?.id || company?.owner_user?.id
@@ -117,8 +117,6 @@ export async function userAccount(userParameters: UserAccountParams) {
       latestIdentityProfile?.country ||
       latestIdentityProfile?.personal_address?.country ||
       latestIdentityProfile?.business_address?.country ||
-      whopAccount?.country ||
-      whopAccount?.business_address?.country ||
       company?.country ||
       company?.business_address?.country ||
       user?.dataValues?.country ||
