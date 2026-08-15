@@ -8,10 +8,12 @@ export type WhopAccountTabsProps = {
 
 /**
  * Vertical Whop payout sub-navigation: Identity & business · Payout method ·
- * Payout schedule & balances · Disputes / refunds.
+ * Payout schedule & balances.
  *
  * "Requirements & compliance" was removed (temporarily) — its checklist was derived
  * from a Whop field that turned out to mean something else; see getWhopAccountStatus.ts.
+ *
+ * "Disputes / refunds" was removed — not part of the supported Whop payout flow.
  */
 const WhopAccountTabs = ({ children }: WhopAccountTabsProps) => {
   const tabs = [
@@ -44,16 +46,6 @@ const WhopAccountTabs = ({ children }: WhopAccountTabsProps) => {
       ),
       value: 'schedule-balances',
       link: '/profile/payout-settings/whop/schedule-balances'
-    },
-    {
-      label: (
-        <FormattedMessage
-          id="payout-settings.whop.tabs.disputes"
-          defaultMessage="Disputes / refunds"
-        />
-      ),
-      value: 'disputes',
-      link: '/profile/payout-settings/whop/disputes'
     }
   ]
 

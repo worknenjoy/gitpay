@@ -231,6 +231,141 @@ describe('User Account (Whop)', () => {
     })
   })
 
+  it('should be active when Whop capabilities.standard_payout is active even if company.verified is not yet true', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST)
+        .get('/api/v1/companies/biz_user_whop_5')
+        .reply(200, { ...whopCompany, id: 'biz_user_whop_5', verified: false })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/accounts/biz_user_whop_5')
+        .reply(200, {
+          id: 'biz_user_whop_5',
+          country: 'us',
+          capabilities: { standard_payout: 'active' }
+        })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_user_whop_5')
+        .reply(200, { id: 'ldgr_test_5', balances: [] })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/payout_methods')
+        .query({ company_id: 'biz_user_whop_5' })
+        .reply(200, {
+          data: [
+            {
+              id: 'potk_test_5',
+              nickname: 'Ops checking',
+              institution_name: 'Test Bank',
+              account_reference: '****4242',
+              currency: 'usd',
+              is_default: true,
+              destination: { category: 'next_day_bank', name: 'Test Bank', country_code: 'US' }
+            }
+          ]
+        })
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_user_whop_5' },
+        { where: { id: user.body.id } }
+      )
+
+      const res = await agent
+        .get('/user/account')
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+
+      expect(res.body.active).to.equal(true)
+      expect(res.body.payouts_enabled).to.equal(true)
+    })
+  })
+
+  it('should stay pending when KYC/capability is active but no payout method has been added yet', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST)
+        .get('/api/v1/companies/biz_user_whop_6')
+        .reply(200, { ...whopCompany, id: 'biz_user_whop_6', verified: true })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/accounts/biz_user_whop_6')
+        .reply(200, {
+          id: 'biz_user_whop_6',
+          country: 'us',
+          capabilities: { standard_payout: 'active' }
+        })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_user_whop_6')
+        .reply(200, { id: 'ldgr_test_6', balances: [] })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/payout_methods')
+        .query({ company_id: 'biz_user_whop_6' })
+        .reply(200, { data: [] })
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_user_whop_6' },
+        { where: { id: user.body.id } }
+      )
+
+      const res = await agent
+        .get('/user/account')
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+
+      expect(res.body.active).to.equal(false)
+      expect(res.body.payouts_enabled).to.equal(false)
+    })
+  })
+
+  it('should stay pending when Whop capabilities.standard_payout is pending, even with a payout method on file', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST)
+        .get('/api/v1/companies/biz_user_whop_7')
+        .reply(200, { ...whopCompany, id: 'biz_user_whop_7', verified: true })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/accounts/biz_user_whop_7')
+        .reply(200, {
+          id: 'biz_user_whop_7',
+          country: 'us',
+          capabilities: { standard_payout: 'pending' }
+        })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_user_whop_7')
+        .reply(200, { id: 'ldgr_test_7', balances: [] })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/payout_methods')
+        .query({ company_id: 'biz_user_whop_7' })
+        .reply(200, {
+          data: [
+            {
+              id: 'potk_test_7',
+              nickname: 'Ops checking',
+              institution_name: 'Test Bank',
+              account_reference: '****4242',
+              currency: 'usd',
+              is_default: true,
+              destination: { category: 'next_day_bank', name: 'Test Bank', country_code: 'US' }
+            }
+          ]
+        })
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_user_whop_7' },
+        { where: { id: user.body.id } }
+      )
+
+      const res = await agent
+        .get('/user/account')
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+
+      expect(res.body.active).to.equal(false)
+      expect(res.body.payouts_enabled).to.equal(false)
+    })
+  })
+
   describe('verification link provider routing', () => {
     it('generates a Whop account link (not Stripe) when provider=whop even if a legacy Stripe account exists', async () => {
       const previousApiHost = process.env.WHOP_API_HOST

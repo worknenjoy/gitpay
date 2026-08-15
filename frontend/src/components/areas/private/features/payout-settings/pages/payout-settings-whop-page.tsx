@@ -4,7 +4,6 @@ import PayoutSettingsWhop from 'design-library/pages/private-pages/settings-page
 import WhopIdentityPanel from 'design-library/molecules/sections/whop-identity-panel/whop-identity-panel'
 import WhopPayoutMethodPanel from 'design-library/molecules/sections/whop-payout-method-panel/whop-payout-method-panel'
 import WhopScheduleBalancesPanel from 'design-library/molecules/sections/whop-schedule-balances-panel/whop-schedule-balances-panel'
-import WhopDisputesPanel from 'design-library/molecules/sections/whop-disputes-panel/whop-disputes-panel'
 import WhopAccountVerificationReturnPage from './payout-settings-whop-verification-return-page'
 
 const WHOP_BASE = '/profile/payout-settings/whop'
@@ -95,11 +94,6 @@ const PayoutSettingsWhopPage = ({
                 onManageOnWhop={handleVerification('payout')}
               />
             )}
-          />
-          <Route
-            exact
-            path={`${WHOP_BASE}/disputes`}
-            render={() => <WhopDisputesPanel account={account} />}
           />
           <Route
             exact

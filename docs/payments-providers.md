@@ -172,7 +172,7 @@ With Stripe (default), existing Connect custom account flow is unchanged (`Users
 | Provider | Active when |
 |----------|-------------|
 | **Stripe** | Account has an `id`, is not rejected, and has no `requirements.currently_due` |
-| **Whop** | Account has a connected company `id` (`Users.whop_account_id`) |
+| **Whop** | Account has a connected company `id`, Whop's own `GET /accounts/{id}` `capabilities.standard_payout` is `active` (or, if that capability is unavailable — older API key without `company:balance:read`, or the lookup failed — falls back to `company.verified === true`, a Whop trust & safety review flag used only as a last resort), **and** the account has at least one payout method on file. Both the KYC/capability signal and the payout method are required — `capabilities.standard_payout` reflects payout-rail eligibility, not whether a payout destination has actually been linked. |
 
 The frontend gates payment-request creation and the “Action required” banner via `validAccount()`, which prefers this `active` flag (no provider-specific branches).
 

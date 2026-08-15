@@ -657,14 +657,13 @@ export class WhopPaymentProvider implements PaymentProvider {
   }
 
   /**
-   * Whop KYC and payout methods are managed on the Whop portal.
-   * Active means a connected company exists and is not explicitly unverified.
-   * Defensive: an unknown (null) verified flag does not lock existing users out.
+   * Whop KYC and payout methods are managed on the Whop portal. `payouts_enabled` (set in
+   * userAccount.ts) already combines Whop's payout-capability/verified signal with an
+   * explicit check that a payout method has been linked — both are required for "active".
    */
   isConnectedAccountActive(account: ConnectedAccountActiveParams | null | undefined): boolean {
     if (!account?.id) return false
-    if ((account as any)?.verified === false) return false
-    return true
+    return Boolean((account as any)?.payouts_enabled)
   }
 
   async verifyAndParseWebhook(

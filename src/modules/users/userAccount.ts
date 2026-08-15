@@ -140,6 +140,20 @@ export async function userAccount(userParameters: UserAccountParams) {
     const defaultCurrency =
       company?.default_currency || company?.currency || currencyForCountry(country)
 
+    const verified = company?.verified ?? null
+
+    const hasPayoutMethod = Array.isArray(payoutMethods) && payoutMethods.length > 0
+
+    // Whop's own computed payout-rail eligibility (from GET /accounts/{id}, requires
+    // company:balance:read scope — same scope getCompanyLedgerBalances already relies on).
+    // Reflects KYC/identity readiness for payouts, but NOT whether a payout destination has
+    // actually been linked — confirmed by real accounts showing 'active' here with zero
+    // payout methods on file. So this only replaces the identity/KYC half of "ready";
+    // payout method presence is always checked separately, via hasPayoutMethod above.
+    const payoutCapability: 'active' | 'inactive' | 'pending' | null =
+      whopAccount?.capabilities?.standard_payout ?? null
+    const kycReady = payoutCapability != null ? payoutCapability === 'active' : verified === true
+
     // Requirements checklist derived from the company + payout methods (no extra API calls).
     const requirementItems =
       typeof whop.buildRequirements === 'function'
@@ -148,8 +162,8 @@ export async function userAccount(userParameters: UserAccountParams) {
     const currentlyDue = requirementItems
       .filter((item) => item.status === 'required')
       .map((item) => item.key)
-    const requirementsMet = currentlyDue.length === 0
-    const verified = company?.verified ?? null
+
+    const requirementsMet = kycReady && hasPayoutMethod
     const identityCheck =
       verified === true ? 'verified' : verified === false ? 'unverified' : 'pending'
     const defaultPayoutMethod =
@@ -165,6 +179,9 @@ export async function userAccount(userParameters: UserAccountParams) {
       currency: defaultCurrency,
       title: company?.title || company?.name || null,
       verified,
+      // Raw Whop-computed payout-rail eligibility signal, exposed for debugging; the
+      // active/pending determination lives in payouts_enabled (see kycReady above).
+      payoutCapability,
       route: company?.route || null,
       url: company?.url || company?.hub_url || null,
       created_at: company?.created_at || null,
