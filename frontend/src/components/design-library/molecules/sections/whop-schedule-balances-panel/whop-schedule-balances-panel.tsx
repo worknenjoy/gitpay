@@ -43,11 +43,14 @@ const WhopScheduleBalancesPanel = ({ account, onManageOnWhop }: WhopScheduleBala
   const { data = {}, completed = true } = account || {}
   const method = getWhopPayoutMethod(data)
   const schedule = normalizeWhopSchedule(data)
-  const currency = (data.currency || data.default_currency || 'usd').toUpperCase()
+  const currency = (
+    method?.currency ||
+    data.currency ||
+    data.default_currency ||
+    'usd'
+  ).toUpperCase()
   const methodLabel = method?.label || method?.type || 'Whop payout method'
-  const methodMeta = [method?.last4 ? `•••• ${method.last4}` : null, method?.currency || null]
-    .filter(Boolean)
-    .join(' · ')
+  const methodMeta = [method?.last4 ? `•••• ${method.last4}` : null].filter(Boolean).join(' · ')
 
   return (
     <Box>

@@ -20,3 +20,16 @@ export const Default = {
 export const Loading = {
   args: { account: { completed: false, data: {} } }
 }
+
+export const WithPayoutMethod = {
+  args: {
+    account: {
+      completed: true,
+      data: {
+        currency: 'usd',
+        balances: { available: 120, pending: 30, reserve: 0 },
+        payout_methods: [{ id: 'potk_1', label: 'Pix Itaú', currency: 'brl', default: true }]
+      }
+    }
+  }
+}
