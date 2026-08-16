@@ -14,17 +14,6 @@ export type WhopIdentityPanelProps = {
   lastSyncedLabel?: React.ReactNode
 }
 
-const identityCheckChip = (status?: string | null) => {
-  switch (status) {
-    case 'verified':
-      return { label: 'VERIFIED', color: 'success' as const }
-    case 'unverified':
-      return { label: 'UNVERIFIED', color: 'warning' as const }
-    default:
-      return { label: 'PENDING', color: 'default' as const }
-  }
-}
-
 /**
  * "Identity & business" read-only panel. Whop verifies documents; Gitpay reads the
  * result. Composes DetailList + DetailRow — not a form.
@@ -38,7 +27,6 @@ const WhopIdentityPanel = ({
 }: WhopIdentityPanelProps) => {
   const { data = {}, completed = true } = account || {}
   const identity = data.identity || {}
-  const check = identityCheckChip(identity.identityCheck)
 
   return (
     <DetailList
@@ -67,11 +55,6 @@ const WhopIdentityPanel = ({
               onClick: onManageOnWhop
             }
           : undefined
-      }
-      footnote={
-        lastSyncedLabel || (
-          <FormattedMessage id="payout-settings.whop.managed" defaultMessage="Managed on Whop" />
-        )
       }
     >
       <CountryCurrencyForm
