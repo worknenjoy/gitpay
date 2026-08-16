@@ -38,8 +38,6 @@ const PayoutSettingsWhop = ({
   const { completed = true } = account || {}
   const { status } = getWhopAccountStatus(account)
 
-  const buttonStyles = { style: { marginTop: 16 } }
-
   return (
     <Box>
       <ProfileSecondaryHeader
@@ -61,8 +59,6 @@ const PayoutSettingsWhop = ({
           severity="error"
           action={
             <Button
-              {...buttonStyles}
-              style={{ marginTop: 8 }}
               completed={completed}
               onClick={onManageOnWhop}
               variant="outlined"
@@ -95,7 +91,6 @@ const PayoutSettingsWhop = ({
           severity="success"
           action={
             <Button
-              {...buttonStyles}
               completed={completed}
               onClick={onManageOnWhop}
               variant="outlined"
@@ -130,7 +125,6 @@ const PayoutSettingsWhop = ({
           severity="warning"
           action={
             <Button
-              {...buttonStyles}
               completed={completed}
               onClick={onManageOnWhop}
               variant="outlined"

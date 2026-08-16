@@ -27,6 +27,9 @@ const variantStyles = (palette) => ({
 export const CustomAlertStyled = styled(Alert)(({ theme }) => ({
   borderRadius: theme.shape.borderRadius,
   color: theme.palette.text.primary,
+  display: 'flex',
+  alignItems: 'center',
+  gap: theme.spacing(1.5),
   '& .MuiAlertTitle-root': {
     fontWeight: 600,
     color: theme.palette.text.primary
