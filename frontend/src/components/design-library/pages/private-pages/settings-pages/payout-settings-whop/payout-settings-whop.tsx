@@ -38,7 +38,7 @@ const PayoutSettingsWhop = ({
   const { completed = true } = account || {}
   const { status } = getWhopAccountStatus(account)
 
-  const buttonStyles = { style: { marginTop: 16 }}
+  const buttonStyles = { style: { marginTop: 16 } }
 
   return (
     <Box>
