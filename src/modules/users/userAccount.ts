@@ -55,6 +55,7 @@ export async function userAccount(userParameters: UserAccountParams) {
     let whopAccount: any = null
     try {
       whopAccount = await getWhopClient().get<any>(`/accounts/${whopAccountId}`)
+      console.log('[whop] retrieve account (beta) for user account', whopAccount)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.warn('[whop] retrieve account (beta) for user account failed', error)
@@ -109,13 +110,7 @@ export async function userAccount(userParameters: UserAccountParams) {
       console.warn('[whop] disputes for connected company failed', error)
     }
 
-    const liveCountryCandidate =
-      latestIdentityProfile?.country ||
-      latestIdentityProfile?.personal_address?.country ||
-      latestIdentityProfile?.business_address?.country ||
-      company?.country ||
-      company?.business_address?.country ||
-      null
+    const liveCountryCandidate = whopAccount?.country || company?.country || null
 
     const country = normalizeCountryCode(liveCountryCandidate) || liveCountryCandidate || null
 

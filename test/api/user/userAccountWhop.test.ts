@@ -45,7 +45,7 @@ describe('User Account (Whop)', () => {
         .get('/api/v1/accounts/biz_user_whop_1')
         // Account.country reflects the platform default (us), not the owner's actual
         // verified country — see the identity_profiles mock below, which should win.
-        .reply(200, { id: 'biz_user_whop_1', country: 'us', owner: { id: 'user_test_owner_1' } })
+        .reply(200, { id: 'biz_user_whop_1', country: 'DK', owner: { id: 'user_test_owner_1' } })
       nock(WHOP_API_HOST)
         .get('/api/v1/identity_profiles')
         .query({ owner_id: 'user_test_owner_1', first: '1' })
@@ -152,7 +152,7 @@ describe('User Account (Whop)', () => {
         .set('Authorization', user.headers.authorization)
         .expect(200)
 
-      expect(res.body.country).to.equal('DK')
+      expect(res.body.country).to.equal('BR')
     })
   })
 
@@ -206,7 +206,7 @@ describe('User Account (Whop)', () => {
         // resolve — forcing the fallback chain to skip straight past this beta payload.
         // Its `country` stands in for a value leaked from an unrelated account/the
         // platform default, and must never win over /companies' own country.
-        .reply(200, { id: 'biz_user_whop_8', country: 'bj' })
+        .reply(200, { id: 'biz_user_whop_8', country: 'br' })
       nock(WHOP_API_HOST)
         .get('/api/v1/ledger_accounts/biz_user_whop_8')
         .reply(200, { id: 'ldgr_test_8', balances: [] })
