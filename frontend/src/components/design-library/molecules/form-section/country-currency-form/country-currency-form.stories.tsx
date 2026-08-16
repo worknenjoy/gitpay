@@ -43,3 +43,10 @@ WhopDerivedCurrency.args = {
     }
   }
 }
+
+// Whop shows currency on the Payout Method panel instead, so the identity panel only needs Country.
+export const CountryOnly = Template.bind({})
+CountryOnly.args = {
+  country: 'US',
+  excludeCurrency: true
+}

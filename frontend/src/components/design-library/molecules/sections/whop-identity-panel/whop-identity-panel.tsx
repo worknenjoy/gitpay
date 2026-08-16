@@ -77,8 +77,8 @@ const WhopIdentityPanel = ({
       <CountryCurrencyForm
         country={data.country}
         countries={countries}
-        currency={countries?.data?.default_currency}
         completed={completed}
+        excludeCurrency
       />
       <DetailRow
         completed={completed}
@@ -89,6 +89,11 @@ const WhopIdentityPanel = ({
           />
         }
         value={identity.legalName || data.title || user?.name}
+      />
+      <DetailRow
+        completed={completed}
+        label={<FormattedMessage id="payout-settings.whop.identity.email" defaultMessage="Email" />}
+        value={data.email || user?.email}
       />
       <DetailRow
         completed={completed}
@@ -110,29 +115,6 @@ const WhopIdentityPanel = ({
         }
         value={data.title}
         hint={data.id}
-      />
-      <DetailRow
-        completed={completed}
-        label={<FormattedMessage id="payout-settings.whop.identity.email" defaultMessage="Email" />}
-        value={data.email || user?.email}
-      />
-      <DetailRow
-        completed={completed}
-        label={
-          <FormattedMessage
-            id="payout-settings.whop.identity.identityCheck"
-            defaultMessage="Identity check"
-          />
-        }
-        status={check.label}
-        statusColor={check.color}
-      />
-      <DetailRow
-        completed={completed}
-        label={
-          <FormattedMessage id="payout-settings.whop.identity.taxForm" defaultMessage="Tax form" />
-        }
-        value={identity.taxForm}
       />
     </DetailList>
   )

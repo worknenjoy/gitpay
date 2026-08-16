@@ -17,7 +17,7 @@ type StatusStyle = { color: string; bg: string; label: React.ReactNode }
 const buildConfig = (theme: any): Record<PayoutAccountStatusValue, StatusStyle> => ({
   active: {
     color: theme.palette.success.dark,
-    bg: theme.palette.success.light,
+    bg: alpha(theme.palette.success.light, 0.15),
     label: (
       <FormattedMessage id="payout-settings.status.payoutsActive" defaultMessage="PAYOUTS ACTIVE" />
     )
@@ -40,7 +40,7 @@ const buildConfig = (theme: any): Record<PayoutAccountStatusValue, StatusStyle> 
   },
   rejected: {
     color: theme.palette.error.dark,
-    bg: theme.palette.error.light,
+    bg: alpha(theme.palette.error.light, 0.15),
     label: <FormattedMessage id="payout-settings.status.rejected" defaultMessage="REJECTED" />
   }
 })
