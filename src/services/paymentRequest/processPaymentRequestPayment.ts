@@ -33,7 +33,8 @@ async function sendTransferEmails(result: any): Promise<void> {
                 result.currency
               ).decimal
             }
-          : null
+          : null,
+        paymentRequestPayment
       )
     } catch (error) {
       console.error('Error sending transfer initiated email:', error)

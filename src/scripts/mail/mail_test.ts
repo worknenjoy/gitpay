@@ -193,7 +193,14 @@ function buildSamples(moduleName: string, methodName: string): any[] {
       }
     }
     if (/transferInitiated/i.test(methodName)) {
-      return [user, paymentRequest, 100, 92]
+      return [
+        user,
+        { ...paymentRequest, provider: 'whop' },
+        92,
+        84.64,
+        null,
+        { amount: 100, amount_after_fees: 92 }
+      ]
     }
     if (/paymentMadeForPaymentRequest/i.test(methodName)) {
       return [user, paymentRequestPayment]

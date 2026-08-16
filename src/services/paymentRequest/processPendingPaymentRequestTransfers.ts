@@ -135,7 +135,8 @@ export async function processPendingPaymentRequestTransfers(
                     transferResult.currency
                   ).decimal
                 }
-              : null
+              : null,
+            transferResult.paymentRequestPayment
           )
         } catch (mailError) {
           console.error(

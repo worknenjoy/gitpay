@@ -100,7 +100,8 @@ const PaymentRequestMail = {
     paymentRequest: any,
     payment_amount: any,
     transfer_amount: any,
-    extraFee: any
+    extraFee: any,
+    paymentRequestPayment?: any
   ) => {
     const to = user.email
     const language = user.language || 'en'
@@ -119,9 +120,33 @@ const PaymentRequestMail = {
       paymentRequest.currency
     )
 
+    const grossAmount =
+      paymentRequestPayment?.amount != null ? Number(paymentRequestPayment.amount) : null
+    const netAfterWhopFee =
+      paymentRequestPayment?.amount_after_fees != null
+        ? Number(paymentRequestPayment.amount_after_fees)
+        : null
+    const hasWhopFee =
+      paymentRequest?.provider === 'whop' &&
+      grossAmount != null &&
+      netAfterWhopFee != null &&
+      grossAmount > netAfterWhopFee
+    const whopFeeAmount = hasWhopFee ? grossAmount - netAfterWhopFee : null
+
+    const whopFeeRows: any[] = hasWhopFee
+      ? [
+          [
+            'Amount Charged',
+            `<div style="text-align:right">${currencySymbol} ${grossAmount}</div>`
+          ],
+          ['Whop Fee', `<div style="text-align:right">- ${currencySymbol} ${whopFeeAmount}</div>`]
+        ]
+      : []
+
     let rows: any[] = []
     if (extraFee) {
       rows = [
+        ...whopFeeRows,
         [
           'Payment amount',
           `<div style="text-align:right">${currencySymbol} ${payment_amount}</div>`
@@ -141,6 +166,7 @@ const PaymentRequestMail = {
       ]
     } else {
       rows = [
+        ...whopFeeRows,
         [
           'Payment amount',
           `<div style="text-align:right">${currencySymbol} ${payment_amount}</div>`
@@ -171,7 +197,11 @@ const PaymentRequestMail = {
               headers: ['Item', '<div style="text-align:right">Amount</div>'],
               rows: rows
             },
-            `<div style="text-align: right">${i18n.__('mail.paymentRequest.transferInitiated.bottom')}</div>`
+            i18n.__('mail.paymentRequest.transferInitiated.bottom'),
+            {
+              link: 'https://gitpay.me/#/profile/claims',
+              text: i18n.__('mail.paymentRequest.transferInitiated.cta')
+            }
           )
         }
       ])
