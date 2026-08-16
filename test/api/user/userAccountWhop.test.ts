@@ -156,45 +156,6 @@ describe('User Account (Whop)', () => {
     })
   })
 
-  it('syncs Users.country from the freshly-resolved Whop country', async () => {
-    await withPaymentProvider('whop', async () => {
-      pinWhopApiForTests()
-      nock(WHOP_API_HOST).get('/api/v1/companies/biz_user_whop_4').reply(200, {
-        ...whopCompany,
-        id: 'biz_user_whop_4',
-        owner_user: { id: 'user_test_owner_4' }
-      })
-      nock(WHOP_API_HOST)
-        .get('/api/v1/accounts/biz_user_whop_4')
-        .reply(200, { id: 'biz_user_whop_4' })
-      nock(WHOP_API_HOST)
-        .get('/api/v1/identity_profiles')
-        .query({ owner_id: 'user_test_owner_4', first: '1' })
-        .reply(200, { data: [{ id: 'idpf_test_4', country: 'dk' }] })
-      nock(WHOP_API_HOST)
-        .get('/api/v1/ledger_accounts/biz_user_whop_4')
-        .reply(200, { id: 'ldgr_test_4', balances: [] })
-      nock(WHOP_API_HOST)
-        .get('/api/v1/payout_methods')
-        .query({ company_id: 'biz_user_whop_4' })
-        .reply(200, { data: [] })
-
-      const user = await registerAndLogin(agent)
-      await models.User.update(
-        { whop_account_id: 'biz_user_whop_4', country: null },
-        { where: { id: user.body.id } }
-      )
-
-      await agent
-        .get('/user/account')
-        .set('Authorization', user.headers.authorization)
-        .expect(200)
-
-      const updated = await models.User.findByPk(user.body.id)
-      expect(updated.dataValues.country).to.equal('DK')
-    })
-  })
-
   it('should mark identity_document and payout_method required when not verified and no payout method', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()

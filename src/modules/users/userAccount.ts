@@ -109,31 +109,15 @@ export async function userAccount(userParameters: UserAccountParams) {
       console.warn('[whop] disputes for connected company failed', error)
     }
 
-    // Sources are inconsistent about 2- vs 3-letter ISO country codes (e.g. Whop's
-    // identity profile has both `country` (2-letter) and `personal_address.country`
-    // (3-letter)) — normalizeCountryCode() accepts either and returns 2-letter,
-    // matching our country lists/flag lookups.
-    const rawCountry =
+    const liveCountryCandidate =
       latestIdentityProfile?.country ||
       latestIdentityProfile?.personal_address?.country ||
       latestIdentityProfile?.business_address?.country ||
       company?.country ||
       company?.business_address?.country ||
-      user?.dataValues?.country ||
       null
-    const country = normalizeCountryCode(rawCountry) || rawCountry || null
 
-    // Keep Users.country in sync with whatever Whop reports, so the currency shown
-    // elsewhere (e.g. userAccountCountries.ts, which reads Users.country from the DB)
-    // doesn't drift from what this live-fetched account actually shows.
-    if (country && user && user.dataValues?.country !== country) {
-      try {
-        await user.update({ country })
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.warn('[whop] failed to sync Users.country from Whop', error)
-      }
-    }
+    const country = normalizeCountryCode(liveCountryCandidate) || liveCountryCandidate || null
 
     const defaultCurrency =
       company?.default_currency || company?.currency || currencyForCountry(country)
