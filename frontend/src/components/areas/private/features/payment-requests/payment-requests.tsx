@@ -40,10 +40,6 @@ const PaymentRequests = ({
   const handleGoToPayoutSettings = () => history.push('/profile/payout-settings')
 
   const handleOpenCreatePaymentRequestDrawer = () => {
-    if (!isAccountValid) {
-      handleGoToPayoutSettings()
-      return
-    }
     setOpenNewPaymentRequestDrawer(true)
   }
 
@@ -121,10 +117,12 @@ const PaymentRequests = ({
 
   return (
     <>
-      <Box sx={{ mb: 2 }}>
-        <AccountRequirements user={user} account={account} onClick={handleGoToPayoutSettings} />
-      </Box>
       <PrimaryDataPage
+        announcement={
+          <Box>
+            <AccountRequirements user={user} account={account} onClick={handleGoToPayoutSettings} />
+          </Box>
+        }
         title={
           <FormattedMessage
             id="account.profile.paymentRequests.links.title"
@@ -142,11 +140,9 @@ const PaymentRequests = ({
           tableHeaderMetadata: paymentRequestMetadata,
           customColumnRenderer: customColumnRenderer
         }}
-        displayAction={isAccountValid}
+        displayAction
         emptyComponent={
-          <EmptyPaymentRequest
-            onActionClick={isAccountValid ? handleOpenCreatePaymentRequestDrawer : undefined}
-          />
+          <EmptyPaymentRequest onActionClick={handleOpenCreatePaymentRequestDrawer} />
         }
         onActionClick={handleOpenCreatePaymentRequestDrawer}
         onActionText={

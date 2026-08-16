@@ -14,6 +14,7 @@ import { CardsWrapper } from './primary-data-page.styles'
 type PrimaryPageProps = {
   title: string | React.ReactNode
   description: string | React.ReactNode
+  announcement?: React.ReactNode
   activeTab?: string
   tabs?: Array<TableTabsProps>
   table?: TableTabsContentProps
@@ -27,6 +28,7 @@ type PrimaryPageProps = {
 const PrimaryDataPage = ({
   title,
   description,
+  announcement,
   activeTab,
   tabs = [],
   table,
@@ -68,6 +70,7 @@ const PrimaryDataPage = ({
           ) : null
         }
       />
+      {announcement}
       {isEmpty || isSingleTableEmpty ? (
         emptyComponent
       ) : table ? (

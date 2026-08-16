@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles'
+import { alpha, styled } from '@mui/material/styles'
 import { Box, Paper } from '@mui/material'
 
 export const ProviderCardRoot = styled(Paper, {
@@ -28,7 +28,7 @@ export const ProviderGlyph = styled(Box)(({ theme }) => ({
 
 export const RecommendedBadge = styled(Box)(({ theme }) => ({
   color: theme.palette.primary.main,
-  backgroundColor: theme.palette.success.light,
+  backgroundColor: alpha(theme.palette.success.light, 0.4),
   fontSize: 11,
   fontWeight: 700,
   letterSpacing: 0.5,

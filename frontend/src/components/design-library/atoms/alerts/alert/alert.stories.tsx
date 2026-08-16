@@ -45,29 +45,33 @@ export const AlertWithActionExample = Template.bind({})
 AlertWithActionExample.args = {
   severity: 'warning',
   children: (
-  <>
-    <Typography variant="subtitle2">
-    <FormattedMessage
-      id="payout-settings.whop.banner.rejected.title"
-      defaultMessage="Action needed on Whop"
-    />
-  </Typography>
-  <Typography variant="body2">
-    <FormattedMessage
-      id="payout-settings.whop.banner.rejected.description"
-      defaultMessage="Whop flagged an issue with this account. Open Whop to resolve it before payouts can continue."
-    />
-  </Typography>
-  </>),
+    <>
+      <Typography variant="subtitle2">
+        <FormattedMessage
+          id="payout-settings.whop.banner.rejected.title"
+          defaultMessage="Action needed on Whop"
+        />
+      </Typography>
+      <Typography variant="body2">
+        <FormattedMessage
+          id="payout-settings.whop.banner.rejected.description"
+          defaultMessage="Whop flagged an issue with this account. Open Whop to resolve it before payouts can continue."
+        />
+      </Typography>
+    </>
+  ),
   completed: true,
-  action: <Button variant="outlined" size="small">
-    Click me
-  </Button>
+  action: (
+    <Button variant="outlined" size="small">
+      Click me
+    </Button>
+  )
 }
 
 export const LoadingAlertExample = Template.bind({})
 LoadingAlertExample.args = {
   severity: 'info',
-  children: 'Please make sure you have bank account on the country selected before continue. More text for two lines of content.',
+  children:
+    'Please make sure you have bank account on the country selected before continue. More text for two lines of content.',
   completed: false
 }

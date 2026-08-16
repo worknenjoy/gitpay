@@ -120,11 +120,7 @@ const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }
     }
   }
 
-  // Stripe (and other) default path
-  if (whop) {
-    return null
-  }
-
+  // Default path (Stripe, and Whop accounts that haven't connected yet at all)
   return !validAccount(user, account) ? (
     <CustomAlert
       completed={completed}
@@ -133,7 +129,7 @@ const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }
         <Button
           completed={completed}
           onClick={onClick}
-          variant="contained"
+          variant="outlined"
           color="secondary"
           size="small"
           label={
