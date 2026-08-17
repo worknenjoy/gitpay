@@ -7,6 +7,8 @@ import {
   withDrawnDisputeForPaymentRequest,
   closeDisputeForPaymentRequest
 } from '../../../services/payments/disputes/disputeService'
+import { createPayoutRecord } from '../../../mutations/payout/createPayoutRecord'
+import PayoutMail from '../../../mail/payout'
 const models = Models as any
 
 /** Default Whop chargeback fee ($15) in cents — overridable via WHOP_DISPUTE_FEE_CENTS */
@@ -395,10 +397,29 @@ async function handleInvoiceFailed(ctx: WebhookHandlerContext) {
   return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
 }
 
+async function sendWithdrawalStatusMail(user: any, payout: any, status: string | undefined) {
+  const paidStatuses = ['paid', 'completed', 'succeeded']
+  const failedStatuses = ['failed', 'canceled', 'cancelled', 'denied']
+  const normalized = status ? String(status).toLowerCase() : ''
+
+  try {
+    if (paidStatuses.includes(normalized)) {
+      await PayoutMail.payoutPaid(user, payout)
+    } else if (failedStatuses.includes(normalized)) {
+      await PayoutMail.payoutFailed(user, payout)
+    } else {
+      await PayoutMail.payoutUpdated(user, payout)
+    }
+  } catch (e) {
+    console.error('[whop] error sending payout status mail:', e)
+  }
+}
+
 async function handleWithdrawal(ctx: WebhookHandlerContext) {
   const withdrawal = ctx.event.data.object || ctx.rawEvent?.data
   const withdrawalId = withdrawal?.id
   const status = withdrawal?.status
+  const companyId = withdrawal?.company_id
 
   console.log('[whop] withdrawal event', { type: ctx.event.type, withdrawalId, status })
 
@@ -408,6 +429,45 @@ async function handleWithdrawal(ctx: WebhookHandlerContext) {
 
   const paidStatuses = ['paid', 'completed', 'succeeded']
   const failedStatuses = ['failed', 'canceled', 'cancelled', 'denied']
+
+  const existingPayout = await models.Payout.findOne({ where: { source_id: withdrawalId } })
+
+  if (!existingPayout) {
+    if (!companyId) {
+      console.warn('[whop] no payout found for withdrawal', withdrawalId)
+      return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+    }
+
+    const user = await models.User.findOne({ where: { whop_account_id: companyId } })
+    if (!user) {
+      console.warn('[whop] no user found for withdrawal company', { withdrawalId, companyId })
+      return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+    }
+
+    const payout = await createPayoutRecord({
+      source_id: withdrawalId,
+      userId: user.id,
+      amount: whopMajorToCents(withdrawal.amount),
+      currency: withdrawal.currency || 'usd',
+      method: 'whop',
+      status: status || 'pending'
+    })
+
+    const normalizedStatus = status ? String(status).toLowerCase() : ''
+    if (paidStatuses.includes(normalizedStatus)) {
+      await payout.update({ paid: true })
+    }
+
+    try {
+      await PayoutMail.payoutCreated(user, payout)
+    } catch (e) {
+      console.error('[whop] error sending payout created mail:', e)
+    }
+
+    return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+  }
+
+  const previousStatus = existingPayout.status
 
   const update: any = {}
   if (status) update.status = status
@@ -419,11 +479,14 @@ async function handleWithdrawal(ctx: WebhookHandlerContext) {
   }
 
   if (Object.keys(update).length > 0) {
-    const [updatedCount] = await models.Payout.update(update, {
-      where: { source_id: withdrawalId }
-    })
-    if (updatedCount === 0) {
-      console.warn('[whop] no payout found for withdrawal', withdrawalId)
+    await existingPayout.update(update)
+  }
+
+  const statusChanged = Boolean(status) && status !== previousStatus
+  if (statusChanged) {
+    const user = await models.User.findByPk(existingPayout.userId)
+    if (user) {
+      await sendWithdrawalStatusMail(user, existingPayout, status)
     }
   }
 
