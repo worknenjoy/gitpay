@@ -192,6 +192,15 @@ function buildSamples(moduleName: string, methodName: string): any[] {
         balance: -5000
       }
     }
+    if (/transferPending/i.test(methodName)) {
+      return [
+        user,
+        { ...paymentRequest, provider: 'whop' },
+        92,
+        84.64,
+        { amount: 100, amount_after_fees: 92 }
+      ]
+    }
     if (/transferInitiated/i.test(methodName)) {
       return [
         user,

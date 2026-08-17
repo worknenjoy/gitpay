@@ -11,13 +11,16 @@ type CheckoutSession = {
 async function sendTransferEmails(result: any): Promise<void> {
   const { user, paymentRequestPayment, paymentRequest } = result
 
+  const ceiledTotal = (cents: number) =>
+    calculateAmountWithPercent(cents, 0, 'centavos', result.currency).decimal
+
   if (result.transferCreated) {
     try {
       await PaymentRequestMail.transferInitiatedForPaymentRequest(
         user,
         paymentRequest,
         result.originalAmountDecimal,
-        result.transferAmountDecimal,
+        ceiledTotal(result.resultingBalanceCents),
         result.balanceTransactionForEmail
           ? {
               extraFee: calculateAmountWithPercent(
@@ -26,18 +29,31 @@ async function sendTransferEmails(result: any): Promise<void> {
                 'centavos',
                 result.currency
               ).decimal,
-              total: calculateAmountWithPercent(
-                result.resultingBalanceCents,
-                0,
-                'centavos',
-                result.currency
-              ).decimal
+              total: ceiledTotal(result.resultingBalanceCents)
             }
           : null,
         paymentRequestPayment
       )
     } catch (error) {
       console.error('Error sending transfer initiated email:', error)
+    }
+  }
+
+  if (
+    result.deferred &&
+    result.newlyDeferred &&
+    result.reason === 'insufficient_available_balance'
+  ) {
+    try {
+      await PaymentRequestMail.transferPendingForPaymentRequest(
+        user,
+        paymentRequest,
+        result.originalAmountDecimal,
+        ceiledTotal(result.resultingBalanceCents),
+        paymentRequestPayment
+      )
+    } catch (error) {
+      console.error('Error sending transfer pending email:', error)
     }
   }
 

@@ -20,6 +20,18 @@ const resolveCurrencyKey = (code: any): CurrencyKey => {
   return 'usd'
 }
 
+type StatusChipVariant = 'pending' | 'success'
+
+const statusChipStyles: Record<StatusChipVariant, { bg: string; color: string; border: string }> = {
+  pending: { bg: '#fff3cd', color: '#856404', border: '#ffeeba' },
+  success: { bg: '#d4edda', color: '#155724', border: '#c3e6cb' }
+}
+
+const renderStatusChip = (label: string, variant: StatusChipVariant): string => {
+  const { bg, color, border } = statusChipStyles[variant]
+  return `<span style="display:inline-block; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; background: ${bg}; color: ${color}; border: 1px solid ${border};">${label}</span>`
+}
+
 const getReason = (reason_details: any) => {
   switch (reason_details) {
     case 'product_not_received':
@@ -113,12 +125,6 @@ const PaymentRequestMail = {
 
     const currencyKey = resolveCurrencyKey(paymentRequest?.currency)
     const currencySymbol = currencyInfo[currencyKey]?.symbol || ''
-    const { decimalFee } = calculateAmountWithPercent(
-      payment_amount,
-      8,
-      'decimal',
-      paymentRequest.currency
-    )
 
     const grossAmount =
       paymentRequestPayment?.amount != null ? Number(paymentRequestPayment.amount) : null
@@ -143,6 +149,17 @@ const PaymentRequestMail = {
         ]
       : []
 
+    // Derive the displayed fee by subtraction from the final total (rather than
+    // recomputing 8%) so the rows always reconcile exactly with the Claims-page value,
+    // regardless of the rounding mode used to arrive at that total.
+    const totalForFeeCalc = extraFee ? Number(extraFee.total) : Number(transfer_amount)
+    const platformFeeDisplay = calculateAmountWithPercent(
+      Number(payment_amount) - totalForFeeCalc,
+      0,
+      'decimal',
+      paymentRequest.currency
+    ).decimal
+
     let rows: any[] = []
     if (extraFee) {
       rows = [
@@ -153,7 +170,7 @@ const PaymentRequestMail = {
         ],
         [
           'Platform Fee (8%)',
-          `<div style="text-align:right">- ${currencySymbol} ${decimalFee}</div>`
+          `<div style="text-align:right">- ${currencySymbol} ${platformFeeDisplay}</div>`
         ],
         [
           'Balance due',
@@ -173,7 +190,7 @@ const PaymentRequestMail = {
         ],
         [
           'Platform Fee (8%)',
-          `<div style="text-align:right">- ${currencySymbol} ${decimalFee}</div>`
+          `<div style="text-align:right">- ${currencySymbol} ${platformFeeDisplay}</div>`
         ],
         [
           'Total',
@@ -191,7 +208,8 @@ const PaymentRequestMail = {
             i18n.__('mail.paymentRequest.transferInitiated.details', {
               title: paymentRequest.title,
               description: paymentRequest.description,
-              currency: paymentRequest.currency
+              currency: paymentRequest.currency,
+              statusChip: renderStatusChip('Payout Initiated', 'success')
             }),
             {
               headers: ['Item', '<div style="text-align:right">Amount</div>'],
@@ -201,6 +219,97 @@ const PaymentRequestMail = {
             {
               link: 'https://gitpay.me/#/profile/claims',
               text: i18n.__('mail.paymentRequest.transferInitiated.cta')
+            }
+          )
+        }
+      ])
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+  transferPendingForPaymentRequest: async (
+    user: any,
+    paymentRequest: any,
+    payment_amount: any,
+    pending_amount: any,
+    paymentRequestPayment?: any
+  ) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+    if (!receiveNotifications) {
+      return
+    }
+    i18n.setLocale(language)
+
+    const currencyKey = resolveCurrencyKey(paymentRequest?.currency)
+    const currencySymbol = currencyInfo[currencyKey]?.symbol || ''
+
+    const grossAmount =
+      paymentRequestPayment?.amount != null ? Number(paymentRequestPayment.amount) : null
+    const netAfterWhopFee =
+      paymentRequestPayment?.amount_after_fees != null
+        ? Number(paymentRequestPayment.amount_after_fees)
+        : null
+    const hasWhopFee =
+      paymentRequest?.provider === 'whop' &&
+      grossAmount != null &&
+      netAfterWhopFee != null &&
+      grossAmount > netAfterWhopFee
+    const whopFeeAmount = hasWhopFee ? grossAmount - netAfterWhopFee : null
+
+    const whopFeeRows: any[] = hasWhopFee
+      ? [
+          [
+            'Amount Charged',
+            `<div style="text-align:right">${currencySymbol} ${grossAmount}</div>`
+          ],
+          ['Whop Fee', `<div style="text-align:right">- ${currencySymbol} ${whopFeeAmount}</div>`]
+        ]
+      : []
+
+    // Same reconciliation approach as transferInitiatedForPaymentRequest: derive the fee
+    // row by subtraction from pending_amount so it matches the Claims-page value exactly.
+    const platformFeeDisplay = calculateAmountWithPercent(
+      Number(payment_amount) - Number(pending_amount),
+      0,
+      'decimal',
+      paymentRequest.currency
+    ).decimal
+
+    const rows: any[] = [
+      ...whopFeeRows,
+      ['Payment amount', `<div style="text-align:right">${currencySymbol} ${payment_amount}</div>`],
+      [
+        'Platform Fee (8%)',
+        `<div style="text-align:right">- ${currencySymbol} ${platformFeeDisplay}</div>`
+      ],
+      [
+        'Estimated Payout (pending)',
+        `<div style="text-align:right"><strong>${currencySymbol} ${pending_amount}</strong></div>`
+      ]
+    ]
+
+    try {
+      return await request(to, i18n.__('mail.paymentRequest.transferPending.subject'), [
+        {
+          type: 'text/html',
+          value: tableContentEmailTemplate(
+            i18n.__('mail.paymentRequest.transferPending.message'),
+            i18n.__('mail.paymentRequest.transferPending.details', {
+              title: paymentRequest.title,
+              description: paymentRequest.description,
+              currency: paymentRequest.currency,
+              statusChip: renderStatusChip('Pending — Processing', 'pending')
+            }),
+            {
+              headers: ['Item', '<div style="text-align:right">Amount</div>'],
+              rows: rows
+            },
+            i18n.__('mail.paymentRequest.transferPending.bottom'),
+            {
+              link: 'https://gitpay.me/#/profile/claims',
+              text: i18n.__('mail.paymentRequest.transferPending.cta')
             }
           )
         }
@@ -249,7 +358,11 @@ const PaymentRequestMail = {
                   ]
                 ]
               },
-              `<div style="text-align: right">${i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.bottom')}</div>`
+              i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.bottom'),
+              {
+                link: 'https://gitpay.me/#/profile/payment-requests',
+                text: i18n.__('mail.paymentRequest.paymentMadeForPaymentRequest.cta')
+              }
             )
           }
         ]

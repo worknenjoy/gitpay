@@ -27,6 +27,8 @@ export type ExecutePaymentRequestTransferResult = {
   deferred: boolean
   skipped: boolean
   reason?: string
+  /** True only the first time this payment transitions into PENDING_FUNDS (not on cron retries). */
+  newlyDeferred: boolean
   originalAmountDecimal: number
   transferAmountDecimal: number
   resultingBalanceCents: number
@@ -147,6 +149,9 @@ export async function executePaymentRequestTransfer(
   const paymentRequest = paymentRequestPayment.PaymentRequest
   const user = paymentRequestPayment.User
 
+  const wasAlreadyPendingFunds =
+    paymentRequestPayment.transferStatus === PaymentRequestTransferStatus.PENDING_FUNDS
+
   if (!paymentRequest) {
     throw new Error(
       `PaymentRequest missing for PaymentRequestPayment ${params.paymentRequestPaymentId}`
@@ -191,6 +196,7 @@ export async function executePaymentRequestTransfer(
     transferCreated: false,
     deferred: false,
     skipped: false,
+    newlyDeferred: false,
     originalAmountDecimal: originalAmount.decimal,
     transferAmountDecimal,
     resultingBalanceCents: 0,
@@ -290,6 +296,7 @@ export async function executePaymentRequestTransfer(
       })
       return baseResult({
         deferred: true,
+        newlyDeferred: !wasAlreadyPendingFunds,
         resultingBalanceCents: resultingBalance,
         reason: `missing_${field}`,
         paymentRequest: paymentRequestPayment.PaymentRequest || paymentRequest,
@@ -453,6 +460,7 @@ export async function executePaymentRequestTransfer(
       transferCreated: true,
       deferred: false,
       skipped: false,
+      newlyDeferred: false,
       originalAmountDecimal: originalAmount.decimal,
       transferAmountDecimal,
       resultingBalanceCents: resultingBalance,
@@ -489,6 +497,7 @@ export async function executePaymentRequestTransfer(
       })
       return baseResult({
         deferred: true,
+        newlyDeferred: !wasAlreadyPendingFunds,
         resultingBalanceCents: resultingBalance,
         reason: 'insufficient_available_balance',
         paymentRequest: paymentRequestPayment.PaymentRequest || paymentRequest,

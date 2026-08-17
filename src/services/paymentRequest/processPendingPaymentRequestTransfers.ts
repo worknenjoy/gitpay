@@ -105,6 +105,31 @@ export async function processPendingPaymentRequestTransfers(
       if (transferResult.deferred) {
         result.deferred += 1
         console.log(`[payment-request-transfer-cron] payment ${payment.id} still pending funds`)
+
+        if (
+          transferResult.newlyDeferred &&
+          transferResult.reason === 'insufficient_available_balance'
+        ) {
+          try {
+            await PaymentRequestMail.transferPendingForPaymentRequest(
+              transferResult.user,
+              transferResult.paymentRequest,
+              transferResult.originalAmountDecimal,
+              calculateAmountWithPercent(
+                transferResult.resultingBalanceCents,
+                0,
+                'centavos',
+                transferResult.currency
+              ).decimal,
+              transferResult.paymentRequestPayment
+            )
+          } catch (mailError) {
+            console.error(
+              `[payment-request-transfer-cron] transfer pending email failed for payment ${payment.id}`,
+              mailError
+            )
+          }
+        }
         continue
       }
 
@@ -119,7 +144,12 @@ export async function processPendingPaymentRequestTransfers(
             transferResult.user,
             transferResult.paymentRequest,
             transferResult.originalAmountDecimal,
-            transferResult.transferAmountDecimal,
+            calculateAmountWithPercent(
+              transferResult.resultingBalanceCents,
+              0,
+              'centavos',
+              transferResult.currency
+            ).decimal,
             transferResult.balanceTransactionForEmail
               ? {
                   extraFee: calculateAmountWithPercent(

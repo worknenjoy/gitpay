@@ -826,11 +826,11 @@ describe('Whop webhooks for payment requests', () => {
       expect(paymentMadeStub.callCount).to.equal(1)
       expect(Number(paymentMadeStub.firstCall.args[1].amount)).to.equal(1)
 
-      // Claim email: fee base = Whop net $0.57, after Gitpay 8% = $0.52
+      // Claim email: fee base = Whop net $0.57, after Gitpay 8% (ceiled cents, matches Claims page) = $0.53
       expect(transferInitiatedStub.callCount).to.equal(1)
       const [, , feeBaseAmount, transferAmount] = transferInitiatedStub.firstCall.args
       expect(Number(feeBaseAmount)).to.equal(0.57)
-      expect(Number(transferAmount)).to.equal(0.52)
+      expect(Number(transferAmount)).to.equal(0.53)
     })
   })
 })
