@@ -72,7 +72,7 @@ const requestPayout = (params) => (dispatch) => {
       }
     })
     .catch((e) => {
-      dispatch(addNotification('actions.payoutRequest.create.error', e))
+      dispatch(addNotification('actions.payoutRequest.create.error', { severity: 'error' }))
       return dispatch(requestPayoutFailed(e))
     })
 }
