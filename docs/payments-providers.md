@@ -341,6 +341,51 @@ Lookup: `PaymentRequestPayment.source` = Stripe `payment_intent` or Whop `paymen
 
 Debits/credits are idempotent per `sourceId` + type so webhook retries are safe.
 
+`WHOP_DISPUTE_FEE_CENTS` (default `1500` = $15) is the source of the Whop provider fee in the
+debit formula above — unlike Stripe, whose fee is read per-event from `balance_transactions[0].fee`,
+Whop's webhook payload has no per-event fee breakdown, so this env var stands in for it. Override it
+if Whop's actual chargeback fee changes.
+
+A won dispute's CREDIT is `amount + provider fee` only — it does **not** reimburse Gitpay's own 8%
+platform fee that was part of the original DEBIT, so the balance does not return fully to zero even
+when a dispute is won (same behavior on both providers, since they share `disputeService.ts`).
+
+### Negative balance recovery on Whop
+
+The debt-recovery mechanism (`executePaymentRequestTransfer.ts`) that applies a user's next paid
+`PaymentRequest` against an existing negative `PaymentRequestBalance` is provider-agnostic, but on
+Whop it interacts with Whop's normal pending-balance settlement lag (card payments often take 1–4
+days to become available):
+
+- If the new payment fully covers the debt, no provider transfer is attempted at all — the debt is
+  cleared immediately regardless of Whop's available balance.
+- If the new payment only partially covers the debt, a real Whop transfer is still required for the
+  remainder. The debt-clearing CREDIT is written atomically with that transfer, so **if the transfer
+  is deferred (insufficient available balance), the negative balance stays exactly as it was** until
+  the daily cron / `process_pending_transfers` retry succeeds — it is never applied optimistically.
+
+### Testing disputes in sandbox
+
+Whop's sandbox cannot generate a real chargeback (disputes are bank/card-network driven — there is no
+Stripe-CLI-style `stripe trigger charge.dispute.created` for Whop). To validate the deployed code path
+(real `WHOP_WEBHOOK_SECRET` signature verification, real DB writes, real email sending) without a live
+chargeback, sign and deliver a synthetic event yourself:
+
+1. Run a real Whop sandbox checkout to get a genuine `payment.id` (`pay_…`) tied to an existing
+   `PaymentRequestPayment`.
+2. Simulate the dispute opening:
+   ```bash
+   npm run scripts:whop:simulate_dispute -- --type=dispute.created --payment-id=pay_xxx --amount=49.95 --url=https://your-host/webhooks/whop
+   ```
+   Confirm a `PaymentRequestBalanceTransaction` DEBIT appears and the dispute-opened email is sent.
+3. Simulate it resolving (won/lost):
+   ```bash
+   npm run scripts:whop:simulate_dispute -- --type=dispute.updated --status=won --payment-id=pay_xxx --url=https://your-host/webhooks/whop
+   ```
+   Confirm the CREDIT/recovery path (or, for `--status=lost`, that no CREDIT is created).
+
+`--url` can point at a local server, an ngrok tunnel, or a deployed sandbox — see
+`src/scripts/whop/simulate_dispute.ts` for the full flag list.
 
 ## Supported countries (payout onboarding)
 

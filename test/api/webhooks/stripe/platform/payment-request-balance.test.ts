@@ -176,10 +176,14 @@ describe('Payment Request Balance Webhook', () => {
         mailStub.restore()
       }
     })
-    // TODO(whop-branch): disputeService now skips a won CREDIT unless a prior
-    // DISPUTE DEBIT exists ("avoid orphan credit"). This test encodes the
-    // pre-refactor behavior; skipped pending a decision on the new accounting.
-    it.skip('should create a Payment Request Balance for a won dispute a user when a charge.dispute.closed event is received', async () => {
+    it('should create a Payment Request Balance CREDIT for a won dispute when a charge.dispute.closed event is received, net of the prior DEBIT', async () => {
+      // disputeService now requires a prior DISPUTE DEBIT before it will credit a
+      // "won" dispute (avoids orphan credits). Seed that DEBIT first via the same
+      // funds_withdrawn flow used elsewhere, retargeted to the payment_intent the
+      // won-dispute fixture uses (pi_test_123).
+      nock('https://api.stripe.com')
+        .get('/v1/disputes/du_test_charge_dispute')
+        .reply(200, disputeFundsWithdrawn.data.object)
       nock('https://api.stripe.com')
         .get('/v1/disputes/du_test_123')
         .reply(200, disputeClosedWon.data.object)
@@ -217,6 +221,28 @@ describe('Payment Request Balance Webhook', () => {
         balance: 0
       })
 
+      const disputeFundsWithdrawnOnWonIntent = {
+        ...disputeFundsWithdrawn,
+        data: {
+          object: {
+            ...disputeFundsWithdrawn.data.object,
+            payment_intent: 'pi_test_123'
+          }
+        }
+      }
+
+      await agent
+        .post('/webhooks/stripe-platform')
+        .send(disputeFundsWithdrawnOnWonIntent)
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      const balanceAfterDebit = await models.PaymentRequestBalance.findOne({
+        where: { userId: currentUser.id }
+      })
+      // 4995 (amount) + 400 (8% Gitpay fee) + 1500 (Stripe dispute fee) = 6895
+      expect(balanceAfterDebit.balance).to.equal('-6895')
+
       const res = await agent
         .post('/webhooks/stripe-platform')
         .send(disputeClosedWon)
@@ -236,11 +262,16 @@ describe('Payment Request Balance Webhook', () => {
       const paymentRequestBalanceTransaction =
         await models.PaymentRequestBalanceTransaction.findOne({
           where: {
-            paymentRequestBalanceId: paymentRequestBalanceUpdated.id
+            paymentRequestBalanceId: paymentRequestBalanceUpdated.id,
+            type: 'CREDIT',
+            reason: 'DISPUTE'
           }
         })
 
       expect(paymentRequestBalanceTransaction).to.exist
+      // Won-dispute CREDIT is amount + provider fee only (4995 + 1500 = 6495) —
+      // it does NOT reimburse Gitpay's own 8% platform fee that was part of the DEBIT,
+      // so the balance does not return fully to zero even on a won dispute.
       expect(paymentRequestBalanceTransaction.amount).to.equal('6495')
       expect(paymentRequestBalanceTransaction.type).to.equal('CREDIT')
       expect(paymentRequestBalanceTransaction.reason).to.equal('DISPUTE')
@@ -249,7 +280,8 @@ describe('Payment Request Balance Webhook', () => {
       expect(paymentRequestBalanceTransaction.closedAt).to.be.instanceOf(Date)
 
       expect(paymentRequestBalanceUpdated).to.exist
-      expect(paymentRequestBalanceUpdated.balance).to.equal('6495')
+      // -6895 (debit) + 6495 (credit) = -400 (the un-reimbursed 8% Gitpay fee)
+      expect(paymentRequestBalanceUpdated.balance).to.equal('-400')
     })
     it('should create a Payment Request Balance when a charge.dispute.funds_withdrawn event is received', async () => {
       nock('https://api.stripe.com')
@@ -323,10 +355,7 @@ describe('Payment Request Balance Webhook', () => {
       expect(updatedPaymentRequestBalance).to.exist
       expect(updatedPaymentRequestBalance.balance).to.equal('-6895')
     })
-    // TODO(whop-branch): disputeService now dedupes the DISPUTE DEBIT, so a
-    // repeated funds_withdrawn event creates one transaction, not two. This test
-    // encodes the pre-refactor behavior; skipped pending a decision.
-    it.skip('should create a Payment Request Balance when a charge.dispute.funds_withdrawn event is received twice', async () => {
+    it('should not double-debit when a charge.dispute.funds_withdrawn event is redelivered (idempotent)', async () => {
       nock('https://api.stripe.com')
         .get('/v1/disputes/du_test_charge_dispute')
         .reply(200, disputeFundsWithdrawn.data.object)
@@ -371,16 +400,7 @@ describe('Payment Request Balance Webhook', () => {
         .expect('Content-Type', /json/)
         .expect(200)
 
-      const anotherPaymentRequestPayment = await PaymentRequestPaymentFactory({
-        amount: 4995,
-        currency: 'usd',
-        source: 'pi_test_payment_intent_2',
-        status: 'paid',
-        customerId: paymentRequestCustomer.id,
-        paymentRequestId: paymentRequest.id,
-        userId: currentUser.id
-      })
-
+      // Webhook retry: same event, same source (payment_intent) and dispute id.
       const res2 = await agent
         .post('/webhooks/stripe-platform')
         .send(disputeFundsWithdrawn)
@@ -391,36 +411,35 @@ describe('Payment Request Balance Webhook', () => {
       expect(event).to.exist
       expect(event.id).to.equal('evt_test_charge_dispute_funds_withdrawn')
 
+      const event2 = JSON.parse(Buffer.from(res2.body).toString())
+      expect(event2).to.exist
+      expect(event2.id).to.equal('evt_test_charge_dispute_funds_withdrawn')
+
       const updatedPaymentRequestBalance = await models.PaymentRequestBalance.findOne({
         where: {
           userId: currentUser.id
         }
       })
 
-      const paymentRequestBalanceTransaction =
+      const paymentRequestBalanceTransactions =
         await models.PaymentRequestBalanceTransaction.findAll({
           where: {
             paymentRequestBalanceId: paymentRequestBalance.id
           }
         })
 
-      expect(paymentRequestBalanceTransaction).to.exist
-      expect(paymentRequestBalanceTransaction[0].amount).to.equal('-6895')
-      expect(paymentRequestBalanceTransaction[0].type).to.equal('DEBIT')
-      expect(paymentRequestBalanceTransaction[0].reason).to.equal('DISPUTE')
-      expect(paymentRequestBalanceTransaction[0].status).to.equal('needs_response')
-      expect(paymentRequestBalanceTransaction[0].openedAt).to.be.instanceOf(Date)
-      expect(paymentRequestBalanceTransaction[0].closedAt).to.be.instanceOf(Date)
-
-      expect(paymentRequestBalanceTransaction[1].amount).to.equal('-6895')
-      expect(paymentRequestBalanceTransaction[1].type).to.equal('DEBIT')
-      expect(paymentRequestBalanceTransaction[1].reason).to.equal('DISPUTE')
-      expect(paymentRequestBalanceTransaction[1].status).to.equal('needs_response')
-      expect(paymentRequestBalanceTransaction[1].openedAt).to.be.instanceOf(Date)
-      expect(paymentRequestBalanceTransaction[1].closedAt).to.be.instanceOf(Date)
+      // disputeService dedupes on sourceId + reason='DISPUTE' + type='DEBIT' —
+      // the redelivered webhook must not create a second row.
+      expect(paymentRequestBalanceTransactions).to.have.lengthOf(1)
+      expect(paymentRequestBalanceTransactions[0].amount).to.equal('-6895')
+      expect(paymentRequestBalanceTransactions[0].type).to.equal('DEBIT')
+      expect(paymentRequestBalanceTransactions[0].reason).to.equal('DISPUTE')
+      expect(paymentRequestBalanceTransactions[0].status).to.equal('needs_response')
+      expect(paymentRequestBalanceTransactions[0].openedAt).to.be.instanceOf(Date)
+      expect(paymentRequestBalanceTransactions[0].closedAt).to.be.instanceOf(Date)
 
       expect(updatedPaymentRequestBalance).to.exist
-      expect(updatedPaymentRequestBalance.balance).to.equal('-13790')
+      expect(updatedPaymentRequestBalance.balance).to.equal('-6895')
     })
   })
   describe('For refunds', () => {
