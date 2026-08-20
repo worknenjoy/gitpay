@@ -1,105 +1,47 @@
 import Models from '../../../../models'
-import PaymentRequestMail from '../../../../mail/paymentRequest'
-import Stripe from '../../../../client/payment/stripe'
-import { calculateAmountWithPercent } from '../../../../utils'
+import { findPaymentRequestPayment } from '../../../../queries/payment-request/payment-request-payment'
+import { debitRefundForPaymentRequest } from '../../../../services/payments/refunds/refundBalanceService'
 
-const stripe = Stripe()
 const models = Models as any
 
-export const handleChargeRefundedPaymentRequest = async (payment_intent: any) => {
-  const { metadata } = payment_intent || {}
+export type ChargeRefundedPaymentRequestParams = {
+  payment_intent_id: string
+  /** This specific refund's own amount (not the charge's cumulative amount_refunded) */
+  refund_amount: number | undefined
+  refund_id: string | undefined
+}
 
-  const paymentRequestPaymentId = metadata.payment_request_payment_id
-  const userId = metadata.user_id
+/**
+ * Marks the PR payment refunded and delegates the balance clawback to the shared
+ * refund service. Resolves the payment by source (PaymentRequestPayment.source =
+ * payment_intent id), not by PaymentIntent metadata — this matches how the dispute
+ * flow already resolves payments, and means it works even when metadata wasn't set.
+ */
+export const handleChargeRefundedPaymentRequest = async ({
+  payment_intent_id,
+  refund_amount,
+  refund_id
+}: ChargeRefundedPaymentRequestParams) => {
+  const paymentRequestPayment = await findPaymentRequestPayment(payment_intent_id)
+  if (!paymentRequestPayment) {
+    return
+  }
 
-  const user = await models.User.findOne({
-    where: {
-      id: userId
-    }
-  })
-
-  const paymentRequestPayment = await models.PaymentRequestPayment.findOne({
-    where: {
-      id: paymentRequestPaymentId
-    },
-    include: [
-      {
-        model: models.PaymentRequest
-      },
-      {
-        model: models.PaymentRequestCustomer
-      }
-    ]
-  })
-
-  const updatePaymentRequestPaymentStatus = await models.PaymentRequestPayment.update(
-    {
-      status: 'refunded'
-    },
-    {
-      where: {
-        id: paymentRequestPaymentId
-      },
-      returning: true
-    }
+  await models.PaymentRequestPayment.update(
+    { status: 'refunded' },
+    { where: { id: paymentRequestPayment.id } }
   )
 
-  const prPaymentStatus = updatePaymentRequestPaymentStatus[0]
-  const prPaymentDetails = updatePaymentRequestPaymentStatus[1][0]
-
-  if (prPaymentStatus) {
-    const paymentRequest = await models.PaymentRequest.findOne({
-      where: {
-        id: prPaymentDetails.paymentRequestId
-      }
-    })
-
-    if (paymentRequest) {
-      const paymentRequestBalance = await models.PaymentRequestBalance.findOrCreate({
-        where: {
-          userId: user.id
-        }
-      })
-
-      const amountReceived = payment_intent.amount
-      const feeToDeduct = calculateAmountWithPercent(amountReceived, 8, 'centavos')
-
-      const paymentRequestBalanceTransactionForRefund =
-        await models.PaymentRequestBalanceTransaction.create({
-          sourceId: payment_intent.id,
-          paymentRequestBalanceId: paymentRequestBalance[0].id,
-          amount: -feeToDeduct.centavosFee,
-          type: 'DEBIT',
-          reason: 'REFUND',
-          reason_details: 'refund_payment_request_requested_by_customer',
-          status: 'completed',
-          openedAt: Math.floor(Date.now() / 1000),
-          closedAt: Math.floor(Date.now() / 1000)
-        })
-
-      const balanceTransactionUpdated = await models.PaymentRequestBalanceTransaction.findOne({
-        where: {
-          id: paymentRequestBalanceTransactionForRefund.id
-        },
-        include: [
-          {
-            model: models.PaymentRequestBalance
-          }
-        ]
-      })
-
-      if (paymentRequestBalanceTransactionForRefund?.id) {
-        PaymentRequestMail.newBalanceTransactionForPaymentRequest(
-          user,
-          paymentRequestPayment,
-          balanceTransactionUpdated
-        ).catch((mailError: any) => {
-          console.error(
-            `Failed to send email for Refund on PaymentRequest ID: ${paymentRequestBalanceTransactionForRefund.id}`,
-            mailError
-          )
-        })
-      }
-    }
+  if (!refund_id || refund_amount == null) {
+    console.warn(
+      `[refund] charge.refunded missing refund id/amount for payment_intent ${payment_intent_id}`
+    )
+    return
   }
+
+  await debitRefundForPaymentRequest({
+    refund_id,
+    source_id: payment_intent_id,
+    refunded_amount: refund_amount
+  })
 }

@@ -15,7 +15,6 @@ import {
 } from '../../../../data/stripe/stripe.webhook.charge.dispute.closed'
 import { disputeFundsWithdrawn } from '../../../../data/stripe/stripe.webhook.charge.dispute.funds_withdrawn'
 import { refundCreated } from '../../../../data/stripe/stripe.webhook.charge.refunded'
-import { PaymentIntentData } from '../../../../data/stripe/stripe.paymentIntent'
 import {
   PaymentRequestFactory,
   PaymentRequestCustomerFactory,
@@ -444,10 +443,6 @@ describe('Payment Request Balance Webhook', () => {
   })
   describe('For refunds', () => {
     it('should update balance after a refund from a payment request is triggered', async () => {
-      nock('https://api.stripe.com')
-        .get('/v1/payment_intents/pi_1TestPI')
-        .reply(200, PaymentIntentData.forPaymentRequest)
-
       const user = await registerAndLogin(agent)
       const { body: currentUser } = user || {}
 
@@ -469,7 +464,7 @@ describe('Payment Request Balance Webhook', () => {
       const paymentRequestPayment = await PaymentRequestPaymentFactory({
         amount: 10000,
         currency: 'usd',
-        source: 'pi_test_456',
+        source: 'pi_1TestPI', // must match refundCreated fixture's payment_intent
         status: 'paid',
         customerId: paymentRequestCustomer.id,
         paymentRequestId: paymentRequest.id,
@@ -516,6 +511,193 @@ describe('Payment Request Balance Webhook', () => {
 
       expect(paymentRequestBalance).to.exist
       expect(paymentRequestBalance.balance).to.equal('-160')
+    })
+
+    it('should not double-debit when a charge.refunded event is redelivered (idempotent)', async () => {
+      const user = await registerAndLogin(agent)
+      const { body: currentUser } = user || {}
+
+      const paymentRequest = await PaymentRequestFactory({
+        title: 'Test Payment Request for redelivered Refund',
+        amount: 10000,
+        currency: 'usd',
+        userId: currentUser.id
+      })
+
+      const paymentRequestCustomer = await PaymentRequestCustomerFactory({
+        email: 'test@example.com',
+        name: 'Test User',
+        sourceId: 'src_test_457',
+        userId: currentUser.id
+      })
+
+      await PaymentRequestPaymentFactory({
+        amount: 10000,
+        currency: 'usd',
+        source: 'pi_1TestPI',
+        status: 'paid',
+        customerId: paymentRequestCustomer.id,
+        paymentRequestId: paymentRequest.id,
+        userId: currentUser.id
+      })
+
+      const paymentRequestBalance = await PaymentRequestBalanceFactory({
+        userId: currentUser.id,
+        balance: 0
+      })
+
+      await agent
+        .post('/webhooks/stripe-platform')
+        .send(refundCreated.successfullyForPaymentRequestMetadata)
+        .expect(200)
+      await agent
+        .post('/webhooks/stripe-platform')
+        .send(refundCreated.successfullyForPaymentRequestMetadata)
+        .expect(200)
+
+      const transactions = await models.PaymentRequestBalanceTransaction.findAll({
+        where: { paymentRequestBalanceId: paymentRequestBalance.id }
+      })
+      expect(transactions).to.have.lengthOf(1)
+
+      const updatedBalance = await models.PaymentRequestBalance.findOne({
+        where: { userId: currentUser.id }
+      })
+      expect(updatedBalance.balance).to.equal('-160')
+    })
+
+    it('should debit based on the actually-refunded amount for a manual partial refund, not the original charge', async () => {
+      const user = await registerAndLogin(agent)
+      const { body: currentUser } = user || {}
+
+      const paymentRequest = await PaymentRequestFactory({
+        title: 'Test Payment Request for partial Refund',
+        amount: 10000,
+        currency: 'usd',
+        userId: currentUser.id
+      })
+
+      const paymentRequestCustomer = await PaymentRequestCustomerFactory({
+        email: 'test@example.com',
+        name: 'Test User',
+        sourceId: 'src_test_458',
+        userId: currentUser.id
+      })
+
+      await PaymentRequestPaymentFactory({
+        amount: 10000,
+        currency: 'usd',
+        source: 'pi_1TestPartialPI', // must match the partial-refund fixture's payment_intent
+        status: 'paid',
+        customerId: paymentRequestCustomer.id,
+        paymentRequestId: paymentRequest.id,
+        userId: currentUser.id
+      })
+
+      const paymentRequestBalance = await PaymentRequestBalanceFactory({
+        userId: currentUser.id,
+        balance: 0
+      })
+
+      await agent
+        .post('/webhooks/stripe-platform')
+        .send(refundCreated.partiallyForPaymentRequestMetadata)
+        .expect(200)
+
+      const transaction = await models.PaymentRequestBalanceTransaction.findOne({
+        where: { paymentRequestBalanceId: paymentRequestBalance.id }
+      })
+
+      expect(transaction).to.exist
+      // amount_refunded (2000) * 8% = 160 — NOT the original charge amount (10000) * 8% = 800
+      expect(transaction.amount).to.equal('-160')
+
+      const updatedBalance = await models.PaymentRequestBalance.findOne({
+        where: { userId: currentUser.id }
+      })
+      expect(updatedBalance.balance).to.equal('-160')
+    })
+
+    it('should create separate DEBIT rows for two distinct refunds on the same payment', async () => {
+      const user = await registerAndLogin(agent)
+      const { body: currentUser } = user || {}
+
+      const paymentRequest = await PaymentRequestFactory({
+        title: 'Test Payment Request for multiple Refunds',
+        amount: 10000,
+        currency: 'usd',
+        userId: currentUser.id
+      })
+
+      const paymentRequestCustomer = await PaymentRequestCustomerFactory({
+        email: 'test@example.com',
+        name: 'Test User',
+        sourceId: 'src_test_459',
+        userId: currentUser.id
+      })
+
+      await PaymentRequestPaymentFactory({
+        amount: 10000,
+        currency: 'usd',
+        source: 'pi_1TestPartialPI',
+        status: 'paid',
+        customerId: paymentRequestCustomer.id,
+        paymentRequestId: paymentRequest.id,
+        userId: currentUser.id
+      })
+
+      const paymentRequestBalance = await PaymentRequestBalanceFactory({
+        userId: currentUser.id,
+        balance: 0
+      })
+
+      // First manual partial refund on this payment
+      await agent
+        .post('/webhooks/stripe-platform')
+        .send(refundCreated.partiallyForPaymentRequestMetadata)
+        .expect(200)
+
+      // A second, distinct manual refund on the same payment_intent. charge.amount_refunded
+      // is cumulative (2000 + 3000 = 5000), but the debit must be based on this event's own
+      // refund amount (3000), not the cumulative total or the first refund's amount.
+      const secondRefund = {
+        ...refundCreated.partiallyForPaymentRequestMetadata,
+        id: 'evt_1TestChargeSecondPartialRefunded',
+        data: {
+          object: {
+            ...refundCreated.partiallyForPaymentRequestMetadata.data.object,
+            amount_refunded: 5000,
+            refunds: {
+              ...refundCreated.partiallyForPaymentRequestMetadata.data.object.refunds,
+              data: [
+                {
+                  ...refundCreated.partiallyForPaymentRequestMetadata.data.object.refunds.data[0],
+                  id: 're_1TestSecondPartialRefund',
+                  amount: 3000
+                }
+              ]
+            }
+          }
+        }
+      }
+
+      await agent.post('/webhooks/stripe-platform').send(secondRefund).expect(200)
+
+      const transactions = await models.PaymentRequestBalanceTransaction.findAll({
+        where: { paymentRequestBalanceId: paymentRequestBalance.id },
+        order: [['id', 'ASC']]
+      })
+      expect(transactions).to.have.lengthOf(2)
+      expect(transactions[0].sourceId).to.equal('re_1TestPartialRefund')
+      expect(transactions[0].amount).to.equal('-160')
+      expect(transactions[1].sourceId).to.equal('re_1TestSecondPartialRefund')
+      expect(transactions[1].amount).to.equal('-240')
+
+      const updatedBalance = await models.PaymentRequestBalance.findOne({
+        where: { userId: currentUser.id }
+      })
+      // -160 (first, 2000 refunded) + -240 (second, 3000 refunded) — each based on its own amount
+      expect(updatedBalance.balance).to.equal('-400')
     })
   })
 })

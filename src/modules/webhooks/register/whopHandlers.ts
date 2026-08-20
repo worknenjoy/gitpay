@@ -7,8 +7,14 @@ import {
   withDrawnDisputeForPaymentRequest,
   closeDisputeForPaymentRequest
 } from '../../../services/payments/disputes/disputeService'
+import { debitRefundForPaymentRequest } from '../../../services/payments/refunds/refundBalanceService'
+import {
+  debitExtraFeeForPaymentRequest,
+  WHOP_DISPUTE_ALERT_FEE_CENTS
+} from '../../../services/payments/fees/extraFeeService'
 import { createPayoutRecord } from '../../../mutations/payout/createPayoutRecord'
 import PayoutMail from '../../../mail/payout'
+import PaymentRequestMail from '../../../mail/paymentRequest'
 const models = Models as any
 
 /** Default Whop chargeback fee ($15) in cents — overridable via WHOP_DISPUTE_FEE_CENTS */
@@ -532,6 +538,20 @@ async function handleRefund(ctx: WebhookHandlerContext) {
     }
   }
 
+  if (paymentId && refund?.id) {
+    try {
+      await debitRefundForPaymentRequest({
+        refund_id: refund.id,
+        source_id: paymentId,
+        refunded_amount: whopMajorToCents(refund.amount)
+      })
+    } catch (error: any) {
+      console.error('[whop] refund balance debit error', error)
+      const status = error?.statusCode || error?.status || 500
+      return ctx.res.status(status).json({ error: error?.message || 'refund_error' })
+    }
+  }
+
   return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
 }
 
@@ -653,6 +673,73 @@ async function handleDisputeUpdated(ctx: WebhookHandlerContext) {
   return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
 }
 
+/**
+ * Whop's Early Dispute Alerts: an early warning from the card network before a
+ * dispute is formalized. `charge_for_alert` tells us whether Whop billed the
+ * platform for this specific alert (~$29, see WHOP_DISPUTE_ALERT_FEE_CENTS) —
+ * independent of whether the alert later becomes a refund (dispute.created is
+ * never sent for alerts Whop auto-refunds) or escalates into a formal dispute.
+ * No money has moved yet at alert time beyond that fee, so this handler only
+ * debits the alert fee (when charged) and notifies the seller — the refund or
+ * dispute clawback is captured separately by handleRefund / handleDisputeCreated
+ * when (if) that event actually arrives.
+ */
+async function handleDisputeAlertCreated(ctx: WebhookHandlerContext) {
+  const alert = ctx.event.data.object || ctx.rawEvent?.data
+  const paymentId = alert?.payment?.id
+  const alertId = alert?.id
+
+  console.log('[whop] dispute_alert.created', {
+    alertId,
+    paymentId,
+    amount: alert?.amount,
+    alertType: alert?.alert_type,
+    chargeForAlert: alert?.charge_for_alert
+  })
+
+  if (!paymentId) {
+    console.warn('[whop] dispute_alert.created missing payment.id — ignoring')
+    return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+  }
+
+  const prPayment = await models.PaymentRequestPayment.findOne({
+    where: { source: paymentId },
+    include: [
+      { model: models.User },
+      { model: models.PaymentRequest },
+      { model: models.PaymentRequestCustomer }
+    ]
+  })
+  if (!prPayment) {
+    console.log('[whop] dispute_alert.created not a payment-request payment', paymentId)
+    return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+  }
+
+  try {
+    if (alert?.charge_for_alert === true) {
+      await debitExtraFeeForPaymentRequest({
+        source_id: alertId,
+        payment_source_id: paymentId,
+        amount: WHOP_DISPUTE_ALERT_FEE_CENTS,
+        reason_details: 'whop_dispute_alert_fee',
+        closedAt: alert.created_at ? new Date(alert.created_at) : undefined
+      })
+    }
+  } catch (error: any) {
+    console.error('[whop] dispute_alert.created fee error', error)
+    const status = error?.statusCode || error?.status || 500
+    return ctx.res.status(status).json({ error: error?.message || 'dispute_alert_error' })
+  }
+
+  PaymentRequestMail.newDisputeAlertForPaymentRequest(prPayment.User, alert, prPayment).catch(
+    (mailError: any) => {
+      console.error(`Failed to send email for dispute alert: ${alertId}`, mailError)
+    }
+  )
+
+  return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+}
+
 export function registerWhopHandlers(
   registry: WebhookEventRegistry = new WebhookEventRegistry()
 ): WebhookEventRegistry {
@@ -672,6 +759,7 @@ export function registerWhopHandlers(
     .onRaw('refund.updated', handleRefund)
     .onRaw('dispute.created', handleDisputeCreated)
     .onRaw('dispute.updated', handleDisputeUpdated)
+    .onRaw('dispute_alert.created', handleDisputeAlertCreated)
 
   registry
     .onNormalized('payment.succeeded', handlePaymentSucceeded)

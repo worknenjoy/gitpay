@@ -50,6 +50,10 @@ const getReason = (reason_details: any) => {
       return i18n.__(
         'mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.refund_payment_request'
       )
+    case 'whop_dispute_alert_fee':
+      return i18n.__(
+        'mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.whop_dispute_alert_fee'
+      )
     case 'manual_payment_for_credit_due':
       return 'Manual payment for credit due'
     default:
@@ -618,6 +622,53 @@ const PaymentRequestMail = {
               },
               `<div style="text-align: right">${i18n.__('mail.paymentRequest.newDisputeCreatedForPaymentRequest.bottom')}</div>`
             )
+          }
+        ]
+      )
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+  /**
+   * Whop-only: an early dispute alert (before it's known whether it becomes an
+   * auto-refund or a formal dispute). Notify-only — any fee/balance impact is
+   * sent separately via newBalanceTransactionForPaymentRequest when applicable.
+   */
+  newDisputeAlertForPaymentRequest: async (user: any, alert: any, paymentRequestPayment: any) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+    if (!receiveNotifications) {
+      return
+    }
+    i18n.setLocale(language)
+
+    try {
+      const al = alert?.object || alert
+      const currencyKey = resolveCurrencyKey(al?.currency)
+      const currencySymbol = currencyInfo[currencyKey]?.symbol || ''
+      const alertedAmount = al?.amount
+
+      return await request(
+        to,
+        i18n.__('mail.paymentRequest.newDisputeAlertForPaymentRequest.subject'),
+        [
+          {
+            type: 'text/html',
+            value: emailTemplate.baseContentEmailTemplate(`
+        <p>${i18n.__('mail.paymentRequest.newDisputeAlertForPaymentRequest.message', {
+          amount: typeof alertedAmount === 'number' ? `${currencySymbol} ${alertedAmount}` : 'N/A'
+        })}</p>
+        <p>${i18n.__('mail.paymentRequest.newDisputeAlertForPaymentRequest.details', {
+          customer_name:
+            paymentRequestPayment?.PaymentRequestCustomer?.name || al?.payment?.user?.name || 'N/A',
+          customer_email:
+            paymentRequestPayment?.PaymentRequestCustomer?.email ||
+            al?.payment?.user?.email ||
+            'N/A'
+        })}</p>
+        ${al?.charge_for_alert ? `<p>${i18n.__('mail.paymentRequest.newDisputeAlertForPaymentRequest.fee_charged')}</p>` : ''}
+      `)
           }
         ]
       )

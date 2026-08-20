@@ -84,8 +84,9 @@ In `NODE_ENV=test`, signature verification is skipped for both providers.
      Gitpay uses them as a paid signal for payment requests when `payment.succeeded` is missing)
    - `invoice.paid`, `invoice.past_due`
    - `withdrawal.created`, `withdrawal.updated`
-   - `refund.created`, `refund.updated`
-   - `dispute.created`, `dispute.updated` (payment-request balance clawback)
+   - `refund.created`, `refund.updated` (payment-request balance clawback: 8% of the refunded amount)
+   - `dispute.created`, `dispute.updated` (payment-request balance clawback: amount + 8% + $15)
+   - `dispute_alert.created` (Early Dispute Alerts early warning — notifies the seller and, when Whop bills for the alert, debits the ~$29 alert fee; see "Payment request: refunds and fees" below)
 4. Store the webhook secret as `WHOP_WEBHOOK_SECRET`.
 
 **If you only log `membership.activated` and never `payment.succeeded`:** that is common for Whop product/plan purchases. Ensure `membership.activated` is subscribed (and deploy code that handles it). Unhandled events still return HTTP 200 so Whop stops retrying — check logs for `[whop] membership.activated/went_valid`.
@@ -350,6 +351,58 @@ A won dispute's CREDIT is `amount + provider fee` only — it does **not** reimb
 platform fee that was part of the original DEBIT, so the balance does not return fully to zero even
 when a dispute is won (same behavior on both providers, since they share `disputeService.ts`).
 
+### Payment request: refunds and fees
+
+Refunds debit the seller's `PaymentRequestBalance` on both providers, sharing
+`src/services/payments/refunds/refundBalanceService.ts`:
+
+| Stripe | Whop |
+|--------|------|
+| `charge.refunded` → **DEBIT** | `refund.created` / `refund.updated` → **DEBIT** |
+
+Debit formula (cents): `8% of the amount actually refunded` — reason `REFUND`, `reason_details:
+'refund_payment_request_requested_by_customer'`. This is a lighter clawback than a formal dispute:
+Gitpay only recovers its own platform fee, since the provider (not the seller's transferred payout)
+absorbs the refunded principal. Idempotent per the **refund's own id** (not the payment id — a single
+payment can have more than one distinct refund, e.g. a manual partial refund issued directly on the
+provider dashboard, so deduping by payment id would wrongly suppress a second, real refund).
+
+Gitpay's own refund action (`paymentRequestRefund`) always issues a **full** refund — there is no
+partial-refund UI in Gitpay. The only way the refunded amount differs from the original charge is a
+manual partial refund issued directly on the Stripe or Whop dashboard, outside Gitpay. The debit
+always reads the actually-refunded amount from the webhook (Stripe: the latest refund's own `amount`,
+**not** the charge's cumulative `amount_refunded`, which is a running total across every refund the
+charge has ever had; Whop: `refund.amount`), so this stays correct even for that edge case.
+
+### Whop Early Dispute Alerts and the alert fee
+
+Whop's Early Dispute Alerts lets you auto-refund transactions under a configurable threshold ($250
+minimum, cannot be set lower) when a card network signals an incoming dispute, preempting a formal
+chargeback. This is a Whop dashboard setting with no Gitpay-side configuration.
+
+Separately from that threshold, Whop bills **per alert** (~$29, independent of whether the alert
+resolves via auto-refund, a formal dispute, or nothing) whenever `charge_for_alert` is `true` on the
+`dispute_alert.created` webhook payload. Gitpay debits this immediately when it fires:
+
+| Event | Fee debited | Reason |
+|---|---|---|
+| `dispute_alert.created` (`charge_for_alert=true`) | `WHOP_DISPUTE_ALERT_FEE_CENTS` (2900 = $29) | `EXTRA_FEE` |
+
+`WHOP_DISPUTE_ALERT_FEE_CENTS` is a plain code constant in `src/services/payments/fees/extraFeeService.ts`
+(not env-configurable, unlike `WHOP_DISPUTE_FEE_CENTS`) — Whop doesn't expose a fee amount anywhere in
+the dispute or dispute-alert API/webhook payloads (unlike Stripe's `balance_transactions[0].fee`), only
+the `charge_for_alert` boolean confirming whether one applies. The $29 figure is sourced from
+third-party research, not Whop's own pricing docs — verify it against a real Whop invoice and adjust
+the constant directly if it differs.
+
+The alert fee is captured once, independent of whatever happens next — no cross-event correlation is
+needed. An alert that leads to an auto-refund accumulates both the `EXTRA_FEE` debit and the `REFUND`
+debit as two separate ledger rows; an alert that escalates into a formal dispute accumulates the
+`EXTRA_FEE` debit plus the full `DISPUTE` debit; a dispute with no preceding alert only ever gets the
+dispute debit. The seller is also notified by email as soon as the alert fires (`dispute_alert.created`
+→ `PaymentRequestMail.newDisputeAlertForPaymentRequest`), before it's known whether it becomes a refund
+or a dispute.
+
 ### Negative balance recovery on Whop
 
 The debt-recovery mechanism (`executePaymentRequestTransfer.ts`) that applies a user's next paid
@@ -364,12 +417,13 @@ days to become available):
   is deferred (insufficient available balance), the negative balance stays exactly as it was** until
   the daily cron / `process_pending_transfers` retry succeeds — it is never applied optimistically.
 
-### Testing disputes in sandbox
+### Testing disputes, refunds, and dispute alerts in sandbox
 
 Whop's sandbox cannot generate a real chargeback (disputes are bank/card-network driven — there is no
-Stripe-CLI-style `stripe trigger charge.dispute.created` for Whop). To validate the deployed code path
-(real `WHOP_WEBHOOK_SECRET` signature verification, real DB writes, real email sending) without a live
-chargeback, sign and deliver a synthetic event yourself:
+Stripe-CLI-style `stripe trigger charge.dispute.created` for Whop), and Early Dispute Alerts can't be
+triggered on demand either. To validate the deployed code path (real `WHOP_WEBHOOK_SECRET` signature
+verification, real DB writes, real email sending) without a live chargeback or alert, sign and deliver
+a synthetic event yourself with `src/scripts/whop/simulate_dispute.ts`:
 
 1. Run a real Whop sandbox checkout to get a genuine `payment.id` (`pay_…`) tied to an existing
    `PaymentRequestPayment`.
@@ -383,6 +437,19 @@ chargeback, sign and deliver a synthetic event yourself:
    npm run scripts:whop:simulate_dispute -- --type=dispute.updated --status=won --payment-id=pay_xxx --url=https://your-host/webhooks/whop
    ```
    Confirm the CREDIT/recovery path (or, for `--status=lost`, that no CREDIT is created).
+4. Simulate a refund (customer-requested or Whop auto-refund from an alert — same event either way):
+   ```bash
+   npm run scripts:whop:simulate_dispute -- --type=refund.created --payment-id=pay_xxx --amount=49.95 --url=https://your-host/webhooks/whop
+   ```
+   Confirm an 8%-of-refund `PaymentRequestBalanceTransaction` DEBIT (`reason='REFUND'`) appears and the
+   payment is marked `refunded`.
+5. Simulate an early dispute alert:
+   ```bash
+   npm run scripts:whop:simulate_dispute -- --type=dispute_alert.created --payment-id=pay_xxx --charge-for-alert=true --url=https://your-host/webhooks/whop
+   ```
+   Confirm the seller notification email sends, and (with `--charge-for-alert=true`) a
+   `PaymentRequestBalanceTransaction` DEBIT (`reason='EXTRA_FEE'`) for `WHOP_DISPUTE_ALERT_FEE_CENTS`
+   appears. Use `--charge-for-alert=false` to confirm the notify-only path with no debit.
 
 `--url` can point at a local server, an ngrok tunnel, or a deployed sandbox — see
 `src/scripts/whop/simulate_dispute.ts` for the full flag list.

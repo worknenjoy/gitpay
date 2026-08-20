@@ -1,6 +1,61 @@
 import { object } from '@paypal/paypal-server-sdk/dist/types/schema'
 
 export const refundCreated = {
+  /**
+   * A manual PARTIAL refund issued directly on the Stripe dashboard (outside
+   * Gitpay's own always-full refund action): amount (10000) != amount_refunded
+   * (2000). Used to prove the balance debit is based on the amount actually
+   * refunded, not the original charge.
+   */
+  partiallyForPaymentRequestMetadata: {
+    id: 'evt_1TestChargePartiallyRefunded',
+    object: 'event',
+    api_version: '2020-03-02',
+    created: 1762903200,
+    data: {
+      object: {
+        id: 'ch_1TestPartialCharge',
+        object: 'charge',
+        amount: 10000,
+        amount_captured: 10000,
+        amount_refunded: 2000,
+        currency: 'usd',
+        metadata: {},
+        payment_intent: 'pi_1TestPartialPI',
+        refunded: false,
+        refunds: {
+          object: 'list',
+          data: [
+            {
+              id: 're_1TestPartialRefund',
+              object: 'refund',
+              amount: 2000,
+              charge: 'ch_1TestPartialCharge',
+              created: 1762903190,
+              currency: 'usd',
+              metadata: {},
+              payment_intent: 'pi_1TestPartialPI',
+              reason: 'requested_by_customer',
+              status: 'succeeded'
+            }
+          ],
+          has_more: false,
+          total_count: 1,
+          url: '/v1/charges/ch_1TestPartialCharge/refunds'
+        },
+        status: 'succeeded'
+      },
+      previous_attributes: {
+        amount_refunded: 0,
+        refunded: false,
+        refunds: { data: [], total_count: 0 }
+      }
+    },
+    livemode: false,
+    pending_webhooks: 1,
+    request: { id: null, idempotency_key: null },
+    type: 'charge.refunded'
+  },
   successfullyForPaymentRequestMetadata: {
     id: 'evt_1TestChargeRefunded',
     object: 'event',
