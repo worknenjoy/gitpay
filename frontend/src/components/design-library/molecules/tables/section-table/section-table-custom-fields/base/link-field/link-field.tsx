@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import TextEllipsis from 'text-ellipsis'
 import { useHistory } from 'react-router-dom'
 import { useIntl } from 'react-intl'
-import { Tooltip, Typography, IconButton } from '@mui/material'
-import FileCopyIcon from '@mui/icons-material/FileCopy'
+import { Tooltip, Typography } from '@mui/material'
+import CopyIconButton from 'design-library/atoms/buttons/copy-icon-button/copy-icon-button'
 
 type LinkFieldProps = {
   url: string
@@ -30,7 +30,6 @@ const LinkField = ({
 }: LinkFieldProps) => {
   const history = useHistory()
   const intl = useIntl()
-  const [copied, setCopied] = useState(false)
 
   const handleClickListItem = (e) => {
     if (external) {
@@ -38,17 +37,6 @@ const LinkField = ({
       history.push(url)
     } else {
       window.open(url, '_blank')
-    }
-  }
-
-  const handleCopy = async (e) => {
-    e.stopPropagation()
-    try {
-      await navigator.clipboard.writeText(url)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1500)
-    } catch (err) {
-      // handle error if needed
     }
   }
 
@@ -80,11 +68,12 @@ const LinkField = ({
         </Tooltip>
       </a>
       {copiable && (
-        <Tooltip title={intl.formatMessage({ id: 'copyLink', defaultMessage: 'Copy link' })}>
-          <IconButton size="small" onClick={handleCopy} style={{ marginLeft: 8 }}>
-            <FileCopyIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
+        <span style={{ marginLeft: 8 }}>
+          <CopyIconButton
+            value={url}
+            tooltipTitle={intl.formatMessage({ id: 'copyLink', defaultMessage: 'Copy link' })}
+          />
+        </span>
       )}
     </div>
   )

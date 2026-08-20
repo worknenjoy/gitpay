@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react'
 import { FormattedMessage } from 'react-intl'
 import moment from 'moment'
+import { Box } from '@mui/material'
 import DetailsSidePanel, {
   DetailsItem,
   DetailsSection
 } from 'design-library/molecules/drawers/details-side-panel/details-side-panel'
 import PaymentStatus from 'design-library/atoms/status/payment-types-status/payment-status/payment-status'
+import CopyIconButton from 'design-library/atoms/buttons/copy-icon-button/copy-icon-button'
 
 type PaymentRequestPayment = {
   id?: number
@@ -199,7 +201,34 @@ const buildSections = (payment: PaymentRequestPayment | null): DetailsSection[] 
           defaultMessage="Payment ID"
         />
       ),
-      value: payment.source || MISSING
+      value: payment.source ? (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 0.5,
+            justifyContent: 'flex-end',
+            minWidth: 0
+          }}
+        >
+          <Box
+            component="span"
+            sx={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              minWidth: 0
+            }}
+          >
+            {payment.source}
+          </Box>
+          <Box sx={{ flexShrink: 0, display: 'flex' }}>
+            <CopyIconButton value={payment.source} />
+          </Box>
+        </Box>
+      ) : (
+        MISSING
+      )
     },
     {
       label: (
@@ -256,6 +285,7 @@ const PaymentRequestPaymentDetailsAction = ({
       open={open}
       onClose={onClose}
       completed={completed}
+      mode="medium"
       title={
         <FormattedMessage
           id="paymentRequest.payment.details.title"

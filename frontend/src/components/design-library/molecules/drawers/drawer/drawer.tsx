@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import DrawerActions from './drawer-actions/drawer-actions'
 import { CloseFab } from './drawer.styles'
 
-export type DrawerMode = 'default' | 'compact'
+export type DrawerMode = 'default' | 'compact' | 'medium'
 
 type DrawerProps = {
   open: boolean
@@ -20,7 +20,9 @@ type DrawerProps = {
   /**
    * Layout density.
    * - default: full form-style side drawer (content-sized / wide)
-   * - compact: fixed narrow width, tighter padding — suited to details / definition lists
+   * - compact: fixed narrow width (360px), tighter padding — suited to details / definition lists
+   * - medium: same tighter padding as compact, but a wider fixed width (480px) — for detail
+   *   panels whose content needs more room (e.g. longer values) than compact comfortably fits
    */
   mode?: DrawerMode
 }
@@ -37,7 +39,7 @@ const Drawer = ({
 }: DrawerProps) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-  const isCompact = mode === 'compact'
+  const isCompact = mode === 'compact' || mode === 'medium'
   const closeDialogButton = () => {
     return (
       <CloseFab size="small" aria-label="close" onClick={onClose} $compact={isCompact}>
@@ -46,7 +48,7 @@ const Drawer = ({
     )
   }
 
-  const paperWidth = isMobile ? '90vw' : isCompact ? 360 : null
+  const paperWidth = isMobile ? '90vw' : mode === 'compact' ? 360 : mode === 'medium' ? 480 : null
 
   return (
     <MuiDrawer

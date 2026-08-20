@@ -46,7 +46,9 @@ export const DefinitionValue = styled('dd')(({ theme }) => ({
   textAlign: 'right',
   flex: '0 0 auto',
   maxWidth: '55%',
-  wordBreak: 'break-word'
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis'
 }))
 
 export const Divider = styled(Box)(({ theme }) => ({

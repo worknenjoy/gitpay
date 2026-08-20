@@ -57,3 +57,21 @@ Compact.args = {
     }
   ]
 }
+
+export const Medium = Template.bind({})
+Medium.args = {
+  open: true,
+  onClose: () => {},
+  mode: 'medium',
+  title: 'Payment details',
+  subtitle: 'Wider side panel for details that need more room',
+  children: 'Medium content sits in a fixed 480px drawer, same tighter padding as compact.',
+  actions: [
+    {
+      label: 'Close',
+      onClick: () => {},
+      variant: 'contained',
+      color: 'secondary'
+    }
+  ]
+}

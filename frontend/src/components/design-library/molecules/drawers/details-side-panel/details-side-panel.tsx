@@ -1,6 +1,6 @@
 import React from 'react'
 import { Skeleton, Typography } from '@mui/material'
-import Drawer from 'design-library/molecules/drawers/drawer/drawer'
+import Drawer, { DrawerMode } from 'design-library/molecules/drawers/drawer/drawer'
 import {
   DefinitionLabel,
   DefinitionList,
@@ -38,6 +38,8 @@ export type DetailsSidePanelProps = {
   }>
   completed?: boolean
   children?: React.ReactNode
+  /** Drawer width/density — defaults to 'compact' (360px). Use 'medium' (480px) for panels that need more room. */
+  mode?: DrawerMode
 }
 
 const valueColor = (variant: DetailsItem['variant'] = 'default') => {
@@ -80,7 +82,8 @@ const DetailsSidePanel = ({
   sections = [],
   actions = [],
   completed = true,
-  children
+  children,
+  mode = 'compact'
 }: DetailsSidePanelProps) => {
   return (
     <Drawer
@@ -90,7 +93,7 @@ const DetailsSidePanel = ({
       subtitle={subtitle}
       actions={actions}
       completed={completed}
-      mode="compact"
+      mode={mode}
     >
       {!completed && <DetailsSidePanelPlaceholder />}
       {completed &&
