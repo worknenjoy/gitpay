@@ -7,10 +7,14 @@ const PREFIX = 'PayoutStatus'
 export const classes = {
   pending: `${PREFIX}-pending`,
   created: `${PREFIX}-created`,
+  requested: `${PREFIX}-requested`,
+  awaiting_payment: `${PREFIX}-awaiting_payment`,
   in_transit: `${PREFIX}-in_transit`,
   failed: `${PREFIX}-failed`,
+  denied: `${PREFIX}-denied`,
   canceled: `${PREFIX}-canceled`,
   paid: `${PREFIX}-paid`,
+  completed: `${PREFIX}-completed`,
   unknown: `${PREFIX}-unknown`
 } as const
 
@@ -25,6 +29,21 @@ export const PayoutStatusRoot = styled('div')(({ theme }) => ({
   },
   [`.${classes.created}`]: {
     backgroundColor: green[500],
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
+  },
+  // Whop's initial withdrawal states — treated the same as pending/created.
+  [`.${classes.requested}`]: {
+    backgroundColor: orange[500],
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
+  },
+  [`.${classes.awaiting_payment}`]: {
+    backgroundColor: orange[500],
     color: theme.palette.common.white,
     '& .MuiSvgIcon-root': {
       color: theme.palette.common.white
@@ -51,7 +70,23 @@ export const PayoutStatusRoot = styled('div')(({ theme }) => ({
       color: theme.palette.common.white
     }
   },
+  // Whop's rejected-withdrawal state — treated the same as failed.
+  [`.${classes.denied}`]: {
+    backgroundColor: red[700],
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
+  },
   [`.${classes.paid}`]: {
+    backgroundColor: green[500],
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
+  },
+  // Whop's terminal successful state — treated the same as paid.
+  [`.${classes.completed}`]: {
     backgroundColor: green[500],
     color: theme.palette.common.white,
     '& .MuiSvgIcon-root': {

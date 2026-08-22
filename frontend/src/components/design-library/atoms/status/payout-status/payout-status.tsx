@@ -27,6 +27,20 @@ const PayoutStatus = ({ status, completed = true }) => {
       icon: <CreatedIcon className={classes.created} />
     },
     {
+      status: 'requested',
+      label: 'Requested',
+      color: 'requested',
+      icon: <CreatedIcon className={classes.requested} />,
+      message: 'Your withdrawal was requested and is waiting to be processed.'
+    },
+    {
+      status: 'awaiting_payment',
+      label: 'Awaiting Payment',
+      color: 'awaiting_payment',
+      icon: <InfoIcon className={classes.awaiting_payment} />,
+      message: 'Your withdrawal is awaiting payment. Please come back later to see the latest status.'
+    },
+    {
       status: 'in_transit',
       label: 'In Transit',
       color: 'in_transit',
@@ -48,11 +62,25 @@ const PayoutStatus = ({ status, completed = true }) => {
       message: 'Your payout was canceled. Please check with your bank for more details.'
     },
     {
+      status: 'denied',
+      label: 'Denied',
+      color: 'denied',
+      icon: <FailedIcon className={classes.denied} />,
+      message: 'Your withdrawal was denied. Please check your payout method for more details.'
+    },
+    {
       status: 'paid',
       label: 'Paid',
       color: 'paid',
       icon: <ActiveIcon className={classes.paid} />,
       message: 'Your status is paid, it means is already in your bank account.'
+    },
+    {
+      status: 'completed',
+      label: 'Completed',
+      color: 'completed',
+      icon: <ActiveIcon className={classes.completed} />,
+      message: 'Your status is completed, it means is already in your bank account.'
     },
     {
       status: 'unknown',
