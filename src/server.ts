@@ -15,7 +15,8 @@ const xFrameOptions = require('x-frame-options')
 const {
   dailyJob,
   monthlyJobNotifyUnclaimedBounties,
-  dailyJobSyncTaskStates
+  dailyJobSyncTaskStates,
+  hourlyJobSyncWhopPayouts
 } = require('./crons/cron')
 
 if (process.env.NODE_ENV !== 'production') {
@@ -49,6 +50,7 @@ app.use(i18n.init)
 dailyJob.start()
 monthlyJobNotifyUnclaimedBounties.start()
 dailyJobSyncTaskStates.start()
+hourlyJobSyncWhopPayouts.start()
 
 app.use(passport.initialize())
 app.use(passport.session())

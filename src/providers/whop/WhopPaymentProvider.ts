@@ -487,6 +487,44 @@ export class WhopPaymentProvider implements PaymentProvider {
     }
   }
 
+  /**
+   * List withdrawals for a connected company — GET /withdrawals?company_id=…,
+   * paginated (cursor-based, per @whop/sdk's WithdrawalListParams). Used by the
+   * payout reconciliation cron / manual sync script to backfill/correct Payouts
+   * the webhook may have missed, since the webhook is otherwise the sole
+   * real-time source. `createdAfter` filters to withdrawals created after that
+   * unix timestamp (a bounded recent-window pass); omit for a full-history walk.
+   * `pageCursor` continues a previous page — response field names for cursor/
+   * page-info are best-effort (multiple aliases checked) pending confirmation
+   * against a real paginated response.
+   */
+  async listWithdrawals(
+    companyId: string,
+    options: { createdAfter?: number; first?: number; pageCursor?: string } = {}
+  ): Promise<{ withdrawals: any[]; hasMore: boolean; endCursor: string | null }> {
+    const params = new URLSearchParams({ company_id: companyId })
+    if (options.createdAfter) params.set('created_after', String(options.createdAfter))
+    if (options.first) params.set('first', String(options.first))
+    if (options.pageCursor) params.set('after', options.pageCursor)
+
+    const response = await this.client.get<any>(`/withdrawals?${params.toString()}`)
+    const withdrawals: any[] = Array.isArray(response)
+      ? response
+      : (response?.data ?? response?.withdrawals ?? [])
+    const pageInfo = response?.page_info || response?.pageInfo || {}
+
+    return {
+      withdrawals,
+      hasMore: Boolean(pageInfo.has_next_page ?? pageInfo.hasNextPage ?? false),
+      endCursor: pageInfo.end_cursor ?? pageInfo.endCursor ?? null
+    }
+  }
+
+  /** Fetch a single withdrawal — GET /withdrawals/{id}. */
+  async getWithdrawal(withdrawalId: string): Promise<any> {
+    return this.client.get<any>(`/withdrawals/${encodeURIComponent(withdrawalId)}`)
+  }
+
   async createConnectedAccount(params: ConnectedAccountParams): Promise<AccountResult> {
     const email = params.email != null ? String(params.email).trim().toLowerCase() : ''
     if (!email || !email.includes('@')) {

@@ -32,9 +32,13 @@ const ACCOUNT_FIELD_LABELS: Record<string, string> = {
 }
 
 const PayoutMail: any = {
-  payoutCreated: async function (user: any, payout: any) {
+  // Returns true only on a genuine successful send, false when intentionally
+  // skipped (receiveNotifications off) or when delivery failed — lets callers
+  // that track notification state (e.g. Payout.notified_status) tell "skipped
+  // on purpose" from "needs retry" apart by also checking receiveNotifications.
+  payoutCreated: async function (user: any, payout: any): Promise<boolean> {
     const { email, language, receiveNotifications } = user || {}
-    if (!receiveNotifications) return
+    if (!receiveNotifications) return false
 
     i18n.setLocale(language || 'en')
 
@@ -44,7 +48,7 @@ const PayoutMail: any = {
     const currencySymbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
 
     try {
-      return await request(email, i18n.__('mail.webhook.payout.subject'), [
+      const response = await request(email, i18n.__('mail.webhook.payout.subject'), [
         {
           type: 'text/html',
           value: tableContentEmailTemplate(
@@ -67,13 +71,15 @@ const PayoutMail: any = {
           )
         }
       ])
+      return Array.isArray(response)
     } catch (error) {
       console.error('Error sending payout created email:', error)
+      return false
     }
   },
-  payoutUpdated: async function (user: any, payout: any) {
+  payoutUpdated: async function (user: any, payout: any): Promise<boolean> {
     const { email, language, receiveNotifications } = user || {}
-    if (!receiveNotifications) return
+    if (!receiveNotifications) return false
 
     i18n.setLocale(language || 'en')
 
@@ -84,7 +90,7 @@ const PayoutMail: any = {
     const status = payout.status || 'generic'
 
     try {
-      return await request(email, i18n.__('mail.webhook.payout.updated.subject'), [
+      const response = await request(email, i18n.__('mail.webhook.payout.updated.subject'), [
         {
           type: 'text/html',
           value: tableContentEmailTemplate(
@@ -107,13 +113,15 @@ const PayoutMail: any = {
           )
         }
       ])
+      return Array.isArray(response)
     } catch (error) {
       console.error('Error sending payout created email:', error)
+      return false
     }
   },
-  payoutPaid: async function (user: any, payout: any) {
+  payoutPaid: async function (user: any, payout: any): Promise<boolean> {
     const { email, language, receiveNotifications } = user || {}
-    if (!receiveNotifications) return
+    if (!receiveNotifications) return false
 
     i18n.setLocale(language || 'en')
 
@@ -123,7 +131,7 @@ const PayoutMail: any = {
     const currencySymbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
 
     try {
-      return await request(email, i18n.__('mail.webhook.payout.finished.subject'), [
+      const response = await request(email, i18n.__('mail.webhook.payout.finished.subject'), [
         {
           type: 'text/html',
           value: tableContentEmailTemplate(
@@ -142,8 +150,10 @@ const PayoutMail: any = {
           )
         }
       ])
+      return Array.isArray(response)
     } catch (error) {
       console.error('Error sending payout created email:', error)
+      return false
     }
   },
   accountRejected: async function (user: any) {
@@ -190,9 +200,9 @@ const PayoutMail: any = {
       console.error('Error sending account currently due email:', error)
     }
   },
-  payoutFailed: async function (user: any, payout: any) {
+  payoutFailed: async function (user: any, payout: any): Promise<boolean> {
     const { email, language, receiveNotifications } = user || {}
-    if (!receiveNotifications) return
+    if (!receiveNotifications) return false
 
     i18n.setLocale(language || 'en')
 
@@ -202,7 +212,7 @@ const PayoutMail: any = {
     const currencySymbol = currencyInfo[currency as keyof typeof currencyInfo]?.symbol || ''
 
     try {
-      return await request(email, i18n.__('mail.webhook.payout.fail.subject'), [
+      const response = await request(email, i18n.__('mail.webhook.payout.fail.subject'), [
         {
           type: 'text/html',
           value: tableContentEmailTemplate(
@@ -221,8 +231,10 @@ const PayoutMail: any = {
           )
         }
       ])
+      return Array.isArray(response)
     } catch (error) {
       console.error('Error sending payout created email:', error)
+      return false
     }
   }
 }

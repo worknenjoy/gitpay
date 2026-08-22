@@ -12,6 +12,7 @@ export interface PayoutAttributes {
   userId: number
   arrival_date?: string | null
   reference_number?: string | null
+  notified_status?: string | null
   createdAt?: Date
   updatedAt?: Date
 }
@@ -28,6 +29,7 @@ export type PayoutCreationAttributes = Optional<
   | 'paid'
   | 'arrival_date'
   | 'reference_number'
+  | 'notified_status'
   | 'createdAt'
   | 'updatedAt'
 >
@@ -47,6 +49,7 @@ export default class Payout
   public userId!: number
   public arrival_date!: string | null
   public reference_number!: string | null
+  public notified_status!: string | null
   public createdAt!: Date
   public updatedAt!: Date
 
@@ -99,6 +102,10 @@ export default class Payout
           allowNull: true
         },
         reference_number: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        notified_status: {
           type: DataTypes.STRING,
           allowNull: true
         },

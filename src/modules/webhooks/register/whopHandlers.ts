@@ -403,51 +403,58 @@ async function handleInvoiceFailed(ctx: WebhookHandlerContext) {
   return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
 }
 
-async function sendWithdrawalStatusMail(user: any, payout: any, status: string | undefined) {
-  const paidStatuses = ['paid', 'completed', 'succeeded']
-  const failedStatuses = ['failed', 'canceled', 'cancelled', 'denied']
+const WHOP_PAID_STATUSES = ['paid', 'completed', 'succeeded']
+const WHOP_FAILED_STATUSES = ['failed', 'canceled', 'cancelled', 'denied']
+
+/**
+ * Sends the status-appropriate PayoutMail. Returns true only on a genuine
+ * successful send (false if skipped or delivery failed) so callers can decide
+ * whether to advance Payout.notified_status.
+ */
+async function sendWithdrawalStatusMail(
+  user: any,
+  payout: any,
+  status: string | undefined
+): Promise<boolean> {
   const normalized = status ? String(status).toLowerCase() : ''
 
-  try {
-    if (paidStatuses.includes(normalized)) {
-      await PayoutMail.payoutPaid(user, payout)
-    } else if (failedStatuses.includes(normalized)) {
-      await PayoutMail.payoutFailed(user, payout)
-    } else {
-      await PayoutMail.payoutUpdated(user, payout)
-    }
-  } catch (e) {
-    console.error('[whop] error sending payout status mail:', e)
+  if (WHOP_PAID_STATUSES.includes(normalized)) {
+    return PayoutMail.payoutPaid(user, payout)
+  } else if (WHOP_FAILED_STATUSES.includes(normalized)) {
+    return PayoutMail.payoutFailed(user, payout)
   }
+  return PayoutMail.payoutUpdated(user, payout)
 }
 
-async function handleWithdrawal(ctx: WebhookHandlerContext) {
-  const withdrawal = ctx.event.data.object || ctx.rawEvent?.data
+/**
+ * Create-or-update a Payout from a Whop withdrawal object, sending/retrying the
+ * appropriate PayoutMail. Shared by the webhook handler, the reconciliation
+ * cron, and the manual sync script — all three funnel through this single
+ * function so row + notification behavior stays identical regardless of
+ * trigger, and a mail send that failed on one pass gets retried on the next
+ * (via Payout.notified_status lagging behind Payout.status).
+ */
+export async function upsertWhopPayoutFromWithdrawal(
+  withdrawal: any,
+  companyId: string | undefined
+) {
   const withdrawalId = withdrawal?.id
   const status = withdrawal?.status
-  const companyId = withdrawal?.company_id
 
-  console.log('[whop] withdrawal event', { type: ctx.event.type, withdrawalId, status })
-
-  if (!withdrawalId) {
-    return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
-  }
-
-  const paidStatuses = ['paid', 'completed', 'succeeded']
-  const failedStatuses = ['failed', 'canceled', 'cancelled', 'denied']
+  if (!withdrawalId) return null
 
   const existingPayout = await models.Payout.findOne({ where: { source_id: withdrawalId } })
 
   if (!existingPayout) {
     if (!companyId) {
-      console.warn('[whop] no payout found for withdrawal', withdrawalId)
-      return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+      console.warn('[whop] no company_id for withdrawal', withdrawalId)
+      return null
     }
 
     const user = await models.User.findOne({ where: { whop_account_id: companyId } })
     if (!user) {
       console.warn('[whop] no user found for withdrawal company', { withdrawalId, companyId })
-      return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+      return null
     }
 
     const payout = await createPayoutRecord({
@@ -460,27 +467,24 @@ async function handleWithdrawal(ctx: WebhookHandlerContext) {
     })
 
     const normalizedStatus = status ? String(status).toLowerCase() : ''
-    if (paidStatuses.includes(normalizedStatus)) {
+    if (WHOP_PAID_STATUSES.includes(normalizedStatus)) {
       await payout.update({ paid: true })
     }
 
-    try {
-      await PayoutMail.payoutCreated(user, payout)
-    } catch (e) {
-      console.error('[whop] error sending payout created mail:', e)
+    const sent = await PayoutMail.payoutCreated(user, payout)
+    if (sent || !user.receiveNotifications) {
+      await payout.update({ notified_status: payout.status })
     }
 
-    return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+    return payout
   }
-
-  const previousStatus = existingPayout.status
 
   const update: any = {}
   if (status) update.status = status
-  if (status && paidStatuses.includes(String(status).toLowerCase())) {
+  if (status && WHOP_PAID_STATUSES.includes(String(status).toLowerCase())) {
     update.paid = true
   }
-  if (status && failedStatuses.includes(String(status).toLowerCase())) {
+  if (status && WHOP_FAILED_STATUSES.includes(String(status).toLowerCase())) {
     update.paid = false
   }
 
@@ -488,12 +492,41 @@ async function handleWithdrawal(ctx: WebhookHandlerContext) {
     await existingPayout.update(update)
   }
 
-  const statusChanged = Boolean(status) && status !== previousStatus
-  if (statusChanged) {
+  const needsNotification =
+    Boolean(existingPayout.status) && existingPayout.status !== existingPayout.notified_status
+
+  if (needsNotification) {
     const user = await models.User.findByPk(existingPayout.userId)
     if (user) {
-      await sendWithdrawalStatusMail(user, existingPayout, status)
+      const sent = await sendWithdrawalStatusMail(user, existingPayout, existingPayout.status)
+      if (sent || !user.receiveNotifications) {
+        await existingPayout.update({ notified_status: existingPayout.status })
+      }
     }
+  }
+
+  return existingPayout
+}
+
+async function handleWithdrawal(ctx: WebhookHandlerContext) {
+  const withdrawal = ctx.event.data.object || ctx.rawEvent?.data
+  const withdrawalId = withdrawal?.id
+  const status = withdrawal?.status
+  // Whop envelope places company_id as a sibling of `data`, not nested inside it.
+  const companyId = ctx.rawEvent?.company_id ?? withdrawal?.company_id
+
+  console.log('[whop] withdrawal event', {
+    type: ctx.event.type,
+    withdrawalId,
+    status,
+    companyId
+  })
+
+  try {
+    await upsertWhopPayoutFromWithdrawal(withdrawal, companyId)
+  } catch (error) {
+    console.error('[whop] error processing withdrawal', { withdrawalId, error })
+    return ctx.res.status(500).json({ error: 'withdrawal_processing_error' })
   }
 
   return ctx.res.status(200).json(ctx.rawEvent || ctx.event)

@@ -8,6 +8,7 @@ const DeadlineMail = require('../mail/deadline')
 const TaskMail = require('../mail/task')
 const OrderCron = require('./orders/orderCron')
 const PaymentRequestTransferCron = require('./paymentRequests/paymentRequestTransferCron')
+const WhopPayoutSyncCron = require('./whop/whopPayoutSyncCron')
 const bountyClosedNotPaidComment = require('../bot/bountyClosedNotPaidComment')
 const {
   notifyUnclaimedBounties: notifyUnclaimedBountiesService
@@ -212,6 +213,13 @@ const dailyJobSyncTaskStates = new CronJob({
   }
 })
 
+const hourlyJobSyncWhopPayouts = new CronJob({
+  cronTime: '0 0 * * * *', // every hour on the hour
+  onTick: () => {
+    WhopPayoutSyncCron.syncRecentPayouts()
+  }
+})
+
 module.exports = {
   dailyJob,
   weeklyJob,
@@ -219,7 +227,9 @@ module.exports = {
   weeklyJobBountiesClosedNotPaid,
   monthlyJobNotifyUnclaimedBounties,
   dailyJobSyncTaskStates,
+  hourlyJobSyncWhopPayouts,
   TaskCron,
   OrderCron,
-  PaymentRequestTransferCron
+  PaymentRequestTransferCron,
+  WhopPayoutSyncCron
 }
