@@ -29,6 +29,7 @@ import messagesEnLocal from '../translations/generated/en.json'
 import Loader from '../components/design-library/atoms/loaders/loader/loader'
 
 import CookieConsentBar, { GITPAY_COOKIE_CONSENT } from './cookie-consent-bar'
+import warningsConfig from '../config/warnings'
 
 const cookieConsent = getCookieConsentValue(GITPAY_COOKIE_CONSENT)
 
@@ -111,7 +112,9 @@ function App() {
             <IntlProvider>
               <div>
                 <CssBaseline />
-                <PaymentPausedBanner open={paymentBannerOpen} onClose={handlePaymentBannerClose} />
+                {warningsConfig.warningMode && (
+                  <PaymentPausedBanner open={paymentBannerOpen} onClose={handlePaymentBannerClose} />
+                )}
                 <NotificationContainer />
                 <Routes />
                 <CookieConsentBar />
