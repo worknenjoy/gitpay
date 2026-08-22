@@ -38,7 +38,8 @@ const PayoutStatus = ({ status, completed = true }) => {
       label: 'Awaiting Payment',
       color: 'awaiting_payment',
       icon: <InfoIcon className={classes.awaiting_payment} />,
-      message: 'Your withdrawal is awaiting payment. Please come back later to see the latest status.'
+      message:
+        'Your withdrawal is awaiting payment. Please come back later to see the latest status.'
     },
     {
       status: 'in_transit',
