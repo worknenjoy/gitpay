@@ -1,5 +1,6 @@
 import React from 'react'
-import { defineMessages, useIntl } from 'react-intl'
+import { defineMessages, useIntl, FormattedMessage } from 'react-intl'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 import {
   convertStripeAmountByCurrency,
   currencyCodeToSymbol
@@ -8,6 +9,7 @@ import SectionTable from 'design-library/molecules/tables/section-table/section-
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field'
 import PayoutStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payouts/payout-status-field/payout-status-field'
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
+import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
 
 const messages = defineMessages({
   status: {
@@ -33,10 +35,20 @@ const messages = defineMessages({
   createdAt: {
     id: 'payouts.table.createdAt',
     defaultMessage: 'Created at'
+  },
+  actions: {
+    id: 'payouts.table.actions',
+    defaultMessage: 'Actions'
   }
 })
 
-const PayoutsTable = ({ payouts }) => {
+const PayoutsTable = ({
+  payouts,
+  onDetails
+}: {
+  payouts: any
+  onDetails?: (item: any) => void
+}) => {
   const intl = useIntl()
 
   const tableHeaderMetadata = {
@@ -75,6 +87,11 @@ const PayoutsTable = ({ payouts }) => {
       numeric: false,
       dataBaseKey: 'createdAt',
       label: intl.formatMessage(messages.createdAt)
+    },
+    actions: {
+      sortable: false,
+      numeric: false,
+      label: intl.formatMessage(messages.actions)
     }
   }
 
@@ -90,7 +107,22 @@ const PayoutsTable = ({ payouts }) => {
     arrival_date: (item: any) =>
       item.arrival_date ? <CreatedField createdAt={item.arrival_date * 1000} /> : <span>—</span>,
     reference_number: (item: any) => <span>{item.reference_number || '—'}</span>,
-    createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />
+    createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />,
+    actions: (item: any) => (
+      <ActionField
+        actions={[
+          {
+            children: <FormattedMessage id="general.buttons.details" defaultMessage="Details" />,
+            icon: <VisibilityIcon />,
+            onClick: () => {
+              if (onDetails) {
+                onDetails(item)
+              }
+            }
+          }
+        ]}
+      />
+    )
   }
 
   return (

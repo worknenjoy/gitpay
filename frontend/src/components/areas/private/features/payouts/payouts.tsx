@@ -8,6 +8,7 @@ import StatusCard from 'design-library/molecules/cards/status-card/status-card'
 import EmptyPayout from 'design-library/molecules/content/empty/empty-payout/empty-payout'
 import { useHistory } from 'react-router-dom'
 import PayoutRequestDrawer from 'design-library/molecules/drawers/payout-request-drawer/payout-request-drawer'
+import PayoutDetailsAction from 'design-library/molecules/drawers/actions/payments/payout-details-action/payout-details-action'
 import Button from 'design-library/atoms/buttons/button/button'
 import { SettingsOutlined as SettingsIcon } from '@mui/icons-material'
 
@@ -42,6 +43,7 @@ const Payouts = ({
   const payoutSchedule = accountData?.settings?.payouts?.schedule?.interval
 
   const [payoutRequestDrawer, setPayoutRequestDrawer] = React.useState(false)
+  const [selectedPayout, setSelectedPayout] = React.useState<any | null>(null)
 
   const handlePayoutRequestDrawer = () => {
     setPayoutRequestDrawer(!payoutRequestDrawer)
@@ -177,9 +179,15 @@ const Payouts = ({
               </React.Fragment>
             ))}
           </div>
-          <PayoutsTable payouts={payouts} />
+          <PayoutsTable payouts={payouts} onDetails={(item) => setSelectedPayout(item)} />
         </>
       )}
+      <PayoutDetailsAction
+        open={!!selectedPayout}
+        onClose={() => setSelectedPayout(null)}
+        payout={selectedPayout}
+        completed={true}
+      />
     </Container>
   )
 }
