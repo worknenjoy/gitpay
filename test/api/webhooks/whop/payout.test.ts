@@ -1,15 +1,29 @@
 import { expect } from 'chai'
+import sinon from 'sinon'
 import request from 'supertest'
 import api from '../../../../src/server'
 import { registerAndLogin, truncateModels } from '../../../helpers'
 import { withPaymentProvider } from '../../../helpers/whop'
 import Models from '../../../../src/models'
 import { PayoutFactory, UserFactory } from '../../../factories'
+import { sendgrid } from '../../../../src/config/secrets'
 
 const agent = request.agent(api) as any
 const models = Models as any
 
 describe('Whop withdrawal webhooks', () => {
+  before(() => {
+    // notified_status assertions below require PayoutMail's send to resolve
+    // deterministically — force the mock/no-op mail path regardless of
+    // whether SENDGRID_API_KEY happens to be set in this environment (CI may
+    // set it for other suites; real delivery must never gate these tests).
+    sinon.stub(sendgrid, 'apiKey').get(() => undefined)
+  })
+
+  after(() => {
+    sinon.restore()
+  })
+
   beforeEach(async () => {
     await truncateModels(models.User)
     await truncateModels(models.Payout)

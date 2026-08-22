@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import sinon from 'sinon'
 import nock from 'nock'
 // Importing the server triggers i18n.configure()/init() as a side effect, which
 // PayoutMail requires — this suite calls the sync service directly, not via HTTP.
@@ -7,6 +8,7 @@ import Models from '../../../src/models'
 import { truncateModels } from '../../helpers'
 import { withPaymentProvider, pinWhopApiForTests, WHOP_API_HOST } from '../../helpers/whop'
 import { UserFactory, PayoutFactory } from '../../factories'
+import { sendgrid } from '../../../src/config/secrets'
 import {
   syncWhopPayoutsForCompany,
   syncWhopPayoutsForAllCompanies
@@ -16,6 +18,17 @@ import WhopPayoutSyncCron from '../../../src/crons/whop/whopPayoutSyncCron'
 const models = Models as any
 
 describe('Whop payout sync (cron / manual script logic)', () => {
+  before(() => {
+    // notified_status assertions below require PayoutMail's send to resolve
+    // deterministically — force the mock/no-op mail path regardless of
+    // whether SENDGRID_API_KEY happens to be set in this environment.
+    sinon.stub(sendgrid, 'apiKey').get(() => undefined)
+  })
+
+  after(() => {
+    sinon.restore()
+  })
+
   beforeEach(async () => {
     await truncateModels(models.User)
     await truncateModels(models.Payout)
