@@ -16,7 +16,6 @@ import AmountField from 'design-library/molecules/tables/section-table/section-t
 import LinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/link-field/link-field'
 import PaymentRequestActiveField from 'design-library/molecules/tables/section-table/section-table-custom-fields/payment-request/payment-request-active-field/payment-request-active-field'
 import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
-import { validAccount } from '../../../../../utils/valid-account'
 
 const PaymentRequests = ({
   user,
@@ -34,8 +33,6 @@ const PaymentRequests = ({
 
   const [processingUpdatePaymentRequest, setProcessingUpdatePaymentRequest] = React.useState(false)
   const [selectedPaymentRequest, setSelectedPaymentRequest] = React.useState<any | null>(null)
-
-  const isAccountValid = validAccount(user, account)
 
   const handleGoToPayoutSettings = () => history.push('/profile/payout-settings')
 
@@ -102,8 +99,7 @@ const PaymentRequests = ({
               />
             ),
             icon: <EditIcon />,
-            onClick: () => openEditPaymentRequest(item),
-            disabled: !isAccountValid
+            onClick: () => openEditPaymentRequest(item)
           }
         ]}
       />
