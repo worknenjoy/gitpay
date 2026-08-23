@@ -11,6 +11,7 @@ import type {
   ConnectedAccountParams,
   CreatePaymentRequestResourcesParams,
   DeactivatePaymentRequestResourcesParams,
+  FinalizePaymentRequestResourcesParams,
   InvoiceParams,
   InvoiceResult,
   NormalizedEventType,
@@ -156,6 +157,14 @@ export class StripePaymentProvider implements PaymentProvider {
     params: CreatePaymentRequestResourcesParams
   ): Promise<PaymentRequestResources> {
     return createPaymentRequestStripeResources(params)
+  }
+
+  async finalizePaymentRequestResources(
+    _params: FinalizePaymentRequestResourcesParams
+  ): Promise<{ paymentUrl?: string } | undefined> {
+    // Stripe's reusable Payment Link (custom_unit_amount for open amounts) is already
+    // final at creation time — no id-dependent follow-up needed.
+    return undefined
   }
 
   async updatePaymentRequestPaymentLinkMetadata(

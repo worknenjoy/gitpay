@@ -20,6 +20,7 @@ import routerWallet from './routes/wallet'
 import routerWalletOrder from './routes/walletOrder'
 import routerLanguage from './routes/language'
 import routerPaymentRequest from './routes/paymentRequest'
+import routerPaymentRequestPublic from './routes/paymentRequestPublic'
 import routerPaymentRequestTransfer from './routes/paymentRequestTransfer'
 import routerAuth from './routes/auth'
 import routerUsers from './routes/users'
@@ -56,6 +57,7 @@ export const init = (app: Express) => {
   app.use('/wallets/orders', routerWalletOrder)
   app.use('/wallets', routerWallet)
   app.use('/payment-requests', routerPaymentRequest)
+  app.use('/payment-requests-public', routerPaymentRequestPublic)
   app.use('/payment-request-transfers', routerPaymentRequestTransfer)
   app.use('/payment-request-payments', routerPaymentRequestPayments)
   app.use('/payment-request-balances', routerPaymentRequestBalance)

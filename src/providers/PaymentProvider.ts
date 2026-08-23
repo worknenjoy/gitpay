@@ -10,6 +10,7 @@ import type {
   ConnectedAccountParams,
   CreatePaymentRequestResourcesParams,
   DeactivatePaymentRequestResourcesParams,
+  FinalizePaymentRequestResourcesParams,
   InvoiceParams,
   InvoiceResult,
   PaymentProviderName,
@@ -41,6 +42,19 @@ export abstract class PaymentProvider {
   abstract createPaymentRequestResources(
     params: CreatePaymentRequestResourcesParams
   ): Promise<PaymentRequestResources>
+
+  /**
+   * Optional post-creation follow-up, called once the payment request's real
+   * (database) id is known — `createPaymentRequestResources` runs before the row
+   * exists, so a provider whose payment URL needs that id (Whop's custom-amount
+   * Gitpay-hosted pay page) can't build it up front. Most providers don't need
+   * this; default is a no-op.
+   */
+  async finalizePaymentRequestResources(
+    _params: FinalizePaymentRequestResourcesParams
+  ): Promise<{ paymentUrl?: string } | undefined> {
+    return undefined
+  }
 
   abstract updatePaymentRequestPaymentLinkMetadata(
     paymentLinkId: string,

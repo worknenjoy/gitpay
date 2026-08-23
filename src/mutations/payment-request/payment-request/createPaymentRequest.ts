@@ -91,6 +91,16 @@ export async function createPaymentRequest(
         user_id: createPaymentRequest.userId
       })
 
+      const finalized = await paymentProvider.finalizePaymentRequestResources({
+        paymentLinkId,
+        paymentRequestId: createPaymentRequest.id,
+        custom_amount: custom_amount ?? false
+      })
+
+      if (finalized?.paymentUrl) {
+        await createPaymentRequest.update({ payment_url: finalized.paymentUrl }, { transaction })
+      }
+
       return createPaymentRequest
     } catch (error) {
       await paymentProvider.deactivatePaymentRequestResources(resources)

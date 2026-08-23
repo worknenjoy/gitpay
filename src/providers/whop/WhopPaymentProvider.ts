@@ -13,6 +13,7 @@ import type {
   ConnectedAccountParams,
   CreatePaymentRequestResourcesParams,
   DeactivatePaymentRequestResourcesParams,
+  FinalizePaymentRequestResourcesParams,
   InvoiceParams,
   InvoiceResult,
   NormalizedEventType,
@@ -29,6 +30,7 @@ import type {
   TransferResult
 } from '../types'
 import { getWhopClient, getWhopCompanyId, type WhopClient } from './client'
+import { getFrontendHostBase } from './redirectBase'
 
 /**
  * Whop payment connector.
@@ -194,21 +196,28 @@ export class WhopPaymentProvider implements PaymentProvider {
       company_id: companyId
     })
 
+    if (params.custom_amount) {
+      // Whop has no reusable open-amount checkout: unlike Stripe's custom_unit_amount,
+      // every Whop plan needs a fixed initial_price at creation. Don't create a plan here —
+      // a fresh one is minted per payer, for their entered amount, via createCheckoutForAmount
+      // once they reach the Gitpay-hosted pay page (payment_url below, finalized with the
+      // real id in finalizePaymentRequestResources since it isn't known yet at this point).
+      return {
+        productId: product.id,
+        priceId: '',
+        paymentLinkId: product.id,
+        paymentUrl: ''
+      }
+    }
+
     const planBody: Record<string, unknown> = {
       product_id: product.id,
       account_id: companyId,
       plan_type: 'one_time',
       currency: params.currency || 'usd',
       metadata,
-      description: params.description || params.title
-    }
-
-    if (params.custom_amount) {
-      // Whop one-time with open amount: use a nominal price; custom amounts may need checkout config.
-      // Prefer fixed amount when provided; otherwise 1.00 placeholder for custom link.
-      planBody.initial_price = params.amount && params.amount > 0 ? params.amount : 1
-    } else {
-      planBody.initial_price = params.amount || 0
+      description: params.description || params.title,
+      initial_price: params.amount || 0
     }
 
     const plan = await this.client.post<any>('/plans', planBody)
@@ -221,16 +230,85 @@ export class WhopPaymentProvider implements PaymentProvider {
     }
   }
 
+  async finalizePaymentRequestResources(
+    params: FinalizePaymentRequestResourcesParams
+  ): Promise<{ paymentUrl?: string } | undefined> {
+    if (!params.custom_amount) return undefined
+    return {
+      paymentUrl: `${getFrontendHostBase()}/#/payment-requests/${params.paymentRequestId}/pay`
+    }
+  }
+
+  /**
+   * Mint a fresh, single-use Whop checkout for a payer-entered amount (Whop custom-amount
+   * payment requests). Mirrors createBountyCheckout's inline-plan pattern: metadata stays at
+   * the checkout_configuration top level (Whop rejects many values on the inline plan).
+   */
+  async createCheckoutForAmount(
+    context: {
+      productId: string
+      title: string
+      description?: string
+      currency?: string
+      metadata?: Record<string, unknown>
+    },
+    amount: number
+  ): Promise<{ sessionId: string; purchaseUrl?: string }> {
+    const companyId = this.companyId()
+    // Whop plan titles (unlike product titles, which allow 80) are capped at 30 chars.
+    const title = context.title.slice(0, 30)
+
+    const body: Record<string, unknown> = {
+      mode: 'payment',
+      metadata: context.metadata || {},
+      plan: {
+        company_id: companyId,
+        product_id: context.productId,
+        initial_price: amount,
+        plan_type: 'one_time',
+        currency: context.currency || 'usd',
+        title,
+        description: context.description || context.title,
+        force_create_new_plan: true
+      }
+    }
+
+    const checkout = await this.client.post<any>('/checkout_configurations', body)
+
+    const planId = checkout.plan?.id || checkout.plan_id
+    const purchaseUrl =
+      checkout.purchase_url ||
+      checkout.checkout_url ||
+      checkout.url ||
+      (planId ? `https://whop.com/checkout/${planId}` : undefined) ||
+      (checkout.id ? `https://whop.com/checkout/${checkout.id}` : undefined)
+
+    return {
+      sessionId: checkout.id,
+      purchaseUrl
+    }
+  }
+
   async updatePaymentRequestPaymentLinkMetadata(
     paymentLinkId: string,
     metadata: PaymentRequestResourceMetadata
   ): Promise<unknown> {
-    return this.client.patch(`/plans/${paymentLinkId}`, {
-      metadata: {
-        payment_request_id: metadata.payment_request_id ?? null,
-        user_id: metadata.user_id ?? null
-      }
-    })
+    try {
+      return await this.client.patch(`/plans/${paymentLinkId}`, {
+        metadata: {
+          payment_request_id: metadata.payment_request_id ?? null,
+          user_id: metadata.user_id ?? null
+        }
+      })
+    } catch (error) {
+      // Custom-amount payment requests store a product id (no persistent plan) here —
+      // there's nothing to patch until a checkout is minted per payer. Best-effort no-op.
+      console.warn('[whop] updatePaymentRequestPaymentLinkMetadata: no plan for id', {
+        paymentLinkId,
+        error
+      })
+      return null
+    }
   }
 
   async updatePaymentRequestPaymentLinkActive(
@@ -238,6 +316,9 @@ export class WhopPaymentProvider implements PaymentProvider {
     active: boolean
   ): Promise<unknown> {
     // Whop has no payment-link active flag; archive product visibility via plan stock/visibility when possible.
+    // For custom-amount payment requests paymentLinkId is a product id (no persistent plan) —
+    // this PATCH best-effort no-ops (caught below); real enforcement is the active check in
+    // the public checkout endpoint before a new checkout is ever minted.
     try {
       return await this.client.patch(`/plans/${paymentLinkId}`, {
         // stock 0 prevents new purchases when deactivating
@@ -259,11 +340,20 @@ export class WhopPaymentProvider implements PaymentProvider {
     }
 
     if (params.title !== undefined || params.description !== undefined) {
-      // payment_link_id is the Whop plan id; resolve product for title updates
-      const plan = await this.client.get<any>(`/plans/${params.paymentLinkId}`)
-      const productId = plan?.product_id || plan?.product?.id
+      // payment_link_id is normally the Whop plan id; resolve its product for title
+      // updates. For custom-amount payment requests there's no persistent plan —
+      // payment_link_id is already the product id — so fall back to patching it directly.
+      let productId: string | undefined
+      let hasPlan = true
+      try {
+        const plan = await this.client.get<any>(`/plans/${params.paymentLinkId}`)
+        productId = plan?.product_id || plan?.product?.id
+      } catch (error) {
+        hasPlan = false
+        productId = params.paymentLinkId
+      }
 
-      if (productId && (params.title !== undefined || params.description !== undefined)) {
+      if (productId) {
         const productBody: Record<string, unknown> = {}
         if (params.title !== undefined) {
           productBody.title = String(params.title).slice(0, 80)
@@ -274,7 +364,7 @@ export class WhopPaymentProvider implements PaymentProvider {
         results.push(await this.client.patch(`/products/${productId}`, productBody))
       }
 
-      if (params.description !== undefined || params.title !== undefined) {
+      if (hasPlan && (params.description !== undefined || params.title !== undefined)) {
         results.push(
           await this.client.patch(`/plans/${params.paymentLinkId}`, {
             description: params.description ?? params.title

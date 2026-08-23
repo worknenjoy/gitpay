@@ -99,8 +99,34 @@ In `NODE_ENV=test`, signature verification is skipped for both providers.
 |------|--------|------|
 | Bounty card / checkout | Elements + Charges | Checkout configuration + embed/link |
 | Bounty invoice | Stripe Invoices | Whop Invoices (`send_invoice`) |
-| Payment request | Product + Price + Payment Link | Product + Plan (`purchase_url`) |
+| Payment request | Product + Price + Payment Link | Product + Plan (`purchase_url`), or Gitpay-hosted pay page for custom amounts (see below) |
 | Wallet top-up | Stripe invoice | Whop invoice |
+
+#### Payment request: custom (open) amounts
+
+A payment request can be created with `custom_amount: true`, meaning the payer chooses
+how much to pay rather than the creator fixing a price. Stripe and Whop support this very
+differently:
+
+- **Stripe**: the Payment Link's Price is created with `custom_unit_amount.enabled: true`
+  (`createPaymentRequestStripeResources`). Stripe's own hosted checkout page lets the payer
+  type an amount directly — one reusable link, no Gitpay involvement beyond creation time.
+- **Whop**: there is no equivalent. Every Whop plan (`initial_price`) is fixed at creation,
+  and there's no buyer-entered-amount field anywhere in the Whop API or hosted checkout.
+  So for `provider: whop` + `custom_amount: true`, `WhopPaymentProvider
+  .createPaymentRequestResources` does **not** create a plan — only a Product — and
+  `PaymentRequest.payment_url` is set to a Gitpay-hosted page instead of a Whop URL:
+  `${FRONTEND_HOST}/#/payment-requests/:id/pay`. That page collects the payer's amount,
+  calls `POST /payment-requests-public/:id/checkout`, which mints a fresh, single-use Whop
+  `checkout_configuration` for that exact amount (`WhopPaymentProvider
+  .createCheckoutForAmount`, same inline-plan pattern as `createBountyCheckout`), and
+  renders it inline via the `@whop/checkout` embed (`WhopCheckoutEmbed`) — the payer never
+  navigates to whop.com. `PaymentRequest.payment_link_id` stores the Whop **product id**
+  (not a plan id) in this case; `updatePaymentRequestPaymentLinkMetadata` /
+  `updatePaymentRequestPaymentLinkActive` / `updatePaymentRequestDetails` treat that id as
+  best-effort (there's no persistent plan to update) — active/inactive enforcement instead
+  happens in the `POST /payment-requests-public/:id/checkout` endpoint itself, before a new
+  checkout is ever minted.
 
 ### Pay-out
 

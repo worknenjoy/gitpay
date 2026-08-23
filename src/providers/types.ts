@@ -26,6 +26,12 @@ export type PaymentRequestResources = {
   paymentUrl: string
 }
 
+export type FinalizePaymentRequestResourcesParams = {
+  paymentLinkId: string
+  paymentRequestId: number | string
+  custom_amount?: boolean
+}
+
 /** Sync payment-request title/description/active to the provider checkout resource */
 export type UpdatePaymentRequestDetailsParams = {
   paymentLinkId: string

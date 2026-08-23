@@ -361,6 +361,135 @@ describe('Whop webhooks for payment requests', () => {
     })
   })
 
+  it('should treat membership.activated as paid for a custom-amount payment request, reading the real amount from the dynamically-minted plan', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_test_platform')
+        .reply(200, pendingLedger)
+      // Custom-amount checkouts mint a fresh plan per payer (createCheckoutForAmount) —
+      // its id is never equal to PaymentRequests.payment_link_id (which stores the
+      // product id in this case), so the real amount has to be fetched separately.
+      nock(WHOP_API_HOST)
+        .get('/api/v1/plans/plan_fresh_custom_amount_1')
+        .reply(200, { id: 'plan_fresh_custom_amount_1', initial_price: 42 })
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      const pr = await PaymentRequestFactory({
+        title: 'Custom amount PR',
+        amount: null,
+        custom_amount: true,
+        currency: 'usd',
+        payment_link_id: 'prod_custom_amount_1',
+        provider: 'whop',
+        userId: user.body.id
+      })
+
+      await agent
+        .post('/webhooks/whop')
+        .send({
+          id: 'msg_custom_amount_mem',
+          api_version: 'v1',
+          type: 'membership.activated',
+          timestamp: '2026-05-12T18:42:11.041Z',
+          company_id: 'biz_test_platform',
+          data: {
+            id: 'mem_custom_amount_1',
+            plan: {
+              id: 'plan_fresh_custom_amount_1',
+              metadata: {
+                purpose: 'payment_request',
+                payment_request_id: String(pr.id),
+                user_id: String(user.body.id)
+              }
+            },
+            product: { id: 'prod_custom_amount_1' },
+            user: { name: 'Buyer', email: 'buyer@example.com' }
+          }
+        })
+        .expect(200)
+
+      await pr.reload()
+      expect(pr.status).to.equal('paid')
+
+      const payment = await models.PaymentRequestPayment.findOne({
+        where: { paymentRequestId: pr.id }
+      })
+      expect(payment).to.exist
+      expect(payment.source).to.equal('mem_custom_amount_1')
+      // The real, payer-entered amount — not 0 (PR.amount is null for custom-amount PRs)
+      expect(Number(payment.amount)).to.equal(42)
+    })
+  })
+
+  it('should mark a custom-amount payment request paid on a real payment.succeeded event (fresh plan id, not payment_link_id)', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_test_platform')
+        .reply(200, pendingLedger)
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      const pr = await PaymentRequestFactory({
+        title: 'Custom amount PR (payment.succeeded)',
+        amount: null,
+        custom_amount: true,
+        currency: 'usd',
+        payment_link_id: 'prod_custom_amount_2',
+        provider: 'whop',
+        userId: user.body.id
+      })
+
+      // Real payment.succeeded envelope: metadata carries payment_request_id, but the
+      // event's own plan id (payment.plan.id) is the fresh, single-use plan minted for
+      // this specific checkout — never equal to PaymentRequests.payment_link_id.
+      await agent
+        .post('/webhooks/whop')
+        .send({
+          id: 'msg_custom_amount_pay',
+          api_version: 'v1',
+          type: 'payment.succeeded',
+          timestamp: '2026-05-12T18:42:11.041Z',
+          company_id: 'biz_test_platform',
+          data: {
+            id: 'pay_custom_amount_1',
+            status: 'succeeded',
+            amount_after_fees: 38.64,
+            total: 42,
+            currency: 'usd',
+            metadata: {
+              purpose: 'payment_request',
+              payment_request_id: String(pr.id),
+              user_id: String(user.body.id)
+            },
+            plan: { id: 'plan_fresh_custom_amount_2' },
+            user: { name: 'Buyer', email: 'buyer@example.com' }
+          }
+        })
+        .expect(200)
+
+      await pr.reload()
+      expect(pr.status).to.equal('paid')
+
+      const payment = await models.PaymentRequestPayment.findOne({
+        where: { paymentRequestId: pr.id }
+      })
+      expect(payment).to.exist
+      expect(payment.source).to.equal('pay_custom_amount_1')
+      expect(Number(payment.amount)).to.equal(42)
+    })
+  })
+
   it('should complete deferred Whop transfer with mockSettlement when sandbox has no balance', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()

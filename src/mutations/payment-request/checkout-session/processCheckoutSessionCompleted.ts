@@ -26,6 +26,11 @@ type CheckoutSession = {
    * Used as the claim/transfer fee base. Not a Stripe field.
    */
   amount_after_fees?: number | null
+  /**
+   * Payment provider's own reported fee (major currency units), e.g. Whop's
+   * application fee. Not a Stripe field.
+   */
+  provider_fee_amount?: number | null
 }
 
 /** Whop real charge id — preferred over provisional membership ids for disputes/refunds. */
@@ -101,6 +106,17 @@ async function maybeUpgradePaymentSourceAndAmount(
     const net = Number(session.amount_after_fees)
     if (payment.amount_after_fees == null || Number(payment.amount_after_fees) !== net) {
       updates.amount_after_fees = net
+    }
+  }
+
+  if (
+    session.provider_fee_amount != null &&
+    Number.isFinite(Number(session.provider_fee_amount)) &&
+    Number(session.provider_fee_amount) >= 0
+  ) {
+    const fee = Number(session.provider_fee_amount)
+    if (payment.provider_fee_amount == null || Number(payment.provider_fee_amount) !== fee) {
+      updates.provider_fee_amount = fee
     }
   }
 
@@ -295,12 +311,20 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
             ? Number(session.amount_after_fees)
             : null
 
+        const providerFeeAmount =
+          session.provider_fee_amount != null &&
+          Number.isFinite(Number(session.provider_fee_amount)) &&
+          Number(session.provider_fee_amount) >= 0
+            ? Number(session.provider_fee_amount)
+            : null
+
         const paymentRequestPayment = await models.PaymentRequestPayment.create(
           {
             paymentRequestId: paymentRequest.id,
             userId: paymentRequest.userId,
             amount: originalAmount.decimal,
             amount_after_fees: netAfterFees,
+            provider_fee_amount: providerFeeAmount,
             currency,
             source: paymentIntentId,
             status: session.payment_status,

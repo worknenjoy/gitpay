@@ -16,7 +16,8 @@
       "images/*": ["src/images/*"],
       "app": ["src/"],
       "design-library/*": ["src/components/design-library/*"],
-      "types/*": ["src/types/*"]
+      "types/*": ["src/types/*"],
+      "@whop/checkout/react": ["node_modules/@whop/checkout/dist/static/checkout/react/index.d.ts"]
     }
   },
   "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"],

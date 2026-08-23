@@ -1,4 +1,5 @@
 import Models from '../../../models'
+import { getWhopClient } from '../../../providers/whop/client'
 import { WebhookEventRegistry } from '../../../providers/webhooks'
 import type { WebhookHandlerContext } from '../../../providers/webhooks'
 import { processPaymentRequestPaymentFromCheckoutSession } from '../../../services/paymentRequest/processPaymentRequestPayment'
@@ -70,6 +71,15 @@ function paymentToCheckoutSession(payment: any, options: { forcePaid?: boolean }
       ? Number(payment.amount_after_fees)
       : null
 
+  // Whop's own reported application fee, when present on the payment object.
+  // Assumed major currency units, consistent with the sibling amount fields above
+  // (Whop's docs don't call this out explicitly — verify against a live payload
+  // if this ever looks off by a factor of 100).
+  const providerFeeAmountMajor =
+    payment?.application_fee?.amount != null && payment?.application_fee?.amount !== ''
+      ? Number(payment.application_fee.amount)
+      : null
+
   const status = payment?.status
   const paidByStatus = status === 'succeeded' || status === 'paid' || status === 'complete'
   const payment_status = options.forcePaid || paidByStatus ? 'paid' : status
@@ -86,6 +96,11 @@ function paymentToCheckoutSession(payment: any, options: { forcePaid?: boolean }
       amountAfterFeesMajor != null && Number.isFinite(amountAfterFeesMajor)
         ? amountAfterFeesMajor
         : null,
+    // Gitpay extension: not a Stripe field; provider's own reported fee for the "Whop Fee" email row
+    provider_fee_amount:
+      providerFeeAmountMajor != null && Number.isFinite(providerFeeAmountMajor)
+        ? providerFeeAmountMajor
+        : null,
     customer_details: {
       name: payment.user?.name || payment.member?.name || metadata.customer_name,
       email:
@@ -101,9 +116,18 @@ function paymentToCheckoutSession(payment: any, options: { forcePaid?: boolean }
 async function resolvePaymentRequestSession(payment: any, metadata: Record<string, any>) {
   const session = paymentToCheckoutSession(payment, { forcePaid: true })
 
-  if (!session.payment_link && metadata.payment_request_id) {
+  // Metadata correlation is authoritative when present — it must win over whatever
+  // paymentToCheckoutSession already derived from the raw plan id. That derivation
+  // (payment.plan?.id) is correct for a fixed persistent plan, but wrong for a
+  // custom-amount payment request: createCheckoutForAmount mints a fresh, single-use
+  // plan per payer, so its id never equals PaymentRequests.payment_link_id (which
+  // stores the product id in that case) — falling through to the plan-id-based
+  // lookup below would 404 in processCheckoutSessionCompleted.
+  if (metadata.payment_request_id) {
     const pr = await models.PaymentRequest.findByPk(metadata.payment_request_id)
-    session.payment_link = pr?.payment_link_id
+    if (pr?.payment_link_id) {
+      session.payment_link = pr.payment_link_id
+    }
   }
 
   if (!session.payment_link && payment?.plan?.id) {
@@ -224,8 +248,12 @@ function resolveWhopResourceId(value: unknown): string | null {
  * requests we create one-time plans; that event is a reliable "paid" signal even
  * when `payment.succeeded` is delayed, filtered, or not delivered to this webhook.
  *
- * Payload shape differs from payments: no amount_after_fees / pay_ id. We match
- * plan.id → PaymentRequests.payment_link_id and use the PR amount.
+ * Payload shape differs from payments: no amount_after_fees / pay_ id. Primary match is
+ * metadata.payment_request_id (works for both a fixed persistent plan and a dynamically
+ * minted per-payer plan — e.g. Whop custom-amount payment requests, where a fresh plan id
+ * is created per checkout via createCheckoutForAmount and can never equal the stored
+ * PaymentRequests.payment_link_id, which holds the product id in that case). Falls back to
+ * plan.id → PaymentRequests.payment_link_id for older/fixed-price plans without metadata.
  *
  * Requires BOTH:
  * 1) Whop dashboard webhook subscribed to `membership.activated`
@@ -239,6 +267,11 @@ async function handleMembershipActivated(ctx: WebhookHandlerContext) {
     resolveWhopResourceId(membership?.data?.plan)
   const productId =
     resolveWhopResourceId(membership?.product) || resolveWhopResourceId(membership?.product_id)
+  const metadata = {
+    ...(membership?.plan?.metadata || {}),
+    ...(membership?.product?.metadata || {}),
+    ...(membership?.metadata || {})
+  }
 
   console.log('[whop] membership.activated/went_valid handler running', {
     id: membership?.id,
@@ -246,25 +279,30 @@ async function handleMembershipActivated(ctx: WebhookHandlerContext) {
     productId,
     planType: typeof membership?.plan,
     keys: membership && typeof membership === 'object' ? Object.keys(membership) : [],
-    metadata: membership?.metadata || membership?.plan?.metadata
+    metadata
   })
 
-  if (!planId && !productId) {
-    console.warn('[whop] membership event: missing plan/product id — cannot match PaymentRequest', {
-      membershipId: membership?.id
-    })
+  if (!planId && !productId && !metadata.payment_request_id) {
+    console.warn(
+      '[whop] membership event: missing plan/product id and metadata — cannot match PaymentRequest',
+      { membershipId: membership?.id }
+    )
     return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
   }
 
-  const pr = planId
-    ? await models.PaymentRequest.findOne({ where: { payment_link_id: planId } })
-    : null
+  const pr = metadata.payment_request_id
+    ? await models.PaymentRequest.findByPk(metadata.payment_request_id)
+    : planId
+      ? await models.PaymentRequest.findOne({ where: { payment_link_id: planId } })
+      : null
 
   if (!pr) {
     console.warn(
-      '[whop] membership event: no PaymentRequest with payment_link_id=',
+      '[whop] membership event: no PaymentRequest matched (metadata.payment_request_id=',
+      metadata.payment_request_id,
+      ', payment_link_id=',
       planId,
-      '(check plan id matches PaymentRequests.payment_link_id)'
+      ')'
     )
     return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
   }
@@ -292,8 +330,35 @@ async function handleMembershipActivated(ctx: WebhookHandlerContext) {
     user_id: pr.userId != null ? String(pr.userId) : undefined
   }
 
-  // amount_total path uses major units → cents; PR amount is major (e.g. 100.00)
-  const amountMajor = Number(pr.amount) || 0
+  // amount_total path uses major units → cents.
+  // For fixed-amount payment requests, PR.amount is the real price (major units, e.g. 100.00).
+  // For custom-amount payment requests PR.amount is null — the buyer picked the amount at
+  // checkout, and it only exists on the dynamically-minted plan Whop just activated a
+  // membership for. Fetch that plan's initial_price rather than fabricating $0 from a
+  // field that was never set. planId is required here; if Whop somehow omitted it, this
+  // event can't be trusted for the amount and is skipped (payment.succeeded should still
+  // deliver the correct amount via its own metadata-based correlation path).
+  let amountMajor = Number(pr.amount) || 0
+  if (pr.custom_amount) {
+    if (!planId) {
+      console.warn(
+        '[whop] membership event: custom-amount PR matched but no plan id to read the real amount from',
+        { paymentRequestId: pr.id }
+      )
+      return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+    }
+    try {
+      const plan = await getWhopClient().get<any>(`/plans/${planId}`)
+      amountMajor = Number(plan?.initial_price) || 0
+    } catch (error) {
+      console.error('[whop] membership event: failed to fetch plan for custom-amount PR', {
+        paymentRequestId: pr.id,
+        planId,
+        error
+      })
+      return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+    }
+  }
 
   const pseudoPayment = {
     id: paymentSourceId,

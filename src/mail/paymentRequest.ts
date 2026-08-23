@@ -141,13 +141,25 @@ const PaymentRequestMail = {
       grossAmount != null &&
       netAfterWhopFee != null &&
       grossAmount > netAfterWhopFee
-    const whopFeeAmount = hasWhopFee ? grossAmount - netAfterWhopFee : null
+    // Prefer Whop's own reported fee; fall back to subtraction for rows recorded
+    // before provider_fee_amount was captured.
+    const rawWhopFeeAmount = hasWhopFee
+      ? paymentRequestPayment?.provider_fee_amount != null
+        ? Number(paymentRequestPayment.provider_fee_amount)
+        : grossAmount - netAfterWhopFee
+      : null
+    const whopFeeAmount = hasWhopFee
+      ? calculateAmountWithPercent(rawWhopFeeAmount!, 0, 'decimal', paymentRequest.currency).decimal
+      : null
+    const grossAmountDisplay = hasWhopFee
+      ? calculateAmountWithPercent(grossAmount, 0, 'decimal', paymentRequest.currency).decimal
+      : null
 
     const whopFeeRows: any[] = hasWhopFee
       ? [
           [
             'Amount Charged',
-            `<div style="text-align:right">${currencySymbol} ${grossAmount}</div>`
+            `<div style="text-align:right">${currencySymbol} ${grossAmountDisplay}</div>`
           ],
           ['Whop Fee', `<div style="text-align:right">- ${currencySymbol} ${whopFeeAmount}</div>`]
         ]
@@ -260,13 +272,25 @@ const PaymentRequestMail = {
       grossAmount != null &&
       netAfterWhopFee != null &&
       grossAmount > netAfterWhopFee
-    const whopFeeAmount = hasWhopFee ? grossAmount - netAfterWhopFee : null
+    // Prefer Whop's own reported fee; fall back to subtraction for rows recorded
+    // before provider_fee_amount was captured.
+    const rawWhopFeeAmount = hasWhopFee
+      ? paymentRequestPayment?.provider_fee_amount != null
+        ? Number(paymentRequestPayment.provider_fee_amount)
+        : grossAmount - netAfterWhopFee
+      : null
+    const whopFeeAmount = hasWhopFee
+      ? calculateAmountWithPercent(rawWhopFeeAmount!, 0, 'decimal', paymentRequest.currency).decimal
+      : null
+    const grossAmountDisplay = hasWhopFee
+      ? calculateAmountWithPercent(grossAmount, 0, 'decimal', paymentRequest.currency).decimal
+      : null
 
     const whopFeeRows: any[] = hasWhopFee
       ? [
           [
             'Amount Charged',
-            `<div style="text-align:right">${currencySymbol} ${grossAmount}</div>`
+            `<div style="text-align:right">${currencySymbol} ${grossAmountDisplay}</div>`
           ],
           ['Whop Fee', `<div style="text-align:right">- ${currencySymbol} ${whopFeeAmount}</div>`]
         ]

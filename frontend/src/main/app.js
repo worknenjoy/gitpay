@@ -113,7 +113,10 @@ function App() {
               <div>
                 <CssBaseline />
                 {warningsConfig.warningMode && (
-                  <PaymentPausedBanner open={paymentBannerOpen} onClose={handlePaymentBannerClose} />
+                  <PaymentPausedBanner
+                    open={paymentBannerOpen}
+                    onClose={handlePaymentBannerClose}
+                  />
                 )}
                 <NotificationContainer />
                 <Routes />

@@ -6,6 +6,8 @@ export interface PaymentRequestPaymentAttributes {
   amount: string
   /** Platform net after processor fees (Whop). Null for Stripe / unknown. */
   amount_after_fees?: string | null
+  /** Payment provider's own reported fee for this payment (e.g. Whop's application fee). Null when not reported. */
+  provider_fee_amount?: string | null
   currency: string
   status: string
   transferStatus?: string | null
@@ -19,7 +21,13 @@ export interface PaymentRequestPaymentAttributes {
 
 export type PaymentRequestPaymentCreationAttributes = Optional<
   PaymentRequestPaymentAttributes,
-  'id' | 'amount_after_fees' | 'transferStatus' | 'transferId' | 'createdAt' | 'updatedAt'
+  | 'id'
+  | 'amount_after_fees'
+  | 'provider_fee_amount'
+  | 'transferStatus'
+  | 'transferId'
+  | 'createdAt'
+  | 'updatedAt'
 >
 
 export default class PaymentRequestPayment
@@ -30,6 +38,7 @@ export default class PaymentRequestPayment
   public source!: string
   public amount!: string
   public amount_after_fees!: string | null
+  public provider_fee_amount!: string | null
   public currency!: string
   public status!: string
   public transferStatus!: string | null
@@ -58,6 +67,10 @@ export default class PaymentRequestPayment
           defaultValue: 0
         },
         amount_after_fees: {
+          type: DataTypes.DECIMAL,
+          allowNull: true
+        },
+        provider_fee_amount: {
           type: DataTypes.DECIMAL,
           allowNull: true
         },
