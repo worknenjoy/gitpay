@@ -24,6 +24,13 @@ export type CheckoutPaymentFlowProps = {
   submitError?: string | null
   checkout: CheckoutPaymentFlowCheckout | null
   whopEnvironment?: 'production' | 'sandbox'
+  /** True once the embed reports the payment completed — replaces the flow with a thank-you card. */
+  paid?: boolean
+  /** Fired by the embed on completion. No `returnUrl` is set and `skipRedirect` is on, so
+   * Whop never navigates the payer away — this is the only completion signal. Without it,
+   * Whop falls back to its own default post-checkout redirect (a page on whop.com listing
+   * every product under the platform company, unrelated to this specific payment). */
+  onPaymentComplete: () => void
 }
 
 /**
@@ -48,8 +55,22 @@ const CheckoutPaymentFlow = ({
   submitting,
   submitError,
   checkout,
-  whopEnvironment = 'sandbox'
+  whopEnvironment = 'sandbox',
+  paid,
+  onPaymentComplete
 }: CheckoutPaymentFlowProps) => {
+  if (paid) {
+    return (
+      <CheckoutShell>
+        <CheckoutCard title="Payment received">
+          <Typography color="text.secondary">
+            Thanks — your payment for &ldquo;{title}&rdquo; has been received.
+          </Typography>
+        </CheckoutCard>
+      </CheckoutShell>
+    )
+  }
+
   return (
     <CheckoutShell maxWidth={900}>
       <Box
@@ -106,7 +127,12 @@ const CheckoutPaymentFlow = ({
           <CheckoutCard title="Payment details">
             {checkout ? (
               <>
-                <WhopCheckoutEmbed sessionId={checkout.sessionId} environment={whopEnvironment} />
+                <WhopCheckoutEmbed
+                  sessionId={checkout.sessionId}
+                  environment={whopEnvironment}
+                  skipRedirect
+                  onComplete={onPaymentComplete}
+                />
                 {checkout.purchaseUrl && (
                   <Typography
                     variant="caption"

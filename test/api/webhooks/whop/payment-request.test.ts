@@ -490,6 +490,69 @@ describe('Whop webhooks for payment requests', () => {
     })
   })
 
+  it('should deactivate a custom-amount payment request after payment (deactivate_after_payment) and reject a further checkout attempt', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_test_platform')
+        .reply(200, pendingLedger)
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      const pr = await PaymentRequestFactory({
+        title: 'Close after payment PR',
+        amount: null,
+        custom_amount: true,
+        deactivate_after_payment: true,
+        currency: 'usd',
+        payment_link_id: 'prod_close_after_payment_1',
+        provider: 'whop',
+        userId: user.body.id
+      })
+
+      await agent
+        .post('/webhooks/whop')
+        .send({
+          id: 'msg_close_after_payment',
+          api_version: 'v1',
+          type: 'payment.succeeded',
+          timestamp: '2026-05-12T18:42:11.041Z',
+          company_id: 'biz_test_platform',
+          data: {
+            id: 'pay_close_after_payment_1',
+            status: 'succeeded',
+            amount_after_fees: 22.64,
+            total: 25,
+            currency: 'usd',
+            metadata: {
+              purpose: 'payment_request',
+              payment_request_id: String(pr.id),
+              user_id: String(user.body.id)
+            },
+            plan: { id: 'plan_fresh_close_after_payment_1' },
+            user: { name: 'Buyer', email: 'buyer@example.com' }
+          }
+        })
+        .expect(200)
+
+      await pr.reload()
+      expect(pr.status).to.equal('paid')
+      // deactivate_after_payment must flip the row inactive — this is the app-level gate
+      // custom-amount checkouts rely on (there's no persistent Whop plan to disable here).
+      expect(pr.active).to.equal(false)
+
+      // A second payer trying to start a new checkout against the same link must be refused.
+      await agent
+        .post(`/payment-requests-public/${pr.id}/checkout`)
+        .send({ amount: 10 })
+        .expect(410)
+    })
+  })
+
   it('should complete deferred Whop transfer with mockSettlement when sandbox has no balance', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
