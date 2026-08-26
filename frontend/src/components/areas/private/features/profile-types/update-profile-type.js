@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import { Dialog, DialogContent, DialogTitle } from '@mui/material'
 
-import Roles from './user-roles'
+import ProfileTypes from './user-profile-types'
 
 const Container = styled.div`
   display: inline-block;
@@ -14,7 +14,7 @@ const Container = styled.div`
 
 // removed withStyles
 
-class UpdateRole extends Component {
+class UpdateProfileType extends Component {
   static propTypes = {
     visible: PropTypes.bool,
     onClose: PropTypes.func
@@ -42,7 +42,7 @@ class UpdateRole extends Component {
             <FormattedMessage id="account.user.role.dialog.title" defaultMessage="User type" />
           </DialogTitle>
           <DialogContent>
-            <Roles {...this.props} />
+            <ProfileTypes {...this.props} />
           </DialogContent>
         </Dialog>
       </Container>
@@ -50,4 +50,4 @@ class UpdateRole extends Component {
   }
 }
 
-export default UpdateRole
+export default UpdateProfileType

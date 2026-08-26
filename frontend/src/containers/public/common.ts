@@ -2,14 +2,14 @@ import { connect } from 'react-redux'
 import { registerUser, forgotPassword } from '../../actions/loginActions'
 import { loggedIn, logOut } from '../../actions/loginActions'
 import { createTask } from '../../actions/taskActions'
-import { fetchRoles } from '../../actions/userRoleActions'
+import { fetchProfileTypes } from '../../actions/userProfileTypeActions'
 import { info } from '../../actions/infoActions'
 import { joinTeam } from '../../actions/teamActions'
 
 const mapStateToProps = (state: any) => {
   return {
     user: state.loggedIn,
-    roles: state.roles,
+    roles: state.profileTypes,
     info: state.info
   }
 }
@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch: any) => {
     registerUser: (user: any) => dispatch(registerUser(user)),
     forgotPassword: (email: any) => dispatch(forgotPassword(email)),
     createTask: (task: any, history: any) => dispatch(createTask(task, history)),
-    fetchRoles: () => dispatch(fetchRoles()),
+    fetchRoles: () => dispatch(fetchProfileTypes()),
     getInfo: () => dispatch(info()),
     joinTeam: (email: string) => dispatch(joinTeam(email))
   }

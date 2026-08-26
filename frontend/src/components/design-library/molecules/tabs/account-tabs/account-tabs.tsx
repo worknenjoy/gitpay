@@ -32,7 +32,7 @@ const AccountTabs = ({ user, children }) => {
             value={'account'}
           />
           <Tab
-            label={<FormattedMessage id="profile.account.tab.roles" defaultMessage="Roles" />}
+            label={<FormattedMessage id="profile.account.tab.roles" defaultMessage="Profile" />}
             value="roles"
           />
           {isContributor && (

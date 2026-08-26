@@ -1,13 +1,17 @@
 import { connect } from 'react-redux'
-import Roles from '../../components/areas/private/features/roles/user-roles'
+import ProfileTypes from '../../components/areas/private/features/profile-types/user-profile-types'
 import { updateUser } from '../../actions/userActions'
-import { fetchRoles, createRoles, deleteRoles } from '../../actions/userRoleActions'
+import {
+  fetchProfileTypes,
+  createProfileTypes,
+  deleteProfileTypes
+} from '../../actions/userProfileTypeActions'
 import { addNotification, closeNotification } from '../../actions/notificationActions'
 import { getUserData } from '../../common/selectors/user/getUser'
 
 const mapStateToProps = (state: any, ownProps?: any) => {
   return {
-    roles: state.roles,
+    profileTypes: state.profileTypes,
     user: getUserData(state)
   }
 }
@@ -16,11 +20,11 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => {
   return {
     addNotification: (message: any, options: any) => dispatch(addNotification(message, options)),
     closeNotification: () => dispatch(closeNotification()),
-    fetchRoles: () => dispatch(fetchRoles()),
+    fetchProfileTypes: () => dispatch(fetchProfileTypes()),
     updateUser: (userData: any) => dispatch(updateUser(userData)),
-    createRoles: (data: any) => dispatch(createRoles(data)),
-    deleteRoles: (data: any) => dispatch(deleteRoles(data))
+    createProfileTypes: (data: any) => dispatch(createProfileTypes(data)),
+    deleteProfileTypes: (data: any) => dispatch(deleteProfileTypes(data))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Roles)
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileTypes)

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Tabs, Tab, Box } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import { HashRouter, Switch, Route, useHistory } from 'react-router-dom'
-import UserRoles from '../../../../../../containers/shared/user-roles'
+import UserProfileTypes from '../../../../../../containers/shared/user-profile-types'
 import SettingsComponent from '../features/account-settings/settings'
 import Preferences from '../features/account-settings/preferences'
 import AccountTabMain from './account-tab-main'
@@ -87,7 +87,7 @@ export default function AccountTabs({
             value={'account'}
           />
           <Tab
-            label={<FormattedMessage id="profile.account.tab.roles" defaultMessage="Roles" />}
+            label={<FormattedMessage id="profile.account.tab.roles" defaultMessage="Profile" />}
             value="roles"
           />
           {isContributor && (
@@ -119,7 +119,11 @@ export default function AccountTabs({
                 />
               )}
             />
-            <Route exact path="/profile/user-account/roles" component={(props) => <UserRoles />} />
+            <Route
+              exact
+              path="/profile/user-account/roles"
+              component={(props) => <UserProfileTypes />}
+            />
             <Route
               exact
               path="/profile/user-account/skills"

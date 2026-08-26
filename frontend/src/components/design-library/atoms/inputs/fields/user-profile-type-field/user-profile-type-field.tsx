@@ -4,15 +4,15 @@ import { Help } from '@mui/icons-material'
 import Checkboxes from '../../checkboxes/checkboxes'
 import { FormattedMessage } from 'react-intl'
 
-const UserRoleField = ({ roles, onChange }) => {
-  const { data, completed } = roles
+const UserProfileTypeField = ({ profileTypes, onChange }) => {
+  const { data, completed } = profileTypes
 
   const checkBoxes = useMemo(
     () =>
-      data.map((role) => ({
-        label: role.label,
-        name: role.name,
-        value: role.id
+      data.map((profileType) => ({
+        label: profileType.label,
+        name: profileType.name,
+        value: profileType.id
       })),
     [data]
   )
@@ -51,4 +51,4 @@ const UserRoleField = ({ roles, onChange }) => {
     </Grid>
   )
 }
-export default UserRoleField
+export default UserProfileTypeField

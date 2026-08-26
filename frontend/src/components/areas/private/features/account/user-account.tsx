@@ -22,7 +22,7 @@ export const UserAccount = ({
               <Typography variant="body2" color="textSecondary">
                 <FormattedMessage
                   id="userAccount.subtitle"
-                  defaultMessage="Manage your account settings, roles and permissions."
+                  defaultMessage="Manage your account settings, profile and permissions."
                 />
               </Typography>
             }

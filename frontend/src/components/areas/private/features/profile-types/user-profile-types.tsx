@@ -13,7 +13,7 @@ import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 const messages = defineMessages({
   saveSuccess: {
     id: 'user.role.update.success',
-    defaultMessage: 'Role updated successfully'
+    defaultMessage: 'Profile updated successfully'
   },
   saveError: {
     id: 'user.role.update.error',
@@ -28,8 +28,15 @@ const imageMap = {
   provider: serviceProvider
 }
 
-const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }) => {
-  const { data, completed } = roles
+const ProfileTypes = ({
+  profileTypes,
+  user,
+  fetchProfileTypes,
+  updateUser,
+  onClose,
+  addNotification
+}) => {
+  const { data, completed } = profileTypes
   const intl = useIntl()
   const hasUserEditedRef = useRef(false)
   const [saving, setSaving] = useState(false)
@@ -43,25 +50,28 @@ const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }
       .join(',')
   }
 
-  const serverRoles = user?.Types || []
-  const serverRolesKey = useMemo(() => normalizeIdsKey(serverRoles), [serverRoles])
+  const serverProfileTypes = user?.Types || []
+  const serverProfileTypesKey = useMemo(
+    () => normalizeIdsKey(serverProfileTypes),
+    [serverProfileTypes]
+  )
 
-  const [savedSnapshotKey, setSavedSnapshotKey] = useState(serverRolesKey)
-  const [selectedRoles, setSelectedRoles] = useState(serverRoles)
+  const [savedSnapshotKey, setSavedSnapshotKey] = useState(serverProfileTypesKey)
+  const [selectedProfileTypes, setSelectedProfileTypes] = useState(serverProfileTypes)
 
   useEffect(() => {
-    fetchRoles().catch(console.log)
+    fetchProfileTypes().catch(console.log)
   }, [])
 
   useEffect(() => {
     if (hasUserEditedRef.current) return
-    setSelectedRoles(serverRoles)
-    setSavedSnapshotKey(serverRolesKey)
-  }, [serverRolesKey])
+    setSelectedProfileTypes(serverProfileTypes)
+    setSavedSnapshotKey(serverProfileTypesKey)
+  }, [serverProfileTypesKey])
 
-  const handleRoleToggle = useCallback((item) => {
+  const handleProfileTypeToggle = useCallback((item) => {
     hasUserEditedRef.current = true
-    setSelectedRoles((prev) => {
+    setSelectedProfileTypes((prev) => {
       const exists = prev.find((i) => i.id === item.id)
       if (exists) {
         return prev.filter((i) => i.id !== item.id)
@@ -73,14 +83,14 @@ const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }
 
   const shouldBeChecked = useCallback(
     (item) => {
-      return selectedRoles.some((s) => s.id === item.id)
+      return selectedProfileTypes.some((s) => s.id === item.id)
     },
-    [selectedRoles]
+    [selectedProfileTypes]
   )
 
   const isDirty = useMemo(() => {
-    return normalizeIdsKey(selectedRoles) !== savedSnapshotKey
-  }, [savedSnapshotKey, selectedRoles])
+    return normalizeIdsKey(selectedProfileTypes) !== savedSnapshotKey
+  }, [savedSnapshotKey, selectedProfileTypes])
 
   const handleSaveClick = async (e) => {
     e.preventDefault()
@@ -88,9 +98,9 @@ const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }
 
     setSaving(true)
     try {
-      await updateUser({ Types: selectedRoles })
+      await updateUser({ Types: selectedProfileTypes })
       addNotification(intl.formatMessage(messages.saveSuccess))
-      setSavedSnapshotKey(normalizeIdsKey(selectedRoles))
+      setSavedSnapshotKey(normalizeIdsKey(selectedProfileTypes))
       hasUserEditedRef.current = false
       onClose && onClose()
     } catch (e) {
@@ -111,7 +121,7 @@ const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }
           subtitle={
             <FormattedMessage
               id="user.type.description"
-              defaultMessage="Define how you will use Gitpay. You can choose multiple types of user roles you want."
+              defaultMessage="Define how you will use Gitpay. You can choose multiple types of user profiles you want."
             />
           }
         />
@@ -123,7 +133,7 @@ const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }
       getTitle={(r) => r.label}
       getDescription={(r) => r.description}
       isSelected={shouldBeChecked}
-      onToggle={handleRoleToggle}
+      onToggle={handleProfileTypeToggle}
     >
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
         <Button
@@ -143,13 +153,13 @@ const Roles = ({ roles, user, fetchRoles, updateUser, onClose, addNotification }
   )
 }
 
-Roles.propTypes = {
+ProfileTypes.propTypes = {
   updateUser: PropTypes.func,
-  fetchRoles: PropTypes.func,
-  roles: PropTypes.object,
+  fetchProfileTypes: PropTypes.func,
+  profileTypes: PropTypes.object,
   user: PropTypes.object,
   onClose: PropTypes.func,
   addNotification: PropTypes.func.isRequired
 }
 
-export default Roles
+export default ProfileTypes

@@ -5,7 +5,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import Checkbox from '@mui/material/Checkbox'
 import TermsDialog from '../../../dialogs/terms-dialog/terms-dialog'
 import PrivacyDialog from '../../../dialogs/privacy-dialog/privacy-dialog'
-import UserRoleField from '../../../../atoms/inputs/fields/user-role-field/user-role-field'
+import UserProfileTypeField from '../../../../atoms/inputs/fields/user-profile-type-field/user-profile-type-field'
 import { Center, SpacedButton, Margins, StyledTextField } from './login-form-signup.styles'
 
 const containUrl = (string) => {
@@ -375,7 +375,7 @@ const LoginFormSignup = ({
         </Margins>
         {!hideRoleSelection && (
           <Margins>
-            <UserRoleField roles={roles} onChange={handleTypesChange} />
+            <UserProfileTypeField profileTypes={roles} onChange={handleTypesChange} />
           </Margins>
         )}
         <div style={{ display: 'flex', justifyContent: 'flex-start' }}>

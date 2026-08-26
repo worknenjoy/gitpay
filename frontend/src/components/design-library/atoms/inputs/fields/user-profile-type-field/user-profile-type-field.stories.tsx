@@ -1,16 +1,16 @@
 import React from 'react'
-import UserRoleField from './user-role-field'
+import UserProfileTypeField from './user-profile-type-field'
 
 export default {
-  title: 'Design Library/Atoms/Inputs/Fields/UserRoleField',
-  component: UserRoleField
+  title: 'Design Library/Atoms/Inputs/Fields/UserProfileTypeField',
+  component: UserProfileTypeField
 }
 
-const Template = (args) => <UserRoleField {...args} />
+const Template = (args) => <UserProfileTypeField {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  roles: {
+  profileTypes: {
     completed: true,
     data: [
       { id: '1', name: 'contributor', label: 'Contributor' },

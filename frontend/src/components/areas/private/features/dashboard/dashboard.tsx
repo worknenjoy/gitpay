@@ -59,7 +59,7 @@ const Dashboard = ({ user, dashboard, fetchDashboardInfo, addNotification }) => 
               >
                 <FormattedMessage
                   id="account.profile.alert.button"
-                  defaultMessage="Update your role"
+                  defaultMessage="Update your profile"
                 />
               </Button>
             }
@@ -67,12 +67,12 @@ const Dashboard = ({ user, dashboard, fetchDashboardInfo, addNotification }) => 
             <AlertTitle>
               <FormattedMessage
                 id="account.profile.alert.title"
-                defaultMessage="Update your role"
+                defaultMessage="Update your profile"
               />
             </AlertTitle>
             <FormattedMessage
               id="account.profile.alert.description"
-              defaultMessage="You need to update your role to define your user type. Click on the button to update your role"
+              defaultMessage="You need to update your profile to define your user type. Click on the button to update your profile"
             />
           </Alert>
         </AlertWrapper>

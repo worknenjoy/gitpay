@@ -1,20 +1,20 @@
 import { connect } from 'react-redux'
 import { addNotification } from '../../actions/notificationActions'
 import { registerUser, forgotPassword, resetPassword } from '../../actions/loginActions'
-import { fetchRoles } from '../../actions/userRoleActions'
+import { fetchProfileTypes } from '../../actions/userProfileTypeActions'
 import SignupPage from '../../components/areas/public/features/session/pages/signup-page'
 
 const mapStateToProps = (state: any, props: any) => {
   return {
     user: state.user,
-    roles: state.roles
+    roles: state.profileTypes
   }
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: any) => {
   return {
     addNotification: (msg: any, options: any) => dispatch(addNotification(msg, options)),
-    fetchRoles: () => dispatch(fetchRoles()),
+    fetchRoles: () => dispatch(fetchProfileTypes()),
     registerUser: (data: any) => dispatch(registerUser(data)),
     forgotPassword: (data: any) => dispatch(forgotPassword(data)),
     resetPassword: (data: any) => dispatch(resetPassword(data))

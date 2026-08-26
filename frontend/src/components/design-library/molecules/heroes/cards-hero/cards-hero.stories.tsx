@@ -21,7 +21,7 @@ type Story = StoryObj<typeof CardsHero>
 
 export const Default: Story = {
   args: {
-    title: 'Choose your role',
+    title: 'Choose your profile',
     description: 'Pick how you want to use Gitpay and start now.',
     cards: [
       {
