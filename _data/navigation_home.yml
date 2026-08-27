@@ -35,3 +35,12 @@
     desc: Veja tarefas, candidate-se, envie PR, solicite pagamento e receba
   doc: contributor
   icon: git-fork
+
+- en:
+    title: 📘 Guides
+    desc: Step-by-step guides
+  br:
+    title: 📘 Guias
+    desc: Guias passo a passo
+  doc: whop-payout-setup
+  icon: file-text
