@@ -70,7 +70,6 @@ const PayoutSettingsWhopPage = ({
               <WhopIdentityPanel
                 account={account}
                 user={user}
-                countries={countries}
                 onManageOnWhop={handleVerification('identity')}
               />
             )}
