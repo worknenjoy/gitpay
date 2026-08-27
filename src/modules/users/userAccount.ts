@@ -110,9 +110,28 @@ export async function userAccount(userParameters: UserAccountParams) {
       console.warn('[whop] disputes for connected company failed', error)
     }
 
-    const liveCountryCandidate = whopAccount?.country || company?.country || null
+    const liveCountryCandidate =
+      latestIdentityProfile?.country ||
+      latestIdentityProfile?.personal_address?.country ||
+      latestIdentityProfile?.business_address?.country ||
+      company?.country ||
+      company?.business_address?.country ||
+      null
 
     const country = normalizeCountryCode(liveCountryCandidate) || liveCountryCandidate || null
+
+    // Keep Users.country in sync once Whop reports a real, verified country, so other
+    // DB-country readers (e.g. userAccountCountries.ts) don't stay stuck on null forever.
+    // Safe because `country` above is never sourced from the leaking beta /accounts/{id}
+    // endpoint (see comment above `whopAccount`).
+    if (country && user && user.dataValues?.country !== country) {
+      try {
+        await user.update({ country })
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.warn('[whop] failed to sync Users.country from Whop', error)
+      }
+    }
 
     const defaultCurrency =
       company?.default_currency || company?.currency || currencyForCountry(country)

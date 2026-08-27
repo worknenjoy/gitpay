@@ -459,6 +459,8 @@
   "customer.personal.title": "1. Personal / business details",
   "customer.verify.fullName": "Full name / Business name",
   "dashboard.title": "Dashboard",
+  "design-library.country-field.notFound": "Country not found",
+  "design-library.country-field.pending": "Pending verification",
   "dialog.picker.choose": "Choose {country}",
   "emptyBankAccount.actionText": "Setup Bank Account",
   "emptyBankAccount.text": "No bank account registered",

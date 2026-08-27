@@ -152,7 +152,7 @@ describe('User Account (Whop)', () => {
         .set('Authorization', user.headers.authorization)
         .expect(200)
 
-      expect(res.body.country).to.equal('BR')
+      expect(res.body.country).to.equal('DK')
     })
   })
 
@@ -204,9 +204,10 @@ describe('User Account (Whop)', () => {
         .get('/api/v1/accounts/biz_user_whop_8')
         // No `owner` here, so the identity-profile lookup (the reliable source) can't
         // resolve — forcing the fallback chain to skip straight past this beta payload.
-        // Its `country` stands in for a value leaked from an unrelated account/the
-        // platform default, and must never win over /companies' own country.
-        .reply(200, { id: 'biz_user_whop_8', country: 'br' })
+        // Its `country` ('us') stands in for a value leaked from an unrelated account/the
+        // platform default, deliberately different from /companies' real country ('br'),
+        // and must never win.
+        .reply(200, { id: 'biz_user_whop_8', country: 'us' })
       nock(WHOP_API_HOST)
         .get('/api/v1/ledger_accounts/biz_user_whop_8')
         .reply(200, { id: 'ldgr_test_8', balances: [] })
