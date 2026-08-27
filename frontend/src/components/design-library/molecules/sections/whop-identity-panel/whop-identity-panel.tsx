@@ -2,7 +2,6 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import DetailList from '../../data-display/detail-list/detail-list'
 import DetailRow from '../../../atoms/data-display/detail-row/detail-row'
-import CountryCurrencyForm from '../../form-section/country-currency-form/country-currency-form'
 
 export type WhopIdentityPanelProps = {
   account?: any
@@ -57,12 +56,6 @@ const WhopIdentityPanel = ({
           : undefined
       }
     >
-      <CountryCurrencyForm
-        country={data.country}
-        countries={countries}
-        completed={completed}
-        excludeCurrency
-      />
       <DetailRow
         completed={completed}
         label={
