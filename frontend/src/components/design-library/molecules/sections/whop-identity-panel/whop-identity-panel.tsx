@@ -6,11 +6,7 @@ import DetailRow from '../../../atoms/data-display/detail-row/detail-row'
 export type WhopIdentityPanelProps = {
   account?: any
   user?: any
-  /** Provider-aware `/user/account/countries` response (same shape used for Stripe) */
-  countries?: any
   onManageOnWhop?: () => void
-  /** ISO date string of the last sync, if known */
-  lastSyncedLabel?: React.ReactNode
 }
 
 /**
@@ -20,9 +16,7 @@ export type WhopIdentityPanelProps = {
 const WhopIdentityPanel = ({
   account,
   user,
-  countries,
   onManageOnWhop,
-  lastSyncedLabel
 }: WhopIdentityPanelProps) => {
   const { data = {}, completed = true } = account || {}
   const identity = data.identity || {}
