@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react'
 import { HashRouter, Redirect, Route, Switch, useHistory } from 'react-router-dom'
-import { Paper } from '@mui/material'
+import { Box, Paper } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import ProfileHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header'
 import PayoutSettings from 'design-library/pages/private-pages/settings-pages/payout-settings/payout-settings'
 import PayoutProviderSelector from 'design-library/molecules/sections/payout-provider-selector/payout-provider-selector'
+import DocsAlert from 'design-library/atoms/alerts/docs-alert/docs-alert'
 import PayoutSettingsWhopContainer from '../../../../../../containers/account/payout-settings/payout-settings-whop'
 import PayoutSettingsBankAccountContainer from '../../../../../../containers/account/payout-settings/payouts-settings-bank-account'
 import PayoutSettingsPaypalContainer from '../../../../../../containers/account/payout-settings/payout-settings-paypal'
+
+const WHOP_PAYOUT_GUIDE_URL = 'https://docs.gitpay.me/docs/en/whop-payout-setup/'
 
 type PayoutSettingsPageProps = {
   user?: any
@@ -118,6 +121,25 @@ const PayoutSettingsPage = (props: PayoutSettingsPageProps) => {
             id="payoutSettings.subtitle"
             defaultMessage="Manage your payout settings and payment methods."
           />
+        }
+        aside={
+          <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+            <DocsAlert
+              docsUrl={WHOP_PAYOUT_GUIDE_URL}
+              text={
+                <FormattedMessage
+                  id="payout-settings.whop.guide.text"
+                  defaultMessage="New to Whop payouts?"
+                />
+              }
+              linkLabel={
+                <FormattedMessage
+                  id="payout-settings.whop.guide.link"
+                  defaultMessage="Read the guide"
+                />
+              }
+            />
+          </Box>
         }
       />
       <HashRouter>
