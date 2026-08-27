@@ -13,11 +13,7 @@ export type WhopIdentityPanelProps = {
  * "Identity & business" read-only panel. Whop verifies documents; Gitpay reads the
  * result. Composes DetailList + DetailRow — not a form.
  */
-const WhopIdentityPanel = ({
-  account,
-  user,
-  onManageOnWhop,
-}: WhopIdentityPanelProps) => {
+const WhopIdentityPanel = ({ account, user, onManageOnWhop }: WhopIdentityPanelProps) => {
   const { data = {}, completed = true } = account || {}
   const identity = data.identity || {}
 
