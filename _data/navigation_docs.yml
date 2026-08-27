@@ -23,6 +23,18 @@ contributor:
         - sponsor
         - contributor
 
+  - en:
+      title: Guides
+    br:
+      title: Guias
+    docs:
+      en:
+        - How to set up a payout account on Whop
+      br:
+        - Como configurar uma conta de pagamento no Whop
+      pages:
+        - whop-payout-setup
+
 maintainer:
   - en:
       title: Basic concepts
@@ -103,3 +115,16 @@ service-provider:
         - service-provider
         - sponsor
         - contributor
+
+
+  - en:
+      title: Guides
+    br:
+      title: Guias
+    docs:
+      en:
+        - How to set up a payout account on Whop
+      br:
+        - Como configurar uma conta de pagamento no Whop
+      pages:
+        - whop-payout-setup
