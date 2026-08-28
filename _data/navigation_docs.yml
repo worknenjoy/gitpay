@@ -30,10 +30,19 @@ contributor:
     docs:
       en:
         - How to set up a payout account on Whop
+        - Claims — claiming tasks and tracking transfers
+        - How payouts work
+        - Disputes and refunds
       br:
         - Como configurar uma conta de pagamento no Whop
+        - Claims — reivindicando tarefas e acompanhando transferências
+        - Como funcionam os pagamentos (payouts)
+        - Disputas e reembolsos
       pages:
         - whop-payout-setup
+        - claims
+        - payouts
+        - disputes-and-refunds
 
 maintainer:
   - en:
@@ -91,6 +100,18 @@ sponsor:
         - sponsor
         - contributor
 
+  - en:
+      title: Guides
+    br:
+      title: Guias
+    docs:
+      en:
+        - Disputes and refunds
+      br:
+        - Disputas e reembolsos
+      pages:
+        - disputes-and-refunds
+
 service-provider:
   - en:
       title: Documentation
@@ -124,7 +145,16 @@ service-provider:
     docs:
       en:
         - How to set up a payout account on Whop
+        - Claims — claiming tasks and tracking transfers
+        - How payouts work
+        - Disputes and refunds
       br:
         - Como configurar uma conta de pagamento no Whop
+        - Claims — reivindicando tarefas e acompanhando transferências
+        - Como funcionam os pagamentos (payouts)
+        - Disputas e reembolsos
       pages:
         - whop-payout-setup
+        - claims
+        - payouts
+        - disputes-and-refunds
