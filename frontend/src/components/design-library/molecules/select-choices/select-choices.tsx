@@ -102,7 +102,10 @@ const SelectChoices = <TItem,>({
                 }
                 label={
                   <Typography variant="body2" color="textSecondary">
-                    <FormattedMessage id="design.selectChoices.selectAll" defaultMessage="Select all" />
+                    <FormattedMessage
+                      id="design.selectChoices.selectAll"
+                      defaultMessage="Select all"
+                    />
                   </Typography>
                 }
               />
@@ -138,7 +141,11 @@ const SelectChoices = <TItem,>({
                     </SelectChoicesLabel>
                     <SelectChoicesActionBar compact={compact}>
                       {itemDescription && (
-                        <Typography variant={descriptionVariant} color="textSecondary" component="p">
+                        <Typography
+                          variant={descriptionVariant}
+                          color="textSecondary"
+                          component="p"
+                        >
                           {itemDescription}
                         </Typography>
                       )}

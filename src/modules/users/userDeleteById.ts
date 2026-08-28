@@ -30,7 +30,10 @@ export async function userDeleteById(userParameters: UserDeleteByIdParams) {
 
       // PaymentRequestPayment references PaymentRequestCustomer/PaymentRequest/PaymentRequestTransfer,
       // so it must be deleted before any of those.
-      await currentModels.PaymentRequestPayment.destroy({ where: { userId: userParameters.id }, transaction: t })
+      await currentModels.PaymentRequestPayment.destroy({
+        where: { userId: userParameters.id },
+        transaction: t
+      })
 
       // PaymentRequestBalanceTransaction has no userId column - it only references
       // PaymentRequestBalance, so it must be looked up via the user's balances and
@@ -47,10 +50,22 @@ export async function userDeleteById(userParameters: UserDeleteByIdParams) {
         })
       }
 
-      await currentModels.PaymentRequestTransfer.destroy({ where: { userId: userParameters.id }, transaction: t })
-      await currentModels.PaymentRequestCustomer.destroy({ where: { userId: userParameters.id }, transaction: t })
-      await currentModels.PaymentRequestBalance.destroy({ where: { userId: userParameters.id }, transaction: t })
-      await currentModels.PaymentRequest.destroy({ where: { userId: userParameters.id }, transaction: t })
+      await currentModels.PaymentRequestTransfer.destroy({
+        where: { userId: userParameters.id },
+        transaction: t
+      })
+      await currentModels.PaymentRequestCustomer.destroy({
+        where: { userId: userParameters.id },
+        transaction: t
+      })
+      await currentModels.PaymentRequestBalance.destroy({
+        where: { userId: userParameters.id },
+        transaction: t
+      })
+      await currentModels.PaymentRequest.destroy({
+        where: { userId: userParameters.id },
+        transaction: t
+      })
       await currentModels.Payout.destroy({ where: { userId: userParameters.id }, transaction: t })
       await currentModels.Assign.destroy({ where: { userId: userParameters.id }, transaction: t })
       await currentModels.Offer.destroy({ where: { userId: userParameters.id }, transaction: t })

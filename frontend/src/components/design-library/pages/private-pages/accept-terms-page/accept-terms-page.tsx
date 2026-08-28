@@ -9,7 +9,10 @@ import CheckboxTerms from '../../../atoms/inputs/checkbox-terms/checkbox-terms'
 import TermsOfService from '../../../molecules/content/terms/terms-of-service/terms-of-service'
 import SignupSigninBase from '../../../templates/base/signup-signin-base/signup-signin-base'
 import UserProfileTypeCards from '../../../atoms/inputs/fields/user-profile-type-field/user-profile-type-cards'
-import { StyledTextField, Margins } from '../../../molecules/form-section/login-form/login-form-signup/login-form-signup.styles'
+import {
+  StyledTextField,
+  Margins
+} from '../../../molecules/form-section/login-form/login-form-signup/login-form-signup.styles'
 
 type ProfileType = {
   id: string | number
@@ -135,7 +138,9 @@ const AcceptTermsPage: React.FC<AcceptTermsPageProps> = ({
               variant="contained"
               size="small"
               disabled={!checked}
-              label={<FormattedMessage id="account.setup.complete" defaultMessage="Complete signup" />}
+              label={
+                <FormattedMessage id="account.setup.complete" defaultMessage="Complete signup" />
+              }
             />
           </div>
         </CardContent>
