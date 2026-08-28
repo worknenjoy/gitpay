@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
+import { Box } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page'
 import IssueLinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-link-field/issue-link-field'
@@ -8,6 +9,9 @@ import AmountField from 'design-library/molecules/tables/section-table/section-t
 import TextField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field'
 import TransferStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/transfer/transfer-status-field/transfer-status-field'
 import EmptyClaim from 'design-library/molecules/content/empty/empty-claim/empty-claim'
+import DocsAlert from 'design-library/atoms/alerts/docs-alert/docs-alert'
+
+const CLAIMS_GUIDE_URL = 'https://docs.gitpay.me/docs/en/claims/'
 
 const Claims = ({
   user,
@@ -45,7 +49,25 @@ const Claims = ({
         />
       }
       activeTab={currentActive}
-      emptyComponent={<EmptyClaim onActionClick={() => history.push('/profile/payout-settings')} />}
+      emptyComponent={
+        <>
+          <EmptyClaim onActionClick={() => history.push('/profile/payout-settings')} />
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+            <DocsAlert
+              docsUrl={CLAIMS_GUIDE_URL}
+              text={
+                <FormattedMessage
+                  id="emptyClaim.docs.text"
+                  defaultMessage="Want to understand how claims work?"
+                />
+              }
+              linkLabel={
+                <FormattedMessage id="emptyClaim.docs.link" defaultMessage="Read the guide" />
+              }
+            />
+          </Box>
+        </>
+      }
       tabs={[
         {
           label: (

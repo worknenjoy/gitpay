@@ -1,16 +1,19 @@
 import React from 'react'
-import { Container, Paper, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Container, useMediaQuery, useTheme } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import ProfileHeader from '../../../../design-library/molecules/headers/profile-main-header/profile-main-header'
 import PayoutsTable from './payouts-table'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
 import StatusCard from 'design-library/molecules/cards/status-card/status-card'
 import EmptyPayout from 'design-library/molecules/content/empty/empty-payout/empty-payout'
+import DocsAlert from 'design-library/atoms/alerts/docs-alert/docs-alert'
 import { useHistory } from 'react-router-dom'
 import PayoutRequestDrawer from 'design-library/molecules/drawers/payout-request-drawer/payout-request-drawer'
 import PayoutDetailsAction from 'design-library/molecules/drawers/actions/payments/payout-details-action/payout-details-action'
 import Button from 'design-library/atoms/buttons/button/button'
 import { SettingsOutlined as SettingsIcon } from '@mui/icons-material'
+
+const PAYOUTS_GUIDE_URL = 'https://docs.gitpay.me/docs/en/payouts/'
 
 const paymentProvider = () =>
   (typeof process !== 'undefined' && process.env && process.env.PAYMENT_PROVIDER) || 'stripe'
@@ -107,9 +110,23 @@ const Payouts = ({
         }
       />
       {!hasPayoutAccount(userData) && userCompleted ? (
-        <Paper elevation={0} style={{ padding: 20, marginTop: 10 }}>
+        <>
           <EmptyPayout onActionClick={() => history.push('/profile/payout-settings')} />
-        </Paper>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+            <DocsAlert
+              docsUrl={PAYOUTS_GUIDE_URL}
+              text={
+                <FormattedMessage
+                  id="emptyPayout.docs.text"
+                  defaultMessage="Want to understand how payouts work?"
+                />
+              }
+              linkLabel={
+                <FormattedMessage id="emptyPayout.docs.link" defaultMessage="Read the guide" />
+              }
+            />
+          </Box>
+        </>
       ) : (
         <>
           <div

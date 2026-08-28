@@ -11,7 +11,10 @@ import {
   paymentRequestBalancesCustomColumnRenderer
 } from './payment-requests-balance-table'
 import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
+import DocsAlert from 'design-library/atoms/alerts/docs-alert/docs-alert'
 import { Shield } from '@mui/icons-material'
+
+const DISPUTES_REFUNDS_GUIDE_URL = 'https://docs.gitpay.me/docs/en/disputes-and-refunds/'
 
 const PaymentRequestBalances = ({
   user,
@@ -72,21 +75,40 @@ const PaymentRequestBalances = ({
           customColumnRenderer: paymentRequestBalancesCustomColumnRenderer
         }}
         emptyComponent={
-          <EmptyBase
-            icon={<Shield />}
-            text={
-              <FormattedMessage
-                id="payment.request.balances.empty.title"
-                defaultMessage="No disputes or refunds fees"
+          <>
+            <EmptyBase
+              icon={<Shield />}
+              text={
+                <FormattedMessage
+                  id="payment.request.balances.empty.title"
+                  defaultMessage="No disputes or refunds fees"
+                />
+              }
+              secondaryText={
+                <FormattedMessage
+                  id="payment.request.balances.empty.description"
+                  defaultMessage="You don't have any disputes or refunds fees for your payment requests"
+                />
+              }
+            />
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+              <DocsAlert
+                docsUrl={DISPUTES_REFUNDS_GUIDE_URL}
+                text={
+                  <FormattedMessage
+                    id="paymentRequestBalances.docs.text"
+                    defaultMessage="Want to understand how disputes and refunds work?"
+                  />
+                }
+                linkLabel={
+                  <FormattedMessage
+                    id="paymentRequestBalances.docs.link"
+                    defaultMessage="Read the guide"
+                  />
+                }
               />
-            }
-            secondaryText={
-              <FormattedMessage
-                id="payment.request.balances.empty.description"
-                defaultMessage="You don't have any disputes or refunds fees for your payment requests"
-              />
-            }
-          />
+            </Box>
+          </>
         }
       />
     </>
