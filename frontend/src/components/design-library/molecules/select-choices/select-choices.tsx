@@ -1,14 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Typography, Checkbox } from '@mui/material'
+import { Typography, Checkbox, FormControlLabel } from '@mui/material'
+import type { TypographyProps } from '@mui/material/Typography'
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
+import { FormattedMessage } from 'react-intl'
 
 import SelectChoicesPlaceholder from './select-choices.placeholder'
 
 import {
   SelectChoicesContainer,
   SelectChoicesHeader,
+  SelectChoicesHeaderRow,
   SelectChoicesGrid,
   SelectChoicesItem,
   SelectChoicesCard,
@@ -32,6 +35,11 @@ type SelectChoicesProps<TItem> = {
   isSelected: (item: TItem) => boolean
   onToggle: (item: TItem) => void
   itemSize?: { xs?: number; sm?: number; md?: number; lg?: number }
+  compact?: boolean
+  includeSelectAll?: boolean
+  onSelectAllChange?: (checked: boolean) => void
+  titleVariant?: TypographyProps['variant']
+  descriptionVariant?: TypographyProps['variant']
 }
 
 const defaultGetKey = (item: any, index: number) => item?.id ?? item?.name ?? index
@@ -50,32 +58,66 @@ const SelectChoices = <TItem,>({
   getDescription,
   isSelected,
   onToggle,
-  itemSize = { xs: 12, sm: 6, md: 3 }
+  itemSize,
+  compact = false,
+  includeSelectAll = false,
+  onSelectAllChange,
+  titleVariant,
+  descriptionVariant = 'body2'
 }: SelectChoicesProps<TItem>) => {
-  const shouldRenderHeader = Boolean(title) || Boolean(description)
+  const effectiveItemSize =
+    itemSize ?? (compact ? { xs: 12, sm: 6, md: 6 } : { xs: 12, sm: 12, md: 6 })
+  const effectiveTitleVariant = titleVariant ?? (compact ? 'body2' : 'subtitle1')
+  const shouldRenderHeader = Boolean(title) || Boolean(description) || includeSelectAll
   const renderTitle =
     typeof title === 'string' || typeof title === 'number' ? (
       <Typography variant="h5">{title}</Typography>
     ) : (
       title
     )
+  const allSelected = items.length > 0 && items.every((item) => isSelected(item))
 
   return (
     <SelectChoicesContainer elevation={1}>
       {shouldRenderHeader ? (
         <SelectChoicesHeader>
-          {renderTitle}
-          {description && (
-            <Typography variant="body2" color="textSecondary" component="p">
-              {description}
-            </Typography>
-          )}
+          <SelectChoicesHeaderRow>
+            <div>
+              {renderTitle}
+              {description && (
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {description}
+                </Typography>
+              )}
+            </div>
+            {includeSelectAll && !loading && (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={allSelected}
+                    onChange={(e) => onSelectAllChange?.(e.target.checked)}
+                    color="primary"
+                    size="small"
+                  />
+                }
+                label={
+                  <Typography variant="body2" color="textSecondary">
+                    <FormattedMessage id="design.selectChoices.selectAll" defaultMessage="Select all" />
+                  </Typography>
+                }
+              />
+            )}
+          </SelectChoicesHeaderRow>
         </SelectChoicesHeader>
       ) : null}
 
       <SelectChoicesGrid container spacing={2} alignItems="stretch" justifyContent="space-around">
         {loading ? (
-          <SelectChoicesPlaceholder count={placeholderCount} itemSize={itemSize} />
+          <SelectChoicesPlaceholder
+            count={placeholderCount}
+            itemSize={effectiveItemSize}
+            compact={compact}
+          />
         ) : (
           <>
             {items.map((item, index) => {
@@ -84,23 +126,25 @@ const SelectChoices = <TItem,>({
               const itemDescription = getDescription?.(item)
 
               return (
-                <SelectChoicesItem key={getKey(item, index)} size={itemSize}>
+                <SelectChoicesItem key={getKey(item, index)} size={effectiveItemSize}>
                   <SelectChoicesCard variant="outlined">
-                    <SelectChoicesMedia>
+                    <SelectChoicesMedia compact={compact}>
                       <img src={imageSrc} alt={imageAlt} />
                     </SelectChoicesMedia>
-                    <SelectChoicesLabel>
-                      <Typography variant="subtitle1">{getTitle(item)}</Typography>
+                    <SelectChoicesLabel compact={compact}>
+                      <Typography variant={effectiveTitleVariant} sx={{ fontWeight: 600 }}>
+                        {getTitle(item)}
+                      </Typography>
                     </SelectChoicesLabel>
-                    <SelectChoicesActionBar>
+                    <SelectChoicesActionBar compact={compact}>
                       {itemDescription && (
-                        <Typography variant="body2" component="p">
+                        <Typography variant={descriptionVariant} color="textSecondary" component="p">
                           {itemDescription}
                         </Typography>
                       )}
                       <Checkbox
-                        icon={<CheckBoxOutlineBlankIcon fontSize="large" />}
-                        checkedIcon={<CheckBoxIcon fontSize="large" />}
+                        icon={<CheckBoxOutlineBlankIcon fontSize={compact ? 'small' : 'large'} />}
+                        checkedIcon={<CheckBoxIcon fontSize={compact ? 'small' : 'large'} />}
                         color="primary"
                         inputProps={{ 'aria-label': imageAlt }}
                         checked={isSelected(item)}
@@ -134,7 +178,12 @@ SelectChoices.propTypes = {
   getDescription: PropTypes.func,
   isSelected: PropTypes.func.isRequired,
   onToggle: PropTypes.func.isRequired,
-  itemSize: PropTypes.object
+  itemSize: PropTypes.object,
+  compact: PropTypes.bool,
+  includeSelectAll: PropTypes.bool,
+  onSelectAllChange: PropTypes.func,
+  titleVariant: PropTypes.string,
+  descriptionVariant: PropTypes.string
 }
 
 export default SelectChoices

@@ -28,6 +28,12 @@ export async function userBuilds(userParameters: UserBuildsParams) {
     userParameters.activation_token_sent_at = new Date()
     userParameters.activation_token_expires_at = new Date(Date.now() + ACTIVATION_TOKEN_TTL_MS)
   }
+  // GitHub signups require an explicit Terms of Service acceptance step post-signup, so leave
+  // terms_accepted_at unset for them. Every other path (local, and any other OAuth provider)
+  // is not gated by terms today, so it's stamped immediately as "not applicable" here.
+  if (userParameters.provider !== 'github') {
+    userParameters.terms_accepted_at = new Date()
+  }
   if (!userParameters.email && !userParameters.password && !userParameters.confirmPassword)
     return false
   try {

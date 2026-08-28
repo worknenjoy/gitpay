@@ -43,6 +43,10 @@ const PrivatePage = ({
     return <Redirect to="/verify-email" />
   }
 
+  if (user?.data?.provider === 'github' && !user?.data?.terms_accepted_at) {
+    return <Redirect to="/accept-terms" />
+  }
+
   return (
     <PrivateBase
       createTask={createTask}

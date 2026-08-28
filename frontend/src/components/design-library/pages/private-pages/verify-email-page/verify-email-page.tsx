@@ -10,11 +10,10 @@ const RESEND_COOLDOWN_SECONDS = 60
 
 interface VerifyEmailPageProps {
   onResend: () => void
-  onSignOut: () => void
   completed?: boolean
 }
 
-const VerifyEmailPage: React.FC<VerifyEmailPageProps> = ({ onResend, onSignOut, completed }) => {
+const VerifyEmailPage: React.FC<VerifyEmailPageProps> = ({ onResend, completed }) => {
   const [cooldown, setCooldown] = useState(0)
 
   useEffect(() => {
@@ -73,7 +72,7 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = ({ onResend, onSignOut, 
               defaultMessage="If you have not received the email, please click below to resend"
             />
           </Typography>
-          <div style={{ display: 'flex', gap: 8, marginTop: 16, flexWrap: 'wrap' }}>
+          <div style={{ marginTop: 16 }}>
             <Button
               completed={completed}
               onClick={handleResend}
@@ -81,11 +80,6 @@ const VerifyEmailPage: React.FC<VerifyEmailPageProps> = ({ onResend, onSignOut, 
               variant="contained"
               disabled={cooldown > 0}
               label={buttonLabel}
-            />
-            <Button
-              onClick={onSignOut}
-              variant="text"
-              label={<FormattedMessage id="task.actions.account.logout" defaultMessage="Logout" />}
             />
           </div>
         </CardContent>

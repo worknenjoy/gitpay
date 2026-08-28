@@ -7,5 +7,7 @@ export const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
 }))
 
 export const StyledFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
-  paddingTop: 0
+  paddingTop: 0,
+  marginRight: 0,
+  marginLeft: 0
 }))

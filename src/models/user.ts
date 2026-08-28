@@ -36,6 +36,7 @@ export interface UserAttributes {
   activation_token?: string | null
   activation_token_sent_at?: Date | null
   activation_token_expires_at?: Date | null
+  terms_accepted_at?: Date | null
   receiveNotifications: boolean
   openForJobs: boolean
   active: boolean
@@ -78,6 +79,7 @@ export type UserCreationAttributes = Optional<
   | 'activation_token'
   | 'activation_token_sent_at'
   | 'activation_token_expires_at'
+  | 'terms_accepted_at'
   | 'receiveNotifications'
   | 'openForJobs'
   | 'active'
@@ -122,6 +124,7 @@ export default class User
   public activation_token!: string | null
   public activation_token_sent_at!: Date | null
   public activation_token_expires_at!: Date | null
+  public terms_accepted_at!: Date | null
   public receiveNotifications!: boolean
   public openForJobs!: boolean
   public active!: boolean
@@ -261,6 +264,10 @@ export default class User
           allowNull: true
         },
         activation_token_expires_at: {
+          type: DataTypes.DATE,
+          allowNull: true
+        },
+        terms_accepted_at: {
           type: DataTypes.DATE,
           allowNull: true
         },

@@ -4,6 +4,7 @@ import PrivateRoute from '../components/areas/private/components/session/private
 import PublicPageContainer from '../containers/public/public-container'
 import ProfileContainer from '../containers/profile'
 import VerifyEmailContainer from '../containers/auth/verify-email'
+import AcceptTermsContainer from '../containers/auth/accept-terms'
 import SessionPage from '../components/areas/public/features/session/pages/session-page'
 import FourOFour from '../components/design-library/pages/public-pages/four-o-four-public-page/four-o-four-public-page'
 import PaymentRequestPayPage from '../components/areas/public/features/payment-request/pages/payment-request-pay-page'
@@ -14,6 +15,7 @@ export default (props) => (
     <Switch>
       <PrivateRoute path="/profile" component={ProfileContainer} />
       <PrivateRoute exact path="/verify-email" component={VerifyEmailContainer} />
+      <PrivateRoute exact path="/accept-terms" component={AcceptTermsContainer} />
 
       {/* Root redirect */}
       <Route
@@ -31,6 +33,7 @@ export default (props) => (
           '/signin',
           '/forgot',
           '/activate/user/:userId/token/:token',
+          '/accept-terms/:token',
           '/token/:token'
         ]}
         component={SessionPage}

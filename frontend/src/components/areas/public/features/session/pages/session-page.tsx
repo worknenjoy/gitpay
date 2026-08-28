@@ -2,6 +2,7 @@ import React from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
 import SignupSigninPage from 'design-library/templates/base/signup-signin-base/signup-signin-base'
 import Session from '../components/session'
+import AcceptTermsSession from '../components/accept-terms-session'
 import AccountActivation from '../../../../../../containers/auth/account-activation'
 import LoginPageContainer from '../../../../../../containers/auth/login-page'
 import RegisterPageContainer from '../../../../../../containers/auth/register-page'
@@ -18,6 +19,7 @@ const SessionPage = () => {
           <Route exact path="/signup" component={RegisterPageContainer} />
           <Route exact path="/reset-password/:token" component={ResetPasswordPageContainer} />
           <Route exact path="/token/:token" component={Session} />
+          <Route exact path="/accept-terms/:token" component={AcceptTermsSession} />
           <Route exact path="/activate/user/:userId/token/:token" component={AccountActivation} />
           <Route exact path="/signup/:type" component={RegisterPageContainer} />
           <Route exact path="/forgot" component={ForgotPasswordPageContainer} />

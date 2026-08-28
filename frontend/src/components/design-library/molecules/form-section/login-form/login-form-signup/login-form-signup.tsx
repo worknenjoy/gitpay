@@ -6,6 +6,7 @@ import Checkbox from '@mui/material/Checkbox'
 import TermsDialog from '../../../dialogs/terms-dialog/terms-dialog'
 import PrivacyDialog from '../../../dialogs/privacy-dialog/privacy-dialog'
 import UserProfileTypeField from '../../../../atoms/inputs/fields/user-profile-type-field/user-profile-type-field'
+import UserProfileTypeCards from '../../../../atoms/inputs/fields/user-profile-type-field/user-profile-type-cards'
 import { Center, SpacedButton, Margins, StyledTextField } from './login-form-signup.styles'
 
 const containUrl = (string) => {
@@ -29,6 +30,7 @@ type LoginFormSignupProps = {
   fetchRoles?: () => void
   hideRoleSelection?: boolean
   presetRoleId?: string | number
+  iconRoleSelector?: boolean
 }
 
 const LoginFormSignup = ({
@@ -41,7 +43,8 @@ const LoginFormSignup = ({
   roles,
   fetchRoles,
   hideRoleSelection,
-  presetRoleId
+  presetRoleId,
+  iconRoleSelector
 }: LoginFormSignupProps) => {
   const [openTermsDialog, setOpenTermsDialog] = useState(false)
   const [openPrivacyDialog, setOpenPrivacyDialog] = useState(false)
@@ -375,7 +378,16 @@ const LoginFormSignup = ({
         </Margins>
         {!hideRoleSelection && (
           <Margins>
-            <UserProfileTypeField profileTypes={roles} onChange={handleTypesChange} />
+            {iconRoleSelector ? (
+              <UserProfileTypeCards
+                profileTypes={roles}
+                onChange={handleTypesChange}
+                compact
+                itemSize={{ xs: 6, sm: 6, md: 6 }}
+              />
+            ) : (
+              <UserProfileTypeField profileTypes={roles} onChange={handleTypesChange} />
+            )}
           </Margins>
         )}
         <div style={{ display: 'flex', justifyContent: 'flex-start' }}>

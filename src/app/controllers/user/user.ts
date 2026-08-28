@@ -182,6 +182,24 @@ export const createPrivateTask = async (req: any, res: any) => {
 const RESEND_ACTIVATION_COOLDOWN_MS = 60 * 1000
 const ACTIVATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000
 
+// Read-only status check, safe to call automatically on page load: it never touches
+// activation_token, so it can't be used to burn a single-use link the way activateUser can.
+export const getActivationStatus = async (req: any, res: any) => {
+  const { userId } = req.query
+  try {
+    const foundUser = await models.User.findOne({ where: { id: userId } })
+    if (!foundUser) {
+      res.status(401).send({ message: 'user.not.exist' })
+      return
+    }
+    res.send({ email_verified: !!foundUser.dataValues.email_verified })
+  } catch (error: any) {
+    // eslint-disable-next-line no-console
+    console.log('[activation] status check error', error)
+    res.status(500).send({ message: 'user.activation.status.error' })
+  }
+}
+
 export const activateUser = async (req: any, res: any) => {
   const { token, userId } = req.query
   try {
@@ -282,6 +300,42 @@ export const resendActivationEmail = async (req: any, res: any) => {
     // eslint-disable-next-line no-console
     console.log('[activation] resend error', error)
     res.status(500).send({ message: 'user.activation.resend.error' })
+  }
+}
+
+export const acceptTerms = async (req: any, res: any) => {
+  const { id: userId } = req.user
+  const { name, Types } = req.body || {}
+
+  const validName = typeof name === 'string' && name.trim().length > 0 ? name.trim() : undefined
+  const validTypes =
+    Array.isArray(Types) && Types.length > 0 && Types.every((t: any) => !Number.isNaN(Number(t)))
+      ? Types.map((t: any) => Number(t))
+      : undefined
+
+  try {
+    const updatedUser = await models.sequelize.transaction(async (t: any) => {
+      await models.User.update(
+        {
+          terms_accepted_at: new Date(),
+          ...(validName ? { name: validName } : {})
+        },
+        { where: { id: userId }, transaction: t }
+      )
+
+      if (validTypes) {
+        const currentUser = await models.User.findByPk(userId, { transaction: t })
+        await currentUser.setTypes(validTypes, { transaction: t })
+      }
+
+      return models.User.findByPk(userId, { include: [models.Type], transaction: t })
+    })
+
+    res.send(updatedUser)
+  } catch (error: any) {
+    // eslint-disable-next-line no-console
+    console.log('[terms] accept error', error)
+    res.status(500).send({ message: 'user.terms.accept.error' })
   }
 }
 

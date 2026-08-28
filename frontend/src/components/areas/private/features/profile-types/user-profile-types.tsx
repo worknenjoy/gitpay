@@ -2,13 +2,10 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
 import { Box, Button } from '@mui/material'
-import funder from 'images/roles/bounty.png'
-import contributor from 'images/roles/sharing.png'
-import maintainer from 'images/roles/notifications.png'
-import serviceProvider from 'images/roles/payment-cycle.png'
 
 import SelectChoices from 'design-library/molecules/select-choices/select-choices'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
+import { profileTypeImages } from 'design-library/atoms/inputs/fields/user-profile-type-field/profile-type-images'
 
 const messages = defineMessages({
   saveSuccess: {
@@ -20,13 +17,6 @@ const messages = defineMessages({
     defaultMessage: 'We couldnt update your information properly'
   }
 })
-
-const imageMap = {
-  funding: funder,
-  contributor: contributor,
-  maintainer: maintainer,
-  provider: serviceProvider
-}
 
 const ProfileTypes = ({
   profileTypes,
@@ -128,7 +118,7 @@ const ProfileTypes = ({
       }
       items={data}
       loading={!completed}
-      getImageSrc={(r) => imageMap[r.name]}
+      getImageSrc={(r) => profileTypeImages[r.name]}
       getImageAlt={(r) => r.name}
       getTitle={(r) => r.label}
       getDescription={(r) => r.description}

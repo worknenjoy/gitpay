@@ -5,6 +5,8 @@ export const callbackGithub = (req: any, res: any) => {
       res.redirect(
         `${process.env.FRONTEND_HOST}/#/profile/user-account/?connectGithubAction=success`
       )
+    } else if (!user.terms_accepted_at) {
+      res.redirect(`${process.env.FRONTEND_HOST}/#/accept-terms/${user.token}`)
     } else {
       res.redirect(`${process.env.FRONTEND_HOST}/#/token/${user.token}`)
     }

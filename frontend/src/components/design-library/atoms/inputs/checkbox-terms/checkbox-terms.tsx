@@ -1,11 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Grid, Link, Typography } from '@mui/material'
+import { Link, Typography } from '@mui/material'
 import { StyledCheckbox, StyledFormControlLabel } from './checkbox-terms.styles'
 import TermsDialog from './terms-dialog'
-// import { on } from 'events';
 
-const CheckboxTerms = ({ onAccept }) => {
+interface CheckboxTermsProps {
+  onAccept: (checked: boolean) => void
+  labelId?: string
+  labelDefaultMessage?: string
+  anchorId?: string
+  anchorDefaultMessage?: string
+  titleId?: string
+  titleDefaultMessage?: string
+  textId?: string
+  textDefaultMessage?: string
+  agreeId?: string
+  agreeDefaultMessage?: string
+  disagreeId?: string
+  disagreeDefaultMessage?: string
+  content?: React.ReactNode
+  align?: 'left' | 'right'
+}
+
+const CheckboxTerms = ({
+  onAccept,
+  labelId = 'task.bounties.interested.termsOfUseLabel',
+  labelDefaultMessage = 'I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION',
+  anchorId = 'task.bounties.interested.termsOfUse',
+  anchorDefaultMessage = 'TERMS OF USE',
+  titleId,
+  titleDefaultMessage,
+  textId,
+  textDefaultMessage,
+  agreeId,
+  agreeDefaultMessage,
+  disagreeId,
+  disagreeDefaultMessage,
+  content,
+  align = 'left'
+}: CheckboxTermsProps) => {
   const [checked, setChecked] = useState(false)
   const [openTerms, setOpenTerms] = useState(false)
 
@@ -18,22 +51,26 @@ const CheckboxTerms = ({ onAccept }) => {
   }, [checked])
 
   return (
-    <Grid size={{ xs: 12 }}>
+    <div
+      style={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: align === 'right' ? 'flex-end' : 'flex-start'
+      }}
+    >
       <StyledFormControlLabel
         control={<StyledCheckbox checked={checked} onChange={handleChange} color="primary" />}
         onClick={handleChange}
+        labelPlacement={align === 'right' ? 'start' : 'end'}
         label={
           <Typography variant="caption">
             <FormattedMessage
-              id="task.bounties.interested.termsOfUseLabel"
-              defaultMessage="I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION"
+              id={labelId}
+              defaultMessage={labelDefaultMessage}
               values={{
                 termsOfUseAnchor: (
                   <Link onClick={() => setOpenTerms(true)}>
-                    <FormattedMessage
-                      id="task.bounties.interested.termsOfUse"
-                      defaultMessage="TERMS OF USE"
-                    />
+                    <FormattedMessage id={anchorId} defaultMessage={anchorDefaultMessage} />
                   </Link>
                 )
               }}
@@ -46,8 +83,17 @@ const CheckboxTerms = ({ onAccept }) => {
         onClose={() => setOpenTerms(false)}
         onAccept={() => setChecked(true)}
         onDisagree={() => setChecked(false)}
+        titleId={titleId}
+        titleDefaultMessage={titleDefaultMessage}
+        textId={textId}
+        textDefaultMessage={textDefaultMessage}
+        agreeId={agreeId}
+        agreeDefaultMessage={agreeDefaultMessage}
+        disagreeId={disagreeId}
+        disagreeDefaultMessage={disagreeDefaultMessage}
+        content={content}
       />
-    </Grid>
+    </div>
   )
 }
 

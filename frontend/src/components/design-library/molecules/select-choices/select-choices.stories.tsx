@@ -67,6 +67,7 @@ const DemoSelectChoices = (args: any) => {
           return exists ? prev.filter((p) => p.id !== item.id) : [...prev, item]
         })
       }
+      onSelectAllChange={(checked) => setSelected(checked ? items : [])}
     />
   )
 }
@@ -92,4 +93,21 @@ Loading.args = {
   description: 'Choose one or more options.',
   loading: true,
   placeholderCount: 3
+}
+
+export const WithSelectAll = Template.bind({})
+WithSelectAll.args = {
+  title: 'Select user roles',
+  description: 'Choose one or more options.',
+  loading: false,
+  includeSelectAll: true
+}
+
+export const Compact = Template.bind({})
+Compact.args = {
+  title: 'Select user roles',
+  loading: false,
+  compact: true,
+  includeSelectAll: true,
+  itemSize: { xs: 12, sm: 6, md: 6 }
 }

@@ -57,6 +57,10 @@ const RESEND_ACTIVATION_EMAIL_REQUESTED = 'RESEND_ACTIVATION_EMAIL_REQUESTED'
 const RESEND_ACTIVATION_EMAIL_SUCCESS = 'RESEND_ACTIVATION_EMAIL_SUCCESS'
 const RESEND_ACTIVATION_EMAIL_ERROR = 'RESEND_ACTIVATION_EMAIL_ERROR'
 
+const ACCEPT_TERMS_REQUESTED = 'ACCEPT_TERMS_REQUESTED'
+const ACCEPT_TERMS_SUCCESS = 'ACCEPT_TERMS_SUCCESS'
+const ACCEPT_TERMS_ERROR = 'ACCEPT_TERMS_ERROR'
+
 const CREATE_BANKACCOUNT_REQUESTED = 'CREATE_BANKACCOUNT_REQUESTED'
 const CREATE_BANKACCOUNT_SUCCESS = 'CREATE_BANKACCOUNT_SUCCESS'
 const CREATE_BANKACCOUNT_ERROR = 'CREATE_BANKACCOUNT_ERROR'
@@ -335,6 +339,26 @@ const resendActivationEmailSuccess = (user) => {
 
 const resendActivationEmailError = (error) => {
   return { type: RESEND_ACTIVATION_EMAIL_ERROR, completed: true, error: error }
+}
+
+/*
+ * User accept terms
+ */
+
+const acceptTermsRequested = () => {
+  return { type: ACCEPT_TERMS_REQUESTED, completed: false }
+}
+
+const acceptTermsSuccess = (user) => {
+  return {
+    type: ACCEPT_TERMS_SUCCESS,
+    completed: true,
+    data: user.data
+  }
+}
+
+const acceptTermsError = (error) => {
+  return { type: ACCEPT_TERMS_ERROR, completed: true, error: error }
 }
 
 /*
@@ -696,6 +720,17 @@ const activateUser = (userId, token) => {
   }
 }
 
+const checkActivationStatus = (userId) => {
+  return axios
+    .get(api.API_URL + `/auth/activation-status?userId=${userId}`)
+    .then((res) => ({ email_verified: res.data.email_verified }))
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log('error on check activation status', error)
+      return { error: true }
+    })
+}
+
 const resendActivationEmail = () => {
   validToken()
   return (dispatch) => {
@@ -716,6 +751,26 @@ const resendActivationEmail = () => {
         // eslint-disable-next-line no-console
         console.log('error on resend activation email', error)
         return dispatch(resendActivationEmailError(error))
+      })
+  }
+}
+
+const acceptTerms = ({ name, Types } = {}) => {
+  validToken()
+  return (dispatch) => {
+    dispatch(acceptTermsRequested())
+    return axios
+      .post(api.API_URL + `/auth/accept-terms`, { name, Types })
+      .then((user) => {
+        // refetch so state.loggedIn.data.terms_accepted_at is fresh before the caller
+        // navigates away - otherwise the PrivatePage gate would immediately bounce back here
+        return dispatch(fetchLoggedUser()).then(() => dispatch(acceptTermsSuccess(user)))
+      })
+      .catch((error) => {
+        dispatch(addNotification('notifications.account.terms.accept.error', { severity: 'error' }))
+        // eslint-disable-next-line no-console
+        console.log('error on accept terms', error)
+        return dispatch(acceptTermsError(error))
       })
   }
 }
@@ -1008,7 +1063,9 @@ export {
   updateUser,
   updateUserEmail,
   activateUser,
+  checkActivationStatus,
   resendActivationEmail,
+  acceptTerms,
   createBankAccount,
   updateBankAccount,
   getBankAccount,

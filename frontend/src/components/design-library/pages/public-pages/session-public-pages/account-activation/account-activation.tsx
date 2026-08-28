@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -7,13 +7,21 @@ import DialogContentText from '@mui/material/DialogContentText'
 import { FormattedMessage } from 'react-intl'
 import { useHistory, useParams } from 'react-router-dom'
 
-type ActivationStatus = 'idle' | 'loading' | 'activated' | 'error'
+type ActivationStatus = 'checking' | 'idle' | 'loading' | 'activated' | 'error'
 
-const AccountActivation = ({ onActivateAccount }) => {
-  const [status, setStatus] = React.useState<ActivationStatus>('idle')
+const AccountActivation = ({ onActivateAccount, onCheckStatus }) => {
+  const [status, setStatus] = React.useState<ActivationStatus>('checking')
 
   const history = useHistory()
   const { token, userId } = useParams<{ token: string; userId: string }>()
+
+  useEffect(() => {
+    const checkStatus = async () => {
+      const result = await onCheckStatus(userId)
+      setStatus(result?.email_verified ? 'activated' : 'idle')
+    }
+    checkStatus()
+  }, [])
 
   const handleActivate = async () => {
     setStatus('loading')
@@ -25,6 +33,11 @@ const AccountActivation = ({ onActivateAccount }) => {
     <div>
       <Dialog open aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         <DialogContent>
+          {status === 'checking' && (
+            <DialogContentText id="alert-dialog-description">
+              <FormattedMessage id="account.activating" defaultMessage="Activating your account…" />
+            </DialogContentText>
+          )}
           {status === 'idle' && (
             <DialogContentText id="alert-dialog-description">
               <FormattedMessage
@@ -61,9 +74,11 @@ const AccountActivation = ({ onActivateAccount }) => {
               <FormattedMessage id="account.activate.button" defaultMessage="Activate my account" />
             </Button>
           )}
-          <Button onClick={() => history.push('/signin')}>
-            <FormattedMessage id="close" defaultMessage="back to login" />
-          </Button>
+          {status !== 'checking' && (
+            <Button onClick={() => history.push('/signin')}>
+              <FormattedMessage id="close" defaultMessage="back to login" />
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </div>

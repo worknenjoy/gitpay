@@ -18,6 +18,14 @@ export const SelectChoicesHeader = styled('div')(({ theme }) => ({
   }
 }))
 
+export const SelectChoicesHeaderRow = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'space-between',
+  gap: theme.spacing(2),
+  flexWrap: 'wrap'
+}))
+
 export const SelectChoicesGrid = styled(Grid)(() => ({
   width: '100%',
   margin: 0
@@ -35,8 +43,10 @@ export const SelectChoicesCard = styled(Card)(() => ({
   overflow: 'hidden'
 }))
 
-export const SelectChoicesMedia = styled('div')(({ theme }) => ({
-  height: 96,
+export const SelectChoicesMedia = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'compact'
+})<{ compact?: boolean }>(({ compact }) => ({
+  height: compact ? 76 : 160,
   width: '100%',
   backgroundColor: '#090607',
   display: 'flex',
@@ -50,22 +60,26 @@ export const SelectChoicesMedia = styled('div')(({ theme }) => ({
   }
 }))
 
-export const SelectChoicesLabel = styled(CardContent)(({ theme }) => ({
-  padding: theme.spacing(1.5, 2, 0.5, 2)
+export const SelectChoicesLabel = styled(CardContent, {
+  shouldForwardProp: (prop) => prop !== 'compact'
+})<{ compact?: boolean }>(({ theme, compact }) => ({
+  padding: compact ? theme.spacing(0.75, 0.5, 0.25, 0.5) : theme.spacing(1.5, 2, 0.5, 2),
+  textAlign: compact ? 'center' : undefined
 }))
 
-export const SelectChoicesActionBar = styled(CardActions)(({ theme }) => ({
-  padding: theme.spacing(0, 2, 1.5, 2),
+export const SelectChoicesActionBar = styled(CardActions, {
+  shouldForwardProp: (prop) => prop !== 'compact'
+})<{ compact?: boolean }>(({ theme, compact }) => ({
+  padding: compact ? theme.spacing(0, 0.5, 0.5, 0.5) : theme.spacing(0, 2, 1.5, 2),
   marginTop: 'auto',
   display: 'flex',
   alignItems: 'flex-start',
-  justifyContent: 'space-between',
+  justifyContent: compact ? 'center' : 'space-between',
   gap: theme.spacing(1),
   '& p': {
     margin: 0,
     flex: 1,
     color: theme.palette.text.secondary,
-    fontSize: '0.85rem',
     lineHeight: 1.4
   },
   '& span': {

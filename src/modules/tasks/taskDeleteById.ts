@@ -7,11 +7,12 @@ interface TaskParameters {
   userId?: number
 }
 
-export async function taskDeleteById(taskParameters: TaskParameters) {
+export async function taskDeleteById(taskParameters: TaskParameters, transaction?: any) {
   const hasOrdersAssociated = await models.Order.findOne({
     where: {
       TaskId: taskParameters.id
-    }
+    },
+    transaction
   })
 
   if (hasOrdersAssociated) {
@@ -19,11 +20,12 @@ export async function taskDeleteById(taskParameters: TaskParameters) {
   }
 
   await Promise.all([
-    models.History.destroy({ where: { TaskId: taskParameters.id } }),
-    models.Offer.destroy({ where: { taskId: taskParameters.id } }),
-    models.Member.destroy({ where: { taskId: taskParameters.id } }),
+    models.History.destroy({ where: { TaskId: taskParameters.id }, transaction }),
+    models.Offer.destroy({ where: { taskId: taskParameters.id }, transaction }),
+    models.Member.destroy({ where: { taskId: taskParameters.id }, transaction }),
     models.sequelize.query(`DELETE FROM "TaskLabels" WHERE "taskId" = ?`, {
-      replacements: [taskParameters.id]
+      replacements: [taskParameters.id],
+      transaction
     })
   ])
 
@@ -32,12 +34,15 @@ export async function taskDeleteById(taskParameters: TaskParameters) {
       where: {
         id: taskParameters.id
       },
-      include: [models.Label]
+      include: [models.Label],
+      transaction
     })
 
   const labels = tasks[0]?.dataValues?.Labels ?? []
   if (labels.length > 0) {
-    await Promise.all(labels.map((label) => models.Label.destroy({ where: { id: label.id } })))
+    await Promise.all(
+      labels.map((label) => models.Label.destroy({ where: { id: label.id }, transaction }))
+    )
   }
 
   const conditions: { id: number; userId?: number } = { id: taskParameters.id }
@@ -45,7 +50,7 @@ export async function taskDeleteById(taskParameters: TaskParameters) {
     conditions.userId = taskParameters.userId
   }
 
-  return models.Task.destroy({ where: conditions })
+  return models.Task.destroy({ where: conditions, transaction })
 }
 
 export default taskDeleteById

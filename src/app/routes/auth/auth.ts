@@ -6,7 +6,9 @@ import {
   resetPassword,
   changePassword,
   activateUser,
-  resendActivationEmail
+  getActivationStatus,
+  resendActivationEmail,
+  acceptTerms
 } from '../../controllers/user/user'
 import { changeEmail } from '../../controllers/auth/auth'
 import { confirmChangeEmail } from '../../controllers/auth/auth'
@@ -20,11 +22,13 @@ router.post('/auth/forgot-password', forgotPasswordNotification)
 
 router.post('/auth/register', register)
 router.get('/auth/activate', activateUser)
+router.get('/auth/activation-status', getActivationStatus)
 router.get('/auth/change-email/confirm', confirmChangeEmail)
 
 router.use('/auth/', secure)
 router.put('/auth/change-password', changePassword)
 router.get('/auth/resend-activation-email', resendActivationEmail)
+router.post('/auth/accept-terms', acceptTerms)
 router.post('/auth/change-email', changeEmail)
 
 export default router

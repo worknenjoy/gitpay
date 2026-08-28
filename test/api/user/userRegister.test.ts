@@ -141,6 +141,29 @@ describe('POST /auth/register', () => {
 
       expect(secondActivateRes.body['email_verified']).to.equal(true)
     })
+    it('should report activation status without consuming the token', async () => {
+      const res = await agent
+        .post('/auth/register')
+        .send({ email: 'teste66666@gmail.com', password: 'teste' })
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      const statusBefore = await agent
+        .get(`/auth/activation-status?userId=${res.body.id}`)
+        .expect(200)
+      expect(statusBefore.body.email_verified).to.equal(false)
+
+      // the status check must not have touched the token: it should still activate normally
+      const activateRes = await agent
+        .get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
+        .expect(200)
+      expect(activateRes.body['email_verified']).to.equal(true)
+
+      const statusAfter = await agent
+        .get(`/auth/activation-status?userId=${res.body.id}`)
+        .expect(200)
+      expect(statusAfter.body.email_verified).to.equal(true)
+    })
     it('should throttle resend requests made within the cooldown window', async () => {
       const registerRes = await register(agent)
       const loginRes = await login(agent, { email: registerRes.body.email })

@@ -20,6 +20,7 @@ interface UserData {
   email?: string
   login_strategy?: string
   token?: string
+  terms_accepted_at?: Date | null
 }
 
 export const createGitHubStrategy = () => {
@@ -84,6 +85,7 @@ export const createGitHubStrategy = () => {
               process.env.SECRET_PHRASE as string
             )
             data.token = token
+            data.terms_accepted_at = user.terms_accepted_at
             return done(null, data)
           } else {
             await userBuilds(data)
