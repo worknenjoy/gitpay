@@ -3,7 +3,6 @@ import { findUserByIdSimple } from '../../queries/user/findUserByIdSimple'
 import { getWhopClient } from '../../providers/whop/client'
 import { WhopPaymentProvider } from '../../providers/whop/WhopPaymentProvider'
 import { currencyForCountry } from '../../utils/currency/currency-map'
-import { normalizeCountryCode } from '../../utils/country/iso3166Alpha3'
 
 type UserAccountParams = {
   id: number
@@ -45,36 +44,19 @@ export async function userAccount(userParameters: UserAccountParams) {
     }
 
     // GET /accounts/{id} (Whop's newer, beta Account resource), queried with this user's
-    // own whopAccountId. Used below for owner.id (to scope the identity-profile lookup)
-    // and capabilities.standard_payout — NOT for country/business_address: confirmed those
-    // fields on this beta endpoint don't reliably scope to the specific sub-merchant (one
-    // observed case returned "us", the platform's own country, for a sub-merchant whose
-    // real KYC address was Denmark; another case leaked a completely unrelated account's
-    // country after that account onboarded). Best-effort: if this call fails (e.g. older
-    // API key without access), the code below still has /companies and Users.country.
+    // own whopAccountId. Used below only for capabilities.standard_payout — NOT for
+    // country/business_address: confirmed those fields on this beta endpoint don't
+    // reliably scope to the specific sub-merchant (one observed case returned "us", the
+    // platform's own country, for a sub-merchant whose real KYC address was Denmark;
+    // another case leaked a completely unrelated account's country after that account
+    // onboarded). Best-effort: if this call fails (e.g. older API key without access),
+    // the code below still has /companies.
     let whopAccount: any = null
     try {
       whopAccount = await getWhopClient().get<any>(`/accounts/${whopAccountId}`)
-      console.log('[whop] retrieve account (beta) for user account', whopAccount)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.warn('[whop] retrieve account (beta) for user account failed', error)
-    }
-
-    // The individual's true verified country lives on their identity profile. Best-effort:
-    // not every account has one, or the owner id may not resolve.
-    let latestIdentityProfile: any = null
-    try {
-      const ownerId = whopAccount?.owner?.id || company?.owner_user?.id
-      if (ownerId) {
-        const identityProfiles = await getWhopClient().get<any>(
-          `/identity_profiles?owner_id=${encodeURIComponent(ownerId)}&first=1`
-        )
-        latestIdentityProfile = identityProfiles?.data?.[0] || null
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.warn('[whop] retrieve identity profile for user account failed', error)
     }
 
     const whop = paymentProvider as WhopPaymentProvider
@@ -110,28 +92,11 @@ export async function userAccount(userParameters: UserAccountParams) {
       console.warn('[whop] disputes for connected company failed', error)
     }
 
-    const liveCountryCandidate =
-      latestIdentityProfile?.country ||
-      latestIdentityProfile?.personal_address?.country ||
-      latestIdentityProfile?.business_address?.country ||
-      company?.country ||
-      company?.business_address?.country ||
-      null
-
-    const country = normalizeCountryCode(liveCountryCandidate) || liveCountryCandidate || null
-
-    // Keep Users.country in sync once Whop reports a real, verified country, so other
-    // DB-country readers (e.g. userAccountCountries.ts) don't stay stuck on null forever.
-    // Safe because `country` above is never sourced from the leaking beta /accounts/{id}
-    // endpoint (see comment above `whopAccount`).
-    if (country && user && user.dataValues?.country !== country) {
-      try {
-        await user.update({ country })
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.warn('[whop] failed to sync Users.country from Whop', error)
-      }
-    }
+    // Whop has no proven-reliable, per-sub-merchant country signal (see comment above
+    // `whopAccount`) — every live endpoint tried has leaked another account's/the
+    // platform's country. Country is read as-is from Users.country and never synced
+    // from Whop.
+    const country = user?.dataValues?.country || null
 
     const defaultCurrency =
       company?.default_currency || company?.currency || currencyForCountry(country)

@@ -43,17 +43,7 @@ describe('User Account (Whop)', () => {
       nock(WHOP_API_HOST).get('/api/v1/companies/biz_user_whop_1').reply(200, whopCompany)
       nock(WHOP_API_HOST)
         .get('/api/v1/accounts/biz_user_whop_1')
-        // Account.country reflects the platform default (us), not the owner's actual
-        // verified country — see the identity_profiles mock below, which should win.
-        .reply(200, { id: 'biz_user_whop_1', country: 'DK', owner: { id: 'user_test_owner_1' } })
-      nock(WHOP_API_HOST)
-        .get('/api/v1/identity_profiles')
-        .query({ owner_id: 'user_test_owner_1', first: '1' })
-        .reply(200, {
-          data: [
-            { id: 'idpf_test_1', country: 'dk', personal_address: { country: 'DNK' } }
-          ]
-        })
+        .reply(200, { id: 'biz_user_whop_1' })
       nock(WHOP_API_HOST)
         .get('/api/v1/ledger_accounts/biz_user_whop_1')
         .reply(200, {
@@ -109,50 +99,9 @@ describe('User Account (Whop)', () => {
       expect(res.body.payout_method.label).to.equal('Ops checking')
       expect(res.body.payout_method.last4).to.equal('4242')
       expect(res.body.payouts_enabled).to.equal(true)
-      // country comes from the owner's identity profile (their actual verified
-      // country), not Account.country (the platform default) or /companies/{id} —
-      // and is normalized to uppercase 2-letter ISO to match our country lists
-      expect(res.body.country).to.equal('DK')
-    })
-  })
-
-  it('normalizes a 3-letter ISO country code from personal_address when no 2-letter country is present', async () => {
-    await withPaymentProvider('whop', async () => {
-      pinWhopApiForTests()
-      nock(WHOP_API_HOST).get('/api/v1/companies/biz_user_whop_3').reply(200, {
-        ...whopCompany,
-        id: 'biz_user_whop_3',
-        owner_user: { id: 'user_test_owner_3' }
-      })
-      nock(WHOP_API_HOST)
-        .get('/api/v1/accounts/biz_user_whop_3')
-        .reply(200, { id: 'biz_user_whop_3' })
-      nock(WHOP_API_HOST)
-        .get('/api/v1/identity_profiles')
-        .query({ owner_id: 'user_test_owner_3', first: '1' })
-        .reply(200, {
-          data: [{ id: 'idpf_test_3', personal_address: { country: 'DNK' } }]
-        })
-      nock(WHOP_API_HOST)
-        .get('/api/v1/ledger_accounts/biz_user_whop_3')
-        .reply(200, { id: 'ldgr_test_3', balances: [] })
-      nock(WHOP_API_HOST)
-        .get('/api/v1/payout_methods')
-        .query({ company_id: 'biz_user_whop_3' })
-        .reply(200, { data: [] })
-
-      const user = await registerAndLogin(agent)
-      await models.User.update(
-        { whop_account_id: 'biz_user_whop_3' },
-        { where: { id: user.body.id } }
-      )
-
-      const res = await agent
-        .get('/user/account')
-        .set('Authorization', user.headers.authorization)
-        .expect(200)
-
-      expect(res.body.country).to.equal('DK')
+      // Country is never derived from live Whop data (see dedicated test below) —
+      // Users.country wasn't set for this user, so it stays null.
+      expect(res.body.country).to.equal(null)
     })
   })
 
@@ -192,21 +141,18 @@ describe('User Account (Whop)', () => {
     })
   })
 
-  it('never trusts GET /accounts/{id} (beta) for country — it can reflect another account entirely', async () => {
+  it('never derives country from live Whop data — reads Users.country only', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
       nock(WHOP_API_HOST).get('/api/v1/companies/biz_user_whop_8').reply(200, {
         ...whopCompany,
-        id: 'biz_user_whop_8',
-        country: 'br'
+        id: 'biz_user_whop_8'
       })
       nock(WHOP_API_HOST)
         .get('/api/v1/accounts/biz_user_whop_8')
-        // No `owner` here, so the identity-profile lookup (the reliable source) can't
-        // resolve — forcing the fallback chain to skip straight past this beta payload.
-        // Its `country` ('us') stands in for a value leaked from an unrelated account/the
-        // platform default, deliberately different from /companies' real country ('br'),
-        // and must never win.
+        // `country` here stands in for a value leaked from an unrelated account/the
+        // platform default (this beta endpoint has been observed doing exactly that)
+        // and must never end up in the response, regardless of Users.country.
         .reply(200, { id: 'biz_user_whop_8', country: 'us' })
       nock(WHOP_API_HOST)
         .get('/api/v1/ledger_accounts/biz_user_whop_8')
@@ -218,7 +164,7 @@ describe('User Account (Whop)', () => {
 
       const user = await registerAndLogin(agent)
       await models.User.update(
-        { whop_account_id: 'biz_user_whop_8' },
+        { whop_account_id: 'biz_user_whop_8', country: 'BR' },
         { where: { id: user.body.id } }
       )
 
