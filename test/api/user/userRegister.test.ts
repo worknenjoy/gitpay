@@ -95,7 +95,25 @@ describe('POST /auth/register', () => {
       expect(activateRes.statusCode).to.equal(200)
       expect(activateRes.body['email_verified']).to.equal(true)
     })
-    it('should resend activation token with no existing one', async () => {
+    it('should resend activation token for an unverified user', async () => {
+      const registerRes = await register(agent)
+      const loginRes = await login(agent, { email: registerRes.body.email })
+      // the initial signup email also starts the cooldown; back-date it so this resend isn't throttled
+      await models.User.update(
+        { activation_token_sent_at: new Date(Date.now() - 61 * 1000) },
+        { where: { id: registerRes.body.id } }
+      )
+
+      const resendRes = await agent
+        .get(`/auth/resend-activation-email`)
+        .set('Authorization', loginRes.headers.authorization)
+        .expect(200)
+
+      expect(resendRes.statusCode).to.equal(200)
+      expect(resendRes.body['email_verified']).to.equal(false)
+      expect(resendRes.body['activation_token']).to.exist
+    })
+    it('should no-op and not send a new token when resending for an already verified user', async () => {
       const res = await registerAndLogin(agent)
 
       const resendRes = await agent
@@ -104,8 +122,45 @@ describe('POST /auth/register', () => {
         .expect(200)
 
       expect(resendRes.statusCode).to.equal(200)
-      expect(resendRes.body['email_verified']).to.equal(false)
-      expect(resendRes.body['activation_token']).to.exist
+      expect(resendRes.body['email_verified']).to.equal(true)
+    })
+    it('should treat activating an already verified user as a success, not an error', async () => {
+      const res = await agent
+        .post('/auth/register')
+        .send({ email: 'teste55555@gmail.com', password: 'teste' })
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      await agent
+        .get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
+        .expect(200)
+
+      const secondActivateRes = await agent
+        .get(`/auth/activate?token=${res.body.activation_token}&userId=${res.body.id}`)
+        .expect(200)
+
+      expect(secondActivateRes.body['email_verified']).to.equal(true)
+    })
+    it('should throttle resend requests made within the cooldown window', async () => {
+      const registerRes = await register(agent)
+      const loginRes = await login(agent, { email: registerRes.body.email })
+      // the initial signup email also starts the cooldown; back-date it so the first resend below isn't throttled
+      await models.User.update(
+        { activation_token_sent_at: new Date(Date.now() - 61 * 1000) },
+        { where: { id: registerRes.body.id } }
+      )
+
+      await agent
+        .get(`/auth/resend-activation-email`)
+        .set('Authorization', loginRes.headers.authorization)
+        .expect(200)
+
+      const throttledRes = await agent
+        .get(`/auth/resend-activation-email`)
+        .set('Authorization', loginRes.headers.authorization)
+        .expect(429)
+
+      expect(throttledRes.body.message).to.equal('user.activation.resend.too_many_requests')
     })
     it('should resend user activation token', async () => {
       const res = await agent

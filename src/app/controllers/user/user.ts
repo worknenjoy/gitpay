@@ -179,22 +179,59 @@ export const createPrivateTask = async (req: any, res: any) => {
   }
 }
 
+const RESEND_ACTIVATION_COOLDOWN_MS = 60 * 1000
+const ACTIVATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000
+
 export const activateUser = async (req: any, res: any) => {
   const { token, userId } = req.query
   try {
-    const foundUser = await models.User.findOne({ where: { activation_token: token, id: userId } })
+    const foundUser = await models.User.findOne({ where: { id: userId } })
     if (!foundUser) {
+      // eslint-disable-next-line no-console
+      console.log(`[activation] activate failed: no user for id ${userId}`)
       res.status(401).send({ message: 'user.not.exist' })
-    } else {
-      const userUpdate = await models.User.update(
-        { activation_token: null, email_verified: true },
-        { where: { id: foundUser.dataValues.id }, returning: true, plain: true }
-      )
-      res.send(userUpdate[1])
+      return
     }
+
+    if (foundUser.dataValues.email_verified) {
+      // eslint-disable-next-line no-console
+      console.log(`[activation] activate no-op: user ${userId} already verified`)
+      res.send(foundUser)
+      return
+    }
+
+    const { activation_token, activation_token_expires_at } = foundUser.dataValues
+    const isExpired =
+      activation_token_expires_at && new Date(activation_token_expires_at).getTime() < Date.now()
+
+    if (!activation_token || activation_token !== token || isExpired) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `[activation] activate failed for user ${userId}: ${
+          isExpired ? 'token expired' : 'token mismatch'
+        }`
+      )
+      res.status(401).send({
+        message: isExpired ? 'user.activation.token.expired' : 'user.activation.token.invalid'
+      })
+      return
+    }
+
+    const userUpdate = await models.User.update(
+      {
+        activation_token: null,
+        activation_token_sent_at: null,
+        activation_token_expires_at: null,
+        email_verified: true
+      },
+      { where: { id: foundUser.dataValues.id }, returning: true, plain: true }
+    )
+    // eslint-disable-next-line no-console
+    console.log(`[activation] activate success for user ${userId}`)
+    res.send(userUpdate[1])
   } catch (error: any) {
     // eslint-disable-next-line no-console
-    console.log(error)
+    console.log('[activation] activate error', error)
     res.status(401).send(error)
   }
 }
@@ -203,22 +240,48 @@ export const resendActivationEmail = async (req: any, res: any) => {
   const { id: userId } = req.user
   try {
     const foundUser = await models.User.findOne({ where: { id: userId } })
-    if (!foundUser) res.status(401)
-    const { id, name } = foundUser.dataValues
+    if (!foundUser) {
+      res.status(401).send({ message: 'user.not.exist' })
+      return
+    }
+
+    if (foundUser.dataValues.email_verified) {
+      // eslint-disable-next-line no-console
+      console.log(`[activation] resend no-op: user ${userId} already verified`)
+      res.send(foundUser)
+      return
+    }
+
+    const { activation_token_sent_at } = foundUser.dataValues
+    if (
+      activation_token_sent_at &&
+      Date.now() - new Date(activation_token_sent_at).getTime() < RESEND_ACTIVATION_COOLDOWN_MS
+    ) {
+      // eslint-disable-next-line no-console
+      console.log(`[activation] resend throttled for user ${userId}`)
+      res.status(429).send({ message: 'user.activation.resend.too_many_requests' })
+      return
+    }
+
     const token = models.User.generateToken()
-    const userUpdate =
-      token &&
-      (await models.User.update(
-        { activation_token: token, email_verified: false },
-        { where: { id: foundUser.dataValues.id }, returning: true, plain: true }
-      ))
+    const userUpdate = await models.User.update(
+      {
+        activation_token: token,
+        activation_token_sent_at: new Date(),
+        activation_token_expires_at: new Date(Date.now() + ACTIVATION_TOKEN_TTL_MS)
+      },
+      { where: { id: foundUser.dataValues.id }, returning: true, plain: true }
+    )
     if (userUpdate[1].dataValues.id) {
+      // eslint-disable-next-line no-console
+      console.log(`[activation] resend sent for user ${userId}`)
       UserMail.activation(userUpdate[1].dataValues, token)
     }
     res.send(userUpdate[1])
   } catch (error: any) {
     // eslint-disable-next-line no-console
-    console.log(error)
+    console.log('[activation] resend error', error)
+    res.status(500).send({ message: 'user.activation.resend.error' })
   }
 }
 

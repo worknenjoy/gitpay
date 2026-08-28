@@ -15,19 +15,25 @@ const UserMail = {
     i18n.setLocale(language)
 
     try {
-      return await request(to, i18n.__('mail.user.activation.subject'), [
-        {
-          type: 'text/html',
-          value: emailTemplate.mainContentEmailTemplate(
-            i18n.__('mail.user.activation.message.intro', {
-              name: user.name || user.username || 'Gitpay user'
-            }),
-            i18n.__('mail.user.activation.message.subtitle'),
-            i18n.__('mail.user.activation.buttonText'),
-            `${process.env.FRONTEND_HOST}/#/activate/user/${user.id}/token/${token}`
-          )
-        }
-      ])
+      return await request(
+        to,
+        i18n.__('mail.user.activation.subject'),
+        [
+          {
+            type: 'text/html',
+            value: emailTemplate.mainContentEmailTemplate(
+              i18n.__('mail.user.activation.message.intro', {
+                name: user.name || user.username || 'Gitpay user'
+              }),
+              i18n.__('mail.user.activation.message.subtitle'),
+              i18n.__('mail.user.activation.buttonText'),
+              `${process.env.FRONTEND_HOST}/#/activate/user/${user.id}/token/${token}`
+            )
+          }
+        ],
+        undefined,
+        { clickTracking: { enable: false, enableText: false } }
+      )
     } catch (error) {
       console.error('Error sending email:', error)
     }

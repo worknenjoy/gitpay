@@ -61,7 +61,6 @@ export const Default = {
     messageAuthor: () => console.log('Message Author Clicked'),
     onDeleteTask: () => console.log('Delete Task Clicked'),
     reportTask: () => console.log('Report Task Clicked'),
-    onResendActivationEmail: () => console.log('Resend Activation Email Clicked'),
     task: {
       completed: true,
       data: {

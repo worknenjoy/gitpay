@@ -34,6 +34,8 @@ export interface UserAttributes {
   languages?: string | null
   recover_password_token?: string | null
   activation_token?: string | null
+  activation_token_sent_at?: Date | null
+  activation_token_expires_at?: Date | null
   receiveNotifications: boolean
   openForJobs: boolean
   active: boolean
@@ -74,6 +76,8 @@ export type UserCreationAttributes = Optional<
   | 'languages'
   | 'recover_password_token'
   | 'activation_token'
+  | 'activation_token_sent_at'
+  | 'activation_token_expires_at'
   | 'receiveNotifications'
   | 'openForJobs'
   | 'active'
@@ -116,6 +120,8 @@ export default class User
   public languages!: string | null
   public recover_password_token!: string | null
   public activation_token!: string | null
+  public activation_token_sent_at!: Date | null
+  public activation_token_expires_at!: Date | null
   public receiveNotifications!: boolean
   public openForJobs!: boolean
   public active!: boolean
@@ -248,6 +254,14 @@ export default class User
         },
         activation_token: {
           type: DataTypes.STRING,
+          allowNull: true
+        },
+        activation_token_sent_at: {
+          type: DataTypes.DATE,
+          allowNull: true
+        },
+        activation_token_expires_at: {
+          type: DataTypes.DATE,
           allowNull: true
         },
         receiveNotifications: {

@@ -7,7 +7,13 @@ import { copyEmail, notificationEmail, fromEmail } from './constants'
 import emailTemplate from './templates/default'
 import { env } from 'process'
 
-const request = async (to: string, subject: string, content: any[], replyEmail?: string) => {
+const request = async (
+  to: string,
+  subject: string,
+  content: any[],
+  replyEmail?: string,
+  trackingSettings?: any
+) => {
   if (!sendgrid.apiKey && env.NODE_ENV !== 'test') {
     console.warn('SendGrid API key is missing')
   }
@@ -22,7 +28,8 @@ const request = async (to: string, subject: string, content: any[], replyEmail?:
         from: notificationEmail,
         replyTo: replyEmail || fromEmail,
         subject,
-        html: emailTemplate.defaultEmailTemplate(content[0].value)
+        html: emailTemplate.defaultEmailTemplate(content[0].value),
+        ...(trackingSettings && { trackingSettings })
       }
 
       const response = await sgMail.send(msg)

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
@@ -7,40 +7,46 @@ import DialogContentText from '@mui/material/DialogContentText'
 import { FormattedMessage } from 'react-intl'
 import { useHistory, useParams } from 'react-router-dom'
 
+type ActivationStatus = 'idle' | 'loading' | 'activated' | 'error'
+
 const AccountActivation = ({ onActivateAccount }) => {
-  const [open, setOpen] = React.useState(false)
-  const [activated, setActivated] = React.useState(false)
+  const [status, setStatus] = React.useState<ActivationStatus>('idle')
 
   const history = useHistory()
   const { token, userId } = useParams<{ token: string; userId: string }>()
 
-  useEffect(() => {
-    const activate = async () => {
-      const activateAccount = await onActivateAccount(token, userId)
-      if (!activateAccount.error) {
-        setActivated(true)
-      }
-      setOpen(true)
-    }
-    activate()
-  }, [])
+  const handleActivate = async () => {
+    setStatus('loading')
+    const activateAccount = await onActivateAccount(token, userId)
+    setStatus(activateAccount.error ? 'error' : 'activated')
+  }
 
   return (
     <div>
-      <Dialog
-        open={open}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
+      <Dialog open aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         <DialogContent>
-          {activated ? (
+          {status === 'idle' && (
+            <DialogContentText id="alert-dialog-description">
+              <FormattedMessage
+                id="account.activate.prompt"
+                defaultMessage="Click below to activate your account."
+              />
+            </DialogContentText>
+          )}
+          {status === 'loading' && (
+            <DialogContentText id="alert-dialog-description">
+              <FormattedMessage id="account.activating" defaultMessage="Activating your account…" />
+            </DialogContentText>
+          )}
+          {status === 'activated' && (
             <DialogContentText id="alert-dialog-description">
               <FormattedMessage
                 id="account.activated"
                 defaultMessage="Your account is active now, you can now back to login"
               />
             </DialogContentText>
-          ) : (
+          )}
+          {status === 'error' && (
             <DialogContentText id="alert-dialog-description">
               <FormattedMessage
                 id="account.not.activated"
@@ -50,6 +56,11 @@ const AccountActivation = ({ onActivateAccount }) => {
           )}
         </DialogContent>
         <DialogActions>
+          {(status === 'idle' || status === 'error') && (
+            <Button onClick={handleActivate}>
+              <FormattedMessage id="account.activate.button" defaultMessage="Activate my account" />
+            </Button>
+          )}
           <Button onClick={() => history.push('/signin')}>
             <FormattedMessage id="close" defaultMessage="back to login" />
           </Button>

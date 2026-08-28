@@ -13,6 +13,8 @@ type UserBuildsParams = {
   [key: string]: any
 }
 
+const ACTIVATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000
+
 export async function userBuilds(userParameters: UserBuildsParams) {
   const selectedTypeIds = userParameters.Types
   if (userParameters.password) {
@@ -23,6 +25,8 @@ export async function userBuilds(userParameters: UserBuildsParams) {
     userParameters.email_verified = true
   } else {
     userParameters.email_verified = false
+    userParameters.activation_token_sent_at = new Date()
+    userParameters.activation_token_expires_at = new Date(Date.now() + ACTIVATION_TOKEN_TTL_MS)
   }
   if (!userParameters.email && !userParameters.password && !userParameters.confirmPassword)
     return false
@@ -30,8 +34,10 @@ export async function userBuilds(userParameters: UserBuildsParams) {
     const user = await currentModels.User.build(userParameters).save()
     const { dataValues } = user
     if (dataValues && dataValues.id) {
-      const { id, name, activation_token } = dataValues
+      const { id, activation_token } = dataValues
       if (!userParameters.provider) {
+        // eslint-disable-next-line no-console
+        console.log(`[activation] sending initial activation email for user ${id}`)
         UserMail.activation(dataValues, activation_token)
       }
       if (selectedTypeIds && selectedTypeIds.length > 0) {

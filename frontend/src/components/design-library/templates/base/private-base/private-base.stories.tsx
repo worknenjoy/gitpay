@@ -51,28 +51,3 @@ Loading.args = {
     getInfo: () => {}
   }
 }
-
-export const NotActiveUser = Template.bind({})
-NotActiveUser.args = {
-  children: <Typography variant="body1">Not Active User</Typography>,
-  createTask: () => console.log('Create Task'),
-  signOut: () => console.log('Sign Out'),
-  user: {
-    data: {
-      id: '1',
-      name: 'John Doe',
-      Types: [],
-      completed: false,
-      email_verified: false
-    },
-    completed: true
-  },
-  profileHeaderProps: {
-    title: 'Not Active User',
-    subtitle: 'Please activate your account'
-  },
-  bottomProps: {
-    info: { bounties: 0, users: 0, tasks: 0 },
-    getInfo: () => {}
-  }
-}

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, Switch, HashRouter } from 'react-router-dom'
+import { Route, Switch, HashRouter, Redirect } from 'react-router-dom'
 import PrivateBase from 'design-library/templates/base/private-base/private-base'
 import DashboardContainer from '../../../../containers/dashboard/dashboard'
 import { UserAccount } from '../features/account/user-account'
@@ -28,7 +28,6 @@ const PrivatePage = ({
   createTask,
   updateUser,
   changePassword,
-  resendActivationEmail,
   updateUserEmail,
   addNotification,
   deleteUser,
@@ -40,11 +39,14 @@ const PrivatePage = ({
     fetchOrganizations()
   }, [])
 
+  if (user?.data?.email_verified === false) {
+    return <Redirect to="/verify-email" />
+  }
+
   return (
     <PrivateBase
       createTask={createTask}
       signOut={signOut}
-      onResendActivationEmail={resendActivationEmail}
       user={user}
       bottomProps={{
         info: info,
