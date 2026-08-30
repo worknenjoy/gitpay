@@ -28,10 +28,12 @@ import routerUser from './routes/user'
 import routerPaymentRequestPayments from './routes/paymentRequestPayment'
 import routerPaymentRequestBalance from './routes/paymentRequestBalance'
 import routerDashboard from './routes/dashboard'
+import routerWellKnown from './routes/wellKnown'
 import type { Express } from 'express'
 
 export const init = (app: Express) => {
   app.use('/webhooks', express.raw({ type: 'application/json' }), routerWebhook)
+  app.use('/', routerWellKnown)
 
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))

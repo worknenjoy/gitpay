@@ -58,7 +58,7 @@ app.use(passport.session())
 app.set('port', process.env.PORT || 3000)
 
 app.use(compression())
-app.use(express.static(path.join(__dirname, '../frontend/public')))
+app.use(express.static(path.join(__dirname, '../frontend/public'), { dotfiles: 'allow' }))
 
 load.init(app)
 
