@@ -29,6 +29,7 @@ coverage
 build/Release
 frontend/public/
 !/frontend/public/lottie/
+!/frontend/public/.well-known/
 frontend/build
 
 # Storybook build output
