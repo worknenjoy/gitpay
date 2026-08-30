@@ -69,7 +69,7 @@ module.exports = {
       }
     }),
     new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ['!favicon-gitpay.ico']
+      cleanOnceBeforeBuildPatterns: ['!favicon-gitpay.ico', '!.well-known', '!.well-known/**']
     }),
     new webpack.ProvidePlugin({
       process: 'process/browser',
