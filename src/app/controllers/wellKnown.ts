@@ -2,7 +2,10 @@ import path from 'path'
 import { Request, Response } from 'express'
 
 export const appleDeveloperMerchantIdDomainAssociation = (req: Request, res: Response) => {
-  const filePath = path.join(__dirname, '../../../frontend/public/.well-known/apple-developer-merchantid-domain-association')
+  const filePath = path.join(
+    __dirname,
+    '../../../frontend/public/.well-known/apple-developer-merchantid-domain-association'
+  )
 
   res.sendFile(filePath, (err: Error) => {
     if (err) {
