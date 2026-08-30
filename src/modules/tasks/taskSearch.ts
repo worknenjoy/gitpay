@@ -117,6 +117,30 @@ export async function taskSearch(searchParams: any) {
     ]
   }
 
+  // Issues solved: task is closed and this user has an accepted assignment on it
+  // (mirrors the accepted-Assign + closed-Task semantics in src/modules/users/userTasks.ts)
+  const solvedByUserId = safeIntParam(searchParams.solvedByUserId)
+  if (solvedByUserId !== null) {
+    whereBase.status = 'closed'
+    whereBase[Op.and] = [
+      ...(whereBase[Op.and] ?? []),
+      Sequelize.literal(
+        `EXISTS (SELECT 1 FROM "Assigns" a WHERE a."TaskId" = "Task"."id" AND a."userId" = ${solvedByUserId} AND a."status" = 'accepted')`
+      )
+    ]
+  }
+
+  // Maintainer's bounties: task belongs to a project under an organization owned by this user
+  const maintainedByUserId = safeIntParam(searchParams.maintainedByUserId)
+  if (maintainedByUserId !== null) {
+    whereBase[Op.and] = [
+      ...(whereBase[Op.and] ?? []),
+      Sequelize.literal(
+        `EXISTS (SELECT 1 FROM "Projects" p JOIN "Organizations" o ON o.id = p."OrganizationId" WHERE p.id = "Task"."ProjectId" AND o."UserId" = ${maintainedByUserId})`
+      )
+    ]
+  }
+
   if (searchParams.status) whereBase.status = searchParams.status
   if (searchParams.url) whereBase.url = searchParams.url
 
@@ -202,6 +226,7 @@ export async function taskSearch(searchParams: any) {
       'private',
       'not_listed',
       'title',
+      'description',
       'url',
       'status',
       'level',
@@ -288,6 +313,7 @@ export async function taskSearch(searchParams: any) {
     'private',
     'not_listed',
     'title',
+    'description',
     'url',
     'status',
     'level',

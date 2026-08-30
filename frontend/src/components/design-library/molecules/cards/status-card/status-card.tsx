@@ -17,17 +17,31 @@ const Name = styled(Typography)(() => ({
   fontSize: 18
 }))
 
+const Sub = styled(Typography)(() => ({
+  fontSize: 13
+}))
+
 type StatusCardProps = {
   name: string | React.ReactNode
   /** Display value: schedule interval, label, or custom node (e.g. FormattedMessage) */
   status: string | number | React.ReactNode
+  /** Optional secondary line under the value, e.g. "3 active · 1 archived" or "↑ 14% YoY" */
+  sub?: React.ReactNode
   onAdd?: (e: any) => void
   action?: React.PropsWithChildren<any>
   actionProps?: any
   completed?: boolean
 }
 
-const StatusCard = ({ name, status, onAdd, action, actionProps, completed }: StatusCardProps) => {
+const StatusCard = ({
+  name,
+  status,
+  sub,
+  onAdd,
+  action,
+  actionProps,
+  completed
+}: StatusCardProps) => {
   return (
     <Root>
       <CardContent>
@@ -42,6 +56,11 @@ const StatusCard = ({ name, status, onAdd, action, actionProps, completed }: Sta
               {name}
             </Name>
             <Balance color="primary">{status}</Balance>
+            {sub && (
+              <Sub color="textSecondary" gutterBottom>
+                {sub}
+              </Sub>
+            )}
           </>
         )}
       </CardContent>

@@ -76,6 +76,15 @@ const Palette = {
     },
     error: {
       main: '#FF0000'
+    },
+    // Role-accent colors for the public profile pages (Contributor/Maintainer/Service
+    // Provider/Funding). Kept as their own namespace rather than overriding MUI's semantic
+    // `warning`/`info` slots, which are already used for unrelated alert/status UI elsewhere.
+    accent: {
+      orange: '#d0722a', // same family as secondary.main — reused, not duplicated
+      teal: '#407E6F',
+      yellow: '#EFB806',
+      pink: '#EFB8D5'
     }
   },
   components: {

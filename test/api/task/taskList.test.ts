@@ -15,6 +15,8 @@ describe('GET /tasks/list', () => {
     await truncateModels(models.Assign)
     await truncateModels(models.Order)
     await truncateModels(models.Transfer)
+    await truncateModels(models.Project)
+    await truncateModels(models.Organization)
   })
 
   it('should list tasks and return an array', async () => {
@@ -301,6 +303,92 @@ describe('GET /tasks/list', () => {
       const res = await agent
         .get('/tasks/list')
         .query({ supportedByUserId: user.id, limit: 10, page: 0 })
+        .expect(200)
+
+      expect(res.body.data).to.be.an('array')
+      expect(res.body.data.length).to.equal(0)
+    })
+  })
+
+  describe('filter by solvedByUserId (issues solved tab)', () => {
+    it('should return closed tasks with an accepted assignment for the user', async () => {
+      const user = await UserFactory()
+      const otherUser = await UserFactory()
+
+      const solvedTask = await TaskFactory({ userId: otherUser.id, status: 'closed' })
+      await AssignFactory({ TaskId: solvedTask.id, userId: user.id, status: 'accepted' })
+
+      // Closed task, but assignment not accepted (should not appear)
+      const pendingAssignTask = await TaskFactory({ userId: otherUser.id, status: 'closed' })
+      await AssignFactory({ TaskId: pendingAssignTask.id, userId: user.id, status: 'pending' })
+
+      // Accepted assignment, but task still open (should not appear)
+      const openTask = await TaskFactory({ userId: otherUser.id, status: 'open' })
+      await AssignFactory({ TaskId: openTask.id, userId: user.id, status: 'accepted' })
+
+      const res = await agent
+        .get('/tasks/list')
+        .query({ solvedByUserId: user.id, limit: 10, page: 0 })
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      expect(res.body.data).to.be.an('array')
+      expect(res.body.data.length).to.equal(1)
+      expect(res.body.data[0].id).to.equal(solvedTask.id)
+    })
+
+    it('should not return closed tasks accepted by a different user', async () => {
+      const user = await UserFactory()
+      const otherUser = await UserFactory()
+
+      const task = await TaskFactory({ status: 'closed' })
+      await AssignFactory({ TaskId: task.id, userId: otherUser.id, status: 'accepted' })
+
+      const res = await agent
+        .get('/tasks/list')
+        .query({ solvedByUserId: user.id, limit: 10, page: 0 })
+        .expect(200)
+
+      expect(res.body.data).to.be.an('array')
+      expect(res.body.data.length).to.equal(0)
+    })
+  })
+
+  describe('filter by maintainedByUserId (maintainer open bounties)', () => {
+    it('should return tasks under a project of an organization owned by the user', async () => {
+      const user = await UserFactory()
+      const otherUser = await UserFactory()
+
+      const org = await models.Organization.create({ name: 'Owned org', UserId: user.id })
+      const project = await org.createProject({ name: 'Owned project' })
+      const maintainedTask = await TaskFactory({ userId: otherUser.id, ProjectId: project.id })
+
+      // Task under a project owned by someone else (should not appear)
+      const otherOrg = await models.Organization.create({ name: 'Other org', UserId: otherUser.id })
+      const otherProject = await otherOrg.createProject({ name: 'Other project' })
+      await TaskFactory({ userId: otherUser.id, ProjectId: otherProject.id })
+
+      // Task with no project at all (should not appear)
+      await TaskFactory({ userId: otherUser.id })
+
+      const res = await agent
+        .get('/tasks/list')
+        .query({ maintainedByUserId: user.id, limit: 10, page: 0 })
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      expect(res.body.data).to.be.an('array')
+      expect(res.body.data.length).to.equal(1)
+      expect(res.body.data[0].id).to.equal(maintainedTask.id)
+    })
+
+    it('should return empty when user maintains no organizations', async () => {
+      const user = await UserFactory()
+      await TaskFactory()
+
+      const res = await agent
+        .get('/tasks/list')
+        .query({ maintainedByUserId: user.id, limit: 10, page: 0 })
         .expect(200)
 
       expect(res.body.data).to.be.an('array')

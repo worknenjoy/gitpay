@@ -4,6 +4,8 @@ const currentModels = models as any
 
 export async function organizationList(params?: any) {
   try {
+    // This route is public — never include full User rows (password hash,
+    // recover_password_token, email, account_id, etc.). Whitelist display-safe fields only.
     const data = await currentModels.Organization.findAll({
       include: [
         {
@@ -11,7 +13,8 @@ export async function organizationList(params?: any) {
           include: [currentModels.Organization]
         },
         {
-          model: currentModels.User
+          model: currentModels.User,
+          attributes: ['id', 'name', 'username', 'picture_url']
         }
       ]
     })

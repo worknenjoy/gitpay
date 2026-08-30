@@ -1,4 +1,8 @@
-import { findPaymentRequestById } from '../../queries/payment-request/payment-request'
+import {
+  findPaymentRequestById,
+  findActivePaymentRequestsByUserId
+} from '../../queries/payment-request/payment-request'
+import { countSucceededPaymentsByPaymentRequestId } from '../../queries/payment-request/payment-request-payment'
 import { WhopPaymentProvider } from '../../providers/whop/WhopPaymentProvider'
 
 export const getPublicPaymentRequest = async function getPublicPaymentRequest(req: any, res: any) {
@@ -19,6 +23,38 @@ export const getPublicPaymentRequest = async function getPublicPaymentRequest(re
   } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log('getPublicPaymentRequest error on controller', error)
+    res.status(error.StatusCodeError || 400).send(error)
+  }
+}
+
+export const getPublicPaymentRequestsByUser = async function getPublicPaymentRequestsByUser(
+  req: any,
+  res: any
+) {
+  try {
+    const paymentRequests = await findActivePaymentRequestsByUserId(req.params.userId)
+    const paidCounts = await countSucceededPaymentsByPaymentRequestId(
+      paymentRequests.map((pr: any) => pr.id)
+    )
+
+    return res.status(200).send(
+      paymentRequests.map((pr: any) => ({
+        id: pr.id,
+        title: pr.title,
+        description: pr.description,
+        currency: pr.currency,
+        provider: pr.provider,
+        custom_amount: pr.custom_amount,
+        amount: pr.amount,
+        payment_url: pr.payment_url,
+        tier: pr.tier,
+        featured: pr.featured,
+        paidCount: paidCounts[pr.id] || 0
+      }))
+    )
+  } catch (error: any) {
+    // eslint-disable-next-line no-console
+    console.log('getPublicPaymentRequestsByUser error on controller', error)
     res.status(error.StatusCodeError || 400).send(error)
   }
 }

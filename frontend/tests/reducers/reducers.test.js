@@ -5,6 +5,9 @@ import { preferences } from '../../src/reducers/preferencesReducer'
 import { organizations } from '../../src/reducers/organizationsReducer'
 import { task } from '../../src/reducers/taskReducer'
 import { contact } from '../../src/reducers/contactReducer'
+import { userProfileStats } from '../../src/reducers/userProfileStatsReducer'
+import { paymentLinksPublic } from '../../src/reducers/paymentLinksPublicReducer'
+import { maintainedProjects } from '../../src/reducers/maintainedProjectsReducer'
 
 xdescribe('task reducer', () => {
   it('should return the initial state', () => {
@@ -65,5 +68,68 @@ describe('organizations reducer', () => {
 describe('contact reducer', () => {
   it('should return the initial state', () => {
     expect(contact(undefined, {})).toEqual({ completed: true })
+  })
+})
+
+describe('userProfileStats reducer', () => {
+  it('should return the initial state', () => {
+    expect(userProfileStats(undefined, {})).toEqual({
+      completed: true,
+      data: {},
+      error: {}
+    })
+  })
+
+  it('should handle GET_USER_PROFILE_STATS_SUCCESS', () => {
+    const stats = { contributor: { issuesSolvedCount: 3 } }
+    expect(
+      userProfileStats(undefined, { type: 'GET_USER_PROFILE_STATS_SUCCESS', data: stats })
+    ).toEqual({
+      completed: true,
+      data: stats,
+      error: {}
+    })
+  })
+})
+
+describe('paymentLinksPublic reducer', () => {
+  it('should return the initial state', () => {
+    expect(paymentLinksPublic(undefined, {})).toEqual({
+      completed: true,
+      data: [],
+      error: {}
+    })
+  })
+
+  it('should handle GET_PUBLIC_PAYMENT_LINKS_SUCCESS', () => {
+    const links = [{ id: 1, title: 'Code review' }]
+    expect(
+      paymentLinksPublic(undefined, { type: 'GET_PUBLIC_PAYMENT_LINKS_SUCCESS', data: links })
+    ).toEqual({
+      completed: true,
+      data: links,
+      error: {}
+    })
+  })
+})
+
+describe('maintainedProjects reducer', () => {
+  it('should return the initial state', () => {
+    expect(maintainedProjects(undefined, {})).toEqual({
+      completed: true,
+      data: [],
+      error: {}
+    })
+  })
+
+  it('should handle GET_MAINTAINED_PROJECTS_SUCCESS', () => {
+    const projects = [{ id: 1, name: 'gitpay' }]
+    expect(
+      maintainedProjects(undefined, { type: 'GET_MAINTAINED_PROJECTS_SUCCESS', data: projects })
+    ).toEqual({
+      completed: true,
+      data: projects,
+      error: {}
+    })
   })
 })

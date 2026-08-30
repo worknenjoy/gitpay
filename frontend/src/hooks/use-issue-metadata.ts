@@ -29,16 +29,22 @@ const messages = defineMessages({
   createdAt: {
     id: 'table.header.createdAt',
     defaultMessage: 'Created at'
+  },
+  actions: {
+    id: 'table.header.actions',
+    defaultMessage: 'Actions'
   }
 })
 
 type UseIssueMetadataOptions = {
   includeProject?: boolean
+  /** Appends a non-sortable, unlabeled "actions" column (row-actions dropdown) */
+  includeActions?: boolean
 }
 
 const useIssueMetadata = (options: UseIssueMetadataOptions = {}) => {
   const intl = useIntl()
-  const { includeProject = true } = options
+  const { includeProject = true, includeActions = false } = options
 
   return React.useMemo(() => {
     const baseMetadata = {
@@ -84,20 +90,32 @@ const useIssueMetadata = (options: UseIssueMetadataOptions = {}) => {
       }
     }
 
-    if (!includeProject) {
-      return baseMetadata
+    const withProject = includeProject
+      ? {
+          ...baseMetadata,
+          project: {
+            sortable: true,
+            numeric: false,
+            dataBaseKey: 'Project',
+            label: intl.formatMessage(messages.project)
+          }
+        }
+      : baseMetadata
+
+    if (!includeActions) {
+      return withProject
     }
 
     return {
-      ...baseMetadata,
-      project: {
-        sortable: true,
+      ...withProject,
+      actions: {
+        sortable: false,
         numeric: false,
-        dataBaseKey: 'Project',
-        label: intl.formatMessage(messages.project)
+        dataBaseKey: 'id',
+        label: intl.formatMessage(messages.actions)
       }
     }
-  }, [intl, includeProject])
+  }, [intl, includeProject, includeActions])
 }
 
 export default useIssueMetadata

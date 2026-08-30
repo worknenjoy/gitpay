@@ -18,6 +18,10 @@ export interface PaymentRequestAttributes {
   status: string
   transfer_status: string
   transfer_id?: string | null
+  /** Service-package tier label (e.g. "Starter"/"Standard"/"Retainer"). Null for a plain payment link. */
+  tier?: string | null
+  /** Whether this package should be visually highlighted as the recommended tier. */
+  featured: boolean
   userId?: number | null
   createdAt?: Date
   updatedAt?: Date
@@ -41,6 +45,8 @@ export type PaymentRequestCreationAttributes = Optional<
   | 'status'
   | 'transfer_status'
   | 'transfer_id'
+  | 'tier'
+  | 'featured'
   | 'userId'
   | 'createdAt'
   | 'updatedAt'
@@ -66,6 +72,8 @@ export default class PaymentRequest
   public status!: string
   public transfer_status!: string
   public transfer_id!: string | null
+  public tier!: string | null
+  public featured!: boolean
   public userId!: number | null
   public createdAt!: Date
   public updatedAt!: Date
@@ -139,6 +147,14 @@ export default class PaymentRequest
         transfer_id: {
           type: DataTypes.STRING,
           allowNull: true
+        },
+        tier: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        featured: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: false
         },
         userId: {
           type: DataTypes.INTEGER,

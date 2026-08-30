@@ -1,4 +1,5 @@
 import React from 'react'
+import { useIntl } from 'react-intl'
 import SectionTable from '../../../molecules/tables/section-table/section-table'
 import IssueLinkField from '../section-table/section-table-custom-fields/issue/issue-link-field/issue-link-field'
 import IssueStatusField from '../section-table/section-table-custom-fields/issue/issue-status-field/issue-status-field'
@@ -7,6 +8,7 @@ import AmountField from '../section-table/section-table-custom-fields/base/amoun
 import IssueLabelsField from '../section-table/section-table-custom-fields/issue/issue-labels-field/issue-labels-field'
 import IssueLanguageField from '../section-table/section-table-custom-fields/issue/issue-language-field/issue-language-field'
 import IssueCreatedField from '../section-table/section-table-custom-fields/issue/issue-created-field/issue-created-field'
+import ActionField from '../section-table/section-table-custom-fields/base/action-field/action-field'
 import IssueFilterBar from '../../../molecules/sections/issue-filter-bar/issue-filter-bar'
 import useIssueMetadata from '../../../../../hooks/use-issue-metadata'
 
@@ -20,6 +22,52 @@ export const customColumnRenderer = {
   labels: (item: any) => <IssueLabelsField issue={item} />,
   languages: (item: any) => <IssueLanguageField issue={item} />,
   createdAt: (item: any) => <IssueCreatedField issue={item} />
+}
+
+type UseIssueColumnRendererOptions = {
+  /** "View details" row action — opens a task detail drawer/panel for the row */
+  onViewDetails?: (item: any) => void
+}
+
+// SectionTable only ever calls a renderer with the row item (no click-handler slot), so a
+// row action that needs a handler (e.g. opening a drawer) has to be built as a hook that
+// closes over it, rather than added to the static `customColumnRenderer` map above.
+export const useIssueColumnRenderer = ({ onViewDetails }: UseIssueColumnRendererOptions = {}) => {
+  const intl = useIntl()
+
+  return React.useMemo(
+    () => ({
+      ...customColumnRenderer,
+      actions: (item: any) => (
+        <ActionField
+          actions={[
+            {
+              children: intl.formatMessage({
+                id: 'table.actions.viewDetails',
+                defaultMessage: 'View details'
+              }),
+              onClick: () => onViewDetails?.(item)
+            },
+            {
+              children: intl.formatMessage({
+                id: 'table.actions.viewOnGithub',
+                defaultMessage: 'View on GitHub'
+              }),
+              onClick: () => item.url && window.open(item.url, '_blank')
+            },
+            {
+              children: intl.formatMessage({
+                id: 'table.actions.copyLink',
+                defaultMessage: 'Copy link'
+              }),
+              onClick: () => item.url && navigator.clipboard?.writeText(item.url)
+            }
+          ]}
+        />
+      )
+    }),
+    [intl, onViewDetails]
+  )
 }
 
 interface IssuesTableProps {

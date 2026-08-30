@@ -26,3 +26,11 @@ export const Loading = Template.bind({})
 Loading.args = {
   completed: false
 }
+
+export const WithSubLabel = Template.bind({})
+WithSubLabel.args = {
+  status: '17,020',
+  name: 'Total funded',
+  sub: '↑ 14% YoY',
+  completed: true
+}

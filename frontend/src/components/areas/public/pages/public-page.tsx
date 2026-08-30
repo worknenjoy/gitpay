@@ -94,7 +94,7 @@ const PublicPage = ({
 
           <Route path="/explore" component={ExplorePage} />
           <Route exact path="/tasks/:filter" component={() => <Redirect to="/explore" />} />
-          <Route exact path="/users/:userId" component={TaskListUser} />
+          <Route exact path={['/users/:userId', '/users/:userId/:role']} component={TaskListUser} />
         </Switch>
       </HashRouter>
     </PublicBase>

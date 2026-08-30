@@ -447,7 +447,9 @@ const listTasks = ({
   sortDirection,
   assignedTo,
   interestedUserId,
-  supportedByUserId
+  supportedByUserId,
+  solvedByUserId,
+  maintainedByUserId
 } = {}) => {
   validToken()
   return (dispatch) => {
@@ -464,7 +466,9 @@ const listTasks = ({
       ...(sortBy != null && { sortBy, sortDirection }),
       ...(assignedTo != null && { assignedTo }),
       ...(interestedUserId != null && { interestedUserId }),
-      ...(supportedByUserId != null && { supportedByUserId })
+      ...(supportedByUserId != null && { supportedByUserId }),
+      ...(solvedByUserId != null && { solvedByUserId }),
+      ...(maintainedByUserId != null && { maintainedByUserId })
     }
     return axios
       .get(api.API_URL + '/tasks/list', { params })

@@ -98,3 +98,4 @@ docker-compose.override.yml
 .claude/
 
 tsconfig.tsbuildinfo
+test-results/
