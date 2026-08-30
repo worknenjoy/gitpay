@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Chip } from '@mui/material'
 import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page'
+import SolutionStatus from 'design-library/atoms/status/solution-status/solution-status'
 import IssueLinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-link-field/issue-link-field'
 import LinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/link-field/link-field'
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
@@ -58,7 +58,7 @@ const TaskSolutions = ({ user, taskSolutions, listTaskSolutions }) => {
           },
           isPRMerged: {
             label: (
-              <FormattedMessage id="account.profile.solutions.isPRMerged" defaultMessage="Merged" />
+              <FormattedMessage id="account.profile.solutions.isPRMerged" defaultMessage="Status" />
             )
           },
           createdAt: {
@@ -83,24 +83,11 @@ const TaskSolutions = ({ user, taskSolutions, listTaskSolutions }) => {
               limit={40}
             />
           ),
-          isPRMerged: (item: any) =>
-            item.isPRMerged ? (
-              <Chip
-                label={
-                  <FormattedMessage id="account.profile.solutions.merged" defaultMessage="Merged" />
-                }
-                color="success"
-                size="small"
-              />
-            ) : (
-              <Chip
-                label={
-                  <FormattedMessage id="account.profile.solutions.open" defaultMessage="Open" />
-                }
-                variant="outlined"
-                size="small"
-              />
-            ),
+          isPRMerged: (item: any) => (
+            <SolutionStatus
+              status={item.isPRMerged ? 'merged' : item.isIssueClosed ? 'closed' : 'open'}
+            />
+          ),
           createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />
         }
       }}

@@ -15,12 +15,19 @@
     "add-react-displayname",
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-proposal-class-properties",
-    "babel-plugin-styled-components",
-    ["react-intl", {
-        "messagesDir": "./build/messages/",
-        "removeDefaultMessage": true,
-        "extractFromFormatMessageCall": true,
-        "workspaceRoot": "src"
-    }]
+    "babel-plugin-styled-components"
+  ],
+  "overrides": [
+    {
+      "exclude": "src/components/design-library/atoms/inputs/checkbox-terms/**",
+      "plugins": [
+        ["react-intl", {
+            "messagesDir": "./build/messages/",
+            "removeDefaultMessage": true,
+            "extractFromFormatMessageCall": true,
+            "workspaceRoot": "src"
+        }]
+      ]
+    }
   ]
 }
