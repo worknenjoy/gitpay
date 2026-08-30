@@ -282,6 +282,35 @@ async function handleMembershipActivated(ctx: WebhookHandlerContext) {
     metadata
   })
 
+  // Bounty order (embedded checkout) — one-time plan purchases often deliver this
+  // event instead of / before payment.succeeded (see handlePaymentSucceeded above).
+  if (metadata.order_id || metadata.purpose === 'bounty_order') {
+    const orderId = metadata.order_id
+    if (!orderId) {
+      console.warn('[whop] bounty membership event missing order_id')
+      return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+    }
+    const paymentSourceId =
+      membership?.payment?.id || membership?.payment_id || membership?.last_payment_id || membership?.id
+    try {
+      const { markBountyOrderPaid } = await import('../../../services/orders/markBountyOrderPaid')
+      await markBountyOrderPaid({
+        orderId: Number(orderId),
+        paymentSourceId,
+        provider: 'whop'
+      })
+    } catch (error: any) {
+      if (String(error?.message || '').includes('not found')) {
+        console.warn('[whop] order not found for membership event', orderId)
+        return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+      }
+      console.error('[whop] bounty membership paid error', error)
+      return ctx.res.status(500).json({ error: error?.message || 'bounty_order_error' })
+    }
+
+    return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
+  }
+
   if (!planId && !productId && !metadata.payment_request_id) {
     console.warn(
       '[whop] membership event: missing plan/product id and metadata — cannot match PaymentRequest',
