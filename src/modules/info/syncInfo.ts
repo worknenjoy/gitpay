@@ -7,7 +7,8 @@ import {
   countPaymentRequests,
   countPaymentRequestPayments,
   totalPaidForBounties,
-  totalPaidForPaymentRequests
+  totalPaidForPaymentRequests,
+  getLatestStats
 } from '../../queries/stats'
 
 const currentModels = models as any
@@ -21,9 +22,12 @@ export interface SyncInfoResult {
   total_paid_for_payment_requests_count: number
   total_user_countries_count: number
   slack_channel_users_count: number
+  new_users_count: number
 }
 
 export async function syncInfo(): Promise<SyncInfoResult> {
+  const previousStats = await getLatestStats()
+
   const [
     users_count,
     bounties_count,
@@ -44,7 +48,9 @@ export async function syncInfo(): Promise<SyncInfoResult> {
     fetchChannelUserCount()
   ])
 
-  const stats: SyncInfoResult = {
+  const new_users_count = previousStats ? users_count - previousStats.users_count : 0
+
+  const persistedStats = {
     users_count,
     bounties_count,
     payment_request_count,
@@ -55,7 +61,7 @@ export async function syncInfo(): Promise<SyncInfoResult> {
     slack_channel_users_count
   }
 
-  await currentModels.PlatformPublicStats.create(stats)
+  await currentModels.PlatformPublicStats.create(persistedStats)
 
-  return stats
+  return { ...persistedStats, new_users_count }
 }

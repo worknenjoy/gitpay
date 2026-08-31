@@ -55,6 +55,8 @@
   "mail.assigned.request.button.secondary": "Rejeitar",
   "mail.deadline.daysLeft.subject": "<p>Olá {{name}}</p>",
   "mail.deadline.update.error": "Tivemos um problema com as notificações sobre interessados em uma tarefa no Gitpay",
+  "mail.stats.newUsers.subject": "{{count}} novos usuários entraram no Gitpay hoje",
+  "mail.stats.newUsers.message": "O Gitpay ganhou {{count}} novos usuários hoje. Total de usuários: {{total}}.",
   "mail.status.subject": "O status de uma tarefa para a qual você foi escolhido foi atualizado no Gitpay",
   "mail.status.message.first": "A sua tarefa <a href=\"{{url}}\">{{url}}</a> teve o status atualizado",
   "mail.status.message.second": "Agora a tarefa está <strong>{{status}}</strong>",

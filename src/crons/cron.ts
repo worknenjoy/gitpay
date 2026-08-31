@@ -6,6 +6,7 @@ const moment = require('moment')
 const i18n = require('i18n')
 const DeadlineMail = require('../mail/deadline')
 const TaskMail = require('../mail/task')
+const StatsMail = require('../mail/stats')
 const OrderCron = require('./orders/orderCron')
 const PaymentRequestTransferCron = require('./paymentRequests/paymentRequestTransferCron')
 const WhopPayoutSyncCron = require('./whop/whopPayoutSyncCron')
@@ -161,7 +162,10 @@ const TaskCron = {
     console.log(`Task state sync complete. Processed: ${total}, Updated: ${updated}`)
   },
   syncStats: async () => {
-    await syncInfo()
+    const result = await syncInfo()
+    if (result.new_users_count > 0) {
+      await StatsMail.newUsers(result.new_users_count, result.users_count)
+    }
     console.log('Platform public stats synced.')
   }
 }
