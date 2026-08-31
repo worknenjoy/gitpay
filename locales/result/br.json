@@ -73,6 +73,8 @@
   "mail.deadline.remember.intro": "A issue que você está trabalhando <a href=\"{{url}}\">{{title}}</a> está prestes a atingir o prazo, e gostaríamos de verificar se tudo está indo bem com o progresso da issue",
   "mail.deadline.remember.message": "O prazo é {{deadline}}. Você tem {{deadlineFromNow}} dias a partir de agora. Se precisar de mais tempo, sem problemas, avisaremos o autor e você pode renegociar para entregar a tempo. Se desistir por algum motivo, por favor, avise o autor o mais rápido possível, para que outros usuários possam ser designados",
   "mail.deadline.update.error": "Tivemos um problema com algumas notificações sobre usuários interessados em uma issue no Gitpay.",
+  "mail.stats.newUsers.subject": "{{count}} new users joined Gitpay today",
+  "mail.stats.newUsers.message": "Gitpay gained {{count}} new users today. Total users: {{total}}.",
   "mail.deadline.end.subject": "O prazo para a issue que você foi designado acabou",
   "mail.deadline.end.hello": "Olá {{name}}",
   "mail.deadline.end.intro": "A issue (<a href=\"{{url}}\">{{title}}</a></p>) que você foi designado no Gitpay chegou à data limite, e talvez você precise rever sua designação.",
