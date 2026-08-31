@@ -73,6 +73,8 @@
   "mail.deadline.remember.intro": "The issue you are working on <a href=\"{{url}}\">{{title}}</a> is about to reach its deadline, and we would like to check if everything is going well with the progress of the issue.",
   "mail.deadline.remember.message": "The deadline is {{deadline}}. You have {{deadlineFromNow}} days from now. If you need more time, that is no problem; we will let the author know, and you can renegotiate to deliver on time. If you gave up for some reason, please let the author know as soon as possible so other users can be assigned",
   "mail.deadline.update.error": "We had an issue with some notifications about interested users for an issue on Gitpay.",
+  "mail.stats.newUsers.subject": "{{count}} new users joined Gitpay today",
+  "mail.stats.newUsers.message": "Gitpay gained {{count}} new users today. Total users: {{total}}.",
   "mail.deadline.end.subject": "The deadline for the issue you were assigned ended.",
   "mail.deadline.end.hello": "Hello {{name}}",
   "mail.deadline.end.intro": "The issue (<a href=\"{{url}}\">{{title}}</a></p>) that you were assigned on Gitpay reached the deadline date, and maybe you will need to review your assignment.",
