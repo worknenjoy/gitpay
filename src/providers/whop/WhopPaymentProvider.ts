@@ -193,7 +193,10 @@ export class WhopPaymentProvider implements PaymentProvider {
     const product = await this.client.post<any>('/products', {
       title: params.title.slice(0, 80),
       description: params.description,
-      company_id: companyId
+      company_id: companyId,
+      // Payment-request products are reachable via direct link only — keep them off
+      // the public Whop storefront listing.
+      visibility: 'hidden'
     })
 
     if (params.custom_amount) {
@@ -217,7 +220,8 @@ export class WhopPaymentProvider implements PaymentProvider {
       currency: params.currency || 'usd',
       metadata,
       description: params.description || params.title,
-      initial_price: params.amount || 0
+      initial_price: params.amount || 0,
+      visibility: 'hidden'
     }
 
     const plan = await this.client.post<any>('/plans', planBody)
@@ -269,7 +273,8 @@ export class WhopPaymentProvider implements PaymentProvider {
         currency: context.currency || 'usd',
         title,
         description: context.description || context.title,
-        force_create_new_plan: true
+        force_create_new_plan: true,
+        visibility: 'hidden'
       }
     }
 
