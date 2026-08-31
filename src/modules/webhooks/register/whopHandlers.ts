@@ -291,7 +291,10 @@ async function handleMembershipActivated(ctx: WebhookHandlerContext) {
       return ctx.res.status(200).json(ctx.rawEvent || ctx.event)
     }
     const paymentSourceId =
-      membership?.payment?.id || membership?.payment_id || membership?.last_payment_id || membership?.id
+      membership?.payment?.id ||
+      membership?.payment_id ||
+      membership?.last_payment_id ||
+      membership?.id
     try {
       const { markBountyOrderPaid } = await import('../../../services/orders/markBountyOrderPaid')
       await markBountyOrderPaid({
