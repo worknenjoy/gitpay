@@ -86,6 +86,8 @@ export class WhopPaymentProvider implements PaymentProvider {
     }
 
     const productTitle = (params.title || params.description || 'Gitpay bounty').trim().slice(0, 80)
+    // Whop plan titles (unlike product titles, which allow 80) are capped at 30 chars.
+    const planTitle = productTitle.slice(0, 30)
 
     const product = await this.client.post<any>('/products', {
       title: productTitle,
@@ -106,7 +108,7 @@ export class WhopPaymentProvider implements PaymentProvider {
         initial_price: params.amount,
         plan_type: 'one_time',
         currency: params.currency || 'usd',
-        title: productTitle,
+        title: planTitle,
         description: params.description || productTitle,
         force_create_new_plan: true
       }

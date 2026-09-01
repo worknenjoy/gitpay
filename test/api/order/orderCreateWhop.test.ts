@@ -90,6 +90,62 @@ describe('POST /orders (Whop)', () => {
       expect(productBody.company_id).to.equal('biz_test_platform')
       expect(checkoutBody.plan.product_id).to.equal('prod_bounty_1')
       expect(checkoutBody.plan.title).to.equal('Whop bounty task')
+      expect(checkoutBody.plan.description).to.include('Whop bounty task')
+    })
+  })
+
+  it('should truncate the Whop plan title to 30 characters for long issue titles', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      let productBody: any
+      let checkoutBody: any
+
+      nock(WHOP_API_HOST)
+        .post('/api/v1/products', (body) => {
+          productBody = body
+          return true
+        })
+        .reply(200, { id: 'prod_bounty_2', title: 'Multi-language support / internationalize' })
+
+      nock(WHOP_API_HOST)
+        .post('/api/v1/checkout_configurations', (body) => {
+          checkoutBody = body
+          return true
+        })
+        .reply(200, checkoutConfig)
+
+      const user = await registerAndLogin(agent)
+      const longTitle =
+        'Multi-language support / internationalize descriptions and display-values'
+      const task = await TaskFactory({
+        url: 'https://github.com/test/repo/issues/11',
+        userId: user.body.id,
+        title: longTitle
+      })
+
+      await agent
+        .post('/orders')
+        .send({
+          currency: 'usd',
+          amount: 100,
+          email: 'funder@gitpay.me',
+          userId: user.body.id,
+          taskId: task.id,
+          plan: 'open source',
+          provider: 'whop'
+        })
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+
+      // Product title allows up to 80 chars and keeps the full issue title.
+      expect(productBody.title).to.equal(longTitle)
+      // Plan title must respect Whop's 30-char limit, which caused the "Title is
+      // too long (maximum is 30 characters)" production error before this fix.
+      expect(checkoutBody.plan.title.length).to.be.at.most(30)
+      expect(checkoutBody.plan.title).to.equal(longTitle.slice(0, 30))
+      // The full issue title and a link back to it must still be reachable via description.
+      expect(checkoutBody.plan.description).to.include(longTitle)
+      expect(checkoutBody.plan.description).to.include('/task/')
     })
   })
 

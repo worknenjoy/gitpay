@@ -171,8 +171,8 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
     const bountyTitle =
       (taskTitle && String(taskTitle).trim()) || `Gitpay bounty #${orderCreated.dataValues.id}`
     const bountyDescription = taskTitle
-      ? `Bounty for: ${taskTitle}`
-      : `Gitpay bounty order ${orderCreated.dataValues.id}`
+      ? `Bounty for: ${taskTitle} (${taskUrl})`
+      : `Gitpay bounty order ${orderCreated.dataValues.id} (${taskUrl})`
 
     const checkout = await paymentProvider.createBountyCheckout({
       amount: totalPrice,
