@@ -94,6 +94,48 @@ describe('POST /orders (Whop)', () => {
     })
   })
 
+  it('should pass the exact fee-inclusive amount to Whop without rounding to a whole dollar', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      let checkoutBody: any
+
+      nock(WHOP_API_HOST)
+        .post('/api/v1/products')
+        .reply(200, { id: 'prod_bounty_3', title: 'Whop exact amount bounty' })
+
+      nock(WHOP_API_HOST)
+        .post('/api/v1/checkout_configurations', (body) => {
+          checkoutBody = body
+          return true
+        })
+        .reply(200, checkoutConfig)
+
+      const user = await registerAndLogin(agent)
+      const task = await TaskFactory({
+        url: 'https://github.com/test/repo/issues/12',
+        userId: user.body.id,
+        title: 'Whop exact amount bounty'
+      })
+
+      await agent
+        .post('/orders')
+        .send({
+          currency: 'usd',
+          amount: 20,
+          email: 'funder@gitpay.me',
+          userId: user.body.id,
+          taskId: task.id,
+          plan: 'open source',
+          provider: 'whop'
+        })
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+
+      // 20 + 8% open source fee = 21.6, must reach Whop as 21.6, not rounded to 22.
+      expect(checkoutBody.plan.initial_price).to.equal(21.6)
+    })
+  })
+
   it('should truncate the Whop plan title to 30 characters for long issue titles', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()

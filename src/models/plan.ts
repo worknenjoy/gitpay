@@ -100,7 +100,7 @@ export default class Plan
       full: 1.3,
       'with support': 1.3
     }
-    return Math.round(Number((price * percentages[plan || 'open source']).toFixed(2)))
+    return Math.round(price * percentages[plan || 'open source'] * 100) / 100
   }
 
   finalPrice(): number {
