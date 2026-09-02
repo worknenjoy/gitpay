@@ -12,6 +12,7 @@ export async function searchTransfers(params: TransferSearchParams = {}) {
   if (params.userId) {
     transfers = await models.Transfer.findAll({
       where: { userId: params.userId },
+      order: [['createdAt', 'DESC']],
       include: [
         models.Task,
         {
@@ -24,6 +25,7 @@ export async function searchTransfers(params: TransferSearchParams = {}) {
   if (params.to) {
     transfers = await models.Transfer.findAll({
       where: { to: params.to },
+      order: [['createdAt', 'DESC']],
       include: [
         models.Task,
         {

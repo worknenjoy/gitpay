@@ -40,6 +40,8 @@ export type DetailsSidePanelProps = {
   children?: React.ReactNode
   /** Drawer width/density — defaults to 'compact' (360px). Use 'medium' (480px) for panels that need more room. */
   mode?: DrawerMode
+  /** Optional content (e.g. an alert) rendered above the sections, below the title/subtitle. */
+  banner?: React.ReactNode
 }
 
 const valueColor = (variant: DetailsItem['variant'] = 'default') => {
@@ -83,7 +85,8 @@ const DetailsSidePanel = ({
   actions = [],
   completed = true,
   children,
-  mode = 'compact'
+  mode = 'compact',
+  banner
 }: DetailsSidePanelProps) => {
   return (
     <Drawer
@@ -96,6 +99,7 @@ const DetailsSidePanel = ({
       mode={mode}
     >
       {!completed && <DetailsSidePanelPlaceholder />}
+      {completed && banner}
       {completed &&
         sections.map((section, sectionIndex) => (
           <React.Fragment key={sectionIndex}>

@@ -2,26 +2,37 @@ import React, { useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Box } from '@mui/material'
 import { useHistory } from 'react-router-dom'
+import VisibilityIcon from '@mui/icons-material/Visibility'
 import PrimaryDataPage from 'design-library/pages/private-pages/data-pages/primary-data-page/primary-data-page'
 import IssueLinkField from 'design-library/molecules/tables/section-table/section-table-custom-fields/issue/issue-link-field/issue-link-field'
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
 import AmountField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/amount-field/amount-field'
 import TextField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/text-field/text-field'
 import TransferStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/transfer/transfer-status-field/transfer-status-field'
+import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
 import EmptyClaim from 'design-library/molecules/content/empty/empty-claim/empty-claim'
 import DocsAlert from 'design-library/atoms/alerts/docs-alert/docs-alert'
+import ClaimDetailsAction from 'design-library/molecules/drawers/actions/payments/claim-details-action/claim-details-action'
 
 const CLAIMS_GUIDE_URL = 'https://docs.gitpay.me/docs/en/claims/'
 
 const Claims = ({
   user,
+  account,
   transfers,
   searchTransfer,
   paymentRequestTransfers,
-  listPaymentRequestTransfers
+  listPaymentRequestTransfers,
+  fetchAccount
 }) => {
   const history = useHistory()
   const [currentActive, setCurrentActive] = React.useState('claims')
+  const [selectedClaim, setSelectedClaim] = React.useState(null)
+  const [selectedClaimType, setSelectedClaimType] = React.useState<'bounty' | 'payment-request'>(
+    'bounty'
+  )
+
+  const handleGoToPayoutSettings = () => history.push('/profile/payout-settings')
 
   useEffect(() => {
     const { data: transferData, completed: transferCompleted } = transfers
@@ -35,159 +46,220 @@ const Claims = ({
   }, [transfers, paymentRequestTransfers])
 
   useEffect(() => {
+    fetchAccount?.()
     searchTransfer({ to: user.id })
     listPaymentRequestTransfers()
   }, [user, searchTransfer, listPaymentRequestTransfers])
 
   return (
-    <PrimaryDataPage
-      title={<FormattedMessage id="account.profile.claims.title" defaultMessage="Claims" />}
-      description={
-        <FormattedMessage
-          id="account.profile.claims.description"
-          defaultMessage="List of claims made by contributors."
-        />
-      }
-      activeTab={currentActive}
-      emptyComponent={
-        <>
-          <EmptyClaim onActionClick={() => history.push('/profile/payout-settings')} />
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-            <DocsAlert
-              docsUrl={CLAIMS_GUIDE_URL}
-              text={
-                <FormattedMessage
-                  id="emptyClaim.docs.text"
-                  defaultMessage="Want to understand how claims work?"
-                />
-              }
-              linkLabel={
-                <FormattedMessage id="emptyClaim.docs.link" defaultMessage="Read the guide" />
-              }
-            />
-          </Box>
-        </>
-      }
-      tabs={[
-        {
-          label: (
-            <FormattedMessage
-              id="account.profile.claims.tab.label"
-              defaultMessage="Claims for bounties"
-            />
-          ),
-          value: 'claims',
-          table: {
-            tableData: transfers,
-            tableHeaderMetadata: {
-              status: {
-                sortable: true,
-                dataBaseKey: 'status',
-                label: (
-                  <FormattedMessage id="account.profile.claims.status" defaultMessage="Status" />
-                )
-              },
-              transfer_method: {
-                sortable: true,
-                dataBaseKey: 'transfer_method',
-                label: (
-                  <FormattedMessage id="account.profile.claims.method" defaultMessage="Method" />
-                )
-              },
-              issue: {
-                sortable: true,
-                dataBaseKey: 'issue',
-                label: <FormattedMessage id="account.profile.claims.issue" defaultMessage="Issue" />
-              },
-              value: {
-                sortable: true,
-                numeric: true,
-                dataBaseKey: 'value',
-                label: <FormattedMessage id="account.profile.claims.value" defaultMessage="Value" />
-              },
-              createdAt: {
-                sortable: true,
-                numeric: true,
-                dataBaseKey: 'createdAt',
-                label: (
-                  <FormattedMessage
-                    id="account.profile.claims.createdAt"
-                    defaultMessage="Created At"
-                  />
-                )
-              }
-            },
-            customColumnRenderer: {
-              status: (item: any) => <TransferStatusField status={item.status} />,
-              issue: (item) => <IssueLinkField issue={item?.Task} />,
-              value: (item: any) => <AmountField value={item.value} />,
-              createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />
-            }
-          }
-        },
-        {
-          label: (
-            <FormattedMessage
-              id="account.profile.paymentRequestTransfers.tab.label"
-              defaultMessage="Claims for payment requests"
-            />
-          ),
-          value: 'payment-request-transfers',
-          table: {
-            tableData: paymentRequestTransfers,
-            tableHeaderMetadata: {
-              title: {
-                sortable: true,
-                dataBaseKey: 'PaymentRequest.title',
-                label: (
-                  <FormattedMessage
-                    id="account.profile.paymentRequestTransfer.title"
-                    defaultMessage="Payment Request"
-                  />
-                )
-              },
-              status: {
-                sortable: true,
-                dataBaseKey: 'status',
-                label: (
-                  <FormattedMessage id="account.profile.claims.status" defaultMessage="Status" />
-                )
-              },
-              transfer_method: {
-                sortable: true,
-                dataBaseKey: 'transfer_method',
-                label: (
-                  <FormattedMessage id="account.profile.claims.method" defaultMessage="Method" />
-                )
-              },
-              value: {
-                sortable: true,
-                numeric: true,
-                dataBaseKey: 'value',
-                label: <FormattedMessage id="account.profile.claims.value" defaultMessage="Value" />
-              },
-              createdAt: {
-                sortable: true,
-                numeric: true,
-                dataBaseKey: 'createdAt',
-                label: (
-                  <FormattedMessage
-                    id="account.profile.claims.createdAt"
-                    defaultMessage="Created At"
-                  />
-                )
-              }
-            },
-            customColumnRenderer: {
-              status: (item: any) => <TransferStatusField status={item.status} />,
-              title: (item: any) => <TextField title={item?.PaymentRequest?.title} />,
-              value: (item: any) => <AmountField value={item.value} />,
-              createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />
-            }
-          }
+    <>
+      <PrimaryDataPage
+        title={<FormattedMessage id="account.profile.claims.title" defaultMessage="Claims" />}
+        description={
+          <FormattedMessage
+            id="account.profile.claims.description"
+            defaultMessage="List of claims made by contributors."
+          />
         }
-      ]}
-    />
+        activeTab={currentActive}
+        emptyComponent={
+          <>
+            <EmptyClaim onActionClick={() => history.push('/profile/payout-settings')} />
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+              <DocsAlert
+                docsUrl={CLAIMS_GUIDE_URL}
+                text={
+                  <FormattedMessage
+                    id="emptyClaim.docs.text"
+                    defaultMessage="Want to understand how claims work?"
+                  />
+                }
+                linkLabel={
+                  <FormattedMessage id="emptyClaim.docs.link" defaultMessage="Read the guide" />
+                }
+              />
+            </Box>
+          </>
+        }
+        tabs={[
+          {
+            label: (
+              <FormattedMessage
+                id="account.profile.claims.tab.label"
+                defaultMessage="Claims for bounties"
+              />
+            ),
+            value: 'claims',
+            table: {
+              tableData: transfers,
+              tableHeaderMetadata: {
+                status: {
+                  sortable: true,
+                  dataBaseKey: 'status',
+                  label: (
+                    <FormattedMessage id="account.profile.claims.status" defaultMessage="Status" />
+                  )
+                },
+                transfer_method: {
+                  sortable: true,
+                  dataBaseKey: 'transfer_method',
+                  label: (
+                    <FormattedMessage id="account.profile.claims.method" defaultMessage="Method" />
+                  )
+                },
+                issue: {
+                  sortable: true,
+                  dataBaseKey: 'issue',
+                  label: (
+                    <FormattedMessage id="account.profile.claims.issue" defaultMessage="Issue" />
+                  )
+                },
+                value: {
+                  sortable: true,
+                  numeric: true,
+                  dataBaseKey: 'value',
+                  label: (
+                    <FormattedMessage id="account.profile.claims.value" defaultMessage="Value" />
+                  )
+                },
+                createdAt: {
+                  sortable: true,
+                  numeric: true,
+                  dataBaseKey: 'createdAt',
+                  label: (
+                    <FormattedMessage
+                      id="account.profile.claims.createdAt"
+                      defaultMessage="Created At"
+                    />
+                  )
+                },
+                actions: {
+                  sortable: false,
+                  numeric: false,
+                  label: <FormattedMessage id="general.buttons.actions" defaultMessage="Actions" />
+                }
+              },
+              customColumnRenderer: {
+                status: (item: any) => <TransferStatusField status={item.status} />,
+                issue: (item) => <IssueLinkField issue={item?.Task} />,
+                value: (item: any) => <AmountField value={item.value} />,
+                createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />,
+                actions: (item: any) => (
+                  <ActionField
+                    actions={[
+                      {
+                        children: (
+                          <FormattedMessage id="general.buttons.details" defaultMessage="Details" />
+                        ),
+                        icon: <VisibilityIcon />,
+                        onClick: () => {
+                          setSelectedClaimType('bounty')
+                          setSelectedClaim(item)
+                        }
+                      }
+                    ]}
+                  />
+                )
+              }
+            }
+          },
+          {
+            label: (
+              <FormattedMessage
+                id="account.profile.paymentRequestTransfers.tab.label"
+                defaultMessage="Claims for payment requests"
+              />
+            ),
+            value: 'payment-request-transfers',
+            table: {
+              tableData: paymentRequestTransfers,
+              tableHeaderMetadata: {
+                title: {
+                  sortable: true,
+                  dataBaseKey: 'PaymentRequest.title',
+                  label: (
+                    <FormattedMessage
+                      id="account.profile.paymentRequestTransfer.title"
+                      defaultMessage="Payment Request"
+                    />
+                  )
+                },
+                status: {
+                  sortable: true,
+                  dataBaseKey: 'status',
+                  label: (
+                    <FormattedMessage id="account.profile.claims.status" defaultMessage="Status" />
+                  )
+                },
+                transfer_method: {
+                  sortable: true,
+                  dataBaseKey: 'transfer_method',
+                  label: (
+                    <FormattedMessage id="account.profile.claims.method" defaultMessage="Method" />
+                  )
+                },
+                value: {
+                  sortable: true,
+                  numeric: true,
+                  dataBaseKey: 'value',
+                  label: (
+                    <FormattedMessage id="account.profile.claims.value" defaultMessage="Value" />
+                  )
+                },
+                createdAt: {
+                  sortable: true,
+                  numeric: true,
+                  dataBaseKey: 'createdAt',
+                  label: (
+                    <FormattedMessage
+                      id="account.profile.claims.createdAt"
+                      defaultMessage="Created At"
+                    />
+                  )
+                },
+                actions: {
+                  sortable: false,
+                  numeric: false,
+                  label: <FormattedMessage id="general.buttons.actions" defaultMessage="Actions" />
+                }
+              },
+              customColumnRenderer: {
+                status: (item: any) => <TransferStatusField status={item.status} />,
+                title: (item: any) => <TextField title={item?.PaymentRequest?.title} />,
+                value: (item: any) => <AmountField value={item.value} />,
+                createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />,
+                actions: (item: any) => (
+                  <ActionField
+                    actions={[
+                      {
+                        children: (
+                          <FormattedMessage id="general.buttons.details" defaultMessage="Details" />
+                        ),
+                        icon: <VisibilityIcon />,
+                        onClick: () => {
+                          setSelectedClaimType('payment-request')
+                          setSelectedClaim(item)
+                        }
+                      }
+                    ]}
+                  />
+                )
+              }
+            }
+          }
+        ]}
+      />
+      <ClaimDetailsAction
+        open={!!selectedClaim}
+        onClose={() => setSelectedClaim(null)}
+        claim={selectedClaim}
+        type={selectedClaimType}
+        user={user}
+        account={account}
+        onActivateAccount={handleGoToPayoutSettings}
+        completed={true}
+      />
+    </>
   )
 }
 
