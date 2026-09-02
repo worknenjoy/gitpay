@@ -85,7 +85,11 @@ export const LeftSide = styled(Side)<{ isActive: boolean }>(({ isActive }) => ({
   }),
   '@media (max-width: 37.5em)': {
     alignItems: 'flex-start',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    ...(!isActive && {
+      position: 'relative' as const,
+      zIndex: 1300
+    })
   }
 }))
 
@@ -97,16 +101,16 @@ export const RightSide = styled(Side)<{ isActive: boolean }>(({ isActive }) => (
     top: 0,
     right: 0,
     backgroundColor: '#2c5c46',
-    height: '100vh',
+    height: '100dvh',
     width: '100vw',
     justifyContent: 'center',
     alignItems: 'center',
     transform: 'translateY(-100%)',
     transition: 'all ease-in-out 400ms',
     zIndex: 1200,
+    overflow: 'hidden',
     ...(isActive && {
-      transform: 'translateY(0)',
-      overflow: 'hidden'
+      transform: 'translateY(0)'
     })
   }
 }))
