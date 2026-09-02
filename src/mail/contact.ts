@@ -1,23 +1,30 @@
 import Signatures from './content'
 import request from './request'
 import * as constants from './constants'
+import i18n from 'i18n'
 
 const ContactMail = {
   recruiters: async (params: any) => {
+    // This sends to recruitersEmail for administrative purposes,
+    // not to end users, so no user preference check is needed
+    i18n.setLocale('en')
+
     try {
       return await request(
         constants.recruitersEmail,
-        `There's a new contact for the Gitpay recruitment team from ${params.name} - title (${params.email})`,
+        i18n.__('mail.contact.recruiters.subject', { name: params.name, email: params.email }),
         [
           {
             type: 'text/html',
-            value: `Here's the contact from ${params.name} to Gitpay team.
-          title: ${params.title} <br />
-          email: ${params.email} <br />
-          phone: ${params.phone} <br />
-          company: ${params.company} <br />
-          country: ${params.country} <br />
-          message: ${params.message} <br />
+            value: `${i18n.__('mail.contact.recruiters.message', {
+              name: params.name,
+              title: params.title,
+              email: params.email,
+              phone: params.phone,
+              company: params.company,
+              country: params.country,
+              message: params.message
+            })}
           ${Signatures.sign()}`
           }
         ]

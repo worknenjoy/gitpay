@@ -15,6 +15,17 @@ import { getPaymentProvider } from '../../providers'
 
 const currentModels = models as any
 
+export type PendingReviewReason = {
+  code:
+    | 'stripe_no_account'
+    | 'stripe_insufficient_capabilities'
+    | 'whop_no_account'
+    | 'whop_transfer_failed'
+    | 'paypal_no_account'
+    | 'paypal_transfer_failed'
+  detail: string
+}
+
 type TransferBuildsParams = {
   transfer_id?: string
   taskId?: number
@@ -116,14 +127,17 @@ export async function transferBuildsService(params: TransferBuildsParams) {
       transfer_id: params.transfer_id
     })
 
-    const pendingReasons: string[] = []
+    const pendingReasons: PendingReviewReason[] = []
 
     // --- Stripe / wallet funded orders ---
     if (stripeTotal > 0) {
       const dest = user?.account_id
       if (!dest) {
         TransferMail.paymentForInvalidAccount(user)
-        pendingReasons.push('Stripe: no account connected')
+        pendingReasons.push({
+          code: 'stripe_no_account',
+          detail: 'Stripe: no account connected'
+        })
       } else {
         if (params.transfer_id) {
           await currentModels.Task.update(
@@ -179,7 +193,10 @@ export async function transferBuildsService(params: TransferBuildsParams) {
               stripeError?.type === 'StripeInvalidRequestError' &&
               stripeError?.code === 'insufficient_capabilities_for_transfer'
             ) {
-              pendingReasons.push('Stripe: insufficient capabilities for transfer')
+              pendingReasons.push({
+                code: 'stripe_insufficient_capabilities',
+                detail: 'Stripe: insufficient capabilities for transfer'
+              })
             } else {
               throw stripeError
             }
@@ -193,7 +210,10 @@ export async function transferBuildsService(params: TransferBuildsParams) {
       const dest = user?.whop_account_id
       if (!dest) {
         TransferMail.paymentForInvalidAccount(user)
-        pendingReasons.push('Whop: no connected account (whop_account_id)')
+        pendingReasons.push({
+          code: 'whop_no_account',
+          detail: 'Whop: no connected account (whop_account_id)'
+        })
       } else {
         try {
           // amount in cents (provider converts to major units for Whop API)
@@ -248,16 +268,20 @@ export async function transferBuildsService(params: TransferBuildsParams) {
           }
         } catch (whopError: any) {
           console.error('whopTransferError', whopError)
-          pendingReasons.push(
-            `Whop: transfer failed${whopError?.message ? ` (${whopError.message})` : ''}`
-          )
+          pendingReasons.push({
+            code: 'whop_transfer_failed',
+            detail: `Whop: transfer failed${whopError?.message ? ` (${whopError.message})` : ''}`
+          })
         }
       }
     }
 
     if (paypalTotal > 0) {
       if (!destination?.paypal_id) {
-        pendingReasons.push('PayPal: no PayPal account connected')
+        pendingReasons.push({
+          code: 'paypal_no_account',
+          detail: 'PayPal: no PayPal account connected'
+        })
       } else {
         try {
           const paypalTransfer = await PaypalConnect({
@@ -307,7 +331,10 @@ export async function transferBuildsService(params: TransferBuildsParams) {
           }
         } catch (e) {
           console.log('paypalTransferError', e)
-          pendingReasons.push('PayPal: payout request failed')
+          pendingReasons.push({
+            code: 'paypal_transfer_failed',
+            detail: 'PayPal: payout request failed'
+          })
         }
       }
     }
@@ -328,7 +355,7 @@ export async function transferBuildsService(params: TransferBuildsParams) {
     }
 
     if (pendingReasons.length > 0) {
-      const comment = pendingReasons.join('; ')
+      const comment = pendingReasons.map((reason) => reason.detail).join('; ')
       const updatedTransfer = await currentModels.Transfer.update(
         { comment },
         { where: { id: transfer.id }, returning: true }
@@ -336,7 +363,7 @@ export async function transferBuildsService(params: TransferBuildsParams) {
       if (updatedTransfer[1]) {
         transfer = updatedTransfer[1][0].dataValues
       }
-      TransferMail.pendingForReview(user, taskData, comment)
+      TransferMail.pendingForReview(user, taskData, pendingReasons)
     }
 
     return transfer

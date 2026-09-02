@@ -229,6 +229,21 @@ function buildSamples(moduleName: string, methodName: string): any[] {
     }
   }
 
+  if (moduleName === 'transfer') {
+    const task = {
+      id: 321,
+      title: 'Sample task title',
+      value: 150
+    }
+    if (/pendingForReview/i.test(methodName)) {
+      return [
+        user,
+        task,
+        [{ code: 'whop_no_account', detail: 'Whop: no connected account (whop_account_id)' }]
+      ]
+    }
+  }
+
   if (moduleName === 'openBounty') {
     const issue = {
       id: 456,

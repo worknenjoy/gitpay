@@ -7,6 +7,7 @@ import Models from '../../../models'
 import * as task from '../../../modules/tasks'
 import Sendmail from '../../../mail/mail'
 import UserMail from '../../../mail/user'
+import i18n from 'i18n'
 
 const models = Models as any
 
@@ -69,8 +70,12 @@ export const forgotPasswordNotification = async (req: any, res: any) => {
       const token = models.User.generateToken()
       await models.User.update({ recover_password_token: token }, { where: { email } })
       const url = `${process.env.FRONTEND_HOST}/#/reset-password/${token}`
-      const html = `<p>Hi ${foundUser.dataValues.name || 'Gitpay user'},</p><p>Click <a href="${url}">here</a> to reset your password.</p>`
-      const subject = 'Reset Password'
+      i18n.setLocale(foundUser.dataValues.language || 'en')
+      const html = i18n.__('mail.user.forgotPassword.message', {
+        name: foundUser.dataValues.name || 'Gitpay user',
+        url
+      })
+      const subject = i18n.__('mail.user.forgotPassword.subject')
       const message = {
         to: foundUser.dataValues,
         subject,

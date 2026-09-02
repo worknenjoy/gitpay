@@ -1,6 +1,17 @@
 import request from './request'
 import i18n from 'i18n'
 import emailTemplate from './templates/base-content'
+import { tableContentEmailTemplate, type ActionButton } from './templates/table-content'
+import type { PendingReviewReason } from '../services/transfers/transferBuildsService'
+
+const PENDING_REVIEW_REASON_KEYS: Record<PendingReviewReason['code'], string> = {
+  stripe_no_account: 'mail.transfer.pendingReview.reason.stripe_no_account',
+  stripe_insufficient_capabilities: 'mail.transfer.pendingReview.reason.stripe_insufficient_capabilities',
+  whop_no_account: 'mail.transfer.pendingReview.reason.whop_no_account',
+  whop_transfer_failed: 'mail.transfer.pendingReview.reason.whop_transfer_failed',
+  paypal_no_account: 'mail.transfer.pendingReview.reason.paypal_no_account',
+  paypal_transfer_failed: 'mail.transfer.pendingReview.reason.paypal_transfer_failed'
+}
 
 const TransferMail = {
   success: async (user: any, task: any, value: number) => {
@@ -126,20 +137,102 @@ const TransferMail = {
     }
   },
 
-  pendingForReview: async (user: any, task: any, reason: string) => {
+  pendingForReview: async (user: any, task: any, reasons: PendingReviewReason[]) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
+    i18n.setLocale(language)
+
+    const url = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
+    const claimsUrl = `${process.env.FRONTEND_HOST}/#/profile/claims`
+    const payoutSettingsUrl = `${process.env.FRONTEND_HOST}/#/profile/payout-settings`
+
+    const reasonsList = (reasons || [])
+      .map(
+        (reason) =>
+          `<li>${i18n.__(PENDING_REVIEW_REASON_KEYS[reason.code] || 'mail.transfer.pendingReview.reason.generic')}</li>`
+      )
+      .join('')
+
     try {
-      return await request('issues@gitpay.me', `Transfer pending for review: task ${task.id}`, [
+      return await request(to, i18n.__('mail.transfer.pendingReview.subject'), [
         {
           type: 'text/html',
-          value: emailTemplate.baseContentEmailTemplate(
-            `<p>A transfer for task <a href="${process.env.FRONTEND_HOST}/#/task/${task.id}">${task.title || task.id}</a> is pending manual review.</p>
-             <p>Recipient: ${user.email}</p>
-             <p>Reason: ${reason}</p>`
+          value: tableContentEmailTemplate(
+            i18n.__('mail.transfer.pendingReview.intro', {
+              name: user.name || user.username || 'Gitpay User',
+              title: task.title || task.id,
+              url
+            }),
+            `${i18n.__('mail.transfer.pendingReview.reasonsIntro')}<ul>${reasonsList}</ul>`,
+            {},
+            i18n.__('mail.transfer.pendingReview.footer', { payoutSettingsUrl }),
+            {
+              link: claimsUrl,
+              text: i18n.__('mail.transfer.pendingReview.cta')
+            } as ActionButton
           )
         }
       ])
     } catch (error) {
       console.error('Error sending pending review email:', error)
+    }
+  },
+
+  claimInitiatedNotifyOwner: async (owner: any, task: any, claimedByUser: any, value: number) => {
+    const to = owner.email
+    const language = owner.language || 'en'
+    const receiveNotifications = owner?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
+    i18n.setLocale(language)
+
+    const claimedByName = claimedByUser.name || claimedByUser.username || 'Gitpay User'
+
+    try {
+      return await request(to, i18n.__('mail.transfer.claimed.owner.subject'), [
+        {
+          type: 'text/html',
+          value: emailTemplate.baseContentEmailTemplate(`
+          <p>${i18n.__('mail.transfer.claimed.owner.message', { name: claimedByName, value: String(value), title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
+        }
+      ])
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+
+  claimInitiatedNotifyBacker: async (backer: any, task: any, claimedByUser: any, value: number) => {
+    const to = backer.email
+    const language = backer.language || 'en'
+    const receiveNotifications = backer?.receiveNotifications
+
+    if (!receiveNotifications) {
+      return
+    }
+
+    i18n.setLocale(language)
+
+    const claimedByName = claimedByUser.name || claimedByUser.username || 'Gitpay User'
+
+    try {
+      return await request(to, i18n.__('mail.transfer.claimed.backer.subject'), [
+        {
+          type: 'text/html',
+          value: emailTemplate.baseContentEmailTemplate(`
+          <p>${i18n.__('mail.transfer.claimed.backer.message', { name: claimedByName, value: String(value), title: task.title, url: `${process.env.FRONTEND_HOST}/#/task/${task.id}` })}<p>`)
+        }
+      ])
+    } catch (error) {
+      console.error('Error sending email:', error)
     }
   },
 

@@ -3,6 +3,7 @@ import models from '../../models'
 import URLSearchParams from 'url-search-params'
 import * as URL from 'url'
 import Decimal from 'decimal.js'
+import i18n from 'i18n'
 import Sendmail from '../../mail/mail'
 import { userCustomerCreate } from '../users/userCustomerCreate'
 import { PaypalConnect } from '../../client/provider/paypal'
@@ -118,10 +119,11 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
     })
 
     if (process.env.NODE_ENV !== 'test' && invoice.hostedUrl) {
+      i18n.setLocale(orderUser.language || 'en')
       Sendmail.success(
         { ...orderUser, email: orderParameters.email },
-        'Invoice created',
-        `An invoice has been created for the task: ${taskUrl}, you can pay it by clicking on the following link: ${invoice.hostedUrl}`
+        i18n.__('mail.order.invoiceCreated.subject'),
+        i18n.__('mail.order.invoiceCreated.message', { url: taskUrl, invoiceUrl: invoice.hostedUrl })
       )
     }
 
