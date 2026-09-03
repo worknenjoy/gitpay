@@ -3,6 +3,7 @@ import { calculateAmountWithPercent } from '../../utils'
 import { createPayoutRecord } from '../../mutations/payout/createPayoutRecord'
 import PayoutMail from '../../mail/payout'
 import { getDefaultPaymentProviderName, getPaymentProvider } from '../../providers'
+import { userAccount } from '../users'
 
 const currentModels = models as any
 
@@ -38,6 +39,15 @@ export async function payoutRequest(params: PayoutRequestParams) {
   if (method === 'whop') {
     if (!user.whop_account_id) {
       return { error: 'User Whop account not activated' }
+    }
+
+    const account = await userAccount({ id: params.userId, provider: 'whop' })
+    if (!account.active) {
+      return {
+        error:
+          'Your Whop payout account is not ready yet. Finish setting up your payout method on Whop.',
+        code: 'payout_not_ready'
+      }
     }
 
     try {

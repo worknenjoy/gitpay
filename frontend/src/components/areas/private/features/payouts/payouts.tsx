@@ -48,7 +48,13 @@ const Payouts = ({
   const [payoutRequestDrawer, setPayoutRequestDrawer] = React.useState(false)
   const [selectedPayout, setSelectedPayout] = React.useState<any | null>(null)
 
+  const isWhopAccountReady = !isWhop || Boolean(accountData?.active)
+
   const handlePayoutRequestDrawer = () => {
+    if (isWhop && !isWhopAccountReady) {
+      history.push('/profile/payout-settings/whop/payout-method')
+      return
+    }
     setPayoutRequestDrawer(!payoutRequestDrawer)
   }
 
@@ -66,7 +72,9 @@ const Payouts = ({
   }, [searchPayout, fetchAccountBalance, fetchAccount])
 
   // Stripe: only enable request when schedule is manual (auto schedule pays without request).
-  // Whop: no Connect schedule — withdrawals are always on-demand.
+  // Whop: no Connect schedule — withdrawals are always on-demand. Stays clickable even when
+  // the account isn't ready yet so handlePayoutRequestDrawer can route to Whop setup instead
+  // of disabling the button with no explanation.
   const canRequestPayout = (amount: number) => {
     if (amount <= 0) return false
     if (isWhop) return true
