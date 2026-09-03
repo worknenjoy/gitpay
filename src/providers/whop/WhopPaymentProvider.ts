@@ -555,6 +555,10 @@ export class WhopPaymentProvider implements PaymentProvider {
 
   async createPayout(params: PayoutParams): Promise<PayoutResult> {
     // Whop withdrawals use major currency units (e.g. 50.00), same as ledger transfers.
+    // Unlike /transfers, /withdrawals has no `metadata` field in Whop's API — sending one
+    // fails with "Invalid value for parameter 'metadata'." (confirmed against @whop/sdk's
+    // WithdrawalCreateParams, which only allows amount/company_id/currency/payout_method_id/
+    // platform_covers_fees/statement_descriptor). params.metadata is intentionally not sent.
     const body: Record<string, unknown> = {
       company_id: params.accountId,
       amount: params.amount,
@@ -563,9 +567,6 @@ export class WhopPaymentProvider implements PaymentProvider {
     // Optional: omit when user has a default payout method configured on Whop
     if (params.payoutMethodId) {
       body.payout_method_id = params.payoutMethodId
-    }
-    if (params.metadata) {
-      body.metadata = params.metadata
     }
 
     // eslint-disable-next-line no-console
