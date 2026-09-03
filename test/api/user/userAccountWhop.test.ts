@@ -394,4 +394,232 @@ describe('User Account (Whop)', () => {
       }
     })
   })
+
+  describe('account create — happy path (no conflict)', () => {
+    it('creates a new connected company and stores whop_account_id when nothing collides', async () => {
+      await withPaymentProvider('whop', async () => {
+        pinWhopApiForTests()
+        let sentBody: any = null
+        nock(WHOP_API_HOST)
+          .post('/api/v1/companies')
+          .reply(201, function (_uri, body) {
+            sentBody = body
+            return { id: 'biz_new_account_1', title: (body as any).title, verified: false }
+          })
+
+        const user = await registerAndLogin(agent)
+
+        const res = await agent
+          .post('/user/account')
+          .set('Authorization', user.headers.authorization)
+          .send({ country: 'US' })
+          .expect(200)
+
+        expect(res.body.id).to.equal('biz_new_account_1')
+        expect(res.body.requiresConfirmation).to.equal(undefined)
+        expect(sentBody.parent_company_id).to.equal('biz_test_platform')
+        expect(sentBody.email).to.equal(user.body.email)
+
+        const updatedUser = await models.User.findByPk(user.body.id)
+        expect(updatedUser.whop_account_id).to.equal('biz_new_account_1')
+        expect(updatedUser.country).to.equal('US')
+      })
+    })
+  })
+
+  describe('account create — duplicate name conflict recovery', () => {
+    it('rethrows the Whop "same name" conflict as-is when no matching company is found under our platform', async () => {
+      await withPaymentProvider('whop', async () => {
+        pinWhopApiForTests()
+        nock(WHOP_API_HOST)
+          .post('/api/v1/companies')
+          .reply(400, {
+            error: {
+              type: 'bad_request',
+              message:
+                'You have already created an account with the same name. Please choose a different name.'
+            }
+          })
+        nock(WHOP_API_HOST)
+          .get('/api/v1/companies')
+          .query({ parent_company_id: 'biz_test_platform', first: '50' })
+          .reply(200, { data: [], page_info: { has_next_page: false } })
+
+        const user = await registerAndLogin(agent)
+
+        const res = await agent
+          .post('/user/account')
+          .set('Authorization', user.headers.authorization)
+          .send({})
+          .expect(400)
+
+        expect(res.body.error).to.equal(
+          'You have already created an account with the same name. Please choose a different name.'
+        )
+
+        const updatedUser = await models.User.findByPk(user.body.id)
+        expect(updatedUser.whop_account_id).to.equal(null)
+      })
+    })
+
+    it('returns requiresConfirmation with the existing account id when a matching orphaned company is found', async () => {
+      await withPaymentProvider('whop', async () => {
+        pinWhopApiForTests()
+        const user = await registerAndLogin(agent)
+
+        nock(WHOP_API_HOST)
+          .post('/api/v1/companies')
+          .reply(400, {
+            error: {
+              type: 'bad_request',
+              message:
+                'You have already created an account with the same name. Please choose a different name.'
+            }
+          })
+        nock(WHOP_API_HOST)
+          .get('/api/v1/companies')
+          .query({ parent_company_id: 'biz_test_platform', first: '50' })
+          .reply(200, {
+            data: [
+              {
+                id: 'biz_orphan_1',
+                title: 'Test',
+                metadata: { gitpay_user_id: String(user.body.id), email: user.body.email }
+              }
+            ],
+            page_info: { has_next_page: false }
+          })
+
+        const res = await agent
+          .post('/user/account')
+          .set('Authorization', user.headers.authorization)
+          .send({})
+          .expect(409)
+
+        expect(res.body.requiresConfirmation).to.equal(true)
+        expect(res.body.existingAccountId).to.equal('biz_orphan_1')
+
+        const updatedUser = await models.User.findByPk(user.body.id)
+        expect(updatedUser.whop_account_id).to.equal(null)
+      })
+    })
+
+    it('links the existing account after confirmation, re-verifying via the same scoped lookup', async () => {
+      await withPaymentProvider('whop', async () => {
+        pinWhopApiForTests()
+        const user = await registerAndLogin(agent)
+
+        nock(WHOP_API_HOST)
+          .get('/api/v1/companies')
+          .query({ parent_company_id: 'biz_test_platform', first: '50' })
+          .reply(200, {
+            data: [
+              {
+                id: 'biz_orphan_1',
+                title: 'Test',
+                metadata: { gitpay_user_id: String(user.body.id), email: user.body.email }
+              }
+            ],
+            page_info: { has_next_page: false }
+          })
+
+        const res = await agent
+          .post('/user/account')
+          .set('Authorization', user.headers.authorization)
+          .send({ confirmExistingAccountId: 'biz_orphan_1' })
+          .expect(200)
+
+        expect(res.body.id).to.equal('biz_orphan_1')
+
+        const updatedUser = await models.User.findByPk(user.body.id)
+        expect(updatedUser.whop_account_id).to.equal('biz_orphan_1')
+      })
+    })
+
+    it('links the existing account even when it only matches on title (no gitpay_user_id metadata on the orphan)', async () => {
+      await withPaymentProvider('whop', async () => {
+        pinWhopApiForTests()
+        const user = await registerAndLogin(agent)
+
+        nock(WHOP_API_HOST)
+          .get('/api/v1/companies')
+          .query({ parent_company_id: 'biz_test_platform', first: '50' })
+          .reply(200, {
+            data: [
+              {
+                id: 'biz_orphan_legacy',
+                title: 'Test',
+                metadata: { email: user.body.email }
+              }
+            ],
+            page_info: { has_next_page: false }
+          })
+
+        const res = await agent
+          .post('/user/account')
+          .set('Authorization', user.headers.authorization)
+          .send({ confirmExistingAccountId: 'biz_orphan_legacy' })
+          .expect(200)
+
+        expect(res.body.id).to.equal('biz_orphan_legacy')
+
+        const updatedUser = await models.User.findByPk(user.body.id)
+        expect(updatedUser.whop_account_id).to.equal('biz_orphan_legacy')
+      })
+    })
+
+    it('rejects a confirm call for an id our own scoped lookup would not have returned', async () => {
+      await withPaymentProvider('whop', async () => {
+        pinWhopApiForTests()
+        const user = await registerAndLogin(agent)
+
+        nock(WHOP_API_HOST)
+          .get('/api/v1/companies')
+          .query({ parent_company_id: 'biz_test_platform', first: '50' })
+          .reply(200, {
+            data: [
+              {
+                id: 'biz_other_user',
+                title: 'Someone Else',
+                metadata: { gitpay_user_id: '999999' }
+              }
+            ],
+            page_info: { has_next_page: false }
+          })
+
+        await agent
+          .post('/user/account')
+          .set('Authorization', user.headers.authorization)
+          .send({ confirmExistingAccountId: 'biz_other_user' })
+          .expect(403)
+
+        const updatedUser = await models.User.findByPk(user.body.id)
+        expect(updatedUser.whop_account_id).to.equal(null)
+      })
+    })
+
+    it('still applies the deliverability rewrite for a genuinely different email error', async () => {
+      await withPaymentProvider('whop', async () => {
+        pinWhopApiForTests()
+        nock(WHOP_API_HOST)
+          .post('/api/v1/companies')
+          .reply(400, {
+            error: {
+              type: 'bad_request',
+              message: 'The email address provided is not a valid mailbox'
+            }
+          })
+
+        const user = await registerAndLogin(agent)
+
+        const res = await agent
+          .post('/user/account')
+          .set('Authorization', user.headers.authorization)
+          .send({})
+          .expect(400)
+
+        expect(res.body.error).to.include('deliverable address')
+      })
+    })
+  })
 })

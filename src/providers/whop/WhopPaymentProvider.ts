@@ -668,7 +668,20 @@ export class WhopPaymentProvider implements PaymentProvider {
         raw: company
       }
     } catch (error: any) {
+      const bodyMessage = String(error?.body?.error?.message || '')
       const message = String(error?.message || '')
+      // Whop enforces a title/name uniqueness constraint scoped to the parent company —
+      // this fires whenever a connected company with this exact title already exists under
+      // WHOP_COMPANY_ID (almost always an orphan from an earlier attempt by the same user,
+      // since the title is generated deterministically from the Gitpay profile).
+      if (/already created an account with the same name/i.test(bodyMessage || message)) {
+        const err: any = new Error(message)
+        err.code = 'whop_account_name_conflict'
+        err.status = error.status
+        err.body = error.body
+        err.title = title
+        throw err
+      }
       // Whop validates deliverability (MX / "real" mailbox), not only format.
       if (message.toLowerCase().includes('email') || message.toLowerCase().includes('mail')) {
         const err: any = new Error(
@@ -687,6 +700,55 @@ export class WhopPaymentProvider implements PaymentProvider {
       }
       throw error
     }
+  }
+
+  /**
+   * Find a connected company already enrolled under our own platform (`parent_company_id`)
+   * matching this Gitpay user — used to recover from the title/name uniqueness conflict in
+   * `createConnectedAccount` (see `err.code === 'whop_account_name_conflict'`), which almost
+   * always means an orphaned company from an earlier attempt already exists for this user.
+   * Never searches outside our own platform's connected accounts.
+   */
+  async findConnectedAccountForUser(params: {
+    title: string
+    gitpayUserId: string
+    email?: string
+  }): Promise<AccountResult | null> {
+    const { title, gitpayUserId, email } = params
+    let cursor: string | undefined
+    let titleOnlyMatch: any = null
+
+    for (let page = 0; page < 10; page++) {
+      const query = new URLSearchParams({ parent_company_id: this.companyId(), first: '50' })
+      if (cursor) query.set('after', cursor)
+
+      const response = await this.client.get<any>(`/companies?${query.toString()}`)
+      const companies: any[] = Array.isArray(response) ? response : (response?.data ?? [])
+
+      for (const company of companies) {
+        const metadata = company?.metadata || {}
+        const sameTitle = company?.title === title
+        const sameUser = String(metadata.gitpay_user_id || '') === gitpayUserId
+
+        if (sameTitle && sameUser) {
+          return { accountId: company.id, raw: company }
+        }
+        if (sameTitle && !titleOnlyMatch) {
+          // Sanity-check against email when we have no metadata match, so we never
+          // hand back a title collision that belongs to a different person.
+          if (!email || !metadata.email || metadata.email === email) {
+            titleOnlyMatch = company
+          }
+        }
+      }
+
+      const pageInfo = response?.page_info || response?.pageInfo || {}
+      const hasMore = Boolean(pageInfo.has_next_page ?? pageInfo.hasNextPage ?? false)
+      cursor = pageInfo.end_cursor ?? pageInfo.endCursor ?? undefined
+      if (!hasMore || !cursor) break
+    }
+
+    return titleOnlyMatch ? { accountId: titleOnlyMatch.id, raw: titleOnlyMatch } : null
   }
 
   async createAccountLink(params: AccountLinkParams): Promise<AccountLinkResult> {

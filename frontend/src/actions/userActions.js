@@ -541,7 +541,7 @@ const fetchAccountCountries = () => {
   }
 }
 
-const createAccount = (country) => {
+const createAccount = (country, confirmExistingAccountId) => {
   validToken()
   return (dispatch, getState) => {
     dispatch(createUserAccountRequested())
@@ -556,7 +556,7 @@ const createAccount = (country) => {
       return dispatch(createUserAccountError({ message: 'actions.user.account.exist' }))
     }
     return axios
-      .post(api.API_URL + '/user/account', { country })
+      .post(api.API_URL + '/user/account', { country, confirmExistingAccountId })
       .then((account) => {
         if (!account.data) {
           dispatch(addNotification('actions.user.account.create.error', { severity: 'error' }))
@@ -568,7 +568,18 @@ const createAccount = (country) => {
         return dispatch(createUserAccountSuccess(account))
       })
       .catch((error) => {
-        const apiMessage = error?.response?.data?.error
+        const responseData = error?.response?.data
+        // Only the first, unconfirmed attempt should skip the error Snackbar in favor of the
+        // confirmation dialog — a confirm attempt (confirmExistingAccountId already set) that
+        // still comes back as a conflict is unexpected and must not fail silently.
+        if (
+          error?.response?.status === 409 &&
+          responseData?.requiresConfirmation &&
+          !confirmExistingAccountId
+        ) {
+          return dispatch(createUserAccountError({ ...responseData, requiresConfirmation: true }))
+        }
+        const apiMessage = responseData?.error
         dispatch(
           addNotification('actions.user.account.create.error', {
             severity: 'error',

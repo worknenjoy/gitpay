@@ -12,7 +12,8 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    createAccount: (country: string) => dispatch(createAccount(country)),
+    createAccount: (country: string, confirmExistingAccountId?: string) =>
+      dispatch(createAccount(country, confirmExistingAccountId)),
     fetchAccount: () => dispatch(fetchAccount()),
     fetchAccountCountries: () => dispatch(fetchAccountCountries())
   }

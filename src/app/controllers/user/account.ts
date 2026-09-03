@@ -15,6 +15,10 @@ export const accountCreate = async (req: any, res: any) => {
   req.body.id = req.user.id
   try {
     const data = await user.userAccountCreate(req.body)
+    if (data?.requiresConfirmation) {
+      res.status(409).json(data)
+      return
+    }
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
