@@ -6,7 +6,8 @@ import type { PendingReviewReason } from '../services/transfers/transferBuildsSe
 
 const PENDING_REVIEW_REASON_KEYS: Record<PendingReviewReason['code'], string> = {
   stripe_no_account: 'mail.transfer.pendingReview.reason.stripe_no_account',
-  stripe_insufficient_capabilities: 'mail.transfer.pendingReview.reason.stripe_insufficient_capabilities',
+  stripe_insufficient_capabilities:
+    'mail.transfer.pendingReview.reason.stripe_insufficient_capabilities',
   whop_no_account: 'mail.transfer.pendingReview.reason.whop_no_account',
   whop_transfer_failed: 'mail.transfer.pendingReview.reason.whop_transfer_failed',
   paypal_no_account: 'mail.transfer.pendingReview.reason.paypal_no_account',

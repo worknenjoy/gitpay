@@ -123,7 +123,10 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
       Sendmail.success(
         { ...orderUser, email: orderParameters.email },
         i18n.__('mail.order.invoiceCreated.subject'),
-        i18n.__('mail.order.invoiceCreated.message', { url: taskUrl, invoiceUrl: invoice.hostedUrl })
+        i18n.__('mail.order.invoiceCreated.message', {
+          url: taskUrl,
+          invoiceUrl: invoice.hostedUrl
+        })
       )
     }
 
