@@ -63,6 +63,45 @@ describe('POST /payouts/request (Whop)', () => {
     })
   })
 
+  it('should default to the account default payout method when none is sent by the client', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST)
+        .get('/api/v1/accounts/biz_user_whop_1')
+        .reply(200, { capabilities: { standard_payout: 'active' } })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/payout_methods')
+        .query({ company_id: 'biz_user_whop_1' })
+        .reply(200, [{ id: 'pm_default_1', nickname: 'Pix Itau', is_default: true }])
+      nock(WHOP_API_HOST)
+        .post('/api/v1/withdrawals', (body) => body.payout_method_id === 'pm_default_1')
+        .reply(200, {
+          id: 'wdrl_test_whop_2',
+          status: 'pending',
+          amount: 50
+        })
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_user_whop_1' },
+        { where: { id: user.body.id } }
+      )
+
+      const res = await agent
+        .post('/payouts/request')
+        .set('Authorization', user.headers.authorization)
+        .send({
+          amount: 50,
+          currency: 'usd',
+          method: 'whop'
+        })
+        .expect(200)
+
+      expect(res.body.error).to.not.exist
+      expect(res.body.source_id).to.equal('wdrl_test_whop_2')
+    })
+  })
+
   it('should error when user has no whop_account_id', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()

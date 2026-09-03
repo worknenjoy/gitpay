@@ -41,11 +41,22 @@ export async function payoutRequest(params: PayoutRequestParams) {
       return { error: 'User Whop account not activated' }
     }
 
-    const account = await userAccount({ id: params.userId, provider: 'whop' })
+    const account: any = await userAccount({ id: params.userId, provider: 'whop' })
     if (!account.active) {
       return {
         error:
           'Your Whop payout account is not ready yet. Finish setting up your payout method on Whop.',
+        code: 'payout_not_ready'
+      }
+    }
+
+    // Whop's /withdrawals requires payout_method_id explicitly — it does not fall back to
+    // a default on its own. The payout request form doesn't collect one, so default to the
+    // account's default (or only) payout method, already resolved by userAccount() above.
+    const payoutMethodId = params.payout_method_id || account.payout_method?.id
+    if (!payoutMethodId) {
+      return {
+        error: 'No payout method found on Whop. Set one up before requesting a payout.',
         code: 'payout_not_ready'
       }
     }
@@ -56,7 +67,7 @@ export async function payoutRequest(params: PayoutRequestParams) {
         amount: finalAmount.decimal,
         currency: params.currency || 'usd',
         accountId: user.whop_account_id,
-        payoutMethodId: params.payout_method_id,
+        payoutMethodId,
         metadata: { type: 'payout_request', user_id: String(params.userId) }
       })
 
