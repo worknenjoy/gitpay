@@ -5,6 +5,7 @@ const currentModels = models as any
 export async function findPayoutsByUserId(userId: number) {
   return currentModels.Payout.findAll({
     where: { userId },
-    include: [currentModels.User]
+    include: [currentModels.User],
+    order: [['createdAt', 'DESC']]
   })
 }
