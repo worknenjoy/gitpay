@@ -4,19 +4,6 @@
 #
 version: "2.1"
 jobs:
-  docs:
-    docker:
-    - image: circleci/ruby:2.5.1
-    steps:
-      - checkout
-      - run: bundle install
-      - run: bundle exec jekyll build
-      - deploy:
-          name: Deploy Release to GitHub
-          command: |
-            if [ $CIRCLE_BRANCH == 'gh-pages' ]; then
-              bash setup-ghpages.sh
-            fi
   build:
     docker:
     # specify the version you desire here
@@ -95,10 +82,6 @@ workflows:
   version: 2
   build-all:
     jobs:
-      - docs:
-          filters:
-            branches:
-              only: gh-pages
       - build:
           filters:
             branches:
