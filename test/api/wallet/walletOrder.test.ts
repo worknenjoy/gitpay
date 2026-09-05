@@ -284,7 +284,7 @@ describe('POST /wallet-order', () => {
       expect(res.body.amount).to.equal('100')
       expect(res.body.status).to.equal('paid')
       expect(res.body.walletId).to.equal(wallet.id)
-      expect(res.body.invoice.hosted_invoice_url).to.equal(
+      expect(res.body.invoice.hostedUrl).to.equal(
         'https://stripe.com/invoice/invst_1Q2fh8BrSjgsps2DUqQsGLDj'
       )
     })

@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { messages } from '../../../../../messages/messages'
-import { Container, Button, useTheme, useMediaQuery } from '@mui/material'
+import { Container, useTheme, useMediaQuery } from '@mui/material'
+import {
+  Visibility as VisibilityIcon,
+  Payment as PaymentIcon,
+  Download as DownloadIcon
+} from '@mui/icons-material'
 import { FormattedMessage, useIntl } from 'react-intl'
 import AddFundsFormDrawer from '../payments/add-funds-form-drawer'
 import BalanceCard from 'design-library/molecules/cards/balance-card/balance-card'
@@ -14,6 +19,8 @@ import { WalletOutlined } from '@mui/icons-material'
 import SectionTable from 'design-library/molecules/tables/section-table/section-table'
 import ProfileMainHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header'
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
+import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
+import WalletOrderDetailsAction from 'design-library/molecules/drawers/actions/payments/wallet-order-details-action/wallet-order-details-action'
 
 const classes = {
   paper: {
@@ -56,6 +63,7 @@ const Wallets = ({
   const [walletName, setWalletName] = useState('Default wallet')
   const [gotToInvoicePayment, setGoToInvoicePayment] = useState(false)
   const [downloadInvoice, setDownloadInvoice] = useState(false)
+  const [detailsWalletOrderId, setDetailsWalletOrderId] = useState(null)
 
   const openAddFundsDialog = (e) => {
     e.preventDefault()
@@ -93,11 +101,18 @@ const Wallets = ({
     setDownloadInvoice(true)
   }
 
+  const openWalletOrderDetails = async (walletOrderId) => {
+    setDetailsWalletOrderId(walletOrderId)
+    await fetchWalletOrder(walletOrderId)
+  }
+
+  const detailsOrder = walletOrder?.data?.id === detailsWalletOrderId ? walletOrder.data : null
+
   useEffect(() => {
     if (gotToInvoicePayment) {
       const invoice = walletOrder?.data?.invoice
-      if (invoice?.hosted_invoice_url) {
-        window.location.href = invoice.hosted_invoice_url
+      if (invoice?.hostedUrl) {
+        window.location.href = invoice.hostedUrl
       }
     }
   }, [gotToInvoicePayment, walletOrder])
@@ -105,8 +120,9 @@ const Wallets = ({
   useEffect(() => {
     if (downloadInvoice) {
       const invoice = walletOrder?.data?.invoice
-      if (invoice?.invoice_pdf) {
-        window.location.href = invoice.invoice_pdf
+      const url = invoice?.pdfUrl || invoice?.hostedUrl
+      if (url) {
+        window.location.href = url
       }
     }
   }, [downloadInvoice, walletOrder])
@@ -130,6 +146,15 @@ const Wallets = ({
         onClose={() => setAddFundsDialog(false)}
         customer={customer}
         onPay={payFunds}
+      />
+      <WalletOrderDetailsAction
+        open={!!detailsWalletOrderId}
+        onClose={() => setDetailsWalletOrderId(null)}
+        walletOrder={
+          detailsOrder || walletOrders?.data?.find((order) => order.id === detailsWalletOrderId)
+        }
+        invoice={detailsOrder?.invoice || null}
+        completed={!!detailsOrder}
       />
       <Container>
         <ProfileMainHeader
@@ -258,36 +283,51 @@ const Wallets = ({
                     />
                   ),
                   actions: (item) => (
-                    <div style={{ display: 'flex', gap: 10 }}>
-                      {item.status === 'open' && (
-                        <Button
-                          onClick={(e) => handleInvoicePayment(item.id)}
-                          variant="contained"
-                          color="secondary"
-                          size="small"
-                        >
-                          <FormattedMessage
-                            id="general.wallets.table.actions.pay"
-                            defaultMessage="Pay invoice"
-                          />
-                        </Button>
-                      )}
-                      {(item.status === 'paid' ||
-                        item.status === 'partially_refunded' ||
-                        item.status === 'refunded') && (
-                        <Button
-                          onClick={(e) => downloadInvoicePayment(item.id)}
-                          variant="contained"
-                          color="secondary"
-                          size="small"
-                        >
-                          <FormattedMessage
-                            id="general.wallets.table.actions.download"
-                            defaultMessage="Download invoice"
-                          />
-                        </Button>
-                      )}
-                    </div>
+                    <ActionField
+                      actions={[
+                        {
+                          children: (
+                            <FormattedMessage
+                              id="general.buttons.details"
+                              defaultMessage="Details"
+                            />
+                          ),
+                          icon: <VisibilityIcon />,
+                          onClick: () => openWalletOrderDetails(item.id)
+                        },
+                        ...(item.status === 'open'
+                          ? [
+                              {
+                                children: (
+                                  <FormattedMessage
+                                    id="general.wallets.table.actions.pay"
+                                    defaultMessage="Pay invoice"
+                                  />
+                                ),
+                                icon: <PaymentIcon />,
+                                onClick: () => handleInvoicePayment(item.id)
+                              }
+                            ]
+                          : []),
+                        ...((item.status === 'paid' ||
+                          item.status === 'partially_refunded' ||
+                          item.status === 'refunded') &&
+                        item.provider !== 'whop'
+                          ? [
+                              {
+                                children: (
+                                  <FormattedMessage
+                                    id="general.wallets.table.actions.download"
+                                    defaultMessage="Download invoice"
+                                  />
+                                ),
+                                icon: <DownloadIcon />,
+                                onClick: () => downloadInvoicePayment(item.id)
+                              }
+                            ]
+                          : [])
+                      ]}
+                    />
                   )
                 }}
               />

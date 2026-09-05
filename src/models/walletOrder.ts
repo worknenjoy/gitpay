@@ -26,6 +26,7 @@ export interface WalletOrderAttributes {
   destination?: string | null
   paid?: boolean | null
   status: WalletOrderStatus
+  provider?: string | null
   createdAt?: Date
   updatedAt?: Date
 }
@@ -44,6 +45,7 @@ export type WalletOrderCreationAttributes = Optional<
   | 'destination'
   | 'paid'
   | 'status'
+  | 'provider'
   | 'createdAt'
   | 'updatedAt'
 >
@@ -66,6 +68,7 @@ export default class WalletOrder
   public destination!: string | null
   public paid!: boolean | null
   public status!: WalletOrderStatus
+  public provider!: string | null
   public createdAt!: Date
   public updatedAt!: Date
 
@@ -140,6 +143,11 @@ export default class WalletOrder
             'partially_refunded'
           ),
           defaultValue: 'pending'
+        },
+        provider: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          defaultValue: 'stripe'
         },
         createdAt: {
           type: DataTypes.DATE,

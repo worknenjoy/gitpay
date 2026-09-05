@@ -90,6 +90,18 @@ export type InvoiceResult = {
   raw?: unknown
 }
 
+/** Normalized shape for looking up an already-created invoice, across providers. */
+export type InvoiceDetails = {
+  id: string
+  number?: string | null
+  status?: string | null
+  /** Unix seconds */
+  dueDate?: number | null
+  hostedUrl?: string | null
+  pdfUrl?: string | null
+  raw?: unknown
+}
+
 export type RefundParams = {
   /**
    * Provider payment reference:

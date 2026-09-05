@@ -11,6 +11,7 @@ import type {
   CreatePaymentRequestResourcesParams,
   DeactivatePaymentRequestResourcesParams,
   FinalizePaymentRequestResourcesParams,
+  InvoiceDetails,
   InvoiceParams,
   InvoiceResult,
   PaymentProviderName,
@@ -38,6 +39,8 @@ export abstract class PaymentProvider {
   abstract createBountyCheckout(params: BountyCheckoutParams): Promise<BountyCheckoutResult>
 
   abstract createInvoice(params: InvoiceParams): Promise<InvoiceResult>
+
+  abstract retrieveInvoice(invoiceId: string): Promise<InvoiceDetails>
 
   abstract createPaymentRequestResources(
     params: CreatePaymentRequestResourcesParams

@@ -12,6 +12,7 @@ import type {
   CreatePaymentRequestResourcesParams,
   DeactivatePaymentRequestResourcesParams,
   FinalizePaymentRequestResourcesParams,
+  InvoiceDetails,
   InvoiceParams,
   InvoiceResult,
   NormalizedEventType,
@@ -150,6 +151,20 @@ export class StripePaymentProvider implements PaymentProvider {
         : null,
       invoiceItemId: invoiceItem.id,
       raw: finalizedInvoice
+    }
+  }
+
+  async retrieveInvoice(invoiceId: string): Promise<InvoiceDetails> {
+    const stripe = getStripeClient()
+    const invoice = await stripe.invoices.retrieve(invoiceId)
+    return {
+      id: invoice.id,
+      number: invoice.number || null,
+      status: invoice.status || null,
+      dueDate: invoice.due_date || null,
+      hostedUrl: invoice.hosted_invoice_url || null,
+      pdfUrl: invoice.invoice_pdf || null,
+      raw: invoice
     }
   }
 

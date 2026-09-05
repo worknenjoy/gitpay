@@ -1,41 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages } from 'react-intl'
 import { Link, Typography } from '@mui/material'
 import { StyledCheckbox, StyledFormControlLabel } from './checkbox-terms.styles'
 import TermsDialog from './terms-dialog'
 
+const messages = defineMessages({
+  bountyLabel: {
+    id: 'task.bounties.interested.termsOfUseLabel',
+    defaultMessage: 'I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION'
+  },
+  bountyAnchor: {
+    id: 'task.bounties.interested.termsOfUse',
+    defaultMessage: 'TERMS OF USE'
+  },
+  accountLabel: {
+    id: 'account.terms.checkbox.label',
+    defaultMessage: 'I AGREE WITH THE {termsOfUseAnchor}'
+  },
+  accountAnchor: {
+    id: 'account.terms.checkbox.anchor',
+    defaultMessage: 'TERMS OF SERVICE'
+  }
+})
+
 interface CheckboxTermsProps {
   onAccept: (checked: boolean) => void
-  labelId?: string
-  labelDefaultMessage?: string
-  anchorId?: string
-  anchorDefaultMessage?: string
-  titleId?: string
-  titleDefaultMessage?: string
-  textId?: string
-  textDefaultMessage?: string
-  agreeId?: string
-  agreeDefaultMessage?: string
-  disagreeId?: string
-  disagreeDefaultMessage?: string
+  /** Which static label/anchor copy to show — 'bounty' (default) or 'account' (signup). */
+  variant?: 'bounty' | 'account'
   content?: React.ReactNode
   align?: 'left' | 'right'
 }
 
 const CheckboxTerms = ({
   onAccept,
-  labelId = 'task.bounties.interested.termsOfUseLabel',
-  labelDefaultMessage = 'I AGREE WITH THE {termsOfUseAnchor} AND THE CONFIDENTIALITY OF INFORMATION',
-  anchorId = 'task.bounties.interested.termsOfUse',
-  anchorDefaultMessage = 'TERMS OF USE',
-  titleId,
-  titleDefaultMessage,
-  textId,
-  textDefaultMessage,
-  agreeId,
-  agreeDefaultMessage,
-  disagreeId,
-  disagreeDefaultMessage,
+  variant = 'bounty',
   content,
   align = 'left'
 }: CheckboxTermsProps) => {
@@ -64,17 +62,29 @@ const CheckboxTerms = ({
         labelPlacement={align === 'right' ? 'start' : 'end'}
         label={
           <Typography variant="caption">
-            <FormattedMessage
-              id={labelId}
-              defaultMessage={labelDefaultMessage}
-              values={{
-                termsOfUseAnchor: (
-                  <Link onClick={() => setOpenTerms(true)}>
-                    <FormattedMessage id={anchorId} defaultMessage={anchorDefaultMessage} />
-                  </Link>
-                )
-              }}
-            />
+            {variant === 'account' ? (
+              <FormattedMessage
+                {...messages.accountLabel}
+                values={{
+                  termsOfUseAnchor: (
+                    <Link onClick={() => setOpenTerms(true)}>
+                      <FormattedMessage {...messages.accountAnchor} />
+                    </Link>
+                  )
+                }}
+              />
+            ) : (
+              <FormattedMessage
+                {...messages.bountyLabel}
+                values={{
+                  termsOfUseAnchor: (
+                    <Link onClick={() => setOpenTerms(true)}>
+                      <FormattedMessage {...messages.bountyAnchor} />
+                    </Link>
+                  )
+                }}
+              />
+            )}
           </Typography>
         }
       />
@@ -83,14 +93,6 @@ const CheckboxTerms = ({
         onClose={() => setOpenTerms(false)}
         onAccept={() => setChecked(true)}
         onDisagree={() => setChecked(false)}
-        titleId={titleId}
-        titleDefaultMessage={titleDefaultMessage}
-        textId={textId}
-        textDefaultMessage={textDefaultMessage}
-        agreeId={agreeId}
-        agreeDefaultMessage={agreeDefaultMessage}
-        disagreeId={disagreeId}
-        disagreeDefaultMessage={disagreeDefaultMessage}
         content={content}
       />
     </div>

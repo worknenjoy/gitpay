@@ -466,7 +466,7 @@ async function handleInvoicePaid(ctx: WebhookHandlerContext) {
 
   // Wallet top-up invoice
   const walletOrder = await models.WalletOrder.findOne({
-    where: { source: invoiceId }
+    where: { source: invoiceId, provider: 'whop' }
   })
   if (walletOrder) {
     await walletOrder.update({
@@ -492,7 +492,9 @@ async function handleInvoiceFailed(ctx: WebhookHandlerContext) {
     if (order && !order.paid) {
       await order.update({ status: 'failed' })
     }
-    const walletOrder = await models.WalletOrder.findOne({ where: { source: invoiceId } })
+    const walletOrder = await models.WalletOrder.findOne({
+      where: { source: invoiceId, provider: 'whop' }
+    })
     if (walletOrder && !walletOrder.paid) {
       await walletOrder.update({ status: 'failed' })
     }

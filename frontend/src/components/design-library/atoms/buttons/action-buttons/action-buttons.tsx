@@ -1,5 +1,4 @@
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
 import { Button, Divider, Typography } from '@mui/material'
 import {
   PrimaryWrapper,
@@ -29,7 +28,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
         <React.Fragment key={`primary-${action.key ?? index}`}>
           {action.helperText && (
             <Typography variant="subtitle2" color="textSecondary" gutterBottom>
-              <FormattedMessage id={action.helperText} />
+              {action.helperText}
             </Typography>
           )}
           <PrimaryWrapper>
@@ -42,9 +41,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
               disabled={action.disabled}
               endIcon={action.icon}
             >
-              <PrimaryLabel>
-                <FormattedMessage id={action.label} />
-              </PrimaryLabel>
+              <PrimaryLabel>{action.label}</PrimaryLabel>
             </Button>
           </PrimaryWrapper>
           {action.component &&
@@ -60,7 +57,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ primary, secondary }) => 
           <React.Fragment key={`secondary-${action.key ?? index}`}>
             {action.helperText && (
               <Typography variant="subtitle2" color="textSecondary" gutterBottom>
-                <FormattedMessage id={action.helperText} />
+                {action.helperText}
               </Typography>
             )}
             <SecondaryButton

@@ -14,6 +14,7 @@ import type {
   CreatePaymentRequestResourcesParams,
   DeactivatePaymentRequestResourcesParams,
   FinalizePaymentRequestResourcesParams,
+  InvoiceDetails,
   InvoiceParams,
   InvoiceResult,
   NormalizedEventType,
@@ -179,6 +180,23 @@ export class WhopPaymentProvider implements PaymentProvider {
       hostedUrl,
       dueDate: invoice.due_date || dueDate,
       invoiceItemId: null,
+      raw: invoice
+    }
+  }
+
+  /** GET /invoices/{id} — the natural counterpart to the POST /invoices call in createInvoice. */
+  async retrieveInvoice(invoiceId: string): Promise<InvoiceDetails> {
+    const invoice = await this.client.get<any>(`/invoices/${encodeURIComponent(invoiceId)}`)
+    // Whop has no receipt/view/PDF field at all (confirmed against the Retrieve Invoice
+    // API reference) — only pay_online_url, a checkout link. Callers must not fall back
+    // to it for a paid invoice; there is no downloadable file to offer.
+    return {
+      id: invoice.id,
+      number: invoice.number || null,
+      status: invoice.status || null,
+      dueDate: invoice.due_date ? Math.floor(new Date(invoice.due_date).getTime() / 1000) : null,
+      hostedUrl: invoice.pay_online_url || null,
+      pdfUrl: null,
       raw: invoice
     }
   }

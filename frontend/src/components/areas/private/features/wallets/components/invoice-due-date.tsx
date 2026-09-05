@@ -8,7 +8,7 @@ export const InvoiceDueDate = ({ walletOrderId, fetchWalletOrder }) => {
   useEffect(() => {
     const getFetchWalletOrder = async () => {
       const fetchedOrder = await fetchWalletOrder(walletOrderId)
-      setInvoiceDueDate(fetchedOrder?.walletOrder?.invoice?.due_date || 0)
+      setInvoiceDueDate(fetchedOrder?.walletOrder?.invoice?.dueDate || 0)
     }
 
     getFetchWalletOrder()

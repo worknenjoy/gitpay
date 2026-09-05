@@ -122,10 +122,7 @@ const AcceptTermsPage: React.FC<AcceptTermsPageProps> = ({
           <div style={{ marginTop: 16 }}>
             <CheckboxTerms
               onAccept={setChecked}
-              labelId="account.terms.checkbox.label"
-              labelDefaultMessage="I AGREE WITH THE {termsOfUseAnchor}"
-              anchorId="account.terms.checkbox.anchor"
-              anchorDefaultMessage="TERMS OF SERVICE"
+              variant="account"
               content={<TermsOfService extraStyles={false} />}
               align="right"
             />

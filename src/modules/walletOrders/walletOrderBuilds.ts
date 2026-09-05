@@ -81,7 +81,8 @@ export async function walletOrderBuilds(params: WalletOrderBuildsParams) {
         source_id: invoice.invoiceItemId || invoice.invoiceId,
         source_type: 'invoice-item',
         source: invoice.invoiceId,
-        status: invoice.status || 'pending'
+        status: invoice.status || 'pending',
+        provider: paymentProvider.name
       },
       {
         where: {

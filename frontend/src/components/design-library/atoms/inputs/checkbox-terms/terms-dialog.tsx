@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages } from 'react-intl'
 import {
   Dialog,
   DialogTitle,
@@ -9,37 +9,35 @@ import {
   DialogContentText
 } from '@mui/material'
 
+const messages = defineMessages({
+  title: {
+    id: 'task.bounties.interested.termsOfUse',
+    defaultMessage: 'TERMS OF USE'
+  },
+  text: {
+    id: 'task.bounties.interested.termsOfUseText',
+    defaultMessage:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+  },
+  agree: {
+    id: 'task.bounties.interested.agree',
+    defaultMessage: 'AGREE'
+  },
+  disagree: {
+    id: 'task.bounties.interested.disagree',
+    defaultMessage: 'DISAGREE'
+  }
+})
+
 interface TermsDialogProps {
   open: boolean
   onClose: () => void
   onAccept: () => void
   onDisagree: () => void
-  titleId?: string
-  titleDefaultMessage?: string
-  textId?: string
-  textDefaultMessage?: string
-  agreeId?: string
-  agreeDefaultMessage?: string
-  disagreeId?: string
-  disagreeDefaultMessage?: string
   content?: React.ReactNode
 }
 
-const TermsDialog = ({
-  open,
-  onClose,
-  onAccept,
-  onDisagree,
-  titleId = 'task.bounties.interested.termsOfUse',
-  titleDefaultMessage = 'TERMS OF USE',
-  textId = 'task.bounties.interested.termsOfUseText',
-  textDefaultMessage = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-  agreeId = 'task.bounties.interested.agree',
-  agreeDefaultMessage = 'AGREE',
-  disagreeId = 'task.bounties.interested.disagree',
-  disagreeDefaultMessage = 'DISAGREE',
-  content
-}: TermsDialogProps) => {
+const TermsDialog = ({ open, onClose, onAccept, onDisagree, content }: TermsDialogProps) => {
   const [agree, setAgree] = React.useState(false)
 
   const handleAgree = () => {
@@ -63,22 +61,22 @@ const TermsDialog = ({
     >
       {!content && (
         <DialogTitle id="terms-dialog-title">
-          <FormattedMessage id={titleId} defaultMessage={titleDefaultMessage} />
+          <FormattedMessage {...messages.title} />
         </DialogTitle>
       )}
       <DialogContent>
         {content ?? (
           <DialogContentText id="terms-dialog-description">
-            <FormattedMessage id={textId} defaultMessage={textDefaultMessage} />
+            <FormattedMessage {...messages.text} />
           </DialogContentText>
         )}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleDisagree} color="primary" size="small">
-          <FormattedMessage id={disagreeId} defaultMessage={disagreeDefaultMessage} />
+          <FormattedMessage {...messages.disagree} />
         </Button>
         <Button onClick={handleAgree} color="primary" size="small" autoFocus>
-          <FormattedMessage id={agreeId} defaultMessage={agreeDefaultMessage} />
+          <FormattedMessage {...messages.agree} />
         </Button>
       </DialogActions>
     </Dialog>
