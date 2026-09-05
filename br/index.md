@@ -13,12 +13,18 @@ categories:
 #featured:
 #    title: O que é importante saber
 #    tag: featured
-#section:
-#    title: Entregando tarefas de projetos usando o Git Workflow
-#    subtitle: com o Git Workflow conseguimos automatizar e melhorar os processos de trabalho remoto e distribuído
+section:
+    title: Dá para ganhar dinheiro no GitHub?
+    subtitle: Sim — com GitHub Sponsors, issues pagas, consultoria e bounties
 #cta:
 #    title: Entre em contato com a gente!
 #    subtitle: Cadastre-se para saber de novas tarefas que surgirem!
 #    button_text: Contato  
 #    button_url: /contact/  
 ---
+
+Sim, dá para ganhar dinheiro no GitHub. Além do GitHub Sponsors e da consultoria, a forma mais rápida de começar é uma **bounty**: um patrocinador financia uma issue do GitHub, um contribuidor envia um Pull Request, e o pagamento é liberado quando ele é aceito.
+
+O Gitpay transforma esse processo em um fluxo de verdade — financie uma issue, candidate-se e envie um PR, depois receba — sem planilhas e sem cobrar pagamento no direct.
+
+[Leia: Dá para ganhar dinheiro no GitHub?](/br/pode-ganhar-dinheiro-no-github/)
