@@ -194,7 +194,14 @@ describe('POST /orders (Whop)', () => {
   it('should create a bounty invoice order via Whop invoices', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
-      nock(WHOP_API_HOST).post('/api/v1/invoices').reply(200, invoiceCreate)
+      let invoiceBody: any
+
+      nock(WHOP_API_HOST)
+        .post('/api/v1/invoices', (body) => {
+          invoiceBody = body
+          return true
+        })
+        .reply(200, invoiceCreate)
 
       const user = await registerAndLogin(agent)
       const task = await TaskFactory({
@@ -221,6 +228,10 @@ describe('POST /orders (Whop)', () => {
       expect(res.body.provider).to.equal('whop')
       expect(res.body.source_id).to.equal(invoiceCreate.id)
       expect(res.body.source_type).to.equal('invoice-item')
+
+      // company_id belongs at the top level only; Whop rejects it when nested in `product`
+      expect(invoiceBody.company_id).to.equal('biz_test_platform')
+      expect(invoiceBody.product).to.not.have.property('company_id')
     })
   })
 })

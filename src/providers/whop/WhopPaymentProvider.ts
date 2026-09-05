@@ -150,8 +150,7 @@ export class WhopPaymentProvider implements PaymentProvider {
       customer_name: params.customerName || params.customerEmail,
       due_date: dueDate,
       product: {
-        title: params.description.slice(0, 80) || 'Gitpay invoice',
-        company_id: companyId
+        title: params.description.slice(0, 80) || 'Gitpay invoice'
       },
       plan: {
         initial_price: params.amount,
