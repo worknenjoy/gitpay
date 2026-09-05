@@ -122,9 +122,12 @@
 <div class="uk-grid-match uk-child-width-1-1" uk-grid>
     {% assign rendered_any_other = false %}
     {% for post in posts limit: 48 %}
-        {% assign is_payment_request = post.url contains '/payment-request' %}
-        {% assign is_payment_link = post.url contains '/payment-link' %}
-        {% assign is_guide = post.url contains '/how-' %}
+        {% assign is_payment_request = false %}
+        {% if post.url contains '/payment-request' %}{% assign is_payment_request = true %}{% endif %}
+        {% assign is_payment_link = false %}
+        {% if post.url contains '/payment-link' %}{% assign is_payment_link = true %}{% endif %}
+        {% assign is_guide = false %}
+        {% if post.url contains '/how-' %}{% assign is_guide = true %}{% endif %}
 
         {% unless is_payment_request or is_payment_link or is_guide %}
             {% assign rendered_any_other = true %}
