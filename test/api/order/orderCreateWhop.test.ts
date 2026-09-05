@@ -228,6 +228,10 @@ describe('POST /orders (Whop)', () => {
       expect(res.body.provider).to.equal('whop')
       expect(res.body.source_id).to.equal(invoiceCreate.id)
       expect(res.body.source_type).to.equal('invoice-item')
+      // The customer must be sent to Whop's own invoice pay link (email pre-filled/locked),
+      // not a guessed https://whop.com/checkout/{plan_id} link — that guessed link pointed
+      // at a plan that isn't a standalone checkout and crashed Whop's pay page.
+      expect(res.body.payment_url).to.equal(invoiceCreate.pay_online_url)
 
       // company_id belongs at the top level only; Whop rejects it when nested in `product`
       expect(invoiceBody.company_id).to.equal('biz_test_platform')

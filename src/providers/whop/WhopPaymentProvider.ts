@@ -168,8 +168,10 @@ export class WhopPaymentProvider implements PaymentProvider {
       ]
     })
 
-    const planId = invoice.current_plan?.id
-    const hostedUrl = planId ? `https://whop.com/checkout/${planId}` : null
+    // pay_online_url is Whop's own invoice pay link (email pre-filled/locked). Building
+    // a generic https://whop.com/checkout/{plan_id} link instead (as bounty checkouts do)
+    // pointed at a plan that isn't a standalone checkout, and crashed Whop's pay page.
+    const hostedUrl = invoice.pay_online_url || null
 
     return {
       invoiceId: invoice.id,
