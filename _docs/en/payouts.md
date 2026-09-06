@@ -44,6 +44,7 @@ depends on how your account is connected:
 
 - **Stripe** — your payout follows the payout schedule configured on your connected Stripe account.
 - **Whop** — payouts can be requested on demand, once your Whop payout method is set up.
+- **PayPal** — supported for some accounts; payouts go to your linked PayPal account.
 
 ## Checking your balance
 
@@ -56,6 +57,7 @@ Before your first payout, you need to tell Gitpay where to send the money:
 
 - If you're paid through Stripe, connect a bank account from your payout settings.
 - If you're paid through Whop, follow [How to set up a payout account on Whop](/docs/en/whop-payout-setup/).
+- If you're paid through PayPal, link your PayPal account from your payout settings.
 
 See [How our payment works](/docs/en/payments/) for more on fees and connecting a bank account.
 
@@ -69,8 +71,8 @@ transfer clears that settlement period, it's ready to include in your next payou
 
 If a payout seems stuck:
 
-1. Check your payout method is still active in your payout settings (Stripe or Whop) — an expired or
-   incomplete method is the most common cause.
+1. Check your payout method is still active in your payout settings (Stripe, Whop, or PayPal) — an
+   expired or incomplete method is the most common cause.
 2. Give it a few business days — bank transfers, in particular, aren't instant even after Gitpay
    initiates them.
 3. Still nothing? Reach out to support with your payout's reference so we can look it up.

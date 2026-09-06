@@ -5,6 +5,8 @@ role: sponsor
 title: Financiando tarefas
 subtitle: Como definir escopo e financiar trabalho com eficiência
 tags: sponsor, financiamento
+redirect_from:
+  - /docs/br/usage/
 ---
 
 #### O que você vai ver
