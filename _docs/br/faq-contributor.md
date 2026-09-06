@@ -2,7 +2,7 @@
 layout: doc
 lang: br
 role: contributor
-title: Perguntas gerais
+title: Perguntas gerais para contribuidores
 subtitle: Dúvidas comuns de contribuidores
 tags: contribuidor, faq
 ---

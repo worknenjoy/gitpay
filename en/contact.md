@@ -1,15 +1,13 @@
 ---
 layout: contact
 lang: en
-title: Entre em contato com a gente se a documentação não respondeu a sua dúvida. Você pode também melhorar a documentação
+title: Contact
 permalink: /contact/
-formspree:
-    email: my_name@gmail.com
-    redirect: /thanks/
 ---
 
-##### Morbi varius in accumsan blandit, elit ligula velit, luctus mattis ante nulla nulla.
+##### Get in touch
 
-Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+Have a question about Gitpay, or found something wrong in these docs?
 
-{% include map.html latitude="40.6700" longitude="-73.9400" zoom="16" %}
+- Email us at [contact@gitpay.me](mailto:contact@gitpay.me).
+- Found an error or an outdated page? [Open an issue on the docs repository](https://github.com/worknenjoy/gitpay/issues/new) so we can fix it.

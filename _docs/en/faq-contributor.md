@@ -2,7 +2,7 @@
 layout: doc
 lang: en
 role: contributor
-title: General questions
+title: General questions for contributors
 subtitle: Common questions from contributors
 tags: contributor, faq
 ---

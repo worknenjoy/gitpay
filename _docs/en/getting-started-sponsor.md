@@ -2,7 +2,7 @@
 layout: doc
 lang: en
 role: sponsor
-title: Getting started
+title: Getting started as a sponsor
 subtitle: Sponsor issues so contributors can deliver them
 tags: sponsor, getting-started
 ---

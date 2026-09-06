@@ -6,7 +6,8 @@
 
 # Site title and description
 title:              Gitpay Documentation
-description:        The guide for Gitpay.
+description:        How to fund GitHub issues, send payment requests, and get paid for software work on Gitpay.
+lang:               en
 
 # Site subpath, e.g. /blog
 baseurl:            ""
@@ -81,6 +82,8 @@ plugins:
   - jekyll-seo-tag
   - jekyll-gist
   - jekyll-avatar
+  - jekyll-sitemap
+  - jekyll-redirect-from
 exclude:
   - .idea/
   - .vscode/

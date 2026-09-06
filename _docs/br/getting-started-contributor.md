@@ -2,7 +2,7 @@
 layout: doc
 lang: br
 role: contributor
-title: Começando
+title: Começando como contribuidor
 subtitle: Crie sua conta e configure o básico antes de trabalhar em tarefas
 tags: contribuidor, comecando
 ---

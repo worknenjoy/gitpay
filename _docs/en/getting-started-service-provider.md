@@ -2,7 +2,7 @@
 layout: doc
 lang: en
 role: service-provider
-title: Getting started
+title: Getting started as a service provider
 subtitle: Deliver client work and collect payment using Git workflow
 tags: service-provider, getting-started
 ---

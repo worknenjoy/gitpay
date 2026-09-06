@@ -2,7 +2,7 @@
 layout: doc
 lang: en
 role: maintainer
-title: Getting started
+title: Getting started as a maintainer
 subtitle: Set up your repository workflow to validate work and release bounties
 tags: maintainer, getting-started
 ---

@@ -2,7 +2,7 @@
 layout: doc
 lang: en
 role: maintainer
-title: General questions
+title: General questions for maintainers
 subtitle: Common questions from maintainers
 tags: maintainer, faq
 ---

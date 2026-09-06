@@ -17,4 +17,4 @@
     {{ page.date | date: date_format }}
 </time>
 
-<a href="{{site.github.repository_url}}/blob/gh-pages/{{page.path}}">Editar esta página</a>
+<a href="{{ site.github.repository_url | default: "https://github.com/worknenjoy/gitpay" }}/blob/gh-pages/{{page.path}}">{{ site.data.translations.editLabel[page.lang] | default: site.data.translations.editLabel["en"] }}</a>
