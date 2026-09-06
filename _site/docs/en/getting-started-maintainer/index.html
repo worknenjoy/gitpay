@@ -6,22 +6,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
-  <!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>Getting started | Gitpay Documentation</title>
-<meta name="generator" content="Jekyll v3.7.3" />
-<meta property="og:title" content="Getting started" />
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Getting started as a maintainer | Gitpay Documentation</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Getting started as a maintainer" />
 <meta name="author" content="Alexandre Magno" />
 <meta property="og:locale" content="en" />
 <meta name="description" content="Table of contents" />
-<meta property="og:description" content="Table of contents" />
-<link rel="canonical" href="http://localhost:4000/docs/en/getting-started-maintainer/" />
-<meta property="og:url" content="http://localhost:4000/docs/en/getting-started-maintainer/" />
+<meta name="twitter:description" property="og:description" content="Table of contents" />
+<link rel="canonical" href="https://docs.gitpay.me/docs/en/getting-started-maintainer/" />
+<meta property="og:url" content="https://docs.gitpay.me/docs/en/getting-started-maintainer/" />
 <meta property="og:site_name" content="Gitpay Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Getting started as a maintainer" />
 <script type="application/ld+json">
-{"headline":"Getting started","@type":"WebPage","description":"Table of contents","url":"http://localhost:4000/docs/en/getting-started-maintainer/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Alexandre Magno"},"description":"Table of contents","headline":"Getting started as a maintainer","url":"https://docs.gitpay.me/docs/en/getting-started-maintainer/"}</script>
 <!-- End Jekyll SEO tag -->
 
-  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
+  <meta property="og:image" content="https://docs.gitpay.me/assets/posts/logo.png"/>
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
   <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
@@ -38,7 +41,7 @@
             <div class="uk-container">
     <div data-uk-navbar>
         <div class="uk-navbar-left">
-            <a class="uk-navbar-item uk-logo" href="/en"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
+            <a class="uk-navbar-item uk-logo" href="/en"><img width="32" height="32" src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a>
             <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title="Contribute with this documentation">Contribute with this documentation</a>
         </div>
         <div class="uk-navbar-right">
@@ -184,7 +187,7 @@
 
                 <article class="uk-article">
 
-                    <h1 class="uk-article-title">Getting started</h1>
+                    <h1 class="uk-article-title">Getting started as a maintainer</h1>
 
                     <p class="subtitle uk-text-lead uk-text-muted">Set up your repository workflow to validate work and release bounties</p>
 
@@ -192,7 +195,7 @@
                         
 
 
-    <img class="avatar avatar-small" src="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32" alt="alexanmtz" srcset="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32 1x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=64 2x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=96 3x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=128 4x" width="32" height="32" data-proofer-ignore="true" />
+    <img class="avatar avatar-small" alt="alexanmtz" width="32" height="32" data-proofer-ignore="true" src="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32" srcset="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32 1x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=64 2x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=96 3x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=128 4x" />
 
 
 
@@ -204,7 +207,7 @@
     
 </time>
 
-<a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_docs/en/getting-started-maintainer.md">Editar esta página</a>
+<a href="https://github.com/worknenjoy/gitpay/blob/gh-pages/_docs/en/getting-started-maintainer.md">Contribute with this documentation</a>
 
                     </div>
 
@@ -213,11 +216,16 @@
 <ul id="markdown-toc">
   <li><a href="#what-this-guide-covers" id="markdown-toc-what-this-guide-covers">What this guide covers</a></li>
   <li><a href="#recommended-workflow" id="markdown-toc-recommended-workflow">Recommended workflow</a></li>
+  <li><a href="#set-contribution-expectations-early" id="markdown-toc-set-contribution-expectations-early">Set contribution expectations early</a></li>
+  <li><a href="#keep-validation-objective" id="markdown-toc-keep-validation-objective">Keep validation objective</a></li>
+  <li><a href="#maintainer-onboarding-checklist" id="markdown-toc-maintainer-onboarding-checklist">Maintainer onboarding checklist</a></li>
   <li><a href="#next-steps" id="markdown-toc-next-steps">Next steps</a></li>
 </ul>
 
 <h2 id="what-this-guide-covers">What this guide covers</h2>
 <p>This page explains how maintainers can accept contributions with clear validation steps, and how that ties to payments.</p>
+
+<p>The goal is to reduce ambiguity in reviews, speed up acceptance, and make payment release decisions consistent.</p>
 
 <h2 id="recommended-workflow">Recommended workflow</h2>
 <ol>
@@ -229,6 +237,31 @@
   <li>Release the bounty/payment based on acceptance.</li>
 </ol>
 
+<h2 id="set-contribution-expectations-early">Set contribution expectations early</h2>
+<ul>
+  <li>Provide issue templates with required fields.</li>
+  <li>Document coding standards and review rules.</li>
+  <li>Define when a task needs tests, docs, or visual proof.</li>
+  <li>Clarify who can approve and release payments.</li>
+</ul>
+
+<h2 id="keep-validation-objective">Keep validation objective</h2>
+<ul>
+  <li>Tie feedback to specific acceptance criteria.</li>
+  <li>Distinguish blocking issues from optional improvements.</li>
+  <li>Request concrete updates instead of broad rework requests.</li>
+  <li>Confirm final acceptance in writing before release.</li>
+</ul>
+
+<h2 id="maintainer-onboarding-checklist">Maintainer onboarding checklist</h2>
+<ol>
+  <li>Review and update issue/PR templates.</li>
+  <li>Ensure CI checks reflect actual quality expectations.</li>
+  <li>Publish a concise “definition of done.”</li>
+  <li>Document payment release conditions.</li>
+  <li>Share expected review response time with contributors.</li>
+</ol>
+
 <h2 id="next-steps">Next steps</h2>
 <ul>
   <li>Read <a href="/docs/en/validating-work">Validating work</a></li>
@@ -236,8 +269,8 @@
 </ul>
 
                         <div class="share uk-text-center">
-    <a href="https://twitter.com/intent/tweet?text=Getting started&url=http://localhost:4000/docs/en/getting-started-maintainer/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
-    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdocs%2Fen%2Fgetting-started-maintainer%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+    <a href="https://twitter.com/intent/tweet?text=Getting started as a maintainer&url=https://docs.gitpay.me/docs/en/getting-started-maintainer/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdocs.gitpay.me%2Fdocs%2Fen%2Fgetting-started-maintainer%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
 </div>
 
                     </div>
@@ -317,16 +350,7 @@
     
 
     
-
-    
-
-    
-    
-
-    
-
-    
-        <li><a href="/docs/br/faq-maintainer/">Perguntas gerais</a></li>
+        <li><a href="/docs/br/faq-maintainer/">Perguntas gerais para mantenedores</a></li>
         
         
     
@@ -366,27 +390,9 @@
     
 
     
-        <li><a href="/docs/br/getting-started-maintainer/">Começando</a></li>
+        <li><a href="/docs/br/getting-started-maintainer/">Começando como mantenedor</a></li>
         
         
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
     
 
     
@@ -500,24 +506,6 @@
     
 
     
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
         <li><a href="/docs/br/validating-work/">Validando entregas</a></li>
         
         
@@ -549,7 +537,7 @@
         <button class="uk-offcanvas-close" type="button" data-uk-close></button>
 
         <ul class="uk-nav uk-nav-default">
-            <li><a class="uk-logo uk-margin-small-bottom" href="/en"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
+            <li><a class="uk-logo uk-margin-small-bottom" href="/en"><img src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a></li>
             
                 
                 
@@ -621,17 +609,17 @@
 
 
 <div>
-    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+    <a href="https://github.com/worknenjoy/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
 </div>
 
 
 <div>
-    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+    <a href="mailto:contact@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
 </div>
 
 
 <div>
-    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+    <a href="https://gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
 </div>
 
 
