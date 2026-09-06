@@ -29,17 +29,20 @@ const TermsOfService = ({ onArrowBack, onAgreeTerms, extraStyles }: TermsOfServi
 5. Disputes: In the event of a dispute between contributors, maintainers, and sponsors, our platform will act as a mediator to resolve the dispute. You agree to abide by the decision made by our platform in such disputes.
 {br}
 {br}
-6. Intellectual Property: You retain ownership of any intellectual property you create while using our platform. You agree to grant maintainers and sponsors a non-exclusive license to use any intellectual property you create while working on a project.
+6. Refunds: Payments for completed and accepted work are non-refundable. This does not affect rights provided by applicable law. Fraudulent, duplicate, or undelivered transactions may be refunded after review.
 {br}
 {br}
-7. Termination: We reserve the right to terminate your account at any time if we believe you have violated these terms and conditions.
+7. Intellectual Property: You retain ownership of any intellectual property you create while using our platform. You agree to grant maintainers and sponsors a non-exclusive license to use any intellectual property you create while working on a project.
 {br}
 {br}
-8. Limitation of Liability: Our platform is provided on an "as is" basis without warranties of any kind, either express or implied. We are not liable for any damages arising out of your use or inability to use our platform.
+8. Termination: We reserve the right to terminate your account at any time if we believe you have violated these terms and conditions.
+{br}
+{br}
+9. Limitation of Liability: Our platform is provided on an "as is" basis without warranties of any kind, either express or implied. We are not liable for any damages arising out of your use or inability to use our platform.
 {br}{br}
-9. Governing Law: These terms and conditions shall be governed by and construed in accordance with the laws of the jurisdiction in which our platform is based.
+10. Governing Law: These terms and conditions shall be governed by and construed in accordance with the laws of the jurisdiction in which our platform is based.
 {br}{br}
-10. Changes: We reserve the right to modify these terms and conditions at any time. We will notify you of any changes via email or through our platform.
+11. Changes: We reserve the right to modify these terms and conditions at any time. We will notify you of any changes via email or through our platform.
 {br}{br}
 By using our platform, you agree to these terms and conditions. If you do not agree, you may not use our platform.
 {br}{br}`
@@ -52,7 +55,7 @@ By using our platform, you agree to these terms and conditions. If you do not ag
           <FormattedMessage id="terms-of-service.subtitle" defaultMessage="About the terms" />
         }
         updated={
-          <FormattedMessage id="terms-of-service.date" defaultMessage="Updated 5 May, 2023" />
+          <FormattedMessage id="terms-of-service.date" defaultMessage="Updated 6 September, 2026" />
         }
         content={
           <FormattedMessage
