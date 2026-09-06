@@ -29,6 +29,7 @@ type PaymentRquestFormData = {
   description?: string
   send_instructions_email?: boolean
   instructions_content?: string
+  direct_charge?: boolean
 }
 
 type PaymentRequestFormProps = {
@@ -38,6 +39,7 @@ type PaymentRequestFormProps = {
     completed: boolean
     data: PaymentRquestFormData
   }
+  account?: { data?: { provider?: string } }
 }
 
 type PaymentRequestFormHandle = {
@@ -45,7 +47,7 @@ type PaymentRequestFormHandle = {
 }
 
 const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFormProps>(
-  ({ onSubmit, paymentRequest, completed = true }, ref) => {
+  ({ onSubmit, paymentRequest, completed = true, account }, ref) => {
     const { data } = paymentRequest || {}
     const [error, setError] = useState<string | false>(false)
     const internalFormRef = useRef<HTMLFormElement>(null)
@@ -195,6 +197,22 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
         }
       ]
 
+      if (account?.data?.provider === 'whop') {
+        items.push({
+          label: (
+            <FormattedMessage
+              id="paymentRequest.form.directCharge"
+              defaultMessage="Direct charge to your connected Whop account"
+            />
+          ),
+          alignment: 'flex-start',
+          name: 'direct_charge',
+          value: true,
+          defaultChecked: data?.direct_charge ?? true,
+          disabled: true
+        } as any)
+      }
+
       if (data?.active !== undefined) {
         items.unshift({
           label: <FormattedMessage id="paymentRequest.form.active" defaultMessage="Active" />,
@@ -209,6 +227,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
       data?.deactivate_after_payment,
       data?.active,
       data?.send_instructions_email,
+      data?.direct_charge,
+      account?.data?.provider,
       sendInstructionsEmailChecked,
       handleSendEmailChange,
       hasInstructions
@@ -413,6 +433,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                                     ? (e) => handleSendEmailChange(e.target.checked)
                                     : undefined
                                 }
+                                disabled={Boolean((item as any).disabled)}
                                 color="primary"
                               />
                             }

@@ -46,6 +46,24 @@ export async function createPaymentRequest(
     }
   )
 
+  // Whop-only: every new payment request is a direct charge on the seller's connected
+  // company, so Whop (not the platform) is merchant of record for disputes/refunds — see
+  // docs/payments-providers.md. This isn't a client-supplied option: the create form's
+  // toggle is locked, so the decision is made here unconditionally. Stripe is untouched.
+  let connectedAccountId: string | undefined
+  const directCharge = paymentProvider.name === 'whop'
+  if (directCharge) {
+    const user = await models.User.findByPk(userId)
+    connectedAccountId = user?.whop_account_id || undefined
+    if (!connectedAccountId) {
+      const err: any = new Error(
+        'Connect your Whop account in Payout Settings before creating a payment request'
+      )
+      err.StatusCodeError = 422
+      throw err
+    }
+  }
+
   const run = async (transaction: Transaction) => {
     const resources: any = {}
 
@@ -56,6 +74,8 @@ export async function createPaymentRequest(
         currency,
         amount,
         custom_amount,
+        directCharge,
+        connectedAccountId,
         metadata: {
           payment_request_id: id ?? null,
           user_id: userId ?? null
@@ -73,6 +93,7 @@ export async function createPaymentRequest(
         {
           ...paymentRequestParams,
           provider: paymentProvider.name,
+          direct_charge: directCharge,
           payment_link_id: paymentLinkId,
           payment_url: paymentUrl,
           currency,

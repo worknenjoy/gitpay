@@ -262,6 +262,36 @@ When transfer is deferred:
 npm run scripts:payment-request:process_pending_transfers
 ```
 
+### Direct charge on connected account (Whop only)
+
+Everything above describes the legacy flow: the customer pays into the **platform's** Whop company, then Gitpay transfers the seller's net to their connected company. Under that flow **Gitpay is merchant of record**, so Gitpay — not the seller — is responsible for disputes, refunds, and fees on that payment (per Whop's own docs: [Collect Payments for Connected Accounts](https://docs.whop.com/developer/platforms/collect-payments-for-connected-accounts)).
+
+`PaymentRequests.direct_charge` (boolean, DB default `true`, Whop-only — inert for Stripe) switches a payment request to Whop's **Direct Charges** mechanism instead:
+
+| Aspect | Legacy (transfers, `direct_charge=false`) | Direct charge (`direct_charge=true`) |
+|--------|---|---|
+| Merchant of record | Platform (`WHOP_COMPANY_ID`) | Seller's connected company (`User.whop_account_id`) |
+| Disputes / refunds | Gitpay's responsibility | Seller's/connected company's responsibility |
+| Commission | Ledger `Transfer` moves seller's net (gross − 8%) after the charge | `plan.application_fee_amount` on the checkout/plan splits Gitpay's 8% at charge time — no separate transfer |
+| Product/plan `company_id` | Platform | Connected account |
+
+**Every payment request created after this shipped defaults to `direct_charge=true`** — the create/edit drawer's "Direct charge to your connected Whop account" toggle is always on and locked (not user-editable yet). Creation is **blocked** with a clear error if the user hasn't finished connecting a Whop account (`User.whop_account_id` missing) — there is no silent fallback to the legacy flow. Payment requests that existed before this shipped were explicitly backfilled to `direct_charge=false` (see the `20260906*` migrations) since their provider resources already live under the platform company and can't retroactively move.
+
+**Fixed-amount** payment requests route their plan creation through `POST /checkout_configurations` (instead of standalone `POST /plans`, which has no fee-split field) when direct charge is on. **Custom-amount** payment requests thread `connectedAccountId` through the public pay page's per-payer checkout mint (`createWhopCheckout` → `createCheckoutForAmount`) the same way.
+
+`PaymentRequestPayments.company_id` / `destination_account_id` snapshot, per payment, which Whop company was actually merchant of record and where funds landed — taken from the webhook envelope's `company_id` (a sibling of `data`, not nested in the payment/membership object). `executePaymentRequestTransfer` checks this to skip its transfer step entirely for a direct-charge payment (funds already settled at the connected account via the charge-time fee split) while still sending the same payment-made / transfer-initiated emails as the legacy path.
+
+**Known limitation:** `PaymentRequestBalance` debt recovery (e.g. clawing back a prior dispute from a seller's *next* payment) only works on the legacy transfer path, where Gitpay controls the transfer amount. A direct-charge payment bypasses Gitpay's balance entirely, so existing debt is not automatically applied — it remains on the ledger for separate reconciliation.
+
+**Refunds create no local debit for a direct-charge payment.** `executePaymentRequestTransfer`'s skip branch marks a direct-charge payment `transferStatus=INITIATED` too (nothing left for Gitpay to do), but `debitRefundForPaymentRequest` (`src/services/payments/refunds/refundBalanceService.ts`) independently used to read that same status as "Gitpay already transferred this seller's money, claw it all back on refund" — the two meanings collided, and a live refund test produced a debit with no real Gitpay liability behind it (the seller was refunded out of their *own* connected-company Whop balance; Gitpay never sent them anything for this payment). Fixed by gating on `PaymentRequestPayment.destination_account_id` (only ever set for a genuine direct-charge settlement) ahead of the `transferStatus` check — a direct-charge refund now creates no `PaymentRequestBalanceTransaction` at all, only the usual "payment refunded" notices to seller and customer.
+
+**`computeSellerNetAmount` was double-charging Gitpay's commission on a direct-charge refund.** That function (`src/services/paymentRequest/sellerNetAmount.ts`) subtracts `GITPAY_COMMISSION_PERCENT` from Whop's reported `amount_after_fees` — correct for the legacy flow, where Gitpay hasn't taken its cut yet at that point. For a direct-charge payment, Gitpay's commission was already deducted upfront via `application_fee_amount`, and Whop's `amount_after_fees` already reflects that alongside its own processing fees — it *is* the seller's true net. A live Whop sandbox refund confirmed the bug: a $20 direct-charge payment with a $1.60 application fee and $17.03 `amount_after_fees` was refunded only $15.67 (17.03 × 0.92) instead of the full $17.03, leaving $1.36 stranded on the seller's connected company after what should have been a full refund. Fixed by skipping the extra reduction when `destination_account_id` is set and the fee base came from Whop's real reported `amount_after_fees` — the same fix also corrects the "transfer initiated" email amount shown to the seller at charge time, since it's computed by the same function.
+
+**Unverified against live Whop API — confirm in sandbox before relying on this in production:**
+- Whether `POST /checkout_configurations` actually accepts `plan.application_fee_amount` and a connected `company_id` when called with the platform's own company-scoped API key. This isn't present in the locally installed `@whop/sdk` TypeScript types but is documented by Whop; `WhopPaymentProvider` calls the raw REST API directly (not through the SDK's typed methods), so this isn't blocked by that gap — first attempts a top-level `company_id` on the checkout configuration, falling back to only the nested `plan.company_id` if rejected (same defensive pattern as `createBountyCheckout`).
+- Whether Whop delivers the resulting `payment.succeeded` / `membership.activated` webhook to the **same** `/webhooks/whop` endpoint/secret already configured for the platform, or requires separate configuration for connected-company events.
+- Whether the platform's Whop API key can still call `POST /payments/{id}/refund` for a payment owned by a connected (child) company.
+
 ### Sandbox: emulating Whop settlement & payout
 
 Whop’s [sandbox docs](https://docs.whop.com/developer/guides/sandbox) note that **payouts may not be available**. Card payments also often stay in **pending** balance for days (or forever in sandbox), so ledger transfers fail with insufficient available balance.

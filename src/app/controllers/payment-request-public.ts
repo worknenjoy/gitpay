@@ -1,5 +1,8 @@
 import { findPaymentRequestById } from '../../queries/payment-request/payment-request'
 import { WhopPaymentProvider } from '../../providers/whop/WhopPaymentProvider'
+import Models from '../../models'
+
+const models = Models as any
 
 export const getPublicPaymentRequest = async function getPublicPaymentRequest(req: any, res: any) {
   try {
@@ -25,7 +28,9 @@ export const getPublicPaymentRequest = async function getPublicPaymentRequest(re
 
 export const createWhopCheckout = async function createWhopCheckout(req: any, res: any) {
   try {
-    const paymentRequest = await findPaymentRequestById(req.params.id)
+    const paymentRequest = await findPaymentRequestById(req.params.id, {
+      include: [{ model: models.User }]
+    })
     if (!paymentRequest) {
       return res.status(404).send({ message: 'Payment request not found' })
     }
@@ -43,6 +48,16 @@ export const createWhopCheckout = async function createWhopCheckout(req: any, re
       return res.status(400).send({ message: 'A valid positive amount is required' })
     }
 
+    let connectedAccountId: string | undefined
+    if (paymentRequest.direct_charge) {
+      connectedAccountId = paymentRequest.User?.whop_account_id || undefined
+      if (!connectedAccountId) {
+        return res.status(422).send({
+          message: 'This seller has not finished connecting their Whop account'
+        })
+      }
+    }
+
     const provider = WhopPaymentProvider.getInstance()
     const { sessionId, purchaseUrl } = await provider.createCheckoutForAmount(
       {
@@ -50,6 +65,7 @@ export const createWhopCheckout = async function createWhopCheckout(req: any, re
         title: paymentRequest.title,
         description: paymentRequest.description,
         currency: paymentRequest.currency,
+        connectedAccountId,
         metadata: {
           payment_request_id: paymentRequest.id,
           user_id: paymentRequest.userId,

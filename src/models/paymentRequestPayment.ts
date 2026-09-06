@@ -8,6 +8,10 @@ export interface PaymentRequestPaymentAttributes {
   amount_after_fees?: string | null
   /** Payment provider's own reported fee for this payment (e.g. Whop's application fee). Null when not reported. */
   provider_fee_amount?: string | null
+  /** Whop company id that was merchant of record for this payment (webhook company_id). Null for Stripe / unrecorded. */
+  company_id?: string | null
+  /** Connected account id that received the funds for this payment, snapshotted at processing time. Null for Stripe / unrecorded. */
+  destination_account_id?: string | null
   currency: string
   status: string
   transferStatus?: string | null
@@ -24,6 +28,8 @@ export type PaymentRequestPaymentCreationAttributes = Optional<
   | 'id'
   | 'amount_after_fees'
   | 'provider_fee_amount'
+  | 'company_id'
+  | 'destination_account_id'
   | 'transferStatus'
   | 'transferId'
   | 'createdAt'
@@ -39,6 +45,8 @@ export default class PaymentRequestPayment
   public amount!: string
   public amount_after_fees!: string | null
   public provider_fee_amount!: string | null
+  public company_id!: string | null
+  public destination_account_id!: string | null
   public currency!: string
   public status!: string
   public transferStatus!: string | null
@@ -72,6 +80,14 @@ export default class PaymentRequestPayment
         },
         provider_fee_amount: {
           type: DataTypes.DECIMAL,
+          allowNull: true
+        },
+        company_id: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        destination_account_id: {
+          type: DataTypes.STRING,
           allowNull: true
         },
         currency: {

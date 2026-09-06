@@ -30,6 +30,10 @@ describe('Whop custom-amount payment request checkout', () => {
       nock(WHOP_API_HOST).post('/api/v1/products').reply(200, productCreate)
 
       const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_seller_connected' },
+        { where: { id: user.body.id } }
+      )
       const res = await agent
         .post('/payment-requests')
         .send({
@@ -42,6 +46,7 @@ describe('Whop custom-amount payment request checkout', () => {
         .expect(201)
 
       expect(res.body.provider).to.equal('whop')
+      expect(res.body.direct_charge).to.equal(true)
       expect(res.body.custom_amount).to.equal(true)
       expect(res.body.payment_link_id).to.equal(productCreate.id)
       expect(res.body.payment_url).to.equal(
@@ -87,6 +92,10 @@ describe('Whop custom-amount payment request checkout', () => {
   describe('POST /payment-requests-public/:id/checkout', () => {
     const createCustomAmountWhopPaymentRequest = async () => {
       const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_seller_connected' },
+        { where: { id: user.body.id } }
+      )
       return models.PaymentRequest.create({
         userId: user.body.id,
         provider: 'whop',

@@ -54,7 +54,10 @@ function whopMajorToCents(value: unknown): number {
  * - amount_total: charge/creator total (gross) → PaymentRequestPayment.amount + payment-made email
  * - amount_after_fees: platform net after Whop processor fees → claim/transfer base (then Gitpay 8%)
  */
-function paymentToCheckoutSession(payment: any, options: { forcePaid?: boolean } = {}) {
+function paymentToCheckoutSession(
+  payment: any,
+  options: { forcePaid?: boolean; companyId?: string | null } = {}
+) {
   const metadata = mergePaymentMetadata(payment)
   const major =
     payment?.total ??
@@ -101,6 +104,11 @@ function paymentToCheckoutSession(payment: any, options: { forcePaid?: boolean }
       providerFeeAmountMajor != null && Number.isFinite(providerFeeAmountMajor)
         ? providerFeeAmountMajor
         : null,
+    // Gitpay extension: not a Stripe field; the Whop company that was merchant of record
+    // for this payment (platform WHOP_COMPANY_ID, or a connected/child company for a
+    // direct-charge payment request) — sourced from the webhook envelope, a sibling of
+    // `data`, not from the payment object itself.
+    company_id: options.companyId ?? null,
     customer_details: {
       name: payment.user?.name || payment.member?.name || metadata.customer_name,
       email:
@@ -113,8 +121,12 @@ function paymentToCheckoutSession(payment: any, options: { forcePaid?: boolean }
   }
 }
 
-async function resolvePaymentRequestSession(payment: any, metadata: Record<string, any>) {
-  const session = paymentToCheckoutSession(payment, { forcePaid: true })
+async function resolvePaymentRequestSession(
+  payment: any,
+  metadata: Record<string, any>,
+  companyId?: string | null
+) {
+  const session = paymentToCheckoutSession(payment, { forcePaid: true, companyId })
 
   // Metadata correlation is authoritative when present — it must win over whatever
   // paymentToCheckoutSession already derived from the raw plan id. That derivation
@@ -149,7 +161,7 @@ async function handlePaymentSucceeded(ctx: WebhookHandlerContext) {
 
   // Payment request checkout (metadata on payment or plan)
   if (metadata.payment_request_id || metadata.purpose === 'payment_request') {
-    const session = await resolvePaymentRequestSession(payment, metadata)
+    const session = await resolvePaymentRequestSession(payment, metadata, ctx.rawEvent?.company_id)
     console.log('[whop] PR checkout session', {
       payment_link: session.payment_link,
       payment_status: session.payment_status,
@@ -213,7 +225,8 @@ async function handlePaymentSucceeded(ctx: WebhookHandlerContext) {
             payment_request_id: String(pr.id),
             payment_link_id: linkId,
             purpose: 'payment_request'
-          }
+          },
+          ctx.rawEvent?.company_id
         )
         session.payment_link = linkId
         try {
@@ -407,7 +420,11 @@ async function handleMembershipActivated(ctx: WebhookHandlerContext) {
   }
 
   try {
-    const session = await resolvePaymentRequestSession(pseudoPayment, planMetadata)
+    const session = await resolvePaymentRequestSession(
+      pseudoPayment,
+      planMetadata,
+      ctx.rawEvent?.company_id
+    )
     session.payment_link = pr.payment_link_id
     console.log('[whop] PR membership → checkout session', {
       payment_link: session.payment_link,

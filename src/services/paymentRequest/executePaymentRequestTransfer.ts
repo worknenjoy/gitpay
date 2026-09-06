@@ -259,6 +259,29 @@ export async function executePaymentRequestTransfer(
   const paymentProvider = getPaymentProvider(paymentRequest.provider || undefined)
   const paymentIntentId = paymentRequestPayment.source
 
+  // Direct charge: Whop already split funds at charge time via application_fee_amount —
+  // the seller's connected company received its net directly, so there is nothing left
+  // for Gitpay to transfer. Known limitation: any existing PaymentRequestBalance debt
+  // (e.g. from a prior dispute clawback) is NOT applied here, since Gitpay has no
+  // transfer step to intercept for a direct-charge payment — it remains on the ledger
+  // for separate reconciliation.
+  if (paymentRequest.direct_charge && paymentRequestPayment.destination_account_id) {
+    await paymentRequestPayment.update({ transferStatus: PaymentRequestTransferStatus.INITIATED })
+    await paymentRequest.update({ transfer_status: PaymentRequestTransferStatus.INITIATED })
+    await paymentRequestPayment.reload({
+      include: [
+        { model: models.PaymentRequest },
+        { model: models.User },
+        { model: models.PaymentRequestCustomer }
+      ]
+    })
+    return baseResult({
+      transferCreated: true,
+      resultingBalanceCents: transferAmountCents,
+      reason: 'direct_charge_settled_at_source'
+    })
+  }
+
   let chargeId: string | undefined
   if (paymentProvider.name === 'stripe') {
     try {

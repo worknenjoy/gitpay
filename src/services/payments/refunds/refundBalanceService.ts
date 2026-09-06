@@ -76,13 +76,24 @@ export const debitRefundForPaymentRequest = async ({
   }
 
   const currency = paymentRequest?.currency || paymentRequestPayment.currency || 'usd'
+  // Direct charge: funds settled directly on the seller's connected Whop company —
+  // executePaymentRequestTransfer marks these transferStatus=INITIATED too (nothing
+  // left for Gitpay to do), but unlike the legacy path Gitpay never transferred
+  // anything to the seller here, so there is nothing of Gitpay's to claw back. The
+  // refund is paid out of the seller's own connected-company balance directly, and
+  // Whop reduces its share of the application fee on its own — no local ledger entry
+  // reflects a real Gitpay liability for this payment.
+  const isDirectCharge = Boolean(paymentRequestPayment.destination_account_id)
   const wasTransferred =
+    !isDirectCharge &&
     paymentRequestPayment.transferStatus === PaymentRequestTransferStatus.INITIATED
 
   let clawbackAmount = 0
   let reasonDetails: string
 
-  if (wasTransferred) {
+  if (isDirectCharge) {
+    reasonDetails = 'refund_direct_charge_no_platform_transfer'
+  } else if (wasTransferred) {
     reasonDetails = 'refund_payment_request_requested_by_customer'
     clawbackAmount = paymentRequest
       ? sellerClawbackCentsForRefund(refunded_amount, {

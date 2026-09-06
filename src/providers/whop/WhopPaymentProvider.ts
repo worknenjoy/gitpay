@@ -32,6 +32,8 @@ import type {
 } from '../types'
 import { getWhopClient, getWhopCompanyId, type WhopClient } from './client'
 import { getFrontendHostBase } from './redirectBase'
+import { calculateAmountWithPercent } from '../../utils'
+import { GITPAY_COMMISSION_PERCENT } from '../../services/paymentRequest/commission'
 
 /**
  * Whop payment connector.
@@ -204,7 +206,13 @@ export class WhopPaymentProvider implements PaymentProvider {
   async createPaymentRequestResources(
     params: CreatePaymentRequestResourcesParams
   ): Promise<PaymentRequestResources> {
-    const companyId = this.companyId()
+    const platformCompanyId = this.companyId()
+    const directCharge = Boolean(params.directCharge && params.connectedAccountId)
+    // Direct charge: create resources on the seller's connected company so Whop treats
+    // it (not the platform) as merchant of record for disputes/refunds — see
+    // https://docs.whop.com/developer/platforms/collect-payments-for-connected-accounts.
+    // Legacy: everything stays on the platform company, unchanged from before.
+    const companyId = directCharge ? (params.connectedAccountId as string) : platformCompanyId
     const metadata = {
       payment_request_id: params.metadata?.payment_request_id ?? null,
       user_id: params.metadata?.user_id ?? null,
@@ -226,32 +234,104 @@ export class WhopPaymentProvider implements PaymentProvider {
       // a fresh one is minted per payer, for their entered amount, via createCheckoutForAmount
       // once they reach the Gitpay-hosted pay page (payment_url below, finalized with the
       // real id in finalizePaymentRequestResources since it isn't known yet at this point).
+      // The connected account (when directCharge) is re-resolved by the caller at mint
+      // time and passed into createCheckoutForAmount — see payment-request-public.ts.
       return {
         productId: product.id,
         priceId: '',
         paymentLinkId: product.id,
-        paymentUrl: ''
+        paymentUrl: '',
+        companyId
       }
     }
 
-    const planBody: Record<string, unknown> = {
+    if (!directCharge) {
+      const planBody: Record<string, unknown> = {
+        product_id: product.id,
+        account_id: companyId,
+        plan_type: 'one_time',
+        currency: params.currency || 'usd',
+        metadata,
+        description: params.description || params.title,
+        initial_price: params.amount || 0,
+        visibility: 'hidden'
+      }
+
+      const plan = await this.client.post<any>('/plans', planBody)
+
+      return {
+        productId: product.id,
+        priceId: plan.id,
+        paymentLinkId: plan.id,
+        paymentUrl: plan.purchase_url || `https://whop.com/checkout/${plan.id}`,
+        companyId
+      }
+    }
+
+    // Direct-charge, fixed amount: the standalone POST /plans used above has no fee-split
+    // field, so route through /checkout_configurations instead (same shape used by
+    // createCheckoutForAmount/createBountyCheckout), which supports application_fee_amount
+    // on the plan — Whop settles the connected account's sale and routes Gitpay's
+    // commission to the platform in the same charge, no separate transfer needed.
+    const applicationFeeAmount = calculateAmountWithPercent(
+      params.amount || 0,
+      GITPAY_COMMISSION_PERCENT,
+      'decimal',
+      params.currency || 'usd'
+    ).decimalFee
+
+    // Metadata goes on the checkout_configuration body itself, never on the inline
+    // plan — Whop rejects plan.metadata ("Invalid value for parameter 'plan.metadata'"),
+    // same constraint already documented in createBountyCheckout above.
+    const checkoutPlanBody: Record<string, unknown> = {
+      company_id: companyId,
       product_id: product.id,
-      account_id: companyId,
+      initial_price: params.amount || 0,
+      application_fee_amount: applicationFeeAmount,
       plan_type: 'one_time',
       currency: params.currency || 'usd',
-      metadata,
       description: params.description || params.title,
-      initial_price: params.amount || 0,
       visibility: 'hidden'
     }
 
-    const plan = await this.client.post<any>('/plans', planBody)
+    let checkout: any
+    try {
+      // Attempt to scope the whole checkout configuration to the connected account, per
+      // Whop's direct-charge docs. Some configurations reject a top-level company_id
+      // ("Cannot provide company_id for this configuration") even for a connected
+      // (child) company — same quirk already documented in createBountyCheckout — so
+      // fall back to scoping only the nested plan, which the docs also describe as valid.
+      checkout = await this.client.post<any>('/checkout_configurations', {
+        mode: 'payment',
+        metadata,
+        company_id: companyId,
+        plan: checkoutPlanBody
+      })
+    } catch (error) {
+      checkout = await this.client.post<any>('/checkout_configurations', {
+        mode: 'payment',
+        metadata,
+        plan: checkoutPlanBody
+      })
+    }
+
+    const planId = checkout.plan?.id || checkout.plan_id
+    const paymentUrl =
+      checkout.purchase_url ||
+      checkout.checkout_url ||
+      checkout.url ||
+      (planId ? `https://whop.com/checkout/${planId}` : undefined)
+
+    if (!planId) {
+      throw new Error('Whop direct-charge checkout configuration create failed: missing plan id')
+    }
 
     return {
       productId: product.id,
-      priceId: plan.id,
-      paymentLinkId: plan.id,
-      paymentUrl: plan.purchase_url || `https://whop.com/checkout/${plan.id}`
+      priceId: planId,
+      paymentLinkId: planId,
+      paymentUrl: paymentUrl || `https://whop.com/checkout/${planId}`,
+      companyId
     }
   }
 
@@ -276,30 +356,61 @@ export class WhopPaymentProvider implements PaymentProvider {
       description?: string
       currency?: string
       metadata?: Record<string, unknown>
+      /** Direct charge: the seller's connected company id. Charges land there instead of the platform. */
+      connectedAccountId?: string
     },
     amount: number
   ): Promise<{ sessionId: string; purchaseUrl?: string }> {
-    const companyId = this.companyId()
+    const directCharge = Boolean(context.connectedAccountId)
+    const companyId = directCharge ? (context.connectedAccountId as string) : this.companyId()
     // Whop plan titles (unlike product titles, which allow 80) are capped at 30 chars.
     const title = context.title.slice(0, 30)
+
+    const planBody: Record<string, unknown> = {
+      company_id: companyId,
+      product_id: context.productId,
+      initial_price: amount,
+      plan_type: 'one_time',
+      currency: context.currency || 'usd',
+      title,
+      description: context.description || context.title,
+      force_create_new_plan: true,
+      visibility: 'hidden'
+    }
+
+    if (directCharge) {
+      // Same fee-split mechanism as the fixed-amount direct-charge branch in
+      // createPaymentRequestResources — see the docs link there.
+      planBody.application_fee_amount = calculateAmountWithPercent(
+        amount,
+        GITPAY_COMMISSION_PERCENT,
+        'decimal',
+        context.currency || 'usd'
+      ).decimalFee
+    }
 
     const body: Record<string, unknown> = {
       mode: 'payment',
       metadata: context.metadata || {},
-      plan: {
-        company_id: companyId,
-        product_id: context.productId,
-        initial_price: amount,
-        plan_type: 'one_time',
-        currency: context.currency || 'usd',
-        title,
-        description: context.description || context.title,
-        force_create_new_plan: true,
-        visibility: 'hidden'
-      }
+      plan: planBody
     }
 
-    const checkout = await this.client.post<any>('/checkout_configurations', body)
+    let checkout: any
+    if (directCharge) {
+      try {
+        // See createPaymentRequestResources: some configurations reject a top-level
+        // company_id even for a connected (child) company — fall back to the nested
+        // plan.company_id alone, which the docs also describe as valid.
+        checkout = await this.client.post<any>('/checkout_configurations', {
+          ...body,
+          company_id: companyId
+        })
+      } catch (error) {
+        checkout = await this.client.post<any>('/checkout_configurations', body)
+      }
+    } else {
+      checkout = await this.client.post<any>('/checkout_configurations', body)
+    }
 
     const planId = checkout.plan?.id || checkout.plan_id
     const purchaseUrl =

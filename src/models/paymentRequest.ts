@@ -15,6 +15,8 @@ export interface PaymentRequestAttributes {
   payment_url?: string | null
   /** Payment connector: stripe | whop */
   provider: string
+  /** Whop-only: charge created directly on the seller's connected company (true) vs legacy platform-charge-then-transfer (false). Inert for Stripe. */
+  direct_charge: boolean
   status: string
   transfer_status: string
   transfer_id?: string | null
@@ -38,6 +40,7 @@ export type PaymentRequestCreationAttributes = Optional<
   | 'payment_link_id'
   | 'payment_url'
   | 'provider'
+  | 'direct_charge'
   | 'status'
   | 'transfer_status'
   | 'transfer_id'
@@ -63,6 +66,7 @@ export default class PaymentRequest
   public payment_link_id!: string | null
   public payment_url!: string | null
   public provider!: string
+  public direct_charge!: boolean
   public status!: string
   public transfer_status!: string
   public transfer_id!: string | null
@@ -127,6 +131,11 @@ export default class PaymentRequest
           type: DataTypes.STRING,
           allowNull: false,
           defaultValue: 'stripe'
+        },
+        direct_charge: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+          defaultValue: false
         },
         status: {
           type: DataTypes.STRING,

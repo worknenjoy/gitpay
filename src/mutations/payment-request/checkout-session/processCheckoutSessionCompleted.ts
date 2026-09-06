@@ -10,6 +10,7 @@ import {
 } from '../../../queries/payment-request/payment-request-payment'
 
 import { getPaymentProvider } from '../../../providers'
+import { getWhopCompanyId } from '../../../providers/whop/client'
 import { executePaymentRequestTransfer } from '../../../services/paymentRequest/executePaymentRequestTransfer'
 import { PaymentRequestTransferStatus } from '../../../services/paymentRequest/paymentRequestTransferStatuses'
 
@@ -31,6 +32,12 @@ type CheckoutSession = {
    * application fee. Not a Stripe field.
    */
   provider_fee_amount?: number | null
+  /**
+   * Whop company that was merchant of record for this payment (platform WHOP_COMPANY_ID,
+   * or the seller's connected company for a direct-charge payment request). Not a
+   * Stripe field.
+   */
+  company_id?: string | null
 }
 
 /** Whop real charge id — preferred over provisional membership ids for disputes/refunds. */
@@ -318,6 +325,13 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
             ? Number(session.provider_fee_amount)
             : null
 
+        // A company_id that differs from the platform's own is a direct-charge event —
+        // funds already settled on that connected company, not the platform's balance.
+        const eventCompanyId = session.company_id || null
+        const isDirectChargeEvent = Boolean(
+          eventCompanyId && paymentProvider.name === 'whop' && eventCompanyId !== getWhopCompanyId()
+        )
+
         const paymentRequestPayment = await models.PaymentRequestPayment.create(
           {
             paymentRequestId: paymentRequest.id,
@@ -325,6 +339,8 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
             amount: originalAmount.decimal,
             amount_after_fees: netAfterFees,
             provider_fee_amount: providerFeeAmount,
+            company_id: eventCompanyId,
+            destination_account_id: isDirectChargeEvent ? eventCompanyId : null,
             currency,
             source: paymentIntentId,
             status: session.payment_status,

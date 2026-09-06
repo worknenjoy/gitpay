@@ -1,5 +1,8 @@
 import { calculateAmountWithPercent } from '../../utils'
 import { getPaymentProvider } from '../../providers'
+import { GITPAY_COMMISSION_PERCENT } from './commission'
+
+export { GITPAY_COMMISSION_PERCENT }
 
 export type SellerNetAmountResult = {
   /** Fee base before Gitpay's 8% cut: Whop's amount_after_fees when known, else gross. */
@@ -25,6 +28,8 @@ export function computeSellerNetAmount(params: {
   paymentRequestPayment: {
     amount: string | number
     amount_after_fees?: string | number | null
+    /** Set only for a genuine direct-charge settlement (see executePaymentRequestTransfer). */
+    destination_account_id?: string | null
   }
   paymentRequest: {
     amount: string | number
@@ -37,6 +42,7 @@ export function computeSellerNetAmount(params: {
   const paymentProviderName = paymentRequest.provider || getPaymentProvider().name
 
   let feeBaseDecimal: number
+  let usedWhopReportedNet = false
   const whopNet = paymentRequestPayment.amount_after_fees
   if (
     paymentProviderName === 'whop' &&
@@ -45,6 +51,7 @@ export function computeSellerNetAmount(params: {
     Number(whopNet) >= 0
   ) {
     feeBaseDecimal = Number(whopNet)
+    usedWhopReportedNet = true
   } else if (paymentRequest.custom_amount) {
     feeBaseDecimal = Number(paymentRequestPayment.amount)
   } else {
@@ -52,7 +59,20 @@ export function computeSellerNetAmount(params: {
   }
 
   const originalAmount = calculateAmountWithPercent(feeBaseDecimal, 0, 'decimal', currency)
-  const amountAfterFee = calculateAmountWithPercent(feeBaseDecimal, 8, 'decimal', currency)
+
+  // Direct charge: Gitpay's commission was already collected upfront via
+  // application_fee_amount at charge time (see WhopPaymentProvider's direct-charge
+  // branch). Whop's own amount_after_fees for a direct-charge payment already reflects
+  // that deduction alongside its own processing fees, so it IS the seller's true net —
+  // subtracting GITPAY_COMMISSION_PERCENT again here would charge the commission twice.
+  // Confirmed against a real Whop sandbox refund: a $20 direct-charge payment with a
+  // $1.60 application fee and $17.03 amount_after_fees was refunded $15.67 instead of
+  // the full $17.03, leaving $1.36 stranded on the seller's connected company.
+  const isDirectChargeWithKnownNet =
+    Boolean(paymentRequestPayment.destination_account_id) && usedWhopReportedNet
+  const amountAfterFee = isDirectChargeWithKnownNet
+    ? originalAmount
+    : calculateAmountWithPercent(feeBaseDecimal, GITPAY_COMMISSION_PERCENT, 'decimal', currency)
 
   return {
     feeBaseDecimal,
@@ -85,6 +105,7 @@ export function sellerClawbackCentsForRefund(
     paymentRequestPayment: {
       amount: string | number
       amount_after_fees?: string | number | null
+      destination_account_id?: string | null
     }
     paymentRequest: {
       amount: string | number

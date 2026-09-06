@@ -122,6 +122,87 @@ describe('Whop webhooks for payment requests', () => {
     })
   })
 
+  it('should skip the ledger transfer for a direct-charge payment (funds already on the connected company)', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      // No /api/v1/transfers or /ledger_accounts mock — a direct-charge payment must
+      // never call the transfer API, since Whop already split funds at charge time.
+      const transferSpy = sinon.spy()
+      nock(WHOP_API_HOST)
+        .post('/api/v1/transfers')
+        .reply(200, () => {
+          transferSpy()
+          return transferCreate
+        })
+      const mailSpy = sinon.spy(PaymentRequestMail, 'transferInitiatedForPaymentRequest')
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      await PaymentRequestFactory({
+        title: 'Direct charge PR',
+        amount: 100,
+        currency: 'usd',
+        payment_link_id: 'plan_direct_charge_pr',
+        provider: 'whop',
+        direct_charge: true,
+        userId: user.body.id
+      })
+
+      const payload = {
+        id: 'msg_whop_pr_direct',
+        api_version: 'v1',
+        type: 'payment.succeeded',
+        timestamp: '2026-05-12T18:42:11.041Z',
+        // Merchant of record is the seller's connected company, not the platform —
+        // this is what tells executePaymentRequestTransfer to skip its transfer step.
+        company_id: 'biz_submerchant_1',
+        data: {
+          id: 'pay_whop_pr_direct_1',
+          status: 'succeeded',
+          amount_after_fees: 92,
+          total: 100,
+          currency: 'usd',
+          metadata: {
+            purpose: 'payment_request',
+            payment_link_id: 'plan_direct_charge_pr'
+          },
+          plan: { id: 'plan_direct_charge_pr' },
+          user: { name: 'Customer', email: 'customer@example.com' }
+        }
+      }
+
+      const res = await agent.post('/webhooks/whop').send(payload).expect(200)
+      expect(res.statusCode).to.equal(200)
+      expect(transferSpy.called).to.equal(false)
+
+      const pr = await models.PaymentRequest.findOne({
+        where: { payment_link_id: 'plan_direct_charge_pr' }
+      })
+      expect(pr.status).to.equal('paid')
+      expect(pr.transfer_status).to.equal('initiated')
+      expect(pr.transfer_id).to.equal(null)
+
+      const payment = await models.PaymentRequestPayment.findOne({
+        where: { paymentRequestId: pr.id }
+      })
+      expect(payment).to.exist
+      expect(payment.transferStatus).to.equal('initiated')
+      expect(payment.company_id).to.equal('biz_submerchant_1')
+      expect(payment.destination_account_id).to.equal('biz_submerchant_1')
+
+      const transferRow = await models.PaymentRequestTransfer.findOne({
+        where: { paymentRequestId: pr.id }
+      })
+      expect(transferRow).to.equal(null)
+
+      expect(mailSpy.called).to.equal(true)
+    })
+  })
+
   it('should transfer when payload has no status and metadata only on plan', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()

@@ -17,6 +17,14 @@ export type CreatePaymentRequestResourcesParams = {
   amount?: number
   custom_amount?: boolean
   metadata?: PaymentRequestResourceMetadata
+  /**
+   * Whop-only: when true (with connectedAccountId set), create the checkout directly
+   * on the seller's connected company instead of the platform, so Whop treats the
+   * connected account as merchant of record for disputes/refunds. Ignored by Stripe.
+   */
+  directCharge?: boolean
+  /** Whop-only: the seller's connected company id (User.whop_account_id) for directCharge. */
+  connectedAccountId?: string
 }
 
 export type PaymentRequestResources = {
@@ -24,6 +32,8 @@ export type PaymentRequestResources = {
   priceId: string
   paymentLinkId: string
   paymentUrl: string
+  /** The provider account/company id that actually owns the created resources. */
+  companyId?: string
 }
 
 export type FinalizePaymentRequestResourcesParams = {

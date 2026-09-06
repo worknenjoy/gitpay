@@ -153,6 +153,7 @@ const PaymentRequests = ({
         onClose={() => setOpenNewPaymentRequestDrawer(false)}
         onSuccess={handlePaymentRequestCreate}
         completed={createPaymentRequestCompleted}
+        account={account}
       />
       <PaymentRequestDrawer
         open={!!selectedPaymentRequest}
@@ -163,6 +164,7 @@ const PaymentRequests = ({
           completed: !processingUpdatePaymentRequest,
           data: selectedPaymentRequest
         }}
+        account={account}
       />
     </>
   )

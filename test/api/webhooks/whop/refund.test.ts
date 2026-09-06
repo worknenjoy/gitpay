@@ -104,6 +104,75 @@ describe('Whop refund webhooks (payment-request balance)', () => {
     })
   })
 
+  it('should not debit the seller for a direct-charge refund (funds never passed through the platform)', async () => {
+    await withPaymentProvider('whop', async () => {
+      const user = await registerAndLogin(agent)
+      const { body: currentUser } = user || {}
+
+      const paymentRequest = await PaymentRequestFactory({
+        title: 'Whop direct-charge PR for refund',
+        amount: 49.95,
+        currency: 'usd',
+        provider: 'whop',
+        direct_charge: true,
+        userId: currentUser.id
+      })
+
+      const paymentRequestCustomer = await PaymentRequestCustomerFactory({
+        email: 'customer@example.com',
+        name: 'Test Customer',
+        sourceId: 'src_whop_direct_refund_123',
+        userId: currentUser.id
+      })
+
+      await PaymentRequestPaymentFactory({
+        amount: 49.95,
+        currency: 'usd',
+        source: 'pay_whop_refund_1', // must match refundCreated.data.payment.id
+        status: 'paid',
+        // Same status a direct-charge payment gets once settled (see
+        // executePaymentRequestTransfer's skip branch) — transferStatus alone must
+        // not be read as "Gitpay transferred this seller money".
+        transferStatus: 'initiated',
+        company_id: 'biz_submerchant_1',
+        destination_account_id: 'biz_submerchant_1',
+        customerId: paymentRequestCustomer.id,
+        paymentRequestId: paymentRequest.id,
+        userId: currentUser.id
+      })
+
+      await PaymentRequestBalanceFactory({
+        userId: currentUser.id,
+        balance: 0
+      })
+
+      const balanceTxMailStub = sinon
+        .stub(PaymentRequestMail as any, 'newBalanceTransactionForPaymentRequest')
+        .resolves(true)
+      const sellerRefundNoticeStub = sinon
+        .stub(PaymentRequestMail as any, 'newRefundForPaymentRequest')
+        .resolves(true)
+      const customerRefundMailStub = sinon
+        .stub(PaymentRequestMail as any, 'refundConfirmationForCustomer')
+        .resolves(true)
+
+      await agent.post('/webhooks/whop').send(refundCreated).expect(200)
+
+      // Gitpay never transferred anything for this payment — the refund is paid out
+      // of the seller's own connected company, so there is nothing to claw back.
+      const transactions = await models.PaymentRequestBalanceTransaction.findAll()
+      expect(transactions).to.have.lengthOf(0)
+      expect(balanceTxMailStub.called).to.equal(false)
+      expect(sellerRefundNoticeStub.calledOnce).to.equal(true)
+      expect(customerRefundMailStub.calledOnce).to.equal(true)
+
+      const balance = await models.PaymentRequestBalance.findOne({
+        where: { userId: currentUser.id }
+      })
+      expect(balance.balance).to.equal('0')
+    })
+  })
+
   it('should not double-debit when refund.created is redelivered (idempotent)', async () => {
     await withPaymentProvider('whop', async () => {
       const user = await registerAndLogin(agent)
