@@ -41,6 +41,13 @@ A refund is money sent back to the payer, either because you or Gitpay issued it
 issued directly on the payment provider's dashboard. Refunds from Gitpay's own interface are always for
 the full amount — there's no partial-refund option in the product itself.
 
+## Our refund policy
+
+Payments for completed and accepted work are non-refundable. This does not affect rights provided by
+applicable law. Fraudulent, duplicate, or undelivered transactions may be refunded after review. This
+is also stated in the Refunds clause of our
+[Terms of Service](https://gitpay.me) (see the "Legal" menu in the site footer).
+
 ## How disputes affect your balance
 
 When a dispute opens, the disputed amount is debited from your payment-request balance, along with
