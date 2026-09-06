@@ -271,6 +271,7 @@
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.product_unacceptable": "Produto inaceitável",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.payment_request_payment_applied": "Solicitação de pagamento de crédito aplicada ao saldo",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.refund_payment_request": "Pedido de pagamento de reembolso solicitado pelo cliente",
+  "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.refund_before_transfer_processor_fee_not_returned": "Refund processed before payout — processor fee not returned",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.whop_dispute_alert_fee": "Taxa de alerta de disputa antecipada",
   "mail.paymentRequest.newDisputeAlertForPaymentRequest.subject": "Um alerta precoce de contestação foi criado para a sua solicitação de pagamento no Gitpay",
   "mail.paymentRequest.newDisputeAlertForPaymentRequest.message": "Seu provedor de pagamento recebeu um alerta de contestação antecipada para um pagamento recente relacionado a sua solicitação de pagamento (valor alertado: {{amount}}). Isso normalmente significa que a transação será automaticamente reembolsada ou será transferida para uma disputa formal — vamos notificá-lo novamente de qualquer maneira.",
