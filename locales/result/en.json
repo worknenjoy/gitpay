@@ -271,6 +271,7 @@
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.product_unacceptable": "Product unacceptable",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.payment_request_payment_applied": "Payment request payment credit applied to balance",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.refund_payment_request": "Refund payment request made by the customer",
+  "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.refund_before_transfer_processor_fee_not_returned": "Refund processed before payout — processor fee not returned",
   "mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.whop_dispute_alert_fee": "Whop early dispute alert fee",
   "mail.paymentRequest.newDisputeAlertForPaymentRequest.subject": "An early dispute alert was raised for your payment request on Gitpay",
   "mail.paymentRequest.newDisputeAlertForPaymentRequest.message": "Your payment provider received an early dispute alert for a recent payment related to your payment request (alerted amount: {{amount}}). This typically means the transaction will either be automatically refunded or escalate into a formal dispute — we'll notify you again either way.",
