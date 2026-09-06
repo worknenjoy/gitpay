@@ -15,6 +15,11 @@ seo_secondary_keywords:
   - charge clients online
   - payment link for digital work
 reading_time: 8 min
+redirect_from:
+  - /get-paid/content-creators/
+  - /payment-request-for-content-creators/
+  - /how-content-creators-get-paid/
+  - /payment-link-for-content-creators/
 ---
 
 ## Introduction

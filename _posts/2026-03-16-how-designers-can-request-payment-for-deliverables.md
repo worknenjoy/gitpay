@@ -15,6 +15,11 @@ seo_secondary_keywords:
   - request payment from client
   - charge clients online
 reading_time: 7 min
+redirect_from:
+  - /get-paid/designers/
+  - /payment-request-for-designers/
+  - /how-designers-get-paid/
+  - /payment-link-for-designers/
 ---
 
 ## Introduction
