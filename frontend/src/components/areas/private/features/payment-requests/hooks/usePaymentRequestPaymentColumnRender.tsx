@@ -54,14 +54,14 @@ export const usePaymentRequestPaymentsCustomColumnRenderer = ({
           confirm: {
             dialogMessage: (
               <FormattedMessage
-                id="user.profile.payments.refund.confirm"
-                defaultMessage="Are you sure you want to refund?"
+                id="paymentRequest.payment.refund.confirm"
+                defaultMessage="Are you sure you want to refund this payment?"
               />
             ),
             alertMessage: (
               <FormattedMessage
-                id="user.profile.payments.refund.message"
-                defaultMessage="You will be refunded with the value paid for the issue, excluding fees"
+                id="paymentRequest.payment.refund.message"
+                defaultMessage="The customer will be refunded the amount they paid, excluding fees."
               />
             )
           },
