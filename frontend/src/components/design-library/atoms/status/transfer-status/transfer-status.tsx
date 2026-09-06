@@ -52,7 +52,8 @@ const TransferStatus = ({ status, completed = true }) => {
       label: 'Refunded',
       color: 'refunded',
       icon: <RefundedIcon className={classes.refunded} />,
-      message: 'This payment was refunded before payout — no funds were transferred to your account.'
+      message:
+        'This payment was refunded before payout — no funds were transferred to your account.'
     },
     {
       status: 'unknown',
