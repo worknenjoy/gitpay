@@ -4,6 +4,8 @@ lang: en
 title: What is Gitpay?
 subtitle: Understand how Gitpay works and how each workflow is connected
 tags:
+redirect_from:
+  - /docs/en/collections/
 ---
 
 #### Table of contents

@@ -2,7 +2,7 @@
 layout: doc
 lang: br
 role: maintainer
-title: Começando
+title: Começando como mantenedor
 subtitle: Configure seu fluxo para validar entregas e liberar recompensas
 tags: maintainer, comecando
 ---

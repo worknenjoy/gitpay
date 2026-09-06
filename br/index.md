@@ -1,6 +1,8 @@
 ---
 layout: home
 lang: br
+title: Documentação do Gitpay
+description: Como o Gitpay conecta patrocinadores, mantenedores e contribuidores para financiar issues do GitHub, enviar cobranças e receber por trabalho de software.
 hero:
     title: Como funciona o Gitpay?
     subtitle: O Gitpay é uma plataforma open source feita para facilitar o desenvolvimento de projetos de forma eficiente, colaborativa e sob demanda 

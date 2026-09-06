@@ -2,7 +2,7 @@
 layout: doc
 lang: br
 role: sponsor
-title: Começando
+title: Começando como patrocinador
 subtitle: Financie tarefas para acelerar entregas
 tags: sponsor, comecando
 ---

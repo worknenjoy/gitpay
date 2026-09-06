@@ -1,18 +1,10 @@
 [
   
     {
-      "title"    : "Como configurar um repositório",
+      "title"    : "Claims — reivindicando tarefas e acompanhando transferências",
       "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/br/assets/",
-      "date"     : ""
-    } ,
-  
-    {
-      "title"    : "Category hosting Setting up new domain and page",
-      "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/br/collections/",
+      "tags"     : "claims,, recompensa,, atribuição,, transferências,, solicitações, de, pagamento",
+      "url"      : "/docs/br/claims/",
       "date"     : ""
     } ,
   
@@ -25,7 +17,7 @@
     } ,
   
     {
-      "title"    : "Contribuidor",
+      "title"    : "Trabalhar em uma Issue",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/contributor/",
@@ -41,15 +33,15 @@
     } ,
   
     {
-      "title"    : "Cancelling a website subscription",
+      "title"    : "Disputas e reembolsos",
       "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/br/drafts/",
+      "tags"     : "disputas,, chargeback,, reembolsos,, solicitações, de, pagamento,, taxas",
+      "url"      : "/docs/br/disputes-and-refunds/",
       "date"     : ""
     } ,
   
     {
-      "title"    : "Perguntas gerais",
+      "title"    : "Perguntas gerais para contribuidores",
       "category" : "",
       "tags"     : "contribuidor,, faq",
       "url"      : "/docs/br/faq-contributor/",
@@ -57,7 +49,7 @@
     } ,
   
     {
-      "title"    : "Perguntas gerais",
+      "title"    : "Perguntas gerais para mantenedores",
       "category" : "",
       "tags"     : "maintainer,, faq",
       "url"      : "/docs/br/faq-maintainer/",
@@ -65,9 +57,9 @@
     } ,
   
     {
-      "title"    : "Plataforma",
+      "title"    : "FAQ",
       "category" : "",
-      "tags"     : "othertag",
+      "tags"     : "",
       "url"      : "/docs/br/faq/",
       "date"     : ""
     } ,
@@ -81,7 +73,7 @@
     } ,
   
     {
-      "title"    : "Começando",
+      "title"    : "Começando como contribuidor",
       "category" : "",
       "tags"     : "contribuidor,, comecando",
       "url"      : "/docs/br/getting-started-contributor/",
@@ -89,7 +81,7 @@
     } ,
   
     {
-      "title"    : "Começando",
+      "title"    : "Começando como mantenedor",
       "category" : "",
       "tags"     : "maintainer,, comecando",
       "url"      : "/docs/br/getting-started-maintainer/",
@@ -97,7 +89,7 @@
     } ,
   
     {
-      "title"    : "Começando",
+      "title"    : "Começando como prestador de serviço",
       "category" : "",
       "tags"     : "service-provider,, comecando",
       "url"      : "/docs/br/getting-started-service-provider/",
@@ -105,7 +97,7 @@
     } ,
   
     {
-      "title"    : "Começando",
+      "title"    : "Começando como patrocinador",
       "category" : "",
       "tags"     : "sponsor,, comecando",
       "url"      : "/docs/br/getting-started-sponsor/",
@@ -129,26 +121,10 @@
     } ,
   
     {
-      "title"    : "Getting started with our application",
-      "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/br/installation/",
-      "date"     : ""
-    } ,
-  
-    {
       "title"    : "Mantenedor",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/maintainer/",
-      "date"     : ""
-    } ,
-  
-    {
-      "title"    : "Updating your billing credit card",
-      "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/br/pages/",
       "date"     : ""
     } ,
   
@@ -161,10 +137,10 @@
     } ,
   
     {
-      "title"    : "Recebendo pagamentos como recompensa",
+      "title"    : "Como funcionam os pagamentos (payouts)",
       "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/br/posts/",
+      "tags"     : "payout,, pagamento,, conta, bancária,, whop,, stripe",
+      "url"      : "/docs/br/payouts/",
       "date"     : ""
     } ,
   
@@ -185,7 +161,7 @@
     } ,
   
     {
-      "title"    : "Prestador de serviço",
+      "title"    : "Cobrar Clientes",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/service-provider/",
@@ -193,26 +169,10 @@
     } ,
   
     {
-      "title"    : "Patrocinador",
+      "title"    : "Financiar uma Issue",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/br/sponsor/",
-      "date"     : ""
-    } ,
-  
-    {
-      "title"    : "Como o Git pode ajudar nas organizações",
-      "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/br/structure/",
-      "date"     : ""
-    } ,
-  
-    {
-      "title"    : "Como são definidas as tarefas?",
-      "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/br/usage/",
       "date"     : ""
     } ,
   
@@ -225,18 +185,18 @@
     } ,
   
     {
-      "title"    : "How to set up a repository",
+      "title"    : "Como configurar uma conta de pagamento no Whop",
       "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/en/assets/",
+      "tags"     : "whop,, payout,, payment,, kyc",
+      "url"      : "/docs/br/whop-payout-setup/",
       "date"     : ""
     } ,
   
     {
-      "title"    : "Category hosting Setting up new domain and page",
+      "title"    : "Claims — claiming tasks and tracking transfers",
       "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/en/collections/",
+      "tags"     : "claims,, bounty,, assignment,, transfers,, payment, requests",
+      "url"      : "/docs/en/claims/",
       "date"     : ""
     } ,
   
@@ -249,7 +209,7 @@
     } ,
   
     {
-      "title"    : "Contributor",
+      "title"    : "Work on an Issue",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/contributor/",
@@ -265,15 +225,15 @@
     } ,
   
     {
-      "title"    : "Cancelling a website subscription",
+      "title"    : "Disputes and refunds",
       "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/en/drafts/",
+      "tags"     : "disputes,, chargebacks,, refunds,, payment, requests,, fees",
+      "url"      : "/docs/en/disputes-and-refunds/",
       "date"     : ""
     } ,
   
     {
-      "title"    : "General questions",
+      "title"    : "General questions for contributors",
       "category" : "",
       "tags"     : "contributor,, faq",
       "url"      : "/docs/en/faq-contributor/",
@@ -281,7 +241,7 @@
     } ,
   
     {
-      "title"    : "General questions",
+      "title"    : "General questions for maintainers",
       "category" : "",
       "tags"     : "maintainer,, faq",
       "url"      : "/docs/en/faq-maintainer/",
@@ -305,15 +265,15 @@
     } ,
   
     {
-      "title"    : "Getting started",
+      "title"    : "Get Started",
       "category" : "",
-      "tags"     : "contributor,, getting-started",
+      "tags"     : "getting-started,, account",
       "url"      : "/docs/en/getting-started-contributor/",
       "date"     : ""
     } ,
   
     {
-      "title"    : "Getting started",
+      "title"    : "Getting started as a maintainer",
       "category" : "",
       "tags"     : "maintainer,, getting-started",
       "url"      : "/docs/en/getting-started-maintainer/",
@@ -321,7 +281,7 @@
     } ,
   
     {
-      "title"    : "Getting started",
+      "title"    : "Getting started as a service provider",
       "category" : "",
       "tags"     : "service-provider,, getting-started",
       "url"      : "/docs/en/getting-started-service-provider/",
@@ -329,7 +289,7 @@
     } ,
   
     {
-      "title"    : "Getting started",
+      "title"    : "Getting started as a sponsor",
       "category" : "",
       "tags"     : "sponsor,, getting-started",
       "url"      : "/docs/en/getting-started-sponsor/",
@@ -337,7 +297,7 @@
     } ,
   
     {
-      "title"    : "Getting Started",
+      "title"    : "What is Gitpay?",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/getting-started/",
@@ -353,26 +313,10 @@
     } ,
   
     {
-      "title"    : "Getting started with our application",
-      "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/en/installation/",
-      "date"     : ""
-    } ,
-  
-    {
       "title"    : "Maintainer",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/maintainer/",
-      "date"     : ""
-    } ,
-  
-    {
-      "title"    : "Updating your billing credit card",
-      "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/en/pages/",
       "date"     : ""
     } ,
   
@@ -385,10 +329,10 @@
     } ,
   
     {
-      "title"    : "Receiving payments as a reward",
+      "title"    : "How payouts work",
       "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/en/posts/",
+      "tags"     : "payout,, payment,, bank, account,, whop,, stripe",
+      "url"      : "/docs/en/payouts/",
       "date"     : ""
     } ,
   
@@ -409,7 +353,7 @@
     } ,
   
     {
-      "title"    : "Service Provider",
+      "title"    : "Charge Customers",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/service-provider/",
@@ -417,26 +361,10 @@
     } ,
   
     {
-      "title"    : "Sponsor",
+      "title"    : "Fund an Issue",
       "category" : "",
       "tags"     : "",
       "url"      : "/docs/en/sponsor/",
-      "date"     : ""
-    } ,
-  
-    {
-      "title"    : "How Git can help organizations",
-      "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/en/structure/",
-      "date"     : ""
-    } ,
-  
-    {
-      "title"    : "How tasks are defined",
-      "category" : "",
-      "tags"     : "",
-      "url"      : "/docs/en/usage/",
       "date"     : ""
     } ,
   
@@ -445,6 +373,14 @@
       "category" : "",
       "tags"     : "maintainer,, validation,, review",
       "url"      : "/docs/en/validating-work/",
+      "date"     : ""
+    } ,
+  
+    {
+      "title"    : "How to set up a payout account on Whop",
+      "category" : "",
+      "tags"     : "whop,, payout,, payment,, kyc",
+      "url"      : "/docs/en/whop-payout-setup/",
       "date"     : ""
     } 
   

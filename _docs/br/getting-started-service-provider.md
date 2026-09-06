@@ -2,7 +2,7 @@
 layout: doc
 lang: br
 role: service-provider
-title: Começando
+title: Começando como prestador de serviço
 subtitle: Entregue serviços e cobre usando o fluxo do Git
 tags: service-provider, comecando
 ---

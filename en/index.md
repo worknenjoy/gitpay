@@ -1,6 +1,22 @@
 ---
 layout: home
 lang: en
+title: Gitpay Documentation
+description: How Gitpay connects sponsors, maintainers, and contributors to fund GitHub issues, send payment requests, and get paid for software work.
+redirect_from:
+  - /post/
+  - /post0/
+  - /post1/
+  - /post2/
+  - /post3/
+  - /post4/
+  - /post5/
+  - /post6/
+  - /post7/
+  - /post60/
+  - /post61/
+  - /post62/
+  - /post63/
 hero:
     title: What is Gitpay?
     subtitle: Gitpay connects sponsors, maintainers, and contributors to fund tasks, deliver pull requests, and release payments

@@ -6,22 +6,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="KXYFm8JkLWBcYqQIuqFlm1hXlF0Jdn1JrO7G_nUOzRY" />
-  <!-- Begin Jekyll SEO tag v2.4.0 -->
+  <!-- Begin Jekyll SEO tag v2.9.0 -->
 <title>Liberando recompensas | Gitpay Documentation</title>
-<meta name="generator" content="Jekyll v3.7.3" />
+<meta name="generator" content="Jekyll v3.10.0" />
 <meta property="og:title" content="Liberando recompensas" />
 <meta name="author" content="Alexandre Magno" />
 <meta property="og:locale" content="br" />
-<meta name="description" content="O que você vai ver" />
-<meta property="og:description" content="O que você vai ver" />
-<link rel="canonical" href="http://localhost:4000/docs/br/releasing-bounties/" />
-<meta property="og:url" content="http://localhost:4000/docs/br/releasing-bounties/" />
+<meta name="description" content="Índice" />
+<meta name="twitter:description" property="og:description" content="Índice" />
+<link rel="canonical" href="https://docs.gitpay.me/docs/br/releasing-bounties/" />
+<meta property="og:url" content="https://docs.gitpay.me/docs/br/releasing-bounties/" />
 <meta property="og:site_name" content="Gitpay Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Liberando recompensas" />
 <script type="application/ld+json">
-{"headline":"Liberando recompensas","@type":"WebPage","description":"O que você vai ver","url":"http://localhost:4000/docs/br/releasing-bounties/","author":{"@type":"Person","name":"Alexandre Magno"},"@context":"http://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"Alexandre Magno"},"description":"Índice","headline":"Liberando recompensas","url":"https://docs.gitpay.me/docs/br/releasing-bounties/"}</script>
 <!-- End Jekyll SEO tag -->
 
-  <meta property="og:image" content="http://localhost:4000/assets/posts/logo.png"/>
+  <meta property="og:image" content="https://docs.gitpay.me/assets/posts/logo.png"/>
   <link rel="stylesheet" href="/assets/css/main.css">
   <link rel="shortcut icon" type="image/png" href="/assets/img/favicon.png" >
   <link rel="alternate" type="application/rss+xml" title="Gitpay Documentation" href="/feed.xml">
@@ -38,7 +41,7 @@
             <div class="uk-container">
     <div data-uk-navbar>
         <div class="uk-navbar-left">
-            <a class="uk-navbar-item uk-logo" href="/br"><img width="32" height="32" src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a>
+            <a class="uk-navbar-item uk-logo" href="/br"><img width="32" height="32" src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a>
             <a style="font-size: 12px;" href="https://github.com/worknenjoy/gitpay/tree/gh-pages" title="Contribua com esta documentação">Contribua com esta documentação</a>
         </div>
         <div class="uk-navbar-right">
@@ -192,7 +195,7 @@
                         
 
 
-    <img class="avatar avatar-small" src="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32" alt="alexanmtz" srcset="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32 1x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=64 2x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=96 3x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=128 4x" width="32" height="32" data-proofer-ignore="true" />
+    <img class="avatar avatar-small" alt="alexanmtz" width="32" height="32" data-proofer-ignore="true" src="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32" srcset="https://avatars2.githubusercontent.com/alexanmtz?v=3&s=32 1x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=64 2x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=96 3x, https://avatars2.githubusercontent.com/alexanmtz?v=3&s=128 4x" />
 
 
 
@@ -204,34 +207,57 @@
     
 </time>
 
-<a href="http://github.com/worknenjoy/gitpay/blob/gh-pages/_docs/br/releasing-bounties.md">Editar esta página</a>
+<a href="https://github.com/worknenjoy/gitpay/blob/gh-pages/_docs/br/releasing-bounties.md">Contribua com esta documentação</a>
 
                     </div>
 
                     <div class="article-content">
-                        <h4 class="no_toc" id="o-que-você-vai-ver">O que você vai ver</h4>
+                        <h4 class="no_toc" id="índice">Índice</h4>
 <ul id="markdown-toc">
   <li><a href="#quando-liberar" id="markdown-toc-quando-liberar">Quando liberar</a></li>
   <li><a href="#o-que-conferir-antes" id="markdown-toc-o-que-conferir-antes">O que conferir antes</a></li>
+  <li><a href="#fluxo-sugerido-de-liberação" id="markdown-toc-fluxo-sugerido-de-liberação">Fluxo sugerido de liberação</a></li>
+  <li><a href="#se-o-escopo-mudou-durante-a-entrega" id="markdown-toc-se-o-escopo-mudou-durante-a-entrega">Se o escopo mudou durante a entrega</a></li>
   <li><a href="#comunicação" id="markdown-toc-comunicação">Comunicação</a></li>
 </ul>
 
 <h2 id="quando-liberar">Quando liberar</h2>
 <p>Libere a recompensa após a entrega ser aceita conforme seu fluxo (normalmente após merge, ou após aprovação explícita).</p>
 
+<p>Use uma regra clara por repositório (por exemplo: “liberar após merge na branch padrão”) para que os contribuidores saibam exatamente quando o pagamento é acionado.</p>
+
 <h2 id="o-que-conferir-antes">O que conferir antes</h2>
 <ul>
   <li>O PR atende ao escopo combinado</li>
   <li>Validações passaram (CI + checagens manuais)</li>
   <li>A entrega funciona no ambiente alvo</li>
+  <li>Qualquer feedback bloqueante foi resolvido e confirmado</li>
+  <li>Documentação ou notas de migração necessárias estão presentes</li>
+</ul>
+
+<h2 id="fluxo-sugerido-de-liberação">Fluxo sugerido de liberação</h2>
+<ol>
+  <li>Poste um comentário de aceitação resumindo o que foi validado.</li>
+  <li>Confirme o valor do pagamento e o destinatário.</li>
+  <li>Acione a liberação usando o fluxo acordado no projeto.</li>
+  <li>Compartilhe a confirmação da liberação na thread da issue/PR.</li>
+</ol>
+
+<h2 id="se-o-escopo-mudou-durante-a-entrega">Se o escopo mudou durante a entrega</h2>
+<ul>
+  <li>Compare a entrega final com o escopo aprovado mais recente.</li>
+  <li>Se trabalho extra foi adicionado, confirme se está incluído na recompensa atual.</li>
+  <li>Se parte do escopo ficou de fora, esclareça o que resta para uma tarefa de acompanhamento.</li>
 </ul>
 
 <h2 id="comunicação">Comunicação</h2>
-<p>Se não puder aceitar, descreva objetivamente o que falta para aceitar.</p>
+<p>Se não puder aceitar a entrega, descreva o que está faltando e o que seria necessário para aceitá-la.</p>
+
+<p>Mantenha as mensagens específicas e acionáveis para que os contribuidores possam resolver os problemas sem precisar adivinhar.</p>
 
                         <div class="share uk-text-center">
-    <a href="https://twitter.com/intent/tweet?text=Liberando recompensas&url=http://localhost:4000/docs/br/releasing-bounties/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
-    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fdocs%2Fbr%2Freleasing-bounties%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+    <a href="https://twitter.com/intent/tweet?text=Liberando recompensas&url=https://docs.gitpay.me/docs/br/releasing-bounties/&via=&related=" rel="nofollow" target="_blank" title="Share on Twitter" onclick="window.open(this.href, 'twitter', 'width=550,height=235');return false;"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    <a  class="uk-margin-small-left" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdocs.gitpay.me%2Fdocs%2Fbr%2Freleasing-bounties%2F" rel="nofollow" target="_blank" title="Share on Facebook" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
 </div>
 
                     </div>
@@ -311,16 +337,7 @@
     
 
     
-
-    
-
-    
-    
-
-    
-
-    
-        <li><a href="/docs/br/faq-maintainer/">Perguntas gerais</a></li>
+        <li><a href="/docs/br/faq-maintainer/">Perguntas gerais para mantenedores</a></li>
         
         
     
@@ -360,45 +377,9 @@
     
 
     
-        <li><a href="/docs/br/getting-started-maintainer/">Começando</a></li>
+        <li><a href="/docs/br/getting-started-maintainer/">Começando como mantenedor</a></li>
         
         
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
     
 
     
@@ -584,7 +565,7 @@
     
 
     
-        <li><a href="/docs/en/faq-maintainer/">General questions</a></li>
+        <li><a href="/docs/en/faq-maintainer/">General questions for maintainers</a></li>
         
         
             
@@ -615,7 +596,7 @@
         <button class="uk-offcanvas-close" type="button" data-uk-close></button>
 
         <ul class="uk-nav uk-nav-default">
-            <li><a class="uk-logo uk-margin-small-bottom" href="/br"><img src="http://localhost:4000/assets/posts/logo.png" alt="Documentation"></a></li>
+            <li><a class="uk-logo uk-margin-small-bottom" href="/br"><img src="https://docs.gitpay.me/assets/posts/logo.png" alt="Documentation"></a></li>
             
                 
                 
@@ -687,17 +668,17 @@
 
 
 <div>
-    <a href="https://worknenjoy.github.com/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
+    <a href="https://github.com/worknenjoy/gitpay" data-uk-icon="icon: github" class="uk-icon-link uk-icon" target="_blank"></a>
 </div>
 
 
 <div>
-    <a href="tarefas@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
+    <a href="mailto:contact@gitpay.me" data-uk-icon="icon: mail" class="uk-icon-link uk-icon" target="_blank"></a>
 </div>
 
 
 <div>
-    <a href="gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
+    <a href="https://gitpay.me" data-uk-icon="icon: link" class="uk-icon-link uk-icon" target="_blank"></a>
 </div>
 
 

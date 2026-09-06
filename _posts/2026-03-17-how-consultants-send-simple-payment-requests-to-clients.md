@@ -15,6 +15,11 @@ seo_secondary_keywords:
   - charge clients online
   - send payment request
 reading_time: 7 min
+redirect_from:
+  - /get-paid/consultants/
+  - /payment-request-for-consultants/
+  - /how-consultants-get-paid/
+  - /payment-link-for-consultants/
 ---
 
 ## Introduction

@@ -5,6 +5,8 @@ title: FAQ
 subtitle: Frequently asked questions about the platform
 tags: 
 author:
+redirect_from:
+  - /docs/en/drafts/
 ---
 
 #### Table of contents

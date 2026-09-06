@@ -2,7 +2,7 @@
 layout: doc
 lang: br
 role: maintainer
-title: Perguntas gerais
+title: Perguntas gerais para mantenedores
 subtitle: Dúvidas comuns de maintainers
 tags: maintainer, faq
 ---

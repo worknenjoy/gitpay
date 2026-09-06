@@ -66,6 +66,12 @@ your balance right away. You'll get an email as soon as this fires.
 Your **Payment Requests** page has a "Disputes and refunds" panel showing any amount currently owed
 from disputes or refund fees against your payment requests.
 
+## Payments funded through PayPal
+
+The debit amounts above apply to card payments processed through Stripe or Whop. If a payment was
+funded through PayPal, its dispute and refund handling follows PayPal's own process; check with
+support if you need details for a specific PayPal-funded payment.
+
 ## What to do if you disagree with a dispute
 
 Disputes are opened and resolved through the payer's bank or card network, not inside Gitpay, so there's

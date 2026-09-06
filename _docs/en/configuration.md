@@ -4,6 +4,10 @@ title: Running the Gitpay project
 subtitle: Learn how to contribute to the Gitpay core and evolve the platform
 author: Alexandre Magno
 tags:
+redirect_from:
+  - /docs/en/installation/
+  - /docs/en/assets/
+  - /docs/en/structure/
 ---
 
 #### What you will learn here
