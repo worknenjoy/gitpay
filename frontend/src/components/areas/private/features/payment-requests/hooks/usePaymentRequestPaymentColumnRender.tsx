@@ -40,6 +40,7 @@ export const usePaymentRequestPaymentsCustomColumnRenderer = ({
         {
           children: <FormattedMessage id="general.buttons.refund" defaultMessage="Refund" />,
           icon: <ReceiptIcon />,
+          disabled: item.status !== 'succeeded',
           confirm: {
             dialogMessage: (
               <FormattedMessage

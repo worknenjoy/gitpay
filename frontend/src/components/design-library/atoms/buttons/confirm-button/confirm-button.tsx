@@ -76,7 +76,7 @@ const ConfirmButton: React.FC<ConfirmButtonProps> = ({
 
   const Component = component
     ? () => (
-        <CustomComponent onClick={openDialog}>
+        <CustomComponent onClick={openDialog} disabled={disabled} type={type} variant={variant} color={color} size={size}>
           {componentName === 'MenuItem' ? (
             <>
               <ListItemIcon>{startIcon}</ListItemIcon>

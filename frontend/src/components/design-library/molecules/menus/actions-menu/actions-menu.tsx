@@ -60,6 +60,7 @@ export const ActionsMenu = ({ actions }: ActionsMenuProps) => {
                   component: () => (
                     <ConfirmButton
                       type="button"
+                      disabled={action.disabled}
                       dialogMessage={action.confirm.dialogMessage}
                       alertMessage={action.confirm.alertMessage}
                       label={action.children}
