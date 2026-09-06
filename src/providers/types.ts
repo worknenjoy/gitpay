@@ -128,6 +128,11 @@ export type TransferParams = {
   /** Stripe: charge id for source_transaction */
   sourceTransaction?: string
   transferGroup?: string
+  /**
+   * Dedup key for retries of this exact transfer decision (same payment + same amount).
+   * Whop: sent as the `Idempotency-Key` header. Stripe: sent as the SDK's requestOptions.idempotencyKey.
+   */
+  idempotencyKey?: string
 }
 
 export type TransferResult = {

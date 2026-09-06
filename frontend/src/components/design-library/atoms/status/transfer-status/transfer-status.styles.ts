@@ -10,6 +10,7 @@ export const classes = {
   in_transit: `${PREFIX}-in_transit`,
   reversed: `${PREFIX}-reversed`,
   completed: `${PREFIX}-completed`,
+  refunded: `${PREFIX}-refunded`,
   unknown: `${PREFIX}-unknown`
 } as const
 
@@ -38,6 +39,13 @@ export const TransferStatusRoot = styled('div')(({ theme }) => ({
   },
   [`.${classes.reversed}`]: {
     backgroundColor: red[500],
+    color: theme.palette.common.white,
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.common.white
+    }
+  },
+  [`.${classes.refunded}`]: {
+    backgroundColor: red[300],
     color: theme.palette.common.white,
     '& .MuiSvgIcon-root': {
       color: theme.palette.common.white

@@ -48,7 +48,8 @@ export class WhopClient {
   async request<T = any>(
     method: string,
     path: string,
-    body?: Record<string, unknown> | null
+    body?: Record<string, unknown> | null,
+    extraHeaders?: Record<string, string>
   ): Promise<T> {
     const apiKey = this.apiKey
     if (!apiKey && process.env.NODE_ENV !== 'test') {
@@ -59,7 +60,8 @@ export class WhopClient {
     const headers: Record<string, string> = {
       Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
-      Accept: 'application/json'
+      Accept: 'application/json',
+      ...extraHeaders
     }
 
     const response = await fetch(url, {
@@ -89,8 +91,8 @@ export class WhopClient {
     return data as T
   }
 
-  post<T = any>(path: string, body?: Record<string, unknown>) {
-    return this.request<T>('POST', path, body || {})
+  post<T = any>(path: string, body?: Record<string, unknown>, headers?: Record<string, string>) {
+    return this.request<T>('POST', path, body || {}, headers)
   }
 
   get<T = any>(path: string) {

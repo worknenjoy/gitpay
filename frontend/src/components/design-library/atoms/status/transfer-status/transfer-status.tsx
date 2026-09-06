@@ -5,7 +5,8 @@ import {
   ImportExport as ReversedIcon,
   AltRoute as InTransitIcon,
   InfoSharp as InfoIcon,
-  HelpOutline as QuestionInfoIcon
+  HelpOutline as QuestionInfoIcon,
+  MoneyOff as RefundedIcon
 } from '@mui/icons-material'
 import classes, { TransferStatusRoot } from './transfer-status.styles'
 import BaseStatus from 'design-library/atoms/status/base-status/base-status'
@@ -45,6 +46,13 @@ const TransferStatus = ({ status, completed = true }) => {
       color: 'completed',
       icon: <CompletedIcon className={classes.completed} />,
       message: 'Your payout is completed and should be in your bank account.'
+    },
+    {
+      status: 'refunded',
+      label: 'Refunded',
+      color: 'refunded',
+      icon: <RefundedIcon className={classes.refunded} />,
+      message: 'This payment was refunded before payout — no funds were transferred to your account.'
     },
     {
       status: 'unknown',

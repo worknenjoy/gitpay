@@ -522,7 +522,10 @@ export class WhopPaymentProvider implements PaymentProvider {
     }
 
     try {
-      const transfer = await this.client.post<any>('/transfers', body)
+      const headers = params.idempotencyKey
+        ? { 'Idempotency-Key': params.idempotencyKey }
+        : undefined
+      const transfer = await this.client.post<any>('/transfers', body, headers)
       return {
         transferId: transfer.id,
         amount: transfer.amount,

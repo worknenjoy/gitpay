@@ -274,7 +274,10 @@ export class StripePaymentProvider implements PaymentProvider {
       transferData.source_transaction = params.sourceTransaction
     }
 
-    const transfer = await createStripeTransfer(transferData)
+    const transfer = await createStripeTransfer(
+      transferData,
+      params.idempotencyKey ? { idempotencyKey: params.idempotencyKey } : undefined
+    )
     if (!transfer?.id) {
       throw new Error('Failed to create transfer')
     }
