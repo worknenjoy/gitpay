@@ -3,6 +3,8 @@ import { findPaymentRequestPayment } from '../../../queries/payment-request/paym
 import { findOrCreatePaymentRequestBalance } from '../../../queries/payment-request/payment-request-balance'
 import PaymentRequestMail from '../../../mail/paymentRequest'
 import { calculateAmountWithPercent } from '../../../utils'
+import { sellerClawbackCentsForRefund } from '../../paymentRequest/sellerNetAmount'
+import { PaymentRequestTransferStatus } from '../../paymentRequest/paymentRequestTransferStatuses'
 
 const models = Models as any
 
@@ -17,7 +19,25 @@ export type RefundDebitParams = {
 }
 
 /**
- * Debit PR balance for a refund (cents): 8% of the actually-refunded amount.
+ * Debit PR balance for a refund (cents).
+ *
+ * Transfer-status-aware:
+ * - If the seller already received the money (transfer INITIATED), the full seller-net
+ *   portion of the refunded amount is clawed back (not just Gitpay's 8%) — platform
+ *   policy is that the seller keeps nothing for a refunded service, regardless of who
+ *   initiated the refund (Gitpay's own partial-refund action, an external dashboard
+ *   refund, or a Whop auto-refund). See sellerClawbackCentsForRefund for how gross vs.
+ *   already-net reported amounts are reconciled.
+ * - If the seller was never paid (transfer not yet INITIATED — still settling, or
+ *   already blocked by the payment_refunded guard in executePaymentRequestTransfer.ts),
+ *   there's nothing of theirs to claw back, but the platform can still have a real,
+ *   unrecoverable loss: Whop/Stripe don't return their own processing fee on a refund,
+ *   so if refunded_amount exceeds amount_after_fees (the real net the platform actually
+ *   received at payment time), that excess is a cost this seller's transaction caused
+ *   and is debited from them — even though they were never paid. When amount_after_fees
+ *   isn't known (Stripe, or an older Whop row), that loss can't be quantified, so the
+ *   debit is 0 — but a record is still created so the seller is notified either way.
+ *
  * Idempotent per refund_id (a payment can have multiple distinct refunds, so the
  * refund's own id is the dedupe key — not the payment id).
  * No-op if source_id doesn't resolve to a PaymentRequestPayment (bounty orders, etc).
@@ -35,6 +55,7 @@ export const debitRefundForPaymentRequest = async ({
   }
 
   const paymentRequestUser = paymentRequestPayment.User
+  const paymentRequest = paymentRequestPayment.PaymentRequest
   const paymentRequestBalance = await findOrCreatePaymentRequestBalance(paymentRequestUser.id)
 
   const existingDebit = await models.PaymentRequestBalanceTransaction.findOne({
@@ -51,16 +72,46 @@ export const debitRefundForPaymentRequest = async ({
     return existingDebit
   }
 
-  const feeToDeduct = calculateAmountWithPercent(refunded_amount, 8, 'centavos').centavosFee
+  const currency = paymentRequest?.currency || paymentRequestPayment.currency || 'usd'
+  const wasTransferred =
+    paymentRequestPayment.transferStatus === PaymentRequestTransferStatus.INITIATED
+
+  let clawbackAmount = 0
+  let reasonDetails: string
+
+  if (wasTransferred) {
+    reasonDetails = 'refund_payment_request_requested_by_customer'
+    clawbackAmount = paymentRequest
+      ? sellerClawbackCentsForRefund(refunded_amount, {
+          paymentRequestPayment,
+          paymentRequest,
+          currency
+        })
+      : refunded_amount
+  } else {
+    reasonDetails = 'refund_before_transfer_processor_fee_not_returned'
+    const netAmount = paymentRequestPayment.amount_after_fees
+    if (netAmount != null && Number.isFinite(Number(netAmount))) {
+      const netAmountCents = calculateAmountWithPercent(
+        Number(netAmount),
+        0,
+        'decimal',
+        currency
+      ).centavos
+      clawbackAmount = Math.max(0, refunded_amount - netAmountCents)
+    }
+    // else: amount_after_fees unknown — can't quantify a loss, clawbackAmount stays 0,
+    // but the transaction record below is still created so the seller is notified.
+  }
 
   const paymentRequestBalanceTransactionForRefund =
     await models.PaymentRequestBalanceTransaction.create({
       sourceId: refund_id,
       paymentRequestBalanceId: paymentRequestBalance.id,
-      amount: -feeToDeduct,
+      amount: clawbackAmount > 0 ? -clawbackAmount : 0,
       type: 'DEBIT',
       reason: 'REFUND',
-      reason_details: 'refund_payment_request_requested_by_customer',
+      reason_details: reasonDetails,
       status: 'completed',
       openedAt: closedAt || new Date(),
       closedAt: closedAt || new Date()

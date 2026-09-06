@@ -50,6 +50,10 @@ const getReason = (reason_details: any) => {
       return i18n.__(
         'mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.refund_payment_request'
       )
+    case 'refund_before_transfer_processor_fee_not_returned':
+      return i18n.__(
+        'mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.refund_before_transfer_processor_fee_not_returned'
+      )
     case 'whop_dispute_alert_fee':
       return i18n.__(
         'mail.paymentRequest.newBalanceTransactionForPaymentRequest.reasons.whop_dispute_alert_fee'

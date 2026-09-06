@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import { Transaction } from 'sequelize'
 import Models from '../../models'
-import { calculateAmountWithPercent } from '../../utils'
 import { getPaymentProvider } from '../../providers'
 import { findOrCreatePaymentRequestBalance } from '../../queries/payment-request/payment-request-balance'
 import {
@@ -9,6 +8,7 @@ import {
   retrievePaymentIntent
 } from '../../mutations/provider/stripe/payment-intent'
 import { PaymentRequestTransferStatus } from './paymentRequestTransferStatuses'
+import { computeSellerNetAmount } from './sellerNetAmount'
 
 const models = Models as any
 
@@ -202,36 +202,16 @@ export async function executePaymentRequestTransfer(
   }
 
   const currency = paymentRequest.currency || paymentRequestPayment.currency || 'usd'
-  const paymentProviderName = paymentRequest.provider || getPaymentProvider().name
 
-  /**
-   * Fee base for Gitpay's 8% platform fee:
-   * - Whop: platform net after processor fees (amount_after_fees) when known
-   * - Stripe / fallback: custom → payment amount; fixed → PR amount
-   *
-   * originalAmountDecimal in results is this fee base (shown on transfer-initiated email),
-   * not necessarily the customer gross (that stays on payment.amount for payment-made).
-   */
-  let feeBaseDecimal: number
-  const whopNet = paymentRequestPayment.amount_after_fees
-  if (
-    paymentProviderName === 'whop' &&
-    whopNet != null &&
-    Number.isFinite(Number(whopNet)) &&
-    Number(whopNet) >= 0
-  ) {
-    feeBaseDecimal = Number(whopNet)
-  } else if (paymentRequest.custom_amount) {
-    feeBaseDecimal = Number(paymentRequestPayment.amount)
-  } else {
-    feeBaseDecimal = Number(paymentRequest.amount)
-  }
-
-  const originalAmount = calculateAmountWithPercent(feeBaseDecimal, 0, 'decimal', currency)
-  const amountAfterFee = calculateAmountWithPercent(feeBaseDecimal, 8, 'decimal', currency)
-
-  const transferAmountDecimal = amountAfterFee.decimal
-  const transferAmountCents = amountAfterFee.centavos
+  // originalAmountDecimal in results is the fee base (shown on transfer-initiated email),
+  // not necessarily the customer gross (that stays on payment.amount for payment-made).
+  const sellerNetAmount = computeSellerNetAmount({
+    paymentRequestPayment,
+    paymentRequest,
+    currency
+  })
+  const transferAmountDecimal = sellerNetAmount.netAmountDecimal
+  const transferAmountCents = sellerNetAmount.netAmountCents
 
   const baseResult = (
     overrides: Partial<ExecutePaymentRequestTransferResult>
@@ -240,7 +220,7 @@ export async function executePaymentRequestTransfer(
     deferred: false,
     skipped: false,
     newlyDeferred: false,
-    originalAmountDecimal: originalAmount.decimal,
+    originalAmountDecimal: sellerNetAmount.originalAmountDecimal,
     transferAmountDecimal,
     resultingBalanceCents: 0,
     currency,
@@ -554,7 +534,7 @@ export async function executePaymentRequestTransfer(
       deferred: false,
       skipped: false,
       newlyDeferred: false,
-      originalAmountDecimal: originalAmount.decimal,
+      originalAmountDecimal: sellerNetAmount.originalAmountDecimal,
       transferAmountDecimal,
       resultingBalanceCents: outcome.resultingBalance,
       currency,

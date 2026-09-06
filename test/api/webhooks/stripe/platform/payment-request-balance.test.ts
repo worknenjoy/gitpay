@@ -466,6 +466,7 @@ describe('Payment Request Balance Webhook', () => {
         currency: 'usd',
         source: 'pi_1TestPI', // must match refundCreated fixture's payment_intent
         status: 'paid',
+        transferStatus: 'initiated', // seller already received the transfer
         customerId: paymentRequestCustomer.id,
         paymentRequestId: paymentRequest.id,
         userId: currentUser.id
@@ -500,7 +501,9 @@ describe('Payment Request Balance Webhook', () => {
           }
         })
       expect(paymentRequestBalanceTransaction).to.exist
-      expect(paymentRequestBalanceTransaction.amount).to.equal('-160')
+      // No amount_after_fees known (Stripe), so the seller's full net take is clawed
+      // back: 2000 refunded * 92% = 1840, not just Gitpay's 8% cut of it.
+      expect(paymentRequestBalanceTransaction.amount).to.equal('-1840')
       expect(paymentRequestBalanceTransaction.type).to.equal('DEBIT')
       expect(paymentRequestBalanceTransaction.reason).to.equal('REFUND')
       expect(paymentRequestBalanceTransaction.reason_details).to.equal(
@@ -510,7 +513,7 @@ describe('Payment Request Balance Webhook', () => {
       expect(paymentRequestBalanceTransaction.closedAt).to.be.instanceOf(Date)
 
       expect(paymentRequestBalance).to.exist
-      expect(paymentRequestBalance.balance).to.equal('-160')
+      expect(paymentRequestBalance.balance).to.equal('-1840')
     })
 
     it('should not double-debit when a charge.refunded event is redelivered (idempotent)', async () => {
@@ -536,6 +539,7 @@ describe('Payment Request Balance Webhook', () => {
         currency: 'usd',
         source: 'pi_1TestPI',
         status: 'paid',
+        transferStatus: 'initiated', // seller already received the transfer
         customerId: paymentRequestCustomer.id,
         paymentRequestId: paymentRequest.id,
         userId: currentUser.id
@@ -563,7 +567,7 @@ describe('Payment Request Balance Webhook', () => {
       const updatedBalance = await models.PaymentRequestBalance.findOne({
         where: { userId: currentUser.id }
       })
-      expect(updatedBalance.balance).to.equal('-160')
+      expect(updatedBalance.balance).to.equal('-1840')
     })
 
     it('should debit based on the actually-refunded amount for a manual partial refund, not the original charge', async () => {
@@ -589,6 +593,7 @@ describe('Payment Request Balance Webhook', () => {
         currency: 'usd',
         source: 'pi_1TestPartialPI', // must match the partial-refund fixture's payment_intent
         status: 'paid',
+        transferStatus: 'initiated', // seller already received the transfer
         customerId: paymentRequestCustomer.id,
         paymentRequestId: paymentRequest.id,
         userId: currentUser.id
@@ -609,13 +614,14 @@ describe('Payment Request Balance Webhook', () => {
       })
 
       expect(transaction).to.exist
-      // amount_refunded (2000) * 8% = 160 — NOT the original charge amount (10000) * 8% = 800
-      expect(transaction.amount).to.equal('-160')
+      // amount_refunded (2000) * 92% = 1840 (the seller's full net take on that portion)
+      // — NOT the original charge amount's equivalent.
+      expect(transaction.amount).to.equal('-1840')
 
       const updatedBalance = await models.PaymentRequestBalance.findOne({
         where: { userId: currentUser.id }
       })
-      expect(updatedBalance.balance).to.equal('-160')
+      expect(updatedBalance.balance).to.equal('-1840')
     })
 
     it('should create separate DEBIT rows for two distinct refunds on the same payment', async () => {
@@ -641,6 +647,7 @@ describe('Payment Request Balance Webhook', () => {
         currency: 'usd',
         source: 'pi_1TestPartialPI',
         status: 'paid',
+        transferStatus: 'initiated', // seller already received the transfer
         customerId: paymentRequestCustomer.id,
         paymentRequestId: paymentRequest.id,
         userId: currentUser.id
@@ -689,15 +696,16 @@ describe('Payment Request Balance Webhook', () => {
       })
       expect(transactions).to.have.lengthOf(2)
       expect(transactions[0].sourceId).to.equal('re_1TestPartialRefund')
-      expect(transactions[0].amount).to.equal('-160')
+      expect(transactions[0].amount).to.equal('-1840')
       expect(transactions[1].sourceId).to.equal('re_1TestSecondPartialRefund')
-      expect(transactions[1].amount).to.equal('-240')
+      expect(transactions[1].amount).to.equal('-2760')
 
       const updatedBalance = await models.PaymentRequestBalance.findOne({
         where: { userId: currentUser.id }
       })
-      // -160 (first, 2000 refunded) + -240 (second, 3000 refunded) — each based on its own amount
-      expect(updatedBalance.balance).to.equal('-400')
+      // -1840 (first, 2000 refunded * 92%) + -2760 (second, 3000 refunded * 92%) — each
+      // based on its own event's amount, clawing back the seller's full net take.
+      expect(updatedBalance.balance).to.equal('-4600')
     })
   })
 })

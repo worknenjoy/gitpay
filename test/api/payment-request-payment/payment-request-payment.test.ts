@@ -59,15 +59,19 @@ describe('Payment Request Payment', () => {
     })
   })
   describe('POST /payment-request-payments/:id/refund', () => {
-    it('should refund a Payment Request Payment and reverse transfer', async () => {
-      nock('https://api.stripe.com').post('/v1/refunds').reply(200, {
-        id: 're_1JHh2Y2eZvKYlo2C0V7h1b2x',
-        object: 'refund',
-        amount: 1000,
-        currency: 'usd',
-        payment_intent: 'pi_1JHh1Z2eZvKYlo2C4b5h6j7k',
-        status: 'succeeded'
-      })
+    it('should refund a Payment Request Payment and reverse transfer, excluding Gitpay\'s fee from the refunded amount', async () => {
+      // PR amount is $1000; the customer should only get back the seller's net take
+      // (92%, no amount_after_fees known for Stripe) = 92000 cents, not the full 100000.
+      nock('https://api.stripe.com')
+        .post('/v1/refunds', (body) => body.amount === '92000' || body.amount === 92000)
+        .reply(200, {
+          id: 're_1JHh2Y2eZvKYlo2C0V7h1b2x',
+          object: 'refund',
+          amount: 92000,
+          currency: 'usd',
+          payment_intent: 'pi_1JHh1Z2eZvKYlo2C4b5h6j7k',
+          status: 'succeeded'
+        })
 
       nock('https://api.stripe.com').post('/v1/transfers/tr_123/reversals').reply(200, {
         id: 'trr_test_4yVfO6Wo9W8e5Y',
@@ -157,8 +161,10 @@ describe('Payment Request Payment', () => {
       )
       await withPaymentProvider('whop', async () => {
         pinWhopApiForTests()
+        // PR amount is $100 with no amount_after_fees known; the customer should only
+        // get back the seller's net take (92%) = $92, not the full $100.
         nock(WHOP_API_HOST)
-          .post('/api/v1/payments/pay_whop_refund_1/refund')
+          .post('/api/v1/payments/pay_whop_refund_1/refund', { amount: 92 })
           .reply(200, { id: 'rfnd_whop_1', status: 'succeeded' })
 
         const user = await registerAndLogin(agent)

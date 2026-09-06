@@ -1,5 +1,6 @@
 import models from '../../models'
 import { getPaymentProvider } from '../../providers'
+import { computeSellerNetAmount } from '../../services/paymentRequest/sellerNetAmount'
 
 const currentModels = models as any
 
@@ -39,8 +40,18 @@ export async function paymentRequestRefund({ id, userId }: PaymentRequestRefundP
   const paymentRequest = paymentRequestPayment.PaymentRequest
   const paymentProvider = getPaymentProvider(paymentRequest?.provider || undefined)
 
+  // Policy: the customer is never refunded the full gross amount — Whop's/Stripe's own
+  // processing fees and Gitpay's 8% commission are excluded, since the seller already
+  // used the service and that cost isn't returned. This is exactly what the seller
+  // receives (or would receive) for this payment, so the two can never drift apart.
+  const currency = paymentRequest?.currency || paymentRequestPayment.currency || 'usd'
+  const amountCents = paymentRequest
+    ? computeSellerNetAmount({ paymentRequestPayment, paymentRequest, currency }).netAmountCents
+    : undefined
+
   const refund = await paymentProvider.refund({
-    paymentReference: sourceId
+    paymentReference: sourceId,
+    ...(amountCents != null ? { amountCents } : {})
   })
 
   if (!isRefundSuccessful(refund.status)) {

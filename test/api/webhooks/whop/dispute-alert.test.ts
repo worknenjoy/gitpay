@@ -38,10 +38,14 @@ describe('Whop dispute_alert.created webhooks (payment-request balance)', () => 
     sinon.restore()
   })
 
-  async function seedPaymentRequestPayment(currentUserId: number, source: string) {
+  async function seedPaymentRequestPayment(
+    currentUserId: number,
+    source: string,
+    options: { transferStatus?: string } = {}
+  ) {
     const paymentRequest = await PaymentRequestFactory({
       title: 'Whop PR for dispute alert',
-      amount: 4995,
+      amount: 49.95,
       currency: 'usd',
       provider: 'whop',
       userId: currentUserId
@@ -55,10 +59,11 @@ describe('Whop dispute_alert.created webhooks (payment-request balance)', () => 
     })
 
     return PaymentRequestPaymentFactory({
-      amount: 4995,
+      amount: 49.95,
       currency: 'usd',
       source,
       status: 'paid',
+      transferStatus: options.transferStatus,
       customerId: paymentRequestCustomer.id,
       paymentRequestId: paymentRequest.id,
       userId: currentUserId
@@ -158,7 +163,11 @@ describe('Whop dispute_alert.created webhooks (payment-request balance)', () => 
       const user = await registerAndLogin(agent)
       const { body: currentUser } = user || {}
 
-      await seedPaymentRequestPayment(currentUser.id, 'pay_whop_alert_1')
+      // transferStatus initiated: the seller already received this payment, so the
+      // later refund's debit has something to claw back.
+      await seedPaymentRequestPayment(currentUser.id, 'pay_whop_alert_1', {
+        transferStatus: 'initiated'
+      })
       const paymentRequestBalance = await PaymentRequestBalanceFactory({
         userId: currentUser.id,
         balance: 0
@@ -197,13 +206,14 @@ describe('Whop dispute_alert.created webhooks (payment-request balance)', () => 
       expect(transactions[0].reason).to.equal('EXTRA_FEE')
       expect(transactions[0].amount).to.equal(String(-WHOP_DISPUTE_ALERT_FEE_CENTS))
       expect(transactions[1].reason).to.equal('REFUND')
-      // 4995 * 8% = 400
-      expect(transactions[1].amount).to.equal('-400')
+      // No amount_after_fees known, so the seller's full net take is clawed back:
+      // 49.95 * 92% = 4596 cents (ceiled), not just 8% of the refund.
+      expect(transactions[1].amount).to.equal('-4596')
 
       const balance = await models.PaymentRequestBalance.findOne({
         where: { userId: currentUser.id }
       })
-      expect(balance.balance).to.equal(String(-WHOP_DISPUTE_ALERT_FEE_CENTS - 400))
+      expect(balance.balance).to.equal(String(-WHOP_DISPUTE_ALERT_FEE_CENTS - 4596))
     })
   })
 })
