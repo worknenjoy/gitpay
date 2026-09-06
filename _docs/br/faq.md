@@ -5,6 +5,8 @@ title: FAQ
 subtitle: Tire as principais dúvidas relacionadas à plataforma
 tags:
 author:
+redirect_from:
+  - /docs/br/drafts/
 ---
 
 #### Índice

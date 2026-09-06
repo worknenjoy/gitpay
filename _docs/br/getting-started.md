@@ -3,6 +3,8 @@ layout: doc
 title: Por onde começar?
 subtitle: Entenda como contribuir com tarefas pelo Gitpay e ser recompensado
 tags:
+redirect_from:
+  - /docs/br/collections/
 ---
 
 #### O que você vai ver aqui
