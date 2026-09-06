@@ -73,10 +73,14 @@ describe('Whop refund webhooks (payment-request balance)', () => {
       const mailStub = sinon
         .stub(PaymentRequestMail as any, 'newBalanceTransactionForPaymentRequest')
         .resolves(true)
+      const customerRefundMailStub = sinon
+        .stub(PaymentRequestMail as any, 'refundConfirmationForCustomer')
+        .resolves(true)
 
       await agent.post('/webhooks/whop').send(refundCreated).expect(200)
 
       expect(mailStub.calledOnce).to.equal(true)
+      expect(customerRefundMailStub.calledOnce).to.equal(true)
 
       const updatedPayment = await models.PaymentRequestPayment.findByPk(paymentRequestPayment.id)
       expect(updatedPayment.status).to.equal('refunded')
@@ -160,7 +164,7 @@ describe('Whop refund webhooks (payment-request balance)', () => {
     })
   })
 
-  it('should debit $0 (but still record + notify) when refunded before transfer and the processor fee is unknown', async () => {
+  it('should create no transaction, but still notify seller and customer, when refunded before transfer and the processor fee is unknown', async () => {
     await withPaymentProvider('whop', async () => {
       const user = await registerAndLogin(agent)
       const { body: currentUser } = user || {}
@@ -191,8 +195,14 @@ describe('Whop refund webhooks (payment-request balance)', () => {
         userId: currentUser.id
       })
 
-      const mailStub = sinon
+      const balanceTxMailStub = sinon
         .stub(PaymentRequestMail as any, 'newBalanceTransactionForPaymentRequest')
+        .resolves(true)
+      const sellerRefundNoticeStub = sinon
+        .stub(PaymentRequestMail as any, 'newRefundForPaymentRequest')
+        .resolves(true)
+      const customerRefundMailStub = sinon
+        .stub(PaymentRequestMail as any, 'refundConfirmationForCustomer')
         .resolves(true)
 
       await PaymentRequestBalanceFactory({
@@ -204,14 +214,12 @@ describe('Whop refund webhooks (payment-request balance)', () => {
 
       // Nothing to claw back — the seller never received this money, and we can't
       // quantify the platform's own processing-fee loss without amount_after_fees.
-      // Still, a $0 record is created and the seller is notified.
+      // No balance transaction is created at all; instead, simple notices go out.
       const transactions = await models.PaymentRequestBalanceTransaction.findAll()
-      expect(transactions).to.have.lengthOf(1)
-      expect(transactions[0].amount).to.equal('0')
-      expect(transactions[0].reason_details).to.equal(
-        'refund_before_transfer_processor_fee_not_returned'
-      )
-      expect(mailStub.calledOnce).to.equal(true)
+      expect(transactions).to.have.lengthOf(0)
+      expect(balanceTxMailStub.called).to.equal(false)
+      expect(sellerRefundNoticeStub.calledOnce).to.equal(true)
+      expect(customerRefundMailStub.calledOnce).to.equal(true)
 
       const balance = await models.PaymentRequestBalance.findOne({
         where: { userId: currentUser.id }

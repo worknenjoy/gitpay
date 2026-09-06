@@ -413,15 +413,25 @@ export class WhopPaymentProvider implements PaymentProvider {
   async refund(params: RefundParams): Promise<RefundResult> {
     const body: Record<string, unknown> = {}
     if (typeof params.amountCents === 'number') {
-      // Whop refund amount is in major currency units
-      body.amount = params.amountCents / 100
+      // Whop's refund-payment endpoint takes `partial_amount` (not `amount`), in major
+      // currency units. Omitting it refunds the full payment amount.
+      body.partial_amount = params.amountCents / 100
     }
-    const refund = await this.client.post<any>(`/payments/${params.paymentReference}/refund`, body)
-    // SDK uses POST /payments/{id}/refund - check path
+    const response = await this.client.post<any>(
+      `/payments/${params.paymentReference}/refund`,
+      body
+    )
+    // The response is the updated Payment object, not a standalone Refund — the
+    // payment's own top-level `status` stays e.g. "paid" even after a successful
+    // partial refund. The refund's actual status lives in `refunds[]`; the one we
+    // just created is the most recently appended entry.
+    const refunds = Array.isArray(response?.refunds) ? response.refunds : []
+    const latestRefund = refunds.length > 0 ? refunds[refunds.length - 1] : null
+
     return {
-      refundId: refund.id || refund.refund_id || params.paymentReference,
-      status: refund.status,
-      raw: refund
+      refundId: latestRefund?.id || response.id || response.refund_id || params.paymentReference,
+      status: latestRefund?.status || response.status,
+      raw: response
     }
   }
 

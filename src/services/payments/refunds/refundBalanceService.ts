@@ -19,7 +19,7 @@ export type RefundDebitParams = {
 }
 
 /**
- * Debit PR balance for a refund (cents).
+ * Debit PR balance for a refund (cents), when there's actually something to claw back.
  *
  * Transfer-status-aware:
  * - If the seller already received the money (transfer INITIATED), the full seller-net
@@ -34,9 +34,12 @@ export type RefundDebitParams = {
  *   unrecoverable loss: Whop/Stripe don't return their own processing fee on a refund,
  *   so if refunded_amount exceeds amount_after_fees (the real net the platform actually
  *   received at payment time), that excess is a cost this seller's transaction caused
- *   and is debited from them — even though they were never paid. When amount_after_fees
- *   isn't known (Stripe, or an older Whop row), that loss can't be quantified, so the
- *   debit is 0 — but a record is still created so the seller is notified either way.
+ *   and is debited from them — even though they were never paid.
+ *
+ * When there's no balance impact at all (nothing to claw back, or amount_after_fees is
+ * unknown so the loss can't be quantified), no PaymentRequestBalanceTransaction is
+ * created — instead a simple "this payment was refunded" notice goes to the seller.
+ * The customer always gets a refund confirmation, regardless of any balance impact.
  *
  * Idempotent per refund_id (a payment can have multiple distinct refunds, so the
  * refund's own id is the dedupe key — not the payment id).
@@ -100,15 +103,43 @@ export const debitRefundForPaymentRequest = async ({
       ).centavos
       clawbackAmount = Math.max(0, refunded_amount - netAmountCents)
     }
-    // else: amount_after_fees unknown — can't quantify a loss, clawbackAmount stays 0,
-    // but the transaction record below is still created so the seller is notified.
+    // else: amount_after_fees unknown — can't quantify a loss, clawbackAmount stays 0.
+  }
+
+  const refundedAmountDecimal = calculateAmountWithPercent(
+    refunded_amount,
+    0,
+    'centavos',
+    currency
+  ).decimal
+
+  if (clawbackAmount <= 0) {
+    PaymentRequestMail.newRefundForPaymentRequest(
+      paymentRequestUser,
+      paymentRequestPayment,
+      refundedAmountDecimal,
+      currency
+    ).catch((mailError: any) => {
+      console.error(`Failed to send refund notice for Refund ID: ${refund_id}`, mailError)
+    })
+    PaymentRequestMail.refundConfirmationForCustomer(
+      paymentRequestPayment,
+      refundedAmountDecimal,
+      currency
+    ).catch((mailError: any) => {
+      console.error(
+        `Failed to send customer refund confirmation for Refund ID: ${refund_id}`,
+        mailError
+      )
+    })
+    return {}
   }
 
   const paymentRequestBalanceTransactionForRefund =
     await models.PaymentRequestBalanceTransaction.create({
       sourceId: refund_id,
       paymentRequestBalanceId: paymentRequestBalance.id,
-      amount: clawbackAmount > 0 ? -clawbackAmount : 0,
+      amount: -clawbackAmount,
       type: 'DEBIT',
       reason: 'REFUND',
       reason_details: reasonDetails,
@@ -128,6 +159,17 @@ export const debitRefundForPaymentRequest = async ({
     balanceTransactionUpdated
   ).catch((mailError: any) => {
     console.error(`Failed to send email for Refund ID: ${refund_id}`, mailError)
+  })
+
+  PaymentRequestMail.refundConfirmationForCustomer(
+    paymentRequestPayment,
+    refundedAmountDecimal,
+    currency
+  ).catch((mailError: any) => {
+    console.error(
+      `Failed to send customer refund confirmation for Refund ID: ${refund_id}`,
+      mailError
+    )
   })
 
   return paymentRequestBalanceTransactionForRefund

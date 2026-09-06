@@ -163,9 +163,19 @@ describe('Payment Request Payment', () => {
         pinWhopApiForTests()
         // PR amount is $100 with no amount_after_fees known; the customer should only
         // get back the seller's net take (92%) = $92, not the full $100.
+        //
+        // Real Whop response shape (confirmed against the live sandbox API): the
+        // refund-payment endpoint returns the updated *Payment* object, not a
+        // standalone Refund — its own top-level status stays "paid" even after a
+        // successful partial refund. The refund's real status lives nested in
+        // refunds[], as the most recently appended entry.
         nock(WHOP_API_HOST)
-          .post('/api/v1/payments/pay_whop_refund_1/refund', { amount: 92 })
-          .reply(200, { id: 'rfnd_whop_1', status: 'succeeded' })
+          .post('/api/v1/payments/pay_whop_refund_1/refund', { partial_amount: 92 })
+          .reply(200, {
+            id: 'pay_whop_refund_1',
+            status: 'paid',
+            refunds: [{ id: 'rfnd_whop_1', status: 'succeeded', amount: 92, currency: 'usd' }]
+          })
 
         const user = await registerAndLogin(agent)
         const { headers, body: currentUser } = user || {}

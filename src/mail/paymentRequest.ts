@@ -555,6 +555,112 @@ const PaymentRequestMail = {
       console.error('Error sending email:', error)
     }
   },
+  /**
+   * Seller notice for a refund that had no balance impact — the seller was never paid
+   * for this payment (or the amount refunded didn't exceed what the platform actually
+   * received), so there's nothing to debit. Simpler than newBalanceTransactionForPaymentRequest,
+   * since there's no balance/debt to report.
+   */
+  newRefundForPaymentRequest: async (
+    user: any,
+    paymentRequestPayment: any,
+    refundedAmountDecimal: number,
+    currency: string
+  ) => {
+    const to = user.email
+    const language = user.language || 'en'
+    const receiveNotifications = user?.receiveNotifications
+    if (!receiveNotifications) {
+      return
+    }
+    i18n.setLocale(language)
+
+    const customer = paymentRequestPayment?.PaymentRequestCustomer
+    const currencyKey = resolveCurrencyKey(currency)
+    const currencySymbol = currencyInfo[currencyKey]?.symbol || ''
+
+    try {
+      return await request(to, i18n.__('mail.paymentRequest.newRefundForPaymentRequest.subject'), [
+        {
+          type: 'text/html',
+          value: tableContentEmailTemplate(
+            i18n.__('mail.paymentRequest.newRefundForPaymentRequest.message'),
+            i18n.__('mail.paymentRequest.newRefundForPaymentRequest.details', {
+              title: paymentRequestPayment?.PaymentRequest?.title || 'N/A',
+              customer_name: customer?.name || 'N/A',
+              customer_email: customer?.email || 'N/A'
+            }),
+            {
+              headers: ['Item', '<div style="text-align:right">Amount</div>'],
+              rows: [
+                [
+                  'Refund',
+                  `<div style="text-align:right">${currencySymbol}${refundedAmountDecimal} ${currency}</div>`
+                ]
+              ]
+            },
+            i18n.__('mail.paymentRequest.newRefundForPaymentRequest.bottom')
+          )
+        }
+      ])
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
+  /** Customer-facing refund confirmation, sent regardless of any seller-side balance impact. */
+  refundConfirmationForCustomer: async (
+    paymentRequestPayment: any,
+    refundedAmountDecimal: number,
+    currency: string
+  ) => {
+    const customer = paymentRequestPayment?.PaymentRequestCustomer
+    const to = customer?.email
+    if (!to) {
+      return
+    }
+    // We don't have a customer language here; default to English for now.
+    i18n.setLocale('en')
+
+    const paymentRequest = paymentRequestPayment?.PaymentRequest
+    const currencyKey = resolveCurrencyKey(currency)
+    const currencySymbol = currencyInfo[currencyKey]?.symbol || ''
+
+    try {
+      return await request(
+        to,
+        i18n.__('mail.paymentRequest.refundConfirmationForCustomer.subject', {
+          title: paymentRequest?.title || 'a service'
+        }),
+        [
+          {
+            type: 'text/html',
+            value: tableContentEmailTemplate(
+              i18n.__('mail.paymentRequest.refundConfirmationForCustomer.message', {
+                amount: String(refundedAmountDecimal),
+                currency
+              }),
+              i18n.__('mail.paymentRequest.refundConfirmationForCustomer.details', {
+                title: paymentRequest?.title || 'N/A',
+                description: paymentRequest?.description || ''
+              }),
+              {
+                headers: ['Item', '<div style="text-align:right">Amount</div>'],
+                rows: [
+                  [
+                    'Refund',
+                    `<div style="text-align:right">${currencySymbol}${refundedAmountDecimal} ${currency}</div>`
+                  ]
+                ]
+              },
+              i18n.__('mail.paymentRequest.refundConfirmationForCustomer.bottom')
+            )
+          }
+        ]
+      )
+    } catch (error) {
+      console.error('Error sending email:', error)
+    }
+  },
   newDisputeCreatedForPaymentRequest: async (
     user: any,
     dispute: any,

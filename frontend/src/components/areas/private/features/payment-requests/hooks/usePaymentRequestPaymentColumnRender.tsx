@@ -7,25 +7,33 @@ import AmountField from 'design-library/molecules/tables/section-table/section-t
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
 import PaymentStatus from 'design-library/atoms/status/payment-types-status/payment-status/payment-status'
 import ActionField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/action-field/action-field'
+import {
+  type PaymentRequestPayment,
+  PaymentRequestPaymentStatus
+} from 'types/payment-request-payment'
 
 export const usePaymentRequestPaymentsCustomColumnRenderer = ({
   onDetails,
   onRefund
 }: {
-  onDetails?: (item: any) => void
+  onDetails?: (item: PaymentRequestPayment) => void
   onRefund?: (id: number) => void | Promise<void>
 }) => ({
-  status: (item: any) => <PaymentStatus status={item.status} />,
-  paymentRequestTitle: (item: any) => <TextField title={item.PaymentRequest?.title} />,
+  status: (item: PaymentRequestPayment) => <PaymentStatus status={item.status as any} />,
+  paymentRequestTitle: (item: PaymentRequestPayment) => (
+    <TextField title={item.PaymentRequest?.title} />
+  ),
   /*
   transferStatus: (item:any) => (
     <TextField title={item.transferStatus} />
   ),
   */
-  customer: (item: any) => <TextField title={item.PaymentRequestCustomer?.email} />,
-  amount: (item: any) => <AmountField value={item.amount} />,
-  createdAt: (item: any) => <CreatedField createdAt={item.createdAt} />,
-  actions: (item: any) => (
+  customer: (item: PaymentRequestPayment) => (
+    <TextField title={item.PaymentRequestCustomer?.email} />
+  ),
+  amount: (item: PaymentRequestPayment) => <AmountField value={item.amount} />,
+  createdAt: (item: PaymentRequestPayment) => <CreatedField createdAt={item.createdAt} />,
+  actions: (item: PaymentRequestPayment) => (
     <ActionField
       actions={[
         {
@@ -40,7 +48,9 @@ export const usePaymentRequestPaymentsCustomColumnRenderer = ({
         {
           children: <FormattedMessage id="general.buttons.refund" defaultMessage="Refund" />,
           icon: <ReceiptIcon />,
-          disabled: item.status !== 'succeeded',
+          disabled:
+            item.status !== PaymentRequestPaymentStatus.SUCCEEDED &&
+            item.status !== PaymentRequestPaymentStatus.PAID,
           confirm: {
             dialogMessage: (
               <FormattedMessage

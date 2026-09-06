@@ -490,18 +490,18 @@ describe('Whop payment-request transfer skipped after refund during pending_fund
       )
       expect(claimAfterCron.status).to.equal('refunded')
 
-      // $0 debit: the seller was never paid (transferStatus was pending_funds, not
-      // initiated, at refund time), and amount_after_fees (50) exactly matches the
-      // refunded amount (50) — no processor-fee gap here, so there's nothing to claw
-      // back. A record still exists for visibility/notification.
+      // No balance transaction at all: the seller was never paid (transferStatus was
+      // pending_funds, not initiated, at refund time), and amount_after_fees (50)
+      // exactly matches the refunded amount (50) — no processor-fee gap here, so
+      // there's nothing to claw back. A simple notice goes out instead (covered by
+      // dedicated tests in refund.test.ts).
       const balance = await models.PaymentRequestBalance.findOne({
         where: { userId: user.body.id }
       })
       const transactions = await models.PaymentRequestBalanceTransaction.findAll({
         where: { paymentRequestBalanceId: balance.id }
       })
-      expect(transactions).to.have.lengthOf(1)
-      expect(transactions[0].amount).to.equal('0')
+      expect(transactions).to.have.lengthOf(0)
       expect(balance.balance).to.equal('0')
     })
   })
