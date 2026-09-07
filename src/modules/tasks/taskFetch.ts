@@ -6,10 +6,9 @@ import { roleExists } from '../roles'
 import { userExists } from '../users'
 // @ts-ignore - ip has no type definitions
 import { memberExists } from '../members'
-import { publicUserInclude, stripUserSecrets } from '../../utils/auth/strip-user-secrets'
+import { stripUserSecrets } from '../../utils/auth/strip-user-secrets'
 
 const currentModels = models as any
-const userInclude = publicUserInclude(currentModels.User)
 
 export async function taskFetch(taskParams: any) {
   const data = await currentModels.Task.findOne({
@@ -17,26 +16,29 @@ export async function taskFetch(taskParams: any) {
       id: taskParams.id
     },
     include: [
-      userInclude,
+      {
+        model: currentModels.User,
+        attributes: { exclude: ['password'] }
+      },
       {
         model: currentModels.Project,
         include: [currentModels.Organization]
       },
       {
         model: currentModels.Order,
-        include: [userInclude]
+        include: [currentModels.User]
       },
       {
         model: currentModels.Assign,
-        include: [userInclude]
+        include: [currentModels.User]
       },
       {
         model: currentModels.Member,
-        include: [userInclude, currentModels.Role]
+        include: [currentModels.User, currentModels.Role]
       },
       {
         model: currentModels.Offer,
-        include: [userInclude, currentModels.Task],
+        include: [currentModels.User, currentModels.Task],
         order: [['createdAt', 'ASC']]
       },
       {
@@ -81,7 +83,7 @@ export async function taskFetch(taskParams: any) {
           where: {
             id: data.assigned
           },
-          include: [userInclude]
+          include: [currentModels.User]
         }).catch((e: any) => {})
 
         const role = await roleExists({ name: 'company_owner' })
