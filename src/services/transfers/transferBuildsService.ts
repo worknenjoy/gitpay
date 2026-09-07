@@ -31,6 +31,14 @@ type TransferBuildsParams = {
   taskId?: number
   userId?: number
   /**
+   * Caller identity from the public API. When set, the requester must be the
+   * task's assigned claimer and the task must already be closed (the same
+   * gitpay/github-sync signal taskSolutionFetchData trusts for "PR validated").
+   * Internal callers (taskSolutionCreate/taskSolutionUpdate) already verified
+   * the claimer via GitHub and omit this, so the check is skipped for them.
+   */
+  requestedByUserId?: number
+  /**
    * When true, Whop ledger transfers are not called; a mock transfer_id is stored.
    * For sandbox / ops only — never set from the public API.
    */
@@ -59,6 +67,13 @@ export async function transferBuildsService(params: TransferBuildsParams) {
 
   const assign = await findAssignByIdWithUser(taskData.assigned)
   const destination = assign?.dataValues?.User
+
+  if (params.requestedByUserId != null) {
+    const claimerId = assign?.dataValues?.userId
+    if (claimerId !== params.requestedByUserId || taskData.status !== 'closed') {
+      return { error: 'Not authorized' }
+    }
+  }
 
   let finalValue = 0
   let isStripe = false

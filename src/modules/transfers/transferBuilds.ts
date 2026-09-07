@@ -4,6 +4,7 @@ type TransferBuildsParams = {
   transfer_id?: string
   taskId?: number
   userId?: number
+  requestedByUserId?: number
 }
 
 export async function transferBuilds(params: TransferBuildsParams) {

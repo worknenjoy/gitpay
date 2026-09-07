@@ -2,10 +2,10 @@ import { findTransferByIdForFetch } from './findTransferByIdForFetch'
 import { retrieveTransfer } from '../provider/stripe/transfer'
 import { PaypalConnect } from '../../client/provider/paypal'
 
-export async function fetchTransfer(id: number) {
+export async function fetchTransfer(id: number, userId: number) {
   if (!id) return
 
-  const transfer = await findTransferByIdForFetch(id)
+  const transfer = await findTransferByIdForFetch(id, userId)
   if (!transfer) return
 
   if (transfer.paypal_payout_id) {

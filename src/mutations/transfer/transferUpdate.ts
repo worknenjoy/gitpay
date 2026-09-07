@@ -15,10 +15,12 @@ const currentModels = models as any
 
 type TransferUpdateParams = {
   id?: number
+  userId?: number
 }
 
 export async function transferUpdate(params: TransferUpdateParams) {
-  let existingTransfer = params.id ? await findTransferByIdForUpdate(params.id) : null
+  let existingTransfer =
+    params.id && params.userId ? await findTransferByIdForUpdate(params.id, params.userId) : null
 
   if (!existingTransfer) {
     return { error: 'No transfer found' }

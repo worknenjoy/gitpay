@@ -2,6 +2,7 @@ import { transferUpdate as transferUpdateMutation } from '../../mutations/transf
 
 type TransferUpdateParams = {
   id?: number
+  userId?: number
 }
 
 export async function transferUpdate(params: TransferUpdateParams) {
