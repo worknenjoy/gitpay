@@ -85,6 +85,25 @@ describe('stripUserSecrets', () => {
     expect(stripUserSecrets(date)).to.equal(date)
   })
 
+  it('strips hashes and tokens from a register-style user payload', () => {
+    const registerBody = {
+      id: 8815,
+      email: 'user@example.com',
+      name: 'Leo',
+      password: '$2b$08$examplehash',
+      activation_token: 'a'.repeat(64),
+      recover_password_token: null,
+      paypal_id: null,
+      customer_id: null
+    }
+    const sanitized = stripUserSecrets(registerBody)
+    expect(sanitized).to.deep.equal({
+      id: 8815,
+      email: 'user@example.com',
+      name: 'Leo'
+    })
+  })
+
   it('plain-ifies sequelize-like instances before stripping', () => {
     const instance = {
       dataValues: {

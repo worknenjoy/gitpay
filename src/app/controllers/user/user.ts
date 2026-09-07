@@ -8,6 +8,7 @@ import * as task from '../../../modules/tasks'
 import Sendmail from '../../../mail/mail'
 import UserMail from '../../../mail/user'
 import i18n from 'i18n'
+import { stripUserSecrets } from '../../../utils/auth/strip-user-secrets'
 
 const models = Models as any
 
@@ -26,7 +27,7 @@ export const updateUser = (req: any, res: any) => {
   req.body.id = req.user.id
   userUpdate(req.body)
     .then((data) => {
-      res.send(data)
+      res.send(stripUserSecrets(data))
     })
     .catch((error) => {
       const message =
@@ -49,7 +50,7 @@ export const register = async (req: any, res: any) => {
     }
     try {
       const data = await user.userBuilds(req.body)
-      res.send(data)
+      res.send(stripUserSecrets(data))
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log(error)
@@ -219,7 +220,7 @@ export const activateUser = async (req: any, res: any) => {
     if (foundUser.dataValues.email_verified) {
       // eslint-disable-next-line no-console
       console.log(`[activation] activate no-op: user ${userId} already verified`)
-      res.send(foundUser)
+      res.send(stripUserSecrets(foundUser))
       return
     }
 
@@ -251,7 +252,7 @@ export const activateUser = async (req: any, res: any) => {
     )
     // eslint-disable-next-line no-console
     console.log(`[activation] activate success for user ${userId}`)
-    res.send(userUpdate[1])
+    res.send(stripUserSecrets(userUpdate[1]))
   } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log('[activation] activate error', error)
