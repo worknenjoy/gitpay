@@ -145,6 +145,13 @@ const PaymentRequestMail = {
       grossAmount != null &&
       netAfterWhopFee != null &&
       grossAmount > netAfterWhopFee
+    // A direct charge settles on the seller's connected Whop company, and Gitpay's 8%
+    // commission is collected in that same charge via application_fee_amount (see
+    // WhopPaymentProvider.ts). So for a direct charge, provider_fee_amount below IS the
+    // platform fee, not a separate "Whop fee" — computeSellerNetAmount already folds the
+    // commission into amount_after_fees, so subtracting it again would double-charge it,
+    // which is why a generic "Platform Fee (8%)" row always nets to $0 for these payments.
+    const isDirectCharge = Boolean(paymentRequestPayment?.destination_account_id)
     // Prefer Whop's own reported fee; fall back to subtraction for rows recorded
     // before provider_fee_amount was captured.
     const rawWhopFeeAmount = hasWhopFee
@@ -159,15 +166,16 @@ const PaymentRequestMail = {
       ? calculateAmountWithPercent(grossAmount, 0, 'decimal', paymentRequest.currency).decimal
       : null
 
-    const whopFeeRows: any[] = hasWhopFee
-      ? [
-          [
-            'Amount Charged',
-            `<div style="text-align:right">${currencySymbol} ${grossAmountDisplay}</div>`
-          ],
-          ['Whop Fee', `<div style="text-align:right">- ${currencySymbol} ${whopFeeAmount}</div>`]
-        ]
-      : []
+    const whopFeeRows: any[] =
+      hasWhopFee && !isDirectCharge
+        ? [
+            [
+              'Amount Charged',
+              `<div style="text-align:right">${currencySymbol} ${grossAmountDisplay}</div>`
+            ],
+            ['Whop Fee', `<div style="text-align:right">- ${currencySymbol} ${whopFeeAmount}</div>`]
+          ]
+        : []
 
     // Derive the displayed fee by subtraction from the final total (rather than
     // recomputing 8%) so the rows always reconcile exactly with the Claims-page value,
@@ -181,7 +189,47 @@ const PaymentRequestMail = {
     ).decimal
 
     let rows: any[] = []
-    if (extraFee) {
+    if (isDirectCharge && hasWhopFee) {
+      const platformFeeKnown = paymentRequestPayment?.provider_fee_amount != null
+      // Whop's own processing cut isn't reported directly for a direct charge — it's
+      // whatever's left after the platform fee is removed from the gross-vs-net gap.
+      const whopProcessingFeeDisplay = platformFeeKnown
+        ? calculateAmountWithPercent(
+            grossAmount! - netAfterWhopFee! - Number(paymentRequestPayment.provider_fee_amount),
+            0,
+            'decimal',
+            paymentRequest.currency
+          ).decimal
+        : null
+
+      rows = [
+        [
+          'Amount Charged',
+          `<div style="text-align:right">${currencySymbol} ${grossAmountDisplay}</div>`
+        ],
+        // Whop's own cut listed before the platform fee, matching the row order used
+        // for a non-direct-charge Whop payment (Whop Fee, then Platform Fee (8%)) — purely
+        // a display convention, since both deductions come out of the same charge.
+        ...(whopProcessingFeeDisplay != null && whopProcessingFeeDisplay > 0
+          ? [
+              [
+                'Whop Processing Fee',
+                `<div style="text-align:right">- ${currencySymbol} ${whopProcessingFeeDisplay}</div>`
+              ]
+            ]
+          : []),
+        platformFeeKnown
+          ? [
+              'Platform Fee (8%)',
+              `<div style="text-align:right">- ${currencySymbol} ${whopFeeAmount}</div>`
+            ]
+          : ['Fees', `<div style="text-align:right">- ${currencySymbol} ${whopFeeAmount}</div>`],
+        [
+          'Total',
+          `<div style="text-align:right"><strong>${currencySymbol} ${transfer_amount}</strong></div>`
+        ]
+      ]
+    } else if (extraFee) {
       rows = [
         ...whopFeeRows,
         [

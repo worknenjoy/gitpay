@@ -58,12 +58,13 @@ export async function processPendingPaymentRequestTransfers(
       {
         model: models.PaymentRequest,
         required: true,
+        // No transfer_status filter here: that field is shared across every payment on
+        // the request, so on a repeatable (multi-payment) request it can already be
+        // `initiated` from an earlier payment while THIS payment (filtered above by its
+        // own transferStatus) still needs processing.
         where: {
           provider: 'whop',
-          status: 'paid',
-          transfer_status: {
-            [Op.notIn]: [PaymentRequestTransferStatus.INITIATED]
-          }
+          status: 'paid'
         }
       },
       { model: models.User },

@@ -197,9 +197,96 @@ describe('Whop webhooks for payment requests', () => {
       const transferRow = await models.PaymentRequestTransfer.findOne({
         where: { paymentRequestId: pr.id }
       })
-      expect(transferRow).to.equal(null)
+      expect(transferRow).to.exist
+      expect(transferRow.status).to.equal('created')
+      expect(transferRow.transfer_method).to.equal('whop')
+      expect(transferRow.transfer_id).to.equal('pay_whop_pr_direct_1')
+      expect(payment.transferId).to.equal(transferRow.id)
 
       expect(mailSpy.called).to.equal(true)
+    })
+  })
+
+  it('should create a second claim for a second payment on a repeatable direct-charge payment request', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      const transferSpy = sinon.spy()
+      nock(WHOP_API_HOST)
+        .post('/api/v1/transfers')
+        .reply(200, () => {
+          transferSpy()
+          return transferCreate
+        })
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      // deactivate_after_payment: false (factory default) — this payment request accepts
+      // repeated payments, which previously got stuck after the first one because the
+      // idempotency guard checked the shared PaymentRequest.transfer_status instead of
+      // the per-payment status.
+      await PaymentRequestFactory({
+        title: 'Repeatable direct charge PR',
+        amount: 100,
+        currency: 'usd',
+        payment_link_id: 'plan_repeat_direct_charge_pr',
+        provider: 'whop',
+        direct_charge: true,
+        userId: user.body.id
+      })
+
+      const makePayload = (id: string) => ({
+        id: `msg_${id}`,
+        api_version: 'v1',
+        type: 'payment.succeeded',
+        timestamp: '2026-05-12T18:42:11.041Z',
+        company_id: 'biz_submerchant_1',
+        data: {
+          id,
+          status: 'succeeded',
+          amount_after_fees: 92,
+          total: 100,
+          currency: 'usd',
+          metadata: {
+            purpose: 'payment_request',
+            payment_link_id: 'plan_repeat_direct_charge_pr'
+          },
+          plan: { id: 'plan_repeat_direct_charge_pr' },
+          user: { name: 'Customer', email: 'customer@example.com' }
+        }
+      })
+
+      await agent.post('/webhooks/whop').send(makePayload('pay_repeat_1')).expect(200)
+      await agent.post('/webhooks/whop').send(makePayload('pay_repeat_2')).expect(200)
+
+      expect(transferSpy.called).to.equal(false)
+
+      const pr = await models.PaymentRequest.findOne({
+        where: { payment_link_id: 'plan_repeat_direct_charge_pr' }
+      })
+      expect(pr.transfer_status).to.equal('initiated')
+
+      const payments = await models.PaymentRequestPayment.findAll({
+        where: { paymentRequestId: pr.id },
+        order: [['createdAt', 'ASC']]
+      })
+      expect(payments.length).to.equal(2)
+      expect(payments[0].transferStatus).to.equal('initiated')
+      expect(payments[1].transferStatus).to.equal('initiated')
+      expect(payments[1].transferId).to.not.equal(null)
+
+      const transferRows = await models.PaymentRequestTransfer.findAll({
+        where: { paymentRequestId: pr.id }
+      })
+      expect(transferRows.length).to.equal(2)
+      expect(transferRows.every((row: any) => row.status === 'created')).to.equal(true)
+      expect(transferRows.map((row: any) => row.transfer_id).sort()).to.deep.equal([
+        'pay_repeat_1',
+        'pay_repeat_2'
+      ])
     })
   })
 

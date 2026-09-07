@@ -232,11 +232,12 @@ export async function executePaymentRequestTransfer(
     ...overrides
   })
 
-  // Already transferred — idempotent no-op
-  if (
-    paymentRequestPayment.transferStatus === PaymentRequestTransferStatus.INITIATED ||
-    paymentRequest.transfer_status === PaymentRequestTransferStatus.INITIATED
-  ) {
+  // Already transferred — idempotent no-op.
+  // Scoped to this specific payment: paymentRequest.transfer_status is shared across
+  // every payment on the request, so checking it here would wrongly skip processing
+  // for later payments on a repeatable (multi-payment) request once an earlier one
+  // was initiated.
+  if (paymentRequestPayment.transferStatus === PaymentRequestTransferStatus.INITIATED) {
     return baseResult({ skipped: true, reason: 'already_initiated' })
   }
 
@@ -266,8 +267,61 @@ export async function executePaymentRequestTransfer(
   // transfer step to intercept for a direct-charge payment — it remains on the ledger
   // for separate reconciliation.
   if (paymentRequest.direct_charge && paymentRequestPayment.destination_account_id) {
-    await paymentRequestPayment.update({ transferStatus: PaymentRequestTransferStatus.INITIATED })
-    await paymentRequest.update({ transfer_status: PaymentRequestTransferStatus.INITIATED })
+    await models.sequelize.transaction(async (tx: Transaction) => {
+      // No separate provider transfer object exists for a direct charge — the
+      // underlying charge id (paymentIntentId) is the closest thing to a
+      // reference for "what moved the money", unlike normal-flow claims whose
+      // transfer_id is a real provider transfer id.
+      let paymentRequestTransfer: any = null
+      if (paymentRequestPayment.transferId) {
+        paymentRequestTransfer = await models.PaymentRequestTransfer.findByPk(
+          paymentRequestPayment.transferId,
+          { transaction: tx }
+        )
+      }
+      if (!paymentRequestTransfer) {
+        paymentRequestTransfer = await models.PaymentRequestTransfer.findOne({
+          where: {
+            paymentRequestId: paymentRequest.id,
+            userId: paymentRequest.userId,
+            status: 'pending',
+            transfer_id: null
+          },
+          order: [['createdAt', 'DESC']],
+          transaction: tx
+        })
+      }
+
+      const claimAttributes = {
+        paymentRequestId: paymentRequest.id,
+        userId: paymentRequest.userId,
+        value: transferAmountDecimal,
+        status: 'created',
+        transfer_method: paymentProvider.name,
+        transfer_id: paymentIntentId
+      }
+
+      if (paymentRequestTransfer) {
+        await paymentRequestTransfer.update(claimAttributes, { transaction: tx })
+      } else {
+        paymentRequestTransfer = await models.PaymentRequestTransfer.create(claimAttributes, {
+          transaction: tx
+        })
+      }
+
+      await paymentRequestPayment.update(
+        {
+          transferStatus: PaymentRequestTransferStatus.INITIATED,
+          transferId: paymentRequestTransfer.id
+        },
+        { transaction: tx }
+      )
+      await paymentRequest.update(
+        { transfer_status: PaymentRequestTransferStatus.INITIATED },
+        { transaction: tx }
+      )
+    })
+
     await paymentRequestPayment.reload({
       include: [
         { model: models.PaymentRequest },
