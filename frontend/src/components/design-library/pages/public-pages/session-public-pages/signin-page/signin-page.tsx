@@ -17,6 +17,9 @@ const SigninPage = ({ addNotification }) => {
         addNotification={addNotification}
         onSignup={() => history.push('/signup')}
         onForgot={() => history.push('/forgot')}
+        onSubmit={(event, state) => {
+          // TODO: send state.rememberMe to backend API
+        }}
         noCancelButton
       />
     </SpotCard>
