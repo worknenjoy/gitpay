@@ -14,10 +14,11 @@ export async function taskInvite({ id }: any, { message, email, name }: any) {
   const language = user.language || 'en'
   const receiveNotifications = user.receiveNotifications
   i18n.setLocale(language)
+  const hasBounty = Number(task.value) > 0
   SendMail.success(
     { email, language, receiveNotifications },
     i18n.__('mail.invite.send.action', { name: name }),
-    `${i18n.__('mail.invite.send.message', {
+    `${i18n.__(hasBounty ? 'mail.invite.send.message' : 'mail.invite.send.message.noValue', {
       name: name,
       title: task.title,
       url: taskUrl,
