@@ -17,6 +17,7 @@ import {
 } from '@mui/material'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
+import logoGitlab from 'images/gitlab-logo.png'
 
 type ImportIssueDialogProps = {
   open: boolean
@@ -32,8 +33,17 @@ const ImportIssueDialog = ({ open, onClose, onImport }: ImportIssueDialogProps) 
   const [notListed, setNotListed] = useState(false)
 
   const onChange = (e: any) => {
-    setUrl(e.target.value)
+    const nextUrl = e.target.value
+    setUrl(nextUrl)
     setError(false)
+    try {
+      const host = new URL(nextUrl).hostname.toLowerCase()
+      if (host === 'gitlab.com' || host === 'www.gitlab.com') setProvider('gitlab')
+      else if (host === 'bitbucket.org' || host === 'www.bitbucket.org') setProvider('bitbucket')
+      else if (host === 'github.com' || host === 'www.github.com') setProvider('github')
+    } catch (err) {
+      // keep the currently selected provider until the URL is valid
+    }
   }
 
   const handleCreateTask = async (e: any) => {
@@ -57,7 +67,7 @@ const ImportIssueDialog = ({ open, onClose, onImport }: ImportIssueDialogProps) 
             <Typography variant="subtitle1" gutterBottom>
               <FormattedMessage
                 id="task.actions.insert.subheading"
-                defaultMessage="Paste the url of an incident of Github or Bitbucket"
+                defaultMessage="Paste the URL of a GitHub, Bitbucket, or GitLab issue"
               />
             </Typography>
           </DialogContentText>
@@ -106,6 +116,7 @@ const ImportIssueDialog = ({ open, onClose, onImport }: ImportIssueDialogProps) 
               </Button>
 
               <Button
+                style={{ marginRight: 10 }}
                 color="primary"
                 variant={provider === 'bitbucket' ? 'contained' : 'outlined'}
                 id="bitbucket"
@@ -113,6 +124,16 @@ const ImportIssueDialog = ({ open, onClose, onImport }: ImportIssueDialogProps) 
               >
                 <img width="16" src={logoBitbucket} />
                 <span style={{ marginLeft: 10 }}>Bitbucket</span>
+              </Button>
+
+              <Button
+                color="primary"
+                variant={provider === 'gitlab' ? 'contained' : 'outlined'}
+                id="gitlab"
+                onClick={(e) => setProvider('gitlab')}
+              >
+                <img width="16" src={logoGitlab} alt="" />
+                <span style={{ marginLeft: 10 }}>Gitlab</span>
               </Button>
             </div>
 
