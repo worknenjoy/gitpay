@@ -6,8 +6,10 @@ import { roleExists } from '../roles'
 import { userExists } from '../users'
 // @ts-ignore - ip has no type definitions
 import { memberExists } from '../members'
+import { publicUserInclude, stripUserSecrets } from '../../utils/auth/strip-user-secrets'
 
 const currentModels = models as any
+const userInclude = publicUserInclude(currentModels.User)
 
 export async function taskFetch(taskParams: any) {
   const data = await currentModels.Task.findOne({
@@ -15,29 +17,26 @@ export async function taskFetch(taskParams: any) {
       id: taskParams.id
     },
     include: [
-      {
-        model: currentModels.User,
-        attributes: { exclude: ['password'] }
-      },
+      userInclude,
       {
         model: currentModels.Project,
         include: [currentModels.Organization]
       },
       {
         model: currentModels.Order,
-        include: [currentModels.User]
+        include: [userInclude]
       },
       {
         model: currentModels.Assign,
-        include: [currentModels.User]
+        include: [userInclude]
       },
       {
         model: currentModels.Member,
-        include: [currentModels.User, currentModels.Role]
+        include: [userInclude, currentModels.Role]
       },
       {
         model: currentModels.Offer,
-        include: [currentModels.User, currentModels.Task],
+        include: [userInclude, currentModels.Task],
         order: [['createdAt', 'ASC']]
       },
       {
@@ -64,7 +63,7 @@ export async function taskFetch(taskParams: any) {
   const projectName = splitIssueUrl[2]
   const issueId = splitIssueUrl[4]
 
-  if (data.dataValues.private) return data.dataValues
+  if (data.dataValues.private) return stripUserSecrets(data.dataValues)
 
   switch (data.dataValues.provider) {
     case 'github':
@@ -82,7 +81,7 @@ export async function taskFetch(taskParams: any) {
           where: {
             id: data.assigned
           },
-          include: [currentModels.User]
+          include: [userInclude]
         }).catch((e: any) => {})
 
         const role = await roleExists({ name: 'company_owner' })
@@ -226,13 +225,13 @@ export async function taskFetch(taskParams: any) {
             console.log('error', e)
           }
         }
-        return responseGithub
+        return stripUserSecrets(responseGithub)
       } catch (e) {
         // eslint-disable-next-line no-console
         console.log('Github response error')
         // eslint-disable-next-line no-console
         console.log(e)
-        return data.dataValues
+        return stripUserSecrets(data.dataValues)
       }
 
     case 'bitbucket':
@@ -296,16 +295,16 @@ export async function taskFetch(taskParams: any) {
 
             */
 
-        return responseBitbucket
+        return stripUserSecrets(responseBitbucket)
       } catch (e) {
         // eslint-disable-next-line no-console
         console.log('Bitbucket response error')
         // eslint-disable-next-line no-console
         console.log(e)
-        return data.dataValues
+        return stripUserSecrets(data.dataValues)
       }
 
     default:
-      return data.dataValues
+      return stripUserSecrets(data.dataValues)
   }
 }
