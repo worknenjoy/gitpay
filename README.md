@@ -51,7 +51,7 @@ To contribute to Gitpay, you will need the following:
 
 To run the tests, use the following commands:
 
-`npm run migrate-test` (first time)
+`npm run migrate:test:dev` (first time)
 
 `npm run test` (to run the tests)
 
