@@ -156,6 +156,185 @@ describe('task actions', () => {
     })
   })
 
+  describe('claim request', () => {
+    it('should dispatch success when a 200 response carries the mail-provider response array', () => {
+      moxios.install()
+      moxios.stubRequest('http://localhost:3000/authenticated', {
+        status: 200,
+        response: {
+          authenticated: true,
+          user: {
+            id: 1
+          }
+        }
+      })
+      moxios.stubRequest('http://localhost:3000/tasks/1/claim', {
+        status: 200,
+        // shape returned by src/mail/request.ts -> src/mail/handleResponse.ts
+        response: [
+          {
+            statusCode: 202,
+            body: {},
+            headers: {}
+          }
+        ]
+      })
+      const expectedActions = [
+        { completed: false, type: 'CLAIM_TASK_REQUESTED' },
+        {
+          open: true,
+          text: 'actions.task.claim.success',
+          type: 'ADD_NOTIFICATION',
+          link: undefined,
+          severity: undefined
+        },
+        { completed: true, type: 'CLAIM_TASK_SUCCESS' }
+      ]
+      const store = mockStore({
+        intl: { messages: {} },
+        task: { completed: true, id: 1 },
+        loggedIn: { logged: true, user: { id: 1 } }
+      })
+      return store
+        .dispatch(taskActions.requestClaimTask(1, 1, 'comments', false, 'token', {}))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions)
+          moxios.uninstall()
+        })
+    })
+
+    it('should dispatch success when a 200 response has an empty body', () => {
+      moxios.install()
+      moxios.stubRequest('http://localhost:3000/authenticated', {
+        status: 200,
+        response: {
+          authenticated: true,
+          user: {
+            id: 1
+          }
+        }
+      })
+      moxios.stubRequest('http://localhost:3000/tasks/1/claim', {
+        status: 200,
+        response: null
+      })
+      const expectedActions = [
+        { completed: false, type: 'CLAIM_TASK_REQUESTED' },
+        {
+          open: true,
+          text: 'actions.task.claim.success',
+          type: 'ADD_NOTIFICATION',
+          link: undefined,
+          severity: undefined
+        },
+        { completed: true, type: 'CLAIM_TASK_SUCCESS' }
+      ]
+      const store = mockStore({
+        intl: { messages: {} },
+        task: { completed: true, id: 1 },
+        loggedIn: { logged: true, user: { id: 1 } }
+      })
+      return store
+        .dispatch(taskActions.requestClaimTask(1, 1, 'comments', false, 'token', {}))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions)
+          moxios.uninstall()
+        })
+    })
+
+    it('should dispatch error when the mail-provider response reports a failure status', () => {
+      moxios.install()
+      moxios.stubRequest('http://localhost:3000/authenticated', {
+        status: 200,
+        response: {
+          authenticated: true,
+          user: {
+            id: 1
+          }
+        }
+      })
+      moxios.stubRequest('http://localhost:3000/tasks/1/claim', {
+        status: 200,
+        response: [
+          {
+            statusCode: 400,
+            body: { errors: [{ message: 'bad request' }] },
+            headers: {}
+          }
+        ]
+      })
+      const expectedActions = [
+        { completed: false, type: 'CLAIM_TASK_REQUESTED' },
+        {
+          open: true,
+          text: 'actions.task.claim.error',
+          type: 'ADD_NOTIFICATION',
+          link: undefined,
+          severity: 'error'
+        },
+        {
+          completed: true,
+          type: 'CLAIM_TASK_ERROR',
+          error: { error: { type: 'task_claim_failed' } }
+        }
+      ]
+      const store = mockStore({
+        intl: { messages: {} },
+        task: { completed: true, id: 1 },
+        loggedIn: { logged: true, user: { id: 1 } }
+      })
+      return store
+        .dispatch(taskActions.requestClaimTask(1, 1, 'comments', false, 'token', {}))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions)
+          moxios.uninstall()
+        })
+    })
+
+    it('should dispatch error when a 200 response carries an unknown object body', () => {
+      moxios.install()
+      moxios.stubRequest('http://localhost:3000/authenticated', {
+        status: 200,
+        response: {
+          authenticated: true,
+          user: {
+            id: 1
+          }
+        }
+      })
+      moxios.stubRequest('http://localhost:3000/tasks/1/claim', {
+        status: 200,
+        response: { something: 'unexpected' }
+      })
+      const expectedActions = [
+        { completed: false, type: 'CLAIM_TASK_REQUESTED' },
+        {
+          open: true,
+          text: 'actions.task.claim.error',
+          type: 'ADD_NOTIFICATION',
+          link: undefined,
+          severity: 'error'
+        },
+        {
+          completed: true,
+          type: 'CLAIM_TASK_ERROR',
+          error: { error: { type: 'task_claim_failed' } }
+        }
+      ]
+      const store = mockStore({
+        intl: { messages: {} },
+        task: { completed: true, id: 1 },
+        loggedIn: { logged: true, user: { id: 1 } }
+      })
+      return store
+        .dispatch(taskActions.requestClaimTask(1, 1, 'comments', false, 'token', {}))
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions)
+          moxios.uninstall()
+        })
+    })
+  })
+
   describe('message author', () => {
     it('should dispatch an action to send message to author', () => {
       expect(taskActions.messageAuthorRequested()).toEqual({
