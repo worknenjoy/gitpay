@@ -1,11 +1,13 @@
 import express from 'express'
 import * as authenticationHelpers from '../../utils/auth/authenticationHelpers'
 import * as controllers from '../controllers/transfer'
+import secure from './secure'
 
 void authenticationHelpers
 
 const router = express.Router()
 
+router.use(secure)
 router.post('/create', controllers.createTransfer)
 router.get('/search', controllers.searchTransfer)
 router.put('/update', controllers.updateTransfer)

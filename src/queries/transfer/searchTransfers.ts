@@ -1,4 +1,5 @@
 import Models from '../../models'
+import { publicUserInclude } from '../../utils/auth/user-secret-attributes'
 
 const models = Models as any
 
@@ -9,30 +10,19 @@ type TransferSearchParams = {
 
 export async function searchTransfers(params: TransferSearchParams = {}) {
   let transfers: any[] = []
+  const userInclude = publicUserInclude(models.User, 'User')
   if (params.userId) {
     transfers = await models.Transfer.findAll({
       where: { userId: params.userId },
       order: [['createdAt', 'DESC']],
-      include: [
-        models.Task,
-        {
-          model: models.User,
-          as: 'User'
-        }
-      ]
+      include: [models.Task, userInclude]
     })
   }
   if (params.to) {
     transfers = await models.Transfer.findAll({
       where: { to: params.to },
       order: [['createdAt', 'DESC']],
-      include: [
-        models.Task,
-        {
-          model: models.User,
-          as: 'User'
-        }
-      ]
+      include: [models.Task, userInclude]
     })
   }
   return transfers

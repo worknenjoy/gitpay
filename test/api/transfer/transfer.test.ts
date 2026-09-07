@@ -21,19 +21,49 @@ import { get as paypalGetPayoutSample } from '../../data/paypal/paypal.payout'
 
 const agent = request.agent(api)
 
+let lastAuth = ''
+
+const makeTask = async (...args: any[]) => {
+  const result = await createTask(agent, ...args)
+  lastAuth = result?.headers?.authorization || ''
+  return result
+}
+
+const withAuth = (req: any) => {
+  if (lastAuth) return req.set('Authorization', lastAuth)
+  return req
+}
+
 // Common function to create transfer
 const createTransferWithTaskData = async (
   taskData: any,
   userId?: number,
   transferId?: string
 ): Promise<any> => {
-  const res = await agent.post('/transfers/create').send({
+  const res = await withAuth(agent.post('/transfers/create')).send({
     taskId: taskData.id,
     userId: userId,
     transfer_id: transferId
   })
   return res
 }
+
+describe('GET /transfers without a session', () => {
+  it('rejects unauthenticated search', async () => {
+    const res = await agent.get('/transfers/search').query({ userId: 1 })
+    expect(res.statusCode).to.equal(403)
+  })
+
+  it('rejects unauthenticated fetch', async () => {
+    const res = await agent.get('/transfers/fetch/1')
+    expect(res.statusCode).to.equal(403)
+  })
+
+  it('rejects unauthenticated create', async () => {
+    const res = await agent.post('/transfers/create').send({ taskId: 1 })
+    expect(res.statusCode).to.equal(403)
+  })
+})
 
 describe('POST /transfer', () => {
   describe('Initial transfer with one credit card and account activated', () => {
@@ -49,7 +79,7 @@ describe('POST /transfer', () => {
     })
     it('should not create transfer with no orders', async () => {
       try {
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         const assign = await createAssign(agent, { taskId: taskData.id })
         const res = await createTransferWithTaskData(taskData, taskData.userId)
@@ -62,7 +92,7 @@ describe('POST /transfer', () => {
     })
     it('should not create a transfer with no user assigned', async () => {
       try {
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         const res = await createTransferWithTaskData(taskData, taskData.userId)
         expect(res.body).to.exist
@@ -74,7 +104,7 @@ describe('POST /transfer', () => {
     })
     it('should not create transfer with no paid order', async () => {
       try {
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id })
         const assign = await createAssign(agent, { taskId: taskData.id })
@@ -89,7 +119,7 @@ describe('POST /transfer', () => {
     it('should create transfer with a single order paid with stripe', async () => {
       try {
         nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         const order = await createOrder({
           userId: taskData.userId,
@@ -113,7 +143,7 @@ describe('POST /transfer', () => {
     it('should create transfer with two orders paid with stripe', async () => {
       try {
         nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         const order = await createOrder({
           userId: taskData.userId,
@@ -143,7 +173,7 @@ describe('POST /transfer', () => {
     it('should create transfer with three multiple orders paid with stripe', async () => {
       try {
         nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         const order = await createOrder({
           userId: taskData.userId,
@@ -178,7 +208,7 @@ describe('POST /transfer', () => {
     })
     it('should create transfer with three multiple orders paid with stripe and paypal but paypal not paid', async () => {
       nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
-      const task = await createTask(agent)
+      const task = await makeTask()
       const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
@@ -240,7 +270,7 @@ describe('POST /transfer', () => {
           }
         )
 
-      const task = await createTask(agent)
+      const task = await makeTask()
       const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
@@ -283,7 +313,7 @@ describe('POST /transfer', () => {
     it('should update transfer pending to created for a pending transfer for an activated account', async () => {
       nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
       nock('https://api.stripe.com').persist().get('/v1/transfers').reply(200, transfer)
-      const task = await createTask(agent)
+      const task = await makeTask()
       const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
@@ -293,7 +323,7 @@ describe('POST /transfer', () => {
       })
       const assign = await createAssign(agent, { taskId: taskData.id })
       const transferData = await createTransferWithTaskData(taskData, taskData.userId)
-      const res = await agent.put('/transfers/update').send({
+      const res = await withAuth(agent.put('/transfers/update')).send({
         id: transferData.body.id
       })
       expect(res.status).to.equal(200)
@@ -345,7 +375,7 @@ describe('POST /transfer', () => {
 
       nock('https://api.stripe.com').persist().get('/v1/transfers').reply(200, transfer)
 
-      const task = await createTask(agent)
+      const task = await makeTask()
       const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
@@ -371,7 +401,7 @@ describe('POST /transfer', () => {
           }
         }
       )
-      const res = await agent.put('/transfers/update').send({
+      const res = await withAuth(agent.put('/transfers/update')).send({
         id: transferData.body.id
       })
       expect(res.status).to.equal(200)
@@ -421,7 +451,7 @@ describe('POST /transfer', () => {
       })
       nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
       nock('https://api.stripe.com').persist().get('/v1/transfers').reply(200, transfer)
-      const task = await createTask(agent)
+      const task = await makeTask()
       const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
@@ -437,7 +467,7 @@ describe('POST /transfer', () => {
       })
       const assign = await createAssign(agent, { taskId: taskData.id }, { paypal_id: 'foo' })
       const transferData = await createTransferWithTaskData(taskData, taskData.userId)
-      const res = await agent.put('/transfers/update').send({
+      const res = await withAuth(agent.put('/transfers/update')).send({
         id: transferData.body.id
       })
       expect(res.status).to.equal(200)
@@ -449,7 +479,7 @@ describe('POST /transfer', () => {
       expect(res.body.transfer_id).to.equal('tr_1CcGcaBrSjgsps2DGToaoNF5')
     })
     it('should search transfers', async () => {
-      const task = await createTask(agent)
+      const task = await makeTask()
       const { body: taskData } = task
       const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id })
       const assign = await createAssign(agent, { taskId: taskData.id })
@@ -458,14 +488,18 @@ describe('POST /transfer', () => {
         userId: taskData.userId,
         to: assign.userId
       })
-      const res = await agent.get('/transfers/search').query({ userId: taskData.userId })
+      const res = await withAuth(agent.get('/transfers/search')).query({ userId: taskData.userId })
       expect(res.body).to.exist
       expect(res.body.length).to.equal(1)
+      if (res.body[0].User) {
+        expect(res.body[0].User).to.not.have.property('password')
+        expect(res.body[0].User).to.not.have.property('paypal_id')
+      }
     })
     it('should fetch transfer', async () => {
       nock('https://api.stripe.com').persist().get('/v1/transfers/1234').reply(200, transfer)
       try {
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         const order = await createOrder({ userId: taskData.userId, TaskId: taskData.id })
         const assign = await createAssign(agent, { taskId: taskData.id })
@@ -475,7 +509,7 @@ describe('POST /transfer', () => {
           to: assign.userId
         })
         const transferId = transfer.id
-        const res = await agent.get('/transfers/fetch/' + transferId)
+        const res = await withAuth(agent.get('/transfers/fetch/' + transferId))
         expect(res.body).to.exist
         expect(res.body.id).to.equal(transferId)
       } catch (e) {
@@ -534,7 +568,7 @@ describe('POST /transfer', () => {
         'Content-Type': 'application/json'
       })
 
-      const task = await createTask(agent)
+      const task = await makeTask()
       const { body: taskData } = task
       const order = await createOrder({
         userId: taskData.userId,
@@ -560,7 +594,7 @@ describe('POST /transfer', () => {
         { paypal_id: 'foo@example.com' }
       )
       const createTransfer = await createTransferWithTaskData(taskData, taskData.userId)
-      const res = await agent.get('/transfers/fetch/' + createTransfer.body.id)
+      const res = await withAuth(agent.get('/transfers/fetch/' + createTransfer.body.id))
       expect(res.body).to.exist
       expect(res.body.status).to.equal('in_transit')
       expect(res.body.value).to.equal('400')
@@ -581,7 +615,7 @@ describe('POST /transfer', () => {
     })
     it('should not create transfers with same id', async () => {
       try {
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         const order = await createOrder({
           userId: taskData.userId,
@@ -601,7 +635,7 @@ describe('POST /transfer', () => {
     it('should not create transfers with same taskId', async () => {
       try {
         nock('https://api.stripe.com').persist().post('/v1/transfers').reply(200, transfer)
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         const order = await createOrder({
           userId: taskData.userId,
@@ -620,7 +654,7 @@ describe('POST /transfer', () => {
     })
     it('should create pending transfer when assigned user has no Stripe account_id', async () => {
       try {
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         await createOrder({
           userId: taskData.userId,
@@ -654,7 +688,7 @@ describe('POST /transfer', () => {
             message: 'This account does not have the capability to transfer funds.'
           }
         })
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         await createOrder({
           userId: taskData.userId,
@@ -676,7 +710,7 @@ describe('POST /transfer', () => {
     })
     it('should create pending transfer for PayPal-only payment when user has no paypal_id', async () => {
       try {
-        const task = await createTask(agent)
+        const task = await makeTask()
         const { body: taskData } = task
         await createOrder({
           userId: taskData.userId,
