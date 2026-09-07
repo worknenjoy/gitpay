@@ -35,6 +35,8 @@ describe('POST /auth/register', () => {
       expect(res.body).to.exist
       expect(res.body.activation_token).to.exist
       expect(res.body.email_verified).to.equal(false)
+      expect(res.body).to.not.have.property('password')
+      expect(res.body).to.not.have.property('paypal_id')
     })
     it('shouldnt register with long names', async () => {
       const res = await agent
