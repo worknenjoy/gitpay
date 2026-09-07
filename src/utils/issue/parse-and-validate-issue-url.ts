@@ -1,9 +1,60 @@
 import url from 'url'
 
-export function parseAndValidateIssueUrl(
-  rawUrl: string,
-  provider: string
-): { userOrCompany: string; projectName: string; issueId: string } {
+export type ParsedIssueUrl = {
+  userOrCompany: string
+  projectName: string
+  issueId: string
+  projectPath: string
+}
+
+export function parseKdeBugUrl(rawUrl: string): ParsedIssueUrl {
+  if (!rawUrl || typeof rawUrl !== 'string') {
+    throw new Error('Invalid repository URL')
+  }
+
+  const parsed = url.parse(rawUrl, true)
+  const hostname = (parsed.hostname || '').toLowerCase()
+  const isKdeHost = hostname === 'bugs.kde.org' || hostname === 'www.bugs.kde.org'
+  if (!isKdeHost) {
+    throw new Error('URL host is not allowed for KDE Bugzilla provider')
+  }
+
+  let issueId = ''
+  const queryId = parsed.query && (parsed.query as { id?: string | string[] }).id
+  if (Array.isArray(queryId)) {
+    issueId = String(queryId[0] || '')
+  } else if (queryId) {
+    issueId = String(queryId)
+  }
+
+  if (!issueId) {
+    const segments = (parsed.pathname || '').split('/').filter(Boolean)
+    const last = segments[segments.length - 1]
+    if (last && /^[0-9]+$/.test(last)) {
+      issueId = last
+    }
+  }
+
+  if (!issueId) {
+    throw new Error('Repository URL does not match expected issue pattern')
+  }
+  if (!/^[0-9]+$/.test(issueId)) {
+    throw new Error('Issue id in URL is not a valid number')
+  }
+
+  return {
+    userOrCompany: 'kde',
+    projectName: 'bugs',
+    issueId,
+    projectPath: 'kde/bugs'
+  }
+}
+
+export function parseAndValidateIssueUrl(rawUrl: string, provider: string): ParsedIssueUrl {
+  if (provider === 'kde') {
+    return parseKdeBugUrl(rawUrl)
+  }
+
   if (!rawUrl || typeof rawUrl !== 'string') {
     throw new Error('Invalid repository URL')
   }
@@ -54,5 +105,10 @@ export function parseAndValidateIssueUrl(
     throw new Error('Repository URL contains an invalid project name')
   }
 
-  return { userOrCompany, projectName, issueId }
+  return {
+    userOrCompany,
+    projectName,
+    issueId,
+    projectPath: `${userOrCompany}/${projectName}`
+  }
 }
