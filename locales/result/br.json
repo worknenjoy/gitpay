@@ -300,7 +300,7 @@
   "mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.won.details": "Quando você vencer uma disputa, o valor contestado é devolvido ao seu saldo.",
   "mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.lost.details": "Quando você perder uma disputa, o valor sujeito será deduzido de seu saldo.",
   "mail.user.forgotPassword.subject": "Redefinir a senha",
-  "mail.user.forgotPassword.message": "<p>Hi {{name}},</p><p>Click <a href=\"{{url}}\">here</a> to reset your password.</p>",
+  "mail.user.forgotPassword.message": "<p>Hi {{name}},</p><p>Click <a href=\"{{{url}}}\">here</a> to reset your password.</p>",
   "mail.user.activation.subject": "Ativar sua conta do Gitpay",
   "mail.user.activation.message.intro": "<p>Oi {{name}},</p><p>Bem-vindo ao Gitpay!</p>",
   "mail.user.activation.message.subtitle": "<p>Precisamos confirmar seu e-mail para ativar sua conta.</p>",
