@@ -6,6 +6,7 @@ import spies from 'chai-spies'
 import jwt from 'jsonwebtoken'
 import api from '../../../src/server'
 import nock from 'nock'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../../src/queries/user/userSensitiveAttributes'
 import {
   createTask,
   createOrder,
@@ -517,9 +518,9 @@ describe('POST /transfer', () => {
       expect(res.body).to.exist
       expect(res.body.length).to.equal(1)
       if (res.body[0].User) {
-        expect(res.body[0].User).to.not.have.property('password')
-        expect(res.body[0].User).to.not.have.property('paypal_id')
-        expect(res.body[0].User).to.not.have.property('account_id')
+        for (const field of USER_SENSITIVE_ATTRIBUTES) {
+          expect(res.body[0].User).to.not.have.property(field)
+        }
       }
     })
     it('does not return another user\'s transfers on search', async () => {

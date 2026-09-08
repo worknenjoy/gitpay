@@ -1,5 +1,6 @@
 import { Op } from 'sequelize'
 import Models from '../../models'
+import { USER_SENSITIVE_ATTRIBUTES } from '../user/userSensitiveAttributes'
 
 const models = Models as any
 
@@ -11,36 +12,12 @@ export const findTransferByIdForFetch = async (id: number, userId: number, optio
       {
         model: models.User,
         as: 'User',
-        attributes: {
-          exclude: [
-            'password',
-            'recover_password_token',
-            'activation_token',
-            'email_change_token',
-            'pending_email_change',
-            'paypal_id',
-            'customer_id',
-            'account_id',
-            'whop_account_id'
-          ]
-        }
+        attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
       },
       {
         model: models.User,
         as: 'destination',
-        attributes: {
-          exclude: [
-            'password',
-            'recover_password_token',
-            'activation_token',
-            'email_change_token',
-            'pending_email_change',
-            'paypal_id',
-            'customer_id',
-            'account_id',
-            'whop_account_id'
-          ]
-        }
+        attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
       }
     ],
     ...options

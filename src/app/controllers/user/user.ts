@@ -62,13 +62,21 @@ export const register = async (req: any, res: any) => {
   }
 }
 
+const RECOVER_PASSWORD_TOKEN_TTL_MS = 60 * 60 * 1000 // 60 minutes
+
 export const forgotPasswordNotification = async (req: any, res: any) => {
   const { email } = req.body
   try {
     const foundUser = await user.userExists({ email })
     if (foundUser.dataValues && foundUser.dataValues.email) {
       const token = models.User.generateToken()
-      await models.User.update({ recover_password_token: token }, { where: { email } })
+      await models.User.update(
+        {
+          recover_password_token: token,
+          recover_password_token_expires_at: new Date(Date.now() + RECOVER_PASSWORD_TOKEN_TTL_MS)
+        },
+        { where: { email } }
+      )
       const url = `${process.env.FRONTEND_HOST}/#/reset-password/${token}`
       i18n.setLocale(foundUser.dataValues.language || 'en')
       const html = i18n.__('mail.user.forgotPassword.message', {
@@ -98,11 +106,32 @@ export const resetPassword = async (req: any, res: any) => {
     const foundUser = await models.User.findOne({
       where: { recover_password_token: req.body.token }
     })
-    if (!foundUser) res.status(401)
+    if (!foundUser) {
+      res.status(401).send({ message: 'user.password.reset.token.invalid' })
+      return
+    }
+
+    // Unlike activation_token (where a missing expiry is treated as not-expired,
+    // since every real row always has one set), a missing expiry here means expired:
+    // it retroactively invalidates every token issued before this expiry column
+    // existed, closing off any that may have been exposed by an earlier leak.
+    const { recover_password_token_expires_at } = foundUser.dataValues
+    const isExpired =
+      !recover_password_token_expires_at ||
+      new Date(recover_password_token_expires_at).getTime() < Date.now()
+    if (isExpired) {
+      res.status(401).send({ message: 'user.password.reset.token.expired' })
+      return
+    }
+
     const passwordHash = models.User.generateHash(req.body.password)
     if (passwordHash) {
       await models.User.update(
-        { password: passwordHash, recover_password_token: null },
+        {
+          password: passwordHash,
+          recover_password_token: null,
+          recover_password_token_expires_at: null
+        },
         { where: { id: foundUser.dataValues.id } }
       )
       res.send('successfully change password')

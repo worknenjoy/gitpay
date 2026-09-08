@@ -33,6 +33,7 @@ export interface UserAttributes {
   skills?: string | null
   languages?: string | null
   recover_password_token?: string | null
+  recover_password_token_expires_at?: Date | null
   activation_token?: string | null
   activation_token_sent_at?: Date | null
   activation_token_expires_at?: Date | null
@@ -76,6 +77,7 @@ export type UserCreationAttributes = Optional<
   | 'skills'
   | 'languages'
   | 'recover_password_token'
+  | 'recover_password_token_expires_at'
   | 'activation_token'
   | 'activation_token_sent_at'
   | 'activation_token_expires_at'
@@ -121,6 +123,7 @@ export default class User
   public skills!: string | null
   public languages!: string | null
   public recover_password_token!: string | null
+  public recover_password_token_expires_at!: Date | null
   public activation_token!: string | null
   public activation_token_sent_at!: Date | null
   public activation_token_expires_at!: Date | null
@@ -253,6 +256,10 @@ export default class User
         },
         recover_password_token: {
           type: DataTypes.STRING,
+          allowNull: true
+        },
+        recover_password_token_expires_at: {
+          type: DataTypes.DATE,
           allowNull: true
         },
         activation_token: {

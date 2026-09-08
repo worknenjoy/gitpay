@@ -26,6 +26,7 @@ interface RegisterParams {
   country?: string
   customer_id?: string
   recover_password_token?: string
+  recover_password_token_expires_at?: string | Date
   account_id?: string
   paypal_id?: string
   provider_username?: string

@@ -97,8 +97,11 @@ describe('AUTH /user', () => {
   })
   describe('reset password', () => {
     it('should reset password from the right token', async () => {
-      const res = await registerAndLogin(agent, { recover_password_token: '123' })
-      const { headers } = res || {}
+      const res = await registerAndLogin(agent, {
+        recover_password_token: '123',
+        recover_password_token_expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString()
+      })
+      const { headers, body } = res || {}
 
       const user = await agent
         .put('/auth/reset-password')
@@ -108,10 +111,17 @@ describe('AUTH /user', () => {
 
       expect(user.statusCode).to.equal(200)
       expect(user.text).to.equal('successfully change password')
+
+      const updatedUser = await models.User.findByPk(body.id)
+      expect(updatedUser.recover_password_token).to.equal(null)
+      expect(updatedUser.recover_password_token_expires_at).to.equal(null)
     })
 
     it('should not reset password from the wrong token', async () => {
-      const res = await registerAndLogin(agent, { recover_password_token: '1234' })
+      const res = await registerAndLogin(agent, {
+        recover_password_token: '1234',
+        recover_password_token_expires_at: new Date(Date.now() + 60 * 60 * 1000).toISOString()
+      })
       const { headers } = res || {}
 
       const user = await agent
@@ -121,6 +131,38 @@ describe('AUTH /user', () => {
         .expect(401)
 
       expect(user.statusCode).to.equal(401)
+      expect(user.body.message).to.equal('user.password.reset.token.invalid')
+    })
+
+    it('should not reset password from an expired token', async () => {
+      const res = await registerAndLogin(agent, {
+        recover_password_token: '123',
+        recover_password_token_expires_at: new Date(Date.now() - 60 * 60 * 1000).toISOString()
+      })
+      const { headers } = res || {}
+
+      const user = await agent
+        .put('/auth/reset-password')
+        .send({ password: '', token: '123' })
+        .set('Authorization', headers.authorization)
+        .expect(401)
+
+      expect(user.statusCode).to.equal(401)
+      expect(user.body.message).to.equal('user.password.reset.token.expired')
+    })
+
+    it('should not reset password from a token with no expiry set (legacy/pre-migration token)', async () => {
+      const res = await registerAndLogin(agent, { recover_password_token: '123' })
+      const { headers } = res || {}
+
+      const user = await agent
+        .put('/auth/reset-password')
+        .send({ password: '', token: '123' })
+        .set('Authorization', headers.authorization)
+        .expect(401)
+
+      expect(user.statusCode).to.equal(401)
+      expect(user.body.message).to.equal('user.password.reset.token.expired')
     })
   })
   describe('change email', () => {

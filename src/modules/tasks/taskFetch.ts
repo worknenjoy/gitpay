@@ -6,6 +6,7 @@ import { roleExists } from '../roles'
 import { userExists } from '../users'
 // @ts-ignore - ip has no type definitions
 import { memberExists } from '../members'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
 
@@ -17,7 +18,7 @@ export async function taskFetch(taskParams: any) {
     include: [
       {
         model: currentModels.User,
-        attributes: { exclude: ['password'] }
+        attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
       },
       {
         model: currentModels.Project,
@@ -25,19 +26,25 @@ export async function taskFetch(taskParams: any) {
       },
       {
         model: currentModels.Order,
-        include: [currentModels.User]
+        include: [{ model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } }]
       },
       {
         model: currentModels.Assign,
-        include: [currentModels.User]
+        include: [{ model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } }]
       },
       {
         model: currentModels.Member,
-        include: [currentModels.User, currentModels.Role]
+        include: [
+          { model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } },
+          currentModels.Role
+        ]
       },
       {
         model: currentModels.Offer,
-        include: [currentModels.User, currentModels.Task],
+        include: [
+          { model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } },
+          currentModels.Task
+        ],
         order: [['createdAt', 'ASC']]
       },
       {
