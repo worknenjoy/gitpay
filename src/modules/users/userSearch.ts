@@ -1,26 +1,18 @@
 import Models from '../../models'
+import {
+  publicUserSearchAttributes,
+  publicUserSearchWhere
+} from '../../utils/auth/public-user-search'
 
 const models = Models as any
 
 export const userSearch = async (params: any) => {
   try {
+    const where = publicUserSearchWhere(params)
+    const attributes = publicUserSearchAttributes(where)
     const users = await models.User.findAll({
-      where: params || {},
-      attributes: [
-        'id',
-        'website',
-        'profile_url',
-        'picture_url',
-        'name',
-        'username',
-        'email',
-        'provider',
-        'account_id',
-        'paypal_id',
-        'repos',
-        'createdAt',
-        'updatedAt'
-      ],
+      where,
+      attributes,
       include: [models.Type]
     })
 
