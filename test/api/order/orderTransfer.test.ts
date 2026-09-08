@@ -70,7 +70,7 @@ describe('POST /order/transfer', () => {
       source_id: '12345',
       currency: 'BRL',
       amount: 200,
-      taskId: tasks[0].dataValues.id
+      TaskId: tasks[0].dataValues.id
     }).save()
 
     const transferRes = await agent
@@ -87,5 +87,40 @@ describe('POST /order/transfer', () => {
     expect(transferRes.body.source_id).to.equal('12345')
     expect(transferRes.body.currency).to.equal('BRL')
     expect(transferRes.body.amount).to.equal('200')
+  })
+
+  it('rejects a transfer request from someone who neither placed the order nor owns the task', async () => {
+    const owner = await registerAndLogin(agent, { email: 'test_transfer_owner@gitpay.me' })
+
+    const tasks = await Promise.all([
+      models.Task.build({
+        url: 'https://github.com/worknenjoy/truppie/issues/8363',
+        userId: owner.body.id
+      }).save(),
+      models.Task.build({
+        url: 'https://github.com/worknenjoy/truppie/issues/8364',
+        userId: owner.body.id,
+        status: 'in_progress'
+      }).save()
+    ])
+
+    const order = await models.Order.build({
+      source_id: '54321',
+      currency: 'BRL',
+      amount: 200,
+      TaskId: tasks[0].dataValues.id
+    }).save()
+
+    const attacker = await registerAndLogin(agent, { email: 'test_transfer_attacker@gitpay.me' })
+
+    const res = await agent
+      .post(`/orders/${order.dataValues.id}/transfers`)
+      .send({ taskId: tasks[1].dataValues.id })
+      .set('Authorization', attacker.headers.authorization)
+
+    expect(res.body.source_id).to.not.equal('54321')
+
+    const unchanged = await models.Order.findByPk(order.dataValues.id)
+    expect(unchanged.dataValues.TaskId).to.equal(tasks[0].dataValues.id)
   })
 })

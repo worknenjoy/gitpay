@@ -137,6 +137,26 @@ describe('Task CRUD', () => {
     expect(body.errors[0].message).to.equal('url must be unique')
   })
 
+  it('should not update or leak a task the caller does not own', async () => {
+    const owner = await UserFactory({ name: 'Task Owner' })
+    const task = await TaskFactory({ userId: owner.id })
+
+    const attacker = await registerAndLogin(agent, { email: 'task_update_attacker@gitpay.me' })
+
+    const res = await agent
+      .put('/tasks/update')
+      .send({ id: task.id, value: 999, title: 'Hijacked title' })
+      .set('Authorization', attacker.headers.authorization)
+      .expect(200)
+
+    expect(res.body).to.not.have.property('User')
+    expect(res.body.value).to.not.equal('999')
+
+    const unchanged = await models.Task.findByPk(task.id)
+    expect(unchanged.dataValues.value).to.equal('100')
+    expect(unchanged.dataValues.title).to.equal('Sample Issue')
+  })
+
   it('should give an error on create if the issue build responds with limit exceeded', async () => {
     nockAuthLimitExceeded()
     const res = await registerAndLogin(agent)

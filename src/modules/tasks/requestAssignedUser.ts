@@ -3,6 +3,7 @@ import { taskUpdate } from './taskUpdate'
 import SendMail from '../../mail/mail'
 import i18n from 'i18n'
 import Signatures from '../../mail/content'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
 
@@ -101,7 +102,7 @@ const actionAssign = async (data: any) => {
       where: {
         id: taskId
       },
-      include: [currentModels.User]
+      include: [{ model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } }]
     })
     const user = assign.User
     const taskOwner = task.User

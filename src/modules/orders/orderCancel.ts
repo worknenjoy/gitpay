@@ -1,19 +1,25 @@
 import models from '../../models'
 import PaymentMail from '../../mail/payment'
 import { PaypalConnect } from '../../client/provider/paypal'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
 
 type OrderCancelParams = {
   id: number
+  userId?: number
 }
 
 export async function orderCancel(orderParameters: OrderCancelParams) {
   const order = await currentModels.Order.findOne({
     where: {
-      id: orderParameters.id
+      id: orderParameters.id,
+      userId: orderParameters.userId
     },
-    include: [currentModels.User, currentModels.Task]
+    include: [
+      { model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } },
+      currentModels.Task
+    ]
   })
 
   if (order && order.dataValues && order.dataValues.provider === 'paypal') {

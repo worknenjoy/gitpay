@@ -1,10 +1,12 @@
 import models from '../../models'
 import TransferMail from '../../mail/transfer'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
 
 type OrderTransferParams = {
   id: number
+  userId?: number
 }
 
 type TransferData = {
@@ -18,10 +20,18 @@ export async function orderTransfer(
   try {
     const order = await currentModels.Order.findOne({
       where: { id: transferParams.id },
-      include: [currentModels.User, currentModels.Task]
+      include: [
+        { model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } },
+        currentModels.Task
+      ]
     })
 
     if (!order) throw new Error('no order found')
+
+    const isAuthorized =
+      order.userId === transferParams.userId ||
+      (order.Task && order.Task.userId === transferParams.userId)
+    if (!isAuthorized) throw new Error('not_authorized')
     if (transferParams.id && transferData.id) {
       const transferOrderId = transferParams.id
       const transferTaskId = transferData.id

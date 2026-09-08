@@ -1,6 +1,7 @@
 import stripe from '../../client/payment/stripe'
 import models from '../../models'
 import { PaypalConnect } from '../../client/provider/paypal'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
 const stripeInstance = stripe()
@@ -13,11 +14,13 @@ export async function transferFetch(id: number) {
         currentModels.Task,
         {
           model: currentModels.User,
-          as: 'User'
+          as: 'User',
+          attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
         },
         {
           model: currentModels.User,
-          as: 'destination'
+          as: 'destination',
+          attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
         }
       ]
     })

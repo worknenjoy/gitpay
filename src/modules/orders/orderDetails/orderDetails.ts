@@ -1,14 +1,15 @@
 import Models from '../../../models'
 import orderFetchPaypal from './orderFetchPaypal'
 import orderFetchInvoice from './orderFetchInvoice'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../../queries/user/userSensitiveAttributes'
 
 const models = Models as any
 
 export async function orderDetails(orderParams: any) {
   try {
     const order = await models.Order.findOne({
-      where: { id: orderParams.id },
-      include: models.User
+      where: { id: orderParams.id, userId: orderParams.userId },
+      include: { model: models.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } }
     })
     let orderDetails = {}
 

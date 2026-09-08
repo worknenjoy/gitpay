@@ -1,8 +1,13 @@
 import models from '../../models'
 import SendMail from '../../mail/mail'
 import i18n from 'i18n'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
+const publicUserInclude = {
+  model: currentModels.User,
+  attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
+}
 
 export async function removeAssignedUser({ id, userId }: any, { message }: any) {
   const task = await currentModels.Task.findOne(
@@ -13,7 +18,7 @@ export async function removeAssignedUser({ id, userId }: any, { message }: any) 
       }
     },
     {
-      include: [currentModels.User, currentModels.Order, currentModels.Assign]
+      include: [publicUserInclude, currentModels.Order, currentModels.Assign]
     }
   )
 
@@ -22,7 +27,7 @@ export async function removeAssignedUser({ id, userId }: any, { message }: any) 
   if (!assignedId) throw new Error("The Task doesn't have an assigned user.")
 
   const assignedPromise = await currentModels.Assign.findByPk(assignedId, {
-    include: [currentModels.User]
+    include: [publicUserInclude]
   })
 
   const author = await currentModels.User.findByPk(task.userId)

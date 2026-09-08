@@ -56,7 +56,8 @@ describe('GET /order/details', () => {
     const order = await models.Order.build({
       source_id: '12345',
       currency: 'BRL',
-      amount: 200
+      amount: 200,
+      userId: user.body.id
     }).save()
 
     const res = await agent
@@ -82,7 +83,8 @@ describe('GET /order/details', () => {
       currency: 'BRL',
       amount: 200,
       provider: 'stripe',
-      source_type: 'invoice-item'
+      source_type: 'invoice-item',
+      userId: user.body.id
     }).save()
 
     const res = await agent
@@ -98,5 +100,23 @@ describe('GET /order/details', () => {
     expect(res.body.amount).to.equal('200')
     expect(res.body.stripe.hosted_invoice_url).to.exist
     expect(res.body.stripe.invoice_pdf).to.exist
+  })
+
+  it('does not return order details belonging to another user', async () => {
+    const owner = await registerAndLogin(agent, { email: 'test_fetch_order_owner@gitpay.me' })
+    const order = await models.Order.build({
+      source_id: '12345',
+      currency: 'BRL',
+      amount: 200,
+      userId: owner.body.id
+    }).save()
+
+    const attacker = await registerAndLogin(agent, { email: 'test_fetch_order_attacker@gitpay.me' })
+
+    const res = await agent
+      .get(`/orders/${order.dataValues.id}/details`)
+      .set('Authorization', attacker.headers.authorization)
+
+    expect(res.body.source_id).to.not.equal('12345')
   })
 })

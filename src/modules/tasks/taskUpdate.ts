@@ -10,8 +10,13 @@ import i18n from 'i18n'
 import { validateCoupon } from '../coupon/validateCoupon'
 import { processCouponUsage as processCoupon } from '../coupon/processCouponUsage'
 import { orderUpdateAfterStripe } from '../orders/orderUpdateAfterStripe'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
+const publicUserInclude = {
+  model: currentModels.User,
+  attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
+}
 
 const createSourceAndCharge = async (
   customer: any,
@@ -130,15 +135,17 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
       userId: taskParameters.userId
     },
     individualHooks: true,
-    include: [currentModels.User, currentModels.Order, currentModels.Offer, currentModels.Member]
+    include: [publicUserInclude, currentModels.Order, currentModels.Offer, currentModels.Member]
   })
 
-  if (!data) {
+  // Model.update resolves to [affectedCount] (always a truthy array), so a mismatched
+  // userId in the where clause above silently updates 0 rows unless we check the count.
+  if (!data || !data[0]) {
     return new Error('task_updated_failed')
   }
 
   const task = await currentModels.Task.findByPk(taskParameters.id, {
-    include: [currentModels.User, currentModels.Order, currentModels.Assign, currentModels.Member]
+    include: [publicUserInclude, currentModels.Order, currentModels.Assign, currentModels.Member]
   })
 
   if (!task) {

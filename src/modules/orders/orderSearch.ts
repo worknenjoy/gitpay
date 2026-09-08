@@ -1,4 +1,5 @@
 import models from '../../models'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
 
@@ -10,7 +11,10 @@ type OrderSearchParams = {
 export async function orderSearch(orderParams: OrderSearchParams) {
   try {
     let findOrderParams: any = {
-      include: [currentModels.User, currentModels.Task],
+      include: [
+        { model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } },
+        currentModels.Task
+      ],
       order: [['id', 'DESC']]
     }
     if (orderParams && orderParams.id) {

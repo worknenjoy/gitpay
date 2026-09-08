@@ -166,6 +166,30 @@ describe('POST /order PayPal', () => {
     }
   })
 
+  it('does not cancel an order belonging to another user', async () => {
+    const owner = await registerAndLogin(agent, { email: 'testcancelorder_owner@gitpay.me' })
+    const order = await models.Order.build({
+      source_id: 'auth_foo_other',
+      currency: 'USD',
+      amount: 200,
+      provider: 'paypal',
+      authorization_id: 'auth_foo_other',
+      userId: owner.body.id
+    }).save()
+
+    const attacker = await registerAndLogin(agent, { email: 'testcancelorder_attacker@gitpay.me' })
+
+    const res = await agent
+      .post(`/orders/${order.dataValues.id}/cancel`)
+      .set('Authorization', attacker.headers.authorization)
+      .send({ id: order.dataValues.id })
+
+    expect(res.body.status).to.not.equal('canceled')
+
+    const unchanged = await models.Order.findByPk(order.dataValues.id)
+    expect(unchanged.dataValues.status).to.not.equal('canceled')
+  })
+
   it('should fetch a paypal order with details', async () => {
     const url = 'https://api.sandbox.paypal.com'
     const path = '/v1/oauth2/token'

@@ -1,6 +1,7 @@
 import models from '../../models'
 import requestPromise from 'request-promise'
 import secrets from '../../config/secrets'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
 
@@ -40,7 +41,7 @@ export async function userOrganizations(userAttributes: UserOrganizationsParams)
 
     const currentOrgs = user.dataValues.Organizations
     const allOrgs = await currentModels.Organization.findAll({
-      include: [currentModels.User]
+      include: [{ model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } }]
     })
 
     const formatedResponse = responseFromGithub.map((org: any) => {
