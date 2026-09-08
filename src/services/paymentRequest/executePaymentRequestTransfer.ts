@@ -179,7 +179,7 @@ export async function executePaymentRequestTransfer(
     {
       include: [
         { model: models.PaymentRequest },
-        { model: models.User },
+        { model: models.User.scope('withSensitive') },
         { model: models.PaymentRequestCustomer }
       ]
     }
@@ -325,7 +325,7 @@ export async function executePaymentRequestTransfer(
     await paymentRequestPayment.reload({
       include: [
         { model: models.PaymentRequest },
-        { model: models.User },
+        { model: models.User.scope('withSensitive') },
         { model: models.PaymentRequestCustomer }
       ]
     })
@@ -583,7 +583,7 @@ export async function executePaymentRequestTransfer(
       await paymentRequestPayment.reload({
         include: [
           { model: models.PaymentRequest },
-          { model: models.User },
+          { model: models.User.scope('withSensitive') },
           { model: models.PaymentRequestCustomer }
         ]
       })
@@ -601,7 +601,7 @@ export async function executePaymentRequestTransfer(
     await paymentRequestPayment.reload({
       include: [
         { model: models.PaymentRequest },
-        { model: models.User },
+        { model: models.User.scope('withSensitive') },
         { model: models.PaymentRequestCustomer }
       ]
     })
@@ -643,7 +643,7 @@ export async function executePaymentRequestTransfer(
       await paymentRequestPayment.reload({
         include: [
           { model: models.PaymentRequest },
-          { model: models.User },
+          { model: models.User.scope('withSensitive') },
           { model: models.PaymentRequestCustomer }
         ]
       })

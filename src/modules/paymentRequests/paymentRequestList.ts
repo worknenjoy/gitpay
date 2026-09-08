@@ -1,5 +1,4 @@
 import Models from '../../models'
-import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 const models = Models as any
 
 export interface PaymentRequestParams {
@@ -10,7 +9,7 @@ export async function paymentRequestList(paymentRequestParams: PaymentRequestPar
   const paymentRequestList = await models.PaymentRequest.findAll({
     where: { userId: paymentRequestParams.userId },
     order: [['createdAt', 'DESC']],
-    include: [{ model: models.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } }]
+    include: [models.User]
   })
   return paymentRequestList
 }

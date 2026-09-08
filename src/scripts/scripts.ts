@@ -113,7 +113,8 @@ const scripts = {
     }
   },
   accountInfo: () => {
-    return models.User.findAll({})
+    return models.User.scope('withSensitive')
+      .findAll({})
       .then((users: any) => {
         if (!users) return false
 

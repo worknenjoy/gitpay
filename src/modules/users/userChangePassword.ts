@@ -30,7 +30,9 @@ export async function userChangePassword(userParameters: UserChangePasswordParam
     throw new Error('user.password.new.incorrect.too_long')
   }
 
-  const foundUser = await currentModels.User.findOne({ where: { id: userParameters.id } })
+  const foundUser = await currentModels.User.scope('withSensitive').findOne({
+    where: { id: userParameters.id }
+  })
 
   if (!foundUser) {
     return false

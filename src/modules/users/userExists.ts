@@ -16,7 +16,10 @@ export async function userExists(userAttributes: UserExistsParams) {
     conditions.email = userAttributes.email
   }
   try {
-    const user = await currentModels.User.findOne({
+    // withSensitive: backs both password-login verification (local-strategy.ts
+    // needs .password) and req.user population for every authenticated request
+    // (e.g. account.ts reads req.user.account_id directly).
+    const user = await currentModels.User.scope('withSensitive').findOne({
       where: {
         ...conditions
       },

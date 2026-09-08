@@ -10,13 +10,8 @@ import i18n from 'i18n'
 import { validateCoupon } from '../coupon/validateCoupon'
 import { processCouponUsage as processCoupon } from '../coupon/processCouponUsage'
 import { orderUpdateAfterStripe } from '../orders/orderUpdateAfterStripe'
-import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
-const publicUserInclude = {
-  model: currentModels.User,
-  attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
-}
 
 const createSourceAndCharge = async (
   customer: any,
@@ -135,7 +130,7 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
       userId: taskParameters.userId
     },
     individualHooks: true,
-    include: [publicUserInclude, currentModels.Order, currentModels.Offer, currentModels.Member]
+    include: [currentModels.User, currentModels.Order, currentModels.Offer, currentModels.Member]
   })
 
   // Model.update resolves to [affectedCount] (always a truthy array), so a mismatched
@@ -145,7 +140,7 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
   }
 
   const task = await currentModels.Task.findByPk(taskParameters.id, {
-    include: [publicUserInclude, currentModels.Order, currentModels.Assign, currentModels.Member]
+    include: [currentModels.User, currentModels.Order, currentModels.Assign, currentModels.Member]
   })
 
   if (!task) {
@@ -157,7 +152,7 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
     const orderParameters = taskParameters.Orders
 
     if (order.userId) {
-      const user = await currentModels.User.findByPk(order.userId)
+      const user = await currentModels.User.scope('withSensitive').findByPk(order.userId)
 
       if (user && user.dataValues.customer_id) {
         const customer = await stripe.customers.retrieve(user.customer_id)

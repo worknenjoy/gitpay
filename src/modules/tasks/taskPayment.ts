@@ -24,7 +24,7 @@ export async function taskPayment(paymentParams: any) {
     where: {
       id: task.assigned
     },
-    include: [currentModels.User]
+    include: [{ model: currentModels.User.scope('withSensitive') }]
   })
 
   const user = assign.dataValues.User.dataValues

@@ -8,18 +8,9 @@ import * as task from '../../../modules/tasks'
 import Sendmail from '../../../mail/mail'
 import UserMail from '../../../mail/user'
 import i18n from 'i18n'
-import { USER_AUTH_SECRET_ATTRIBUTES } from '../../../queries/user/userSensitiveAttributes'
+import { omitAuthSecrets } from '../../../queries/user/userSensitiveAttributes'
 
 const models = Models as any
-
-const omitAuthSecrets = (userData: any, keep: string[] = []) => {
-  if (!userData) return userData
-  const plain = userData.dataValues ? { ...userData.dataValues } : { ...userData }
-  USER_AUTH_SECRET_ATTRIBUTES.filter((field) => !keep.includes(field)).forEach(
-    (field) => delete plain[field]
-  )
-  return plain
-}
 
 export const getUserInfo = async (req: any, res: any) => {
   const userId = req.user.id
@@ -113,7 +104,7 @@ export const forgotPasswordNotification = async (req: any, res: any) => {
 
 export const resetPassword = async (req: any, res: any) => {
   try {
-    const foundUser = await models.User.findOne({
+    const foundUser = await models.User.scope('withSensitive').findOne({
       where: { recover_password_token: req.body.token }
     })
     if (!foundUser) {
@@ -247,7 +238,9 @@ export const getActivationStatus = async (req: any, res: any) => {
 export const activateUser = async (req: any, res: any) => {
   const { token, userId } = req.query
   try {
-    const foundUser = await models.User.findOne({ where: { id: userId } })
+    // withSensitive: the token comparison below needs activation_token/_expires_at,
+    // which the lighter selfView scope (used for the response) excludes.
+    const foundUser = await models.User.scope('withSensitive').findOne({ where: { id: userId } })
     if (!foundUser) {
       // eslint-disable-next-line no-console
       console.log(`[activation] activate failed: no user for id ${userId}`)
@@ -279,6 +272,8 @@ export const activateUser = async (req: any, res: any) => {
       return
     }
 
+    // Model.update's RETURNING clause ignores Sequelize scopes (always `RETURNING *`),
+    // so omitAuthSecrets below is what actually keeps this response safe -- not a scope.
     const userUpdate = await models.User.update(
       {
         activation_token: null,
@@ -301,7 +296,7 @@ export const activateUser = async (req: any, res: any) => {
 export const resendActivationEmail = async (req: any, res: any) => {
   const { id: userId } = req.user
   try {
-    const foundUser = await models.User.findOne({ where: { id: userId } })
+    const foundUser = await models.User.scope('selfView').findOne({ where: { id: userId } })
     if (!foundUser) {
       res.status(401).send({ message: 'user.not.exist' })
       return

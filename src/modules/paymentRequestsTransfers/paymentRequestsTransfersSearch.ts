@@ -1,11 +1,9 @@
 import models from '../../models'
-import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
-const publicUserInclude = {
+const userInclude = {
   model: currentModels.User,
-  as: 'User',
-  attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
+  as: 'User'
 }
 
 type TransferSearchParams = {
@@ -18,13 +16,13 @@ export async function transferSearch(params: TransferSearchParams = {}) {
   if (params.userId) {
     transfers = await currentModels.Transfer.findAll({
       where: { userId: params.userId },
-      include: [currentModels.Task, publicUserInclude]
+      include: [currentModels.Task, userInclude]
     })
   }
   if (params.to) {
     transfers = await currentModels.Transfer.findAll({
       where: { to: params.to },
-      include: [currentModels.Task, publicUserInclude]
+      include: [currentModels.Task, userInclude]
     })
   }
   return transfers

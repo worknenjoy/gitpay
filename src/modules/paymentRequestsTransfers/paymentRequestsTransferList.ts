@@ -1,5 +1,4 @@
 import models from '../../models'
-import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
 
@@ -13,15 +12,7 @@ export async function paymentRequestTransferList({ userId }: PaymentRequestTrans
       userId: userId
     },
     order: [['createdAt', 'DESC']],
-    include: [
-      {
-        model: currentModels.User,
-        attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
-      },
-      {
-        model: currentModels.PaymentRequest
-      }
-    ]
+    include: [currentModels.User, currentModels.PaymentRequest]
   })
   return paymentRequestTransferList
 }

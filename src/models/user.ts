@@ -1,6 +1,10 @@
 import { Model, DataTypes, Optional, Sequelize } from 'sequelize'
 import * as bcrypt from 'bcrypt'
 import * as crypto from 'crypto'
+import {
+  USER_SENSITIVE_ATTRIBUTES,
+  USER_AUTH_SECRET_ATTRIBUTES
+} from '../queries/user/userSensitiveAttributes'
 
 export interface UserAttributes {
   id: number
@@ -304,7 +308,22 @@ export default class User
       {
         sequelize,
         tableName: 'Users',
-        timestamps: true
+        timestamps: true,
+        defaultScope: {
+          attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
+        },
+        scopes: {
+          // Full row, including auth secrets -- for login/token verification.
+          withSensitive: {
+            attributes: { include: USER_SENSITIVE_ATTRIBUTES }
+          },
+          // A user's own row for self-facing responses (register/activate,
+          // GET /user profile): payout IDs like paypal_id/account_id are the
+          // caller's own data and safe to return, but password/tokens are not.
+          selfView: {
+            attributes: { exclude: USER_AUTH_SECRET_ATTRIBUTES }
+          }
+        }
       }
     )
     return User

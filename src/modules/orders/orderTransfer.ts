@@ -1,6 +1,5 @@
 import models from '../../models'
 import TransferMail from '../../mail/transfer'
-import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
 
@@ -20,10 +19,7 @@ export async function orderTransfer(
   try {
     const order = await currentModels.Order.findOne({
       where: { id: transferParams.id },
-      include: [
-        { model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } },
-        currentModels.Task
-      ]
+      include: [currentModels.User, currentModels.Task]
     })
 
     if (!order) throw new Error('no order found')

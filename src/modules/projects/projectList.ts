@@ -1,5 +1,4 @@
 import models from '../../models'
-import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
 
@@ -10,9 +9,7 @@ export async function projectList(params?: any) {
         currentModels.Organization,
         {
           model: currentModels.Task,
-          include: [
-            { model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } }
-          ]
+          include: [currentModels.User]
         }
       ]
     })

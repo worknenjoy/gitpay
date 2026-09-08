@@ -22,7 +22,7 @@ export async function payoutRequest(params: PayoutRequestParams) {
     return { error: 'No userId' }
   }
 
-  const user = await currentModels.User.findByPk(params.userId)
+  const user = await currentModels.User.scope('withSensitive').findByPk(params.userId)
   if (!user) {
     return { error: 'User not found' }
   }

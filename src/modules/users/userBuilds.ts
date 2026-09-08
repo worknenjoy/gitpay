@@ -48,7 +48,7 @@ export async function userBuilds(userParameters: UserBuildsParams) {
       }
       if (selectedTypeIds && selectedTypeIds.length > 0) {
         await user.setTypes(selectedTypeIds)
-        const userWithTypes = await currentModels.User.findByPk(id, {
+        const userWithTypes = await currentModels.User.scope('selfView').findByPk(id, {
           include: { model: currentModels.Type }
         })
         return userWithTypes

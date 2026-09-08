@@ -3,6 +3,7 @@ import { userConfirmChangeEmail } from '../../../modules/users/userConfirmChange
 import userDisconnectGithub from '../../../modules/users/userDisconectGithub'
 import secrets from '../../../config/secrets'
 import passport from 'passport'
+import { omitAuthSecrets } from '../../../queries/user/userSensitiveAttributes'
 
 export const changeEmail = async (req: any, res: any) => {
   const userId = req.user.id
@@ -16,7 +17,7 @@ export const changeEmail = async (req: any, res: any) => {
       confirmCurrentPassword
     }
     const data = await userChangeEmail(changeEmailParams)
-    res.status(200).send(data)
+    res.status(200).send(omitAuthSecrets(data))
   } catch (error: any) {
     console.log('error on request change email', error)
     res.status(500).json({ error: error.message || 'user.change_email.failed' })

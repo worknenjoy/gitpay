@@ -8,7 +8,6 @@ import Sendmail from '../../mail/mail'
 import { userCustomerCreate } from '../users/userCustomerCreate'
 import { PaypalConnect } from '../../client/provider/paypal'
 import { getDefaultPaymentProviderName, getPaymentProvider } from '../../providers'
-import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 const slack = require('../../shared/slack')
 
 const currentModels = models as any
@@ -77,7 +76,7 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
   const orderCreated = await order.reload({
     include: [
       { model: currentModels.Task },
-      { model: currentModels.User, attributes: { exclude: USER_SENSITIVE_ATTRIBUTES } },
+      { model: currentModels.User.scope('selfView') },
       {
         model: currentModels.Plan,
         include: [{ model: currentModels.PlanSchema }]

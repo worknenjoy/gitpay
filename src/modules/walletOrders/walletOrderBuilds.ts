@@ -22,7 +22,7 @@ export async function walletOrderBuilds(params: WalletOrderBuildsParams) {
 
   const user =
     params.userId &&
-    (await currentModels.User.findOne({
+    (await currentModels.User.scope('withSensitive').findOne({
       where: {
         id: params.userId
       }

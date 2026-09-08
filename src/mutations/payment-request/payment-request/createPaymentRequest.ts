@@ -53,7 +53,7 @@ export async function createPaymentRequest(
   let connectedAccountId: string | undefined
   const directCharge = paymentProvider.name === 'whop'
   if (directCharge) {
-    const user = await models.User.findByPk(userId)
+    const user = await models.User.scope('withSensitive').findByPk(userId)
     connectedAccountId = user?.whop_account_id || undefined
     if (!connectedAccountId) {
       const err: any = new Error(

@@ -21,7 +21,7 @@ export async function taskTransfer(taskParameters: any) {
     throw new Error('find_task_error')
   }
 
-  const user = await currentModels.User.findOne({
+  const user = await currentModels.User.scope('withSensitive').findOne({
     where: {
       id: data.id
     }

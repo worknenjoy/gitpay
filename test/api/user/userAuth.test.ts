@@ -112,7 +112,7 @@ describe('AUTH /user', () => {
       expect(user.statusCode).to.equal(200)
       expect(user.text).to.equal('successfully change password')
 
-      const updatedUser = await models.User.findByPk(body.id)
+      const updatedUser = await models.User.scope('withSensitive').findByPk(body.id)
       expect(updatedUser.recover_password_token).to.equal(null)
       expect(updatedUser.recover_password_token_expires_at).to.equal(null)
     })
@@ -188,7 +188,7 @@ describe('AUTH /user', () => {
       expect(user.statusCode).to.equal(200)
       expect(user.body.id).to.equal(body.id)
 
-      const updatedUser = await models.User.findByPk(body.id)
+      const updatedUser = await models.User.scope('withSensitive').findByPk(body.id)
       expect(updatedUser.pending_email_change).to.equal(newEmail)
       expect(updatedUser.email).to.not.equal(newEmail)
       expect(updatedUser.email_change_token).to.be.a('string')
@@ -302,7 +302,7 @@ describe('AUTH /user', () => {
         .set('Authorization', headers.authorization)
         .expect(200)
 
-      const updatedUser = await models.User.findByPk(body.id)
+      const updatedUser = await models.User.scope('withSensitive').findByPk(body.id)
 
       const confirmResponse = await agent
         .get('/auth/change-email/confirm')
@@ -315,7 +315,7 @@ describe('AUTH /user', () => {
         `${process.env.FRONTEND_HOST}/#/signin/email-change-confirmed`
       )
 
-      const confirmedUser = await models.User.findByPk(body.id)
+      const confirmedUser = await models.User.scope('withSensitive').findByPk(body.id)
       expect(confirmedUser.email).to.equal(newEmail)
       expect(confirmedUser.pending_email_change).to.be.null
       expect(confirmedUser.email_change_token).to.be.null
@@ -355,7 +355,7 @@ describe('AUTH /user', () => {
         .set('Authorization', headers.authorization)
         .expect(200)
 
-      const updatedUser = await models.User.findByPk(body.id)
+      const updatedUser = await models.User.scope('withSensitive').findByPk(body.id)
 
       const confirmResponse = await agent
         .get('/auth/change-email/confirm')
@@ -368,7 +368,7 @@ describe('AUTH /user', () => {
         `${process.env.FRONTEND_HOST}/#/signin/email-change-confirmed`
       )
 
-      const confirmedUser = await models.User.findByPk(body.id)
+      const confirmedUser = await models.User.scope('withSensitive').findByPk(body.id)
       expect(confirmedUser.email).to.equal(newEmail)
       expect(confirmedUser.pending_email_change).to.be.null
       expect(confirmedUser.email_change_token).to.be.null
@@ -396,15 +396,17 @@ describe('AUTH /user', () => {
 
       const newEmail = 'new@example.com'
 
-      const user = await agent
+      await agent
         .post('/auth/change-email')
         .send({ newEmail, currentPassword: 'test', confirmCurrentPassword: 'test' })
         .set('Authorization', headers.authorization)
         .expect(200)
 
+      const pendingUser = await models.User.scope('withSensitive').findByPk(body.id)
+
       const confirmChangeUser = await agent
         .get('/auth/change-email/confirm')
-        .query({ token: user.body.email_change_token })
+        .query({ token: pendingUser.email_change_token })
         .set('Authorization', headers.authorization)
         .expect(302)
 
@@ -413,7 +415,7 @@ describe('AUTH /user', () => {
         `${process.env.FRONTEND_HOST}/#/signin/email-change-failed`
       )
 
-      const confirmedUser = await models.User.findByPk(body.id)
+      const confirmedUser = await models.User.scope('withSensitive').findByPk(body.id)
       expect(confirmedUser.email).to.equal('oldemail@example.com')
     })
     it('it should not confirm email change if another account with the new email exist', async () => {
@@ -427,7 +429,7 @@ describe('AUTH /user', () => {
         .set('Authorization', headers.authorization)
         .expect(200)
 
-      const updatedUser = await models.User.findByPk(body.id)
+      const updatedUser = await models.User.scope('withSensitive').findByPk(body.id)
 
       await UserFactory({ email: 'new@example.com' })
 
@@ -442,7 +444,7 @@ describe('AUTH /user', () => {
         `${process.env.FRONTEND_HOST}/#/signin/email-change-failed`
       )
 
-      const confirmedUser = await models.User.findByPk(body.id)
+      const confirmedUser = await models.User.scope('withSensitive').findByPk(body.id)
       expect(confirmedUser.email).to.equal('oldemail@example.com')
     })
   })

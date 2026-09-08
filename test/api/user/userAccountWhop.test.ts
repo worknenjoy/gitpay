@@ -420,7 +420,7 @@ describe('User Account (Whop)', () => {
         expect(sentBody.parent_company_id).to.equal('biz_test_platform')
         expect(sentBody.email).to.equal(user.body.email)
 
-        const updatedUser = await models.User.findByPk(user.body.id)
+        const updatedUser = await models.User.scope('withSensitive').findByPk(user.body.id)
         expect(updatedUser.whop_account_id).to.equal('biz_new_account_1')
         expect(updatedUser.country).to.equal('US')
       })
@@ -457,7 +457,7 @@ describe('User Account (Whop)', () => {
           'You have already created an account with the same name. Please choose a different name.'
         )
 
-        const updatedUser = await models.User.findByPk(user.body.id)
+        const updatedUser = await models.User.scope('withSensitive').findByPk(user.body.id)
         expect(updatedUser.whop_account_id).to.equal(null)
       })
     })
@@ -499,7 +499,7 @@ describe('User Account (Whop)', () => {
         expect(res.body.requiresConfirmation).to.equal(true)
         expect(res.body.existingAccountId).to.equal('biz_orphan_1')
 
-        const updatedUser = await models.User.findByPk(user.body.id)
+        const updatedUser = await models.User.scope('withSensitive').findByPk(user.body.id)
         expect(updatedUser.whop_account_id).to.equal(null)
       })
     })
@@ -531,7 +531,7 @@ describe('User Account (Whop)', () => {
 
         expect(res.body.id).to.equal('biz_orphan_1')
 
-        const updatedUser = await models.User.findByPk(user.body.id)
+        const updatedUser = await models.User.scope('withSensitive').findByPk(user.body.id)
         expect(updatedUser.whop_account_id).to.equal('biz_orphan_1')
       })
     })
@@ -563,7 +563,7 @@ describe('User Account (Whop)', () => {
 
         expect(res.body.id).to.equal('biz_orphan_legacy')
 
-        const updatedUser = await models.User.findByPk(user.body.id)
+        const updatedUser = await models.User.scope('withSensitive').findByPk(user.body.id)
         expect(updatedUser.whop_account_id).to.equal('biz_orphan_legacy')
       })
     })
@@ -593,7 +593,7 @@ describe('User Account (Whop)', () => {
           .send({ confirmExistingAccountId: 'biz_other_user' })
           .expect(403)
 
-        const updatedUser = await models.User.findByPk(user.body.id)
+        const updatedUser = await models.User.scope('withSensitive').findByPk(user.body.id)
         expect(updatedUser.whop_account_id).to.equal(null)
       })
     })

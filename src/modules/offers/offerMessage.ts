@@ -1,13 +1,8 @@
 import models from '../../models'
 import AssignMail from '../../mail/assign'
 import i18n from 'i18n'
-import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
-const publicUserInclude = {
-  model: currentModels.User,
-  attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
-}
 
 type OfferMessageTask = {
   id: number
@@ -21,10 +16,10 @@ type OfferMessageParams = {
 export async function offerMessage(task: OfferMessageTask, params: OfferMessageParams, user: any) {
   const taskData = await currentModels.Task.findByPk(task.id, {
     include: [
-      publicUserInclude,
+      currentModels.User,
       currentModels.Order,
-      { model: currentModels.Offer, include: [publicUserInclude] },
-      { model: currentModels.Assign, include: [publicUserInclude] }
+      { model: currentModels.Offer, include: [currentModels.User] },
+      { model: currentModels.Assign, include: [currentModels.User] }
     ]
   })
 

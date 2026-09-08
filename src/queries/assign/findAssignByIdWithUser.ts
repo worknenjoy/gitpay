@@ -9,7 +9,7 @@ export const findAssignByIdWithUser = async (assignId: number, options: any = {}
     },
     include: [
       {
-        model: models.User,
+        model: models.User.scope('withSensitive'),
         as: 'User'
       }
     ],
