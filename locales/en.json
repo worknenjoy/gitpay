@@ -300,7 +300,7 @@
   "mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.won.details": "When you win a dispute, the disputed amount is returned to your balance.",
   "mail.paymentRequest.newDisputeClosedForPaymentRequest.reasons.lost.details": "When you lose a dispute, the disputed amount deducted from your balance is lost.",
   "mail.user.forgotPassword.subject": "Reset Password",
-  "mail.user.forgotPassword.message": "<p>Hi {{name}},</p><p>Click <a href=\"{{url}}\">here</a> to reset your password.</p>",
+  "mail.user.forgotPassword.message": "<p>Hi {{name}},</p><p>Click <a href=\"{{{url}}}\">here</a> to reset your password.</p>",
   "mail.user.activation.subject": "Activate your Gitpay account",
   "mail.user.activation.message.intro": "<p>Hi {{name}},</p><p>Welcome to Gitpay!</p>",
   "mail.user.activation.message.subtitle": "<p>We need to confirm your e-mail to activate your account.</p>",
