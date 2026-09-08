@@ -104,7 +104,7 @@ const fetchPullRequestData = (owner, repositoryName, pullRequestId, taskId) => {
         return dispatch(fetchPullRequestDataSuccess(response.data))
       })
       .catch((error) => {
-        if (error.response.data && error.response.data.error) {
+        if (error?.response?.data?.error) {
           dispatch(addNotification(ERRORS[error.response.data.error], { severity: 'error' }))
           return dispatch(fetchPullRequestDataError(error.response.data.error))
         }
@@ -112,9 +112,7 @@ const fetchPullRequestData = (owner, repositoryName, pullRequestId, taskId) => {
         dispatch(
           addNotification(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA'], { severity: 'error' })
         )
-        return dispatch(
-          getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_FETCH_PULL_REQUEST_DATA']))
-        )
+        return dispatch(fetchPullRequestDataError(error))
       })
   }
 }
@@ -139,7 +137,7 @@ const createTaskSolution = (taskSolution) => {
         return dispatch(createTaskSolutionSuccess(response.data))
       })
       .catch((error) => {
-        if (error.response.data && error.response.data.error) {
+        if (error?.response?.data?.error) {
           dispatch(
             addNotification(ERRORS[error.response.data.error] || error.response.data.error, {
               extra: '',
@@ -153,7 +151,7 @@ const createTaskSolution = (taskSolution) => {
         }
 
         dispatch(addNotification(ERRORS['COULD_NOT_CREATE_TASK_SOLUTION'], { severity: 'error' }))
-        return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_CREATE_TASK_SOLUTION'])))
+        return dispatch(createTaskSolutionError(error))
       })
   }
 }
@@ -185,13 +183,13 @@ const updateTaskSolution = ({ taskSolutionId, pullRequestURL, taskId }) => {
         return dispatch(updateTaskSolutionSuccess(response.data))
       })
       .catch((error) => {
-        if (error.response.data && error.response.data.error) {
+        if (error?.response?.data?.error) {
           dispatch(addNotification(ERRORS[error.response.data.error], { severity: 'error' }))
           return dispatch(updateTaskSolutionError(error.response.data.error))
         }
 
         dispatch(addNotification(ERRORS['COULD_NOT_UPDATE_TASK_SOLUTION'], { severity: 'error' }))
-        return dispatch(getTaskSolutionError(JSON.parse(ERRORS['COULD_NOT_UPDATE_TASK_SOLUTION'])))
+        return dispatch(updateTaskSolutionError(error))
       })
   }
 }
