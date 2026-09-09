@@ -7,6 +7,7 @@ import { withPaymentProvider } from '../../../helpers/whop'
 import Models from '../../../../src/models'
 import { PayoutFactory, UserFactory } from '../../../factories'
 import { sendgrid } from '../../../../src/config/secrets'
+import PayoutMail from '../../../../src/mail/payout'
 
 const agent = request.agent(api) as any
 const models = Models as any
@@ -91,6 +92,90 @@ describe('Whop withdrawal webhooks', () => {
       expect(payout.status).to.equal('pending')
       expect(Number(payout.amount)).to.equal(5000)
       expect(payout.notified_status).to.equal('pending')
+    })
+  })
+
+  it('should send the paid mail (not the in-transit one) when withdrawal.created already reports a completed status', async () => {
+    await withPaymentProvider('whop', async () => {
+      const payoutCreatedSpy = sinon.spy(PayoutMail, 'payoutCreated')
+      const payoutPaidSpy = sinon.spy(PayoutMail, 'payoutPaid')
+
+      try {
+        const user = await UserFactory({
+          whop_account_id: 'biz_seller_fast',
+          receiveNotifications: true
+        })
+
+        await agent
+          .post('/webhooks/whop')
+          .send({
+            id: 'msg_wdrl_fast',
+            type: 'withdrawal.created',
+            company_id: 'biz_seller_fast',
+            data: {
+              id: 'wdrl_hook_fast',
+              status: 'completed',
+              amount: 50,
+              currency: 'usd'
+            }
+          })
+          .expect(200)
+
+        expect(payoutPaidSpy.calledOnce).to.equal(true)
+        expect(payoutCreatedSpy.called).to.equal(false)
+
+        const payout = await models.Payout.findOne({ where: { source_id: 'wdrl_hook_fast' } })
+        expect(payout).to.exist
+        expect(payout.userId).to.equal(user.dataValues.id)
+        expect(payout.paid).to.equal(true)
+        expect(payout.status).to.equal('completed')
+        expect(payout.notified_status).to.equal('completed')
+      } finally {
+        payoutCreatedSpy.restore()
+        payoutPaidSpy.restore()
+      }
+    })
+  })
+
+  it('should send the failed mail (not the in-transit one) when withdrawal.created already reports a failed status', async () => {
+    await withPaymentProvider('whop', async () => {
+      const payoutCreatedSpy = sinon.spy(PayoutMail, 'payoutCreated')
+      const payoutFailedSpy = sinon.spy(PayoutMail, 'payoutFailed')
+
+      try {
+        const user = await UserFactory({
+          whop_account_id: 'biz_seller_failfast',
+          receiveNotifications: true
+        })
+
+        await agent
+          .post('/webhooks/whop')
+          .send({
+            id: 'msg_wdrl_failfast',
+            type: 'withdrawal.created',
+            company_id: 'biz_seller_failfast',
+            data: {
+              id: 'wdrl_hook_failfast',
+              status: 'failed',
+              amount: 50,
+              currency: 'usd'
+            }
+          })
+          .expect(200)
+
+        expect(payoutFailedSpy.calledOnce).to.equal(true)
+        expect(payoutCreatedSpy.called).to.equal(false)
+
+        const payout = await models.Payout.findOne({ where: { source_id: 'wdrl_hook_failfast' } })
+        expect(payout).to.exist
+        expect(payout.userId).to.equal(user.dataValues.id)
+        expect(payout.paid).to.equal(false)
+        expect(payout.status).to.equal('failed')
+        expect(payout.notified_status).to.equal('failed')
+      } finally {
+        payoutCreatedSpy.restore()
+        payoutFailedSpy.restore()
+      }
     })
   })
 

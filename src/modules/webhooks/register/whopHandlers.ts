@@ -587,7 +587,14 @@ export async function upsertWhopPayoutFromWithdrawal(
       await payout.update({ paid: true })
     }
 
-    const sent = await PayoutMail.payoutCreated(user, payout)
+    let sent: boolean
+    if (WHOP_PAID_STATUSES.includes(normalizedStatus)) {
+      sent = await PayoutMail.payoutPaid(user, payout)
+    } else if (WHOP_FAILED_STATUSES.includes(normalizedStatus)) {
+      sent = await PayoutMail.payoutFailed(user, payout)
+    } else {
+      sent = await PayoutMail.payoutCreated(user, payout)
+    }
     if (sent || !user.receiveNotifications) {
       await payout.update({ notified_status: payout.status })
     }
