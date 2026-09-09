@@ -1340,7 +1340,7 @@
   "welcome.pricing.contributors.description1": "We support direct transfer for your bank account registered on Gitpay for credit card payments or invoice",
   "welcome.pricing.contributors.description2": "We support many payout methods, including Paypal, Bank transfer, and more",
   "welcome.pricing.contributors.description3": "8% fee to withdraw your bounty after the Pull request is merged",
-  "welcome.pricing.contributors.description4": "⚠️ Note: check in countries and make the onboarding to see if you are eligible to receive payments on your bank account or Paypal",
+  "welcome.pricing.contributors.description4": "⚠️ Note: You will receive the payouts according to the payment method used by the maintainer. If the maintainer is paid by credit card, you will receive the payout to your bank account. If the maintainer paid with PayPal, you will receive the payout in your PayPal account",
   "welcome.pricing.contributors.subheader": "For contributors who solve issues, you will have a fee to receive the transfer",
   "welcome.pricing.contributors.title": "Fee for contributors",
   "welcome.pricing.issue": " / issue",
