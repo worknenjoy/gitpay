@@ -34,7 +34,8 @@ describe('payment request payments loading lifecycle', () => {
     const rows = [{ id: 43 }]
     const loaded = paymentRequestPayments(pending, listPaymentRequestPaymentSucceeded(rows))
 
-    expect(pending).toMatchObject({ completed: false, error: null })
+    expect(pending.completed).toBe(false)
+    expect(pending.error).toBeNull()
     expect(loaded).toEqual({ completed: true, error: null, data: rows })
   })
 
