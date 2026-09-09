@@ -36,3 +36,4 @@ jobs:
           publish_branch: gh-pages
           destination_dir: storybook
           keep_files: true
+          enable_jekyll: true
