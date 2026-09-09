@@ -29,7 +29,7 @@ const messages = defineMessages({
   },
   openSourceDescription3: {
     id: 'welcome.pricing.opensource.description3',
-    defaultMessage: '8% fee for payment with Credit Card or Paypal'
+    defaultMessage: '8% fee for payment with Credit Card or invoice'
   },
   openSourceDescription4: {
     id: 'welcome.pricing.opensource.description4',
@@ -53,7 +53,7 @@ const messages = defineMessages({
   },
   privateDescription3: {
     id: 'welcome.pricing.private.description3',
-    defaultMessage: '18% fee for payment in Credit Card or Paypal'
+    defaultMessage: '18% fee for payment in Credit Card or invoice'
   },
   privateButton: { id: 'welcome.pricing.private.button', defaultMessage: 'Get started' },
 
@@ -72,7 +72,7 @@ const messages = defineMessages({
   },
   contributorsDescription2: {
     id: 'welcome.pricing.contributors.description2',
-    defaultMessage: 'We support Paypal to receive payments when the bounty is paid using Paypal'
+    defaultMessage: 'We support many payout methods, including Paypal, Bank transfer, and more'
   },
   contributorsDescription3: {
     id: 'welcome.pricing.contributors.description3',
@@ -95,7 +95,7 @@ const messages = defineMessages({
   serviceProvidersDescription1: {
     id: 'welcome.pricing.serviceproviders.description1',
     defaultMessage:
-      '8% to receive payouts automatically when your customer pay the payment request for your service'
+      '8% of platform fees + processing fees to receive payouts automatically when your customer pays the payment request for your service'
   },
   serviceProvidersDescription2: {
     id: 'welcome.pricing.serviceproviders.description2',
