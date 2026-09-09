@@ -13,6 +13,9 @@ const PUBLIC_ATTRIBUTES = [
   'username',
   'provider',
   'repos',
+  'country',
+  'skills',
+  'openForJobs',
   'createdAt',
   'updatedAt'
 ]
@@ -38,7 +41,7 @@ export const userSearch = async (params: any) => {
     const users = await models.User.findAll({
       where,
       attributes,
-      include: [models.Type]
+      include: [{ model: models.Type, attributes: ['id', 'name'], through: { attributes: [] } }]
     })
 
     if (!users || users.length <= 0) return false

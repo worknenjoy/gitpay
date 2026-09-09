@@ -11,6 +11,10 @@ const LIST_PAYMENT_REQUESTS_REQUESTED = 'LIST_PAYMENT_REQUESTS_REQUESTED'
 const LIST_PAYMENT_REQUESTS_SUCCESS = 'LIST_PAYMENT_REQUESTS_SUCCESS'
 const LIST_PAYMENT_REQUESTS_ERROR = 'LIST_PAYMENT_REQUESTS_ERROR'
 
+const LIST_PUBLIC_PAYMENT_REQUESTS_REQUESTED = 'LIST_PUBLIC_PAYMENT_REQUESTS_REQUESTED'
+const LIST_PUBLIC_PAYMENT_REQUESTS_SUCCESS = 'LIST_PUBLIC_PAYMENT_REQUESTS_SUCCESS'
+const LIST_PUBLIC_PAYMENT_REQUESTS_ERROR = 'LIST_PUBLIC_PAYMENT_REQUESTS_ERROR'
+
 const UPDATE_PAYMENT_REQUEST_REQUESTED = 'UPDATE_PAYMENT_REQUEST_REQUESTED'
 const UPDATE_PAYMENT_REQUEST_SUCCESS = 'UPDATE_PAYMENT_REQUEST_SUCCESS'
 const UPDATE_PAYMENT_REQUEST_ERROR = 'UPDATE_PAYMENT_REQUEST_ERROR'
@@ -79,6 +83,32 @@ export const listPaymentRequests = (params) => {
   }
 }
 
+export const listPublicPaymentRequestsRequested = () => {
+  return { type: LIST_PUBLIC_PAYMENT_REQUESTS_REQUESTED, completed: false }
+}
+
+export const listPublicPaymentRequestsSuccess = (paymentRequests) => {
+  return { type: LIST_PUBLIC_PAYMENT_REQUESTS_SUCCESS, completed: true, paymentRequests }
+}
+
+export const listPublicPaymentRequestsError = (error) => {
+  return { type: LIST_PUBLIC_PAYMENT_REQUESTS_ERROR, completed: true, error }
+}
+
+export const listPublicPaymentRequests = (userId) => {
+  return (dispatch) => {
+    dispatch(listPublicPaymentRequestsRequested())
+    return axios
+      .get(api.API_URL + `/payment-requests-public/user/${userId}`)
+      .then((response) => {
+        return dispatch(listPublicPaymentRequestsSuccess(response.data))
+      })
+      .catch((e) => {
+        return dispatch(listPublicPaymentRequestsError(e))
+      })
+  }
+}
+
 export const updatePaymentRequestRequested = () => {
   return { type: UPDATE_PAYMENT_REQUEST_REQUESTED }
 }
@@ -120,6 +150,9 @@ export {
   LIST_PAYMENT_REQUESTS_REQUESTED,
   LIST_PAYMENT_REQUESTS_SUCCESS,
   LIST_PAYMENT_REQUESTS_ERROR,
+  LIST_PUBLIC_PAYMENT_REQUESTS_REQUESTED,
+  LIST_PUBLIC_PAYMENT_REQUESTS_SUCCESS,
+  LIST_PUBLIC_PAYMENT_REQUESTS_ERROR,
   UPDATE_PAYMENT_REQUEST_REQUESTED,
   UPDATE_PAYMENT_REQUEST_SUCCESS,
   UPDATE_PAYMENT_REQUEST_ERROR

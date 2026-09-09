@@ -8,7 +8,10 @@ import {
   CLEAN_PULL_REQUEST_DATA_STATE,
   LIST_TASK_SOLUTIONS_REQUESTED,
   LIST_TASK_SOLUTIONS_SUCCESS,
-  LIST_TASK_SOLUTIONS_ERROR
+  LIST_TASK_SOLUTIONS_ERROR,
+  LIST_PUBLIC_TASK_SOLUTIONS_REQUESTED,
+  LIST_PUBLIC_TASK_SOLUTIONS_SUCCESS,
+  LIST_PUBLIC_TASK_SOLUTIONS_ERROR
 } from '../actions/taskSolutionActions'
 
 const initialState = {
@@ -24,6 +27,19 @@ export const taskSolutions = (state = { data: [], completed: false }, action) =>
     case LIST_TASK_SOLUTIONS_SUCCESS:
       return { ...state, completed: true, data: action.taskSolutions }
     case LIST_TASK_SOLUTIONS_ERROR:
+      return { ...state, completed: true, error: action.error }
+    default:
+      return state
+  }
+}
+
+export const publicTaskSolutions = (state = { data: [], completed: false }, action) => {
+  switch (action.type) {
+    case LIST_PUBLIC_TASK_SOLUTIONS_REQUESTED:
+      return { ...state, completed: false }
+    case LIST_PUBLIC_TASK_SOLUTIONS_SUCCESS:
+      return { ...state, completed: true, data: action.taskSolutions }
+    case LIST_PUBLIC_TASK_SOLUTIONS_ERROR:
       return { ...state, completed: true, error: action.error }
     default:
       return state

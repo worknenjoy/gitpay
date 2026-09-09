@@ -1,4 +1,7 @@
-import { findPaymentRequestById } from '../../queries/payment-request/payment-request'
+import {
+  findPaymentRequestById,
+  findPublicPaymentRequestsByUserId
+} from '../../queries/payment-request/payment-request'
 import { WhopPaymentProvider } from '../../providers/whop/WhopPaymentProvider'
 import Models from '../../models'
 
@@ -22,6 +25,36 @@ export const getPublicPaymentRequest = async function getPublicPaymentRequest(re
   } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log('getPublicPaymentRequest error on controller', error)
+    res.status(error.StatusCodeError || 400).send(error)
+  }
+}
+
+export const listPublicPaymentRequests = async function listPublicPaymentRequests(
+  req: any,
+  res: any
+) {
+  try {
+    const userId = parseInt(req.params.userId, 10)
+    if (!Number.isFinite(userId)) {
+      return res.status(400).send({ message: 'A valid userId is required' })
+    }
+
+    const paymentRequests = await findPublicPaymentRequestsByUserId(userId)
+
+    return res.status(200).send(
+      paymentRequests.map((paymentRequest: any) => ({
+        id: paymentRequest.id,
+        title: paymentRequest.title,
+        description: paymentRequest.description,
+        url: paymentRequest.payment_url,
+        price: Number(paymentRequest.amount),
+        currency: paymentRequest.currency,
+        paidCount: Number(paymentRequest.getDataValue('paidCount'))
+      }))
+    )
+  } catch (error: any) {
+    // eslint-disable-next-line no-console
+    console.log('listPublicPaymentRequests error on controller', error)
     res.status(error.StatusCodeError || 400).send(error)
   }
 }

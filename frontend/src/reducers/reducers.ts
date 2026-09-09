@@ -15,7 +15,7 @@ import { preferences } from './preferencesReducer'
 import { profileTypes } from './userProfileTypeReducer'
 import { organizations, organization } from './organizationsReducer'
 import { contact } from './contactReducer'
-import taskSolution, { taskSolutions } from './taskSolutionReducer'
+import taskSolution, { taskSolutions, publicTaskSolutions } from './taskSolutionReducer'
 import couponReducer from './couponReducer'
 import { profileReducer } from './profileReducer'
 import { labels } from './labelReducer'
@@ -24,7 +24,7 @@ import { transfers, transfer } from './transfersReducer'
 import { payouts } from './payoutsReducer'
 import { wallet, wallets } from './walletReducer'
 import { walletOrder, walletOrders } from './walletOrderReducer'
-import { paymentRequest, paymentRequests } from './paymentRequestReducer'
+import { paymentRequest, paymentRequests, publicPaymentRequests } from './paymentRequestReducer'
 import { paymentRequestTransfers } from './paymentRequestTransferReducer'
 import { paymentRequestPayments, paymentRequestPayment } from './paymentRequestPaymentReducer'
 import { paymentRequestBalances } from './paymentRequestBalanceReducer'
@@ -58,6 +58,7 @@ const reducers = combineReducers({
   contact,
   taskSolutionReducer: taskSolution,
   taskSolutions,
+  publicTaskSolutions,
   couponReducer: couponReducer,
   profileReducer: profileReducer,
   intl: intlReducer,
@@ -70,6 +71,7 @@ const reducers = combineReducers({
   walletOrder,
   paymentRequest,
   paymentRequests,
+  publicPaymentRequests,
   paymentRequestTransfers,
   paymentRequestPayments,
   paymentRequestPayment,

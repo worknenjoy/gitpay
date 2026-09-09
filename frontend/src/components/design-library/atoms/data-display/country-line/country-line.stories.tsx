@@ -14,7 +14,7 @@ type Story = StoryObj<typeof CountryLine>
 
 export const Default: Story = {
   args: {
-    flagEmoji: '🇧🇷',
+    image: 'brazil',
     countryName: 'Brazil',
     utcOffset: '−03:00'
   }
@@ -22,7 +22,7 @@ export const Default: Story = {
 
 export const NoOffset: Story = {
   args: {
-    flagEmoji: '🇵🇹',
+    image: 'portugal',
     countryName: 'Portugal'
   }
 }

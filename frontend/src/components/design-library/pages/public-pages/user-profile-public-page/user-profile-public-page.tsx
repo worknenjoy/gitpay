@@ -21,29 +21,29 @@ export type ProfileType = 'contributor' | 'maintainer' | 'provider'
 type UserProfilePublicPageProps = {
   user?: any
   tasks?: any
+  pullRequests?: any
   searchUser?: any
   serverSidePagination?: any
   onTabChange?: any
   profileTypes?: ProfileType[]
-  onHire?: () => void
-  onSponsor?: () => void
   onPayLink?: (link: any) => void
   onViewBounty?: (bounty: any) => void
   onBountyTabChange?: (value: string) => void
+  shareUrl?: string
 }
 
 const UserProfilePublicPage = ({
   user,
   tasks,
+  pullRequests,
   searchUser,
   serverSidePagination,
   onTabChange,
   profileTypes = [],
-  onHire,
-  onSponsor,
   onPayLink,
   onViewBounty,
-  onBountyTabChange
+  onBountyTabChange,
+  shareUrl
 }: UserProfilePublicPageProps) => {
   const { data: profile } = user || {}
   const issueMetadata = useIssueMetadata({ includeProject: true })
@@ -54,12 +54,12 @@ const UserProfilePublicPage = ({
         <ContributorProfileVariant
           profile={profile}
           bounties={tasks}
+          pullRequests={pullRequests}
           completed={user?.completed}
-          onHire={onHire}
-          onSponsor={onSponsor}
           onPayLink={onPayLink}
           onViewBounty={onViewBounty}
           onBountyTabChange={onBountyTabChange}
+          shareUrl={shareUrl}
         />
       </Page>
     )

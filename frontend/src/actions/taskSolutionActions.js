@@ -26,6 +26,10 @@ const LIST_TASK_SOLUTIONS_REQUESTED = 'LIST_TASK_SOLUTIONS_REQUESTED'
 const LIST_TASK_SOLUTIONS_SUCCESS = 'LIST_TASK_SOLUTIONS_SUCCESS'
 const LIST_TASK_SOLUTIONS_ERROR = 'LIST_TASK_SOLUTIONS_ERROR'
 
+const LIST_PUBLIC_TASK_SOLUTIONS_REQUESTED = 'LIST_PUBLIC_TASK_SOLUTIONS_REQUESTED'
+const LIST_PUBLIC_TASK_SOLUTIONS_SUCCESS = 'LIST_PUBLIC_TASK_SOLUTIONS_SUCCESS'
+const LIST_PUBLIC_TASK_SOLUTIONS_ERROR = 'LIST_PUBLIC_TASK_SOLUTIONS_ERROR'
+
 const ERRORS = {
   COULD_NOT_GET_TASK_SOLUTION: 'issue.solution.dialog.get.error',
   COULD_NOT_UPDATE_TASK_SOLUTION: 'issue.solution.dialog.update.error',
@@ -220,6 +224,24 @@ const listTaskSolutions = () => {
   }
 }
 
+const listPublicTaskSolutions = (userId) => {
+  return (dispatch) => {
+    dispatch({ type: LIST_PUBLIC_TASK_SOLUTIONS_REQUESTED, completed: false })
+    return axios
+      .get(`${api.API_URL}/tasksolutions-public/${userId}`)
+      .then((response) => {
+        return dispatch({
+          type: LIST_PUBLIC_TASK_SOLUTIONS_SUCCESS,
+          completed: true,
+          taskSolutions: response.data
+        })
+      })
+      .catch((error) => {
+        return dispatch({ type: LIST_PUBLIC_TASK_SOLUTIONS_ERROR, completed: true, error })
+      })
+  }
+}
+
 export {
   fetchPullRequestData,
   createTaskSolution,
@@ -227,6 +249,7 @@ export {
   getTaskSolution,
   cleanPullRequestDataState,
   listTaskSolutions,
+  listPublicTaskSolutions,
   GET_TASK_SOLUTION_REQUESTED,
   GET_TASK_SOLUTION_SUCCESS,
   GET_TASK_SOLUTION_ERROR,
@@ -239,5 +262,8 @@ export {
   CLEAN_PULL_REQUEST_DATA_STATE,
   LIST_TASK_SOLUTIONS_REQUESTED,
   LIST_TASK_SOLUTIONS_SUCCESS,
-  LIST_TASK_SOLUTIONS_ERROR
+  LIST_TASK_SOLUTIONS_ERROR,
+  LIST_PUBLIC_TASK_SOLUTIONS_REQUESTED,
+  LIST_PUBLIC_TASK_SOLUTIONS_SUCCESS,
+  LIST_PUBLIC_TASK_SOLUTIONS_ERROR
 }

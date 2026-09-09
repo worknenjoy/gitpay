@@ -1,29 +1,23 @@
 import React from 'react'
 import { Typography } from '@mui/material'
-import { FormattedMessage } from 'react-intl'
+import CountryFlagImage from '../../../../areas/private/shared/country-flag-image'
 
 export type CountryLineProps = {
-  flagEmoji?: string
+  /** Flag image slug, e.g. "brazil" — see provider-country-codes.ts's `image` field. */
+  image?: string
   countryName: string
   utcOffset?: string
 }
 
-const CountryLine = ({ flagEmoji, countryName, utcOffset }: CountryLineProps) => (
+const CountryLine = ({ image, countryName, utcOffset }: CountryLineProps) => (
   <Typography
     variant="caption"
     sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, color: 'text.secondary' }}
   >
-    {flagEmoji && <span aria-hidden="true">{flagEmoji}</span>}
+    {image && <CountryFlagImage image={image} alt="" width={18} height={13} />}
     <span>
-      {utcOffset ? (
-        <FormattedMessage
-          id="profile.countryLine.withOffset"
-          defaultMessage="{countryName} · UTC{utcOffset}"
-          values={{ countryName, utcOffset }}
-        />
-      ) : (
-        countryName
-      )}
+      {countryName}
+      {utcOffset ? ` · UTC${utcOffset}` : ''}
     </span>
   </Typography>
 )

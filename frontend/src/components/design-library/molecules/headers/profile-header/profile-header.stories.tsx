@@ -20,7 +20,7 @@ const baseArgs = {
   username: 'alexandremagno',
   name: 'Alexandre Magno',
   verified: true,
-  country: { flagEmoji: '🇧🇷', name: 'Brazil', utcOffset: '−03:00' },
+  country: { image: 'brazil', name: 'Brazil', utcOffset: '−03:00' },
   links: [
     {
       label: 'blog.alexandremagno.net/en',

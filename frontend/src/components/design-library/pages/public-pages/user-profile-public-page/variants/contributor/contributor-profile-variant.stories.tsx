@@ -50,7 +50,6 @@ const baseProfile = {
   ],
   bountyTabs: [
     { value: 'solved', label: 'Issues solved', count: 127 },
-    { value: 'sponsored', label: 'Sponsored', count: 12 },
     { value: 'pull-requests', label: 'Pull requests', count: 142 }
   ]
 }
@@ -118,12 +117,30 @@ const sampleBounties = [
   }
 ]
 
+const samplePullRequests = [
+  {
+    id: 1,
+    pullRequestURL: 'https://github.com/worknenjoy/gitpay/pull/1101',
+    isPRMerged: true,
+    isIssueClosed: true,
+    createdAt: '2024-11-02T10:00:00Z',
+    Task: { id: 1101, title: 'When accept the terms in account settings, redirect fails' }
+  },
+  {
+    id: 2,
+    pullRequestURL: 'https://github.com/worknenjoy/gitpay/pull/980',
+    isPRMerged: false,
+    isIssueClosed: false,
+    createdAt: '2024-12-01T10:00:00Z',
+    Task: { id: 980, title: 'Update readme with new setup instructions' }
+  }
+]
+
 const baseArgs = {
   completed: true,
   profile: baseProfile,
   bounties: { data: sampleBounties, completed: true },
-  onHire: action('onHire'),
-  onSponsor: action('onSponsor'),
+  pullRequests: { data: samplePullRequests, completed: true },
   onPayLink: action('onPayLink'),
   onViewBounty: action('onViewBounty'),
   onBountyTabChange: action('onBountyTabChange'),
@@ -192,7 +209,8 @@ export const EmptyState: Story = {
     ...baseArgs,
     defaultTab: 'bounties',
     profile: { ...baseProfile, skills: [], paymentLinks: [] },
-    bounties: { data: [], completed: true }
+    bounties: { data: [], completed: true },
+    pullRequests: { data: [], completed: true }
   }
 }
 

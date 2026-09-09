@@ -11,6 +11,7 @@ import routerOrganization from './routes/organization'
 import routerContact from './routes/contact'
 import routerTypes from './routes/types'
 import routerTaskSolution from './routes/taskSolutions'
+import routerTaskSolutionPublic from './routes/taskSolutionsPublic'
 import routerCoupon from './routes/coupon'
 import routerLabel from './routes/label'
 import routerOffer from './routes/offer'
@@ -50,6 +51,7 @@ export const init = (app: Express) => {
   app.use('/types', routerTypes)
   app.use('/contact', routerContact)
   app.use('/tasksolutions', routerTaskSolution)
+  app.use('/tasksolutions-public', routerTaskSolutionPublic)
   app.use('/coupon', routerCoupon)
   app.use('/labels', routerLabel)
   app.use('/languages', routerLanguage)

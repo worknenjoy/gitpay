@@ -82,7 +82,6 @@ export const Contributor: Story = {
         ],
         bountyTabs: [
           { value: 'solved', label: 'Issues solved', count: 127 },
-          { value: 'sponsored', label: 'Sponsored', count: 12 },
           { value: 'pull-requests', label: 'Pull requests', count: 142 }
         ]
       }
@@ -130,8 +129,19 @@ export const Contributor: Story = {
         }
       ]
     },
-    onHire: action('onHire'),
-    onSponsor: action('onSponsor'),
+    pullRequests: {
+      completed: true,
+      data: [
+        {
+          id: 1,
+          pullRequestURL: 'https://github.com/worknenjoy/gitpay/pull/1101',
+          isPRMerged: true,
+          isIssueClosed: true,
+          createdAt: '2024-11-02T10:00:00Z',
+          Task: { id: 1101, title: 'When accept the terms in account settings, redirect fails' }
+        }
+      ]
+    },
     onPayLink: action('onPayLink'),
     onViewBounty: action('onViewBounty'),
     onBountyTabChange: action('onBountyTabChange'),

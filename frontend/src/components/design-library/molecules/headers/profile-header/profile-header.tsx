@@ -40,7 +40,7 @@ export type ProfileHeaderProps = {
   name: string
   pictureUrl?: string
   verified?: boolean
-  country?: { flagEmoji?: string; name: string; utcOffset?: string }
+  country?: { image?: string; name: string; utcOffset?: string }
   links?: LinkChipProps[]
   role?: { name: string; tone?: 'orange' | 'teal' | 'yellow' }
   actions?: ProfileHeaderAction[]
@@ -117,7 +117,7 @@ const ProfileHeader = ({
       </Typography>
       {country && (
         <CountryLine
-          flagEmoji={country.flagEmoji}
+          image={country.image}
           countryName={country.name}
           utcOffset={country.utcOffset}
         />
