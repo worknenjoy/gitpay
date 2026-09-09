@@ -30,6 +30,7 @@ export const DefinitionRow = styled(Box)(() => ({
 
 export const DefinitionLabel = styled('dt')(({ theme }) => ({
   margin: 0,
+  fontFamily: theme.typography.fontFamily,
   color: theme.palette.text.secondary,
   fontSize: theme.typography.body2.fontSize,
   lineHeight: 1.5,
@@ -40,6 +41,7 @@ export const DefinitionLabel = styled('dt')(({ theme }) => ({
 
 export const DefinitionValue = styled('dd')(({ theme }) => ({
   margin: 0,
+  fontFamily: theme.typography.fontFamily,
   color: theme.palette.text.primary,
   fontSize: theme.typography.body2.fontSize,
   lineHeight: 1.5,

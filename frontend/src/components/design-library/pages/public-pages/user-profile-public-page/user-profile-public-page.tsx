@@ -10,10 +10,60 @@ import {
   customColumnRenderer
 } from 'design-library/molecules/tables/issue-table/issue-table'
 import { FormattedMessage } from 'react-intl'
+import ContributorProfileVariant from './variants/contributor/contributor-profile-variant'
 
-const UserProfilePublicPage = ({ user, tasks, searchUser, serverSidePagination, onTabChange }) => {
+// Which role-based variant to render. A user can hold multiple roles at once
+// (contributor + maintainer, say) — hence an array — but for now only
+// 'contributor' has a real variant; anything else falls back to the generic
+// layout below. Test one variant at a time as each is built.
+export type ProfileType = 'contributor' | 'maintainer' | 'provider'
+
+type UserProfilePublicPageProps = {
+  user?: any
+  tasks?: any
+  searchUser?: any
+  serverSidePagination?: any
+  onTabChange?: any
+  profileTypes?: ProfileType[]
+  onHire?: () => void
+  onSponsor?: () => void
+  onPayLink?: (link: any) => void
+  onViewBounty?: (bounty: any) => void
+  onBountyTabChange?: (value: string) => void
+}
+
+const UserProfilePublicPage = ({
+  user,
+  tasks,
+  searchUser,
+  serverSidePagination,
+  onTabChange,
+  profileTypes = [],
+  onHire,
+  onSponsor,
+  onPayLink,
+  onViewBounty,
+  onBountyTabChange
+}: UserProfilePublicPageProps) => {
   const { data: profile } = user || {}
   const issueMetadata = useIssueMetadata({ includeProject: true })
+
+  if (profileTypes.includes('contributor')) {
+    return (
+      <Page>
+        <ContributorProfileVariant
+          profile={profile}
+          bounties={tasks}
+          completed={user?.completed}
+          onHire={onHire}
+          onSponsor={onSponsor}
+          onPayLink={onPayLink}
+          onViewBounty={onViewBounty}
+          onBountyTabChange={onBountyTabChange}
+        />
+      </Page>
+    )
+  }
 
   return (
     <React.Fragment>
