@@ -4,7 +4,7 @@ import { Typography, Chip, Link } from '@mui/material'
 
 const IssueProjectField = ({ issue }) => {
   const history = useHistory()
-  const { Project: project } = issue
+  const { Project: project } = issue || {}
   const isProfile = history.location.pathname.includes('/profile')
   const isExplore = history.location.pathname.includes('/profile/explore')
   const profile = isProfile ? '/profile' : ''

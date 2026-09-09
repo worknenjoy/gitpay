@@ -8,7 +8,14 @@ import { formatCurrency } from '../../../../../../utils/format-currency'
 import { formatStripeAmount } from '../../balance-card/balance-card'
 
 const PayoutsDashboardCard = ({ payouts }) => {
-  const { currency, amount, total = 0, pending = 0, completed = 0, in_transit = 0 } = payouts || {}
+  const {
+    currency = '',
+    amount,
+    total = 0,
+    pending = 0,
+    completed = 0,
+    in_transit = 0
+  } = payouts || {}
   const convertedAmount = formatStripeAmount(amount)
   const finalAmount = formatCurrency(Number(convertedAmount), 'en-US', currency.toUpperCase())
   return (

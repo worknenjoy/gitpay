@@ -3,7 +3,7 @@ import React from 'react'
 import TextEllipsis from 'text-ellipsis'
 
 const IssueLabelsField = ({ issue }) => {
-  const { Labels: labels } = issue
+  const { Labels: labels } = issue || {}
   return labels?.length ? (
     <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 4 }}>
       {labels.slice(0, 2).map((label) => (

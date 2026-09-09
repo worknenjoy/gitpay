@@ -38,7 +38,7 @@ const paginate = (array, pageSize, pageNumber) => {
 }
 
 const OrganizationList = ({ organizations }) => {
-  const { data, completed } = organizations
+  const { data, completed } = organizations || {}
   const [currentOrganizations, setCurrentOrganizations] = useState([])
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)

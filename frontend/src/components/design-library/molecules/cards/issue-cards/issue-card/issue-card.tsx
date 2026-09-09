@@ -9,6 +9,7 @@ import { StyledCardHeader, StyledAvatar, TaskTitle } from './issue-card.styles'
 
 const IssueCard = ({ issue }) => {
   const [open, setOpen] = useState(false)
+  const { data = {} } = issue || {}
 
   const handleOpen = () => {
     setOpen(true)
@@ -19,14 +20,14 @@ const IssueCard = ({ issue }) => {
   }
 
   const renderIssueAuthorLink = () => {
-    if (issue.data.metadata && issue.data.metadata?.issue?.user?.html_url) {
+    if (data.metadata && data.metadata?.issue?.user?.html_url) {
       return (
-        <Link href={`${issue.data.metadata.issue.user.html_url}`} target="_blank">
+        <Link href={`${data.metadata.issue.user.html_url}`} target="_blank">
           <FormattedMessage
             id="task.status.created.name.short"
             defaultMessage="by {name}"
             values={{
-              name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
+              name: data.metadata ? data.metadata?.issue?.user?.login : 'unknown'
             }}
           />
         </Link>
@@ -37,16 +38,14 @@ const IssueCard = ({ issue }) => {
           id="task.status.created.name.short"
           defaultMessage="by {name}"
           values={{
-            name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
+            name: data.metadata ? data.metadata?.issue?.user?.login : 'unknown'
           }}
         />
       )
     }
   }
 
-  const updatedAtTimeString = MomentComponent(issue?.data?.updated_at)
-    .utc()
-    .format('DD/MM/YYYY hh:mm A')
+  const updatedAtTimeString = MomentComponent(data.updated_at).utc().format('DD/MM/YYYY hh:mm A')
 
   return (
     <Card>
@@ -56,18 +55,18 @@ const IssueCard = ({ issue }) => {
             id="task.status.created.name"
             defaultMessage="Created by {name}"
             values={{
-              name: issue.data.metadata ? issue.data.metadata?.issue?.user?.login : 'unknown'
+              name: data.metadata ? data.metadata?.issue?.user?.login : 'unknown'
             }}
           >
             {(msg) => (
               <Tooltip id="tooltip-github" title={msg} placement="bottom">
                 <a
-                  href={`${issue.data.metadata?.issue?.user?.html_url}`}
+                  href={`${data.metadata?.issue?.user?.html_url}`}
                   target="_blank"
                   rel="noreferrer"
                 >
                   <Avatar
-                    src={issue.data.metadata?.issue?.user?.avatar_url}
+                    src={data.metadata?.issue?.user?.avatar_url}
                     component={StyledAvatar as any}
                   />
                 </a>
@@ -77,13 +76,13 @@ const IssueCard = ({ issue }) => {
         }
         title={
           <Typography variant="h6" color="primary">
-            <Link href={`${issue.data.url}`} target="_blank" component={TaskTitle as any}>
-              {issue.data.title}
+            <Link href={`${data.url}`} target="_blank" component={TaskTitle as any}>
+              {data.title}
               <img
                 width="24"
                 height="24"
                 style={{ marginLeft: 10 }}
-                src={issue.data.provider === 'github' ? logoGithub : logoBitbucket}
+                src={data.provider === 'github' ? logoGithub : logoBitbucket}
               />
             </Link>
           </Typography>

@@ -10,7 +10,7 @@ const paginate = (array, pageSize, pageNumber) => {
 }
 
 const ProjectListFull = ({ projects }) => {
-  const { data, completed } = projects
+  const { data, completed } = projects || {}
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [currentProjects, setCurrentProjects] = useState([])

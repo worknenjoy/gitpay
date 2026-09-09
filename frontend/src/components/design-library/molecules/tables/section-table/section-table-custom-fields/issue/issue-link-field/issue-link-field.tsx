@@ -33,7 +33,7 @@ const IssueLinkField = ({ issue }) => {
     }
   }
 
-  const logo = getProviderLogo(issue.provider)
+  const logo = getProviderLogo(issue?.provider)
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

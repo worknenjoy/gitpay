@@ -24,7 +24,7 @@ const LANGUAGE_COLORS: Record<string, { bg: string; color: string }> = {
 const DEFAULT_LANG_COLOR = { bg: '#f3f4f6', color: '#374151' }
 
 const IssueLanguageField = ({ issue }) => {
-  const { Project: project } = issue
+  const { Project: project } = issue || {}
   const languages = project?.ProgrammingLanguages
   return languages?.length ? (
     <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 4 }}>

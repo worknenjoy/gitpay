@@ -7,7 +7,8 @@ import { Profile, BigAvatar, NameContainer, Website } from './profile-user-heade
 
 import logoGithub from 'images/github-logo.png'
 
-const ProfileUserHeader = ({ profile }) => {
+const ProfileUserHeader = ({ profile: profileProp }) => {
+  const profile = profileProp || {}
   return (
     <Profile>
       <div>
