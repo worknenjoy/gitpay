@@ -26,7 +26,7 @@ import CookiePolicy from '../../../../molecules/content/terms/cookie-policy/cook
 import logoCompleteGray from 'images/logo-complete-gray.png'
 import logoWorknEnjoy from 'images/worknenjoy-logo.png'
 
-const Bottom = ({ info, getInfo }) => {
+const Bottom = ({ info = {}, getInfo }) => {
   const history = useHistory()
   const { data, completed } = info
   const {
