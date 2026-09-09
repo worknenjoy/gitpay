@@ -15,6 +15,13 @@
     url: /docs/br/getting-started
 
 - en:
+    title: Storybook
+    url: /storybook/
+  br:
+    title: Storybook
+    url: /storybook/
+
+- en:
     title: Roadmap
     url: /changelog
   br:
