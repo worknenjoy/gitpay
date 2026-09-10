@@ -14,7 +14,7 @@ const CountryLine = ({ image, countryName, utcOffset }: CountryLineProps) => (
     variant="caption"
     sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, color: 'text.secondary' }}
   >
-    {image && <CountryFlagImage image={image} alt="" width={18} height={13} />}
+    {image && <CountryFlagImage image={image} alt="" width={16} />}
     <span>
       {countryName}
       {utcOffset ? ` · UTC${utcOffset}` : ''}
