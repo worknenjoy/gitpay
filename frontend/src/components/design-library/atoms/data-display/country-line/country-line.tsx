@@ -12,7 +12,7 @@ export type CountryLineProps = {
 const CountryLine = ({ image, countryName, utcOffset }: CountryLineProps) => (
   <Typography
     variant="caption"
-    sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, color: 'text.secondary' }}
+    sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5, color: 'text.secondary' }}
   >
     {image && <CountryFlagImage image={image} alt="" width={16} />}
     <span>

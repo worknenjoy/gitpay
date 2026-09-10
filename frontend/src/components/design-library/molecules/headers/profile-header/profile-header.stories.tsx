@@ -28,7 +28,7 @@ const baseArgs = {
       icon: <WebsiteIcon fontSize="small" />
     },
     {
-      label: '@alexandremagno',
+      label: 'alexandremagno',
       href: 'https://github.com/alexandremagno',
       icon: <GitHubIcon fontSize="small" />
     }

@@ -81,7 +81,7 @@ const headerLinks = (profile: ContributorProfileData) => {
   }
   if (profile.profile_url) {
     links.push({
-      label: `@${profile.username}`,
+      label: profile.username,
       href: profile.profile_url,
       icon: <GitHubIcon fontSize="small" />
     })
