@@ -29,7 +29,7 @@ const fetchProjectError = (error) => {
 const fetchProject = (projectId, params) => {
   return (dispatch) => {
     dispatch(fetchProjectRequested())
-    axios
+    return axios
       .get(api.API_URL + `/projects/fetch/${projectId}`, { params })
       .then((project) => {
         if (project.data) {
@@ -40,11 +40,11 @@ const fetchProject = (projectId, params) => {
       })
       .catch((e) => {
         dispatch(addNotification('actions.task.fetch.other.error', { severity: 'error' }))
-        dispatch(fetchProjectError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')
         // eslint-disable-next-line no-console
         console.log(e)
+        return dispatch(fetchProjectError(e))
       })
   }
 }
@@ -68,7 +68,7 @@ const listProjectsError = (error) => {
 const listProjects = () => {
   return (dispatch) => {
     dispatch(listProjectsRequested())
-    axios
+    return axios
       .get(api.API_URL + '/projects/list')
       .then((projects) => {
         if (projects.data) {
@@ -79,11 +79,11 @@ const listProjects = () => {
       })
       .catch((e) => {
         dispatch(addNotification('actions.task.fetch.other.error', { severity: 'error' }))
-        dispatch(listProjectsError(e))
         // eslint-disable-next-line no-console
         console.log('not possible to fetch issue')
         // eslint-disable-next-line no-console
         console.log(e)
+        return dispatch(listProjectsError(e))
       })
   }
 }
