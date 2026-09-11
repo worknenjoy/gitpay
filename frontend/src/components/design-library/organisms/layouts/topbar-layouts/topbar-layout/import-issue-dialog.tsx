@@ -18,6 +18,12 @@ import {
 import isGithubUrl from 'is-github-url'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
+
+const logoKde =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" rx="3" fill="#1D99F3"/><text x="8" y="12" text-anchor="middle" font-size="10" font-family="sans-serif" fill="#fff">K</text></svg>'
+  )
 import api from '../../../../../../consts'
 import {
   FullWidthFormControl,
@@ -34,16 +40,29 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
   const [notListed, setNotListed] = useState(false)
 
   const validURL = (url) => {
-    return isGithubUrl(url) || isBitbucketUrl(url)
+    return isGithubUrl(url) || isBitbucketUrl(url) || isKdeUrl(url)
   }
 
   const isBitbucketUrl = (url) => {
     return url.indexOf('bitbucket') > -1
   }
 
+  const isKdeUrl = (url) => {
+    try {
+      const host = new URL(url).hostname.toLowerCase()
+      return host === 'bugs.kde.org' || host === 'www.bugs.kde.org'
+    } catch (e) {
+      return url.indexOf('bugs.kde.org') > -1
+    }
+  }
+
   const onChange = (e: any) => {
-    setUrl(e.target.value)
+    const nextUrl = e.target.value
+    setUrl(nextUrl)
     setError(false)
+    if (isKdeUrl(nextUrl)) setProvider('kde')
+    else if (isBitbucketUrl(nextUrl)) setProvider('bitbucket')
+    else if (isGithubUrl(nextUrl)) setProvider('github')
   }
 
   const handleCreateTask = async (e: any) => {
@@ -79,7 +98,7 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
             <Typography variant="subtitle1" gutterBottom>
               <FormattedMessage
                 id="task.actions.insert.subheading"
-                defaultMessage="Paste the url of an incident of Github or Bitbucket"
+                defaultMessage="Paste the URL of a GitHub, Bitbucket, or KDE Bugzilla issue"
               />
             </Typography>
           </DialogContentText>
@@ -134,6 +153,16 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
               >
                 <img width="16" src={logoBitbucket} />
                 <span className="provider-label">Bitbucket</span>
+              </ProviderButton>
+
+              <ProviderButton
+                color="primary"
+                variant={provider === 'kde' ? 'contained' : 'outlined'}
+                id="kde"
+                onClick={(e) => setProvider('kde')}
+              >
+                <img width="16" src={logoKde} alt="" />
+                <span className="provider-label">KDE</span>
               </ProviderButton>
             </ProvidersWrapper>
 
