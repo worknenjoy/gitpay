@@ -18,6 +18,12 @@ import {
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 
+const logoCodeberg =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="#2185D0" d="M8 1.5 1 14.5h14L8 1.5zm0 3.2 4.7 8.3H3.3L8 4.7z"/></svg>'
+  )
+
 type ImportIssueDialogProps = {
   open: boolean
   onClose: () => void
@@ -32,8 +38,17 @@ const ImportIssueDialog = ({ open, onClose, onImport }: ImportIssueDialogProps) 
   const [notListed, setNotListed] = useState(false)
 
   const onChange = (e: any) => {
-    setUrl(e.target.value)
+    const nextUrl = e.target.value
+    setUrl(nextUrl)
     setError(false)
+    try {
+      const host = new URL(nextUrl).hostname.toLowerCase()
+      if (host === 'codeberg.org' || host === 'www.codeberg.org') setProvider('codeberg')
+      else if (host === 'bitbucket.org' || host === 'www.bitbucket.org') setProvider('bitbucket')
+      else if (host === 'github.com' || host === 'www.github.com') setProvider('github')
+    } catch (err) {
+      // keep the currently selected provider until the URL is valid
+    }
   }
 
   const handleCreateTask = async (e: any) => {
@@ -57,7 +72,7 @@ const ImportIssueDialog = ({ open, onClose, onImport }: ImportIssueDialogProps) 
             <Typography variant="subtitle1" gutterBottom>
               <FormattedMessage
                 id="task.actions.insert.subheading"
-                defaultMessage="Paste the url of an incident of Github or Bitbucket"
+                defaultMessage="Paste the URL of a GitHub, Bitbucket, or Codeberg issue"
               />
             </Typography>
           </DialogContentText>
@@ -113,6 +128,16 @@ const ImportIssueDialog = ({ open, onClose, onImport }: ImportIssueDialogProps) 
               >
                 <img width="16" src={logoBitbucket} />
                 <span style={{ marginLeft: 10 }}>Bitbucket</span>
+              </Button>
+
+              <Button
+                color="primary"
+                variant={provider === 'codeberg' ? 'contained' : 'outlined'}
+                id="codeberg"
+                onClick={(e) => setProvider('codeberg')}
+              >
+                <img width="16" src={logoCodeberg} alt="" />
+                <span style={{ marginLeft: 10 }}>Codeberg</span>
               </Button>
             </div>
 
