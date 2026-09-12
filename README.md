@@ -87,10 +87,11 @@ Full details (flows, webhooks, tests, onboarding): **[docs/payments-providers.md
 1. Install by running the following command: `brew install postgres`
 2. Start the command service by running the following command: `brew services start postgresql`
 3. Create a postgres user by running the following command: `createuser postgres -s`
-4. Log in to the Postgres CLI by running the following command: `psql -U postgres`
-5. Create a test database by typing the following command: `create database gitpay_test;`
-6. Create a dev database by running the following command: `create database gitpay_dev;`
-7. Run this command to exit: `\q`
+4. Create a postgres database by running the following command: `createdb postgres`
+5. Log in to the Postgres CLI by running the following command: `psql -U postgres`
+6. Create a test database by typing the following command: `create database gitpay_test;`
+7. Create a dev database by running the following command: `create database gitpay_dev;`
+8. Run this command to exit: `\q`
 
 #### Install PostgreSQL (Linux - Ubuntu)
 
