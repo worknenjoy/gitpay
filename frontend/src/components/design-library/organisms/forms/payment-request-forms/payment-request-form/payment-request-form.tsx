@@ -30,6 +30,7 @@ type PaymentRquestFormData = {
   send_instructions_email?: boolean
   instructions_content?: string
   direct_charge?: boolean
+  listed_on_profile?: boolean
 }
 
 type PaymentRequestFormProps = {
@@ -40,6 +41,7 @@ type PaymentRequestFormProps = {
     data: PaymentRquestFormData
   }
   account?: { data?: { provider?: string } }
+  profileUrl?: string
 }
 
 type PaymentRequestFormHandle = {
@@ -47,7 +49,7 @@ type PaymentRequestFormHandle = {
 }
 
 const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFormProps>(
-  ({ onSubmit, paymentRequest, completed = true, account }, ref) => {
+  ({ onSubmit, paymentRequest, completed = true, account, profileUrl }, ref) => {
     const { data } = paymentRequest || {}
     const [error, setError] = useState<string | false>(false)
     const internalFormRef = useRef<HTMLFormElement>(null)
@@ -93,7 +95,8 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           ...data,
           attachments,
           active: formData.get('active') || false,
-          send_instructions_email: formData.get('send_instructions_email') || false
+          send_instructions_email: formData.get('send_instructions_email') || false,
+          listed_on_profile: formData.get('listed_on_profile') || false
         })
         return
       }
@@ -194,6 +197,37 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           alignment: 'flex-start',
           checked: sendInstructionsEmailChecked,
           onChange: handleSendEmailChange
+        },
+        {
+          label: (
+            <FormattedMessage
+              id="paymentRequest.form.listedOnProfile"
+              defaultMessage="List on profile"
+            />
+          ),
+          description: (
+            <>
+              <FormattedMessage
+                id="paymentRequest.form.listedOnProfile.description"
+                defaultMessage="When enabled, this payment link will appear on your public profile."
+              />
+              {profileUrl && (
+                <>
+                  {' '}
+                  <Link href={profileUrl} target="_blank" rel="noopener noreferrer">
+                    <FormattedMessage
+                      id="paymentRequest.form.listedOnProfile.viewProfile"
+                      defaultMessage="View profile"
+                    />
+                  </Link>
+                </>
+              )}
+            </>
+          ),
+          alignment: 'flex-start',
+          name: 'listed_on_profile',
+          value: true,
+          defaultChecked: data?.listed_on_profile ?? false
         }
       ]
 
@@ -228,10 +262,12 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
       data?.active,
       data?.send_instructions_email,
       data?.direct_charge,
+      data?.listed_on_profile,
       account?.data?.provider,
       sendInstructionsEmailChecked,
       handleSendEmailChange,
-      hasInstructions
+      hasInstructions,
+      profileUrl
     ])
 
     const tabs = useMemo(
@@ -417,6 +453,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
                           <PreferenceRow
                             key={item.name}
                             title={item.label}
+                            description={(item as any).description}
                             divider={!isLast}
                             action={
                               <Switch

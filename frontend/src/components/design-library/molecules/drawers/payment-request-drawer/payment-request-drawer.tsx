@@ -12,6 +12,7 @@ type PaymentRquestFormData = {
   currency?: string
   title?: string
   description?: string
+  listed_on_profile?: boolean
 }
 
 interface PaymentRequestDrawerProps {
@@ -24,6 +25,7 @@ interface PaymentRequestDrawerProps {
     data: PaymentRquestFormData
   }
   account?: { data?: { provider?: string } }
+  profileUrl?: string
 }
 
 const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
@@ -32,7 +34,8 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
   onSuccess,
   completed = true,
   paymentRequest,
-  account
+  account,
+  profileUrl
 }) => {
   const { completed: paymentRequestCompleted, data } = paymentRequest || {}
   const formRef = useRef<{ submit: () => void }>(null)
@@ -92,6 +95,7 @@ const PaymentRequestDrawer: React.FC<PaymentRequestDrawerProps> = ({
         completed={completed}
         paymentRequest={paymentRequest}
         account={account}
+        profileUrl={profileUrl}
       />
     </Drawer>
   )

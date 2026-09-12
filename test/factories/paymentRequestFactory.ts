@@ -6,6 +6,7 @@ export const PaymentRequestFactory = async (paramsOverwrite: any = {}) => {
   const defaultParams = {
     active: true,
     deactivate_after_payment: false,
+    listed_on_profile: false,
     currency: 'usd',
     amount: 5000,
     custom_amount: false,

@@ -26,6 +26,7 @@ describe('GET /payment-requests-public/user/:userId', () => {
     const paymentRequest = await PaymentRequestFactory({
       userId: user.id,
       active: true,
+      listed_on_profile: true,
       title: 'Code review session',
       description: 'A focused walkthrough',
       amount: 12000,
@@ -73,7 +74,16 @@ describe('GET /payment-requests-public/user/:userId', () => {
 
   it('excludes inactive payment requests', async () => {
     const user = await UserFactory()
-    await PaymentRequestFactory({ userId: user.id, active: false })
+    await PaymentRequestFactory({ userId: user.id, active: false, listed_on_profile: true })
+
+    const res = await agent.get(`/payment-requests-public/user/${user.id}`).expect(200)
+
+    expect(res.body).to.deep.equal([])
+  })
+
+  it('excludes payment requests not listed on profile', async () => {
+    const user = await UserFactory()
+    await PaymentRequestFactory({ userId: user.id, active: true, listed_on_profile: false })
 
     const res = await agent.get(`/payment-requests-public/user/${user.id}`).expect(200)
 
@@ -83,7 +93,7 @@ describe('GET /payment-requests-public/user/:userId', () => {
   it('does not return another user\'s payment requests', async () => {
     const owner = await UserFactory()
     const other = await UserFactory()
-    await PaymentRequestFactory({ userId: owner.id, active: true })
+    await PaymentRequestFactory({ userId: owner.id, active: true, listed_on_profile: true })
 
     const res = await agent.get(`/payment-requests-public/user/${other.id}`).expect(200)
 

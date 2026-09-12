@@ -28,6 +28,10 @@ const PaymentRequests = ({
 }) => {
   const history = useHistory()
 
+  const profileUrl = user?.id
+    ? `/#/users/${user.username ? `${user.id}-${user.username}` : user.id}/`
+    : undefined
+
   const [createPaymentRequestCompleted, setCreatePaymentRequestCompleted] = React.useState(true)
   const [openNewPaymentRequestDrawer, setOpenNewPaymentRequestDrawer] = React.useState(false)
 
@@ -154,6 +158,7 @@ const PaymentRequests = ({
         onSuccess={handlePaymentRequestCreate}
         completed={createPaymentRequestCompleted}
         account={account}
+        profileUrl={profileUrl}
       />
       <PaymentRequestDrawer
         open={!!selectedPaymentRequest}
@@ -165,6 +170,7 @@ const PaymentRequests = ({
           data: selectedPaymentRequest
         }}
         account={account}
+        profileUrl={profileUrl}
       />
     </>
   )

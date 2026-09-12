@@ -10,7 +10,7 @@ const models = Models as any
  */
 export const findPublicPaymentRequestsByUserId = async (userId: number) => {
   return models.PaymentRequest.findAll({
-    where: { userId, active: true },
+    where: { userId, active: true, listed_on_profile: true },
     order: [['createdAt', 'DESC']],
     attributes: [
       'id',

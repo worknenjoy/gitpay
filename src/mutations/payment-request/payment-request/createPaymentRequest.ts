@@ -17,6 +17,7 @@ export type PaymentRequestCreateParams = {
   instructions_content?: string
   /** Optional override; defaults to PAYMENT_PROVIDER env */
   provider?: string
+  listed_on_profile?: boolean
 }
 
 export async function createPaymentRequest(
@@ -33,7 +34,8 @@ export async function createPaymentRequest(
     custom_amount,
     send_instructions_email,
     instructions_content,
-    provider: providerName
+    provider: providerName,
+    listed_on_profile
   } = paymentRequestParams
 
   const currency = currencyParam ?? 'usd'
@@ -101,6 +103,7 @@ export async function createPaymentRequest(
           custom_amount: custom_amount ?? false,
           send_instructions_email: send_instructions_email ?? false,
           instructions_content: sanitizedInstructionsContent,
+          listed_on_profile: listed_on_profile ?? false,
           title,
           description
         },
