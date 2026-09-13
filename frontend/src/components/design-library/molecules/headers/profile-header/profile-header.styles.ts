@@ -23,6 +23,14 @@ export const ShareRow = styled('div')(({ theme }) => ({
     top: theme.spacing(1.5),
     right: theme.spacing(3.5),
     marginBottom: 0
+  },
+  // The header lives inside a centered `maxWidth="lg"` container, which is
+  // fluid (≈ full viewport width) below that breakpoint but fixed at 1200px
+  // above it — so past `lg`, the container's own edge drifts away from the
+  // real browser edge as the window grows. Counteract exactly that drift so
+  // the bar keeps hugging the true viewport edge instead of the container's.
+  [theme.breakpoints.up('lg')]: {
+    right: `calc(${theme.spacing(3.5)} - (100vw - ${theme.breakpoints.values.lg}px) / 2)`
   }
 }))
 
