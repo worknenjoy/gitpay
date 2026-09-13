@@ -51,6 +51,9 @@ export type ProfileHeaderProps = {
   onAction?: (key: string) => void
   identity?: string[]
   availability?: { label: string; active?: boolean }[]
+  /** A third meta line for free-form stats (e.g. "$17,020 paid out") that
+   * don't fit `identity` or `availability` — used by roles like Maintainer. */
+  stats?: string[]
   shareUrl: string
 }
 
@@ -87,6 +90,7 @@ const ProfileHeader = ({
   onAction,
   identity = [],
   availability = [],
+  stats = [],
   shareUrl
 }: ProfileHeaderProps) => (
   <Root data-profile-type={profileType}>
@@ -182,6 +186,21 @@ const ProfileHeader = ({
         <MetaLine>
           {availability.map((item) => (
             <AvailabilityChip key={String(item.label)} label={item.label} active={item.active} />
+          ))}
+        </MetaLine>
+      </MetaBlock>
+    )}
+
+    {stats.length > 0 && (
+      <MetaBlock>
+        <MetaLine>
+          {stats.map((item, index) => (
+            <React.Fragment key={index}>
+              {index > 0 && <MetaSeparator />}
+              <Typography component="span" variant="caption" color="text.secondary">
+                {item}
+              </Typography>
+            </React.Fragment>
           ))}
         </MetaLine>
       </MetaBlock>

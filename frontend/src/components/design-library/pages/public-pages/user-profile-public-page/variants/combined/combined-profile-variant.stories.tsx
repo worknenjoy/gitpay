@@ -78,6 +78,68 @@ const providerProfile = {
   ]
 }
 
+const maintainerProfile = {
+  username: 'alexandremagno',
+  name: 'Alexandre Magno',
+  website: 'https://blog.alexandremagno.net/en',
+  country: 'BR',
+  profile_url: 'https://github.com/alexandremagno',
+  picture_url: '',
+  verified: true,
+  role: { name: 'maintainer', tone: 'teal' as const },
+  identity: ['Maintaining since 2019', '3 active projects'],
+  stats: ['$17,020 paid out']
+}
+
+const org = { id: 1, name: 'worknenjoy', provider: 'github' }
+
+const maintainerProjects = {
+  data: [
+    {
+      id: 1,
+      name: 'gitpay',
+      Organization: org,
+      description: 'Payment platform for open-source work delivered.',
+      languages: ['TypeScript', 'React', 'Node'],
+      Tasks: [
+        { id: 1, status: 'open', value: 0 },
+        { id: 2, status: 'closed', value: 50 }
+      ]
+    },
+    {
+      id: 2,
+      name: 'issue-bounty',
+      Organization: org,
+      description: 'GitHub Action that posts bounties to PR threads automatically.',
+      languages: ['TypeScript', 'Shell'],
+      Tasks: [{ id: 3, status: 'open', value: 0 }]
+    }
+  ],
+  completed: true
+}
+
+const maintainerOpenBounties = {
+  data: [
+    {
+      id: 2201,
+      title: 'Server side rendering for /explore',
+      status: 'open',
+      value: 200,
+      provider: 'github',
+      url: 'https://github.com/gitpay/gitpay/issues/2201',
+      Labels: [{ id: 'enhancement', name: 'enhancement' }],
+      Project: {
+        id: 1,
+        OrganizationId: 1,
+        name: 'gitpay',
+        ProgrammingLanguages: [{ id: 'ts', name: 'TypeScript' }]
+      },
+      createdAt: '2024-11-10T10:00:00Z'
+    }
+  ],
+  completed: true
+}
+
 const sampleBounties = [
   {
     id: 1101,
@@ -155,9 +217,12 @@ const samplePullRequests = [
 const baseArgs = {
   completed: true,
   contributorProfile,
+  maintainerProfile,
   providerProfile,
   bounties: { data: sampleBounties, completed: true },
   pullRequests: { data: samplePullRequests, completed: true },
+  maintainerProjects,
+  maintainerOpenBounties,
   onPayLink: action('onPayLink'),
   onViewBounty: action('onViewBounty'),
   onBountyTabChange: action('onBountyTabChange'),
@@ -187,6 +252,20 @@ export const Contributor: Story = {
   args: { ...baseArgs, defaultView: 'contributor' }
 }
 
+export const Maintainer: Story = {
+  args: { ...baseArgs, defaultView: 'maintainer' }
+}
+
 export const ServiceProvider: Story = {
   args: { ...baseArgs, defaultView: 'provider' }
+}
+
+// Only two of the three roles active — the switcher and header pills should
+// show just Contributor + Maintainer, no Service provider tab/pill.
+export const TwoRoles: Story = {
+  args: {
+    ...baseArgs,
+    providerProfile: undefined,
+    defaultView: 'overview'
+  }
 }

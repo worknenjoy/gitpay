@@ -9,6 +9,7 @@ import PaymentLinksList, {
 import BountiesTable, {
   BountyRow
 } from 'design-library/molecules/tables/bounties-table/bounties-table'
+import ProjectListFull from 'design-library/molecules/lists/project-list/project-list-full/project-list-full'
 import { PullRequestRow } from 'design-library/molecules/tables/pull-requests-table/pull-requests-table'
 import BountyDetailsDrawer from 'design-library/molecules/drawers/bounty-details-drawer/bounty-details-drawer'
 import ContributorProfileBody from '../contributor/contributor-profile-body'
@@ -19,15 +20,20 @@ import {
 import { countryDisplay } from '../contributor/country-display'
 import ServiceProviderProfileBody from '../provider/service-provider-profile-body'
 import { ServiceProviderProfileData } from '../provider/service-provider-profile-variant'
+import MaintainerProfileBody from '../maintainer/maintainer-profile-body'
+import { MaintainerProfileData } from '../maintainer/maintainer-profile-variant'
 import { Shell, SwitcherRow } from './combined-profile-variant.styles'
 
-export type CombinedProfileView = 'overview' | 'contributor' | 'provider'
+export type CombinedProfileView = 'overview' | 'contributor' | 'maintainer' | 'provider'
 
 export type CombinedProfileVariantProps = {
-  contributorProfile: ContributorProfileData
-  providerProfile: ServiceProviderProfileData
+  contributorProfile?: ContributorProfileData
+  maintainerProfile?: MaintainerProfileData
+  providerProfile?: ServiceProviderProfileData
   bounties: { data: BountyRow[]; completed: boolean }
   pullRequests: { data: PullRequestRow[]; completed: boolean }
+  maintainerProjects?: { data: any[]; completed: boolean }
+  maintainerOpenBounties?: { data: BountyRow[]; completed: boolean }
   completed?: boolean
   defaultView?: CombinedProfileView
   onPayLink?: (link: PaymentLink) => void
@@ -39,10 +45,15 @@ export type CombinedProfileVariantProps = {
 const messages = defineMessages({
   overviewTab: { id: 'profile.combined.overviewTab', defaultMessage: 'Overview' },
   contributorTab: { id: 'profile.combined.contributorTab', defaultMessage: 'Contributor' },
+  maintainerTab: { id: 'profile.combined.maintainerTab', defaultMessage: 'Maintainer' },
   providerTab: { id: 'profile.combined.providerTab', defaultMessage: 'Service provider' },
   recentBountiesTitle: {
     id: 'profile.combined.recentBountiesTitle',
     defaultMessage: 'Contributor · recent bounties'
+  },
+  projectsTitle: {
+    id: 'profile.combined.projectsTitle',
+    defaultMessage: 'Maintainer · projects'
   },
   paymentLinksTitle: {
     id: 'profile.combined.paymentLinksTitle',
@@ -50,15 +61,18 @@ const messages = defineMessages({
   }
 })
 
-// How many rows/links the Overview tab previews from each role — a glance,
-// not the full list (that's what the Contributor/Service provider tabs are for).
+// How many rows/links/cards the Overview tab previews from each role — a
+// glance, not the full list (that's what the per-role tabs are for).
 const OVERVIEW_PREVIEW_COUNT = 3
 
 const CombinedProfileVariant = ({
   contributorProfile,
+  maintainerProfile,
   providerProfile,
   bounties,
   pullRequests,
+  maintainerProjects,
+  maintainerOpenBounties,
   completed = true,
   defaultView = 'overview',
   onPayLink,
@@ -75,24 +89,45 @@ const CombinedProfileVariant = ({
     onViewBounty?.(bounty)
   }
 
+  // Shared identity fields are the same real User row regardless of role —
+  // pick whichever profile is present first to read them from.
+  const primaryProfile = contributorProfile ?? maintainerProfile ?? providerProfile
+  if (!primaryProfile) return null
+
+  const headerAvailability = contributorProfile?.availability ?? maintainerProfile?.availability
+  const headerStats = maintainerProfile?.stats
+
+  const switcherOptions = [
+    { value: 'overview' as const, label: intl.formatMessage(messages.overviewTab) },
+    ...(contributorProfile
+      ? [{ value: 'contributor' as const, label: intl.formatMessage(messages.contributorTab) }]
+      : []),
+    ...(maintainerProfile
+      ? [{ value: 'maintainer' as const, label: intl.formatMessage(messages.maintainerTab) }]
+      : []),
+    ...(providerProfile
+      ? [{ value: 'provider' as const, label: intl.formatMessage(messages.providerTab) }]
+      : [])
+  ]
+
   return (
     <Shell maxWidth="lg">
       <ProfileHeader
         profileType="contributor"
-        username={contributorProfile.username}
-        name={contributorProfile.name}
-        pictureUrl={contributorProfile.picture_url}
-        verified={contributorProfile.verified}
-        country={countryDisplay(contributorProfile.country)}
-        links={contributorHeaderLinks(contributorProfile)}
+        username={primaryProfile.username}
+        name={primaryProfile.name}
+        pictureUrl={primaryProfile.picture_url}
+        verified={primaryProfile.verified}
+        country={countryDisplay(primaryProfile.country)}
+        links={contributorHeaderLinks(primaryProfile)}
         roles={
-          [contributorProfile.role, providerProfile.role].filter(Boolean) as {
-            name: string
-            tone?: 'orange' | 'teal' | 'yellow'
-          }[]
+          [contributorProfile?.role, maintainerProfile?.role, providerProfile?.role].filter(
+            Boolean
+          ) as { name: string; tone?: 'orange' | 'teal' | 'yellow' }[]
         }
-        identity={contributorProfile.identity}
-        availability={contributorProfile.availability}
+        identity={primaryProfile.identity}
+        availability={headerAvailability}
+        stats={headerStats}
         shareUrl={shareUrl ?? (typeof window !== 'undefined' ? window.location.href : '')}
       />
 
@@ -100,35 +135,51 @@ const CombinedProfileVariant = ({
         <SegmentedSwitcher
           value={view}
           onChange={(value) => setView(value as CombinedProfileView)}
-          options={[
-            { value: 'overview', label: intl.formatMessage(messages.overviewTab) },
-            { value: 'contributor', label: intl.formatMessage(messages.contributorTab) },
-            { value: 'provider', label: intl.formatMessage(messages.providerTab) }
-          ]}
+          options={switcherOptions}
         />
       </SwitcherRow>
 
       {view === 'overview' && (
         <>
-          <SectionDivider label={intl.formatMessage(messages.recentBountiesTitle)} />
-          <BountiesTable
-            issues={{
-              data: bounties.data.slice(0, OVERVIEW_PREVIEW_COUNT),
-              completed: bounties.completed
-            }}
-            onViewDetails={handleViewBounty}
-          />
+          {contributorProfile && (
+            <>
+              <SectionDivider label={intl.formatMessage(messages.recentBountiesTitle)} />
+              <BountiesTable
+                issues={{
+                  data: bounties.data.slice(0, OVERVIEW_PREVIEW_COUNT),
+                  completed: bounties.completed
+                }}
+                onViewDetails={handleViewBounty}
+              />
+            </>
+          )}
 
-          <SectionDivider label={intl.formatMessage(messages.paymentLinksTitle)} />
-          <PaymentLinksList
-            links={(providerProfile.paymentLinks ?? []).slice(0, OVERVIEW_PREVIEW_COUNT)}
-            completed={completed}
-            onPay={(link) => onPayLink?.(link)}
-          />
+          {maintainerProfile && (
+            <>
+              <SectionDivider label={intl.formatMessage(messages.projectsTitle)} />
+              <ProjectListFull
+                projects={{
+                  data: (maintainerProjects?.data ?? []).slice(0, OVERVIEW_PREVIEW_COUNT),
+                  completed: maintainerProjects?.completed ?? true
+                }}
+              />
+            </>
+          )}
+
+          {providerProfile && (
+            <>
+              <SectionDivider label={intl.formatMessage(messages.paymentLinksTitle)} />
+              <PaymentLinksList
+                links={(providerProfile.paymentLinks ?? []).slice(0, OVERVIEW_PREVIEW_COUNT)}
+                completed={completed}
+                onPay={(link) => onPayLink?.(link)}
+              />
+            </>
+          )}
         </>
       )}
 
-      {view === 'contributor' && (
+      {view === 'contributor' && contributorProfile && (
         <ContributorProfileBody
           profile={contributorProfile}
           bounties={bounties}
@@ -140,7 +191,15 @@ const CombinedProfileVariant = ({
         />
       )}
 
-      {view === 'provider' && (
+      {view === 'maintainer' && maintainerProfile && (
+        <MaintainerProfileBody
+          projects={maintainerProjects ?? { data: [], completed: true }}
+          openBounties={maintainerOpenBounties ?? { data: [], completed: true }}
+          onViewBounty={onViewBounty}
+        />
+      )}
+
+      {view === 'provider' && providerProfile && (
         <ServiceProviderProfileBody
           paymentLinks={providerProfile.paymentLinks}
           completed={completed}

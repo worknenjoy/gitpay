@@ -486,6 +486,32 @@ const listTasks = ({
   }
 }
 
+const LIST_MAINTAINER_OPEN_BOUNTIES_REQUESTED = 'LIST_MAINTAINER_OPEN_BOUNTIES_REQUESTED'
+const LIST_MAINTAINER_OPEN_BOUNTIES_SUCCESS = 'LIST_MAINTAINER_OPEN_BOUNTIES_SUCCESS'
+const LIST_MAINTAINER_OPEN_BOUNTIES_ERROR = 'LIST_MAINTAINER_OPEN_BOUNTIES_ERROR'
+
+// A separate list (and reducer slice) from `tasks`/`listTasks` on purpose —
+// the Maintainer profile's "open bounties across my projects" and a
+// Contributor's own issues are two different lists that can both be visible
+// at once (the combined multi-role profile), so they can't share one slice.
+const listMaintainerOpenBounties = (organizationId) => {
+  return (dispatch) => {
+    dispatch({ type: LIST_MAINTAINER_OPEN_BOUNTIES_REQUESTED, completed: false })
+    return axios
+      .get(api.API_URL + '/tasks/list', { params: { organizationId, status: 'open' } })
+      .then((response) => {
+        return dispatch({
+          type: LIST_MAINTAINER_OPEN_BOUNTIES_SUCCESS,
+          completed: true,
+          data: response.data
+        })
+      })
+      .catch((error) => {
+        return dispatch({ type: LIST_MAINTAINER_OPEN_BOUNTIES_ERROR, completed: true, error })
+      })
+  }
+}
+
 const filterTasks = (key = 'all', value, additional) => {
   return (dispatch, getState) => {
     const tasks = getState().tasks.data
@@ -885,11 +911,15 @@ export {
   CLAIM_TASK_REQUESTED,
   CLAIM_TASK_SUCCESS,
   CLAIM_TASK_ERROR,
+  LIST_MAINTAINER_OPEN_BOUNTIES_REQUESTED,
+  LIST_MAINTAINER_OPEN_BOUNTIES_SUCCESS,
+  LIST_MAINTAINER_OPEN_BOUNTIES_ERROR,
   addNotification,
   createTask,
   fetchTask,
   listTasks,
   listTaskSuccess,
+  listMaintainerOpenBounties,
   filterTasks,
   filterTaskOrders,
   updateTask,

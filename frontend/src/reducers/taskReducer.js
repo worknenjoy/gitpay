@@ -54,6 +54,12 @@ import {
   FETCH_PROJECT_ERROR
 } from '../actions/projectActions'
 
+import {
+  LIST_MAINTAINER_OPEN_BOUNTIES_REQUESTED,
+  LIST_MAINTAINER_OPEN_BOUNTIES_SUCCESS,
+  LIST_MAINTAINER_OPEN_BOUNTIES_ERROR
+} from '../actions/taskActions'
+
 export const task = (
   state = {
     completed: true,
@@ -210,6 +216,26 @@ export const tasks = (
         filterValue: action.filterValue,
         filterAdditional: action.filterAdditional
       }
+    default:
+      return state
+  }
+}
+
+export const maintainerOpenBounties = (
+  state = {
+    completed: true,
+    data: [],
+    error: {}
+  },
+  action
+) => {
+  switch (action.type) {
+    case LIST_MAINTAINER_OPEN_BOUNTIES_REQUESTED:
+      return { ...state, completed: action.completed }
+    case LIST_MAINTAINER_OPEN_BOUNTIES_SUCCESS:
+      return { ...state, completed: action.completed, data: action.data ?? [] }
+    case LIST_MAINTAINER_OPEN_BOUNTIES_ERROR:
+      return { ...state, completed: action.completed, error: action.error }
     default:
       return state
   }

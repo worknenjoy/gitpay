@@ -7,7 +7,7 @@ import { user } from './userReducer'
 import { account, balance, countries, bankAccount, accountVerificationLink } from './accountReducer'
 import { customer } from './customerReducer'
 import { project, projects } from './projectReducer'
-import { task, tasks } from './taskReducer'
+import { task, tasks, maintainerOpenBounties } from './taskReducer'
 import { team } from './teamReducer'
 import { order, orders } from './orderReducer'
 import { info } from './infoReducer'
@@ -47,6 +47,7 @@ const reducers = combineReducers({
   projects,
   task,
   tasks,
+  maintainerOpenBounties,
   team,
   info,
   preferences,

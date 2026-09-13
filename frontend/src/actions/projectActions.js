@@ -65,11 +65,11 @@ const listProjectsError = (error) => {
   return { type: LIST_PROJECTS_ERROR, completed: true, error: error }
 }
 
-const listProjects = () => {
+const listProjects = (params) => {
   return (dispatch) => {
     dispatch(listProjectsRequested())
     axios
-      .get(api.API_URL + '/projects/list')
+      .get(api.API_URL + '/projects/list', { params })
       .then((projects) => {
         if (projects.data) {
           return dispatch(listProjectsSuccess(projects))

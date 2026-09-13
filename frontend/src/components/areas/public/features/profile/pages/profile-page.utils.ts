@@ -86,3 +86,43 @@ export const mapToServiceProviderProfileData = (userData: any, paymentLinks: any
     paymentLinks
   }
 }
+
+export const isMaintainerType = (types: { name: string }[] = []) =>
+  types.some((type) => type.name === 'maintainer')
+
+// Same "paid" definition `ProjectCard` itself uses (a valued, non-open task)
+// — kept in sync so the header stat and the per-project cards always agree.
+const projectPaidOut = (tasks: any[] = []) =>
+  tasks
+    .filter((task) => task.value && task.status !== 'open')
+    .reduce((sum, task) => sum + Number(task.value), 0)
+
+/**
+ * Shapes the raw `User` row into the `MaintainerProfileData` the Maintainer
+ * variant expects — identity lines from `createdAt` + the project count, and
+ * a stats line with the total paid out across those projects. `projects`
+ * come from `GET /projects/list?userId=` (each with its `Tasks` already
+ * included), so nothing here is fabricated. No `availability` chips or
+ * contributor count are set — neither has real backing data today.
+ */
+export const mapToMaintainerProfileData = (userData: any, projects: any[] = []) => {
+  if (!userData) return userData
+
+  const totalPaidOut = projects.reduce(
+    (sum: number, project: any) => sum + projectPaidOut(project.Tasks),
+    0
+  )
+
+  const identity = [
+    userData.createdAt ? `Maintaining since ${moment(userData.createdAt).format('YYYY')}` : null,
+    `${projects.length} active project${projects.length === 1 ? '' : 's'}`
+  ].filter(Boolean) as string[]
+
+  const isMaintainer = (userData.Types ?? []).some((type: any) => type.name === 'maintainer')
+
+  return {
+    ...userData,
+    identity,
+    role: isMaintainer ? { name: 'maintainer', tone: 'teal' } : undefined
+  }
+}

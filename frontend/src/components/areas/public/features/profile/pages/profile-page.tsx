@@ -7,7 +7,9 @@ import {
   isContributorType,
   mapToContributorProfileData,
   isProviderType,
-  mapToServiceProviderProfileData
+  mapToServiceProviderProfileData,
+  isMaintainerType,
+  mapToMaintainerProfileData
 } from './profile-page.utils'
 
 const TAB_TO_PARAM: Record<string, string> = {
@@ -25,7 +27,11 @@ const ProfilePage = ({
   pullRequests,
   listPublicTaskSolutions,
   paymentLinks,
-  listPublicPaymentRequests
+  listPublicPaymentRequests,
+  maintainerProjects,
+  listMaintainerProjects,
+  maintainerOpenBounties,
+  listMaintainerOpenBounties
 }) => {
   // The public profile link is "friendly" — /#/users/:id-:username/ (see
   // account-menu.tsx, which generates it) — so the id needs pulling out of
@@ -42,6 +48,7 @@ const ProfilePage = ({
 
   const isContributor = isContributorType(user?.data?.Types)
   const isProvider = isProviderType(user?.data?.Types)
+  const isMaintainer = isMaintainerType(user?.data?.Types)
 
   const fetchIssues = useCallback(
     (
@@ -88,21 +95,39 @@ const ProfilePage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId])
 
-  // Once the profile has loaded and we know whether this user is a
-  // contributor, fetch the data each variant actually needs.
+  // Once the profile has loaded and we know which roles this user has,
+  // fetch the data each active variant needs. Each role's fetch is
+  // independent so any combination (single role or several at once, for
+  // the combined profile) pulls exactly what it needs.
   useEffect(() => {
     if (!userId || !user?.completed || !user?.data?.id) return
     if (isContributor) {
       fetchSolvedIssues(0, rowsPerPage, {})
       listPublicTaskSolutions(userId)
+    }
+    if (isContributor || isProvider) {
       listPublicPaymentRequests(userId)
-    } else if (isProvider) {
-      listPublicPaymentRequests(userId)
-    } else {
+    }
+    if (isMaintainer) {
+      listMaintainerProjects(userId)
+    }
+    if (!isContributor && !isProvider && !isMaintainer) {
       fetchIssues('created', 0, rowsPerPage, {})
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, user?.completed, user?.data?.id, isContributor, isProvider])
+  }, [userId, user?.completed, user?.data?.id, isContributor, isProvider, isMaintainer])
+
+  // The open-bounties table needs an Organization id, which only exists
+  // once the maintainer's projects have loaded — a separate effect chained
+  // off that result rather than a nested fetch inside the effect above.
+  useEffect(() => {
+    if (!isMaintainer || !maintainerProjects?.completed) return
+    const organizationId = maintainerProjects?.data?.[0]?.Organization?.id
+    if (organizationId) {
+      listMaintainerOpenBounties(organizationId)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMaintainer, maintainerProjects?.completed, maintainerProjects?.data])
 
   const handleTabChange = useCallback(
     (newTab: string) => {
@@ -197,16 +222,23 @@ const ProfilePage = ({
     ? mapToServiceProviderProfileData(user.data, paymentLinks?.data ?? [])
     : undefined
 
+  const maintainerProfile = isMaintainer
+    ? mapToMaintainerProfileData(user.data, maintainerProjects?.data ?? [])
+    : undefined
+
   // Single-role pages still read `user.data` directly (e.g. the legacy
   // fallback layout), so keep it shaped to whichever one role is active.
   const shapedUser = contributorProfile
     ? { ...user, data: contributorProfile }
     : providerProfile
       ? { ...user, data: providerProfile }
-      : user
+      : maintainerProfile
+        ? { ...user, data: maintainerProfile }
+        : user
 
   const profileTypes: ProfileType[] = [
     ...(isContributor ? (['contributor'] as const) : []),
+    ...(isMaintainer ? (['maintainer'] as const) : []),
     ...(isProvider ? (['provider'] as const) : [])
   ]
 
@@ -214,9 +246,12 @@ const ProfilePage = ({
     <UserProfilePublicPage
       user={shapedUser}
       contributorProfile={contributorProfile}
+      maintainerProfile={maintainerProfile}
       providerProfile={providerProfile}
       tasks={tasks}
       pullRequests={pullRequests}
+      maintainerProjects={maintainerProjects}
+      maintainerOpenBounties={maintainerOpenBounties}
       profileTypes={profileTypes}
       searchUser={searchUser}
       serverSidePagination={serverSidePagination}

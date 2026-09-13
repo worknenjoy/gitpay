@@ -13,7 +13,10 @@ export const fetchProject = async (req: any, res: any) => {
 
 export const listProjects = async (req: any, res: any) => {
   try {
-    const data = await projectList(req.params || req.query)
+    // `/list` has no route params, so `req.params` is always `{}` — truthy,
+    // which meant the `req.query` fallback below was dead code and this
+    // endpoint could never actually be filtered.
+    const data = await projectList(req.query)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console

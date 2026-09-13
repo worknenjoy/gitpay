@@ -16,24 +16,31 @@ import ContributorProfileVariant, {
 import ServiceProviderProfileVariant, {
   ServiceProviderProfileData
 } from './variants/provider/service-provider-profile-variant'
+import MaintainerProfileVariant, {
+  MaintainerProfileData
+} from './variants/maintainer/maintainer-profile-variant'
 import CombinedProfileVariant from './variants/combined/combined-profile-variant'
 
 // Which role-based variant to render. A user can hold multiple roles at once
-// (contributor + maintainer, say) — hence an array. 'contributor' and
-// 'provider' have real variants; 'maintainer' falls back to the generic
-// layout below until it's built. Test one variant at a time as each is built.
+// (contributor + maintainer, say) — hence an array. All three have real
+// variants now; holding 2+ renders the combined profile instead of a single one.
 export type ProfileType = 'contributor' | 'maintainer' | 'provider'
 
 type UserProfilePublicPageProps = {
   user?: any
-  /** Pre-shaped data for the Contributor variant. Required when both
-   * 'contributor' and 'provider' are active, since `user.data` can then only
-   * hold one shape at a time. */
+  /** Pre-shaped data for the Contributor variant. Required when 2+ roles are
+   * active, since `user.data` can then only hold one shape at a time. */
   contributorProfile?: ContributorProfileData
+  /** Pre-shaped data for the Maintainer variant — see `contributorProfile`. */
+  maintainerProfile?: MaintainerProfileData
   /** Pre-shaped data for the Service Provider variant — see `contributorProfile`. */
   providerProfile?: ServiceProviderProfileData
   tasks?: any
   pullRequests?: any
+  /** Maintainer's projects (`{data, completed}`), from `GET /projects/list?userId=`. */
+  maintainerProjects?: { data: any[]; completed: boolean }
+  /** Open bounties across the maintainer's projects' organization. */
+  maintainerOpenBounties?: any
   searchUser?: any
   serverSidePagination?: any
   onTabChange?: any
@@ -47,9 +54,12 @@ type UserProfilePublicPageProps = {
 const UserProfilePublicPage = ({
   user,
   contributorProfile,
+  maintainerProfile,
   providerProfile,
   tasks,
   pullRequests,
+  maintainerProjects,
+  maintainerOpenBounties,
   searchUser,
   serverSidePagination,
   onTabChange,
@@ -62,16 +72,21 @@ const UserProfilePublicPage = ({
   const { data: profile } = user || {}
   const issueMetadata = useIssueMetadata({ includeProject: true })
   const isContributor = profileTypes.includes('contributor')
+  const isMaintainer = profileTypes.includes('maintainer')
   const isProvider = profileTypes.includes('provider')
+  const activeRoleCount = [isContributor, isMaintainer, isProvider].filter(Boolean).length
 
-  if (isContributor && isProvider && contributorProfile && providerProfile) {
+  if (activeRoleCount >= 2) {
     return (
       <Page>
         <CombinedProfileVariant
           contributorProfile={contributorProfile}
+          maintainerProfile={maintainerProfile}
           providerProfile={providerProfile}
           bounties={tasks}
           pullRequests={pullRequests}
+          maintainerProjects={maintainerProjects}
+          maintainerOpenBounties={maintainerOpenBounties}
           completed={user?.completed}
           onPayLink={onPayLink}
           onViewBounty={onViewBounty}
@@ -93,6 +108,20 @@ const UserProfilePublicPage = ({
           onPayLink={onPayLink}
           onViewBounty={onViewBounty}
           onBountyTabChange={onBountyTabChange}
+          shareUrl={shareUrl}
+        />
+      </Page>
+    )
+  }
+
+  if (isMaintainer) {
+    return (
+      <Page>
+        <MaintainerProfileVariant
+          profile={maintainerProfile ?? profile}
+          projects={maintainerProjects ?? { data: [], completed: true }}
+          openBounties={maintainerOpenBounties ?? { data: [], completed: true }}
+          onViewBounty={onViewBounty}
           shareUrl={shareUrl}
         />
       </Page>
