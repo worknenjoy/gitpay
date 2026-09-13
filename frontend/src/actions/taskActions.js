@@ -804,7 +804,18 @@ const requestClaimTask = (taskId, userId, comments, isApproved, token, history) 
         baseUrl: api.API_URL
       })
       .then((task) => {
-        if (task.status === 200 && !task.data && !task.data.error) {
+        const taskData = task.data
+        const mailResponses = Array.isArray(taskData) ? taskData : null
+        const mailResponseOk =
+          mailResponses &&
+          mailResponses.length > 0 &&
+          Number.isInteger(mailResponses[0].statusCode) &&
+          mailResponses[0].statusCode >= 200 &&
+          mailResponses[0].statusCode < 300
+        if (
+          task.status === 200 &&
+          (taskData == null || taskData === '' || mailResponseOk)
+        ) {
           dispatch(addNotification('actions.task.claim.success'))
           if (isApproved) {
             history.push(`/task/${taskId}`)
