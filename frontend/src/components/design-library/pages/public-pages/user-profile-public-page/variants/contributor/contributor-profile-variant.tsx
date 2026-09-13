@@ -1,25 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Language as WebsiteIcon, GitHub as GitHubIcon } from '@mui/icons-material'
-import { defineMessages, useIntl } from 'react-intl'
 import ProfileHeader from 'design-library/molecules/headers/profile-header/profile-header'
-import SegmentedSwitcher from 'design-library/molecules/switchers/segmented-switcher/segmented-switcher'
-import SectionDivider from 'design-library/molecules/content/section-divider/section-divider'
-import SkillsList from 'design-library/molecules/lists/skills-list/skills-list'
-import CountedTabList, {
-  CountedTabItem
-} from 'design-library/molecules/tabs/counted-tab-list/counted-tab-list'
-import PaymentLinksList, {
-  PaymentLink
-} from 'design-library/molecules/lists/payment-links-list/payment-links-list'
-import BountiesTable, {
-  BountyRow
-} from 'design-library/molecules/tables/bounties-table/bounties-table'
-import PullRequestsTable, {
-  PullRequestRow
-} from 'design-library/molecules/tables/pull-requests-table/pull-requests-table'
-import BountyDetailsDrawer from 'design-library/molecules/drawers/bounty-details-drawer/bounty-details-drawer'
-import { Shell, SwitcherRow } from './contributor-profile-variant.styles'
+import { CountedTabItem } from 'design-library/molecules/tabs/counted-tab-list/counted-tab-list'
+import { PaymentLink } from 'design-library/molecules/lists/payment-links-list/payment-links-list'
+import { BountyRow } from 'design-library/molecules/tables/bounties-table/bounties-table'
+import { PullRequestRow } from 'design-library/molecules/tables/pull-requests-table/pull-requests-table'
+import { Shell } from './contributor-profile-variant.styles'
 import { countryDisplay } from './country-display'
+import ContributorProfileBody from './contributor-profile-body'
 
 // The profile's identity fields (username, name, website, country, profile_url,
 // picture_url) already exist on the real `User` model — this type reuses those
@@ -59,18 +47,11 @@ export type ContributorProfileVariantProps = {
   shareUrl?: string
 }
 
-const messages = defineMessages({
-  servicesTab: { id: 'profile.contributor.servicesTab', defaultMessage: 'Services' },
-  bountiesTab: { id: 'profile.contributor.bountiesTab', defaultMessage: 'Bounties' },
-  paymentLinksTitle: {
-    id: 'profile.contributor.paymentLinksTitle',
-    defaultMessage: 'Payment links'
-  },
-  skillsTitle: { id: 'profile.contributor.skillsTitle', defaultMessage: 'Skills' },
-  bountiesTitle: { id: 'profile.contributor.bountiesTitle', defaultMessage: 'Bounties' }
-})
-
-const headerLinks = (profile: ContributorProfileData) => {
+export const headerLinks = (profile: {
+  website?: string
+  profile_url?: string
+  username: string
+}) => {
   const links: { label: string; href: string; icon: React.ReactNode }[] = []
   if (profile.website) {
     links.push({
@@ -99,94 +80,33 @@ const ContributorProfileVariant = ({
   onViewBounty,
   onBountyTabChange,
   shareUrl
-}: ContributorProfileVariantProps) => {
-  const intl = useIntl()
-  const [tab, setTab] = useState<'services' | 'bounties'>(defaultTab)
-  const [activeBountyTab, setActiveBountyTab] = useState(profile.bountyTabs?.[0]?.value)
-  const [selectedBounty, setSelectedBounty] = useState<BountyRow | undefined>()
+}: ContributorProfileVariantProps) => (
+  <Shell maxWidth="lg">
+    <ProfileHeader
+      profileType="contributor"
+      username={profile.username}
+      name={profile.name}
+      pictureUrl={profile.picture_url}
+      verified={profile.verified}
+      country={countryDisplay(profile.country)}
+      links={headerLinks(profile)}
+      role={profile.role}
+      identity={profile.identity}
+      availability={profile.availability}
+      shareUrl={shareUrl ?? (typeof window !== 'undefined' ? window.location.href : '')}
+    />
 
-  const handleBountyTabChange = (value: string) => {
-    setActiveBountyTab(value)
-    onBountyTabChange?.(value)
-  }
-
-  const handleViewBounty = (bounty: BountyRow) => {
-    setSelectedBounty(bounty)
-    onViewBounty?.(bounty)
-  }
-
-  const resolvedBountyTab = activeBountyTab ?? profile.bountyTabs?.[0]?.value
-
-  return (
-    <Shell maxWidth="lg">
-      <ProfileHeader
-        profileType="contributor"
-        username={profile.username}
-        name={profile.name}
-        pictureUrl={profile.picture_url}
-        verified={profile.verified}
-        country={countryDisplay(profile.country)}
-        links={headerLinks(profile)}
-        role={profile.role}
-        identity={profile.identity}
-        availability={profile.availability}
-        shareUrl={shareUrl ?? (typeof window !== 'undefined' ? window.location.href : '')}
-      />
-
-      <SwitcherRow>
-        <SegmentedSwitcher
-          value={tab}
-          onChange={(value) => setTab(value as 'services' | 'bounties')}
-          options={[
-            { value: 'services', label: intl.formatMessage(messages.servicesTab) },
-            { value: 'bounties', label: intl.formatMessage(messages.bountiesTab) }
-          ]}
-        />
-      </SwitcherRow>
-
-      {tab === 'services' && (
-        <>
-          <SectionDivider label={intl.formatMessage(messages.paymentLinksTitle)} />
-          <PaymentLinksList
-            links={profile.paymentLinks ?? []}
-            completed={completed}
-            onPay={(link) => onPayLink?.(link)}
-          />
-        </>
-      )}
-
-      {tab === 'bounties' && (
-        <>
-          {profile.skills && profile.skills.length > 0 && (
-            <>
-              <SectionDivider label={intl.formatMessage(messages.skillsTitle)} />
-              <SkillsList skills={profile.skills} />
-            </>
-          )}
-
-          <SectionDivider label={intl.formatMessage(messages.bountiesTitle)} />
-          {profile.bountyTabs && profile.bountyTabs.length > 0 && (
-            <CountedTabList
-              items={profile.bountyTabs}
-              value={resolvedBountyTab ?? profile.bountyTabs[0].value}
-              onChange={handleBountyTabChange}
-            />
-          )}
-          {resolvedBountyTab === 'pull-requests' ? (
-            <PullRequestsTable pullRequests={pullRequests} />
-          ) : (
-            <BountiesTable issues={bounties} onViewDetails={handleViewBounty} />
-          )}
-        </>
-      )}
-
-      <BountyDetailsDrawer
-        open={!!selectedBounty}
-        onClose={() => setSelectedBounty(undefined)}
-        bounty={selectedBounty}
-      />
-    </Shell>
-  )
-}
+    <ContributorProfileBody
+      profile={profile}
+      bounties={bounties}
+      pullRequests={pullRequests}
+      completed={completed}
+      defaultTab={defaultTab}
+      onPayLink={onPayLink}
+      onViewBounty={onViewBounty}
+      onBountyTabChange={onBountyTabChange}
+    />
+  </Shell>
+)
 
 export default ContributorProfileVariant

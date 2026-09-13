@@ -10,16 +10,28 @@ import {
   customColumnRenderer
 } from 'design-library/molecules/tables/issue-table/issue-table'
 import { FormattedMessage } from 'react-intl'
-import ContributorProfileVariant from './variants/contributor/contributor-profile-variant'
+import ContributorProfileVariant, {
+  ContributorProfileData
+} from './variants/contributor/contributor-profile-variant'
+import ServiceProviderProfileVariant, {
+  ServiceProviderProfileData
+} from './variants/provider/service-provider-profile-variant'
+import CombinedProfileVariant from './variants/combined/combined-profile-variant'
 
 // Which role-based variant to render. A user can hold multiple roles at once
-// (contributor + maintainer, say) — hence an array — but for now only
-// 'contributor' has a real variant; anything else falls back to the generic
-// layout below. Test one variant at a time as each is built.
+// (contributor + maintainer, say) — hence an array. 'contributor' and
+// 'provider' have real variants; 'maintainer' falls back to the generic
+// layout below until it's built. Test one variant at a time as each is built.
 export type ProfileType = 'contributor' | 'maintainer' | 'provider'
 
 type UserProfilePublicPageProps = {
   user?: any
+  /** Pre-shaped data for the Contributor variant. Required when both
+   * 'contributor' and 'provider' are active, since `user.data` can then only
+   * hold one shape at a time. */
+  contributorProfile?: ContributorProfileData
+  /** Pre-shaped data for the Service Provider variant — see `contributorProfile`. */
+  providerProfile?: ServiceProviderProfileData
   tasks?: any
   pullRequests?: any
   searchUser?: any
@@ -34,6 +46,8 @@ type UserProfilePublicPageProps = {
 
 const UserProfilePublicPage = ({
   user,
+  contributorProfile,
+  providerProfile,
   tasks,
   pullRequests,
   searchUser,
@@ -47,18 +61,51 @@ const UserProfilePublicPage = ({
 }: UserProfilePublicPageProps) => {
   const { data: profile } = user || {}
   const issueMetadata = useIssueMetadata({ includeProject: true })
+  const isContributor = profileTypes.includes('contributor')
+  const isProvider = profileTypes.includes('provider')
 
-  if (profileTypes.includes('contributor')) {
+  if (isContributor && isProvider && contributorProfile && providerProfile) {
     return (
       <Page>
-        <ContributorProfileVariant
-          profile={profile}
+        <CombinedProfileVariant
+          contributorProfile={contributorProfile}
+          providerProfile={providerProfile}
           bounties={tasks}
           pullRequests={pullRequests}
           completed={user?.completed}
           onPayLink={onPayLink}
           onViewBounty={onViewBounty}
           onBountyTabChange={onBountyTabChange}
+          shareUrl={shareUrl}
+        />
+      </Page>
+    )
+  }
+
+  if (isContributor) {
+    return (
+      <Page>
+        <ContributorProfileVariant
+          profile={contributorProfile ?? profile}
+          bounties={tasks}
+          pullRequests={pullRequests}
+          completed={user?.completed}
+          onPayLink={onPayLink}
+          onViewBounty={onViewBounty}
+          onBountyTabChange={onBountyTabChange}
+          shareUrl={shareUrl}
+        />
+      </Page>
+    )
+  }
+
+  if (isProvider) {
+    return (
+      <Page>
+        <ServiceProviderProfileVariant
+          profile={providerProfile ?? profile}
+          completed={user?.completed}
+          onPayLink={onPayLink}
           shareUrl={shareUrl}
         />
       </Page>

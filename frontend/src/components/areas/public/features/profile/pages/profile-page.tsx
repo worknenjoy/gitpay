@@ -1,7 +1,14 @@
-import UserProfilePublicPage from 'design-library/pages/public-pages/user-profile-public-page/user-profile-public-page'
+import UserProfilePublicPage, {
+  ProfileType
+} from 'design-library/pages/public-pages/user-profile-public-page/user-profile-public-page'
 import React, { useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
-import { isContributorType, mapToContributorProfileData } from './profile-page.utils'
+import {
+  isContributorType,
+  mapToContributorProfileData,
+  isProviderType,
+  mapToServiceProviderProfileData
+} from './profile-page.utils'
 
 const TAB_TO_PARAM: Record<string, string> = {
   created: 'userId',
@@ -34,6 +41,7 @@ const ProfilePage = ({
   const [currentTab, setCurrentTab] = React.useState('created')
 
   const isContributor = isContributorType(user?.data?.Types)
+  const isProvider = isProviderType(user?.data?.Types)
 
   const fetchIssues = useCallback(
     (
@@ -88,11 +96,13 @@ const ProfilePage = ({
       fetchSolvedIssues(0, rowsPerPage, {})
       listPublicTaskSolutions(userId)
       listPublicPaymentRequests(userId)
+    } else if (isProvider) {
+      listPublicPaymentRequests(userId)
     } else {
       fetchIssues('created', 0, rowsPerPage, {})
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, user?.completed, user?.data?.id, isContributor])
+  }, [userId, user?.completed, user?.data?.id, isContributor, isProvider])
 
   const handleTabChange = useCallback(
     (newTab: string) => {
@@ -174,24 +184,40 @@ const ProfilePage = ({
     onSortChange: handleSortChange
   }
 
-  const contributorUser = isContributor
-    ? {
-        ...user,
-        data: mapToContributorProfileData(
-          user.data,
-          tasks.totalCount ?? 0,
-          pullRequests?.data?.length ?? 0,
-          paymentLinks?.data ?? []
-        )
-      }
-    : user
+  const contributorProfile = isContributor
+    ? mapToContributorProfileData(
+        user.data,
+        tasks.totalCount ?? 0,
+        pullRequests?.data?.length ?? 0,
+        paymentLinks?.data ?? []
+      )
+    : undefined
+
+  const providerProfile = isProvider
+    ? mapToServiceProviderProfileData(user.data, paymentLinks?.data ?? [])
+    : undefined
+
+  // Single-role pages still read `user.data` directly (e.g. the legacy
+  // fallback layout), so keep it shaped to whichever one role is active.
+  const shapedUser = contributorProfile
+    ? { ...user, data: contributorProfile }
+    : providerProfile
+      ? { ...user, data: providerProfile }
+      : user
+
+  const profileTypes: ProfileType[] = [
+    ...(isContributor ? (['contributor'] as const) : []),
+    ...(isProvider ? (['provider'] as const) : [])
+  ]
 
   return (
     <UserProfilePublicPage
-      user={contributorUser}
+      user={shapedUser}
+      contributorProfile={contributorProfile}
+      providerProfile={providerProfile}
       tasks={tasks}
       pullRequests={pullRequests}
-      profileTypes={isContributor ? ['contributor'] : []}
+      profileTypes={profileTypes}
       searchUser={searchUser}
       serverSidePagination={serverSidePagination}
       onTabChange={handleTabChange}

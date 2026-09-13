@@ -2,16 +2,29 @@ import { Avatar } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 export const Root = styled('div')(({ theme }) => ({
+  position: 'relative',
   textAlign: 'center',
   padding: theme.spacing(1.5, 3.5, 2.5),
-  borderBottom: `1px solid ${theme.palette.divider}`
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  [theme.breakpoints.up('sm')]: {
+    paddingTop: theme.spacing(3)
+  }
 }))
 
-export const ShareRow = styled('div')({
-  display: 'flex',
-  justifyContent: 'flex-end',
-  marginBottom: 4
-})
+// On narrow screens there isn't room beside the centered avatar/name column,
+// so this stays a normal in-flow row (like any other header block) with the
+// share bar stretched full-width. From `sm` up it's pulled out of that flow
+// and pinned to the corner instead, so it reads as a persistent page action
+// rather than another stacked row.
+export const ShareRow = styled('div')(({ theme }) => ({
+  marginBottom: theme.spacing(1.5),
+  [theme.breakpoints.up('sm')]: {
+    position: 'absolute',
+    top: theme.spacing(1.5),
+    right: theme.spacing(3.5),
+    marginBottom: 0
+  }
+}))
 
 export const AvatarWrap = styled('div')({
   position: 'relative',

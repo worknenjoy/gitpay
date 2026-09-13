@@ -43,6 +43,10 @@ export type ProfileHeaderProps = {
   country?: { image?: string; name: string; utcOffset?: string }
   links?: LinkChipProps[]
   role?: { name: string; tone?: 'orange' | 'teal' | 'yellow' }
+  /** When a user holds more than one role (e.g. Contributor + Service
+   * provider), pass all of them here instead of `role` to render one pill
+   * per role. Takes precedence over `role` when both are given. */
+  roles?: { name: string; tone?: 'orange' | 'teal' | 'yellow' }[]
   actions?: ProfileHeaderAction[]
   onAction?: (key: string) => void
   identity?: string[]
@@ -78,6 +82,7 @@ const ProfileHeader = ({
   country,
   links = [],
   role,
+  roles,
   actions = [],
   onAction,
   identity = [],
@@ -146,9 +151,17 @@ const ProfileHeader = ({
       </Block>
     )}
 
-    {role && (
+    {(roles?.length || role) && (
       <Block>
-        <RolePill name={role.name} active tone={role.tone} />
+        {roles?.length ? (
+          <LinksRow>
+            {roles.map((r) => (
+              <RolePill key={r.name} name={r.name} active tone={r.tone} />
+            ))}
+          </LinksRow>
+        ) : (
+          <RolePill name={role!.name} active tone={role!.tone} />
+        )}
         {actions.length > 0 && (
           <CtaRow>
             {actions.map((cta) => (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IconButton, Tooltip } from '@mui/material'
+import { IconButton, Tooltip, useTheme, useMediaQuery } from '@mui/material'
 import { defineMessages, useIntl } from 'react-intl'
 import {
   X as XIcon,
@@ -8,6 +8,7 @@ import {
   Email as EmailIcon,
   Link as LinkIcon
 } from '@mui/icons-material'
+import ActionsMenu from 'design-library/molecules/menus/actions-menu/actions-menu'
 import { Root, UrlButton, UrlText, CopyLabel, Separator, Targets } from './share-bar.styles'
 
 export type ShareBarProps = {
@@ -50,6 +51,8 @@ const messages = defineMessages({
 
 const ShareBar = ({ url, label }: ShareBarProps) => {
   const intl = useIntl()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const [copied, setCopied] = useState(false)
   const displayLabel = label ?? url.replace(/^https?:\/\//, '')
 
@@ -100,21 +103,34 @@ const ShareBar = ({ url, label }: ShareBarProps) => {
         </CopyLabel>
       </UrlButton>
       <Separator />
-      <Targets>
-        {shareTargets.map((target) => (
-          <Tooltip key={target.id} title={target.title}>
-            <IconButton
-              size="small"
-              aria-label={target.title}
-              href={target.href}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {target.icon}
-            </IconButton>
-          </Tooltip>
-        ))}
-      </Targets>
+      {isMobile ? (
+        // The 4 separate icon buttons are the main reason this pill doesn't
+        // fit narrow screens — collapse them into one overflow menu instead
+        // of shrinking (and hiding) each one individually.
+        <ActionsMenu
+          actions={shareTargets.map((target) => ({
+            children: target.title,
+            icon: target.icon,
+            onClick: () => window.open(target.href, '_blank', 'noreferrer')
+          }))}
+        />
+      ) : (
+        <Targets>
+          {shareTargets.map((target) => (
+            <Tooltip key={target.id} title={target.title}>
+              <IconButton
+                size="small"
+                aria-label={target.title}
+                href={target.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {target.icon}
+              </IconButton>
+            </Tooltip>
+          ))}
+        </Targets>
+      )}
     </Root>
   )
 }
