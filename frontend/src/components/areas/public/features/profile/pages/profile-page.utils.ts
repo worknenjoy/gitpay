@@ -123,6 +123,40 @@ export const mapToMaintainerProfileData = (userData: any, projects: any[] = []) 
   return {
     ...userData,
     identity,
-    role: isMaintainer ? { name: 'maintainer', tone: 'teal' } : undefined
+    role: isMaintainer ? { name: 'maintainer', tone: 'teal' } : undefined,
+    stats: totalPaidOut > 0 ? [`$${totalPaidOut.toLocaleString()} paid out`] : []
+  }
+}
+
+export const isFundingType = (types: { name: string }[] = []) =>
+  types.some((type) => type.name === 'funding')
+
+/**
+ * Shapes the raw `User` row into the `FundingProfileData` the Funding
+ * variant expects — identity lines from `createdAt` + the funded-bounties
+ * count, and a stats line with the total amount funded. `bounties` come from
+ * `GET /tasks/list?supportedByUserId=` (tasks with a succeeded Order from
+ * this user), so nothing here is fabricated.
+ */
+export const mapToFundingProfileData = (userData: any, bounties: any[] = []) => {
+  if (!userData) return userData
+
+  const totalFunded = bounties.reduce(
+    (sum: number, bounty: any) => sum + (Number(bounty.value) || 0),
+    0
+  )
+
+  const identity = [
+    userData.createdAt ? `Funding since ${moment(userData.createdAt).format('YYYY')}` : null,
+    `${bounties.length} bount${bounties.length === 1 ? 'y' : 'ies'} funded`
+  ].filter(Boolean) as string[]
+
+  const isFunding = (userData.Types ?? []).some((type: any) => type.name === 'funding')
+
+  return {
+    ...userData,
+    identity,
+    role: isFunding ? { name: 'funding', tone: 'pink' } : undefined,
+    stats: totalFunded > 0 ? [`$${totalFunded.toLocaleString()} funded`] : []
   }
 }

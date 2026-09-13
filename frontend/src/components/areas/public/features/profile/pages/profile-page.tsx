@@ -9,7 +9,9 @@ import {
   isProviderType,
   mapToServiceProviderProfileData,
   isMaintainerType,
-  mapToMaintainerProfileData
+  mapToMaintainerProfileData,
+  isFundingType,
+  mapToFundingProfileData
 } from './profile-page.utils'
 
 const TAB_TO_PARAM: Record<string, string> = {
@@ -31,7 +33,9 @@ const ProfilePage = ({
   maintainerProjects,
   listMaintainerProjects,
   maintainerOpenBounties,
-  listMaintainerOpenBounties
+  listMaintainerOpenBounties,
+  fundingBounties,
+  listFundingBounties
 }) => {
   // The public profile link is "friendly" — /#/users/:id-:username/ (see
   // account-menu.tsx, which generates it) — so the id needs pulling out of
@@ -49,6 +53,7 @@ const ProfilePage = ({
   const isContributor = isContributorType(user?.data?.Types)
   const isProvider = isProviderType(user?.data?.Types)
   const isMaintainer = isMaintainerType(user?.data?.Types)
+  const isFunding = isFundingType(user?.data?.Types)
 
   const fetchIssues = useCallback(
     (
@@ -111,11 +116,14 @@ const ProfilePage = ({
     if (isMaintainer) {
       listMaintainerProjects(userId)
     }
-    if (!isContributor && !isProvider && !isMaintainer) {
+    if (isFunding) {
+      listFundingBounties(userId)
+    }
+    if (!isContributor && !isProvider && !isMaintainer && !isFunding) {
       fetchIssues('created', 0, rowsPerPage, {})
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId, user?.completed, user?.data?.id, isContributor, isProvider, isMaintainer])
+  }, [userId, user?.completed, user?.data?.id, isContributor, isProvider, isMaintainer, isFunding])
 
   // The open-bounties table needs an Organization id, which only exists
   // once the maintainer's projects have loaded — a separate effect chained
@@ -226,6 +234,10 @@ const ProfilePage = ({
     ? mapToMaintainerProfileData(user.data, maintainerProjects?.data ?? [])
     : undefined
 
+  const fundingProfile = isFunding
+    ? mapToFundingProfileData(user.data, fundingBounties?.data ?? [])
+    : undefined
+
   // Single-role pages still read `user.data` directly (e.g. the legacy
   // fallback layout), so keep it shaped to whichever one role is active.
   const shapedUser = contributorProfile
@@ -234,12 +246,15 @@ const ProfilePage = ({
       ? { ...user, data: providerProfile }
       : maintainerProfile
         ? { ...user, data: maintainerProfile }
-        : user
+        : fundingProfile
+          ? { ...user, data: fundingProfile }
+          : user
 
   const profileTypes: ProfileType[] = [
     ...(isContributor ? (['contributor'] as const) : []),
     ...(isMaintainer ? (['maintainer'] as const) : []),
-    ...(isProvider ? (['provider'] as const) : [])
+    ...(isProvider ? (['provider'] as const) : []),
+    ...(isFunding ? (['funding'] as const) : [])
   ]
 
   return (
@@ -248,10 +263,12 @@ const ProfilePage = ({
       contributorProfile={contributorProfile}
       maintainerProfile={maintainerProfile}
       providerProfile={providerProfile}
+      fundingProfile={fundingProfile}
       tasks={tasks}
       pullRequests={pullRequests}
       maintainerProjects={maintainerProjects}
       maintainerOpenBounties={maintainerOpenBounties}
+      fundingBounties={fundingBounties}
       profileTypes={profileTypes}
       searchUser={searchUser}
       serverSidePagination={serverSidePagination}

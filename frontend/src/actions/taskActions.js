@@ -512,6 +512,31 @@ const listMaintainerOpenBounties = (organizationId) => {
   }
 }
 
+const LIST_FUNDING_BOUNTIES_REQUESTED = 'LIST_FUNDING_BOUNTIES_REQUESTED'
+const LIST_FUNDING_BOUNTIES_SUCCESS = 'LIST_FUNDING_BOUNTIES_SUCCESS'
+const LIST_FUNDING_BOUNTIES_ERROR = 'LIST_FUNDING_BOUNTIES_ERROR'
+
+// Same reasoning as `listMaintainerOpenBounties` — its own slice so a
+// Funding tab can sit alongside Contributor/Maintainer/Provider in the
+// combined profile without clobbering their task lists.
+const listFundingBounties = (userId) => {
+  return (dispatch) => {
+    dispatch({ type: LIST_FUNDING_BOUNTIES_REQUESTED, completed: false })
+    return axios
+      .get(api.API_URL + '/tasks/list', { params: { supportedByUserId: userId } })
+      .then((response) => {
+        return dispatch({
+          type: LIST_FUNDING_BOUNTIES_SUCCESS,
+          completed: true,
+          data: response.data
+        })
+      })
+      .catch((error) => {
+        return dispatch({ type: LIST_FUNDING_BOUNTIES_ERROR, completed: true, error })
+      })
+  }
+}
+
 const filterTasks = (key = 'all', value, additional) => {
   return (dispatch, getState) => {
     const tasks = getState().tasks.data
@@ -914,12 +939,16 @@ export {
   LIST_MAINTAINER_OPEN_BOUNTIES_REQUESTED,
   LIST_MAINTAINER_OPEN_BOUNTIES_SUCCESS,
   LIST_MAINTAINER_OPEN_BOUNTIES_ERROR,
+  LIST_FUNDING_BOUNTIES_REQUESTED,
+  LIST_FUNDING_BOUNTIES_SUCCESS,
+  LIST_FUNDING_BOUNTIES_ERROR,
   addNotification,
   createTask,
   fetchTask,
   listTasks,
   listTaskSuccess,
   listMaintainerOpenBounties,
+  listFundingBounties,
   filterTasks,
   filterTaskOrders,
   updateTask,

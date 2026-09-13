@@ -140,6 +140,57 @@ const maintainerOpenBounties = {
   completed: true
 }
 
+const fundingProfile = {
+  username: 'alexandremagno',
+  name: 'Alexandre Magno',
+  website: 'https://blog.alexandremagno.net/en',
+  country: 'BR',
+  profile_url: 'https://github.com/alexandremagno',
+  picture_url: '',
+  verified: true,
+  role: { name: 'funding', tone: 'pink' as const },
+  identity: ['Funding since 2023', '2 bounties funded'],
+  stats: ['$350 funded']
+}
+
+const fundingBounties = {
+  data: [
+    {
+      id: 3101,
+      title: 'Type inference on nested routers',
+      status: 'closed',
+      value: 300,
+      provider: 'github',
+      url: 'https://github.com/trpc/trpc/issues/3101',
+      Labels: [{ id: 'enhancement', name: 'enhancement' }],
+      Project: {
+        id: 2,
+        OrganizationId: 2,
+        name: 'trpc',
+        ProgrammingLanguages: [{ id: 'ts', name: 'TypeScript' }]
+      },
+      createdAt: '2024-08-05T10:00:00Z'
+    },
+    {
+      id: 3102,
+      title: 'Async callback docs',
+      status: 'closed',
+      value: 50,
+      provider: 'github',
+      url: 'https://github.com/langchain/langchain-py/issues/3102',
+      Labels: [{ id: 'docs', name: 'docs' }],
+      Project: {
+        id: 4,
+        OrganizationId: 4,
+        name: 'langchain-py',
+        ProgrammingLanguages: [{ id: 'mdx', name: 'MDX' }]
+      },
+      createdAt: '2024-06-01T10:00:00Z'
+    }
+  ],
+  completed: true
+}
+
 const sampleBounties = [
   {
     id: 1101,
@@ -219,10 +270,12 @@ const baseArgs = {
   contributorProfile,
   maintainerProfile,
   providerProfile,
+  fundingProfile,
   bounties: { data: sampleBounties, completed: true },
   pullRequests: { data: samplePullRequests, completed: true },
   maintainerProjects,
   maintainerOpenBounties,
+  fundingBounties,
   onPayLink: action('onPayLink'),
   onViewBounty: action('onViewBounty'),
   onBountyTabChange: action('onBountyTabChange'),
@@ -260,12 +313,17 @@ export const ServiceProvider: Story = {
   args: { ...baseArgs, defaultView: 'provider' }
 }
 
-// Only two of the three roles active — the switcher and header pills should
-// show just Contributor + Maintainer, no Service provider tab/pill.
+export const Funding: Story = {
+  args: { ...baseArgs, defaultView: 'funding' }
+}
+
+// Only two of the four roles active — the switcher and header pills should
+// show just Contributor + Maintainer, no Service provider or Funding tab/pill.
 export const TwoRoles: Story = {
   args: {
     ...baseArgs,
     providerProfile: undefined,
+    fundingProfile: undefined,
     defaultView: 'overview'
   }
 }

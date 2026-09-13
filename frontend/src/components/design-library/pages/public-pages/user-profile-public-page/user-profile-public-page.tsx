@@ -19,12 +19,15 @@ import ServiceProviderProfileVariant, {
 import MaintainerProfileVariant, {
   MaintainerProfileData
 } from './variants/maintainer/maintainer-profile-variant'
+import FundingProfileVariant, {
+  FundingProfileData
+} from './variants/funding/funding-profile-variant'
 import CombinedProfileVariant from './variants/combined/combined-profile-variant'
 
 // Which role-based variant to render. A user can hold multiple roles at once
-// (contributor + maintainer, say) — hence an array. All three have real
+// (contributor + maintainer, say) — hence an array. All four have real
 // variants now; holding 2+ renders the combined profile instead of a single one.
-export type ProfileType = 'contributor' | 'maintainer' | 'provider'
+export type ProfileType = 'contributor' | 'maintainer' | 'provider' | 'funding'
 
 type UserProfilePublicPageProps = {
   user?: any
@@ -35,12 +38,16 @@ type UserProfilePublicPageProps = {
   maintainerProfile?: MaintainerProfileData
   /** Pre-shaped data for the Service Provider variant — see `contributorProfile`. */
   providerProfile?: ServiceProviderProfileData
+  /** Pre-shaped data for the Funding variant — see `contributorProfile`. */
+  fundingProfile?: FundingProfileData
   tasks?: any
   pullRequests?: any
   /** Maintainer's projects (`{data, completed}`), from `GET /projects/list?userId=`. */
   maintainerProjects?: { data: any[]; completed: boolean }
   /** Open bounties across the maintainer's projects' organization. */
   maintainerOpenBounties?: any
+  /** Bounties this user funded (`{data, completed}`), from `GET /tasks/list?supportedByUserId=`. */
+  fundingBounties?: any
   searchUser?: any
   serverSidePagination?: any
   onTabChange?: any
@@ -56,10 +63,12 @@ const UserProfilePublicPage = ({
   contributorProfile,
   maintainerProfile,
   providerProfile,
+  fundingProfile,
   tasks,
   pullRequests,
   maintainerProjects,
   maintainerOpenBounties,
+  fundingBounties,
   searchUser,
   serverSidePagination,
   onTabChange,
@@ -74,7 +83,10 @@ const UserProfilePublicPage = ({
   const isContributor = profileTypes.includes('contributor')
   const isMaintainer = profileTypes.includes('maintainer')
   const isProvider = profileTypes.includes('provider')
-  const activeRoleCount = [isContributor, isMaintainer, isProvider].filter(Boolean).length
+  const isFunding = profileTypes.includes('funding')
+  const activeRoleCount = [isContributor, isMaintainer, isProvider, isFunding].filter(
+    Boolean
+  ).length
 
   if (activeRoleCount >= 2) {
     return (
@@ -83,10 +95,12 @@ const UserProfilePublicPage = ({
           contributorProfile={contributorProfile}
           maintainerProfile={maintainerProfile}
           providerProfile={providerProfile}
+          fundingProfile={fundingProfile}
           bounties={tasks}
           pullRequests={pullRequests}
           maintainerProjects={maintainerProjects}
           maintainerOpenBounties={maintainerOpenBounties}
+          fundingBounties={fundingBounties}
           completed={user?.completed}
           onPayLink={onPayLink}
           onViewBounty={onViewBounty}
@@ -135,6 +149,19 @@ const UserProfilePublicPage = ({
           profile={providerProfile ?? profile}
           completed={user?.completed}
           onPayLink={onPayLink}
+          shareUrl={shareUrl}
+        />
+      </Page>
+    )
+  }
+
+  if (isFunding) {
+    return (
+      <Page>
+        <FundingProfileVariant
+          profile={fundingProfile ?? profile}
+          bounties={fundingBounties ?? { data: [], completed: true }}
+          onViewBounty={onViewBounty}
           shareUrl={shareUrl}
         />
       </Page>

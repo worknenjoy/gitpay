@@ -23,10 +23,8 @@ import {
   MetaBlock
 } from './profile-header.styles'
 
-/** Profile types this header supports. Only 'contributor' is wired to a page today —
- * maintainer/provider are listed so the header's contract doesn't need to change
- * when those variants are implemented. */
-export type ProfileType = 'contributor' | 'maintainer' | 'provider'
+/** Profile types this header supports — one per role variant. */
+export type ProfileType = 'contributor' | 'maintainer' | 'provider' | 'funding'
 
 export type ProfileHeaderAction = {
   key: string
@@ -42,11 +40,11 @@ export type ProfileHeaderProps = {
   verified?: boolean
   country?: { image?: string; name: string; utcOffset?: string }
   links?: LinkChipProps[]
-  role?: { name: string; tone?: 'orange' | 'teal' | 'yellow' }
+  role?: { name: string; tone?: 'orange' | 'teal' | 'yellow' | 'pink' }
   /** When a user holds more than one role (e.g. Contributor + Service
    * provider), pass all of them here instead of `role` to render one pill
    * per role. Takes precedence over `role` when both are given. */
-  roles?: { name: string; tone?: 'orange' | 'teal' | 'yellow' }[]
+  roles?: { name: string; tone?: 'orange' | 'teal' | 'yellow' | 'pink' }[]
   actions?: ProfileHeaderAction[]
   onAction?: (key: string) => void
   identity?: string[]

@@ -22,18 +22,22 @@ import ServiceProviderProfileBody from '../provider/service-provider-profile-bod
 import { ServiceProviderProfileData } from '../provider/service-provider-profile-variant'
 import MaintainerProfileBody from '../maintainer/maintainer-profile-body'
 import { MaintainerProfileData } from '../maintainer/maintainer-profile-variant'
+import FundingProfileBody from '../funding/funding-profile-body'
+import { FundingProfileData } from '../funding/funding-profile-variant'
 import { Shell, SwitcherRow } from './combined-profile-variant.styles'
 
-export type CombinedProfileView = 'overview' | 'contributor' | 'maintainer' | 'provider'
+export type CombinedProfileView = 'overview' | 'contributor' | 'maintainer' | 'provider' | 'funding'
 
 export type CombinedProfileVariantProps = {
   contributorProfile?: ContributorProfileData
   maintainerProfile?: MaintainerProfileData
   providerProfile?: ServiceProviderProfileData
+  fundingProfile?: FundingProfileData
   bounties: { data: BountyRow[]; completed: boolean }
   pullRequests: { data: PullRequestRow[]; completed: boolean }
   maintainerProjects?: { data: any[]; completed: boolean }
   maintainerOpenBounties?: { data: BountyRow[]; completed: boolean }
+  fundingBounties?: { data: BountyRow[]; completed: boolean }
   completed?: boolean
   defaultView?: CombinedProfileView
   onPayLink?: (link: PaymentLink) => void
@@ -47,6 +51,7 @@ const messages = defineMessages({
   contributorTab: { id: 'profile.combined.contributorTab', defaultMessage: 'Contributor' },
   maintainerTab: { id: 'profile.combined.maintainerTab', defaultMessage: 'Maintainer' },
   providerTab: { id: 'profile.combined.providerTab', defaultMessage: 'Service provider' },
+  fundingTab: { id: 'profile.combined.fundingTab', defaultMessage: 'Funding' },
   recentBountiesTitle: {
     id: 'profile.combined.recentBountiesTitle',
     defaultMessage: 'Contributor · recent bounties'
@@ -58,6 +63,10 @@ const messages = defineMessages({
   paymentLinksTitle: {
     id: 'profile.combined.paymentLinksTitle',
     defaultMessage: 'Service provider · payment links'
+  },
+  fundedBountiesTitle: {
+    id: 'profile.combined.fundedBountiesTitle',
+    defaultMessage: 'Funding · bounties funded'
   }
 })
 
@@ -69,10 +78,12 @@ const CombinedProfileVariant = ({
   contributorProfile,
   maintainerProfile,
   providerProfile,
+  fundingProfile,
   bounties,
   pullRequests,
   maintainerProjects,
   maintainerOpenBounties,
+  fundingBounties,
   completed = true,
   defaultView = 'overview',
   onPayLink,
@@ -91,11 +102,12 @@ const CombinedProfileVariant = ({
 
   // Shared identity fields are the same real User row regardless of role —
   // pick whichever profile is present first to read them from.
-  const primaryProfile = contributorProfile ?? maintainerProfile ?? providerProfile
+  const primaryProfile =
+    contributorProfile ?? maintainerProfile ?? providerProfile ?? fundingProfile
   if (!primaryProfile) return null
 
   const headerAvailability = contributorProfile?.availability ?? maintainerProfile?.availability
-  const headerStats = maintainerProfile?.stats
+  const headerStats = maintainerProfile?.stats ?? fundingProfile?.stats
 
   const switcherOptions = [
     { value: 'overview' as const, label: intl.formatMessage(messages.overviewTab) },
@@ -107,6 +119,9 @@ const CombinedProfileVariant = ({
       : []),
     ...(providerProfile
       ? [{ value: 'provider' as const, label: intl.formatMessage(messages.providerTab) }]
+      : []),
+    ...(fundingProfile
+      ? [{ value: 'funding' as const, label: intl.formatMessage(messages.fundingTab) }]
       : [])
   ]
 
@@ -121,9 +136,12 @@ const CombinedProfileVariant = ({
         country={countryDisplay(primaryProfile.country)}
         links={contributorHeaderLinks(primaryProfile)}
         roles={
-          [contributorProfile?.role, maintainerProfile?.role, providerProfile?.role].filter(
-            Boolean
-          ) as { name: string; tone?: 'orange' | 'teal' | 'yellow' }[]
+          [
+            contributorProfile?.role,
+            maintainerProfile?.role,
+            providerProfile?.role,
+            fundingProfile?.role
+          ].filter(Boolean) as { name: string; tone?: 'orange' | 'teal' | 'yellow' | 'pink' }[]
         }
         identity={primaryProfile.identity}
         availability={headerAvailability}
@@ -176,6 +194,19 @@ const CombinedProfileVariant = ({
               />
             </>
           )}
+
+          {fundingProfile && (
+            <>
+              <SectionDivider label={intl.formatMessage(messages.fundedBountiesTitle)} />
+              <BountiesTable
+                issues={{
+                  data: (fundingBounties?.data ?? []).slice(0, OVERVIEW_PREVIEW_COUNT),
+                  completed: fundingBounties?.completed ?? true
+                }}
+                onViewDetails={handleViewBounty}
+              />
+            </>
+          )}
         </>
       )}
 
@@ -204,6 +235,13 @@ const CombinedProfileVariant = ({
           paymentLinks={providerProfile.paymentLinks}
           completed={completed}
           onPayLink={onPayLink}
+        />
+      )}
+
+      {view === 'funding' && fundingProfile && (
+        <FundingProfileBody
+          bounties={fundingBounties ?? { data: [], completed: true }}
+          onViewBounty={onViewBounty}
         />
       )}
 

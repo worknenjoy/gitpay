@@ -1,18 +1,19 @@
 import React from 'react'
 import { Chip } from '@mui/material'
-import { amber } from '@mui/material/colors'
+import { amber, pink } from '@mui/material/colors'
 
 export type RolePillProps = {
   name: React.ReactNode
   active?: boolean
-  tone?: 'orange' | 'teal' | 'yellow'
+  tone?: 'orange' | 'teal' | 'yellow' | 'pink'
 }
 
 const RolePill = ({ name, active = false, tone = 'orange' }: RolePillProps) => {
   const toneColor = {
     orange: 'secondary.main',
     teal: 'primary.main',
-    yellow: amber[800]
+    yellow: amber[800],
+    pink: pink[600]
   }[tone]
 
   return (

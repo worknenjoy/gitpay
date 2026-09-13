@@ -1,5 +1,9 @@
 import { connect } from 'react-redux'
-import { listTasks, listMaintainerOpenBounties } from '../../actions/taskActions'
+import {
+  listTasks,
+  listMaintainerOpenBounties,
+  listFundingBounties
+} from '../../actions/taskActions'
 import { searchUser } from '../../actions/userActions'
 import { listPublicTaskSolutions } from '../../actions/taskSolutionActions'
 import { listPublicPaymentRequests } from '../../actions/paymentRequestActions'
@@ -13,7 +17,8 @@ const mapStateToProps = (state: any) => {
     pullRequests: state.publicTaskSolutions,
     paymentLinks: state.publicPaymentRequests,
     maintainerProjects: state.projects,
-    maintainerOpenBounties: state.maintainerOpenBounties
+    maintainerOpenBounties: state.maintainerOpenBounties,
+    fundingBounties: state.fundingBounties
   }
 }
 
@@ -25,7 +30,8 @@ const mapDispatchToProps = (dispatch: any) => {
     listPublicPaymentRequests: (userId: number) => dispatch(listPublicPaymentRequests(userId)),
     listMaintainerProjects: (userId: number) => dispatch(listProjects({ userId })),
     listMaintainerOpenBounties: (organizationId: number) =>
-      dispatch(listMaintainerOpenBounties(organizationId))
+      dispatch(listMaintainerOpenBounties(organizationId)),
+    listFundingBounties: (userId: number) => dispatch(listFundingBounties(userId))
   }
 }
 

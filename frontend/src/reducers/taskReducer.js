@@ -57,7 +57,10 @@ import {
 import {
   LIST_MAINTAINER_OPEN_BOUNTIES_REQUESTED,
   LIST_MAINTAINER_OPEN_BOUNTIES_SUCCESS,
-  LIST_MAINTAINER_OPEN_BOUNTIES_ERROR
+  LIST_MAINTAINER_OPEN_BOUNTIES_ERROR,
+  LIST_FUNDING_BOUNTIES_REQUESTED,
+  LIST_FUNDING_BOUNTIES_SUCCESS,
+  LIST_FUNDING_BOUNTIES_ERROR
 } from '../actions/taskActions'
 
 export const task = (
@@ -235,6 +238,26 @@ export const maintainerOpenBounties = (
     case LIST_MAINTAINER_OPEN_BOUNTIES_SUCCESS:
       return { ...state, completed: action.completed, data: action.data ?? [] }
     case LIST_MAINTAINER_OPEN_BOUNTIES_ERROR:
+      return { ...state, completed: action.completed, error: action.error }
+    default:
+      return state
+  }
+}
+
+export const fundingBounties = (
+  state = {
+    completed: true,
+    data: [],
+    error: {}
+  },
+  action
+) => {
+  switch (action.type) {
+    case LIST_FUNDING_BOUNTIES_REQUESTED:
+      return { ...state, completed: action.completed }
+    case LIST_FUNDING_BOUNTIES_SUCCESS:
+      return { ...state, completed: action.completed, data: action.data ?? [] }
+    case LIST_FUNDING_BOUNTIES_ERROR:
       return { ...state, completed: action.completed, error: action.error }
     default:
       return state

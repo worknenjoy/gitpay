@@ -18,7 +18,7 @@ export type ServiceProviderProfileData = {
   profile_url?: string
   picture_url?: string
   verified?: boolean
-  role?: { name: string; tone?: 'orange' | 'teal' | 'yellow' }
+  role?: { name: string; tone?: 'orange' | 'teal' | 'yellow' | 'pink' }
   identity?: string[]
   paymentLinks?: PaymentLink[]
 }
