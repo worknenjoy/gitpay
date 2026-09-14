@@ -15,12 +15,16 @@ export function parseAndValidateIssueUrl(
   // Only allow expected hosts for supported providers
   const isGithubHost = hostname === 'github.com' || hostname === 'www.github.com'
   const isBitbucketHost = hostname === 'bitbucket.org' || hostname === 'www.bitbucket.org'
+  const isCodebergHost = hostname === 'codeberg.org' || hostname === 'www.codeberg.org'
 
   if (provider === 'github' && !isGithubHost) {
     throw new Error('URL host is not allowed for GitHub provider')
   }
   if (provider === 'bitbucket' && !isBitbucketHost) {
     throw new Error('URL host is not allowed for Bitbucket provider')
+  }
+  if (provider === 'codeberg' && !isCodebergHost) {
+    throw new Error('URL host is not allowed for Codeberg provider')
   }
 
   // Basic path validation: /owner/repo/issues/number
