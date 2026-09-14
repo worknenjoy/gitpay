@@ -9,16 +9,28 @@ import api from '../../../../../../consts'
 import { Margins, Center, SpacedButton, StyledTextField } from './login-form-signin.styles'
 import { useParams } from 'react-router-dom'
 
-type LoginFormSigninProps = {
-  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void
+export type LoginFormStateError = {
+    username: string
+    password: string
+    captcha:string
+}
+export type LoginFormState = {
+  username: string,
+  password: string,
+  rememberMe: boolean,
+  captchaChecked: boolean,
+  error: LoginFormStateError
+}
+export type LoginFormSigninProps = {
+  onSubmit?: (event: React.FormEvent<HTMLFormElement>, state: LoginFormState) => void
   action?: string
   onClose?: () => void
   onSignup?: () => void
   noCancelButton?: boolean
   onForgot?: () => void
   addNotification?: (message: string, options: any) => void
+  initialState: LoginFormState
 }
-
 const LoginFormSignin = ({
   onSubmit,
   onClose,
@@ -26,6 +38,7 @@ const LoginFormSignin = ({
   noCancelButton,
   onForgot,
   addNotification
+  initialState
 }: LoginFormSigninProps) => {
   const { status } = useParams<{ status: string }>()
 
@@ -38,7 +51,8 @@ const LoginFormSignin = ({
       username: '',
       password: '',
       captcha: ''
-    }
+    },
+    ...initialState
   })
 
   const handleChange = (name) => (event) => {
@@ -128,7 +142,7 @@ const LoginFormSignin = ({
     if (!validEmail || !validPassword) {
       return event && event.preventDefault()
     }
-    onSubmit?.(event)
+    onSubmit?.(event, state)
   }
 
   useEffect(() => {
