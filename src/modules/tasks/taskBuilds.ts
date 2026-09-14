@@ -1,6 +1,11 @@
 import requestPromise from 'request-promise'
 import models from '../../models'
 import { GithubConnect } from '../../client/provider/github'
+import {
+  KdeConnect,
+  kdeBugCommentsUri,
+  kdeBugUri
+} from '../../client/provider/kde'
 import TaskMail from '../../mail/task'
 import { roleExists } from '../roles'
 import { userExists } from '../users'
@@ -102,6 +107,44 @@ export async function taskBuilds(taskParameters: any) {
       const p = await project(userOrCompany, projectName, userId, 'bitbucket')
       const task = await p.createTask({ ...taskParameters, private: true })
       return task.dataValues
+    }
+
+    case 'kde': {
+      const bugPayload = (await KdeConnect({ uri: kdeBugUri(issueId) })) as any
+      const bug = Array.isArray(bugPayload?.bugs) ? bugPayload.bugs[0] : null
+      if (!bug || !bug.summary) return false
+      if (!taskParameters.title) taskParameters.title = bug.summary
+
+      if (!taskParameters.description) {
+        try {
+          const commentsPayload = (await KdeConnect({
+            uri: kdeBugCommentsUri(issueId)
+          })) as any
+          const comments =
+            commentsPayload?.bugs?.[String(bug.id)]?.comments ||
+            commentsPayload?.bugs?.[issueId]?.comments ||
+            []
+          taskParameters.description = comments[0]?.text || ''
+        } catch (e) {
+          taskParameters.description = ''
+        }
+      }
+
+      const orgName = bug.product || userOrCompany || 'kde'
+      const kdeProjectName = bug.component || projectName || 'bugs'
+      const p = await project(orgName, kdeProjectName, userId, 'kde')
+      const task = await p.createTask(taskParameters)
+
+      const taskData = task.dataValues
+      const userData = await task.getUser()
+
+      if (userData.receiveNotifications) {
+        TaskMail.new(userData, taskData)
+      }
+
+      await notifyNewIssue(taskData, userData)
+
+      return { ...taskData, ProjectId: taskData.ProjectId }
     }
 
     default: {
