@@ -29,7 +29,7 @@ const listLanguage = (params) => {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log('error on list labels', error)
+        console.error('error on list labels', error)
         return dispatch(listLanguageError(error))
       })
   }

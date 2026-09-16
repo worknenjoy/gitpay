@@ -21,7 +21,7 @@ const PaypalPaymentCard: React.FC<PaypalPaymentCardProps> = (props) => {
     if (createdOrder && createdOrder.payment_url) {
       window.location.href = createdOrder.payment_url
     } else {
-      console.log('no payment_url found on order', createdOrder)
+      console.error('no payment_url found on order', createdOrder)
     }
   }, [])
 
@@ -47,12 +47,12 @@ const PaypalPaymentCard: React.FC<PaypalPaymentCardProps> = (props) => {
               triggerPayment(created.data)
             } else {
               // eslint-disable-next-line no-console
-              console.log('no paypal order', created)
+              console.error('no paypal order', created)
             }
           })
           .catch((err: any) => {
             // eslint-disable-next-line no-console
-            console.log('failed paypal order', err)
+            console.error('failed paypal order', err)
           })
       }
     },

@@ -30,13 +30,13 @@ export const Default: Story = {
       currency: 'USD'
     },
     onSend: (taskId: number) => {
-      console.log(`Transfer sent to task ID: ${taskId}`)
+      console.error(`Transfer sent to task ID: ${taskId}`)
     },
     onClose: () => {
-      console.log('Drawer closed')
+      console.error('Drawer closed')
     },
     listOrders: () => {
-      console.log('List orders called')
+      console.error('List orders called')
     }
   }
 }
@@ -55,13 +55,13 @@ export const Loading: Story = {
       currency: 'USD'
     },
     onSend: (taskId: number) => {
-      console.log(`Transfer sent to task ID: ${taskId}`)
+      console.error(`Transfer sent to task ID: ${taskId}`)
     },
     onClose: () => {
-      console.log('Drawer closed')
+      console.error('Drawer closed')
     },
     listOrders: () => {
-      console.log('List orders called')
+      console.error('List orders called')
     }
   }
 }

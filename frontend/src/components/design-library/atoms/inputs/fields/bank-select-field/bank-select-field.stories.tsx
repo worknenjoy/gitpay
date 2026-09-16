@@ -12,6 +12,6 @@ export const Default = Template.bind({})
 Default.args = {
   routingNumber: '123456789',
   country: 'BR',
-  onChange: (e) => console.log(e.target.value),
+  onChange: (e) => console.error(e.target.value),
   disabled: false
 }

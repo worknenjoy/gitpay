@@ -53,8 +53,8 @@ Default.args = {
       name: 'Project Name'
     }
   },
-  updateTask: () => console.log('Task updated'),
-  reportTask: () => console.log('Task reported')
+  updateTask: () => console.error('Task updated'),
+  reportTask: () => console.error('Task reported')
 }
 
 export const Loading = Template.bind({})

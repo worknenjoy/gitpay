@@ -59,7 +59,7 @@ export const withConfirmationFields: Story = {
     confirmLabel: 'Confirm',
     cancelLabel: 'Cancel',
     onConfirm: (e, confirmFields) => {
-      console.log('Confirmed with fields:', confirmFields)
+      console.error('Confirmed with fields:', confirmFields)
       action('Confirmed')(e, confirmFields)
     }
   }

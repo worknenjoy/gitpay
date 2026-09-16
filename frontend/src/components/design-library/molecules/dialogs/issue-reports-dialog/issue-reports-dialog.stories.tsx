@@ -11,7 +11,7 @@ const Template = (args) => <IssueReportsDialog {...args} />
 export const Default = Template.bind({})
 Default.args = {
   open: true,
-  onClose: () => console.log('Dialog closed'),
+  onClose: () => console.error('Dialog closed'),
   issueDetails: {
     title: 'Sample Issue',
     description: 'This is a sample issue description.'

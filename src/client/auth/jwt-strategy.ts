@@ -15,6 +15,10 @@ export const createJWTStrategy = () => {
       secretOrKey: process.env.SECRET_PHRASE
     },
     async (jwtPayload: any, done: any) => {
+      const jwtPayloadJson = JSON.stringify(jwtPayload, null, 2)
+      console.log(
+        `\x1b[1;38;2;240;79;120mjwtPayload: \x1b[1;38;2;143;211;255m${jwtPayloadJson}\x1b[0m`
+      )
       try {
         const userAttributes = {
           email: jwtPayload.email

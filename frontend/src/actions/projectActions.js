@@ -42,9 +42,9 @@ const fetchProject = (projectId, params) => {
         dispatch(addNotification('actions.task.fetch.other.error', { severity: 'error' }))
         dispatch(fetchProjectError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible to fetch issue')
+        console.error('not possible to fetch issue')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }
@@ -81,9 +81,9 @@ const listProjects = () => {
         dispatch(addNotification('actions.task.fetch.other.error', { severity: 'error' }))
         dispatch(listProjectsError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible to fetch issue')
+        console.error('not possible to fetch issue')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }

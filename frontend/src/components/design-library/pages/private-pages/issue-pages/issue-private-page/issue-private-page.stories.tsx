@@ -42,25 +42,25 @@ export const Default = {
       completed: true,
       data: { id: 1, name: 'Sample Organization' }
     },
-    fundingInviteTask: () => console.log('Funding Invite Task Clicked'),
-    createTaskSolution: () => console.log('Create Task Solution Clicked'),
-    getTaskSolution: () => console.log('Get Task Solution Clicked'),
-    updateTaskSolution: () => console.log('Update Task Solution Clicked'),
-    fetchPullRequestData: () => console.log('Fetch Pull Request Data Clicked'),
+    fundingInviteTask: () => console.error('Funding Invite Task Clicked'),
+    createTaskSolution: () => console.error('Create Task Solution Clicked'),
+    getTaskSolution: () => console.error('Get Task Solution Clicked'),
+    updateTaskSolution: () => console.error('Update Task Solution Clicked'),
+    fetchPullRequestData: () => console.error('Fetch Pull Request Data Clicked'),
     pullRequestData: {
       completed: true,
       data: {}
     },
     taskSolution: null,
-    createTask: () => console.log('Create Task Clicked'),
-    signOut: () => console.log('Sign Out Clicked'),
+    createTask: () => console.error('Create Task Clicked'),
+    signOut: () => console.error('Sign Out Clicked'),
     bottomProps: {},
     cleanPullRequestDataState: () => {},
     fetchAccount: () => {},
-    inviteTask: () => console.log('Invite Task Clicked'),
-    messageAuthor: () => console.log('Message Author Clicked'),
-    onDeleteTask: () => console.log('Delete Task Clicked'),
-    reportTask: () => console.log('Report Task Clicked'),
+    inviteTask: () => console.error('Invite Task Clicked'),
+    messageAuthor: () => console.error('Message Author Clicked'),
+    onDeleteTask: () => console.error('Delete Task Clicked'),
+    reportTask: () => console.error('Report Task Clicked'),
     task: {
       completed: true,
       data: {
@@ -87,27 +87,27 @@ export const Default = {
       loading: false,
       error: null
     },
-    updateTask: () => console.log('Update Task Clicked'),
+    updateTask: () => console.error('Update Task Clicked'),
 
     // New: customer/order/wallet related props
-    fetchCustomer: () => console.log('Fetch Customer Clicked'),
+    fetchCustomer: () => console.error('Fetch Customer Clicked'),
     customer: {
       completed: true,
       data: { id: 1, name: 'Jane Customer' }
     },
     addNotification: (...args: any[]) =>
-      console.log(`Notification: ${args?.[0] || 'Sample notification'}`),
-    createOrder: () => console.log('Create Order Clicked'),
+      console.error(`Notification: ${args?.[0] || 'Sample notification'}`),
+    createOrder: () => console.error('Create Order Clicked'),
     order: {
       completed: true,
       data: { id: 101, status: 'pending', amount: 100, currency: 'USD' }
     },
-    fetchWallet: () => console.log('Fetch Wallet Clicked'),
+    fetchWallet: () => console.error('Fetch Wallet Clicked'),
     wallet: {
       completed: true,
       data: { id: 10, balance: 500, currency: 'USD' }
     },
-    listWallets: () => console.log('List Wallets Clicked'),
+    listWallets: () => console.error('List Wallets Clicked'),
     wallets: {
       completed: true,
       data: [
@@ -115,7 +115,7 @@ export const Default = {
         { id: 11, balance: 250, currency: 'USD' }
       ]
     },
-    fetchTask: () => console.log('Fetch Task Clicked'),
-    syncTask: () => console.log('Sync Task Clicked')
+    fetchTask: () => console.error('Fetch Task Clicked'),
+    syncTask: () => console.error('Sync Task Clicked')
   }
 }

@@ -12,5 +12,5 @@ export const Default = Template.bind({})
 Default.args = {
   currentPage: 1,
   totalPages: 10,
-  onPageChange: (page) => console.log(`Page changed to: ${page}`)
+  onPageChange: (page) => console.error(`Page changed to: ${page}`)
 }

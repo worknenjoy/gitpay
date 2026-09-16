@@ -31,7 +31,7 @@ const getUserTypes = (userId) => {
       })
       .catch((e) => {
         // eslint-disable-next-line no-console
-        console.log('get user types error', e)
+        console.error('get user types error', e)
         return dispatch(getUserTypesError(e))
       })
   }

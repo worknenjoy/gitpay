@@ -530,9 +530,9 @@ const fetchTask = (taskId) => {
         dispatch(addNotification('actions.task.fetch.other.error', { severity: 'error' }))
         dispatch(fetchTaskError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible to fetch issue')
+        console.error('not possible to fetch issue')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }
@@ -573,9 +573,9 @@ const transferTask = (taskId) => {
         dispatch(addNotification('actions.task.transfer.other.error', { severity: 'error' }))
         dispatch(transferTaskError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible to transfer issue')
+        console.error('not possible to transfer issue')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }
@@ -607,9 +607,9 @@ const paymentTask = (taskId, value) => {
         dispatch(addNotification('actions.task.payment.error.send', { severity: 'error' }))
         dispatch(paymentTaskError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible to pay task')
+        console.error('not possible to pay task')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }
@@ -642,9 +642,9 @@ const inviteTask = (id, email, message, user) => {
         dispatch(addNotification('actions.task.invite.error', { severity: 'error' }))
         dispatch(inviteTaskError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible send invite')
+        console.error('not possible send invite')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }
@@ -669,9 +669,9 @@ const messageAuthor = (userId, taskId, message) => {
         dispatch(addNotification('actions.task.message.author.error', { severity: 'error' }))
         dispatch(inviteTaskError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible send invite')
+        console.error('not possible send invite')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }
@@ -706,9 +706,9 @@ const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, us
         dispatch(addNotification('actions.task.invite.error', { severity: 'error' }))
         return dispatch(fundingInviteTaskError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible send invite')
+        console.error('not possible send invite')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }
@@ -734,9 +734,9 @@ const syncTask = (taskId) => {
         dispatch(addNotification('actions.task.fetch.other.error', { severity: 'error' }))
         dispatch(syncTaskError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible to fetch issue')
+        console.error('not possible to fetch issue')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }
@@ -768,9 +768,9 @@ const reportTask = (task, reason) => {
         dispatch(addNotification('actions.task.report.error', { severity: 'error' }))
         dispatch(reportTaskError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible to send report')
+        console.error('not possible to send report')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }
@@ -836,9 +836,9 @@ const requestClaimTask = (taskId, userId, comments, isApproved, token, history) 
         dispatch(addNotification('actions.task.claim.error', { severity: 'error' }))
         dispatch(requestClaimTaskError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible request claim')
+        console.error('not possible request claim')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }

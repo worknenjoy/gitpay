@@ -34,7 +34,7 @@ export const createWallet = (wallet) => {
     return axios
       .post(api.API_URL + '/wallets', wallet)
       .then((wallet) => {
-        console.log(wallet)
+        console.error(wallet)
         if (wallet.data) {
           dispatch(addNotification('actions.wallet.create.success'))
           return dispatch(createWalletSuccess(wallet.data))

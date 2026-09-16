@@ -61,7 +61,7 @@ const actionAssign = (taskId, assignId, action, message) => {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log(error)
+        console.error(error)
         dispatch(addNotification('actions.assign.task.error', { severity: 'error' }))
         return dispatch(assignTaskError(error))
       })

@@ -12,8 +12,8 @@ const Template = (args) => <PrivateBase {...args} />
 export const Default = Template.bind({})
 Default.args = {
   children: <Typography variant="body1">Private Base content</Typography>,
-  createTask: () => console.log('Create Task'),
-  signOut: () => console.log('Sign Out'),
+  createTask: () => console.error('Create Task'),
+  signOut: () => console.error('Sign Out'),
   user: {
     data: {
       id: '1',
@@ -36,8 +36,8 @@ Default.args = {
 export const Loading = Template.bind({})
 Loading.args = {
   children: <Typography variant="body1">Loading...</Typography>,
-  createTask: () => console.log('Create Task'),
-  signOut: () => console.log('Sign Out'),
+  createTask: () => console.error('Create Task'),
+  signOut: () => console.error('Sign Out'),
   user: {
     data: {},
     completed: false

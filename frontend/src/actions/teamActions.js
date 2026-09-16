@@ -39,7 +39,7 @@ const joinTeam = (email) => {
       .catch((error) => {
         dispatch(addNotification('Oops! Email could not be sent'))
         // eslint-disable-next-line no-console
-        console.log('error on join team notification', error)
+        console.error('error on join team notification', error)
         return dispatch(joinTeamError(error))
       })
   }

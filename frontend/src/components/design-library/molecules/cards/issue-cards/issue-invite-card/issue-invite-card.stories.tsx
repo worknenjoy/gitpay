@@ -23,10 +23,10 @@ Default.args = {
   },
   id: 1,
   onInvite: () => {
-    console.log('Invite')
+    console.error('Invite')
   },
   onFunding: () => {
-    console.log('Funding')
+    console.error('Funding')
   }
 }
 

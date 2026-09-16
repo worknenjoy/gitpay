@@ -61,7 +61,7 @@ WhopVerificationRequired.args = {
     completed: true
   },
   forceShow: true,
-  onClick: () => console.log('open Whop verification link')
+  onClick: () => console.error('open Whop verification link')
 }
 
 export const LoadingState = Template.bind({})

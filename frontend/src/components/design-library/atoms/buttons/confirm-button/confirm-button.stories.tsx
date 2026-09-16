@@ -49,7 +49,7 @@ WithConfirmFields.args = {
     type: 'text'
   },
   onConfirm: (e, confirmFields) => {
-    console.log('Confirmed with fields:', confirmFields)
+    console.error('Confirmed with fields:', confirmFields)
     action('Confirmed')(e, confirmFields)
   },
   alertMessage: 'This will permanently remove the item.',

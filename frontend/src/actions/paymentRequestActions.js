@@ -38,7 +38,7 @@ export const createPaymentRequest = (paymentRequest) => {
     return axios
       .post(api.API_URL + '/payment-requests', paymentRequest)
       .then((response) => {
-        console.log(response)
+        console.error(response)
         if (response.data) {
           dispatch(addNotification('actions.paymentRequest.create.success'))
           return dispatch(createPaymentRequestSuccess(response.data))

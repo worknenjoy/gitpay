@@ -40,7 +40,7 @@ Default.args = {
         ]
       }
     },
-    messageAuthor: () => console.log('Message author clicked')
+    messageAuthor: () => console.error('Message author clicked')
   }
 }
 
@@ -69,6 +69,6 @@ Loading.args = {
   task: {
     completed: false,
     data: null,
-    messageAuthor: () => console.log('Message author clicked')
+    messageAuthor: () => console.error('Message author clicked')
   }
 }

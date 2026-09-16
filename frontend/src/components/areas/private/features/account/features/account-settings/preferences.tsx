@@ -114,7 +114,7 @@ const Skills = (props) => {
       setSavedSnapshot({ skillsKey: nextSkillsKey, osKey: nextOsKey })
       hasUserEditedRef.current = false
     } catch (e) {
-      console.log('error', e)
+      console.error('error', e)
     } finally {
       setSaving(false)
     }
