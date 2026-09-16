@@ -197,11 +197,7 @@ const LoginFormSignin = ({
       </Margins>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          {state.rememberMe ? (
-            <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
-          ) : (
-            <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
-          )}
+          <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
           <Typography variant="caption">
             <FormattedMessage id="account.login.label.remember" defaultMessage="Remember me" />
           </Typography>
