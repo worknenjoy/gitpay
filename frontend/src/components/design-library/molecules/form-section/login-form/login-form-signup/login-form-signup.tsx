@@ -281,7 +281,7 @@ const LoginFormSignup = ({
           }
         })
         /* eslint-disable no-console */
-        console.log(error)
+        console.error(error)
       }
     }
   }

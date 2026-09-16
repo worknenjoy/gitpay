@@ -22,8 +22,8 @@ Default.args = {
       suggestedDate: new Date()
     }
   ],
-  onMessage: (id) => console.log('onMessage', id),
+  onMessage: (id) => console.error('onMessage', id),
   assigned: false,
-  onAccept: (id) => console.log('onAccept', id),
-  onReject: (id) => console.log('onReject', id)
+  onAccept: (id) => console.error('onAccept', id),
+  onReject: (id) => console.error('onReject', id)
 }

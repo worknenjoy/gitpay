@@ -12,7 +12,7 @@ type Story = StoryObj<typeof AccountCustomerForm>
 
 const baseArgs = {
   user: { data: { id: 123 } },
-  fetchCustomer: (id: number) => console.log('fetchCustomer', id),
+  fetchCustomer: (id: number) => console.error('fetchCustomer', id),
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     alert('Payment information saved')

@@ -14,7 +14,7 @@ Default.args = {
   userId: '123',
   taskId: '456',
   name: 'John Doe',
-  onClose: () => console.log('Dialog closed'),
+  onClose: () => console.error('Dialog closed'),
   onSend: (userId, taskId, message) =>
-    console.log(`Message sent to user ${userId} for task ${taskId}: ${message}`)
+    console.error(`Message sent to user ${userId} for task ${taskId}: ${message}`)
 }

@@ -10,7 +10,7 @@ const PayoutSettingsBankAccountPayoutSchedulePage = ({ account, updateAccount })
 
   /*
   useEffect(() => {
-   console.log(account, updateAccount);
+   console.error(account, updateAccount);
   }, [account, updateAccount]);
   */
 

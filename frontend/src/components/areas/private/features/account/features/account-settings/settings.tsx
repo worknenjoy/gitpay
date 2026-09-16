@@ -87,7 +87,7 @@ const Settings = (props) => {
       setSavedSnapshot((prev) => ({ ...prev, language: lang }))
       hasUserEditedRef.current = false
     } catch (e) {
-      console.log('error', e)
+      console.error('error', e)
     }
   }
 
@@ -132,7 +132,7 @@ const Settings = (props) => {
 
       hasUserEditedRef.current = false
     } catch (e) {
-      console.log('error', e)
+      console.error('error', e)
     } finally {
       setSaving(false)
     }

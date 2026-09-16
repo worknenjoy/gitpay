@@ -17,7 +17,7 @@ export const Default: Story = {
   args: {
     joinTeamAPICall: (email: string) => {
       // stub API call
-      console.log('joinTeamAPICall invoked with:', email)
+      console.error('joinTeamAPICall invoked with:', email)
       action('joinTeamAPICall')(email)
     }
   }

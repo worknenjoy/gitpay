@@ -428,7 +428,7 @@ const fetchCustomer = () => {
       })
       .catch((e) => {
         // eslint-disable-next-line no-console
-        console.log('fetch user customer error', e)
+        console.error('fetch user customer error', e)
         return dispatch(fetchUserCustomerError(e))
       })
   }
@@ -457,7 +457,7 @@ const createCustomer = (customerData) => {
       .catch((error) => {
         dispatch(addNotification('actions.customer.create.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
-        console.log('error on create customer', error)
+        console.error('error on create customer', error)
         return dispatch(createUserCustomerError(error))
       })
   }
@@ -477,7 +477,7 @@ const updateCustomer = (customerData) => {
         const errorMessage = error.response.data
         dispatch(addNotification('actions.customer.update.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
-        console.log('error on update customer', error)
+        console.error('error on update customer', error)
         return dispatch(updateUserCustomerError('actions.customer.update.error'))
       })
   }
@@ -501,7 +501,7 @@ const fetchAccount = (provider) => {
       })
       .catch((e) => {
         // eslint-disable-next-line no-console
-        console.log('fetch user account error', e)
+        console.error('fetch user account error', e)
         return dispatch(fetchUserAccountError(e))
       })
   }
@@ -518,7 +518,7 @@ const fetchAccountBalance = () => {
       })
       .catch((e) => {
         // eslint-disable-next-line no-console
-        console.log('fetch user account balance error', e)
+        console.error('fetch user account balance error', e)
         return dispatch(fetchUserBalanceError(e))
       })
   }
@@ -535,7 +535,7 @@ const fetchAccountCountries = () => {
       })
       .catch((e) => {
         // eslint-disable-next-line no-console
-        console.log('fetch user account countries error', e)
+        console.error('fetch user account countries error', e)
         return dispatch(fetchUserAccountCountriesError(e))
       })
   }
@@ -587,7 +587,7 @@ const createAccount = (country, confirmExistingAccountId) => {
           })
         )
         // eslint-disable-next-line no-console
-        console.log('error on create account', error)
+        console.error('error on create account', error)
         return dispatch(createUserAccountError(error))
       })
   }
@@ -612,7 +612,7 @@ const updateAccount = (account) => {
           addNotification('actions.user.account.update.error.missing', { severity: 'error' })
         )
         // eslint-disable-next-line no-console
-        console.log('error on update account', error)
+        console.error('error on update account', error)
 
         return dispatch(updateUserAccountError(error.response.data, accountData))
       })
@@ -635,7 +635,7 @@ const deleteAccount = (provider) => {
       .catch((error) => {
         dispatch(addNotification('actions.user.account.delete.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
-        console.log('error on delete account', error)
+        console.error('error on delete account', error)
         return dispatch(deleteUserAccountError(error))
       })
   }
@@ -659,7 +659,7 @@ const updateUser = (userData) => {
       .catch((error) => {
         dispatch(addNotification('notifications.account.update.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
-        console.log('error on update user', error)
+        console.error('error on update user', error)
         return dispatch(updateUserError(error))
       })
   }
@@ -725,7 +725,7 @@ const activateUser = (userId, token) => {
       .catch((error) => {
         dispatch(addNotification('notifications.account.activate.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
-        console.log('error on activate user', error)
+        console.error('error on activate user', error)
         return dispatch(activateUserError(error))
       })
   }
@@ -737,7 +737,7 @@ const checkActivationStatus = (userId) => {
     .then((res) => ({ email_verified: res.data.email_verified }))
     .catch((error) => {
       // eslint-disable-next-line no-console
-      console.log('error on check activation status', error)
+      console.error('error on check activation status', error)
       return { error: true }
     })
 }
@@ -760,7 +760,7 @@ const resendActivationEmail = () => {
           })
         )
         // eslint-disable-next-line no-console
-        console.log('error on resend activation email', error)
+        console.error('error on resend activation email', error)
         return dispatch(resendActivationEmailError(error))
       })
   }
@@ -780,7 +780,7 @@ const acceptTerms = ({ name, Types } = {}) => {
       .catch((error) => {
         dispatch(addNotification('notifications.account.terms.accept.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
-        console.log('error on accept terms', error)
+        console.error('error on accept terms', error)
         return dispatch(acceptTermsError(error))
       })
   }
@@ -803,7 +803,7 @@ const deleteUser = (user) => {
           })
         )
         // eslint-disable-next-line no-console
-        console.log('error on delete account', error)
+        console.error('error on delete account', error)
         return error
       })
   }
@@ -825,7 +825,7 @@ const getBankAccount = () => {
       .catch((error) => {
         dispatch(addNotification('notifications.bank.get.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
-        console.log('error on create account', error)
+        console.error('error on create account', error)
         return dispatch(getBankAccountError(error))
       })
   }
@@ -868,7 +868,7 @@ const createBankAccount = (bank) => {
       .catch((error) => {
         dispatch(addNotification('notifications.bank.create.other.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
-        console.log('error on create account', error)
+        console.error('error on create account', error)
         return dispatch(createBankAccountError(error))
       })
   }
@@ -904,7 +904,7 @@ const updateBankAccount = (bank_account) => {
       .catch((error) => {
         dispatch(addNotification('notifications.bank.update.other.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
-        console.log('error on create account', error)
+        console.error('error on create account', error)
         return dispatch(updateBankAccountError(error))
       })
   }
@@ -928,7 +928,7 @@ const deleteBankAccount = (bankAccountId) => {
       .catch((error) => {
         dispatch(addNotification('notifications.bank.delete.error', { severity: 'error' }))
         // eslint-disable-next-line no-console
-        console.log('error on delete bank account', error)
+        console.error('error on delete bank account', error)
         return dispatch(updateBankAccountError(error))
       })
   }
@@ -961,7 +961,7 @@ const searchUser = (data) => {
         }
       })
       .catch((error) => {
-        console.log('error', error)
+        console.error('error', error)
         dispatch(addNotification('user.search.error', { severity: 'error' }))
         dispatch(searchUserError(error))
       })
@@ -998,7 +998,7 @@ const fetchAccountVerificationLink = (provider, purpose) => {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log('error on fetch account verification link', error)
+        console.error('error on fetch account verification link', error)
         dispatch(
           addNotification('actions.user.account.verification.link.error', { severity: 'error' })
         )

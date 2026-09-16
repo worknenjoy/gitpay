@@ -26,7 +26,7 @@ class Auth extends Component {
   }
   onSubmit() {
     // eslint-disable-next-line no-console
-    console.log(this.state)
+    console.error(this.state)
   }
   render() {
     return (

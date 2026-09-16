@@ -20,14 +20,14 @@ const menuItems = [
     items: [
       {
         include: true,
-        onClick: () => console.log('My Issues'),
+        onClick: () => console.error('My Issues'),
         icon: <LibraryBooks />,
         label: 'My Issues',
         selected: true
       },
       {
         include: true,
-        onClick: () => console.log('Explore Issues'),
+        onClick: () => console.error('Explore Issues'),
         icon: <Home />,
         label: 'Explore Issues'
       }
@@ -38,13 +38,13 @@ const menuItems = [
     items: [
       {
         include: true,
-        onClick: () => console.log('My Wallet'),
+        onClick: () => console.error('My Wallet'),
         icon: <WalletIcon />,
         label: 'My Wallet'
       },
       {
         include: true,
-        onClick: () => console.log('Payments'),
+        onClick: () => console.error('Payments'),
         icon: <PaymentIcon />,
         label: 'Payments'
       }

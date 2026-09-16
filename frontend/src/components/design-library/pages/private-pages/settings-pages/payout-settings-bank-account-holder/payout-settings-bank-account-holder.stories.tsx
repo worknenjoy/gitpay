@@ -117,5 +117,5 @@ WhopConnectedCompany.args = {
       countries: [{ country: 'United States', code: 'US' }]
     }
   },
-  onCompleteVerification: () => console.log('fetch Whop verification link')
+  onCompleteVerification: () => console.error('fetch Whop verification link')
 }

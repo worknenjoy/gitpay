@@ -41,7 +41,7 @@ const ImportIssueDialog = ({ open, onClose, onImport }: ImportIssueDialogProps) 
       await onImport({ url, privateRepo, notListed, provider })
     } catch (e) {
       setError(true)
-      console.log(e)
+      console.error(e)
     }
   }
 

@@ -38,6 +38,10 @@ const PrivatePage = ({
   useEffect(() => {
     fetchOrganizations()
   }, [])
+  /* const userJson = JSON.stringify(user, null, 2)
+   * console.error(`\x1b[1;38;2;240;79;120muser: \x1b[1;38;2;143;211;255m${userJson}\x1b[0m`)
+   * const userDataJson = JSON.stringify(user.data, null, 2)
+   * console.error(`\x1b[1;38;2;240;79;120muserData: \x1b[1;38;2;143;211;255m${userDataJson}\x1b[0m`) */
 
   if (user?.data?.email_verified === false) {
     return <Redirect to="/verify-email" />

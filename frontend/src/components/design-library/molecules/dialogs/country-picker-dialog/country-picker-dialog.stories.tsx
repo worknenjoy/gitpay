@@ -12,6 +12,6 @@ export const Default = Template.bind({})
 Default.args = {
   open: true,
   onClose: (e, country) => {
-    console.log('Dialog closed', e, country)
+    console.error('Dialog closed', e, country)
   }
 }

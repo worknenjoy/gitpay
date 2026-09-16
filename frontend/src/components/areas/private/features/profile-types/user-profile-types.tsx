@@ -94,7 +94,7 @@ const ProfileTypes = ({
       hasUserEditedRef.current = false
       onClose && onClose()
     } catch (e) {
-      console.log(e)
+      console.error(e)
       addNotification(intl.formatMessage(messages.saveError))
     } finally {
       setSaving(false)

@@ -317,7 +317,7 @@ const cancelOrder = (id) => {
         }
       })
       .catch((e) => {
-        console.log('error', e)
+        console.error('error', e)
         dispatch(addNotification('actions.order.cancel.payment.error', { severity: 'error' }))
         return dispatch(cancelOrderError(e))
       })

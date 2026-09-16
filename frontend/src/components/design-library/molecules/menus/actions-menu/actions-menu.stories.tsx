@@ -38,7 +38,7 @@ ConfirmButton.args = {
     {
       children: 'Delete Item',
       onClick: () => {
-        console.log('Item deleted')
+        console.error('Item deleted')
       },
       confirm: {
         dialogMessage: 'Are you sure you want to delete this item?',

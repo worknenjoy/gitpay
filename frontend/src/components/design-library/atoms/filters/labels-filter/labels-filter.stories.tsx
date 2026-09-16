@@ -19,11 +19,11 @@ const mockLabels = {
 }
 
 const mockListLabels = () => {
-  console.log('List labels called')
+  console.error('List labels called')
 }
 
 const mockListTasks = (filters) => {
-  console.log('List tasks called with filters:', filters)
+  console.error('List tasks called with filters:', filters)
 }
 
 export const Default = Template.bind({})

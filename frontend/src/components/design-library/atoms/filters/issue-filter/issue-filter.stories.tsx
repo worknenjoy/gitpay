@@ -19,7 +19,7 @@ const mockTasks = [
 ]
 
 const mockFilterTasks = (key, value) => {
-  console.log('Filter called with:', key, value)
+  console.error('Filter called with:', key, value)
   return Promise.resolve()
 }
 

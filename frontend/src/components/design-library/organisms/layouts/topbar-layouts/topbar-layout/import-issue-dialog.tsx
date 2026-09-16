@@ -60,7 +60,7 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
           provider: provider
         })
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     } else {
       setError(true)

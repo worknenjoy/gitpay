@@ -11,7 +11,7 @@ const Template = (args) => <AccountButton {...args} />
 export const Default = Template.bind({})
 Default.args = {
   // Add default props here
-  handleMenu: () => console.log('handleMenu'),
+  handleMenu: () => console.error('handleMenu'),
   user: {
     logged: true,
     completed: true,

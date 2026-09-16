@@ -22,7 +22,7 @@ Default.args = {
     }
   },
   disabled: false,
-  onChange: (e) => console.log(e.target.value)
+  onChange: (e) => console.error(e.target.value)
 }
 
 export const Loading = Template.bind({})
@@ -39,5 +39,5 @@ Loading.args = {
     }
   },
   disabled: true,
-  onChange: (e) => console.log(e.target.value)
+  onChange: (e) => console.error(e.target.value)
 }

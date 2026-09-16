@@ -20,7 +20,7 @@ Default.args = {
     error: {}
   },
   updateUser: (id, data) => {
-    console.log(`User ${id} updated with data:`, data)
+    console.error(`User ${id} updated with data:`, data)
   }
 }
 
@@ -36,7 +36,7 @@ NotActive.args = {
     error: {}
   },
   updateUser: (id, data) => {
-    console.log(`User ${id} updated with data:`, data)
+    console.error(`User ${id} updated with data:`, data)
   }
 }
 
@@ -48,6 +48,6 @@ Loading.args = {
     error: {}
   },
   updateUser: (id, data) => {
-    console.log(`User ${id} updated with data:`, data)
+    console.error(`User ${id} updated with data:`, data)
   }
 }

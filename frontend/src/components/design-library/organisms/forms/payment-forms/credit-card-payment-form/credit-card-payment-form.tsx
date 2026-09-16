@@ -94,7 +94,7 @@ const CheckoutForm = (props) => {
         throw new Error('No token received')
       }
     } catch (e) {
-      console.log('Error creating token or processing payment:', e)
+      console.error('Error creating token or processing payment:', e)
       props.addNotification('payment.message.error', e.message || 'Error processing payment')
       setCheckoutFormState((prev) => ({ ...prev, paymentRequested: false }))
     }

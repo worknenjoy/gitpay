@@ -31,5 +31,5 @@ Disabled.args = {
   placeholder: 'Enter amount',
   value: '50.00',
   disabled: true,
-  onChange: (value) => console.log('Currency value changed:', value)
+  onChange: (value) => console.error('Currency value changed:', value)
 }

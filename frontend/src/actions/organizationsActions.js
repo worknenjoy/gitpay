@@ -52,9 +52,9 @@ const listOrganizations = () => {
         dispatch(addNotification('actions.orgs.list.other.error', { severity: 'error' }))
         dispatch(listOrganizationsError(e))
         // eslint-disable-next-line no-console
-        console.log('not possible to fetch issue')
+        console.error('not possible to fetch issue')
         // eslint-disable-next-line no-console
-        console.log(e)
+        console.error(e)
       })
   }
 }
@@ -83,7 +83,7 @@ const fetchOrganizations = () => {
         })
         .catch((error) => {
           // eslint-disable-next-line no-console
-          console.log('error to fetch organizations', error)
+          console.error('error to fetch organizations', error)
           return dispatch(fetchOrganizationsError(error))
         })
     })
@@ -113,7 +113,7 @@ const fetchOrganization = (id) => {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.log('error to fetch organizations', error)
+        console.error('error to fetch organizations', error)
         return dispatch(fetchOrganizationError(error))
       })
   }
@@ -148,7 +148,7 @@ const createOrganizations = (org) => {
         .catch((error) => {
           dispatch(addNotification('actions.orgs.create.error', { severity: 'error' }))
           // eslint-disable-next-line no-console
-          console.log('error to fetch organizations', error)
+          console.error('error to fetch organizations', error)
           return dispatch(createOrganizationsError(error))
         })
     })
@@ -181,7 +181,7 @@ const updateOrganization = (organization) => {
         .catch((error) => {
           dispatch(addNotification('actions.orgs.update.error', { severity: 'error' }))
           // eslint-disable-next-line no-console
-          console.log('error to fetch organizations', error)
+          console.error('error to fetch organizations', error)
           return dispatch(updateOrganizationsError(error))
         })
     })

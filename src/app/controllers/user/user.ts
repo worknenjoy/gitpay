@@ -14,6 +14,7 @@ const models = Models as any
 
 export const getUserInfo = async (req: any, res: any) => {
   const userId = req.user.id
+  const rememberMe = req.user.rememberMe
   try {
     const info = await userInfo({ userId })
     res.status(200).json(info)
