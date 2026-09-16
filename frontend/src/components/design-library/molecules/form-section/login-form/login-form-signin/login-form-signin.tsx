@@ -131,6 +131,8 @@ const LoginFormSignin = ({
     }
     const validEmail = validateEmail(state.username, state.error)
     const validPassword = validatePassword(state.password, state.error)
+    const rememberMe = state.rememberMe;
+    event.rememberMe = rememberMe;
     if (!validEmail || !validPassword) {
       return event && event.preventDefault()
     }
@@ -197,7 +199,7 @@ const LoginFormSignin = ({
       </Margins>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Checkbox checked={state.rememberMe} onClick={handleRememberMe} />
+          <Checkbox name="rememberMe" checked={state.rememberMe} onClick={handleRememberMe} />
           <Typography variant="caption">
             <FormattedMessage id="account.login.label.remember" defaultMessage="Remember me" />
           </Typography>
