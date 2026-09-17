@@ -29,7 +29,7 @@ export const paymentRequestPayments = (
     case LIST_PAYMENT_REQUEST_PAYMENT_REQUESTED:
       return {
         ...state,
-        completed: true,
+        completed: false,
         error: null
       }
     case LIST_PAYMENT_REQUEST_PAYMENT_SUCCEEDED:
