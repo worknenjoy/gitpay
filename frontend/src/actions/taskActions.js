@@ -409,8 +409,8 @@ const deleteTask = (task) => {
         return dispatch(deleteTaskSuccess())
       })
       .catch((error) => {
-        const errorMessage = error.response.data.error
-        // eslint-disable-next-line no-console
+        // network failures and timeouts have no response, and some responses have no body
+        const errorMessage = error?.response?.data?.error || error
         if (error.response && error.response.status === 403) {
           dispatch(addNotification('actions.task.delete.auth.error', { severity: 'error' }))
           return dispatch(deleteTaskError(error))
