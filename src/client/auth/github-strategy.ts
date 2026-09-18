@@ -82,7 +82,8 @@ export const createGitHubStrategy = () => {
             await userUpdate({ ...data, id: user.id })
             const token = jwt.sign(
               { id: data.id, email: data.email },
-              process.env.SECRET_PHRASE as string
+              process.env.SECRET_PHRASE as string,
+              user?.rememberMe == 'on' ? { expiresIn: thirdyDaysExpirationHuman } : null
             )
             data.token = token
             data.terms_accepted_at = user.terms_accepted_at
