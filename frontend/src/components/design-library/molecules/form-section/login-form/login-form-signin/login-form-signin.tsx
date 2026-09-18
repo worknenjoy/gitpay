@@ -50,9 +50,6 @@ const LoginFormSignin = ({
   }
 
   const handleRememberMe = () => {
-    const rememberMeJson = state.rememberMe;
-    console.error(`\x1b[1;38;2;240;79;120mrememberMe: \x1b[1;38;2;143;211;255m${rememberMeJson}\x1b[0m`)
-
     setState({ ...state, rememberMe: !state.rememberMe })
   }
 
@@ -120,9 +117,6 @@ const LoginFormSignin = ({
   }
 
   const submitByFormType = (event) => {
-    const eventJson = JSON.stringify(event, null, 2)
-    console.error(`\x1b[1;38;2;240;79;120mevent: \x1b[1;38;2;143;211;255m${eventJson}\x1b[0m`)
-
     const { captchaChecked } = state
     if (!captchaChecked) {
       setState({ ...state, error: { ...state.error, captcha: 'Please check the captcha' } })

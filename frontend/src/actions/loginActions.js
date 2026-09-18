@@ -89,8 +89,6 @@ const loggedOutCompleted = () => {
 
 export const loggedIn = () => {
   const token = Auth.getToken()
-  const tokenJson = JSON.stringify(token, null, 2)
-  console.error(`\x1b[1;38;2;240;79;120mtokenJson: \x1b[1;38;2;143;211;255m${tokenJson}\x1b[0m`)
 
   if (token) {
     return (dispatch, getState) => {

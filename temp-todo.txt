@@ -1,6 +1,0 @@
-https://github.com/worknenjoy/gitpay/compare/master...gabrielfalcao:gitpay:remember-me?expand=1
-https://github.com/gabrielfalcao/gitpay/tree/master
-https://opentelemetry.io/docs/languages/js/getting-started/nodejs/
-http://localhost:8082/#/profile
-https://expressjs.com/en/5x/api/request/#reqbody
-https://www.npmjs.com/package/passport

@@ -9,8 +9,6 @@ export const createLocalStrategy = () => {
     }
     try {
       const user = await userExists(userAttributes)
-      const userJson = JSON.stringify(user, null, 2)
-      console.log(`\x1b[1;38;2;240;79;120muserJson: \x1b[1;38;2;143;211;255m${userJson}\x1b[0m`)
       if (!user) return done(null, false)
       if (user.login_strategy && user.login_strategy !== 'local') return done(null, false)
       if (user.verifyPassword && user.verifyPassword(password, user.password as string)) {
