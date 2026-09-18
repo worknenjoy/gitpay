@@ -125,8 +125,8 @@ const LoginFormSignin = ({
     }
     const validEmail = validateEmail(state.username, state.error)
     const validPassword = validatePassword(state.password, state.error)
-    const rememberMe = state.rememberMe;
-    event.rememberMe = rememberMe;
+    const rememberMe = state.rememberMe
+    event.rememberMe = rememberMe
     if (!validEmail || !validPassword) {
       return event && event.preventDefault()
     }

@@ -82,8 +82,8 @@ const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }
             size="small"
             label={
               <FormattedMessage
-                id="payout-settings.whop.verification.button"
-                defaultMessage="Complete verification on Whop"
+                id="payout-settings.provider.verification.button"
+                defaultMessage="Set up payouts"
               />
             }
           />
@@ -94,8 +94,8 @@ const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }
         </AlertTitle>
         <Typography variant="body2" gutterBottom>
           <FormattedMessage
-            id="payout-settings.whop.verification.description"
-            defaultMessage="Complete verification on Whop before you can receive payouts. You will be redirected to Whop to finish identity and payout setup."
+            id="payout-settings.provider.verification.description"
+            defaultMessage="Verify your identity and set up payouts to start receiving funds."
           />
         </Typography>
       </CustomAlert>
