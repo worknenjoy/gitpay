@@ -4,6 +4,7 @@ import requestPromise from 'request-promise'
 import { bitbucket, oauthCallbacks } from '../../config/secrets'
 import { userExists, userBuilds, userUpdate } from '../../modules/users'
 import { mailChimpConnect } from '../mail/mailchimp'
+import { thirdyDaysExpirationHuman } from './common'
 
 interface UserData {
   id?: number
@@ -57,7 +58,8 @@ export const createBitbucketStrategy = () => {
             await userUpdate({ ...data, id: user.id })
             const token = jwt.sign(
               { id: data.id, email: data.email },
-              process.env.SECRET_PHRASE as string
+              process.env.SECRET_PHRASE as string,
+              user?.rememberMe == 'on' ? { expiresIn: thirdyDaysExpirationHuman } : {}
             )
             data.token = token
             return done(null, data)
