@@ -193,7 +193,23 @@ const LoginFormSignin = ({
       </Margins>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Checkbox name="rememberMe" checked={state.rememberMe} onClick={handleRememberMe} />
+          <input id="rememberMeNonEmpty" type="hidden" name="rememberMe" value="off" />
+
+          <Checkbox
+            id="rememberMe"
+            name="rememberMe"
+            onClick={handleRememberMe}
+            checked={state.rememberMe}
+            onChange={(event) => {
+              const hiddenInput = document.getElementById('rememberMeNonEmpty')
+              if (event.target.checked) {
+                hiddenInput.removeAttribute('name')
+              } else {
+                hiddenInput.setAttribute('name', 'rememberMe')
+              }
+            }}
+          />
+
           <Typography variant="caption">
             <FormattedMessage id="account.login.label.remember" defaultMessage="Remember me" />
           </Typography>
