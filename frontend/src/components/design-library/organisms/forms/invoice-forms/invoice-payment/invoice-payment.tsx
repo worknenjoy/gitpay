@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Skeleton } from '@mui/material'
+import { Skeleton } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import { CustomAlert } from '../../../../atoms/alerts/alert/alert'
 import { BillingInfoCard } from '../../../../molecules/cards/billing-info-card/billing-info-card'
@@ -34,14 +34,17 @@ const InvoicePayment = ({ price, customer, onInvoicePayment, processingPayment =
               defaultMessage="Invoices are generated based on the billing information in your account settings."
             />
           }
-          action={
-            <Button size="small" onClick={onInfoClick} variant="contained" color="secondary">
-              <FormattedMessage
-                id="issue.payment.invoice.info.action.update"
-                defaultMessage="Update invoice settings"
-              />
-            </Button>
-          }
+          actions={[
+            {
+              onClick: onInfoClick,
+              label: (
+                <FormattedMessage
+                  id="issue.payment.invoice.info.action.update"
+                  defaultMessage="Update invoice settings"
+                />
+              )
+            }
+          ]}
         >
           <FormattedMessage
             id="issue.payment.invoice.settings.info.description"

@@ -34,6 +34,9 @@ export const CustomAlertStyled = styled(Alert)(({ theme }) => ({
     fontWeight: 600,
     color: theme.palette.text.primary
   },
+  '& .MuiAlert-action': {
+    paddingRight: theme.spacing(1)
+  },
   ...variantStyles(theme.palette),
   [theme.breakpoints.down('sm')]: {
     display: 'flex',

@@ -248,33 +248,27 @@ const BankAccount = ({
                               <Alert
                                 severity="success"
                                 variant="outlined"
-                                action={
-                                  !editBankAccount ? (
-                                    <Button
-                                      size="small"
-                                      onClick={handleEditAccount}
-                                      variant="contained"
-                                      color="secondary"
-                                    >
-                                      <FormattedMessage
-                                        id="bank.alert.button.edit"
-                                        defaultMessage="Edit bank account"
-                                      />
-                                    </Button>
-                                  ) : (
-                                    <Button
-                                      size="small"
-                                      onClick={() => setEditBankAccount(false)}
-                                      variant="contained"
-                                      color="secondary"
-                                    >
-                                      <FormattedMessage
-                                        id="bank.alert.button.cancel"
-                                        defaultMessage="Cancel edit bank account"
-                                      />
-                                    </Button>
-                                  )
-                                }
+                                actions={[
+                                  !editBankAccount
+                                    ? {
+                                        onClick: handleEditAccount,
+                                        label: (
+                                          <FormattedMessage
+                                            id="bank.alert.button.edit"
+                                            defaultMessage="Edit bank account"
+                                          />
+                                        )
+                                      }
+                                    : {
+                                        onClick: () => setEditBankAccount(false),
+                                        label: (
+                                          <FormattedMessage
+                                            id="bank.alert.button.cancel"
+                                            defaultMessage="Cancel edit bank account"
+                                          />
+                                        )
+                                      }
+                                ]}
                               >
                                 <Typography color="primary">
                                   <FormattedMessage

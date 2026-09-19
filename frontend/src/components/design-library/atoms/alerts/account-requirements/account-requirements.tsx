@@ -3,7 +3,6 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { AlertTitle, Typography } from '@mui/material'
 import { validAccount } from '../../../../../utils/valid-account'
 import api from '../../../../../consts'
-import Button from '../../../atoms/buttons/button/button'
 import { CustomAlert } from './account-requirements.styles'
 
 const isWhopProvider = (account) => {
@@ -34,22 +33,17 @@ const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }
       <CustomAlert
         completed={completed}
         severity="error"
-        action={
-          <Button
-            completed={completed}
-            component="a"
-            href="mailto:contact@gitpay.me"
-            variant="contained"
-            color="error"
-            size="small"
-            label={
+        actions={[
+          {
+            href: 'mailto:contact@gitpay.me',
+            label: (
               <FormattedMessage
                 id="payout-settings.verification.rejected.contact"
                 defaultMessage="Contact us at contact@gitpay.me"
               />
-            }
-          />
-        }
+            )
+          }
+        ]}
       >
         <AlertTitle>
           <FormattedMessage
@@ -73,21 +67,17 @@ const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }
       <CustomAlert
         completed={completed}
         severity="warning"
-        action={
-          <Button
-            completed={completed}
-            onClick={onClick}
-            variant="contained"
-            color="secondary"
-            size="small"
-            label={
+        actions={[
+          {
+            onClick,
+            label: (
               <FormattedMessage
                 id="payout-settings.provider.verification.button"
                 defaultMessage="Set up payouts"
               />
-            }
-          />
-        }
+            )
+          }
+        ]}
       >
         <AlertTitle>
           <FormattedMessage id="profile.transfer.actionrequired" defaultMessage="Action required" />
@@ -125,18 +115,14 @@ const AccountRequirements = ({ user, account, intl, onClick, forceShow = false }
     <CustomAlert
       completed={completed}
       severity="warning"
-      action={
-        <Button
-          completed={completed}
-          onClick={onClick}
-          variant="outlined"
-          color="secondary"
-          size="small"
-          label={
+      actions={[
+        {
+          onClick,
+          label: (
             <FormattedMessage id="transfers.alert.button" defaultMessage="Update your account" />
-          }
-        />
-      }
+          )
+        }
+      ]}
     >
       <AlertTitle>
         <FormattedMessage id="profile.transfer.actionrequired" defaultMessage="Action required" />

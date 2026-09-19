@@ -188,7 +188,19 @@ const Palette = {
             boxShadow: 'none'
           }
         }
-      }
+      },
+      variants: [
+        // root's fontSize:16 is fixed regardless of size, so size="small"
+        // otherwise renders at full size — restore a genuinely smaller look.
+        {
+          props: { size: 'small' },
+          style: {
+            fontSize: 13,
+            padding: '4px 14px',
+            minHeight: 30
+          }
+        }
+      ]
     },
     MuiButtonGroup: {
       styleOverrides: {

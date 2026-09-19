@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from '../../../atoms/buttons/button/button'
 
 import Alert from './alert'
 import { FormattedMessage } from 'react-intl'
@@ -61,11 +60,7 @@ AlertWithActionExample.args = {
     </>
   ),
   completed: true,
-  action: (
-    <Button variant="outlined" size="small">
-      Click me
-    </Button>
-  )
+  actions: [{ label: 'Click me' }]
 }
 
 export const LoadingAlertExample = Template.bind({})

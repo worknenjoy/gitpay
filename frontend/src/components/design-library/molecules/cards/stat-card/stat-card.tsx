@@ -1,5 +1,5 @@
 import React from 'react'
-import { CardContent, CardActions, Skeleton } from '@mui/material'
+import { Button, CardContent, CardActions, Skeleton } from '@mui/material'
 import {
   RootCard,
   Header,
@@ -8,8 +8,7 @@ import {
   ValueRow,
   CurrencyPrefix,
   Value,
-  Note,
-  ActionButton
+  Note
 } from './stat-card.styles'
 
 export type StatCardProps = {
@@ -61,7 +60,7 @@ const StatCard = ({
       </CardContent>
       {onAdd && action && (
         <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <ActionButton
+          <Button
             variant="contained"
             size="small"
             color="secondary"
@@ -69,7 +68,7 @@ const StatCard = ({
             {...actionProps}
           >
             {action}
-          </ActionButton>
+          </Button>
         </CardActions>
       )}
     </RootCard>

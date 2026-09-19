@@ -4,13 +4,11 @@ import { Skeleton, Box } from '@mui/material'
 import Button from '../../buttons/button/button'
 import { CustomAlertStyled } from './alert.styles'
 
-const skeletonBgBySeverity = {
-  warning: '#FFF8F0',
-  info: '#F0F7FF',
-  error: '#FFF0F0',
-  success: '#F0FFF4'
-}
-
+/**
+ * `actions`: [{ label, onClick?, href?, endIcon?, disabled? }]. Each renders as an
+ * outlined Button colored by `severity` — the alert owns the action's look so every
+ * consumer stays visually consistent instead of styling its own Button.
+ */
 export const CustomAlert = (props) => {
   const {
     onClose,
@@ -48,10 +46,10 @@ export const CustomAlert = (props) => {
           alignItems: 'flex-start',
           gap: 1.5,
           p: '12px 16px',
-          bgcolor: skeletonBgBySeverity[severity] ?? '#F0F7FF',
+          bgcolor: 'action.hover',
           borderRadius: 1,
           borderLeft: '4px solid',
-          borderColor: `${severity}.main`
+          borderColor: 'divider'
         }}
       >
         <Skeleton variant="circular" width={22} height={22} sx={{ mt: 0.25, flexShrink: 0 }} />
@@ -70,7 +68,26 @@ export const CustomAlert = (props) => {
       severity={severity}
       action={
         <>
-          {actions}
+          {actions?.map((actionItem, index) => (
+            <Button
+              key={index}
+              variant="outlined"
+              color={severity}
+              size="small"
+              onClick={actionItem.onClick}
+              disabled={actionItem.disabled}
+              endIcon={actionItem.endIcon}
+              label={actionItem.label}
+              {...(actionItem.href
+                ? {
+                    component: 'a',
+                    href: actionItem.href,
+                    target: '_blank',
+                    rel: 'noopener noreferrer'
+                  }
+                : {})}
+            />
+          ))}
           {dismissable && (
             <Button
               label={

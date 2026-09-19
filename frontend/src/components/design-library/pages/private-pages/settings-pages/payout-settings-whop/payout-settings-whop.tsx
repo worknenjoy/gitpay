@@ -6,7 +6,6 @@ import ProfileSecondaryHeader from '../../../../molecules/headers/profile-second
 import PayoutAccountStatus from '../../../../atoms/status/payout-account-status/payout-account-status'
 import WhopAccountTabs from '../../../../molecules/tabs/whop-account-tabs/whop-account-tabs'
 import { CustomAlert } from '../../../../atoms/alerts/alert/alert'
-import Button from '../../../../atoms/buttons/button/button'
 import ConfirmButton from '../../../../atoms/buttons/confirm-button/confirm-button'
 import { getWhopAccountStatus } from './getWhopAccountStatus'
 
@@ -57,20 +56,17 @@ const PayoutSettingsWhop = ({
         <CustomAlert
           completed={completed}
           severity="error"
-          action={
-            <Button
-              completed={completed}
-              onClick={onManageOnWhop}
-              variant="outlined"
-              color="secondary"
-              label={
+          actions={[
+            {
+              onClick: onManageOnWhop,
+              label: (
                 <FormattedMessage
                   id="payout-settings.whop.banner.rejected.button"
                   defaultMessage="Resolve on Whop"
                 />
-              }
-            />
-          }
+              )
+            }
+          ]}
         >
           <Typography variant="subtitle2">
             <FormattedMessage
@@ -89,22 +85,18 @@ const PayoutSettingsWhop = ({
         <CustomAlert
           completed={completed}
           severity="success"
-          action={
-            <Button
-              completed={completed}
-              onClick={onManageOnWhop}
-              variant="outlined"
-              color="success"
-              size="small"
-              endIcon={<OpenInNewIcon />}
-              label={
+          actions={[
+            {
+              onClick: onManageOnWhop,
+              endIcon: <OpenInNewIcon />,
+              label: (
                 <FormattedMessage
                   id="payout-settings.whop.manage.button"
                   defaultMessage="Manage on Whop"
                 />
-              }
-            />
-          }
+              )
+            }
+          ]}
         >
           <Typography variant="subtitle2">
             <FormattedMessage
@@ -123,22 +115,18 @@ const PayoutSettingsWhop = ({
         <CustomAlert
           completed={completed}
           severity="warning"
-          action={
-            <Button
-              completed={completed}
-              onClick={onManageOnWhop}
-              variant="outlined"
-              color="secondary"
-              size="small"
-              endIcon={<OpenInNewIcon />}
-              label={
+          actions={[
+            {
+              onClick: onManageOnWhop,
+              endIcon: <OpenInNewIcon />,
+              label: (
                 <FormattedMessage
                   id="payout-settings.whop.banner.pending.button"
                   defaultMessage="Check status on Whop"
                 />
-              }
-            />
-          }
+              )
+            }
+          ]}
         >
           <Typography variant="subtitle2">
             <FormattedMessage

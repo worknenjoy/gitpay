@@ -236,7 +236,7 @@ const PaymentRequestForm = forwardRef<PaymentRequestFormHandle, PaymentRequestFo
           label: (
             <FormattedMessage
               id="paymentRequest.form.directCharge"
-              defaultMessage="Direct charge to your connected Whop account"
+              defaultMessage="Direct charge to your connected account"
             />
           ),
           alignment: 'flex-start',

@@ -695,7 +695,7 @@
   "paymentRequest.form.active": "Active",
   "paymentRequest.form.customAmount": "Custom Amount",
   "paymentRequest.form.deactivateAfterPayment": "Deactivate after payment",
-  "paymentRequest.form.directCharge": "Direct charge to your connected Whop account",
+  "paymentRequest.form.directCharge": "Direct charge to your connected account",
   "paymentRequest.form.instructions.change": "Change instructions",
   "paymentRequest.form.instructions.label": "Instructions",
   "paymentRequest.form.instructions.save": "Save",

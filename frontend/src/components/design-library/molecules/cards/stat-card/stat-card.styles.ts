@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles'
-import { Button as MuiButton, Card as MuiCard, Typography as MuiTypography } from '@mui/material'
+import { Card as MuiCard, Typography as MuiTypography } from '@mui/material'
 
 // This app's real text colors — palette.js only customizes these per
 // Typography variant (h3-h6/subtitle/caption), not palette.text.primary/
@@ -32,12 +32,12 @@ export const IconWrap = styled('span')(({ theme }) => ({
   color: theme.palette.primary.main,
   '& svg': {
     display: 'block',
-    fontSize: 22
+    fontSize: 16
   }
 }))
 
 export const Label = styled(MuiTypography)(() => ({
-  fontSize: 20,
+  fontSize: 13,
   lineHeight: 1.3,
   color: TEXT_SECONDARY
 }))
@@ -64,11 +64,4 @@ export const Note = styled(MuiTypography)(() => ({
   fontSize: 12.5,
   color: TEXT_SECONDARY,
   marginTop: 4
-}))
-
-export const ActionButton = styled(MuiButton)(() => ({
-  fontSize: 12,
-  padding: '3px 12px',
-  minHeight: 28,
-  lineHeight: 1.4
 }))
