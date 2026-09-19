@@ -4,6 +4,7 @@ import requestPromise from 'request-promise'
 import { bitbucket, oauthCallbacks } from '../../config/secrets'
 import { userExists, userBuilds, userUpdate } from '../../modules/users'
 import { mailChimpConnect } from '../mail/mailchimp'
+import { thirdyDaysExpirationHuman } from './common'
 
 interface UserData {
   id?: number
