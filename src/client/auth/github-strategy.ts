@@ -83,7 +83,7 @@ export const createGitHubStrategy = () => {
             const token = jwt.sign(
               { id: data.id, email: data.email },
               process.env.SECRET_PHRASE as string,
-              user?.rememberMe == 'on' ? { expiresIn: thirdyDaysExpirationHuman } : null
+              user?.rememberMe == 'on' ? { expiresIn: thirdyDaysExpirationHuman } : {}
             )
             data.token = token
             data.terms_accepted_at = user.terms_accepted_at
