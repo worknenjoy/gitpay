@@ -80,6 +80,13 @@ const Palette = {
   },
   components: {
     // Name of the component
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          boxShadow: '0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.08)'
+        }
+      }
+    },
     MuiDrawer: {
       styleOverrides: {
         root: {

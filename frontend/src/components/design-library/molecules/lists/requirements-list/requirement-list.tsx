@@ -1,32 +1,24 @@
 import React from 'react'
-import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material'
-import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded'
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
-import { Root } from './requirement-list.styles'
-import CircularProgress from '@mui/material/CircularProgress'
+import ChecklistCard from 'design-library/molecules/cards/checklist-card/checklist-card'
 
-const CustomPlaceholder = () => <CircularProgress size={24} />
-const SendSolutionRequirements = ({ requirements, completed }) => {
-  return (
-    <List component={Root as any}>
-      {requirements.map((requirement, index) => (
-        <ListItem>
-          <ListItemIcon style={{ color: 'black' }}>
-            {completed ? (
-              requirement.done ? (
-                <CheckCircleRoundedIcon color="primary" />
-              ) : (
-                <CancelRoundedIcon />
-              )
-            ) : (
-              <CustomPlaceholder />
-            )}
-          </ListItemIcon>
-          <ListItemText primary={requirement.label} />
-        </ListItem>
-      ))}
-    </List>
-  )
+type Requirement = {
+  label: React.ReactNode
+  done: boolean
 }
 
-export default SendSolutionRequirements
+type RequirementListProps = {
+  requirements: Requirement[]
+  completed?: boolean
+}
+
+const RequirementList = ({ requirements, completed }: RequirementListProps) => (
+  <ChecklistCard
+    completed={completed}
+    items={requirements.map((requirement) => ({
+      label: requirement.label,
+      state: requirement.done ? 'checked' : 'failed'
+    }))}
+  />
+)
+
+export default RequirementList

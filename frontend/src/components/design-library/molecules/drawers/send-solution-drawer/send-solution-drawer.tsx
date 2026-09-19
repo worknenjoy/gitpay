@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import SendSolutionForm from '../../../atoms/inputs/solution-input/solution-input'
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import TransferEligibilityInfo from 'design-library/atoms/alerts/transfer-eligibility-info/transfer-eligibility-info'
 import SendSolutionRequirements from '../../../../areas/public/features/issue/legacy/send-solution-requirements'
@@ -141,15 +141,17 @@ const SendSolutionDrawer = ({
               handlePullRequestURLChange={handlePullRequestURLChange}
               pullRequestURL={pullRequestURL}
             />
-            <SendSolutionRequirements
-              completed={taskSolutionCompleted}
-              isConnectedToGitHub={pullRequestData.isConnectedToGitHub}
-              isAuthorOfPR={pullRequestData.isAuthorOfPR}
-              isPRMerged={pullRequestData.isPRMerged}
-              isIssueClosed={pullRequestData.isIssueClosed}
-              hasIssueReference={pullRequestData.hasIssueReference}
-              bountyAvailable={Number(task?.data?.value) && !task?.data?.paid}
-            />
+            <Box sx={{ mt: 2 }}>
+              <SendSolutionRequirements
+                completed={taskSolutionCompleted}
+                isConnectedToGitHub={pullRequestData.isConnectedToGitHub}
+                isAuthorOfPR={pullRequestData.isAuthorOfPR}
+                isPRMerged={pullRequestData.isPRMerged}
+                isIssueClosed={pullRequestData.isIssueClosed}
+                hasIssueReference={pullRequestData.hasIssueReference}
+                bountyAvailable={Number(task?.data?.value) && !task?.data?.paid}
+              />
+            </Box>
           </React.Fragment>
         ) : (
           <IssueSolutionCard taskSolution={taskSolution} task={task.data} />

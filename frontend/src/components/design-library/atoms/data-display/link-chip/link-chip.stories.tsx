@@ -5,7 +5,7 @@ import { Language as LanguageIcon, GitHub as GitHubIcon } from '@mui/icons-mater
 import LinkChip from './link-chip'
 
 const meta: Meta<typeof LinkChip> = {
-  title: 'Design Library/Atoms/Data Display/LinkChip',
+  title: 'Design Library/Atoms/DataDisplay/LinkChip',
   component: LinkChip,
   parameters: {
     layout: 'centered'

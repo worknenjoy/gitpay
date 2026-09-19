@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import CountryLine from './country-line'
 
 const meta: Meta<typeof CountryLine> = {
-  title: 'Design Library/Atoms/Data Display/CountryLine',
+  title: 'Design Library/Atoms/DataDisplay/CountryLine',
   component: CountryLine,
   parameters: {
     layout: 'centered'

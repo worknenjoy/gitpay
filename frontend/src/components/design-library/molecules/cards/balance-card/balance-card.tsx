@@ -1,8 +1,6 @@
 import React from 'react'
-import { Button, CardContent, CardActions, Skeleton } from '@mui/material'
 import currencyMap from './currency-map'
-import { RootCard, Balance as BalanceText, Name as NameText } from './balance-card.styles'
-import { formatCurrency } from '../../../../../utils/format-currency'
+import StatCard from '../stat-card/stat-card'
 
 //Function to convert currency code to symbol
 export function currencyCodeToSymbol(code) {
@@ -28,12 +26,12 @@ export const convertStripeAmountByCurrency = (amount, currency) => {
   return (amount / Math.pow(10, places)).toFixed(places)
 }
 
-// styles migrated to balance-card.styles.ts
-
 type BalanceCardProps = {
   name: string | React.ReactNode
   balance: number
   currency?: string
+  icon?: React.ReactNode
+  note?: React.ReactNode
   onAdd?: (e: any) => void
   action?: React.PropsWithChildren<any>
   actionProps?: any
@@ -45,48 +43,35 @@ const BalanceCard = ({
   name,
   balance,
   currency = 'USD',
+  icon,
+  note,
   onAdd,
   action,
   actionProps,
   completed,
   type = 'decimal'
 }: BalanceCardProps) => {
-  const convertedBalance =
+  const places = currencyMap[currency.toLowerCase()]?.decimalPlaces ?? 2
+  const formattedValue =
     type === 'decimal'
-      ? formatCurrency(balance)
-      : `${currencyCodeToSymbol(currency)} ${convertStripeAmountByCurrency(balance, currency)}`
-
-  const isLoading = completed === false
+      ? balance.toLocaleString('en-US', {
+          minimumFractionDigits: places,
+          maximumFractionDigits: places
+        })
+      : convertStripeAmountByCurrency(balance, currency)
 
   return (
-    <RootCard>
-      <CardContent>
-        {isLoading ? (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-            <Skeleton variant="text" animation="wave" height={40} width="60%" />
-            <Skeleton variant="rectangular" animation="wave" width="40%" height={100} />
-          </div>
-        ) : (
-          <>
-            <NameText gutterBottom>{name}</NameText>
-            <BalanceText>{convertedBalance}</BalanceText>
-          </>
-        )}
-      </CardContent>
-      {onAdd && action && (
-        <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button
-            variant="contained"
-            size="small"
-            color="secondary"
-            onClick={onAdd}
-            {...actionProps}
-          >
-            {action}
-          </Button>
-        </CardActions>
-      )}
-    </RootCard>
+    <StatCard
+      icon={icon}
+      label={name}
+      value={formattedValue}
+      currency={currencyCodeToSymbol(currency)}
+      note={note}
+      onAdd={onAdd}
+      action={action}
+      actionProps={actionProps}
+      completed={completed}
+    />
   )
 }
 
