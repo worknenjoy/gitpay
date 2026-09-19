@@ -85,7 +85,19 @@ const Palette = {
         root: {
           boxShadow: '0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.08)'
         }
-      }
+      },
+      variants: [
+        // Cards that opt out via elevation={0} (e.g. GithubCard) or
+        // variant="outlined" (e.g. ResourceCard) keep no shadow.
+        {
+          props: { elevation: 0 },
+          style: { boxShadow: 'none' }
+        },
+        {
+          props: { variant: 'outlined' },
+          style: { boxShadow: 'none' }
+        }
+      ]
     },
     MuiDrawer: {
       styleOverrides: {
