@@ -13,11 +13,11 @@ redirect_from:
 * TOC
 {:toc}
 
-Gitpay is a platform for funding and delivering software work with clear scope, review-based acceptance, and transparent payment release.
+Gitpay is a platform that facilitates payment for delivered work.
 
 It helps:
 - People and teams fund issues with defined bounties.
-- Contributors get assigned, deliver via Pull Requests, and request payment.
+- Contributors send their work via Pull Requests and request payment.
 - Service providers charge customers with traceable delivery and payout records.
 
 ## Next steps
