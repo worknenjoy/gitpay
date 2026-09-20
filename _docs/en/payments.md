@@ -3,7 +3,7 @@ layout: doc
 lang: en
 role: contributor
 title: How our payment works
-subtitle: How we pay for bounties completed when you're assigned on tasks on Gitpay
+subtitle: How funded contributions and Payment Requests move toward payout
 tags: payments, work, bounty, get paid, reward, open-source payments
 redirect_from:
   - /docs/en/pages/
@@ -15,13 +15,17 @@ redirect_from:
 * TOC
 {:toc}
 
-When a task is completed and the related issue and pull request are closed, the code is deployed to production and you receive the bounty payment. The same payment flow applies when someone pays a
-[payment request](/docs/en/payments/) you created for service work.
+Gitpay has two documented payment paths: a funded project task that a contributor delivers and a Payment Request that a provider sends for completed customer work. In either path, approval or payment, transfer credit, and payout are separate steps.
 
-## ⚙️ Payments & Settings
-- Connect a payout account.
-- How fees work.
-- Invoices & history.
+## Follow the payment stages
+
+1. Agree on the work and amount. A project can fund an issue; a provider can create a Payment Request after delivery.
+2. Deliver and obtain acceptance where the project or customer requires it.
+3. Complete the applicable payment or release step.
+4. Check the credited transfer in [Claims](/docs/en/claims/).
+5. Withdraw available funds through [Payouts](/docs/en/payouts/).
+
+A merged Pull Request alone does not guarantee that payment has been released. A paid request can still require processing before funds are available.
 
 ## Gitpay uses more than one payment provider
 Depending on how a task or payment request was funded, and which payout method you've connected,
