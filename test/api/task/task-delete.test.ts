@@ -79,21 +79,14 @@ describe('DELETE /tasks/delete/:id', () => {
     await models.Member.create({ userId: anotherUserBody.id, taskId: createdTask.id })
     await models.History.create({ type: 'create', fields: ['title'], TaskId: createdTask.id })
     const label = await models.Label.create({ name: 'help wanted' })
-    await models.sequelize.query(
-      `INSERT INTO "TaskLabels" ("labelId", "taskId", "createdAt", "updatedAt") VALUES (?, ?, now(), now())`,
-      { replacements: [label.id, createdTask.id] }
-    )
+    await createdTask.addLabel(label)
 
     const relatedRecordCounts = async () => {
-      const [taskLabels] = await models.sequelize.query(
-        `SELECT count(*)::int AS count FROM "TaskLabels" WHERE "taskId" = ?`,
-        { replacements: [createdTask.id] }
-      )
       return {
         offers: await models.Offer.count({ where: { taskId: createdTask.id } }),
         members: await models.Member.count({ where: { taskId: createdTask.id } }),
         histories: await models.History.count({ where: { TaskId: createdTask.id } }),
-        taskLabels: taskLabels[0].count
+        taskLabels: await createdTask.countLabels()
       }
     }
 
