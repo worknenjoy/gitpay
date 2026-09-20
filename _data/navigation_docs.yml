@@ -6,7 +6,7 @@ contributor:
     docs:
       en:
         - What is Gitpay?
-        - Get Started
+        - Get started as a contributor
         - Charge Customers
         - Fund an Issue
         - Work on an Issue
@@ -33,16 +33,19 @@ contributor:
         - Claims — claiming tasks and tracking transfers
         - How payouts work
         - Disputes and refunds
+        - How payments work
       br:
         - Como configurar uma conta de pagamento no Whop
         - Claims — reivindicando tarefas e acompanhando transferências
         - Como funcionam os pagamentos (payouts)
         - Disputas e reembolsos
+        - Como funcionam os pagamentos
       pages:
         - whop-payout-setup
         - claims
         - payouts
         - disputes-and-refunds
+        - payments
 
 maintainer:
   - en:
@@ -83,7 +86,7 @@ sponsor:
     docs:
       en:
         - What is Gitpay?
-        - Get Started
+        - Get started as a contributor
         - Charge Customers
         - Fund an Issue
         - Work on an Issue
@@ -120,7 +123,7 @@ service-provider:
     docs:
       en:
         - What is Gitpay?
-        - Get Started
+        - Get started as a contributor
         - Charge Customers
         - Fund an Issue
         - Work on an Issue
