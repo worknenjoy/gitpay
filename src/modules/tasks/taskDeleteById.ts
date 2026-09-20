@@ -8,6 +8,19 @@ interface TaskParameters {
 }
 
 export async function taskDeleteById(taskParameters: TaskParameters, transaction?: any) {
+  const conditions: { id: number; userId?: number } = { id: taskParameters.id }
+  if (taskParameters.userId) {
+    conditions.userId = taskParameters.userId
+  }
+
+  // the related records below are removed by task id alone, so the task has to
+  // be matched against the same conditions as the delete before touching them
+  const task = await models.Task.findOne({ where: conditions, transaction })
+
+  if (!task) {
+    return 0
+  }
+
   const hasOrdersAssociated = await models.Order.findOne({
     where: {
       TaskId: taskParameters.id
@@ -43,11 +56,6 @@ export async function taskDeleteById(taskParameters: TaskParameters, transaction
     await Promise.all(
       labels.map((label) => models.Label.destroy({ where: { id: label.id }, transaction }))
     )
-  }
-
-  const conditions: { id: number; userId?: number } = { id: taskParameters.id }
-  if (taskParameters.userId) {
-    conditions.userId = taskParameters.userId
   }
 
   return models.Task.destroy({ where: conditions, transaction })
