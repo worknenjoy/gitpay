@@ -59,6 +59,48 @@ describe('DELETE /tasks/delete/:id', () => {
     expect(deleted.text).to.equal('0')
     expect(await models.Task.findByPk(createdTask.id)).to.not.be.null
   })
+  it('should not delete the records related to a task of another user', async () => {
+    const task = await createTask(agent)
+
+    const { body: createdTask } = task || {}
+
+    const anotherUser = await registerAndLogin(agent, {
+      email: 'anotheruser@example.com',
+      password: 'anotherpassword'
+    })
+
+    const { headers: anotherUserHeaders, body: anotherUserBody } = anotherUser || {}
+
+    await models.Offer.create({
+      userId: anotherUserBody.id,
+      taskId: createdTask.id,
+      value: 50
+    })
+    await models.Member.create({ userId: anotherUserBody.id, taskId: createdTask.id })
+    await models.History.create({ type: 'create', fields: ['title'], TaskId: createdTask.id })
+    const label = await models.Label.create({ name: 'help wanted' })
+    await createdTask.addLabel(label)
+
+    const relatedRecordCounts = async () => {
+      return {
+        offers: await models.Offer.count({ where: { taskId: createdTask.id } }),
+        members: await models.Member.count({ where: { taskId: createdTask.id } }),
+        histories: await models.History.count({ where: { TaskId: createdTask.id } }),
+        taskLabels: await createdTask.countLabels()
+      }
+    }
+
+    const before = await relatedRecordCounts()
+
+    const deleted = await agent
+      .delete(`/tasks/delete/${createdTask.id}`)
+      .set('Authorization', anotherUserHeaders?.authorization)
+      .expect(200)
+
+    expect(deleted.text).to.equal('0')
+    expect(await models.Task.findByPk(createdTask.id)).to.not.be.null
+    expect(await relatedRecordCounts()).to.deep.equal(before)
+  })
   it('should return 403 when not authenticated', async () => {
     const task = await createTask(agent)
 
