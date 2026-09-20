@@ -238,6 +238,48 @@ describe('POST /payment-request', () => {
     expect(res.body[0].deactivate_after_payment).to.equal(false)
   })
 
+  it('should include each payment request payments, so paid-count can be derived per link', async () => {
+    const register = await registerAndLogin(agent)
+    const { body, headers } = register
+
+    const paymentRequest = await PaymentRequestFactory({
+      userId: body.id,
+      title: 'Repository audit',
+      amount: 120,
+      currency: 'USD',
+      status: 'open'
+    })
+
+    const customer = await models.PaymentRequestCustomer.create({
+      email: 'buyer@test.com',
+      sourceId: 'cus_test',
+      userId: body.id
+    })
+
+    await models.PaymentRequestPayment.create({
+      source: 'stripe',
+      amount: 120,
+      currency: 'USD',
+      status: 'succeeded',
+      customerId: customer.id,
+      paymentRequestId: paymentRequest.id,
+      userId: body.id
+    })
+
+    const res = await agent
+      .get('/payment-requests')
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('authorization', headers.authorization)
+      .expect(200)
+
+    const found = res.body.find((request: any) => request.id === paymentRequest.id)
+    expect(found).to.exist
+    expect(found.PaymentRequestPayments).to.have.lengthOf(1)
+    expect(Number(found.PaymentRequestPayments[0].amount)).to.equal(120)
+    expect(found.PaymentRequestPayments[0].status).to.equal('succeeded')
+  })
+
   it('should update a payment request', async () => {
     nock('https://api.stripe.com')
       .persist()

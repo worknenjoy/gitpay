@@ -71,3 +71,40 @@ Loading.args = {
   items: [],
   completed: false
 }
+
+const MANY_WORK_ITEMS = [
+  ...WORK_ITEMS,
+  {
+    meta: ['worknenjoy/gitpay', '#1262', 'assigned 12 days ago'],
+    title: 'Show claim status on the contributor issue list',
+    chip: { label: 'Open', tone: 'success' as const },
+    currency: '$',
+    amount: '64.81'
+  },
+  {
+    meta: ['worknenjoy/gitpay-api', '#844', 'closed 2 Sep'],
+    title: 'Retry failed transfers before marking a payout as failed',
+    chip: { label: 'Closed', tone: 'error' as const },
+    currency: '$',
+    amount: '95.00'
+  }
+]
+
+// Only the first `limit` items render — the rest are only reachable via the
+// footer link. Defaults to 3, regardless of how many `items` are passed in.
+export const DefaultLimit = Template.bind({})
+DefaultLimit.args = {
+  title: 'Work items',
+  subtitle: 'Issues you are working on',
+  footer: 'See all your issues',
+  items: MANY_WORK_ITEMS
+}
+
+export const CustomLimit = Template.bind({})
+CustomLimit.args = {
+  title: 'Work items',
+  subtitle: 'Issues you are working on',
+  footer: 'See all your issues',
+  items: MANY_WORK_ITEMS,
+  limit: 5
+}

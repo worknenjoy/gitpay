@@ -156,7 +156,39 @@ const userInfo = async (params: any) => {
       }, 0),
       payments: paymentRequests.rows.reduce((count: number, request: any) => {
         return count + (request.PaymentRequestPayments ? request.PaymentRequestPayments.length : 0)
-      }, 0)
+      }, 0),
+      // Distinct buyers across all of this user's payment links.
+      customers: new Set(
+        paymentRequests.rows.flatMap(
+          (request: any) =>
+            request.PaymentRequestPayments?.map((pay: any) => pay.customerId).filter(Boolean) || []
+        )
+      ).size,
+      // Share of links that received at least one payment.
+      convertedPercent:
+        paymentRequests.count > 0
+          ? Math.round(
+              (paymentRequests.rows.filter(
+                (request: any) => request.PaymentRequestPayments?.length > 0
+              ).length /
+                paymentRequests.count) *
+                100
+            )
+          : 0,
+      recentPayments: paymentRequests.rows.reduce(
+        (acc: { count: number; amount: number }, request: any) => {
+          const recent = (request.PaymentRequestPayments || []).filter(
+            (pay: any) => new Date(pay.createdAt).getTime() >= Date.now() - 30 * 24 * 60 * 60 * 1000
+          )
+          return {
+            count: acc.count + recent.length,
+            amount:
+              acc.amount +
+              recent.reduce((sum: number, pay: any) => sum + Number(pay.amount || 0), 0)
+          }
+        },
+        { count: 0, amount: 0 }
+      )
     },
     claims: {
       total: transfers.count + paymentRequestTransfers.count,

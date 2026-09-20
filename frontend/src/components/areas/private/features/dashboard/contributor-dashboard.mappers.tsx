@@ -12,15 +12,14 @@ import {
 import { ListCardItem } from 'design-library/molecules/cards/list-card/list-card'
 import { ChecklistCardItem } from 'design-library/molecules/cards/checklist-card/checklist-card'
 import { StatGroupCardItem } from 'design-library/molecules/cards/stat-card/stat-group-card'
-import { DetailsSection } from 'design-library/molecules/data-display/details-section/details-section'
-import { formatCurrency } from '../../../../../utils/format-currency'
 import { validAccount } from '../../../../../utils/valid-account'
+import {
+  formatAmount,
+  mapClaimsSections,
+  mapPayoutsSummarySections
+} from './dashboard-shared.mappers'
 
-const formatAmount = (amount: number) =>
-  Number(amount || 0).toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })
+export { mapClaimsSections, mapPayoutsSummarySections }
 
 const issueNumberFromUrl = (url?: string | null) => {
   if (!url) return null
@@ -245,80 +244,6 @@ export const mapStats = (dashboardData: any = {}, solutions: any[] = []): StatGr
           defaultMessage="automatic payouts enabled"
         />
       )
-    }
-  ]
-}
-
-export const mapClaimsSections = (dashboardData: any = {}): DetailsSection[] => [
-  {
-    items: [
-      {
-        label: (
-          <FormattedMessage
-            id="dashboard.contributor.claims.bounties"
-            defaultMessage="For bounties"
-          />
-        ),
-        value: formatCurrency(dashboardData.claims?.bounties ?? 0)
-      },
-      {
-        label: (
-          <FormattedMessage
-            id="dashboard.contributor.claims.paymentRequests"
-            defaultMessage="For payment requests"
-          />
-        ),
-        value: formatCurrency(dashboardData.claims?.paymentRequests ?? 0)
-      },
-      {
-        label: <FormattedMessage id="dashboard.contributor.claims.total" defaultMessage="Total" />,
-        value: formatCurrency(dashboardData.claims?.amount ?? 0),
-        variant: 'emphasis'
-      }
-    ]
-  }
-]
-
-export const mapPayoutsSummarySections = (
-  dashboardData: any = {}
-): DetailsSection[] | undefined => {
-  const payoutsByCurrency = dashboardData.payouts ?? {}
-  const currency = Object.keys(payoutsByCurrency)[0]
-  if (!currency) return undefined
-
-  const { paidAmount = 0, inTransitAmount = 0 } = payoutsByCurrency[currency]
-  if (paidAmount === 0 && inTransitAmount === 0) return undefined
-
-  const code = currency.toUpperCase()
-  return [
-    {
-      items: [
-        {
-          label: (
-            <FormattedMessage
-              id="dashboard.contributor.payoutsSummary.paidOut"
-              defaultMessage="Paid out"
-            />
-          ),
-          value: formatCurrency(paidAmount, 'en-US', code)
-        },
-        {
-          label: (
-            <FormattedMessage
-              id="dashboard.contributor.when.inTransit"
-              defaultMessage="In transit"
-            />
-          ),
-          value: formatCurrency(inTransitAmount, 'en-US', code)
-        },
-        {
-          label: (
-            <FormattedMessage id="dashboard.contributor.claims.total" defaultMessage="Total" />
-          ),
-          value: formatCurrency(paidAmount + inTransitAmount, 'en-US', code),
-          variant: 'emphasis'
-        }
-      ]
     }
   ]
 }

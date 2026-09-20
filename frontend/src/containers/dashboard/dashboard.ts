@@ -5,6 +5,8 @@ import { fetchAccount } from '../../actions/userActions'
 import { listTasks } from '../../actions/taskActions'
 import { listTaskSolutions } from '../../actions/taskSolutionActions'
 import { searchPayout } from '../../actions/payoutActions'
+import { listPaymentRequests } from '../../actions/paymentRequestActions'
+import { listPaymentRequestPayments } from '../../actions/paymentRequestPaymentActions'
 import Dashboard from '../../components/areas/private/features/dashboard/dashboard'
 import { getCurrentUser } from '../../common/selectors/user/getUser'
 
@@ -15,7 +17,9 @@ const mapStateToProps = (state: any) => {
     account: state.account,
     tasks: state.tasks,
     taskSolutions: state.taskSolutions,
-    payouts: state.payouts
+    payouts: state.payouts,
+    paymentRequests: state.paymentRequests,
+    paymentRequestPayments: state.paymentRequestPayments
   }
 }
 
@@ -26,7 +30,9 @@ const mapDispatchToProps = (dispatch: any) => {
     fetchAccount: () => dispatch(fetchAccount()),
     listTasks: (params) => dispatch(listTasks(params)),
     listTaskSolutions: () => dispatch(listTaskSolutions()),
-    searchPayout: () => dispatch(searchPayout())
+    searchPayout: () => dispatch(searchPayout()),
+    listPaymentRequests: () => dispatch(listPaymentRequests()),
+    listPaymentRequestPayments: () => dispatch(listPaymentRequestPayments())
   }
 }
 

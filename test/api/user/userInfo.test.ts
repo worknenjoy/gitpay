@@ -117,4 +117,64 @@ describe('Current User Info', () => {
     expect(res.body.payouts.usd.inTransitAmount).to.equal(10)
     expect(res.body.awaitingPayoutAmount).to.be.closeTo(7.42, 0.001)
   })
+
+  it('should return distinct customer count, conversion rate, and recent payments for payment requests', async () => {
+    const user = await registerAndLogin(agent)
+    const { headers, body: currentUser } = user || {}
+
+    const requestWithRecentPayment = await currentModels.PaymentRequest.create({
+      userId: currentUser.id,
+      active: true
+    })
+    const requestWithOldPayment = await currentModels.PaymentRequest.create({
+      userId: currentUser.id,
+      active: true
+    })
+    await currentModels.PaymentRequest.create({
+      userId: currentUser.id,
+      active: true
+    })
+
+    const customer1 = await currentModels.PaymentRequestCustomer.create({
+      email: 'customer1@test.com',
+      sourceId: 'cus_1',
+      userId: currentUser.id
+    })
+    const customer2 = await currentModels.PaymentRequestCustomer.create({
+      email: 'customer2@test.com',
+      sourceId: 'cus_2',
+      userId: currentUser.id
+    })
+
+    await currentModels.PaymentRequestPayment.create({
+      source: 'stripe',
+      amount: 10,
+      currency: 'USD',
+      status: 'succeeded',
+      customerId: customer1.id,
+      paymentRequestId: requestWithRecentPayment.id,
+      userId: currentUser.id,
+      createdAt: new Date()
+    })
+    await currentModels.PaymentRequestPayment.create({
+      source: 'stripe',
+      amount: 20,
+      currency: 'USD',
+      status: 'succeeded',
+      customerId: customer2.id,
+      paymentRequestId: requestWithOldPayment.id,
+      userId: currentUser.id,
+      createdAt: new Date(Date.now() - 40 * 24 * 60 * 60 * 1000)
+    })
+
+    const res = await agent
+      .get(`/dashboard`)
+      .set('Authorization', headers['authorization'])
+      .expect(200)
+
+    expect(res.body.paymentRequests.total).to.equal(3)
+    expect(res.body.paymentRequests.customers).to.equal(2)
+    expect(res.body.paymentRequests.convertedPercent).to.equal(67)
+    expect(res.body.paymentRequests.recentPayments).to.deep.equal({ count: 1, amount: 10 })
+  })
 })

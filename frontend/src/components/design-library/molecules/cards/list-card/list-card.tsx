@@ -32,6 +32,8 @@ type ListCardProps = {
   emptyActionText?: React.ReactNode
   onEmptyActionClick?: (e: any) => void
   completed?: boolean
+  /** Max rows shown — the rest are only reachable via the footer link. */
+  limit?: number
   loadingRows?: number
 }
 
@@ -72,9 +74,11 @@ const ListCard = ({
   emptyActionText,
   onEmptyActionClick,
   completed,
-  loadingRows = 3
+  limit = 3,
+  loadingRows = limit
 }: ListCardProps) => {
   const isLoading = completed === false
+  const visibleItems = items.slice(0, limit)
 
   return (
     <RootCard>
@@ -114,7 +118,7 @@ const ListCard = ({
             )}
           </EmptyRoot>
         ) : (
-          items.map(({ id, ...row }, index) => <ListCardRow key={id ?? index} {...row} />)
+          visibleItems.map(({ id, ...row }, index) => <ListCardRow key={id ?? index} {...row} />)
         )}
       </Body>
       {footer && (
