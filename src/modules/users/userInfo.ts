@@ -15,7 +15,8 @@ const userInfo = async (params: any) => {
   const payments = await currentModels.Order.findAndCountAll({
     where: {
       userId: userId
-    }
+    },
+    include: [currentModels.Task]
   })
 
   const wallets = await currentModels.Wallet.findAndCountAll({
@@ -23,6 +24,10 @@ const userInfo = async (params: any) => {
       userId: userId
     }
   })
+
+  const walletsSpendBalance = (
+    await Promise.all(wallets.rows.map((wallet: any) => wallet.spendBalance()))
+  ).reduce((sum: number, spend: any) => sum + spend.toNumber(), 0)
 
   const paymentRequests = await currentModels.PaymentRequest.findAndCountAll({
     where: {
@@ -126,7 +131,11 @@ const userInfo = async (params: any) => {
     issues: {
       total: issues.count,
       open: issues.rows.filter((issue: any) => issue.status === 'open').length,
-      closed: issues.rows.filter((issue: any) => issue.status === 'closed').length
+      closed: issues.rows.filter((issue: any) => issue.status === 'closed').length,
+      // Sum of the bounty value committed to this user's still-open issues.
+      openValue: issues.rows
+        .filter((issue: any) => issue.status === 'open')
+        .reduce((sum: number, issue: any) => sum + Number(issue.value || 0), 0)
     },
     payments: {
       total: payments.count,
@@ -136,12 +145,17 @@ const userInfo = async (params: any) => {
       refunded: payments.rows.filter((payment: any) => payment.status === 'refunded').length,
       amount: payments.rows
         .filter((payment: any) => payment.status === 'succeeded')
-        .reduce((sum: number, payment: any) => sum + Number(payment.amount || 0), 0)
+        .reduce((sum: number, payment: any) => sum + Number(payment.amount || 0), 0),
+      // Distinct projects this user has funded a payment towards.
+      distinctProjects: new Set(
+        payments.rows.map((payment: any) => payment.Task?.ProjectId).filter(Boolean)
+      ).size
     },
     wallets: {
       total: wallets.count,
       data: wallets.rows.map((wallet: any) => ({ name: wallet.name })),
-      balance: wallets.rows[0]?.balance || 0
+      balance: wallets.rows[0]?.balance || 0,
+      spendBalance: walletsSpendBalance
     },
     paymentRequests: {
       total: paymentRequests.count,

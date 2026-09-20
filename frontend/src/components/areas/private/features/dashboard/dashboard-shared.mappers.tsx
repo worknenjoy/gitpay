@@ -42,6 +42,24 @@ export const mapClaimsSections = (dashboardData: any = {}): DetailsSection[] => 
   }
 ]
 
+// Maintainer and Funding both show the same "Wallet" summary card shape.
+export const mapWalletSection = (dashboardData: any = {}): DetailsSection[] => [
+  {
+    items: [
+      {
+        label: <FormattedMessage id="dashboard.wallet.balance" defaultMessage="Balance" />,
+        value: formatCurrency(dashboardData.wallets?.balance ?? 0)
+      },
+      {
+        label: (
+          <FormattedMessage id="dashboard.wallet.spendBalance" defaultMessage="Spend from wallet" />
+        ),
+        value: formatCurrency(dashboardData.wallets?.spendBalance ?? 0)
+      }
+    ]
+  }
+]
+
 export const mapPayoutsSummarySections = (
   dashboardData: any = {}
 ): DetailsSection[] | undefined => {

@@ -177,4 +177,63 @@ describe('Current User Info', () => {
     expect(res.body.paymentRequests.convertedPercent).to.equal(67)
     expect(res.body.paymentRequests.recentPayments).to.deep.equal({ count: 1, amount: 10 })
   })
+
+  it('should return open bounty value committed, distinct funded projects, and wallet spend balance', async () => {
+    const user = await registerAndLogin(agent)
+    const { headers, body: currentUser } = user || {}
+
+    const project = await currentModels.Project.create({})
+
+    const openTask = await currentModels.Task.create({
+      title: 'Open task',
+      status: 'open',
+      value: '150.00',
+      userId: currentUser.id,
+      ProjectId: project.id
+    })
+    await currentModels.Task.create({
+      title: 'Another open task',
+      status: 'open',
+      value: '75.50',
+      userId: currentUser.id,
+      ProjectId: project.id
+    })
+    await currentModels.Task.create({
+      title: 'Closed task',
+      status: 'closed',
+      value: '999.00',
+      userId: currentUser.id
+    })
+
+    await currentModels.Order.create({
+      amount: 150,
+      status: 'succeeded',
+      userId: currentUser.id,
+      TaskId: openTask.id
+    })
+
+    const wallet = await currentModels.Wallet.create({
+      name: 'My wallet',
+      userId: currentUser.id,
+      balance: 0
+    })
+    await currentModels.Order.create({
+      amount: 5000,
+      status: 'succeeded',
+      provider: 'wallet',
+      source_type: 'wallet-funds',
+      source_id: `${wallet.id}`,
+      userId: currentUser.id
+    })
+
+    const res = await agent
+      .get(`/dashboard`)
+      .set('Authorization', headers['authorization'])
+      .expect(200)
+
+    expect(res.body.issues.open).to.equal(2)
+    expect(res.body.issues.openValue).to.equal(225.5)
+    expect(res.body.payments.distinctProjects).to.equal(1)
+    expect(res.body.wallets.spendBalance).to.equal(5000)
+  })
 })

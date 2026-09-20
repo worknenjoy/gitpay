@@ -14,13 +14,19 @@ export async function searchTransfers(params: TransferSearchParams = {}) {
     as: 'User',
     attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
   }
+  const destinationInclude = {
+    model: models.User,
+    as: 'destination',
+    attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
+  }
 
   let transfers: any[] = []
   if (params.userId) {
+    // The maintainer who released the payment — include who received it too.
     transfers = await models.Transfer.findAll({
       where: { userId: params.userId },
       order: [['createdAt', 'DESC']],
-      include: [models.Task, userInclude]
+      include: [models.Task, userInclude, destinationInclude]
     })
   }
   if (params.to) {

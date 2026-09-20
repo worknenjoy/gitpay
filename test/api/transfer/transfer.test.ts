@@ -522,6 +522,11 @@ describe('POST /transfer', () => {
           expect(res.body[0].User).to.not.have.property(field)
         }
       }
+      expect(res.body[0].destination).to.exist
+      expect(res.body[0].destination.id).to.equal(assign.userId)
+      for (const field of USER_SENSITIVE_ATTRIBUTES) {
+        expect(res.body[0].destination).to.not.have.property(field)
+      }
     })
     it('does not return another user\'s transfers on search', async () => {
       const task = await createTask(agent)

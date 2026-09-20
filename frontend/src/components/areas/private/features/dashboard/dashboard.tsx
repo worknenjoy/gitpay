@@ -9,6 +9,8 @@ import DashboardCardList from 'design-library/molecules/cards/dashboard-cards/da
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 import ContributorDashboard from 'design-library/pages/private-pages/dashboard-pages/contributor-dashboard/contributor-dashboard'
 import ServiceProviderDashboard from 'design-library/pages/private-pages/dashboard-pages/service-provider-dashboard/service-provider-dashboard'
+import MaintainerDashboard from 'design-library/pages/private-pages/dashboard-pages/maintainer-dashboard/maintainer-dashboard'
+import FundingDashboard from 'design-library/pages/private-pages/dashboard-pages/funding-dashboard/funding-dashboard'
 import AccountRequirements from 'design-library/atoms/alerts/account-requirements/account-requirements'
 import useUserTypes from '../../../../../hooks/use-user-types'
 import {
@@ -26,6 +28,19 @@ import {
   mapProviderStats,
   mapProviderChecklist
 } from './service-provider-dashboard.mappers'
+import {
+  mapOpenIssues,
+  mapClosedIssues,
+  mapMaintainerPayments,
+  mapMaintainerStats,
+  mapMaintainerChecklist,
+  mapWalletSection
+} from './maintainer-dashboard.mappers'
+import {
+  mapFundingPayments,
+  mapFundingStats,
+  mapFundingChecklist
+} from './funding-dashboard.mappers'
 
 const Dashboard = ({
   user,
@@ -36,6 +51,9 @@ const Dashboard = ({
   payouts,
   paymentRequests,
   paymentRequestPayments,
+  projects,
+  transfers,
+  orders,
   fetchDashboardInfo,
   fetchAccount,
   listTasks,
@@ -43,10 +61,13 @@ const Dashboard = ({
   searchPayout,
   listPaymentRequests,
   listPaymentRequestPayments,
+  listProjects,
+  searchTransfer,
+  listOrders,
   addNotification
 }) => {
   const { data = {}, completed } = user
-  const { isContributor, isProvider } = useUserTypes({ user })
+  const { isContributor, isProvider, isMaintainer, isFunding } = useUserTypes({ user })
 
   const history = useHistory()
   const location = useLocation()
@@ -77,6 +98,20 @@ const Dashboard = ({
       fetchAccount()
     }
   }, [completed, isContributor, isProvider, data.id])
+
+  React.useEffect(() => {
+    if (completed && !isContributor && !isProvider && isMaintainer) {
+      listTasks({ userId: data.id, limit: 20 })
+      listProjects({ userId: data.id })
+      searchTransfer({ userId: true })
+    }
+  }, [completed, isContributor, isProvider, isMaintainer, data.id])
+
+  React.useEffect(() => {
+    if (completed && !isContributor && !isProvider && !isMaintainer && isFunding) {
+      listOrders({ userId: data.id })
+    }
+  }, [completed, isContributor, isProvider, isMaintainer, isFunding, data.id])
 
   React.useEffect(() => {
     if (createTaskError === 'true' && message) {
@@ -112,9 +147,14 @@ const Dashboard = ({
     paymentRequests.completed &&
     paymentRequestPayments.completed
 
+  const allMaintainerCompleted =
+    completed && dashboard.completed && tasks.completed && projects.completed && transfers.completed
+
+  const allFundingCompleted = completed && dashboard.completed && orders.completed
+
   return (
     <Container>
-      {!isContributor && !isProvider && (
+      {!isContributor && !isProvider && !isMaintainer && !isFunding && (
         <Grid container justifyContent="space-between" alignItems="center">
           <MainTitle title={<FormattedMessage id="dashboard.title" defaultMessage="Dashboard" />} />
         </Grid>
@@ -205,6 +245,32 @@ const Dashboard = ({
           onViewPaymentLinksClick={handleGoToPaymentRequests}
           onViewClaimsClick={() => history.push('/profile/claims')}
           onViewPayoutsSummaryClick={() => history.push('/profile/payouts')}
+        />
+      ) : isMaintainer ? (
+        <MaintainerDashboard
+          completed={allMaintainerCompleted}
+          stats={mapMaintainerStats(dashboard.data, projects.data)}
+          openIssues={mapOpenIssues(tasks.data)}
+          closedIssues={mapClosedIssues(tasks.data)}
+          recentPayments={mapMaintainerPayments(transfers.data)}
+          wallet={mapWalletSection(dashboard.data)}
+          {...mapMaintainerChecklist({ user: data, dashboardData: dashboard.data })}
+          onFundIssueClick={handleGoToExplore}
+          onViewOpenIssuesClick={() => history.push('/profile/tasks/createdbyme')}
+          onViewClosedIssuesClick={() => history.push('/profile/tasks/createdbyme')}
+          onViewPaymentsClick={() => history.push('/profile/payments')}
+          onManageWalletClick={() => history.push('/profile/wallets')}
+        />
+      ) : isFunding ? (
+        <FundingDashboard
+          completed={allFundingCompleted}
+          stats={mapFundingStats(dashboard.data)}
+          recentPayments={mapFundingPayments(orders.data)}
+          wallet={mapWalletSection(dashboard.data)}
+          {...mapFundingChecklist({ user: data, dashboardData: dashboard.data })}
+          onSponsorProjectClick={handleGoToExplore}
+          onViewPaymentsClick={() => history.push('/profile/payments')}
+          onManageWalletClick={() => history.push('/profile/wallets')}
         />
       ) : (
         <DashboardCardList user={user} dashboard={dashboard} />
