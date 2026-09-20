@@ -20,13 +20,13 @@ It defines how distributed teams integrate their work using Git.
 
 ## Our workflow
 
-We use contributions in a Git repository to validate work. Git acts as our smart contract. Change requests go through automated tests and multiple validation stages before the code is integrated.
+We use contributions in a Git repository to validate work. Git provides a record of changes and review, while the project decides acceptance and the applicable payment step. Change requests go through automated tests and multiple validation stages before the code is integrated.
 
 ## Git Workflow
 
 Git workflow is the guideline we use to deliver tasks consistently and effectively.
 
-When using Git as our version control system we follow a workflow that allows the team to collaborate on the codebase. Issues are opened and closed through Pull Requests.
+When using Git as our version control system we follow a workflow that allows the team to collaborate on the codebase. Issues can be linked to Pull Requests; whether a merge closes an issue depends on the repository workflow.
 
 There are many workflows for teams using Git. Here we describe the one used on Gitpay, similar to processes adopted by companies worldwide.
 
@@ -48,3 +48,6 @@ We validate your changes with the following guidelines:
 1. We evaluate the value of the task being delivered rather than every minor detail.
 2. We are flexible to discuss better solutions, but a well written issue avoids unnecessary scope changes.
 3. We encourage automated tests, especially when fixing bugs.
+
+## Connect delivery to payment
+For a funded task, confirm assignment and acceptance criteria before coding. Link the issue in the Pull Request, record test evidence, address review comments, and wait for the maintainer's acceptance and payment release. A contribution that began outside a bounty needs an explicit payment agreement. See [Work on an issue](/docs/en/contributor/) and [Pull Requests](/docs/en/pull-requests/).

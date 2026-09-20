@@ -43,3 +43,9 @@ In the issue description, include:
 Accept/merge when the agreed requirements are met and your validation steps pass.
 
 If acceptance is blocked, provide a short list of remaining required changes so contributors can close the gap quickly.
+
+## Example decision record
+After reviewing a bug fix, the maintainer can comment: “The regression test passes, the reported case is fixed, and the documented manual check succeeded. Accepted for the agreed issue scope.” If a check fails, name it and explain the change needed before acceptance.
+
+## Keep payment aligned with review
+Acceptance is the decision that the delivered work meets the agreed scope. Before [releasing a bounty](/docs/en/releasing-bounties/), confirm the contributor, amount, and task. If new work is requested, agree on scope and funding first. A team should identify who makes the final acceptance decision.

@@ -2,8 +2,8 @@
 layout: doc
 lang: en
 role: service-provider
-title: Charge Customers
-subtitle: Charge clients with payment links, payout setup, and dispute handling
+title: Charge customers with Payment Requests
+subtitle: Request payment for delivered work, guide the customer, and track payout
 tags:
 ---
 
@@ -12,52 +12,34 @@ tags:
 * TOC
 {:toc}
 
-## Creating payment links
-Create payment links tied to approved deliverables so customers can pay with clear context.
+Payment Requests let a service provider ask a customer to pay for delivered work. They work for services outside a GitHub repository as well as work supported by an issue, Pull Request, or other delivery record.
 
-Each payment request should include:
-- A short title describing the delivered outcome.
-- Scope summary and references (issue, PR, milestone, or document).
-- Exact amount and currency.
-- Due date and payment terms.
-- Optional notes with what is included in this delivery.
+## Before you create a request
+Agree with the customer on the deliverable, price, currency, and who can approve it. Keep the acceptance record and a link to the result. Gitpay handles the payment request; it does not replace the agreement about what was delivered.
 
-## Activating your bank account
-Enable and verify your bank account so payouts can be transferred after payment collection.
+For example, after a developer delivers a reviewed feature, they can create a request describing that milestone and share its payment link with the client.
 
-Before sending links to customers:
-1. Confirm payout details are accurate.
-2. Complete any required verification steps.
-3. Validate your supported payout country/currency.
-4. Review expected payout timing.
+## Create and send a Payment Request
+1. Sign in and open **Payment Requests**.
+2. Create a request with a clear title, description, and amount. Describe the completed work in plain language.
+3. Check the request before sharing its link with the customer.
+4. Send the link to the person responsible for paying and include the delivery or approval reference in your message.
 
-## Supported payment methods
-Use supported methods available in your region and account configuration.
+Avoid sensitive customer data in a description or public link. If the price or scope is disputed, resolve it with the customer before asking them to pay.
 
-To reduce failed payments:
-- Offer at least one backup payment method when available.
-- Communicate accepted methods before delivery approval.
-- Keep invoice/request amounts consistent across systems.
+## What the customer does
+The customer opens the link, reviews the request, and completes the available checkout. They do not need to participate in a GitHub issue or Pull Request. See [the client guide](/docs/en/faq/) for the questions to settle before payment.
 
-## Disputes and refunds
-Handle disputes and refunds according to the payment method policy and platform workflow.
+## After payment
+Track the request and resulting transfer in your account. A paid request and a completed payout are different stages: processing and your configured payout method affect when funds arrive. See [Payments](/docs/en/payments/), [Claims](/docs/en/claims/), and [Payouts](/docs/en/payouts/).
 
-Recommended approach:
-1. Keep proof of delivery (PR links, acceptance messages, assets).
-2. Respond quickly and clearly to customer concerns.
-3. Share objective evidence aligned with agreed scope.
-4. Use partial or full refunds only when justified by the delivery agreement.
+## If something goes wrong
+If the customer cannot recognize the charge, share the delivery record and request details. For a refund or card dispute, read [Disputes and refunds](/docs/en/disputes-and-refunds/) before making assumptions about your balance. Gitpay's documented interface supports full refunds; agree any other adjustment with support.
 
-## Fees and payouts
-Review transaction fees and payout timing before charging customers.
-
-Plan cash flow with:
-- Platform and processor fee deductions.
-- Payout schedule (instant vs delayed where applicable).
-- Refund/dispute reserve impacts.
-- Currency conversion effects when relevant.
+## Working as a team
+A team can use the same delivery discipline: identify who approves the work, who creates the request, and which account receives payment. Confirm account ownership and payout setup before sharing a request.
 
 ## Next steps
-- Read [What is Gitpay?](/docs/en/getting-started)
-- Read [Get Started](/docs/en/getting-started-contributor)
-- Read [Fund an Issue](/docs/en/sponsor)
+- [Getting started as a service provider](/docs/en/getting-started-service-provider/)
+- [Delivering work](/docs/en/delivering-work/)
+- [How payouts work](/docs/en/payouts/)

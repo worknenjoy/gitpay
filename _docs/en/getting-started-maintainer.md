@@ -47,3 +47,11 @@ The goal is to reduce ambiguity in reviews, speed up acceptance, and make paymen
 ## Next steps
 - Read [Validating work](/docs/en/validating-work)
 - Read [Releasing bounties](/docs/en/releasing-bounties)
+
+## Decide what your project will fund
+Start with a small issue that can be accepted against observable results. Document who will answer questions, review the Pull Request, and approve payment. A contribution may also arise before an issue is funded; discuss whether the project will pay for that work and record the agreed amount.
+
+## Example: one issue from funding to payment
+A maintainer defines a bug fix and its tests, funds the task, confirms a contributor's assignment, reviews the linked Pull Request, and records acceptance before releasing payment. The contributor then follows [Claims](/docs/en/claims/) and [Payouts](/docs/en/payouts/).
+
+For teams, agree who owns the GitHub issue and who can authorize the payment. Read [Funding issues](/docs/en/funding-issues/) and [Releasing bounties](/docs/en/releasing-bounties/) before publishing a task.

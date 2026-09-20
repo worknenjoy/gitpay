@@ -24,3 +24,11 @@ As a sponsor, you fund a task so a contributor has a clear incentive to deliver 
 
 ## Next steps
 - Read [Funding issues](/docs/en/funding-issues)
+
+## Before you fund
+Confirm that the GitHub issue describes the expected result, how it will be tested, and who will decide whether it is accepted. State the funding amount and answer contributor questions before assignment. If a contributor has already delivered work, agree on recognition and payment explicitly rather than treating the bounty process as retroactive.
+
+## During and after delivery
+Keep scope decisions in the issue, review the linked Pull Request, and release payment only after acceptance under your project rules. A team should name a funding owner and an approval owner.
+
+Read [Funding issues](/docs/en/funding-issues/), [Fund an issue](/docs/en/sponsor/), and [Releasing bounties](/docs/en/releasing-bounties/) for each stage.

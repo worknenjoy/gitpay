@@ -37,3 +37,9 @@ Prefer following a documented repository rule (for example, merge first, then re
 
 ## How can I keep payout decisions fair?
 Use the same acceptance checklist for every contributor, keep review notes public in the PR/issue, and base release decisions on agreed criteria rather than informal expectations.
+
+## Can we pay for a contribution that began without a bounty?
+Discuss it with the contributor and record the agreed amount, recipient, acceptance, and payment route. A normal project contribution does not automatically create a funded task. See [What is Gitpay?](/docs/en/getting-started/) and [Funding issues](/docs/en/funding-issues/).
+
+## Who should approve payment in a team?
+Choose an accountable approval owner before inviting work. Reviewers can collaborate on the Pull Request, while one clear decision on acceptance and funding keeps the payment step predictable.

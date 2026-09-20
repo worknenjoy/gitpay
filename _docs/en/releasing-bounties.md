@@ -39,3 +39,9 @@ Use one clear rule per repository (for example: "release after merge to default 
 If you cannot accept the work, explain what is missing and what would be required to accept it.
 
 Keep messages specific and actionable so contributors can resolve issues without guesswork.
+
+## Example handoff
+For an issue with a funded bug fix, record that the linked Pull Request meets the listed acceptance criteria. Confirm the assigned contributor and funded amount in Gitpay, then use the task's release action and tell the contributor where to track the transfer in [Claims](/docs/en/claims/). The transfer becoming available for [payout](/docs/en/payouts/) is a later step.
+
+## If the task was not funded in advance
+A project may decide to pay for an accepted contribution that began through ordinary collaboration. Agree on the payment route and amount with the contributor; do not describe this as an automatic bounty release. See [What is Gitpay?](/docs/en/getting-started/) for the distinction.

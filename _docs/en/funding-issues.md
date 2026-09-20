@@ -45,3 +45,12 @@ Ask contributors to submit work via Pull Request so you can review changes and s
 - Read [Fund an Issue](/docs/en/sponsor/) for the full sponsor workflow.
 - Once a contributor delivers, see [How our payment works](/docs/en/payments/) and
   [Releasing bounties](/docs/en/releasing-bounties/).
+
+## Example acceptance criteria
+For a login bug, useful criteria might be: reproduce the failure with a test, make login succeed for the affected case, preserve existing valid login behavior, and document how the reviewer can verify it. The issue should state any browser or environment constraints.
+
+## If the work already exists
+A project may want to pay for a contribution that began through normal collaboration. Discuss the value, amount, and payment route with the contributor. Do not add a bounty and assume an earlier contribution is automatically assigned or payable. See [What is Gitpay?](/docs/en/getting-started/) for this broader vision.
+
+## Ownership and changes
+Name the reviewer and funding owner. If the scope changes, update the issue and confirm the payment expectation before asking for more work. Continue with [Validating work](/docs/en/validating-work/) and [Releasing bounties](/docs/en/releasing-bounties/).
