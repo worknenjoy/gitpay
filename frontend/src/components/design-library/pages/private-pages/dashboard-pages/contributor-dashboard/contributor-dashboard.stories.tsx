@@ -1,8 +1,10 @@
 import React from 'react'
+import { Typography } from '@mui/material'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import MergeTypeIcon from '@mui/icons-material/MergeType'
 import LinkIcon from '@mui/icons-material/Link'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import CustomAlert from 'design-library/atoms/alerts/alert/alert'
 import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate'
 import ContributorDashboard from './contributor-dashboard'
 
@@ -19,7 +21,12 @@ const Template = (args) => <ContributorDashboard {...args} />
 export const Default = Template.bind({})
 Default.args = {
   user: { completed: true, data: { id: '1', name: 'John Doe' } },
-  payoutAlert: { balance: '$64.81' },
+  banner: (
+    <CustomAlert severity="warning" completed actions={[{ label: 'Connect a payout method' }]}>
+      <Typography variant="subtitle2">Action needed</Typography>
+      <Typography variant="body2">Set up payouts to receive your $64.81</Typography>
+    </CustomAlert>
+  ),
   stats: [
     {
       icon: <AccountBalanceWalletIcon fontSize="small" />,
@@ -147,13 +154,21 @@ Default.args = {
         { label: 'Total', value: '$1.83', variant: 'emphasis' }
       ]
     }
-  ]
+  ],
+  onExploreIssuesClick: () => alert('Explore issues clicked'),
+  onConnectPayoutClick: () => alert('Connect a payout method clicked'),
+  onViewWorkItemsClick: () => alert('See all your issues clicked'),
+  onViewSolutionsClick: () => alert('See all your solutions clicked'),
+  onViewPayoutsClick: () => alert('See all your payouts clicked'),
+  onViewClaimsClick: () => alert('See your claims clicked'),
+  onViewPayoutsSummaryClick: () => alert('See all payouts clicked')
 }
 
 export const Loading = Template.bind({})
 Loading.args = {
   user: { completed: true, data: { id: '1', name: 'John Doe' } },
   completed: false,
+  banner: <CustomAlert severity="warning" completed={false} />,
   stats: Default.args.stats,
   workItems: [],
   solutions: [],
@@ -183,7 +198,7 @@ Empty.args = {
     },
     {
       icon: <LinkIcon fontSize="small" />,
-      label: 'Active links',
+      label: 'Payment links',
       value: '0',
       note: 'none created'
     },
@@ -214,7 +229,7 @@ Empty.args = {
       ]
     }
   ],
-  // payoutAlert and payoutsSummary omitted: nothing to pay out yet
+  // banner and payoutsSummary omitted: nothing to pay out yet
   onExploreIssuesClick: () => alert('Explore issues clicked'),
   onConnectPayoutClick: () => alert('Connect a payout method clicked')
 }

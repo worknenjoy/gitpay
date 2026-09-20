@@ -1,5 +1,8 @@
 import React from 'react'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
+import MergeTypeIcon from '@mui/icons-material/MergeType'
+import LinkIcon from '@mui/icons-material/Link'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import StatCard from './stat-card'
 import StatGroupCard from './stat-group-card'
 
@@ -24,7 +27,7 @@ export const WithIconCurrencyAndNote = Template.bind({})
 WithIconCurrencyAndNote.args = {
   icon: <AccountBalanceWalletIcon fontSize="small" />,
   currency: '$',
-  note: 'across 154 merged issues'
+  note: 'for issues solved'
 }
 
 export const Loading = Template.bind({})
@@ -40,11 +43,22 @@ export const Group = () => (
         label: 'Total earned',
         value: '4,293.20',
         currency: '$',
-        note: 'across 154 merged issues'
+        note: 'for issues solved'
       },
-      { label: 'Issues merged', value: '154', note: '2 open right now' },
-      { label: 'Payment links', value: '3', note: '2 Active' },
-      { label: 'Awaiting payout', value: '64.81', currency: '$', note: 'automatic payouts enabled' }
+      {
+        icon: <MergeTypeIcon fontSize="small" />,
+        label: 'Issues merged',
+        value: '15',
+        note: 'ready to payout'
+      },
+      { icon: <LinkIcon fontSize="small" />, label: 'Payment links', value: '3', note: '2 Active' },
+      {
+        icon: <AccessTimeIcon fontSize="small" />,
+        label: 'Awaiting payout',
+        value: '64.81',
+        currency: '$',
+        note: 'automatic payouts enabled'
+      }
     ]}
   />
 )

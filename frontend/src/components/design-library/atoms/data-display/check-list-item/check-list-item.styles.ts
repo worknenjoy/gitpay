@@ -61,10 +61,12 @@ export const Badge = styled('span', {
 })
 
 export const Label = styled(MuiTypography, {
-  shouldForwardProp: (prop) => prop !== 'checked'
-})<{ checked?: boolean }>(({ checked }) => ({
+  shouldForwardProp: (prop) => prop !== 'checked' && prop !== 'linked'
+})<{ checked?: boolean; linked?: boolean }>(({ theme, checked, linked }) => ({
   fontSize: 13.5,
-  color: TEXT_SECONDARY,
-  textDecoration: checked ? 'line-through' : 'none',
-  textDecorationColor: '#e0dcd4'
+  fontWeight: linked ? 500 : 400,
+  color: linked ? theme.palette.primary.main : TEXT_SECONDARY,
+  textDecoration: checked ? 'line-through' : linked ? 'underline' : 'none',
+  textDecorationColor: checked ? '#e0dcd4' : undefined,
+  cursor: linked ? 'pointer' : 'inherit'
 }))

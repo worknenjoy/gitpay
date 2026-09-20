@@ -6,7 +6,9 @@ export async function taskSolutionList(userId: number) {
   try {
     const data = await currentModels.TaskSolution.findAll({
       where: { userId },
-      include: [{ model: currentModels.Task }],
+      include: [
+        { model: currentModels.Task, include: [currentModels.Order, currentModels.Project] }
+      ],
       order: [['createdAt', 'DESC']]
     })
     return data

@@ -57,4 +57,64 @@ describe('Current User Info', () => {
     expect(res.body.payments.succeeded).to.equal(1)
     expect(res.body.payments.failed).to.equal(1)
   })
+
+  it('should return active payment request count, claims breakdown, payout amounts by status, and awaiting payout', async () => {
+    const user = await registerAndLogin(agent)
+    const { headers, body: currentUser } = user || {}
+
+    const task = await currentModels.Task.create({
+      title: 'Task 1',
+      status: 'closed',
+      userId: currentUser.id
+    })
+
+    const activeRequest = await currentModels.PaymentRequest.create({
+      userId: currentUser.id,
+      active: true
+    })
+    await currentModels.PaymentRequest.create({
+      userId: currentUser.id,
+      active: false
+    })
+
+    await currentModels.Transfer.create({
+      status: 'paid',
+      value: '32.42',
+      taskId: task.id,
+      userId: currentUser.id,
+      to: currentUser.id
+    })
+
+    await currentModels.PaymentRequestTransfer.create({
+      status: 'paid',
+      value: '5.00',
+      paymentRequestId: activeRequest.id,
+      userId: currentUser.id
+    })
+
+    await currentModels.Payout.bulkCreate([
+      { userId: currentUser.id, method: 'stripe', currency: 'usd', amount: 2000, status: 'paid' },
+      {
+        userId: currentUser.id,
+        method: 'stripe',
+        currency: 'usd',
+        amount: 1000,
+        status: 'in_transit'
+      }
+    ])
+
+    const res = await agent
+      .get(`/dashboard`)
+      .set('Authorization', headers['authorization'])
+      .expect(200)
+
+    expect(res.body.paymentRequests.active).to.equal(1)
+    expect(res.body.claims.bounties).to.equal(32.42)
+    expect(res.body.claims.paymentRequests).to.equal(5)
+    expect(res.body.claims.amount).to.equal(37.42)
+    expect(res.body.payouts.usd.amount).to.equal(3000)
+    expect(res.body.payouts.usd.paidAmount).to.equal(20)
+    expect(res.body.payouts.usd.inTransitAmount).to.equal(10)
+    expect(res.body.awaitingPayoutAmount).to.be.closeTo(7.42, 0.001)
+  })
 })

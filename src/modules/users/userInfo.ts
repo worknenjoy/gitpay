@@ -1,4 +1,5 @@
 import models from '../../models'
+import { calculateAmountWithPercent } from '../../utils'
 
 const currentModels = models as any
 
@@ -58,6 +59,8 @@ const userInfo = async (params: any) => {
           completed: number
           in_transit: number
           amount: number
+          paidAmount: number
+          inTransitAmount: number
         }
       >,
       payout: any
@@ -70,19 +73,53 @@ const userInfo = async (params: any) => {
           pending: 0,
           completed: 0,
           in_transit: 0,
-          amount: 0
+          amount: 0,
+          paidAmount: 0,
+          inTransitAmount: 0
         }
       }
+
+      // Payout.amount is stored in centavos (Stripe convention); convert to decimal
+      // before combining with the decimal-denominated Transfer/PaymentRequestTransfer
+      // values below (claimsAmount, awaitingPayoutAmount).
+      const decimalAmount = calculateAmountWithPercent(
+        Number(payout.amount || 0),
+        0,
+        'centavos',
+        currency
+      ).decimal
 
       acc[currency].total += 1
       acc[currency].pending += payout.status === 'pending' ? 1 : 0
       acc[currency].completed += payout.status === 'paid' ? 1 : 0
       acc[currency].in_transit += payout.status === 'in_transit' ? 1 : 0
       acc[currency].amount += Number(payout.amount || 0)
+      acc[currency].paidAmount += payout.status === 'paid' ? decimalAmount : 0
+      acc[currency].inTransitAmount += payout.status === 'in_transit' ? decimalAmount : 0
 
       return acc
     },
     {}
+  )
+
+  const claimsBounties = transfers.rows.reduce(
+    (sum: number, transfer: any) => sum + Number(transfer.value || 0),
+    0
+  )
+  const claimsPaymentRequests = paymentRequestTransfers.rows.reduce(
+    (sum: number, prTransfer: any) => sum + Number(prTransfer.value || 0),
+    0
+  )
+  const claimsAmount = claimsBounties + claimsPaymentRequests
+
+  const paidOrInTransitAmount = (
+    Object.values(payoutsByCurrency) as Array<{
+      paidAmount: number
+      inTransitAmount: number
+    }>
+  ).reduce(
+    (sum, currencyPayouts) => sum + currencyPayouts.paidAmount + currencyPayouts.inTransitAmount,
+    0
   )
 
   return {
@@ -108,6 +145,7 @@ const userInfo = async (params: any) => {
     },
     paymentRequests: {
       total: paymentRequests.count,
+      active: paymentRequests.rows.filter((request: any) => request.active).length,
       amount: paymentRequests.rows.reduce((sum: number, request: any) => {
         const paidAmount =
           request.PaymentRequestPayments?.reduce(
@@ -122,17 +160,14 @@ const userInfo = async (params: any) => {
     },
     claims: {
       total: transfers.count + paymentRequestTransfers.count,
-      amount:
-        transfers.rows.reduce(
-          (sum: number, transfer: any) => sum + Number(transfer.value || 0),
-          0
-        ) +
-        paymentRequestTransfers.rows.reduce(
-          (sum: number, prTransfer: any) => sum + Number(prTransfer.value || 0),
-          0
-        )
+      amount: claimsAmount,
+      bounties: claimsBounties,
+      paymentRequests: claimsPaymentRequests
     },
-    payouts: payoutsByCurrency
+    payouts: payoutsByCurrency,
+    // Money claimed but not yet disbursed via payout (not a wallet balance —
+    // Wallet is the funder/maintainer funding wallet, unrelated to contributor earnings).
+    awaitingPayoutAmount: claimsAmount - paidOrInTransitAmount
   }
 }
 

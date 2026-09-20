@@ -25,6 +25,7 @@ type ListCardProps = {
   subtitle?: React.ReactNode
   link?: React.ReactNode
   footer?: React.ReactNode
+  onFooterClick?: (e: any) => void
   items: ListCardItem[]
   emptyIcon?: React.ReactElement
   emptyText?: React.ReactNode
@@ -64,6 +65,7 @@ const ListCard = ({
   subtitle,
   link,
   footer,
+  onFooterClick,
   items,
   emptyIcon,
   emptyText,
@@ -119,7 +121,7 @@ const ListCard = ({
         <>
           <Divider />
           <Footer>
-            <FooterLink>{footer}</FooterLink>
+            <FooterLink onClick={onFooterClick}>{footer}</FooterLink>
           </Footer>
         </>
       )}

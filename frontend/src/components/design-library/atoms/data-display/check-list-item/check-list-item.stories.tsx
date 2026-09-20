@@ -19,6 +19,13 @@ Checked.args = { state: 'checked' }
 export const Empty = Template.bind({})
 Empty.args = { state: 'empty' }
 
+export const Linked = Template.bind({})
+Linked.args = {
+  state: 'empty',
+  label: 'Payout account connected',
+  onClick: () => alert('Go complete this step clicked')
+}
+
 export const Failed = Template.bind({})
 Failed.args = { state: 'failed', label: "You're the author of this Pull Request on GitHub" }
 

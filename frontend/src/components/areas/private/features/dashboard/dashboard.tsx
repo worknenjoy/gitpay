@@ -7,9 +7,35 @@ import { AlertWrapper } from './dashboard.styles'
 import WelcomeUser from '../../components/session/welcome-user'
 import DashboardCardList from 'design-library/molecules/cards/dashboard-cards/dashboard-card-list/dashboard-card-list'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
+import ContributorDashboard from 'design-library/pages/private-pages/dashboard-pages/contributor-dashboard/contributor-dashboard'
+import AccountRequirements from 'design-library/atoms/alerts/account-requirements/account-requirements'
+import useUserTypes from '../../../../../hooks/use-user-types'
+import {
+  mapWorkItems,
+  mapSolutions,
+  mapPayoutRows,
+  mapStats,
+  mapClaimsSections,
+  mapPayoutsSummarySections,
+  mapChecklist
+} from './contributor-dashboard.mappers'
 
-const Dashboard = ({ user, dashboard, fetchDashboardInfo, addNotification }) => {
+const Dashboard = ({
+  user,
+  dashboard,
+  account,
+  tasks,
+  taskSolutions,
+  payouts,
+  fetchDashboardInfo,
+  fetchAccount,
+  listTasks,
+  listTaskSolutions,
+  searchPayout,
+  addNotification
+}) => {
   const { data = {}, completed } = user
+  const { isContributor } = useUserTypes({ user })
 
   const history = useHistory()
   const location = useLocation()
@@ -25,6 +51,15 @@ const Dashboard = ({ user, dashboard, fetchDashboardInfo, addNotification }) => 
   }, [data, completed])
 
   React.useEffect(() => {
+    if (completed && isContributor) {
+      listTasks({ assignedTo: data.id, limit: 5 })
+      listTaskSolutions()
+      searchPayout()
+      fetchAccount()
+    }
+  }, [completed, isContributor, data.id])
+
+  React.useEffect(() => {
     if (createTaskError === 'true' && message) {
       if (message.length > 0) {
         try {
@@ -38,11 +73,25 @@ const Dashboard = ({ user, dashboard, fetchDashboardInfo, addNotification }) => 
     }
   }, [createTaskError, message])
 
+  const handleGoToPayoutSettings = () => history.push('/profile/payout-settings')
+  const handleGoToExplore = () => history.push('/profile/explore')
+  const handleGoToGithubConnect = () => history.push('/profile/user-account')
+
+  const allCompleted =
+    completed &&
+    dashboard.completed &&
+    account.completed &&
+    tasks.completed &&
+    taskSolutions.completed &&
+    payouts.completed
+
   return (
     <Container>
-      <Grid container justifyContent="space-between" alignItems="center">
-        <MainTitle title={<FormattedMessage id="dashboard.title" defaultMessage="Dashboard" />} />
-      </Grid>
+      {!isContributor && (
+        <Grid container justifyContent="space-between" alignItems="center">
+          <MainTitle title={<FormattedMessage id="dashboard.title" defaultMessage="Dashboard" />} />
+        </Grid>
+      )}
       {window.localStorage.getItem('firstLogin') === 'true' && <WelcomeUser />}
       {visible && (
         <AlertWrapper>
@@ -77,7 +126,37 @@ const Dashboard = ({ user, dashboard, fetchDashboardInfo, addNotification }) => 
           </Alert>
         </AlertWrapper>
       )}
-      <DashboardCardList user={user} dashboard={dashboard} />
+      {isContributor ? (
+        <ContributorDashboard
+          completed={allCompleted}
+          banner={
+            <AccountRequirements user={data} account={account} onClick={handleGoToPayoutSettings} />
+          }
+          stats={mapStats(dashboard.data, taskSolutions.data)}
+          workItems={mapWorkItems(tasks.data)}
+          solutions={mapSolutions(taskSolutions.data)}
+          payouts={mapPayoutRows(payouts.data)}
+          claims={mapClaimsSections(dashboard.data)}
+          payoutsSummary={mapPayoutsSummarySections(dashboard.data)}
+          {...mapChecklist({
+            user: data,
+            account,
+            hasClaimedIssue: (tasks.totalCount ?? tasks.data.length) > 0,
+            onConnectGithubClick: handleGoToGithubConnect,
+            onClaimIssueClick: handleGoToExplore,
+            onConnectPayoutClick: handleGoToPayoutSettings
+          })}
+          onExploreIssuesClick={handleGoToExplore}
+          onConnectPayoutClick={handleGoToPayoutSettings}
+          onViewWorkItemsClick={() => history.push('/profile/tasks/assigned')}
+          onViewSolutionsClick={() => history.push('/profile/solutions')}
+          onViewPayoutsClick={() => history.push('/profile/payouts')}
+          onViewClaimsClick={() => history.push('/profile/claims')}
+          onViewPayoutsSummaryClick={() => history.push('/profile/payouts')}
+        />
+      ) : (
+        <DashboardCardList user={user} dashboard={dashboard} />
+      )}
     </Container>
   )
 }

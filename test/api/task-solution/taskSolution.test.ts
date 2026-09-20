@@ -617,4 +617,54 @@ describe('Task Solution', () => {
       }
     })
   })
+
+  describe('List task solutions', () => {
+    it('should include each solution task Orders, so payout status can be derived per solution', async () => {
+      const loginResponse = await registerAndLogin(agent, {
+        email: 'tasksolutionlisttest@test.com',
+        provider: 'github',
+        provider_username: 'alexanmtz'
+      })
+      const { body: user, headers } = loginResponse as any
+
+      const task = await TaskFactory({
+        url: 'https://github.com/alexanmtz/test-repository/issues/1',
+        userId: user.id,
+        status: 'closed'
+      })
+
+      await OrderFactory({
+        provider: 'stripe',
+        amount: 100,
+        userId: user.id,
+        TaskId: task.id,
+        source_id: '1234',
+        status: 'succeeded',
+        paid: true
+      })
+
+      await models.TaskSolution.create({
+        pullRequestURL: 'https://github.com/alexanmtz/test-repository/pull/2',
+        isAuthorOfPR: true,
+        isConnectedToGitHub: true,
+        isPRMerged: true,
+        isIssueClosed: true,
+        hasIssueReference: true,
+        taskId: task.id,
+        userId: user.id
+      })
+
+      const res = await agent
+        .get('/tasksolutions/list')
+        .set('Authorization', headers.authorization)
+        .expect('Content-Type', /json/)
+        .expect(200)
+
+      expect(res.body).to.have.lengthOf(1)
+      expect(res.body[0].Task).to.have.property('Orders')
+      expect(res.body[0].Task.Orders).to.have.lengthOf(1)
+      expect(res.body[0].Task.Orders[0].status).to.equal('succeeded')
+      expect(Number(res.body[0].Task.Orders[0].amount)).to.equal(100)
+    })
+  })
 })

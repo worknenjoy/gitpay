@@ -11,10 +11,11 @@ type SummaryCardProps = {
   sections: DetailsSectionShape[]
   note?: React.ReactNode
   cta?: React.ReactNode
+  onCtaClick?: (e: any) => void
   completed?: boolean
 }
 
-const SummaryCard = ({ title, sections, note, cta, completed }: SummaryCardProps) => {
+const SummaryCard = ({ title, sections, note, cta, onCtaClick, completed }: SummaryCardProps) => {
   const isLoading = completed === false
 
   return (
@@ -35,7 +36,7 @@ const SummaryCard = ({ title, sections, note, cta, completed }: SummaryCardProps
           <Note>{note}</Note>
         </NoteDivider>
       )}
-      {cta && <Cta>{cta}</Cta>}
+      {cta && <Cta onClick={onCtaClick}>{cta}</Cta>}
     </RootCard>
   )
 }
