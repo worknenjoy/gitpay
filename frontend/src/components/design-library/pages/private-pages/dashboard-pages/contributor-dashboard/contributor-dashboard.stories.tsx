@@ -26,26 +26,26 @@ Default.args = {
       label: 'Total earned',
       currency: '$',
       value: '4,293.20',
-      note: 'across 154 merged issues'
+      note: 'for issues solved'
     },
     {
       icon: <MergeTypeIcon fontSize="small" />,
       label: 'Issues merged',
-      value: '154',
-      note: '2 open right now'
+      value: '15',
+      note: 'ready to payout'
     },
     {
       icon: <LinkIcon fontSize="small" />,
-      label: 'Active links',
+      label: 'Payment links',
       value: '3',
-      note: '2 archived'
+      note: '2 Active'
     },
     {
       icon: <AccessTimeIcon fontSize="small" />,
       label: 'Awaiting payout',
       currency: '$',
       value: '64.81',
-      note: 'next run 14 Sep'
+      note: 'automatic payouts enabled'
     }
   ],
   workItems: [

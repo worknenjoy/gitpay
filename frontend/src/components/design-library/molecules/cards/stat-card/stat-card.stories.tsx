@@ -43,8 +43,8 @@ export const Group = () => (
         note: 'across 154 merged issues'
       },
       { label: 'Issues merged', value: '154', note: '2 open right now' },
-      { label: 'Active links', value: '3', note: '2 archived' },
-      { label: 'Awaiting payout', value: '64.81', currency: '$', note: 'next run 14 Sep' }
+      { label: 'Payment links', value: '3', note: '2 Active' },
+      { label: 'Awaiting payout', value: '64.81', currency: '$', note: 'automatic payouts enabled' }
     ]}
   />
 )

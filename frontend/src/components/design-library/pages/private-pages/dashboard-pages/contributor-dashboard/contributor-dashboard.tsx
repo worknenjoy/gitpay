@@ -71,11 +71,10 @@ const ContributorDashboard = ({
           {payoutAlert && (
             <>
               <Typography variant="subtitle2">
-                Set up payouts to receive your {payoutAlert.balance}
+                Action needed
               </Typography>
               <Typography variant="body2">
-                Connect a bank account or payout method so your available balance can be sent to
-                you.
+                Set up payouts to receive your {payoutAlert.balance}
               </Typography>
             </>
           )}
