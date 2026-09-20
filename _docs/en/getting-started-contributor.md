@@ -47,3 +47,11 @@ tags: getting-started, account
 - Read [Fund an Issue](/docs/en/sponsor)
 - Read [Work on an Issue](/docs/en/contributor)
 - Read [Charge Customers](/docs/en/service-provider)
+
+## Two ways to find a payment path
+A listed, funded issue gives you an amount and an assignment process before delivery. You can also contribute through a project's normal workflow and discuss payment with its maintainer. In that case, clarify the amount and approval route before assuming the work will be paid.
+
+## Example: your first funded contribution
+You find an issue with a reproducible bug and clear acceptance criteria. Ask a question, request assignment, make the fix in a branch, and open a linked Pull Request with the test result. The maintainer reviews and accepts the change, then releases payment. Your [Claims](/docs/en/claims/) and [Payouts](/docs/en/payouts/) pages show the later money stages.
+
+For the detailed steps, continue with [Work on an issue](/docs/en/contributor/).
