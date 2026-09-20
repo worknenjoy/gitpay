@@ -88,7 +88,6 @@ File: [https://github.com/worknenjoy/gitpay/blob/master/frontend/public/index.ht
   <meta charset="utf-8">
   <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
   <title>GitPay - Freelancing with git</title>
-  <script src="https://js.stripe.com/v3/"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
   <link rel="stylesheet" href="app.css">
 </head>
@@ -103,7 +102,6 @@ E teríamos o arquivo da seguinte forma:
   <meta charset="utf-8">
   <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
   <title>GitPay - Freelancing with git</title>
-  <script src="https://js.stripe.com/v3/"></script>
   <link rel="shortcut icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
   <link rel="stylesheet" href="app.css">
