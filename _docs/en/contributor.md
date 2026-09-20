@@ -2,8 +2,8 @@
 layout: doc
 lang: en
 role: contributor
-title: Work on an Issue
-subtitle: From finding a task to requesting payment and getting paid
+title: Work on an issue
+subtitle: From project contribution and review to acceptance and payment
 tags:
 ---
 
@@ -12,55 +12,31 @@ tags:
 * TOC
 {:toc}
 
-## Browse available tasks
-Find funded issues that match your skills, timeline, and technical context.
+Gitpay helps contributors move from useful project work to an accepted contribution and payment. A funded issue is one route; the broader contribution path can also begin through a project's usual collaboration process. Agree on payment with the project before treating that work as paid.
 
-Look for issues that provide:
-- Clear acceptance criteria.
-- Reproducible current behavior.
-- Defined technical scope and constraints.
-- Active maintainer communication.
+## Choose and understand the work
+Browse project tasks or start from an issue you are already discussing with a maintainer. Read the scope, acceptance criteria, repository instructions, and payment status. Ask what is excluded and who will review the result.
 
-## Apply and get assigned
-Apply to the issue and wait for assignment before starting delivery work.
+## Apply and confirm assignment
+For a funded task, explain your approach and request assignment. Gitpay checks the underlying GitHub issue assignment when confirming a claim. Wait for confirmation before relying on the bounty. See [Claims](/docs/en/claims/) for the claim process.
 
-When applying:
-1. Confirm your understanding of the problem.
-2. Share a brief implementation approach.
-3. Ask clarifying questions early.
-4. Wait for explicit assignment confirmation.
+## Deliver a reviewable contribution
+1. Create a focused branch or fork according to the repository's instructions.
+2. Make the change and run relevant checks.
+3. Open a Pull Request linked to the issue, with a short summary and test evidence.
+4. Respond to review comments and keep the scope discussion visible.
 
-Starting before assignment may cause overlap with other contributors and increase delivery risk.
+See [Git workflow](/docs/en/git-workflow/) and [Pull Requests](/docs/en/pull-requests/) for practical details.
 
-## Submit a Pull Request
-Deliver your solution in a Pull Request with test evidence and implementation notes.
+## Acceptance and payment
+A submitted Pull Request is a delivery, not automatic acceptance. The maintainer checks the agreed criteria, then confirms and releases payment through the applicable task workflow. Your transfer can appear in [Claims](/docs/en/claims/) before it is ready for [payout](/docs/en/payouts/).
 
-A strong PR usually includes:
-- Problem summary and what changed.
-- Linked issue/task reference.
-- Testing evidence (commands, screenshots, logs).
-- Notes about tradeoffs or follow-up work.
+If you made a valuable contribution before a task was funded, ask the project whether it wants to recognize and pay for that work. The exact amount, recipient, and payment route need agreement; Gitpay does not automatically price past contributions.
 
-Prefer small, focused PRs whenever possible to make review faster and easier.
-
-## Request payment for work completed
-After acceptance conditions are met, request payment through the task flow.
-
-Before requesting payment, confirm:
-- Scope was fully delivered.
-- Requested revisions were addressed.
-- Required checks passed.
-- Maintainer accepted the final output.
-
-## Get paid
-Payment is released based on approved delivery and the configured payout method.
-
-To avoid payout delays:
-- Keep payout details up to date.
-- Ensure your identity/verification requirements are complete.
-- Track payout status and contact support quickly if processing exceeds expected timing.
+## When work is blocked
+Explain what you tried and ask a specific question on the issue or Pull Request. If requirements change, get the new scope and payment expectation in writing before continuing.
 
 ## Next steps
-- Read [What is Gitpay?](/docs/en/getting-started)
-- Read [Get Started](/docs/en/getting-started-contributor)
-- Read [Fund an Issue](/docs/en/sponsor)
+- [Get started as a contributor](/docs/en/getting-started-contributor/)
+- [Claims and transfers](/docs/en/claims/)
+- [Contributor FAQ](/docs/en/faq-contributor/)
