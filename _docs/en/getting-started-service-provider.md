@@ -48,3 +48,11 @@ Align with the customer on:
 ## Next steps
 - Read [Delivering work](/docs/en/delivering-work)
 - Review [Pull Requests](/docs/en/pull-requests)
+
+## Use a Payment Request after delivery
+For direct customer work, Gitpay's documented path is a Payment Request. Agree on the work and price, deliver it, and create a request with a clear description and amount. Send the payment link to the customer, then follow the resulting payment and payout in your account. A GitHub Pull Request can be useful evidence, but is not required for work delivered outside a repository.
+
+## Example: a completed milestone
+A designer shares the agreed files and receives approval for a milestone. They create a Payment Request describing that milestone and send its link to the client. The client reviews and pays; the designer tracks the transfer in [Claims](/docs/en/claims/) and configures [Payouts](/docs/en/payouts/).
+
+Continue with [Charge customers](/docs/en/service-provider/) for the request flow and [Disputes and refunds](/docs/en/disputes-and-refunds/) for later payment issues.
