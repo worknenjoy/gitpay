@@ -1,5 +1,13 @@
 # Categories home page navigation
-
+- en:
+    title: ❓ What is Gitpay
+    desc: Know more about our core, what we are, and our values
+  br:
+    title: ❓ O que é o Gitpay
+    desc: Saiba mais sobre nosso core
+  doc: getting-started
+  icon: user
+  
 - en:
     title: 🚀 Get Started
     desc: Create your account
