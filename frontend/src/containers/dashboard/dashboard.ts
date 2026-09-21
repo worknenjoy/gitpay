@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { fetchDashboardInfo } from '../../actions/dashboardActions'
 import { addNotification } from '../../actions/notificationActions'
 import { fetchAccount } from '../../actions/userActions'
-import { listTasks } from '../../actions/taskActions'
+import { listTasks, listMaintainerTasks } from '../../actions/taskActions'
 import { listTaskSolutions } from '../../actions/taskSolutionActions'
 import { searchPayout } from '../../actions/payoutActions'
 import { listPaymentRequests } from '../../actions/paymentRequestActions'
@@ -19,6 +19,7 @@ const mapStateToProps = (state: any) => {
     dashboard: state.dashboard,
     account: state.account,
     tasks: state.tasks,
+    maintainerTasks: state.maintainerTasks,
     taskSolutions: state.taskSolutions,
     payouts: state.payouts,
     paymentRequests: state.paymentRequests,
@@ -35,6 +36,7 @@ const mapDispatchToProps = (dispatch: any) => {
     addNotification: (message, options) => dispatch(addNotification(message, options)),
     fetchAccount: () => dispatch(fetchAccount()),
     listTasks: (params) => dispatch(listTasks(params)),
+    listMaintainerTasks: (params) => dispatch(listMaintainerTasks(params)),
     listTaskSolutions: () => dispatch(listTaskSolutions()),
     searchPayout: () => dispatch(searchPayout()),
     listPaymentRequests: () => dispatch(listPaymentRequests()),

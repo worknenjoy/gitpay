@@ -35,6 +35,10 @@ const LIST_TASK_REQUESTED = 'LIST_TASK_REQUESTED'
 const LIST_TASK_SUCCESS = 'LIST_TASK_SUCCESS'
 const LIST_TASK_ERROR = 'LIST_TASK_ERROR'
 
+const LIST_MAINTAINER_TASK_REQUESTED = 'LIST_MAINTAINER_TASK_REQUESTED'
+const LIST_MAINTAINER_TASK_SUCCESS = 'LIST_MAINTAINER_TASK_SUCCESS'
+const LIST_MAINTAINER_TASK_ERROR = 'LIST_MAINTAINER_TASK_ERROR'
+
 const FILTER_TASK_REQUESTED = 'FILTER_TASK_REQUESTED'
 const FILTER_TASK_SUCCESS = 'FILTER_TASK_SUCCESS'
 
@@ -486,6 +490,63 @@ const listTasks = ({
   }
 }
 
+// A separate list (and reducer slice) from `tasks`/`listTasks` on purpose — the private
+// combined multi-role dashboard fetches a Contributor's assigned issues and a Maintainer's
+// created-by-me issues at the same time, and both can't write into the one `tasks` slice
+// without one silently clobbering the other's data.
+const listMaintainerTasks = (params = {}) => {
+  validToken()
+  return (dispatch) => {
+    dispatch({ type: LIST_MAINTAINER_TASK_REQUESTED, completed: false })
+    const {
+      organizationId,
+      projectId,
+      userId,
+      status,
+      labelIds,
+      languageIds,
+      page,
+      limit,
+      hasBounty,
+      sortBy,
+      sortDirection
+    } = params
+    return axios
+      .get(api.API_URL + '/tasks/list', {
+        params: {
+          organizationId,
+          projectId,
+          userId,
+          status,
+          labelIds,
+          languageIds,
+          ...(limit != null && { limit, page: page ?? 0 }),
+          ...(hasBounty != null && { hasBounty }),
+          ...(sortBy != null && { sortBy, sortDirection })
+        }
+      })
+      .then((response) => {
+        // Detect paginated response: { data: [], totalCount: N } — same shape /tasks/list
+        // returns for listTasks when a limit is passed.
+        const data =
+          response.data &&
+          typeof response.data === 'object' &&
+          !Array.isArray(response.data) &&
+          'totalCount' in response.data
+            ? response.data.data
+            : response.data
+        return dispatch({
+          type: LIST_MAINTAINER_TASK_SUCCESS,
+          completed: true,
+          data
+        })
+      })
+      .catch((error) => {
+        return dispatch({ type: LIST_MAINTAINER_TASK_ERROR, completed: true, error })
+      })
+  }
+}
+
 const LIST_MAINTAINER_OPEN_BOUNTIES_REQUESTED = 'LIST_MAINTAINER_OPEN_BOUNTIES_REQUESTED'
 const LIST_MAINTAINER_OPEN_BOUNTIES_SUCCESS = 'LIST_MAINTAINER_OPEN_BOUNTIES_SUCCESS'
 const LIST_MAINTAINER_OPEN_BOUNTIES_ERROR = 'LIST_MAINTAINER_OPEN_BOUNTIES_ERROR'
@@ -919,6 +980,9 @@ export {
   LIST_TASK_REQUESTED,
   LIST_TASK_SUCCESS,
   LIST_TASK_ERROR,
+  LIST_MAINTAINER_TASK_REQUESTED,
+  LIST_MAINTAINER_TASK_SUCCESS,
+  LIST_MAINTAINER_TASK_ERROR,
   FILTER_TASK_REQUESTED,
   FILTER_TASK_SUCCESS,
   FILTER_TASK_ORDERS_REQUESTED,
@@ -947,6 +1011,7 @@ export {
   fetchTask,
   listTasks,
   listTaskSuccess,
+  listMaintainerTasks,
   listMaintainerOpenBounties,
   listFundingBounties,
   filterTasks,

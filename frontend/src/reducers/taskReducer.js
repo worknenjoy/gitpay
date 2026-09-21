@@ -14,6 +14,9 @@ import {
   LIST_TASK_REQUESTED,
   LIST_TASK_SUCCESS,
   LIST_TASK_ERROR,
+  LIST_MAINTAINER_TASK_REQUESTED,
+  LIST_MAINTAINER_TASK_SUCCESS,
+  LIST_MAINTAINER_TASK_ERROR,
   FILTER_TASK_REQUESTED,
   FILTER_TASK_SUCCESS,
   FILTER_TASK_ORDERS_REQUESTED,
@@ -219,6 +222,34 @@ export const tasks = (
         filterValue: action.filterValue,
         filterAdditional: action.filterAdditional
       }
+    default:
+      return state
+  }
+}
+
+// Its own slice from `tasks` on purpose — see the comment on `listMaintainerTasks` in
+// taskActions.js.
+export const maintainerTasks = (
+  state = {
+    completed: true,
+    error: {
+      message: false
+    },
+    data: []
+  },
+  action
+) => {
+  switch (action.type) {
+    case LIST_MAINTAINER_TASK_REQUESTED:
+      return { ...state, completed: action.completed }
+    case LIST_MAINTAINER_TASK_SUCCESS:
+      return {
+        ...state,
+        completed: action.completed,
+        data: Array.isArray(action.data) ? action.data : []
+      }
+    case LIST_MAINTAINER_TASK_ERROR:
+      return { ...state, completed: action.completed, error: action.error }
     default:
       return state
   }

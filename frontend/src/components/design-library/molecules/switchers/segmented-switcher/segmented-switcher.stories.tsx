@@ -49,3 +49,25 @@ const ThreeOptionsRender = () => {
 export const ThreeOptions: Story = {
   render: () => <ThreeOptionsRender />
 }
+
+const TransparentVariantRender = () => {
+  const [value, setValue] = React.useState('overview')
+  return (
+    <SegmentedSwitcher
+      variant="transparent"
+      value={value}
+      onChange={setValue}
+      options={[
+        { value: 'overview', label: 'Overview' },
+        { value: 'contributor', label: 'Contributor' },
+        { value: 'maintainer', label: 'Maintainer' },
+        { value: 'provider', label: 'Service provider' },
+        { value: 'funding', label: 'Funding' }
+      ]}
+    />
+  )
+}
+
+export const TransparentVariant: Story = {
+  render: () => <TransparentVariantRender />
+}

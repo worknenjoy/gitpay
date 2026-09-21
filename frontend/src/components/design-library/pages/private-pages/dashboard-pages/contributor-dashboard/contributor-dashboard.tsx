@@ -7,8 +7,7 @@ import PaymentsIcon from '@mui/icons-material/Payments'
 import RolePill from 'design-library/atoms/badges/role-pill/role-pill'
 import StatGroupCard from 'design-library/molecules/cards/stat-card/stat-group-card'
 import ListCard from 'design-library/molecules/cards/list-card/list-card'
-import ChecklistCard from 'design-library/molecules/cards/checklist-card/checklist-card'
-import ChecklistProgress from 'design-library/molecules/data-display/checklist-progress/checklist-progress'
+import GetStartedCard from 'design-library/molecules/cards/get-started-card/get-started-card'
 import SummaryCard from 'design-library/molecules/cards/summary-card/summary-card'
 import { Root, Header, HeaderTitleRow, Body, Column } from './contributor-dashboard.styles'
 
@@ -19,12 +18,14 @@ type ContributorDashboardProps = {
    * banner owns its own severity/copy/loading. Today this is a single node; later this
    * slot can grow into a proper multi-warning layout without another prop-shape change. */
   banner?: React.ReactNode
+  /** Multi-role accounts only — the role switcher (<CombinedDashboard/> injects it). */
+  switcher?: React.ReactNode
   stats: React.ComponentProps<typeof StatGroupCard>['stats']
   workItems: React.ComponentProps<typeof ListCard>['items']
   solutions: React.ComponentProps<typeof ListCard>['items']
   payouts: React.ComponentProps<typeof ListCard>['items']
   checklistProgress: { completed: number; total: number }
-  checklistItems: React.ComponentProps<typeof ChecklistCard>['items']
+  checklistItems: React.ComponentProps<typeof GetStartedCard>['items']
   claims: React.ComponentProps<typeof SummaryCard>['sections']
   /** Omit to hide the Payouts summary card (e.g. no payout history yet) */
   payoutsSummary?: React.ComponentProps<typeof SummaryCard>['sections']
@@ -40,6 +41,7 @@ type ContributorDashboardProps = {
 const ContributorDashboard = ({
   completed = true,
   banner,
+  switcher,
   stats,
   workItems,
   solutions,
@@ -78,6 +80,8 @@ const ContributorDashboard = ({
           />
         </Typography>
       </Header>
+
+      {switcher}
 
       {banner}
 
@@ -193,20 +197,8 @@ const ContributorDashboard = ({
           />
         </Column>
         <Column>
-          <ChecklistCard
-            progress={
-              <ChecklistProgress
-                title={
-                  <FormattedMessage
-                    id="dashboard.contributor.checklist.title"
-                    defaultMessage="Get started"
-                  />
-                }
-                completed={checklistProgress.completed}
-                total={checklistProgress.total}
-                loading={isLoading}
-              />
-            }
+          <GetStartedCard
+            progress={checklistProgress}
             items={checklistItems}
             completed={completed}
           />

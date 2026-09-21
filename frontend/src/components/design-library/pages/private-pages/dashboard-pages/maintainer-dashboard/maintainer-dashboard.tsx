@@ -6,8 +6,7 @@ import PaymentsIcon from '@mui/icons-material/Payments'
 import RolePill from 'design-library/atoms/badges/role-pill/role-pill'
 import StatGroupCard from 'design-library/molecules/cards/stat-card/stat-group-card'
 import ListCard from 'design-library/molecules/cards/list-card/list-card'
-import ChecklistCard from 'design-library/molecules/cards/checklist-card/checklist-card'
-import ChecklistProgress from 'design-library/molecules/data-display/checklist-progress/checklist-progress'
+import GetStartedCard from 'design-library/molecules/cards/get-started-card/get-started-card'
 import SummaryCard from 'design-library/molecules/cards/summary-card/summary-card'
 import { Root, Header, HeaderTitleRow, Body, Column } from '../dashboard-page-layout.styles'
 
@@ -16,12 +15,14 @@ type MaintainerDashboardProps = {
   completed?: boolean
   /** Caller-composed notice (e.g. <AccountRequirements/>). Same slot as the other dashboards. */
   banner?: React.ReactNode
+  /** Multi-role accounts only — the role switcher (<CombinedDashboard/> injects it). */
+  switcher?: React.ReactNode
   stats: React.ComponentProps<typeof StatGroupCard>['stats']
   openIssues: React.ComponentProps<typeof ListCard>['items']
   closedIssues: React.ComponentProps<typeof ListCard>['items']
   recentPayments: React.ComponentProps<typeof ListCard>['items']
   checklistProgress: { completed: number; total: number }
-  checklistItems: React.ComponentProps<typeof ChecklistCard>['items']
+  checklistItems: React.ComponentProps<typeof GetStartedCard>['items']
   wallet: React.ComponentProps<typeof SummaryCard>['sections']
   onFundIssueClick?: () => void
   onViewOpenIssuesClick?: () => void
@@ -33,6 +34,7 @@ type MaintainerDashboardProps = {
 const MaintainerDashboard = ({
   completed = true,
   banner,
+  switcher,
   stats,
   openIssues,
   closedIssues,
@@ -68,6 +70,8 @@ const MaintainerDashboard = ({
           />
         </Typography>
       </Header>
+
+      {switcher}
 
       {banner}
 
@@ -176,20 +180,8 @@ const MaintainerDashboard = ({
           />
         </Column>
         <Column>
-          <ChecklistCard
-            progress={
-              <ChecklistProgress
-                title={
-                  <FormattedMessage
-                    id="dashboard.maintainer.checklist.title"
-                    defaultMessage="Get started"
-                  />
-                }
-                completed={checklistProgress.completed}
-                total={checklistProgress.total}
-                loading={isLoading}
-              />
-            }
+          <GetStartedCard
+            progress={checklistProgress}
             items={checklistItems}
             completed={completed}
           />

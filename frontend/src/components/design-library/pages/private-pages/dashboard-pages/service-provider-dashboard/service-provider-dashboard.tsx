@@ -6,8 +6,7 @@ import LinkIcon from '@mui/icons-material/Link'
 import RolePill from 'design-library/atoms/badges/role-pill/role-pill'
 import StatGroupCard from 'design-library/molecules/cards/stat-card/stat-group-card'
 import ListCard from 'design-library/molecules/cards/list-card/list-card'
-import ChecklistCard from 'design-library/molecules/cards/checklist-card/checklist-card'
-import ChecklistProgress from 'design-library/molecules/data-display/checklist-progress/checklist-progress'
+import GetStartedCard from 'design-library/molecules/cards/get-started-card/get-started-card'
 import SummaryCard from 'design-library/molecules/cards/summary-card/summary-card'
 import { Root, Header, HeaderTitleRow, Body, Column } from '../dashboard-page-layout.styles'
 
@@ -16,11 +15,13 @@ type ServiceProviderDashboardProps = {
   completed?: boolean
   /** Caller-composed notice (e.g. <AccountRequirements/>). Same slot as ContributorDashboard. */
   banner?: React.ReactNode
+  /** Multi-role accounts only — the role switcher (<CombinedDashboard/> injects it). */
+  switcher?: React.ReactNode
   stats: React.ComponentProps<typeof StatGroupCard>['stats']
   paymentsReceived: React.ComponentProps<typeof ListCard>['items']
   paymentLinks: React.ComponentProps<typeof ListCard>['items']
   checklistProgress: { completed: number; total: number }
-  checklistItems: React.ComponentProps<typeof ChecklistCard>['items']
+  checklistItems: React.ComponentProps<typeof GetStartedCard>['items']
   claims: React.ComponentProps<typeof SummaryCard>['sections']
   /** Omit to hide the Payouts summary card (e.g. no payout history yet) */
   payoutsSummary?: React.ComponentProps<typeof SummaryCard>['sections']
@@ -34,6 +35,7 @@ type ServiceProviderDashboardProps = {
 const ServiceProviderDashboard = ({
   completed = true,
   banner,
+  switcher,
   stats,
   paymentsReceived,
   paymentLinks,
@@ -71,6 +73,8 @@ const ServiceProviderDashboard = ({
           />
         </Typography>
       </Header>
+
+      {switcher}
 
       {banner}
 
@@ -149,20 +153,8 @@ const ServiceProviderDashboard = ({
           />
         </Column>
         <Column>
-          <ChecklistCard
-            progress={
-              <ChecklistProgress
-                title={
-                  <FormattedMessage
-                    id="dashboard.provider.checklist.title"
-                    defaultMessage="Get started"
-                  />
-                }
-                completed={checklistProgress.completed}
-                total={checklistProgress.total}
-                loading={isLoading}
-              />
-            }
+          <GetStartedCard
+            progress={checklistProgress}
             items={checklistItems}
             completed={completed}
           />
