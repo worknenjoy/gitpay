@@ -70,7 +70,7 @@ settings to connect one.
 
 ## From claim to payout
 
-A transfer showing on your Claims page is money that's yours, but it isn't in your bank account yet —
+A transfer showing on your Claims page is money that's yours, but it has not reached your Whop payout destination yet —
 it's sitting in your Gitpay balance. To actually receive it, request a
 [payout](/docs/en/payouts/). If a dispute or refund happens on the original payment afterward, it can
 be debited back out of your balance — see [Disputes and refunds](/docs/en/disputes-and-refunds/) for

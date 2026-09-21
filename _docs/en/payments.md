@@ -27,29 +27,23 @@ Gitpay has two documented payment paths: a funded project task that a contributo
 
 A merged Pull Request alone does not guarantee that payment has been released. A paid request can still require processing before funds are available.
 
-## Gitpay uses more than one payment provider
-Depending on how a task or payment request was funded, and which payout method you've connected,
-money moves through **Stripe**, **Whop**, or **PayPal**:
+## Payments and payouts through Whop
 
-- **Stripe** is Gitpay's default provider for card payments and payouts (via Stripe Connect).
-- **Whop** is available as an alternative payout method — see
-  [How to set up a payout account on Whop](/docs/en/whop-payout-setup/).
-- **PayPal** remains supported for some accounts and older funded tasks.
+Gitpay's current payment flow uses **Whop**. Funded contributions and Payment Requests both lead to a transfer through Whop once the applicable payment or release step is complete. PayPal is a possible payment or payout method within the Whop flow, not a separate Gitpay payout provider.
 
-You don't choose the provider yourself for a given payout — it follows whichever method was used to
-fund the task or payment request, and whichever payout method you have active on your profile.
+## Payout eligibility and methods
+
+Your ability to receive a payout depends on whether Whop supports your country and whether you complete its identity and account checks. Check [Whop's supported payout countries](https://docs.whop.com/manage-your-business/manage-payouts/set-up-payouts#supported-countries) before you rely on a payout. The available destinations vary by country and account. They can include a bank account, PayPal, or a crypto wallet; choose from the options Whop actually shows you. See [Whop's payout methods](https://docs.whop.com/manage-your-business/manage-payouts/payout-methods) and [Gitpay's Whop setup guide](/docs/en/whop-payout-setup/).
+
+The customer's checkout method and your payout destination are different choices. A PayPal checkout does not mean Gitpay sends a separate PayPal transfer outside Whop.
 
 ## Connect a payout account
-To receive payouts, you need an active payout method on your profile: a bank account connected
-through Stripe or Whop, or a linked PayPal account. See [How payouts work](/docs/en/payouts/) for the
-full withdrawal flow.
+
+Set up your Whop payout account and complete any required verification before withdrawing. See [How payouts work](/docs/en/payouts/) for the withdrawal flow.
 
 ## How fees work
-- Gitpay charges an 8% platform fee on payment requests. This fee is not refunded if the payment is
-  later disputed — see [Disputes and refunds](/docs/en/disputes-and-refunds/).
-- Stripe-connected payouts follow Stripe's own transfer and payout-schedule terms.
-- Whop payouts are requested on demand — see [How payouts work](/docs/en/payouts/).
-- PayPal payouts follow PayPal's own fees and require an active, linked PayPal account.
+
+Gitpay charges an 8% platform fee on Payment Requests. A dispute or refund may affect your balance and may involve additional fees; see [Disputes and refunds](/docs/en/disputes-and-refunds/). Whop shows any applicable payout method fees and timing during setup or withdrawal.
 
 ## Invoices & history
 Use your account payment history to track funded tasks, payout status, and completed transfers.

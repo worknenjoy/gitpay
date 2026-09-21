@@ -4,7 +4,7 @@ lang: en
 role: contributor
 title: How payouts work
 subtitle: How Gitpay sends your bounty and payment-request earnings to your account
-tags: payout, payment, bank account, whop, stripe
+tags: payout, payment, bank account, paypal, crypto, whop
 ---
 
 #### Table of contents
@@ -26,8 +26,7 @@ claimed  →  funded  →  transfer credited  →  payout requested  →  money 
 ```
 
 A payout is what turns a credited transfer — money already sitting in your Gitpay balance because a
-bounty or payment request was paid — into money that actually lands in your bank account or Whop
-account. Nothing about a payout changes *how much* you're owed; it's the withdrawal step, not the
+bounty or payment request was paid — into money sent from Whop to your eligible payout destination. Nothing about a payout changes *how much* you're owed; it's the withdrawal step, not the
 earning step.
 
 ## How you get paid
@@ -39,12 +38,13 @@ as soon as the payer's charge goes through.
 
 ## Requesting a withdrawal
 
-Once you have a balance, go to your **Payouts** page and request a withdrawal. What happens next
-depends on how your account is connected:
+Once funds are available, use your **Payouts** page and connected Whop account to request or manage a withdrawal. Whop handles the payout and shows the destination, status, and applicable options.
 
-- **Stripe** — your payout follows the payout schedule configured on your connected Stripe account.
-- **Whop** — payouts can be requested on demand, once your Whop payout method is set up.
-- **PayPal** — supported for some accounts; payouts go to your linked PayPal account.
+## Payout eligibility and available methods
+
+Check [Whop's supported payout countries](https://docs.whop.com/manage-your-business/manage-payouts/set-up-payouts#supported-countries) before setting up a payout. A country on that list is eligible for Whop payouts, subject to identity verification and account requirements. Available payout methods differ by country: Whop may offer a bank account, PayPal, or a crypto wallet. The options shown in your Whop account are the ones available to you. See [Whop's payout methods](https://docs.whop.com/manage-your-business/manage-payouts/payout-methods) for current details.
+
+PayPal and crypto are payout destinations within the Whop flow where offered. They are not separate Gitpay payment providers. The method the customer used to pay can also affect whether a specific digital-wallet payout is available.
 
 ## Checking your balance
 
@@ -53,26 +53,17 @@ how much is about to move.
 
 ## Setting up where the money goes
 
-Before your first payout, you need to tell Gitpay where to send the money:
-
-- If you're paid through Stripe, connect a bank account from your payout settings.
-- If you're paid through Whop, follow [How to set up a payout account on Whop](/docs/en/whop-payout-setup/).
-- If you're paid through PayPal, link your PayPal account from your payout settings.
-
-See [How our payment works](/docs/en/payments/) for more on fees and connecting a bank account.
+Follow [How to set up a payout account on Whop](/docs/en/whop-payout-setup/) to verify your identity and add an available payout method. Review the destination in Whop before requesting a withdrawal. See [How payments work](/docs/en/payments/) for the earlier payment stages.
 
 ## How long it takes
 
-Card payments don't become available to withdraw the instant they're made — providers hold funds for a
-short settlement period first (typically a few days) before they can be transferred out. Once a
-transfer clears that settlement period, it's ready to include in your next payout.
+A payment may need to settle before it becomes available to withdraw. Whop shows the available balance and any pending funds. Payout timing then depends on the destination and the options available to your account.
 
 ## Troubleshooting a payout that hasn't arrived
 
 If a payout seems stuck:
 
-1. Check your payout method is still active in your payout settings (Stripe, Whop, or PayPal) — an
-   expired or incomplete method is the most common cause.
+1. Check your Whop account verification and the payout method selected there. An incomplete or unavailable method can prevent withdrawal.
 2. Give it a few business days — bank transfers, in particular, aren't instant even after Gitpay
    initiates them.
 3. Still nothing? Reach out to support with your payout's reference so we can look it up.

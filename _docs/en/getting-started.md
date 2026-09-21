@@ -166,9 +166,9 @@ If you are using Gitpay only to request payment for services outside GitHub, you
 
 If you receive money through Gitpay, you need to configure your **payout account**.
 
-Your payout account is where you configure how you receive your funds. Available payout methods can depend on your account and location.
+Your payout account is configured through Whop. Check [Whop's supported payout countries](https://docs.whop.com/manage-your-business/manage-payouts/set-up-payouts#supported-countries) for eligibility. Depending on your country and account, Whop may offer a bank account, PayPal, or a crypto wallet as a payout destination.
 
-You may also need to complete identity or business verification before receiving payouts.
+You must complete any identity or business verification Whop requires before receiving payouts.
 
 Once your payout setup is complete, eligible funds received through Gitpay can be transferred using your configured payout method.
 
