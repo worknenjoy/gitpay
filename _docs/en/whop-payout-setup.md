@@ -12,7 +12,7 @@ tags: whop, payout, payment, kyc
 * TOC
 {:toc}
 
-Identity, payout method, and schedule are set on Whop. Gitpay shows what you configured there and sends your payments to that account.
+Identity, payout method, and schedule are set on Whop. Gitpay sends eligible earnings through that connected account. Before setup, check [Whop's supported payout countries](https://docs.whop.com/manage-your-business/manage-payouts/set-up-payouts#supported-countries). Payout eligibility depends on your country and completing Whop's verification. Available destinations vary by country and may include a bank account, PayPal, or a crypto wallet. See [Whop's payout methods](https://docs.whop.com/manage-your-business/manage-payouts/payout-methods); your account shows the options actually available to you.
 
 ## Check your account status
 Go to **Profile → Payout settings → Whop**. Your **Identity & business** tab shows your connected Whop company:
@@ -20,7 +20,7 @@ Go to **Profile → Payout settings → Whop**. Your **Identity & business** tab
 ![Identity & business tab on Whop payout settings](/assets/img/guides/whop-payout-identity.png)
 
 ## Check your payout method
-Open the **Payout method** tab. If you see a method already configured there (like a bank account), your account is active:
+Open the **Payout method** tab. If you see an eligible method configured there, check that your identity verification and account status are complete:
 
 ![Payout method tab showing a configured payout method](/assets/img/guides/whop-payout-method.png)
 
@@ -33,7 +33,7 @@ Click **"Add payout method on Whop"**. This opens Whop's hosted account panel. F
 
 ![Whop hosted panel with the Automatic withdrawals menu and withdrawal history](/assets/img/guides/whop-payout-withdrawal.png)
 
-Follow the steps Whop shows you and choose from the withdrawal methods available for your country.
+Follow the steps Whop shows you and choose from the withdrawal methods available for your country. PayPal and crypto, where offered, are destinations managed in Whop rather than separate Gitpay payout providers.
 
 ## Come back to Gitpay
 Once you're done on Whop, click **"Back to Gitpay"**. Your Whop payout account should now show as active, with your payout method listed.
