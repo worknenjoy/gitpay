@@ -55,6 +55,10 @@ Um reembolso gera um desconto mais leve do que uma disputa: apenas a taxa de 8% 
 seu saldo. O próprio provedor de pagamento absorve o valor reembolsado, já que esse dinheiro nunca
 chegou a ser transferido para você como payout.
 
+## Métodos de pagamento dentro do Whop
+
+O fluxo atual do Gitpay utiliza Whop. PayPal, conta bancária e cripto podem estar disponíveis conforme o país e a conta, mas não são provedores de disputas separados do Gitpay. O destino de payout não altera a análise do pagamento original do cliente. Para um caso específico, confira a transação no Whop e contate o suporte. Antes de receber fundos, consulte os [países elegíveis para payout](https://docs.whop.com/manage-your-business/manage-payouts/set-up-payouts#supported-countries) e os [métodos disponíveis](https://docs.whop.com/manage-your-business/manage-payouts/payout-methods).
+
 ## Taxas extras no Whop (alertas de disputa)
 
 Se você recebe pelo Whop, o Whop pode reembolsar automaticamente uma transação abaixo de um certo valor
