@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 
-import { Card, CardText } from '@mui/material'
+import { Card, CardContent } from '@mui/material'
 import Input from '../../common/form/inputAuth'
 
-const cardStyle = {
+export const cardStyle = {
   minWidth: 275,
   position: 'relative'
 }
 
-class Auth extends Component {
+export class Auth extends Component {
   constructor(props) {
     super(props)
 
@@ -26,7 +26,7 @@ class Auth extends Component {
   }
   onSubmit() {
     // eslint-disable-next-line no-console
-    console.error(this.state)
+    console.log(this.state)
   }
   render() {
     return (
@@ -47,13 +47,13 @@ class Auth extends Component {
             <Input label="Password" name="password" type="password" value={this.state.password} />
           </div>
 
-          <CardText>
+          <CardContent>
             <a onClick={() => this.changeMode()}>
               {this.state.loginMode
                 ? 'New user? Register here!'
                 : 'Already registered? Come in here!'}
             </a>
-          </CardText>
+          </CardContent>
         </form>
       </Card>
     )
