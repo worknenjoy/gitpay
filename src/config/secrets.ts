@@ -36,7 +36,9 @@ export const databaseDev: DatabaseConnectionConfig = {
 export const databaseTest: DatabaseConnectionConfig = {
   username: 'postgres',
   password: process.env.DB_PASSWORD || process.env.POSTGRES_PASSWORD || 'postgres',
-  database: 'gitpay_test',
+  // Overridable so a separate CI job (e.g. Playwright e2e) can point NODE_ENV=test at its
+  // own database instead of the one the Mocha suite uses, so seeded/truncated rows never collide.
+  database: process.env.TEST_DB_NAME || 'gitpay_test',
   host: '127.0.0.1',
   port: 5432,
   dialect: 'postgres',

@@ -1,13 +1,16 @@
 import React, { useMemo } from 'react'
 import { FormattedMessage } from 'react-intl'
-import moment from 'moment'
-import { Box } from '@mui/material'
 import DetailsSidePanel, {
   DetailsItem,
   DetailsSection
 } from 'design-library/molecules/drawers/details-side-panel/details-side-panel'
+import {
+  MISSING,
+  formatDateTime,
+  copyableIdItem,
+  closeAction
+} from 'design-library/molecules/drawers/details-side-panel/details-panel-helpers'
 import PaymentStatus from 'design-library/atoms/status/payment-types-status/payment-status/payment-status'
-import CopyIconButton from 'design-library/atoms/buttons/copy-icon-button/copy-icon-button'
 
 type PaymentRequestPayment = {
   id?: number
@@ -34,17 +37,10 @@ type PaymentRequestPaymentDetailsActionProps = {
   completed?: boolean
 }
 
-const MISSING = <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
-
 const formatMoney = (value: number, currencySymbol = '$') => {
   const abs = Math.abs(value)
   const formatted = abs.toFixed(2)
   return value < 0 ? `-${currencySymbol}${formatted}` : `${currencySymbol}${formatted}`
-}
-
-const formatDateTime = (value?: string | Date | null) => {
-  if (!value) return null
-  return moment(value).format('MMM D, h:mm A')
 }
 
 const parseAmount = (value?: string | number | null): number | null => {
@@ -194,42 +190,13 @@ const buildSections = (payment: PaymentRequestPayment | null): DetailsSection[] 
       ),
       value: payment.PaymentRequest?.provider || MISSING
     },
-    {
-      label: (
-        <FormattedMessage
-          id="paymentRequest.payment.details.paymentId"
-          defaultMessage="Payment ID"
-        />
-      ),
-      value: payment.source ? (
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 0.5,
-            justifyContent: 'flex-end',
-            minWidth: 0
-          }}
-        >
-          <Box
-            component="span"
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-              minWidth: 0
-            }}
-          >
-            {payment.source}
-          </Box>
-          <Box sx={{ flexShrink: 0, display: 'flex' }}>
-            <CopyIconButton value={payment.source} />
-          </Box>
-        </Box>
-      ) : (
-        MISSING
-      )
-    },
+    copyableIdItem(
+      <FormattedMessage
+        id="paymentRequest.payment.details.paymentId"
+        defaultMessage="Payment ID"
+      />,
+      payment.source
+    ),
     {
       label: (
         <FormattedMessage id="paymentRequest.payment.details.created" defaultMessage="Created" />
@@ -299,14 +266,7 @@ const PaymentRequestPaymentDetailsAction = ({
         />
       }
       sections={sections}
-      actions={[
-        {
-          label: <FormattedMessage id="general.buttons.close" defaultMessage="Close" />,
-          onClick: onClose,
-          variant: 'contained',
-          color: 'secondary'
-        }
-      ]}
+      actions={closeAction(onClose)}
     />
   )
 }

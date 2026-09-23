@@ -146,11 +146,6 @@ const WhopCheckout = (props: any) => {
         >
           <FormattedMessage id="payment.whop.open" defaultMessage="Open Whop checkout" />
         </Button>
-        <div
-          data-whop-checkout-session={session.sessionId}
-          data-whop-checkout-return-url={`${window.location.origin}/#/task/${taskId}`}
-          style={{ minHeight: 1 }}
-        />
       </Box>
     )
   }

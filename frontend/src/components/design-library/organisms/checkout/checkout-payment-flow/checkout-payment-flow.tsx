@@ -1,11 +1,16 @@
 import React from 'react'
 import { Box, Button, CircularProgress, Typography } from '@mui/material'
-import { WhopCheckoutEmbed } from '@whop/checkout/react'
+import { WhopElements, Checkout, CheckoutElement } from '@whop/elements-react'
+import { loadWhop } from '@whop/elements'
 import CheckoutShell from '../checkout-shell/checkout-shell'
 import CheckoutCard from '../../../molecules/checkout/checkout-card/checkout-card'
 import CheckoutMerchantSummary from '../../../molecules/checkout/checkout-merchant-summary/checkout-merchant-summary'
 import CheckoutAmountInput from '../../../atoms/checkout/checkout-amount-input/checkout-amount-input'
 import CheckoutFootNote from '../../../atoms/checkout/checkout-foot-note/checkout-foot-note'
+
+// Injects the hosted Whop Elements SDK script once; loadWhop() caches and shares one
+// promise across calls, so this is safe at module scope even with hot reload.
+const whopElementsSdk = loadWhop()
 
 export type CheckoutPaymentFlowCheckout = {
   sessionId: string
@@ -24,13 +29,6 @@ export type CheckoutPaymentFlowProps = {
   submitError?: string | null
   checkout: CheckoutPaymentFlowCheckout | null
   whopEnvironment?: 'production' | 'sandbox'
-  /** True once the embed reports the payment completed — replaces the flow with a thank-you card. */
-  paid?: boolean
-  /** Fired by the embed on completion. No `returnUrl` is set and `skipRedirect` is on, so
-   * Whop never navigates the payer away — this is the only completion signal. Without it,
-   * Whop falls back to its own default post-checkout redirect (a page on whop.com listing
-   * every product under the platform company, unrelated to this specific payment). */
-  onPaymentComplete: () => void
 }
 
 /**
@@ -55,22 +53,8 @@ const CheckoutPaymentFlow = ({
   submitting,
   submitError,
   checkout,
-  whopEnvironment = 'sandbox',
-  paid,
-  onPaymentComplete
+  whopEnvironment = 'sandbox'
 }: CheckoutPaymentFlowProps) => {
-  if (paid) {
-    return (
-      <CheckoutShell>
-        <CheckoutCard title="Payment received">
-          <Typography color="text.secondary">
-            Thanks — your payment for &ldquo;{title}&rdquo; has been received.
-          </Typography>
-        </CheckoutCard>
-      </CheckoutShell>
-    )
-  }
-
   return (
     <CheckoutShell maxWidth={900}>
       <Box
@@ -126,13 +110,12 @@ const CheckoutPaymentFlow = ({
         <Box sx={{ flex: 1, width: '100%' }}>
           <CheckoutCard title="Payment details">
             {checkout ? (
-              <>
-                <WhopCheckoutEmbed
-                  sessionId={checkout.sessionId}
-                  environment={whopEnvironment}
-                  skipRedirect
-                  onComplete={onPaymentComplete}
-                />
+              <div data-testid="whop-checkout-container">
+                <WhopElements elements={whopElementsSdk} environment={whopEnvironment}>
+                  <Checkout checkoutConfiguration={checkout.sessionId}>
+                    <CheckoutElement />
+                  </Checkout>
+                </WhopElements>
                 {checkout.purchaseUrl && (
                   <Typography
                     variant="caption"
@@ -142,7 +125,7 @@ const CheckoutPaymentFlow = ({
                     Trouble loading? <a href={checkout.purchaseUrl}>Pay on Whop instead</a>
                   </Typography>
                 )}
-              </>
+              </div>
             ) : (
               <Box sx={{ textAlign: 'center', color: 'text.secondary', py: 4 }}>
                 <Typography variant="body2">Enter an amount to continue.</Typography>

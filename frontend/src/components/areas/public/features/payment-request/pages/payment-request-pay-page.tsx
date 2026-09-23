@@ -36,7 +36,6 @@ const PaymentRequestPayPage = () => {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [checkout, setCheckout] = useState<CheckoutPaymentFlowCheckout | null>(null)
-  const [paid, setPaid] = useState(false)
 
   useEffect(() => {
     const load = async () => {
@@ -122,8 +121,6 @@ const PaymentRequestPayPage = () => {
       submitError={submitError}
       checkout={checkout}
       whopEnvironment={WHOP_ENVIRONMENT}
-      paid={paid}
-      onPaymentComplete={() => setPaid(true)}
     />
   )
 }

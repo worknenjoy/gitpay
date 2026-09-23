@@ -249,6 +249,7 @@ const Payments = ({
         <IssueOrderDetailsAction
           open={!!openDetailsOrder}
           order={order}
+          task={selectedOrder?.Task}
           onClose={() => setOpenDetailsOrder(null)}
           onCancel={() => cancelPaypalPayment(order.id)}
         />

@@ -88,6 +88,11 @@ testem.log
 /e2e/*.js
 /e2e/*.map
 
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.seed.json
+
 # System Files
 .DS_Store
 Thumbs.db

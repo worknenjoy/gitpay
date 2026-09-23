@@ -8,11 +8,12 @@ import AccountRequirements from 'design-library/atoms/alerts/account-requirement
 
 import {
   paymentRequestBalancesMetadata,
-  paymentRequestBalancesCustomColumnRenderer
+  usePaymentRequestBalancesColumnRenderer
 } from './payment-requests-balance-table'
 import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
 import DocsAlert from 'design-library/atoms/alerts/docs-alert/docs-alert'
 import { Shield } from '@mui/icons-material'
+import DisputeDetailsAction from 'design-library/molecules/drawers/actions/payments/dispute-details-action/dispute-details-action'
 
 const DISPUTES_REFUNDS_GUIDE_URL = 'https://docs.gitpay.me/docs/en/disputes-and-refunds/'
 
@@ -24,8 +25,15 @@ const PaymentRequestBalances = ({
   listPaymentRequestBalances
 }) => {
   const history = useHistory()
+  const [selectedTransaction, setSelectedTransaction] = React.useState<any | null>(null)
 
   const handleGoToPayoutSettings = () => history.push('/profile/payout-settings')
+
+  const paymentRequestBalancesCustomColumnRenderer = usePaymentRequestBalancesColumnRenderer({
+    onDetails: (item) => {
+      setSelectedTransaction(item)
+    }
+  })
 
   useEffect(() => {
     fetchAccount?.()
@@ -110,6 +118,11 @@ const PaymentRequestBalances = ({
             </Box>
           </>
         }
+      />
+      <DisputeDetailsAction
+        open={!!selectedTransaction}
+        onClose={() => setSelectedTransaction(null)}
+        transaction={selectedTransaction}
       />
     </>
   )

@@ -45,7 +45,7 @@
     "start:dev": "nodemon --watch src --ext ts,js --exec \"tsx src/index.ts\"",
     "start": "node ./dist/index.js",
     "test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--import tsx\" mocha --extension ts,js --timeout 30000 --exit \"test/**/*.test.{js,ts}\"",
-    "test:e2e": "playwright test",
+    "test:e2e": "cross-env NODE_ENV=test node playwright/run-e2e.js",
     "lint": "eslint . --cache --cache-location .cache/eslint/",
     "lint-fix": "eslint . --fix --cache --cache-location .cache/eslint/",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",

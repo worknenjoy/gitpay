@@ -1,13 +1,17 @@
 import React, { useMemo } from 'react'
 import { FormattedMessage } from 'react-intl'
-import moment from 'moment'
 import DetailsSidePanel, {
   DetailsItem,
   DetailsSection
 } from 'design-library/molecules/drawers/details-side-panel/details-side-panel'
+import {
+  MISSING,
+  formatDateTime,
+  formatMoney,
+  closeAction
+} from 'design-library/molecules/drawers/details-side-panel/details-panel-helpers'
 import InvoiceStatus from 'design-library/atoms/status/payment-types-status/invoice-status/invoice-status'
 import SimpleInfo from 'design-library/atoms/alerts/simple-info/simple-info'
-import { formatCurrency } from '../../../../../../../utils/format-currency'
 
 type WalletOrder = {
   id?: number
@@ -32,13 +36,6 @@ type WalletOrderDetailsActionProps = {
   completed?: boolean
 }
 
-const MISSING = <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
-
-const formatDateTime = (value?: string | Date | null) => {
-  if (!value) return null
-  return moment(value).format('MMM D, h:mm A')
-}
-
 const buildSections = (walletOrder: WalletOrder | null, invoice: Invoice): DetailsSection[] => {
   if (!walletOrder) return []
 
@@ -49,7 +46,7 @@ const buildSections = (walletOrder: WalletOrder | null, invoice: Invoice): Detai
     },
     {
       label: <FormattedMessage id="wallets.details.amount" defaultMessage="Amount" />,
-      value: walletOrder.amount != null ? formatCurrency(Number(walletOrder.amount)) : MISSING
+      value: walletOrder.amount != null ? formatMoney(walletOrder.amount) : MISSING
     },
     {
       label: (
@@ -110,14 +107,7 @@ const WalletOrderDetailsAction = ({
         ) : null
       }
       sections={sections}
-      actions={[
-        {
-          label: <FormattedMessage id="general.buttons.close" defaultMessage="Close" />,
-          onClick: onClose,
-          variant: 'contained',
-          color: 'secondary'
-        }
-      ]}
+      actions={closeAction(onClose)}
     />
   )
 }

@@ -78,11 +78,70 @@ jobs:
           command: npm run test:ci
           working_directory: frontend
 
+  e2e:
+    docker:
+    # Own Postgres service on its own database (gitpay_e2e, via TEST_DB_NAME) so this job
+    # can never race or collide with the `build` job's gitpay_test database — separate
+    # containers per CircleCI job already isolate them, and the distinct name is belt-and-suspenders.
+    - image: cimg/node:18.20.8
+      environment:
+        PG_HOST: 127.0.0.1
+        POSTGRES_DB: gitpay_e2e
+        POSTGRES_USER: postgres
+        PG_PASSWD: postgres
+        NODE_ENV: test
+        TEST_DB_NAME: gitpay_e2e
+    - image: cimg/postgres:9.6
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: gitpay_e2e
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install backend packages
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+          - node_modules
+      - run:
+          name: Install frontend packages
+          command: npm install
+          working_directory: frontend
+      - run:
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Install Playwright browsers
+          command: npx playwright install --with-deps chromium
+      - run:
+          name: Migrate e2e database
+          command: npm run migrate:test:dev
+      - run:
+          name: run e2e tests
+          command: npm run test:e2e
+          no_output_timeout: 15m
+
 workflows:
   version: 2
   build-all:
     jobs:
       - build:
+          filters:
+            branches:
+              ignore: gh-pages
+      - e2e:
           filters:
             branches:
               ignore: gh-pages

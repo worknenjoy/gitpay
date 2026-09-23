@@ -18,7 +18,6 @@ const InteractiveTemplate = (args) => {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [checkout, setCheckout] = useState<CheckoutPaymentFlowCheckout | null>(null)
-  const [paid, setPaid] = useState(false)
 
   const handleContinue = () => {
     if (!amount || Number(amount) <= 0) return
@@ -45,8 +44,6 @@ const InteractiveTemplate = (args) => {
       submitting={submitting}
       submitError={submitError}
       checkout={checkout}
-      paid={paid}
-      onPaymentComplete={() => setPaid(true)}
     />
   )
 }
@@ -69,7 +66,6 @@ AmountEntry.args = {
   onAmountChange: () => {},
   onContinue: () => {},
   onChangeAmount: () => {},
-  onPaymentComplete: () => {},
   checkout: null
 }
 
@@ -92,12 +88,4 @@ PaymentDetails.args = {
   ...AmountEntry.args,
   amount: '25',
   checkout: { sessionId: 'session_demo_123', purchaseUrl: 'https://whop.com/checkout/demo' }
-}
-
-export const Paid = StaticTemplate.bind({})
-Paid.args = {
-  ...AmountEntry.args,
-  amount: '25',
-  checkout: { sessionId: 'session_demo_123', purchaseUrl: 'https://whop.com/checkout/demo' },
-  paid: true
 }

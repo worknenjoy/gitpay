@@ -1,10 +1,15 @@
 import React, { useMemo } from 'react'
 import { FormattedMessage } from 'react-intl'
-import moment from 'moment'
 import DetailsSidePanel, {
   DetailsItem,
   DetailsSection
 } from 'design-library/molecules/drawers/details-side-panel/details-side-panel'
+import {
+  MISSING,
+  formatDateTime,
+  formatMoney,
+  closeAction
+} from 'design-library/molecules/drawers/details-side-panel/details-panel-helpers'
 import TransferStatusField from 'design-library/molecules/tables/section-table/section-table-custom-fields/transfer/transfer-status-field/transfer-status-field'
 import AccountRequirements from 'design-library/atoms/alerts/account-requirements/account-requirements'
 import { validAccount } from '../../../../../../../utils/valid-account'
@@ -28,13 +33,6 @@ type ClaimDetailsActionProps = {
   account?: any
   onActivateAccount?: () => void
   completed?: boolean
-}
-
-const MISSING = <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
-
-const formatDateTime = (value?: string | Date | null) => {
-  if (!value) return null
-  return moment(value).format('MMM D, h:mm A')
 }
 
 const buildSections = (
@@ -65,7 +63,7 @@ const buildSections = (
     },
     {
       label: <FormattedMessage id="claims.details.value" defaultMessage="Value" />,
-      value: claim.value && claim.value !== '0' ? `$ ${claim.value}` : MISSING
+      value: claim.value && claim.value !== '0' ? formatMoney(claim.value) : MISSING
     },
     {
       label: <FormattedMessage id="claims.details.created" defaultMessage="Created" />,
@@ -112,14 +110,7 @@ const ClaimDetailsAction = ({
         ) : null
       }
       sections={sections}
-      actions={[
-        {
-          label: <FormattedMessage id="general.buttons.close" defaultMessage="Close" />,
-          onClick: onClose,
-          variant: 'contained',
-          color: 'secondary'
-        }
-      ]}
+      actions={closeAction(onClose)}
     />
   )
 }

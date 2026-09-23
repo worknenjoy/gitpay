@@ -1,17 +1,18 @@
 import React, { useMemo } from 'react'
 import { FormattedMessage } from 'react-intl'
-import moment from 'moment'
-import { Box } from '@mui/material'
 import DetailsSidePanel, {
   DetailsItem,
   DetailsSection
 } from 'design-library/molecules/drawers/details-side-panel/details-side-panel'
-import PayoutStatus from 'design-library/atoms/status/payout-status/payout-status'
-import CopyIconButton from 'design-library/atoms/buttons/copy-icon-button/copy-icon-button'
 import {
-  convertStripeAmountByCurrency,
-  currencyCodeToSymbol
-} from 'design-library/molecules/cards/balance-card/balance-card'
+  MISSING,
+  formatDateTime,
+  formatMoney,
+  copyableIdItem,
+  closeAction
+} from 'design-library/molecules/drawers/details-side-panel/details-panel-helpers'
+import PayoutStatus from 'design-library/atoms/status/payout-status/payout-status'
+import { convertStripeAmountByCurrency } from 'design-library/molecules/cards/balance-card/balance-card'
 
 type Payout = {
   id?: number
@@ -34,18 +35,10 @@ type PayoutDetailsActionProps = {
   completed?: boolean
 }
 
-const MISSING = <FormattedMessage id="general.messages.missing" defaultMessage="Not found" />
-
-const formatDateTime = (value?: string | Date | null) => {
-  if (!value) return null
-  return moment(value).format('MMM D, h:mm A')
-}
-
 const buildSections = (payout: Payout | null): DetailsSection[] => {
   if (!payout) return []
 
   const amount = convertStripeAmountByCurrency(payout.amount, payout.currency)
-  const currencySymbol = currencyCodeToSymbol(payout.currency)
 
   const infoItems: DetailsItem[] = [
     {
@@ -58,39 +51,12 @@ const buildSections = (payout: Payout | null): DetailsSection[] => {
     },
     {
       label: <FormattedMessage id="payouts.details.amount" defaultMessage="Amount" />,
-      value: amount ? `${currencySymbol} ${amount}` : MISSING
+      value: amount ? formatMoney(amount, payout.currency) : MISSING
     },
-    {
-      label: <FormattedMessage id="payouts.details.payoutId" defaultMessage="Payout ID" />,
-      value: payout.source_id ? (
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 0.5,
-            justifyContent: 'flex-end',
-            minWidth: 0
-          }}
-        >
-          <Box
-            component="span"
-            sx={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-              minWidth: 0
-            }}
-          >
-            {payout.source_id}
-          </Box>
-          <Box sx={{ flexShrink: 0, display: 'flex' }}>
-            <CopyIconButton value={payout.source_id} />
-          </Box>
-        </Box>
-      ) : (
-        MISSING
-      )
-    },
+    copyableIdItem(
+      <FormattedMessage id="payouts.details.payoutId" defaultMessage="Payout ID" />,
+      payout.source_id
+    ),
     {
       label: (
         <FormattedMessage id="payouts.details.referenceNumber" defaultMessage="Reference number" />
@@ -139,14 +105,7 @@ const PayoutDetailsAction = ({
         />
       }
       sections={sections}
-      actions={[
-        {
-          label: <FormattedMessage id="general.buttons.close" defaultMessage="Close" />,
-          onClick: onClose,
-          variant: 'contained',
-          color: 'secondary'
-        }
-      ]}
+      actions={closeAction(onClose)}
     />
   )
 }

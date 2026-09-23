@@ -97,7 +97,7 @@ In `NODE_ENV=test`, signature verification is skipped for both providers.
 
 | Flow | Stripe | Whop |
 |------|--------|------|
-| Bounty card / checkout | Elements + Charges | Checkout configuration + embed/link |
+| Bounty card / checkout | Elements + Charges | Checkout configuration + hosted redirect |
 | Bounty invoice | Stripe Invoices | Whop Invoices (`send_invoice`) |
 | Payment request | Product + Price + Payment Link | Product + Plan (`purchase_url`), or Gitpay-hosted pay page for custom amounts (see below) |
 | Wallet top-up | Stripe invoice | Whop invoice |
@@ -120,8 +120,11 @@ differently:
   calls `POST /payment-requests-public/:id/checkout`, which mints a fresh, single-use Whop
   `checkout_configuration` for that exact amount (`WhopPaymentProvider
   .createCheckoutForAmount`, same inline-plan pattern as `createBountyCheckout`), and
-  renders it inline via the `@whop/checkout` embed (`WhopCheckoutEmbed`) — the payer never
-  navigates to whop.com. `PaymentRequest.payment_link_id` stores the Whop **product id**
+  renders it inline via Whop Elements (`@whop/elements-react`'s `<Checkout
+  checkoutConfiguration={sessionId}>` + `<CheckoutElement />`, wrapped in `<WhopElements
+  elements={loadWhop()}>`) — the payer never navigates to whop.com. Fulfillment stays
+  webhook-driven (see Webhooks above); the embed carries no completion callback of its own.
+  `PaymentRequest.payment_link_id` stores the Whop **product id**
   (not a plan id) in this case; `updatePaymentRequestPaymentLinkMetadata` /
   `updatePaymentRequestPaymentLinkActive` / `updatePaymentRequestDetails` treat that id as
   best-effort (there's no persistent plan to update) — active/inactive enforcement instead
