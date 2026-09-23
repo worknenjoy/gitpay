@@ -21,7 +21,7 @@ module.exports = defineConfig({
       cwd: './frontend',
       url: 'http://localhost:8082',
       reuseExistingServer: !process.env.CI,
-      timeout: 120000,
+      timeout: 300000,
       stdout: 'pipe',
       stderr: 'pipe'
     }
