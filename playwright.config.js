@@ -12,14 +12,18 @@ module.exports = defineConfig({
       url: 'http://localhost:3000',
       reuseExistingServer: !process.env.CI,
       env: { NODE_ENV: 'test' },
-      timeout: 60000
+      timeout: 120000,
+      stdout: 'pipe',
+      stderr: 'pipe'
     },
     {
       command: 'npm run dev',
       cwd: './frontend',
       url: 'http://localhost:8082',
       reuseExistingServer: !process.env.CI,
-      timeout: 60000
+      timeout: 120000,
+      stdout: 'pipe',
+      stderr: 'pipe'
     }
   ]
 })
