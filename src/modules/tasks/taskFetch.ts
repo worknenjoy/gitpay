@@ -7,6 +7,13 @@ import { userExists } from '../users'
 // @ts-ignore - ip has no type definitions
 import { memberExists } from '../members'
 import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
+import {
+  GitlabConnect,
+  gitlabIssueUri,
+  gitlabProjectUri,
+  gitlabStateToGitpay
+} from '../../client/provider/gitlab'
+import { parseGitlabIssuePath } from '../../utils/issue/parse-and-validate-issue-url'
 
 const currentModels = models as any
 
@@ -307,6 +314,123 @@ export async function taskFetch(taskParams: any) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.log('Bitbucket response error')
+        // eslint-disable-next-line no-console
+        console.log(e)
+        return data.dataValues
+      }
+
+    case 'gitlab':
+      try {
+        const parsedGitlab = parseGitlabIssuePath(issueUrl)
+        const gitlabPath = parsedGitlab.projectPath
+        const gitlabIssueId = parsedGitlab.issueId
+        const gitlabUser = parsedGitlab.userOrCompany
+        const gitlabProjectName = parsedGitlab.projectName
+
+        const issueDataJsonGitlab = (await GitlabConnect({
+          uri: gitlabIssueUri(gitlabPath, gitlabIssueId)
+        })) as any
+
+        const assigned = await currentModels.Assign.findOne({
+          where: {
+            id: data.assigned
+          },
+          include: [currentModels.User]
+        }).catch((e: any) => {})
+
+        let repoUrl = `https://gitlab.com/${gitlabPath}`
+        let ownerUrl = `https://gitlab.com/${gitlabUser}`
+        try {
+          const repoInfoJSON = (await GitlabConnect({
+            uri: gitlabProjectUri(gitlabPath)
+          })) as any
+          repoUrl = repoInfoJSON.web_url || repoUrl
+          ownerUrl = repoInfoJSON.namespace?.web_url || ownerUrl
+        } catch (e) {
+          // keep constructed URLs
+        }
+
+        const gitpayState = gitlabStateToGitpay(issueDataJsonGitlab.state)
+        const labels = (issueDataJsonGitlab.labels || []).map((label: any) =>
+          typeof label === 'string' ? { name: label } : label
+        )
+
+        const responseGitlab = {
+          id: data.dataValues.id,
+          url: issueUrl,
+          private: data.dataValues.private,
+          not_listed: data.dataValues.not_listed,
+          title: data.dataValues.title,
+          description: data.dataValues.description,
+          value: data.dataValues.value || 0,
+          deadline: data.dataValues.deadline,
+          level: data.dataValues.level,
+          status: data.dataValues.status,
+          state: data.dataValues.state,
+          assigned: data.dataValues.assigned,
+          assignedUser: assigned && assigned.dataValues.User.dataValues,
+          User: data.dataValues && data.dataValues.User && data.dataValues.User.dataValues,
+          paid: data.dataValues.paid,
+          transfer_id: data.dataValues.transfer_id,
+          provider: data.dataValues.provider,
+          metadata: {
+            id: gitlabIssueId,
+            user: gitlabUser,
+            company: gitlabUser,
+            projectName: gitlabProjectName,
+            repoUrl,
+            ownerUrl,
+            labels,
+            issue: {
+              ...issueDataJsonGitlab,
+              state: gitpayState,
+              body: issueDataJsonGitlab.description,
+              user: {
+                login: issueDataJsonGitlab.author?.username,
+                avatar_url: issueDataJsonGitlab.author?.avatar_url
+              }
+            }
+          },
+          orders: data.dataValues.Orders,
+          Transfer: data.dataValues.Transfer,
+          Assigns: data.dataValues.Assigns,
+          members: data.dataValues.Members,
+          Offers: data.dataValues.Offers,
+          histories: data.dataValues.Histories,
+          Project: data.dataValues.Project && {
+            ...data.dataValues.Project.dataValues,
+            organization: data.dataValues.Project.dataValues.Organization.dataValues
+          }
+        }
+
+        if (!data.title || data.title !== issueDataJsonGitlab.title) {
+          const dataTitleUpdate = await data.update(
+            { title: issueDataJsonGitlab.title },
+            {
+              where: {
+                id: data.id
+              }
+            }
+          )
+          responseGitlab.title = dataTitleUpdate.title
+        }
+        if (data.status !== 'in_progress' && data.status !== gitpayState) {
+          const dataStatusUpdate = await data.update(
+            { status: gitpayState },
+            {
+              where: {
+                id: data.id
+              },
+              returning: true
+            }
+          )
+          responseGitlab.status = dataStatusUpdate.status
+        }
+
+        return responseGitlab
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log('GitLab response error')
         // eslint-disable-next-line no-console
         console.log(e)
         return data.dataValues
