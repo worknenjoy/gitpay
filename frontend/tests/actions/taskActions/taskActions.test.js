@@ -5,8 +5,10 @@
 jest.unmock('react-intl')
 import configureMockStore from 'redux-mock-store'
 import { thunk } from 'redux-thunk'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
 import moxios from 'moxios'
 import * as taskActions from '../../../src/actions/taskActions'
+import { task } from '../../../src/reducers/taskReducer'
 import Auth from '../../../src/modules/auth'
 
 Auth.getToken = () => true
@@ -152,6 +154,130 @@ describe('task actions', () => {
         // return of async actions
         expect(store.getActions()).toEqual(expectedActions)
         moxios.uninstall()
+      })
+    })
+
+    describe('when the request fails without a usable response body', () => {
+      const deleteUrl = 'http://localhost:3000/tasks/delete/1'
+      const genericErrorNotification = {
+        open: true,
+        text: 'actions.task.delete.notification.error',
+        type: 'ADD_NOTIFICATION',
+        link: undefined,
+        severity: 'error'
+      }
+      const createMockStore = () =>
+        mockStore({
+          intl: { messages: {} },
+          task: { completed: true, id: 1 },
+          loggedIn: { logged: true, user: { id: 1 } }
+        })
+
+      beforeEach(() => {
+        moxios.install()
+      })
+
+      afterEach(() => {
+        moxios.uninstall()
+      })
+
+      it('should dispatch the error when the request fails with a network error', () => {
+        const networkError = new Error('Network Error')
+        moxios.wait(() => {
+          moxios.requests.mostRecent().reject(networkError)
+        })
+        const store = createMockStore()
+        return store.dispatch(taskActions.deleteTask({ id: 1 })).then(() => {
+          expect(store.getActions()).toEqual([
+            { completed: false, type: 'DELETE_TASK_REQUESTED' },
+            genericErrorNotification,
+            { completed: true, type: 'DELETE_TASK_ERROR', error: networkError }
+          ])
+        })
+      })
+
+      it('should dispatch the error when the request times out', () => {
+        moxios.stubTimeout(deleteUrl)
+        const store = createMockStore()
+        return store.dispatch(taskActions.deleteTask({ id: 1 })).then(() => {
+          expect(store.getActions()).toEqual([
+            { completed: false, type: 'DELETE_TASK_REQUESTED' },
+            genericErrorNotification,
+            {
+              completed: true,
+              type: 'DELETE_TASK_ERROR',
+              error: expect.objectContaining({ code: 'ECONNABORTED' })
+            }
+          ])
+        })
+      })
+
+      it('should dispatch the permission error when a 403 response has no body', () => {
+        moxios.stubRequest(deleteUrl, { status: 403 })
+        const store = createMockStore()
+        return store.dispatch(taskActions.deleteTask({ id: 1 })).then(() => {
+          expect(store.getActions()).toEqual([
+            { completed: false, type: 'DELETE_TASK_REQUESTED' },
+            {
+              open: true,
+              text: 'actions.task.delete.auth.error',
+              type: 'ADD_NOTIFICATION',
+              link: undefined,
+              severity: 'error'
+            },
+            {
+              completed: true,
+              type: 'DELETE_TASK_ERROR',
+              error: expect.objectContaining({ response: expect.objectContaining({ status: 403 }) })
+            }
+          ])
+        })
+      })
+
+      it('should fall back to the original error when the response body is null', () => {
+        moxios.stubRequest(deleteUrl, { status: 500, response: null })
+        const store = createMockStore()
+        return store.dispatch(taskActions.deleteTask({ id: 1 })).then(() => {
+          expect(store.getActions()).toEqual([
+            { completed: false, type: 'DELETE_TASK_REQUESTED' },
+            genericErrorNotification,
+            {
+              completed: true,
+              type: 'DELETE_TASK_ERROR',
+              error: expect.objectContaining({ response: expect.objectContaining({ status: 500 }) })
+            }
+          ])
+        })
+      })
+
+      it('should keep the server error message when the response body has one', () => {
+        moxios.stubRequest(deleteUrl, { status: 500, response: { error: 'SOME_SERVER_ERROR' } })
+        const store = createMockStore()
+        return store.dispatch(taskActions.deleteTask({ id: 1 })).then(() => {
+          expect(store.getActions()).toEqual([
+            { completed: false, type: 'DELETE_TASK_REQUESTED' },
+            genericErrorNotification,
+            { completed: true, type: 'DELETE_TASK_ERROR', error: 'SOME_SERVER_ERROR' }
+          ])
+        })
+      })
+
+      it('should restore the task state and resolve with the error on a network failure', () => {
+        const networkError = new Error('Network Error')
+        moxios.wait(() => {
+          moxios.requests.mostRecent().reject(networkError)
+        })
+        const store = createStore(
+          combineReducers({ task, intl: (state = { messages: {} }) => state }),
+          applyMiddleware(thunk)
+        )
+        return store.dispatch(taskActions.deleteTask({ id: 1 })).then((action) => {
+          // the issue header checks `action.error` to decide whether to redirect
+          expect(action.error).toBe(networkError)
+          expect(store.getState().task).toEqual(
+            expect.objectContaining({ completed: true, error: networkError })
+          )
+        })
       })
     })
   })
