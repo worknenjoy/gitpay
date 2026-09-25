@@ -1,54 +1,31 @@
-# Categories home page navigation
-- en:
-    title: ❓ What is Gitpay
-    desc: Know more about our core, what we are, and our values
-  br:
-    title: ❓ O que é o Gitpay
-    desc: Saiba mais sobre nosso core
-  doc: getting-started
-  icon: user
-  
-- en:
-    title: 🚀 Get Started
-    desc: Create your account
-  br:
-    title: 🚀 Comece
-    desc: Crie sua conta
-  doc: getting-started-contributor
-  icon: user
-
-- en:
-    title: 🧾 Charge Customers
-    desc: Creating payment links, activating your bank account, payment methods, disputes, and fees
-  br:
-    title: 🧾 Cobrar clientes
-    desc: Links de pagamento, conta bancária, métodos, disputas e taxas
-  doc: service-provider
+# Three primary tasks on the documentation homepage.
+- doc: service-provider
   icon: credit-card
-
-- en:
-    title: 💰 Fund an Issue
-    desc: Create a task from a GitHub issue, set a bounty, track delivery, and release payment
+  en:
+    title: Get paid for work
+    desc: Send a Payment Request to a customer after delivering work.
+    action: Request a payment
   br:
-    title: 💰 Financie uma issue
-    desc: Crie tarefa com issue, defina recompensa, acompanhe e libere pagamento
-  doc: sponsor
-  icon: users
-
-- en:
-    title: 🛠️ Work on an Issue
-    desc: Browse available tasks, apply, submit a Pull Request, request payment, and get paid
-  br:
-    title: 🛠️ Trabalhe em uma issue
-    desc: Veja tarefas, candidate-se, envie PR, solicite pagamento e receba
-  doc: contributor
+    title: Receba pelo seu trabalho
+    desc: Envie uma cobrança ao cliente depois de entregar o trabalho.
+    action: Solicitar pagamento
+- doc: contributor
   icon: git-fork
-
-- en:
-    title: 📘 Guides
-    desc: Step-by-step guides
+  en:
+    title: Contribute to a project
+    desc: Find a funded issue, deliver a Pull Request, and receive payment after acceptance.
+    action: Explore contributions
   br:
-    title: 📘 Guias
-    desc: Guias passo a passo
-  doc: whop-payout-setup
-  icon: file-text
+    title: Contribua com um projeto
+    desc: Encontre uma issue financiada, envie um Pull Request e receba após a aprovação.
+    action: Explorar contribuições
+- doc: sponsor
+  icon: users
+  en:
+    title: Fund work on a project
+    desc: Fund a GitHub issue, review the contribution, and release payment.
+    action: Fund an issue
+  br:
+    title: Financie trabalho em um projeto
+    desc: Financie uma issue do GitHub, revise a contribuição e libere o pagamento.
+    action: Financiar uma issue

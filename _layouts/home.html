@@ -1,114 +1,69 @@
 ---
 layout: default
-lang: en
 ---
 
-{% if page.categories.columns %}
-    {% assign columns = page.categories.columns %}
-{% else %}
-    {% assign columns = 3 %}
-{% endif %}
-
-{% if page.categories %}
-<div class="uk-section">
-    <div class="uk-container">
-
-        {% if page.categories.title %}
-            <h2 class="uk-text-center heading-hero-2">{{ page.categories.title }}</h2>
-        {% endif %}
-
-
-        {% if page.categories.subtitle %}<p class="subtitle uk-text-lead uk-text-center">{{ page.categories.subtitle | escape }}</p>{% endif %}
-
-        <div class="uk-child-width-1-{{ columns }}@m uk-grid-match uk-text-center uk-margin-medium-top uk-flex-center" data-uk-grid>
-        {% for item in site.data.navigation_home %}
-            {% if item.title %}
-            {% assign doc_url = item.doc | prepend:"/docs/" | append:"/" %}
-            {% assign doc = site.docs | where:"url", doc_url | first %}
-            <div>
-                <div class="uk-card uk-card-body uk-inline uk-border-rounded">
-                    <a class="uk-position-cover" href="{{ doc.url }}"></a>
-                    {% if item.icon %}
-                    <span data-uk-icon="icon: {{ item.icon }}; ratio: 2" class=""></span>
-                    {% endif %}
-                    <h3 class="uk-card-title uk-margin">{{ item.title }}</h3>
-                    {% if item.desc %}
-                    <p>{{ item.desc }}</p>
-                    {% endif %}
-                </div>
-            </div>
-            {% endif %}
-            {% if item[page.lang] %}
-            {% assign doc_url = page.lang | append: "/" | prepend:"/docs/" | append: item.doc %}
-            <div>
-                <div class="uk-card uk-card-body uk-inline uk-border-rounded">
-                    <a class="uk-position-cover" href="{{ doc_url }}"></a>
-                    {% if item.icon %}
-                    <span data-uk-icon="icon: {{ item.icon }}; ratio: 2" class=""></span>
-                    {% endif %}
-                    <h3 class="uk-card-title uk-margin">{{ item[page.lang].title }}</h3>
-                    {% if item[page.lang].desc %}
-                    <p>{{ item[page.lang].desc }}</p>
-                    {% endif %}
-                </div>
-            </div>
-            {% endif %}
-        {% endfor %}
-        </div>
-
+<div class="uk-section uk-section-small">
+  <div class="uk-container">
+    <p class="uk-text-uppercase uk-text-bold uk-text-muted">{% if page.lang == 'br' %}Documentação do Gitpay{% else %}Gitpay documentation{% endif %}</p>
+    <h1 class="uk-heading-medium uk-margin-small-top">{{ page.hero.title }}</h1>
+    <p class="uk-text-lead uk-width-2-3@m">{{ page.hero.subtitle }}</p>
+    <div class="uk-margin-medium-top uk-width-2-3@m">
+      <form class="uk-search uk-search-default uk-width-1-1" role="search" onsubmit="return false;">
+        <span data-uk-search-icon></span>
+        <input id="hero-search" class="uk-search-input" type="search" aria-label="{% if page.lang == 'br' %}Pesquisar na documentação{% else %}Search documentation{% endif %}" placeholder="{% if page.lang == 'br' %}Pesquisar na documentação...{% else %}Search documentation...{% endif %}">
+      </form>
+      <ul id="hero-search-results" class="uk-position-absolute uk-list uk-background-default"></ul>
     </div>
+  </div>
 </div>
-{% endif %}
 
-{% if page.featured.tag %}
-<div class="uk-section uk-text-center">
-    <div class="uk-container uk-container-small">
+<div class="uk-section uk-section-small uk-section-muted">
+  <div class="uk-container">
+    <h2 class="heading-hero-2">{{ page.paths.title }}</h2>
+    <p class="uk-text-lead">{{ page.paths.subtitle }}</p>
+    <div class="uk-child-width-1-3@m uk-grid-match uk-margin-medium-top" data-uk-grid>
+      {% for item in site.data.navigation_home %}
+      {% assign destination = '/docs/' | append: page.lang | append: '/' | append: item.doc | append: '/' %}
+      <div>
+        <div class="uk-card uk-card-default uk-card-body uk-border-rounded">
+          <span data-uk-icon="icon: {{ item.icon }}; ratio: 1.5" aria-hidden="true"></span>
+          <h3 class="uk-card-title uk-margin-small-top"><a href="{{ destination | relative_url }}">{{ item[page.lang].title }}</a></h3>
+          <p>{{ item[page.lang].desc }}</p>
+          <a href="{{ destination | relative_url }}">{{ item[page.lang].action }} <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 
-        {% if page.featured.title %}
-        <h2 class="heading-hero-2">{{ page.featured.title }}</h2>
-        {% endif %}
-        <ul class="uk-list uk-list-large list-featured uk-child-width-1-2@s" data-uk-grid>
-        {% for doc in site.docs %}
-            {% if doc.tags contains page.featured.tag %}
-            <li><a href="{{ site.baseurl }}{{ doc.url }}">{{doc.title}}</a></li>
-            {% endif %}
-        {% endfor %}
+<div class="uk-section uk-section-small">
+  <div class="uk-container">
+    <h2 class="heading-hero-2">{{ page.topics.title }}</h2>
+    <p class="uk-text-lead">{{ page.topics.subtitle }}</p>
+    <div class="uk-child-width-1-2@s uk-child-width-1-3@m uk-grid-small" data-uk-grid>
+      {% for section in site.data.navigation_docs %}
+      <div>
+        <h3 class="uk-h4">{{ section[page.lang] }}</h3>
+        <ul class="uk-list">
+          {% for item in section.pages limit: 4 %}
+          {% assign destination = '/docs/' | append: page.lang | append: '/' | append: item.slug | append: '/' %}
+          <li><a href="{{ destination | relative_url }}">{{ item[page.lang] }}</a></li>
+          {% endfor %}
         </ul>
-
+      </div>
+      {% endfor %}
     </div>
+    <p class="uk-margin-large-top">{% if page.lang == 'br' %}Procurando novidades e histórias?{% else %}Looking for product news and stories?{% endif %} <a href="/{{ page.lang }}/news/">{% if page.lang == 'br' %}Leia o blog{% else %}Read the blog{% endif %} →</a></p>
+  </div>
 </div>
-{% endif %}
 
-{% if page.section %}
-<div class="uk-section uk-text-center">
-    <div class="uk-container uk-container-small">
-
-        {% if page.section.title %}
-            <h2 class="uk-text-center heading-hero-2">{{ page.section.title }}</h2>
-        {% endif %}
-
-        {% if page.section.subtitle %}<p class="subtitle uk-text-lead uk-text-center">{{ page.section.subtitle | escape }}</p>{% endif %}
-
-            <div class="article-content uk-margin-medium-top">{{ content }}</div>
-    </div>
-</div>
-{% endif %}
-
-{% if page.cta.button_url contains 'http' %}
-    {% assign domain = '' %}
-{% else %}
-    {% assign domain = relative_url %}
-{% endif %}
-
-
-{% if page.cta %}
-<div class="uk-section uk-text-center">
-    <div class="uk-container uk-container-small">
-        <div data-uk-scrollspy="cls: uk-animation-slide-bottom-medium; repeat: true">
-            <h3>{{ page.cta.title }}</h3>
-            {% if page.cta.subtitle %}<p class="subtitle uk-text-lead uk-text-center">{{ page.cta.subtitle | escape }}</p>{% endif %}
-            <a class="uk-button uk-button-primary uk-button-large button-cta" href="{{ domain }}{{ page.cta.button_url }}">{{ page.cta.button_text }}</a>
-        </div>
-    </div>
-</div>
-{% endif %}
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('hero-search'),
+    resultsContainer: document.getElementById('hero-search-results'),
+    noResultsText: '<li>{% if page.lang == "br" %}Nenhum resultado{% else %}No results found{% endif %}</li>',
+    searchResultTemplate: '<li><a href="{url}">{title}</a></li>',
+    json: '/search.json'
+  });
+</script>
