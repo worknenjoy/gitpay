@@ -14,7 +14,7 @@ export function calculateAmountWithPercent(
   type: string,
   currency: string = 'usd'
 ): HandleAmountResult {
-  const decimalPlaces = currencyInfo[currency.toLowerCase()]?.decimalPlaces || 2
+  const decimalPlaces = currencyInfo[currency.toLowerCase()]?.decimalPlaces ?? 2
   const centsFactor = Math.pow(10, decimalPlaces)
   let decimalAmount: any
 
