@@ -2,7 +2,7 @@
 layout: doc
 lang: en
 role: contributor
-title: How our payment works
+title: How payments work
 subtitle: How funded contributions and Payment Requests move toward payout
 tags: payments, work, bounty, get paid, reward, open-source payments
 redirect_from:
