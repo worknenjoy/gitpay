@@ -57,7 +57,7 @@ const AccountHeader = ({ user, onCreateTask, onLogout }) => {
               </ActionButton>
             </div>
           )}
-          {(isMaintainer || isFunding) && (
+          {(isMaintainer || isFunding || isContributor) && (
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <ImportIssueButton onAddIssueClick={handleAddIssueClick} />
               <ImportIssueDialog
