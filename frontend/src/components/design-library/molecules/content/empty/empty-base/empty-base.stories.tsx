@@ -25,3 +25,9 @@ Loading.args = {
   text: 'Loading...',
   completed: false
 }
+
+export const Compact = Template.bind({})
+Compact.args = {
+  text: 'No open pull requests here',
+  iconSize: 32
+}

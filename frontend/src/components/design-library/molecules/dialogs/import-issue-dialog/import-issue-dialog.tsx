@@ -5,7 +5,6 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle,
   Button,
   TextField,
   FormControl,
@@ -15,6 +14,7 @@ import {
   FormControlLabel,
   Checkbox
 } from '@mui/material'
+import DialogTitle from '../dialog-title/dialog-title'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 
@@ -48,9 +48,12 @@ const ImportIssueDialog = ({ open, onClose, onImport }: ImportIssueDialogProps) 
   return (
     <form onSubmit={handleCreateTask} action="POST">
       <Dialog open={open} onClose={onClose} aria-label="form-dialog-title">
-        <DialogTitle id="form-dialog-title">
-          <FormattedMessage id="task.actions.insert.new" defaultMessage="Insert a new task" />
-        </DialogTitle>
+        <DialogTitle
+          id="form-dialog-title"
+          title={
+            <FormattedMessage id="task.actions.insert.new" defaultMessage="Insert a new task" />
+          }
+        />
 
         <DialogContent>
           <DialogContentText>

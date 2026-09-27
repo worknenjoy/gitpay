@@ -24,12 +24,14 @@ export const MessageSecondary = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(0)
 }))
 
-export const IconContainer = styled('div')(({ theme }) => ({
+export const IconContainer = styled('div', {
+  shouldForwardProp: (prop) => prop !== 'iconSize'
+})<{ iconSize?: number }>(({ theme, iconSize = 72 }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   marginBottom: theme.spacing(0),
-  fontSize: 72,
+  fontSize: iconSize,
   color: theme.palette.text.secondary,
   '& svg': {
     fontSize: 'inherit'

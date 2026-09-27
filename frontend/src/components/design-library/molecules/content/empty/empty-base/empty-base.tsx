@@ -7,6 +7,8 @@ import { Root, Message, IconContainer, MessageSecondary } from './empty-base.sty
 type EmptyBaseProps = {
   onActionClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   icon?: React.ReactElement
+  /** Icon container font-size in px. Defaults to 72 for full-page empty states; pass something smaller (e.g. 32) when embedding inside a compact list or card. */
+  iconSize?: number
   text?: string | React.ReactNode
   secondaryText?: string | React.ReactNode
   actionText?: string | React.ReactNode
@@ -16,6 +18,7 @@ type EmptyBaseProps = {
 const EmptyBase = ({
   onActionClick,
   icon = <EmptyIcon />,
+  iconSize,
   text = 'No Data',
   secondaryText,
   actionText = 'Create your first item',
@@ -23,7 +26,7 @@ const EmptyBase = ({
 }: EmptyBaseProps) => {
   return (
     <Box component={Root as any}>
-      {icon && <IconContainer>{icon}</IconContainer>}
+      {icon && <IconContainer iconSize={iconSize}>{icon}</IconContainer>}
       <Message variant="h6" gutterBottom>
         {text}
       </Message>

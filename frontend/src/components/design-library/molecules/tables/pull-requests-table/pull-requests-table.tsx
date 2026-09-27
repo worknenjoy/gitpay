@@ -1,10 +1,11 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import slugify from '@sindresorhus/slugify'
-import { Chip, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import { GitHub as GitHubIcon } from '@mui/icons-material'
 import SectionTable from 'design-library/molecules/tables/section-table/section-table'
 import CreatedField from 'design-library/molecules/tables/section-table/section-table-custom-fields/base/created-field/created-field'
+import { PullRequestStatusChip } from 'design-library/molecules/cards/pull-request-summary-card/pull-request-summary-card'
 
 export type PullRequestRow = {
   id: string | number
@@ -33,21 +34,11 @@ const PullRequestLink = ({ url }: { url: string }) => (
   </a>
 )
 
-const PullRequestStatus = ({ row }: { row: PullRequestRow }) => {
-  if (row.isPRMerged) {
-    return (
-      <Chip
-        size="small"
-        label="Merged"
-        sx={{ bgcolor: 'primary.main', color: 'primary.contrastText' }}
-      />
-    )
-  }
-  if (row.isIssueClosed) {
-    return <Chip size="small" label="Closed" variant="outlined" />
-  }
-  return <Chip size="small" label="Open" color="secondary" />
-}
+const PullRequestStatus = ({ row }: { row: PullRequestRow }) => (
+  <PullRequestStatusChip
+    state={row.isPRMerged ? 'merged' : row.isIssueClosed ? 'closed' : 'open'}
+  />
+)
 
 const PullRequestTask = ({ task }: { task?: PullRequestRow['Task'] }) => {
   const history = useHistory()
