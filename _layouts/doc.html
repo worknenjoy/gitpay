@@ -7,35 +7,36 @@ layout: default
         <div class="uk-grid-large" data-uk-grid>
             <div class="sidebar-fixed-width uk-visible@m">
                 <div class="sidebar-docs uk-position-fixed">
-                                        {% assign nav_role = page.role | default: 'contributor' %}
-                                        {% assign nav_lang = page.lang %}
-                                        {% if nav_lang == nil %}
-                                            {% if page.url contains '/docs/br/' %}
-                                                {% assign nav_lang = 'br' %}
-                                            {% else %}
-                                                {% assign nav_lang = 'en' %}
-                                            {% endif %}
-                                        {% endif %}
-
-                                        {% for section in site.data.navigation_docs[nav_role] %}
-                    {% if section.title %}
-                    <h5>{{ section.title }}</h5>
-                    {% endif %}
-                                        {% if section[nav_lang] %}
-                                        <h5>{{ section[nav_lang].title }}</h5>
-                    {% endif %}
-                    <ul class="uk-nav uk-nav-default doc-nav">
-                                        {% for doc in section.docs[nav_lang] %}
-                      {% assign p = section.docs.pages[forloop.index0] %}
-                                            {% assign doc_url = "/docs/" | append: nav_lang | append: "/" | append: p | append: "/" %}
-                      <li class="{% if doc_url == page.url %}uk-active{% endif %}"><a href="{{ doc_url }}">{{ doc }}</a></li>
-                    {% endfor %}
-                    </ul>
-                    {% endfor %}
+                    {% assign nav_lang = page.lang | default: 'en' %}
+                    <nav aria-label="Documentation">
+                      {% for section in site.data.navigation_docs %}
+                      <h5>{{ section[nav_lang] }}</h5>
+                      <ul class="uk-nav uk-nav-default doc-nav">
+                        {% for item in section.pages %}
+                        {% assign doc_url = '/docs/' | append: nav_lang | append: '/' | append: item.slug | append: '/' %}
+                        <li class="{% if doc_url == page.url %}uk-active{% endif %}"><a href="{{ doc_url | relative_url }}" {% if doc_url == page.url %}aria-current="page"{% endif %}>{{ item[nav_lang] }}</a></li>
+                        {% endfor %}
+                      </ul>
+                      {% endfor %}
+                    </nav>
                 </div>
             </div>
 
             <div class="uk-width-1-1 uk-width-expand@m">
+                <details class="uk-hidden@m uk-margin-bottom">
+                  <summary>{% if page.lang == 'br' %}Navegar pela documentação{% else %}Browse documentation{% endif %}</summary>
+                  <nav aria-label="Documentation" class="uk-margin-small-top">
+                    {% for section in site.data.navigation_docs %}
+                    <h5>{{ section[nav_lang] }}</h5>
+                    <ul class="uk-nav uk-nav-default doc-nav">
+                      {% for item in section.pages %}
+                      {% assign doc_url = '/docs/' | append: nav_lang | append: '/' | append: item.slug | append: '/' %}
+                      <li class="{% if doc_url == page.url %}uk-active{% endif %}"><a href="{{ doc_url | relative_url }}" {% if doc_url == page.url %}aria-current="page"{% endif %}>{{ item[nav_lang] }}</a></li>
+                      {% endfor %}
+                    </ul>
+                    {% endfor %}
+                  </nav>
+                </details>
 
                 <article class="uk-article">
 
@@ -54,7 +55,6 @@ layout: default
 
                     <hr class="uk-margin-medium">
 
-                    {% include paginate-doc.html %}
 
                     {% include related-docs.html %}
 

@@ -2,7 +2,7 @@
 layout: doc
 lang: en
 role: service-provider
-title: Charge customers with Payment Requests
+title: Request payment from a customer
 subtitle: Request payment for delivered work, guide the customer, and track payout
 tags:
 ---

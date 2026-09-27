@@ -2,8 +2,8 @@
 layout: doc
 lang: en
 role: contributor
-title: How to set up a payout account on Whop
-subtitle: Connect your Whop account so Gitpay can send your bounty and payment-request earnings
+title: Set up a payout method
+subtitle: Verify your account and choose where eligible earnings are sent
 tags: whop, payout, payment, kyc
 ---
 

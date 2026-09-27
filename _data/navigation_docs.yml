@@ -1,163 +1,91 @@
-contributor:
-  - en:
-      title: Documentation
-    br:
-      title: Documentação
-    docs:
-      en:
-        - What is Gitpay?
-        - Get started as a contributor
-        - Charge Customers
-        - Fund an Issue
-        - Work on an Issue
-      br:
-        - Por onde começar?
-        - Começando
-        - Prestador de serviço
-        - Patrocinador
-        - Contribuidor
-      pages:
-        - getting-started
-        - getting-started-contributor
-        - service-provider
-        - sponsor
-        - contributor
-
-  - en:
-      title: Guides
-    br:
-      title: Guias
-    docs:
-      en:
-        - How to set up a payout account on Whop
-        - Claims — claiming tasks and tracking transfers
-        - How payouts work
-        - Disputes and refunds
-        - How payments work
-      br:
-        - Como configurar uma conta de pagamento no Whop
-        - Claims — reivindicando tarefas e acompanhando transferências
-        - Como funcionam os pagamentos (payouts)
-        - Disputas e reembolsos
-        - Como funcionam os pagamentos
-      pages:
-        - whop-payout-setup
-        - claims
-        - payouts
-        - disputes-and-refunds
-        - payments
-
-maintainer:
-  - en:
-      title: Basic concepts
-    br:
-      title: Conceitos básicos
-    docs:
-      en:
-        - Getting started
-        - Validating work
-        - Releasing bounties
-      br:
-        - Começando
-        - Validando entregas
-        - Liberando recompensas
-      pages:
-        - getting-started-maintainer
-        - validating-work
-        - releasing-bounties
-
-  - en:
-      title: Frequently asked questions
-    br:
-      title: Perguntas frequentes
-    docs:
-      en:
-        - General questions
-      br:
-        - Perguntas gerais
-      pages:
-          - faq-maintainer
-
-sponsor:
-  - en:
-      title: Documentation
-    br:
-      title: Documentação
-    docs:
-      en:
-        - What is Gitpay?
-        - Get started as a contributor
-        - Charge Customers
-        - Fund an Issue
-        - Work on an Issue
-      br:
-        - Por onde começar?
-        - Começando
-        - Prestador de serviço
-        - Patrocinador
-        - Contribuidor
-      pages:
-        - getting-started
-        - getting-started-contributor
-        - service-provider
-        - sponsor
-        - contributor
-
-  - en:
-      title: Guides
-    br:
-      title: Guias
-    docs:
-      en:
-        - Disputes and refunds
-      br:
-        - Disputas e reembolsos
-      pages:
-        - disputes-and-refunds
-
-service-provider:
-  - en:
-      title: Documentation
-    br:
-      title: Documentação
-    docs:
-      en:
-        - What is Gitpay?
-        - Get started as a contributor
-        - Charge Customers
-        - Fund an Issue
-        - Work on an Issue
-      br:
-        - Por onde começar?
-        - Começando
-        - Prestador de serviço
-        - Patrocinador
-        - Contribuidor
-      pages:
-        - getting-started
-        - getting-started-contributor
-        - service-provider
-        - sponsor
-        - contributor
-
-
-  - en:
-      title: Guides
-    br:
-      title: Guias
-    docs:
-      en:
-        - How to set up a payout account on Whop
-        - Claims — claiming tasks and tracking transfers
-        - How payouts work
-        - Disputes and refunds
-      br:
-        - Como configurar uma conta de pagamento no Whop
-        - Claims — reivindicando tarefas e acompanhando transferências
-        - Como funcionam os pagamentos (payouts)
-        - Disputas e reembolsos
-      pages:
-        - whop-payout-setup
-        - claims
-        - payouts
-        - disputes-and-refunds
+# One task-based map shared by every documentation page.
+- en: Start here
+  br: Comece aqui
+  pages:
+    - slug: getting-started
+      en: What is Gitpay?
+      br: O que é o Gitpay?
+- en: Get paid for work
+  br: Receba pelo seu trabalho
+  pages:
+    - slug: service-provider
+      en: Request payment from a customer
+      br: Solicite pagamento a um cliente
+    - slug: getting-started-service-provider
+      en: Plan and deliver client work
+      br: Planeje e entregue trabalho para clientes
+    - slug: delivering-work
+      en: Deliver work
+      br: Entregue o trabalho
+- en: Contribute to projects
+  br: Contribua com projetos
+  pages:
+    - slug: getting-started-contributor
+      en: Get started as a contributor
+      br: Comece como contribuidor
+    - slug: contributor
+      en: Work on a funded issue
+      br: Trabalhe em uma issue financiada
+    - slug: claims
+      en: Claim a task and track transfers
+      br: Reivindique uma tarefa e acompanhe transferências
+    - slug: pull-requests
+      en: Deliver a Pull Request
+      br: Entregue um Pull Request
+- en: Fund and manage work
+  br: Financie e gerencie trabalho
+  pages:
+    - slug: sponsor
+      en: Fund a GitHub issue
+      br: Financie uma issue do GitHub
+    - slug: funding-issues
+      en: Define scope and funding
+      br: Defina escopo e financiamento
+    - slug: getting-started-sponsor
+      en: Get started as a sponsor
+      br: Comece como patrocinador
+    - slug: getting-started-maintainer
+      en: Set up project reviews
+      br: Prepare revisões do projeto
+    - slug: validating-work
+      en: Review and accept work
+      br: Revise e aceite o trabalho
+    - slug: releasing-bounties
+      en: Release payment
+      br: Libere o pagamento
+- en: Payments and payouts
+  br: Pagamentos e saques
+  pages:
+    - slug: payments
+      en: How payments work
+      br: Como funcionam os pagamentos
+    - slug: whop-payout-setup
+      en: Set up a payout method
+      br: Configure um método de saque
+    - slug: payouts
+      en: Payout timing and status
+      br: Prazo e status dos saques
+    - slug: disputes-and-refunds
+      en: Disputes and refunds
+      br: Disputas e reembolsos
+- en: Help and reference
+  br: Ajuda e referência
+  pages:
+    - slug: faq
+      en: Frequently asked questions
+      br: Perguntas frequentes
+    - slug: faq-contributor
+      en: Contributor questions
+      br: Dúvidas de contribuidores
+    - slug: maintainer
+      en: Maintainer overview
+      br: Visão geral para mantenedores
+    - slug: faq-maintainer
+      en: Maintainer questions
+      br: Dúvidas de mantenedores
+    - slug: git-workflow
+      en: Git workflow
+      br: Fluxo de trabalho com Git
+    - slug: configuration
+      en: Contribute to Gitpay itself
+      br: Contribua com o Gitpay
