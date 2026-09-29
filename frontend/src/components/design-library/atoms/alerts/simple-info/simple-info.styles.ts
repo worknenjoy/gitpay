@@ -1,16 +1,22 @@
 import { styled } from '@mui/material/styles'
 import { Typography } from '@mui/material'
 
-export const SimpleInfoRoot = styled('div')(({ theme }) => ({
+export const SimpleInfoRoot = styled('div')(() => ({
   paddingBottom: 10,
   display: 'flex',
+  // 'center' vertically centers the icon against the *whole* text block, so it floats
+  // between the lines once the text wraps to two or more lines — align to the top and nudge
+  // the icon down to the first line instead (see IconCenter's marginTop).
   alignItems: 'center'
 }))
 
 export const IconCenter = styled('span')(({ theme }) => ({
-  verticalAlign: 'middle',
+  display: 'flex',
   paddingRight: 5,
-  color: theme.palette.action.active
+  color: theme.palette.action.active,
+  '& svg': {
+    fontSize: 18
+  }
 }))
 
 // styled(Typography) so this inherits the theme's fontFamily — a plain styled('p')
@@ -18,7 +24,5 @@ export const IconCenter = styled('span')(({ theme }) => ({
 // CssBaseline/body font-family reset for text elements to inherit from.
 export const Text = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
-  marginTop: 5,
-  fontSize: 11,
-  marginBottom: 0
+  fontSize: 11
 }))

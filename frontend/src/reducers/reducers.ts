@@ -35,6 +35,7 @@ import { paymentRequestTransfers } from './paymentRequestTransferReducer'
 import { paymentRequestPayments, paymentRequestPayment } from './paymentRequestPaymentReducer'
 import { paymentRequestBalances } from './paymentRequestBalanceReducer'
 import { dashboardReducer } from './dashboardReducer'
+import { pullRequest, myPullRequests, pullRequestComment } from './pullRequestReducer'
 
 const reducers = combineReducers({
   notification,
@@ -85,7 +86,10 @@ const reducers = combineReducers({
   paymentRequestPayments,
   paymentRequestPayment,
   paymentRequestBalances,
-  dashboard: dashboardReducer
+  dashboard: dashboardReducer,
+  pullRequest,
+  myPullRequests,
+  pullRequestComment
 })
 
 export default reducers

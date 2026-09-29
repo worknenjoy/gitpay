@@ -112,56 +112,26 @@ const meta: Meta<typeof ImportPullRequest> = {
 export default meta
 type Story = StoryObj<typeof ImportPullRequest>
 
-const samplePullRequests = [
-  {
-    repo: 'worknenjoy/gitpay',
-    number: 1301,
-    title: 'Add Whop payout provider to the payout settings screen',
-    when: '2 days ago',
-    state: 'open' as const
-  },
-  {
-    repo: 'worknenjoy/gitpay',
-    number: 1288,
-    title: 'Fix currency rounding on payout summary',
-    when: '1 week ago',
-    state: 'open' as const
-  },
-  {
-    repo: 'worknenjoy/gitpay',
-    number: 1264,
-    title: 'Migrate issue page to the new layout',
-    when: '1 month ago',
-    state: 'closed' as const
-  }
-]
-
-const sampleOwners = [
-  { id: 'alexanmtz', kind: 'User' },
-  { id: 'worknenjoy', kind: 'Organization' }
-]
-
 const baseArgs: Partial<ImportPullRequestProps> = {
   viewerUsername: 'alexanmtz',
-  connected: false,
-  onConnectGithub: () => {},
-  pullRequests: samplePullRequests,
-  owners: sampleOwners,
-  resolvePullRequest: (url) =>
+  resolvePullRequest: async (url) =>
     url.includes('1301')
       ? {
           repo: 'worknenjoy/gitpay',
           number: 1301,
           title: 'Add Whop payout provider to the payout settings screen',
-          state: 'open'
+          state: 'merged'
         }
       : undefined,
-  buildShareUrl: (pr) => `gitpay.me/pr/${pr.number}`,
-  buildComment: ({ mode, price, shareUrl }) =>
-    mode === 'fixed'
-      ? `Requesting payment of $${price} USD for this pull request.\n\nPay here: https://${shareUrl}`
-      : `Requesting payment for this pull request. You can pay any amount.\n\nPay here: https://${shareUrl}`,
-  onSubmit: () => {},
+  buildShareUrl: (paymentUrl) => paymentUrl,
+  buildComment: ({ mode, price, shareUrl }) => {
+    const intro =
+      mode === 'fixed'
+        ? `If you'd like to support the work on this pull request, I'm asking **${price} USD** — totally optional.`
+        : "If you'd like to support the work on this pull request, any amount is welcome — totally optional."
+    return `${intro}\n\n**[Pay here](${shareUrl})**\n\n_[Gitpay](https://gitpay.me) lets you send payments directly to contributors for work delivered on GitHub._`
+  },
+  onSubmit: async () => ({ id: 1, paymentUrl: 'https://gitpay.me/pr/1301' }),
   onPost: async () => {}
 }
 

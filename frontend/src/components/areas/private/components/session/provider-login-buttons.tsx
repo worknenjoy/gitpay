@@ -80,10 +80,19 @@ const ProviderLoginButtons = ({
               : { href: `${api.API_URL}/authorize/github` })}
             variant="contained"
             color="secondary"
-            disabled={provider === 'github'}
+            {...(!authorizeGithub ? { disabled: provider === 'github' } : {})}
           >
             <img width="16" src={GithubLogo} />
-            <span style={{ marginLeft: 10 }}>Github</span>
+            <span style={{ marginLeft: 10 }}>
+              {provider === 'github' ? (
+                <FormattedMessage
+                  id="account.login.connect.provider.reconnect"
+                  defaultMessage="Reconnect Github"
+                />
+              ) : (
+                'Github'
+              )}
+            </span>
           </Button>
           <Button
             {...(isDesktop ? {} : { fullWidth: true })}

@@ -84,7 +84,10 @@ describe('POST /payment-request', () => {
     expect(res.body.title).to.equal('Test Payment Request')
     expect(res.body.description).to.equal('This is a test payment request')
     expect(res.body.amount).to.equal('100')
-    expect(res.body.currency).to.equal('USD')
+    // Currency is normalized to lowercase before storing — Whop's API rejects uppercase
+    // codes outright, and Stripe's own API returns lowercase too, so this keeps both
+    // providers consistent regardless of the casing a caller sends.
+    expect(res.body.currency).to.equal('usd')
     expect(res.body.send_instructions_email).to.equal(false)
     expect(res.body.instructions_content).to.equal(null)
     expect(res.body.status).to.equal('open')
@@ -149,7 +152,7 @@ describe('POST /payment-request', () => {
     expect(res.body.title).to.equal('Test Payment Request')
     expect(res.body.description).to.equal('This is a test payment request')
     expect(res.body.amount).to.equal('100')
-    expect(res.body.currency).to.equal('USD')
+    expect(res.body.currency).to.equal('usd')
     expect(res.body.send_instructions_email).to.equal(true)
     expect(res.body.instructions_content).to.equal(
       'Please follow the instructions to complete the payment.'
@@ -417,5 +420,89 @@ describe('POST /payment-request', () => {
     expect(res.body.instructions_content).to.equal(
       'Please follow the instructions to complete the payment.'
     )
+  })
+})
+
+describe('POST /payment-request — payment link type', () => {
+  let previousPaymentProvider: string | undefined
+
+  beforeEach(async () => {
+    previousPaymentProvider = process.env.PAYMENT_PROVIDER
+    process.env.PAYMENT_PROVIDER = 'stripe'
+    resetPaymentProviderCache()
+    await truncateModels(models.User)
+    await truncateModels(models.PaymentRequest)
+    await truncateModels(models.PaymentLinkType)
+    await models.PaymentLinkType.bulkCreate([
+      { name: 'default', label: 'Default' },
+      { name: 'pull_request', label: 'Pull Request' }
+    ])
+  })
+  afterEach(async () => {
+    nock.cleanAll()
+    process.env.PAYMENT_PROVIDER = previousPaymentProvider
+    resetPaymentProviderCache()
+  })
+
+  const mockStripeResources = () => {
+    nock('https://api.sendgrid.com')
+      .persist()
+      .post('/v3/mail/send')
+      .reply(202, [{ type: 'text/html', value: 'email content' }])
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/products')
+      .reply(200, sampleProduct.stripe.product.create.success)
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/prices')
+      .reply(200, samplePrice.stripe.price.create)
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/payment_links')
+      .reply(200, samplePaymentLink.stripe.paymentLinks.create)
+    nock('https://api.stripe.com')
+      .persist()
+      .post('/v1/payment_links/plink_1RcnYCBrSjgsps2DsAPjr1km')
+      .reply(200, {})
+  }
+
+  it('defaults to the "default" payment link type when none is provided', async () => {
+    mockStripeResources()
+    const user = await registerAndLogin(agent)
+    const defaultType = await models.PaymentLinkType.findOne({ where: { name: 'default' } })
+
+    const res = await agent
+      .post('/payment-requests')
+      .set('authorization', user.headers.authorization)
+      .expect(201)
+      .send({ title: 'Test Payment Request', amount: 100.0, currency: 'USD' })
+
+    expect(res.body.typeId).to.equal(defaultType.id)
+    expect(res.body.url).to.be.null
+  })
+
+  it('attaches the "pull_request" payment link type and url when importing a pull request', async () => {
+    mockStripeResources()
+    const user = await registerAndLogin(agent)
+    const pullRequestType = await models.PaymentLinkType.findOne({
+      where: { name: 'pull_request' }
+    })
+
+    const res = await agent
+      .post('/payment-requests')
+      .set('authorization', user.headers.authorization)
+      .expect(201)
+      .send({
+        title: 'Add Whop payout provider',
+        description: 'Payment for work delivered in pull request #1301.',
+        amount: 240.0,
+        currency: 'USD',
+        type: 'pull_request',
+        url: 'https://github.com/worknenjoy/gitpay/pull/1301'
+      })
+
+    expect(res.body.typeId).to.equal(pullRequestType.id)
+    expect(res.body.url).to.equal('https://github.com/worknenjoy/gitpay/pull/1301')
   })
 })

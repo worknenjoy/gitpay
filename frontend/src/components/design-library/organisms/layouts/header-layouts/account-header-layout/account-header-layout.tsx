@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import ImportIssueButton from '../../topbar-layouts/topbar-layout/import-issue'
 import ImportIssueDialog from '../../topbar-layouts/topbar-layout/import-issue-dialog'
+import ImportPullRequest from '../../../../../../containers/payment/import-pull-request'
 import ProfileAccountMenu from '../../../../molecules/menus/profile-account-menu/profile-account-menu'
 import { FormattedMessage } from 'react-intl'
 import { Grid } from '@mui/material'
@@ -59,7 +59,10 @@ const AccountHeader = ({ user, onCreateTask, onLogout }) => {
           )}
           {(isMaintainer || isFunding || isContributor) && (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <ImportIssueButton onAddIssueClick={handleAddIssueClick} />
+              <ImportPullRequest
+                onImportIssueClick={handleAddIssueClick}
+                onViewPaymentRequests={() => history.push('/profile/payment-requests')}
+              />
               <ImportIssueDialog
                 open={openAddIssue}
                 onClose={() => setOpenAddIssue(false)}

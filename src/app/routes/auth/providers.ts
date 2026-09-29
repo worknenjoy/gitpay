@@ -33,7 +33,10 @@ router.get(
   })
 )
 
-router.get('/authorize/github', passport.authenticate('github', { scope: ['user:email'] }))
+router.get(
+  '/authorize/github',
+  passport.authenticate('github', { scope: ['user:email', 'public_repo'] })
+)
 
 router.get(
   '/callback/github',

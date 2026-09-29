@@ -19,10 +19,6 @@ import ShareBar from '../../content/share-bar/share-bar'
 import PullRequestSummaryCard, {
   PullRequestState
 } from '../../cards/pull-request-summary-card/pull-request-summary-card'
-import PullRequestPickerList, {
-  PullRequestPickerOwner,
-  PullRequestPickerRow
-} from '../../lists/pull-request-picker-list/pull-request-picker-list'
 import {
   Section,
   FieldLabel,
@@ -37,13 +33,15 @@ import {
 } from './import-pull-request-dialog.styles'
 
 export type ImportPullRequestMode = 'fixed' | 'custom'
-export type ImportPullRequestStep = 'form' | 'preview' | 'posted'
+export type ImportPullRequestStep = 'form' | 'review' | 'done'
 
 export type ResolvedPullRequest = {
   repo: string
   number: number
   title: string
   state: PullRequestState
+  /** The PR's GitHub URL, as resolved from the pasted URL. */
+  url?: string
 }
 
 export type ImportPullRequestDialogProps = {
@@ -56,26 +54,28 @@ export type ImportPullRequestDialogProps = {
   resolvedPullRequest?: ResolvedPullRequest
   resolvingPullRequest?: boolean
 
-  connected?: boolean
-  onConnectGithub?: () => void
-  pullRequests?: PullRequestPickerRow[]
-  loadingPullRequests?: boolean
-  owners?: PullRequestPickerOwner[]
-  pickedPullRequestNumber?: number
-  onPickedPullRequestChange?: (pullRequestNumber: number) => void
-
   mode: ImportPullRequestMode
   onModeChange: (mode: ImportPullRequestMode) => void
   price: string
   onPriceChange: (price: string) => void
 
   viewerUsername: string
+  /** Read-only preview of the comment that will be posted, shown on the review step before the
+   * payment request (and its real payment link) exist — the link is a placeholder until then. */
+  previewComment?: string
   comment: string
   onCommentChange?: (comment: string) => void
   shareUrl: string
+  /** Whether the comment has already been posted to the PR (set after Create & post, or after Post in pull request from the done step). */
+  posted?: boolean
 
-  onSubmit?: () => void
-  onPost?: () => Promise<void> | void
+  /** Creates the payment request only — does not post a comment. */
+  onCreate?: () => Promise<void>
+  /** Creates the payment request and immediately posts the comment. */
+  onCreateAndPost?: () => Promise<void>
+  /** Posts the comment for an already-created payment request (from the done step, if not posted yet). */
+  onPostNow?: () => Promise<void>
+  onViewPaymentRequests?: () => void
 }
 
 const ImportPullRequestDialog = ({
@@ -86,31 +86,26 @@ const ImportPullRequestDialog = ({
   onPullRequestUrlChange,
   resolvedPullRequest,
   resolvingPullRequest = false,
-  connected = false,
-  onConnectGithub,
-  pullRequests = [],
-  loadingPullRequests = false,
-  owners = [],
-  pickedPullRequestNumber,
-  onPickedPullRequestChange,
   mode,
   onModeChange,
   price,
   onPriceChange,
   viewerUsername,
+  previewComment,
   comment,
   onCommentChange,
   shareUrl,
-  onSubmit,
-  onPost
+  posted = false,
+  onCreate,
+  onCreateAndPost,
+  onPostNow,
+  onViewPaymentRequests
 }: ImportPullRequestDialogProps) => {
   const intl = useIntl()
   const [step, setStep] = React.useState<ImportPullRequestStep>(initialStep)
   const [editingComment, setEditingComment] = React.useState(false)
+  const [submitting, setSubmitting] = React.useState(false)
   const [posting, setPosting] = React.useState(false)
-  const [pickerFilter, setPickerFilter] = React.useState<'open' | 'closed'>('open')
-  const [pickerOwner, setPickerOwner] = React.useState('all')
-  const [pickerRepo, setPickerRepo] = React.useState('all')
 
   React.useEffect(() => {
     if (open) setStep(initialStep)
@@ -118,179 +113,323 @@ const ImportPullRequestDialog = ({
 
   const titleIcon = <img src={githubLogo} alt="" width={20} height={20} />
 
-  const handleSubmit = () => {
-    onSubmit?.()
-    setStep('preview')
+  const handleContinue = () => setStep('review')
+  const handleBackToForm = () => setStep('form')
+
+  // Failures here (e.g. the account isn't activated for payments) are already surfaced to the
+  // user via the global notification toast, dispatched from the same redux action that raises
+  // this rejection — catching it here just keeps the dialog open on the review step instead of
+  // crashing the app with an unhandled rejection.
+  const handleCreate = async () => {
+    setSubmitting(true)
+    try {
+      await onCreate?.()
+      setStep('done')
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to create the payment request', error)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
-  const handleBack = () => setStep('form')
+  const handleCreateAndPost = async () => {
+    setSubmitting(true)
+    try {
+      await onCreateAndPost?.()
+      setStep('done')
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to create and post the payment request', error)
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
-  const handlePost = async () => {
+  const handlePostNow = async () => {
     setPosting(true)
-    await onPost?.()
-    setPosting(false)
-    setStep('posted')
+    try {
+      await onPostNow?.()
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to post the pull request comment', error)
+    } finally {
+      setPosting(false)
+    }
   }
 
-  if (step === 'posted') {
+  const handleViewPaymentRequests = () => {
+    onClose()
+    onViewPaymentRequests?.()
+  }
+
+  if (step === 'done') {
     return (
       <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
         <DialogTitle
           icon={titleIcon}
           onClose={onClose}
-          title={intl.formatMessage({
-            id: 'design.importPullRequestDialog.title',
-            defaultMessage: 'Import pull request'
-          })}
+          title={
+            posted
+              ? intl.formatMessage({
+                  id: 'design.importPullRequestDialog.posted.title',
+                  defaultMessage: 'Posted successfully'
+                })
+              : intl.formatMessage({
+                  id: 'design.importPullRequestDialog.previewTitle',
+                  defaultMessage: 'Payment link created'
+                })
+          }
         />
         <DialogContent>
-          <CustomAlert severity="success" completed>
-            <AlertTitle>
-              <FormattedMessage
-                id="design.importPullRequestDialog.posted.title"
-                defaultMessage="Posted successfully"
-              />
-            </AlertTitle>
-            {resolvedPullRequest && (
-              <Typography variant="body2">
+          {posted ? (
+            <CustomAlert severity="success" completed>
+              <AlertTitle>
                 <FormattedMessage
-                  id="design.importPullRequestDialog.posted.description"
-                  defaultMessage="Your payment request is on {repo} #{number}."
-                  values={{ repo: resolvedPullRequest.repo, number: resolvedPullRequest.number }}
+                  id="design.importPullRequestDialog.posted.title"
+                  defaultMessage="Posted successfully"
                 />
-              </Typography>
-            )}
-          </CustomAlert>
+              </AlertTitle>
+              {resolvedPullRequest && (
+                <Typography variant="body2">
+                  <FormattedMessage
+                    id="design.importPullRequestDialog.posted.description"
+                    defaultMessage="Your payment request is on {repo} #{number}."
+                    values={{ repo: resolvedPullRequest.repo, number: resolvedPullRequest.number }}
+                  />
+                </Typography>
+              )}
+            </CustomAlert>
+          ) : (
+            <Section>
+              <div>
+                <PreviewHead>
+                  <FieldLabel style={{ margin: 0 }}>
+                    <FormattedMessage
+                      id="design.importPullRequestDialog.preview"
+                      defaultMessage="Preview"
+                    />
+                  </FieldLabel>
+                  <Button
+                    variant="text"
+                    size="small"
+                    onClick={() => setEditingComment((current) => !current)}
+                    label={
+                      editingComment ? (
+                        <FormattedMessage
+                          id="design.importPullRequestDialog.done"
+                          defaultMessage="Done"
+                        />
+                      ) : (
+                        <FormattedMessage
+                          id="design.importPullRequestDialog.edit"
+                          defaultMessage="Edit"
+                        />
+                      )
+                    }
+                  />
+                </PreviewHead>
+                <CommentBox>
+                  <CommentBar>
+                    <CommentAvatar>{viewerUsername.charAt(0).toUpperCase()}</CommentAvatar>
+                    <CommentUser>{viewerUsername}</CommentUser>
+                    {resolvedPullRequest && (
+                      <CommentMeta>
+                        <FormattedMessage
+                          id="design.importPullRequestDialog.willComment"
+                          defaultMessage="will comment on {repo} #{number}"
+                          values={{
+                            repo: resolvedPullRequest.repo,
+                            number: resolvedPullRequest.number
+                          }}
+                        />
+                      </CommentMeta>
+                    )}
+                  </CommentBar>
+                  {editingComment ? (
+                    <CommentTextarea
+                      value={comment}
+                      onChange={(e) => onCommentChange?.(e.target.value)}
+                    />
+                  ) : (
+                    <CommentText>{comment}</CommentText>
+                  )}
+                </CommentBox>
+              </div>
+              <ShareBar url={shareUrl} />
+            </Section>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button
-            variant="text"
-            onClick={onClose}
-            label={
-              <FormattedMessage id="design.importPullRequestDialog.close" defaultMessage="Close" />
-            }
-          />
-          <Button
-            variant="outlined"
-            label={
-              <FormattedMessage
-                id="design.importPullRequestDialog.viewOnGithub"
-                defaultMessage="View on GitHub"
+          {posted ? (
+            <>
+              <Button
+                variant="text"
+                onClick={handleViewPaymentRequests}
+                label={
+                  <FormattedMessage
+                    id="design.importPullRequestDialog.viewPaymentRequests"
+                    defaultMessage="View payment requests"
+                  />
+                }
               />
-            }
-            {...{
-              component: 'a',
-              href: pullRequestUrl,
-              target: '_blank',
-              rel: 'noopener noreferrer'
-            }}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={onClose}
-            label={
-              <FormattedMessage
-                id="design.importPullRequestDialog.viewPaymentRequests"
-                defaultMessage="View payment requests"
+              <Button
+                variant="contained"
+                color="primary"
+                label={
+                  <FormattedMessage
+                    id="design.importPullRequestDialog.viewOnGithub"
+                    defaultMessage="View on GitHub"
+                  />
+                }
+                {...{
+                  component: 'a',
+                  href: pullRequestUrl,
+                  target: '_blank',
+                  rel: 'noopener noreferrer'
+                }}
               />
-            }
-          />
+            </>
+          ) : (
+            <>
+              <Button
+                variant="text"
+                onClick={onClose}
+                label={
+                  <FormattedMessage
+                    id="design.importPullRequestDialog.close"
+                    defaultMessage="Close"
+                  />
+                }
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handlePostNow}
+                completed={!posting}
+                label={
+                  <FormattedMessage
+                    id="design.importPullRequestDialog.post"
+                    defaultMessage="Post in pull request"
+                  />
+                }
+              />
+            </>
+          )}
         </DialogActions>
       </Dialog>
     )
   }
 
-  if (step === 'preview') {
+  if (step === 'review') {
     return (
       <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
         <DialogTitle
           icon={titleIcon}
           onClose={onClose}
           title={intl.formatMessage({
-            id: 'design.importPullRequestDialog.previewTitle',
-            defaultMessage: 'Payment link created'
+            id: 'design.importPullRequestDialog.reviewTitle',
+            defaultMessage: 'Review payment request'
           })}
         />
         <DialogContent>
           <Section>
+            {resolvedPullRequest && <PullRequestSummaryCard {...resolvedPullRequest} />}
             <div>
-              <PreviewHead>
-                <FieldLabel style={{ margin: 0 }}>
+              <FieldLabel>
+                <FormattedMessage
+                  id="design.importPullRequestDialog.amount"
+                  defaultMessage="Amount"
+                />
+              </FieldLabel>
+              <Typography variant="body2">
+                {mode === 'fixed' ? (
+                  <FormattedMessage
+                    id="design.importPullRequestDialog.reviewFixedAmount"
+                    defaultMessage="{price} USD"
+                    values={{ price: `$${price}` }}
+                  />
+                ) : (
+                  <FormattedMessage
+                    id="design.importPullRequestDialog.reviewCustomAmount"
+                    defaultMessage="Custom amount"
+                  />
+                )}
+              </Typography>
+            </div>
+            {previewComment && (
+              <div>
+                <FieldLabel>
                   <FormattedMessage
                     id="design.importPullRequestDialog.preview"
                     defaultMessage="Preview"
                   />
                 </FieldLabel>
-                <Button
-                  variant="text"
-                  size="small"
-                  onClick={() => setEditingComment((current) => !current)}
-                  label={
-                    editingComment ? (
-                      <FormattedMessage
-                        id="design.importPullRequestDialog.done"
-                        defaultMessage="Done"
-                      />
-                    ) : (
-                      <FormattedMessage
-                        id="design.importPullRequestDialog.edit"
-                        defaultMessage="Edit"
-                      />
-                    )
-                  }
+                <CommentBox>
+                  <CommentBar>
+                    <CommentAvatar>{viewerUsername.charAt(0).toUpperCase()}</CommentAvatar>
+                    <CommentUser>{viewerUsername}</CommentUser>
+                    {resolvedPullRequest && (
+                      <CommentMeta>
+                        <FormattedMessage
+                          id="design.importPullRequestDialog.willComment"
+                          defaultMessage="will comment on {repo} #{number}"
+                          values={{
+                            repo: resolvedPullRequest.repo,
+                            number: resolvedPullRequest.number
+                          }}
+                        />
+                      </CommentMeta>
+                    )}
+                  </CommentBar>
+                  <CommentText>{previewComment}</CommentText>
+                </CommentBox>
+              </div>
+            )}
+            <SimpleInfo
+              text={
+                <FormattedMessage
+                  id="design.importPullRequestDialog.reviewNote"
+                  defaultMessage="We'll post a comment with your payment link on this pull request — you can review it before posting."
                 />
-              </PreviewHead>
-              <CommentBox>
-                <CommentBar>
-                  <CommentAvatar>{viewerUsername.charAt(0).toUpperCase()}</CommentAvatar>
-                  <CommentUser>{viewerUsername}</CommentUser>
-                  {resolvedPullRequest && (
-                    <CommentMeta>
-                      <FormattedMessage
-                        id="design.importPullRequestDialog.willComment"
-                        defaultMessage="will comment on {repo} #{number}"
-                        values={{
-                          repo: resolvedPullRequest.repo,
-                          number: resolvedPullRequest.number
-                        }}
-                      />
-                    </CommentMeta>
-                  )}
-                </CommentBar>
-                {editingComment ? (
-                  <CommentTextarea
-                    value={comment}
-                    onChange={(e) => onCommentChange?.(e.target.value)}
-                  />
-                ) : (
-                  <CommentText>{comment}</CommentText>
-                )}
-              </CommentBox>
-            </div>
-            <ShareBar url={shareUrl} />
+              }
+            />
           </Section>
         </DialogContent>
         <DialogActions>
           <Button
             variant="text"
-            onClick={handleBack}
+            onClick={handleBackToForm}
+            disabled={submitting}
             label={
               <FormattedMessage
                 id="design.importPullRequestDialog.editStep"
-                defaultMessage="Edit"
+                defaultMessage="Back"
+              />
+            }
+          />
+          <Button
+            variant="outlined"
+            onClick={handleCreate}
+            disabled={submitting}
+            completed={!submitting}
+            label={
+              <FormattedMessage
+                id="design.importPullRequestDialog.createOnly"
+                defaultMessage="Create"
               />
             }
           />
           <Button
             variant="contained"
             color="primary"
-            onClick={handlePost}
-            completed={!posting}
+            onClick={handleCreateAndPost}
+            disabled={submitting}
+            completed={!submitting}
             label={
               <FormattedMessage
-                id="design.importPullRequestDialog.post"
-                defaultMessage="Post in pull request"
+                id="design.importPullRequestDialog.createAndPost"
+                defaultMessage="Create and post"
               />
             }
           />
@@ -324,30 +463,27 @@ const ImportPullRequestDialog = ({
               value={pullRequestUrl}
               onChange={(e) => onPullRequestUrlChange(e.target.value)}
               placeholder="https://github.com/owner/repo/pull/123"
-              InputProps={
-                !connected && onConnectGithub
-                  ? {
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Button
-                            variant="text"
-                            size="small"
-                            onClick={onConnectGithub}
-                            startIcon={<img src={githubLogo} alt="" width={15} height={15} />}
-                            label={
-                              <FormattedMessage
-                                id="design.importPullRequestDialog.connectGithub"
-                                defaultMessage="Connect GitHub"
-                              />
-                            }
-                          />
-                        </InputAdornment>
-                      )
-                    }
-                  : undefined
-              }
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <img src={githubLogo} alt="" width={15} height={15} />
+                  </InputAdornment>
+                )
+              }}
             />
-            {!connected && resolvingPullRequest && (
+            {!resolvingPullRequest && !resolvedPullRequest && (
+              <div style={{ marginTop: 12 }}>
+                <SimpleInfo
+                  text={
+                    <FormattedMessage
+                      id="design.importPullRequestDialog.urlHint"
+                      defaultMessage="Paste the URL of a merged pull request you authored."
+                    />
+                  }
+                />
+              </div>
+            )}
+            {resolvingPullRequest && (
               <div style={{ marginTop: 12 }}>
                 <PullRequestSummaryCard
                   repo=""
@@ -358,26 +494,9 @@ const ImportPullRequestDialog = ({
                 />
               </div>
             )}
-            {!connected && !resolvingPullRequest && resolvedPullRequest && (
+            {!resolvingPullRequest && resolvedPullRequest && (
               <div style={{ marginTop: 12 }}>
                 <PullRequestSummaryCard {...resolvedPullRequest} />
-              </div>
-            )}
-            {connected && (
-              <div style={{ marginTop: 12 }}>
-                <PullRequestPickerList
-                  pullRequests={pullRequests}
-                  owners={owners}
-                  loading={loadingPullRequests}
-                  value={pickedPullRequestNumber}
-                  onChange={(number) => onPickedPullRequestChange?.(number)}
-                  filter={pickerFilter}
-                  onFilterChange={setPickerFilter}
-                  owner={pickerOwner}
-                  onOwnerChange={setPickerOwner}
-                  repo={pickerRepo}
-                  onRepoChange={setPickerRepo}
-                />
               </div>
             )}
           </div>
@@ -461,11 +580,12 @@ const ImportPullRequestDialog = ({
         <Button
           variant="contained"
           color="primary"
-          onClick={handleSubmit}
+          onClick={handleContinue}
+          disabled={!resolvedPullRequest}
           label={
             <FormattedMessage
-              id="design.importPullRequestDialog.createLink"
-              defaultMessage="Create payment link"
+              id="design.importPullRequestDialog.continue"
+              defaultMessage="Continue"
             />
           }
         />

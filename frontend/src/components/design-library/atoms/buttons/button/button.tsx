@@ -19,15 +19,16 @@ const Button = ({
   const { Progress } = styles as any
   const isDisabled = !completed ? true : disabled
 
-  const Component = component || MaterialButton
-
+  // `component` must be forwarded to MaterialButton's polymorphic `component` prop, not used
+  // to swap out the element MaterialButton itself renders as — doing the latter (e.g. for
+  // component="a") skipped MUI's Button styling entirely and rendered a bare, unstyled <a>.
   return (
-    <Component disabled={isDisabled} {...rest}>
+    <MaterialButton disabled={isDisabled} component={component} {...rest}>
       <>
         {children ?? label}
         {!completed && <Progress size={24} color="inherit" />}
       </>
-    </Component>
+    </MaterialButton>
   )
 }
 export default Button

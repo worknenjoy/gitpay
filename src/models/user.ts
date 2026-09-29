@@ -38,6 +38,8 @@ export interface UserAttributes {
   languages?: string | null
   recover_password_token?: string | null
   recover_password_token_expires_at?: Date | null
+  /** GitHub OAuth access token (public_repo scope) used to post comments on the user's behalf. Auth secret — never returned to the client. */
+  github_access_token?: string | null
   activation_token?: string | null
   activation_token_sent_at?: Date | null
   activation_token_expires_at?: Date | null
@@ -82,6 +84,7 @@ export type UserCreationAttributes = Optional<
   | 'languages'
   | 'recover_password_token'
   | 'recover_password_token_expires_at'
+  | 'github_access_token'
   | 'activation_token'
   | 'activation_token_sent_at'
   | 'activation_token_expires_at'
@@ -128,6 +131,7 @@ export default class User
   public languages!: string | null
   public recover_password_token!: string | null
   public recover_password_token_expires_at!: Date | null
+  public github_access_token!: string | null
   public activation_token!: string | null
   public activation_token_sent_at!: Date | null
   public activation_token_expires_at!: Date | null
@@ -264,6 +268,10 @@ export default class User
         },
         recover_password_token_expires_at: {
           type: DataTypes.DATE,
+          allowNull: true
+        },
+        github_access_token: {
+          type: DataTypes.STRING,
           allowNull: true
         },
         activation_token: {

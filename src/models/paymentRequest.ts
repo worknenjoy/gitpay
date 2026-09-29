@@ -22,6 +22,10 @@ export interface PaymentRequestAttributes {
   transfer_status: string
   transfer_id?: string | null
   userId?: number | null
+  /** Kind of payment link (default vs pull-request-attached, etc.) — see PaymentLinkType */
+  typeId?: number | null
+  /** Optional external link associated with this payment request (e.g. the attached PR's URL) */
+  url?: string | null
   createdAt?: Date
   updatedAt?: Date
 }
@@ -47,6 +51,8 @@ export type PaymentRequestCreationAttributes = Optional<
   | 'transfer_status'
   | 'transfer_id'
   | 'userId'
+  | 'typeId'
+  | 'url'
   | 'createdAt'
   | 'updatedAt'
 >
@@ -74,6 +80,8 @@ export default class PaymentRequest
   public transfer_status!: string
   public transfer_id!: string | null
   public userId!: number | null
+  public typeId!: number | null
+  public url!: string | null
   public createdAt!: Date
   public updatedAt!: Date
 
@@ -161,6 +169,14 @@ export default class PaymentRequest
           type: DataTypes.INTEGER,
           allowNull: false
         },
+        typeId: {
+          type: DataTypes.INTEGER,
+          allowNull: true
+        },
+        url: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
@@ -183,6 +199,7 @@ export default class PaymentRequest
 
   static associate(models: any) {
     models.PaymentRequest.belongsTo(models.User, { foreignKey: 'userId' })
+    models.PaymentRequest.belongsTo(models.PaymentLinkType, { foreignKey: 'typeId' })
     models.PaymentRequest.hasMany(models.PaymentRequestPayment, { foreignKey: 'paymentRequestId' })
   }
 }

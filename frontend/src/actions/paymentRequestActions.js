@@ -31,6 +31,11 @@ export const createPaymentRequestError = (error) => {
   return { type: CREATE_PAYMENT_REQUEST_ERROR, error }
 }
 
+const CREATE_PAYMENT_REQUEST_ERROR_MESSAGES = {
+  PAYOUT_ACCOUNT_NOT_CONNECTED: 'actions.paymentRequest.create.error.payoutAccountNotConnected'
+}
+const CREATE_PAYMENT_REQUEST_ERROR_FALLBACK = 'actions.paymentRequest.create.error'
+
 export const createPaymentRequest = (paymentRequest) => {
   validToken()
   return (dispatch) => {
@@ -47,7 +52,10 @@ export const createPaymentRequest = (paymentRequest) => {
         return dispatch(createPaymentRequestError('actions.paymentRequest.create.error'))
       })
       .catch((e) => {
-        dispatch(addNotification('actions.paymentRequest.create.error', { severity: 'error' }))
+        const errorCode = e?.response?.data?.error
+        const messageId =
+          CREATE_PAYMENT_REQUEST_ERROR_MESSAGES[errorCode] || CREATE_PAYMENT_REQUEST_ERROR_FALLBACK
+        dispatch(addNotification(messageId, { severity: 'error' }))
         return dispatch(createPaymentRequestError(e))
       })
   }

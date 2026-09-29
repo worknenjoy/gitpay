@@ -69,7 +69,8 @@ export const connectGithub = (req: any, res: any, next: any) => {
   const user = req.user
   if (user) {
     passport.authenticate('github', {
-      scope: ['user:email'],
+      // public_repo: needed to post comments as the user on public repos (Import Pull Request).
+      scope: ['user:email', 'public_repo'],
       state: req.user.email
     })(req, res, next)
   } else {

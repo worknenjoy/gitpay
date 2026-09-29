@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles'
+import { styled, alpha } from '@mui/material/styles'
 import { Typography } from '@mui/material'
 
 export const Root = styled('div')(({ theme }) => ({
@@ -10,6 +10,8 @@ export const Root = styled('div')(({ theme }) => ({
   borderRadius: theme.spacing(1)
 }))
 
+// Same muted, light-fill treatment as MergeStatus's "merged" chip (alpha-blended success.light
+// background + success.dark icon), rather than a solid fill, so the two read as one system.
 export const IconWrap = styled('span')(({ theme }) => ({
   flexShrink: 0,
   width: 28,
@@ -18,7 +20,7 @@ export const IconWrap = styled('span')(({ theme }) => ({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundColor: theme.palette.success.light ?? theme.palette.success.main,
+  backgroundColor: alpha(theme.palette.success.light, 0.15),
   color: theme.palette.success.dark ?? theme.palette.success.contrastText,
   '& svg': { fontSize: 15 }
 }))

@@ -3,7 +3,7 @@ import request from 'supertest'
 import nock from 'nock'
 import api from '../../../src/server'
 import { registerAndLogin, truncateModels } from '../../helpers'
-import { withPaymentProvider, pinWhopApiForTests, WHOP_API_HOST } from '../../helpers/whop'
+import { withPaymentProvider, pinWhopApiForTests, getWhopNockOrigin } from '../../helpers/whop'
 import Models from '../../../src/models'
 import productCreate from '../../data/whop/product.create'
 import planCreate from '../../data/whop/plan.create'
@@ -27,20 +27,20 @@ describe('POST /payment-request (Whop)', () => {
 
   it('should create a payment request via Whop product + plan', async () => {
     await withPaymentProvider('whop', async () => {
-      nock(WHOP_API_HOST)
+      nock(getWhopNockOrigin())
         .post('/api/v1/products')
         .reply(200, productCreate)
       // Direct charge (default for new payment requests): fixed-amount plans route
       // through /checkout_configurations instead of standalone /plans, since that's
       // the only endpoint supporting the application_fee_amount fee-split.
       let checkoutBody: any
-      nock(WHOP_API_HOST)
+      nock(getWhopNockOrigin())
         .post('/api/v1/checkout_configurations', (body) => {
           checkoutBody = body
           return true
         })
         .reply(200, checkoutConfig)
-      nock(WHOP_API_HOST)
+      nock(getWhopNockOrigin())
         .patch(`/api/v1/plans/${checkoutConfig.plan.id}`)
         .reply(200, planCreate)
 
@@ -77,10 +77,50 @@ describe('POST /payment-request (Whop)', () => {
     })
   })
 
+  it('should normalize an uppercase currency before sending it to Whop', async () => {
+    await withPaymentProvider('whop', async () => {
+      nock(getWhopNockOrigin())
+        .post('/api/v1/products')
+        .reply(200, productCreate)
+      let checkoutBody: any
+      nock(getWhopNockOrigin())
+        .post('/api/v1/checkout_configurations', (body) => {
+          checkoutBody = body
+          return true
+        })
+        .reply(200, checkoutConfig)
+      nock(getWhopNockOrigin())
+        .patch(`/api/v1/plans/${checkoutConfig.plan.id}`)
+        .reply(200, planCreate)
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_seller_connected' },
+        { where: { id: user.body.id } }
+      )
+
+      // Whop rejects 'USD' with "Invalid value for parameter 'plan.currency'" — it only
+      // accepts lowercase ISO codes. The Import Pull Request flow sends currency uppercase,
+      // so the mutation must normalize it rather than forwarding the caller's casing as-is.
+      await agent
+        .post('/payment-requests')
+        .send({
+          title: 'Whop PR',
+          description: 'Pay via Whop',
+          amount: 100,
+          currency: 'USD'
+        })
+        .set('Authorization', user.headers.authorization)
+        .expect(201)
+
+      expect(checkoutBody.plan.currency).to.equal('usd')
+    })
+  })
+
   it('should block creating a Whop payment request when the user has no connected account', async () => {
     await withPaymentProvider('whop', async () => {
       const user = await registerAndLogin(agent)
-      await agent
+      const res = await agent
         .post('/payment-requests')
         .send({
           title: 'Whop PR',
@@ -90,6 +130,10 @@ describe('POST /payment-request (Whop)', () => {
         })
         .set('Authorization', user.headers.authorization)
         .expect(422)
+
+      // The error code is provider-agnostic on the wire — the frontend maps it to a
+      // generic "activate your account" message and must not surface "Whop" to the user.
+      expect(res.body.error).to.equal('PAYOUT_ACCOUNT_NOT_CONNECTED')
     })
   })
 })

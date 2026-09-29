@@ -61,7 +61,7 @@ describe('GET /auth/social', () => {
 
       expect(res.statusCode).to.equal(302)
       expect(res.headers.location).to.include(
-        'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub&scope=user%3Aemail&client_id='
+        'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub&scope=user%3Aemail%2Cpublic_repo&client_id='
       )
     })
     xit('should callback after authorize on github', async () => {

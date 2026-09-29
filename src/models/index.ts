@@ -9,6 +9,7 @@ import Member from './member'
 import Offer from './offer'
 import Order from './order'
 import Organization from './organization'
+import PaymentLinkType from './paymentLinkType'
 import PaymentRequest from './paymentRequest'
 import PaymentRequestBalance from './paymentRequestBalance'
 import PaymentRequestBalanceTransaction from './paymentRequestBalanceTransaction'
@@ -100,6 +101,7 @@ const models = [
   Offer,
   Order,
   Organization,
+  PaymentLinkType,
   PaymentRequest,
   PaymentRequestBalance,
   PaymentRequestBalanceTransaction,

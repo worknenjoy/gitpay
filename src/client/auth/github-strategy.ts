@@ -22,6 +22,8 @@ interface UserData {
   login_strategy?: string
   token?: string
   terms_accepted_at?: Date | null
+  /** GitHub OAuth access token (public_repo scope), persisted so we can post comments on the user's behalf. */
+  github_access_token?: string
 }
 
 export const createGitHubStrategy = () => {
@@ -35,7 +37,8 @@ export const createGitHubStrategy = () => {
       clientSecret: github.secret,
       callbackURL: oauthCallbacks.githubCallbackUrl,
       passReqToCallback: true,
-      scope: ['user:email', 'read:org']
+      // public_repo: needed to post comments as the user on public repos (Import Pull Request).
+      scope: ['user:email', 'read:org', 'public_repo']
     },
     async (req: any, accessToken: string, accessTokenSecret: string, profile: any, done: any) => {
       try {
@@ -54,7 +57,8 @@ export const createGitHubStrategy = () => {
           website: profile._json.blog,
           profile_url: profile.profileUrl,
           repos: 0,
-          email: email
+          email: email,
+          github_access_token: accessToken
         }
 
         if (userEmail) {

@@ -1,6 +1,7 @@
 import { Transaction } from 'sequelize'
 import Models from '../../../models'
 import { getPaymentProvider } from '../../../providers'
+import { getPaymentLinkType } from '../../../modules/paymentRequests/getPaymentLinkType'
 import { sanitizePaymentRequestInstructionsContent } from '../../../utils/sanitize/paymentRequestInstructions'
 
 const models = Models as any
@@ -18,6 +19,10 @@ export type PaymentRequestCreateParams = {
   /** Optional override; defaults to PAYMENT_PROVIDER env */
   provider?: string
   listed_on_profile?: boolean
+  /** Optional external link associated with this payment request (e.g. the attached PR's URL) */
+  url?: string
+  /** PaymentLinkType name (e.g. 'pull_request'); defaults to 'default' */
+  type?: string
 }
 
 export async function createPaymentRequest(
@@ -35,11 +40,18 @@ export async function createPaymentRequest(
     send_instructions_email,
     instructions_content,
     provider: providerName,
-    listed_on_profile
+    listed_on_profile,
+    url,
+    type: typeName
   } = paymentRequestParams
 
-  const currency = currencyParam ?? 'usd'
+  // Provider APIs (Whop confirmed, Stripe by convention) require lowercase ISO currency
+  // codes — callers shouldn't have to know that, so normalize here rather than at each
+  // call site (the Import Pull Request flow sends 'USD' uppercase, which Whop rejects
+  // with "Invalid value for parameter 'plan.currency'").
+  const currency = (currencyParam ?? 'usd').toLowerCase()
   const paymentProvider = getPaymentProvider(providerName)
+  const paymentLinkType = await getPaymentLinkType(typeName)
 
   const sanitizedInstructionsContent = sanitizePaymentRequestInstructionsContent(
     instructions_content,
@@ -62,6 +74,9 @@ export async function createPaymentRequest(
         'Connect your Whop account in Payout Settings before creating a payment request'
       )
       err.StatusCodeError = 422
+      // Provider-agnostic on the wire: the frontend maps this to a generic "activate your
+      // account" message and must not surface the provider name.
+      err.error = 'PAYOUT_ACCOUNT_NOT_CONNECTED'
       throw err
     }
   }
@@ -105,7 +120,9 @@ export async function createPaymentRequest(
           instructions_content: sanitizedInstructionsContent,
           listed_on_profile: listed_on_profile ?? false,
           title,
-          description
+          description,
+          typeId: paymentLinkType?.id ?? null,
+          url: url ?? null
         },
         { transaction }
       )

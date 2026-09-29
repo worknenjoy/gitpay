@@ -619,6 +619,10 @@ const messages = defineMessages({
     id: 'actions.paymentRequest.create.error',
     defaultMessage: 'We could not create this payment request'
   },
+  notificationPaymentRequestCreateErrorPayoutAccountNotConnected: {
+    id: 'actions.paymentRequest.create.error.payoutAccountNotConnected',
+    defaultMessage: 'Activate your account in Payout Settings before creating a payment request'
+  },
   notificationPaymentRequestListError: {
     id: 'actions.paymentRequest.list.error',
     defaultMessage: 'We could not list your payment requests'
@@ -659,6 +663,46 @@ const messages = defineMessages({
     id: 'payment.paused.message',
     defaultMessage:
       'Gitpay has temporarily paused all payment operations while we look for a new payment provider. You can still create an account, but bank account management, payments, and payouts are currently unavailable. We apologize for the inconvenience.'
+  },
+  notificationPullRequestResolveErrorNotFound: {
+    id: 'actions.pullRequest.resolve.error.notFound',
+    defaultMessage: "We couldn't find that pull request"
+  },
+  notificationPullRequestResolveErrorNotLinked: {
+    id: 'actions.pullRequest.resolve.error.notLinked',
+    defaultMessage: 'Connect your GitHub account before importing a pull request'
+  },
+  notificationPullRequestResolveErrorNotAuthor: {
+    id: 'actions.pullRequest.resolve.error.notAuthor',
+    defaultMessage: "This pull request wasn't opened by your connected GitHub account"
+  },
+  notificationPullRequestResolveErrorNotMerged: {
+    id: 'actions.pullRequest.resolve.error.notMerged',
+    defaultMessage: 'Only merged pull requests can be imported'
+  },
+  notificationPullRequestResolveErrorGeneric: {
+    id: 'actions.pullRequest.resolve.error.generic',
+    defaultMessage: 'We could not resolve that pull request'
+  },
+  notificationPullRequestMineErrorNotLinked: {
+    id: 'actions.pullRequest.mine.error.notLinked',
+    defaultMessage: 'Connect your GitHub account to see your pull requests'
+  },
+  notificationPullRequestMineErrorGeneric: {
+    id: 'actions.pullRequest.mine.error.generic',
+    defaultMessage: 'We could not load your pull requests'
+  },
+  notificationPullRequestCommentSuccess: {
+    id: 'actions.pullRequest.comment.success',
+    defaultMessage: 'Comment posted on the pull request'
+  },
+  notificationPullRequestCommentError: {
+    id: 'actions.pullRequest.comment.error',
+    defaultMessage: 'We could not post the comment on the pull request'
+  },
+  notificationPullRequestCommentErrorNeedsGithubAccess: {
+    id: 'actions.pullRequest.comment.error.needsGithubAccess',
+    defaultMessage: 'Reconnecting you to GitHub to grant permission to post as you…'
   }
 })
 

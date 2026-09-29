@@ -3,7 +3,7 @@ import request from 'supertest'
 import nock from 'nock'
 import api from '../../../src/server'
 import { registerAndLogin, truncateModels } from '../../helpers'
-import { withPaymentProvider, pinWhopApiForTests, WHOP_API_HOST } from '../../helpers/whop'
+import { withPaymentProvider, pinWhopApiForTests, getWhopNockOrigin } from '../../helpers/whop'
 import Models from '../../../src/models'
 import productCreate from '../../data/whop/product.create'
 import checkoutConfig from '../../data/whop/checkout-configuration.create'
@@ -27,7 +27,7 @@ describe('Whop custom-amount payment request checkout', () => {
 
   it('creates a whop custom-amount payment request without a fixed plan, pointing payment_url at the Gitpay pay page', async () => {
     await withPaymentProvider('whop', async () => {
-      nock(WHOP_API_HOST).post('/api/v1/products').reply(200, productCreate)
+      nock(getWhopNockOrigin()).post('/api/v1/products').reply(200, productCreate)
 
       const user = await registerAndLogin(agent)
       await models.User.update(
@@ -112,7 +112,7 @@ describe('Whop custom-amount payment request checkout', () => {
     it('mints a fresh Whop checkout for the entered amount and returns sessionId + purchaseUrl', async () => {
       await withPaymentProvider('whop', async () => {
         let checkoutBody: any
-        nock(WHOP_API_HOST)
+        nock(getWhopNockOrigin())
           .post('/api/v1/checkout_configurations', (body) => {
             checkoutBody = body
             return true

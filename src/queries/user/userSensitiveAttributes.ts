@@ -6,7 +6,8 @@ export const USER_AUTH_SECRET_ATTRIBUTES = [
   'activation_token_expires_at',
   'email_change_token',
   'email_change_token_expires_at',
-  'pending_email_change'
+  'pending_email_change',
+  'github_access_token'
 ]
 
 export const USER_SENSITIVE_ATTRIBUTES = [

@@ -1,6 +1,7 @@
 import React from 'react'
-import { Chip, Skeleton } from '@mui/material'
+import { Skeleton } from '@mui/material'
 import PullRequestIcon from '../../../atoms/icons/pull-request-icon/pull-request-icon'
+import MergeStatus from '../../../atoms/status/merge-status/merge-status'
 import { Root, IconWrap, Body, Meta, Title } from './pull-request-summary-card.styles'
 
 export type PullRequestState = 'open' | 'closed' | 'merged'
@@ -14,21 +15,9 @@ export type PullRequestSummaryCardProps = {
   completed?: boolean
 }
 
-export const PullRequestStatusChip = ({ state }: { state: PullRequestState }) => {
-  if (state === 'merged') {
-    return (
-      <Chip
-        size="small"
-        label="Merged"
-        sx={{ bgcolor: 'primary.main', color: 'primary.contrastText' }}
-      />
-    )
-  }
-  if (state === 'closed') {
-    return <Chip size="small" label="Closed" variant="outlined" />
-  }
-  return <Chip size="small" label="Open" color="secondary" />
-}
+export const PullRequestStatusChip = ({ state }: { state: PullRequestState }) => (
+  <MergeStatus status={state} />
+)
 
 const PullRequestSummaryCard = ({
   repo,
