@@ -117,7 +117,45 @@ const postCreateOrUpdateOffer = async (task: any, offer: any) => {
   }
 }
 
+// A contributor offer is not a task mutation: the offering user is usually not the task owner,
+// so it must not go through the owner-scoped Task.update below. Only whitelisted offer fields are
+// accepted (never e.g. `status`), and the user/task always come from the caller, not the payload.
+const createOrUpdateOffer = async (taskParameters: any) => {
+  const { value, suggestedDate, learn, comment } = taskParameters.Offer
+  const offerParameters = { value, suggestedDate, learn, comment }
+  const userId = taskParameters.Offer.userId
+  const taskId = taskParameters.id
+
+  const task = await currentModels.Task.findByPk(taskId, {
+    include: [currentModels.User, currentModels.Order, currentModels.Assign, currentModels.Member]
+  })
+
+  if (!task) {
+    return new Error('task_find_failed')
+  }
+
+  const existingAssign = await assignExist({ userId, taskId })
+
+  if (!existingAssign) {
+    await task.createAssign({ userId })
+  }
+
+  const existingOffer = await offerExists({ userId, taskId })
+
+  if (!existingOffer) {
+    await task.createOffer({ ...offerParameters, userId })
+  } else {
+    await currentModels.Offer.update(offerParameters, { where: { userId, taskId } })
+  }
+
+  return postCreateOrUpdateOffer(task, { ...offerParameters, userId })
+}
+
 export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = true) {
+  if (taskParameters.Offer) {
+    return createOrUpdateOffer(taskParameters)
+  }
+
   let couponValidation = null
 
   if (taskParameters.coupon) {
@@ -194,32 +232,6 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
         assignedUserDeadline.username
       )
       return task.dataValues
-    }
-  }
-
-  if (taskParameters.Offer) {
-    const existingAssign = await assignExist({
-      userId: taskParameters.Offer.userId,
-      taskId: taskParameters.id
-    })
-
-    if (!existingAssign) {
-      await task.createAssign({ userId: taskParameters.Offer.userId })
-    }
-
-    const resp = await offerExists({
-      userId: taskParameters.Offer.userId,
-      taskId: taskParameters.id
-    })
-
-    if (!resp) {
-      const offer = await task.createOffer(taskParameters.Offer)
-      return postCreateOrUpdateOffer(task, taskParameters.Offer)
-    } else {
-      const update = await currentModels.Offer.update(taskParameters.Offer, {
-        where: { userId: taskParameters.Offer.userId, taskId: taskParameters.id }
-      })
-      return postCreateOrUpdateOffer(task, taskParameters.Offer)
     }
   }
 
