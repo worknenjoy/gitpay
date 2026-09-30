@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import {
   Bar,
@@ -16,7 +17,8 @@ import logo from 'images/gitpay-logo.png'
 
 import TopbarMenu from './topbar-menu'
 import SignupSignin from '../../../forms/signup-forms/signup-signin/signup-signin'
-import ImportIssue from '../../../forms/issue-forms/import-issue/import-issue'
+import ImportPullRequest from '../../../../../../containers/payment/import-pull-request'
+import ImportIssueDialog from './import-issue-dialog'
 import AccountSettings from '../../../../molecules/trigger-buttons/account-settings/account-settings'
 import { AccountWrapper } from './import-issue-dialog.styles'
 
@@ -27,8 +29,10 @@ const Topbar = ({
   loginFormForgotFormProps,
   importIssuesProps
 }) => {
+  const history = useHistory()
   const [isActive, setIsActive] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [openAddIssue, setOpenAddIssue] = useState(false)
 
   const handleClickMenuMobile = () => {
     setIsActive(!isActive)
@@ -38,6 +42,11 @@ const Topbar = ({
     const isLoggedIn = user?.logged
     setIsLoggedIn(isLoggedIn)
   }, [user])
+
+  const handleCreateTask = async (data) => {
+    await importIssuesProps.onImport(data)
+    setOpenAddIssue(false)
+  }
 
   return (
     <Bar>
@@ -61,7 +70,16 @@ const Topbar = ({
           </OnlyMobile>
           {isLoggedIn ? (
             <AccountWrapper>
-              <ImportIssue onImport={importIssuesProps.onImport} />
+              <ImportPullRequest
+                onImportIssueClick={() => setOpenAddIssue(true)}
+                onViewPaymentRequests={() => history.push('/profile/payment-requests')}
+              />
+              <ImportIssueDialog
+                open={openAddIssue}
+                onClose={() => setOpenAddIssue(false)}
+                onCreate={handleCreateTask}
+                user={user}
+              />
               <AccountSettings user={user} accountMenuProps={accountMenuProps} />
             </AccountWrapper>
           ) : (
