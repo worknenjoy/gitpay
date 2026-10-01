@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import ExploreIssuesPage from '../../components/areas/private/features/issues/pages/user-issues-explore-page'
-import { listTasks, filterTasks } from '../../actions/taskActions'
+import { listTasks, filterTasks, createTask } from '../../actions/taskActions'
 import { listLabels } from '../../actions/labelActions'
 import { listLanguage } from '../../actions/languageActions'
 import { getCurrentUser } from '../../common/selectors/user/getUser'
@@ -20,7 +20,8 @@ const mapDispatchToProps = (dispatch: any, ownProps?: any) => {
     filterTasks: (key: any, value: any, additional: any) =>
       dispatch(filterTasks(key, value, additional)),
     listLabels: () => dispatch(listLabels()),
-    listLanguages: () => dispatch(listLanguage())
+    listLanguages: () => dispatch(listLanguage()),
+    createTask: (task: any, history: any) => dispatch(createTask(task, history))
   }
 }
 

@@ -32,6 +32,7 @@ interface IssuesTableProps {
   listTasks: (params: Record<string, any>) => void
   serverSidePagination?: boolean
   defaultRowsPerPage?: number
+  emptyComponent?: React.ReactNode
 }
 
 export const IssuesTable = ({
@@ -43,7 +44,8 @@ export const IssuesTable = ({
   listLanguages,
   listTasks,
   serverSidePagination = false,
-  defaultRowsPerPage = 10
+  defaultRowsPerPage = 10,
+  emptyComponent
 }: IssuesTableProps) => {
   const issueMetadata = useIssueMetadata({ includeProject: true })
 
@@ -119,6 +121,7 @@ export const IssuesTable = ({
         tableHeaderMetadata={issueMetadata}
         customColumnRenderer={customColumnRenderer}
         transparent
+        emptyComponent={emptyComponent}
         serverSidePagination={
           serverSidePagination
             ? {

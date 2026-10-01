@@ -45,3 +45,16 @@ export const Default: Story = {
     }
   }
 }
+
+export const Empty: Story = {
+  args: {
+    ...Default.args,
+    issues: {
+      completed: true,
+      data: []
+    },
+    onAddIssueClick: () => {},
+    onCloseAddIssue: () => {},
+    onCreateIssue: () => {}
+  }
+}

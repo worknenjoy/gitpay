@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ExploreIssuesPrivatePage from 'design-library/pages/private-pages/issues-pages/explore-issues-private-page/explore-issues-private-page'
 import { useHistory } from 'react-router-dom'
 
@@ -10,14 +10,21 @@ const ExploreIssuesPage = ({
   listLabels,
   languages,
   listLanguages,
-  user
+  user,
+  createTask
 }) => {
   const history = useHistory()
+  const [openAddIssue, setOpenAddIssue] = useState(false)
 
   useEffect(() => {
     filterTasks({})
     listTasks({ page: 0, limit: 10 })
   }, [history.location.pathname])
+
+  const handleCreateIssue = async (data) => {
+    await createTask(data, history)
+    setOpenAddIssue(false)
+  }
 
   return (
     <ExploreIssuesPrivatePage
@@ -28,6 +35,11 @@ const ExploreIssuesPage = ({
       languages={languages}
       listLabels={listLabels}
       listLanguages={listLanguages}
+      user={user}
+      openAddIssue={openAddIssue}
+      onAddIssueClick={() => setOpenAddIssue(true)}
+      onCloseAddIssue={() => setOpenAddIssue(false)}
+      onCreateIssue={handleCreateIssue}
     />
   )
 }

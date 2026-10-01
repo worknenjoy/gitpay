@@ -51,6 +51,7 @@ interface SectionTableProps {
   customColumnRenderer?: Record<string, (item: any, rowData?: any) => React.ReactNode>
   serverSidePagination?: ServerSidePaginationProps
   transparent?: boolean
+  emptyComponent?: React.ReactNode
 }
 
 const SectionTable = ({
@@ -58,7 +59,8 @@ const SectionTable = ({
   tableHeaderMetadata,
   customColumnRenderer = {},
   serverSidePagination,
-  transparent = false
+  transparent = false,
+  emptyComponent
 }: SectionTableProps) => {
   const isServerSide = !!serverSidePagination?.enabled
   const safeData = Array.isArray(tableData?.data) ? tableData.data : []
@@ -269,15 +271,17 @@ const SectionTable = ({
   if (tableData.completed && safeData.length === 0) {
     return (
       <RootPaper sx={{ p: 2 }}>
-        <EmptyBase
-          text={
-            <FormattedMessage
-              id="sectionTable.empty"
-              defaultMessage="No records for this table yet"
-            />
-          }
-          icon={<NoDataIcon fontSize="large" color="disabled" />}
-        />
+        {emptyComponent ?? (
+          <EmptyBase
+            text={
+              <FormattedMessage
+                id="sectionTable.empty"
+                defaultMessage="No records for this table yet"
+              />
+            }
+            icon={<NoDataIcon fontSize="large" color="disabled" />}
+          />
+        )}
       </RootPaper>
     )
   }
