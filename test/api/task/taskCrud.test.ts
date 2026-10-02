@@ -157,6 +157,79 @@ describe('Task CRUD', () => {
     expect(unchanged.dataValues.title).to.equal('Sample Issue')
   })
 
+  it('should let a contributor make an offer on a task owned by someone else', async () => {
+    const owner = await UserFactory({ name: 'Task Owner', email: 'offer_owner@gitpay.me' })
+    const task = await TaskFactory({ userId: owner.id })
+
+    const contributor = await registerAndLogin(agent, { email: 'offer_contributor@gitpay.me' })
+    const contributorId = contributor.body.id
+
+    const res = await agent
+      .put('/tasks/update')
+      .send({
+        id: task.id,
+        Offer: { suggestedDate: '2030-01-01', value: 50, learn: false, comment: 'I can do it' }
+      })
+      .set('Authorization', contributor.headers.authorization)
+      .expect(200)
+
+    expect(res.body.id).to.equal(task.id)
+
+    const offers = await models.Offer.findAll({ where: { taskId: task.id } })
+    expect(offers).to.have.length(1)
+    expect(offers[0].userId).to.equal(contributorId)
+    expect(offers[0].comment).to.equal('I can do it')
+
+    const assigns = await models.Assign.findAll({ where: { TaskId: task.id } })
+    expect(assigns).to.have.length(1)
+    expect(assigns[0].userId).to.equal(contributorId)
+  })
+
+  it('should update the same offer instead of duplicating it', async () => {
+    const owner = await UserFactory({ name: 'Task Owner', email: 'offer_owner2@gitpay.me' })
+    const task = await TaskFactory({ userId: owner.id })
+    const contributor = await registerAndLogin(agent, { email: 'offer_contributor2@gitpay.me' })
+
+    for (const comment of ['first', 'second']) {
+      await agent
+        .put('/tasks/update')
+        .send({ id: task.id, Offer: { value: 10, learn: false, comment } })
+        .set('Authorization', contributor.headers.authorization)
+        .expect(200)
+    }
+
+    const offers = await models.Offer.findAll({ where: { taskId: task.id } })
+    expect(offers).to.have.length(1)
+    expect(offers[0].comment).to.equal('second')
+  })
+
+  it('should ignore a spoofed offer user, offer status and task fields sent with an offer', async () => {
+    const owner = await UserFactory({ name: 'Task Owner', email: 'offer_owner3@gitpay.me' })
+    const victim = await UserFactory({ name: 'Victim', email: 'offer_victim@gitpay.me' })
+    const task = await TaskFactory({ userId: owner.id })
+    const contributor = await registerAndLogin(agent, { email: 'offer_contributor3@gitpay.me' })
+
+    await agent
+      .put('/tasks/update')
+      .send({
+        id: task.id,
+        title: 'Hijacked title',
+        value: 999,
+        Offer: { userId: victim.id, status: 'accepted', value: 10, learn: false }
+      })
+      .set('Authorization', contributor.headers.authorization)
+      .expect(200)
+
+    const offers = await models.Offer.findAll({ where: { taskId: task.id } })
+    expect(offers).to.have.length(1)
+    expect(offers[0].userId).to.equal(contributor.body.id)
+    expect(offers[0].status).to.not.equal('accepted')
+
+    const unchanged = await models.Task.findByPk(task.id)
+    expect(unchanged.dataValues.title).to.equal('Sample Issue')
+    expect(unchanged.dataValues.value).to.equal('100')
+  })
+
   it('should give an error on create if the issue build responds with limit exceeded', async () => {
     nockAuthLimitExceeded()
     const res = await registerAndLogin(agent)
