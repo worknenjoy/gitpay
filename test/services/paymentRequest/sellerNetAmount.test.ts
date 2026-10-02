@@ -2,6 +2,18 @@ import { expect } from 'chai'
 import { computeSellerNetAmount } from '../../../src/services/paymentRequest/sellerNetAmount'
 
 describe('computeSellerNetAmount', () => {
+  it('keeps the seller net amount in whole yen for a zero-decimal currency', () => {
+    const result = computeSellerNetAmount({
+      paymentRequestPayment: { amount: 1000 },
+      paymentRequest: { amount: 1000, custom_amount: false, provider: 'stripe' },
+      currency: 'jpy'
+    })
+
+    expect(result.originalAmountDecimal).to.equal(1000)
+    expect(result.netAmountDecimal).to.equal(920)
+    expect(result.netAmountCents).to.equal(920)
+  })
+
   it('applies Gitpay\'s 8% cut on top of Whop\'s reported net for a legacy (transfer) payment', () => {
     const result = computeSellerNetAmount({
       paymentRequestPayment: {
