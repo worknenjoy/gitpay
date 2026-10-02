@@ -19,6 +19,12 @@ import isGithubUrl from 'is-github-url'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 import api from '../../../../../../consts'
+
+const logoCodeberg =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="#2185D0" d="M8 1.5 1 14.5h14L8 1.5zm0 3.2 4.7 8.3H3.3L8 4.7z"/></svg>'
+  )
 import {
   FullWidthFormControl,
   ProvidersWrapper,
@@ -34,16 +40,29 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
   const [notListed, setNotListed] = useState(false)
 
   const validURL = (url) => {
-    return isGithubUrl(url) || isBitbucketUrl(url)
+    return isGithubUrl(url) || isBitbucketUrl(url) || isCodebergUrl(url)
   }
 
   const isBitbucketUrl = (url) => {
     return url.indexOf('bitbucket') > -1
   }
 
+  const isCodebergUrl = (url) => {
+    try {
+      const host = new URL(url).hostname.toLowerCase()
+      return host === 'codeberg.org' || host === 'www.codeberg.org'
+    } catch (e) {
+      return url.indexOf('codeberg.org') > -1
+    }
+  }
+
   const onChange = (e: any) => {
-    setUrl(e.target.value)
+    const nextUrl = e.target.value
+    setUrl(nextUrl)
     setError(false)
+    if (isCodebergUrl(nextUrl)) setProvider('codeberg')
+    else if (isBitbucketUrl(nextUrl)) setProvider('bitbucket')
+    else if (isGithubUrl(nextUrl)) setProvider('github')
   }
 
   const handleCreateTask = async (e: any) => {
@@ -79,7 +98,7 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
             <Typography variant="subtitle1" gutterBottom>
               <FormattedMessage
                 id="task.actions.insert.subheading"
-                defaultMessage="Paste the url of an incident of Github or Bitbucket"
+                defaultMessage="Paste the URL of a GitHub, Bitbucket, or Codeberg issue"
               />
             </Typography>
           </DialogContentText>
@@ -134,6 +153,16 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
               >
                 <img width="16" src={logoBitbucket} />
                 <span className="provider-label">Bitbucket</span>
+              </ProviderButton>
+
+              <ProviderButton
+                color="primary"
+                variant={provider === 'codeberg' ? 'contained' : 'outlined'}
+                id="codeberg"
+                onClick={(e) => setProvider('codeberg')}
+              >
+                <img width="16" src={logoCodeberg} alt="" />
+                <span className="provider-label">Codeberg</span>
               </ProviderButton>
             </ProvidersWrapper>
 

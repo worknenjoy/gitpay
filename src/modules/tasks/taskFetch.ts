@@ -7,6 +7,7 @@ import { userExists } from '../users'
 // @ts-ignore - ip has no type definitions
 import { memberExists } from '../members'
 import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
+import { CodebergConnect, codebergIssueUri, codebergRepoUri } from '../../client/provider/codeberg'
 
 const currentModels = models as any
 
@@ -307,6 +308,113 @@ export async function taskFetch(taskParams: any) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.log('Bitbucket response error')
+        // eslint-disable-next-line no-console
+        console.log(e)
+        return data.dataValues
+      }
+
+    case 'codeberg':
+      try {
+        const issueDataJsonCodeberg = (await CodebergConnect({
+          uri: codebergIssueUri(userOrCompany, projectName, issueId)
+        })) as any
+
+        const assigned = await currentModels.Assign.findOne({
+          where: {
+            id: data.assigned
+          },
+          include: [currentModels.User]
+        }).catch((e: any) => {})
+
+        let repoUrl = `https://codeberg.org/${userOrCompany}/${projectName}`
+        let ownerUrl = `https://codeberg.org/${userOrCompany}`
+        try {
+          const repoInfoJSON = (await CodebergConnect({
+            uri: codebergRepoUri(userOrCompany, projectName)
+          })) as any
+          repoUrl = repoInfoJSON.html_url || repoUrl
+          ownerUrl = repoInfoJSON.owner?.html_url || ownerUrl
+        } catch (e) {
+          // keep constructed URLs
+        }
+
+        const responseCodeberg = {
+          id: data.dataValues.id,
+          url: issueUrl,
+          private: data.dataValues.private,
+          not_listed: data.dataValues.not_listed,
+          title: data.dataValues.title,
+          description: data.dataValues.description,
+          value: data.dataValues.value || 0,
+          deadline: data.dataValues.deadline,
+          level: data.dataValues.level,
+          status: data.dataValues.status,
+          state: data.dataValues.state,
+          assigned: data.dataValues.assigned,
+          assignedUser: assigned && assigned.dataValues.User.dataValues,
+          User: data.dataValues && data.dataValues.User && data.dataValues.User.dataValues,
+          paid: data.dataValues.paid,
+          transfer_id: data.dataValues.transfer_id,
+          provider: data.dataValues.provider,
+          metadata: {
+            id: issueId,
+            user: userOrCompany,
+            company: userOrCompany,
+            projectName: projectName,
+            repoUrl,
+            ownerUrl,
+            labels: issueDataJsonCodeberg.labels,
+            issue: {
+              ...issueDataJsonCodeberg,
+              state: issueDataJsonCodeberg.state,
+              body: issueDataJsonCodeberg.body,
+              user: {
+                login:
+                  issueDataJsonCodeberg.user?.login || issueDataJsonCodeberg.user?.username,
+                avatar_url: issueDataJsonCodeberg.user?.avatar_url
+              }
+            }
+          },
+          orders: data.dataValues.Orders,
+          Transfer: data.dataValues.Transfer,
+          Assigns: data.dataValues.Assigns,
+          members: data.dataValues.Members,
+          Offers: data.dataValues.Offers,
+          histories: data.dataValues.Histories,
+          Project: data.dataValues.Project && {
+            ...data.dataValues.Project.dataValues,
+            organization: data.dataValues.Project.dataValues.Organization.dataValues
+          }
+        }
+
+        if (!data.title || data.title !== issueDataJsonCodeberg.title) {
+          const dataTitleUpdate = await data.update(
+            { title: issueDataJsonCodeberg.title },
+            {
+              where: {
+                id: data.id
+              }
+            }
+          )
+          responseCodeberg.title = dataTitleUpdate.title
+        }
+        if (data.status !== 'in_progress' && data.status !== issueDataJsonCodeberg.state) {
+          const dataStatusUpdate = await data.update(
+            { status: issueDataJsonCodeberg.state },
+            {
+              where: {
+                id: data.id
+              },
+              returning: true
+            }
+          )
+          responseCodeberg.status = dataStatusUpdate.status
+        }
+
+        return responseCodeberg
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log('Codeberg response error')
         // eslint-disable-next-line no-console
         console.log(e)
         return data.dataValues

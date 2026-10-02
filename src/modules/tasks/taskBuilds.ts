@@ -1,6 +1,11 @@
 import requestPromise from 'request-promise'
 import models from '../../models'
 import { GithubConnect } from '../../client/provider/github'
+import {
+  CodebergConnect,
+  codebergIssueUri,
+  codebergLanguagesUri
+} from '../../client/provider/codeberg'
 import TaskMail from '../../mail/task'
 import { roleExists } from '../roles'
 import { userExists } from '../users'
@@ -102,6 +107,58 @@ export async function taskBuilds(taskParameters: any) {
       const p = await project(userOrCompany, projectName, userId, 'bitbucket')
       const task = await p.createTask({ ...taskParameters, private: true })
       return task.dataValues
+    }
+
+    case 'codeberg': {
+      const issueData = (await CodebergConnect({
+        uri: codebergIssueUri(userOrCompany, projectName, issueId)
+      })) as any
+
+      if (!issueData || !issueData.title) return false
+      if (!taskParameters.title) taskParameters.title = issueData.title
+      if (!taskParameters.description) taskParameters.description = issueData.body
+
+      let programmingLanguagesResponse = {}
+      try {
+        programmingLanguagesResponse = await CodebergConnect({
+          uri: codebergLanguagesUri(userOrCompany, projectName)
+        })
+      } catch (e) {
+        programmingLanguagesResponse = {}
+      }
+
+      const languages = Object.keys(programmingLanguagesResponse || {})
+
+      const p = await project(userOrCompany, projectName, userId, 'codeberg')
+      const task = await p.createTask(taskParameters)
+
+      for (const language of languages) {
+        let programmingLanguage = await currentModels.ProgrammingLanguage.findOne({
+          where: { name: language }
+        })
+
+        if (!programmingLanguage) {
+          programmingLanguage = await currentModels.ProgrammingLanguage.create({
+            name: language
+          })
+        }
+
+        await currentModels.ProjectProgrammingLanguage.create({
+          projectId: task.ProjectId,
+          programmingLanguageId: programmingLanguage.id
+        })
+      }
+
+      const taskData = task.dataValues
+      const userData = await task.getUser()
+
+      if (userData.receiveNotifications) {
+        TaskMail.new(userData, taskData)
+      }
+
+      await notifyNewIssue(taskData, userData)
+
+      return { ...taskData, ProjectId: taskData.ProjectId }
     }
 
     default: {
