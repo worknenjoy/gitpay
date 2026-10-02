@@ -854,7 +854,6 @@
   "issues.bounties.interested.canSuggestBounty.title": "Sugerir uma oferta de recompensa",
   "issues.explore.description": "Aqui você pode ver todos os incidentes em nossa rede",
   "issues.explore.empty": "Nenhuma issue encontrada",
-  "issues.explore.empty.action": "Importar issue",
   "issues.explore.empty.secondary": "Não há problemas disponíveis para trabalhar neste momento.",
   "issues.explore.header.title": "Explore issues, projetos e organizações",
   "issues.explore.title": "Explorar incidentes",
