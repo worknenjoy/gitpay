@@ -1,6 +1,7 @@
 import React from 'react'
 import { useIntl } from 'react-intl'
 import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined'
+import type { ButtonProps as MUIButtonProps } from '@mui/material/Button'
 import SplitButton from '../../../../atoms/buttons/split-button/split-button'
 import PullRequestIcon from '../../../../atoms/icons/pull-request-icon/pull-request-icon'
 import ImportPullRequestDialog, {
@@ -39,6 +40,7 @@ export type PendingPost = {
 export type ImportPullRequestProps = {
   onImportIssueClick: () => void
   onViewPaymentRequests?: () => void
+  color?: MUIButtonProps['color']
   viewerUsername: string
   /** Resolves a pasted PR URL against the backend; returns undefined for an invalid/unauthored/unmerged/not-found PR (the backend already surfaces the specific error). */
   resolvePullRequest: (url: string) => Promise<ResolvedPullRequest | undefined>
@@ -64,6 +66,7 @@ export type ImportPullRequestProps = {
 const ImportPullRequest = ({
   onImportIssueClick,
   onViewPaymentRequests,
+  color = 'primary',
   viewerUsername,
   resolvePullRequest,
   buildShareUrl,
@@ -197,6 +200,7 @@ const ImportPullRequest = ({
     <>
       <SplitButton
         label={intl.formatMessage({ id: 'task.actions.import', defaultMessage: 'Import' })}
+        color={color}
         actions={[
           {
             key: 'issue',

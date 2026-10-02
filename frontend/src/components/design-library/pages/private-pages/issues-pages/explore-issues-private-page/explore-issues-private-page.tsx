@@ -8,6 +8,7 @@ import MainTitle from 'design-library/atoms/typography/main-title/main-title'
 import Breadcrumb from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
 import EmptyBase from 'design-library/molecules/content/empty/empty-base/empty-base'
 import ImportIssueDialog from 'design-library/organisms/layouts/topbar-layouts/topbar-layout/import-issue-dialog'
+import ImportPullRequest from '../../../../../../containers/payment/import-pull-request'
 
 const ExploreIssuesPrivatePage = ({
   filterTasks,
@@ -21,7 +22,8 @@ const ExploreIssuesPrivatePage = ({
   openAddIssue = false,
   onAddIssueClick,
   onCloseAddIssue,
-  onCreateIssue
+  onCreateIssue,
+  onViewPaymentRequests
 }) => {
   return (
     <ExplorePaper elevation={0}>
@@ -72,13 +74,13 @@ const ExploreIssuesPrivatePage = ({
                     />
                   }
                   icon={<NoIssuesIcon fontSize="large" color="disabled" />}
-                  actionText={
-                    <FormattedMessage
-                      id="issues.explore.empty.action"
-                      defaultMessage="Import issue"
+                  actionComponent={
+                    <ImportPullRequest
+                      color="secondary"
+                      onImportIssueClick={onAddIssueClick}
+                      onViewPaymentRequests={onViewPaymentRequests}
                     />
                   }
-                  onActionClick={onAddIssueClick}
                 />
                 <ImportIssueDialog
                   open={openAddIssue}

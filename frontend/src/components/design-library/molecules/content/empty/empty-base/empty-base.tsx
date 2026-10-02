@@ -13,6 +13,8 @@ type EmptyBaseProps = {
   secondaryText?: string | React.ReactNode
   actionText?: string | React.ReactNode
   completed?: boolean
+  /** Renders in place of the default action button — use for an action that isn't a single plain button (e.g. a split button with multiple options). */
+  actionComponent?: React.ReactNode
 }
 
 const EmptyBase = ({
@@ -22,7 +24,8 @@ const EmptyBase = ({
   text = 'No Data',
   secondaryText,
   actionText = 'Create your first item',
-  completed = true
+  completed = true,
+  actionComponent
 }: EmptyBaseProps) => {
   return (
     <Box component={Root as any}>
@@ -35,15 +38,19 @@ const EmptyBase = ({
           {secondaryText}
         </MessageSecondary>
       )}
-      {onActionClick && (
-        <Button
-          sx={{ mt: 2 }}
-          variant="contained"
-          color="secondary"
-          onClick={onActionClick}
-          completed={completed}
-          label={actionText}
-        />
+      {actionComponent ? (
+        <Box sx={{ mt: 2 }}>{actionComponent}</Box>
+      ) : (
+        onActionClick && (
+          <Button
+            sx={{ mt: 2 }}
+            variant="contained"
+            color="secondary"
+            onClick={onActionClick}
+            completed={completed}
+            label={actionText}
+          />
+        )
       )}
     </Box>
   )

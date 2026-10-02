@@ -40,6 +40,7 @@ const ExploreIssuesPage = ({
       onAddIssueClick={() => setOpenAddIssue(true)}
       onCloseAddIssue={() => setOpenAddIssue(false)}
       onCreateIssue={handleCreateIssue}
+      onViewPaymentRequests={() => history.push('/profile/payment-requests')}
     />
   )
 }

@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import ExploreIssuesPrivatePage from './explore-issues-private-page'
 import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate'
+import { withReduxStore } from '../../../../../../../.storybook/decorators/withReduxStore'
 
 const meta: Meta<typeof ExploreIssuesPrivatePage> = {
   title: 'Design Library/Pages/Private/Issues/ExploreIssues',
   component: ExploreIssuesPrivatePage,
-  decorators: [withProfileTemplate],
+  // Renders the Redux-connected ImportPullRequest container (via PrivateBase's AccountHeader,
+  // and the empty state's own import action).
+  decorators: [withProfileTemplate, withReduxStore],
   parameters: {
     layout: 'fullscreen'
   }
