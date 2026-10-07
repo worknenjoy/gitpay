@@ -18,6 +18,7 @@ import {
 import isGithubUrl from 'is-github-url'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
+import logoGitlab from 'images/gitlab-logo.png'
 import api from '../../../../../../consts'
 import {
   FullWidthFormControl,
@@ -34,16 +35,29 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
   const [notListed, setNotListed] = useState(false)
 
   const validURL = (url) => {
-    return isGithubUrl(url) || isBitbucketUrl(url)
+    return isGithubUrl(url) || isBitbucketUrl(url) || isGitlabUrl(url)
   }
 
   const isBitbucketUrl = (url) => {
     return url.indexOf('bitbucket') > -1
   }
 
+  const isGitlabUrl = (url) => {
+    try {
+      const host = new URL(url).hostname.toLowerCase()
+      return host === 'gitlab.com' || host === 'www.gitlab.com'
+    } catch (e) {
+      return url.indexOf('gitlab.com') > -1
+    }
+  }
+
   const onChange = (e: any) => {
-    setUrl(e.target.value)
+    const nextUrl = e.target.value
+    setUrl(nextUrl)
     setError(false)
+    if (isGitlabUrl(nextUrl)) setProvider('gitlab')
+    else if (isBitbucketUrl(nextUrl)) setProvider('bitbucket')
+    else if (isGithubUrl(nextUrl)) setProvider('github')
   }
 
   const handleCreateTask = async (e: any) => {
@@ -79,7 +93,7 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
             <Typography variant="subtitle1" gutterBottom>
               <FormattedMessage
                 id="task.actions.insert.subheading"
-                defaultMessage="Paste the url of an incident of Github or Bitbucket"
+                defaultMessage="Paste the URL of a GitHub, Bitbucket, or GitLab issue"
               />
             </Typography>
           </DialogContentText>
@@ -134,6 +148,16 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
               >
                 <img width="16" src={logoBitbucket} />
                 <span className="provider-label">Bitbucket</span>
+              </ProviderButton>
+
+              <ProviderButton
+                color="primary"
+                variant={provider === 'gitlab' ? 'contained' : 'outlined'}
+                id="gitlab"
+                onClick={(e) => setProvider('gitlab')}
+              >
+                <img width="16" src={logoGitlab} alt="" />
+                <span className="provider-label">Gitlab</span>
               </ProviderButton>
             </ProvidersWrapper>
 
