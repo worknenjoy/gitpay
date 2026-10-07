@@ -2,6 +2,28 @@ import { expect } from 'chai'
 import { calculateAmountWithPercent } from '../src/utils'
 
 describe('Amount Conversion', () => {
+  for (const currency of ['jpy', 'JPY', 'krw', 'clp', 'vnd', 'xaf', 'xof', 'vuv', 'xpf', 'rwf']) {
+    for (const type of ['centavos', 'decimal']) {
+      it(`should preserve whole units for ${currency} in ${type} mode`, () => {
+        expect(calculateAmountWithPercent(1000, 8, type, currency)).to.deep.equal({
+          centavos: 920,
+          decimal: 920,
+          decimalFee: 80,
+          centavosFee: 80
+        })
+      })
+    }
+  }
+
+  it('should retain the two-decimal fallback for an unknown currency', () => {
+    expect(calculateAmountWithPercent(1000, 8, 'centavos', 'unknown')).to.deep.equal({
+      centavos: 920,
+      decimal: 9.2,
+      decimalFee: 0.8,
+      centavosFee: 80
+    })
+  })
+
   it('should convert cents to decimal', () => {
     const result = calculateAmountWithPercent(100, 0, 'centavos')
     expect(result.centavos).to.equal(100)
