@@ -7,6 +7,8 @@ import { userExists } from '../users'
 // @ts-ignore - ip has no type definitions
 import { memberExists } from '../members'
 import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
+import { KdeConnect, kdeBugUri, kdeStateToGitpay } from '../../client/provider/kde'
+import { parseKdeBugUrl } from '../../utils/issue/parse-and-validate-issue-url'
 
 const currentModels = models as any
 
@@ -307,6 +309,118 @@ export async function taskFetch(taskParams: any) {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.log('Bitbucket response error')
+        // eslint-disable-next-line no-console
+        console.log(e)
+        return data.dataValues
+      }
+
+    case 'kde':
+      try {
+        const parsedKde = parseKdeBugUrl(issueUrl)
+        const kdeBugId = parsedKde.issueId
+        const bugPayload = (await KdeConnect({ uri: kdeBugUri(kdeBugId) })) as any
+        const bug = Array.isArray(bugPayload?.bugs) ? bugPayload.bugs[0] : null
+        if (!bug) {
+          return data.dataValues
+        }
+
+        const assigned = await currentModels.Assign.findOne({
+          where: {
+            id: data.assigned
+          },
+          include: [currentModels.User]
+        }).catch((e: any) => {})
+
+        const gitpayState = kdeStateToGitpay(bug)
+        const product = bug.product || 'kde'
+        const component = bug.component || 'bugs'
+        const repoUrl = `https://bugs.kde.org/buglist.cgi?product=${encodeURIComponent(product)}`
+        const ownerUrl = 'https://bugs.kde.org/'
+        const labels = []
+        if (bug.component) labels.push({ name: String(bug.component) })
+        if (bug.severity) labels.push({ name: String(bug.severity) })
+        if (Array.isArray(bug.keywords)) {
+          for (const keyword of bug.keywords) {
+            labels.push({ name: String(keyword) })
+          }
+        }
+
+        const responseKde = {
+          id: data.dataValues.id,
+          url: issueUrl,
+          private: data.dataValues.private,
+          not_listed: data.dataValues.not_listed,
+          title: data.dataValues.title,
+          description: data.dataValues.description,
+          value: data.dataValues.value || 0,
+          deadline: data.dataValues.deadline,
+          level: data.dataValues.level,
+          status: data.dataValues.status,
+          state: data.dataValues.state,
+          assigned: data.dataValues.assigned,
+          assignedUser: assigned && assigned.dataValues.User.dataValues,
+          User: data.dataValues && data.dataValues.User && data.dataValues.User.dataValues,
+          paid: data.dataValues.paid,
+          transfer_id: data.dataValues.transfer_id,
+          provider: data.dataValues.provider,
+          metadata: {
+            id: kdeBugId,
+            user: product,
+            company: product,
+            projectName: component,
+            repoUrl,
+            ownerUrl,
+            labels,
+            issue: {
+              ...bug,
+              state: gitpayState,
+              body: data.dataValues.description,
+              user: {
+                login: bug.creator_detail?.name || bug.creator,
+                avatar_url: bug.creator_detail?.avatar_url || null
+              }
+            }
+          },
+          orders: data.dataValues.Orders,
+          Transfer: data.dataValues.Transfer,
+          Assigns: data.dataValues.Assigns,
+          members: data.dataValues.Members,
+          Offers: data.dataValues.Offers,
+          histories: data.dataValues.Histories,
+          Project: data.dataValues.Project && {
+            ...data.dataValues.Project.dataValues,
+            organization: data.dataValues.Project.dataValues.Organization.dataValues
+          }
+        }
+
+        if (!data.title || data.title !== bug.summary) {
+          const dataTitleUpdate = await data.update(
+            { title: bug.summary },
+            {
+              where: {
+                id: data.id
+              }
+            }
+          )
+          responseKde.title = dataTitleUpdate.title
+        }
+        if (data.status !== 'in_progress' && data.status !== gitpayState) {
+          const dataStatusUpdate = await data.update(
+            { status: gitpayState },
+            {
+              where: {
+                id: data.id
+              },
+              returning: true
+            }
+          )
+          responseKde.status = dataStatusUpdate.status
+        }
+
+        return responseKde
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log('KDE Bugzilla response error')
         // eslint-disable-next-line no-console
         console.log(e)
         return data.dataValues
