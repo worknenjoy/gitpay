@@ -256,16 +256,73 @@ export async function taskSearch(searchParams: any) {
             ordersInclude
           ],
           distinct: true,
-          order: [
-            ['status', 'DESC'],
-            ['id', 'DESC']
-          ]
+          order: sortCol
+            ? [
+                [sortCol, sortDir],
+                ['id', sortDir]
+              ]
+            : [
+                ['status', 'DESC'],
+                ['id', 'DESC']
+              ]
         }
       ],
       order: [['id', 'DESC']]
     })
 
-    projects.forEach((p: any) => p.Tasks.forEach((t: any) => tasks.push(t)))
+    projects.forEach((p: any) => p.Tasks?.forEach((t: any) => tasks.push(t)))
+
+    // Apply global sorting across all projects in the organization before pagination
+    if (sortCol) {
+      tasks.sort((a: any, b: any) => {
+        const aVal = a?.get ? a.get(sortCol) : a?.dataValues ? a.dataValues[sortCol] : a?.[sortCol]
+        const bVal = b?.get ? b.get(sortCol) : b?.dataValues ? b.dataValues[sortCol] : b?.[sortCol]
+
+        let cmp = 0
+        if (aVal == null && bVal == null) {
+          cmp = 0
+        } else if (aVal == null) {
+          cmp = sortDir === 'ASC' ? -1 : 1
+        } else if (bVal == null) {
+          cmp = sortDir === 'ASC' ? 1 : -1
+        } else if (sortCol === 'value') {
+          const numA = Number(aVal)
+          const numB = Number(bVal)
+          cmp = (isNaN(numA) ? 0 : numA) - (isNaN(numB) ? 0 : numB)
+        } else if (sortCol === 'createdAt') {
+          const timeA = new Date(aVal).getTime()
+          const timeB = new Date(bVal).getTime()
+          cmp = (isNaN(timeA) ? 0 : timeA) - (isNaN(timeB) ? 0 : timeB)
+        } else {
+          cmp = String(aVal).localeCompare(String(bVal))
+        }
+
+        if (cmp !== 0) {
+          return sortDir === 'ASC' ? cmp : -cmp
+        }
+
+        // Deterministic tie-breaker by id
+        const aId = a?.get ? a.get('id') : (a?.dataValues?.id ?? a?.id ?? 0)
+        const bId = b?.get ? b.get('id') : (b?.dataValues?.id ?? b?.id ?? 0)
+        return sortDir === 'ASC' ? aId - bId : bId - aId
+      })
+    } else {
+      // Default order: status DESC, id DESC
+      tasks.sort((a: any, b: any) => {
+        const aStatus = String(
+          a?.get ? a.get('status') : (a?.dataValues?.status ?? a?.status ?? '')
+        )
+        const bStatus = String(
+          b?.get ? b.get('status') : (b?.dataValues?.status ?? b?.status ?? '')
+        )
+        const statusCmp = bStatus.localeCompare(aStatus)
+        if (statusCmp !== 0) return statusCmp
+        const aId = a?.get ? a.get('id') : (a?.dataValues?.id ?? a?.id ?? 0)
+        const bId = b?.get ? b.get('id') : (b?.dataValues?.id ?? b?.id ?? 0)
+        return bId - aId
+      })
+    }
+
     attachLabelsVirtual(tasks)
 
     if (isPaginated) {
@@ -305,6 +362,9 @@ export async function taskSearch(searchParams: any) {
   const projectInclude: any = {
     model: currentModels.Project,
     attributes: ['id', 'name', 'repo', 'OrganizationId'],
+    ...(searchParams.organizationId && {
+      where: { OrganizationId: parseInt(searchParams.organizationId, 10) }
+    }),
     include: [
       {
         model: currentModels.ProgrammingLanguage,
