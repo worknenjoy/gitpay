@@ -820,4 +820,54 @@ describe('Task CRUD', () => {
       .expect(200)
     expect(mailSpySuccess).to.have.been.called()
   })
+
+  it('should reject unauthenticated requests to task invite, funding, and report with 403', async () => {
+    const owner = await register(agent, { email: 'owner_unauth@gitpay.me', password: 'password123' })
+    const task = await buildTask({ userId: owner.body.id })
+
+    await agent
+      .post(`/tasks/${task.id}/invite/`)
+      .send({ email: 'spammer-target@example.com', message: 'phishing' })
+      .expect(403)
+
+    await agent
+      .post(`/tasks/${task.id}/funding/`)
+      .send({ email: 'spammer-target@example.com', comment: 'spam' })
+      .expect(403)
+
+    await agent
+      .post(`/tasks/${task.id}/report`)
+      .send({ reason: 'spam' })
+      .expect(403)
+  })
+
+  it('should return 403 Forbidden when non-owner attempts to invite or request funding', async () => {
+    const owner = await register(agent, { email: 'task_owner_perm@gitpay.me', password: 'password123' })
+    const attacker = await registerAndLogin(agent, { email: 'attacker_perm@gitpay.me', password: 'password123' })
+    const task = await buildTask({ userId: owner.body.id })
+
+    const resInvite = await agent
+      .post(`/tasks/${task.id}/invite/`)
+      .set('Authorization', attacker.headers.authorization)
+      .send({ email: 'target@example.com', name: 'Fake Invite', message: 'Unauthorized' })
+      .expect(403)
+    expect(resInvite.body.error).to.equal('Unauthorized')
+
+    const resFunding = await agent
+      .post(`/tasks/${task.id}/funding/`)
+      .set('Authorization', attacker.headers.authorization)
+      .send({ email: 'target@example.com', comment: 'Unauthorized funding' })
+      .expect(403)
+    expect(resFunding.body.error).to.equal('Unauthorized')
+  })
+
+  it('should return 404 Not Found when attempting to invite on non-existent task', async () => {
+    const user = await registerAndLogin(agent, { email: 'user_404_task@gitpay.me', password: 'password123' })
+    const res = await agent
+      .post('/tasks/999999/invite/')
+      .set('Authorization', user.headers.authorization)
+      .send({ email: 'target@example.com', message: 'hello' })
+      .expect(404)
+    expect(res.body.error).to.equal('Task not found')
+  })
 })
