@@ -51,11 +51,13 @@ export async function updatePaymentRequest(
 
     const paymentProvider = getPaymentProvider(paymentRequest.provider || undefined)
 
-    // Only allow updating safe domain fields (title, description, active)
+    // Only allow updating safe domain fields (title, description, active, send_instructions_email, instructions_content)
     const allowedUpdates: Record<string, any> = {}
     if (paymentRequestParams.title !== undefined) allowedUpdates.title = paymentRequestParams.title
     if (paymentRequestParams.description !== undefined) allowedUpdates.description = paymentRequestParams.description
     if (typeof paymentRequestParams.active === 'boolean') allowedUpdates.active = paymentRequestParams.active
+    if (paymentRequestParams.send_instructions_email !== undefined) allowedUpdates.send_instructions_email = paymentRequestParams.send_instructions_email
+    if (paymentRequestParams.instructions_content !== undefined) allowedUpdates.instructions_content = paymentRequestParams.instructions_content
 
     const paymentRequestUpdated = await paymentRequest.update(allowedUpdates, {
       transaction

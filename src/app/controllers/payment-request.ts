@@ -28,12 +28,14 @@ export const listPaymentRequests = async function listPaymentRequests(req: any, 
 
 export const updatePaymentRequest = async function updatePaymentRequest(req: any, res: any) {
   try {
-    const { title, description, active } = req.body || {}
+    const { title, description, active, send_instructions_email, instructions_content } = req.body || {}
     const data = await paymentRequestUpdate({
       id: req.params.id,
       title,
       description,
       active,
+      send_instructions_email,
+      instructions_content,
       userId: req.user.id
     })
     res.status(200).send(data)
