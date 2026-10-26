@@ -43,7 +43,7 @@ export async function walletUpdate(params: WalletUpdateParams) {
 
   const updateFields: any = {}
   if (name !== undefined) updateFields.name = name
-  if (amount !== undefined) updateFields.balance = amount
+  if (amount !== undefined) updateFields.balance = Number(amount).toFixed(2)
 
   const updatedWallet = await existingWallet.update(updateFields)
   return updatedWallet.dataValues
