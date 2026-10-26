@@ -25,7 +25,19 @@ export async function updatePaymentRequest(
   const run = async (transaction: Transaction) => {
     const paymentRequest = await findPaymentRequestById(paymentRequestParams.id, { transaction })
     if (!paymentRequest) {
-      throw new Error('Payment Request not found')
+      const error: any = new Error('Payment Request not found')
+      error.StatusCodeError = 404
+      throw error
+    }
+
+    if (
+      paymentRequestParams.userId !== undefined &&
+      paymentRequest.userId !== undefined &&
+      String(paymentRequest.userId) !== String(paymentRequestParams.userId)
+    ) {
+      const error: any = new Error('Unauthorized')
+      error.StatusCodeError = 403
+      throw error
     }
 
     const previousActive = !!paymentRequest.active
@@ -39,10 +51,13 @@ export async function updatePaymentRequest(
 
     const paymentProvider = getPaymentProvider(paymentRequest.provider || undefined)
 
-    // Only pass mutable domain fields to the DB update (ignore provider, ids, etc.)
-    const { id: _id, ...updateFields } = paymentRequestParams
+    // Only allow updating safe domain fields (title, description, active)
+    const allowedUpdates: Record<string, any> = {}
+    if (paymentRequestParams.title !== undefined) allowedUpdates.title = paymentRequestParams.title
+    if (paymentRequestParams.description !== undefined) allowedUpdates.description = paymentRequestParams.description
+    if (typeof paymentRequestParams.active === 'boolean') allowedUpdates.active = paymentRequestParams.active
 
-    const paymentRequestUpdated = await paymentRequest.update(updateFields, {
+    const paymentRequestUpdated = await paymentRequest.update(allowedUpdates, {
       transaction
     })
 

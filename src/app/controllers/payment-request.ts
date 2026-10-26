@@ -28,9 +28,12 @@ export const listPaymentRequests = async function listPaymentRequests(req: any, 
 
 export const updatePaymentRequest = async function updatePaymentRequest(req: any, res: any) {
   try {
+    const { title, description, active } = req.body || {}
     const data = await paymentRequestUpdate({
       id: req.params.id,
-      ...req.body,
+      title,
+      description,
+      active,
       userId: req.user.id
     })
     res.status(200).send(data)
