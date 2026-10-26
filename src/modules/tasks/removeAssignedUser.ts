@@ -9,7 +9,6 @@ export async function removeAssignedUser({ id, userId }: any, { message }: any) 
     {
       where: {
         id
-        // userId
       }
     },
     {
@@ -17,9 +16,32 @@ export async function removeAssignedUser({ id, userId }: any, { message }: any) 
     }
   )
 
+  if (!task) {
+    const error: any = new Error('Task not found')
+    error.status = 404
+    error.StatusCodeError = 404
+    throw error
+  }
+
+  if (
+    userId !== undefined &&
+    task.userId !== undefined &&
+    String(task.userId) !== String(userId)
+  ) {
+    const error: any = new Error('Unauthorized')
+    error.status = 403
+    error.StatusCodeError = 403
+    throw error
+  }
+
   const assignedId = task.assigned
 
-  if (!assignedId) throw new Error("The Task doesn't have an assigned user.")
+  if (!assignedId) {
+    const error: any = new Error("The Task doesn't have an assigned user.")
+    error.status = 400
+    error.StatusCodeError = 400
+    throw error
+  }
 
   const assignedPromise = await currentModels.Assign.findByPk(assignedId, {
     include: [currentModels.User]
@@ -27,17 +49,16 @@ export async function removeAssignedUser({ id, userId }: any, { message }: any) 
 
   const author = await currentModels.User.findByPk(task.userId)
 
-  // Unset assigned value,
-  const saveTaskPromise = task.set('assigned', null).save()
-  const changeStatusPromise = task.set('status', 'open').save()
+  // Unset assigned value and reset status atomically
+  const saveTaskPromise = task.set({ assigned: null, status: 'open' }).save()
   const changeStatusAssign = assignedPromise.set('status', 'pending').save()
 
   const [assign] = await Promise.all([
     assignedPromise,
     saveTaskPromise,
-    changeStatusPromise,
     changeStatusAssign
   ])
+
 
   const user = assign.User
   const language = user.language || 'en'
