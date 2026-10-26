@@ -5,9 +5,15 @@ import {
 } from '../../modules/paymentRequestsTransfers'
 
 export const createPaymentRequestTransfer = async (req: any, res: any) => {
+  const { paymentRequestId, value, transfer_id, transfer_method, status } =
+    req.body || {}
   await paymentRequestTransferBuilds({
-    userId: req.user.id,
-    ...req.body
+    paymentRequestId,
+    value,
+    transfer_id,
+    transfer_method,
+    status,
+    userId: req.user.id
   })
     .then((data: any) => {
       res.send(data)
@@ -36,10 +42,14 @@ export const listPaymentRequestTransfers = async (req: any, res: any) => {
 }
 
 export const updatePaymentRequestTransfer = async (req: any, res: any) => {
+  const { transfer_method, status, value, transfer_id } = req.body || {}
   await paymentRequestTransferUpdate({
-    userId: req.user.id,
     id: req.params.id,
-    ...req.body
+    transfer_method,
+    status,
+    value,
+    transfer_id,
+    userId: req.user.id
   })
     .then((data: any) => {
       res.send(data)
@@ -51,3 +61,4 @@ export const updatePaymentRequestTransfer = async (req: any, res: any) => {
         .json({ error: 'Error updating payment request transfer' })
     })
 }
+

@@ -5,14 +5,32 @@ const currentModels = models as any
 type TransferBuildsParams = {
   userId?: number
   paymentRequestId?: number
-  amount?: number
+  value?: number | string
   currency?: string
   status?: string
-  method?: string
+  transfer_id?: string
+  transfer_method?: string
   [key: string]: any
 }
 
 export async function paymentRequestTransferBuilds(params: TransferBuildsParams) {
-  const paymentRequestTransfer = await currentModels.PaymentRequestTransfer.create(params)
+  const {
+    userId,
+    paymentRequestId,
+    value,
+    status = 'pending',
+    transfer_id,
+    transfer_method
+  } = params
+
+  const paymentRequestTransfer = await currentModels.PaymentRequestTransfer.create({
+    userId,
+    paymentRequestId,
+    value,
+    status,
+    transfer_id,
+    transfer_method
+  })
   return paymentRequestTransfer
 }
+
