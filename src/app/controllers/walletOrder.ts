@@ -12,15 +12,17 @@ export const createWalletOrder = async (req: any, res: any) => {
 
 export const updateWalletOrder = async (req: any, res: any) => {
   try {
+    const { name, description } = req.body || {}
     const wallet = await WalletOrder.walletOrderUpdate({
-      ...req.body,
+      name,
+      description,
       id: req.params.id,
       userId: req.user.id
     })
     res.status(200).send(wallet)
   } catch (error: any) {
     console.log('error on updateWallet', error)
-    res.status(400).send(error)
+    res.status(error.StatusCodeError || 400).send(error)
   }
 }
 

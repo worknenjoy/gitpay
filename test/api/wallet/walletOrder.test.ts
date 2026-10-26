@@ -95,100 +95,7 @@ describe('POST /wallet-order', () => {
           'Content-Type': 'application/json'
         })
     })
-    it('should update an initial wallet Order with balance updated when order is paid', async () => {
-      const user = await registerAndLogin(agent)
-      const wallet = await WalletFactory({
-        userId: user.body.id,
-        name: 'Test Wallet',
-        balance: 0
-      })
-      const walletOrder = await WalletOrderFactory({
-        walletId: wallet.id,
-        amount: 100
-      })
-      const res = await agent
-        .put(`/wallets/orders/${walletOrder.id}`)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('authorization', user.headers.authorization)
-        .expect(200)
-        .send({
-          status: 'paid'
-        })
-
-      expect(res.body).to.exist
-      expect(res.body.id).to.exist
-      expect(res.body.amount).to.equal('100')
-      expect(res.body.status).to.equal('paid')
-      expect(res.body.walletId).to.equal(wallet.id)
-
-      const walletUpdated = await models.Wallet.findOne({
-        where: {
-          id: wallet.id
-        }
-      })
-
-      expect(walletUpdated.balance).to.equal('100.00')
-    })
-    it('should create many wallet Orders with balance updated when order is succeeded', async () => {
-      const user = await registerAndLogin(agent)
-      const wallet = await WalletFactory({
-        userId: user.body.id,
-        name: 'Test Wallet',
-        balance: 0
-      })
-
-      const walletOrder = await WalletOrderFactory({
-        walletId: wallet.id,
-        amount: 100
-      })
-      await agent
-        .put(`/wallets/orders/${walletOrder.id}`)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('authorization', user.headers.authorization)
-        .expect(200)
-        .send({
-          status: 'paid'
-        })
-
-      const walletOrder2 = await WalletOrderFactory({
-        walletId: wallet.id,
-        amount: 100
-      })
-      await agent
-        .put(`/wallets/orders/${walletOrder2.id}`)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('authorization', user.headers.authorization)
-        .expect(200)
-        .send({
-          status: 'paid'
-        })
-
-      const walletOrder3 = await WalletOrderFactory({
-        walletId: wallet.id,
-        amount: 108
-      })
-      await agent
-        .put(`/wallets/orders/${walletOrder3.id}`)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('authorization', user.headers.authorization)
-        .expect(200)
-        .send({
-          status: 'open'
-        })
-
-      const walletUpdated = await models.Wallet.findOne({
-        where: {
-          id: wallet.id
-        }
-      })
-
-      expect(walletUpdated.balance).to.equal('200.00')
-    })
-    it('should update wallet order', async () => {
+    it('should update wallet order description for owner', async () => {
       const user = await registerAndLogin(agent)
       const wallet = await WalletFactory({
         userId: user.body.id,
@@ -207,11 +114,40 @@ describe('POST /wallet-order', () => {
         .set('authorization', user.headers.authorization)
         .expect(200)
         .send({
-          status: 'paid'
+          description: 'Updated description'
         })
+
       expect(res.body).to.exist
       expect(res.body.id).to.exist
-      expect(res.body.status).to.equal('paid')
+      expect(res.body.description).to.equal('Updated description')
+      expect(res.body.status).to.equal('pending')
+    })
+    it('should not allow user to update order status or amount directly and prevent balance forgery', async () => {
+      const user = await registerAndLogin(agent)
+      const wallet = await WalletFactory({
+        userId: user.body.id,
+        name: 'Test Wallet',
+        balance: 0
+      })
+      const walletOrder = await WalletOrderFactory({
+        walletId: wallet.id,
+        amount: 100,
+        status: 'pending'
+      })
+      const res = await agent
+        .put(`/wallets/orders/${walletOrder.id}`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('authorization', user.headers.authorization)
+        .expect(200)
+        .send({
+          status: 'paid',
+          amount: 50000
+        })
+
+      expect(res.body).to.exist
+      expect(res.body.status).to.equal('pending')
+      expect(res.body.amount).to.equal('100')
 
       const walletUpdated = await models.Wallet.findOne({
         where: {
@@ -219,7 +155,65 @@ describe('POST /wallet-order', () => {
         }
       })
 
-      expect(walletUpdated.balance).to.equal('100.00')
+      expect(walletUpdated.balance).to.equal('0.00')
+    })
+    it('should return 403 when trying to update another user wallet order', async () => {
+      const user1 = await registerAndLogin(agent)
+      const user2 = await registerAndLogin(agent, {
+        email: 'attacker@example.com',
+        password: 'attackerpassword'
+      })
+      const wallet = await WalletFactory({
+        userId: user1.body.id,
+        name: 'Test Wallet',
+        balance: 0
+      })
+      const walletOrder = await WalletOrderFactory({
+        walletId: wallet.id,
+        amount: 100,
+        status: 'pending'
+      })
+      await agent
+        .put(`/wallets/orders/${walletOrder.id}`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('authorization', user2.headers.authorization)
+        .expect(403)
+        .send({
+          description: 'Attacker update'
+        })
+    })
+    it('should calculate balance correctly when orders are paid via payment provider', async () => {
+      const user = await registerAndLogin(agent)
+      const wallet = await WalletFactory({
+        userId: user.body.id,
+        name: 'Test Wallet',
+        balance: 0
+      })
+
+      const walletOrder = await WalletOrderFactory({
+        walletId: wallet.id,
+        amount: 100,
+        status: 'paid'
+      })
+      const walletOrder2 = await WalletOrderFactory({
+        walletId: wallet.id,
+        amount: 100,
+        status: 'paid'
+      })
+      const walletOrder3 = await WalletOrderFactory({
+        walletId: wallet.id,
+        amount: 108,
+        status: 'open'
+      })
+
+      const walletUpdated = await models.Wallet.findOne({
+        where: {
+          id: wallet.id
+        }
+      })
+
+      expect(walletUpdated.balance).to.equal('200.00')
     })
   })
   describe('list wallet orders', () => {
