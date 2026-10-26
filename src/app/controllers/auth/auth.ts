@@ -4,6 +4,7 @@ import userDisconnectGithub from '../../../modules/users/userDisconectGithub'
 import secrets from '../../../config/secrets'
 import passport from 'passport'
 import { omitAuthSecrets } from '../../../queries/user/userSensitiveAttributes'
+import { createPrivateTaskState } from '../../../utils/auth/privateTaskOAuth'
 
 export const changeEmail = async (req: any, res: any) => {
   const userId = req.user.id
@@ -41,13 +42,22 @@ export const confirmChangeEmail = async (req: any, res: any) => {
 }
 
 export const authorizeGithubPrivateIssue = (req: any, res: any) => {
-  const params = req.query
-  const uri = encodeURIComponent(
-    `${process.env.API_HOST}/callback/github/private?userId=${params.userId}&url=${params.url}`
-  )
-  res.redirect(
-    `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${uri}&scope=repo&client_id=${secrets.github.id}`
-  )
+  try {
+    const { url } = req.query
+    const state = createPrivateTaskState({ userId: req.user.id, url })
+    const uri = encodeURIComponent(`${process.env.API_HOST}/callback/github/private`)
+    res.redirect(
+      `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${uri}&scope=repo&state=${encodeURIComponent(
+        state
+      )}&client_id=${secrets.github.id}`
+    )
+  } catch (error: any) {
+    res.redirect(
+      `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodeURIComponent(
+        error.message || 'We could not import the issue.'
+      )}`
+    )
+  }
 }
 
 export const disconnectGithub = async (req: any, res: any) => {

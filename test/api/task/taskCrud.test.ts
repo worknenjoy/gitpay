@@ -11,6 +11,7 @@ import secrets from '../../../src/config/secrets'
 import spies from 'chai-spies'
 import AssignMail from '../../../src/mail/assign'
 import TaskMail from '../../../src/mail/task'
+import { createPrivateTaskState } from '../../../src/utils/auth/privateTaskOAuth'
 
 import sampleIssue from '../../data/github/github.issue.create'
 import getSingleIssue from '../../data/github/github.issue.get'
@@ -269,11 +270,13 @@ describe('Task CRUD', () => {
   })
 
   it('should redirect to profile with an error when private task auth returns an invalid code', async () => {
+    const state = createPrivateTaskState({
+      userId: 1,
+      url: 'https://github.com/alexanmtz/festifica/issues/1'
+    })
     nockAuthInvalidCode()
     const res = await agent
-      .get(
-        '/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7'
-      )
+      .get(`/callback/github/private/?state=${encodeURIComponent(state)}&code=eb518274e906c68580f7`)
       .expect(302)
 
     expect(res.statusCode).to.equal(302)
@@ -282,6 +285,96 @@ describe('Task CRUD', () => {
         'The code passed is incorrect or expired.'
       )}`
     )
+  })
+
+  it('should redirect to profile with an error when private task state is missing', async () => {
+    const res = await agent.get('/callback/github/private/?code=eb518274e906c68580f7').expect(302)
+
+    expect(res.headers.location).to.equal(
+      `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodeURIComponent(
+        'The task import session expired. Please start again.'
+      )}`
+    )
+  })
+
+  it('should redirect to profile with an error when private task state is tampered', async () => {
+    const res = await agent
+      .get('/callback/github/private/?state=invalid-state&code=eb518274e906c68580f7')
+      .expect(302)
+
+    expect(res.headers.location).to.equal(
+      `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodeURIComponent(
+        'The task import session expired. Please start again.'
+      )}`
+    )
+  })
+
+  it('should not create a private task when the GitHub identity is not linked to the GitPay account', async () => {
+    const user = await UserFactory({ provider_id: '12345' })
+    const state = createPrivateTaskState({
+      userId: user.id,
+      url: 'https://github.com/alexanmtz/festifica/issues/1'
+    })
+
+    nock('https://github.com')
+      .post('/login/oauth/access_token/', { code: 'eb518274e906c68580f7' })
+      .basicAuth({ user: secrets.github.id, pass: secrets.github.secret })
+      .reply(200, { access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a' })
+    nock('https://api.github.com')
+      .get('/repos/alexanmtz/festifica/issues/1')
+      .query({ client_id: secrets.github.id, client_secret: secrets.github.secret })
+      .reply(200, sampleIssue.issue)
+      .get('/users/alexanmtz')
+      .query({ client_id: secrets.github.id, client_secret: secrets.github.secret })
+      .reply(200, { email: 'test@gmail.com' })
+    nock('https://api.github.com')
+      .get('/user')
+      .matchHeader('Authorization', 'Bearer e72e16c7e42f292c6912e7710c838347ae178b4a')
+      .reply(200, { id: 4212, login: 'otheruser', email: 'other@example.com' })
+
+    const res = await agent
+      .get(`/callback/github/private/?state=${encodeURIComponent(state)}&code=eb518274e906c68580f7`)
+      .expect(302)
+
+    expect(res.headers.location).to.equal(
+      `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodeURIComponent(
+        'This GitHub account is not linked to the authenticated GitPay account.'
+      )}`
+    )
+    expect(await models.Task.count({ where: { userId: user.id } })).to.equal(0)
+  })
+
+  it('should create a private task when the GitHub provider id matches the GitPay account', async () => {
+    const user = await UserFactory({ provider_id: '4212' })
+    const state = createPrivateTaskState({
+      userId: user.id,
+      url: 'https://github.com/alexanmtz/festifica/issues/1'
+    })
+
+    nock('https://github.com')
+      .post('/login/oauth/access_token/', { code: 'eb518274e906c68580f7' })
+      .basicAuth({ user: secrets.github.id, pass: secrets.github.secret })
+      .reply(200, { access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a' })
+    nock('https://api.github.com')
+      .get('/repos/alexanmtz/festifica/issues/1')
+      .query({ client_id: secrets.github.id, client_secret: secrets.github.secret })
+      .reply(200, sampleIssue.issue)
+      .get('/users/alexanmtz')
+      .query({ client_id: secrets.github.id, client_secret: secrets.github.secret })
+      .reply(200, { email: 'test@gmail.com' })
+    nock('https://api.github.com')
+      .get('/user')
+      .matchHeader('Authorization', 'Bearer e72e16c7e42f292c6912e7710c838347ae178b4a')
+      .reply(200, { id: 4212, login: 'testuser', email: 'teste@gmail.com' })
+
+    const res = await agent
+      .get(`/callback/github/private/?state=${encodeURIComponent(state)}&code=eb518274e906c68580f7`)
+      .expect(302)
+
+    const createdTask = await models.Task.findOne({ where: { userId: user.id } })
+    expect(res.headers.location).to.equal(`${process.env.FRONTEND_HOST}/#/task/${createdTask.id}`)
+    expect(createdTask.url).to.equal('https://github.com/alexanmtz/festifica/issues/1')
+    expect(createdTask.private).to.equal(true)
   })
 
   it('should receive code on the platform from github auth to the redirected url for private tasks with a valid code', async () => {
@@ -305,11 +398,18 @@ describe('Task CRUD', () => {
     expect(registerRes.statusCode).to.equal(200)
     expect(registerRes.body).to.exist
     const userId = registerRes.body.id
+    const state = createPrivateTaskState({
+      userId,
+      url: 'https://github.com/alexanmtz/festifica/issues/1'
+    })
+
+    nock('https://api.github.com')
+      .get('/user')
+      .matchHeader('Authorization', `Bearer e72e16c7e42f292c6912e7710c838347ae178b4a`)
+      .reply(200, { id: 4212, login: 'testuser', email: 'teste@gmail.com' })
 
     const callbackRes = await agent
-      .get(
-        `/callback/github/private/?userId=${userId}&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7`
-      )
+      .get(`/callback/github/private/?state=${encodeURIComponent(state)}&code=eb518274e906c68580f7`)
       .expect(302)
 
     expect(callbackRes.statusCode).to.equal(302)

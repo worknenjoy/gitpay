@@ -74,16 +74,26 @@ describe('GET /auth/social', () => {
         'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate%3FuserId%3Dundefined%26url%3Dundefined&scope=repo&client_id='
       )
     })
-    it('should user ask permissions with github to access private issue', async () => {
+    it('should reject private issue authorization without an authenticated GitPay user', async () => {
       const res = await agent
         .get('/authorize/github/private')
         .send({ userId: 2, url: 'https://github.com/alexanmtz/project/issues/2', code: '123' })
+        .expect(403)
+
+      expect(res.statusCode).to.equal(403)
+    })
+
+    it('should ask permissions with github to access a private issue for the authenticated user', async () => {
+      const auth = await registerAndLogin(agent)
+      const res = await agent
+        .get('/authorize/github/private')
+        .query({ url: 'https://github.com/alexanmtz/project/issues/2' })
+        .set('Authorization', auth.headers.authorization)
         .expect(302)
 
       expect(res.statusCode).to.equal(302)
-      expect(res.headers.location).to.include(
-        'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate%3FuserId%3Dundefined%26url%3Dundefined&scope=repo&client_id='
-      )
+      expect(res.headers.location).to.include('https://github.com/login/oauth/authorize')
+      expect(res.headers.location).to.include('scope=repo&state=')
     })
   })
 })
