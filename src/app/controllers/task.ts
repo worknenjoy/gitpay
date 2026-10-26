@@ -147,9 +147,36 @@ export const deleteTaskById = async (req: any, res: any) => {
 // Delete task from report email
 export const deleteTaskFromReport = async (req: any, res: any) => {
   try {
+    const { token } = req.query
+    const taskId = req.params.taskId
+    const userId = req.params.userId
+
+    let authorized = false
+
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, process.env.SECRET_PHRASE as string)
+        if (String(decoded) === String(taskId)) {
+          authorized = true
+        }
+      } catch {
+        authorized = false
+      }
+    }
+
+    if (!authorized) {
+      if (req.user && (String(req.user.id) === String(userId) || req.user.role === 'admin')) {
+        authorized = true
+      }
+    }
+
+    if (!authorized) {
+      return res.status(403).json({ error: 'Unauthorized to delete this task' })
+    }
+
     const params = {
-      id: req.params.taskId,
-      userId: req.params.userId,
+      id: taskId,
+      userId: userId,
       title: req.query.title,
       reason: req.query.reason
     }
