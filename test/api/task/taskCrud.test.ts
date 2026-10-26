@@ -821,24 +821,24 @@ describe('Task CRUD', () => {
     expect(mailSpySuccess).to.have.been.called()
   })
 
-  it('should reject unauthenticated requests to task invite, funding, and report with 401', async () => {
+  it('should reject unauthenticated requests to task invite, funding, and report with 403', async () => {
     const owner = await register(agent, { email: 'owner_unauth@gitpay.me', password: 'password123' })
     const task = await buildTask({ userId: owner.body.id })
 
     await agent
       .post(`/tasks/${task.id}/invite/`)
       .send({ email: 'spammer-target@example.com', message: 'phishing' })
-      .expect(401)
+      .expect(403)
 
     await agent
       .post(`/tasks/${task.id}/funding/`)
       .send({ email: 'spammer-target@example.com', comment: 'spam' })
-      .expect(401)
+      .expect(403)
 
     await agent
       .post(`/tasks/${task.id}/report`)
       .send({ reason: 'spam' })
-      .expect(401)
+      .expect(403)
   })
 
   it('should return 403 Forbidden when non-owner attempts to invite or request funding', async () => {
