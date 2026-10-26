@@ -106,14 +106,22 @@ export const updateTask = async (req: any, res: any) => {
 
 export const paymentTask = async (req: any, res: any) => {
   try {
-    const data = await taskPayment(req.body)
+    const data = await taskPayment(req.body, req.user)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
-    console.log('error on task controller', error)
-    // eslint-disable-next-line no-console
-    console.log('error raw', error)
-    res.send({ error: error.raw })
+    console.log('error on task controller payment', error)
+    if (error.message === 'not_authorized') {
+      return res.status(403).send({ error: 'not_authorized', message: 'You are not authorized to pay for this task' })
+    }
+    if (
+      error.message === 'task_already_paid' ||
+      error.message === 'insufficient_funds' ||
+      error.message === 'find_task_error'
+    ) {
+      return res.status(400).send({ error: error.message })
+    }
+    res.status(500).send({ error: error.raw || error.message })
   }
 }
 
