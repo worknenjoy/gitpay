@@ -9,6 +9,7 @@ import Sendmail from '../../../mail/mail'
 import UserMail from '../../../mail/user'
 import i18n from 'i18n'
 import { omitAuthSecrets } from '../../../queries/user/userSensitiveAttributes'
+import { isLinkedGithubAccount, verifyPrivateTaskState } from '../../../utils/auth/privateTaskOAuth'
 
 const models = Models as any
 
@@ -159,7 +160,8 @@ export const changePassword = async (req: any, res: any) => {
 }
 
 export const createPrivateTask = async (req: any, res: any) => {
-  const { url, code, userId } = req.query
+  const { code, state } = req.query
+  const privateTaskState = verifyPrivateTaskState(state)
   const githubClientId = secrets.github.id
   const githubClientSecret = secrets.github.secret
   const redirectPrivateTaskError = (message?: string) => {
@@ -169,6 +171,10 @@ export const createPrivateTask = async (req: any, res: any) => {
     )
   }
   try {
+    if (!privateTaskState) {
+      return redirectPrivateTaskError('The task import session expired. Please start again.')
+    }
+
     const response = await requestPromise({
       method: 'POST',
       uri: 'https://github.com/login/oauth/access_token/',
@@ -184,11 +190,28 @@ export const createPrivateTask = async (req: any, res: any) => {
     })
     if (response.access_token) {
       try {
+        const githubUser = await requestPromise({
+          method: 'GET',
+          uri: 'https://api.github.com/user',
+          headers: {
+            Accept: 'application/vnd.github+json',
+            Authorization: `Bearer ${response.access_token}`,
+            'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0'
+          },
+          json: true
+        })
+        const taskUser = await models.User.findByPk(privateTaskState.userId)
+        if (!isLinkedGithubAccount(taskUser?.dataValues, githubUser)) {
+          return redirectPrivateTaskError(
+            'This GitHub account is not linked to the authenticated GitPay account.'
+          )
+        }
+
         const taskResult = await task.taskBuilds({
           provider: 'github',
           private: true,
-          userId,
-          url,
+          userId: privateTaskState.userId,
+          url: privateTaskState.url,
           token: response.access_token
         })
         res.redirect(`${process.env.FRONTEND_HOST}/#/task/${taskResult.id}`)
