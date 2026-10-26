@@ -349,6 +349,40 @@ describe('POST /payment-request', () => {
     expect(res.body.title).to.equal('New Title')
     expect(res.body.description).to.equal('New Description')
   })
+
+  it('should return 403 when trying to update another user payment request', async () => {
+    const user1 = await registerAndLogin(agent)
+    const user2 = await registerAndLogin(agent, {
+      email: 'attacker@example.com',
+      password: 'attackerpassword'
+    })
+
+    const paymentRequest = await PaymentRequestFactory({
+      userId: user1.body.id,
+      title: 'Original Title',
+      description: 'Original Description',
+      currency: 'USD',
+      amount: 50,
+      payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
+      payment_url: 'https://buy.stripe.com/test_6oU14m1Nb0XZ3MDaAtdwc04',
+      status: 'open',
+      active: true
+    })
+
+    await agent
+      .put(`/payment-requests/${paymentRequest.id}`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('authorization', user2.headers.authorization)
+      .send({
+        title: 'Attacker Takeover'
+      })
+      .expect(403)
+
+    const unchanged = await models.PaymentRequest.findByPk(paymentRequest.id)
+    expect(unchanged.userId).to.equal(user1.body.id)
+    expect(unchanged.title).to.equal('Original Title')
+  })
   it('should update a payment request with email instructions', async () => {
     nock('https://api.stripe.com')
       .persist()
