@@ -20,7 +20,8 @@ export const updateWallet = async (req: any, res: any) => {
     res.status(200).send(wallet)
   } catch (error: any) {
     console.log('error on updateWallet', error)
-    res.status(400).send(error)
+    const status = error.status || error.StatusCodeError || 400
+    res.status(status).send({ error: error.message })
   }
 }
 
