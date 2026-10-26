@@ -99,5 +99,108 @@ describe('POST /payment-request-transfer', () => {
       expect(res.body.id).to.equal(transfer.id)
       expect(res.body.status).to.equal(updatedTransferData.status)
     })
+
+    it('should return 403 when trying to update another user payment request transfer', async () => {
+      const user1 = await registerAndLogin(agent)
+      const user2 = await registerAndLogin(agent, {
+        email: 'attacker@example.com',
+        password: 'attackerpassword'
+      })
+
+      const paymentRequest = await PaymentRequestFactory({
+        userId: user1.body.id,
+        title: 'Original Payment Request',
+        description: 'Original description',
+        amount: 100.0,
+        currency: 'USD',
+        payment_link_id: 'prl_victim_1'
+      })
+
+      const transfer = await PaymentRequestTransferFactory({
+        userId: user1.body.id,
+        paymentRequestId: paymentRequest.id,
+        status: 'pending',
+        value: 100.0,
+        transfer_id: 'tr_victim_1',
+        transfer_method: 'stripe'
+      })
+
+      const res = await agent
+        .put(`/payment-request-transfers/${transfer.id}`)
+        .set('Authorization', user2.headers.authorization)
+        .send({
+          status: 'completed'
+        })
+
+      expect(res.status).to.equal(403)
+
+      const unchanged = await models.PaymentRequestTransfer.findByPk(transfer.id)
+      expect(unchanged.userId).to.equal(user1.body.id)
+      expect(unchanged.status).to.equal('pending')
+    })
+
+    it('should not allow user to override userId on creation', async () => {
+      const user = await registerAndLogin(agent)
+      const paymentRequest = await PaymentRequestFactory({
+        userId: user.body.id,
+        title: 'Test Payment Request',
+        description: 'Description',
+        amount: 50.0,
+        currency: 'USD',
+        payment_link_id: 'prl_victim_2'
+      })
+
+      const res = await agent
+        .post('/payment-request-transfers')
+        .set('authorization', user.headers.authorization)
+        .send({
+          paymentRequestId: paymentRequest.id,
+          status: 'pending',
+          value: 50.0,
+          transfer_id: 'tr_2',
+          transfer_method: 'stripe',
+          userId: 99999
+        })
+
+      expect(res.status).to.equal(200)
+      expect(res.body.userId).to.equal(user.body.id)
+    })
+
+    it('should ignore attempts to reassign userId during update', async () => {
+      const user = await registerAndLogin(agent)
+      const paymentRequest = await PaymentRequestFactory({
+        userId: user.body.id,
+        title: 'Test Payment Request',
+        description: 'Description',
+        amount: 75.0,
+        currency: 'USD',
+        payment_link_id: 'prl_victim_3'
+      })
+
+      const transfer = await PaymentRequestTransferFactory({
+        userId: user.body.id,
+        paymentRequestId: paymentRequest.id,
+        status: 'pending',
+        value: 75.0,
+        transfer_id: 'tr_3',
+        transfer_method: 'stripe'
+      })
+
+      const res = await agent
+        .put(`/payment-request-transfers/${transfer.id}`)
+        .set('Authorization', user.headers.authorization)
+        .send({
+          status: 'completed',
+          userId: 99999
+        })
+
+      expect(res.status).to.equal(200)
+      expect(res.body.userId).to.equal(user.body.id)
+
+      const reloaded = await models.PaymentRequestTransfer.findByPk(transfer.id)
+      expect(reloaded.userId).to.equal(user.body.id)
+      expect(reloaded.status).to.equal('completed')
+    })
   })
 })
+
