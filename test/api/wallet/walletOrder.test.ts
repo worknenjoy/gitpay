@@ -248,6 +248,42 @@ describe('POST /wallet-order', () => {
       expect(res.body[0].status).to.equal('pending')
       expect(res.body[0].walletId).to.equal(wallet.id)
     })
+    it('should return 403 Forbidden when non-owner attempts to list another user wallet orders', async () => {
+      const owner = await registerAndLogin(agent, {
+        name: 'Owner User',
+        email: 'owner-wallet-order-list@example.com',
+        password: 'password123'
+      })
+      const attacker = await registerAndLogin(agent, {
+        name: 'Attacker User',
+        email: 'attacker-wallet-order-list@example.com',
+        password: 'password123'
+      })
+      const wallet = await WalletFactory({
+        userId: owner.body.id,
+        name: 'Owner Wallet',
+        balance: 50
+      })
+      const res = await agent
+        .get('/wallets/orders')
+        .query({ walletId: wallet.id })
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('authorization', attacker.headers.authorization)
+        .expect(403)
+      expect(res.body.error).to.equal('Unauthorized')
+    })
+    it('should return 404 Not Found when wallet does not exist', async () => {
+      const user = await registerAndLogin(agent)
+      const res = await agent
+        .get('/wallets/orders')
+        .query({ walletId: 999999 })
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('authorization', user.headers.authorization)
+        .expect(404)
+      expect(res.body.error).to.equal('No valid wallet')
+    })
   })
   describe('fetch wallet orders', () => {
     beforeEach(() => {
@@ -287,6 +323,47 @@ describe('POST /wallet-order', () => {
       expect(res.body.invoice.hostedUrl).to.equal(
         'https://stripe.com/invoice/invst_1Q2fh8BrSjgsps2DUqQsGLDj'
       )
+    })
+    it('should return 403 Forbidden when non-owner attempts to fetch another user wallet order', async () => {
+      const owner = await registerAndLogin(agent, {
+        name: 'Owner User',
+        email: 'owner-wo-fetch@example.com',
+        password: 'password123'
+      })
+      const attacker = await registerAndLogin(agent, {
+        name: 'Attacker User',
+        email: 'attacker-wo-fetch@example.com',
+        password: 'password123'
+      })
+      const wallet = await WalletFactory({
+        userId: owner.body.id,
+        name: 'Owner Wallet',
+        balance: 50
+      })
+      const walletOrder = await WalletOrderFactory({
+        walletId: wallet.id,
+        amount: 50,
+        status: 'paid',
+        source_id: 'ii_owner_order',
+        source: 'in_owner_invoice'
+      })
+      const res = await agent
+        .get(`/wallets/orders/${walletOrder.id}`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('authorization', attacker.headers.authorization)
+        .expect(403)
+      expect(res.body.error).to.equal('Unauthorized')
+    })
+    it('should return 404 Not Found when wallet order does not exist', async () => {
+      const user = await registerAndLogin(agent)
+      const res = await agent
+        .get('/wallets/orders/999999')
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('authorization', user.headers.authorization)
+        .expect(404)
+      expect(res.body.error).to.equal('No valid wallet order')
     })
   })
 })

@@ -4,22 +4,30 @@ const currentModels = models as any
 
 type OrderFetchParams = {
   id: number
+  userId?: number
 }
 
 export async function orderFetch(orderParams: OrderFetchParams) {
-  try {
-    const data = await currentModels.Order.findOne({
-      where: { id: orderParams.id },
-      include: currentModels.User
-    })
-    return {
-      source_id: data.source_id,
-      currency: data.currency,
-      amount: data.amount
-    }
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(error)
-    return false
+  const data = await currentModels.Order.findOne({
+    where: { id: orderParams.id },
+    include: currentModels.User
+  })
+
+  if (!data) {
+    const err: any = new Error('Order not found')
+    err.status = 404
+    throw err
+  }
+
+  if (orderParams.userId && Number(data.userId) !== Number(orderParams.userId)) {
+    const err: any = new Error('Unauthorized')
+    err.status = 403
+    throw err
+  }
+
+  return {
+    source_id: data.source_id,
+    currency: data.currency,
+    amount: data.amount
   }
 }

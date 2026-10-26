@@ -91,7 +91,8 @@ export const fetchOrders = async (req: any, res: any) => {
     const data = await orderFetch(params)
     res.send(data)
   } catch (error: any) {
-    res.send(false)
+    const status = error.status || error.StatusCodeError || 404
+    res.status(status).send({ error: error.message || 'Order not found' })
   }
 }
 

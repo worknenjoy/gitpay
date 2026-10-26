@@ -9,25 +9,20 @@ type OrderSearchParams = {
 
 export async function orderSearch(orderParams: OrderSearchParams) {
   try {
-    let findOrderParams: any = {
+    const where: any = {}
+    if (orderParams && orderParams.id) {
+      where.id = orderParams.id
+    }
+    if (orderParams && orderParams.userId) {
+      where.userId = orderParams.userId
+    }
+
+    const findOrderParams: any = {
       include: [currentModels.User, currentModels.Task],
       order: [['id', 'DESC']]
     }
-    if (orderParams && orderParams.id) {
-      findOrderParams = {
-        ...findOrderParams,
-        where: {
-          id: orderParams.id
-        }
-      }
-    }
-    if (orderParams && orderParams.userId) {
-      findOrderParams = {
-        ...findOrderParams,
-        where: {
-          userId: orderParams.userId
-        }
-      }
+    if (Object.keys(where).length > 0) {
+      findOrderParams.where = where
     }
     const data = await currentModels.Order.findAll(findOrderParams)
     return data
