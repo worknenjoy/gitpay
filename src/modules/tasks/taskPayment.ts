@@ -6,7 +6,11 @@ const stripe = stripeModule()
 
 const currentModels = models as any
 
-export async function taskPayment(paymentParams: any) {
+export async function taskPayment(paymentParams: {
+  taskId: number
+  userId: number
+  value?: number
+}) {
   const task = await currentModels.Task.findOne(
     {
       where: {
@@ -18,6 +22,37 @@ export async function taskPayment(paymentParams: any) {
 
   if (!task) {
     throw new Error('find_task_error')
+  }
+
+  if (task.userId !== paymentParams.userId) {
+    throw new Error('not_authorized')
+  }
+
+  if (task.transfer_id) {
+    throw new Error('task_already_paid')
+  }
+
+  const fundedOrders = await currentModels.Order.findAll({
+    where: {
+      TaskId: task.id,
+      paid: true
+    }
+  })
+  const fundedAmount = fundedOrders.reduce(
+    (sum: number, order: any) => sum + parseFloat(order.amount || '0'),
+    0
+  )
+  if (fundedAmount <= 0) {
+    throw new Error('task_not_funded')
+  }
+
+  const requestedAmount =
+    paymentParams.value == null ? Number(task.value) : Number(paymentParams.value)
+  if (!Number.isFinite(requestedAmount) || requestedAmount <= 0) {
+    throw new Error('invalid_amount')
+  }
+  if (requestedAmount > fundedAmount) {
+    throw new Error('amount_exceeds_funding')
   }
 
   const assign = await currentModels.Assign.findOne({
@@ -34,7 +69,7 @@ export async function taskPayment(paymentParams: any) {
     TransferMail.paymentForInvalidAccount(user)
     throw new Error('account_destination_invalid')
   }
-  const centavosAmount = paymentParams.value * 100 || task.value * 100
+  const centavosAmount = Math.floor(requestedAmount * 100)
 
   let transferData: any = {
     amount: centavosAmount * 0.92, // 8% base fee
@@ -50,7 +85,9 @@ export async function taskPayment(paymentParams: any) {
     transferData['transfer_group'] = task.transfer_group ? task.transfer_group : `task_${task.id}`
   }
 
-  const transfer = await stripe.transfers.create(transferData)
+  const transfer = await stripe.transfers.create(transferData, {
+    idempotencyKey: `task-payment-${task.id}`
+  })
 
   if (transfer) {
     const update = await currentModels.Task.update(
