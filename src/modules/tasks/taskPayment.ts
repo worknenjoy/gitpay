@@ -20,12 +20,31 @@ export async function taskPayment(paymentParams: any) {
     throw new Error('find_task_error')
   }
 
+  // 1. Idempotency check: prevent duplicate payouts
+  if (task.transfer_id) {
+    throw new Error('task_already_paid')
+  }
+
+  // 2. Ownership authorization: ensure executing user owns task
+  if (paymentParams.userId && task.userId !== paymentParams.userId) {
+    throw new Error('unauthorized_payment_execution')
+  }
+
+  // 3. Balance / value validation
+  if (!task.value || task.value <= 0) {
+    throw new Error('invalid_task_balance')
+  }
+
   const assign = await currentModels.Assign.findOne({
     where: {
       id: task.assigned
     },
     include: [{ model: currentModels.User.scope('withSensitive') }]
   })
+
+  if (!assign || !assign.dataValues || !assign.dataValues.User) {
+    throw new Error('assign_not_found')
+  }
 
   const user = assign.dataValues.User.dataValues
 
@@ -34,6 +53,12 @@ export async function taskPayment(paymentParams: any) {
     TransferMail.paymentForInvalidAccount(user)
     throw new Error('account_destination_invalid')
   }
+
+  const order = await currentModels.Order.findOne({ where: { TaskId: task.id } })
+  if (order && order.status && order.status !== 'paid' && order.status !== 'COMPLETED') {
+    throw new Error('insufficient_validated_balance')
+  }
+
   const centavosAmount = paymentParams.value * 100 || task.value * 100
 
   let transferData: any = {
@@ -43,8 +68,7 @@ export async function taskPayment(paymentParams: any) {
     source_type: 'card'
   }
 
-  const order = await currentModels.Order.findOne({ where: { TaskId: task.id } })
-  const coupon = await currentModels.Coupon.findOne({ where: { id: order.couponId } })
+  const coupon = order ? await currentModels.Coupon.findOne({ where: { id: order.couponId } }) : null
 
   if (!coupon || (coupon && coupon.amount < 100)) {
     transferData['transfer_group'] = task.transfer_group ? task.transfer_group : `task_${task.id}`
@@ -68,7 +92,9 @@ export async function taskPayment(paymentParams: any) {
     }
 
     const taskOwner = await currentModels.User.findByPk(task.userId)
-    TransferMail.notifyOwner(taskOwner.dataValues, task, task.value)
+    if (taskOwner) {
+      TransferMail.notifyOwner(taskOwner.dataValues, task, task.value)
+    }
     TransferMail.success(user, task, task.value)
     return transfer
   }
