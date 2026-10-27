@@ -253,7 +253,8 @@ export const removeAssignedUser = async (req: any, res: any) => {
     const data = await taskRemoveAssignedUser(params, req.body)
     res.send(data)
   } catch (error: any) {
-    res.send({ error: error.message })
+    const status = error.status || error.StatusCodeError || 400
+    res.status(status).send({ error: error.message })
   }
 }
 
