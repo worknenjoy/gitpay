@@ -158,3 +158,123 @@ xdescribe('Task Assignment', () => {
     expect(taskResult.status).to.be.equal('open')
   })
 })
+
+
+describe('PUT /tasks/:id/assignment/remove - Authorization & Ownership Protection (#1623)', () => {
+  let ownerUser: any
+  let contributorUser: any
+  let attackerUser: any
+  let task: any
+  let assign: any
+
+  beforeEach(async () => {
+    await truncateModels(models.Task)
+    await truncateModels(models.User)
+    await truncateModels(models.Assign)
+    await truncateModels(models.Order)
+
+    ownerUser = await registerAndLogin(agent, {
+      name: 'Task Owner',
+      email: 'owner@example.com',
+      password: 'password123'
+    })
+
+    contributorUser = await registerAndLogin(agent, {
+      name: 'Contributor User',
+      email: 'contributor@example.com',
+      password: 'password123'
+    })
+
+    attackerUser = await registerAndLogin(agent, {
+      name: 'Attacker User',
+      email: 'attacker@example.com',
+      password: 'password123'
+    })
+
+    task = await TaskFactory({
+      userId: ownerUser.body.id,
+      title: 'Bounty Task in Progress',
+      url: 'https://github.com/worknenjoy/gitpay/issues/100',
+      status: 'in_progress'
+    })
+
+    assign = await AssignFactory({
+      userId: contributorUser.body.id,
+      TaskId: task.id,
+      status: 'accepted'
+    })
+
+    await task.update({ assigned: assign.id })
+  })
+
+  afterEach(async () => {
+    nock.cleanAll()
+  })
+
+  it('should return 403 Forbidden and NOT unassign task when non-owner attempts to remove assignment', async () => {
+    const res = await agent
+      .put(`/tasks/${task.id}/assignment/remove`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('Authorization', attackerUser.headers.authorization)
+      .send({ message: 'Attacker attempting unauthorized unassign' })
+
+    expect(res.status).to.equal(403)
+    expect(res.body.error).to.equal('Unauthorized')
+
+    const refreshedTask = await models.Task.findByPk(task.id)
+    expect(refreshedTask.status).to.equal('in_progress')
+    expect(refreshedTask.assigned).to.equal(assign.id)
+  })
+
+  it('should return 404 Not Found when attempting to remove assignment on non-existent task', async () => {
+    const nonExistentTaskId = 999999
+    const res = await agent
+      .put(`/tasks/${nonExistentTaskId}/assignment/remove`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('Authorization', ownerUser.headers.authorization)
+      .send({ message: 'Removing from non-existent task' })
+
+    expect(res.status).to.equal(404)
+    expect(res.body.error).to.equal('Task not found')
+  })
+
+  it('should return 400 Bad Request when task has no assigned user', async () => {
+    const unassignedTask = await TaskFactory({
+      userId: ownerUser.body.id,
+      title: 'Unassigned Task',
+      url: 'https://github.com/worknenjoy/gitpay/issues/101',
+      status: 'open',
+      assigned: null
+    })
+
+    const res = await agent
+      .put(`/tasks/${unassignedTask.id}/assignment/remove`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('Authorization', ownerUser.headers.authorization)
+      .send({ message: 'Remove unassigned user' })
+
+    expect(res.status).to.equal(400)
+    expect(res.body.error).to.equal("The Task doesn't have an assigned user.")
+  })
+
+  it('should allow legitimate task owner to remove assignment and reset task to open', async () => {
+    const res = await agent
+      .put(`/tasks/${task.id}/assignment/remove`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('Authorization', ownerUser.headers.authorization)
+      .send({ message: 'Owner removing contributor for inactivity' })
+
+    expect(res.status).to.equal(200)
+
+    const updatedTask = await models.Task.findByPk(task.id)
+    expect(updatedTask.status).to.equal('open')
+    expect(updatedTask.assigned).to.be.null
+
+    const updatedAssign = await models.Assign.findByPk(assign.id)
+    expect(updatedAssign.status).to.equal('pending')
+  })
+})
