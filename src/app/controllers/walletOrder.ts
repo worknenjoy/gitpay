@@ -26,7 +26,14 @@ export const updateWalletOrder = async (req: any, res: any) => {
 
 export const walletOrderList = async (req: any, res: any) => {
   try {
-    const wallets = await WalletOrder.walletOrderList({ walletId: req.query.walletId })
+    const wallets = await WalletOrder.walletOrderList({
+      walletId: req.query.walletId,
+      userId: req.user.id
+    })
+    if (!wallets) {
+      res.status(404).send({ error: 'wallet.not_found' })
+      return
+    }
     res.status(200).send(wallets)
   } catch (error: any) {
     console.log('error on walletList', error)
@@ -36,7 +43,11 @@ export const walletOrderList = async (req: any, res: any) => {
 
 export const walletOrderFetch = async (req: any, res: any) => {
   try {
-    const wallet = await WalletOrder.walletOrderFetch({ id: req.params.id })
+    const wallet = await WalletOrder.walletOrderFetch({ id: req.params.id, userId: req.user.id })
+    if (!wallet) {
+      res.status(404).send({ error: 'wallet_order.not_found' })
+      return
+    }
     res.status(200).send(wallet)
   } catch (error: any) {
     console.log('error on walletFetch', error)

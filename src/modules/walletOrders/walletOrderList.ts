@@ -4,6 +4,7 @@ const currentModels = models as any
 
 type WalletOrderListParams = {
   walletId: number
+  userId: number
 }
 
 export async function walletOrderList(params: WalletOrderListParams) {
@@ -11,12 +12,13 @@ export async function walletOrderList(params: WalletOrderListParams) {
     params.walletId &&
     (await currentModels.Wallet.findOne({
       where: {
-        id: params.walletId
+        id: params.walletId,
+        userId: params.userId
       }
     }))
 
   if (!wallet) {
-    return { error: 'No valid wallet' }
+    return false
   }
 
   return currentModels.WalletOrder.findAll({

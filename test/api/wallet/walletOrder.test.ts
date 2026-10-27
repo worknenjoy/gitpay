@@ -248,6 +248,25 @@ describe('POST /wallet-order', () => {
       expect(res.body[0].status).to.equal('pending')
       expect(res.body[0].walletId).to.equal(wallet.id)
     })
+
+    it('should not list wallet orders belonging to another user', async () => {
+      const owner = await registerAndLogin(agent)
+      const wallet = await WalletFactory({
+        userId: owner.body.id,
+        name: 'Owner Wallet',
+        balance: 0
+      })
+      await WalletOrderFactory({ walletId: wallet.id, amount: 100 })
+      const attacker = await registerAndLogin(agent)
+
+      const res = await agent
+        .get('/wallets/orders')
+        .query({ walletId: wallet.id })
+        .set('authorization', attacker.headers.authorization)
+        .expect(404)
+
+      expect(res.body).to.deep.equal({ error: 'wallet.not_found' })
+    })
   })
   describe('fetch wallet orders', () => {
     beforeEach(() => {
@@ -287,6 +306,29 @@ describe('POST /wallet-order', () => {
       expect(res.body.invoice.hostedUrl).to.equal(
         'https://stripe.com/invoice/invst_1Q2fh8BrSjgsps2DUqQsGLDj'
       )
+    })
+
+    it('should not fetch a wallet order belonging to another user', async () => {
+      const owner = await registerAndLogin(agent)
+      const wallet = await WalletFactory({
+        userId: owner.body.id,
+        name: 'Owner Wallet',
+        balance: 0
+      })
+      const walletOrder = await WalletOrderFactory({
+        walletId: wallet.id,
+        amount: 100,
+        status: 'paid',
+        source: 'in_1Q2fh8BrSjgsps2DUqQsGLDj'
+      })
+      const attacker = await registerAndLogin(agent)
+
+      const res = await agent
+        .get(`/wallets/orders/${walletOrder.id}`)
+        .set('authorization', attacker.headers.authorization)
+        .expect(404)
+
+      expect(res.body).to.deep.equal({ error: 'wallet_order.not_found' })
     })
   })
 })
