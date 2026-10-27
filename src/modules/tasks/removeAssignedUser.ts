@@ -25,6 +25,11 @@ export async function removeAssignedUser({ id, userId }: any, { message }: any) 
     include: [currentModels.User]
   })
 
+  // Security Fix (CWE-285/CWE-639): Verify caller is either task owner or the assigned user
+  if (task.userId !== userId && assignedPromise?.userId !== userId) {
+    throw new Error("Unauthorized: Only the task owner or assigned contributor can remove the assignment.")
+  }
+
   const author = await currentModels.User.findByPk(task.userId)
 
   // Unset assigned value,
