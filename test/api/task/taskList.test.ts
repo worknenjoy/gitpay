@@ -381,4 +381,56 @@ describe('GET /tasks/list', () => {
       expect(res.body.data.length).to.equal(1)
     })
   })
+
+  describe('organization sorting', () => {
+    beforeEach(async () => {
+      await truncateModels(models.Task)
+      await truncateModels(models.Project)
+      await truncateModels(models.Organization)
+      await truncateModels(models.User)
+      await truncateModels(models.Assign)
+      await truncateModels(models.Order)
+      await truncateModels(models.Transfer)
+    })
+
+    it('sorts organization tasks globally before pagination', async () => {
+      const user = await UserFactory()
+      const organization = await models.Organization.create({ private: false, name: 'org', UserId: user.id })
+      const projectOne = await models.Project.create({ name: 'one', OrganizationId: organization.id })
+      const projectTwo = await models.Project.create({ name: 'two', OrganizationId: organization.id })
+      await TaskFactory({ userId: user.id, ProjectId: projectOne.id, value: 10, title: 'middle' })
+      await TaskFactory({ userId: user.id, ProjectId: projectTwo.id, value: 30, title: 'highest' })
+      await TaskFactory({ userId: user.id, ProjectId: projectOne.id, value: 0, title: 'lowest' })
+
+      const asc = await agent
+        .get('/tasks/list')
+        .query({ organizationId: organization.id, limit: 10, page: 0, sortBy: 'value', sortDirection: 'asc' })
+        .expect(200)
+      expect(asc.body.data.map((task: any) => Number(task.value))).to.deep.equal([0, 10, 30])
+
+      const desc = await agent
+        .get('/tasks/list')
+        .query({ organizationId: organization.id, limit: 10, page: 0, sortBy: 'value', sortDirection: 'desc' })
+        .expect(200)
+      expect(desc.body.data.map((task: any) => Number(task.value))).to.deep.equal([30, 10, 0])
+    })
+
+    it('paginates organization tasks across projects in the requested order', async () => {
+      const user = await UserFactory()
+      const organization = await models.Organization.create({ private: false, name: 'org', UserId: user.id })
+      const projectOne = await models.Project.create({ name: 'one', OrganizationId: organization.id })
+      const projectTwo = await models.Project.create({ name: 'two', OrganizationId: organization.id })
+      await TaskFactory({ userId: user.id, ProjectId: projectOne.id, value: 10 })
+      await TaskFactory({ userId: user.id, ProjectId: projectTwo.id, value: 30 })
+      await TaskFactory({ userId: user.id, ProjectId: projectOne.id, value: 0 })
+
+      const res = await agent
+        .get('/tasks/list')
+        .query({ organizationId: organization.id, limit: 2, page: 0, sortBy: 'value', sortDirection: 'asc' })
+        .expect(200)
+
+      expect(res.body.totalCount).to.equal(3)
+      expect(res.body.data.map((task: any) => Number(task.value))).to.deep.equal([0, 10])
+    })
+  })
 })

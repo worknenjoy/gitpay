@@ -189,14 +189,24 @@ export async function taskSearch(searchParams: any) {
   }
 
   if (searchParams.organizationId && !searchParams.projectId) {
-    const whereTasks: any = { ...whereBase }
+    const organizationProjects = await currentModels.Project.findAll({
+      where: { OrganizationId: parseInt(searchParams.organizationId) },
+      attributes: ['id']
+    })
+    const projectIds = organizationProjects.map((project: any) => project.id)
+
+    if (projectIds.length === 0) {
+      return isPaginated ? { rows: [], count: 0 } : []
+    }
+
+    const whereTasks: any = { ...whereBase, ProjectId: { [Op.in]: projectIds } }
 
     if (labelIds.length > 0) {
-      const lblFilter = makeLabelFilterLiteral('Tasks', labelIds)
+      const lblFilter = makeLabelFilterLiteral('Task', labelIds)
       whereTasks[Op.and] = whereTasks[Op.and] ? [...whereTasks[Op.and], lblFilter] : [lblFilter]
     }
 
-    const taskAttrsInProject = [
+    const taskAttrs = [
       'id',
       'provider',
       'private',
@@ -211,68 +221,66 @@ export async function taskSearch(searchParams: any) {
       'updatedAt',
       'ProjectId',
       'userId',
-      makeLabelJsonAttr('Tasks')
+      makeLabelJsonAttr('Task')
     ]
 
-    let tasks: any[] = []
-    const projects = await currentModels.Project.findAll({
-      where: { OrganizationId: parseInt(searchParams.organizationId) },
-      include: [
-        {
-          model: currentModels.Task,
-          where: whereTasks,
-          attributes: taskAttrsInProject,
-          include: [
-            {
-              model: currentModels.User,
-              attributes: ['id', 'name', 'username', 'picture_url', 'country', 'language']
-            },
-            {
-              model: currentModels.Assign,
-              separate: true,
-              attributes: ['id', 'status', 'message', 'createdAt', 'TaskId', 'userId'],
-              include: [
-                { model: currentModels.User, attributes: ['id', 'username', 'picture_url', 'name'] }
-              ],
-              order: [['createdAt', 'DESC']]
-            },
-            {
-              model: currentModels.Project,
-              attributes: ['id', 'name', 'repo', 'OrganizationId'],
-              include: [
-                {
-                  model: currentModels.ProgrammingLanguage,
-                  as: 'ProgrammingLanguages',
-                  attributes: ['id', 'name'],
-                  through: { attributes: [] },
-                  ...(languageIds.length > 0 && {
-                    where: { id: { [Op.in]: languageIds } },
-                    required: true
-                  })
-                }
-              ],
-              ...(languageIds.length > 0 && { required: true })
-            },
-            ordersInclude
-          ],
-          distinct: true,
-          order: [
-            ['status', 'DESC'],
-            ['id', 'DESC']
-          ]
-        }
-      ],
-      order: [['id', 'DESC']]
-    })
-
-    projects.forEach((p: any) => p.Tasks.forEach((t: any) => tasks.push(t)))
-    attachLabelsVirtual(tasks)
+    const includeBase = [
+      {
+        model: currentModels.User,
+        attributes: ['id', 'name', 'username', 'picture_url', 'country', 'language']
+      },
+      {
+        model: currentModels.Assign,
+        separate: true,
+        attributes: ['id', 'status', 'message', 'createdAt', 'TaskId', 'userId'],
+        include: [
+          { model: currentModels.User, attributes: ['id', 'username', 'picture_url', 'name'] }
+        ],
+        order: [['createdAt', 'DESC']]
+      },
+      {
+        model: currentModels.Project,
+        attributes: ['id', 'name', 'repo', 'OrganizationId'],
+        include: [
+          {
+            model: currentModels.ProgrammingLanguage,
+            as: 'ProgrammingLanguages',
+            attributes: ['id', 'name'],
+            through: { attributes: [] },
+            ...(languageIds.length > 0 && {
+              where: { id: { [Op.in]: languageIds } },
+              required: true
+            })
+          }
+        ],
+        ...(languageIds.length > 0 && { required: true })
+      },
+      ordersInclude
+    ]
 
     if (isPaginated) {
-      const count = tasks.length
-      const rows = tasks.slice(computedOffset, computedOffset! + limit!)
-      return { rows, count }
+      const result = await currentModels.Task.findAndCountAll({
+        where: whereTasks,
+        attributes: taskAttrs,
+        include: includeBase,
+        distinct: true,
+        limit,
+        offset: computedOffset,
+        order: orderClause
+      })
+      attachLabelsVirtual(result.rows)
+      return { rows: result.rows, count: result.count }
     }
+
+    const tasks = await currentModels.Task.findAll({
+      where: whereTasks,
+      attributes: taskAttrs,
+      include: includeBase,
+      distinct: true,
+      order: orderClause
+    })
+    attachLabelsVirtual(tasks)
+
     return tasks
   }
 
