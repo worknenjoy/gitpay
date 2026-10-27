@@ -17,6 +17,9 @@ export const updateWalletOrder = async (req: any, res: any) => {
       id: req.params.id,
       userId: req.user.id
     })
+    if (wallet && wallet.error) {
+      return res.status(wallet.status || 400).send(wallet)
+    }
     res.status(200).send(wallet)
   } catch (error: any) {
     console.log('error on updateWallet', error)
