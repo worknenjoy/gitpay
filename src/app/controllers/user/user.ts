@@ -160,6 +160,13 @@ export const changePassword = async (req: any, res: any) => {
 
 export const createPrivateTask = async (req: any, res: any) => {
   const { url, code, userId } = req.query
+
+  // Security Fix (CWE-639 / CWE-290): Prevent unverified userId spoofing in OAuth callback
+  const authenticatedUserId = req.user?.id || req.session?.passport?.user?.id || req.session?.userId
+  if (authenticatedUserId && String(authenticatedUserId) !== String(userId)) {
+    const encodedError = encodeURIComponent('Unauthorized: userId mismatch with authenticated session.')
+    return res.redirect(`${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodedError}`)
+  }
   const githubClientId = secrets.github.id
   const githubClientSecret = secrets.github.secret
   const redirectPrivateTaskError = (message?: string) => {
