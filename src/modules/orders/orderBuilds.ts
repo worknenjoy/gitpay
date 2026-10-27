@@ -275,6 +275,11 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
       throw new Error(`Wallet with id ${orderParameters.walletId} not found`)
     }
 
+    // Security Fix (CWE-639 IDOR): Verify wallet ownership before deducting balance
+    if (wallet.userId && String(wallet.userId) !== String(orderParameters.userId)) {
+      throw new Error(`Unauthorized: Wallet does not belong to user ${orderParameters.userId}`)
+    }
+
     // Wallet balance is calculated from WalletOrders via afterFind hook
     // The balance field is updated by the hook after findOne
     // Convert to Decimal for comparison (balance is a string after hook processing)
