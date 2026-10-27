@@ -89,6 +89,10 @@ export const fetchOrders = async (req: any, res: any) => {
   try {
     const params = { ...req.params, ...{ userId: req.user.id } }
     const data = await orderFetch(params)
+    if (!data) {
+      res.status(404).send({ error: 'order.not_found' })
+      return
+    }
     res.send(data)
   } catch (error: any) {
     res.send(false)
