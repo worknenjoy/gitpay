@@ -6,10 +6,20 @@ const currentModels = models as any
 
 type OrderPaymentParams = {
   id: number
+  userId: number
 }
 
 export async function orderPayment(orderParameters: OrderPaymentParams) {
-  const order = await currentModels.Order.findByPk(orderParameters.id)
+  const order = await currentModels.Order.findOne({
+    where: {
+      id: orderParameters.id,
+      userId: orderParameters.userId
+    }
+  })
+
+  if (!order) {
+    throw new Error('order_not_found')
+  }
 
   if (order.provider === 'paypal') {
     const paymentData = await PaypalConnect({
