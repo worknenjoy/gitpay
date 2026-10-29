@@ -275,6 +275,12 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
       throw new Error(`Wallet with id ${orderParameters.walletId} not found`)
     }
 
+    if (orderParameters.userId && wallet.userId !== orderParameters.userId) {
+      throw new Error(
+        `Unauthorized: Wallet with id ${orderParameters.walletId} does not belong to user ${orderParameters.userId}`
+      )
+    }
+
     // Wallet balance is calculated from WalletOrders via afterFind hook
     // The balance field is updated by the hook after findOne
     // Convert to Decimal for comparison (balance is a string after hook processing)

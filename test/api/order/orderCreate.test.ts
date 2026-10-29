@@ -220,6 +220,45 @@ describe('POST /order', () => {
     }
   })
 
+  it('should reject wallet-funded order when wallet belongs to another user (IDOR prevention)', async () => {
+    const victim = await register(agent)
+    const attacker = await registerAndLogin(agent)
+
+    const victimWallet = await WalletFactory({
+      name: 'Victim Wallet',
+      balance: 0,
+      userId: victim.body.id
+    })
+    await WalletOrderFactory({
+      walletId: victimWallet.id,
+      amount: 500,
+      currency: 'USD',
+      status: 'paid',
+      paid: true
+    })
+    await victimWallet.reload()
+
+    const task = await TaskFactory({
+      url: 'https://github.com/test/repo/issues/6',
+      userId: attacker.body.id,
+      title: 'Attacker Task'
+    })
+
+    const res = await agent
+      .post('/orders')
+      .send({
+        provider: 'wallet',
+        source_type: 'wallet-funds',
+        walletId: victimWallet.id,
+        amount: 200,
+        currency: 'USD',
+        taskId: task.id
+      })
+      .set('Authorization', attacker.headers.authorization)
+
+    expect(res.statusCode).to.equal(401)
+  })
+
   it('should not call notifyNewBounty when wallet payment completes for a private task', async () => {
     chai.use(spies)
     const slackModule = require('../../../src/shared/slack')
