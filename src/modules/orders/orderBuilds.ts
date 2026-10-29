@@ -265,14 +265,17 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
   }
 
   if (orderParameters.provider === 'wallet' && orderParameters.source_type === 'wallet-funds') {
+    // Ownership check (CWE-639): a client-supplied walletId must only ever
+    // debit a wallet belonging to the authenticated user
     const wallet = await currentModels.Wallet.findOne({
       where: {
-        id: orderParameters.walletId
+        id: orderParameters.walletId,
+        userId: userId
       }
     })
 
     if (!wallet) {
-      throw new Error(`Wallet with id ${orderParameters.walletId} not found`)
+      throw new Error(`Wallet with id ${orderParameters.walletId} not found for user ${userId}`)
     }
 
     // Wallet balance is calculated from WalletOrders via afterFind hook
