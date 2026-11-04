@@ -20,7 +20,29 @@ const buildTask = (params: any) => {
   })
 }
 
-xdescribe('Task Assignment', () => {
+xdescribe('Task Assignment'
+  it('should reject unassigning task when caller is not the task owner (Issue #1623)', async () => {
+    const owner = await register(agent, {
+      name: 'Real Owner',
+      email: 'real_owner@example.com',
+      password: 'password123'
+    })
+    const attacker = await register(agent, {
+      name: 'Attacker User',
+      email: 'attacker@example.com',
+      password: 'password123'
+    })
+    const task = await buildTask({ userId: owner.body.id, title: 'Protected Bounty' })
+
+    const token = await login(agent, { email: 'attacker@example.com', password: 'password123' })
+    const res = await agent
+      .put(`/tasks/${task.id}/assignment/remove`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({ message: 'malicious removal attempt' })
+
+    expect(res.status).to.be.oneOf([403, 400])
+  })
+, () => {
   beforeEach(async () => {
     await truncateModels(models.Task)
     await truncateModels(models.User)
