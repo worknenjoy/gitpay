@@ -98,9 +98,14 @@ export const updateTask = async (req: any, res: any) => {
     const data = await taskUpdate(req.body)
     res.send(data)
   } catch (error: any) {
+    // Do not log raw Stripe errors, which may contain payment metadata.
+    if (error?.type === 'StripeCardError') {
+      res.status(402).send({ type: 'StripeCardError', message: error.message })
+      return
+    }
     // eslint-disable-next-line no-console
     console.log('error on update issue', error)
-    res.status(400).send(error)
+    res.status(400).send({ error: error?.message || 'task_update_failed' })
   }
 }
 

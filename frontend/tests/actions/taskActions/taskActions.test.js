@@ -34,14 +34,6 @@ describe('task actions', () => {
         status: 200,
         response: taskResponse
       })
-      moxios.stubRequest('http://localhost:3000/tasks/fetch/1', {
-        status: 200,
-        response: taskResponse
-      })
-      moxios.stubRequest('http://localhost:3000/tasks/1/sync/value', {
-        status: 200,
-        response: taskResponse
-      })
       const expectedActions = [
         { completed: false, type: 'UPDATE_TASK_REQUESTED' },
         {
@@ -51,11 +43,7 @@ describe('task actions', () => {
           link: undefined,
           severity: undefined
         },
-        { completed: true, type: 'UPDATE_TASK_SUCCESS' },
-        { completed: false, type: 'SYNC_TASK_REQUESTED', data: {} },
-        { completed: false, type: 'FETCH_TASK_REQUESTED', data: {} },
-        { completed: true, type: 'SYNC_TASK_SUCCESS', values: { id: 1 } },
-        { completed: true, type: 'FETCH_TASK_SUCCESS', data: { id: 1 } }
+        { completed: true, type: 'UPDATE_TASK_SUCCESS', data: { id: 1 } }
       ]
       const store = mockStore({
         intl: { messages: {} },

@@ -1,5 +1,5 @@
 import models from '../../models'
-import Decimal from 'decimal.js'
+import { summarizeTaskOrders } from './taskOrderSummary'
 
 const currentModels = models as any
 
@@ -13,33 +13,7 @@ export async function taskSync(taskParameters: any) {
     throw new Error('Task not found')
   }
 
-  let finalValue = {
-    available: new Decimal(0),
-    pending: new Decimal(0),
-    failed: new Decimal(0),
-    card: new Decimal(0),
-    paypal: new Decimal(0),
-    transferred: new Decimal(0)
-  }
-
-  task.dataValues.Orders.map((item: any) => {
-    const decimalAmount = new Decimal(item.amount)
-    if (item.status === 'open') {
-      finalValue.pending.plus(decimalAmount)
-    } else if (item.paid) {
-      finalValue.available = Decimal.add(finalValue.available, decimalAmount)
-      if (item.provider === 'paypal') {
-        finalValue.paypal = Decimal.add(finalValue.paypal, decimalAmount)
-      } else {
-        finalValue.card = Decimal.add(finalValue.card, decimalAmount)
-      }
-      if (item.transfer_id) {
-        finalValue.transferred = Decimal.add(finalValue.transferred, decimalAmount)
-      }
-    } else {
-      finalValue.failed = Decimal.add(finalValue.failed, decimalAmount)
-    }
-  })
+  const finalValue = summarizeTaskOrders(task.dataValues.Orders)
 
   const paidPaypal = !!(
     finalValue.paypal.equals(0) || finalValue.transferred.equals(finalValue.available)

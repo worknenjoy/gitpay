@@ -100,8 +100,8 @@ const updateTaskRequested = () => {
   return { type: UPDATE_TASK_REQUESTED, completed: false }
 }
 
-const updateTaskSuccess = () => {
-  return { type: UPDATE_TASK_SUCCESS, completed: true }
+const updateTaskSuccess = (data) => {
+  return { type: UPDATE_TASK_SUCCESS, completed: true, data }
 }
 
 const updateTaskError = (error) => {
@@ -348,32 +348,32 @@ const updateTask = (task) => {
     return axios
       .put(api.API_URL + '/tasks/update', task)
       .then((response) => {
-        const task = response.data
-        /* TODO: REVIEW THIS LOGIC TO HANLDE UPDATE WITH ORDERS
-        if (task?.Orders?.[0]?.id) {
-          dispatch(addNotification('actions.task.payment.notification.success'))
-          dispatch(syncTask(task.id))
-          dispatch(updateTaskSuccess())
-        }
-        else if (task.Offer) {
-          dispatch(
-            addNotification('actions.task.interested.notification.success')
-          )
-          dispatch(updateTaskSuccess())
-        }
-        else {
-          dispatch(addNotification('actions.task.update.notification.success'))
-          dispatch(updateTaskSuccess())
-        }*/
-        if (task.id) {
-          dispatch(addNotification('actions.task.update.notification.success'))
-          dispatch(updateTaskSuccess())
-          dispatch(syncTask(task.id))
-          return dispatch(fetchTask(task.id))
-        } else {
+        const updated = response.data
+        if (!updated?.id) {
           dispatch(addNotification('actions.task.update.notification.error', { severity: 'error' }))
           return dispatch(updateTaskError({ message: 'actions.task.update.unavailable' }))
         }
+        // Confirm the new payment from the authoritative server response.
+        const paidOrder =
+          task.Orders &&
+          updated.Orders?.some(
+            (order) =>
+              order.id === updated.paymentOrderId && order.paid && order.status === 'succeeded'
+          )
+        if (task.Orders && !paidOrder) {
+          dispatch(
+            addNotification('actions.task.payment.notification.error', { severity: 'error' })
+          )
+          return dispatch(updateTaskError({ message: 'actions.task.payment.notification.error' }))
+        }
+        if (paidOrder) {
+          dispatch(addNotification('actions.task.payment.notification.success'))
+        } else if (task.Offer) {
+          dispatch(addNotification('actions.task.interested.notification.success'))
+        } else {
+          dispatch(addNotification('actions.task.update.notification.success'))
+        }
+        return dispatch(updateTaskSuccess(updated))
       })
       .catch((error) => {
         const errorResponse = error?.response?.data
@@ -397,7 +397,7 @@ const updateTask = (task) => {
           return dispatch(updateTaskError(error.response.data.error))
         }
         dispatch(addNotification('actions.task.update.notification.error', { severity: 'error' }))
-        return dispatch(fetchTask(task.id))
+        return dispatch(updateTaskError(error))
       })
   }
 }
