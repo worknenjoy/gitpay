@@ -96,8 +96,21 @@ export const task = (
 
     case UPDATE_TASK_REQUESTED:
       return { ...state, completed: false }
-    case UPDATE_TASK_SUCCESS:
-      return { ...state, completed: true }
+    case UPDATE_TASK_SUCCESS: {
+      if (!action.data) return { ...state, completed: true }
+      const { Orders, values, ...updated } = action.data
+      return {
+        ...state,
+        completed: true,
+        data: {
+          ...state.data,
+          ...updated,
+          ...(Orders && { orders: Orders })
+        },
+        ...(values && { values }),
+        filterOrdersBy: {}
+      }
+    }
     case UPDATE_TASK_ERROR:
       return { ...state, completed: true, error: action.error }
     case CHANGE_TASK_TAB:

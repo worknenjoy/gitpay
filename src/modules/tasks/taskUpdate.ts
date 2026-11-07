@@ -10,8 +10,44 @@ import i18n from 'i18n'
 import { validateCoupon } from '../coupon/validateCoupon'
 import { processCouponUsage as processCoupon } from '../coupon/processCouponUsage'
 import { orderUpdateAfterStripe } from '../orders/orderUpdateAfterStripe'
+import { taskSync } from './taskSync'
+import { USER_SENSITIVE_ATTRIBUTES } from '../../queries/user/userSensitiveAttributes'
 
 const currentModels = models as any
+
+// Return authoritative data to the UI. Payment synchronization must run on the
+// server after the charge is committed, before the response is constructed.
+const reloadUpdatedTask = async (
+  id: number,
+  synchronizePayment = false,
+  paymentOrderId?: number
+) => {
+  const summary = synchronizePayment ? await taskSync({ id }) : null
+  const safeUser = () => ({
+    model: currentModels.User,
+    attributes: { exclude: USER_SENSITIVE_ATTRIBUTES }
+  })
+  const updated = await currentModels.Task.findByPk(id, {
+    include: [
+      safeUser(),
+      { model: currentModels.Order, include: [safeUser()] },
+      { model: currentModels.Assign, include: [safeUser()] },
+      { model: currentModels.Member, include: [safeUser(), currentModels.Role] },
+      { model: currentModels.Offer, include: [safeUser()] }
+    ]
+  })
+  if (!updated) {
+    throw new Error('task_find_failed')
+  }
+  const response = updated.toJSON()
+  if (summary?.value) {
+    response.values = summary.value
+  }
+  if (paymentOrderId != null) {
+    response.paymentOrderId = paymentOrderId
+  }
+  return response
+}
 
 const createSourceAndCharge = async (
   customer: any,
@@ -32,14 +68,15 @@ const createSourceAndCharge = async (
       const couponProcessResult = await processCoupon(couponValidation)
 
       if (!couponProcessResult) {
-        return task
+        throw new Error('coupon_processing_failed')
       }
 
       await order.update({ couponId: couponValidation.id }, { where: { id: order.id } })
 
       // This means that the amount of discount provided by coupon is 100%
       if (couponValidation.orderPrice <= 0.5) {
-        return orderUpdateAfterStripe(order, null, null, orderParameters, user, task, true)
+        await orderUpdateAfterStripe(order, null, null, orderParameters, user, task, true)
+        return reloadUpdatedTask(task.dataValues.id, true, order.dataValues.id)
       }
 
       totalPrice =
@@ -58,11 +95,16 @@ const createSourceAndCharge = async (
       metadata: { order_id: order.dataValues.id }
     })
 
-    if (charge) {
-      return orderUpdateAfterStripe(order, charge, card, orderParameters, user, task, false)
+    if (charge?.paid && charge.status === 'succeeded') {
+      await orderUpdateAfterStripe(order, charge, card, orderParameters, user, task, false)
+      return reloadUpdatedTask(task.dataValues.id, true, order.dataValues.id)
     }
-    throw new Error('no charge')
+    throw new Error('charge_not_succeeded')
   } catch (e: any) {
+    // Preserve a declined-card error without logging Stripe's raw payment data.
+    if (e?.type === 'StripeCardError') {
+      throw e
+    }
     // eslint-disable-next-line no-console
     console.log('could not create charge', e)
     throw new Error(e.message || e)
@@ -86,7 +128,7 @@ const createCustomer = async (
       { where: { id: order.userId } }
     )
 
-    if (!update) {
+    if (!update || !update[0]) {
       throw new Error('user not updated')
     }
     return createSourceAndCharge(customer, orderParameters, order, task, user, couponValidation)
@@ -133,10 +175,17 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
     include: [currentModels.User, currentModels.Order, currentModels.Offer, currentModels.Member]
   })
 
-  // Model.update resolves to [affectedCount] (always a truthy array), so a mismatched
-  // userId in the where clause above silently updates 0 rows unless we check the count.
+  // A payment-only request may change no Task columns, so Sequelize returns [0].
+  // Verify ownership explicitly before proceeding with order creation, without
+  // treating an authorized no-op update as a failed payment.
   if (!data || !data[0]) {
-    return new Error('task_updated_failed')
+    const ownedTask = await currentModels.Task.findOne({
+      where: { id: taskParameters.id, userId: taskParameters.userId },
+      attributes: ['id']
+    })
+    if (!ownedTask) {
+      return new Error('task_updated_failed')
+    }
   }
 
   const task = await currentModels.Task.findByPk(taskParameters.id, {
@@ -154,7 +203,10 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
     if (order.userId) {
       const user = await currentModels.User.scope('withSensitive').findByPk(order.userId)
 
-      if (user && user.dataValues.customer_id) {
+      if (!user) {
+        throw new Error('payment_user_not_found')
+      }
+      if (user.dataValues.customer_id) {
         const customer = await stripe.customers.retrieve(user.customer_id)
         return createSourceAndCharge(
           customer,
@@ -193,7 +245,7 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
         task.dataValues,
         assignedUserDeadline.username
       )
-      return task.dataValues
+      return reloadUpdatedTask(taskParameters.id)
     }
   }
 
@@ -214,12 +266,14 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
 
     if (!resp) {
       const offer = await task.createOffer(taskParameters.Offer)
-      return postCreateOrUpdateOffer(task, taskParameters.Offer)
+      await postCreateOrUpdateOffer(task, taskParameters.Offer)
+      return reloadUpdatedTask(taskParameters.id)
     } else {
       const update = await currentModels.Offer.update(taskParameters.Offer, {
         where: { userId: taskParameters.Offer.userId, taskId: taskParameters.id }
       })
-      return postCreateOrUpdateOffer(task, taskParameters.Offer)
+      await postCreateOrUpdateOffer(task, taskParameters.Offer)
+      return reloadUpdatedTask(taskParameters.id)
     }
   }
 
@@ -232,9 +286,9 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
     if (!resp) {
       try {
         const member = await task.createMember(taskParameters.Members[0])
-        return task.dataValues
+        return reloadUpdatedTask(taskParameters.id)
       } catch (e) {
-        return task.dataValues
+        return reloadUpdatedTask(taskParameters.id)
       }
     } else {
       const update = await currentModels.Member.update(taskParameters.Members[0], {
@@ -243,7 +297,7 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
           taskId: taskParameters.id
         }
       })
-      return task.dataValues
+      return reloadUpdatedTask(taskParameters.id)
     }
   }
 
@@ -265,8 +319,8 @@ export async function taskUpdate(taskParameters: any, notifyOnAssign: boolean = 
     notifyOnAssign && AssignMail.owner.assigned(ownerUser, task.dataValues, assignedUser)
     notifyOnAssign && AssignMail.assigned(assignedUser, task.dataValues)
 
-    return task.dataValues
+    return reloadUpdatedTask(taskParameters.id)
   }
 
-  return task.dataValues
+  return reloadUpdatedTask(taskParameters.id)
 }
