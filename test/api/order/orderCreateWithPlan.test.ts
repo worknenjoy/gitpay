@@ -108,7 +108,7 @@ describe('POST /order with plan', () => {
     expect(res.body.Plan.PlanSchema.feeType).to.equal('charge')
   })
 
-  xit('should create a new order with a plan above 5000', async () => {
+  it('should create a new order with a plan above 5000', async () => {
     const user = await registerAndLogin(agent)
     const res = await agent
       .post('/orders')
@@ -233,7 +233,7 @@ describe('POST /order with plan', () => {
     expect(res.body.Plan.feePercentage).to.equal(8)
   })
 
-  xit('should create a order type invoice-item above 5000', async () => {
+  it('should create a order type invoice-item above 5000', async () => {
     chai.use(spies)
     const stripeInstance = stripe()
     const invoiceItem = chai.spy.on(stripeInstance.invoiceItems, 'create')
