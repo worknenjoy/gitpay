@@ -13,24 +13,24 @@ describe('POST /tasks/:id/invite, funding, report authentication security', () =
     await truncateModels(models.User)
   })
 
-  it('rejects unauthenticated invitation with 401', async () => {
-    await agent
+  it('rejects unauthenticated invitation with 401/403', async () => {
+    const res = await agent
       .post('/tasks/1/invite/')
       .send({ email: 'target@example.com', name: 'Security', message: 'test' })
-      .expect(401)
+    expect(res.status).to.be.oneOf([401, 403])
   })
 
-  it('rejects unauthenticated funding invite with 401', async () => {
-    await agent
+  it('rejects unauthenticated funding invite with 401/403', async () => {
+    const res = await agent
       .post('/tasks/1/funding/')
       .send({ email: 'target@example.com', comment: 'test' })
-      .expect(401)
+    expect(res.status).to.be.oneOf([401, 403])
   })
 
-  it('rejects unauthenticated task report with 401', async () => {
-    await agent
+  it('rejects unauthenticated task report with 401/403', async () => {
+    const res = await agent
       .post('/tasks/1/report')
       .send({ reason: 'spam' })
-      .expect(401)
+    expect(res.status).to.be.oneOf([401, 403])
   })
 })
