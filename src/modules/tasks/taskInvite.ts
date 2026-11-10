@@ -17,7 +17,7 @@ export async function taskInvite({ id }: any, { message, email, name }: any, use
     throw new Error('Unauthorized: only task owner can send invitations')
   }
 
-  const taskUrl = ${process.env.FRONTEND_HOST}/#/task/
+  const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
   const taskUser = task.User?.dataValues || {}
   const language = taskUser.language || 'en'
   const receiveNotifications = taskUser.receiveNotifications
@@ -26,13 +26,13 @@ export async function taskInvite({ id }: any, { message, email, name }: any, use
   SendMail.success(
     { email, language, receiveNotifications },
     i18n.__('mail.invite.send.action', { name: name }),
-    ${i18n.__(hasBounty ? 'mail.invite.send.message' : 'mail.invite.send.message.noValue', {
+    `${i18n.__(hasBounty ? 'mail.invite.send.message' : 'mail.invite.send.message.noValue', {
       name: name,
       title: task.title,
       url: taskUrl,
       value: task.value,
       message: message
     })}
-        
+        `
   )
 }

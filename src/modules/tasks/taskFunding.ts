@@ -7,7 +7,7 @@ const currentModels = models as any
 export async function taskFunding(
   { id }: any,
   { comment, email, suggestedValue, suggestedDate, username }: any,
-  user?: any
+  _user?: any
 ) {
   const task = await currentModels.Task.findByPk(id, {
     include: [currentModels.User, currentModels.Order, currentModels.Assign]
@@ -17,7 +17,7 @@ export async function taskFunding(
     throw new Error('Task not found')
   }
 
-  const taskUrl = ${process.env.FRONTEND_HOST}/#/task/
+  const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
   const taskUser = task.User?.dataValues || {}
   const language = taskUser.language || 'en'
   const receiveNotifications = taskUser.receiveNotifications
@@ -25,7 +25,7 @@ export async function taskFunding(
   SendMail.success(
     { email, language, receiveNotifications },
     i18n.__('mail.funding.send.action', { username: username }),
-    ${i18n.__('mail.funding.send.message', {
+    `${i18n.__('mail.funding.send.message', {
       title: task.title,
       url: taskUrl,
       suggestedValue: suggestedValue,
@@ -33,6 +33,6 @@ export async function taskFunding(
       username: username,
       suggestedDate: suggestedDate
     })}
-        
+        `
   )
 }

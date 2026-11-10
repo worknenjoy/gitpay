@@ -7,11 +7,11 @@ import * as constants from '../../mail/constants'
 
 const currentModels = models as any
 
-export async function taskReport({ id }: any, { task, reason, baseUrl }: any, user?: any) {
+export async function taskReport({ id }: any, { task, reason, baseUrl }: any, _user?: any) {
   const token = jwt.sign(id, process.env.SECRET_PHRASE as string)
   const title = (task?.title || '').replace(/\s/g, '-')
   const formattedReason = (reason || '').replace(/\s/g, '-')
-  const userId = task?.User ? task.User.id : (task?.userId || '')
+  const userId = task?.User ? task.User.id : task?.userId || ''
   const configuredBaseUrl = process.env.API_URL || process.env.FRONTEND_HOST || baseUrl || ''
   const approveURL =
     configuredBaseUrl +
@@ -34,18 +34,18 @@ export async function taskReport({ id }: any, { task, reason, baseUrl }: any, us
     throw new Error('Task not found')
   }
 
-  const taskUrl = ${process.env.FRONTEND_HOST}/#/task/
+  const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${taskData.id}`
   i18n.setLocale('en')
   const receiveNotifications = taskData.User?.receiveNotifications ?? true
   SendMail.success(
     { email: constants.reportEmail, language: 'en', receiveNotifications },
     i18n.__('mail.report.send.action'),
-    ${i18n.__('mail.report.send.message', {
+    `${i18n.__('mail.report.send.message', {
       title: taskData.title,
       url: taskUrl,
       approveURL: approveURL,
       selectedReason: reason
     })}
-        
+        `
   )
 }
