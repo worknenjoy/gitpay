@@ -97,7 +97,7 @@ describe('POST /wallet', () => {
 
     const attacker = await registerAndLogin(agent, { email: 'attacker_wallet_1622@gitpay.me' })
     const res = await agent
-      .put(/wallets/)
+      .put(`/wallets/${wallet.id}`)
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')
       .set('authorization', attacker.headers.authorization)
