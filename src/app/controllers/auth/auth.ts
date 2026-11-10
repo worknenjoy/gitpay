@@ -3,6 +3,8 @@ import { userConfirmChangeEmail } from '../../../modules/users/userConfirmChange
 import userDisconnectGithub from '../../../modules/users/userDisconectGithub'
 import secrets from '../../../config/secrets'
 import passport from 'passport'
+import { signPrivateTaskState } from '../../../utils/auth/privateTaskState'
+import { parseAndValidateIssueUrl } from '../../../utils/issue/parse-and-validate-issue-url'
 import { omitAuthSecrets } from '../../../queries/user/userSensitiveAttributes'
 
 export const changeEmail = async (req: any, res: any) => {
@@ -41,12 +43,23 @@ export const confirmChangeEmail = async (req: any, res: any) => {
 }
 
 export const authorizeGithubPrivateIssue = (req: any, res: any) => {
-  const params = req.query
-  const uri = encodeURIComponent(
-    `${process.env.API_HOST}/callback/github/private?userId=${params.userId}&url=${params.url}`
-  )
-  res.redirect(
-    `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${uri}&scope=repo&client_id=${secrets.github.id}`
+  const userId = req.user?.id
+  const issueUrl = typeof req.query?.url === 'string' ? req.query.url : ''
+
+  if (!userId) {
+    return res.status(403).json({ errors: ['Failed to authenticate user'] })
+  }
+
+  try {
+    parseAndValidateIssueUrl(issueUrl, 'github')
+  } catch (error: any) {
+    return res.status(400).json({ error: error?.message || 'Invalid GitHub issue URL' })
+  }
+
+  const state = signPrivateTaskState({ userId, url: issueUrl })
+  const uri = encodeURIComponent(`${process.env.API_HOST}/callback/github/private`)
+  return res.redirect(
+    `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${uri}&scope=${encodeURIComponent('repo,user:email')}&client_id=${secrets.github.id}&state=${encodeURIComponent(state)}`
   )
 }
 

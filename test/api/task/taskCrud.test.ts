@@ -11,6 +11,7 @@ import secrets from '../../../src/config/secrets'
 import spies from 'chai-spies'
 import AssignMail from '../../../src/mail/assign'
 import TaskMail from '../../../src/mail/task'
+import { signPrivateTaskState, verifyPrivateTaskState } from '../../../src/utils/auth/privateTaskState'
 
 import sampleIssue from '../../data/github/github.issue.create'
 import getSingleIssue from '../../data/github/github.issue.get'
@@ -270,9 +271,18 @@ describe('Task CRUD', () => {
 
   it('should redirect to profile with an error when private task auth returns an invalid code', async () => {
     nockAuthInvalidCode()
+    const userAuth = await registerAndLogin(agent, { email: 'private-invalid-code@gmail.com' })
+    const issueUrl = 'https://github.com/alexanmtz/festifica/issues/1'
+    const authRes = await agent
+      .get('/authorize/github/private')
+      .query({ url: issueUrl })
+      .set('Authorization', userAuth.headers.authorization)
+      .expect(302)
+    const state = new URL(authRes.headers.location).searchParams.get('state') || ''
+
     const res = await agent
       .get(
-        '/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7'
+        `/callback/github/private/?state=${encodeURIComponent(state)}&code=eb518274e906c68580f7`
       )
       .expect(302)
 
@@ -290,29 +300,104 @@ describe('Task CRUD', () => {
       .basicAuth({ user: secrets.github.id, pass: secrets.github.secret })
       .reply(200, { access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a' })
     nock('https://api.github.com')
+      .get('/user')
+      .reply(200, { id: 1001, login: 'alexanmtz', email: 'teste@gmail.com' })
+      .get('/user/emails')
+      .reply(200, [{ email: 'teste@gmail.com', verified: true, primary: true }])
       .get('/repos/alexanmtz/festifica/issues/1')
       .reply(200, sampleIssue.issue)
       .get('/users/alexanmtz')
       .query({ client_id: secrets.github.id, client_secret: secrets.github.secret })
       .reply(200, { email: 'test@gmail.com' })
 
-    const registerRes = await agent
-      .post('/auth/register')
-      .send({ email: 'teste@gmail.com', password: 'teste' })
-      .expect('Content-Type', /json/)
-      .expect(200)
-
-    expect(registerRes.statusCode).to.equal(200)
-    expect(registerRes.body).to.exist
-    const userId = registerRes.body.id
+    const userAuth = await registerAndLogin(agent, { email: 'teste@gmail.com' })
+    const userId = userAuth.body.id
+    const issueUrl = 'https://github.com/alexanmtz/festifica/issues/1'
+    const authRes = await agent
+      .get('/authorize/github/private')
+      .query({ url: issueUrl })
+      .set('Authorization', userAuth.headers.authorization)
+      .expect(302)
+    const state = new URL(authRes.headers.location).searchParams.get('state') || ''
 
     const callbackRes = await agent
       .get(
-        `/callback/github/private/?userId=${userId}&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7`
+        `/callback/github/private/?state=${encodeURIComponent(state)}&code=eb518274e906c68580f7`
       )
       .expect(302)
 
     expect(callbackRes.statusCode).to.equal(302)
+    expect(callbackRes.headers.location).to.include(`${process.env.FRONTEND_HOST}/#/task/`)
+    const createdTask = await models.Task.findOne({ where: { url: issueUrl } })
+    expect(createdTask).to.exist
+    expect(createdTask.userId).to.equal(userId)
+    expect(createdTask.private).to.equal(true)
+  })
+
+  it('should reject /callback/github/private without a signed state even when userId query param is supplied', async () => {
+    const victimAuth = await registerAndLogin(agent, { email: 'victim-spoof@gmail.com' })
+
+    const noStateRes = await agent
+      .get(
+        `/callback/github/private/?userId=${victimAuth.body.id}&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7`
+      )
+      .expect(302)
+    expect(noStateRes.headers.location).to.include(
+      `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true`
+    )
+
+    const forgedStateRes = await agent
+      .get(
+        `/callback/github/private/?state=forged.signature&userId=${victimAuth.body.id}&code=eb518274e906c68580f7`
+      )
+      .expect(302)
+    expect(forgedStateRes.headers.location).to.include(
+      `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true`
+    )
+
+    const taskCount = await models.Task.count()
+    expect(taskCount).to.equal(0)
+  })
+
+  it('should ignore spoofed userId query param on /authorize/github/private and reject GitHub identity mismatch on callback', async () => {
+    const victimUser = await models.User.create({
+      email: 'victim-gh@gmail.com',
+      provider: 'github',
+      provider_id: '999999',
+      provider_username: 'victim-gh',
+      active: true
+    })
+    const attackerAuth = await registerAndLogin(agent, { email: 'attacker@gmail.com' })
+    const issueUrl = 'https://github.com/alexanmtz/festifica/issues/1'
+
+    const authRes = await agent
+      .get('/authorize/github/private')
+      .query({ userId: victimUser.id, url: issueUrl })
+      .set('Authorization', attackerAuth.headers.authorization)
+      .expect(302)
+    const attackerState = new URL(authRes.headers.location).searchParams.get('state')
+    expect(verifyPrivateTaskState(attackerState)?.userId).to.equal(attackerAuth.body.id)
+
+    nock('https://github.com')
+      .post('/login/oauth/access_token/', { code: 'eb518274e906c68580f7' })
+      .basicAuth({ user: secrets.github.id, pass: secrets.github.secret })
+      .reply(200, { access_token: 'attacker-token' })
+    nock('https://api.github.com')
+      .get('/user')
+      .reply(200, { id: 777777, login: 'attacker-gh', email: 'attacker@gmail.com' })
+
+    const victimSignedState = signPrivateTaskState({ userId: victimUser.id, url: issueUrl })
+    const callbackRes = await agent
+      .get(
+        `/callback/github/private/?state=${encodeURIComponent(victimSignedState)}&code=eb518274e906c68580f7`
+      )
+      .expect(302)
+
+    expect(callbackRes.headers.location).to.include(
+      `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true`
+    )
+    const taskCount = await models.Task.count()
+    expect(taskCount).to.equal(0)
   })
 
   describe('task fetch', () => {
