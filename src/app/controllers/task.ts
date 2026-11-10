@@ -176,25 +176,25 @@ export const deleteTaskFromReport = async (req: any, res: any) => {
 }
 
 // invite functions
-export const inviteUserToTask = async ({ params, body }: any, res: any) => {
+export const inviteUserToTask = async ({ params, body, user }: any, res: any) => {
   try {
-    const data = await taskInvite(params, body)
+    const data = await taskInvite(params, body, user)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log('error on task controller invite', error)
-    res.send({ error: error.message })
+    res.status(400).send({ error: error.message })
   }
 }
 
-export const inviteToFundingTask = async ({ params, body }: any, res: any) => {
+export const inviteToFundingTask = async ({ params, body, user }: any, res: any) => {
   try {
-    const data = await taskFunding(params, body)
+    const data = await taskFunding(params, body, user)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log('error on task controller funding', error)
-    res.send({ error: error.message })
+    res.status(400).send({ error: error.message })
   }
 }
 
@@ -276,14 +276,14 @@ export const assignedUser = async (req: any, res: any) => {
 }
 
 // Report Task
-export const reportTask = async ({ params, body }: any, res: any) => {
+export const reportTask = async ({ params, body, user }: any, res: any) => {
   try {
-    const data = await taskReport(params, body)
+    const data = await taskReport(params, body, user)
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log('error on task controller report', error)
-    res.send({ error: error.message })
+    res.status(400).send({ error: error.message })
   }
 }
 
