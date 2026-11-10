@@ -72,7 +72,10 @@ export default class Plan
                 private: 18,
                 'with support': 30
               }
-              if (instance.plan) {
+              if (
+                instance.plan &&
+                (instance.feePercentage === undefined || instance.feePercentage === null)
+              ) {
                 instance.feePercentage = percentages[instance.plan]
                 // Note: original code referenced instance.amount which doesn't exist in schema
                 // Keeping the logic as-is for minimal changes
