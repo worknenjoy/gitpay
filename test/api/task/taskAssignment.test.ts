@@ -158,3 +158,38 @@ xdescribe('Task Assignment', () => {
     expect(taskResult.status).to.be.equal('open')
   })
 })
+
+describe('Task Assignment Authorization (#1623)', () => {
+  beforeEach(async () => {
+    await truncateModels(models.Task)
+    await truncateModels(models.User)
+    await truncateModels(models.Assign)
+    await truncateModels(models.Order)
+    await truncateModels(models.Transfer)
+  })
+
+  it('should reject unassigning task when caller is not the task owner (Issue #1623)', async () => {
+    const owner = await register(agent, {
+      name: 'Real Owner',
+      email: 'real_owner_1623@example.com',
+      password: 'password123'
+    })
+    await register(agent, {
+      name: 'Attacker User',
+      email: 'attacker_1623@example.com',
+      password: 'password123'
+    })
+    const task = await buildTask({ userId: owner.body.id, title: 'Protected Bounty' })
+
+    const logged = await login(agent, {
+      email: 'attacker_1623@example.com',
+      password: 'password123'
+    })
+    const res = await agent
+      .put(`/tasks/${task.id}/assignment/remove`)
+      .set('Authorization', logged.headers.authorization)
+      .send({ message: 'malicious removal attempt' })
+
+    expect(res.status).to.be.oneOf([403, 400])
+  })
+})

@@ -9,13 +9,24 @@ export async function removeAssignedUser({ id, userId }: any, { message }: any) 
     {
       where: {
         id
-        // userId
       }
     },
     {
       include: [currentModels.User, currentModels.Order, currentModels.Assign]
     }
   )
+
+  if (!task) {
+    const error: any = new Error("Task not found.")
+    error.statusCode = 404
+    throw error
+  }
+
+  if (userId && task.userId !== userId) {
+    const error: any = new Error("Unauthorized: only the task owner can remove assigned contributors.")
+    error.statusCode = 403
+    throw error
+  }
 
   const assignedId = task.assigned
 
