@@ -19,6 +19,7 @@ import isGithubUrl from 'is-github-url'
 import logoGithub from 'images/github-logo.png'
 import logoBitbucket from 'images/bitbucket-logo.png'
 import api from '../../../../../../consts'
+import Auth from '../../../../../../modules/auth'
 import {
   FullWidthFormControl,
   ProvidersWrapper,
@@ -49,7 +50,8 @@ const ImportIssueDialog = ({ user, open, onClose, onCreate }) => {
   const handleCreateTask = async (e: any) => {
     if (validURL(url)) {
       if (privateRepo) {
-        window.location.href = `${api.API_URL}/authorize/github/private/?url=${encodeURIComponent(url)}&userId=${data.id}`
+        const token = Auth.getToken()
+        window.location.href = `${api.API_URL}/authorize/github/private/?url=${encodeURIComponent(url)}&token=${encodeURIComponent(token || '')}`
         return
       }
       try {

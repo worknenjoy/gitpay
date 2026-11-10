@@ -7,6 +7,7 @@ import Models from '../../../src/models'
 import { registerAndLogin, register, login, truncateModels } from '../../helpers'
 import githubOrg from '../../data/github/github.org.json'
 import secrets from '../../../src/config/secrets'
+import { verifyPrivateTaskState } from '../../../src/utils/auth/privateTaskState'
 
 const models = Models as any
 const agent = request.agent(api)
@@ -74,16 +75,46 @@ describe('GET /auth/social', () => {
         'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate%3FuserId%3Dundefined%26url%3Dundefined&scope=repo&client_id='
       )
     })
-    it('should user ask permissions with github to access private issue', async () => {
+    it('should reject unauthenticated requests to /authorize/github/private', async () => {
       const res = await agent
         .get('/authorize/github/private')
-        .send({ userId: 2, url: 'https://github.com/alexanmtz/project/issues/2', code: '123' })
+        .query({ userId: 2, url: 'https://github.com/alexanmtz/project/issues/2' })
+        .expect(403)
+
+      expect(res.statusCode).to.equal(403)
+    })
+
+    it('should user ask permissions with github to access private issue with signed state', async () => {
+      const auth = await registerAndLogin(agent, { email: 'private-auth-test@gmail.com' })
+      const issueUrl = 'https://github.com/alexanmtz/project/issues/2'
+      const res = await agent
+        .get('/authorize/github/private')
+        .query({ userId: 99999, url: issueUrl })
+        .set('Authorization', auth.headers.authorization)
         .expect(302)
 
       expect(res.statusCode).to.equal(302)
       expect(res.headers.location).to.include(
-        'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate%3FuserId%3Dundefined%26url%3Dundefined&scope=repo&client_id='
+        'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate&scope=repo%2Cuser%3Aemail&client_id='
       )
+      const parsedLocation = new URL(res.headers.location)
+      const state = parsedLocation.searchParams.get('state')
+      const verified = verifyPrivateTaskState(state)
+      expect(verified).to.deep.equal({
+        userId: auth.body.id,
+        url: issueUrl
+      })
+    })
+
+    it('should reject invalid issue URL in /authorize/github/private', async () => {
+      const auth = await registerAndLogin(agent, { email: 'private-invalid-url@gmail.com' })
+      const res = await agent
+        .get('/authorize/github/private')
+        .query({ url: 'https://evil.example.com/owner/repo/issues/1' })
+        .set('Authorization', auth.headers.authorization)
+        .expect(400)
+
+      expect(res.statusCode).to.equal(400)
     })
   })
 })

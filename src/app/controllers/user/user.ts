@@ -9,6 +9,8 @@ import Sendmail from '../../../mail/mail'
 import UserMail from '../../../mail/user'
 import i18n from 'i18n'
 import { omitAuthSecrets } from '../../../queries/user/userSensitiveAttributes'
+import { verifyPrivateTaskState } from '../../../utils/auth/privateTaskState'
+import { parseAndValidateIssueUrl } from '../../../utils/issue/parse-and-validate-issue-url'
 
 const models = Models as any
 
@@ -158,8 +160,76 @@ export const changePassword = async (req: any, res: any) => {
   }
 }
 
+const verifyGithubIdentityMatchesUser = async (
+  accessToken: string,
+  targetUser: any
+): Promise<boolean> => {
+  const ghUser = await requestPromise({
+    method: 'GET',
+    uri: 'https://api.github.com/user',
+    headers: {
+      'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
+      Authorization: `token ${accessToken}`
+    },
+    json: true
+  })
+
+  if (!ghUser || !ghUser.id) {
+    return false
+  }
+
+  if (targetUser.provider === 'github' && targetUser.provider_id) {
+    return String(ghUser.id) === String(targetUser.provider_id)
+  }
+
+  if (targetUser.provider === 'github' && targetUser.provider_username) {
+    return (
+      typeof ghUser.login === 'string' &&
+      ghUser.login.toLowerCase() === String(targetUser.provider_username).toLowerCase()
+    )
+  }
+
+  const candidateEmails: string[] = []
+  if (targetUser.provider === 'github' && targetUser.provider_email) {
+    candidateEmails.push(String(targetUser.provider_email).toLowerCase())
+  }
+  if (targetUser.email) {
+    candidateEmails.push(String(targetUser.email).toLowerCase())
+  }
+
+  if (candidateEmails.length === 0) {
+    return false
+  }
+
+  let ghEmails: any[] = []
+  try {
+    const emailsResponse = await requestPromise({
+      method: 'GET',
+      uri: 'https://api.github.com/user/emails',
+      headers: {
+        'User-Agent': 'octonode/0.3 (https://github.com/pksunkara/octonode) terminal/0.0',
+        Authorization: `token ${accessToken}`
+      },
+      json: true
+    })
+    if (Array.isArray(emailsResponse)) {
+      ghEmails = emailsResponse
+    }
+  } catch (_error) {
+    return false
+  }
+
+  return ghEmails.some(
+    (entry: any) =>
+      entry &&
+      entry.verified === true &&
+      typeof entry.email === 'string' &&
+      candidateEmails.includes(entry.email.toLowerCase())
+  )
+}
+
 export const createPrivateTask = async (req: any, res: any) => {
-  const { url, code, userId } = req.query
+  const { code, state } = req.query
   const githubClientId = secrets.github.id
   const githubClientSecret = secrets.github.secret
   const redirectPrivateTaskError = (message?: string) => {
@@ -168,7 +238,34 @@ export const createPrivateTask = async (req: any, res: any) => {
       `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodedError}`
     )
   }
+
+  const verifiedState = verifyPrivateTaskState(state)
+  if (!verifiedState) {
+    return redirectPrivateTaskError('Invalid or expired OAuth state.')
+  }
+
+  if (typeof req.query?.url === 'string' && req.query.url !== verifiedState.url) {
+    return redirectPrivateTaskError('Mismatched issue URL.')
+  }
+
+  const { userId, url } = verifiedState
+
   try {
+    parseAndValidateIssueUrl(url, 'github')
+  } catch (error: any) {
+    return redirectPrivateTaskError(error?.message || 'Invalid repository URL')
+  }
+
+  if (!code || typeof code !== 'string') {
+    return redirectPrivateTaskError('Authorization code is required.')
+  }
+
+  try {
+    const targetUser = await user.userExists({ id: userId })
+    if (!targetUser) {
+      return redirectPrivateTaskError('User not found.')
+    }
+
     const response = await requestPromise({
       method: 'POST',
       uri: 'https://github.com/login/oauth/access_token/',
@@ -184,6 +281,16 @@ export const createPrivateTask = async (req: any, res: any) => {
     })
     if (response.access_token) {
       try {
+        const identityMatches = await verifyGithubIdentityMatchesUser(
+          response.access_token,
+          targetUser
+        )
+        if (!identityMatches) {
+          return redirectPrivateTaskError(
+            'Authenticated GitHub account does not match the Gitpay user.'
+          )
+        }
+
         const taskResult = await task.taskBuilds({
           provider: 'github',
           private: true,
@@ -191,7 +298,7 @@ export const createPrivateTask = async (req: any, res: any) => {
           url,
           token: response.access_token
         })
-        res.redirect(`${process.env.FRONTEND_HOST}/#/task/${taskResult.id}`)
+        return res.redirect(`${process.env.FRONTEND_HOST}/#/task/${taskResult.id}`)
         // return res.send(data)
       } catch (error: any) {
         // eslint-disable-next-line no-console
