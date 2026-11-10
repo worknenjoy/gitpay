@@ -5,17 +5,17 @@ const currentModels = models as any
 type WalletUpdateParams = {
   userId: number
   id: number
-  amount: number
-  name: string
+  amount?: number
+  name?: string
 }
 
 export async function walletUpdate(params: WalletUpdateParams) {
-  const { amount, name, id } = params
+  const { amount, name, id, userId } = params
   const user =
-    params.userId &&
+    userId &&
     (await currentModels.User.findOne({
       where: {
-        id: params.userId
+        id: userId
       }
     }))
 
@@ -23,17 +23,28 @@ export async function walletUpdate(params: WalletUpdateParams) {
     return { error: 'No valid user' }
   }
 
+  const updateFields: any = {}
+  if (name !== undefined) {
+    updateFields.name = name
+  }
+  if (amount !== undefined) {
+    updateFields.balance = amount
+  }
+
   const wallet = await currentModels.Wallet.update(
-    {
-      balance: amount,
-      name: name
-    },
+    updateFields,
     {
       where: {
-        id: id
+        id,
+        userId
       },
       returning: true
     }
   )
+
+  if (!wallet || !wallet[0] || !wallet[1] || wallet[1].length === 0) {
+    return { error: 'No valid wallet' }
+  }
+
   return wallet[1][0].dataValues
 }

@@ -87,4 +87,30 @@ describe('POST /wallet', () => {
     expect(res.body.name).to.equal('Test Wallet')
     expect(res.body.balance).to.equal('0.00')
   })
+  it('should not update wallet belonging to another user (returns 404)', async () => {
+    const owner = await registerAndLogin(agent, { email: 'owner_wallet_1622@gitpay.me' })
+    const wallet = await WalletFactory({
+      userId: owner.body.id,
+      name: 'Owner Wallet',
+      balance: 0
+    })
+
+    const attacker = await registerAndLogin(agent, { email: 'attacker_wallet_1622@gitpay.me' })
+    const res = await agent
+      .put(`/wallets/${wallet.id}`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('authorization', attacker.headers.authorization)
+      .expect(404)
+      .send({
+        name: 'owned-by-attacker',
+        amount: 500
+      })
+
+    expect(res.body.error).to.equal('No valid wallet')
+
+    const unchanged = await models.Wallet.findOne({ where: { id: wallet.id } })
+    expect(unchanged.name).to.equal('Owner Wallet')
+    expect(unchanged.balance).to.equal('0.00')
+  })
 })

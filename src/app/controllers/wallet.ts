@@ -17,6 +17,10 @@ export const updateWallet = async (req: any, res: any) => {
       id: req.params.id,
       userId: req.user.id
     })
+    if (wallet?.error) {
+      res.status(404).send(wallet)
+      return
+    }
     res.status(200).send(wallet)
   } catch (error: any) {
     console.log('error on updateWallet', error)
@@ -37,6 +41,10 @@ export const walletList = async (req: any, res: any) => {
 export const walletFetch = async (req: any, res: any) => {
   try {
     const wallet = await Wallet.walletFetch({ id: req.params.id, userId: req.user.id })
+    if (wallet?.error) {
+      res.status(404).send(wallet)
+      return
+    }
     res.status(200).send(wallet)
   } catch (error: any) {
     console.log('error on walletFetch', error)
