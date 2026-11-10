@@ -132,7 +132,7 @@ describe('GET /order/details', () => {
     const attacker = await registerAndLogin(agent, { email: 'test_fetch_order_attacker_fetch@gitpay.me' })
 
     const res = await agent
-      .get(/orders/)
+      .get(`/orders/${order.dataValues.id}`)
       .set('Authorization', attacker.headers.authorization)
       .expect(404)
 

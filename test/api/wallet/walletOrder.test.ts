@@ -333,7 +333,7 @@ describe('POST /wallet-order', () => {
       })
 
       const res = await agent
-        .get(/wallets/orders/)
+        .get(`/wallets/orders/${walletOrder.id}`)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .set('authorization', otherUser.headers.authorization)
