@@ -4,15 +4,19 @@ const currentModels = models as any
 
 type WalletOrderListParams = {
   walletId: number
+  userId?: number
 }
 
 export async function walletOrderList(params: WalletOrderListParams) {
+  const where: any = { id: params.walletId }
+  if (params.userId) {
+    where.userId = params.userId
+  }
+
   const wallet =
     params.walletId &&
     (await currentModels.Wallet.findOne({
-      where: {
-        id: params.walletId
-      }
+      where
     }))
 
   if (!wallet) {
