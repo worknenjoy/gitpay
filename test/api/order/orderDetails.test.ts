@@ -119,4 +119,23 @@ describe('GET /order/details', () => {
 
     expect(res.body.source_id).to.not.equal('12345')
   })
+
+  it('does not return order fetch belonging to another user (GET /orders/:id returns 404)', async () => {
+    const owner = await registerAndLogin(agent, { email: 'test_fetch_order_owner_fetch@gitpay.me' })
+    const order = await models.Order.build({
+      source_id: '12345',
+      currency: 'BRL',
+      amount: 200,
+      userId: owner.body.id
+    }).save()
+
+    const attacker = await registerAndLogin(agent, { email: 'test_fetch_order_attacker_fetch@gitpay.me' })
+
+    const res = await agent
+      .get(/orders/)
+      .set('Authorization', attacker.headers.authorization)
+      .expect(404)
+
+    expect(res.body).to.equal(false)
+  })
 })

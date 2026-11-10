@@ -248,6 +248,31 @@ describe('POST /wallet-order', () => {
       expect(res.body[0].status).to.equal('pending')
       expect(res.body[0].walletId).to.equal(wallet.id)
     })
+    it('should return 404 when listing wallet orders for a wallet belonging to another user', async () => {
+      const owner = await registerAndLogin(agent, { email: 'wallet_owner_list@gitpay.me' })
+      const otherUser = await registerAndLogin(agent, { email: 'other_user_list@gitpay.me' })
+
+      const wallet = await WalletFactory({
+        userId: owner.body.id,
+        name: 'Owner Wallet',
+        balance: 0
+      })
+      await WalletOrderFactory({
+        walletId: wallet.id,
+        amount: 100,
+        status: 'pending'
+      })
+
+      const res = await agent
+        .get('/wallets/orders')
+        .query({ walletId: wallet.id })
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('authorization', otherUser.headers.authorization)
+        .expect(404)
+
+      expect(res.body.error).to.equal('No valid wallet')
+    })
   })
   describe('fetch wallet orders', () => {
     beforeEach(() => {
@@ -287,6 +312,34 @@ describe('POST /wallet-order', () => {
       expect(res.body.invoice.hostedUrl).to.equal(
         'https://stripe.com/invoice/invst_1Q2fh8BrSjgsps2DUqQsGLDj'
       )
+    })
+    it('should return 404 when fetching wallet order belonging to another user', async () => {
+      const owner = await registerAndLogin(agent, { email: 'wallet_owner_fetch@gitpay.me' })
+      const otherUser = await registerAndLogin(agent, { email: 'other_user_fetch@gitpay.me' })
+
+      const wallet = await WalletFactory({
+        userId: owner.body.id,
+        name: 'Owner Wallet',
+        balance: 0
+      })
+      const walletOrder = await WalletOrderFactory({
+        walletId: wallet.id,
+        amount: 100,
+        status: 'paid',
+        source_id: 'ii_test',
+        source_type: 'invoice-item',
+        currency: 'usd',
+        source: 'in_test'
+      })
+
+      const res = await agent
+        .get(/wallets/orders/)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .set('authorization', otherUser.headers.authorization)
+        .expect(404)
+
+      expect(res.body.error).to.equal('No valid wallet order')
     })
   })
 })

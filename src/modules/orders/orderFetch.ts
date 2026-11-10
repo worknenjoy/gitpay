@@ -4,14 +4,22 @@ const currentModels = models as any
 
 type OrderFetchParams = {
   id: number
+  userId?: number
 }
 
 export async function orderFetch(orderParams: OrderFetchParams) {
   try {
+    const where: any = { id: orderParams.id }
+    if (orderParams.userId) {
+      where.userId = orderParams.userId
+    }
     const data = await currentModels.Order.findOne({
-      where: { id: orderParams.id },
+      where,
       include: currentModels.User
     })
+    if (!data) {
+      return false
+    }
     return {
       source_id: data.source_id,
       currency: data.currency,
