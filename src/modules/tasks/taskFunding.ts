@@ -6,21 +6,26 @@ const currentModels = models as any
 
 export async function taskFunding(
   { id }: any,
-  { comment, email, suggestedValue, suggestedDate, username }: any
+  { comment, email, suggestedValue, suggestedDate, username }: any,
+  user?: any
 ) {
   const task = await currentModels.Task.findByPk(id, {
     include: [currentModels.User, currentModels.Order, currentModels.Assign]
   })
 
-  const taskUrl = `${process.env.FRONTEND_HOST}/#/task/${task.id}`
-  const user = task.User.dataValues
-  const language = user.language || 'en'
-  const receiveNotifications = user.receiveNotifications
+  if (!task) {
+    throw new Error('Task not found')
+  }
+
+  const taskUrl = ${process.env.FRONTEND_HOST}/#/task/
+  const taskUser = task.User?.dataValues || {}
+  const language = taskUser.language || 'en'
+  const receiveNotifications = taskUser.receiveNotifications
   i18n.setLocale(language)
   SendMail.success(
     { email, language, receiveNotifications },
     i18n.__('mail.funding.send.action', { username: username }),
-    `${i18n.__('mail.funding.send.message', {
+    ${i18n.__('mail.funding.send.message', {
       title: task.title,
       url: taskUrl,
       suggestedValue: suggestedValue,
@@ -28,6 +33,6 @@ export async function taskFunding(
       username: username,
       suggestedDate: suggestedDate
     })}
-        `
+        
   )
 }
