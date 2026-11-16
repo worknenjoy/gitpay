@@ -14,7 +14,7 @@ const bountyClosedNotPaidComment = require('../bot/bountyClosedNotPaidComment')
 const {
   notifyUnclaimedBounties: notifyUnclaimedBountiesService
 } = require('../services/issues/claims/unclaimedBountyService')
-const { syncAllTaskStates } = require('../services/issues/state/issueStateService')
+const { syncAllIssuesStates } = require('../services/issues/state/issueStateService')
 const { syncInfo } = require('../modules/info/syncInfo')
 
 i18n.configure({
@@ -158,8 +158,9 @@ const TaskCron = {
     return results
   },
   syncTaskStates: async () => {
-    const { total, updated } = await syncAllTaskStates()
-    console.log(`Task state sync complete. Processed: ${total}, Updated: ${updated}`)
+    const updated = await syncAllIssuesStates()
+    console.log(`Task state sync complete. Updated: ${updated.length}`)
+    return updated
   },
   syncStats: async () => {
     const result = await syncInfo()
@@ -213,7 +214,7 @@ const monthlyJobNotifyUnclaimedBounties = new CronJob({
 const dailyJobSyncTaskStates = new CronJob({
   cronTime: '0 0 1 * * *', // every day at 1:00AM
   onTick: () => {
-    TaskCron.syncTaskStates()
+    TaskCron.syncTaskStates().catch((err: any) => console.error('Task state sync failed:', err))
   }
 })
 
