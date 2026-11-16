@@ -4,6 +4,25 @@ import { getWhopClient } from '../../providers/whop/client'
 import { WhopPaymentProvider } from '../../providers/whop/WhopPaymentProvider'
 import { currencyForCountry } from '../../utils/currency/currency-map'
 
+const WHOP_WITHDRAWAL_INTERVALS = ['manual', 'daily', 'weekly', 'monthly']
+
+/**
+ * Whop's automatic withdrawal schedule, from GET /accounts/{id}
+ * `payment_controls.withdrawal_schedule` (beta). Read-only: changes happen on the
+ * Whop payouts portal. Returns null when the field is missing or unrecognized.
+ */
+const normalizeWhopWithdrawalSchedule = (
+  schedule: any
+): { interval: string; day: number | null; next_payout_date: string | null } | null => {
+  const interval = schedule?.interval || schedule?.frequency || null
+  if (!interval || !WHOP_WITHDRAWAL_INTERVALS.includes(interval)) return null
+  return {
+    interval,
+    day: typeof schedule?.day === 'number' ? schedule.day : null,
+    next_payout_date: schedule?.next_payout_date || schedule?.next_payout_at || null
+  }
+}
+
 type UserAccountParams = {
   id: number
   /**
@@ -172,6 +191,10 @@ export async function userAccount(userParameters: UserAccountParams) {
       // Best-effort payout method; bank/card/crypto is added on the Whop portal
       payout_method: defaultPayoutMethod,
       payout_methods: payoutMethods,
+      // Automatic withdrawal schedule as configured on Whop (null when unavailable)
+      payout_schedule: normalizeWhopWithdrawalSchedule(
+        whopAccount?.payment_controls?.withdrawal_schedule
+      ),
       // Disputes/refunds arrive via webhooks; empty until surfaced
       disputes,
       // KYC / bank details are completed on Whop portal via account_links

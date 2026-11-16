@@ -103,3 +103,28 @@ export const mapPayoutsSummarySections = (
     }
   ]
 }
+
+/** Provider account -> <AutoWithdrawalStatus/> props. Whop exposes `payout_schedule`
+ * (read from Whop's withdrawal_schedule); Stripe uses `settings.payouts.schedule`.
+ * No connected account yet -> `connected: false`, so the control can offer setup. */
+export const mapAutoWithdrawalProps = (
+  account: any = {}
+): {
+  connected: boolean
+  enabled: boolean
+  frequency: 'daily' | 'weekly' | 'monthly' | null
+  nextRunDate: string | null
+} => {
+  const data = account?.data || {}
+  if (!data.id) return { connected: false, enabled: false, frequency: null, nextRunDate: null }
+  const schedule =
+    data.provider === 'whop' ? data.payout_schedule : data.settings?.payouts?.schedule
+  const interval = schedule?.interval || null
+  const frequency = ['daily', 'weekly', 'monthly'].includes(interval) ? interval : null
+  return {
+    connected: true,
+    enabled: Boolean(frequency),
+    frequency,
+    nextRunDate: schedule?.next_payout_date || null
+  }
+}

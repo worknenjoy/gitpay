@@ -6,6 +6,7 @@ import LinkIcon from '@mui/icons-material/Link'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import CustomAlert from 'design-library/atoms/alerts/alert/alert'
 import { withProfileTemplate } from '../../../../../../../.storybook/decorators/withPrivateTemplate'
+import AutoWithdrawalStatus from 'design-library/molecules/payouts/auto-withdrawal-status/auto-withdrawal-status'
 import ContributorDashboard from './contributor-dashboard'
 
 const meta = {
@@ -162,6 +163,12 @@ Default.args = {
   onViewPayoutsClick: () => alert('See all your payouts clicked'),
   onViewClaimsClick: () => alert('See your claims clicked'),
   onViewPayoutsSummaryClick: () => alert('See all payouts clicked')
+}
+
+export const WithAutoWithdrawals = Template.bind({})
+WithAutoWithdrawals.args = {
+  ...Default.args,
+  headerAction: <AutoWithdrawalStatus enabled frequency="weekly" onChange={() => {}} />
 }
 
 export const Loading = Template.bind({})

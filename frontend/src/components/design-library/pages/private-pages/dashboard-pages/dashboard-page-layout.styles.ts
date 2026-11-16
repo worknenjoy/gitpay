@@ -19,6 +19,23 @@ export const HeaderTitleRow = styled('div')(() => ({
   flexWrap: 'wrap'
 }))
 
+/** Title group (left) + header action (right), both sitting on the bottom line */
+export const HeaderBar = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'flex-end',
+  justifyContent: 'space-between',
+  gap: theme.spacing(2),
+  flexWrap: 'wrap'
+}))
+
+/** Right side of the header bar (e.g. <AutoWithdrawalStatus/>) */
+export const HeaderAction = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  marginLeft: 'auto',
+  marginTop: 4
+}))
+
 export const Body = styled('div')(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'minmax(0, 1fr) 340px',

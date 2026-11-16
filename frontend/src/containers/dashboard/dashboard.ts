@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { fetchDashboardInfo } from '../../actions/dashboardActions'
 import { addNotification } from '../../actions/notificationActions'
-import { fetchAccount } from '../../actions/userActions'
+import { fetchAccount, fetchAccountVerificationLink } from '../../actions/userActions'
 import { listTasks, listMaintainerTasks } from '../../actions/taskActions'
 import { listTaskSolutions } from '../../actions/taskSolutionActions'
 import { searchPayout } from '../../actions/payoutActions'
@@ -35,6 +35,8 @@ const mapDispatchToProps = (dispatch: any) => {
     fetchDashboardInfo: () => dispatch(fetchDashboardInfo()),
     addNotification: (message, options) => dispatch(addNotification(message, options)),
     fetchAccount: () => dispatch(fetchAccount()),
+    fetchAccountVerificationLink: (provider: string, purpose?: string) =>
+      dispatch(fetchAccountVerificationLink(provider, purpose)),
     listTasks: (params) => dispatch(listTasks(params)),
     listMaintainerTasks: (params) => dispatch(listMaintainerTasks(params)),
     listTaskSolutions: () => dispatch(listTaskSolutions()),

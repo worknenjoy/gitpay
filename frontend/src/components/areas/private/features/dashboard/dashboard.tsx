@@ -21,6 +21,7 @@ import ServiceProviderDashboard from 'design-library/pages/private-pages/dashboa
 import MaintainerDashboard from 'design-library/pages/private-pages/dashboard-pages/maintainer-dashboard/maintainer-dashboard'
 import FundingDashboard from 'design-library/pages/private-pages/dashboard-pages/funding-dashboard/funding-dashboard'
 import AccountRequirements from 'design-library/atoms/alerts/account-requirements/account-requirements'
+import AutoWithdrawalStatus from 'design-library/molecules/payouts/auto-withdrawal-status/auto-withdrawal-status'
 import useUserTypes from '../../../../../hooks/use-user-types'
 import {
   mapWorkItems,
@@ -37,6 +38,7 @@ import {
   mapProviderStats,
   mapProviderChecklist
 } from './service-provider-dashboard.mappers'
+import { mapAutoWithdrawalProps } from './dashboard-shared.mappers'
 import {
   mapOpenIssues,
   mapClosedIssues,
@@ -73,6 +75,7 @@ const Dashboard = ({
   orders,
   fetchDashboardInfo,
   fetchAccount,
+  fetchAccountVerificationLink,
   listTasks,
   listMaintainerTasks,
   listTaskSolutions,
@@ -184,6 +187,22 @@ const Dashboard = ({
     <AccountRequirements user={data} account={account} onClick={handleGoToPayoutSettings} />
   )
 
+  // Whop owns the schedule: Change opens its hosted payouts portal. Stripe has its own page.
+  const autoWithdrawal = mapAutoWithdrawalProps(account)
+  const handleChangeAutoWithdrawal = () => {
+    if (!autoWithdrawal.connected) return handleGoToPayoutSettings()
+    return account.data?.provider === 'whop'
+      ? fetchAccountVerificationLink('whop', 'payout')
+      : history.push('/profile/payout-settings/bank-account/payout-schedule')
+  }
+  const autoWithdrawalStatus = (isContributor || isProvider) && (
+    <AutoWithdrawalStatus
+      {...autoWithdrawal}
+      completed={account.completed}
+      onChange={handleChangeAutoWithdrawal}
+    />
+  )
+
   const roles: CombinedDashboardRole[] = []
 
   if (isContributor) {
@@ -199,6 +218,7 @@ const Dashboard = ({
         <ContributorDashboard
           completed={allCompleted}
           banner={banner}
+          headerAction={autoWithdrawalStatus}
           stats={mapStats(dashboard.data, taskSolutions.data)}
           workItems={mapWorkItems(tasks.data)}
           solutions={mapSolutions(taskSolutions.data)}
@@ -238,6 +258,7 @@ const Dashboard = ({
         <ServiceProviderDashboard
           completed={allProviderCompleted}
           banner={banner}
+          headerAction={autoWithdrawalStatus}
           stats={mapProviderStats(dashboard.data)}
           paymentsReceived={mapPaymentsReceived(paymentRequestPayments.data)}
           paymentLinks={mapPaymentLinks(paymentRequests.data)}
@@ -343,6 +364,7 @@ const Dashboard = ({
       <DashboardOverview
         completed={overviewCompleted}
         banner={(isContributor || isProvider) && banner}
+        headerAction={autoWithdrawalStatus}
         roleBadges={[
           isContributor && (
             <RolePill

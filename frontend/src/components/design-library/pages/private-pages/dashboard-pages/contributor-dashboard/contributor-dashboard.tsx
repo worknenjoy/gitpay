@@ -9,7 +9,15 @@ import StatGroupCard from 'design-library/molecules/cards/stat-card/stat-group-c
 import ListCard from 'design-library/molecules/cards/list-card/list-card'
 import GetStartedCard from 'design-library/molecules/cards/get-started-card/get-started-card'
 import SummaryCard from 'design-library/molecules/cards/summary-card/summary-card'
-import { Root, Header, HeaderTitleRow, Body, Column } from './contributor-dashboard.styles'
+import {
+  Root,
+  Header,
+  HeaderTitleRow,
+  HeaderBar,
+  HeaderAction,
+  Body,
+  Column
+} from './contributor-dashboard.styles'
 
 type ContributorDashboardProps = {
   /** completed === false -> every card/alert below renders its own loading state */
@@ -20,6 +28,8 @@ type ContributorDashboardProps = {
   banner?: React.ReactNode
   /** Multi-role accounts only — the role switcher (<CombinedDashboard/> injects it). */
   switcher?: React.ReactNode
+  /** Right side of the title row (e.g. <AutoWithdrawalStatus/>). Omit to show nothing. */
+  headerAction?: React.ReactNode
   stats: React.ComponentProps<typeof StatGroupCard>['stats']
   workItems: React.ComponentProps<typeof ListCard>['items']
   solutions: React.ComponentProps<typeof ListCard>['items']
@@ -42,6 +52,7 @@ const ContributorDashboard = ({
   completed = true,
   banner,
   switcher,
+  headerAction,
   stats,
   workItems,
   solutions,
@@ -63,16 +74,21 @@ const ContributorDashboard = ({
   return (
     <Root>
       <Header>
-        <HeaderTitleRow>
-          <Typography variant="h3">
-            <FormattedMessage id="dashboard.contributor.title" defaultMessage="Dashboard" />
-          </Typography>
-          <RolePill
-            name={<FormattedMessage id="dashboard.contributor.role" defaultMessage="Contributor" />}
-            active
-            tone="orange"
-          />
-        </HeaderTitleRow>
+        <HeaderBar>
+          <HeaderTitleRow>
+            <Typography variant="h3">
+              <FormattedMessage id="dashboard.contributor.title" defaultMessage="Dashboard" />
+            </Typography>
+            <RolePill
+              name={
+                <FormattedMessage id="dashboard.contributor.role" defaultMessage="Contributor" />
+              }
+              active
+              tone="orange"
+            />
+          </HeaderTitleRow>
+          {headerAction && <HeaderAction>{headerAction}</HeaderAction>}
+        </HeaderBar>
         <Typography variant="subtitle1">
           <FormattedMessage
             id="dashboard.contributor.subtitle"

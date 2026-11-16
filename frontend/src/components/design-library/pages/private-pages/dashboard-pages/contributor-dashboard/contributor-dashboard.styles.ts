@@ -1,1 +1,9 @@
-export { Root, Header, HeaderTitleRow, Body, Column } from '../dashboard-page-layout.styles'
+export {
+  Root,
+  Header,
+  HeaderTitleRow,
+  HeaderBar,
+  HeaderAction,
+  Body,
+  Column
+} from '../dashboard-page-layout.styles'

@@ -223,6 +223,53 @@ describe('User Account (Whop)', () => {
 
       expect(res.body.active).to.equal(true)
       expect(res.body.payouts_enabled).to.equal(true)
+      expect(res.body.payout_schedule).to.equal(null)
+    })
+  })
+
+  it('should expose the Whop automatic withdrawal schedule as payout_schedule', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nock(WHOP_API_HOST)
+        .get('/api/v1/companies/biz_user_whop_9')
+        .reply(200, { ...whopCompany, id: 'biz_user_whop_9', verified: true })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/accounts/biz_user_whop_9')
+        .reply(200, {
+          id: 'biz_user_whop_9',
+          capabilities: { standard_payout: 'active' },
+          payment_controls: {
+            withdrawal_schedule: {
+              interval: 'weekly',
+              day: 1,
+              next_payout_date: '2026-11-23'
+            }
+          }
+        })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_user_whop_9')
+        .reply(200, { id: 'ldgr_test_9', balances: [] })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/payout_methods')
+        .query({ company_id: 'biz_user_whop_9' })
+        .reply(200, { data: [] })
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_user_whop_9' },
+        { where: { id: user.body.id } }
+      )
+
+      const res = await agent
+        .get('/user/account')
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+
+      expect(res.body.payout_schedule).to.deep.equal({
+        interval: 'weekly',
+        day: 1,
+        next_payout_date: '2026-11-23'
+      })
     })
   })
 

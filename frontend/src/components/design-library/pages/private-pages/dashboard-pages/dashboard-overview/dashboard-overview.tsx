@@ -8,7 +8,15 @@ import StatGroupCard from 'design-library/molecules/cards/stat-card/stat-group-c
 import ListCard from 'design-library/molecules/cards/list-card/list-card'
 import GetStartedCard from 'design-library/molecules/cards/get-started-card/get-started-card'
 import SummaryCard from 'design-library/molecules/cards/summary-card/summary-card'
-import { Root, Header, HeaderTitleRow, Body, Column } from '../dashboard-page-layout.styles'
+import {
+  Root,
+  Header,
+  HeaderTitleRow,
+  HeaderBar,
+  HeaderAction,
+  Body,
+  Column
+} from '../dashboard-page-layout.styles'
 
 export type RoleOverviewSection = Omit<RoleSectionHeaderProps, 'onLinkClick'> & {
   key: string
@@ -30,6 +38,8 @@ type DashboardOverviewProps = {
   banner?: React.ReactNode
   /** The role switcher (<CombinedDashboard/> injects it). */
   switcher?: React.ReactNode
+  /** Right side of the title row (e.g. <AutoWithdrawalStatus/>). Omit to show nothing. */
+  headerAction?: React.ReactNode
   /** Jump straight to a role's own tab (<CombinedDashboard/> injects it) — used by each role
    * section's "Open X view" link. */
   onNavigateToRole?: (key: string) => void
@@ -54,6 +64,7 @@ const DashboardOverview = ({
   completed = true,
   banner,
   switcher,
+  headerAction,
   onNavigateToRole,
   roleBadges,
   roleCount,
@@ -73,14 +84,17 @@ const DashboardOverview = ({
   return (
     <Root>
       <Header>
-        <HeaderTitleRow>
-          <Typography variant="h3">
-            <FormattedMessage id="dashboard.combined.title" defaultMessage="Dashboard" />
-          </Typography>
-          {roleBadges.map((badge, index) => (
-            <React.Fragment key={index}>{badge}</React.Fragment>
-          ))}
-        </HeaderTitleRow>
+        <HeaderBar>
+          <HeaderTitleRow>
+            <Typography variant="h3">
+              <FormattedMessage id="dashboard.combined.title" defaultMessage="Dashboard" />
+            </Typography>
+            {roleBadges.map((badge, index) => (
+              <React.Fragment key={index}>{badge}</React.Fragment>
+            ))}
+          </HeaderTitleRow>
+          {headerAction && <HeaderAction>{headerAction}</HeaderAction>}
+        </HeaderBar>
         <Typography variant="subtitle1">
           <FormattedMessage
             id="dashboard.combined.subtitle"
