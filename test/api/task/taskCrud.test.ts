@@ -7,6 +7,7 @@ import { registerAndLogin, register, login, truncateModels } from '../../helpers
 import { TaskFactory, OrderFactory, AssignFactory, UserFactory } from '../../factories'
 import { USER_SENSITIVE_ATTRIBUTES } from '../../../src/queries/user/userSensitiveAttributes'
 import nock from 'nock'
+import jwt from 'jsonwebtoken'
 import secrets from '../../../src/config/secrets'
 import spies from 'chai-spies'
 import AssignMail from '../../../src/mail/assign'
@@ -19,6 +20,10 @@ import getSingleRepo from '../../data/github/github.repository.get'
 
 const models = Models as any
 const agent = request.agent(api)
+
+const privateTaskUrl = 'https://github.com/alexanmtz/festifica/issues/1'
+const privateTaskState = (userId: number) =>
+  jwt.sign({ userId, url: privateTaskUrl }, process.env.SECRET_PHRASE as string)
 
 const nockAuth = () => {
   nock('https://github.com')
@@ -271,9 +276,8 @@ describe('Task CRUD', () => {
   it('should redirect to profile with an error when private task auth returns an invalid code', async () => {
     nockAuthInvalidCode()
     const res = await agent
-      .get(
-        '/callback/github/private/?userId=1&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7'
-      )
+      .get('/callback/github/private/')
+      .query({ code: 'eb518274e906c68580f7', state: privateTaskState(1) })
       .expect(302)
 
     expect(res.statusCode).to.equal(302)
@@ -291,6 +295,7 @@ describe('Task CRUD', () => {
       .reply(200, { access_token: 'e72e16c7e42f292c6912e7710c838347ae178b4a' })
     nock('https://api.github.com')
       .get('/repos/alexanmtz/festifica/issues/1')
+      .query(true)
       .reply(200, sampleIssue.issue)
       .get('/users/alexanmtz')
       .query({ client_id: secrets.github.id, client_secret: secrets.github.secret })
@@ -307,12 +312,37 @@ describe('Task CRUD', () => {
     const userId = registerRes.body.id
 
     const callbackRes = await agent
-      .get(
-        `/callback/github/private/?userId=${userId}&url=https%3A%2F%2Fgithub.com%2Falexanmtz%2Ffestifica%2Fissues%2F1&code=eb518274e906c68580f7`
-      )
+      .get('/callback/github/private/')
+      .query({ code: 'eb518274e906c68580f7', state: privateTaskState(userId) })
       .expect(302)
 
     expect(callbackRes.statusCode).to.equal(302)
+    const createdTask = await models.Task.findOne({ where: { userId } })
+    expect(createdTask).to.exist
+    expect(callbackRes.headers.location).to.equal(
+      `${process.env.FRONTEND_HOST}/#/task/${createdTask.id}`
+    )
+  })
+
+  it('should not create a private task for a userId passed in the query without a valid state', async () => {
+    const victim = await UserFactory({ email: 'victim@gitpay.me', password: 'teste' })
+    const forgedState = jwt.sign(
+      { userId: victim.id, url: privateTaskUrl },
+      'not-the-secret-phrase'
+    )
+
+    for (const query of [
+      { userId: victim.id, url: privateTaskUrl, code: 'eb518274e906c68580f7' },
+      { code: 'eb518274e906c68580f7', state: forgedState }
+    ]) {
+      const res = await agent.get('/callback/github/private/').query(query).expect(302)
+      expect(res.headers.location).to.equal(
+        `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodeURIComponent(
+          'The import session expired. Please try again.'
+        )}`
+      )
+    }
+    expect(await models.Task.count({ where: { userId: victim.id } })).to.equal(0)
   })
 
   describe('task fetch', () => {

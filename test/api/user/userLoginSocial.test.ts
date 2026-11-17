@@ -2,6 +2,7 @@ import nock from 'nock'
 import assert from 'assert'
 import request from 'supertest'
 import { expect } from 'chai'
+import jwt from 'jsonwebtoken'
 import api from '../../../src/server'
 import Models from '../../../src/models'
 import { registerAndLogin, register, login, truncateModels } from '../../helpers'
@@ -74,16 +75,25 @@ describe('GET /auth/social', () => {
         'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate%3FuserId%3Dundefined%26url%3Dundefined&scope=repo&client_id='
       )
     })
-    it('should user ask permissions with github to access private issue', async () => {
-      const res = await agent
+    it('should not ask permissions with github to access private issue without authentication', async () => {
+      await agent
         .get('/authorize/github/private')
-        .send({ userId: 2, url: 'https://github.com/alexanmtz/project/issues/2', code: '123' })
-        .expect(302)
+        .query({ userId: 2, url: 'https://github.com/alexanmtz/project/issues/2' })
+        .expect(403)
+    })
+    it('should user ask permissions with github to access private issue with a signed state', async () => {
+      const user = await registerAndLogin(agent)
+      const token = user.headers.authorization.replace(/Bearer\s+/, '')
+      const url = 'https://github.com/alexanmtz/project/issues/2'
+      const res = await agent.get('/authorize/github/private').query({ url, token }).expect(302)
 
-      expect(res.statusCode).to.equal(302)
       expect(res.headers.location).to.include(
-        'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate%3FuserId%3Dundefined%26url%3Dundefined&scope=repo&client_id='
+        'https://github.com/login/oauth/authorize?response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%2Fgithub%2Fprivate&scope=repo&state='
       )
+      const state = new URL(res.headers.location).searchParams.get('state') as string
+      const decoded: any = jwt.verify(state, process.env.SECRET_PHRASE as string)
+      expect(decoded.userId).to.equal(user.body.id)
+      expect(decoded.url).to.equal(url)
     })
   })
 })

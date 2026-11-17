@@ -48,7 +48,7 @@ router.get('/callback/github/private', createPrivateTask)
 
 router.get('/connect/github', secure, connectGithub)
 
-router.get('/authorize/github/private', authorizeGithubPrivateIssue)
+router.get('/authorize/github/private', secure, authorizeGithubPrivateIssue)
 router.get('/authorize/github/disconnect', secure, disconnectGithub)
 
 router.get('/authorize/bitbucket', passport.authenticate('bitbucket', { scope: ['email'] }))

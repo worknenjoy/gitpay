@@ -3,6 +3,7 @@ import { userConfirmChangeEmail } from '../../../modules/users/userConfirmChange
 import userDisconnectGithub from '../../../modules/users/userDisconectGithub'
 import secrets from '../../../config/secrets'
 import passport from 'passport'
+import jwt from 'jsonwebtoken'
 import { omitAuthSecrets } from '../../../queries/user/userSensitiveAttributes'
 
 export const changeEmail = async (req: any, res: any) => {
@@ -41,12 +42,15 @@ export const confirmChangeEmail = async (req: any, res: any) => {
 }
 
 export const authorizeGithubPrivateIssue = (req: any, res: any) => {
-  const params = req.query
-  const uri = encodeURIComponent(
-    `${process.env.API_HOST}/callback/github/private?userId=${params.userId}&url=${params.url}`
+  // Sign who started the import so the callback can't be called on behalf of another user
+  const state = jwt.sign(
+    { userId: req.user.id, url: req.query.url },
+    process.env.SECRET_PHRASE as string,
+    { expiresIn: '15m' }
   )
+  const uri = encodeURIComponent(`${process.env.API_HOST}/callback/github/private`)
   res.redirect(
-    `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${uri}&scope=repo&client_id=${secrets.github.id}`
+    `https://github.com/login/oauth/authorize?response_type=code&redirect_uri=${uri}&scope=repo&state=${encodeURIComponent(state)}&client_id=${secrets.github.id}`
   )
 }
 

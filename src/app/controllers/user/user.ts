@@ -1,6 +1,7 @@
 import userInfo from '../../../modules/users/userInfo'
 import userUpdate from '../../../modules/users/userUpdate'
 import requestPromise from 'request-promise'
+import jwt from 'jsonwebtoken'
 import secrets from '../../../config/secrets'
 import * as user from '../../../modules/users'
 import Models from '../../../models'
@@ -159,7 +160,7 @@ export const changePassword = async (req: any, res: any) => {
 }
 
 export const createPrivateTask = async (req: any, res: any) => {
-  const { url, code, userId } = req.query
+  const { code, state } = req.query
   const githubClientId = secrets.github.id
   const githubClientSecret = secrets.github.secret
   const redirectPrivateTaskError = (message?: string) => {
@@ -167,6 +168,14 @@ export const createPrivateTask = async (req: any, res: any) => {
     return res.redirect(
       `${process.env.FRONTEND_HOST}/#/profile?createTaskError=true&message=${encodedError}`
     )
+  }
+  let userId: number
+  let url: string
+  try {
+    // state is signed in authorizeGithubPrivateIssue, never trust userId/url from the query
+    ;({ userId, url } = jwt.verify(state, process.env.SECRET_PHRASE as string) as any)
+  } catch (e: any) {
+    return redirectPrivateTaskError('The import session expired. Please try again.')
   }
   try {
     const response = await requestPromise({
