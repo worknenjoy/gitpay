@@ -106,13 +106,25 @@ export const updateTask = async (req: any, res: any) => {
 
 export const paymentTask = async (req: any, res: any) => {
   try {
-    const data = await taskPayment(req.body)
+    const data = await taskPayment({ ...req.body, userId: req.user.id })
     res.send(data)
   } catch (error: any) {
     // eslint-disable-next-line no-console
     console.log('error on task controller', error)
     // eslint-disable-next-line no-console
     console.log('error raw', error)
+    if (
+      [
+        'not_authorized',
+        'task_not_funded',
+        'task_already_paid',
+        'invalid_amount',
+        'amount_exceeds_funding'
+      ].includes(error.message)
+    ) {
+      res.status(403).send({ error: error.message })
+      return
+    }
     res.send({ error: error.raw })
   }
 }
