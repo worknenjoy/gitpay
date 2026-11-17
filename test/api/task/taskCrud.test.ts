@@ -345,6 +345,43 @@ describe('Task CRUD', () => {
     expect(await models.Task.count({ where: { userId: victim.id } })).to.equal(0)
   })
 
+  it('should require authentication to send invite, funding and report emails', async () => {
+    const owner = await UserFactory({ email: 'mail_relay_owner@gitpay.me', password: 'teste' })
+    const task = await TaskFactory({ userId: owner.id, title: 'Mail relay task' })
+
+    await agent
+      .post(`/tasks/${task.id}/invite/`)
+      .send({ email: 'anyone@example.com', name: 'x', message: 'spam' })
+      .expect(403)
+    await agent
+      .post(`/tasks/${task.id}/funding/`)
+      .send({ email: 'anyone@example.com', comment: 'spam' })
+      .expect(403)
+    await agent
+      .post(`/tasks/${task.id}/report`)
+      .send({ reason: 'spam', baseUrl: 'https://evil.example.com' })
+      .expect(403)
+  })
+
+  it('should not let a user remove the assignee of a task they do not own', async () => {
+    const owner = await UserFactory({ email: 'unassign_owner@gitpay.me', password: 'teste' })
+    const assignee = await UserFactory({ email: 'unassign_assignee@gitpay.me', password: 'teste' })
+    const task = await TaskFactory({ userId: owner.id, status: 'in_progress' })
+    const assign = await AssignFactory({ userId: assignee.id, TaskId: task.id })
+    await task.update({ assigned: assign.id })
+
+    const attacker = await registerAndLogin(agent, { email: 'unassign_attacker@gitpay.me' })
+    const res = await agent
+      .put(`/tasks/${task.id}/assignment/remove`)
+      .set('Authorization', attacker.headers.authorization)
+      .send({ message: 'bye' })
+
+    expect(res.body.error).to.equal('task_not_found')
+    await task.reload()
+    expect(task.assigned).to.equal(assign.id)
+    expect(task.status).to.equal('in_progress')
+  })
+
   describe('task fetch', () => {
     beforeEach(async () => {
       nock('https://api.github.com')

@@ -421,6 +421,29 @@ describe('POST /payment-request', () => {
       'Please follow the instructions to complete the payment.'
     )
   })
+
+  it('should not update or take over a payment request owned by another user', async () => {
+    const owner = await registerAndLogin(agent)
+    const attacker = await registerAndLogin(agent, { email: 'pr_attacker@gitpay.me' })
+    const paymentRequest = await PaymentRequestFactory({
+      userId: owner.body.id,
+      title: 'Old Title',
+      currency: 'USD',
+      amount: 50,
+      payment_link_id: 'plink_1RcnYCBrSjgsps2DsAPjr1km',
+      active: true
+    })
+
+    await agent
+      .put(`/payment-requests/${paymentRequest.id}`)
+      .set('authorization', attacker.headers.authorization)
+      .send({ title: 'Hijacked', userId: attacker.body.id })
+      .expect(400)
+
+    await paymentRequest.reload()
+    expect(paymentRequest.userId).to.equal(owner.body.id)
+    expect(paymentRequest.title).to.equal('Old Title')
+  })
 })
 
 describe('POST /payment-request — payment link type', () => {

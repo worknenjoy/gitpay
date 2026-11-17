@@ -8,14 +8,16 @@ export async function removeAssignedUser({ id, userId }: any, { message }: any) 
   const task = await currentModels.Task.findOne(
     {
       where: {
-        id
-        // userId
+        id,
+        userId
       }
     },
     {
       include: [currentModels.User, currentModels.Order, currentModels.Assign]
     }
   )
+
+  if (!task) throw new Error('task_not_found')
 
   const assignedId = task.assigned
 
