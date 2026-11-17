@@ -72,10 +72,11 @@ export default class Plan
                 private: 18,
                 'with support': 30
               }
-              if (instance.plan) {
+              // Only fall back to the plan default when the caller didn't set one:
+              // orderBuilds passes the PlanSchema fee, which is 0 for the
+              // "Open Source - no fee" schema (bounties of 5000 or more).
+              if (instance.plan && instance.feePercentage == null) {
                 instance.feePercentage = percentages[instance.plan]
-                // Note: original code referenced instance.amount which doesn't exist in schema
-                // Keeping the logic as-is for minimal changes
               }
             } catch (e) {
               // eslint-disable-next-line no-console

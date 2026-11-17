@@ -236,6 +236,59 @@ describe('POST /orders (Whop)', () => {
       // company_id belongs at the top level only; Whop rejects it when nested in `product`
       expect(invoiceBody.company_id).to.equal('biz_test_platform')
       expect(invoiceBody.product).to.not.have.property('company_id')
+      // Open source fee of 8% below 5000
+      expect(invoiceBody.line_items[0].unit_price).to.equal(54)
+    })
+  })
+
+  it('should create a bounty invoice order of 5000 via Whop invoices with no fee', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      let invoiceBody: any
+
+      await models.PlanSchema.findOrCreate({
+        where: { plan: 'open source', name: 'Open Source - no fee', feeType: 'charge' },
+        defaults: {
+          plan: 'open source',
+          name: 'Open Source - no fee',
+          description: 'open source no fee',
+          fee: 0,
+          feeType: 'charge'
+        }
+      })
+
+      nock(WHOP_API_HOST)
+        .post('/api/v1/invoices', (body) => {
+          invoiceBody = body
+          return true
+        })
+        .reply(200, invoiceCreate)
+
+      const user = await registerAndLogin(agent)
+      const task = await TaskFactory({
+        url: 'https://github.com/test/repo/issues/11',
+        userId: user.body.id,
+        title: 'Invoice bounty no fee'
+      })
+
+      const res = await agent
+        .post('/orders')
+        .send({
+          currency: 'usd',
+          amount: 5000,
+          email: user.body.email,
+          userId: user.body.id,
+          taskId: task.id,
+          plan: 'open source',
+          provider: 'whop',
+          source_type: 'invoice-item'
+        })
+        .set('Authorization', user.headers.authorization)
+        .expect(200)
+
+      expect(res.body.provider).to.equal('whop')
+      expect(invoiceBody.line_items[0].unit_price).to.equal(5000)
+      expect(invoiceBody.plan.initial_price).to.equal(5000)
     })
   })
 })

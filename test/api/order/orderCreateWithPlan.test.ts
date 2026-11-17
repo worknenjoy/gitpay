@@ -1,14 +1,11 @@
 import request from 'supertest'
 import { expect } from 'chai'
-import chai from 'chai'
-import spies from 'chai-spies'
 import api from '../../../src/server'
 import nock from 'nock'
 import Models from '../../../src/models'
 import { registerAndLogin, register, login, truncateModels } from '../../helpers'
 import { TaskFactory, OrderFactory, WalletFactory, WalletOrderFactory } from '../../factories'
 import PaymentMail from '../../../src/mail/payment'
-import stripe from '../../../src/client/payment/stripe'
 import customerData from '../../data/stripe/stripe.customer'
 import invoiceData from '../../data/stripe/stripe.invoice.basic'
 
@@ -108,7 +105,7 @@ describe('POST /order with plan', () => {
     expect(res.body.Plan.PlanSchema.feeType).to.equal('charge')
   })
 
-  xit('should create a new order with a plan above 5000', async () => {
+  it('should create a new order with a plan above 5000', async () => {
     const user = await registerAndLogin(agent)
     const res = await agent
       .post('/orders')
@@ -189,11 +186,15 @@ describe('POST /order with plan', () => {
   })
 
   it('should create a order type invoice-item with a existing customer', async () => {
+    let invoiceItemBody: any
     nock('https://api.stripe.com')
       .post('/v1/invoices')
       .reply(200, { id: 'foo' }, { 'Content-Type': 'application/json' })
     nock('https://api.stripe.com')
-      .post('/v1/invoiceitems')
+      .post('/v1/invoiceitems', (body) => {
+        invoiceItemBody = body
+        return true
+      })
       .reply(200, { id: 'foo' }, { 'Content-Type': 'application/json' })
 
     nock('https://api.stripe.com')
@@ -231,18 +232,19 @@ describe('POST /order with plan', () => {
     expect(res.body.Plan.plan).to.equal('open source')
     expect(res.body.Plan.fee).to.equal('16')
     expect(res.body.Plan.feePercentage).to.equal(8)
+    expect(String(invoiceItemBody.unit_amount)).to.equal('21600')
   })
 
-  xit('should create a order type invoice-item above 5000', async () => {
-    chai.use(spies)
-    const stripeInstance = stripe()
-    const invoiceItem = chai.spy.on(stripeInstance.invoiceItems, 'create')
-
+  it('should create a order type invoice-item above 5000 with no fee', async () => {
+    let invoiceItemBody: any
     nock('https://api.stripe.com')
       .post('/v1/invoices')
       .reply(200, { id: 'foo' }, { 'Content-Type': 'application/json' })
     nock('https://api.stripe.com')
-      .post('/v1/invoiceitems')
+      .post('/v1/invoiceitems', (body) => {
+        invoiceItemBody = body
+        return true
+      })
       .reply(200, { id: 'foo' }, { 'Content-Type': 'application/json' })
 
     nock('https://api.stripe.com')
@@ -253,38 +255,35 @@ describe('POST /order with plan', () => {
       .post('/v1/invoices/foo/finalize')
       .reply(200, { id: 'foo' }, { 'Content-Type': 'application/json' })
 
-    try {
-      const user = await registerAndLogin(agent)
-      const res = await agent
-        .post('/orders')
-        .send({
-          source_id: '12345',
-          currency: 'BRL',
-          amount: 5000,
-          email: 'test@gmail.com',
-          source_type: 'invoice-item',
-          customer_id: 'cus_12345',
-          provider: 'stripe',
-          userId: user.body.id,
-          plan: 'open source'
-        })
-        .set('Authorization', user.headers.authorization)
-        .expect('Content-Type', /json/)
-        .expect(200)
+    const user = await registerAndLogin(agent)
+    const res = await agent
+      .post('/orders')
+      .send({
+        source_id: '12345',
+        currency: 'BRL',
+        amount: 5000,
+        email: 'test@gmail.com',
+        source_type: 'invoice-item',
+        customer_id: 'cus_12345',
+        provider: 'stripe',
+        userId: user.body.id,
+        plan: 'open source'
+      })
+      .set('Authorization', user.headers.authorization)
+      .expect('Content-Type', /json/)
+      .expect(200)
 
-      expect(res.statusCode).to.equal(200)
-      expect(res.body).to.exist
-      expect(res.body.source_id).to.exist
-      expect(res.body.currency).to.equal('BRL')
-      expect(res.body.amount).to.equal('5000')
-      expect(res.body.Plan).to.exist
-      expect(res.body.Plan.plan).to.equal('open source')
-      expect(res.body.Plan.fee).to.equal('0')
-      expect(res.body.Plan.feePercentage).to.equal(0)
-      expect(invoiceItem).to.have.been.called()
-    } finally {
-      chai.spy.restore(stripeInstance.invoiceItems, 'create')
-    }
+    expect(res.statusCode).to.equal(200)
+    expect(res.body).to.exist
+    expect(res.body.source_id).to.exist
+    expect(res.body.currency).to.equal('BRL')
+    expect(res.body.amount).to.equal('5000')
+    expect(res.body.Plan).to.exist
+    expect(res.body.Plan.plan).to.equal('open source')
+    expect(res.body.Plan.fee).to.equal('0')
+    expect(res.body.Plan.feePercentage).to.equal(0)
+    expect(invoiceItemBody).to.exist
+    expect(String(invoiceItemBody.unit_amount)).to.equal('500000')
   })
 
   it('should create a order type wallet funds', async () => {
