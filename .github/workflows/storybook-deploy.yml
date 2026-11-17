@@ -8,6 +8,12 @@ on:
 permissions:
   contents: write
 
+# Back-to-back merges otherwise push to gh-pages at the same time and the loser fails.
+# Each run builds from its own commit, so the newest run covers anything a cancelled one had.
+concurrency:
+  group: storybook-deploy
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
