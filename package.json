@@ -101,7 +101,7 @@
     "bitbucket-api-v2": "^0.6.2",
     "bitbucket-v2": "^0.4.3",
     "bluebird": "^3.5.3",
-    "body-parser": "^1.20.2",
+    "body-parser": "^1.20.9",
     "bootstrap": "^3.4.1",
     "color": "^3.1.2",
     "compression": "^1.7.4",
