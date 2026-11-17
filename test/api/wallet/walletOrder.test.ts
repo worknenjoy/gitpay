@@ -106,21 +106,7 @@ describe('POST /wallet-order', () => {
         walletId: wallet.id,
         amount: 100
       })
-      const res = await agent
-        .put(`/wallets/orders/${walletOrder.id}`)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('authorization', user.headers.authorization)
-        .expect(200)
-        .send({
-          status: 'paid'
-        })
-
-      expect(res.body).to.exist
-      expect(res.body.id).to.exist
-      expect(res.body.amount).to.equal('100')
-      expect(res.body.status).to.equal('paid')
-      expect(res.body.walletId).to.equal(wallet.id)
+      await walletOrder.update({ status: 'paid' })
 
       const walletUpdated = await models.Wallet.findOne({
         where: {
@@ -142,43 +128,19 @@ describe('POST /wallet-order', () => {
         walletId: wallet.id,
         amount: 100
       })
-      await agent
-        .put(`/wallets/orders/${walletOrder.id}`)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('authorization', user.headers.authorization)
-        .expect(200)
-        .send({
-          status: 'paid'
-        })
+      await walletOrder.update({ status: 'paid' })
 
       const walletOrder2 = await WalletOrderFactory({
         walletId: wallet.id,
         amount: 100
       })
-      await agent
-        .put(`/wallets/orders/${walletOrder2.id}`)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('authorization', user.headers.authorization)
-        .expect(200)
-        .send({
-          status: 'paid'
-        })
+      await walletOrder2.update({ status: 'paid' })
 
       const walletOrder3 = await WalletOrderFactory({
         walletId: wallet.id,
         amount: 108
       })
-      await agent
-        .put(`/wallets/orders/${walletOrder3.id}`)
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/json')
-        .set('authorization', user.headers.authorization)
-        .expect(200)
-        .send({
-          status: 'open'
-        })
+      await walletOrder3.update({ status: 'open' })
 
       const walletUpdated = await models.Wallet.findOne({
         where: {
@@ -188,7 +150,7 @@ describe('POST /wallet-order', () => {
 
       expect(walletUpdated.balance).to.equal('200.00')
     })
-    it('should update wallet order', async () => {
+    it('should not let users mark their own wallet order as paid', async () => {
       const user = await registerAndLogin(agent)
       const wallet = await WalletFactory({
         userId: user.body.id,
@@ -200,18 +162,15 @@ describe('POST /wallet-order', () => {
         amount: 100,
         status: 'pending'
       })
-      const res = await agent
+      await agent
         .put(`/wallets/orders/${walletOrder.id}`)
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .set('authorization', user.headers.authorization)
-        .expect(200)
         .send({
           status: 'paid'
         })
-      expect(res.body).to.exist
-      expect(res.body.id).to.exist
-      expect(res.body.status).to.equal('paid')
+        .expect(404)
 
       const walletUpdated = await models.Wallet.findOne({
         where: {
@@ -219,7 +178,7 @@ describe('POST /wallet-order', () => {
         }
       })
 
-      expect(walletUpdated.balance).to.equal('100.00')
+      expect(walletUpdated.balance).to.equal('0.00')
     })
   })
   describe('list wallet orders', () => {

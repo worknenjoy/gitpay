@@ -24,7 +24,10 @@ export async function updatePaymentRequest(
 ): Promise<any> {
   const run = async (transaction: Transaction) => {
     const paymentRequest = await findPaymentRequestById(paymentRequestParams.id, { transaction })
-    if (!paymentRequest) {
+    if (
+      !paymentRequest ||
+      (paymentRequestParams.userId && paymentRequest.userId !== paymentRequestParams.userId)
+    ) {
       throw new Error('Payment Request not found')
     }
 
@@ -40,7 +43,7 @@ export async function updatePaymentRequest(
     const paymentProvider = getPaymentProvider(paymentRequest.provider || undefined)
 
     // Only pass mutable domain fields to the DB update (ignore provider, ids, etc.)
-    const { id: _id, ...updateFields } = paymentRequestParams
+    const { id: _id, userId: _userId, ...updateFields } = paymentRequestParams
 
     const paymentRequestUpdated = await paymentRequest.update(updateFields, {
       transaction

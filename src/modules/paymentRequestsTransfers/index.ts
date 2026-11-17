@@ -1,5 +1,3 @@
-export * from './paymentRequestsTransfersBuilds'
 export * from './paymentRequestsTransfersSearch'
-export * from './paymentRequestsTransfersUpdate'
 export * from './paymentRequestsTransfersFetch'
 export * from './paymentRequestsTransferList'

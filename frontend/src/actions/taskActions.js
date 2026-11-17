@@ -727,6 +727,7 @@ const paymentTask = (taskId, value) => {
 }
 
 const inviteTask = (id, email, message, user) => {
+  validToken()
   return (dispatch) => {
     const name = user.name
     dispatch(inviteTaskRequested())
@@ -789,6 +790,7 @@ const messageAuthor = (userId, taskId, message) => {
 }
 
 const fundingInviteTask = (id, email, comment, suggestedValue, suggestedDate, user) => {
+  validToken()
   return (dispatch) => {
     const username = user.name
     dispatch(fundingInviteTaskRequested())
@@ -854,6 +856,7 @@ const syncTask = (taskId) => {
 }
 
 const reportTask = (task, reason) => {
+  validToken()
   return (dispatch) => {
     dispatch(reportTaskRequested())
     return axios
