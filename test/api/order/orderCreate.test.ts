@@ -220,6 +220,56 @@ describe('POST /order', () => {
     }
   })
 
+  it('should reject wallet order when wallet belongs to another user', async () => {
+    const victim = await registerAndLogin(agent)
+    const attacker = await registerAndLogin(agent, {
+      email: 'attacker@example.com',
+      password: 'attackerpassword'
+    })
+
+    const wallet = await WalletFactory({
+      name: 'Victim Wallet',
+      balance: 0,
+      userId: victim.body.id
+    })
+    await WalletOrderFactory({
+      walletId: wallet.id,
+      amount: 500,
+      currency: 'USD',
+      status: 'paid',
+      paid: true
+    })
+    await wallet.reload()
+
+    const task = await TaskFactory({
+      url: 'https://github.com/test/repo/issues/5',
+      userId: attacker.body.id,
+      title: 'Attacker Task',
+      not_listed: false,
+      private: false
+    })
+
+    const orderBuilds = require('../../../src/modules/orders').orderBuilds
+
+    let err: any = null
+    try {
+      await orderBuilds({
+        walletId: wallet.id,
+        currency: 'USD',
+        amount: 200,
+        provider: 'wallet',
+        source_type: 'wallet-funds',
+        userId: attacker.body.id,
+        taskId: task.id
+      })
+    } catch (e) {
+      err = e
+    }
+
+    expect(err).to.exist
+    expect(err.message).to.include('not found or unauthorized')
+  })
+
   it('should not call notifyNewBounty when wallet payment completes for a private task', async () => {
     chai.use(spies)
     const slackModule = require('../../../src/shared/slack')

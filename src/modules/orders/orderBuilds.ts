@@ -267,12 +267,13 @@ export async function orderBuilds(orderParameters: OrderBuildsParams) {
   if (orderParameters.provider === 'wallet' && orderParameters.source_type === 'wallet-funds') {
     const wallet = await currentModels.Wallet.findOne({
       where: {
-        id: orderParameters.walletId
+        id: orderParameters.walletId,
+        userId: orderParameters.userId
       }
     })
 
     if (!wallet) {
-      throw new Error(`Wallet with id ${orderParameters.walletId} not found`)
+      throw new Error(`Wallet with id ${orderParameters.walletId} not found or unauthorized`)
     }
 
     // Wallet balance is calculated from WalletOrders via afterFind hook
