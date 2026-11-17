@@ -95,6 +95,8 @@ export const fetchTask = async (req: any, res: any) => {
 export const updateTask = async (req: any, res: any) => {
   try {
     req.body.userId = req.user.id
+    // the offering user is always the authenticated one, never taken from the payload
+    if (req.body.Offer) req.body.Offer.userId = req.user.id
     const data = await taskUpdate(req.body)
     res.send(data)
   } catch (error: any) {
