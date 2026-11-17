@@ -30,7 +30,7 @@ describe('POST /wallet', () => {
     expect(res.body.name).to.equal('Test Wallet')
     expect(res.body.balance).to.equal('0.00')
   })
-  it('should update wallet balance', async () => {
+  it('should update wallet name', async () => {
     const user = await registerAndLogin(agent)
     const wallet = await WalletFactory({
       userId: user.body.id,
@@ -44,12 +44,36 @@ describe('POST /wallet', () => {
       .set('authorization', user.headers.authorization)
       .expect(200)
       .send({
+        name: 'Updated Wallet',
         amount: 100
       })
     expect(res.body).to.exist
     expect(res.body.id).to.exist
-    expect(res.body.name).to.equal('Test Wallet')
-    expect(res.body.balance).to.equal('100.00')
+    expect(res.body.name).to.equal('Updated Wallet')
+    expect(res.body.balance).to.equal('0.00')
+  })
+
+  it('should not update another user wallet', async () => {
+    const victim = await registerAndLogin(agent)
+    const wallet = await WalletFactory({
+      userId: victim.body.id,
+      name: 'Victim Wallet',
+      balance: 0
+    })
+    const attacker = await registerAndLogin(agent)
+
+    const res = await agent
+      .put(`/wallets/${wallet.id}`)
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .set('authorization', attacker.headers.authorization)
+      .expect(404)
+      .send({ name: 'Attacker Wallet', amount: 100 })
+
+    expect(res.body).to.deep.equal({ error: 'wallet.not_found' })
+
+    const victimWallet = await models.Wallet.findByPk(wallet.id)
+    expect(victimWallet.name).to.equal('Victim Wallet')
   })
   it('should list wallets', async () => {
     const user = await registerAndLogin(agent)

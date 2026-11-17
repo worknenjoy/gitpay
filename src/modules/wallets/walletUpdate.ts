@@ -5,35 +5,27 @@ const currentModels = models as any
 type WalletUpdateParams = {
   userId: number
   id: number
-  amount: number
   name: string
 }
 
 export async function walletUpdate(params: WalletUpdateParams) {
-  const { amount, name, id } = params
-  const user =
-    params.userId &&
-    (await currentModels.User.findOne({
-      where: {
-        id: params.userId
-      }
-    }))
-
-  if (!user) {
-    return { error: 'No valid user' }
-  }
-
+  const { name, id } = params
   const wallet = await currentModels.Wallet.update(
     {
-      balance: amount,
       name: name
     },
     {
       where: {
-        id: id
+        id,
+        userId: params.userId
       },
       returning: true
     }
   )
+
+  if (!wallet[1].length) {
+    throw new Error('wallet.not_found')
+  }
+
   return wallet[1][0].dataValues
 }
