@@ -9,6 +9,7 @@ import {
 } from '../../mutations/provider/stripe/payment-intent'
 import { PaymentRequestTransferStatus } from './paymentRequestTransferStatuses'
 import { computeSellerNetAmount } from './sellerNetAmount'
+import type { WhopPaymentProvider } from '../../providers/whop/WhopPaymentProvider'
 
 const models = Models as any
 
@@ -144,6 +145,7 @@ async function ensurePendingClaim(params: {
 type LockedTransferOutcome =
   | { kind: 'debt_applied'; resultingBalance: number; balanceTransactionForEmail: any }
   | { kind: 'deferred_no_destination'; resultingBalance: number }
+  | { kind: 'deferred_not_settled'; resultingBalance: number }
   | {
       kind: 'transferred'
       resultingBalance: number
@@ -429,6 +431,26 @@ export async function executePaymentRequestTransfer(
           throw err
         }
 
+        // Whop: only transfer once this payment's funds have settled; the balance
+        // preflight in createTransfer then checks there is enough to cover it.
+        if (
+          paymentProvider.name === 'whop' &&
+          !params.mockSettlement &&
+          String(paymentIntentId || '').startsWith('pay_') &&
+          !(await (paymentProvider as unknown as WhopPaymentProvider).isPaymentSettled(
+            paymentIntentId
+          ))
+        ) {
+          await ensurePendingClaim({
+            paymentRequestPayment,
+            paymentRequest,
+            valueDecimal: resultingBalance / 100,
+            transferMethod: 'whop',
+            transaction: tx
+          })
+          return { kind: 'deferred_not_settled', resultingBalance }
+        }
+
         // Provider call first — only write balance/status after success.
         // mockSettlement: sandbox often never frees available balance; ops can complete the Gitpay side.
         let transfer: { transferId: string; amount?: number; currency?: string; raw?: unknown }
@@ -579,7 +601,7 @@ export async function executePaymentRequestTransfer(
       })
     }
 
-    if (outcome.kind === 'deferred_no_destination') {
+    if (outcome.kind === 'deferred_no_destination' || outcome.kind === 'deferred_not_settled') {
       await paymentRequestPayment.reload({
         include: [
           { model: models.PaymentRequest },
@@ -591,7 +613,10 @@ export async function executePaymentRequestTransfer(
         deferred: true,
         newlyDeferred: !wasAlreadyPendingFunds,
         resultingBalanceCents: outcome.resultingBalance,
-        reason: `missing_${paymentProvider.name === 'whop' ? 'whop_account_id' : 'account_id'}`,
+        reason:
+          outcome.kind === 'deferred_not_settled'
+            ? 'payment_not_settled'
+            : `missing_${paymentProvider.name === 'whop' ? 'whop_account_id' : 'account_id'}`,
         paymentRequest: paymentRequestPayment.PaymentRequest || paymentRequest,
         paymentRequestPayment
       })

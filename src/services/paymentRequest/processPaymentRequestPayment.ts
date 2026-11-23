@@ -42,7 +42,7 @@ async function sendTransferEmails(result: any): Promise<void> {
   if (
     result.deferred &&
     result.newlyDeferred &&
-    result.reason === 'insufficient_available_balance'
+    (result.reason === 'insufficient_available_balance' || result.reason === 'payment_not_settled')
   ) {
     try {
       await PaymentRequestMail.transferPendingForPaymentRequest(

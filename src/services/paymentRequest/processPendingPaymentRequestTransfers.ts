@@ -109,7 +109,8 @@ export async function processPendingPaymentRequestTransfers(
 
         if (
           transferResult.newlyDeferred &&
-          transferResult.reason === 'insufficient_available_balance'
+          (transferResult.reason === 'insufficient_available_balance' ||
+            transferResult.reason === 'payment_not_settled')
         ) {
           try {
             await PaymentRequestMail.transferPendingForPaymentRequest(
