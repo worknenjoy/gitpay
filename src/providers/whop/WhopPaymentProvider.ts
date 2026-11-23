@@ -36,6 +36,12 @@ import { calculateAmountWithPercent } from '../../utils'
 import { GITPAY_COMMISSION_PERCENT } from '../../services/paymentRequest/commission'
 
 /**
+ * Ledger currencies Whop reports as dollars. With Whop Treasury, settled funds
+ * post to a dollar stablecoin row (e.g. `usdt`) that the dashboard shows as USD.
+ */
+const USD_EQUIVALENT_CURRENCIES = ['usd', 'usdt', 'usdt0', 'usdc']
+
+/**
  * Whop payment connector.
  * Uses REST against api.whop.com (or sandbox) with platform company as merchant of record.
  */
@@ -549,6 +555,13 @@ export class WhopPaymentProvider implements PaymentProvider {
   /**
    * Fetch platform ledger available/pending USD (major units).
    * GET /ledger_accounts/{biz_id} — id may be company or ldgr_…
+   *
+   * With Whop Treasury enabled, settled funds post to a dollar stablecoin row
+   * (`usdt`, mirrored in `treasury_balance`) instead of `usd`, while Whop's
+   * dashboard still reports them as available USD. Available is therefore the
+   * larger of the summed dollar rows and `treasury_balance.total_withdrawable_balance`.
+   * Taking the max (not the sum) avoids double counting, since the treasury
+   * duplicates the `usdt` row. Pending and reserve come from the rows.
    */
   async getCompanyLedgerBalances(companyId?: string): Promise<{
     ledgerId: string | null
@@ -563,15 +576,26 @@ export class WhopPaymentProvider implements PaymentProvider {
     }
     try {
       const ledger = await this.client.get<any>(`/ledger_accounts/${id}`)
-      const usd =
-        (ledger.balances || []).find(
-          (b: any) => String(b.currency || '').toLowerCase() === 'usd'
-        ) || ledger.balances?.[0]
+      const balances: any[] = ledger.balances || []
+      const usdRows = balances.filter((b: any) =>
+        USD_EQUIVALENT_CURRENCIES.includes(String(b?.currency || '').toLowerCase())
+      )
+      const rows = usdRows.length > 0 ? usdRows : balances.slice(0, 1)
+      const sum = (field: string) =>
+        rows.reduce((total: number, b: any) => total + (Number(b?.[field]) || 0), 0)
+
+      const treasury = ledger.treasury_balance
+      const treasuryWithdrawable =
+        treasury &&
+        USD_EQUIVALENT_CURRENCIES.includes(String(treasury.currency || '').toLowerCase())
+          ? Number(treasury.total_withdrawable_balance) || 0
+          : 0
+
       return {
         ledgerId: ledger.id || null,
-        available: Number(usd?.balance ?? 0),
-        pending: Number(usd?.pending_balance ?? 0),
-        reserve: Number(usd?.reserve_balance ?? 0),
+        available: Math.max(sum('balance'), treasuryWithdrawable),
+        pending: sum('pending_balance'),
+        reserve: sum('reserve_balance'),
         raw: ledger
       }
     } catch (error) {

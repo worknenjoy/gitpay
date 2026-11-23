@@ -15,6 +15,7 @@ import {
 import transferCreate from '../../../data/whop/transfer.create'
 import { processPendingPaymentRequestTransfers } from '../../../../src/services/paymentRequest/processPendingPaymentRequestTransfers'
 import { executePaymentRequestTransfer } from '../../../../src/services/paymentRequest/executePaymentRequestTransfer'
+import { WhopPaymentProvider } from '../../../../src/providers/whop/WhopPaymentProvider'
 
 const agent = request.agent(api) as any
 const models = Models as any
@@ -625,6 +626,152 @@ describe('Whop payment-request transfer concurrency', () => {
         where: { userId: user.body.id }
       })
       expect(balance.balance).to.equal('0')
+    })
+  })
+})
+
+/**
+ * Whop Treasury: settled platform funds post to a `usdt` row (mirrored in
+ * `treasury_balance`) while the `usd` row stays at 0. Production shape from
+ * GET /ledger_accounts for a platform with Treasury enabled.
+ */
+const treasuryLedger = {
+  id: 'ldgr_test',
+  balances: [
+    { currency: 'usd', balance: 0, pending_balance: 0, reserve_balance: 5.39 },
+    { currency: 'usdt', balance: 174.22, pending_balance: 0, reserve_balance: 0 }
+  ],
+  treasury_balance: {
+    balance: 174.22,
+    balance_usd: 174.22,
+    currency: 'usdt',
+    pending_balance: 0,
+    reserve_balance: 0,
+    total_withdrawable_balance: 174.22
+  }
+}
+
+describe('Whop ledger balances with Treasury (USDT) funds', () => {
+  beforeEach(async () => {
+    await truncateModels(models.User)
+    await truncateModels(models.PaymentRequest)
+    await truncateModels(models.PaymentRequestPayment)
+    await truncateModels(models.PaymentRequestCustomer)
+    await truncateModels(models.PaymentRequestBalance)
+    await truncateModels(models.PaymentRequestBalanceTransaction)
+    await truncateModels(models.PaymentRequestTransfer)
+    process.env.WHOP_API_KEY = 'test_whop_key'
+    process.env.WHOP_COMPANY_ID = 'biz_test_platform'
+    pinWhopApiForTests()
+  })
+
+  afterEach(() => {
+    nock.cleanAll()
+    sinon.restore()
+  })
+
+  it('counts the USDT treasury as available USD without double counting', async () => {
+    nock(WHOP_API_HOST).get('/api/v1/ledger_accounts/biz_test_platform').reply(200, treasuryLedger)
+
+    const ledger = await WhopPaymentProvider.getInstance().getCompanyLedgerBalances()
+
+    expect(ledger.available).to.equal(174.22)
+    expect(ledger.pending).to.equal(0)
+    expect(ledger.reserve).to.equal(5.39)
+  })
+
+  it('uses treasury withdrawable balance when no dollar stablecoin row is listed', async () => {
+    nock(WHOP_API_HOST)
+      .get('/api/v1/ledger_accounts/biz_test_platform')
+      .reply(200, {
+        id: 'ldgr_test',
+        balances: [{ currency: 'usd', balance: 0, pending_balance: 0, reserve_balance: 0 }],
+        treasury_balance: { currency: 'usdt', total_withdrawable_balance: 50 }
+      })
+
+    const ledger = await WhopPaymentProvider.getInstance().getCompanyLedgerBalances()
+
+    expect(ledger.available).to.equal(50)
+  })
+
+  it('keeps reading the usd row for accounts without Treasury', async () => {
+    nock(WHOP_API_HOST)
+      .get('/api/v1/ledger_accounts/biz_test_platform')
+      .reply(200, { ...availableLedger, treasury_balance: null })
+
+    const ledger = await WhopPaymentProvider.getInstance().getCompanyLedgerBalances()
+
+    expect(ledger.available).to.equal(1000)
+  })
+
+  it('transfers a pending_funds payment once the funds settle into the USDT treasury', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      // First attempt: funds still pending on the platform
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_test_platform')
+        .reply(200, pendingLedger)
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      await PaymentRequestFactory({
+        title: 'Treasury settlement PR',
+        amount: 50,
+        currency: 'usd',
+        payment_link_id: 'plan_treasury',
+        provider: 'whop',
+        userId: user.body.id
+      })
+
+      await agent
+        .post('/webhooks/whop')
+        .send({
+          id: 'msg_whop_treasury',
+          api_version: 'v1',
+          type: 'payment.succeeded',
+          timestamp: '2026-11-20T15:43:00.000Z',
+          company_id: 'biz_test_platform',
+          data: {
+            id: 'pay_whop_treasury_1',
+            status: 'succeeded',
+            amount_after_fees: 50,
+            total: 50,
+            currency: 'usd',
+            metadata: { purpose: 'payment_request', payment_link_id: 'plan_treasury' },
+            plan: { id: 'plan_treasury' },
+            user: { name: 'Customer', email: 'customer@example.com' }
+          }
+        })
+        .expect(200)
+
+      const pendingPayment = await models.PaymentRequestPayment.findOne({
+        where: { source: 'pay_whop_treasury_1' }
+      })
+      expect(pendingPayment.transferStatus).to.equal('pending_funds')
+
+      // Retry: funds settled into the USDT treasury, usd row still 0
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_test_platform')
+        .reply(200, treasuryLedger)
+      nock(WHOP_API_HOST).post('/api/v1/transfers').reply(200, transferCreate)
+
+      const cronResult = await processPendingPaymentRequestTransfers()
+      expect(cronResult.transferred).to.equal(1)
+      expect(cronResult.deferred).to.equal(0)
+      expect(cronResult.failed).to.equal(0)
+
+      await pendingPayment.reload()
+      expect(pendingPayment.transferStatus).to.equal('initiated')
+
+      const pr = await models.PaymentRequest.findOne({
+        where: { payment_link_id: 'plan_treasury' }
+      })
+      expect(pr.transfer_status).to.equal('initiated')
+      expect(pr.transfer_id).to.equal(transferCreate.id)
     })
   })
 })
