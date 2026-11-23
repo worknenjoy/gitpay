@@ -549,6 +549,8 @@ export class WhopPaymentProvider implements PaymentProvider {
   /**
    * Fetch platform ledger available/pending USD (major units).
    * GET /ledger_accounts/{biz_id} — id may be company or ldgr_…
+   * Available is Whop's withdrawable balance: with Treasury, settled funds sit in USDT
+   * (not the `usd` row); accounts without Treasury fall back to the `usd` row.
    */
   async getCompanyLedgerBalances(companyId?: string): Promise<{
     ledgerId: string | null
@@ -569,7 +571,7 @@ export class WhopPaymentProvider implements PaymentProvider {
         ) || ledger.balances?.[0]
       return {
         ledgerId: ledger.id || null,
-        available: Number(usd?.balance ?? 0),
+        available: Number(ledger.treasury_balance?.total_withdrawable_balance ?? usd?.balance ?? 0),
         pending: Number(usd?.pending_balance ?? 0),
         reserve: Number(usd?.reserve_balance ?? 0),
         raw: ledger
@@ -578,6 +580,18 @@ export class WhopPaymentProvider implements PaymentProvider {
       console.warn('[whop] getCompanyLedgerBalances failed', error)
       return { ledgerId: null, available: 0, pending: 0, reserve: 0, raw: null }
     }
+  }
+
+  /**
+   * Whether a Whop payment's funds have posted to the available balance.
+   * Whop sets `settlement_time_at` (midnight UTC) once paid; holds (e.g. reserve) release separately.
+   */
+  async isPaymentSettled(paymentId: string): Promise<boolean> {
+    const payment = await this.client.get<any>(`/payments/${paymentId}`)
+    const settlementTime = payment?.settlement_time_at
+      ? Date.parse(payment.settlement_time_at)
+      : NaN
+    return Number.isFinite(settlementTime) && settlementTime <= Date.now()
   }
 
   async createTransfer(params: TransferParams): Promise<TransferResult> {

@@ -4,7 +4,12 @@ import nock from 'nock'
 import sinon from 'sinon'
 import api from '../../../../src/server'
 import { registerAndLogin, truncateModels } from '../../../helpers'
-import { withPaymentProvider, pinWhopApiForTests, WHOP_API_HOST } from '../../../helpers/whop'
+import {
+  withPaymentProvider,
+  pinWhopApiForTests,
+  nockWhopPayment,
+  WHOP_API_HOST
+} from '../../../helpers/whop'
 import Models from '../../../../src/models'
 import {
   PaymentRequestFactory,
@@ -62,6 +67,7 @@ describe('Whop payment-request balance debt recovery', () => {
     process.env.WHOP_API_KEY = 'test_whop_key'
     process.env.WHOP_COMPANY_ID = 'biz_test_platform'
     pinWhopApiForTests()
+    nockWhopPayment({ settled: true })
   })
 
   afterEach(() => {
@@ -367,6 +373,7 @@ describe('Whop payment-request transfer skipped after refund during pending_fund
     process.env.WHOP_API_KEY = 'test_whop_key'
     process.env.WHOP_COMPANY_ID = 'biz_test_platform'
     pinWhopApiForTests()
+    nockWhopPayment({ settled: true })
   })
 
   afterEach(() => {
@@ -527,6 +534,7 @@ describe('Whop payment-request transfer concurrency', () => {
     process.env.WHOP_API_KEY = 'test_whop_key'
     process.env.WHOP_COMPANY_ID = 'biz_test_platform'
     pinWhopApiForTests()
+    nockWhopPayment({ settled: true })
   })
 
   afterEach(() => {
@@ -625,6 +633,133 @@ describe('Whop payment-request transfer concurrency', () => {
         where: { userId: user.body.id }
       })
       expect(balance.balance).to.equal('0')
+    })
+  })
+})
+
+/**
+ * Settlement gate + withdrawable balance. Whop only transfers a payment-request payment
+ * once that payment has settled, and the platform has enough withdrawable balance.
+ * With Whop Treasury, settled funds sit in USDT: the `usd` row stays 0 and
+ * `treasury_balance.total_withdrawable_balance` carries the available amount.
+ */
+const treasuryLedger = {
+  id: 'ldgr_test',
+  balances: [{ currency: 'usd', balance: 0, pending_balance: 0, reserve_balance: 5.39 }],
+  treasury_balance: { currency: 'usdt', total_withdrawable_balance: 174.22 }
+}
+
+describe('Whop payment-request transfer: settlement gate and withdrawable balance', () => {
+  beforeEach(async () => {
+    await truncateModels(models.User)
+    await truncateModels(models.PaymentRequest)
+    await truncateModels(models.PaymentRequestPayment)
+    await truncateModels(models.PaymentRequestCustomer)
+    await truncateModels(models.PaymentRequestBalance)
+    await truncateModels(models.PaymentRequestBalanceTransaction)
+    await truncateModels(models.PaymentRequestTransfer)
+    process.env.WHOP_API_KEY = 'test_whop_key'
+    process.env.WHOP_COMPANY_ID = 'biz_test_platform'
+    pinWhopApiForTests()
+  })
+
+  afterEach(() => {
+    nock.cleanAll()
+    sinon.restore()
+  })
+
+  const payViaWebhook = async (paymentId: string) => {
+    const user = await registerAndLogin(agent)
+    await models.User.update(
+      { whop_account_id: 'biz_submerchant_1' },
+      { where: { id: user.body.id } }
+    )
+    await PaymentRequestFactory({
+      title: 'Settlement gate PR',
+      amount: 50,
+      currency: 'usd',
+      payment_link_id: 'plan_settlement_gate',
+      provider: 'whop',
+      userId: user.body.id
+    })
+    await agent
+      .post('/webhooks/whop')
+      .send({
+        id: `msg_${paymentId}`,
+        api_version: 'v1',
+        type: 'payment.succeeded',
+        timestamp: '2026-11-20T15:43:00.000Z',
+        company_id: 'biz_test_platform',
+        data: {
+          id: paymentId,
+          status: 'succeeded',
+          amount_after_fees: 50,
+          total: 50,
+          currency: 'usd',
+          metadata: { purpose: 'payment_request', payment_link_id: 'plan_settlement_gate' },
+          plan: { id: 'plan_settlement_gate' },
+          user: { name: 'Customer', email: 'customer@example.com' }
+        }
+      })
+      .expect(200)
+    return models.PaymentRequestPayment.findOne({ where: { source: paymentId } })
+  }
+
+  it('keeps the payment pending without checking the balance while it has not settled', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nockWhopPayment({ settled: false, paymentId: 'pay_not_settled' })
+      // No /ledger_accounts or /transfers mock: neither may be called before settlement.
+
+      const payment = await payViaWebhook('pay_not_settled')
+
+      expect(payment.transferStatus).to.equal('pending_funds')
+      const claim = await models.PaymentRequestTransfer.findByPk(payment.transferId)
+      expect(claim.status).to.equal('pending')
+      expect(nock.isDone()).to.equal(true)
+    })
+  })
+
+  it('keeps the payment pending when it settled but the withdrawable balance is short', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nockWhopPayment({ settled: true, paymentId: 'pay_settled_short' })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_test_platform')
+        .reply(200, {
+          ...treasuryLedger,
+          treasury_balance: { currency: 'usdt', total_withdrawable_balance: 10 }
+        })
+
+      const payment = await payViaWebhook('pay_settled_short')
+
+      expect(payment.transferStatus).to.equal('pending_funds')
+      expect(nock.isDone()).to.equal(true)
+    })
+  })
+
+  it('transfers once the payment settled and the Treasury withdrawable balance covers it', async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      nockWhopPayment({ settled: false, paymentId: 'pay_treasury' })
+      const payment = await payViaWebhook('pay_treasury')
+      expect(payment.transferStatus).to.equal('pending_funds')
+
+      // Next cron run: settled, funds in the USDT treasury, usd row still 0
+      nockWhopPayment({ settled: true, paymentId: 'pay_treasury' })
+      nock(WHOP_API_HOST)
+        .get('/api/v1/ledger_accounts/biz_test_platform')
+        .reply(200, treasuryLedger)
+      nock(WHOP_API_HOST).post('/api/v1/transfers').reply(200, transferCreate)
+
+      const cronResult = await processPendingPaymentRequestTransfers()
+      expect(cronResult.transferred).to.equal(1)
+      expect(cronResult.failed).to.equal(0)
+
+      await payment.reload()
+      expect(payment.transferStatus).to.equal('initiated')
+      const pr = await models.PaymentRequest.findByPk(payment.paymentRequestId)
+      expect(pr.transfer_id).to.equal(transferCreate.id)
     })
   })
 })

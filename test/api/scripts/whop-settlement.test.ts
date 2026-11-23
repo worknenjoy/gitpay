@@ -3,7 +3,12 @@ import request from 'supertest'
 import nock from 'nock'
 import api from '../../../src/server'
 import { registerAndLogin, truncateModels } from '../../helpers'
-import { withPaymentProvider, pinWhopApiForTests, WHOP_API_HOST } from '../../helpers/whop'
+import {
+  withPaymentProvider,
+  pinWhopApiForTests,
+  nockWhopPayment,
+  WHOP_API_HOST
+} from '../../helpers/whop'
 import Models from '../../../src/models'
 import {
   TaskFactory,
@@ -41,6 +46,7 @@ describe('Whop settlement services (script / mock path)', () => {
     process.env.WHOP_API_KEY = 'test_whop_key'
     process.env.WHOP_COMPANY_ID = 'biz_test_platform'
     pinWhopApiForTests()
+    nockWhopPayment({ settled: true })
   })
 
   afterEach(() => {

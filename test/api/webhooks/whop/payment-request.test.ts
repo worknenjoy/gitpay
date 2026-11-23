@@ -4,7 +4,12 @@ import nock from 'nock'
 import sinon from 'sinon'
 import api from '../../../../src/server'
 import { registerAndLogin, truncateModels } from '../../../helpers'
-import { withPaymentProvider, pinWhopApiForTests, WHOP_API_HOST } from '../../../helpers/whop'
+import {
+  withPaymentProvider,
+  pinWhopApiForTests,
+  nockWhopPayment,
+  WHOP_API_HOST
+} from '../../../helpers/whop'
 import Models from '../../../../src/models'
 import { PaymentRequestFactory } from '../../../factories'
 import transferCreate from '../../../data/whop/transfer.create'
@@ -50,6 +55,7 @@ describe('Whop webhooks for payment requests', () => {
     process.env.WHOP_API_KEY = 'test_whop_key'
     process.env.WHOP_COMPANY_ID = 'biz_test_platform'
     pinWhopApiForTests()
+    nockWhopPayment({ settled: true })
   })
 
   afterEach(() => {

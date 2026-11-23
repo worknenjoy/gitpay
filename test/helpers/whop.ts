@@ -51,3 +51,21 @@ export function pinWhopApiForTests() {
   resetWhopClient()
   WhopPaymentProvider.resetInstance()
 }
+
+/**
+ * Mock GET /payments/:id for the payment-request transfer settlement gate.
+ * `settled: false` returns `settlement_time_at: null` (Whop has not posted the funds yet).
+ * Without `paymentId`, matches any payment and persists for the whole test.
+ */
+export function nockWhopPayment({ settled, paymentId }: { settled: boolean; paymentId?: string }) {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const nock = require('nock')
+  const scope = nock(WHOP_API_HOST)
+    .get(paymentId ? `/api/v1/payments/${paymentId}` : /^\/api\/v1\/payments\/[^/]+$/)
+    .reply(200, (uri: string) => ({
+      id: uri.split('/').pop(),
+      status: 'paid',
+      settlement_time_at: settled ? '2026-01-01T00:00:00.000Z' : null
+    }))
+  return paymentId ? scope : scope.persist()
+}
