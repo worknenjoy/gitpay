@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Grid, Typography, Container } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import AccountTabs from './components/account-tabs'
 import ProfileMainHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header'
 
@@ -13,7 +13,7 @@ export const UserAccount = ({
   updateUserEmail
 }) => {
   return (
-    <Container>
+    <div>
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 12 }}>
           <ProfileMainHeader
@@ -39,6 +39,6 @@ export const UserAccount = ({
           />
         </Grid>
       </Grid>
-    </Container>
+    </div>
   )
 }

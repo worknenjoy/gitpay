@@ -1,12 +1,13 @@
 import { styled } from '@mui/material/styles'
 
-export const Body = styled('div')({
+export const Body = styled('div')(({ theme }) => ({
+  fontFamily: theme.typography.fontFamily,
   display: 'flex',
   flexDirection: 'column',
   gap: 20,
   marginTop: 16,
   '& > .MuiAlert-root': { marginBottom: 0 }
-})
+}))
 
 export const RequestPayment = styled('div')(({ theme }) => ({
   padding: '6px 14px',

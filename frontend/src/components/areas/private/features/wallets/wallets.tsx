@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { messages } from '../../../../../messages/messages'
-import { Container, useTheme, useMediaQuery } from '@mui/material'
+import { useTheme, useMediaQuery } from '@mui/material'
 import {
   Visibility as VisibilityIcon,
   Payment as PaymentIcon,
@@ -156,7 +156,7 @@ const Wallets = ({
         invoice={detailsOrder?.invoice || null}
         completed={!!detailsOrder}
       />
-      <Container>
+      <div>
         <ProfileMainHeader
           title={<FormattedMessage id="wallets.page.title" defaultMessage="My Wallets" />}
           subtitle={
@@ -336,7 +336,7 @@ const Wallets = ({
         ) : (
           <></>
         )}
-      </Container>
+      </div>
     </div>
   )
 }

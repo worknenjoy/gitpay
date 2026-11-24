@@ -2,6 +2,7 @@ import { styled } from '@mui/material/styles'
 
 export const PaymentsTitle = styled('h3')(({ theme }) => ({
   margin: '24px 0 8px',
+  fontFamily: theme.typography.fontFamily,
   paddingTop: 16,
   borderTop: `1px solid ${theme.palette.divider}`,
   fontSize: 16,
@@ -14,6 +15,7 @@ export const Note = styled('p')(({ theme }) => ({
   gap: 8,
   alignItems: 'flex-start',
   margin: '16px 0 0',
+  fontFamily: theme.typography.fontFamily,
   fontSize: 12.5,
   lineHeight: 1.5,
   color: theme.palette.text.secondary,

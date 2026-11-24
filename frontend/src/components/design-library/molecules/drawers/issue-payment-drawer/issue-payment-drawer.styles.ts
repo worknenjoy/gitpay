@@ -1,12 +1,13 @@
 import { styled, alpha } from '@mui/material/styles'
 import { TextField } from '@mui/material'
 
-export const Section = styled('div')({
+export const Section = styled('div')(({ theme }) => ({
+  fontFamily: theme.typography.fontFamily,
   display: 'flex',
   flexDirection: 'column',
   gap: 10,
   marginTop: 20
-})
+}))
 
 export const SectionLabel = styled('span')(({ theme }) => ({
   fontSize: 13,
@@ -47,7 +48,8 @@ export const Pill = styled('button')(({ theme }) => ({
 }))
 
 export const AmountInput = styled(TextField)({
-  width: 170
+  flex: 1,
+  minWidth: 140
 })
 
 export const FeeLine = styled('span')(({ theme }) => ({
@@ -109,6 +111,7 @@ export const MethodText = styled('span')(({ theme }) => ({
 }))
 
 export const Note = styled('p')(({ theme }) => ({
+  fontFamily: theme.typography.fontFamily,
   display: 'flex',
   gap: 8,
   alignItems: 'flex-start',

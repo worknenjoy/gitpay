@@ -21,9 +21,14 @@ type SolutionChecklistCardProps = {
   completed?: boolean
 }
 
-const LABELS: Record<SolutionCheckId, Partial<Record<SolutionCheckItem['state'], React.ReactNode>> & { default: React.ReactNode }> = {
+const LABELS: Record<
+  SolutionCheckId,
+  Partial<Record<SolutionCheckItem['state'], React.ReactNode>> & { default: React.ReactNode }
+> = {
   bounty: {
-    default: <FormattedMessage id="solutionCheck.bounty" defaultMessage="The bounty is available" />,
+    default: (
+      <FormattedMessage id="solutionCheck.bounty" defaultMessage="The bounty is available" />
+    ),
     warning: (
       <FormattedMessage
         id="solutionCheck.bounty.none"
@@ -45,7 +50,9 @@ const LABELS: Record<SolutionCheckId, Partial<Record<SolutionCheckItem['state'],
     )
   },
   merged: {
-    default: <FormattedMessage id="solutionCheck.merged" defaultMessage="The pull request was merged" />,
+    default: (
+      <FormattedMessage id="solutionCheck.merged" defaultMessage="The pull request was merged" />
+    ),
     warning: (
       <FormattedMessage
         id="solutionCheck.merged.pending"
@@ -55,7 +62,10 @@ const LABELS: Record<SolutionCheckId, Partial<Record<SolutionCheckItem['state'],
   },
   issueClosed: {
     default: (
-      <FormattedMessage id="solutionCheck.issueClosed" defaultMessage="The issue is closed on GitHub" />
+      <FormattedMessage
+        id="solutionCheck.issueClosed"
+        defaultMessage="The issue is closed on GitHub"
+      />
     )
   },
   referenced: {

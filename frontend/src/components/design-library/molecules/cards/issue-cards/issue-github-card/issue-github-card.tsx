@@ -12,7 +12,14 @@ import PullRequestIcon from 'design-library/atoms/icons/pull-request-icon/pull-r
 import { PrIcon } from 'design-library/molecules/menus/linked-pull-requests-menu/linked-pull-requests-menu.styles'
 import type { LinkedPullRequest } from 'design-library/molecules/menus/linked-pull-requests-menu/linked-pull-requests-menu'
 import IssueSidebarCardBase from '../issue-sidebar-card-base/issue-sidebar-card-base'
-import { Who, OpenDot, LinkedRow, LinkedToggle, LinkedList, LinkedItem } from './issue-github-card.styles'
+import {
+  Who,
+  OpenDot,
+  LinkedRow,
+  LinkedToggle,
+  LinkedList,
+  LinkedItem
+} from './issue-github-card.styles'
 
 export type IssueGithubCardInfo = {
   status: 'open' | 'closed'
@@ -34,10 +41,15 @@ type IssueGithubCardProps = {
 const relative = (date: string) => {
   const seconds = Math.round((new Date(date).getTime() - Date.now()) / 1000)
   const abs = Math.abs(seconds)
-  if (abs < 3600) return <FormattedRelativeTime value={Math.round(seconds / 60)} unit="minute" numeric="auto" />
-  if (abs < 86400) return <FormattedRelativeTime value={Math.round(seconds / 3600)} unit="hour" numeric="auto" />
-  if (abs < 86400 * 30) return <FormattedRelativeTime value={Math.round(seconds / 86400)} unit="day" numeric="auto" />
-  return <FormattedRelativeTime value={Math.round(seconds / (86400 * 30))} unit="month" numeric="auto" />
+  if (abs < 3600)
+    return <FormattedRelativeTime value={Math.round(seconds / 60)} unit="minute" numeric="auto" />
+  if (abs < 86400)
+    return <FormattedRelativeTime value={Math.round(seconds / 3600)} unit="hour" numeric="auto" />
+  if (abs < 86400 * 30)
+    return <FormattedRelativeTime value={Math.round(seconds / 86400)} unit="day" numeric="auto" />
+  return (
+    <FormattedRelativeTime value={Math.round(seconds / (86400 * 30))} unit="month" numeric="auto" />
+  )
 }
 
 /** What GitHub says about the issue. Rows without data are left out. */
@@ -68,7 +80,11 @@ const IssueGithubCard = ({
       label: <FormattedMessage id="issue.github.repoType" defaultMessage="Repository type" />,
       value: (
         <Who>
-          {info.repoPrivate ? <PrivateIcon sx={{ fontSize: 14 }} /> : <PublicIcon sx={{ fontSize: 14 }} />}
+          {info.repoPrivate ? (
+            <PrivateIcon sx={{ fontSize: 14 }} />
+          ) : (
+            <PublicIcon sx={{ fontSize: 14 }} />
+          )}
           {info.repoPrivate ? (
             <FormattedMessage id="issue.github.private" defaultMessage="Private" />
           ) : (

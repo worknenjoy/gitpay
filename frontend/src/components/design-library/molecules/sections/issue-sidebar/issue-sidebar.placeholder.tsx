@@ -4,8 +4,8 @@ import FactsStrip from 'design-library/molecules/sections/facts-strip/facts-stri
 import IssueSidebarCardBasePlaceholder from 'design-library/molecules/cards/issue-cards/issue-sidebar-card-base/issue-sidebar-card-base.placeholder'
 import { SidebarRoot } from './issue-sidebar.styles'
 
-const IssueSidebarPlaceholder = () => (
-  <SidebarRoot aria-busy="true" aria-label="Issue sidebar loading">
+const IssueSidebarPlaceholder = ({ contained = false }: { contained?: boolean }) => (
+  <SidebarRoot contained={contained} aria-busy="true" aria-label="Issue sidebar loading">
     <div className="share-bar-wrap">
       <Skeleton variant="rounded" width={260} height={40} sx={{ borderRadius: 999 }} />
     </div>

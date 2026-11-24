@@ -1,7 +1,8 @@
 import { styled } from '@mui/material/styles'
 
 export const BreadcrumbRoot = styled('div')(({ theme }) => ({
-  marginTop: theme.spacing(2),
+  // No top margin: the breadcrumb is the first thing on a page, and the page
+  // container already provides the top spacing, so it lines up with side panels.
   marginBottom: theme.spacing(2)
 }))
 

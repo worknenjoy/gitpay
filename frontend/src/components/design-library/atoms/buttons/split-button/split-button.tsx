@@ -22,6 +22,8 @@ export type SplitButtonProps = {
   variant?: MUIButtonProps['variant']
   color?: MUIButtonProps['color']
   size?: MUIButtonProps['size']
+  /** Stretch to the container width. */
+  fullWidth?: boolean
   completed?: boolean
   disabled?: boolean
 }
@@ -33,6 +35,7 @@ const SplitButton = ({
   variant = 'contained',
   color = 'primary',
   size = 'medium',
+  fullWidth = false,
   completed = true,
   disabled = false
 }: SplitButtonProps) => {
@@ -50,7 +53,7 @@ const SplitButton = ({
 
   return (
     <>
-      <ButtonGroup variant={variant} color={color} disabled={isDisabled}>
+      <ButtonGroup variant={variant} color={color} disabled={isDisabled} fullWidth={fullWidth}>
         {onDefaultClick && (
           <Button
             variant={variant}

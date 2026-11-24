@@ -68,9 +68,29 @@ WithExistingSolution.args = {
 }
 
 const myPullRequests = [
-  { repo: 'RetroShare/RetroShare', number: 3102, title: 'Boards: stick posts to the top of the feed', when: 'merged 2 days ago', state: 'merged' as const, note: 'Mentions #3094' },
-  { repo: 'RetroShare/RetroShare', number: 3098, title: 'Use createPostV2 in PostedCreatePostDialog', when: '1 week ago', state: 'open' as const, note: 'Mentions #3094' },
-  { repo: 'RetroShare/libretroshare', number: 231, title: 'Admin can edit posts in boards', when: '2 weeks ago', state: 'open' as const }
+  {
+    repo: 'RetroShare/RetroShare',
+    number: 3102,
+    title: 'Boards: stick posts to the top of the feed',
+    when: 'merged 2 days ago',
+    state: 'merged' as const,
+    note: 'Mentions #3094'
+  },
+  {
+    repo: 'RetroShare/RetroShare',
+    number: 3098,
+    title: 'Use createPostV2 in PostedCreatePostDialog',
+    when: '1 week ago',
+    state: 'open' as const,
+    note: 'Mentions #3094'
+  },
+  {
+    repo: 'RetroShare/libretroshare',
+    number: 231,
+    title: 'Admin can edit posts in boards',
+    when: '2 weeks ago',
+    state: 'open' as const
+  }
 ]
 
 /** Nothing checked yet — the state right after opening the drawer today. */

@@ -1,6 +1,5 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { Container } from '@mui/material'
 import { BugReportOutlined as NoIssuesIcon } from '@mui/icons-material'
 import { ExplorePaper, TopSection } from './explore-issues-private-page.styles'
 import IssuesTable from 'design-library/molecules/tables/issue-table/issue-table'
@@ -27,7 +26,7 @@ const ExploreIssuesPrivatePage = ({
 }) => {
   return (
     <ExplorePaper elevation={0}>
-      <Container>
+      <div>
         <TopSection>
           <Breadcrumb
             root={{
@@ -92,7 +91,7 @@ const ExploreIssuesPrivatePage = ({
             }
           />
         </TopSection>
-      </Container>
+      </div>
     </ExplorePaper>
   )
 }

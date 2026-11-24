@@ -36,4 +36,45 @@ export const PlanIcon = styled('span')(() => ({
   padding: 2
 }))
 
+export const CompactCard = styled('div')(({ theme }) => ({
+  display: 'inline-flex',
+  alignItems: 'center',
+  padding: '4px 12px 4px 6px',
+  border: `1px solid ${theme.palette.divider}`,
+  borderRadius: 8,
+  fontFamily: theme.typography.fontFamily,
+  backgroundColor: theme.palette.background.paper
+}))
+
+export const CompactFee = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 8,
+  flexShrink: 0,
+  '& b': {
+    display: 'block',
+    fontSize: 14,
+    lineHeight: 1.2,
+    fontWeight: 600,
+    color: theme.palette.text.primary
+  },
+  '& em': {
+    display: 'block',
+    fontStyle: 'normal',
+    fontSize: 11.5,
+    lineHeight: 1.2,
+    color: theme.palette.text.secondary
+  }
+}))
+
+export const CompactIcon = styled('span')(({ theme }) => ({
+  width: 28,
+  height: 28,
+  borderRadius: '50%',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: theme.palette.action.hover
+}))
+
 export default { PlanGridItem, PlanCard, PlanCardContent, PlanButton, PlanBullets, PlanIcon }

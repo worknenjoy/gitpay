@@ -6,7 +6,6 @@ import {
   customColumnRenderer
 } from 'design-library/molecules/tables/project-issue-table/project-issue-table'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
-import { Container } from '@mui/material'
 import { ExplorePaper, TopSection } from './my-project-issues-private-page.styles'
 import Breadcrumbs from 'design-library/molecules/breadcrumbs/breadcrumb/breadcrumb'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
@@ -37,7 +36,7 @@ const MyProjectIssuesPrivatePage = ({ project, user, issues, serverSidePaginatio
 
   return (
     <ExplorePaper elevation={0}>
-      <Container>
+      <div>
         <TopSection>
           <Breadcrumbs
             project={project}
@@ -78,7 +77,7 @@ const MyProjectIssuesPrivatePage = ({ project, user, issues, serverSidePaginatio
             serverSidePagination={serverSidePagination}
           />
         </TopSection>
-      </Container>
+      </div>
     </ExplorePaper>
   )
 }

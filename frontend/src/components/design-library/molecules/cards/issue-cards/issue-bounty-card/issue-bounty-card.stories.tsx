@@ -19,7 +19,11 @@ const meta: Meta<typeof IssueBountyCard> = {
 export default meta
 type Story = StoryObj<typeof IssueBountyCard>
 
-const sponsors = [{ name: 'worknenjoy' }, { name: 'defnax' }, { name: 'Anonymous', anonymous: true }]
+const sponsors = [
+  { name: 'worknenjoy' },
+  { name: 'defnax' },
+  { name: 'Anonymous', anonymous: true }
+]
 
 export const PaidInAdvance: Story = {
   args: { total: 350, sponsors, timing: 'advance' }

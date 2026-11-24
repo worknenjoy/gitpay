@@ -28,7 +28,12 @@ export const ThreeFacts: Story = {
         value: <StatusChip label="Funded" tone="success" />
       },
       { label: 'Visibility', help: 'Who can find it.', value: 'Public' },
-      { label: 'Deadline', help: 'When a solution is needed.', value: 'Dec 15, 2026', sub: '22 days left' }
+      {
+        label: 'Deadline',
+        help: 'When a solution is needed.',
+        value: 'Dec 15, 2026',
+        sub: '22 days left'
+      }
     ]
   }
 }

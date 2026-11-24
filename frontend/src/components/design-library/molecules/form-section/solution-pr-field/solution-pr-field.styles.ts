@@ -1,11 +1,12 @@
 import { styled } from '@mui/material/styles'
 import { Input as MuiInput } from '@mui/material'
 
-export const Field = styled('div')({
+export const Field = styled('div')(({ theme }) => ({
+  fontFamily: theme.typography.fontFamily,
   display: 'flex',
   flexDirection: 'column',
   gap: 6
-})
+}))
 
 export const Label = styled('span')(({ theme }) => ({
   fontSize: 13,

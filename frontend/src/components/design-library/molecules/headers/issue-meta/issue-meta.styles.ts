@@ -6,6 +6,7 @@ export const Root = styled('div')(({ theme }) => ({
   alignItems: 'flex-start',
   gap: 10,
   margin: '10px 0 20px',
+  fontFamily: theme.typography.fontFamily,
   fontSize: 14,
   color: theme.palette.text.secondary,
   '& a': {

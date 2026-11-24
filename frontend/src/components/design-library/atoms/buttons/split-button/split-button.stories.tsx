@@ -60,3 +60,11 @@ export const Disabled: Story = {
     disabled: true
   }
 }
+
+export const FullWidth: Story = {
+  args: {
+    label: 'Import',
+    actions: importActions,
+    fullWidth: true
+  }
+}

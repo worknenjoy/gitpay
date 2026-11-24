@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { useHistory, useLocation } from 'react-router-dom'
-import { Button, Container, Grid } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import { Alert, AlertTitle } from '@mui/material'
 import CodeIcon from '@mui/icons-material/Code'
 import AssignmentIcon from '@mui/icons-material/Assignment'
@@ -447,7 +447,7 @@ const Dashboard = ({
     ) : undefined
 
   return (
-    <Container>
+    <div>
       {roles.length === 0 && (
         <Grid container justifyContent="space-between" alignItems="center">
           <MainTitle title={<FormattedMessage id="dashboard.title" defaultMessage="Dashboard" />} />
@@ -492,7 +492,7 @@ const Dashboard = ({
       ) : (
         <DashboardCardList user={user} dashboard={dashboard} />
       )}
-    </Container>
+    </div>
   )
 }
 

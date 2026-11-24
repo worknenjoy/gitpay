@@ -77,10 +77,7 @@ const IssueMeta = ({
             <Link href={providerUrl} target="_blank" rel="noopener noreferrer" color="inherit">
               {providerName}
             </Link>
-            <ProviderLogo
-              src={provider === 'bitbucket' ? logoBitbucket : logoGithub}
-              alt=""
-            />
+            <ProviderLogo src={provider === 'bitbucket' ? logoBitbucket : logoGithub} alt="" />
             {shownAuthor && (
               <>
                 <FormattedMessage id="issue.meta.by" defaultMessage="by" />

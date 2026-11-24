@@ -5,6 +5,7 @@ import { addDecorator } from '@storybook/react'
 import '../src/main/app.css'
 import messagesEnLocal from '../src/translations/generated/en.json'
 import Palette from '../src/styleguide/styles/palette'
+import { withReduxStore } from './decorators/withReduxStore'
 
 const theme = createTheme(Palette)
 
@@ -32,6 +33,9 @@ const withRouter = (Story) => (
 addDecorator(withIntl)
 addDecorator(withMuiTheme)
 addDecorator(withRouter)
+// The topbar / account header in the page templates render Redux-connected
+// containers (e.g. ImportPullRequest), so every story needs a store.
+addDecorator(withReduxStore)
 
 export const globalTypes = {
   locale: {

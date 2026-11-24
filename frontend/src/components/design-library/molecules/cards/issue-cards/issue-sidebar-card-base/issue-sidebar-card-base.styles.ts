@@ -1,9 +1,10 @@
 import { styled } from '@mui/material/styles'
 
-export const Card = styled('section', {
+export const Card = styled('div', {
   shouldForwardProp: (prop) => prop !== 'dense'
 })<{ dense?: boolean }>(({ theme, dense }) => ({
   position: 'relative',
+  fontFamily: theme.typography.fontFamily,
   backgroundColor: theme.palette.background.paper,
   border: `1px solid ${theme.palette.divider}`,
   borderRadius: 8,

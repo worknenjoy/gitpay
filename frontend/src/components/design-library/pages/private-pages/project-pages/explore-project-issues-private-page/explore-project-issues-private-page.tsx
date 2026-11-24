@@ -1,6 +1,5 @@
 import React from 'react'
 import { ExplorePaper } from '../../issues-pages/explore-issues-private-page/explore-issues-private-page.styles'
-import { Container } from '@mui/material'
 import { TopSection } from './explore-project-issues-private-page.styles'
 import { FormattedMessage } from 'react-intl'
 import MainTitle from 'design-library/atoms/typography/main-title/main-title'
@@ -21,7 +20,7 @@ const ExploreProjectPage = ({
 }) => {
   return (
     <ExplorePaper elevation={0}>
-      <Container>
+      <div>
         <TopSection>
           <Breadcrumbs
             project={project}
@@ -68,7 +67,7 @@ const ExploreProjectPage = ({
             defaultRowsPerPage={defaultRowsPerPage}
           />
         </TopSection>
-      </Container>
+      </div>
     </ExplorePaper>
   )
 }

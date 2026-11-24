@@ -9,17 +9,31 @@ import Paper from '@mui/material/Paper'
 import Popper from '@mui/material/Popper'
 import MenuItem from '@mui/material/MenuItem'
 import MenuList from '@mui/material/MenuList'
+import Menu from '@mui/material/Menu'
 
 const options = ['', 'easy', 'medium', 'hard']
 
-const optionLabels = {
+export const optionLabels = {
   '': 'Choose level',
   easy: 'Easy',
   medium: 'Medium',
   hard: 'Hard'
 }
 
-export default function TaskLevelSplitButton({ id, level, updateTask }) {
+type TaskLevelSplitButtonProps = {
+  id: number
+  level?: string | null
+  updateTask: (data: { id: number; level: string }) => any
+  /** compact: a small text button with a menu, for tight spots like a details row. */
+  variant?: 'default' | 'compact'
+}
+
+export default function TaskLevelSplitButton({
+  id,
+  level,
+  updateTask,
+  variant = 'default'
+}: TaskLevelSplitButtonProps) {
   const [open, setOpen] = React.useState(false)
   const anchorRef = React.useRef(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
@@ -67,6 +81,52 @@ export default function TaskLevelSplitButton({ id, level, updateTask }) {
     }
 
     setOpen(false)
+  }
+
+  if (variant === 'compact') {
+    return (
+      <>
+        <Button
+          ref={anchorRef}
+          size="small"
+          color="primary"
+          onClick={handleToggle}
+          endIcon={<ArrowDropDownIcon />}
+          aria-haspopup="menu"
+          aria-expanded={open ? 'true' : undefined}
+          sx={{
+            minWidth: 0,
+            p: '0 4px',
+            mr: '-4px',
+            fontSize: 14,
+            fontWeight: 500,
+            textTransform: 'none',
+            lineHeight: 1.5,
+            '& .MuiButton-endIcon': { ml: 0 }
+          }}
+        >
+          {optionLabels[selectedLevel] || optionLabels['']}
+        </Button>
+        <Menu
+          anchorEl={anchorRef.current}
+          open={open}
+          onClose={() => setOpen(false)}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        >
+          {options.map((option, index) => (
+            <MenuItem
+              key={index}
+              dense
+              selected={index === selectedIndex}
+              onClick={(event) => handleMenuItemClick(event, index, option)}
+            >
+              {optionLabels[option]}
+            </MenuItem>
+          ))}
+        </Menu>
+      </>
+    )
   }
 
   return (

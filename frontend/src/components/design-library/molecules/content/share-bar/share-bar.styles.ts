@@ -9,6 +9,8 @@ export const Root = styled('div')(({ theme }) => ({
   border: '1px solid',
   borderColor: 'inherit',
   borderRadius: 999,
+  maxWidth: '100%',
+  boxSizing: 'border-box',
   // Full-width on mobile instead of a content-sized pill — there's no
   // second column to sit beside there, so it reads better spanning the row.
   [theme.breakpoints.down('sm')]: {
@@ -28,6 +30,7 @@ export const UrlButton = styled('button')(({ theme }) => ({
   borderRadius: 999,
   cursor: 'pointer',
   color: theme.palette.text.primary,
+  minWidth: 0,
   '&:hover': {
     backgroundColor: theme.palette.action.hover
   },
@@ -45,6 +48,9 @@ export const UrlText = styled(Typography)(({ theme }) => ({
   fontSize: 12,
   color: theme.palette.text.primary,
   whiteSpace: 'nowrap',
+  minWidth: 0,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
   // The bar is full-width now, but the URL is still the one part that can
   // run long — let it shrink and ellipsis rather than force the bar wider.
   [theme.breakpoints.down('sm')]: {

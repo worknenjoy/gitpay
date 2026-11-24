@@ -18,9 +18,7 @@ const EmptySolutions = ({ onActionClick }: EmptySolutionsProps) => (
         defaultMessage="Pull requests sent as solutions for this issue show up here."
       />
     }
-    actionText={
-      <FormattedMessage id="emptySolutions.actionText" defaultMessage="Send solution" />
-    }
+    actionText={<FormattedMessage id="emptySolutions.actionText" defaultMessage="Send solution" />}
     onActionClick={onActionClick}
   />
 )

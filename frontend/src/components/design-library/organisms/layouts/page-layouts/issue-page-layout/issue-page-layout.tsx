@@ -9,7 +9,10 @@ import BountyBreakdownDrawer from 'design-library/molecules/drawers/bounty-break
 import IssueSolutionsDrawer from 'design-library/molecules/drawers/issue-solutions-drawer/issue-solutions-drawer'
 import IssueMessageAuthorDialog from 'design-library/molecules/dialogs/issue-message-author-dialog/issue-message-author-dialog'
 import LoginButton from 'design-library/molecules/form-section/login-form/login-form-signin/login-form-signin'
-import type { IssueOwner, IssueOwnerReputation } from 'design-library/molecules/cards/issue-cards/issue-owner-card/issue-owner-card'
+import type {
+  IssueOwner,
+  IssueOwnerReputation
+} from 'design-library/molecules/cards/issue-cards/issue-owner-card/issue-owner-card'
 import type { LinkedPullRequest } from 'design-library/molecules/menus/linked-pull-requests-menu/linked-pull-requests-menu'
 import type { MyPullRequest } from 'design-library/molecules/form-section/solution-pr-field/solution-pr-field'
 import type { IssueSolution } from 'design-library/molecules/lists/issue-solutions-list/issue-solutions-list'
@@ -64,7 +67,8 @@ const IssuePage = ({
   initialBountyMethod,
   initialBountyWhen = 'now',
   defaultVisibilityOpen,
-  linkedOpen
+  linkedOpen,
+  contained = false
 }: {
   [key: string]: any
   solutions?: IssueSolution[]
@@ -83,6 +87,8 @@ const IssuePage = ({
   initialBountyWhen?: 'now' | 'later'
   defaultVisibilityOpen?: boolean
   linkedOpen?: boolean
+  /** Rendered inside a padded container (profile pages). */
+  contained?: boolean
 }) => {
   const [dialog, setDialog] = useState<IssuePageDialog>(initialDialog)
   const [bountyWhen, setBountyWhen] = useState<'now' | 'later'>(initialBountyWhen)
@@ -95,8 +101,10 @@ const IssuePage = ({
 
   return (
     <>
-      <Grid container style={{ marginBottom: 4 }} alignItems="stretch">
-        <Grid size={{ xs: 12, sm: 12, md: 8 }} style={{ marginBottom: 40 }}>
+      {/* The grid owns the vertical spacing so both columns start (and end) on the same line.
+          Inside a padded container (profile) that spacing already exists. */}
+      <Grid container alignItems="stretch" sx={{ py: contained ? 0 : 3 }}>
+        <Grid size={{ xs: 12, sm: 12, md: 8 }} sx={{ mb: { xs: 3, md: 0 } }}>
           <IssueContent
             user={user}
             task={task}
@@ -108,9 +116,10 @@ const IssuePage = ({
             onSendSolution={() => setDialog('solution')}
             linkedPullRequests={linkedPullRequests}
             linkedOpen={linkedOpen}
+            contained={contained}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 12, md: 4 }} style={{ marginBottom: 40 }}>
+        <Grid size={{ xs: 12, sm: 12, md: 4 }} sx={{ display: 'flex', flexDirection: 'column' }}>
           <IssueSidebar
             user={user}
             task={task}
@@ -132,6 +141,7 @@ const IssuePage = ({
             onPostOnGithub={onPostOnGithub}
             defaultVisibilityOpen={defaultVisibilityOpen}
             linkedOpen={linkedOpen}
+            contained={contained}
           />
         </Grid>
       </Grid>
@@ -220,7 +230,11 @@ const IssuePage = ({
               onSend={messageAuthor}
             />
           ) : (
-            <Dialog open={dialog === 'message'} onClose={close} aria-labelledby="login-dialog-title">
+            <Dialog
+              open={dialog === 'message'}
+              onClose={close}
+              aria-labelledby="login-dialog-title"
+            >
               <DialogTitle id="login-dialog-title">
                 <FormattedMessage
                   id="task.bounties.logged.info"
