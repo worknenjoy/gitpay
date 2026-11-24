@@ -17,6 +17,7 @@ import type { LinkedPullRequest } from 'design-library/molecules/menus/linked-pu
 import type { MyPullRequest } from 'design-library/molecules/form-section/solution-pr-field/solution-pr-field'
 import type { IssueSolution } from 'design-library/molecules/lists/issue-solutions-list/issue-solutions-list'
 import type { AddBountyMethod } from 'design-library/molecules/drawers/issue-payment-drawer/issue-payment-drawer'
+import { PAGE_PADDING } from 'design-library/templates/base/private-base/private-base.styles'
 import { getBountySummary, getImporter, getSolutionsFromTaskSolution } from './issue-page.helpers'
 
 export type IssuePageDialog = 'bounty' | 'solution' | 'breakdown' | 'solutions' | 'message' | null
@@ -102,8 +103,15 @@ const IssuePage = ({
   return (
     <>
       {/* The grid owns the vertical spacing so both columns start (and end) on the same line.
-          Inside a padded container (profile) that spacing already exists. */}
-      <Grid container alignItems="stretch" sx={{ py: contained ? 0 : 3 }}>
+          Inside a padded container (profile) that spacing already exists, but the content drops
+          its gutters there, so the grid also adds the gap between the columns — the same as the
+          container's own side padding. */}
+      <Grid
+        container
+        alignItems="stretch"
+        columnSpacing={contained ? { md: PAGE_PADDING.desktop.x } : 0}
+        sx={{ py: contained ? 0 : 3 }}
+      >
         <Grid size={{ xs: 12, sm: 12, md: 8 }} sx={{ mb: { xs: 3, md: 0 } }}>
           <IssueContent
             user={user}
