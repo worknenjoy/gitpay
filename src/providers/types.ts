@@ -25,6 +25,11 @@ export type CreatePaymentRequestResourcesParams = {
   directCharge?: boolean
   /** Whop-only: the seller's connected company id (User.whop_account_id) for directCharge. */
   connectedAccountId?: string
+  /**
+   * Gitpay platform fee (% of gross) snapshotted on the payment request. Whop direct
+   * charge collects it via application_fee_amount; ignored otherwise.
+   */
+  platformFeePercent?: number
 }
 
 export type PaymentRequestResources = {

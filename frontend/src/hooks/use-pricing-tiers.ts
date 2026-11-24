@@ -86,16 +86,16 @@ const messages = defineMessages({
   contributorsButton: { id: 'welcome.pricing.contributors.button', defaultMessage: 'Get started' },
   serviceProvidersTitle: {
     id: 'welcome.pricing.serviceproviders.title',
-    defaultMessage: 'Fee for service providers'
+    defaultMessage: 'Platform payments'
   },
   serviceProvidersSubheader: {
     id: 'welcome.pricing.serviceproviders.subheader',
-    defaultMessage: 'For service providers who deliver services through Gitpay'
+    defaultMessage: 'Gitpay holds the funds and manages disputes for you'
   },
   serviceProvidersDescription1: {
     id: 'welcome.pricing.serviceproviders.description1',
     defaultMessage:
-      '8% of platform fees + processing fees to receive payouts automatically when your customer pays the payment request for your service'
+      '8% platform fee + processing fees. Gitpay receives the payment, handles disputes and refunds, and sends your payout automatically'
   },
   serviceProvidersDescription2: {
     id: 'welcome.pricing.serviceproviders.description2',
@@ -107,6 +107,30 @@ const messages = defineMessages({
   },
   serviceProvidersButton: {
     id: 'welcome.pricing.serviceproviders.button',
+    defaultMessage: 'Get started'
+  },
+  directChargeTitle: {
+    id: 'welcome.pricing.serviceproviders.directcharge.title',
+    defaultMessage: 'Direct charge'
+  },
+  directChargeSubheader: {
+    id: 'welcome.pricing.serviceproviders.directcharge.subheader',
+    defaultMessage: 'Get paid directly on your connected payout account'
+  },
+  directChargeDescription1: {
+    id: 'welcome.pricing.serviceproviders.directcharge.description1',
+    defaultMessage: '5% platform fee + processing fees, charged when your customer pays'
+  },
+  directChargeDescription2: {
+    id: 'welcome.pricing.serviceproviders.directcharge.description2',
+    defaultMessage: 'Payments settle directly on your connected payout account'
+  },
+  directChargeDescription3: {
+    id: 'welcome.pricing.serviceproviders.directcharge.description3',
+    defaultMessage: 'You handle disputes and refunds as the merchant of record'
+  },
+  directChargeButton: {
+    id: 'welcome.pricing.serviceproviders.directcharge.button',
     defaultMessage: 'Get started'
   }
 })
@@ -181,6 +205,21 @@ const usePricingTiers = () => {
         ],
         link: signinLink,
         buttonText: intl.formatMessage(messages.serviceProvidersButton),
+        buttonVariant: 'text'
+      },
+      {
+        id: 'welcome.pricing.serviceproviders.directcharge.title',
+        title: intl.formatMessage(messages.directChargeTitle),
+        subheader: intl.formatMessage(messages.directChargeSubheader),
+        price: '5%',
+        description: [
+          intl.formatMessage(messages.directChargeDescription1),
+          intl.formatMessage(messages.directChargeDescription2),
+          intl.formatMessage(messages.directChargeDescription3),
+          ''
+        ],
+        link: signinLink,
+        buttonText: intl.formatMessage(messages.directChargeButton),
         buttonVariant: 'text'
       }
     ]

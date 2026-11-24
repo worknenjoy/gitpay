@@ -13,6 +13,7 @@ import { getPaymentProvider } from '../../../providers'
 import { getWhopCompanyId } from '../../../providers/whop/client'
 import { executePaymentRequestTransfer } from '../../../services/paymentRequest/executePaymentRequestTransfer'
 import { PaymentRequestTransferStatus } from '../../../services/paymentRequest/paymentRequestTransferStatuses'
+import { getPlatformFeePercent } from '../../../services/paymentRequest/platformFee'
 
 const models = Models as any
 
@@ -228,6 +229,10 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
   // Still allow transfer retries when transfer was deferred or never finished.
   const existingBySource = await findPaymentRequestPayment(paymentIntentId)
   if (existingBySource) {
+    // A later event for the same pay_ id (e.g. payment.succeeded after payment.created)
+    // may be the first to carry amount_after_fees — persist it before resuming, since a
+    // direct-charge transfer waits for it (see executePaymentRequestTransfer).
+    await maybeUpgradePaymentSourceAndAmount(existingBySource, paymentIntentId, session)
     return resumeExistingPayment(existingBySource)
   }
 
@@ -270,9 +275,15 @@ export async function processCheckoutSessionCompleted(session: CheckoutSession) 
     'centavos',
     currency
   )
+  const platformFeePercent = getPlatformFeePercent(paymentRequest)
   const amountAfterFee = custom_amount
-    ? calculateAmountWithPercent(session.amount_total ?? 0, 8, 'centavos', currency)
-    : calculateAmountWithPercent(amount, 8, 'decimal', currency)
+    ? calculateAmountWithPercent(
+        session.amount_total ?? 0,
+        platformFeePercent,
+        'centavos',
+        currency
+      )
+    : calculateAmountWithPercent(amount, platformFeePercent, 'decimal', currency)
 
   const transferAmountDecimal = amountAfterFee.decimal
 

@@ -142,6 +142,14 @@ async function ensurePendingClaim(params: {
   return claim
 }
 
+/** Whop has reported this payment's net (amount_after_fees) — see computeSellerNetAmount. */
+function hasProviderReportedNet(paymentRequestPayment: {
+  amount_after_fees?: string | number | null
+}): boolean {
+  const net = paymentRequestPayment.amount_after_fees
+  return net != null && Number.isFinite(Number(net)) && Number(net) >= 0
+}
+
 type LockedTransferOutcome =
   | { kind: 'debt_applied'; resultingBalance: number; balanceTransactionForEmail: any }
   | { kind: 'deferred_no_destination'; resultingBalance: number }
@@ -269,6 +277,26 @@ export async function executePaymentRequestTransfer(
   // transfer step to intercept for a direct-charge payment — it remains on the ledger
   // for separate reconciliation.
   if (paymentRequest.direct_charge && paymentRequestPayment.destination_account_id) {
+    // The seller's real net (gross − Whop processing − Gitpay's application fee) is only
+    // known once Whop reports amount_after_fees, which arrives on payment.succeeded —
+    // often a few seconds after the first event (e.g. membership.activated) that created
+    // this row. Initiating now would record the claim at gross − platform fee and email
+    // a breakdown with no Whop fee, so park it as pending instead: the payment.succeeded
+    // event resumes this flow (resumeExistingPayment), and the pending-funds cron retries.
+    if (!hasProviderReportedNet(paymentRequestPayment)) {
+      await ensurePendingClaim({
+        paymentRequestPayment,
+        paymentRequest,
+        valueDecimal: transferAmountDecimal,
+        transferMethod: paymentProvider.name
+      })
+      return baseResult({
+        deferred: true,
+        newlyDeferred: !wasAlreadyPendingFunds,
+        reason: 'awaiting_provider_net'
+      })
+    }
+
     await models.sequelize.transaction(async (tx: Transaction) => {
       // No separate provider transfer object exists for a direct charge — the
       // underlying charge id (paymentIntentId) is the closest thing to a

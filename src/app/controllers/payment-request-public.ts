@@ -4,6 +4,7 @@ import {
 } from '../../queries/payment-request/payment-request'
 import { WhopPaymentProvider } from '../../providers/whop/WhopPaymentProvider'
 import Models from '../../models'
+import { getPlatformFeePercent } from '../../services/paymentRequest/platformFee'
 
 const models = Models as any
 
@@ -99,6 +100,7 @@ export const createWhopCheckout = async function createWhopCheckout(req: any, re
         description: paymentRequest.description,
         currency: paymentRequest.currency,
         connectedAccountId,
+        platformFeePercent: getPlatformFeePercent(paymentRequest),
         metadata: {
           payment_request_id: paymentRequest.id,
           user_id: paymentRequest.userId,

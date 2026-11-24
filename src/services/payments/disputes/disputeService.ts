@@ -5,6 +5,7 @@ import PaymentRequestMail from '../../../mail/paymentRequest'
 import { findOrCreatePaymentRequestBalance } from '../../../queries/payment-request/payment-request-balance'
 import { findPaymentRequestPayment } from '../../../queries/payment-request/payment-request-payment'
 import { calculateAmountWithPercent } from '../../../utils'
+import { getPlatformFeePercent } from '../../paymentRequest/platformFee'
 
 const stripe = Stripe()
 const models = Models as any
@@ -58,7 +59,7 @@ export const createDisputeForPaymentRequest = async ({
 
 /**
  * Debit PR balance for a dispute (amounts in cents).
- * finalDebit = amount + 8% gitpay fee + provider fee.
+ * finalDebit = amount + Gitpay platform fee (PaymentRequest.platform_fee_percent) + provider fee.
  * Idempotent: skips if a DISPUTE DEBIT already exists for this sourceId.
  */
 export const withDrawnDisputeForPaymentRequest = async ({
@@ -130,8 +131,11 @@ export const withDrawnDisputeForPaymentRequest = async ({
     }
   }
 
+  const platformFeePercent = getPlatformFeePercent(paymentRequestPayment.PaymentRequest)
   const finalAmount =
-    amount + calculateAmountWithPercent(amount, 8, 'centavos', 'usd').centavosFee + (fee || 0)
+    amount +
+    calculateAmountWithPercent(amount, platformFeePercent, 'centavos', 'usd').centavosFee +
+    (fee || 0)
 
   const paymentRequestBalanceTransactionForDisputeFee =
     await models.PaymentRequestBalanceTransaction.create({

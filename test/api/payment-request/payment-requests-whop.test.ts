@@ -27,9 +27,7 @@ describe('POST /payment-request (Whop)', () => {
 
   it('should create a payment request via Whop product + plan', async () => {
     await withPaymentProvider('whop', async () => {
-      nock(getWhopNockOrigin())
-        .post('/api/v1/products')
-        .reply(200, productCreate)
+      nock(getWhopNockOrigin()).post('/api/v1/products').reply(200, productCreate)
       // Direct charge (default for new payment requests): fixed-amount plans route
       // through /checkout_configurations instead of standalone /plans, since that's
       // the only endpoint supporting the application_fee_amount fee-split.
@@ -72,16 +70,17 @@ describe('POST /payment-request (Whop)', () => {
       expect(checkoutBody.plan.metadata).to.be.undefined
       expect(checkoutBody.metadata).to.exist
       expect(checkoutBody.plan.company_id).to.equal('biz_seller_connected')
-      expect(checkoutBody.plan.application_fee_amount).to.be.a('number')
-      expect(checkoutBody.plan.application_fee_amount).to.be.greaterThan(0)
+      // Direct charge: 5% of the $100 gross, snapshotted on the payment request.
+      expect(checkoutBody.plan.application_fee_amount).to.equal(5)
+      expect(Number(res.body.platform_fee_percent)).to.equal(5)
+      const saved = await models.PaymentRequest.findByPk(res.body.id)
+      expect(Number(saved.platform_fee_percent)).to.equal(5)
     })
   })
 
   it('should normalize an uppercase currency before sending it to Whop', async () => {
     await withPaymentProvider('whop', async () => {
-      nock(getWhopNockOrigin())
-        .post('/api/v1/products')
-        .reply(200, productCreate)
+      nock(getWhopNockOrigin()).post('/api/v1/products').reply(200, productCreate)
       let checkoutBody: any
       nock(getWhopNockOrigin())
         .post('/api/v1/checkout_configurations', (body) => {

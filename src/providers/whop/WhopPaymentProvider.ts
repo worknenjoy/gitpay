@@ -33,7 +33,7 @@ import type {
 import { getWhopClient, getWhopCompanyId, type WhopClient } from './client'
 import { getFrontendHostBase } from './redirectBase'
 import { calculateAmountWithPercent } from '../../utils'
-import { GITPAY_COMMISSION_PERCENT } from '../../services/paymentRequest/commission'
+import { DIRECT_CHARGE_FEE_PERCENT } from '../../services/paymentRequest/platformFee'
 
 /**
  * Whop payment connector.
@@ -275,7 +275,7 @@ export class WhopPaymentProvider implements PaymentProvider {
     // commission to the platform in the same charge, no separate transfer needed.
     const applicationFeeAmount = calculateAmountWithPercent(
       params.amount || 0,
-      GITPAY_COMMISSION_PERCENT,
+      params.platformFeePercent ?? DIRECT_CHARGE_FEE_PERCENT,
       'decimal',
       params.currency || 'usd'
     ).decimalFee
@@ -358,6 +358,8 @@ export class WhopPaymentProvider implements PaymentProvider {
       metadata?: Record<string, unknown>
       /** Direct charge: the seller's connected company id. Charges land there instead of the platform. */
       connectedAccountId?: string
+      /** Direct charge: Gitpay fee (% of gross) snapshotted on the payment request. */
+      platformFeePercent?: number
     },
     amount: number
   ): Promise<{ sessionId: string; purchaseUrl?: string }> {
@@ -383,7 +385,7 @@ export class WhopPaymentProvider implements PaymentProvider {
       // createPaymentRequestResources — see the docs link there.
       planBody.application_fee_amount = calculateAmountWithPercent(
         amount,
-        GITPAY_COMMISSION_PERCENT,
+        context.platformFeePercent ?? DIRECT_CHARGE_FEE_PERCENT,
         'decimal',
         context.currency || 'usd'
       ).decimalFee
