@@ -213,6 +213,91 @@ describe('Whop webhooks for payment requests', () => {
     })
   })
 
+  it("should wait for Whop's reported net before initiating a direct-charge claim", async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      const mailSpy = sinon
+        .stub(PaymentRequestMail, 'transferInitiatedForPaymentRequest')
+        .resolves()
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      await PaymentRequestFactory({
+        title: 'Direct charge 5% PR',
+        amount: 100,
+        currency: 'usd',
+        payment_link_id: 'plan_direct_charge_await_net',
+        provider: 'whop',
+        direct_charge: true,
+        platform_fee_percent: 5,
+        userId: user.body.id
+      })
+
+      const makePayload = (msgId: string, data: Record<string, unknown>) => ({
+        id: msgId,
+        api_version: 'v1',
+        type: 'payment.succeeded',
+        timestamp: '2026-11-24T13:48:06.000Z',
+        company_id: 'biz_submerchant_1',
+        data: {
+          id: 'pay_await_net_1',
+          status: 'succeeded',
+          total: 100,
+          currency: 'usd',
+          metadata: {
+            purpose: 'payment_request',
+            payment_link_id: 'plan_direct_charge_await_net'
+          },
+          plan: { id: 'plan_direct_charge_await_net' },
+          user: { name: 'Customer', email: 'customer@example.com' },
+          ...data
+        }
+      })
+
+      // First event: Whop hasn't reported the net yet.
+      await agent.post('/webhooks/whop').send(makePayload('msg_await_net_1', {})).expect(200)
+
+      const pr = await models.PaymentRequest.findOne({
+        where: { payment_link_id: 'plan_direct_charge_await_net' }
+      })
+      let payment = await models.PaymentRequestPayment.findOne({
+        where: { paymentRequestId: pr.id }
+      })
+      expect(payment.transferStatus).to.equal('pending_funds')
+      let claim = await models.PaymentRequestTransfer.findByPk(payment.transferId)
+      expect(claim.status).to.equal('pending')
+      expect(mailSpy.called).to.equal(false)
+
+      // Second event for the same payment carries the real net and application fee.
+      await agent
+        .post('/webhooks/whop')
+        .send(
+          makePayload('msg_await_net_2', {
+            amount_after_fees: 89.63,
+            application_fee: { amount: 5 }
+          })
+        )
+        .expect(200)
+
+      payment = await models.PaymentRequestPayment.findOne({ where: { paymentRequestId: pr.id } })
+      expect(payment.transferStatus).to.equal('initiated')
+      expect(Number(payment.amount_after_fees)).to.equal(89.63)
+      claim = await models.PaymentRequestTransfer.findByPk(payment.transferId)
+      expect(claim.status).to.equal('created')
+      // $100 − $5 platform fee − $5.37 Whop processing; not $95 (gross − platform fee).
+      expect(Number(claim.value)).to.equal(89.63)
+
+      expect(mailSpy.calledOnce).to.equal(true)
+      const emailedPayment = mailSpy.firstCall.args[5] as any
+      expect(Number(emailedPayment.amount_after_fees)).to.equal(89.63)
+      expect(Number(emailedPayment.provider_fee_amount)).to.equal(5)
+    })
+  })
+
   it('should create a second claim for a second payment on a repeatable direct-charge payment request', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
@@ -355,9 +440,7 @@ describe('Whop webhooks for payment requests', () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
       // Preflight sees funds still pending (not available yet)
-      nock(WHOP_API_HOST)
-        .get('/api/v1/ledger_accounts/biz_test_platform')
-        .reply(200, pendingLedger)
+      nock(WHOP_API_HOST).get('/api/v1/ledger_accounts/biz_test_platform').reply(200, pendingLedger)
 
       const user = await registerAndLogin(agent)
       await models.User.update(
@@ -425,9 +508,7 @@ describe('Whop webhooks for payment requests', () => {
   it('should treat membership.activated as paid for payment requests (plan checkout)', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
-      nock(WHOP_API_HOST)
-        .get('/api/v1/ledger_accounts/biz_test_platform')
-        .reply(200, pendingLedger)
+      nock(WHOP_API_HOST).get('/api/v1/ledger_accounts/biz_test_platform').reply(200, pendingLedger)
 
       const user = await registerAndLogin(agent)
       await models.User.update(
@@ -488,9 +569,7 @@ describe('Whop webhooks for payment requests', () => {
   it('should match membership.activated when plan is a bare string id', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
-      nock(WHOP_API_HOST)
-        .get('/api/v1/ledger_accounts/biz_test_platform')
-        .reply(200, pendingLedger)
+      nock(WHOP_API_HOST).get('/api/v1/ledger_accounts/biz_test_platform').reply(200, pendingLedger)
 
       const user = await registerAndLogin(agent)
       await models.User.update(
@@ -538,9 +617,7 @@ describe('Whop webhooks for payment requests', () => {
   it('should treat membership.activated as paid for a custom-amount payment request, reading the real amount from the dynamically-minted plan', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
-      nock(WHOP_API_HOST)
-        .get('/api/v1/ledger_accounts/biz_test_platform')
-        .reply(200, pendingLedger)
+      nock(WHOP_API_HOST).get('/api/v1/ledger_accounts/biz_test_platform').reply(200, pendingLedger)
       // Custom-amount checkouts mint a fresh plan per payer (createCheckoutForAmount) —
       // its id is never equal to PaymentRequests.payment_link_id (which stores the
       // product id in this case), so the real amount has to be fetched separately.
@@ -604,9 +681,7 @@ describe('Whop webhooks for payment requests', () => {
   it('should mark a custom-amount payment request paid on a real payment.succeeded event (fresh plan id, not payment_link_id)', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
-      nock(WHOP_API_HOST)
-        .get('/api/v1/ledger_accounts/biz_test_platform')
-        .reply(200, pendingLedger)
+      nock(WHOP_API_HOST).get('/api/v1/ledger_accounts/biz_test_platform').reply(200, pendingLedger)
 
       const user = await registerAndLogin(agent)
       await models.User.update(
@@ -667,9 +742,7 @@ describe('Whop webhooks for payment requests', () => {
   it('should deactivate a custom-amount payment request after payment (deactivate_after_payment) and reject a further checkout attempt', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
-      nock(WHOP_API_HOST)
-        .get('/api/v1/ledger_accounts/biz_test_platform')
-        .reply(200, pendingLedger)
+      nock(WHOP_API_HOST).get('/api/v1/ledger_accounts/biz_test_platform').reply(200, pendingLedger)
 
       const user = await registerAndLogin(agent)
       await models.User.update(
@@ -731,9 +804,7 @@ describe('Whop webhooks for payment requests', () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
 
-      nock(WHOP_API_HOST)
-        .get('/api/v1/ledger_accounts/biz_test_platform')
-        .reply(200, pendingLedger)
+      nock(WHOP_API_HOST).get('/api/v1/ledger_accounts/biz_test_platform').reply(200, pendingLedger)
 
       const user = await registerAndLogin(agent)
       await models.User.update(
@@ -812,9 +883,7 @@ describe('Whop webhooks for payment requests', () => {
       pinWhopApiForTests()
 
       // First webhook: insufficient available balance
-      nock(WHOP_API_HOST)
-        .get('/api/v1/ledger_accounts/biz_test_platform')
-        .reply(200, pendingLedger)
+      nock(WHOP_API_HOST).get('/api/v1/ledger_accounts/biz_test_platform').reply(200, pendingLedger)
 
       const user = await registerAndLogin(agent)
       await models.User.update(
@@ -891,9 +960,7 @@ describe('Whop webhooks for payment requests', () => {
   it('should store payment total (gross), not amount_after_fees', async () => {
     await withPaymentProvider('whop', async () => {
       pinWhopApiForTests()
-      nock(WHOP_API_HOST)
-        .get('/api/v1/ledger_accounts/biz_test_platform')
-        .reply(200, pendingLedger)
+      nock(WHOP_API_HOST).get('/api/v1/ledger_accounts/biz_test_platform').reply(200, pendingLedger)
 
       const user = await registerAndLogin(agent)
       await models.User.update(

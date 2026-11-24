@@ -1,15 +1,13 @@
 import { calculateAmountWithPercent } from '../../utils'
 import { getPaymentProvider } from '../../providers'
-import { GITPAY_COMMISSION_PERCENT } from './commission'
-
-export { GITPAY_COMMISSION_PERCENT }
+import { getPlatformFeePercent } from './platformFee'
 
 export type SellerNetAmountResult = {
-  /** Fee base before Gitpay's 8% cut: Whop's amount_after_fees when known, else gross. */
+  /** Fee base before Gitpay's platform fee: Whop's amount_after_fees when known, else gross. */
   feeBaseDecimal: number
   /** feeBaseDecimal, kept as a decimal for display use (transfer-initiated email, etc). */
   originalAmountDecimal: number
-  /** What the seller actually receives (or would receive): feeBaseDecimal minus Gitpay's 8%. */
+  /** What the seller actually receives (or would receive): feeBaseDecimal minus Gitpay's platform fee. */
   netAmountDecimal: number
   netAmountCents: number
 }
@@ -18,7 +16,7 @@ export type SellerNetAmountResult = {
  * What the seller receives (or would receive) for a payment-request payment, after:
  * - Whop's own processing fee (via amount_after_fees, when known — real per-transaction
  *   deduction reported by Whop at payment time, not a flat estimate)
- * - Gitpay's 8% platform commission
+ * - Gitpay's platform fee (PaymentRequest.platform_fee_percent, snapshotted at creation)
  *
  * Shared by the transfer calculation (executePaymentRequestTransfer.ts) and the refund
  * amount calculation (paymentRequestPaymentRefund.ts) so the two can't drift apart —
@@ -35,6 +33,7 @@ export function computeSellerNetAmount(params: {
     amount: string | number
     custom_amount: boolean
     provider?: string | null
+    platform_fee_percent?: number | string | null
   }
   currency: string
 }): SellerNetAmountResult {
@@ -64,7 +63,7 @@ export function computeSellerNetAmount(params: {
   // application_fee_amount at charge time (see WhopPaymentProvider's direct-charge
   // branch). Whop's own amount_after_fees for a direct-charge payment already reflects
   // that deduction alongside its own processing fees, so it IS the seller's true net —
-  // subtracting GITPAY_COMMISSION_PERCENT again here would charge the commission twice.
+  // subtracting the platform fee again here would charge it twice.
   // Confirmed against a real Whop sandbox refund: a $20 direct-charge payment with a
   // $1.60 application fee and $17.03 amount_after_fees was refunded $15.67 instead of
   // the full $17.03, leaving $1.36 stranded on the seller's connected company.
@@ -72,7 +71,12 @@ export function computeSellerNetAmount(params: {
     Boolean(paymentRequestPayment.destination_account_id) && usedWhopReportedNet
   const amountAfterFee = isDirectChargeWithKnownNet
     ? originalAmount
-    : calculateAmountWithPercent(feeBaseDecimal, GITPAY_COMMISSION_PERCENT, 'decimal', currency)
+    : calculateAmountWithPercent(
+        feeBaseDecimal,
+        getPlatformFeePercent(paymentRequest),
+        'decimal',
+        currency
+      )
 
   return {
     feeBaseDecimal,
@@ -111,6 +115,7 @@ export function sellerClawbackCentsForRefund(
       amount: string | number
       custom_amount: boolean
       provider?: string | null
+      platform_fee_percent?: number | string | null
     }
     currency: string
   }

@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { computeSellerNetAmount } from '../../../src/services/paymentRequest/sellerNetAmount'
 
 describe('computeSellerNetAmount', () => {
-  it('applies Gitpay\'s 8% cut on top of Whop\'s reported net for a legacy (transfer) payment', () => {
+  it("applies Gitpay's 8% cut on top of Whop's reported net for a legacy (transfer) payment", () => {
     const result = computeSellerNetAmount({
       paymentRequestPayment: {
         amount: 20,
@@ -84,5 +84,34 @@ describe('computeSellerNetAmount', () => {
 
     expect(result.originalAmountDecimal).to.equal(20)
     expect(result.netAmountDecimal).to.equal(18.4)
+  })
+
+  it('uses the platform_fee_percent snapshotted on the payment request', () => {
+    const base = {
+      paymentRequestPayment: { amount: 20, amount_after_fees: null },
+      currency: 'usd'
+    }
+    const atFive = computeSellerNetAmount({
+      ...base,
+      paymentRequest: {
+        amount: 20,
+        custom_amount: false,
+        provider: 'stripe',
+        platform_fee_percent: '5.00'
+      }
+    })
+    const atEight = computeSellerNetAmount({
+      ...base,
+      paymentRequest: {
+        amount: 20,
+        custom_amount: false,
+        provider: 'stripe',
+        platform_fee_percent: 8
+      }
+    })
+
+    expect(atFive.netAmountDecimal).to.equal(19)
+    expect(atFive.netAmountCents).to.equal(1900)
+    expect(atEight.netAmountDecimal).to.equal(18.4)
   })
 })

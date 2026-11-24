@@ -37,6 +37,102 @@ export const WhopWithFees: Story = {
   }
 }
 
+export const DirectChargeBreakdown: Story = {
+  args: {
+    open: true,
+    onClose: () => {},
+    completed: true,
+    payment: {
+      id: 4,
+      source: 'pay_direct_charge_1',
+      amount: '100.00',
+      amount_after_fees: '89.63',
+      currency: 'usd',
+      status: 'paid',
+      fee_breakdown: {
+        gross: 100,
+        processingFee: 5.37,
+        platformFee: 5,
+        platformFeePercent: 5,
+        net: 89.63,
+        directCharge: true
+      },
+      createdAt: '2026-11-24T13:48:06.000Z',
+      PaymentRequest: {
+        title: 'Direct charge payment request',
+        provider: 'whop'
+      },
+      PaymentRequestCustomer: {
+        email: 'customer@example.com'
+      }
+    }
+  }
+}
+
+export const DirectChargeAwaitingNet: Story = {
+  args: {
+    open: true,
+    onClose: () => {},
+    completed: true,
+    payment: {
+      id: 5,
+      source: 'pay_direct_charge_2',
+      amount: '100.00',
+      amount_after_fees: null,
+      currency: 'usd',
+      status: 'paid',
+      fee_breakdown: {
+        gross: 100,
+        processingFee: null,
+        platformFee: 5,
+        platformFeePercent: 5,
+        net: null,
+        directCharge: true
+      },
+      createdAt: '2026-11-24T13:48:06.000Z',
+      PaymentRequest: {
+        title: 'Direct charge payment request',
+        provider: 'whop'
+      },
+      PaymentRequestCustomer: {
+        email: 'customer@example.com'
+      }
+    }
+  }
+}
+
+export const PlatformBreakdown: Story = {
+  args: {
+    open: true,
+    onClose: () => {},
+    completed: true,
+    payment: {
+      id: 6,
+      source: 'pay_platform_1',
+      amount: '100.00',
+      amount_after_fees: '94.37',
+      currency: 'usd',
+      status: 'paid',
+      fee_breakdown: {
+        gross: 100,
+        processingFee: 5.63,
+        platformFee: 7.55,
+        platformFeePercent: 8,
+        net: 86.82,
+        directCharge: false
+      },
+      createdAt: '2026-11-24T13:48:06.000Z',
+      PaymentRequest: {
+        title: 'Platform payment request',
+        provider: 'whop'
+      },
+      PaymentRequestCustomer: {
+        email: 'customer@example.com'
+      }
+    }
+  }
+}
+
 export const WithoutFees: Story = {
   args: {
     open: true,

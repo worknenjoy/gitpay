@@ -3,6 +3,7 @@ import Models from '../../../models'
 import { getPaymentProvider } from '../../../providers'
 import { getPaymentLinkType } from '../../../modules/paymentRequests/getPaymentLinkType'
 import { sanitizePaymentRequestInstructionsContent } from '../../../utils/sanitize/paymentRequestInstructions'
+import { feePercentForNewPaymentRequest } from '../../../services/paymentRequest/platformFee'
 
 const models = Models as any
 
@@ -66,6 +67,7 @@ export async function createPaymentRequest(
   // toggle is locked, so the decision is made here unconditionally. Stripe is untouched.
   let connectedAccountId: string | undefined
   const directCharge = paymentProvider.name === 'whop'
+  const platformFeePercent = feePercentForNewPaymentRequest(directCharge)
   if (directCharge) {
     const user = await models.User.scope('withSensitive').findByPk(userId)
     connectedAccountId = user?.whop_account_id || undefined
@@ -93,6 +95,7 @@ export async function createPaymentRequest(
         custom_amount,
         directCharge,
         connectedAccountId,
+        platformFeePercent,
         metadata: {
           payment_request_id: id ?? null,
           user_id: userId ?? null
@@ -111,6 +114,7 @@ export async function createPaymentRequest(
           ...paymentRequestParams,
           provider: paymentProvider.name,
           direct_charge: directCharge,
+          platform_fee_percent: platformFeePercent,
           payment_link_id: paymentLinkId,
           payment_url: paymentUrl,
           currency,

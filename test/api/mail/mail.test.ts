@@ -54,7 +54,7 @@ describe('POST /mail', () => {
     expect(mailResponse[0].statusCode).to.equal(202)
   })
 
-  it('should show the real platform fee (not $0) and Whop\'s own processing cut for a direct-charge transfer-initiated email', async () => {
+  it("should show the real platform fee (not $0) and Whop's own processing cut for a direct-charge transfer-initiated email", async () => {
     let capturedHtml = ''
     nock('https://api.sendgrid.com')
       .persist()
@@ -100,5 +100,86 @@ describe('POST /mail', () => {
     expect(whopRowIndex).to.be.greaterThan(-1)
     expect(platformRowIndex).to.be.greaterThan(-1)
     expect(whopRowIndex).to.be.lessThan(platformRowIndex)
+  })
+
+  it('labels the direct-charge platform fee with the rate snapshotted on the payment request', async () => {
+    let capturedHtml = ''
+    nock('https://api.sendgrid.com')
+      .persist()
+      .post('/v3/mail/send')
+      .reply(202, (_uri: string, requestBody: any) => {
+        const htmlContent = requestBody?.content?.find((c: any) => c.type === 'text/html')
+        capturedHtml = htmlContent?.value || ''
+        return [{ type: 'text/html', value: 'email content' }]
+      })
+
+    const { body } = await register(agent)
+
+    // Gross $100 at 5%: $5 application fee + $3.37 Whop processing = $91.63 net.
+    await PaymentRequestMail.transferInitiatedForPaymentRequest(
+      body,
+      {
+        title: 'Direct charge PR',
+        description: 'desc',
+        currency: 'usd',
+        provider: 'whop',
+        platform_fee_percent: '5.00'
+      },
+      91.63,
+      91.63,
+      null,
+      {
+        amount: 100,
+        amount_after_fees: 91.63,
+        provider_fee_amount: 5,
+        destination_account_id: 'biz_submerchant_1'
+      }
+    )
+
+    expect(capturedHtml).to.include('Platform Fee (5%)')
+    expect(capturedHtml).to.not.include('Platform Fee (8%)')
+    expect(capturedHtml).to.include('- $ 5')
+    expect(capturedHtml).to.include('Whop Processing Fee')
+    expect(capturedHtml).to.include('- $ 3.37')
+  })
+
+  it('renders direct-charge fee rows (not "Whop Fee") in the transfer-pending email', async () => {
+    let capturedHtml = ''
+    nock('https://api.sendgrid.com')
+      .persist()
+      .post('/v3/mail/send')
+      .reply(202, (_uri: string, requestBody: any) => {
+        const htmlContent = requestBody?.content?.find((c: any) => c.type === 'text/html')
+        capturedHtml = htmlContent?.value || ''
+        return [{ type: 'text/html', value: 'email content' }]
+      })
+
+    const { body } = await register(agent)
+
+    await PaymentRequestMail.transferPendingForPaymentRequest(
+      body,
+      {
+        title: 'Direct charge PR',
+        description: 'desc',
+        currency: 'usd',
+        provider: 'whop',
+        platform_fee_percent: 5
+      },
+      91.63,
+      91.63,
+      {
+        amount: 100,
+        amount_after_fees: 91.63,
+        provider_fee_amount: 5,
+        destination_account_id: 'biz_submerchant_1'
+      }
+    )
+
+    expect(capturedHtml).to.include('Amount Charged')
+    expect(capturedHtml).to.include('Whop Processing Fee')
+    expect(capturedHtml).to.include('Platform Fee (5%)')
+    expect(capturedHtml).to.include('Estimated Payout (pending)')
+    expect(capturedHtml).to.not.include('Whop Fee<')
+    expect(capturedHtml).to.not.include('- $ 0<')
   })
 })

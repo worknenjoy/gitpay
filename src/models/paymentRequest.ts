@@ -1,4 +1,5 @@
 import { Model, DataTypes, Optional, Sequelize } from 'sequelize'
+import { PLATFORM_FEE_PERCENT } from '../services/paymentRequest/platformFee'
 
 export interface PaymentRequestAttributes {
   id: number
@@ -17,6 +18,8 @@ export interface PaymentRequestAttributes {
   provider: string
   /** Whop-only: charge created directly on the seller's connected company (true) vs legacy platform-charge-then-transfer (false). Inert for Stripe. */
   direct_charge: boolean
+  /** Gitpay platform fee (% of gross) snapshotted at creation — see services/paymentRequest/platformFee.ts. DECIMAL, so read via getPlatformFeePercent. */
+  platform_fee_percent: number | string
   listed_on_profile: boolean
   status: string
   transfer_status: string
@@ -46,6 +49,7 @@ export type PaymentRequestCreationAttributes = Optional<
   | 'payment_url'
   | 'provider'
   | 'direct_charge'
+  | 'platform_fee_percent'
   | 'listed_on_profile'
   | 'status'
   | 'transfer_status'
@@ -75,6 +79,7 @@ export default class PaymentRequest
   public payment_url!: string | null
   public provider!: string
   public direct_charge!: boolean
+  public platform_fee_percent!: number | string
   public listed_on_profile!: boolean
   public status!: string
   public transfer_status!: string
@@ -147,6 +152,11 @@ export default class PaymentRequest
           type: DataTypes.BOOLEAN,
           allowNull: false,
           defaultValue: false
+        },
+        platform_fee_percent: {
+          type: DataTypes.DECIMAL(5, 2),
+          allowNull: false,
+          defaultValue: PLATFORM_FEE_PERCENT
         },
         listed_on_profile: {
           type: DataTypes.BOOLEAN,

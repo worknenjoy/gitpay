@@ -12,6 +12,16 @@ import {
 } from 'design-library/molecules/drawers/details-side-panel/details-panel-helpers'
 import PaymentStatus from 'design-library/atoms/status/payment-types-status/payment-status/payment-status'
 
+/** Server-computed (services/paymentRequest/feeBreakdown.ts) — same rows as the payout emails. */
+type PaymentFeeBreakdown = {
+  gross: number
+  processingFee: number | null
+  platformFee: number | null
+  platformFeePercent: number
+  net: number | null
+  directCharge: boolean
+}
+
 type PaymentRequestPayment = {
   id?: number
   source?: string
@@ -19,6 +29,7 @@ type PaymentRequestPayment = {
   amount_after_fees?: string | number | null
   currency?: string
   status?: string
+  fee_breakdown?: PaymentFeeBreakdown | null
   createdAt?: string | Date
   updatedAt?: string | Date
   PaymentRequest?: {
@@ -119,26 +130,78 @@ const buildActivityItems = (payment: PaymentRequestPayment): DetailsItem[] => {
   ]
 }
 
-const buildSections = (payment: PaymentRequestPayment | null): DetailsSection[] => {
-  if (!payment) return []
+const customerPaidLabel = (
+  <FormattedMessage
+    id="paymentRequest.payment.details.customerPaid"
+    defaultMessage="Customer paid"
+  />
+)
+const netAmountLabel = (
+  <FormattedMessage id="paymentRequest.payment.details.netAmount" defaultMessage="Net amount" />
+)
 
+const buildFeeBreakdownItems = (
+  breakdown: PaymentFeeBreakdown,
+  currencySymbol: string
+): DetailsItem[] => {
+  const items: DetailsItem[] = [
+    { label: customerPaidLabel, value: formatMoney(breakdown.gross, currencySymbol) }
+  ]
+
+  if (breakdown.processingFee != null) {
+    items.push({
+      label: (
+        <FormattedMessage
+          id="paymentRequest.payment.details.processingFee"
+          defaultMessage="Processing fee"
+        />
+      ),
+      value: formatMoney(-breakdown.processingFee, currencySymbol),
+      variant: 'negative'
+    })
+  }
+
+  if (breakdown.platformFee != null && breakdown.platformFee > 0) {
+    items.push({
+      label: (
+        <FormattedMessage
+          id="paymentRequest.payment.details.platformFee"
+          defaultMessage="Platform fee ({percent}%)"
+          values={{ percent: breakdown.platformFeePercent }}
+        />
+      ),
+      value: formatMoney(-breakdown.platformFee, currencySymbol),
+      variant: 'negative'
+    })
+  }
+
+  items.push({
+    label: netAmountLabel,
+    value:
+      breakdown.net != null ? (
+        formatMoney(breakdown.net, currencySymbol)
+      ) : (
+        <FormattedMessage id="paymentRequest.payment.details.netPending" defaultMessage="Pending" />
+      ),
+    variant: 'emphasis'
+  })
+
+  return items
+}
+
+// Fallback for payments without a server breakdown: one combined fees row.
+const buildLegacyBreakdownItems = (
+  payment: PaymentRequestPayment,
+  currencySymbol: string
+): DetailsItem[] => {
   const gross = parseAmount(payment.amount)
   const net = parseAmount(payment.amount_after_fees)
   const fees = gross != null && net != null ? gross - net : null
-  const currencySymbol = '$'
 
   const breakdownItems: DetailsItem[] = []
 
   if (gross != null) {
-    breakdownItems.push({
-      label: (
-        <FormattedMessage
-          id="paymentRequest.payment.details.customerPaid"
-          defaultMessage="Customer paid"
-        />
-      ),
-      value: formatMoney(gross, currencySymbol)
-    })
+    breakdownItems.push({ label: customerPaidLabel, value: formatMoney(gross, currencySymbol) })
   }
 
   if (fees != null && fees > 0) {
@@ -151,16 +214,22 @@ const buildSections = (payment: PaymentRequestPayment | null): DetailsSection[] 
 
   if (net != null) {
     breakdownItems.push({
-      label: (
-        <FormattedMessage
-          id="paymentRequest.payment.details.netAmount"
-          defaultMessage="Net amount"
-        />
-      ),
+      label: netAmountLabel,
       value: formatMoney(net, currencySymbol),
       variant: 'emphasis'
     })
   }
+
+  return breakdownItems
+}
+
+const buildSections = (payment: PaymentRequestPayment | null): DetailsSection[] => {
+  if (!payment) return []
+
+  const currencySymbol = '$'
+  const breakdownItems = payment.fee_breakdown
+    ? buildFeeBreakdownItems(payment.fee_breakdown, currencySymbol)
+    : buildLegacyBreakdownItems(payment, currencySymbol)
 
   const infoItems: DetailsItem[] = [
     {

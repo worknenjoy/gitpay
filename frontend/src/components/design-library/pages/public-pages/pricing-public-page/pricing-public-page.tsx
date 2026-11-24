@@ -161,7 +161,7 @@ function PricingPublicPage() {
 
         <Grid container spacing={2} justifyContent="center" sx={{ mt: 2 }}>
           {tiersServiceProviders.map((tier) => (
-            <Grid key={tier.id} size={{ xs: 12, sm: 6, md: 12 }}>
+            <Grid key={tier.id} size={{ xs: 12, sm: 6, md: 6 }}>
               <Card>
                 <CardHeader title={tier.title} subheader={tier.subheader} sx={cardHeaderSx} />
                 <CardContent>
