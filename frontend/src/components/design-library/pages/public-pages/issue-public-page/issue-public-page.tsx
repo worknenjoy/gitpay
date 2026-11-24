@@ -28,8 +28,9 @@ const IssuePublicPage = ({
   listWallets,
   wallets,
   fetchTask,
-  syncTask
-}) => {
+  syncTask,
+  ...rest
+}: any) => {
   return (
     <IssuePage
       user={user}
@@ -59,6 +60,7 @@ const IssuePublicPage = ({
       wallets={wallets}
       fetchTask={fetchTask}
       syncTask={syncTask}
+      {...rest}
     />
   )
 }

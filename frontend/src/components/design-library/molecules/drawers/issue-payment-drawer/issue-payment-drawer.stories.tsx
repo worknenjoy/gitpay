@@ -6,7 +6,8 @@ const IssuePaymentDrawer = require('./issue-payment-drawer').default
 
 const meta = {
   title: 'Design Library/Molecules/Drawers/IssuePaymentDrawer',
-  component: IssuePaymentDrawer
+  component: IssuePaymentDrawer,
+  parameters: { layout: 'fullscreen' }
 }
 
 export default meta
@@ -17,9 +18,7 @@ const Template = (args) => {
   return <IssuePaymentDrawer {...args} open={open} onClose={() => setOpen(false)} />
 }
 
-export const Default = Template.bind({})
-Default.args = {
-  // minimal mocks to let tabs render safely
+const baseArgs = {
   addNotification: () => {},
   updateTask: async () => {},
   createOrder: async () => ({ data: { id: 'ord_123', payment_url: 'https://example.com/pay' } }),
@@ -29,9 +28,42 @@ Default.args = {
   fetchTask: async () => {},
   syncTask: async () => {},
   order: { completed: true, data: { id: 'ord_123', payment_url: 'https://example.com/pay' } },
-  customer: { completed: true, data: { name: 'Acme Inc.', address: {} } },
-  wallets: { completed: true, data: [{ id: 1, name: 'Main Wallet' }] },
-  wallet: { completed: true, data: { id: 1, name: 'Main Wallet', balance: 1500 } },
-  user: { id: 1, email: 'dev@example.com', name: 'Dev User', customer_id: 'cus_test_123' },
-  task: { completed: true, data: { id: 101, private: false } }
+  customer: { completed: true, data: { name: 'RetroShare e.V.', address: {} } },
+  wallets: { completed: true, data: [{ id: 1, name: 'RetroShare wallet' }] },
+  wallet: { completed: true, data: { id: 1, name: 'RetroShare wallet', balance: 420 } },
+  user: {
+    completed: true,
+    data: { id: 1, email: 'dev@example.com', name: 'Dev User', customer_id: 'cus_test_123' }
+  },
+  task: { completed: true, data: { id: 101, private: false } },
+  price: 100
 }
+
+/** Add bounty · card (today). */
+export const Card = Template.bind({})
+Card.args = baseArgs
+
+/** Add bounty · invoice. */
+export const Invoice = Template.bind({})
+Invoice.args = { ...baseArgs, initialMethod: 'invoice' }
+
+/** Add bounty · wallet. */
+export const Wallet = Template.bind({})
+Wallet.args = { ...baseArgs, initialMethod: 'wallet' }
+
+/** Add bounty · wallet, not enough balance. */
+export const WalletInsufficient = Template.bind({})
+WalletInsufficient.args = {
+  ...baseArgs,
+  initialMethod: 'wallet',
+  wallets: { completed: true, data: [{ id: 2, name: 'Personal wallet' }] },
+  wallet: { completed: true, data: { id: 2, name: 'Personal wallet', balance: 35 } }
+}
+
+/** Add bounty · pay now, with the pay-later switch (when pledges are available). */
+export const PayNowWithPayLater = Template.bind({})
+PayNowWithPayLater.args = { ...baseArgs, onPledge: () => {} }
+
+/** Add bounty · pay later (pledge). */
+export const PayLater = Template.bind({})
+PayLater.args = { ...baseArgs, onPledge: () => {}, initialWhen: 'later' }

@@ -25,7 +25,18 @@ export const ClickableRow = styled(Row)(({ theme }) => ({
 }))
 
 export const Left = styled('div')({
-  minWidth: 0
+  minWidth: 0,
+  flex: 1
+})
+
+export const Leading = styled('div')({
+  flexShrink: 0,
+  alignSelf: 'flex-start',
+  display: 'inline-flex'
+})
+
+export const Extra = styled('div')({
+  marginTop: 6
 })
 
 export const Meta = styled(MuiTypography)(() => ({

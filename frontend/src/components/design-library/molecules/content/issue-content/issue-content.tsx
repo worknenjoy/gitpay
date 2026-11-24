@@ -4,67 +4,99 @@ import {
   ExpandLess,
   ExpandMore,
   History as HistoryIcon,
-  Article as DescriptionIcon,
-  Paid as PaidIcon
+  Article as DescriptionIcon
 } from '@mui/icons-material'
 import { FormattedMessage } from 'react-intl'
 import ShowMoreText from 'react-show-more-text'
 import { marked } from 'marked'
 import parse from 'html-react-parser'
 import IssueHeader from '../../headers/issue-header/issue-header'
-import IssueAuthorList from '../../lists/issue-author-list/issue-author-list'
 import { IssueContentText } from './issue-content.styles'
 import IssueContentPlaceholder from './issue-content-placeholder'
 import IssueHistoryTimeline from '../issue-history-timeline/issue-history-timeline'
-import IssuePaymentsList from 'design-library/molecules/lists/issue-payments-list/issue-payments-list'
+import IssueSolutionsList, {
+  IssueSolution
+} from 'design-library/molecules/lists/issue-solutions-list/issue-solutions-list'
+import PullRequestIcon from 'design-library/atoms/icons/pull-request-icon/pull-request-icon'
+import type { LinkedPullRequest } from 'design-library/molecules/menus/linked-pull-requests-menu/linked-pull-requests-menu'
 import BaseTabs from 'design-library/molecules/tabs/base-tabs/base-tabs'
 
-const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messageAuthor }) => {
+type IssueContentProps = {
+  user: any
+  task: any
+  updateTask: (data: any) => any
+  reportTask: (...args: any[]) => void
+  onDeleteTask: (data: any) => Promise<any>
+  /** Opens the message dialog (Message button in the header). */
+  onMessage?: () => void
+  solutions?: IssueSolution[]
+  onSendSolution?: () => void
+  linkedPullRequests?: LinkedPullRequest[]
+  linkedOpen?: boolean
+}
+
+const TAB_DESCRIPTION = 0
+const TAB_HISTORY = 1
+const TAB_SOLUTIONS = 2
+
+const TabLabel = ({
+  icon,
+  count,
+  children
+}: {
+  icon: React.ReactNode
+  count?: number
+  children: React.ReactNode
+}) => (
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+    {icon}
+    <Badge badgeContent={count} color="default" max={99}>
+      <Box sx={{ pr: count ? 1.5 : 0 }}>{children}</Box>
+    </Badge>
+  </Box>
+)
+
+const IssueContent = ({
+  user,
+  updateTask,
+  reportTask,
+  onDeleteTask,
+  task,
+  onMessage,
+  solutions = [],
+  onSendSolution,
+  linkedPullRequests,
+  linkedOpen
+}: IssueContentProps) => {
   const { data, completed } = task
-  const [activeTab, setActiveTab] = useState<string | number>(0)
+  const [activeTab, setActiveTab] = useState<string | number>(TAB_DESCRIPTION)
 
   const histories = data?.histories || []
-  const paidOrders = (data?.orders || data?.Orders)?.filter((o) => o.paid) || []
 
   const tabs = [
     {
       label: (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-          <DescriptionIcon fontSize="small" />
+        <TabLabel icon={<DescriptionIcon fontSize="small" />}>
           <FormattedMessage id="task.info.description" defaultMessage="Description" />
-        </Box>
+        </TabLabel>
       ),
-      value: 0
+      value: TAB_DESCRIPTION
     },
-    ...(paidOrders.length > 0
-      ? [
-          {
-            label: (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                <PaidIcon fontSize="small" />
-                <Badge badgeContent={paidOrders.length} color="default" max={99}>
-                  <Box sx={{ pr: 1.5 }}>
-                    <FormattedMessage id="issue.content.tab.payments" defaultMessage="Payments" />
-                  </Box>
-                </Badge>
-              </Box>
-            ),
-            value: 2
-          }
-        ]
-      : []),
     {
       label: (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-          <HistoryIcon fontSize="small" />
-          <Badge badgeContent={histories.length} color="default" max={99}>
-            <Box sx={{ pr: histories.length > 0 ? 1.5 : 0 }}>
-              <FormattedMessage id="task.info.history" defaultMessage="History" />
-            </Box>
-          </Badge>
-        </Box>
+        <TabLabel icon={<PullRequestIcon fontSize="small" />} count={solutions.length}>
+          <FormattedMessage id="issue.content.tab.solutions" defaultMessage="Solutions" />
+        </TabLabel>
       ),
-      value: 1
+      value: TAB_SOLUTIONS
+    },
+    {
+      label: (
+        <TabLabel icon={<HistoryIcon fontSize="small" />} count={histories.length}>
+          <FormattedMessage id="issue.content.tab.activity" defaultMessage="Activity" />
+        </TabLabel>
+      ),
+      value: TAB_HISTORY
     }
   ]
 
@@ -76,6 +108,9 @@ const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messag
         updateTask={updateTask}
         reportTask={reportTask}
         handleDeleteTask={onDeleteTask}
+        onMessage={onMessage}
+        linkedPullRequests={linkedPullRequests}
+        linkedOpen={linkedOpen}
       />
 
       <BaseTabs
@@ -84,7 +119,7 @@ const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messag
         onChange={(_, v) => setActiveTab(v)}
         withCard={false}
       >
-        {activeTab == 0 ? (
+        {activeTab == TAB_DESCRIPTION ? (
           <IssueContentText variant="body1">
             <ShowMoreText
               lines={8}
@@ -104,25 +139,14 @@ const IssueContent = ({ user, updateTask, reportTask, onDeleteTask, task, messag
               {data.description && parse(marked(data.description))}
             </ShowMoreText>
           </IssueContentText>
-        ) : activeTab == 1 ? (
-          <IssueHistoryTimeline histories={histories} />
+        ) : activeTab == TAB_SOLUTIONS ? (
+          <Box sx={{ mt: 2 }}>
+            <IssueSolutionsList solutions={solutions} onSendSolution={onSendSolution} />
+          </Box>
         ) : (
-          <IssuePaymentsList orders={paidOrders} />
+          <IssueHistoryTimeline histories={histories} />
         )}
       </BaseTabs>
-
-      <IssueAuthorList
-        user={user}
-        task={task}
-        messageAuthor={messageAuthor}
-        authors={[
-          {
-            name: data?.User?.name || 'anonymous',
-            email: data?.User?.email,
-            href: data?.User?.website
-          }
-        ]}
-      />
     </Container>
   ) : (
     <IssueContentPlaceholder />

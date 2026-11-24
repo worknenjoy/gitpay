@@ -44,3 +44,30 @@ Clickable.args = {
   amount: '240.00',
   onClick: () => alert('Row clicked')
 }
+
+export const WithLeadingAndExtra = Template.bind({})
+WithLeadingAndExtra.args = {
+  meta: ['Card', 'Nov 10'],
+  title: 'worknenjoy',
+  leading: (
+    <span
+      style={{
+        width: 28,
+        height: 28,
+        borderRadius: '50%',
+        background: '#407E6F',
+        color: '#fff',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 12
+      }}
+    >
+      W
+    </span>
+  ),
+  extra: <span style={{ fontSize: 12, color: '#6e6e6e' }}>64 paid · $9,840 total</span>,
+  chip: { label: 'Paid · held', tone: 'success' },
+  currency: '$',
+  amount: '200.00'
+}

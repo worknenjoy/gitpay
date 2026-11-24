@@ -1,67 +1,84 @@
 import React, { useState } from 'react'
-import { Typography, Chip, Button, Divider, Tooltip } from '@mui/material'
-import {
-  AttachMoney as MoneyIcon,
-  EmojiFoodBeverage as CoffeeIcon,
-  InfoOutlined,
-  VisibilityOff
-} from '@mui/icons-material'
-import { FormattedMessage, useIntl } from 'react-intl'
-import MomentComponent from 'moment'
+import { FormattedMessage } from 'react-intl'
 import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer'
-import {
-  SidebarItem,
-  SidebarSection,
-  SidebarCard,
-  SpanText,
-  TaskInfoContent,
-  StatusChip,
-  StatusAvatarDot,
-  SidebarRoot
-} from './issue-sidebar.styles'
-import IssuePublicStatus from 'design-library/atoms/status/issue-public-status/issue-public-status'
-import IssueStateStatus from 'design-library/atoms/status/issue-state-status/issue-state-status'
 import TaskDeadlineDrawer from 'design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer'
-import IssueActionsByRole from 'design-library/atoms/buttons/issue-actions-by-role/issue-actions-by-role'
-import Constants from '../../../../../consts'
-import inviteCover from 'images/funds.png'
 import IssueLevelDropdown from 'design-library/atoms/inputs/dropdowns/issue-level-dropdown/issue-level-dropdown'
-import { messages } from '../../../../../messages/messages'
+import IssueShareBar from 'design-library/molecules/content/issue-share-bar/issue-share-bar'
+import IssueFacts from 'design-library/molecules/sections/issue-facts/issue-facts'
+import IssueBountyCard from 'design-library/molecules/cards/issue-cards/issue-bounty-card/issue-bounty-card'
+import IssueSolveCard from 'design-library/molecules/cards/issue-cards/issue-solve-card/issue-solve-card'
+import IssueGithubCard from 'design-library/molecules/cards/issue-cards/issue-github-card/issue-github-card'
+import IssueOwnerCard, {
+  IssueOwner,
+  IssueOwnerReputation
+} from 'design-library/molecules/cards/issue-cards/issue-owner-card/issue-owner-card'
 import IssueInviteCard from 'design-library/molecules/cards/issue-cards/issue-invite-card/issue-invite-card'
+import type { AddBountyWhen } from 'design-library/atoms/buttons/add-bounty-button/add-bounty-button'
+import type { LinkedPullRequest } from 'design-library/molecules/menus/linked-pull-requests-menu/linked-pull-requests-menu'
+import {
+  getBountySummary,
+  getPaymentTiming,
+  getBreakdownTotals,
+  getDeadlineInfo,
+  getGithubInfo,
+  getIssueVisibility,
+  isBountyLocked
+} from 'design-library/organisms/layouts/page-layouts/issue-page-layout/issue-page.helpers'
+import inviteCover from 'images/funds.png'
 import useIssueAuthor from '../../../../../hooks/use-issue-author'
 import IssueSidebarPlaceholder from './issue-sidebar.placeholder'
+import { SidebarRoot, SpanText } from './issue-sidebar.styles'
 
+export type IssueSidebarProps = {
+  user: any
+  task: any
+  updateTask: (data: any) => any
+  inviteTask: (...args: any[]) => void
+  fundingInviteTask: (...args: any[]) => void
+  /** Opens the Add bounty drawer. */
+  onAddBounty: (when: AddBountyWhen) => void
+  /** Opens the Send solution drawer. */
+  onSendSolution: () => void
+  /** Opens the bounty breakdown drawer. */
+  onBreakdown?: () => void
+  /** Opens the solutions sent drawer. */
+  onSolutions?: () => void
+  solutionsCount?: number
+  /** Pay later is offered only when pledges are supported. */
+  allowPayLater?: boolean
+  /** Follow segment in the share bar — hidden without it. */
+  follow?: { following: boolean; followers?: number; onToggle: () => void }
+  /** Issue owner reputation — the owner card is hidden without it. */
+  owner?: { profile: IssueOwner; reputation: IssueOwnerReputation }
+  linkedPullRequests?: LinkedPullRequest[]
+  /** Comment on GitHub with a link to the page — row hidden without it. */
+  onPostOnGithub?: () => void
+  defaultVisibilityOpen?: boolean
+  linkedOpen?: boolean
+}
+
+/** The issue page rail: share bar, facts, then the fund / solve / GitHub / owner / share cards. */
 const IssueSidebar = ({
   user,
   task,
   updateTask,
   inviteTask,
   fundingInviteTask,
-  cleanPullRequestDataState,
-  fetchPullRequestData,
-  taskSolution,
-  taskSolutionCompleted,
-  getTaskSolution,
-  createTaskSolution,
-  updateTaskSolution,
-  pullRequestData,
-  customer,
-  addNotification,
-  createOrder,
-  order,
-  fetchWallet,
-  wallet,
-  listWallets,
-  wallets,
-  fetchTask,
-  syncTask,
-  fetchCustomer
-}) => {
-  const intl = useIntl()
+  onAddBounty,
+  onSendSolution,
+  onBreakdown,
+  onSolutions,
+  solutionsCount = 0,
+  allowPayLater = false,
+  follow,
+  owner,
+  linkedPullRequests,
+  onPostOnGithub,
+  defaultVisibilityOpen,
+  linkedOpen
+}: IssueSidebarProps) => {
   const issueAuthor = useIssueAuthor(task, user)
   const { data: taskData, completed: taskCompleted } = task || {}
-
-  const isReady = taskCompleted
 
   const [deadlineForm, setDeadlineForm] = useState(false)
   const [taskFundingDialog, setTaskFundingDialog] = useState(false)
@@ -70,12 +87,8 @@ const IssueSidebar = ({
   const [currentPrice, setCurrentPrice] = useState(0)
   const [termsAgreed, setTermsAgreed] = useState(false)
 
-  const handleFundingEmailInputChange = (e) => {
-    setFundingInvite({ ...fundingInvite, email: e.target.value })
-  }
-  const handleFundingInputMessageChange = (e) => {
-    setFundingInvite({ ...fundingInvite, comment: e.target.value })
-  }
+  if (!taskCompleted || !taskData) return <IssueSidebarPlaceholder />
+
   const handleAssignFundingDialogClose = () => {
     setTaskFundingDialog(false)
     setFundingInvite({ email: '', comment: '' })
@@ -102,254 +115,78 @@ const IssueSidebar = ({
     handleAssignFundingDialogClose()
   }
 
-  const deliveryDate =
-    taskData.deadline !== null
-      ? MomentComponent(taskData.deadline).utc().format('MM-DD-YYYY')
-      : intl.formatMessage(messages.deliveryDateNotInformed)
+  const bounty = getBountySummary(taskData)
+  const timing = getPaymentTiming(bounty.payments)
+  const totals = getBreakdownTotals(bounty.payments)
+  const github = getGithubInfo(taskData)
+  const locked = isBountyLocked(taskData)
+  const pageUrl =
+    typeof window !== 'undefined'
+      ? `${window.location.origin}/#/task/${taskData.id}`
+      : `https://gitpay.me/#/task/${taskData.id}`
 
-  const deadlineDiff =
-    taskData.deadline !== null
-      ? MomentComponent(taskData.deadline).diff(MomentComponent(), 'days')
-      : false
+  const level = issueAuthor ? (
+    <IssueLevelDropdown id={taskData.id} level={taskData.level} updateTask={updateTask} />
+  ) : (
+    taskData.level || undefined
+  )
 
-  return isReady ? (
+  return (
     <SidebarRoot>
-      {/* Not listed chip at the top */}
-      {taskData && taskData.not_listed && (
-        <SidebarSection style={{ marginTop: 0, marginBottom: 10, justifyContent: 'center' }}>
-          <Tooltip
-            title={
-              <FormattedMessage
-                id="task.notListed.tooltip"
-                defaultMessage="This task is visible by a direct link but not listed in our network."
-              />
-            }
-            arrow
-          >
-            <Chip
-              icon={<VisibilityOff fontSize="small" style={{ color: 'inherit' }} />}
-              label={<FormattedMessage id="task.notListed.info" defaultMessage="Not listed" />}
-              color="warning"
-              size="small"
-              style={{ fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}
-            />
-          </Tooltip>
-        </SidebarSection>
-      )}
+      <div className="share-bar-wrap">
+        <IssueShareBar
+          url={pageUrl}
+          following={follow?.following}
+          followers={follow?.followers}
+          onFollow={follow?.onToggle}
+        />
+      </div>
 
-      {/* Top: Gitpay state + funded value */}
-      <SidebarSection>
-        {taskData.state && (
-          <SidebarItem>
-            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.state.label" defaultMessage="State" />
-            </Typography>
-            <div>
-              <IssueStateStatus
-                state={taskData.state}
-                completed={taskCompleted}
-                date={
-                  taskData.state === 'created'
-                    ? taskData.createdAt
-                    : taskData.state === 'funded'
-                      ? taskData.funded_at
-                      : taskData.state === 'claimed'
-                        ? taskData.claimed_at
-                        : taskData.state === 'completed'
-                          ? taskData.completed_at
-                          : null
-                }
-              />
-            </div>
-          </SidebarItem>
-        )}
-        {task.values && task.values.available > 0 && (
-          <SidebarItem>
-            <div
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}
-            >
-              <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-                <FormattedMessage id="task.value.funded.label" defaultMessage="Value funded" />
-              </Typography>
-              <Tooltip
-                title={intl.formatMessage({
-                  id: 'task.value.funded.tooltip',
-                  defaultMessage:
-                    'The funds are already on Gitpay and available to pay out to whoever completes the PR'
-                })}
-                arrow
-              >
-                <span
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    marginLeft: 2
-                  }}
-                >
-                  <InfoOutlined fontSize="small" style={{ color: '#888' }} />
-                </span>
-              </Tooltip>
-            </div>
-            <div
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}
-            >
-              <MoneyIcon fontSize="small" />
-              <Typography variant="h6" component="span">
-                {task.values.available}
-              </Typography>
-              {taskData.paid && <Chip size="small" label="paid" />}
-            </div>
-          </SidebarItem>
-        )}
-      </SidebarSection>
+      <IssueFacts
+        state={taskData.state}
+        visibility={getIssueVisibility(taskData)}
+        onVisibilityChange={
+          issueAuthor
+            ? (value) => updateTask({ id: taskData.id, not_listed: value === 'unlisted' })
+            : undefined
+        }
+        deadline={getDeadlineInfo(taskData.deadline)}
+        onDeadlineClick={issueAuthor ? () => setDeadlineForm(true) : undefined}
+        defaultVisibilityOpen={defaultVisibilityOpen}
+      />
 
-      {/* Provider card: visibility + issue status */}
-      <SidebarCard elevation={0} variant="outlined">
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          sx={{ textTransform: 'uppercase', fontWeight: 600, letterSpacing: 0.5 }}
-        >
-          {taskData.provider ? (
-            taskData.provider.charAt(0).toUpperCase() + taskData.provider.slice(1)
-          ) : (
-            <FormattedMessage id="task.provider.label" defaultMessage="Provider" />
-          )}
-        </Typography>
-        <Divider sx={{ my: 1 }} />
-        <SidebarSection>
-          <SidebarItem>
-            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.visibility.label" defaultMessage="Visibility" />
-            </Typography>
-            <div>
-              {/* Use GitHub repo visibility if available, fallback to private flag */}
-              <IssuePublicStatus
-                status={
-                  taskData.repoVisibility
-                    ? taskData.repoVisibility
-                    : taskData.private
-                      ? 'private'
-                      : 'public'
-                }
-              />
-            </div>
-          </SidebarItem>
+      <IssueBountyCard
+        total={bounty.total}
+        sponsors={bounty.sponsors}
+        timing={timing}
+        pledged={totals.pledged}
+        onAdd={onAddBounty}
+        allowLater={allowPayLater}
+        onBreakdown={bounty.payments.length > 0 ? onBreakdown : undefined}
+        disabled={locked}
+      />
 
-          {taskData.status && (
-            <SidebarItem>
-              <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-                <FormattedMessage id="task.status.label" defaultMessage="Issue status" />
-              </Typography>
-              <div>
-                <StatusChip
-                  status={taskData.status}
-                  label={intl.formatMessage(Constants.STATUSES[taskData.status])}
-                  avatar={<StatusAvatarDot status={taskData.status}> </StatusAvatarDot>}
-                />
-              </div>
-            </SidebarItem>
-          )}
-        </SidebarSection>
-      </SidebarCard>
+      <IssueSolveCard
+        bountyTotal={bounty.total}
+        payLater={timing === 'later'}
+        solutionsCount={solutionsCount}
+        onSolutions={onSolutions}
+        onSend={onSendSolution}
+        level={level}
+        disabled={locked}
+      />
 
-      <SidebarSection>
-        {taskData.level && !issueAuthor && (
-          <SidebarItem>
-            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.level.label" defaultMessage="Level" />
-            </Typography>
-            <div>
-              <div style={{ verticalAlign: 'bottom', display: 'inline-block' }}>
-                <CoffeeIcon />
-              </div>
-              <Typography variant="h6" component="span" sx={{ verticalAlign: 'baseline', ml: 1 }}>
-                <TaskInfoContent>{taskData.level}</TaskInfoContent>
-              </Typography>
-            </div>
-          </SidebarItem>
-        )}
+      {github && <IssueGithubCard info={github} linkedPullRequests={linkedPullRequests} linkedOpen={linkedOpen} />}
 
-        {taskData.deadline && !issueAuthor && (
-          <SidebarItem>
-            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.deadline.label" defaultMessage="Deadline" />
-            </Typography>
-            <div>
-              <Typography variant="h6">
-                <Button onClick={() => setDeadlineForm(true)}>
-                  {taskData.deadline ? (
-                    <div>
-                      <div>{deliveryDate}</div>
-                      {deadlineDiff && deadlineDiff > 0 ? (
-                        <small>in {deadlineDiff} days</small>
-                      ) : (
-                        <Chip
-                          size="small"
-                          label={
-                            <FormattedMessage id="task.dealine.past" defaultMessage="Overdue" />
-                          }
-                        />
-                      )}
-                    </div>
-                  ) : (
-                    <FormattedMessage id="task.deadline.call" defaultMessage="Set deadline" />
-                  )}
-                </Button>
-              </Typography>
-            </div>
-          </SidebarItem>
-        )}
+      {owner && <IssueOwnerCard owner={owner.profile} reputation={owner.reputation} />}
 
-        {issueAuthor && (
-          <SidebarItem>
-            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.level.label" defaultMessage="Level" />
-            </Typography>
-            <div>
-              <Typography variant="h6">
-                <IssueLevelDropdown
-                  id={taskData.id}
-                  level={taskData.level}
-                  updateTask={updateTask}
-                />
-              </Typography>
-            </div>
-          </SidebarItem>
-        )}
-
-        {issueAuthor && (
-          <SidebarItem>
-            <Typography variant="caption" style={{ textTransform: 'uppercase' }}>
-              <FormattedMessage id="task.deadline.label" defaultMessage="Deadline" />
-            </Typography>
-            <div>
-              <Typography variant="h6">
-                <Button onClick={() => setDeadlineForm(true)}>
-                  {taskData.deadline ? (
-                    <div>
-                      <div>{deliveryDate}</div>
-                      {deadlineDiff && deadlineDiff > 0 ? (
-                        <small>in {deadlineDiff} days</small>
-                      ) : (
-                        <Chip
-                          size="small"
-                          label={
-                            <FormattedMessage id="task.dealine.past" defaultMessage="Overdue" />
-                          }
-                        />
-                      )}
-                    </div>
-                  ) : (
-                    <FormattedMessage id="task.deadline.call" defaultMessage="Set deadline" />
-                  )}
-                </Button>
-              </Typography>
-            </div>
-          </SidebarItem>
-        )}
-      </SidebarSection>
+      <IssueInviteCard
+        onInvite={inviteTask}
+        onFunding={handleTaskFundingDialogOpen}
+        onPostOnGithub={onPostOnGithub}
+        user={user}
+        id={taskData.id}
+      />
 
       <TaskDeadlineDrawer
         open={deadlineForm}
@@ -360,40 +197,6 @@ const IssueSidebar = ({
           updateTask(updatedTask)
           setDeadlineForm(false)
         }}
-      />
-
-      <IssueActionsByRole
-        issue={task}
-        currentRole={issueAuthor ? 'admin' : 'user'}
-        cleanPullRequestDataState={cleanPullRequestDataState}
-        user={user}
-        taskSolution={taskSolution}
-        taskSolutionCompleted={taskSolutionCompleted}
-        getTaskSolution={getTaskSolution}
-        createTaskSolution={createTaskSolution}
-        updateTaskSolution={updateTaskSolution}
-        fetchPullRequestData={fetchPullRequestData}
-        pullRequestData={pullRequestData}
-        updateTask={updateTask}
-        task={task}
-        fetchCustomer={fetchCustomer}
-        customer={customer}
-        addNotification={addNotification}
-        createOrder={createOrder}
-        order={order}
-        fetchWallet={fetchWallet}
-        wallet={wallet}
-        listWallets={listWallets}
-        wallets={wallets}
-        fetchTask={fetchTask}
-        syncTask={syncTask}
-      />
-
-      <IssueInviteCard
-        onInvite={inviteTask}
-        onFunding={handleTaskFundingDialogOpen}
-        user={user}
-        id={taskData.id}
       />
 
       <OfferDrawer
@@ -447,8 +250,8 @@ const IssueSidebar = ({
         onDeliveryDateChange={(date) => setInterestedSuggestedDate(date)}
         onChangePrice={(price) => setCurrentPrice(price)}
         onClose={handleAssignFundingDialogClose}
-        onCommentChange={handleFundingInputMessageChange}
-        onEmailInviteChange={handleFundingEmailInputChange}
+        onCommentChange={(e) => setFundingInvite({ ...fundingInvite, comment: e.target.value })}
+        onEmailInviteChange={(e) => setFundingInvite({ ...fundingInvite, email: e.target.value })}
         onTermsCheckboxChange={(checked) => setTermsAgreed(checked)}
         actions={[
           {
@@ -465,8 +268,6 @@ const IssueSidebar = ({
         ]}
       />
     </SidebarRoot>
-  ) : (
-    <IssueSidebarPlaceholder />
   )
 }
 

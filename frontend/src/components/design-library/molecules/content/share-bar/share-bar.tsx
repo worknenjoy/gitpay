@@ -6,14 +6,38 @@ import {
   LinkedIn as LinkedInIcon,
   Reddit as RedditIcon,
   Email as EmailIcon,
-  Link as LinkIcon
+  Link as LinkIcon,
+  NotificationsNone as BellIcon,
+  NotificationsActive as BellOnIcon
 } from '@mui/icons-material'
 import ActionsMenu from 'design-library/molecules/menus/actions-menu/actions-menu'
-import { Root, UrlButton, UrlText, CopyLabel, Separator, Targets } from './share-bar.styles'
+import {
+  Root,
+  UrlButton,
+  UrlText,
+  CopyLabel,
+  Separator,
+  Targets,
+  FollowButton,
+  FollowCount
+} from './share-bar.styles'
+
+export type ShareBarFollow = {
+  following: boolean
+  /** Number of followers, shown as a small count. */
+  count?: number
+  onToggle: () => void
+  /** Tooltip shown on the follow segment. */
+  tooltip?: React.ReactNode
+}
 
 export type ShareBarProps = {
   url: string
   label?: React.ReactNode
+  /** Tooltip / title for the copy button. Defaults to "Copy profile link". */
+  copyTitle?: string
+  /** Optional Follow segment rendered first. Omitted → no follow segment. */
+  follow?: ShareBarFollow
 }
 
 const COPIED_FEEDBACK_MS = 1600
@@ -46,10 +70,18 @@ const messages = defineMessages({
   shareByEmail: {
     id: 'profile.shareBar.shareByEmail',
     defaultMessage: 'Share by email'
+  },
+  follow: {
+    id: 'shareBar.follow',
+    defaultMessage: 'Follow'
+  },
+  following: {
+    id: 'shareBar.following',
+    defaultMessage: 'Following'
   }
 })
 
-const ShareBar = ({ url, label }: ShareBarProps) => {
+const ShareBar = ({ url, label, copyTitle, follow }: ShareBarProps) => {
   const intl = useIntl()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
@@ -95,7 +127,24 @@ const ShareBar = ({ url, label }: ShareBarProps) => {
 
   return (
     <Root>
-      <UrlButton onClick={handleCopy} title={intl.formatMessage(messages.copyLink)}>
+      {follow && (
+        <>
+          <Tooltip title={follow.tooltip || ''}>
+            <FollowButton
+              type="button"
+              aria-pressed={follow.following}
+              data-following={follow.following}
+              onClick={follow.onToggle}
+            >
+              {follow.following ? <BellOnIcon fontSize="small" /> : <BellIcon fontSize="small" />}
+              {intl.formatMessage(follow.following ? messages.following : messages.follow)}
+              {typeof follow.count === 'number' && <FollowCount>{follow.count}</FollowCount>}
+            </FollowButton>
+          </Tooltip>
+          <Separator />
+        </>
+      )}
+      <UrlButton onClick={handleCopy} title={copyTitle || intl.formatMessage(messages.copyLink)}>
         <LinkIcon fontSize="small" />
         <UrlText variant="caption">{displayLabel}</UrlText>
         <CopyLabel variant="caption" data-copied={copied}>

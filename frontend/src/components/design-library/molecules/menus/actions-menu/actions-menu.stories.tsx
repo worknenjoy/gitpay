@@ -67,3 +67,28 @@ customIcons.args = {
     }
   ]
 }
+
+export const WithDescriptionsAndSelection = Template.bind({})
+WithDescriptionsAndSelection.args = {
+  menuWidth: 300,
+  align: 'left',
+  defaultOpen: true,
+  renderTrigger: (props) => (
+    <button type="button" {...props}>
+      Public ▾
+    </button>
+  ),
+  actions: [
+    {
+      children: 'Public',
+      description: 'Listed in Explore and search. Anyone can find it.',
+      selected: true,
+      onClick: () => {}
+    },
+    {
+      children: 'Not listed',
+      description: 'Hidden from Explore and search. Anyone with the link can open it.',
+      onClick: () => {}
+    }
+  ]
+}

@@ -17,3 +17,25 @@ export const Default: Story = {
     url: 'https://gitpay.me/alexandremagno'
   }
 }
+
+const follow = {
+  following: false,
+  count: 24,
+  onToggle: () => {},
+  tooltip: 'Get notified when a bounty is added or a solution is sent.'
+}
+
+export const WithFollow: Story = {
+  args: {
+    url: 'https://gitpay.me/task/3094',
+    copyTitle: 'Copy issue link',
+    follow
+  }
+}
+
+export const Following: Story = {
+  args: {
+    ...WithFollow.args,
+    follow: { ...follow, following: true, count: 25 }
+  }
+}
