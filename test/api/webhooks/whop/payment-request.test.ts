@@ -15,6 +15,7 @@ import { PaymentRequestFactory } from '../../../factories'
 import transferCreate from '../../../data/whop/transfer.create'
 import { processPendingPaymentRequestTransfers } from '../../../../src/services/paymentRequest/processPendingPaymentRequestTransfers'
 import PaymentRequestMail from '../../../../src/mail/paymentRequest'
+import { computePaymentFeeBreakdown } from '../../../../src/services/paymentRequest/feeBreakdown'
 
 const agent = request.agent(api) as any
 const models = Models as any
@@ -295,6 +296,96 @@ describe('Whop webhooks for payment requests', () => {
       const emailedPayment = mailSpy.firstCall.args[5] as any
       expect(Number(emailedPayment.amount_after_fees)).to.equal(89.63)
       expect(Number(emailedPayment.provider_fee_amount)).to.equal(5)
+    })
+  })
+
+  it("should wait for Whop's reported net before initiating a custom-amount direct-charge claim", async () => {
+    await withPaymentProvider('whop', async () => {
+      pinWhopApiForTests()
+      const mailSpy = sinon
+        .stub(PaymentRequestMail, 'transferInitiatedForPaymentRequest')
+        .resolves()
+
+      const user = await registerAndLogin(agent)
+      await models.User.update(
+        { whop_account_id: 'biz_submerchant_1' },
+        { where: { id: user.body.id } }
+      )
+
+      const pr = await PaymentRequestFactory({
+        title: 'Custom amount direct charge 5% PR',
+        amount: null,
+        custom_amount: true,
+        currency: 'usd',
+        payment_link_id: 'prod_custom_direct_await_net',
+        provider: 'whop',
+        direct_charge: true,
+        platform_fee_percent: 5,
+        userId: user.body.id
+      })
+
+      // Payer entered $42; the event's plan is the fresh single-use one minted at checkout.
+      const makePayload = (msgId: string, data: Record<string, unknown>) => ({
+        id: msgId,
+        api_version: 'v1',
+        type: 'payment.succeeded',
+        timestamp: '2026-11-24T13:48:06.000Z',
+        company_id: 'biz_submerchant_1',
+        data: {
+          id: 'pay_custom_direct_await_net_1',
+          status: 'succeeded',
+          total: 42,
+          currency: 'usd',
+          metadata: {
+            purpose: 'payment_request',
+            payment_request_id: String(pr.id),
+            user_id: String(user.body.id)
+          },
+          plan: { id: 'plan_fresh_custom_direct_1' },
+          user: { name: 'Customer', email: 'customer@example.com' },
+          ...data
+        }
+      })
+
+      await agent.post('/webhooks/whop').send(makePayload('msg_custom_await_1', {})).expect(200)
+
+      let payment = await models.PaymentRequestPayment.findOne({
+        where: { paymentRequestId: pr.id }
+      })
+      expect(Number(payment.amount)).to.equal(42)
+      expect(payment.transferStatus).to.equal('pending_funds')
+      expect(mailSpy.called).to.equal(false)
+
+      // $42 − $2.10 platform fee (5%) − $2.30 Whop processing = $37.60
+      await agent
+        .post('/webhooks/whop')
+        .send(
+          makePayload('msg_custom_await_2', {
+            amount_after_fees: 37.6,
+            application_fee: { amount: 2.1 }
+          })
+        )
+        .expect(200)
+
+      payment = await models.PaymentRequestPayment.findOne({ where: { paymentRequestId: pr.id } })
+      expect(payment.transferStatus).to.equal('initiated')
+      const claim = await models.PaymentRequestTransfer.findByPk(payment.transferId)
+      expect(Number(claim.value)).to.equal(37.6)
+
+      expect(mailSpy.calledOnce).to.equal(true)
+      const breakdown = computePaymentFeeBreakdown({
+        paymentRequestPayment: mailSpy.firstCall.args[5] as any,
+        paymentRequest: pr,
+        currency: 'usd'
+      })
+      expect(breakdown).to.deep.equal({
+        gross: 42,
+        processingFee: 2.3,
+        platformFee: 2.1,
+        platformFeePercent: 5,
+        net: 37.6,
+        directCharge: true
+      })
     })
   })
 

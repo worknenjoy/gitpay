@@ -62,9 +62,7 @@ export const listPublicPaymentRequests = async function listPublicPaymentRequest
 
 export const createWhopCheckout = async function createWhopCheckout(req: any, res: any) {
   try {
-    const paymentRequest = await findPaymentRequestById(req.params.id, {
-      include: [{ model: models.User }]
-    })
+    const paymentRequest = await findPaymentRequestById(req.params.id)
     if (!paymentRequest) {
       return res.status(404).send({ message: 'Payment request not found' })
     }
@@ -84,7 +82,12 @@ export const createWhopCheckout = async function createWhopCheckout(req: any, re
 
     let connectedAccountId: string | undefined
     if (paymentRequest.direct_charge) {
-      connectedAccountId = paymentRequest.User?.whop_account_id || undefined
+      // whop_account_id is excluded by User's default scope (sensitive payout id), so an
+      // included User would always come back without it — fetch just that column.
+      const seller = await models.User.unscoped().findByPk(paymentRequest.userId, {
+        attributes: ['id', 'whop_account_id']
+      })
+      connectedAccountId = seller?.whop_account_id || undefined
       if (!connectedAccountId) {
         return res.status(422).send({
           message: 'This seller has not finished connecting their Whop account'
