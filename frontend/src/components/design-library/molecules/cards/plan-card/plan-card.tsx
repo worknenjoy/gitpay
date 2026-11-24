@@ -9,24 +9,52 @@ import {
   PlanCardContent as StyledCardContent,
   PlanButton,
   PlanBullets,
-  PlanIcon
+  PlanIcon,
+  CompactCard,
+  CompactFee,
+  CompactIcon
 } from './plan-card.styles'
 
 // styles migrated to plan-card.styles.ts
 
 type PlanDetails = {
   fee?: number
-  category?: string
-  title?: string
-  items?: string[]
+  category?: React.ReactNode
+  title?: React.ReactNode
+  items?: React.ReactNode[]
 }
 
 type PlanProps = {
   plan?: PlanDetails
+  /** compact: just the fee and category, small enough to sit in a form row (e.g. the Add bounty amount row). */
+  variant?: 'default' | 'compact'
 }
 
-const PlanCard = ({ plan }: PlanProps) => {
-  const { fee, category, title, items } = plan
+const PlanCard = ({ plan, variant = 'default' }: PlanProps) => {
+  const { fee, category, title, items = [] } = plan
+
+  if (variant === 'compact') {
+    return (
+      <CompactCard>
+        <CompactFee>
+          <CompactIcon>
+            <Motorcycle color="primary" fontSize="small" />
+          </CompactIcon>
+          <span>
+            <b>
+              <FormattedMessage
+                id="actions.task.payment.plan.percentagefee"
+                defaultMessage="{fee}% fee"
+                values={{ fee: fee }}
+              />
+            </b>
+            <em>{category}</em>
+          </span>
+        </CompactFee>
+      </CompactCard>
+    )
+  }
+
   return (
     <PlanGridItem>
       <StyledCard>

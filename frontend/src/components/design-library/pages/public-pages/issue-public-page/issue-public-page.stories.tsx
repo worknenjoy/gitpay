@@ -35,7 +35,12 @@ const order = (id: number, amount: string, user: any, extra: any = {}) => ({
 
 const advanceOrders = [
   order(1, '200', { id: 7, name: 'worknenjoy' }),
-  order(2, '100', { id: 8, name: 'defnax' }, { source_type: 'invoice-item', createdAt: '2026-11-14T00:00:00.000Z' }),
+  order(
+    2,
+    '100',
+    { id: 8, name: 'defnax' },
+    { source_type: 'invoice-item', createdAt: '2026-11-14T00:00:00.000Z' }
+  ),
   order(3, '50', null, { createdAt: '2026-11-18T00:00:00.000Z' })
 ]
 
@@ -56,7 +61,7 @@ const taskData = {
   state: 'funded',
   status: 'open',
   value: '350',
-  level: 'intermediate',
+  level: 'medium',
   not_listed: false,
   private: false,
   deadline: daysFromNow(22),
@@ -92,37 +97,83 @@ const withTask = (overrides: any = {}) => ({
 const visitor = {
   logged: true,
   completed: true,
-  data: { id: 2, name: 'alexanmtz', email: 'dev@example.com', Types: [{ id: 1, name: 'contributor' }] }
+  data: {
+    id: 2,
+    name: 'alexanmtz',
+    email: 'dev@example.com',
+    Types: [{ id: 1, name: 'contributor' }]
+  }
 }
 
 const issueOwner = {
   logged: true,
   completed: true,
-  data: { id: 1, name: 'RetroShare', email: 'owner@example.com', Types: [{ id: 2, name: 'maintainer' }] }
+  data: {
+    id: 1,
+    name: 'RetroShare',
+    email: 'owner@example.com',
+    Types: [{ id: 2, name: 'maintainer' }]
+  }
 }
 
 const solutions = [
   {
     id: 1,
     author: { name: 'alexanmtz' },
-    pullRequest: { number: 3102, title: 'Boards: stick posts to the top of the feed', url: 'https://github.com/RetroShare/RetroShare/pull/3102', state: 'merged' },
+    pullRequest: {
+      number: 3102,
+      title: 'Boards: stick posts to the top of the feed',
+      url: 'https://github.com/RetroShare/RetroShare/pull/3102',
+      state: 'merged'
+    },
     sentAt: '2026-11-21',
     payout: 'ready'
   },
   {
     id: 2,
     author: { name: 'tbilous' },
-    pullRequest: { number: 3098, title: 'Use createPostV2 in PostedCreatePostDialog', url: 'https://github.com/RetroShare/RetroShare/pull/3098', state: 'open' },
+    pullRequest: {
+      number: 3098,
+      title: 'Use createPostV2 in PostedCreatePostDialog',
+      url: 'https://github.com/RetroShare/RetroShare/pull/3098',
+      state: 'open'
+    },
     sentAt: '2026-11-16',
     payout: 'waiting'
   }
 ]
 
 const myPullRequests = [
-  { repo: 'RetroShare/RetroShare', number: 3102, title: 'Boards: stick posts to the top of the feed', when: 'merged 2 days ago', state: 'merged', note: 'Mentions #3094' },
-  { repo: 'RetroShare/RetroShare', number: 3090, title: 'Sort boards by pinned posts first', when: 'merged 1 week ago', state: 'merged' },
-  { repo: 'RetroShare/RetroShare', number: 3098, title: 'Use createPostV2 in PostedCreatePostDialog', when: '1 week ago', state: 'open', note: 'Mentions #3094' },
-  { repo: 'RetroShare/libretroshare', number: 231, title: 'Admin can edit posts in boards', when: '2 weeks ago', state: 'open' }
+  {
+    repo: 'RetroShare/RetroShare',
+    number: 3102,
+    title: 'Boards: stick posts to the top of the feed',
+    when: 'merged 2 days ago',
+    state: 'merged',
+    note: 'Mentions #3094'
+  },
+  {
+    repo: 'RetroShare/RetroShare',
+    number: 3090,
+    title: 'Sort boards by pinned posts first',
+    when: 'merged 1 week ago',
+    state: 'merged'
+  },
+  {
+    repo: 'RetroShare/RetroShare',
+    number: 3098,
+    title: 'Use createPostV2 in PostedCreatePostDialog',
+    when: '1 week ago',
+    state: 'open',
+    note: 'Mentions #3094'
+  },
+  {
+    repo: 'RetroShare/libretroshare',
+    number: 231,
+    title: 'Admin can edit posts in boards',
+    when: '2 weeks ago',
+    state: 'open'
+  }
 ]
 
 /** Everything the back end will add later — passed together to show the full design. */
@@ -134,15 +185,31 @@ const futureData = {
     reputation: { bountiesPaid: 128, totalPaid: '$24,310', openWithBounty: 6 }
   },
   linkedPullRequests: [
-    { number: 3102, title: 'Boards: stick posts to the top of the feed', state: 'merged', url: 'https://github.com/RetroShare/RetroShare/pull/3102' },
-    { number: 3098, title: 'Use createPostV2 in PostedCreatePostDialog', state: 'open', url: 'https://github.com/RetroShare/RetroShare/pull/3098' }
+    {
+      number: 3102,
+      title: 'Boards: stick posts to the top of the feed',
+      state: 'merged',
+      url: 'https://github.com/RetroShare/RetroShare/pull/3102'
+    },
+    {
+      number: 3098,
+      title: 'Use createPostV2 in PostedCreatePostDialog',
+      state: 'open',
+      url: 'https://github.com/RetroShare/RetroShare/pull/3098'
+    }
   ],
   myPullRequests,
   connectedAs: 'alexanmtz',
   onPledge: () => {},
   onRequestPayment: () => {},
   onPostOnGithub: () => {},
-  messageTopics: ['Question about the issue', 'Ask to add a bounty', 'Working on it', 'Payment or payout', 'Other']
+  messageTopics: [
+    'Question about the issue',
+    'Ask to add a bounty',
+    'Working on it',
+    'Payment or payout',
+    'Other'
+  ]
 }
 
 const actions = {
@@ -203,7 +270,13 @@ export const PayLater = {
     task: withTask({
       state: 'created',
       value: '300',
-      orders: [order(4, '300', importer, { paid: false, pledged: true, createdAt: '2026-10-28T00:00:00.000Z' })]
+      orders: [
+        order(4, '300', importer, {
+          paid: false,
+          pledged: true,
+          createdAt: '2026-10-28T00:00:00.000Z'
+        })
+      ]
     })
   }
 }
@@ -227,7 +300,10 @@ export const ImportedByNonAuthor = {
     task: withTask({
       metadata: {
         ...taskData.metadata,
-        issue: { ...taskData.metadata.issue, user: { login: 'defnax', html_url: 'https://github.com/defnax' } }
+        issue: {
+          ...taskData.metadata.issue,
+          user: { login: 'defnax', html_url: 'https://github.com/defnax' }
+        }
       }
     })
   }

@@ -115,7 +115,7 @@ const IssueHeader = ({
   return completed ? (
     <TaskHeaderContainer>
       <Grid size={{ xs: 12, sm: 12, md: 12 }}>
-        <div style={{ marginTop: 30, marginBottom: 20 }}>
+        <div style={{ marginBottom: 20 }}>
           <Breadcrumb task={task} root={breadcrumbRoot} />
         </div>
 

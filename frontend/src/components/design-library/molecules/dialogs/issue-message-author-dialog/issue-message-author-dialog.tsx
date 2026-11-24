@@ -5,11 +5,6 @@ import styled from 'styled-components'
 import ConfirmTextDialog from '../confirm-text-dialog/confirm-text-dialog'
 import AvatarStack from 'design-library/atoms/data-display/avatar-stack/avatar-stack'
 
-const Container = styled.div`
-  display: inline-block;
-  margin-right: 1rem;
-`
-
 const Recipient = styled.div`
   display: flex;
   align-items: center;
@@ -114,42 +109,37 @@ const IssueMessageAuthor = ({
   )
 
   return (
-    <Container>
-      <ConfirmTextDialog
-        open={open}
-        handleClose={onClose}
-        title={
-          name ? (
-            <FormattedMessage
-              id="task.message.title.name"
-              defaultMessage="Message {name}"
-              values={{ name }}
-            />
-          ) : (
-            <FormattedMessage
-              id="task.message.title"
-              defaultMessage="Send a message to the author"
-            />
-          )
-        }
-        header={header}
-        actionsNote={
+    <ConfirmTextDialog
+      open={open}
+      handleClose={onClose}
+      title={
+        name ? (
           <FormattedMessage
-            id="task.message.privacy"
-            defaultMessage="Sent by email · your address stays hidden"
+            id="task.message.title.name"
+            defaultMessage="Message {name}"
+            values={{ name }}
           />
-        }
-        textAreaName="message"
-        actionLabel={<FormattedMessage id="task.message.form.send" defaultMessage="Send" />}
-        cancelLabel={<FormattedMessage id="task.message.form.cancel" defaultMessage="Cancel" />}
-        initialValue={message}
-        onValueChange={setMessage}
-        onConfirm={(value) => sendMessage(value)}
-        onCancel={() => {
-          // keep message draft for next open
-        }}
-      />
-    </Container>
+        ) : (
+          <FormattedMessage id="task.message.title" defaultMessage="Send a message to the author" />
+        )
+      }
+      header={header}
+      actionsNote={
+        <FormattedMessage
+          id="task.message.privacy"
+          defaultMessage="Sent by email · your address stays hidden"
+        />
+      }
+      textAreaName="message"
+      actionLabel={<FormattedMessage id="task.message.form.send" defaultMessage="Send" />}
+      cancelLabel={<FormattedMessage id="task.message.form.cancel" defaultMessage="Cancel" />}
+      initialValue={message}
+      onValueChange={setMessage}
+      onConfirm={(value) => sendMessage(value)}
+      onCancel={() => {
+        // keep message draft for next open
+      }}
+    />
   )
 }
 

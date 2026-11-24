@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import OfferDrawer from 'design-library/molecules/drawers/offer-drawer/offer-drawer'
 import TaskDeadlineDrawer from 'design-library/molecules/drawers/task-deadline-drawer/task-deadline-drawer'
-import IssueLevelDropdown from 'design-library/atoms/inputs/dropdowns/issue-level-dropdown/issue-level-dropdown'
+import IssueLevelDropdown, {
+  optionLabels as levelLabels
+} from 'design-library/atoms/inputs/dropdowns/issue-level-dropdown/issue-level-dropdown'
 import IssueShareBar from 'design-library/molecules/content/issue-share-bar/issue-share-bar'
 import IssueFacts from 'design-library/molecules/sections/issue-facts/issue-facts'
 import IssueBountyCard from 'design-library/molecules/cards/issue-cards/issue-bounty-card/issue-bounty-card'
@@ -55,6 +57,8 @@ export type IssueSidebarProps = {
   onPostOnGithub?: () => void
   defaultVisibilityOpen?: boolean
   linkedOpen?: boolean
+  /** The page already sits in a padded container (profile): drop the floating margins. */
+  contained?: boolean
 }
 
 /** The issue page rail: share bar, facts, then the fund / solve / GitHub / owner / share cards. */
@@ -75,7 +79,8 @@ const IssueSidebar = ({
   linkedPullRequests,
   onPostOnGithub,
   defaultVisibilityOpen,
-  linkedOpen
+  linkedOpen,
+  contained = false
 }: IssueSidebarProps) => {
   const issueAuthor = useIssueAuthor(task, user)
   const { data: taskData, completed: taskCompleted } = task || {}
@@ -87,7 +92,7 @@ const IssueSidebar = ({
   const [currentPrice, setCurrentPrice] = useState(0)
   const [termsAgreed, setTermsAgreed] = useState(false)
 
-  if (!taskCompleted || !taskData) return <IssueSidebarPlaceholder />
+  if (!taskCompleted || !taskData) return <IssueSidebarPlaceholder contained={contained} />
 
   const handleAssignFundingDialogClose = () => {
     setTaskFundingDialog(false)
@@ -126,13 +131,18 @@ const IssueSidebar = ({
       : `https://gitpay.me/#/task/${taskData.id}`
 
   const level = issueAuthor ? (
-    <IssueLevelDropdown id={taskData.id} level={taskData.level} updateTask={updateTask} />
+    <IssueLevelDropdown
+      id={taskData.id}
+      level={taskData.level}
+      updateTask={updateTask}
+      variant="compact"
+    />
   ) : (
-    taskData.level || undefined
+    (taskData.level && (levelLabels[taskData.level] || taskData.level)) || undefined
   )
 
   return (
-    <SidebarRoot>
+    <SidebarRoot contained={contained}>
       <div className="share-bar-wrap">
         <IssueShareBar
           url={pageUrl}
@@ -176,7 +186,13 @@ const IssueSidebar = ({
         disabled={locked}
       />
 
-      {github && <IssueGithubCard info={github} linkedPullRequests={linkedPullRequests} linkedOpen={linkedOpen} />}
+      {github && (
+        <IssueGithubCard
+          info={github}
+          linkedPullRequests={linkedPullRequests}
+          linkedOpen={linkedOpen}
+        />
+      )}
 
       {owner && <IssueOwnerCard owner={owner.profile} reputation={owner.reputation} />}
 

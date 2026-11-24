@@ -26,3 +26,16 @@ Primary.args = {
     items: ['Feature 1', 'Feature 2', 'Feature 3']
   }
 }
+
+/** Compact — just the fee, in the Add bounty amount row. */
+export const Compact = Template.bind({})
+Compact.args = {
+  variant: 'compact',
+  plan: { fee: 8, category: 'Open Source' }
+}
+
+export const CompactNoFee = Template.bind({})
+CompactNoFee.args = {
+  variant: 'compact',
+  plan: { fee: 0, category: 'Open Source' }
+}

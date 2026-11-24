@@ -48,7 +48,10 @@ export const pullRequestUrl = (pr: MyPullRequest) =>
   `https://github.com/${pr.repo}/pull/${pr.number}`
 
 const GROUPS: { state: MyPullRequest['state']; label: React.ReactNode }[] = [
-  { state: 'merged', label: <FormattedMessage id="solutionPr.group.merged" defaultMessage="Merged" /> },
+  {
+    state: 'merged',
+    label: <FormattedMessage id="solutionPr.group.merged" defaultMessage="Merged" />
+  },
   { state: 'open', label: <FormattedMessage id="solutionPr.group.open" defaultMessage="Open" /> }
 ]
 
@@ -111,7 +114,10 @@ const SolutionPrField = ({
                   onClick={() => setAnchorEl(boxRef.current)}
                 >
                   <img src={logoGithub} alt="" />
-                  <FormattedMessage id="solutionPr.myPullRequests" defaultMessage="My pull requests" />
+                  <FormattedMessage
+                    id="solutionPr.myPullRequests"
+                    defaultMessage="My pull requests"
+                  />
                   <ChevronIcon fontSize="small" />
                 </PickerButton>
               ) : (
@@ -159,7 +165,16 @@ const SolutionPrField = ({
             const rows = myPullRequests.filter((pr) => pr.state === state)
             if (rows.length === 0) return []
             return [
-              <ListSubheader key={`group-${state}`} sx={{ fontSize: 11.5, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5, lineHeight: '32px' }}>
+              <ListSubheader
+                key={`group-${state}`}
+                sx={{
+                  fontSize: 11.5,
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  letterSpacing: 0.5,
+                  lineHeight: '32px'
+                }}
+              >
                 {label}
               </ListSubheader>,
               ...rows.map((pr) => (

@@ -1,5 +1,4 @@
 import React from 'react'
-import { Container } from '@mui/material'
 import { AddOutlined as AddIcon } from '@mui/icons-material'
 import ProfileHeader from 'design-library/molecules/headers/profile-main-header/profile-main-header'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
@@ -45,7 +44,7 @@ const PrimaryDataPage = ({
   const isSingleTableEmpty = table?.tableData.data.length === 0 && table?.tableData.completed
 
   return (
-    <Container>
+    <div>
       <ProfileHeader
         title={title}
         subtitle={description}
@@ -92,7 +91,7 @@ const PrimaryDataPage = ({
       ) : (
         <TabbedTable tabs={tabs} activeTab={activeTab} />
       )}
-    </Container>
+    </div>
   )
 }
 

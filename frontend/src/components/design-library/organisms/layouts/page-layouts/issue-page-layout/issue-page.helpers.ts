@@ -222,13 +222,7 @@ export const hasBountyAvailable = (taskData: any): boolean => {
 }
 
 export type SolutionCheck = {
-  id:
-    | 'bounty'
-    | 'connected'
-    | 'author'
-    | 'merged'
-    | 'issueClosed'
-    | 'referenced'
+  id: 'bounty' | 'connected' | 'author' | 'merged' | 'issueClosed' | 'referenced'
   state: ChecklistState
 }
 
@@ -279,12 +273,7 @@ export const canSubmitSolution = ({
   )
 }
 
-export type AddBountyFooter =
-  | 'pledge'
-  | 'invoice'
-  | 'wallet'
-  | 'walletShort'
-  | 'card'
+export type AddBountyFooter = 'pledge' | 'invoice' | 'wallet' | 'walletShort' | 'card'
 
 export const getAddBountyFooter = ({
   method,
@@ -330,10 +319,7 @@ const pullNumberFromUrl = (url: string): number | undefined => {
  * Today the page only knows the current user's own solution (`taskSolution`).
  * It becomes a one-row solutions list; a full list arrives later through the same shape.
  */
-export const getSolutionsFromTaskSolution = (
-  taskSolution: any,
-  user: any
-): SolutionSummary[] => {
+export const getSolutionsFromTaskSolution = (taskSolution: any, user: any): SolutionSummary[] => {
   if (!taskSolution || !taskSolution.id || !taskSolution.pullRequestURL) return []
   const url = taskSolution.pullRequestURL
   const number = pullNumberFromUrl(url)

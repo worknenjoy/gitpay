@@ -1,9 +1,10 @@
 import { styled } from '@mui/material/styles'
 
-export const Root = styled('section', {
+export const Root = styled('div', {
   shouldForwardProp: (prop) => prop !== 'columns'
 })<{ columns: number }>(({ theme, columns }) => ({
   display: 'grid',
+  fontFamily: theme.typography.fontFamily,
   gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
   backgroundColor: theme.palette.background.paper,
   border: `1px solid ${theme.palette.divider}`,

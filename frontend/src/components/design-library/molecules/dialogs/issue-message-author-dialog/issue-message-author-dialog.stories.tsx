@@ -31,5 +31,11 @@ MessageImporter.args = {
 export const WithTopics = Template.bind({})
 WithTopics.args = {
   ...MessageImporter.args,
-  topics: ['Question about the issue', 'Ask to add a bounty', 'Working on it', 'Payment or payout', 'Other']
+  topics: [
+    'Question about the issue',
+    'Ask to add a bounty',
+    'Working on it',
+    'Payment or payout',
+    'Other'
+  ]
 }

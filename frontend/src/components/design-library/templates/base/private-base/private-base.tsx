@@ -50,7 +50,7 @@ const PrivateBase = ({
           <ProfileSideBar user={user} />
           <div style={{ flexGrow: 1 }}>
             <AccountHeader user={user} onCreateTask={createTask} onLogout={handleSignOut} />
-            <ContainerRoot maxWidth="lg">
+            <ContainerRoot maxWidth="xl" disableGutters>
               {profileHeaderProps && (
                 <ProfileHeader
                   title={profileHeaderProps.title}

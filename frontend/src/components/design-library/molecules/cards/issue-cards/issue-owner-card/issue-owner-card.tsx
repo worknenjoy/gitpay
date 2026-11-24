@@ -72,7 +72,9 @@ const IssueOwnerCard = ({ owner, reputation, completed = true }: IssueOwnerCardP
       <DetailsSection
         items={[
           {
-            label: <FormattedMessage id="issue.owner.bountiesPaid" defaultMessage="Bounties paid" />,
+            label: (
+              <FormattedMessage id="issue.owner.bountiesPaid" defaultMessage="Bounties paid" />
+            ),
             value: reputation.bountiesPaid
           },
           {

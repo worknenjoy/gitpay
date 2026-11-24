@@ -21,7 +21,10 @@ const BountyPaymentStatus = ({ status, completed = true }: BountyPaymentStatusPr
     },
     {
       status: 'pledged',
-      label: intl.formatMessage({ id: 'bountyPayment.status.pledged', defaultMessage: 'Pay later' }),
+      label: intl.formatMessage({
+        id: 'bountyPayment.status.pledged',
+        defaultMessage: 'Pay later'
+      }),
       color: 'warning'
     },
     {

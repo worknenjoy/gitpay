@@ -103,7 +103,10 @@ const IssueBountyCard = ({
             {money(total)}
             <Unit>
               {timing === 'later' ? (
-                <FormattedMessage id="issue.bounty.unit.estimated" defaultMessage="USD · estimated" />
+                <FormattedMessage
+                  id="issue.bounty.unit.estimated"
+                  defaultMessage="USD · estimated"
+                />
               ) : timing === 'flex' && pledged ? (
                 <FormattedMessage
                   id="issue.bounty.unit.pledged"

@@ -2,9 +2,9 @@ import React from 'react'
 import { Container, Skeleton } from '@mui/material'
 import IssueHeaderPlaceholder from 'design-library/molecules/headers/issue-header/issue-header.placeholder'
 
-const IssueContentPlaceholder = () => {
+const IssueContentPlaceholder = ({ contained = false }: { contained?: boolean }) => {
   return (
-    <Container fixed maxWidth="md" sx={{ mt: 2 }}>
+    <Container fixed maxWidth="md" disableGutters={contained}>
       <IssueHeaderPlaceholder />
       <div style={{ marginTop: 20 }}>
         <Skeleton variant="text" width="100%" />

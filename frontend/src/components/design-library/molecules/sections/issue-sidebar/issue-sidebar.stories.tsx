@@ -18,9 +18,33 @@ const Template = (args) => <IssueSidebar {...args} />
 const daysFromNow = (days: number) => new Date(Date.now() + days * 86400 * 1000).toISOString()
 
 const orders = [
-  { id: 1, amount: '200', paid: true, provider: 'stripe', source_type: 'card', createdAt: '2026-11-10', User: { id: 7, name: 'worknenjoy' } },
-  { id: 2, amount: '100', paid: true, provider: 'stripe', source_type: 'invoice-item', createdAt: '2026-11-14', User: { id: 8, name: 'defnax' } },
-  { id: 3, amount: '50', paid: true, provider: 'wallet', source_type: 'wallet-funds', createdAt: '2026-11-18', User: null }
+  {
+    id: 1,
+    amount: '200',
+    paid: true,
+    provider: 'stripe',
+    source_type: 'card',
+    createdAt: '2026-11-10',
+    User: { id: 7, name: 'worknenjoy' }
+  },
+  {
+    id: 2,
+    amount: '100',
+    paid: true,
+    provider: 'stripe',
+    source_type: 'invoice-item',
+    createdAt: '2026-11-14',
+    User: { id: 8, name: 'defnax' }
+  },
+  {
+    id: 3,
+    amount: '50',
+    paid: true,
+    provider: 'wallet',
+    source_type: 'wallet-funds',
+    createdAt: '2026-11-18',
+    User: null
+  }
 ]
 
 const taskData = {
@@ -31,7 +55,7 @@ const taskData = {
   state: 'funded',
   status: 'open',
   value: '350',
-  level: 'intermediate',
+  level: 'medium',
   not_listed: false,
   private: false,
   deadline: daysFromNow(22),
@@ -76,8 +100,18 @@ FullDesign.args = {
     reputation: { bountiesPaid: 128, totalPaid: '$24,310', openWithBounty: 6 }
   },
   linkedPullRequests: [
-    { number: 3102, title: 'Boards: stick posts to the top of the feed', state: 'merged', url: 'https://github.com/RetroShare/RetroShare/pull/3102' },
-    { number: 3098, title: 'Use createPostV2 in PostedCreatePostDialog', state: 'open', url: 'https://github.com/RetroShare/RetroShare/pull/3098' }
+    {
+      number: 3102,
+      title: 'Boards: stick posts to the top of the feed',
+      state: 'merged',
+      url: 'https://github.com/RetroShare/RetroShare/pull/3102'
+    },
+    {
+      number: 3098,
+      title: 'Use createPostV2 in PostedCreatePostDialog',
+      state: 'open',
+      url: 'https://github.com/RetroShare/RetroShare/pull/3098'
+    }
   ],
   onPostOnGithub: () => {}
 }
@@ -89,7 +123,10 @@ Owner.args = { ...baseArgs, user: { completed: true, data: { id: 1, name: 'Retro
 export const NoBounty = Template.bind({})
 NoBounty.args = {
   ...baseArgs,
-  task: { completed: true, data: { ...taskData, state: 'created', value: '0', orders: [], deadline: null } }
+  task: {
+    completed: true,
+    data: { ...taskData, state: 'created', value: '0', orders: [], deadline: null }
+  }
 }
 
 export const PaidOut = Template.bind({})
@@ -100,3 +137,7 @@ PaidOut.args = {
 
 export const Loading = Template.bind({})
 Loading.args = { ...baseArgs, task: { completed: false, data: null } }
+
+/** Inside a padded page container (profile pages): no floating margins. */
+export const Contained = Template.bind({})
+Contained.args = { ...baseArgs, contained: true }

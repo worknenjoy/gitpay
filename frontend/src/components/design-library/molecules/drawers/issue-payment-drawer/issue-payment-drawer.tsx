@@ -4,6 +4,7 @@ import { InputAdornment } from '@mui/material'
 import { InfoOutlined as InfoIcon } from '@mui/icons-material'
 
 import Drawer from 'design-library/molecules/drawers/drawer/drawer'
+import PlanCard from 'design-library/molecules/cards/plan-card/plan-card'
 import PaymentTimingAlert from 'design-library/atoms/alerts/payment-timing-alert/payment-timing-alert'
 import CreditCardPaymentCard from 'design-library/molecules/cards/payment-cards/credit-card-payment-card/credit-card-payment-card'
 import InvoicePaymentCard from '../../cards/payment-cards/invoice-payment-card/invoice-payment-card'
@@ -242,6 +243,26 @@ function IssuePaymentDrawer({
               endAdornment: <InputAdornment position="end">USD</InputAdornment>
             }}
           />
+          {!later && (
+            <PlanCard
+              variant="compact"
+              plan={{
+                fee: plan === 'private' ? 18 : (feeValue as number),
+                category:
+                  plan === 'private' ? (
+                    <FormattedMessage
+                      id="actions.task.payment.plan.private"
+                      defaultMessage="Private"
+                    />
+                  ) : (
+                    <FormattedMessage
+                      id="actions.task.payment.plan.opensource"
+                      defaultMessage="Open Source"
+                    />
+                  )
+              }}
+            />
+          )}
         </Amounts>
         {!later && amount > 0 && (
           <FeeLine>
@@ -252,12 +273,9 @@ function IssuePaymentDrawer({
               />
             ) : (
               <FormattedMessage
-                id="issue.addBounty.feeLine"
-                defaultMessage="{total} with the {fee}% platform fee"
-                values={{
-                  total: <b>{formatCurrency(priceAfterFee as number)}</b>,
-                  fee: plan === 'private' ? 18 : 8
-                }}
+                id="issue.addBounty.totalWithFee"
+                defaultMessage="Total with fee: {total}"
+                values={{ total: <b>{formatCurrency(priceAfterFee as number)}</b> }}
               />
             )}
           </FeeLine>

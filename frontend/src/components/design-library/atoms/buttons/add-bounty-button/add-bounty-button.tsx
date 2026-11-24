@@ -1,6 +1,10 @@
 import React from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { CreditCard as CardIcon, LockOutlined as LockIcon, History as LaterIcon } from '@mui/icons-material'
+import {
+  CreditCard as CardIcon,
+  LockOutlined as LockIcon,
+  History as LaterIcon
+} from '@mui/icons-material'
 import Button from 'design-library/atoms/buttons/button/button'
 import SplitButton from 'design-library/atoms/buttons/split-button/split-button'
 
@@ -53,6 +57,7 @@ const AddBountyButton = ({
 
   return (
     <SplitButton
+      fullWidth
       label={label}
       disabled={disabled}
       completed={completed}

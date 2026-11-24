@@ -4,7 +4,6 @@ import {
   customColumnRenderer
 } from 'design-library/molecules/tables/issue-table/issue-table'
 import TabbedTable from 'design-library/molecules/tables/tabbed-table/tabbed-table'
-import { Container } from '@mui/material'
 import {
   ExplorePaper,
   TopSection
@@ -31,7 +30,7 @@ const MyIssuesPrivatePage = ({ user, issues, serverSidePagination }) => {
 
   return (
     <ExplorePaper elevation={0}>
-      <Container>
+      <div>
         <TopSection>
           <Breadcrumbs
             root={{
@@ -57,7 +56,7 @@ const MyIssuesPrivatePage = ({ user, issues, serverSidePagination }) => {
             serverSidePagination={serverSidePagination}
           />
         </TopSection>
-      </Container>
+      </div>
     </ExplorePaper>
   )
 }

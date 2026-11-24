@@ -60,6 +60,7 @@ const IssuePrivatePage = ({
       wallets={wallets}
       fetchTask={fetchTask}
       syncTask={syncTask}
+      contained
       {...rest}
     />
   )

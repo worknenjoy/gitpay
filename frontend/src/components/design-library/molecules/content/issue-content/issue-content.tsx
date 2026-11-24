@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Container, Badge, Box } from '@mui/material'
+import { Button, Container, Box } from '@mui/material'
 import {
   ExpandLess,
   ExpandMore,
@@ -33,6 +33,8 @@ type IssueContentProps = {
   onSendSolution?: () => void
   linkedPullRequests?: LinkedPullRequest[]
   linkedOpen?: boolean
+  /** Inside a padded page container (profile): no extra side gutters. */
+  contained?: boolean
 }
 
 const TAB_DESCRIPTION = 0
@@ -50,9 +52,28 @@ const TabLabel = ({
 }) => (
   <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
     {icon}
-    <Badge badgeContent={count} color="default" max={99}>
-      <Box sx={{ pr: count ? 1.5 : 0 }}>{children}</Box>
-    </Badge>
+    {children}
+    {count > 0 && (
+      <Box
+        component="span"
+        sx={{
+          ml: 0.75,
+          minWidth: 20,
+          height: 20,
+          px: 0.75,
+          boxSizing: 'border-box',
+          borderRadius: '10px',
+          bgcolor: 'action.selected',
+          color: 'text.primary',
+          fontSize: 12,
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        {count > 99 ? '99+' : count}
+      </Box>
+    )}
   </Box>
 )
 
@@ -66,7 +87,8 @@ const IssueContent = ({
   solutions = [],
   onSendSolution,
   linkedPullRequests,
-  linkedOpen
+  linkedOpen,
+  contained = false
 }: IssueContentProps) => {
   const { data, completed } = task
   const [activeTab, setActiveTab] = useState<string | number>(TAB_DESCRIPTION)
@@ -101,7 +123,7 @@ const IssueContent = ({
   ]
 
   return completed ? (
-    <Container fixed maxWidth="md" sx={{ mt: 2 }}>
+    <Container fixed maxWidth="md" disableGutters={contained}>
       <IssueHeader
         task={task}
         user={user}
@@ -119,7 +141,7 @@ const IssueContent = ({
         onChange={(_, v) => setActiveTab(v)}
         withCard={false}
       >
-        {activeTab == TAB_DESCRIPTION ? (
+        {activeTab === TAB_DESCRIPTION ? (
           <IssueContentText variant="body1">
             <ShowMoreText
               lines={8}
@@ -139,7 +161,7 @@ const IssueContent = ({
               {data.description && parse(marked(data.description))}
             </ShowMoreText>
           </IssueContentText>
-        ) : activeTab == TAB_SOLUTIONS ? (
+        ) : activeTab === TAB_SOLUTIONS ? (
           <Box sx={{ mt: 2 }}>
             <IssueSolutionsList solutions={solutions} onSendSolution={onSendSolution} />
           </Box>
@@ -149,7 +171,7 @@ const IssueContent = ({
       </BaseTabs>
     </Container>
   ) : (
-    <IssueContentPlaceholder />
+    <IssueContentPlaceholder contained={contained} />
   )
 }
 

@@ -30,11 +30,7 @@ const FactsStrip = ({ facts, completed = true }: FactsStripProps) => {
             {fact.label}
             {fact.help && <HelpTooltip label={fact.label} text={fact.help} />}
           </Label>
-          {completed ? (
-            <Value>{fact.value}</Value>
-          ) : (
-            <Skeleton variant="text" width="70%" />
-          )}
+          {completed ? <Value>{fact.value}</Value> : <Skeleton variant="text" width="70%" />}
           {completed && fact.sub && <Sub>{fact.sub}</Sub>}
         </Cell>
       ))}
