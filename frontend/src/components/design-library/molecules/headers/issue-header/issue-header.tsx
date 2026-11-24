@@ -28,15 +28,42 @@ import { Breadcrumb } from '../../breadcrumbs/breadcrumb/breadcrumb'
 import { IssueLabelsList as TaskLabels } from '../../lists/issue-labels-list/issue-labels-list'
 import { IssueReportDialog as TaskReport } from '../../dialogs/issue-reports-dialog/issue-reports-dialog'
 
-import logoGithub from 'images/github-logo.png'
-import logoBitbucket from 'images/bitbucket-logo.png'
+import IssueMeta from '../issue-meta/issue-meta'
+import type { LinkedPullRequest } from '../../menus/linked-pull-requests-menu/linked-pull-requests-menu'
+import {
+  getGithubInfo,
+  getImporter,
+  isImporterAuthor
+} from 'design-library/organisms/layouts/page-layouts/issue-page-layout/issue-page.helpers'
 import useIssueAuthor from '../../../../../hooks/use-issue-author'
 import { useHistory } from 'react-router-dom'
 import IssueHeaderPlaceholder from './issue-header.placeholder'
 import { TaskHeaderContainer } from './issue-header.styles'
 
-const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) => {
+type IssueHeaderProps = {
+  task: any
+  user: any
+  handleDeleteTask: (data: any) => Promise<any>
+  reportTask: (...args: any[]) => void
+  updateTask: (data: any) => Promise<any> | void
+  /** Opens the message dialog. Omit → no Message button. */
+  onMessage?: () => void
+  linkedPullRequests?: LinkedPullRequest[]
+  linkedOpen?: boolean
+}
+
+const IssueHeader = ({
+  task,
+  user,
+  handleDeleteTask,
+  reportTask,
+  updateTask,
+  onMessage,
+  linkedPullRequests,
+  linkedOpen
+}: IssueHeaderProps) => {
   const { data, completed } = task || {}
+  const github = getGithubInfo(data)
   const history = useHistory()
   const issueAuthor = useIssueAuthor(task, user)
   const [anchorEl, setAnchorEl] = useState(null)
@@ -94,7 +121,7 @@ const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) =
 
         <div style={{ marginTop: 20, marginBottom: 0 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h5" component="h1" sx={{ fontSize: 26, lineHeight: 1.3, mb: 0 }}>
               <strong>{data.title}</strong>
             </Typography>
             <IconButton onClick={handleMoreButton}>
@@ -185,60 +212,22 @@ const IssueHeader = ({ task, user, handleDeleteTask, reportTask, updateTask }) =
             </DialogActions>
           </div>
         </Dialog>
-        <Typography
-          variant="caption"
-          style={{ display: 'inline-block', marginBottom: 20, marginRight: 0 }}
-        >
-          {data.provider && (
-            <div>
-              Created on{' '}
-              <a href={data.url} style={{ textDecoration: 'underline' }}>
-                {data.provider}{' '}
-                <img
-                  width="18"
-                  src={data.provider === 'github' ? logoGithub : logoBitbucket}
-                  style={{
-                    marginRight: 5,
-                    marginLeft: 5,
-                    borderRadius: '50%',
-                    padding: 3,
-                    backgroundColor: 'black',
-                    borderColor: 'black',
-                    borderWidth: 1,
-                    verticalAlign: 'middle'
-                  }}
-                />
-              </a>
-              by{' '}
-              <a
-                href={
-                  data.metadata && data.provider === 'github'
-                    ? data.metadata.issue.user.html_url
-                    : ''
-                }
-              >
-                {data.metadata && data.provider === 'github'
-                  ? data.metadata.issue.user.login
-                  : data.metadata && data.metadata.user}
-                <img
-                  style={{
-                    marginRight: 5,
-                    marginLeft: 5,
-                    borderRadius: '50%',
-                    padding: 3,
-                    verticalAlign: 'middle'
-                  }}
-                  width="18"
-                  src={
-                    data.metadata && data.provider === 'github'
-                      ? data.metadata.issue.user.avatar_url
-                      : ''
-                  }
-                />
-              </a>
-            </div>
-          )}
-        </Typography>
+        <IssueMeta
+          provider={data.provider}
+          providerUrl={github?.url || data.url}
+          status={github?.status || (data.status === 'closed' ? 'closed' : 'open')}
+          author={
+            github?.author ||
+            (data.metadata && data.provider !== 'github' && data.metadata.user
+              ? { name: data.metadata.user }
+              : undefined)
+          }
+          importer={getImporter(data)}
+          importerIsAuthor={isImporterAuthor(data)}
+          linkedPullRequests={linkedPullRequests}
+          linkedOpen={linkedOpen}
+          onMessage={onMessage}
+        />
         <TaskLabels labels={data?.metadata?.labels} completed={task.completed} />
       </Grid>
     </TaskHeaderContainer>

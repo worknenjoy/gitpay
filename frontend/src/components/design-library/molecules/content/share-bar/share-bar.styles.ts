@@ -82,3 +82,39 @@ export const Targets = styled('div')({
   display: 'flex',
   gap: 2
 })
+
+export const FollowButton = styled('button')(({ theme }) => ({
+  font: 'inherit',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 6,
+  padding: '6px 10px',
+  border: 0,
+  background: 'transparent',
+  borderRadius: 999,
+  cursor: 'pointer',
+  fontSize: 13,
+  fontWeight: 500,
+  color: theme.palette.primary.main,
+  whiteSpace: 'nowrap',
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover
+  },
+  '&[data-following="true"]': {
+    backgroundColor: theme.palette.action.selected
+  }
+}))
+
+export const FollowCount = styled('span')(({ theme }) => ({
+  minWidth: 18,
+  height: 18,
+  padding: '0 5px',
+  boxSizing: 'border-box',
+  borderRadius: 9,
+  backgroundColor: theme.palette.action.hover,
+  color: theme.palette.text.primary,
+  fontSize: 11,
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+}))

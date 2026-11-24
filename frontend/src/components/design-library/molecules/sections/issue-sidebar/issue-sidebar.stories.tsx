@@ -3,288 +3,100 @@ import IssueSidebar from './issue-sidebar'
 
 export default {
   title: 'Design Library/Molecules/Sections/IssueSidebar',
-  component: IssueSidebar
+  component: IssueSidebar,
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 420 }}>
+        <Story />
+      </div>
+    )
+  ]
 }
 
 const Template = (args) => <IssueSidebar {...args} />
 
-const futureDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7).toISOString() // +7 days
-const pastDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString() // -3 days
-const fundedAt = new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() // 2 hours ago
-const claimedAt = new Date(Date.now() - 1000 * 60 * 30).toISOString() // 30 minutes ago
-const completedAt = new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString() // 1 day ago
+const daysFromNow = (days: number) => new Date(Date.now() + days * 86400 * 1000).toISOString()
+
+const orders = [
+  { id: 1, amount: '200', paid: true, provider: 'stripe', source_type: 'card', createdAt: '2026-11-10', User: { id: 7, name: 'worknenjoy' } },
+  { id: 2, amount: '100', paid: true, provider: 'stripe', source_type: 'invoice-item', createdAt: '2026-11-14', User: { id: 8, name: 'defnax' } },
+  { id: 3, amount: '50', paid: true, provider: 'wallet', source_type: 'wallet-funds', createdAt: '2026-11-18', User: null }
+]
+
+const taskData = {
+  id: 3094,
+  provider: 'github',
+  url: 'https://github.com/RetroShare/RetroShare/issues/3094',
+  title: '[Qt] Boards improvements (alias Reddit clone)',
+  state: 'funded',
+  status: 'open',
+  value: '350',
+  level: 'intermediate',
+  not_listed: false,
+  private: false,
+  deadline: daysFromNow(22),
+  User: { id: 1, name: 'RetroShare', provider_username: 'RetroShare' },
+  orders,
+  metadata: {
+    issue: {
+      state: 'open',
+      comments: 14,
+      updated_at: daysFromNow(-3),
+      html_url: 'https://github.com/RetroShare/RetroShare/issues/3094',
+      user: { login: 'defnax' },
+      assignees: [{ login: 'alexanmtz' }, { login: 'tbilous' }]
+    }
+  }
+}
 
 const baseArgs = {
-  user: {
-    completed: true,
-    data: {
-      id: 1,
-      name: 'John Doe',
-      username: 'johndoe',
-      avatar_url: 'https://via.placeholder.com/64'
-    }
-  },
-  account: {
-    completed: true,
-    data: {
-      id: 1,
-      name: 'Foo Bar'
-    }
-  },
+  user: { completed: true, data: { id: 2, name: 'alexanmtz' } },
+  task: { completed: true, data: taskData },
   updateTask: () => {},
   inviteTask: () => {},
   fundingInviteTask: () => {},
-  cleanPullRequestDataState: () => {},
-  fetchAccount: () => {},
-  fetchPullRequestData: () => {},
-  taskSolution: null,
-  getTaskSolution: () => {},
-  createTaskSolution: () => {},
-  updateTaskSolution: () => {},
-  pullRequestData: {
-    completed: true,
-    data: {}
+  onAddBounty: () => {},
+  onSendSolution: () => {},
+  onBreakdown: () => {},
+  onSolutions: () => {}
+}
+
+/** What the live page renders with today's data. */
+export const TodayData = Template.bind({})
+TodayData.args = baseArgs
+
+/** Every section on, as designed. */
+export const FullDesign = Template.bind({})
+FullDesign.args = {
+  ...baseArgs,
+  solutionsCount: 2,
+  follow: { following: false, followers: 24, onToggle: () => {} },
+  owner: {
+    profile: { name: 'RetroShare', kind: 'Organization', since: 2019, verified: true },
+    reputation: { bountiesPaid: 128, totalPaid: '$24,310', openWithBounty: 6 }
   },
-  customer: {
-    completed: true,
-    data: {}
-  },
-  addNotification: () => {},
-  createOrder: async () => {},
-  order: {
-    completed: true,
-    data: {}
-  },
-  fetchWallet: () => {},
-  wallet: {
-    completed: true,
-    data: {}
-  },
-  listWallets: () => {},
-  wallets: {
-    completed: true,
-    data: []
-  },
-  fetchTask: () => {},
-  syncTask: () => {},
-  fetchCustomer: () => {}
+  linkedPullRequests: [
+    { number: 3102, title: 'Boards: stick posts to the top of the feed', state: 'merged', url: 'https://github.com/RetroShare/RetroShare/pull/3102' },
+    { number: 3098, title: 'Use createPostV2 in PostedCreatePostDialog', state: 'open', url: 'https://github.com/RetroShare/RetroShare/pull/3098' }
+  ],
+  onPostOnGithub: () => {}
 }
 
-export const AsUser = Template.bind({})
-AsUser.args = {
+/** The issue owner sees the visibility menu, deadline and level pickers. */
+export const Owner = Template.bind({})
+Owner.args = { ...baseArgs, user: { completed: true, data: { id: 1, name: 'RetroShare' } } }
+
+export const NoBounty = Template.bind({})
+NoBounty.args = {
   ...baseArgs,
-  task: {
-    completed: true,
-    values: { available: 250 },
-    data: {
-      id: 101,
-      title: 'Improve search performance',
-      state: 'funded',
-      funded_at: fundedAt,
-      paid: false,
-      private: false,
-      status: 'open',
-      level: 'intermediate',
-      deadline: futureDate,
-      Assigns: [],
-      Orders: [
-        {
-          id: 1,
-          paid: true,
-          status: 'succeeded',
-          amount: 100,
-          provider: 'stripe',
-          updatedAt: new Date().toISOString(),
-          User: { name: 'Alice', username: 'alice' }
-        }
-      ],
-      metadata: {
-        issue: {
-          user: { login: 'maintainer', html_url: 'https://example.com/maintainer' }
-        }
-      }
-    }
-  }
+  task: { completed: true, data: { ...taskData, state: 'created', value: '0', orders: [], deadline: null } }
 }
 
-export const AsOwner = Template.bind({})
-AsOwner.args = {
+export const PaidOut = Template.bind({})
+PaidOut.args = {
   ...baseArgs,
-  task: {
-    completed: true,
-    values: { available: 500 },
-    data: {
-      id: 202,
-      title: 'Refactor authentication module',
-      state: 'claimed',
-      claimed_at: claimedAt,
-      paid: true,
-      private: true,
-      status: 'in_progress',
-      level: 'advanced',
-      deadline: futureDate,
-      Assigns: [{ id: 11, userId: 1 }],
-      Orders: [
-        {
-          id: 2,
-          paid: true,
-          status: 'succeeded',
-          amount: 250,
-          provider: 'paypal',
-          updatedAt: new Date().toISOString(),
-          User: { name: 'Bob', username: 'bob' }
-        }
-      ],
-      metadata: {
-        issue: {
-          user: { login: 'owner', html_url: 'https://example.com/owner' }
-        }
-      }
-    }
-  }
-}
-
-export const Overdue = Template.bind({})
-Overdue.args = {
-  ...baseArgs,
-  task: {
-    completed: true,
-    values: { available: 0 },
-    data: {
-      id: 303,
-      title: 'Fix flaky tests',
-      state: 'created',
-      paid: false,
-      private: false,
-      status: 'open',
-      level: 'beginner',
-      deadline: pastDate,
-      Assigns: [],
-      Orders: [],
-      metadata: {
-        issue: {
-          user: { login: 'qa', html_url: 'https://example.com/qa' }
-        }
-      }
-    }
-  }
-}
-
-export const StateCreated = Template.bind({})
-StateCreated.args = {
-  ...baseArgs,
-  task: {
-    completed: true,
-    values: { available: 0 },
-    data: {
-      id: 401,
-      title: 'Add new onboarding flow',
-      state: 'created',
-      createdAt: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(), // 5 hours ago
-      paid: false,
-      private: false,
-      status: 'open',
-      level: 'beginner',
-      deadline: futureDate,
-      Assigns: [],
-      Orders: [],
-      metadata: {
-        issue: {
-          user: { login: 'dev', html_url: 'https://example.com/dev' }
-        }
-      }
-    }
-  }
-}
-
-export const StateFunded = Template.bind({})
-StateFunded.args = {
-  ...baseArgs,
-  task: {
-    completed: true,
-    values: { available: 150 },
-    data: {
-      id: 404,
-      title: 'Add dark mode support',
-      state: 'funded',
-      funded_at: fundedAt,
-      paid: false,
-      private: false,
-      status: 'open',
-      level: 'intermediate',
-      deadline: futureDate,
-      Assigns: [],
-      Orders: [],
-      metadata: {
-        issue: {
-          user: { login: 'alice', html_url: 'https://example.com/alice' }
-        }
-      }
-    }
-  }
-}
-
-export const StateClaimed = Template.bind({})
-StateClaimed.args = {
-  ...baseArgs,
-  task: {
-    completed: true,
-    values: { available: 300 },
-    data: {
-      id: 505,
-      title: 'Fix memory leak in worker process',
-      state: 'claimed',
-      claimed_at: claimedAt,
-      paid: false,
-      private: false,
-      status: 'in_progress',
-      level: 'advanced',
-      deadline: futureDate,
-      Assigns: [{ id: 22, userId: 2 }],
-      Orders: [],
-      metadata: {
-        issue: {
-          user: { login: 'bob', html_url: 'https://example.com/bob' }
-        }
-      }
-    }
-  }
-}
-
-export const StateCompleted = Template.bind({})
-StateCompleted.args = {
-  ...baseArgs,
-  task: {
-    completed: true,
-    values: { available: 0 },
-    data: {
-      id: 606,
-      title: 'Migrate to TypeScript',
-      state: 'completed',
-      completed_at: completedAt,
-      paid: true,
-      private: false,
-      status: 'closed',
-      level: 'advanced',
-      deadline: pastDate,
-      Assigns: [{ id: 33, userId: 3 }],
-      Orders: [],
-      metadata: {
-        issue: {
-          user: { login: 'carol', html_url: 'https://example.com/carol' }
-        }
-      }
-    }
-  }
+  task: { completed: true, data: { ...taskData, paid: true, transfer_id: 'tr_1' } }
 }
 
 export const Loading = Template.bind({})
-Loading.args = {
-  ...baseArgs,
-  task: {
-    completed: false,
-    data: {}
-  },
-  user: { completed: false, data: {} },
-  account: { completed: false, data: {} }
-}
+Loading.args = { ...baseArgs, task: { completed: false, data: null } }

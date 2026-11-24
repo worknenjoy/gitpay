@@ -24,6 +24,10 @@ type ConfirmTextDialogProps = {
   onConfirm?: (value: string) => void
   onCancel?: () => void
   handleClose?: () => void
+  /** Optional content above the text area, e.g. a recipient or topic picker. */
+  header?: React.ReactNode
+  /** Optional note shown on the left of the actions. */
+  actionsNote?: React.ReactNode
 }
 
 export default function ConfirmTextDialog({
@@ -39,7 +43,9 @@ export default function ConfirmTextDialog({
   onValueChange,
   onConfirm,
   onCancel,
-  handleClose
+  handleClose,
+  header,
+  actionsNote
 }: ConfirmTextDialogProps) {
   const [value, setValue] = useState(initialValue)
 
@@ -71,6 +77,7 @@ export default function ConfirmTextDialog({
             {subtitle}
           </Typography>
         )}
+        {header}
         <TextField
           autoFocus
           fullWidth
@@ -86,6 +93,11 @@ export default function ConfirmTextDialog({
         />
       </DialogContent>
       <DialogActions>
+        {actionsNote && (
+          <Typography variant="caption" color="text.secondary" sx={{ flex: 1, pl: 1 }}>
+            {actionsNote}
+          </Typography>
+        )}
         <Button onClick={onClickCancel} variant="outlined" color="secondary" label={cancelLabel} />
         <Button
           onClick={onClickConfirm}

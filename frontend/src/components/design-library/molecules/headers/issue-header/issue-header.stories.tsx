@@ -71,3 +71,40 @@ Loading.args = {
     data: {}
   }
 }
+
+/** Redesign: meta block with importer, verified author, linked pull requests and Message. */
+export const WithMeta = Template.bind({})
+WithMeta.args = {
+  user: { completed: true, data: { id: 2 } },
+  updateTask: () => {},
+  reportTask: () => {},
+  handleDeleteTask: () => Promise.resolve({}),
+  onMessage: () => {},
+  linkedPullRequests: [
+    { number: 3102, title: 'Boards: stick posts to the top of the feed', state: 'merged', url: 'https://github.com/RetroShare/RetroShare/pull/3102' },
+    { number: 3098, title: 'Use createPostV2 in PostedCreatePostDialog', state: 'open', url: 'https://github.com/RetroShare/RetroShare/pull/3098' }
+  ],
+  task: {
+    completed: true,
+    data: {
+      id: 3094,
+      provider: 'github',
+      url: 'https://github.com/RetroShare/RetroShare/issues/3094',
+      title: '[Qt] Boards improvements (alias Reddit clone)',
+      status: 'open',
+      User: { id: 1, name: 'RetroShare', provider_username: 'RetroShare' },
+      metadata: {
+        issue: {
+          state: 'open',
+          html_url: 'https://github.com/RetroShare/RetroShare/issues/3094',
+          user: { login: 'RetroShare', html_url: 'https://github.com/RetroShare' }
+        },
+        labels: [
+          { id: 1, name: 'help wanted' },
+          { id: 2, name: 'gui' },
+          { id: 3, name: 'good first issue' }
+        ]
+      }
+    }
+  }
+}

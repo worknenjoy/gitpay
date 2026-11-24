@@ -1,12 +1,44 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import SendSolutionForm from '../../../atoms/inputs/solution-input/solution-input'
-import { Box, Typography } from '@mui/material'
+import { Checkbox, FormControlLabel } from '@mui/material'
 import { FormattedMessage } from 'react-intl'
 import TransferEligibilityInfo from 'design-library/atoms/alerts/transfer-eligibility-info/transfer-eligibility-info'
-import SendSolutionRequirements from '../../../../areas/public/features/issue/legacy/send-solution-requirements'
 import Drawer from 'design-library/molecules/drawers/drawer/drawer'
 import IssueSolutionCard from 'design-library/molecules/cards/issue-cards/issue-solution-card/issue-solution-card'
+import SolutionPrField, {
+  MyPullRequest
+} from 'design-library/molecules/form-section/solution-pr-field/solution-pr-field'
+import SolutionChecklistCard from 'design-library/molecules/cards/solution-checklist-card/solution-checklist-card'
+import {
+  getSolutionChecklist,
+  canSubmitSolution,
+  hasBountyAvailable,
+  isBountyLocked
+} from 'design-library/organisms/layouts/page-layouts/issue-page-layout/issue-page.helpers'
+import { Body, RequestPayment } from './send-solution-drawer.styles'
+
+type SendSolutionDrawerProps = {
+  taskSolution: any
+  task: any
+  user: any
+  getTaskSolution: (taskId: number) => void
+  createTaskSolution: (payload: any) => Promise<any>
+  updateTaskSolution: (payload: any) => Promise<any>
+  open: boolean
+  onClose: () => void
+  cleanPullRequestDataState: () => void
+  fetchPullRequestData: (owner: string, repo: string, pullNumber: string, taskId: number) => void
+  pullRequestData: any
+  taskSolutionCompleted?: boolean
+  /** Contributor's own PRs for the picker. Omit → plain URL input. */
+  myPullRequests?: MyPullRequest[]
+  /** GitHub login when connected. */
+  connectedAs?: string
+  onConnectGithub?: () => void
+  /** Send the solution and ask the maintainer for payment when there's no bounty. Omit → hidden. */
+  onRequestPayment?: (payload: { pullRequestURL: string; taskId: number }) => void
+  /** Called after a solution is created or updated (e.g. to show a toast). */
+  onSent?: () => void
+}
 
 const SendSolutionDrawer = ({
   taskSolution,
@@ -20,19 +52,30 @@ const SendSolutionDrawer = ({
   cleanPullRequestDataState,
   fetchPullRequestData,
   pullRequestData,
-  taskSolutionCompleted
-}) => {
-  const history = useHistory()
+  taskSolutionCompleted,
+  myPullRequests,
+  connectedAs,
+  onConnectGithub,
+  onRequestPayment,
+  onSent
+}: SendSolutionDrawerProps) => {
   const [pullRequestURL, setPullRequestURL] = useState('')
   const [editMode, setEditMode] = useState(false)
+  const [requestPayment, setRequestPayment] = useState(true)
   const [timer, setTimer] = useState<NodeJS.Timeout | null>(null)
 
+  const taskData = task?.data
+  const bountyAvailable = hasBountyAvailable(taskData)
+  const hasSolution = Object.keys(taskSolution || {}).length !== 0
+
   useEffect(() => {
-    user?.data?.id && task?.data?.id && getTaskSolution(task.data.id)
+    user?.data?.id && taskData?.id && getTaskSolution(taskData.id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, task])
 
   useEffect(() => {
     cleanPullRequestDataState()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -41,123 +84,136 @@ const SendSolutionDrawer = ({
       setTimer(
         setTimeout(() => {
           const urlSplitted = pullRequestURL.split('/')
-          fetchPullRequestData(urlSplitted[3], urlSplitted[4], urlSplitted[6], task.data.id)
+          fetchPullRequestData(urlSplitted[3], urlSplitted[4], urlSplitted[6], taskData.id)
         }, 2500)
       )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pullRequestURL])
 
-  const handlePullRequestURLChange = (event) => {
-    setPullRequestURL(event.target.value)
-  }
-
-  const handleTaskSolutionUpdate = () => {
-    setEditMode(true)
-  }
-
-  const submitTaskSolution = () => {
+  const submitTaskSolution = async () => {
     if (editMode) {
-      const payload = {
-        pullRequestURL: pullRequestURL,
-        taskId: task.data.id,
+      await updateTaskSolution({
+        pullRequestURL,
+        taskId: taskData.id,
         taskSolutionId: taskSolution.id
-      }
-      updateTaskSolution(payload).then((solution) => {})
+      })
       setEditMode(false)
-      // eslint-disable-next-line no-useless-return
+      onSent?.()
       return
     }
-
-    const payload = { ...pullRequestData, pullRequestURL: pullRequestURL, taskId: task.data.id }
-
-    createTaskSolution(payload).then((solution) => {})
+    await createTaskSolution({ ...pullRequestData, pullRequestURL, taskId: taskData.id })
+    onSent?.()
   }
 
-  const taskValue = task?.data?.value
+  const showRequestPayment = !bountyAvailable && Boolean(onRequestPayment)
+  const canSend = canSubmitSolution({ pullRequestURL, pullRequestData, taskData })
+  const canRequest =
+    showRequestPayment &&
+    requestPayment &&
+    Boolean(pullRequestURL) &&
+    pullRequestData?.isAuthorOfPR &&
+    !isBountyLocked(taskData)
 
-  const shouldDisableForNoBountyAvailable =
-    taskValue === '0' || taskValue === null || taskValue === '' || isNaN(Number(taskValue))
+  const sendAction =
+    hasSolution && !editMode
+      ? {
+          onClick: () => setEditMode(true),
+          label: <FormattedMessage id="task.solution.form.edit" defaultMessage="Edit Solution" />,
+          variant: 'contained',
+          color: 'primary',
+          disabled: isBountyLocked(taskData)
+        }
+      : {
+          onClick: () => {
+            if (canRequest && !canSend) {
+              onRequestPayment({ pullRequestURL, taskId: taskData.id })
+              return
+            }
+            submitTaskSolution()
+          },
+          label: <FormattedMessage id="task.solution.form.send" defaultMessage="Send Solution" />,
+          variant: 'contained',
+          color: 'primary',
+          disabled: !(canSend || canRequest)
+        }
 
   return (
-    <React.Fragment>
-      <Drawer
-        open={open}
-        onClose={onClose}
-        title={
-          <FormattedMessage
-            id="task.solution.dialog.message"
-            defaultMessage="Send a solution for this issue"
-          />
-        }
-        actions={[
-          {
-            label: <FormattedMessage id="task.bounties.actions.cancel" defaultMessage="Cancel" />,
-            onClick: onClose,
-            variant: 'text',
-            color: 'default',
-            disabled: false
-          },
-          Object.keys(taskSolution || {}).length !== 0 && !editMode
-            ? {
-                onClick: handleTaskSolutionUpdate,
-                label: (
-                  <FormattedMessage id="task.solution.form.edit" defaultMessage="Edit Solution" />
-                ),
-                variant: 'contained',
-                color: 'primary',
-                disabled: task?.data?.paid || task?.data?.Transfer || task?.data?.transfer_id
-              }
-            : {
-                onClick: submitTaskSolution,
-                label: (
-                  <FormattedMessage id="task.solution.form.send" defaultMessage="Send Solution" />
-                ),
-                variant: 'contained',
-                color: 'primary',
-                disabled:
-                  !pullRequestURL ||
-                  !pullRequestData.isConnectedToGitHub ||
-                  !pullRequestData.isAuthorOfPR ||
-                  !pullRequestData.isPRMerged ||
-                  !pullRequestData.isIssueClosed ||
-                  !pullRequestData.hasIssueReference ||
-                  shouldDisableForNoBountyAvailable ||
-                  task.data.paid ||
-                  task.data.transfer_id ||
-                  task.data.Transfer
-              }
-        ]}
-      >
-        <Typography variant="body2" style={{ color: 'black' }} gutterBottom>
-          <FormattedMessage
-            id="task.solution.dialog.description"
-            defaultMessage="You can send a solution for this issue providing the Pull Request / Merge Request URL of your solution:"
-          />
-        </Typography>
+    <Drawer
+      open={open}
+      onClose={onClose}
+      title={
+        <FormattedMessage
+          id="task.solution.dialog.message"
+          defaultMessage="Send a solution for this issue"
+        />
+      }
+      subtitle={
+        <FormattedMessage
+          id="task.solution.dialog.lede"
+          defaultMessage="Pick the pull request that solves this issue, or paste its URL."
+        />
+      }
+      actions={[
+        {
+          label: <FormattedMessage id="task.bounties.actions.cancel" defaultMessage="Cancel" />,
+          onClick: onClose,
+          variant: 'text',
+          color: 'default',
+          disabled: false
+        },
+        sendAction
+      ]}
+    >
+      <Body>
         <TransferEligibilityInfo user={user?.data} />
-        {Object.keys(taskSolution || {}).length === 0 || editMode ? (
-          <React.Fragment>
-            <SendSolutionForm
-              handlePullRequestURLChange={handlePullRequestURLChange}
-              pullRequestURL={pullRequestURL}
+        {!hasSolution || editMode ? (
+          <>
+            <SolutionPrField
+              value={pullRequestURL}
+              onChange={setPullRequestURL}
+              myPullRequests={myPullRequests}
+              connectedAs={connectedAs}
+              onConnect={onConnectGithub}
             />
-            <Box sx={{ mt: 2 }}>
-              <SendSolutionRequirements
-                completed={taskSolutionCompleted}
-                isConnectedToGitHub={pullRequestData.isConnectedToGitHub}
-                isAuthorOfPR={pullRequestData.isAuthorOfPR}
-                isPRMerged={pullRequestData.isPRMerged}
-                isIssueClosed={pullRequestData.isIssueClosed}
-                hasIssueReference={pullRequestData.hasIssueReference}
-                bountyAvailable={Number(task?.data?.value) && !task?.data?.paid}
-              />
-            </Box>
-          </React.Fragment>
+            <SolutionChecklistCard
+              completed={taskSolutionCompleted !== false}
+              items={getSolutionChecklist({ pullRequestData, bountyAvailable })}
+            />
+            {showRequestPayment && (
+              <RequestPayment>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={requestPayment}
+                      onChange={(e) => setRequestPayment(e.target.checked)}
+                    />
+                  }
+                  label={
+                    <span>
+                      <b>
+                        <FormattedMessage
+                          id="task.solution.requestPayment"
+                          defaultMessage="Request payment from the maintainer"
+                        />
+                      </b>
+                      <em>
+                        <FormattedMessage
+                          id="task.solution.requestPayment.description"
+                          defaultMessage="There is no bounty yet. The maintainer gets your request with the solution."
+                        />
+                      </em>
+                    </span>
+                  }
+                />
+              </RequestPayment>
+            )}
+          </>
         ) : (
-          <IssueSolutionCard taskSolution={taskSolution} task={task.data} />
+          <IssueSolutionCard taskSolution={taskSolution} task={taskData} />
         )}
-      </Drawer>
-    </React.Fragment>
+      </Body>
+    </Drawer>
   )
 }
 

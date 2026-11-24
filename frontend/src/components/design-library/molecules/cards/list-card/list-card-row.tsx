@@ -10,7 +10,9 @@ import {
   AmountWrap,
   CurrencyPrefix,
   Amount,
-  When
+  When,
+  Leading,
+  Extra
 } from './list-card-row.styles'
 
 export type ListCardRowProps = {
@@ -21,14 +23,32 @@ export type ListCardRowProps = {
   amount?: React.ReactNode
   when?: React.ReactNode
   onClick?: (e: React.MouseEvent) => void
+  /** Optional element before the text, e.g. an avatar. */
+  leading?: React.ReactNode
+  /** Optional content under the title, e.g. reputation chips. */
+  extra?: React.ReactNode
+  /** Optional status element (e.g. a specific status chip) — rendered where `chip` is. */
+  status?: React.ReactNode
 }
 
-const ListCardRow = ({ meta, title, chip, currency, amount, when, onClick }: ListCardRowProps) => {
+const ListCardRow = ({
+  meta,
+  title,
+  chip,
+  currency,
+  amount,
+  when,
+  onClick,
+  leading,
+  extra,
+  status
+}: ListCardRowProps) => {
   const metaPieces = meta?.filter(Boolean)
   const RowComponent = onClick ? ClickableRow : Row
 
   return (
     <RowComponent onClick={onClick}>
+      {leading && <Leading>{leading}</Leading>}
       <Left>
         {metaPieces && metaPieces.length > 0 && (
           <Meta>
@@ -41,8 +61,10 @@ const ListCardRow = ({ meta, title, chip, currency, amount, when, onClick }: Lis
           </Meta>
         )}
         <Title>{title}</Title>
+        {extra && <Extra>{extra}</Extra>}
       </Left>
       <Right>
+        {status}
         {chip && <StatusChip label={chip.label} tone={chip.tone} />}
         {amount && (
           <AmountWrap>

@@ -73,3 +73,24 @@ Loading.args = {
     data: {}
   }
 }
+
+/** Redesign: Solutions tab with the solutions sent, Message in the header. */
+export const WithSolutions = Template.bind({})
+WithSolutions.args = {
+  ...Default.args,
+  onMessage: () => {},
+  solutions: [
+    {
+      id: 1,
+      author: { name: 'alexanmtz' },
+      pullRequest: {
+        number: 3102,
+        title: 'Boards: stick posts to the top of the feed',
+        url: 'https://github.com/RetroShare/RetroShare/pull/3102',
+        state: 'merged'
+      },
+      sentAt: '2026-11-21',
+      payout: 'ready'
+    }
+  ]
+}
