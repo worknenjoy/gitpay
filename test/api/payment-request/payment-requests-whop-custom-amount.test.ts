@@ -48,6 +48,7 @@ describe('Whop custom-amount payment request checkout', () => {
       expect(res.body.provider).to.equal('whop')
       expect(res.body.direct_charge).to.equal(true)
       expect(res.body.custom_amount).to.equal(true)
+      expect(Number(res.body.platform_fee_percent)).to.equal(5)
       expect(res.body.payment_link_id).to.equal(productCreate.id)
       expect(res.body.payment_url).to.equal(
         `http://localhost:8082/#/payment-requests/${res.body.id}/pay`
@@ -69,9 +70,7 @@ describe('Whop custom-amount payment request checkout', () => {
       payment_url: 'http://localhost:8082/#/payment-requests/1/pay'
     })
 
-    const res = await agent
-      .get(`/payment-requests-public/${paymentRequest.id}/public`)
-      .expect(200)
+    const res = await agent.get(`/payment-requests-public/${paymentRequest.id}/public`).expect(200)
 
     expect(res.body).to.deep.equal({
       title: 'Open amount PR',
@@ -90,7 +89,9 @@ describe('Whop custom-amount payment request checkout', () => {
   })
 
   describe('POST /payment-requests-public/:id/checkout', () => {
-    const createCustomAmountWhopPaymentRequest = async () => {
+    const createCustomAmountWhopPaymentRequest = async (
+      overrides: Record<string, unknown> = {}
+    ) => {
       const user = await registerAndLogin(agent)
       await models.User.update(
         { whop_account_id: 'biz_seller_connected' },
@@ -105,9 +106,48 @@ describe('Whop custom-amount payment request checkout', () => {
         description: 'Pay whatever you want',
         currency: 'usd',
         payment_link_id: 'prod_test_whop_123',
-        payment_url: 'http://localhost:8082/#/payment-requests/1/pay'
+        payment_url: 'http://localhost:8082/#/payment-requests/1/pay',
+        ...overrides
       })
     }
+
+    const mintDirectChargeCheckout = async (platformFeePercent: number, amount: number) => {
+      let checkoutBody: any
+      nock(getWhopNockOrigin())
+        .post('/api/v1/checkout_configurations', (body) => {
+          checkoutBody = body
+          return true
+        })
+        .reply(200, checkoutConfig)
+
+      const paymentRequest = await createCustomAmountWhopPaymentRequest({
+        direct_charge: true,
+        platform_fee_percent: platformFeePercent
+      })
+      await agent
+        .post(`/payment-requests-public/${paymentRequest.id}/checkout`)
+        .send({ amount })
+        .expect(201)
+      return checkoutBody
+    }
+
+    it('charges the 5% direct-charge fee as application_fee_amount on the entered amount', async () => {
+      await withPaymentProvider('whop', async () => {
+        const checkoutBody = await mintDirectChargeCheckout(5, 42)
+
+        expect(checkoutBody.plan.company_id).to.equal('biz_seller_connected')
+        expect(checkoutBody.plan.initial_price).to.equal(42)
+        expect(checkoutBody.plan.application_fee_amount).to.equal(2.1)
+      })
+    })
+
+    it('keeps the 8% rate snapshotted on an older custom-amount direct-charge request', async () => {
+      await withPaymentProvider('whop', async () => {
+        const checkoutBody = await mintDirectChargeCheckout(8, 42)
+
+        expect(checkoutBody.plan.application_fee_amount).to.equal(3.36)
+      })
+    })
 
     it('mints a fresh Whop checkout for the entered amount and returns sessionId + purchaseUrl', async () => {
       await withPaymentProvider('whop', async () => {
@@ -145,7 +185,10 @@ describe('Whop custom-amount payment request checkout', () => {
         .send({ amount: 0 })
         .expect(400)
 
-      await agent.post(`/payment-requests-public/${paymentRequest.id}/checkout`).send({}).expect(400)
+      await agent
+        .post(`/payment-requests-public/${paymentRequest.id}/checkout`)
+        .send({})
+        .expect(400)
     })
 
     it('rejects when the payment request does not accept a custom amount', async () => {
@@ -206,10 +249,7 @@ describe('Whop custom-amount payment request checkout', () => {
     })
 
     it('404s for an unknown payment request id', async () => {
-      await agent
-        .post('/payment-requests-public/999999/checkout')
-        .send({ amount: 42 })
-        .expect(404)
+      await agent.post('/payment-requests-public/999999/checkout').send({ amount: 42 }).expect(404)
     })
   })
 })
