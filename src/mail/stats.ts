@@ -7,23 +7,25 @@ const StatsMail = {
     // This sends to notificationEmail for administrative purposes,
     // not to end users, so no user preference check is needed
     i18n.setLocale('en')
-    try {
-      return await request(
-        constants.notificationEmail,
-        i18n.__('mail.stats.newUsers.subject', { count: String(newUsersCount) }),
-        [
-          {
-            type: 'text/html',
-            value: i18n.__('mail.stats.newUsers.message', {
-              count: String(newUsersCount),
-              total: String(totalUsersCount)
-            })
-          }
-        ]
-      )
-    } catch (error) {
-      console.error('Error sending stats email:', error)
+    const response = await request(
+      constants.notificationEmail,
+      i18n.__('mail.stats.newUsers.subject', { count: String(newUsersCount) }),
+      [
+        {
+          type: 'text/html',
+          value: i18n.__('mail.stats.newUsers.message', {
+            count: String(newUsersCount),
+            total: String(totalUsersCount)
+          })
+        }
+      ]
+    )
+    // request() returns SendGrid errors instead of throwing; rethrow so callers
+    // (e.g. the Inngest `mail-new-users` step) can fail and retry.
+    if (response instanceof Error) {
+      throw response
     }
+    return response
   }
 }
 

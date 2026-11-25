@@ -18,6 +18,8 @@ const {
   dailyJobSyncTaskStates,
   hourlyJobSyncWhopPayouts
 } = require('./crons/cron')
+const { serve } = require('inngest/express')
+const { inngest, functions, isInngestEnabled } = require('./inngest')
 
 if (process.env.NODE_ENV !== 'production') {
   const cors = require('cors')
@@ -59,6 +61,11 @@ app.set('port', process.env.PORT || 3000)
 
 app.use(compression())
 app.use(express.static(path.join(__dirname, '../frontend/public'), { dotfiles: 'allow' }))
+
+if (isInngestEnabled()) {
+  // Must be mounted before load.init, which registers the global JSON body parser
+  app.use('/api/inngest', express.json({ limit: '4mb' }), serve({ client: inngest, functions }))
+}
 
 load.init(app)
 

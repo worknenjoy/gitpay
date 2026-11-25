@@ -16,6 +16,7 @@ const {
 } = require('../services/issues/claims/unclaimedBountyService')
 const { syncAllIssuesStates } = require('../services/issues/state/issueStateService')
 const { syncInfo } = require('../modules/info/syncInfo')
+const { isInngestEnabled } = require('../inngest/client')
 
 i18n.configure({
   directory:
@@ -165,7 +166,10 @@ const TaskCron = {
   syncStats: async () => {
     const result = await syncInfo()
     if (result.new_users_count > 0) {
-      await StatsMail.newUsers(result.new_users_count, result.users_count)
+      // Legacy path keeps the old behavior: log the failure, don't throw
+      await StatsMail.newUsers(result.new_users_count, result.users_count).catch((error: any) =>
+        console.error('Error sending stats email:', error)
+      )
     }
     console.log('Platform public stats synced.')
   }
@@ -178,7 +182,8 @@ const dailyJob = new CronJob({
     //TaskCron.rememberDeadline()
     //OrderCron.verify()
     OrderCron.checkExpiredPaypalOrders()
-    TaskCron.syncStats()
+    // Owned by the Inngest `sync-stats` function when INNGEST_ENABLED=true
+    if (!isInngestEnabled()) TaskCron.syncStats()
     PaymentRequestTransferCron.processPendingTransfers()
   }
 })

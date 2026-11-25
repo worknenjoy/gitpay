@@ -10,6 +10,10 @@ Gitpay is an open-source platform that integrates payment workflows with Git rep
 
 Platform payments go through a connector abstraction (`src/providers/`). Configure `PAYMENT_PROVIDER=stripe|whop` (default `stripe`). See [docs/payments-providers.md](docs/payments-providers.md) for webhooks, Whop setup, and tests.
 
+### Scheduled jobs / workflows
+
+New scheduled jobs and lifecycle workflows go in `src/inngest/functions/` (Inngest, behind `INNGEST_ENABLED`), not `src/crons/cron.ts`. See [docs/inngest.md](docs/inngest.md).
+
 ## Common Commands
 
 ### Development
