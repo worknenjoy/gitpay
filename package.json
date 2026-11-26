@@ -208,7 +208,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-sourcemap-loader": "^0.3.7",
     "mini-css-extract-plugin": "^0.9.0",
-    "mocha": "^11.7.1",
+    "mocha": "^12.0.3",
     "mockdate": "^2.0.2",
     "nock": "^14.0.5",
     "nodemon": "^2.0.20",
