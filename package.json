@@ -192,7 +192,7 @@
     "@types/sinon": "^21.0.0",
     "@types/supertest": "^6.0.3",
     "@types/umzug": "^2.3.9",
-    "chai": "^3.5.0",
+    "chai": "^6.3.0",
     "chai-spies": "^1.0.0",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
