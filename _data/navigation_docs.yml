@@ -10,13 +10,13 @@
   pages:
     - slug: getting-started-service-provider
       en: Get started as a service provider
-      br: Planeje e entregue trabalho para clientes
+      br: Comece como prestador de serviço
     - slug: service-provider
       en: Request payment from a customer
       br: Solicite pagamento a um cliente
     - slug: delivering-work
       en: Payment requests for pull requests
-      br: Entregue o trabalho
+      br: Solicitações de pagamento para pull requests
 - en: Contribute to projects
   br: Contribua com projetos
   pages:
@@ -28,10 +28,10 @@
       br: Trabalhe em uma issue financiada
     - slug: pull-requests
       en: Submit a solution
-      br: Entregue um Pull Request
+      br: Envie uma solução
     - slug: claims
       en: Claims
-      br: Reivindique uma tarefa e acompanhe transferências
+      br: Reivindicações
 - en: Fund and manage work
   br: Financie e gerencie trabalho
   pages:
@@ -40,34 +40,34 @@
       br: Comece como patrocinador
     - slug: sponsor
       en: Fund an issue
-      br: Financie uma issue do GitHub
+      br: Financie uma issue
     - slug: funding-issues
       en: Payment options for sponsors
-      br: Defina escopo e financiamento
+      br: Formas de pagamento para patrocinadores
     - slug: getting-started-maintainer
       en: Import issues and projects
-      br: Prepare revisões do projeto
+      br: Importe issues e projetos
     - slug: validating-work
       en: Review applications and offers
-      br: Revise e aceite o trabalho
+      br: Avalie candidaturas e ofertas
     - slug: releasing-bounties
       en: How bounties are paid out
-      br: Libere o pagamento
+      br: Como as recompensas são pagas
 - en: Payments and payouts
   br: Pagamentos e saques
   pages:
     - slug: payments
       en: How payments and fees work
-      br: Como funcionam os pagamentos
+      br: Como funcionam pagamentos e taxas
     - slug: whop-payout-setup
       en: Set up payouts
-      br: Configure um método de saque
+      br: Configure seus saques
     - slug: payouts
       en: Payouts
-      br: Prazo e status dos saques
+      br: Saques
     - slug: disputes-and-refunds
       en: Refunds and disputes
-      br: Disputas e reembolsos
+      br: Reembolsos e disputas
 - en: Help and reference
   br: Ajuda e referência
   pages:

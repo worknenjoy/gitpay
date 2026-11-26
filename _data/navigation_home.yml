@@ -7,7 +7,7 @@
     action: Request a payment
   br:
     title: Receba pelo seu trabalho
-    desc: Envie uma cobrança ao cliente depois de entregar o trabalho.
+    desc: Crie um link de pagamento, envie ao cliente e receba por cartão.
     action: Solicitar pagamento
 - doc: getting-started-contributor
   icon: git-fork
@@ -17,7 +17,7 @@
     action: Explore contributions
   br:
     title: Contribua com um projeto
-    desc: Encontre uma issue financiada, envie um Pull Request e receba após a aprovação.
+    desc: Encontre uma issue financiada, tenha seu pull request mesclado e receba automaticamente.
     action: Explorar contribuições
 - doc: getting-started-sponsor
   icon: users
@@ -27,5 +27,5 @@
     action: Fund an issue
   br:
     title: Financie trabalho em um projeto
-    desc: Financie uma issue do GitHub, revise a contribuição e libere o pagamento.
+    desc: Coloque uma recompensa em uma issue do GitHub. Ela só é paga quando uma solução é mesclada.
     action: Financiar uma issue

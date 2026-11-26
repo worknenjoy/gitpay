@@ -18,7 +18,7 @@ You don't need permission to solve an issue on Gitpay. The bounty goes to whoeve
 
 The issue page on Gitpay shows:
 
-- **Bounty**: the total, with a breakdown per sponsor. Amounts are marked **Paid in advance** (held by Gitpay), **Invoice pending** or **To pay later** (pledged, charged when a solution is accepted).
+- **Bounty**: the total, with a breakdown per sponsor. Amounts are marked **Paid in advance** (held by Gitpay), **Invoice pending** or **To pay later** (pledged; the sponsor pays when a solution is accepted).
 - **State**: Created (no bounty), Funded, Claimed, Completed or Closed.
 - **Deadline**: the date the owner needs a solution by, if set.
 - **Solutions sent**: pull requests other contributors already submitted.

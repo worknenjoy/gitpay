@@ -2,9 +2,9 @@
 layout: doc
 lang: br
 role: maintainer
-title: Liberando recompensas
-subtitle: Quando e como liberar pagamento após a aceitação
-tags: maintainer, pagamentos
+title: Como as recompensas são pagas
+subtitle: O que dispara o pagamento, quem recebe e o que acontece quando ninguém reivindica
+tags: maintainer, sponsor, bounties, payouts
 ---
 
 #### Índice
@@ -12,30 +12,50 @@ tags: maintainer, pagamentos
 * TOC
 {:toc}
 
-## Quando liberar
-Libere a recompensa após a entrega ser aceita conforme seu fluxo (normalmente após merge, ou após aprovação explícita).
+As recompensas são pagas automaticamente. Ninguém aperta um botão de "liberar": o pagamento é disparado quando o contribuidor envia uma solução que passa nas verificações do Gitpay.
 
-Use uma regra clara por repositório (por exemplo: "liberar após merge na branch padrão") para que os contribuidores saibam exatamente quando o pagamento é acionado.
+## O que dispara o pagamento
 
-## O que conferir antes
-- O PR atende ao escopo combinado
-- Validações passaram (CI + checagens manuais)
-- A entrega funciona no ambiente alvo
-- Qualquer feedback bloqueante foi resolvido e confirmado
-- Documentação ou notas de migração necessárias estão presentes
+Tudo isto precisa ser verdade:
 
-## Fluxo sugerido de liberação
-1. Poste um comentário de aceitação resumindo o que foi validado.
-2. Confirme o valor do pagamento e o destinatário.
-3. Acione a liberação usando o fluxo acordado no projeto.
-4. Compartilhe a confirmação da liberação na thread da issue/PR.
+1. O contribuidor entrou no Gitpay com o GitHub.
+2. Ele é o autor do pull request.
+3. O pull request foi mesclado no repositório da issue.
+4. O pull request cita a issue.
+5. A issue está fechada no GitHub.
 
-## Se o escopo mudou durante a entrega
-- Compare a entrega final com o escopo aprovado mais recente.
-- Se trabalho extra foi adicionado, confirme se está incluído na recompensa atual.
-- Se parte do escopo ficou de fora, esclareça o que resta para uma tarefa de acompanhamento.
+O contribuidor envia a URL do pull request como solução. Se todas as verificações passarem, o Gitpay atribui a issue a ele (se ainda não estava atribuída) e transfere a recompensa para a conta de saque dele.
 
-## Comunicação
-Se não puder aceitar a entrega, descreva o que está faltando e o que seria necessário para aceitá-la.
+**Para mantenedores, mesclar é a aprovação.** Revise o pull request antes de mesclar.
 
-Mantenha as mensagens específicas e acionáveis para que os contribuidores possam resolver os problemas sem precisar adivinhar.
+## O que o contribuidor recebe
+
+92% da recompensa paga. Só valores pagos são transferidos. Nos compromissos marcados como **A pagar mais tarde**, o patrocinador recebe um pedido de pagamento quando a solução é aceita.
+
+Se a conta de saque do contribuidor não estiver ativa, a transferência falha e ele é orientado a terminar a configuração e enviar a solução de novo.
+
+## Estados da issue
+
+| Estado | Quando |
+|---|---|
+| **Created** (criada) | Importada, sem recompensa. |
+| **Funded** (financiada) | Um patrocinador pagou uma recompensa. |
+| **Claimed** (reivindicada) | Uma solução foi aceita e a transferência começou. |
+| **Completed** (concluída) | A recompensa foi transferida. |
+| **Closed** (fechada) | Fechada no Gitpay, por exemplo depois de um reembolso. |
+
+## Quando uma solução é mesclada, mas não reivindicada
+
+Se um pull request mesclado cita uma issue financiada, mas o autor nunca o envia:
+
+1. No dia 26 de cada mês, o Gitpay envia um e-mail ao autor do pull request lembrando de reivindicar a recompensa.
+2. Depois de dois lembretes, na execução seguinte o Gitpay reembolsa a recompensa aos patrocinadores.
+
+## Quando ninguém resolve a issue
+
+Escreva para [contact@gitpay.me](mailto:contact@gitpay.me) para pedir o reembolso da recompensa, ou use em **Pagamentos** a opção de transferir a recompensa para outra issue. Veja [Reembolsos e disputas](/docs/br/disputes-and-refunds/).
+
+## Próximos passos
+
+- [Reembolsos e disputas](/docs/br/disputes-and-refunds/)
+- [Envie uma solução](/docs/br/pull-requests/)

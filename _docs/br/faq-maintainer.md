@@ -2,9 +2,9 @@
 layout: doc
 lang: br
 role: maintainer
-title: Perguntas gerais para mantenedores
-subtitle: Dúvidas comuns de maintainers
-tags: maintainer, faq
+title: Dúvidas de mantenedores
+subtitle: Perguntas comuns sobre importar issues, recompensas e contribuidores
+tags: faq, maintainer
 ---
 
 #### Índice
@@ -12,28 +12,34 @@ tags: maintainer, faq
 * TOC
 {:toc}
 
-## Como reduzir retrabalho no PR?
-Use uma issue com critérios de aceitação claros, prints e passos de teste.
+### Preciso instalar algo no meu repositório?
 
-Além disso:
-- Peça aos contribuidores que abram PRs em rascunho (draft) cedo.
-- Mantenha uma única fonte de verdade para os requisitos (a issue).
-- Separe feedbacks obrigatórios de sugestões opcionais.
+Não. Você importa issues pela URL. O Gitpay lê issues e pull requests públicos pela API do GitHub. Para repositórios privados, você autoriza o Gitpay a lê-los.
 
-## Preciso de CI?
-É altamente recomendado. Mesmo um pipeline básico de lint/test acelera reviews e deixa critérios mais objetivos.
+### Eu aprovo os pagamentos?
 
-No mínimo, automatize verificações que protejam sua branch principal (lint, testes e build quando relevante).
+Não no Gitpay. Mesclar o pull request e fechar a issue é a aprovação: o contribuidor então envia a solução e recebe automaticamente. Revise o pull request com cuidado antes de mesclar. Veja [Como as recompensas são pagas](/docs/br/releasing-bounties/).
 
-## E se a entrega estiver boa, mas incompleta?
-Deixe feedback acionável e, se possível, aponte checks falhando ou comportamentos faltantes.
+### Outra pessoa importou uma issue do meu projeto. Isso é permitido?
 
-Se a maior parte do escopo estiver concluída, confirme se o trabalho restante deve ser:
-1. Concluído na mesma tarefa antes do pagamento, ou
-2. Dividido em uma nova issue com financiamento separado.
+Sim. Qualquer pessoa pode importar e financiar uma issue pública. Ela só é paga quando você mescla um pull request que a resolve.
 
-## Devo fazer o merge primeiro ou liberar o pagamento primeiro?
-Prefira seguir uma regra documentada no repositório (por exemplo, fazer merge primeiro e depois liberar) e aplicá-la de forma consistente.
+### Posso financiar issues do meu próprio projeto?
 
-## Como manter as decisões de pagamento justas?
-Use o mesmo checklist de aceitação para todos os contribuidores, mantenha as notas de review públicas na PR/issue e baseie as decisões de liberação em critérios acordados, não em expectativas informais.
+Sim. Nesse caso você é mantenedor e patrocinador ao mesmo tempo. Veja [Financie uma issue](/docs/br/sponsor/).
+
+### Quanto o Gitpay cobra?
+
+8% somados à recompensa em issues de código aberto (nada para recompensas de US$ 5.000 ou mais) e 18% em issues privadas. O contribuidor recebe 92% da recompensa. Veja [Como funcionam pagamentos e taxas](/docs/br/payments/).
+
+### E se ninguém resolver a issue?
+
+Escreva para [contact@gitpay.me](mailto:contact@gitpay.me) para pedir o reembolso, ou mova a recompensa para outra issue pela opção de transferência em **Pagamentos**. Compromissos de pagar depois nunca são cobrados se não houver solução.
+
+### Posso pagar um contribuidor que trabalhou sem recompensa?
+
+Sim. Financie a issue, ou peça a ele que envie uma solicitação de pagamento pelo trabalho.
+
+### Como atraio contribuidores?
+
+Escreva uma issue clara, financie com pagamento antecipado em vez de só prometer, e use **Postar no GitHub** para colocar o link da página do Gitpay na issue do GitHub.

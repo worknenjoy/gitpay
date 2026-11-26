@@ -2,9 +2,9 @@
 layout: doc
 lang: br
 role: maintainer
-title: Validando entregas
-subtitle: Como revisar, testar e aceitar entregas de forma consistente
-tags: maintainer, validacao
+title: Avalie candidaturas e ofertas
+subtitle: Escolha quem trabalha em uma issue, combine prazos e recompensas e remova uma atribuição
+tags: maintainer, offers, assignment, review
 ---
 
 #### Índice
@@ -12,34 +12,37 @@ tags: maintainer, validacao
 * TOC
 {:toc}
 
-## Defina "concluído" desde o início
-Na descrição da issue, inclua:
-- Comportamento esperado e casos de borda
-- Como testar (manual e/ou automatizado)
-- Requisitos de UX (prints, textos, responsividade)
-- Restrições não funcionais (performance, segurança, acessibilidade) quando aplicável
-- Notas de rollout ou migração quando as mudanças afetam usuários existentes
+Contribuidores podem se candidatar às suas issues e fazer ofertas. Você não é obrigado a atribuir ninguém: a recompensa é paga a quem abriu o pull request mesclado que resolve a issue. Atribuir é a forma de coordenar quem trabalha em quê.
 
-## Checklist de revisão
-- Escopo: atende ao combinado
-- Qualidade: código legível e consistente
-- Segurança: sem problemas óbvios de dados/permissões
-- Testes: adicionados/atualizados quando necessário
-- Docs: atualizadas se houver mudança de comportamento
+## Candidaturas
 
-## Valide evidências, não suposições
-- Reproduza os fluxos principais localmente ou no ambiente alvo.
-- Confirme que screenshots/vídeos representam o código atual, não revisões desatualizadas.
-- Verifique se as instruções de teste no PR podem ser executadas por outro revisor.
-- Valide se as issues vinculadas e as descrições do PR estão alinhadas com o comportamento entregue.
+Quando um contribuidor se candidata, ele aparece na lista de interessados da issue, com a mensagem e a data de entrega sugerida. Você pode:
 
-## Gerencie rodadas de revisão de forma eficiente
-1. Agrupe o feedback por prioridade (bloqueante vs. não bloqueante).
-2. Referencie arquivos/linhas exatos ou checks falhando.
-3. Confirme quando cada item bloqueante for resolvido.
-4. Reexecute as etapas de validação críticas após as atualizações.
+- **atribuir** a issue a ele;
+- **sugerir outra data**, se a dele não servir;
+- **enviar uma mensagem** para tirar dúvidas antes.
 
-## Aceitação
-Aceite/integre quando os requisitos acordados forem atendidos e as etapas de validação passarem.
+O contribuidor atribuído vê a issue em **Meus incidentes**, na aba das issues em que está trabalhando.
 
-Se a aceitação estiver bloqueada, forneça uma lista curta das mudanças necessárias restantes para que os contribuidores possam resolver a pendência rapidamente.
+Para desfazer uma atribuição, remova o usuário atribuído da issue.
+
+## Ofertas
+
+Uma oferta é um contribuidor propondo um valor de recompensa e um prazo, por exemplo em uma issue ainda sem recompensa. As ofertas ficam em **Ofertas para esta tarefa**.
+
+Se você aceitar uma oferta, o Gitpay cria um pedido a partir dela, com a taxa de 8% de código aberto, para você pagar. O contribuidor recebe quando a solução dele for mesclada, como em qualquer recompensa.
+
+## Revisão do trabalho em si
+
+A revisão de código acontece no GitHub, como sempre. O Gitpay não pede que você aprove o pagamento: quando você mescla o pull request e a issue é fechada, o contribuidor pode enviar a solução e o Gitpay paga automaticamente. **Mesclar é a aprovação.**
+
+Então, antes de mesclar um pull request em uma issue financiada, confirme que ele realmente resolve a issue.
+
+## Soluções sem recompensa
+
+Se uma issue não tem recompensa, um contribuidor ainda pode enviar uma solução e pedir pagamento a você. Você recebe o pedido junto com a solução e pode financiar a issue para pagar.
+
+## Próximos passos
+
+- [Como as recompensas são pagas](/docs/br/releasing-bounties/)
+- [Financie uma issue](/docs/br/sponsor/)

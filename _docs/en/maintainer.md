@@ -36,7 +36,7 @@ An issue with a clear definition of done gets fewer pull requests you have to re
 
 ## Your dashboard
 
-With the **Maintainer** role, your dashboard shows the total paid, your projects and organizations, and the open issues with their assignees. Turn the role on in **Profile → User account → Roles**.
+With the **Maintainer** role, your dashboard shows the total paid, your projects and organizations, and the open issues with their assignees. Turn the role on in **Account → Profile** (the "What types of users fit with you?" section).
 
 ## Next steps
 

@@ -18,7 +18,7 @@ As a contributor you solve issues that have a bounty. You're paid when your pull
 
 Sign up or sign in at [gitpay.me](https://gitpay.me) **with GitHub**. Gitpay uses your GitHub account to confirm that you authored the pull request you submit, so a bounty can only be paid to an account signed in with GitHub.
 
-Then add the **Contributor** role in **Profile → User account → Roles**. You can also add your skills under **Skills**.
+Then add the **Contributor** role in **Account → Profile** (the "What types of users fit with you?" section). You can also add your skills in **Account → Skills**.
 
 ## 2. Set up payouts
 

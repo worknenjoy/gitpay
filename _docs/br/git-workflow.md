@@ -2,48 +2,65 @@
 layout: doc
 lang: br
 role: contributor
-title: Trabalhando com o Git Workflow
-subtitle: O processo de entrega integrado de uma tarefa no Gitpay
-author: Alexandre Magno
-tags: 
-
+title: Fluxo de trabalho com Git
+subtitle: Como organizar sua branch e seu pull request para a solução passar nas verificações do Gitpay
+tags: contributor, git, github, pull-requests
 ---
-#### O que você vai aprender aqui
 
+#### Índice
 {:.no_toc}
 * TOC
 {:toc}
 
-O Git Workflow é um processo usado no desenvolvimento de software para validar tarefas em projetos open source ou privados.
+O Gitpay não muda o seu jeito de trabalhar com Git. Ele só lê o seu pull request no GitHub para decidir se a recompensa pode ser paga. Esta página mostra o fluxo que passa nessas verificações de primeira.
 
-Ele define diretrizes e processos de trabalho com Git para times distribuídos.
+## 1. Fork e branch
 
-## O nosso Workflow
+Se você não tem permissão de escrita no repositório, faça um fork e clone o seu fork:
 
-Utilizamos o processo de contribuição em um repositório Git para validar o trabalho. O Git funciona como nosso contrato. Mudanças passam por testes automatizados e validações em vários ambientes antes de serem integradas.
+```bash
+git clone https://github.com/<seu-usuario>/<repo>.git
+cd <repo>
+git remote add upstream https://github.com/<dono>/<repo>.git
+git fetch upstream
+git checkout -b fix-123-descricao-curta upstream/main
+```
 
-## Git Workflow
+Use a branch padrão do projeto (`main`, `master` ou a que o projeto usar) e siga o guia de contribuição dele.
 
-O Git Workflow recomenda como usar o Git para finalizar tarefas de maneira consistente e produtiva.
+## 2. Commit e push
 
-Quando usamos Git para controle de versão seguimos um fluxo de trabalho comum. Ele garante que times em grande escala estejam na mesma página e define quando a tarefa é considerada finalizada.
+```bash
+git add .
+git commit -m "Corrige loop de redirecionamento no login (#123)"
+git push origin fix-123-descricao-curta
+```
 
-Existem diversos tipos de workflow para equipes. Aqui apresentamos o que usamos no Gitpay e que também é adotado por muitas empresas.
+## 3. Abra o pull request no repositório original
 
-> Workflows são formas de apresentar um processo de trabalho no desenvolvimento de software ágil. Ele se baseia em regras claras e concretas de como trabalhamos em projetos usando o Git como controle de versão.
+Abra o pull request da branch do seu fork **para o repositório original**, aquele a que a issue pertence. Um pull request mesclado no seu próprio fork não conta.
 
-## Forking Workflow
+Na descrição, cite a issue com uma palavra-chave de fechamento:
 
-![](/uploads/img-multidev-forking-800-2.png)
+```
+Fixes #123
+```
 
-Este é o processo que usamos para integrar tarefas. No Forking Workflow você cria um repositório a partir do principal, faz suas alterações e depois abre um Pull Request.
+Também valem `Closes #123`, `Resolves #123` ou a URL completa da issue. A palavra-chave faz duas coisas que o Gitpay verifica: cita a issue e faz o GitHub fechá-la automaticamente quando o pull request é mesclado.
 
-Toda mudança passa por um processo de aprovação que segue as melhores práticas de desenvolvimento.
+## 4. Depois do merge
 
-## Avaliando as mudanças
+Confirme que a issue está fechada e envie a URL do pull request no Gitpay. Veja [Envie uma solução](/docs/br/pull-requests/).
 
-Avaliamos as mudanças seguindo as seguintes premissas:
+## Checklist
 
-1. Focamos no valor da entrega, não em cada detalhe.
-2. Somos flexíveis para discutir melhores soluções, mas uma tarefa bem descrita evita aumento de escopo.
-3. Adotamos desenvolvimento ágil e incentivamos testes automatizados, principalmente em correções de bugs.
+- [ ] Entrei no Gitpay com a mesma conta do GitHub que abriu o pull request
+- [ ] Pull request aberto no repositório original
+- [ ] Descrição cita a issue (`Fixes #123` ou a URL da issue)
+- [ ] Pull request mesclado
+- [ ] Issue fechada
+- [ ] Solução enviada no Gitpay
+
+## Próximos passos
+
+- [Envie uma solução](/docs/br/pull-requests/)

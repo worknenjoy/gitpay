@@ -40,7 +40,7 @@ The issue's bounty breakdown lists each sponsor's contribution and its status:
 |---|---|
 | **Paid in advance** (Paid · held) | Charged and held by Gitpay. |
 | **Invoice pending** | Invoice sent, not paid yet. Switches to paid when the payment arrives. |
-| **To pay later** | Pledged. Charged when a solution is accepted. |
+| **To pay later** | Pledged. The sponsor is asked to pay when a solution is accepted. |
 
 Sponsors can appear as **Anonymous**.
 
