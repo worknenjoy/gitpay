@@ -2,35 +2,43 @@
 layout: doc
 lang: br
 role: maintainer
-title: Mantenedor
-subtitle: Gerencie tarefas, revise contribuições e libere pagamentos com segurança
-tags:
+title: Visão geral para mantenedores
+subtitle: Como usar o Gitpay para conseguir ajuda nas issues do seu projeto
+tags: maintainer, overview
 ---
 
-#### O que você vai ver
+#### Índice
 {:.no_toc}
 * TOC
 {:toc}
 
-## Para quem é esta página
-Este guia é para mantenedores que querem disponibilizar issues no Gitpay, orientar contribuidores e aprovar entregas para liberar pagamentos.
+Como mantenedor, você usa o Gitpay para que issues do seu projeto sejam resolvidas por contribuidores externos, pagos por você ou por patrocinadores.
 
-## Suas responsabilidades
-- Manter as issues claras e testáveis.
-- Definir critérios de aceitação (o que é “concluído”).
-- Revisar Pull Requests e pedir ajustes quando necessário.
-- Fazer merge apenas quando a entrega estiver pronta.
+## O fluxo
 
-## Como o pagamento é liberado
-O Gitpay usa o workflow do repositório como fonte de verdade. Quando a tarefa é concluída de acordo com o seu processo de validação (review + aceitação/merge), a recompensa pode ser liberada.
+1. **Importe** as issues em que quer ajuda. → [Importe issues e projetos](/docs/br/getting-started-maintainer/)
+2. **Financie** as issues, ou convide patrocinadores. → [Financie uma issue](/docs/br/sponsor/)
+3. **Divulgue**: **Postar no GitHub** adiciona um comentário na issue do GitHub com o link para a página do Gitpay.
+4. **Coordene** os contribuidores por candidaturas e ofertas. → [Avalie candidaturas e ofertas](/docs/br/validating-work/)
+5. **Revise e mescle** o pull request no GitHub, como sempre.
+6. O contribuidor **envia a solução** e recebe automaticamente. → [Como as recompensas são pagas](/docs/br/releasing-bounties/)
 
-## Dicas para mantenedores
-- Prefira tarefas pequenas e bem definidas.
-- Documente como rodar o projeto localmente.
-- Use CI para reduzir esforço de revisão.
+## Escreva issues que são resolvidas
+
+Os contribuidores decidem só pela issue se vão pegá-la. Antes de financiar uma issue:
+
+- descreva o comportamento esperado e como você vai testar;
+- inclua links para o código ou os arquivos relevantes;
+- diga o que está fora do escopo;
+- cite o guia de contribuição e o padrão de código do projeto.
+
+Uma issue com uma definição clara de pronto gera menos pull requests para recusar.
+
+## Seu painel
+
+Com o papel **Maintainer**, seu painel mostra o total pago, seus projetos e organizações, e as issues abertas com os responsáveis. Ative o papel em **Conta → Perfil** (seção "Que tipo de usuário é você?").
 
 ## Próximos passos
-- Leia [Começando](/docs/br/getting-started-maintainer)
-- Revise [Requisições de mudança](/docs/br/pull-requests)
-- Aprenda o [Fluxo de trabalho do git](/docs/br/git-workflow)
-- Entenda [Como receber pagamentos](/docs/br/payments)
+
+- [Importe issues e projetos](/docs/br/getting-started-maintainer/)
+- [Dúvidas de mantenedores](/docs/br/faq-maintainer/)

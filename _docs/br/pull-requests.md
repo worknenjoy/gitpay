@@ -2,60 +2,60 @@
 layout: doc
 lang: br
 role: contributor
-title: O poder e a importância dos Pull Requests
-subtitle: Como o Pull Request é importante e peça chave para integração de sua tarefa
-author:
-tags:
+title: Envie uma solução
+subtitle: As cinco verificações que um pull request precisa passar para a recompensa ser paga
+tags: contributor, bounties, pull-requests, solutions
 ---
 
-#### O que você vai ver aqui
+#### Índice
 {:.no_toc}
 * TOC
 {:toc}
 
-Os Pull Requests são nossos contratos para integração da mudança e finalização da tarefa. Ele contém todas as modificações que você realizou e tem uma poderosa ferramenta, nas diferentes plataformas como Github e Bitbucket, para permitir avaliações da mudança.
+Quando seu pull request resolve uma issue financiada, você o envia ao Gitpay como **solução**. O Gitpay verifica o pull request no GitHub. Se todas as verificações passarem, a recompensa é transferida para você automaticamente.
 
-Por lá também acontece os feedbacks, comentários e até trabalho em conjunto, para a partir dali, após aprovado, o código.
+## Envie uma solução
 
-Baixe um resumo prático do git: http://rogerdudler.github.io/git-guide/files/git_cheat_sheet.pdf
+1. Abra a issue no Gitpay e selecione **Enviar solução**.
+2. Cole a URL do pull request, ou escolha em **Meus pull requests** se estiver conectado ao GitHub.
+3. O Gitpay faz as verificações e mostra o resultado de cada uma.
+4. Selecione **Enviar Solução**.
 
-## Testes automatizados para cada Pull Request
+Você pode enviar a solução antes de o pull request ser mesclado. Ela fica como **Aguardando fusão**, e você pode usar **Editar Solução** para refazer as verificações depois do merge.
 
-Quando o Pull Request é enviado, ele é analisado por testes automatizados, antes mesmo de ser revisado, ele precisa passar nestes teste para ter a mínima qualidade aceitável para ser integrado.
+## As verificações
 
-Por favor, caso ele não seja bem sucedido nestas verificações, você pode realizar os ajustes e enviar novamente para sua branch, que para cada push realizado, o Pull Request é atualizado.
+| Verificação | Como passar |
+|---|---|
+| **Você está conectado ao GitHub** | Entre no Gitpay com o GitHub. |
+| **Você é o autor deste pull request no GitHub** | Envie um pull request que você abriu, com a conta do GitHub com que entrou. |
+| **O pull request foi mesclado** | O pull request precisa estar mesclado (não só fechado) no **mesmo repositório** da issue. |
+| **A issue é citada no pull request** | Cite a issue na descrição do pull request, por exemplo `Fixes #123` ou a URL completa da issue. |
+| **A issue está fechada no GitHub** | A issue precisa estar fechada. Usar `Fixes #123` na descrição fecha a issue automaticamente no merge. |
 
-## O que são Pull Requests?
+O Gitpay também mostra se **a recompensa está disponível**. Se ainda não há recompensa, você pode enviar a solução mesmo assim e pedir pagamento ao mantenedor.
 
-Pull Requests são requisições ou entrega de uma tarefa que foi desenvolvida de um projeto em que desenvoledores colaboram entre si. Em todas plataformas que usam o Git, como Github, Gitlab, Bitbucket ou TeamFoundation possuem uma interface onde é possível discutir sobre aquela solução.
+## Status do pagamento
 
-Essas discussões podem ser aprovadas e ações são executadas a partir dali, entre elas uma integração no repositório principal do projeto, que desencadeia um fluxo de envio destas mudanças para produção de uma forma eficiente e automatizada.
+| Status | Significado |
+|---|---|
+| **Pronto para pagar** | Todas as verificações passaram. A recompensa é transferida. |
+| **Aguardando fusão** | O pull request ainda não foi mesclado. O pagamento é liberado no merge. |
+| **Não elegível** | Uma ou mais verificações falharam. |
 
-Os Pull Requests são mecanismos para que um desenvolvedor notifique membros que ele completou aquela funcionalidade. Esta funcionalidade geralmente vem de um incidente (ou issue) do repositório.
+Quando a recompensa é transferida, você recebe 92% da recompensa paga na sua conta de saque, e uma reivindicação aparece em **Receber pagamentos → Minhas Reivindicações**. Veja [Reivindicações](/docs/br/claims/).
 
-Quando você cita uma issue a partir de um Pull Request, é possível relacioná-los, e assim que o Pull Request é integrado, a issue é considerada finalizada.
+## Se a transferência falhar
 
-## Anatomia de um Pull Request
+- **"Sua conta precisa ser atualizada para receber pagamentos"**: sua conta de saque não está ativa. Termine de [configurar seus saques](/docs/br/whop-payout-setup/), depois edite e reenvie a solução.
+- Uma verificação que deveria passar falhou: compare o pull request com a tabela acima. As causas mais comuns são um pull request mesclado em um fork em vez do repositório original, e uma descrição que não cita a issue.
 
-Quando um Pull Request é realizado, o que você está fazendo é requisitar que outro desenvolvedor veja as mudanças que você quer realizar no repositório principal. Então esta mudança vem com quatro informações:
+## Se você esquecer de enviar
 
-1. O repositório base
-2. A branch base
-3. O repositório de destino
-4. A branch de destino
+Se o seu pull request foi mesclado e você nunca o enviou, o Gitpay manda um lembrete por e-mail no dia 26 de cada mês. Depois de dois lembretes, a recompensa é reembolsada aos patrocinadores. Envie assim que o pull request for mesclado.
 
-Sendo assim, no nosso modelo, geralmente você faz uma requisição para *integrar da sua branch*, criada a partir do seu fork, na branch principal (master) do projeto base. 
+## Próximos passos
 
-## Passos para criar um Pull Request
-
-Pull Requests podem ser usados como envio de uma mudança no modelo de Fork, assim como outros modelos de workflow. Praticamente o Pull Request é a porta de entrada para o seu código virar realidade.
-
-O processo geral para criação compreende os seguintes passos:
-
-1. O desenvolvedor cria uma funcionalidade em uma branch dedicada no seu repositório após um fork do projeto;
-2. O desenvolvedor realiza um `git push` para a branch do seu repositório (branch remota);
-3. O desenvolvedor abre um Pull Request (no Github ou Bitbucket);
-4. O código é revisado, discutido e é possível dar feedbacks e fazer revisões sobre partes específicas da mudança a ser realizda;
-5. Quem mantém o projeto realiza um `merge` desta funcionalidade que irá ser integrada no repositório oficial e o Pull Request é fechado
-
-Você agora sabe o que é necessário para enviar um Pull Request. Quando você é escolhido para uma tarefa, esta é a etapa que avaliamos a solução e que valida a tarefa para concluirmos com a recompensa.
+- [Reivindicações](/docs/br/claims/)
+- [Saques](/docs/br/payouts/)
+- [Fluxo de trabalho com Git](/docs/br/git-workflow/)

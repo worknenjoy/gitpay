@@ -2,9 +2,9 @@
 layout: doc
 lang: br
 role: contributor
-title: Trabalhar em uma Issue
-subtitle: Da busca por uma tarefa à solicitação de pagamento e recebimento
-tags:
+title: Trabalhe em uma issue financiada
+subtitle: Candidate-se a uma issue, combine prazo ou recompensa e seja atribuído
+tags: contributor, bounties, offers, assignment
 ---
 
 #### Índice
@@ -12,55 +12,50 @@ tags:
 * TOC
 {:toc}
 
-## Encontrar tarefas disponíveis
-Encontre issues financiadas que combinam com suas habilidades, disponibilidade e contexto técnico.
+Você não precisa de permissão para resolver uma issue no Gitpay. A recompensa vai para quem abriu o pull request mesclado que resolve a issue. Ainda assim, avisar o dono que você está trabalhando nela evita que duas pessoas resolvam a mesma coisa e permite combinar um prazo ou uma recompensa antes.
 
-Procure issues que ofereçam:
-- Critérios de aceitação claros.
-- Comportamento atual reproduzível.
-- Escopo técnico e restrições bem definidos.
-- Comunicação ativa do maintainer.
+## Leia a página da issue
 
-## Candidatar-se e ser atribuído
-Candidate-se à issue e aguarde a atribuição antes de começar a entrega.
+A página da issue no Gitpay mostra:
 
-Ao se candidatar:
-1. Confirme seu entendimento do problema.
-2. Compartilhe uma abordagem de implementação resumida.
-3. Faça perguntas de esclarecimento cedo.
-4. Aguarde a confirmação explícita de atribuição.
+- **Recompensa**: o total, com o detalhamento por patrocinador. Os valores aparecem como **Pago com antecedência** (guardado pelo Gitpay), **Fatura pendente** ou **A pagar mais tarde** (prometido; o patrocinador paga quando uma solução é aceita).
+- **Estado**: Created, Funded, Claimed, Completed ou Closed.
+- **Prazo**: a data em que o dono precisa da solução, se definida.
+- **Soluções enviadas**: pull requests que outros contribuidores já enviaram.
+- **Visibilidade**: issues públicas aparecem em Explorar; issues *não listadas* só abrem com o link.
 
-Começar antes da atribuição pode gerar conflito com outros contribuidores e aumentar o risco de entrega.
+Confira **Soluções enviadas** antes de começar, para não repetir o trabalho de outra pessoa.
 
-## Enviar um Pull Request
-Entregue sua solução em um Pull Request com evidências de teste e notas de implementação.
+## Candidate-se
 
-Um bom PR normalmente inclui:
-- Resumo do problema e o que mudou.
-- Referência à issue/tarefa vinculada.
-- Evidência de testes (comandos, screenshots, logs).
-- Notas sobre trade-offs ou trabalho de acompanhamento.
+Na issue, candidate-se para resolvê-la. Você pode:
 
-Prefira PRs pequenos e focados sempre que possível para facilitar e agilizar o review.
+- descrever seu plano em uma mensagem curta;
+- sugerir uma data de entrega.
 
-## Solicitar pagamento pelo trabalho concluído
-Após as condições de aceitação serem atendidas, solicite o pagamento pelo fluxo da tarefa.
+O dono analisa as candidaturas e pode atribuir a issue a você. Ela aparece em **Tarefas → Meus incidentes**, na aba das issues em que você está trabalhando.
 
-Antes de solicitar o pagamento, confirme que:
-- O escopo foi entregue completamente.
-- As revisões solicitadas foram atendidas.
-- As verificações requeridas passaram.
-- O maintainer aceitou o resultado final.
+## Faça uma oferta
 
-## Receber o pagamento
-O pagamento é liberado com base na entrega aprovada e no método de recebimento configurado.
+Use **Fazer uma oferta** para propor uma recompensa, por exemplo quando a issue ainda não tem recompensa ou quando você acha que o escopo é maior que a recompensa atual. A oferta tem um valor e um prazo sugerido. Se o dono aceitar, o Gitpay cria um pedido nesse valor (com a taxa de 8% de código aberto) para o dono pagar. Você recebe quando sua solução for mesclada.
 
-Para evitar atrasos no recebimento:
-- Mantenha os dados de recebimento atualizados.
-- Certifique-se de que os requisitos de identidade/verificação estão completos.
-- Acompanhe o status do pagamento e entre em contato com o suporte rapidamente se o processamento ultrapassar o prazo esperado.
+## Fale com o dono
+
+Use **mensagem** na página da issue para falar com quem importou a issue. Mantenha a discussão técnica na issue do GitHub, onde os mantenedores vão ver.
+
+## Convide outras pessoas
+
+Use **Compartilhar com outros** para:
+
+- **Convidar contribuidor**: chamar um desenvolvedor para trabalhar na issue;
+- **Convidar patrocinador**: pedir a alguém que aumente a recompensa;
+- **Postar no GitHub**: comentar na issue do GitHub com um link para a página do Gitpay.
+
+## Quando terminar
+
+Abra um pull request e envie como sua solução: [Envie uma solução](/docs/br/pull-requests/).
 
 ## Próximos passos
-- Leia [O que é o Gitpay?](/docs/br/getting-started)
-- Leia [Por onde começar?](/docs/br/getting-started-contributor)
-- Leia [Financiar uma Issue](/docs/br/sponsor)
+
+- [Envie uma solução](/docs/br/pull-requests/)
+- [Fluxo de trabalho com Git](/docs/br/git-workflow/)

@@ -1,80 +1,45 @@
 ---
 layout: doc
 lang: br
-role: contributor
-title: Claims — reivindicando tarefas e acompanhando transferências
-subtitle: Como reivindicar uma tarefa com recompensa e onde ver o dinheiro que você recebeu
-tags: claims, recompensa, atribuição, transferências, solicitações de pagamento
+title: Reivindicações
+subtitle: O registro de cada recompensa e solicitação de pagamento pela qual você recebeu
+tags: claims, contributor, service-provider, payouts
 ---
 
-#### O que você vai ver
+#### Índice
 {:.no_toc}
 * TOC
 {:toc}
 
-"Claim" tem dois significados diferentes no Gitpay, e esta página cobre os dois — porque um leva
-diretamente ao outro: reivindicar uma tarefa é como você começa a ganhar uma recompensa, e a página
-Claims é onde essa recompensa aparece como dinheiro assim que é paga.
+Uma **reivindicação** é criada quando há dinheiro devido a você no Gitpay:
 
-## Onde isso se encaixa no fluxo de pagamento
+- **em recompensas**: quando sua solução é aceita e a recompensa é transferida para você;
+- **em solicitações de pagamento**: quando um cliente paga um dos seus links de pagamento.
 
-```
-reivindicado  →  financiado  →  transferência creditada  →  payout solicitado  →  dinheiro na sua conta
-(esta página)   (issue/PR       (também esta página,                                     ↘
-                pago)           o lado financeiro)                             disputa ou reembolso
-                                                                       (veja Disputas e reembolsos)
-```
+As reivindicações ficam em **Receber pagamentos → Minhas Reivindicações**, em duas abas: uma para recompensas e outra para solicitações de pagamento. Abra uma reivindicação para ver o valor, o método de transferência, o status e a issue ou solicitação de pagamento de origem.
 
-Reivindicar uma tarefa é o início da cadeia: é o que transforma "uma recompensa aberta que qualquer um
-poderia trabalhar" em "trabalho atribuído a você". Depois que esse trabalho é entregue e pago, a mesma
-palavra descreve a outra ponta da cadeia também — a página Claims é onde você "reivindica", no sentido
-do dia a dia, o dinheiro que ganhou, antes de solicitar um [payout](/docs/br/payouts/) para efetivamente
-sacá-lo.
+## Da reivindicação até a conta bancária
 
-## Reivindicando uma tarefa
+1. **Reivindicação**: o dinheiro é atribuído a você.
+2. **Transferência**: o dinheiro vai para sua conta de saque (seu saldo Whop).
+3. **Saque**: você retira para seu banco, cartão ou carteira. Veja [Saques](/docs/br/payouts/).
 
-Para reivindicar uma tarefa, solicite ser atribuído a ela na página da tarefa ou da issue. Isso envia um
-pedido ao dono da tarefa (ou confirma que você já é o usuário atribuído no GitHub), para que o Gitpay
-possa confirmar que você é a pessoa certa antes de reservar a recompensa para você.
+Em solicitações de pagamento com cobrança direta, os passos 1 e 2 acontecem no momento do pagamento: o dinheiro é cobrado direto na sua conta Whop.
 
-## Aguardando aprovação
+## Status das reivindicações de solicitações de pagamento
 
-Depois que você solicita uma reivindicação, o Gitpay verifica se você está realmente atribuído à issue
-correspondente no GitHub antes de confirmá-la. Você recebe um e-mail assim que sua reivindicação é
-aprovada.
+| Status | Significado |
+|---|---|
+| **Pendente** | O cliente pagou, mas os fundos ainda estão em liquidação. O Gitpay tenta a transferência de novo toda noite até ficarem disponíveis (normalmente de 1 a 4 dias para cartão). Vale para solicitações antigas. |
+| **Criada** | A transferência para a sua conta Whop foi feita. |
+| **Revertida** | O pagamento foi reembolsado depois da transferência. |
 
-## O que acontece se ninguém reivindicar uma tarefa
+## Por que não tenho reivindicações?
 
-Se uma tarefa financiada ficar sem ser reivindicada por um tempo, o Gitpay verifica periodicamente e dá
-aos contribuidores a chance de reivindicá-la. Se ela continuar sem ser reivindicada mesmo depois desses
-lembretes, a tarefa é liberada e o patrocinador que a financiou é reembolsado — assim, recompensas
-financiadas não ficam paradas para sempre.
+- **Sem conta de saque**: a página de reivindicações pede para você ativar sua conta. Veja [Configure seus saques](/docs/br/whop-payout-setup/).
+- **Solução de recompensa ainda não aceita**: confira as verificações da solução na página da issue. Veja [Envie uma solução](/docs/br/pull-requests/).
 
-## A página Claims
+## Próximos passos
 
-Depois que o trabalho é reivindicado e pago, "reivindicar" ganha o outro significado: a página
-**Claims** no seu perfil é onde você vê o dinheiro que recebeu. Ela tem duas abas, que correspondem às
-duas formas como o Gitpay paga os contribuidores.
-
-## Claims de recompensas (bounties)
-
-Transferências que você recebeu por tarefas com recompensa que concluiu — resultado direto de
-reivindicar e finalizar uma tarefa, como descrito acima.
-
-## Claims de solicitações de pagamento
-
-Transferências de solicitações de pagamento que você emitiu e que já foram pagas.
-
-## Ativando sua conta para receber claims
-
-Se sua página Claims estiver vazia e pedir para ativar sua conta, isso é uma etapa única: o Gitpay
-precisa de um método de pagamento ativo cadastrado antes de poder creditar transferências para você.
-Acesse suas configurações de pagamento para conectar um.
-
-## Do claim ao payout
-
-Uma transferência que aparece na sua página Claims é dinheiro que já é seu, mas ainda não está na sua
-conta bancária — ele está no seu saldo do Gitpay. Para efetivamente recebê-lo, solicite um
-[payout](/docs/br/payouts/). Se uma disputa ou reembolso acontecer depois no pagamento original, o valor
-pode ser debitado de volta do seu saldo — veja
-[Disputas e reembolsos](/docs/br/disputes-and-refunds/) para entender como isso funciona.
+- [Saques](/docs/br/payouts/)
+- [Como funcionam pagamentos e taxas](/docs/br/payments/)

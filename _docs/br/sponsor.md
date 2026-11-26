@@ -2,9 +2,9 @@
 layout: doc
 lang: br
 role: sponsor
-title: Financiar uma Issue
-subtitle: Financie e gerencie a entrega desde a criação da issue até a liberação do pagamento
-tags:
+title: Financie uma issue
+subtitle: Adicione uma recompensa, escolha o plano e a forma de pagamento, e veja o que os contribuidores enxergam
+tags: sponsor, bounties, funding
 ---
 
 #### Índice
@@ -12,63 +12,54 @@ tags:
 * TOC
 {:toc}
 
-## Criar uma tarefa a partir de uma issue do GitHub
-Comece por uma issue com escopo claro, resultado esperado e critérios de aceitação para que os contribuidores possam estimar e entregar com confiança.
+## Adicione uma recompensa
 
-Inclua:
-- Descrição do problema: o que está quebrado ou faltando e por que isso importa.
-- Limites do escopo: o que está incluído e o que está explicitamente fora do escopo.
-- Critérios de aceitação: verificações objetivas usadas para aprovação.
-- Formato de evidência: screenshots, logs, resultados de testes ou links de demonstração necessários para validação.
-- Contexto técnico: branch, arquivos ou issues relacionadas que ajudam os contribuidores a começar rapidamente.
+1. Abra a issue no Gitpay e selecione **Adicionar recompensa** (ou **Adicionar à recompensa**, se ela já tiver uma).
+2. Informe o valor em dólares (USD).
+3. Escolha quando pagar:
+   - **Pagar agora**: cobrado agora. O Gitpay guarda o dinheiro e libera quando uma solução é mesclada.
+   - **Pagar mais tarde**: nada é cobrado agora. Você paga quando uma solução é aceita.
+4. Se for pagar agora, escolha como: **Cartão**, **Fatura** ou **Carteira**. Veja [Formas de pagamento para patrocinadores](/docs/br/funding-issues/).
+5. Confira o total com taxa e confirme.
 
-## Definir uma recompensa
-Defina o valor da recompensa com base na complexidade, urgência e qualidade de entrega esperada.
+## Planos e taxas
 
-Ao definir o valor, considere:
-- Esforço estimado de implementação.
-- Tempo de review e iteração.
-- Nível de expertise necessário.
-- Impacto no negócio e urgência.
+| Plano | Para | Taxa somada |
+|---|---|---|
+| **Código aberto** | Projetos públicos | 8% |
+| **Código aberto**, recompensa de US$ 5.000 ou mais | Projetos públicos | Sem taxa |
+| **Privado** | Repositórios privados | 18% |
 
-Se possível, informe os tempos esperados de resposta para atribuição, review e liberação para que os contribuidores possam planejar seu trabalho.
+O contribuidor que resolve a issue recebe 92% da recompensa. Veja [Como funcionam pagamentos e taxas](/docs/br/payments/).
 
-## Acompanhar a entrega
-Acompanhe o progresso por meio de atualizações da issue, branches e Pull Requests para manter a entrega transparente.
+## O que os contribuidores veem
 
-Boas práticas:
-1. Peça aos contribuidores que compartilhem atualizações curtas nos marcos principais.
-2. Confirme mudanças significativas de escopo antes de continuar a implementação.
-3. Revise PRs em rascunho (draft) cedo para evitar retrabalho tardio.
-4. Mantenha todas as decisões nos comentários da issue/PR para um histórico claro.
+O detalhamento da recompensa na issue lista a contribuição de cada patrocinador e o status:
 
-## Revisar e liberar o pagamento
-Revise o Pull Request enviado e libere o pagamento após os critérios de aceitação serem atendidos.
+| Status | Significado |
+|---|---|
+| **Pago com antecedência** | Cobrado e guardado pelo Gitpay. |
+| **Fatura pendente** | Fatura enviada, ainda não paga. Passa a pago quando o pagamento chega. |
+| **A pagar mais tarde** | Prometido. O patrocinador recebe um pedido de pagamento quando uma solução é aceita. |
 
-Use esta sequência:
-1. Valide o comportamento funcional contra os critérios de aceitação.
-2. Confirme que os testes/checks passaram e que a documentação necessária foi atualizada.
-3. Solicite revisões se necessário, com feedback acionável.
-4. Aprove e libere o pagamento após a aceitação final.
+Patrocinadores podem aparecer como **Anônimo**.
 
-## Conectar sua conta bancária
-Ative seus dados de conta para poder financiar trabalhos e gerenciar operações relacionadas a recebimentos.
+Dinheiro já pago mostra aos contribuidores que o trabalho será pago com certeza. Compromissos aparecem como estimados.
 
-Antes de financiar, verifique:
-- Titularidade da conta e dados do destinatário.
-- Compatibilidade de moeda/região.
-- Quaisquer etapas de verificação necessárias nas configurações da conta.
+## Defina um prazo
 
-## Como as taxas funcionam
-Revise as taxas da plataforma e do processador de pagamento antes de financiar para que o custo total seja claro.
+O dono da issue pode definir um prazo (em uma semana, 15 dias, 20 dias, um mês, ou uma data específica). Ele aparece na issue como a data em que a solução é necessária.
 
-Sempre verifique:
-- Percentual ou valor fixo da taxa da plataforma.
-- Taxa de processamento do método de pagamento.
-- Valor final recebido pelo contribuidor após as deduções aplicáveis.
-- Implicações de reembolso/disputa quando aplicável.
+## Convide pessoas
+
+Na issue, use **Convidar patrocinador** para pedir a alguém que aumente a recompensa, **Convidar contribuidor** para chamar um desenvolvedor, ou **Postar no GitHub** para comentar na issue do GitHub com um link para a página do Gitpay.
+
+## Pague por trabalhos fora de issues do GitHub
+
+Se você quer pagar uma pessoa específica por um trabalho entregue, ela pode enviar uma solicitação de pagamento. Veja [Solicite pagamento a um cliente](/docs/br/service-provider/).
 
 ## Próximos passos
-- Leia [O que é o Gitpay?](/docs/br/getting-started)
-- Leia [Por onde começar?](/docs/br/getting-started-contributor)
-- Leia [Trabalhar em uma Issue](/docs/br/contributor)
+
+- [Formas de pagamento para patrocinadores](/docs/br/funding-issues/)
+- [Como as recompensas são pagas](/docs/br/releasing-bounties/)
+- [Reembolsos e disputas](/docs/br/disputes-and-refunds/)

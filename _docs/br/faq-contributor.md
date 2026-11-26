@@ -2,24 +2,56 @@
 layout: doc
 lang: br
 role: contributor
-title: Perguntas gerais para contribuidores
-subtitle: Dúvidas comuns de contribuidores
-tags: contribuidor, faq
+title: Dúvidas de contribuidores
+subtitle: Perguntas comuns sobre trabalhar com recompensas e receber
+tags: faq, contributor, bounties
 ---
 
-#### O que você vai ver
+#### Índice
 {:.no_toc}
 * TOC
 {:toc}
 
-## Preciso ser escolhido antes de começar?
-Em geral, sim. Começar antes de aprovação aumenta o risco de trabalho duplicado ou fora do escopo esperado.
+### Preciso ser atribuído para receber?
 
-## O que significa “concluído”?
-Normalmente: seu Pull Request atende aos requisitos da tarefa, passa nos checks (quando existirem) e é aceito pelo maintainer.
+Não. A recompensa é paga a quem abriu o pull request mesclado que resolve a issue. Candidatar-se e ser atribuído ajuda a evitar trabalho duplicado, mas não é obrigatório. Veja [Trabalhe em uma issue financiada](/docs/br/contributor/).
 
-## Quando recebo?
-O pagamento é liberado após a aceitação conforme o fluxo do projeto. Veja [payments](/docs/br/payments).
+### Duas pessoas resolveram a mesma issue. Quem recebe?
 
-## E se eu travar?
-Compartilhe o que você tentou, o que observou e faça perguntas objetivas na issue/PR.
+O autor do pull request que foi mesclado. Só um pull request fecha a issue, então confira **Soluções enviadas** na página da issue antes de começar e avise o dono que você está trabalhando nela.
+
+### Por que não recebo a recompensa inteira?
+
+O Gitpay fica com 8% da recompensa no repasse, então você recebe 92%. Uma recompensa de US$ 100 paga US$ 92 a você.
+
+### Meu pull request foi mesclado, mas a verificação falha. Por quê?
+
+As causas mais comuns:
+
+- o pull request foi mesclado em um fork, não no repositório original;
+- a descrição não cita a issue (adicione `Fixes #123`);
+- a issue ainda está aberta no GitHub;
+- você entrou no Gitpay com outra conta do GitHub, ou com e-mail em vez do GitHub.
+
+Veja [Envie uma solução](/docs/br/pull-requests/).
+
+### Quando posso sacar o dinheiro?
+
+Quando a recompensa for transferida para o seu saldo Whop e ficar disponível. Depois, vá em **Meus Pagamentos → Solicitar pagamento**. Veja [Saques](/docs/br/payouts/).
+
+### A issue não tem recompensa. Ainda posso receber?
+
+Sim, de duas formas:
+
+- envie sua solução e **peça pagamento ao mantenedor**; ou
+- **faça uma oferta** propondo uma recompensa antes de começar. Veja [Trabalhe em uma issue financiada](/docs/br/contributor/).
+
+Você também pode [importar seu pull request mesclado](/docs/br/delivering-work/) como solicitação de pagamento e publicar o link no pull request.
+
+### O que significa "A pagar mais tarde" em uma recompensa?
+
+O patrocinador prometeu esse valor, mas ainda não pagou. Ele recebe um pedido de pagamento quando uma solução é aceita. O valor marcado como **Pago com antecedência** já está guardado pelo Gitpay.
+
+### Esqueci de enviar minha solução.
+
+Envie agora. O Gitpay lembra os autores de pull requests no dia 26 de cada mês. Depois de dois lembretes, a recompensa é reembolsada aos patrocinadores.

@@ -2,9 +2,9 @@
 layout: doc
 lang: br
 role: maintainer
-title: Começando como mantenedor
-subtitle: Configure seu fluxo para validar entregas e liberar recompensas
-tags: maintainer, comecando
+title: Importe issues e projetos
+subtitle: Traga issues do GitHub ou do Bitbucket para o Gitpay para que possam ser financiadas e resolvidas
+tags: maintainer, issues, import, projects
 ---
 
 #### Índice
@@ -12,38 +12,43 @@ tags: maintainer, comecando
 * TOC
 {:toc}
 
-## O que este guia cobre
-Esta página explica como maintainers podem aceitar contribuições com etapas de validação claras e como isso se conecta aos pagamentos.
+Qualquer pessoa pode importar uma issue pública para o Gitpay. Mantenedores costumam importar as issues em que querem ajuda, financiá-las ou convidar patrocinadores, e avaliar quem se candidata.
 
-O objetivo é reduzir ambiguidade nos reviews, acelerar a aceitação e tornar as decisões de liberação de pagamento consistentes.
+## Importe uma issue
 
-## Fluxo recomendado
-1. Crie uma issue bem definida (requisitos + critérios de aceitação).
-2. Garanta um processo de PR (branching, review, CI).
-3. Selecione um contribuidor após alinhar escopo.
-4. Valide a entrega via review + checks automatizados.
-5. Aceite/integre quando os requisitos forem atendidos.
-6. Libere a recompensa conforme a aceitação.
+1. Entre e selecione **Importação → Importar tarefa** na barra superior.
+2. Cole a URL de uma issue do GitHub ou do Bitbucket, por exemplo `https://github.com/dono/repo/issues/123`.
+3. O Gitpay busca o título, a descrição, o status e os responsáveis no provedor e cria a página da issue.
 
-## Definir expectativas de contribuição desde o início
-- Forneça templates de issue com campos obrigatórios.
-- Documente padrões de código e regras de review.
-- Defina quando uma tarefa precisa de testes, documentação ou comprovação visual.
-- Esclareça quem pode aprovar e liberar pagamentos.
+Cada issue só pode ser importada uma vez. Se ela já estiver no Gitpay, você verá o aviso "Esta tarefa já foi importada".
 
-## Manter a validação objetiva
-- Vincule o feedback a critérios de aceitação específicos.
-- Diferencie problemas bloqueantes de melhorias opcionais.
-- Solicite atualizações concretas em vez de pedidos genéricos de retrabalho.
-- Confirme a aceitação final por escrito antes da liberação.
+Ao importar uma issue, o Gitpay também cria as páginas da organização e do projeto, e lista as linguagens do repositório.
 
-## Checklist de onboarding do maintainer
-1. Revise e atualize os templates de issue/PR.
-2. Certifique-se de que os checks de CI refletem as expectativas reais de qualidade.
-3. Publique uma "definição de concluído" concisa.
-4. Documente as condições de liberação de pagamento.
-5. Compartilhe o tempo de resposta esperado para reviews com os contribuidores.
+### Repositórios privados
+
+Para importar uma issue de um repositório privado do GitHub, autorize o Gitpay a ler seus repositórios privados quando for solicitado. Issues privadas usam o plano **Privado** (taxa de 18%).
+
+## Mantenha as issues sincronizadas
+
+O Gitpay lê o status de cada issue no GitHub quando a issue é aberta no Gitpay: se a issue foi fechada no GitHub, o Gitpay também a marca como fechada. O Gitpay verifica esse status antes de pagar uma recompensa, então feche as issues no GitHub como você já faz.
+
+## Visibilidade da issue
+
+| Visibilidade | Significado |
+|---|---|
+| **Pública** | Aparece em Explorar e na busca. |
+| **Não listada** | Fica fora de Explorar e da busca; qualquer pessoa com o link ainda consegue abrir. |
+
+## Encontre suas issues
+
+**Tarefas → Meus incidentes** tem abas para **Minhas issues importadas**, as issues em que você está trabalhando, **Patrocínio** e as issues que você segue.
+
+## Organizações e projetos
+
+Explorar lista issues, projetos e organizações. Cada organização e cada projeto tem uma página pública com suas issues no Gitpay.
 
 ## Próximos passos
-- Leia [Validando entregas](/docs/br/validating-work)
-- Leia [Liberando recompensas](/docs/br/releasing-bounties)
+
+- [Avalie candidaturas e ofertas](/docs/br/validating-work/)
+- [Financie uma issue](/docs/br/sponsor/)
+- [Como as recompensas são pagas](/docs/br/releasing-bounties/)
