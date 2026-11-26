@@ -1,10 +1,9 @@
 ---
 layout: doc
 lang: en
-role: contributor
-title: Claims — claiming tasks and tracking transfers
-subtitle: How to claim a bounty task, and where to see the money you've received
-tags: claims, bounty, assignment, transfers, payment requests
+title: Claims
+subtitle: The record of every bounty and payment request you've been paid for
+tags: claims, contributor, service-provider, payouts
 ---
 
 #### Table of contents
@@ -12,66 +11,35 @@ tags: claims, bounty, assignment, transfers, payment requests
 * TOC
 {:toc}
 
-"Claim" means two different things on Gitpay, and this page covers both — because one leads directly
-into the other: claiming a task is how you start earning a bounty, and the Claims page is where that
-bounty shows up as money once it's paid.
+A **claim** is created when money is owed to you on Gitpay:
 
-## Where this fits in the payment flow
+- **for bounties**: when your solution is accepted and the bounty is transferred to you;
+- **for payment requests**: when a customer pays one of your payment links.
 
-```
-claimed  →  funded  →  transfer credited  →  payout requested  →  money in your account
-(this page)  (issue/PR      (also this page,                    ↘
-             paid)          the money side)                dispute or refund
-                                                     (see Disputes and refunds)
-```
+Claims are listed in **Receive Payments → My Claims**, in two tabs: **Claims for bounties** and **Claims for payment requests**. Open a claim to see its value, transfer method, status and the issue or payment request it came from.
 
-Claiming a task is the very start of the chain: it's what turns "an open bounty anyone could work on"
-into "work assigned to you." Once that work is delivered and paid, the same word describes the other
-end of the chain too — the Claims page is where you "claim," in the everyday sense, the money you've
-earned, before requesting a [payout](/docs/en/payouts/) to actually withdraw it.
+## From claim to bank account
 
-## Claiming a task
+1. **Claim**: the money is assigned to you.
+2. **Transfer**: the money moves to your payout account (your Whop balance).
+3. **Payout**: you withdraw it to your bank, card or wallet. See [Payouts](/docs/en/payouts/).
 
-To claim a task, request to be assigned to it from the task or issue page. This sends a request to the
-task owner (or verifies you're already the assigned GitHub user), so Gitpay can confirm you're the
-right person before the bounty is reserved for you.
+For payment requests created with direct charge, steps 1 and 2 happen at the moment of payment: the money is charged directly on your Whop account.
 
-## Waiting for approval
+## Claim statuses for payment requests
 
-After you request a claim, Gitpay checks that you're actually assigned to the underlying GitHub issue
-before confirming it. You'll get an email once your claim is approved.
+| Status | Meaning |
+|---|---|
+| **Pending** | The customer paid, but the funds are still settling. Gitpay retries the transfer every night until they're available (usually 1–4 days for card payments). This applies to older payment requests. |
+| **Created** | The transfer to your Whop account was made. |
+| **Reversed** | The payment was refunded after the transfer. |
 
-## What happens if nobody claims a task
+## Why don't I have claims?
 
-If a funded task sits unclaimed for a while, Gitpay periodically checks in and gives contributors a
-chance to claim it. If it stays unclaimed for too long despite those reminders, the task is released
-and the sponsor who funded it is refunded — so funded bounties don't sit in limbo forever.
+- **No payout account**: the Claims page asks you to activate your account. See [Set up payouts](/docs/en/whop-payout-setup/).
+- **Bounty solution not accepted yet**: check the solution's checks on the issue page. See [Submit a solution](/docs/en/pull-requests/).
 
-## The Claims page
+## Next steps
 
-Once work is claimed and paid for, "claiming" takes on its other meaning: the **Claims** page in your
-profile is where you see the money you've received. It has two tabs, matching the two ways Gitpay pays
-contributors.
-
-## Claims for bounties
-
-Transfers you've received for bounty tasks you completed — the direct result of claiming and finishing
-a task, as described above.
-
-## Claims for payment requests
-
-Transfers from payment requests you issued and that have since been paid.
-
-## Activating your account to receive claims
-
-If your Claims page is empty and asks you to activate your account, that's a one-time step: Gitpay
-needs an active payout method on file before it can credit transfers to you. Head to your payout
-settings to connect one.
-
-## From claim to payout
-
-A transfer showing on your Claims page is money that's yours, but it has not reached your Whop payout destination yet —
-it's sitting in your Gitpay balance. To actually receive it, request a
-[payout](/docs/en/payouts/). If a dispute or refund happens on the original payment afterward, it can
-be debited back out of your balance — see [Disputes and refunds](/docs/en/disputes-and-refunds/) for
-how that works.
+- [Payouts](/docs/en/payouts/)
+- [How payments and fees work](/docs/en/payments/)

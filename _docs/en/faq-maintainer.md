@@ -2,9 +2,9 @@
 layout: doc
 lang: en
 role: maintainer
-title: General questions for maintainers
-subtitle: Common questions from maintainers
-tags: maintainer, faq
+title: Maintainer questions
+subtitle: Common questions about importing issues, bounties and contributors
+tags: faq, maintainer
 ---
 
 #### Table of contents
@@ -12,34 +12,34 @@ tags: maintainer, faq
 * TOC
 {:toc}
 
-## How do I reduce back-and-forth on PRs?
-Use a clear issue template with acceptance criteria, screenshots, and exact test steps.
+### Do I have to install anything on my repository?
 
-Also:
-- Ask contributors to open draft PRs early.
-- Keep one source of truth for requirements (the issue).
-- Separate must-fix feedback from nice-to-have suggestions.
+No. You import issues by URL. Gitpay reads public issues and pull requests through the GitHub API. For private repositories, you authorize Gitpay to read them.
 
-## Do I need CI?
-It’s strongly recommended. Even a basic test/lint pipeline makes reviews faster and acceptance criteria clearer.
+### Do I approve payments?
 
-At minimum, automate checks that protect your main branch (lint, tests, and build when relevant).
+Not in Gitpay. Merging the pull request and closing the issue is the approval: the contributor then submits the solution and is paid automatically. Review the pull request carefully before merging. See [How bounties are paid out](/docs/en/releasing-bounties/).
 
-## What if the contribution is good but not quite complete?
-Leave actionable feedback and (if possible) point to specific failing checks or missing behaviors.
+### Someone else imported an issue from my project. Is that allowed?
 
-If most of the scope is done, confirm whether the remaining work should be:
-1. Completed in the same task before payment, or
-2. Split into a follow-up issue with separate funding.
+Yes. Anyone can import a public issue and fund it. It still only pays out when you merge a pull request that solves it.
 
-## Should I merge first or release payment first?
-Prefer following a documented repository rule (for example, merge first, then release) and apply it consistently.
+### Can I fund issues in my own project?
 
-## How can I keep payout decisions fair?
-Use the same acceptance checklist for every contributor, keep review notes public in the PR/issue, and base release decisions on agreed criteria rather than informal expectations.
+Yes. You're then both maintainer and sponsor. See [Fund an issue](/docs/en/sponsor/).
 
-## Can we pay for a contribution that began without a bounty?
-Discuss it with the contributor and record the agreed amount, recipient, acceptance, and payment route. A normal project contribution does not automatically create a funded task. See [What is Gitpay?](/docs/en/getting-started/) and [Funding issues](/docs/en/funding-issues/).
+### What does Gitpay charge?
 
-## Who should approve payment in a team?
-Choose an accountable approval owner before inviting work. Reviewers can collaborate on the Pull Request, while one clear decision on acceptance and funding keeps the payment step predictable.
+8% on top of the bounty for open source issues (nothing for bounties of $5,000 or more), 18% for private issues. The contributor receives 92% of the bounty. See [How payments and fees work](/docs/en/payments/).
+
+### What if nobody solves the issue?
+
+Contact [contact@gitpay.me](mailto:contact@gitpay.me) for a refund, or move the bounty to another issue with **Transfer Bounty** in **Payments**. Pledges to pay later are never charged if there's no solution.
+
+### Can I pay a contributor who worked without a bounty?
+
+Yes. Fund the issue, or ask them to send you a payment request for the work.
+
+### How do I attract contributors?
+
+Write a clear issue, fund it in advance rather than only pledging, and use **Post on GitHub** to link the Gitpay page from the GitHub issue.

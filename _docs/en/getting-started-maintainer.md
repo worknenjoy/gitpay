@@ -2,9 +2,9 @@
 layout: doc
 lang: en
 role: maintainer
-title: Getting started as a maintainer
-subtitle: Set up your repository workflow to validate work and release bounties
-tags: maintainer, getting-started
+title: Import issues and projects
+subtitle: Bring issues from GitHub or Bitbucket into Gitpay so they can be funded and solved
+tags: maintainer, issues, import, projects
 ---
 
 #### Table of contents
@@ -12,46 +12,43 @@ tags: maintainer, getting-started
 * TOC
 {:toc}
 
-## What this guide covers
-This page explains how maintainers can accept contributions with clear validation steps, and how that ties to payments.
+Anyone can import a public issue into Gitpay. Maintainers usually import the issues they want help with, fund them or invite sponsors, and review the people who apply.
 
-The goal is to reduce ambiguity in reviews, speed up acceptance, and make payment release decisions consistent.
+## Import an issue
 
-## Recommended workflow
-1. Create a well-scoped issue (requirements + acceptance criteria).
-2. Ensure the repo has a clear PR process (branching, review, CI).
-3. Assign a contributor once you agree on scope.
-4. Validate work through review + automated checks.
-5. Accept/merge when requirements are met.
-6. Release the bounty/payment based on acceptance.
+1. Sign in and select **Import → Import issue** in the top bar.
+2. Paste the URL of a GitHub or Bitbucket issue, for example `https://github.com/owner/repo/issues/123`.
+3. Gitpay fetches the title, description, status and assignees from the provider, and creates the issue page.
 
-## Set contribution expectations early
-- Provide issue templates with required fields.
-- Document coding standards and review rules.
-- Define when a task needs tests, docs, or visual proof.
-- Clarify who can approve and release payments.
+Each issue can only be imported once. If it's already on Gitpay, you'll see "This issue was imported already".
 
-## Keep validation objective
-- Tie feedback to specific acceptance criteria.
-- Distinguish blocking issues from optional improvements.
-- Request concrete updates instead of broad rework requests.
-- Confirm final acceptance in writing before release.
+When you import an issue, Gitpay also creates its organization and project pages, and lists the repository's languages.
 
-## Maintainer onboarding checklist
-1. Review and update issue/PR templates.
-2. Ensure CI checks reflect actual quality expectations.
-3. Publish a concise “definition of done.”
-4. Document payment release conditions.
-5. Share expected review response time with contributors.
+### Private repositories
+
+To import an issue from a private GitHub repository, authorize Gitpay to read your private repositories when prompted. Private issues use the **Private** plan (18% fee).
+
+## Keep issues in sync
+
+Gitpay reads each issue's status from GitHub when the issue is opened on Gitpay: when an issue is closed on GitHub, Gitpay marks it closed too. Gitpay checks this status before paying a bounty, so close issues on GitHub as you normally would.
+
+## Issue visibility
+
+| Visibility | Meaning |
+|---|---|
+| **Public** | Listed in Explore and search. |
+| **Not listed** | Hidden from Explore and search; anyone with the link can still open it. |
+
+## Find your issues
+
+**Issues → My issues** has tabs for **My imported issues**, **Issues I'm working on**, **Sponsoring** and **Following**.
+
+## Organizations and projects
+
+Explore lists issues, projects and organizations. Each organization and project has a public page with its issues on Gitpay.
 
 ## Next steps
-- Read [Validating work](/docs/en/validating-work)
-- Read [Releasing bounties](/docs/en/releasing-bounties)
 
-## Decide what your project will fund
-Start with a small issue that can be accepted against observable results. Document who will answer questions, review the Pull Request, and approve payment. A contribution may also arise before an issue is funded; discuss whether the project will pay for that work and record the agreed amount.
-
-## Example: one issue from funding to payment
-A maintainer defines a bug fix and its tests, funds the task, confirms a contributor's assignment, reviews the linked Pull Request, and records acceptance before releasing payment. The contributor then follows [Claims](/docs/en/claims/) and [Payouts](/docs/en/payouts/).
-
-For teams, agree who owns the GitHub issue and who can authorize the payment. Read [Funding issues](/docs/en/funding-issues/) and [Releasing bounties](/docs/en/releasing-bounties/) before publishing a task.
+- [Review applications and offers](/docs/en/validating-work/)
+- [Fund an issue](/docs/en/sponsor/)
+- [How bounties are paid out](/docs/en/releasing-bounties/)

@@ -3,8 +3,8 @@ layout: doc
 lang: en
 role: sponsor
 title: Fund an issue
-subtitle: Define, fund, review, and pay for contributions to your project
-tags:
+subtitle: Add a bounty, choose a plan and a payment method, and see what contributors see
+tags: sponsor, bounties, funding
 ---
 
 #### Table of contents
@@ -12,29 +12,54 @@ tags:
 * TOC
 {:toc}
 
-A project owner or sponsor can fund a GitHub issue so a contributor has a defined opportunity to deliver work and be paid. The issue remains the source of truth for requirements and review.
+## Add a bounty
 
-## Start with a useful issue
-Describe the current problem, expected result, scope boundaries, and how you will decide whether the work is accepted. Include reproduction steps or examples when useful. See [Funding issues](/docs/en/funding-issues/) for a template.
+1. Open the issue on Gitpay and select **Add bounty** (or **Add to bounty** if it already has one).
+2. Enter the amount in USD.
+3. Choose when to pay:
+   - **Pay now**: charged now. Gitpay holds the money and releases it when a solution is merged.
+   - **Pay later**: nothing is charged now. You pay when a solution is accepted.
+4. If you pay now, choose how: **Card**, **Invoice** or **Wallet**. See [Payment options for sponsors](/docs/en/funding-issues/).
+5. Check **Total with fee** and confirm.
 
-## Add funding and choose a contributor
-1. Select an existing GitHub issue and add it as a task on Gitpay.
-2. Set the amount and review the payment details before funding.
-3. Respond to contributor questions and confirm who is assigned to the underlying issue.
-4. Agree on the delivery route, usually a Pull Request, and any review timing.
+## Plans and fees
 
-Funding makes a task visible and payable, but acceptance still depends on the project reviewing the delivered result. If a contributor began contributing before a bounty existed, discuss scope and payment expectations explicitly. Do not imply an unapproved contribution is automatically payable.
+| Plan | For | Fee added |
+|---|---|---|
+| **Open source** | Public projects | 8% |
+| **Open source**, bounty of $5,000 or more | Public projects | No fee |
+| **Private** | Private repositories | 18% |
 
-## Review and release
-Review the Pull Request against the agreed criteria, request specific changes where needed, then record acceptance. Confirm the recipient and amount before releasing the payment through the task flow. [Validating work](/docs/en/validating-work/) and [Releasing bounties](/docs/en/releasing-bounties/) give detailed checklists.
+The contributor who solves the issue receives 92% of the bounty. See [How payments and fees work](/docs/en/payments/).
 
-## If plans change
-If scope expands, agree on the extra work and funding before it is done. If the contributor cannot continue, communicate in the issue and follow the task's assignment and refund options. Keep payment decisions tied to recorded acceptance.
+## What contributors see
 
-## Teams and organizations
-Name the person who can approve the contribution and the person who controls funding. A shared project can have many reviewers, but contributors need one clear decision on acceptance and payment.
+The issue's bounty breakdown lists each sponsor's contribution and its status:
+
+| Status | Meaning |
+|---|---|
+| **Paid in advance** (Paid · held) | Charged and held by Gitpay. |
+| **Invoice pending** | Invoice sent, not paid yet. Switches to paid when the payment arrives. |
+| **To pay later** | Pledged. Charged when a solution is accepted. |
+
+Sponsors can appear as **Anonymous**.
+
+Money that's already paid tells contributors the work will be paid for sure. Pledges are shown as estimated.
+
+## Set a deadline
+
+The issue owner can set a deadline (in one week, 15 days, 20 days, a month, or a specific date). It's shown on the issue as the date a solution is needed by.
+
+## Invite people
+
+From the issue, use **Invite sponsor** to ask someone to add to the bounty, **Invite contributor** to ask a developer to work on it, or **Post on GitHub** to comment on the GitHub issue with a link to the Gitpay page.
+
+## Fund work outside GitHub issues
+
+If you want to pay a specific person for work they delivered, they can send you a payment request instead. See [Request payment from a customer](/docs/en/service-provider/).
 
 ## Next steps
-- [Getting started as a maintainer](/docs/en/getting-started-maintainer/)
-- [Funding issues](/docs/en/funding-issues/)
-- [How payments work](/docs/en/payments/)
+
+- [Payment options for sponsors](/docs/en/funding-issues/)
+- [How bounties are paid out](/docs/en/releasing-bounties/)
+- [Refunds and disputes](/docs/en/disputes-and-refunds/)

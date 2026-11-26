@@ -2,9 +2,9 @@
 layout: doc
 lang: en
 role: maintainer
-title: Validating work
-subtitle: How to review, test, and accept deliverables consistently
-tags: maintainer, validation, review
+title: Review applications and offers
+subtitle: Choose who works on an issue, agree on dates and bounties, and remove an assignment
+tags: maintainer, offers, assignment, review
 ---
 
 #### Table of contents
@@ -12,40 +12,37 @@ tags: maintainer, validation, review
 * TOC
 {:toc}
 
-## Define “done” up front
-In the issue description, include:
-- Expected behavior and edge cases
-- How to test (manual steps and/or automated tests)
-- Any UX requirements (screenshots, copy, responsiveness)
-- Non-functional constraints (performance, security, accessibility) when applicable
-- Rollout or migration notes when changes affect existing users
+Contributors can apply to work on your issues and make offers. You don't have to assign anyone: a bounty is paid to the author of the merged pull request that solves the issue. Assigning is how you coordinate who works on what.
 
-## Use a repeatable review checklist
-- Scope: matches what was agreed
-- Quality: readable code, consistent patterns
-- Safety: no obvious security or data handling issues
-- Tests: added/updated where appropriate
-- Docs: updated if behavior changed
+## Applications
 
-## Validate evidence, not assumptions
-- Reproduce key flows locally or in the target environment.
-- Confirm screenshots/videos represent current code, not outdated revisions.
-- Check that test instructions in the PR are runnable by another reviewer.
-- Verify linked issues and PR descriptions are aligned with delivered behavior.
+When a contributor applies, you see them in the issue's list of interested users, with their message and suggested delivery date. You can:
 
-## Handle revision rounds efficiently
-1. Group feedback by priority (blocking vs non-blocking).
-2. Reference exact files/lines or failing checks.
-3. Confirm when each blocking item is resolved.
-4. Re-run critical validation steps after updates.
+- **assign** the issue to them;
+- **suggest another date** if theirs doesn't work for you;
+- **send a message** to ask questions first.
 
-## Acceptance
-Accept/merge when the agreed requirements are met and your validation steps pass.
+The assigned contributor sees the issue in **My issues → Issues I'm working on**.
 
-If acceptance is blocked, provide a short list of remaining required changes so contributors can close the gap quickly.
+To take an assignment back, remove the assigned user from the issue.
 
-## Example decision record
-After reviewing a bug fix, the maintainer can comment: “The regression test passes, the reported case is fixed, and the documented manual check succeeded. Accepted for the agreed issue scope.” If a check fails, name it and explain the change needed before acceptance.
+## Offers
 
-## Keep payment aligned with review
-Acceptance is the decision that the delivered work meets the agreed scope. Before [releasing a bounty](/docs/en/releasing-bounties/), confirm the contributor, amount, and task. If new work is requested, agree on scope and funding first. A team should identify who makes the final acceptance decision.
+An offer is a contributor proposing a bounty value and a deadline, for example on an issue with no bounty yet. Offers are listed under **Offers for this issue**.
+
+If you accept an offer, Gitpay creates an order from it, with the 8% open source fee added, for you to pay. The contributor is paid when their solution is merged, like any bounty.
+
+## Reviewing the work itself
+
+Code review happens on GitHub, as usual. Gitpay doesn't ask you to approve the payment: when you merge the pull request and the issue is closed, the contributor can submit the solution and Gitpay pays them automatically. **Merging is the approval.**
+
+So before merging a pull request on a funded issue, make sure it really solves the issue.
+
+## Solutions with no bounty
+
+If an issue has no bounty, a contributor can still send a solution and request payment from you. You receive the request with the solution, and can fund the issue to pay them.
+
+## Next steps
+
+- [How bounties are paid out](/docs/en/releasing-bounties/)
+- [Fund an issue](/docs/en/sponsor/)

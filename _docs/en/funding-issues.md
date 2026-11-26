@@ -2,9 +2,9 @@
 layout: doc
 lang: en
 role: sponsor
-title: Funding issues
-subtitle: How to set scope and fund work effectively
-tags: sponsor, funding
+title: Payment options for sponsors
+subtitle: Card, invoice, wallet and pay later, and how each one shows on the issue
+tags: sponsor, bounties, invoices, wallets
 redirect_from:
   - /docs/en/usage/
 ---
@@ -14,43 +14,48 @@ redirect_from:
 * TOC
 {:toc}
 
-To fund a task, paste the link to an existing GitHub issue and set a bounty. The issue itself is
-still where the work gets defined and discussed — Gitpay doesn't replace that, it adds a bounty and
-a payment flow on top of it.
+## Card
 
-## Write fundable issues
-Good funded issues are:
-- Small enough to deliver
-- Unambiguous and testable
-- Clear about what is in/out of scope
+Charged now through a secure Whop checkout. The bounty is funded right away.
 
-## A template for defining the task
+## Invoice
 
-Issues that are easy to fund — and easy for a contributor to pick up without back-and-forth —
-usually answer the same handful of questions:
+For companies that pay by bank transfer. Gitpay emails you an invoice for the bounty plus the fee, due in 30 days. The issue shows **Invoice pending** until the payment arrives, then switches to funded.
 
-- **Why this task.** What's the motivation? What happens once it's done?
-- **Level.** Is this beginner, intermediate, or advanced? This helps the right contributor claim it.
-- **Current behavior.** What's happening now, and how can someone reproduce it?
-- **Expected behavior.** What should happen instead once the change ships?
-- **Useful links.** Related issues, discussions, or references that add context.
+Find your invoices in **Payments → Payments**, where you can use **Pay Invoice**.
 
-## Prefer acceptance criteria over assumptions
-Add explicit criteria (bullet list), plus example inputs/outputs when possible.
+## Wallet
 
-## Track progress in the repo
-Ask contributors to submit work via Pull Request so you can review changes and see automated checks.
+A wallet holds funds you add in advance, so you can fund several issues without paying each one separately.
 
-## Where to go next
-- Read [Fund an Issue](/docs/en/sponsor/) for the full sponsor workflow.
-- Once a contributor delivers, see [How our payment works](/docs/en/payments/) and
-  [Releasing bounties](/docs/en/releasing-bounties/).
+1. Go to **Payments → Wallets** and select **Add funds**.
+2. Pay the invoice Gitpay sends you.
+3. When you fund an issue, choose **Wallet**.
 
-## Example acceptance criteria
-For a login bug, useful criteria might be: reproduce the failure with a test, make login succeed for the affected case, preserve existing valid login behavior, and document how the reviewer can verify it. The issue should state any browser or environment constraints.
+If a bounty paid from your wallet is refunded, the money goes back to your wallet.
 
-## If the work already exists
-A project may want to pay for a contribution that began through normal collaboration. Discuss the value, amount, and payment route with the contributor. Do not add a bounty and assume an earlier contribution is automatically assigned or payable. See [What is Gitpay?](/docs/en/getting-started/) for this broader vision.
+## Pay later
 
-## Ownership and changes
-Name the reviewer and funding owner. If the scope changes, update the issue and confirm the payment expectation before asking for more work. Continue with [Validating work](/docs/en/validating-work/) and [Releasing bounties](/docs/en/releasing-bounties/).
+A pledge: nothing is charged now. The pledge shows on the issue as **To pay later**. When a solution is accepted, you receive a request to pay, and choose card, invoice or wallet at that point.
+
+Pledges are useful when you're not sure the issue will be solved. Contributors can see the difference between money that's already paid and money that's pledged, so a paid bounty attracts contributors more reliably.
+
+## Manage your payments
+
+**Payments → Payments** lists every bounty payment with its status. From there you can:
+
+- **View details** of a payment;
+- **Download Invoice** or **Pay Invoice**;
+- **Transfer Bounty**: move your payment to another issue.
+
+Payment statuses: **Open**, **Payment completed successfully**, **Payment failed**, **Payment canceled**, **Payment expired**, **Payment refunded**.
+
+## PayPal
+
+PayPal is being discontinued on Gitpay and isn't offered for new bounties. Older PayPal payments still show in your payment list.
+
+## Next steps
+
+- [Fund an issue](/docs/en/sponsor/)
+- [How bounties are paid out](/docs/en/releasing-bounties/)
+- [Refunds and disputes](/docs/en/disputes-and-refunds/)

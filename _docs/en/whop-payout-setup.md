@@ -1,10 +1,9 @@
 ---
 layout: doc
 lang: en
-role: contributor
-title: Set up a payout method
-subtitle: Verify your account and choose where eligible earnings are sent
-tags: whop, payout, payment, kyc
+title: Set up payouts
+subtitle: Connect a Whop payout account so you can receive payments and bounties
+tags: payouts, whop, account, verification
 ---
 
 #### Table of contents
@@ -12,34 +11,58 @@ tags: whop, payout, payment, kyc
 * TOC
 {:toc}
 
-Identity, payout method, and schedule are set on Whop. Gitpay sends eligible earnings through that connected account. Before setup, check [Whop's supported payout countries](https://docs.whop.com/manage-your-business/manage-payouts/set-up-payouts#supported-countries). Payout eligibility depends on your country and completing Whop's verification. Available destinations vary by country and may include a bank account, PayPal, or a crypto wallet. See [Whop's payout methods](https://docs.whop.com/manage-your-business/manage-payouts/payout-methods); your account shows the options actually available to you.
+To receive money on Gitpay, from payment requests or bounties, you need an active payout account. Gitpay uses Whop for this. Whop verifies your identity, handles tax forms, and sends money to your bank account, debit card or USDC wallet. Gitpay never stores your bank details.
 
-## Check your account status
-Go to **Profile → Payout settings → Whop**. Your **Identity & business** tab shows your connected Whop company:
+## Set up your Whop payout account
 
-![Identity & business tab on Whop payout settings](/assets/img/guides/whop-payout-identity.png)
+1. Open **Payout settings** and choose the **Whop** tab.
+2. **Choose your country** and continue. Your country sets your payout currency, and Gitpay creates a Whop account for you under the Gitpay platform, using your name and email.
+   - If a Whop account already exists for your verified email, Gitpay asks whether to link it instead.
+3. Select **Set up on Whop**. You're taken to Whop to:
+   - verify your identity (legal name and documents);
+   - add a payout method: bank transfer, debit card or USDC.
+4. When you finish, Whop sends you back to Gitpay with "Account verification submitted".
 
-## Check your payout method
-Open the **Payout method** tab. If you see an eligible method configured there, check that your identity verification and account status are complete:
+Whop supports payouts to more than 100 countries in more than 30 currencies.
 
-![Payout method tab showing a configured payout method](/assets/img/guides/whop-payout-method.png)
+## Account status
 
-Otherwise, Gitpay will ask you to register one before payouts can go through:
+The **Payout settings** page shows your status:
 
-![Pending state asking to add a payout method on Whop](/assets/img/guides/whop-payout-pending.png)
+| Status | Meaning | What to do |
+|---|---|---|
+| **PAYOUTS ACTIVE** | Verified and a payout method is on file. You can create payment requests and receive bounties. | Nothing. |
+| **VERIFICATION REQUIRED** | Whop still needs information from you. | Select **Complete verification** and finish the steps on Whop. |
+| **PENDING** | You submitted everything and Whop is reviewing it. | Wait, or select **Check status on Whop**. |
+| **REJECTED** | Whop flagged an issue with the account. | Select **Resolve on Whop**. |
 
-## Add a payout method on Whop
-Click **"Add payout method on Whop"**. This opens Whop's hosted account panel. From the menu in the top right, choose **"Automatic withdrawals"**:
+Your account counts as active only when **both** are true: Whop has approved it for payouts, and it has at least one payout method. Verification alone isn't enough.
 
-![Whop hosted panel with the Automatic withdrawals menu and withdrawal history](/assets/img/guides/whop-payout-withdrawal.png)
+If your verification link expires, open **Payout settings** again and continue. What you already submitted is kept.
 
-Follow the steps Whop shows you and choose from the withdrawal methods available for your country. PayPal and crypto, where offered, are destinations managed in Whop rather than separate Gitpay payout providers.
+## What you can see in Gitpay
 
-## Come back to Gitpay
-Once you're done on Whop, click **"Back to Gitpay"**. Your Whop payout account should now show as active, with your payout method listed.
+- **Account holder**: your connected Whop company, its ID, country and currency, and its balances:
+  - **Available**: can be paid out now;
+  - **Pending**: still settling (card payments usually take 1–4 days);
+  - **Reserve**: held by Whop.
+- **Bank account**: a link to manage your payout method on Whop. Bank details are only stored on Whop.
+- **Disputes / refunds**: chargebacks and refunds Whop reports for your account.
 
-## Get paid
-Create a payment request, or wait for a bounty payout, as you normally would. Funds are sent to your connected Whop account. Once a withdrawal completes, you'll see it listed with its amount, status, and destination — like the completed payout shown above.
+To change your payout method, schedule or identity details, select **Manage on Whop**.
 
-## Need help?
-See [How our payment works](/docs/en/payments/) for fee and timing details.
+## Disconnect
+
+**Disconnect Whop account** removes the link between Gitpay and your Whop company. Whop keeps your bank and identity data. You can reconnect later by choosing a country again.
+
+## Stripe and PayPal (older accounts)
+
+Before Whop, Gitpay paid out through Stripe Connect and PayPal.
+
+- **Stripe:** you can no longer create a new Stripe payout account. Existing Stripe accounts keep paying out on their schedule until they're moved to Whop; support will contact you about the move.
+- **PayPal:** being discontinued, and can no longer be added. Use Whop, which covers the same countries.
+
+## Next steps
+
+- [Payouts](/docs/en/payouts/)
+- [How payments and fees work](/docs/en/payments/)
