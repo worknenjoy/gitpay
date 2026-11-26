@@ -2,9 +2,9 @@
 layout: doc
 lang: en
 role: maintainer
-title: Releasing bounties
-subtitle: When and how to release payment after acceptance
-tags: maintainer, payments
+title: How bounties are paid out
+subtitle: What triggers the payment, who gets it, and what happens when nobody claims it
+tags: maintainer, sponsor, bounties, payouts
 ---
 
 #### Table of contents
@@ -12,36 +12,50 @@ tags: maintainer, payments
 * TOC
 {:toc}
 
-## When to release
-Release the bounty/payment after the work is accepted according to your repository workflow (typically after merge, or after explicit approval).
+Bounties are paid automatically. Nobody presses a "release" button: the payment is triggered by the contributor submitting a solution that passes Gitpay's checks.
 
-Use one clear rule per repository (for example: "release after merge to default branch") so contributors know exactly when payout is triggered.
+## What triggers the payment
 
-## What to confirm before releasing
-- The PR matches the agreed scope
-- Validation steps passed (CI + any manual verification)
-- The deliverable is usable in the target environment
-- Any blocker feedback has been resolved and acknowledged
-- Required documentation or migration notes are present
+All of these must be true:
 
-## Suggested release flow
-1. Post an acceptance comment summarizing what was validated.
-2. Confirm payout amount and recipient.
-3. Trigger release using the agreed project workflow.
-4. Share release confirmation in the issue/PR thread.
+1. The contributor is signed in to Gitpay with GitHub.
+2. They authored the pull request.
+3. The pull request is merged into the issue's repository.
+4. The pull request references the issue.
+5. The issue is closed on GitHub.
 
-## If scope changed during delivery
-- Compare final delivery with the latest approved scope.
-- If extra work was added, confirm whether it is included in the current bounty.
-- If some scope moved out, clarify what remains for a follow-up task.
+The contributor submits the pull request URL as a solution. If all checks pass, Gitpay assigns the issue to them (if it wasn't already) and transfers the bounty to their payout account.
 
-## Communicate clearly
-If you cannot accept the work, explain what is missing and what would be required to accept it.
+**For maintainers, merging is the approval.** Review the pull request before merging it.
 
-Keep messages specific and actionable so contributors can resolve issues without guesswork.
+## What the contributor receives
 
-## Example handoff
-For an issue with a funded bug fix, record that the linked Pull Request meets the listed acceptance criteria. Confirm the assigned contributor and funded amount in Gitpay, then use the task's release action and tell the contributor where to track the transfer in [Claims](/docs/en/claims/). The transfer becoming available for [payout](/docs/en/payouts/) is a later step.
+92% of the paid bounty. Only paid amounts are transferred. For pledges marked **To pay later**, the sponsor receives a request to pay when the solution is accepted.
 
-## If the task was not funded in advance
-A project may decide to pay for an accepted contribution that began through ordinary collaboration. Agree on the payment route and amount with the contributor; do not describe this as an automatic bounty release. See [What is Gitpay?](/docs/en/getting-started/) for the distinction.
+If the contributor's payout account isn't active, the transfer fails and they're asked to finish setting it up and send the solution again.
+
+## Issue states
+
+| State | When |
+|---|---|
+| **Created** | Imported, no bounty. |
+| **Funded** | A sponsor paid a bounty. |
+| **Claimed** | A solution was accepted and the transfer started. |
+| **Completed** | The bounty was transferred. |
+| **Closed** | Closed on Gitpay, for example refunded. |
+
+## When a solution is merged but not claimed
+
+If a merged pull request references a funded issue but its author never submits it:
+
+1. On the 26th of each month, Gitpay emails the pull request author to remind them to claim the bounty.
+2. After two reminders, on the next run Gitpay refunds the bounty to the sponsors.
+
+## When nobody solves the issue
+
+Contact [contact@gitpay.me](mailto:contact@gitpay.me) to get the bounty refunded, or use **Transfer Bounty** in **Payments** to move it to another issue. See [Refunds and disputes](/docs/en/disputes-and-refunds/).
+
+## Next steps
+
+- [Refunds and disputes](/docs/en/disputes-and-refunds/)
+- [Submit a solution](/docs/en/pull-requests/)

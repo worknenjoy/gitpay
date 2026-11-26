@@ -2,9 +2,9 @@
 layout: doc
 lang: en
 role: sponsor
-title: Getting started as a sponsor
-subtitle: Sponsor issues so contributors can deliver them
-tags: sponsor, getting-started
+title: Get started as a sponsor
+subtitle: Put money on an issue so contributors know the work will be paid
+tags: sponsor, bounties, getting-started
 ---
 
 #### Table of contents
@@ -12,23 +12,31 @@ tags: sponsor, getting-started
 * TOC
 {:toc}
 
-## What sponsoring means
-As a sponsor, you fund a task so a contributor has a clear incentive to deliver it.
+A sponsor funds issues. You can fund an issue in your own project, or any open source issue you want solved. You only pay for a solution that gets merged: if nobody solves the issue, a bounty you paid in advance can be refunded, and a pledge to pay later is never charged.
 
-## A simple sponsor flow
-1. Identify a task with clear business value.
-2. Ensure the issue is well-defined and testable.
-3. Fund the task.
-4. Follow progress via the Pull Request.
-5. Once accepted, payment is released.
+## 1. Create an account
+
+Sign up at [gitpay.me](https://gitpay.me) with email, GitHub or Bitbucket, and add the **Funding** role in **Profile → User account → Roles**.
+
+You don't need a payout account to fund issues. You only need one to receive money.
+
+## 2. Find or import the issue
+
+- If the issue is already on Gitpay, find it in **Issues → Explore issues**.
+- If not, select **Import → Import issue** in the top bar and paste the GitHub or Bitbucket issue URL. See [Import issues and projects](/docs/en/getting-started-maintainer/).
+
+## 3. Add a bounty
+
+On the issue, select **Add bounty**, enter the amount and choose how to pay: card, invoice or wallet, now or later. The fee is added on top and shown as **Total with fee** before you confirm. See [Fund an issue](/docs/en/sponsor/).
+
+## 4. Follow the work
+
+Your funded issues are under **Issues → My issues → Sponsoring**. Your payments, invoices and their status are under **Payments → Payments**.
+
+When a contributor's pull request is merged and the issue is closed, the contributor submits the solution and Gitpay pays them. You don't need to approve the transfer.
 
 ## Next steps
-- Read [Funding issues](/docs/en/funding-issues)
 
-## Before you fund
-Confirm that the GitHub issue describes the expected result, how it will be tested, and who will decide whether it is accepted. State the funding amount and answer contributor questions before assignment. If a contributor has already delivered work, agree on recognition and payment explicitly rather than treating the bounty process as retroactive.
-
-## During and after delivery
-Keep scope decisions in the issue, review the linked Pull Request, and release payment only after acceptance under your project rules. A team should name a funding owner and an approval owner.
-
-Read [Funding issues](/docs/en/funding-issues/), [Fund an issue](/docs/en/sponsor/), and [Releasing bounties](/docs/en/releasing-bounties/) for each stage.
+- [Fund an issue](/docs/en/sponsor/)
+- [Payment options for sponsors](/docs/en/funding-issues/)
+- [How bounties are paid out](/docs/en/releasing-bounties/)

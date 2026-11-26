@@ -2,52 +2,65 @@
 layout: doc
 lang: en
 role: contributor
-title: Working with Git Workflow
-subtitle: How to deliver a task on Gitpay using Git Workflow
-author: Alexandre Magno
-tags: workflow, git, work, task, delivery, issue, solve
-
+title: Git workflow
+subtitle: How to structure your branch and pull request so your solution passes Gitpay's checks
+tags: contributor, git, github, pull-requests
 ---
-#### Table of contents
 
+#### Table of contents
 {:.no_toc}
 * TOC
 {:toc}
 
-The Git workflow is a process used to validate a task in open source and private projects.
+Gitpay doesn't change how you work with Git. It only reads your pull request on GitHub to decide whether the bounty can be paid. This page is the workflow that passes those checks first time.
 
-It defines how distributed teams integrate their work using Git.
+## 1. Fork and branch
 
-## Our workflow
+If you don't have write access to the repository, fork it and clone your fork:
 
-We use contributions in a Git repository to validate work. Git provides a record of changes and review, while the project decides acceptance and the applicable payment step. Change requests go through automated tests and multiple validation stages before the code is integrated.
+```bash
+git clone https://github.com/<your-username>/<repo>.git
+cd <repo>
+git remote add upstream https://github.com/<owner>/<repo>.git
+git fetch upstream
+git checkout -b fix-123-short-description upstream/main
+```
 
-## Git Workflow
+Use the project's default branch (`main`, `master` or whatever the project uses) and follow its contributing guide.
 
-Git workflow is the guideline we use to deliver tasks consistently and effectively.
+## 2. Commit and push
 
-When using Git as our version control system we follow a workflow that allows the team to collaborate on the codebase. Issues can be linked to Pull Requests; whether a merge closes an issue depends on the repository workflow.
+```bash
+git add .
+git commit -m "Fix login redirect loop (#123)"
+git push origin fix-123-short-description
+```
 
-There are many workflows for teams using Git. Here we describe the one used on Gitpay, similar to processes adopted by companies worldwide.
+## 3. Open the pull request against the original repository
 
+Open the pull request from your fork's branch **into the original repository**, the one the issue belongs to. A pull request merged into your own fork doesn't count.
 
-> Workflow are ways to present the work process in agile development. They are based in project guidelines using git as version control system.
+In the description, reference the issue with a closing keyword:
 
-## Forking Workflow
+```
+Fixes #123
+```
 
-![](/uploads/img-multidev-forking-800-2.png)
+You can also use `Closes #123`, `Resolves #123`, or paste the full issue URL. A closing keyword does two things Gitpay checks: it references the issue, and GitHub closes the issue automatically when the pull request is merged.
 
-This is the forking workflow used to integrate code into our projects. You create a repository from the main source, make your changes and then open a Pull Request.
+## 4. After the merge
 
-Every change goes through an approval process that follows agile guidelines and good development practices.
+Make sure the issue is closed, then submit the pull request URL on Gitpay. See [Submit a solution](/docs/en/pull-requests/).
 
-## Validating changes
+## Checklist
 
-We validate your changes with the following guidelines:
+- [ ] Signed in to Gitpay with the same GitHub account that opened the pull request
+- [ ] Pull request opened against the original repository
+- [ ] Description references the issue (`Fixes #123` or the issue URL)
+- [ ] Pull request merged
+- [ ] Issue closed
+- [ ] Solution submitted on Gitpay
 
-1. We evaluate the value of the task being delivered rather than every minor detail.
-2. We are flexible to discuss better solutions, but a well written issue avoids unnecessary scope changes.
-3. We encourage automated tests, especially when fixing bugs.
+## Next steps
 
-## Connect delivery to payment
-For a funded task, confirm assignment and acceptance criteria before coding. Link the issue in the Pull Request, record test evidence, address review comments, and wait for the maintainer's acceptance and payment release. A contribution that began outside a bounty needs an explicit payment agreement. See [Work on an issue](/docs/en/contributor/) and [Pull Requests](/docs/en/pull-requests/).
+- [Submit a solution](/docs/en/pull-requests/)

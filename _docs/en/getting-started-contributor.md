@@ -3,8 +3,8 @@ layout: doc
 lang: en
 role: contributor
 title: Get started as a contributor
-subtitle: Prepare your account to work on funded issues
-tags: getting-started, account
+subtitle: Find funded issues, solve them, and get paid when your pull request is merged
+tags: contributor, bounties, getting-started
 ---
 
 #### Table of contents
@@ -12,41 +12,42 @@ tags: getting-started, account
 * TOC
 {:toc}
 
-## Create your account
-1. Sign up and verify your email.
-2. Complete your profile so maintainers and sponsors can identify you.
-3. Add payout details if you plan to receive payments.
-4. Review task and payment rules before starting funded work.
+As a contributor you solve issues that have a bounty. You're paid when your pull request is merged and the issue is closed.
 
-## Prepare your profile for assignments
-- Add your main skills (language, framework, tooling) so maintainers can match you with issues faster.
-- Link your GitHub account and make sure your username is correct, since assignment and PR tracking depend on it.
-- Write a short description of your experience level and preferred task type (bug fix, feature, documentation, refactor).
-- Keep your timezone and response availability updated to reduce delays during review.
+## 1. Sign up with GitHub
 
-## Choose the right first task
-- Start with issues that have clear acceptance criteria and reproducible steps.
-- Prefer tasks with active maintainers and recent comments.
-- Check whether tests or setup steps are already documented in the repository.
-- Avoid taking multiple funded tasks at once until you have completed your first full delivery cycle.
+Sign up or sign in at [gitpay.me](https://gitpay.me) **with GitHub**. Gitpay uses your GitHub account to confirm that you authored the pull request you submit, so a bounty can only be paid to an account signed in with GitHub.
 
-## Understand how approval works
-- Assignment confirms that you are the contributor expected to deliver the issue.
-- Work is evaluated against scope, quality, and acceptance criteria defined in the issue.
-- Payment release depends on acceptance, not only on opening a Pull Request.
-- If scope changes during implementation, ask for written confirmation before continuing.
+Then add the **Contributor** role in **Profile → User account → Roles**. You can also add your skills under **Skills**.
 
-## Contributor checklist before coding
-1. Re-read the issue and list expected outcomes.
-2. Confirm setup instructions and run baseline tests/lint locally.
-3. Create a branch with a clear name linked to the issue.
-4. Plan small, reviewable commits.
-5. Keep notes/screenshots for your final PR description.
+## 2. Set up payouts
 
-## Two ways to find a payment path
-A listed, funded issue gives you an amount and an assignment process before delivery. You can also contribute through a project's normal workflow and discuss payment with its maintainer. In that case, clarify the amount and approval route before assuming the work will be paid.
+Set up your Whop payout account before you finish your first solution, so the bounty can be transferred as soon as it's accepted. See [Set up payouts](/docs/en/whop-payout-setup/).
 
-## Example: your first funded contribution
-You find an issue with a reproducible bug and clear acceptance criteria. Ask a question, request assignment, make the fix in a branch, and open a linked Pull Request with the test result. The maintainer reviews and accepts the change, then releases payment. Your [Claims](/docs/en/claims/) and [Payouts](/docs/en/payouts/) pages show the later money stages.
+## 3. Find an issue
 
-For the detailed steps, continue with [Work on an issue](/docs/en/contributor/). For payout setup, see [Set up a payout method](/docs/en/whop-payout-setup/).
+Go to **Issues → Explore issues**. Each issue shows its bounty, its state and its deadline, if the owner set one.
+
+| State | Meaning |
+|---|---|
+| **Created** | No bounty yet. You can still solve it and request payment from the maintainer. |
+| **Funded** | Money is held for the contributor who solves it. |
+| **Claimed** | A contributor's solution was accepted and the bounty transfer started. |
+| **Completed** | The bounty was transferred to the contributor. |
+| **Closed** | Closed on Gitpay, for example after the bounty was refunded. |
+
+A bounty marked **To pay later** is a pledge: the sponsor pays when a solution is accepted, not before.
+
+## 4. Work on it
+
+Read the issue on GitHub, then tell the owner you're working on it. See [Work on a funded issue](/docs/en/contributor/).
+
+## 5. Submit your solution and get paid
+
+Open a pull request on the same repository that references the issue. When it's merged and the issue is closed, send the pull request URL to Gitpay. If everything checks out, the bounty is transferred to your payout account. See [Submit a solution](/docs/en/pull-requests/).
+
+## Next steps
+
+- [Work on a funded issue](/docs/en/contributor/)
+- [Submit a solution](/docs/en/pull-requests/)
+- [Claims](/docs/en/claims/)

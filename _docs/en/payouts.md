@@ -1,10 +1,9 @@
 ---
 layout: doc
 lang: en
-role: contributor
-title: How payouts work
-subtitle: How Gitpay sends your bounty and payment-request earnings to your account
-tags: payout, payment, bank account, paypal, crypto, whop
+title: Payouts
+subtitle: Move your balance to your bank account, card or wallet, and track each payout
+tags: payouts, whop, balances
 ---
 
 #### Table of contents
@@ -12,64 +11,47 @@ tags: payout, payment, bank account, paypal, crypto, whop
 * TOC
 {:toc}
 
-A payout is the last step of a longer journey your money takes on Gitpay — this page explains that
-step. If you haven't read [Claims](/docs/en/claims/) yet, start there: it covers how work you do turns
-into money you can actually withdraw.
+A payout moves money from your Whop balance to the payout method you set up on Whop. You need an active payout account first; see [Set up payouts](/docs/en/whop-payout-setup/).
 
-## Where this fits in the payment flow
+## How money reaches your balance
 
-```
-claimed  →  funded  →  transfer credited  →  payout requested  →  money in your account
-(Claims)     (issue/PR      (shows on your                              ↘
-             paid)          Claims page)                       dispute or refund
-                                                                 (see Disputes and refunds)
-```
+| Source | When it reaches your Whop balance |
+|---|---|
+| Payment request (direct charge) | At payment, as **pending**. Card payments usually become **available** after 1–4 days. |
+| Payment request (older links) | When Gitpay transfers your net amount, once Gitpay's funds have settled. Gitpay retries every night. |
+| Bounty | When your solution is accepted and Gitpay transfers the bounty. |
 
-A payout is what turns a credited transfer — money already sitting in your Gitpay balance because a
-bounty or payment request was paid — into money sent from Whop to your eligible payout destination. Nothing about a payout changes *how much* you're owed; it's the withdrawal step, not the
-earning step.
+Only the **available** balance can be paid out.
 
-## How you get paid
+## Request a payout
 
-Whenever a task you were assigned to is completed and its bounty is paid, or a payment request you
-issued is paid, Gitpay credits a transfer to your account. You can see all of these on your
-[Claims page](/docs/en/claims/). None of this requires any action from you — it happens automatically
-as soon as the payer's charge goes through.
+1. Go to **Receive Payments → My Payouts**.
+2. Select **Request payout**.
+3. Enter the amount, or select **Use total balance**.
+4. Confirm that you agree to withdraw this amount from your Whop balance to your payout method on Whop.
 
-## Requesting a withdrawal
+Gitpay creates a withdrawal on Whop. Whop may charge a withdrawal fee that depends on your payout method and country. Gitpay doesn't add a fee on payouts.
 
-Once funds are available, use your **Payouts** page and connected Whop account to request or manage a withdrawal. Whop handles the payout and shows the destination, status, and applicable options.
+## Automatic withdrawals
 
-## Payout eligibility and available methods
+Instead of requesting each payout, you can have Whop withdraw your balance on a schedule: daily, weekly or monthly. Set it up on Whop (**Manage on Whop**). Gitpay shows the schedule and the next run date on your dashboard.
 
-Check [Whop's supported payout countries](https://docs.whop.com/manage-your-business/manage-payouts/set-up-payouts#supported-countries) before setting up a payout. A country on that list is eligible for Whop payouts, subject to identity verification and account requirements. Available payout methods differ by country: Whop may offer a bank account, PayPal, or a crypto wallet. The options shown in your Whop account are the ones available to you. See [Whop's payout methods](https://docs.whop.com/manage-your-business/manage-payouts/payout-methods) for current details.
+## Track your payouts
 
-PayPal and crypto are payout destinations within the Whop flow where offered. They are not separate Gitpay payment providers. The method the customer used to pay can also affect whether a specific digital-wallet payout is available.
+**My Payouts** lists every payout with its amount, status, transfer method, creation date and arrival date. Open a payout to see its reference number. Gitpay checks Whop for status updates every hour.
 
-## Checking your balance
+## Claims and payouts
 
-Your Payouts page always shows your current available balance before you withdraw, so you know exactly
-how much is about to move.
+A **claim** is the record of money owed to you: a bounty you were paid for, or a payment request that was paid. A **payout** is money leaving your balance for your bank. You can have claims without payouts if you haven't requested one yet. See [Claims](/docs/en/claims/).
 
-## Setting up where the money goes
+## Stripe accounts (older)
 
-Follow [How to set up a payout account on Whop](/docs/en/whop-payout-setup/) to verify your identity and add an available payout method. Review the destination in Whop before requesting a withdrawal. See [How payments work](/docs/en/payments/) for the earlier payment stages.
+If you still have a Stripe payout account, payouts follow the schedule set in **Payout settings → Bank account → Payout schedule**:
 
-## How long it takes
+- **Automatic payouts**: daily, weekly or monthly;
+- **Manual payouts**: you start each payout yourself.
 
-A payment may need to settle before it becomes available to withdraw. Whop shows the available balance and any pending funds. Payout timing then depends on the destination and the options available to your account.
+## Next steps
 
-## Troubleshooting a payout that hasn't arrived
-
-If a payout seems stuck:
-
-1. Check your Whop account verification and the payout method selected there. An incomplete or unavailable method can prevent withdrawal.
-2. Give it a few business days — bank transfers, in particular, aren't instant even after Gitpay
-   initiates them.
-3. Still nothing? Reach out to support with your payout's reference so we can look it up.
-
-## Where to go next
-
-- Not sure where a payout's balance came from? See [Claims](/docs/en/claims/).
-- Balance lower than expected? A dispute or refund may have affected it — see
-  [Disputes and refunds](/docs/en/disputes-and-refunds/).
+- [Claims](/docs/en/claims/)
+- [Refunds and disputes](/docs/en/disputes-and-refunds/)

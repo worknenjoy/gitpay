@@ -1,29 +1,29 @@
 # Three primary tasks on the documentation homepage.
-- doc: service-provider
+- doc: getting-started-service-provider
   icon: credit-card
   en:
     title: Get paid for work
-    desc: Send a Payment Request to a customer after delivering work.
+    desc: Create a payment link, send it to your customer, and get paid by card.
     action: Request a payment
   br:
     title: Receba pelo seu trabalho
     desc: Envie uma cobrança ao cliente depois de entregar o trabalho.
     action: Solicitar pagamento
-- doc: contributor
+- doc: getting-started-contributor
   icon: git-fork
   en:
     title: Contribute to a project
-    desc: Find a funded issue, deliver a Pull Request, and receive payment after acceptance.
+    desc: Find a funded issue, get your pull request merged, and get paid automatically.
     action: Explore contributions
   br:
     title: Contribua com um projeto
     desc: Encontre uma issue financiada, envie um Pull Request e receba após a aprovação.
     action: Explorar contribuições
-- doc: sponsor
+- doc: getting-started-sponsor
   icon: users
   en:
     title: Fund work on a project
-    desc: Fund a GitHub issue, review the contribution, and release payment.
+    desc: Put a bounty on a GitHub issue. It's paid out only when a solution is merged.
     action: Fund an issue
   br:
     title: Financie trabalho em um projeto

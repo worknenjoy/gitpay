@@ -8,14 +8,14 @@
 - en: Get paid for work
   br: Receba pelo seu trabalho
   pages:
+    - slug: getting-started-service-provider
+      en: Get started as a service provider
+      br: Planeje e entregue trabalho para clientes
     - slug: service-provider
       en: Request payment from a customer
       br: Solicite pagamento a um cliente
-    - slug: getting-started-service-provider
-      en: Plan and deliver client work
-      br: Planeje e entregue trabalho para clientes
     - slug: delivering-work
-      en: Deliver work
+      en: Payment requests for pull requests
       br: Entregue o trabalho
 - en: Contribute to projects
   br: Contribua com projetos
@@ -26,47 +26,47 @@
     - slug: contributor
       en: Work on a funded issue
       br: Trabalhe em uma issue financiada
-    - slug: claims
-      en: Claim a task and track transfers
-      br: Reivindique uma tarefa e acompanhe transferências
     - slug: pull-requests
-      en: Deliver a Pull Request
+      en: Submit a solution
       br: Entregue um Pull Request
+    - slug: claims
+      en: Claims
+      br: Reivindique uma tarefa e acompanhe transferências
 - en: Fund and manage work
   br: Financie e gerencie trabalho
   pages:
-    - slug: sponsor
-      en: Fund a GitHub issue
-      br: Financie uma issue do GitHub
-    - slug: funding-issues
-      en: Define scope and funding
-      br: Defina escopo e financiamento
     - slug: getting-started-sponsor
       en: Get started as a sponsor
       br: Comece como patrocinador
+    - slug: sponsor
+      en: Fund an issue
+      br: Financie uma issue do GitHub
+    - slug: funding-issues
+      en: Payment options for sponsors
+      br: Defina escopo e financiamento
     - slug: getting-started-maintainer
-      en: Set up project reviews
+      en: Import issues and projects
       br: Prepare revisões do projeto
     - slug: validating-work
-      en: Review and accept work
+      en: Review applications and offers
       br: Revise e aceite o trabalho
     - slug: releasing-bounties
-      en: Release payment
+      en: How bounties are paid out
       br: Libere o pagamento
 - en: Payments and payouts
   br: Pagamentos e saques
   pages:
     - slug: payments
-      en: How payments work
+      en: How payments and fees work
       br: Como funcionam os pagamentos
     - slug: whop-payout-setup
-      en: Set up a payout method
+      en: Set up payouts
       br: Configure um método de saque
     - slug: payouts
-      en: Payout timing and status
+      en: Payouts
       br: Prazo e status dos saques
     - slug: disputes-and-refunds
-      en: Disputes and refunds
+      en: Refunds and disputes
       br: Disputas e reembolsos
 - en: Help and reference
   br: Ajuda e referência

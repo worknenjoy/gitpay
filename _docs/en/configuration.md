@@ -1,54 +1,82 @@
 ---
 layout: doc
-title: Running the Gitpay project
-subtitle: Learn how to contribute to the Gitpay core and evolve the platform
+lang: en
+title: Contribute to Gitpay itself
+subtitle: Run the Gitpay platform locally and find your way around the code
 author: Alexandre Magno
-tags:
+tags: development, open-source, setup
 redirect_from:
   - /docs/en/installation/
   - /docs/en/assets/
   - /docs/en/structure/
 ---
 
-#### What you will learn here
+#### Table of contents
 {:.no_toc}
 * TOC
 {:toc}
 
-## Running the project
+Gitpay is open source: [github.com/worknenjoy/gitpay](https://github.com/worknenjoy/gitpay). This page is for developers who want to run it locally and contribute. The repository's `README.md` and `CONTRIBUTING.md` are the reference if anything here differs.
 
-### Frontend server
-`npm run dev`
+## Requirements
 
-### Backend (node.js)
-`npm run start:dev`
+- Node.js 24 (see `.nvmrc`) and npm
+- PostgreSQL, with databases `gitpay_dev` and `gitpay_test` owned by the `postgres` user
+- Or Docker and Docker Compose
 
-After starting both services you can access the application at http://localhost:8082
+## Run locally
 
-### Using Docker
+```bash
+git clone https://github.com/worknenjoy/gitpay.git
+cd gitpay
+npm install
+cd frontend && npm install && cd ..
+cp .env.example .env    # then fill in the credentials you need
 
-We received a great community contribution to support Docker and make it easier to run a local environment for development.
+npm run migrate:dev     # create the tables
+npm run seed:dev        # optional: sample data
 
-### Requirements
+npm run start:dev       # backend on http://localhost:3000
+cd frontend && npm run dev   # frontend on http://localhost:8082
+```
 
-* Docker Engine
-* Docker Compose
+### With Docker
 
-### Ubuntu
+```bash
+docker-compose up                                  # app on http://localhost:8082
+docker-compose -f docker-compose.test.yml up       # tests
+```
 
-#### Installing
+## Tests and checks
 
-* Docker Engine: https://docs.docker.com/install/linux/docker-ce/ubuntu/
-* Docker Compose: https://docs.docker.com/compose/install/
+```bash
+npm run test               # backend (Mocha)
+cd frontend && npm run test   # frontend (Jest)
+npm run test:e2e           # end-to-end (Playwright)
+npm run lint && npm run typecheck
+```
 
-#### Running the project from Docker images
+## Payment providers
 
-##### Development environment
+Payments go through a provider abstraction in `src/providers/`. Set `PAYMENT_PROVIDER=stripe` or `PAYMENT_PROVIDER=whop` in `.env`. Webhooks, Whop sandbox setup and the full money flow are documented in [`docs/payments-providers.md`](https://github.com/worknenjoy/gitpay/blob/master/docs/payments-providers.md) in the repository.
 
-Run `docker-compose up`
+## Where things are
 
-Then open the application at http://localhost:8082
+| Path | Contents |
+|---|---|
+| `src/app/routes`, `src/app/controllers` | HTTP API |
+| `src/modules`, `src/services` | Business logic by feature |
+| `src/models` | Sequelize models |
+| `src/queries`, `src/mutations` | Database reads and writes |
+| `src/providers` | Stripe and Whop connectors |
+| `src/crons`, `src/inngest` | Scheduled jobs |
+| `frontend/src/components/design-library` | UI components ([Storybook](https://docs.gitpay.me/storybook)) |
+| `frontend/src/translations` | UI strings (English and Portuguese) |
 
-##### Running tests
+## Contributing
 
-Run `docker-compose -f docker-compose.test.yml up`
+1. Pick an issue on [GitHub](https://github.com/worknenjoy/gitpay/issues) or on Gitpay; some have bounties.
+2. Fork, branch, and open a pull request that references the issue.
+3. Follow the code style (`npm run lint-fix`). For UI text, use React Intl and run `npm run translate` in `frontend` instead of editing the translation files.
+
+Bounties on Gitpay's own issues are paid like any other: see [Submit a solution](/docs/en/pull-requests/).

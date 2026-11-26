@@ -1,10 +1,9 @@
 ---
 layout: doc
 lang: en
-role: sponsor
-title: Disputes and refunds
-subtitle: What happens to your balance when a payment request is disputed or refunded
-tags: disputes, chargebacks, refunds, payment requests, fees
+title: Refunds and disputes
+subtitle: How to refund a customer, what happens when a payment is disputed, and how bounty refunds work
+tags: payments, refunds, disputes, chargebacks, payment-requests, bounties
 ---
 
 #### Table of contents
@@ -12,75 +11,58 @@ tags: disputes, chargebacks, refunds, payment requests, fees
 * TOC
 {:toc}
 
-A dispute or refund can happen even after a [claim](/docs/en/claims/) has already been credited to you,
-or after you've requested a [payout](/docs/en/payouts/). This page explains what that means for your
-balance.
+A **refund** is money you (or Gitpay) return to a payer. A **dispute**, or chargeback, is when the payer asks their bank to reverse a card payment. Disputes cost more than refunds, so if a customer is unhappy, a refund is usually the better outcome for both sides.
 
-## Where this fits in the payment flow
+## Refund a payment request payment
+
+1. Go to **Payment Requests → Payments** and open the payment.
+2. Select **Refund** and confirm.
+
+The customer is refunded **the amount they paid, excluding fees**: the processing fee and Gitpay's platform fee aren't returned, because the payment processor doesn't return them either. In practice the customer gets back your net amount for that payment.
+
+The customer receives a refund confirmation by email. The payment status changes to **Refunded**.
+
+### Where the refund comes from
+
+- **Direct charge payments** (all new payment requests): the refund is paid from your Whop balance. Nothing is recorded on your Gitpay payment request balance.
+- **Older payment requests** (Gitpay as merchant of record): if you were already paid for the payment, the refunded amount is recovered from you. If you weren't paid yet, only the processing fee that can't be recovered is charged to you. These amounts appear in **Payment Requests → Disputes / refunds**.
+
+## Disputes on payment requests
+
+### Direct charge payments
+
+Your Whop account is the merchant of record, so disputes are opened against your account and handled on Whop. Whop may charge dispute fees. Gitpay notifies you when Whop reports a dispute or an early dispute warning.
+
+To respond, send Whop your evidence: the written agreement with the customer (price and scope), the delivered work, and your conversation with them.
+
+### Older payment requests
+
+Gitpay handles the dispute and charges the cost to your payment request balance:
 
 ```
-claimed  →  funded  →  transfer credited  →  payout requested  →  money in your account
-                             (Claims)                                     ↘
-                                                                dispute or refund (this page)
-                                                                  debits your balance
+disputed amount + platform fee (8%) + dispute fee ($15 on Whop, or Stripe's fee)
 ```
 
-Claiming, funding, and payouts are the forward direction: money moving toward you. A dispute or refund
-runs the other way — it reverses part of that chain by debiting money back out of your balance, even if
-it had already been credited as a claim.
+If the dispute is won, the amount is credited back. A negative balance is recovered from your next payments.
 
-## What is a dispute?
+### Avoiding disputes
 
-A dispute (also called a chargeback) happens when the person who paid you contests the charge with
-their bank or card network — for example, if they believe the charge was unauthorized. It's opened by
-the payer's bank, not by Gitpay or the payer directly through Gitpay.
+- Agree on the price, scope and refund policy in writing before you send the link.
+- Send links privately to the person paying.
+- Keep proof of delivery.
+- Refund quickly when you can't deliver.
 
-## What is a refund?
+## Bounty refunds
 
-A refund is money sent back to the payer, either because you or Gitpay issued it, or because it was
-issued directly on the payment provider's dashboard. Refunds from Gitpay's own interface are always for
-the full amount — there's no partial-refund option in the product itself.
+| Situation | What happens |
+|---|---|
+| A solution was merged but nobody claimed the bounty | Gitpay emails the pull request author on the 26th of each month. After two reminders, the next run refunds the sponsors. |
+| You funded the wrong issue | In **Payments**, use **Transfer Bounty** to move your payment to another issue. |
+| Anything else (issue abandoned, closed without a solution) | Contact [contact@gitpay.me](mailto:contact@gitpay.me) with the issue link. |
 
-## Our refund policy
+Refunds go back to the original payment method, or to your wallet if you paid from a wallet. The fee added when you funded the bounty isn't refunded.
 
-Payments for completed and accepted work are non-refundable. This does not affect rights provided by
-applicable law. Fraudulent, duplicate, or undelivered transactions may be refunded after review. This
-is also stated in the Refunds clause of our
-[Terms of Service](https://gitpay.me) (see the "Legal" menu in the site footer).
+## Next steps
 
-## How disputes affect your balance
-
-When a dispute opens, the disputed amount is debited from your payment-request balance, along with
-Gitpay's 8% platform fee and a provider fee. If the dispute is later resolved in your favor, the
-disputed amount and the provider fee are credited back — but Gitpay's 8% fee is not refunded, so your
-balance won't fully return to where it started even when you win.
-
-## How refunds affect your balance
-
-A refund is a lighter deduction than a dispute: only Gitpay's 8% fee is debited from your balance. The
-payment provider absorbs the refunded amount itself, since it isn't money that was ever transferred out
-to you as a payout.
-
-## Extra fees on Whop (dispute alerts)
-
-If you're paid through Whop, Whop can automatically refund a transaction under a certain amount as soon
-as it detects an incoming dispute, before it becomes a formal chargeback. When this happens, Whop
-charges a separate alert fee (currently around $29) regardless of the outcome, and Gitpay debits it from
-your balance right away. You'll get an email as soon as this fires.
-
-## Where to see this
-
-Your **Payment Requests** page has a "Disputes and refunds" panel showing any amount currently owed
-from disputes or refund fees against your payment requests.
-
-## Payment methods within Whop
-
-Gitpay's current payment flow uses Whop. PayPal, bank, and crypto options depend on the payment or payout methods available in the relevant country and account. They are not separate Gitpay dispute providers. A payout destination also does not change how the original customer payment is reviewed. Check the transaction in Whop and contact support for the handling of a specific dispute or refund.
-
-Before receiving funds, check [Whop's supported payout countries](https://docs.whop.com/manage-your-business/manage-payouts/set-up-payouts#supported-countries) and the [available payout methods](https://docs.whop.com/manage-your-business/manage-payouts/payout-methods).
-
-## What to do if you disagree with a dispute
-
-Disputes are opened and resolved through the payer's bank or card network, not inside Gitpay, so there's
-no dispute-response flow within the product itself. If you believe a dispute is mistaken, reach out to
-support with the payment's details — we can help point you in the right direction.
+- [How payments and fees work](/docs/en/payments/)
+- [Fund an issue](/docs/en/sponsor/)
