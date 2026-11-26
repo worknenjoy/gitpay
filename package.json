@@ -104,7 +104,7 @@
     "body-parser": "^1.20.2",
     "bootstrap": "^3.4.1",
     "color": "^3.1.2",
-    "compression": "^1.7.4",
+    "compression": "^1.8.2",
     "core-js": "^2.4.1",
     "cron": "^1.4.0",
     "cross-env": "^7.0.3",
