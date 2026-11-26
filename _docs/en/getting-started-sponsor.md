@@ -16,7 +16,7 @@ A sponsor funds issues. You can fund an issue in your own project, or any open s
 
 ## 1. Create an account
 
-Sign up at [gitpay.me](https://gitpay.me) with email, GitHub or Bitbucket, and add the **Funding** role in **Profile → User account → Roles**.
+Sign up at [gitpay.me](https://gitpay.me) with email, GitHub or Bitbucket, and add the **Funding** role in **Account → Profile** (the "What types of users fit with you?" section).
 
 You don't need a payout account to fund issues. You only need one to receive money.
 

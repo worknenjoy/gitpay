@@ -22,7 +22,7 @@ You don't need GitHub to use payment requests. You only need it to [import a pul
 
 ## 2. Choose the Provider role
 
-Go to **Profile → User account → Roles**, select **Provider** ("You provide a service and need to request payments") and save. Your dashboard now shows your payment links, revenue and claims.
+Go to **Account → Profile** (the "What types of users fit with you?" section), select **Provider** ("You provide a service and need to request payments") and save. Your dashboard now shows your payment links, revenue and claims.
 
 ## 3. Set up payouts
 

@@ -50,7 +50,7 @@ Your account can have one or more roles. Roles change what you see on your dashb
 | Sponsor | Funding | Funding issues |
 | Maintainer | Maintainer | Importing issues from your projects and reviewing work |
 
-Change your roles in **Profile → User account → Roles**.
+Change your roles in **Account → Profile** (the "What types of users fit with you?" section).
 
 ## How money moves
 

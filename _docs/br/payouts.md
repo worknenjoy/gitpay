@@ -1,76 +1,57 @@
 ---
 layout: doc
 lang: br
-role: contributor
-title: Como funcionam os pagamentos (payouts)
-subtitle: Como o Gitpay envia seus ganhos de recompensas e solicitações de pagamento para sua conta
-tags: payout, pagamento, conta bancária, paypal, cripto, whop
+title: Saques
+subtitle: Leve seu saldo para sua conta bancária, cartão ou carteira, e acompanhe cada saque
+tags: payouts, whop, balances
 ---
 
-#### O que você vai ver
+#### Índice
 {:.no_toc}
 * TOC
 {:toc}
 
-Um payout é a última etapa de uma jornada mais longa que o seu dinheiro percorre no Gitpay — esta
-página explica essa etapa. Se você ainda não leu [Claims](/docs/br/claims/), comece por lá: essa página
-explica como o trabalho que você faz se transforma em dinheiro que você pode sacar.
+Um saque transfere dinheiro do seu saldo Whop para o método de saque que você configurou na Whop. Antes, você precisa de uma conta de saque ativa; veja [Configure seus saques](/docs/br/whop-payout-setup/).
 
-## Onde isso se encaixa no fluxo de pagamento
+## Como o dinheiro chega ao seu saldo
 
-```
-reivindicado  →  financiado  →  transferência creditada  →  payout solicitado  →  dinheiro na sua conta
-  (Claims)      (issue/PR       (aparece na sua                                          ↘
-                pago)           página Claims)                                disputa ou reembolso
-                                                                       (veja Disputas e reembolsos)
-```
+| Origem | Quando chega ao seu saldo Whop |
+|---|---|
+| Solicitação de pagamento (cobrança direta) | No pagamento, como **pendente**. Pagamentos com cartão costumam ficar **disponíveis** após 1 a 4 dias. |
+| Solicitação de pagamento (links antigos) | Quando o Gitpay transfere seu valor líquido, depois que os fundos do Gitpay são liquidados. O Gitpay tenta de novo toda noite. |
+| Recompensa | Quando sua solução é aceita e o Gitpay transfere a recompensa. |
 
-Um payout é o que transforma uma transferência já creditada — dinheiro que já está no seu saldo do
-Gitpay porque uma recompensa ou solicitação de pagamento foi paga — em dinheiro que realmente chega ao destino de payout disponível na sua conta Whop. Nada em um payout muda *quanto* você tem a receber; é a etapa de
-saque, não a etapa em que você ganha o dinheiro.
+Só o saldo **disponível** pode ser sacado.
 
-## Como você recebe o pagamento
+## Solicite um saque
 
-Sempre que uma tarefa que você assumiu é concluída e sua recompensa é paga, ou uma solicitação de
-pagamento que você emitiu é paga, o Gitpay credita uma transferência na sua conta. Você pode ver todas
-elas na sua [página Claims](/docs/br/claims/). Nada disso exige qualquer ação da sua parte — acontece
-automaticamente assim que a cobrança de quem pagou é confirmada.
+1. Vá em **Receber pagamentos → Meus Pagamentos**.
+2. Selecione **Solicitar pagamento**.
+3. Informe o valor, ou selecione **Usar saldo total**.
+4. Confirme que concorda em sacar esse valor do seu saldo Whop para o seu método de saque na Whop.
 
-## Solicitando um saque
+O Gitpay cria um saque na Whop. A Whop pode cobrar uma taxa de saque, que depende do método e do país. O Gitpay não cobra taxa sobre saques.
 
-Quando houver saldo disponível, use a página **Payouts** e sua conta Whop conectada para solicitar ou acompanhar o saque. O Whop mostra o destino, o status e as opções aplicáveis.
+## Saques automáticos
 
-## Países elegíveis e métodos disponíveis
+Em vez de pedir cada saque, você pode deixar a Whop sacar seu saldo automaticamente: diariamente, semanalmente ou mensalmente. Configure isso na Whop. O Gitpay mostra o cronograma e a próxima data no seu painel.
 
-Confira a [lista de países com payouts disponíveis no Whop](https://docs.whop.com/manage-your-business/manage-payouts/set-up-payouts#supported-countries). A elegibilidade depende do país e da verificação de identidade e conta. Os métodos variam por país e podem incluir conta bancária, PayPal ou carteira de criptomoedas. As opções exibidas na sua conta Whop são as disponíveis para você. Consulte os [métodos de payout do Whop](https://docs.whop.com/manage-your-business/manage-payouts/payout-methods).
+## Acompanhe seus saques
 
-PayPal e cripto, quando disponíveis, são destinos dentro do fluxo Whop, não provedores de payout separados do Gitpay.
+**Meus Pagamentos** lista cada saque com valor, status, método de transferência, data de criação e data de chegada. Abra um saque para ver o número de referência. O Gitpay consulta a Whop a cada hora para atualizar os status.
 
-## Verificando seu saldo
+## Reivindicações e saques
 
-Sua página de Payouts sempre mostra seu saldo disponível atual antes do saque, para que você saiba
-exatamente quanto vai ser movimentado.
+Uma **reivindicação** é o registro de um valor devido a você: uma recompensa que você recebeu, ou uma solicitação de pagamento que foi paga. Um **saque** é o dinheiro saindo do seu saldo para o seu banco. Você pode ter reivindicações sem saques se ainda não pediu nenhum. Veja [Reivindicações](/docs/br/claims/).
 
-## Configurando para onde o dinheiro vai
+## Contas Stripe (antigas)
 
-Siga [Como configurar uma conta de pagamento no Whop](/docs/br/whop-payout-setup/) para verificar sua identidade e adicionar um método disponível. Confira o destino no Whop antes de solicitar o saque.
+Se você ainda tem uma conta de saque Stripe, os saques seguem o cronograma definido em **Configurações de pagamento → Conta bancária → Cronograma de Pagamento**:
 
-## Quanto tempo leva
+- **Pagamentos automáticos**: diários, semanais ou mensais;
+- **Pagamentos manuais**: você inicia cada saque.
 
-O pagamento pode precisar ser liquidado antes de ficar disponível para saque. O Whop mostra o saldo disponível e o saldo pendente. O prazo do payout depende do destino e das opções disponíveis na sua conta.
+## Próximos passos
 
-## Resolvendo problemas com um payout que não chegou
-
-Se um payout parecer travado:
-
-1. Verifique a situação da sua conta Whop e o método de payout selecionado. Um método incompleto ou indisponível pode impedir o saque.
-2. Aguarde alguns dias úteis — transferências bancárias, em especial, não são instantâneas mesmo depois
-   que o Gitpay as inicia.
-3. Ainda nada? Entre em contato com o suporte com a referência do seu payout para que possamos
-   verificar.
-
-## Para onde ir agora
-
-- Não sabe de onde veio o saldo de um payout? Veja [Claims](/docs/br/claims/).
-- Saldo menor do que o esperado? Uma disputa ou reembolso pode ter afetado ele — veja
-  [Disputas e reembolsos](/docs/br/disputes-and-refunds/).
+- [Reivindicações](/docs/br/claims/)
+- [Reembolsos e disputas](/docs/br/disputes-and-refunds/)

@@ -1,45 +1,68 @@
 ---
 layout: doc
 lang: br
-role: contributor
-title: Como configurar uma conta de pagamento no Whop
-subtitle: Conecte sua conta Whop para que o Gitpay possa enviar seus ganhos de recompensas e solicitações de pagamento
-tags: whop, payout, payment, kyc
+title: Configure seus saques
+subtitle: Conecte uma conta de saque Whop para receber pagamentos e recompensas
+tags: payouts, whop, account, verification
 ---
 
-#### O que você vai ver
+#### Índice
 {:.no_toc}
 * TOC
 {:toc}
 
-Identidade, método de payout e cronograma são configurados no Whop. Confira os [países elegíveis para payout](https://docs.whop.com/manage-your-business/manage-payouts/set-up-payouts#supported-countries) antes da configuração. A elegibilidade depende do país e da verificação exigida pelo Whop. Os métodos disponíveis variam por país e podem incluir conta bancária, PayPal ou carteira de criptomoedas. Consulte os [métodos de payout do Whop](https://docs.whop.com/manage-your-business/manage-payouts/payout-methods) e escolha entre as opções exibidas na sua conta.
+Para receber dinheiro no Gitpay, seja de solicitações de pagamento ou de recompensas, você precisa de uma conta de saque ativa. O Gitpay usa a Whop para isso. A Whop verifica sua identidade, cuida dos formulários fiscais e envia o dinheiro para sua conta bancária, cartão de débito ou carteira USDC. O Gitpay nunca guarda seus dados bancários.
 
-## Verifique o status da sua conta
-Acesse **Perfil → Configurações de pagamento → Whop**. A aba **Identidade e empresa** mostra sua empresa conectada no Whop:
+## Configure sua conta de saque Whop
 
-![Aba Identidade e empresa nas configurações de pagamento do Whop](/assets/img/guides/whop-payout-identity.png)
+1. Abra **Configurações de pagamento** e escolha a aba da Whop.
+2. **Escolha o país e continue.** O país define a moeda dos seus saques, e o Gitpay cria uma conta Whop para você dentro da plataforma Gitpay, com seu nome e e-mail.
+   - Se já existir uma conta Whop para o seu e-mail verificado, o Gitpay pergunta se você quer vinculá-la.
+3. Selecione **Configurar em Whop**. Você vai para a Whop para:
+   - verificar sua identidade (nome legal e documentos);
+   - adicionar um método de saque: transferência bancária, cartão de débito ou USDC.
+4. Ao terminar, a Whop leva você de volta ao Gitpay com a confirmação de que a verificação foi enviada.
 
-## Verifique seu método de pagamento
-Abra a aba **Método de pagamento**. Se já houver um método configurado, confira também se a verificação de identidade e a situação da conta estão concluídas:
+A Whop faz saques para mais de 100 países, em mais de 30 moedas.
 
-![Aba de método de pagamento mostrando um método configurado](/assets/img/guides/whop-payout-method.png)
+## Status da conta
 
-Caso contrário, o Gitpay vai pedir que você registre um antes que os pagamentos possam ser processados:
+A página **Configurações de pagamento** mostra seu status:
 
-![Estado pendente pedindo para adicionar um método de pagamento no Whop](/assets/img/guides/whop-payout-pending.png)
+| Status | Significado | O que fazer |
+|---|---|---|
+| **PAYOUTS ATIVOS** | Verificada e com método de saque cadastrado. Você pode criar solicitações de pagamento e receber recompensas. | Nada. |
+| **VERIFICAÇÃO OBRIGATÓRIA** | A Whop ainda precisa de informações suas. | Selecione **Completar verificação** e conclua as etapas na Whop. |
+| **PENDENTE** | Você enviou tudo e a Whop está analisando. | Aguarde, ou selecione **Verificar status no Whop**. |
+| **REJEITADO** | A Whop encontrou um problema na conta. | Selecione **Resolver em Whop**. |
 
-## Adicione um método de pagamento no Whop
-Clique em **"Add payout method on Whop"**. Isso abre o painel hospedado pelo Whop. No menu no canto superior direito, escolha **"Automatic withdrawals"**:
+Sua conta só conta como ativa quando **as duas** condições são verdadeiras: a Whop aprovou a conta para saques e há pelo menos um método de saque cadastrado. Só a verificação não basta.
 
-![Painel do Whop com o menu de saques automáticos e histórico de saques](/assets/img/guides/whop-payout-withdrawal.png)
+Se o seu link de verificação expirar, abra **Configurações de pagamento** de novo e continue. O que você já enviou fica salvo.
 
-Siga os passos indicados pelo Whop e escolha entre os métodos de saque disponíveis para o seu país. PayPal e cripto, quando oferecidos, são destinos gerenciados pelo Whop, não provedores separados do Gitpay.
+## O que você vê no Gitpay
 
-## Volte para o Gitpay
-Ao terminar no Whop, clique em **"Back to Gitpay"**. Sua conta de pagamento no Whop deve aparecer como ativa, com o método de pagamento listado.
+- **Titular da conta**: sua empresa conectada na Whop, com ID, país, moeda e saldos:
+  - **Disponível**: pode ser sacado agora;
+  - **Pendente**: ainda em liquidação (pagamentos com cartão costumam levar de 1 a 4 dias);
+  - **Reserva**: retido pela Whop.
+- **Conta bancária**: um link para gerenciar seu método de saque na Whop. Dados bancários ficam só na Whop.
+- **Disputas / reembolsos**: estornos e reembolsos que a Whop informa para a sua conta.
 
-## Receba seus pagamentos
-Crie uma solicitação de pagamento, ou aguarde o pagamento de uma recompensa, normalmente. Os fundos são enviados para sua conta Whop conectada. Quando um saque for concluído, ele aparecerá listado com valor, status e destino — como o pagamento concluído mostrado acima.
+Para mudar o método de saque, o cronograma ou seus dados de identidade, use o botão que abre a Whop para gerenciar a conta.
 
-## Precisa de ajuda?
-Veja [Entendendo como funciona os pagamentos](/docs/br/payments/) para detalhes sobre taxas e prazos.
+## Desconectar
+
+**Desconectar conta Whop** remove o vínculo entre o Gitpay e sua empresa na Whop. A Whop mantém seus dados bancários e de identidade. Você pode reconectar depois escolhendo um país de novo.
+
+## Stripe e PayPal (contas antigas)
+
+Antes da Whop, o Gitpay fazia saques por Stripe Connect e PayPal.
+
+- **Stripe:** não é mais possível criar uma conta de saque Stripe. Contas Stripe existentes continuam recebendo no cronograma delas até serem migradas para a Whop; o suporte vai entrar em contato sobre a migração.
+- **PayPal:** está sendo descontinuado e não pode mais ser adicionado. Use a Whop, que atende os mesmos países.
+
+## Próximos passos
+
+- [Saques](/docs/br/payouts/)
+- [Como funcionam pagamentos e taxas](/docs/br/payments/)

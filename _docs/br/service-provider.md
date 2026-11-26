@@ -2,9 +2,9 @@
 layout: doc
 lang: br
 role: service-provider
-title: Cobrar Clientes
-subtitle: Cobre clientes com links de pagamento, configuração de recebimento e gestão de disputas
-tags:
+title: Solicite pagamento a um cliente
+subtitle: Todos os campos e opções de uma solicitação de pagamento, o que o cliente vê e como gerenciar seus links
+tags: service-provider, payment-requests
 ---
 
 #### Índice
@@ -12,52 +12,80 @@ tags:
 * TOC
 {:toc}
 
-## Criar links de pagamento
-Crie links de pagamento vinculados a entregáveis aprovados para que os clientes paguem com contexto claro.
+Uma solicitação de pagamento é um link de pagamento reutilizável. Você cria no Gitpay, envia ao cliente e ele paga com cartão. Antes, sua conta de saque precisa estar ativa; veja [Comece como prestador de serviço](/docs/br/getting-started-service-provider/).
 
-Cada solicitação de pagamento deve incluir:
-- Um título curto descrevendo o resultado entregue.
-- Resumo do escopo e referências (issue, PR, marco ou documento).
-- Valor exato e moeda.
-- Data de vencimento e condições de pagamento.
-- Notas opcionais sobre o que está incluído nesta entrega.
+## Crie uma solicitação de pagamento
 
-## Ativar sua conta bancária
-Ative e verifique sua conta bancária para que os pagamentos possam ser transferidos após a cobrança.
+Vá em **Solicitações de pagamento → Links de pagamento → Criar solicitação de pagamento**.
 
-Antes de enviar links para clientes:
-1. Confirme que os dados de recebimento estão corretos.
-2. Conclua as etapas de verificação necessárias.
-3. Valide o país/moeda de recebimento suportado.
-4. Revise o prazo esperado para o recebimento.
+### Informação básica
 
-## Métodos de pagamento suportados
-Use os métodos suportados disponíveis na sua região e configuração de conta.
+| Campo | O que faz |
+|---|---|
+| **Título** | Aparece para o cliente no checkout. Dê o nome do serviço, por exemplo "Ilustração de personagem – corpo inteiro". |
+| **Descrição** | Aparece para o cliente. Descreva o que ele está pagando. |
+| **Quantidade** | O preço em dólares (USD). Não é usado quando **Quantidade personalizada** está ativada. |
 
-Para reduzir pagamentos com falha:
-- Ofereça pelo menos um método de pagamento alternativo quando disponível.
-- Comunique os métodos aceitos antes da aprovação da entrega.
-- Mantenha os valores de faturas/solicitações consistentes entre os sistemas.
+### Configurações
 
-## Disputas e reembolsos
-Gerencie disputas e reembolsos de acordo com a política do método de pagamento e o fluxo da plataforma.
+| Opção | Padrão | O que faz |
+|---|---|---|
+| **Quantidade personalizada** | Desligada | O cliente digita o valor que vai pagar. Use quando o preço muda por cliente, para gorjetas ou sinais (adiantamentos). |
+| **Desativar após pagamento** | Desligada | O link deixa de aceitar pagamentos após o primeiro. Use para trabalhos avulsos. |
+| **Enviar notificação por e-mail com as instruções de pagamento** | Desligada | Depois de pagar, o cliente recebe um e-mail com as instruções que você escrever (próximos passos, detalhes da entrega, como falar com você). |
+| **Listar no perfil** | Desligada | Mostra o link no seu perfil público do Gitpay, para que qualquer visitante possa pagar. |
+| **Cobrança direta para a sua conta conectada** | Ligada (fixa) | O pagamento é cobrado na sua própria conta Whop e a taxa do Gitpay é separada na mesma cobrança. Veja [Como funcionam pagamentos e taxas](/docs/br/payments/). |
+| **Ativo** | Ligada | Quando desligada, o link não pode ser pago. |
 
-Abordagem recomendada:
-1. Guarde comprovantes de entrega (links de PR, mensagens de aceitação, assets).
-2. Responda rápida e claramente às preocupações do cliente.
-3. Compartilhe evidências objetivas alinhadas ao escopo acordado.
-4. Use reembolsos parciais ou totais apenas quando justificado pelo contrato de entrega.
+**Anexar arquivos** (entregar arquivos automaticamente após o pagamento) aparece como *Em breve*.
 
-## Taxas e recebimentos
-Revise as taxas de transação e o prazo de recebimento antes de cobrar os clientes.
+### O que acontece ao salvar
 
-Planeje o fluxo de caixa considerando:
-- Deduções de taxas da plataforma e do processador.
-- Calendário de recebimento (imediato vs. com atraso, quando aplicável).
-- Impacto de reservas para reembolso/disputa.
-- Efeitos de conversão de moeda quando relevante.
+O Gitpay cria o produto e o checkout na Whop e gera o seu link de pagamento. A taxa da plataforma em vigor nesse momento (hoje, 5%) fica gravada no link e vale para todos os pagamentos que ele receber, mesmo que a taxa do Gitpay mude depois.
+
+## O que o cliente vê
+
+- **Valor fixo:** o link abre um checkout seguro da Whop com seu título, descrição e preço. O cliente paga com cartão.
+- **Valor personalizado:** o link abre uma página do Gitpay onde o cliente digita o valor e paga em um checkout embutido na mesma página.
+
+O cliente não precisa de conta no Gitpay.
+
+Depois de pagar, o cliente recebe o seu e-mail de instruções, se você ativou essa opção.
+
+## Depois de um pagamento
+
+Você recebe um e-mail com o valor e o nome e e-mail do cliente. Em **Solicitações de pagamento → Pagamentos** você pode abrir cada pagamento para ver:
+
+- **valor pago pelo cliente**: o valor bruto;
+- **Taxa de processamento**: a taxa da Whop para processar o pagamento;
+- **Taxa de plataforma (5%)**: a taxa do Gitpay;
+- **Montante líquido**: o que você recebe. Aparece como **Pendente** até a Whop informar o valor final.
+
+A mesma tela mostra o status do pagamento (concluído, falhou ou reembolsado) e o histórico.
+
+## Gerencie seus links
+
+Em **Links de pagamento**, use **Ações** em qualquer link para:
+
+- editar o **título** e a **descrição**;
+- ligar ou desligar **Ativo**, por exemplo se o link foi enviado à pessoa errada;
+- mudar as outras opções, como **Listar no perfil** ou o e-mail de instruções.
+
+Não é possível mudar o valor nem trocar entre valor fixo e personalizado em um link existente. Crie um link novo e desative o antigo.
+
+## Solicite pagamento por um pull request
+
+Se o trabalho é um pull request no GitHub, você pode importá-lo em vez de preencher o formulário, e publicar o link de pagamento como comentário no pull request. Veja [Solicitações de pagamento para pull requests](/docs/br/delivering-work/).
+
+## Boas práticas
+
+- Envie o link em privado para quem vai pagar. Um link público pode ser pago por qualquer pessoa.
+- Combine por escrito preço, escopo e política de reembolso antes de enviar o link.
+- Guarde a prova de entrega (a conversa, os arquivos entregues) até o pagamento não poder mais ser contestado.
+- Use **Desativar após pagamento** em trabalhos avulsos, para o link não ser pago duas vezes por engano.
 
 ## Próximos passos
-- Leia [O que é o Gitpay?](/docs/br/getting-started)
-- Leia [Por onde começar?](/docs/br/getting-started-contributor)
-- Leia [Financiar uma Issue](/docs/br/sponsor)
+
+- [Como funcionam pagamentos e taxas](/docs/br/payments/)
+- [Reembolsos e disputas](/docs/br/disputes-and-refunds/)
+- [Saques](/docs/br/payouts/)

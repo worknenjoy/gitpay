@@ -21,7 +21,7 @@ With an email and password, or with GitHub or Bitbucket, at [gitpay.me](https://
 
 ### What are roles?
 
-Provider, Contributor, Funding (sponsor) and Maintainer. They change what your dashboard shows; they don't restrict what you can do. Change them in **Profile → User account → Roles**. See [What is Gitpay?](/docs/en/getting-started/).
+Provider, Contributor, Funding (sponsor) and Maintainer. They change what your dashboard shows; they don't restrict what you can do. Change them in **Account → Profile** (the "What types of users fit with you?" section). See [What is Gitpay?](/docs/en/getting-started/).
 
 ### Can I use Gitpay in Portuguese?
 

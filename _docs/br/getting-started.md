@@ -1,126 +1,80 @@
 ---
 layout: doc
-title: Por onde começar?
-subtitle: Entenda como contribuir com tarefas pelo Gitpay e ser recompensado
-tags:
+lang: br
+title: O que é o Gitpay?
+subtitle: As duas formas de o dinheiro circular no Gitpay, quem usa cada uma e quanto custa
+tags: getting-started, payments, payment-requests, bounties
 redirect_from:
   - /docs/br/collections/
 ---
 
-#### O que você vai ver aqui
+#### Índice
 {:.no_toc}
 * TOC
 {:toc}
 
-O Gitpay é uma plataforma que oferece tarefas para projetos que utilizam Git. Essas tarefas costumam ser chamadas de *issues* no GitHub ou *incidentes* no Bitbucket.
+O Gitpay é uma plataforma de pagamentos para trabalho. Ele tem dois produtos:
 
-Você pode trabalhar em tarefas disponíveis na plataforma de diversos projetos, inclusive do próprio Gitpay. Dessa forma a plataforma evolui utilizando as contribuições da comunidade.
+| | Solicitações de pagamento | Recompensas (bounties) |
+|---|---|---|
+| O que é | Um link de pagamento que você envia a um cliente | Dinheiro vinculado a uma issue do GitHub (ou Bitbucket) |
+| Quem recebe | Quem criou o link | O contribuidor cujo pull request resolve a issue |
+| Quando recebe | Quando o cliente paga | Quando a solução é mesclada (merge) e a issue é fechada |
+| Quem paga a taxa | O vendedor (descontada do pagamento) | O patrocinador (somada ao valor) e o contribuidor (descontada do repasse) |
+| Comece aqui | [Comece como prestador de serviço](/docs/br/getting-started-service-provider/) | [Comece como contribuidor](/docs/br/getting-started-contributor/) ou [como patrocinador](/docs/br/getting-started-sponsor/) |
 
-Quem contribui para o projeto ajuda a construir *sua própria plataforma de trabalho* e aprende de forma colaborativa. A experiência adquirida pode ser aplicada em outros projetos.
+## Solicitações de pagamento
 
-As tarefas normalmente são pequenas e específicas, mas também podem envolver demandas maiores. Focamos em tarefas menores para reduzir riscos e facilitar testes e integrações.
-No Gitpay as tarefas passam por diversas validações seguindo as melhores práticas de desenvolvimento ágil. Contribuindo você aprende como projetos podem ser mantidos de forma sustentável e colaborativa, mesmo em equipes remotas.
+Uma solicitação de pagamento é um link com título, descrição e valor (fixo ou escolhido pelo cliente). Você envia o link ao cliente por mensagem, e-mail ou DM. O cliente paga com cartão em um checkout seguro, e o dinheiro vai para a sua conta de saque, menos a taxa de processamento e a taxa da plataforma Gitpay.
 
-## O que eu preciso saber?
-Você não precisa dominar todos os conceitos para contribuir e receber recompensas. Basta estar disposto a aprender.
+Você não precisa de site, loja nem repositório no GitHub. Solicitações de pagamento servem para qualquer serviço digital: design, ilustração e comissões, desenvolvimento, consultoria, redação, edição, coaching.
 
-Trabalhamos com práticas como desenvolvimento ágil, Scrum, extreme programming, open source, releases, pull requests, integração contínua e TDD. Essas práticas também são recomendadas para os projetos cadastrados na plataforma.
+Leia [Solicite pagamento a um cliente](/docs/br/service-provider/).
 
-O Gitpay envolve um processo de recompensa e contribuição por projetos que usam o Git. Ele transforma o Git numa ferramenta de trabalho e pagamento pela realização de tarefas. Diferente de uma tarefa ou projeto que um cliente ofereça, aqui ela passa a fazer parte de um ciclo de desenvolvimento que é claro para quem desenvolve, e que no fim se torna claro para quem usa também.
+## Recompensas
 
-As tarefas geralmente seguem um padrão que melhora através do tempo para detalhar da melhor forma como resolver aquele problema ou criar aquela funcionalidade. Temos screenshots e detalhes de como reproduzir cenários usando as boas práticas que as plataformas Git usam.
+Uma recompensa é o dinheiro que um patrocinador coloca em uma issue. Qualquer pessoa pode ver a issue no Gitpay, trabalhar nela e enviar um pull request. Quando o pull request é mesclado e a issue é fechada, o contribuidor envia a URL do pull request ao Gitpay como solução e recebe a recompensa.
 
-Muitas vezes, partes destes cenários e detalhes da tarefa também estão ligados a processos automatizados. Sendo assim, para alguns casos temos como fazer análises na proposta de mudança, que precisa passar nos testes automatizados de diferentes níveis de acordo com o projeto.
+Os patrocinadores podem pagar agora (o Gitpay guarda o dinheiro até uma solução ser mesclada) ou se comprometer a pagar depois (nada é cobrado até uma solução ser aceita).
 
-Sendo assim, seu código é verificado para adequar aos padrões do projeto em questão, e até testes de interface automatizados podem ser realizados, para garantir que antes mesmo de ser analisado por alguém, a qualidade mínima necessária para ir para produção é atendida.
+Leia [Financie uma issue](/docs/br/sponsor/) e [Trabalhe em uma issue financiada](/docs/br/contributor/).
 
-## O conceito de entrega baseada no manifesto ágil
+## Papéis
 
-Com o Gitpay, você trabalha em uma tarefa passando pelo processo de desenvolvimento ágil, com integração contínua de tarefa por tarefa, que pode ser distribuída em times de diversas partes.
+Sua conta pode ter um ou mais papéis. Eles mudam o que aparece no seu painel; não limitam o que você pode fazer.
 
-Isto significa que cada tarefa quando enviada através de um *Pull Request* vai para produção após aprovada. O contrato do Gitpay são processos já existentes no Git para validar um trabalho. 
+| Papel | No app | Para |
+|---|---|---|
+| Prestador de serviço | Provider | Enviar solicitações de pagamento a clientes |
+| Contribuidor | Contributor | Resolver issues financiadas |
+| Patrocinador | Funding | Financiar issues |
+| Mantenedor | Maintainer | Importar issues dos seus projetos e revisar trabalhos |
 
-{% include image.html img="https://alexandremagno.net/wp-content/uploads/2018/09/Global-Business-Deals-Venn-Diagram.png" style="wide" lightbox="true" alt="Alt for image" caption="Image in lightbox" %}
+Altere seus papéis em **Conta → Perfil** (seção "Que tipo de usuário é você?").
 
-## Como contribuir na prática e ser recompensado
-Vamos mostrar de forma resumida como funciona o processo a partir do momento em que você demonstra interesse por uma tarefa. Depois de se cadastrar no Gitpay podemos enviar propostas tanto da plataforma quanto de clientes que disponibilizam demandas de seus projetos.
+## Como o dinheiro circula
 
-As tarefas podem ter origem em projetos open source ou privados. Pessoas interessadas podem investir na solução, então a recompensa pode ser financiada por várias fontes.
+O Gitpay usa a [Whop](https://whop.com) para checkout, verificação de identidade e saques. Contas criadas antes da Whop ainda podem usar Stripe Connect ou PayPal; veja [Configure seus saques](/docs/br/whop-payout-setup/).
 
-O Gitpay atende tanto usuários individuais quanto empresas.
+**Solicitação de pagamento:** o cliente paga → o pagamento cai no seu saldo Whop (a taxa do Gitpay é separada na mesma cobrança) → você solicita o saque para sua conta bancária, cartão de débito ou carteira USDC.
 
-Navegando pela plataforma ou recebendo notificações você pode manifestar interesse e iniciar a solução da tarefa.
+**Recompensa:** o patrocinador paga → o Gitpay guarda o dinheiro → a solução é mesclada e a issue é fechada → o Gitpay transfere a recompensa para a conta de saque do contribuidor → o contribuidor solicita o saque.
 
-Por exemplo, imagine a solicitação de adicionar um favicon ao site. O favicon é um pequeno ícone exibido na barra de endereços do navegador.
+## Taxas em resumo
 
-Suponha que essa tarefa tenha sido criada a partir de uma issue no GitHub. A solução seria apenas adicionar uma linha no *header* do site com a referência do favicon. O código do site estaria hospedado em um repositório do GitHub.
+| | Taxa |
+|---|---|
+| Solicitação de pagamento (criada com cobrança direta na Whop) | 5% do valor cobrado, mais a taxa de processamento da Whop |
+| Solicitação de pagamento (links antigos, Gitpay como comerciante responsável) | 8% do valor após as taxas de processamento |
+| Recompensa, issue de código aberto | 8% somados para o patrocinador; sem taxa para recompensas de US$ 5.000 ou mais |
+| Recompensa, issue privada | 18% somados para o patrocinador |
+| Repasse da recompensa ao contribuidor | O contribuidor recebe 92% da recompensa |
 
-#### Interesse em uma tarefa
+Detalhes completos: [Como funcionam pagamentos e taxas](/docs/br/payments/).
 
-Você primeiro chega até a tarefa: [https://gitpay.me/#/task/64](https://gitpay.me/#/task/64)
-Nessa página você pode demonstrar interesse e o criador da tarefa será notificado.
-> Não hesite em se candidatar para quantas tarefas quiser. Caso não seja escolhido em uma, haverá outras oportunidades.
+## Próximos passos
 
-#### Escolhido
-Se você for escolhido, pode iniciar a tarefa.
-Dependendo da tarefa, pode ser necessário receber instruções adicionais para acessar o projeto.
-
-## Criando um fork
-O primeiro passo para trabalhar em um projeto é realizar um *fork*. Com essa "cópia" você faz as modificações e ao final envia de volta para integração na base principal.
-O fork serve para que você trabalhe nas mudanças até que estejam prontas para integrar o projeto.
-Enquanto você trabalha na tarefa o projeto pode sofrer atualizações. Mantenha seu fork sincronizado para evitar conflitos na hora de integrar o código.
-
-Vamos supor que seja o próprio projeto do Gitpay esta tarefa, sendo assim, teríamos: https://github.com/worknenjoy/gitpay/issues/12
-
-Precisaríamos seguir as instruções para iniciar o projeto em: http://github.com/worknenjoy/gitpay
-
-E rodaríamos o projeto com os seguintes comandos:
-
-Frontend: `npm run dev`
-
-Backend (node.js): `npm run start:dev`
-
-Em seguida, iríamos para o código fonte do seguinte arquivo:
-
-File: [https://github.com/worknenjoy/gitpay/blob/master/frontend/public/index.html](https://github.com/worknenjoy/gitpay/blob/master/frontend/public/index.html)
-```html
-<head>
-  <meta charset="utf-8">
-  <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
-  <title>GitPay - Freelancing with git</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-  <link rel="stylesheet" href="app.css">
-</head>
-```
-
-E acrescentaríamos a linha: `<link rel="shortcut icon" type="image/png" href="favicon.png">`
-
-E teríamos o arquivo da seguinte forma:
-
-```html
-<head>
-  <meta charset="utf-8">
-  <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no' />
-  <title>GitPay - Freelancing with git</title>
-  <link rel="shortcut icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-  <link rel="stylesheet" href="app.css">
-</head>
-```
-
-Esse é o resultado final do seu trabalho, você pode verificar na home page que o favicon foi alterado.
-
-Quer começar a aprender na prática? Essa é uma tarefa de teste, você pode enviar de fato um Pull Request com esta mudança para a gente.
-
-
-## Enviando seu Pull Request
-Com a solução implementada, faça commit e push para o seu repositório.
-
-> Não se esqueça de executar `npm run test` e `npm run lint` para garantir que o código está nos padrões do projeto.
-
-
-Para este projeto o pull request deve ser aberto em [https://github.com/worknenjoy/gitpay/pulls](https://github.com/worknenjoy/gitpay/pulls)
-
-Após abrir o Pull Request poderemos solicitar ajustes. Faça as correções necessárias até chegar à solução final.
-
-Depois de aprovado seu código é integrado e você recebe a recompensa pela tarefa.
+- [Comece como prestador de serviço](/docs/br/getting-started-service-provider/)
+- [Comece como contribuidor](/docs/br/getting-started-contributor/)
+- [Comece como patrocinador](/docs/br/getting-started-sponsor/)
+- [Perguntas frequentes](/docs/br/faq/)

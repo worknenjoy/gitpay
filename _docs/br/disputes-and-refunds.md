@@ -1,79 +1,68 @@
 ---
 layout: doc
 lang: br
-role: sponsor
-title: Disputas e reembolsos
-subtitle: O que acontece com seu saldo quando uma solicitação de pagamento sofre uma disputa ou reembolso
-tags: disputas, chargeback, reembolsos, solicitações de pagamento, taxas
+title: Reembolsos e disputas
+subtitle: Como reembolsar um cliente, o que acontece quando um pagamento é contestado e como funcionam os reembolsos de recompensas
+tags: payments, refunds, disputes, chargebacks, payment-requests, bounties
 ---
 
-#### O que você vai ver
+#### Índice
 {:.no_toc}
 * TOC
 {:toc}
 
-Uma disputa ou reembolso pode acontecer mesmo depois que um [claim](/docs/br/claims/) já foi creditado
-para você, ou depois que você solicitou um [payout](/docs/br/payouts/). Esta página explica o que isso
-significa para o seu saldo.
+Um **reembolso** é o dinheiro que você (ou o Gitpay) devolve a quem pagou. Uma **disputa**, ou estorno (chargeback), é quando quem pagou pede ao banco para reverter um pagamento com cartão. Disputas custam mais que reembolsos, então, se um cliente está insatisfeito, reembolsar costuma ser melhor para os dois lados.
 
-## Onde isso se encaixa no fluxo de pagamento
+## Reembolse um pagamento de solicitação de pagamento
+
+1. Vá em **Solicitações de pagamento → Pagamentos** e abra o pagamento.
+2. Selecione **Reembolso** e confirme.
+
+O cliente é reembolsado do **valor que pagou, sem as taxas**: a taxa de processamento e a taxa da plataforma Gitpay não são devolvidas, porque o processador de pagamentos também não as devolve. Na prática, o cliente recebe de volta o seu valor líquido desse pagamento.
+
+O cliente recebe uma confirmação de reembolso por e-mail. O status do pagamento muda para **Reembolsado**.
+
+### De onde sai o reembolso
+
+- **Pagamentos com cobrança direta** (todas as novas solicitações): o reembolso sai do seu saldo Whop. Nada é registrado no seu saldo de solicitações de pagamento no Gitpay.
+- **Solicitações antigas** (Gitpay como comerciante responsável): se você já recebeu por esse pagamento, o valor reembolsado é recuperado de você. Se ainda não recebeu, só é cobrada de você a taxa de processamento que não pode ser recuperada. Esses valores aparecem em **Solicitações de pagamento → Disputas / reembolsos**.
+
+## Disputas em solicitações de pagamento
+
+### Pagamentos com cobrança direta
+
+Sua conta Whop é a comerciante responsável, então as disputas são abertas contra a sua conta e tratadas na Whop. A Whop pode cobrar taxas de disputa. O Gitpay avisa você quando a Whop informa uma disputa ou um alerta antecipado de disputa.
+
+Para responder, envie suas evidências à Whop: o combinado por escrito com o cliente (preço e escopo), o trabalho entregue e a conversa com ele.
+
+### Solicitações antigas
+
+O Gitpay trata a disputa e cobra o custo do seu saldo de solicitações de pagamento:
 
 ```
-reivindicado  →  financiado  →  transferência creditada  →  payout solicitado  →  dinheiro na sua conta
-                       (Claims)                                                          ↘
-                                                                        disputa ou reembolso (esta página)
-                                                                              debita seu saldo
+valor contestado + taxa da plataforma (8%) + taxa de disputa (US$ 15 na Whop, ou a taxa da Stripe)
 ```
 
-Reivindicar, financiar e sacar via payout são a direção "para frente": dinheiro se movendo em sua
-direção. Uma disputa ou reembolso funciona no sentido contrário — reverte parte dessa cadeia debitando
-dinheiro de volta do seu saldo, mesmo que ele já tivesse sido creditado como um claim.
+Se a disputa for ganha, o valor é creditado de volta. Um saldo negativo é recuperado dos seus próximos pagamentos.
 
-## O que é uma disputa?
+### Como evitar disputas
 
-Uma disputa (também chamada de chargeback) acontece quando a pessoa que te pagou contesta a cobrança
-junto ao banco ou à bandeira do cartão — por exemplo, se ela acredita que a cobrança não foi autorizada.
-Ela é aberta pelo banco de quem pagou, não pelo Gitpay nem diretamente por quem pagou através do Gitpay.
+- Combine por escrito preço, escopo e política de reembolso antes de enviar o link.
+- Envie os links em privado para quem vai pagar.
+- Guarde a prova de entrega.
+- Reembolse rápido quando não puder entregar.
 
-## O que é um reembolso?
+## Reembolsos de recompensas
 
-Um reembolso é dinheiro devolvido para quem pagou, seja porque você ou o Gitpay o emitiu, seja porque
-foi emitido diretamente no painel do provedor de pagamento. Reembolsos feitos pela própria interface do
-Gitpay são sempre do valor integral — não existe opção de reembolso parcial no produto.
+| Situação | O que acontece |
+|---|---|
+| Uma solução foi mesclada, mas ninguém reivindicou a recompensa | O Gitpay envia um e-mail ao autor do pull request no dia 26 de cada mês. Depois de dois lembretes, a execução seguinte reembolsa os patrocinadores. |
+| Você financiou a issue errada | Em **Pagamentos**, use a opção de transferir a recompensa para mover seu pagamento para outra issue. |
+| Qualquer outro caso (issue abandonada, fechada sem solução) | Escreva para [contact@gitpay.me](mailto:contact@gitpay.me) com o link da issue. |
 
-## Como as disputas afetam seu saldo
+Os reembolsos voltam para o meio de pagamento original, ou para sua carteira se você pagou com a carteira. A taxa somada quando você financiou a recompensa não é reembolsada.
 
-Quando uma disputa é aberta, o valor disputado é debitado do seu saldo de solicitações de pagamento,
-junto com a taxa de 8% da plataforma Gitpay e uma taxa do provedor. Se a disputa for resolvida a seu
-favor depois, o valor disputado e a taxa do provedor são creditados de volta — mas a taxa de 8% do
-Gitpay não é reembolsada, então seu saldo não volta totalmente ao ponto inicial mesmo quando você
-vence.
+## Próximos passos
 
-## Como os reembolsos afetam seu saldo
-
-Um reembolso gera um desconto mais leve do que uma disputa: apenas a taxa de 8% do Gitpay é debitada do
-seu saldo. O próprio provedor de pagamento absorve o valor reembolsado, já que esse dinheiro nunca
-chegou a ser transferido para você como payout.
-
-## Métodos de pagamento dentro do Whop
-
-O fluxo atual do Gitpay utiliza Whop. PayPal, conta bancária e cripto podem estar disponíveis conforme o país e a conta, mas não são provedores de disputas separados do Gitpay. O destino de payout não altera a análise do pagamento original do cliente. Para um caso específico, confira a transação no Whop e contate o suporte. Antes de receber fundos, consulte os [países elegíveis para payout](https://docs.whop.com/manage-your-business/manage-payouts/set-up-payouts#supported-countries) e os [métodos disponíveis](https://docs.whop.com/manage-your-business/manage-payouts/payout-methods).
-
-## Taxas extras no Whop (alertas de disputa)
-
-Se você recebe pelo Whop, o Whop pode reembolsar automaticamente uma transação abaixo de um certo valor
-assim que detecta uma disputa chegando, antes que ela vire um chargeback formal. Quando isso acontece,
-o Whop cobra uma taxa de alerta separada (atualmente por volta de $29), independente do resultado, e o
-Gitpay a debita do seu saldo imediatamente. Você recebe um e-mail assim que isso ocorre.
-
-## Onde ver isso
-
-Sua página de **Solicitações de pagamento** tem um painel de "Disputas e reembolsos" mostrando qualquer
-valor atualmente devido por disputas ou taxas de reembolso nas suas solicitações de pagamento.
-
-## O que fazer se você discordar de uma disputa
-
-Disputas são abertas e resolvidas através do banco ou da bandeira do cartão de quem pagou, não dentro do
-Gitpay, então não existe um fluxo de resposta a disputas dentro do produto. Se você acredita que uma
-disputa está equivocada, entre em contato com o suporte com os detalhes do pagamento — podemos ajudar a
-te orientar.
+- [Como funcionam pagamentos e taxas](/docs/br/payments/)
+- [Financie uma issue](/docs/br/sponsor/)
